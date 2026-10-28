@@ -1,6 +1,6 @@
-// Gestellte Tauri-Brücke (Windows-Hülle) für Browser-Proben: Diktat, Startdateien, Update-Adresse.
+// Gestellte Tauri-Brücke (Windows-Hülle) für Browser-Proben: Diktat, Startdateien, Updates vom eigenen Server (Prüfen/Installieren gestellt).
 export const tauriStub = `(() => {
-  const state = { diktat: [], geoeffnet: [], startdateien: [] };
+  const state = { diktat: [], geoeffnet: [], startdateien: [], updatePruefungen: 0, installiert: [] };
   window.__tauriState = state;
   const listeners = {};
   window.__TAURI__ = {
@@ -10,6 +10,8 @@ export const tauriStub = `(() => {
       if (cmd === 'fa_plattform') return { plattform: 'windows', fassung: state.fassung || '2.28.1' };
       if (cmd === 'fa_startdateien') { const d = state.startdateien.splice(0); return { dateien: d }; }
       if (cmd === 'fa_adresse_oeffnen') { if (!/^https:\\/\\//.test(args?.url || '')) throw 'INVALID_INPUT'; state.geoeffnet.push(args.url); return null; }
+      if (cmd === 'fa_update_pruefen') { state.updatePruefungen++; if (state.updateFehler) throw state.updateFehler; return state.updateAntwort || { neu: '2.28.3', installiert: '2.28.2', groesse: 41943040 }; }
+      if (cmd === 'fa_update_installieren') { window.__tauriEmit('familienakte:update-stand', { geladen: 20971520, groesse: 41943040 }); state.installiert.push(Date.now()); return { gestartet: true }; }
       throw 'UNKNOWN ' + cmd;
     } },
     event: { listen: async (name, fn) => { (listeners[name] ||= []).push(fn); return () => {}; } },

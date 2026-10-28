@@ -39,7 +39,7 @@ jobs:
           FAMILIENAKTE_COMMIT: ${{ github.sha }}
       - name: Bauen und Lint
         working-directory: android
-        run: ./gradlew --no-daemon --max-workers=2 assembleDebug lintDebug
+        run: ./gradlew --no-daemon --max-workers=2 assembleDebug lintDebug testDebugUnitTest
         env:
           FAMILIENAKTE_BUILD_NUMBER: ${{ github.run_number }}
       - uses: actions/upload-artifact@v4

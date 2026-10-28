@@ -1,16 +1,22 @@
 name: Android-APK veröffentlichen
 
-# Von Hand, nur von main (Klaus 2026-10-28: Test-APK zum Prüfen). Signatur: liegt das Geheimnis
-# FA_ANDROID_KEYSTORE_B64 (Base64 eines .jks) mit FA_ANDROID_KEYSTORE_PASSWORD und FA_ANDROID_KEY_ALIAS vor,
-# wird damit signiert (dauerhafte Updates). Sonst entsteht eine Test-APK mit einem Wegwerf-Schlüssel dieses
-# Laufs: sie lässt sich installieren, aber eine spätere Fassung muss dann neu installiert werden (andere
-# Signatur). Kein Schlüssel liegt im Repo.
+# Von Hand, nur von main (Klaus 2026-10-28: Test-APK zum Prüfen). Signatur: liegt die verschlüsselte Identität
+# signing/android-release.enc.json im Repo (Lauf „Dauerhafte Familienakte-Signieridentität“), wird mit ihr signiert –
+# Freigabe FA_SIGNING_UNLOCK aus der Umgebung android-production, ohne sie bricht der Lauf ab (nie still ein Wegwerf-
+# Schlüssel). Ohne Identität entsteht wie bisher eine Test-APK mit Wegwerf-Schlüssel dieses Laufs.
+# Server: mit „ja“ im Feld server geht dieselbe APK zusätzlich nach https://family-projekt.de/updates/familienakte/,
+# mit unterschriebener aktuell-android.json (UPDATE_SIGNING_KEY), nur bei dauerhafter Signatur.
 on:
   workflow_dispatch:
     inputs:
       tag:
         description: Versions-Tag, etwa android-v2.28.1-test.1
         required: true
+        type: string
+      server:
+        description: 'Auch auf den Update-Server family-projekt.de legen (genau "ja"; nur mit dauerhafter Signatur)'
+        required: false
+        default: 'nein'
         type: string
 
 permissions:
@@ -25,6 +31,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     timeout-minutes: 40
+    environment: android-production
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -52,40 +59,40 @@ jobs:
         run: npm run sync:android
         env:
           FAMILIENAKTE_COMMIT: ${{ github.sha }}
-      - name: Signierschlüssel bereitstellen (Geheimnis oder Wegwerf-Schlüssel)
-        id: signing
-        env:
-          KEYSTORE_B64: ${{ secrets.FA_ANDROID_KEYSTORE_B64 }}
-          KEYSTORE_PASSWORD: ${{ secrets.FA_ANDROID_KEYSTORE_PASSWORD }}
-          KEY_ALIAS: ${{ secrets.FA_ANDROID_KEY_ALIAS }}
-        run: |
-          set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/signing"
-          if [ -n "$KEYSTORE_B64" ] && [ -n "$KEYSTORE_PASSWORD" ] && [ -n "$KEY_ALIAS" ]; then
-            echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/signing/release.jks"
-            echo "art=dauerhaft" >> "$GITHUB_OUTPUT"
-            echo "alias=$KEY_ALIAS" >> "$GITHUB_OUTPUT"
-            echo "::add-mask::$KEYSTORE_PASSWORD"
-            echo "password=$KEYSTORE_PASSWORD" >> "$GITHUB_OUTPUT"
-          else
-            password=$(openssl rand -hex 16)
-            keytool -genkeypair -v -keystore "$RUNNER_TEMP/signing/release.jks" -storepass "$password" -keypass "$password" -alias familienakte-test -keyalg RSA -keysize 2048 -validity 3650 -dname "CN=Familienakte Test, O=Familienakte, C=DE" >/dev/null 2>&1
-            echo "art=wegwerf" >> "$GITHUB_OUTPUT"
-            echo "alias=familienakte-test" >> "$GITHUB_OUTPUT"
-            echo "::add-mask::$password"
-            echo "password=$password" >> "$GITHUB_OUTPUT"
-          fi
-      - name: Release-APK bauen und signieren
+      - name: Release-APK bauen (unsigniert) und ausrichten
         working-directory: android
         env:
           FAMILIENAKTE_BUILD_NUMBER: ${{ github.run_number }}
         run: |
           set -euo pipefail
-          ./gradlew --no-daemon --max-workers=2 assembleRelease lintRelease
+          ./gradlew --no-daemon --max-workers=2 assembleRelease lintRelease testReleaseUnitTest
           BT="$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -1)"
+          echo "BT=$BT" >> "$GITHUB_ENV"
           "$BT/zipalign" -f -p 4 app/build/outputs/apk/release/app-release-unsigned.apk "$RUNNER_TEMP/aligned.apk"
-          "$BT/apksigner" sign --ks "$RUNNER_TEMP/signing/release.jks" --ks-pass "pass:${{ steps.signing.outputs.password }}" --ks-key-alias "${{ steps.signing.outputs.alias }}" --out "$RUNNER_TEMP/Familienakte-${{ inputs.tag }}.apk" "$RUNNER_TEMP/aligned.apk"
-          "$BT/apksigner" verify --print-certs "$RUNNER_TEMP/Familienakte-${{ inputs.tag }}.apk" | head -5
+      - name: Signieren (dauerhafte Identität oder Wegwerf-Schlüssel)
+        id: signing
+        env:
+          FA_SIGNING_UNLOCK: ${{ secrets.FA_SIGNING_UNLOCK }}
+          FA_RELEASE_TAG: ${{ inputs.tag }}
+          FA_RELEASE_COMMIT: ${{ github.sha }}
+          TMPDIR: ${{ runner.temp }}
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/Familienakte-${{ inputs.tag }}.apk"
+          if [ -e signing/android-release.enc.json ]; then
+            [ -n "$FA_SIGNING_UNLOCK" ] || { echo "::error::Identität vorhanden, aber FA_SIGNING_UNLOCK fehlt (Umgebung android-production)"; exit 1; }
+            node --test tools/signing/test-identity.mjs
+            FA_APKSIGNER="$BT/apksigner" FA_AAPT="$BT/aapt" node tools/signing/cli.mjs sign-apk "$RUNNER_TEMP/aligned.apk" "$out"
+            echo "art=dauerhaft" >> "$GITHUB_OUTPUT"
+          else
+            password=$(openssl rand -hex 16)
+            echo "::add-mask::$password"
+            keytool -genkeypair -keystore "$RUNNER_TEMP/wegwerf.jks" -storepass "$password" -keypass "$password" -alias familienakte-test -keyalg RSA -keysize 2048 -validity 3650 -dname "CN=Familienakte Test, O=Familienakte, C=DE" >/dev/null 2>&1
+            "$BT/apksigner" sign --ks "$RUNNER_TEMP/wegwerf.jks" --ks-pass "pass:$password" --ks-key-alias familienakte-test --out "$out" "$RUNNER_TEMP/aligned.apk"
+            rm -f "$RUNNER_TEMP/wegwerf.jks"
+            echo "art=wegwerf" >> "$GITHUB_OUTPUT"
+          fi
+          "$BT/apksigner" verify --print-certs "$out" | head -5
       - name: Prüfsummen und Hinweise
         id: sums
         run: |
@@ -99,10 +106,10 @@ jobs:
             echo "Installieren: APK herunterladen, öffnen, Installation aus dieser Quelle erlauben."
             if [ "${{ steps.signing.outputs.art }}" = "wegwerf" ]; then
               echo
-              echo "⚠ Signiert mit einem Wegwerf-Schlüssel dieses Laufs: Vor der nächsten Test-APK die alte App deinstallieren (andere Signatur). Für dauerhafte Updates die Geheimnisse FA_ANDROID_KEYSTORE_B64, FA_ANDROID_KEYSTORE_PASSWORD und FA_ANDROID_KEY_ALIAS im Repo hinterlegen (docs/PLATTFORMEN.md)."
+              echo "⚠ Signiert mit einem Wegwerf-Schlüssel dieses Laufs: Vor der nächsten Test-APK die alte App deinstallieren (andere Signatur). Für dauerhafte Updates einmal den Lauf „Dauerhafte Familienakte-Signieridentität“ (initialize) ausführen (docs/PLATTFORMEN.md)."
             else
               echo
-              echo "Signiert mit dem dauerhaften Schlüssel: über die vorhandene App installieren."
+              echo "Signiert mit dem dauerhaften Schlüssel (Zertifikat SHA-256 $(node -p "require('./signing/android-certificate.json').certificateSha256")): über die vorhandene App installieren."
             fi
             echo
             echo "SHA-256:"; echo '```'; cat SHA256SUMS; echo '```'
@@ -114,3 +121,44 @@ jobs:
           set -euo pipefail
           gh release create "${{ inputs.tag }}" --repo "$GITHUB_REPOSITORY" --title "Familienakte Android ${{ inputs.tag }}" --notes-file "$RUNNER_TEMP/notes.md" --prerelease "$RUNNER_TEMP/Familienakte-${{ inputs.tag }}.apk" "$RUNNER_TEMP/SHA256SUMS"
           echo "Download: https://github.com/$GITHUB_REPOSITORY/releases/download/${{ inputs.tag }}/Familienakte-${{ inputs.tag }}.apk"
+      # Updates vom eigenen Server (Klaus 2026-10-28, Vorbild BookLedgerPro): dieselbe APK nach family-projekt.de/updates/familienakte/,
+      # Feed unterschrieben (Ed25519) und gegen den in der App eingebauten Schlüssel geprüft. Nur Android-Dateien werden abgeglichen.
+      - name: Update-Datei bauen, unterschreiben, gegen den Schlüssel der App prüfen
+        if: inputs.server == 'ja'
+        env:
+          SIGNIERSCHLUESSEL: ${{ secrets.UPDATE_SIGNING_KEY }}
+          ART: ${{ steps.signing.outputs.art }}
+        run: |
+          set -euo pipefail
+          [ "$ART" = "dauerhaft" ] || { echo "::error::Nur dauerhaft signierte APKs kommen auf den Update-Server (die App nimmt kein anderes Zertifikat an)"; exit 1; }
+          test -n "$SIGNIERSCHLUESSEL" || { echo "::error::Geheimnis UPDATE_SIGNING_KEY fehlt"; exit 1; }
+          version=$(node -p "require('./package.json').version")
+          mkdir -p hoch && cp "$RUNNER_TEMP/Familienakte-${{ inputs.tag }}.apk" "hoch/Familienakte-android-v$version.apk"
+          node tools/native/update-feed.mjs android "hoch/Familienakte-android-v$version.apk" "${{ github.run_number }}" hoch/aktuell-android.json
+          umask 077; printf '%s\n' "$SIGNIERSCHLUESSEL" > "$RUNNER_TEMP/sig.pem"
+          openssl pkeyutl -sign -rawin -inkey "$RUNNER_TEMP/sig.pem" -in hoch/aktuell-android.json -out "$RUNNER_TEMP/sig.bin"
+          base64 -w0 "$RUNNER_TEMP/sig.bin" > hoch/aktuell-android.json.sig; echo >> hoch/aktuell-android.json.sig
+          rm -f "$RUNNER_TEMP/sig.pem"
+          PUB=$(grep -o 'SCHLUESSEL = "[^"]*"' android/app/src/main/java/de/familyprojekt/familienakte/UpdateFeed.java | cut -d'"' -f2)
+          { echo '-----BEGIN PUBLIC KEY-----'; echo "$PUB"; echo '-----END PUBLIC KEY-----'; } > "$RUNNER_TEMP/pub.pem"
+          openssl pkeyutl -verify -rawin -pubin -inkey "$RUNNER_TEMP/pub.pem" -in hoch/aktuell-android.json -sigfile "$RUNNER_TEMP/sig.bin"
+          ls -la hoch
+      - name: Auf family-projekt.de hochladen und von außen prüfen
+        if: inputs.server == 'ja'
+        env:
+          HOCHLADESCHLUESSEL: ${{ secrets.UPDATE_UPLOAD_KEY }}
+        run: |
+          set -euo pipefail
+          test -n "$HOCHLADESCHLUESSEL" || { echo "::error::Geheimnis UPDATE_UPLOAD_KEY fehlt"; exit 1; }
+          umask 077; mkdir -p ~/.ssh; printf '%s\n' "$HOCHLADESCHLUESSEL" > ~/.ssh/upload
+          # Server-Kennung fest (Klaus' Termux, 2026-10-28): eine fremde Gegenstelle bekommt nichts.
+          echo '167.233.204.72 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhzSmN0kY2Vk2oem2u6dH8rq04A8UXVZyay2WWRjOmR' > ~/.ssh/known_hosts
+          rsync -rt --delete-after --delay-updates --include='aktuell-android.json' --include='aktuell-android.json.sig' --include='Familienakte-android-v*.apk' --exclude='*' \
+            -e "ssh -i ~/.ssh/upload -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes" hoch/ root@167.233.204.72:familienakte/
+          rm -f ~/.ssh/upload
+          B=https://family-projekt.de/updates/familienakte
+          curl -fsS "$B/aktuell-android.json" | cmp - hoch/aktuell-android.json
+          curl -fsS "$B/aktuell-android.json.sig" | cmp - hoch/aktuell-android.json.sig
+          D=$(ls hoch/*.apk | xargs -n1 basename)
+          curl -fsS "$B/$D" | sha256sum | grep -q "$(sha256sum "hoch/$D" | cut -d' ' -f1)"
+          echo "Auch auf dem Update-Server: $B/$D"

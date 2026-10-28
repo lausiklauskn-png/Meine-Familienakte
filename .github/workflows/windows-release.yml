@@ -2,13 +2,20 @@ name: Windows-Installer veröffentlichen
 
 # Von Hand, nur von main (Klaus 2026-10-28). Baut den NSIS-Installer (unsigniert, pro Benutzer) und legt ein Release
 # mit Installer, SHA256SUMS und latest.json an. Danach stellt pages.yml latest.json und den Installer unter
-# windows/ auf der Pages-Adresse bereit; die App prüft dort über die Versionszeile auf eine neue Fassung.
+# windows/ auf der Pages-Adresse bereit (für Fassungen bis 2.28.2, die dort nachsehen). Ab 2.28.3 prüft die App über die
+# Versionszeile auf Klaus' Server: mit „ja“ im Feld server legt der Job „server“ Setup und unterschriebene
+# aktuell-windows.json nach https://family-projekt.de/updates/familienakte/ (Vorbild BookLedgerPro, Klaus 2026-10-28).
 on:
   workflow_dispatch:
     inputs:
       tag:
         description: Versions-Tag, etwa windows-v2.28.2
         required: true
+        type: string
+      server:
+        description: 'Auch auf den Update-Server family-projekt.de legen (genau "ja")'
+        required: false
+        default: 'nein'
         type: string
 
 permissions:
@@ -91,3 +98,58 @@ jobs:
           set -euo pipefail
           gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --title "Familienakte Windows $TAG" --notes-file release/notes.md release/*.exe release/SHA256SUMS release/latest.json
           echo "Download: https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$(ls release/*.exe | xargs -n1 basename)"
+
+  server:
+    needs: release
+    if: inputs.server == 'ja'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Setup aus dem Release holen und prüfen
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          mkdir -p rel hoch
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir rel --pattern '*.exe' --pattern SHA256SUMS
+          (cd rel && sha256sum -c SHA256SUMS)
+          cp rel/*.exe hoch/
+      - name: aktuell-windows.json bauen, unterschreiben, gegen den Schlüssel der App prüfen
+        env:
+          SIGNIERSCHLUESSEL: ${{ secrets.UPDATE_SIGNING_KEY }}
+        run: |
+          set -euo pipefail
+          test -n "$SIGNIERSCHLUESSEL" || { echo "::error::Geheimnis UPDATE_SIGNING_KEY fehlt"; exit 1; }
+          node tools/native/update-feed.mjs windows hoch/*.exe hoch/aktuell-windows.json
+          umask 077; printf '%s\n' "$SIGNIERSCHLUESSEL" > "$RUNNER_TEMP/sig.pem"
+          openssl pkeyutl -sign -rawin -inkey "$RUNNER_TEMP/sig.pem" -in hoch/aktuell-windows.json -out "$RUNNER_TEMP/sig.bin"
+          base64 -w0 "$RUNNER_TEMP/sig.bin" > hoch/aktuell-windows.json.sig; echo >> hoch/aktuell-windows.json.sig
+          rm -f "$RUNNER_TEMP/sig.pem"
+          PUB=$(grep -o 'SCHLUESSEL: &str = "[^"]*"' windows/src-tauri/src/update.rs | cut -d'"' -f2)
+          { echo '-----BEGIN PUBLIC KEY-----'; echo "$PUB"; echo '-----END PUBLIC KEY-----'; } > "$RUNNER_TEMP/pub.pem"
+          openssl pkeyutl -verify -rawin -pubin -inkey "$RUNNER_TEMP/pub.pem" -in hoch/aktuell-windows.json -sigfile "$RUNNER_TEMP/sig.bin"
+          ls -la hoch
+      - name: Auf family-projekt.de hochladen und von außen prüfen
+        env:
+          HOCHLADESCHLUESSEL: ${{ secrets.UPDATE_UPLOAD_KEY }}
+        run: |
+          set -euo pipefail
+          test -n "$HOCHLADESCHLUESSEL" || { echo "::error::Geheimnis UPDATE_UPLOAD_KEY fehlt"; exit 1; }
+          umask 077; mkdir -p ~/.ssh; printf '%s\n' "$HOCHLADESCHLUESSEL" > ~/.ssh/upload
+          # Server-Kennung fest (Klaus' Termux, 2026-10-28): eine fremde Gegenstelle bekommt nichts.
+          echo '167.233.204.72 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhzSmN0kY2Vk2oem2u6dH8rq04A8UXVZyay2WWRjOmR' > ~/.ssh/known_hosts
+          # Nur Windows-Dateien abgleichen (alte Setups weg); Android-Dateien im selben Ordner bleiben unberührt.
+          rsync -rt --delete-after --delay-updates --include='aktuell-windows.json' --include='aktuell-windows.json.sig' --include='Familienakte-Windows-*-x64-setup.exe' --exclude='*' \
+            -e "ssh -i ~/.ssh/upload -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes" hoch/ root@167.233.204.72:familienakte/
+          rm -f ~/.ssh/upload
+          B=https://family-projekt.de/updates/familienakte
+          curl -fsS "$B/aktuell-windows.json" | cmp - hoch/aktuell-windows.json
+          curl -fsS "$B/aktuell-windows.json.sig" | cmp - hoch/aktuell-windows.json.sig
+          D=$(ls hoch/*.exe | xargs -n1 basename)
+          curl -fsS "$B/$D" | sha256sum | grep -q "$(sha256sum "hoch/$D" | cut -d' ' -f1)"
+          echo "Auf dem Update-Server: $B/$D"

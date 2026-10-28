@@ -47,7 +47,8 @@
     "build:single": "npm run build && node scripts/build-single-file.mjs",
     "sync:android": "npm run build && cap sync android",
     "check:android": "node tools/native/test-android.mjs",
-    "check:windows": "node tools/native/test-windows.mjs"
+    "check:windows": "node tools/native/test-windows.mjs",
+    "check:signing": "node --test tools/signing/test-identity.mjs"
   },
   "dependencies": {
     "lucide-react": "1.31.0",
