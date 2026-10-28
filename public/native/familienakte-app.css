@@ -1,0 +1,5 @@
+/* Hinweisleiste der Hülle (Neue Version, Internet aus) – Farben wie das Thema der App. */
+.familienakte-hinweis{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;gap:12px;max-width:min(92vw,640px);padding:10px 14px;border-radius:12px;background:#0b3154;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.25);font:500 14px/1.4 system-ui,sans-serif}
+.familienakte-hinweis button{border:0;border-radius:8px;padding:6px 12px;background:#68c4ff;color:#07233f;font:600 13px system-ui,sans-serif;cursor:pointer}
+.familienakte-hinweis button[hidden]{display:none}
+.familienakte-hinweis .familienakte-hinweis-zu{background:transparent;color:#fff;font-size:18px;padding:0 4px}

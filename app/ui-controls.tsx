@@ -35,7 +35,9 @@ export function DictationButton({ value, onChange, label, append = true, onDicta
   const sessionRef = useRef<ReturnType<typeof createDictationSession> | null>(null);
   useEffect(() => {
     const supported = () => !!speechConstructor(window as unknown as SpeechBrowser);
-    const online = () => navigator.onLine !== false;
+    // Internetschalter der App (Standard aus): Browser-Diktat nur mit eingeschaltetem Internet; ein natives Diktat
+    // (Android/Windows, window.FamilienakteDiktat) arbeitet auf dem Gerät und bleibt auch bei „aus“ erlaubt.
+    const online = () => { const w = window as unknown as { PBNetwork?: { ready: boolean; offline: boolean }; FamilienakteDiktat?: { offlineFaehig?: boolean } }; if (navigator.onLine === false) return false; if (w.FamilienakteDiktat?.offlineFaehig) return true; return !w.PBNetwork || (w.PBNetwork.ready && !w.PBNetwork.offline); };
     const session = createDictationSession({ constructor: () => speechConstructor(window as unknown as SpeechBrowser), online, onText: (text) => latest.current.onChange(text), onState: setListening, onHint: (text, error) => { setHint(text); if (text && error) latest.current.report({ kind: "error", text: `Spracheingabe · ${text}` }); } });
     sessionRef.current = session;
     const availability = () => { const reason = microphoneBlockedReason(); setBlocked(reason); setAvailable(supported() && online() && !reason); setHint(!online() ? "Offline – bitte tippen." : !supported() ? "Sprache nicht verfügbar – bitte tippen." : ""); };
@@ -43,9 +45,9 @@ export function DictationButton({ value, onChange, label, append = true, onDicta
     const other = (event: Event) => { if ((event as CustomEvent<string>).detail !== id) session.stop(); };
     const typed = () => session.stop();
     availability();
-    window.addEventListener("online", availability); window.addEventListener("offline", offline);
+    window.addEventListener("online", availability); window.addEventListener("offline", offline); window.addEventListener("pb:network", availability);
     window.addEventListener("family-dictation-start", other); window.addEventListener("family-dictation-typed", typed);
-    return () => { session.dispose(); sessionRef.current = null; window.removeEventListener("online", availability); window.removeEventListener("offline", offline); window.removeEventListener("family-dictation-start", other); window.removeEventListener("family-dictation-typed", typed); };
+    return () => { session.dispose(); sessionRef.current = null; window.removeEventListener("online", availability); window.removeEventListener("offline", offline); window.removeEventListener("pb:network", availability); window.removeEventListener("family-dictation-start", other); window.removeEventListener("family-dictation-typed", typed); };
   }, [id]);
   const toggle = () => {
     const session = sessionRef.current;

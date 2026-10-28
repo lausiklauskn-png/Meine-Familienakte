@@ -73,6 +73,9 @@ export function createDictationSession(options: {
       current.onend = () => {
         if (recognition !== current) return;
         recognition = null;
+        // Zweiter Weg (APK/Windows): ein natives Dialogfenster hört genau einmal zu (oneShot) und beendet das Diktat
+        // danach sauber, statt den Dialog in einer Schleife neu zu öffnen. Die Knöpfe der Oberfläche bleiben gleich.
+        if ((current as SpeechRecognitionLike & { oneShot?: boolean }).oneShot) { active = false; clearTimer(); if (!disposed) options.onState(false); return; }
         if (active && !disposed) { clearTimer(); timer = schedule(() => { timer = null; startRecognition(); }); }
       };
       current.start();

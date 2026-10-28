@@ -1680,3 +1680,9 @@ button.object-card:hover { transform: translateY(-2px); border-color: #8fb2c9; b
 .app-fehlergrenze { max-width: 640px; margin: 48px auto; padding: 0 20px; color: var(--navy, #0b3154); font-family: inherit; }
 .app-fehlergrenze h1 { font-size: 1.4rem; margin-bottom: 8px; }
 .app-fehlergrenze pre { white-space: pre-wrap; font-size: .85rem; color: var(--muted, #4b5d6b); }
+
+/* Internetschalter in der Kopfleiste (Standard aus): Lampe rot = aus, grün = an. */
+.netz-schalter { position: relative; }
+.netz-schalter .netz-lampe { position: absolute; right: 5px; bottom: 5px; width: 8px; height: 8px; border-radius: 50%; background: #d64545; box-shadow: 0 0 0 2px #fff; }
+.netz-schalter.netz-an .netz-lampe { background: #2f9e5b; }
+.netz-schalter:disabled .netz-lampe { background: #b8c2cc; }

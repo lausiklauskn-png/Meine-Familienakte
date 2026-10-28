@@ -1,0 +1,12 @@
+{
+  "_": "Byte-gleich übernommene Bausteine aus anderen Repos von Klaus. Nie hier abwandeln; dort pflegen und neu kopieren (node tools/herkunft-pruefen.mjs prüft die SHA-256).",
+  "dateien": {
+    "public/native/native-network.js": {
+      "repo": "lausiklauskn-png/Privat-Brain-Pro",
+      "pfad": "native/native-network.js",
+      "commit": "b0a28ddfb57f7efb285099f7b58f18433037f663",
+      "sha256": "5c0fc2ea29a97ed75ee2c9ca10ada135e7a3173cf1442d82ac6055fbbd7232e6",
+      "zweck": "App-Internetschalter: fetch/XMLHttpRequest/WebSocket-Hülle, APP_OFFLINE, data-app-offline, Ereignis pb:network"
+    }
+  }
+}
