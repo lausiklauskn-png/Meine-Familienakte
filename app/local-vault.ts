@@ -55,6 +55,8 @@ export type VaultAuditEntry = {
 
 type VaultIndex = {
   version: 5;
+  /** Zähler je Schreibvorgang (A3): wer ein älteres Register zurückschreibt, bekommt einen Konflikt statt die Änderungen anderer zu überschreiben. */
+  revision: number;
   modelVersion: typeof FAMILY_DATA_MODEL_VERSION;
   updatedAt: string;
   documents: LocalDocument[];
@@ -157,6 +159,8 @@ const ROOT = "Me_Myself_and_I_Familienakte";
 export const AUTOMATED_TEST_WORKSPACE = "Familienakte_Automatische_Testumgebung_2.28.1";
 const AUTOMATED_TEST_WINDOWS_BASE_PATH = String.raw`G:\01GPT-SOFTWARE\002 FAMAKT SOFTWARE Entwicklung\SOFTWARE TESTORDNER`;
 const WINDOWS_LEGACY_PATH_LIMIT = 260;
+/** Größengrenzen an einer Stelle (A6). Dokumente 20 MB, Textauszug und Fotos 25 MB, Videos 200 MB. */
+export const LIMITS = { documentBytes: 20 * 1024 * 1024, textExtractBytes: 25 * 1024 * 1024, mediaPhotoBytes: 25 * 1024 * 1024, mediaVideoBytes: 200 * 1024 * 1024, inMemoryDigestBytes: 8 * 1024 * 1024 } as const;
 
 function automatedWindowsPathInfo(relativePath: string) {
   const normalized = relativePath.replace(/^[/\\]+/, "").replaceAll("/", "\\");
@@ -189,8 +193,11 @@ export function browserVault(): Promise<FileSystemDirectoryHandle> {
 async function openBrowserVault(): Promise<FileSystemDirectoryHandle> {
   if (!browserStorageSupported()) throw new Error("Dieser Browser bietet keinen lokalen Dateispeicher an.");
   try { await navigator.storage?.persist?.(); } catch { /* optional */ }
-  let forceIdb = false;
-  try { forceIdb = localStorage.getItem("mmi-browser-speicher") === "indexeddb"; } catch { /* optional */ }
+  // A2: Die einmal getroffene Wahl (Dateispeicher OPFS oder IndexedDB) bleibt gespeichert. Schlägt der gemerkte
+  // Dateispeicher später fehl, meldet sich das als Fehler, statt still auf einen leeren zweiten Speicher zu wechseln.
+  let remembered: string | null = null;
+  try { remembered = localStorage.getItem(BROWSER_STORAGE_CHOICE_KEY); } catch { /* optional */ }
+  const forceIdb = remembered === "indexeddb";
   if (!forceIdb && typeof navigator.storage?.getDirectory === "function") {
     try {
       const storageRoot = await navigator.storage.getDirectory();
@@ -200,10 +207,23 @@ async function openBrowserVault(): Promise<FileSystemDirectoryHandle> {
       if (typeof (probe as FileSystemFileHandle & { createWritable?: unknown }).createWritable !== "function") throw new Error("kein createWritable");
       const writable = await probe.createWritable(); await writable.write("ok"); await writable.close();
       await vault.removeEntry(".schreibprobe");
+      rememberBrowserStorage("opfs");
       return vault;
-    } catch { /* weiter mit IndexedDB */ }
+    } catch (error) {
+      if (remembered === "opfs") throw new Error(`Der Browser-Datentresor (Dateispeicher) ist gerade nicht erreichbar (${error instanceof Error ? error.message : "unbekannt"}). Es wird nicht auf einen anderen Speicher gewechselt. Bitte den Browser neu starten; die Daten bleiben erhalten.`);
+      /* erste Entscheidung: weiter mit IndexedDB */
+    }
   }
+  rememberBrowserStorage("indexeddb");
   return idbRootDirectory(BROWSER_VAULT_NAME);
+}
+const BROWSER_STORAGE_CHOICE_KEY = "mmi-browser-speicher";
+function rememberBrowserStorage(kind: "opfs" | "indexeddb") {
+  try { if (localStorage.getItem(BROWSER_STORAGE_CHOICE_KEY) !== kind) { localStorage.setItem(BROWSER_STORAGE_CHOICE_KEY, kind); localStorage.setItem(`${BROWSER_STORAGE_CHOICE_KEY}-seit`, new Date().toISOString()); } } catch { /* optional */ }
+}
+/** Welcher Browser-Speicher den Datentresor trägt (A2), oder null vor der ersten Entscheidung. */
+export function browserStorageKind(): "opfs" | "indexeddb" | null {
+  try { const value = localStorage.getItem(BROWSER_STORAGE_CHOICE_KEY); return value === "opfs" || value === "indexeddb" ? value : null; } catch { return null; }
 }
 export const isBrowserVault = (handle: FileSystemDirectoryHandle | null | undefined) => handle?.name === BROWSER_VAULT_NAME;
 
@@ -395,16 +415,33 @@ async function existingVaultRoot(handle: FileSystemDirectoryHandle) {
   // darf den Pilotbestand weder verdecken noch überschreiben.
   const inspected = (await Promise.all(candidates.map((candidate, depth) => inspectExistingVaultRoot(candidate, depth))))
     .filter((candidate): candidate is ExistingVaultRoot => Boolean(candidate));
+  // A4: Ein einmal gewählter Stammordner bleibt gewählt, auch wenn sein Register später kleiner wird (etwa nach
+  // „Beispieldaten entfernen“). Nur beim ersten Öffnen entscheidet die Vollständigkeit.
+  const rememberedDepth = rememberedRootDepth(handle);
+  const rememberedCandidate = rememberedDepth === null ? null : inspected.find((candidate) => candidate.depth === rememberedDepth && !candidate.corrupted);
+  if (rememberedCandidate) return rememberedCandidate.handle;
   const valid = inspected.filter((candidate) => !candidate.corrupted)
     .sort((a, b) => b.score - a.score || b.updatedAt - a.updatedAt || b.depth - a.depth);
-  if (valid.length) return valid[0].handle;
+  if (valid.length) { rememberRootDepth(handle, valid[0].depth); return valid[0].handle; }
   const corrupted = inspected.filter((candidate) => candidate.corrupted).sort((a, b) => b.depth - a.depth);
   if (corrupted.length) return corrupted[0].handle;
   return null;
 }
 
+const ROOT_DEPTH_KEY = "mmi-vault-root-depth";
+function rootDepthKey(handle: FileSystemDirectoryHandle) { return `${ROOT_DEPTH_KEY}:${handle.name}`; }
+function rememberedRootDepth(handle: FileSystemDirectoryHandle): number | null {
+  try { const value = localStorage.getItem(rootDepthKey(handle)); return value === null ? null : Number(value); } catch { return null; }
+}
+function rememberRootDepth(handle: FileSystemDirectoryHandle, depth: number) {
+  try { localStorage.setItem(rootDepthKey(handle), String(depth)); } catch { /* optional */ }
+}
 async function root(handle: FileSystemDirectoryHandle) {
-  return await existingVaultRoot(handle) || handle.getDirectoryHandle(ROOT, { create: true });
+  const existing = await existingVaultRoot(handle);
+  if (existing) return existing;
+  // Neu angelegt: der Stammordner liegt eine Ebene unter dem gewählten Ordner (Tiefe 1 in existingVaultRoot).
+  rememberRootDepth(handle, 1);
+  return handle.getDirectoryHandle(ROOT, { create: true });
 }
 async function registerDir(handle: FileSystemDirectoryHandle) {
   return (await root(handle)).getDirectoryHandle("00_Register", { create: true });
@@ -412,6 +449,7 @@ async function registerDir(handle: FileSystemDirectoryHandle) {
 function emptyIndex(): VaultIndex {
   return {
     version: 5,
+    revision: 0,
     modelVersion: FAMILY_DATA_MODEL_VERSION,
     updatedAt: new Date().toISOString(),
     documents: [],
@@ -464,6 +502,7 @@ function normalizeIndex(value: unknown): VaultIndex {
   return {
     ...existing,
     version: 5,
+    revision: typeof existing.revision === "number" && Number.isFinite(existing.revision) ? existing.revision : 0,
     modelVersion: FAMILY_DATA_MODEL_VERSION,
     updatedAt: typeof existing.updatedAt === "string" ? existing.updatedAt : new Date().toISOString(),
     documents,
@@ -478,7 +517,7 @@ function normalizeIndex(value: unknown): VaultIndex {
   };
 }
 export class VaultRegisterError extends Error {
-  readonly code: "REGISTER_CORRUPTED" | "REGISTER_WRITE_FAILED" | "REGISTER_PATH_TOO_LONG";
+  readonly code: "REGISTER_CORRUPTED" | "REGISTER_WRITE_FAILED" | "REGISTER_PATH_TOO_LONG" | "REGISTER_CONFLICT";
   constructor(code: VaultRegisterError["code"], message: string, options?: ErrorOptions) {
     super(message, options);
     this.name = "VaultRegisterError";
@@ -681,12 +720,19 @@ async function withRegisterWriteLock<T>(operation: () => Promise<T>) {
   let release!: () => void;
   registerWriteLock = new Promise<void>((resolve) => { release = resolve; });
   await previous.catch(() => undefined);
-  try { return await operation(); }
+  try {
+    // A3: Über Tabs und Fenster desselben Ursprungs hinweg sperrt zusätzlich die Web Locks API.
+    const locks = (navigator as Navigator & { locks?: { request<R>(name: string, options: { mode: "exclusive" }, callback: () => Promise<R>): Promise<R> } }).locks;
+    if (locks?.request) return await locks.request("familienakte-register", { mode: "exclusive" }, operation);
+    return await operation();
+  }
   finally { release(); }
 }
 
 type RegisterWriteOptions = {
   preserveTimestamp?: boolean;
+  /** „beliebig“: Wiederherstellung und Testregister dürfen einen vorhandenen Stand bewusst ersetzen. */
+  revision?: "beliebig";
   diagnostics?: string[];
   trace?: AutomatedStorageTrace;
   relativeDirectoryPath?: string;
@@ -700,7 +746,15 @@ function registerFileDiagnostic(options: RegisterWriteOptions | undefined, relat
 
 async function writeIndexToRegisterDirectoryUnlocked(resolveDirectory: () => Promise<FileSystemDirectoryHandle>, index: VaultIndex, options?: RegisterWriteOptions) {
   const existingText = await readExistingRegisterTextFromDirectory(await resolveDirectory());
-  if (existingText !== null) parseIndex(existingText);
+  const existing = existingText === null ? null : parseIndex(existingText);
+  // A3: Konflikt erkennen. Wer ein Register schreibt, das nicht vom aktuellen Stand abstammt (zweiter Tab, langer
+  // Bestandslauf, während bedient wurde), überschreibt nichts; die Aktion meldet sich und kann wiederholt werden.
+  const existingRevision = existing?.revision ?? 0;
+  if (options?.revision !== "beliebig" && (index.revision ?? 0) !== existingRevision) {
+    throw new VaultRegisterError("REGISTER_CONFLICT", `Das Register wurde zwischenzeitlich von einem anderen Vorgang oder einem zweiten Fenster geändert (Stand ${existingRevision} statt ${index.revision ?? 0}). Diese Aktion wurde nicht gespeichert; bitte die Ansicht aktualisieren und die Aktion wiederholen.`);
+  }
+  // Wiederherstellung („beliebig“) schreibt die Sicherung unverändert zurück, auch ihren Stand; sonst zählt der Stand hoch.
+  index.revision = options?.revision === "beliebig" ? (index.revision ?? 0) : existingRevision + 1;
   index.version = 5;
   index.modelVersion = FAMILY_DATA_MODEL_VERSION;
   if (!options?.preserveTimestamp) index.updatedAt = new Date().toISOString();
@@ -805,9 +859,79 @@ async function ensureVault(handle: FileSystemDirectoryHandle, storageKind: "loca
 }
 const clean = (value: string) => value.replace(/[<>:"/\\|?*\u0000-\u001F]/g, "_").replace(/\s+/g, " ").trim().slice(0, 120) || "Sonstiges";
 
-async function fileChecksum(file: Blob) {
-  const digest = await crypto.subtle.digest("SHA-256", await file.arrayBuffer());
-  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+const hex = (bytes: ArrayLike<number>) => Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+
+// SHA-256 in Stücken (A6): große Dateien (Videos bis 200 MB) werden nicht mehr vollständig in den Arbeitsspeicher
+// gelesen. Kleine Dateien gehen weiter über WebCrypto; beide Wege liefern dieselbe Prüfsumme (geprüft in
+// scripts/run-vault-safety-tests.mjs).
+const SHA256_K = new Uint32Array([0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5, 0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174, 0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da, 0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967, 0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85, 0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070, 0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3, 0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2]);
+export class Sha256Stream {
+  private state = new Uint32Array([0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19]);
+  private buffer = new Uint8Array(64);
+  private buffered = 0;
+  private length = 0;
+  private readonly words = new Uint32Array(64);
+  update(chunk: Uint8Array) {
+    this.length += chunk.length;
+    let offset = 0;
+    if (this.buffered) {
+      const take = Math.min(64 - this.buffered, chunk.length);
+      this.buffer.set(chunk.subarray(0, take), this.buffered); this.buffered += take; offset = take;
+      if (this.buffered === 64) { this.block(this.buffer, 0); this.buffered = 0; }
+    }
+    for (; offset + 64 <= chunk.length; offset += 64) this.block(chunk, offset);
+    if (offset < chunk.length) { this.buffer.set(chunk.subarray(offset), 0); this.buffered = chunk.length - offset; }
+  }
+  private block(data: Uint8Array, offset: number) {
+    const w = this.words;
+    for (let i = 0; i < 16; i++) w[i] = (data[offset + i * 4] << 24) | (data[offset + i * 4 + 1] << 16) | (data[offset + i * 4 + 2] << 8) | data[offset + i * 4 + 3];
+    for (let i = 16; i < 64; i++) {
+      const a = w[i - 15], b = w[i - 2];
+      const s0 = ((a >>> 7) | (a << 25)) ^ ((a >>> 18) | (a << 14)) ^ (a >>> 3);
+      const s1 = ((b >>> 17) | (b << 15)) ^ ((b >>> 19) | (b << 13)) ^ (b >>> 10);
+      w[i] = (w[i - 16] + s0 + w[i - 7] + s1) | 0;
+    }
+    let [a, b, c, d, e, f, g, h] = this.state;
+    for (let i = 0; i < 64; i++) {
+      const S1 = ((e >>> 6) | (e << 26)) ^ ((e >>> 11) | (e << 21)) ^ ((e >>> 25) | (e << 7));
+      const ch = (e & f) ^ (~e & g);
+      const t1 = (h + S1 + ch + SHA256_K[i] + w[i]) | 0;
+      const S0 = ((a >>> 2) | (a << 30)) ^ ((a >>> 13) | (a << 19)) ^ ((a >>> 22) | (a << 10));
+      const maj = (a & b) ^ (a & c) ^ (b & c);
+      const t2 = (S0 + maj) | 0;
+      h = g; g = f; f = e; e = (d + t1) | 0; d = c; c = b; b = a; a = (t1 + t2) | 0;
+    }
+    const st = this.state;
+    st[0] = (st[0] + a) | 0; st[1] = (st[1] + b) | 0; st[2] = (st[2] + c) | 0; st[3] = (st[3] + d) | 0;
+    st[4] = (st[4] + e) | 0; st[5] = (st[5] + f) | 0; st[6] = (st[6] + g) | 0; st[7] = (st[7] + h) | 0;
+  }
+  digestHex() {
+    const bits = this.length * 8;
+    const pad = new Uint8Array(((this.buffered + 8) >> 6 === 0 ? 64 : 128) - this.buffered);
+    pad[0] = 0x80;
+    const view = new DataView(pad.buffer);
+    view.setUint32(pad.length - 8, Math.floor(bits / 0x100000000), false);
+    view.setUint32(pad.length - 4, bits >>> 0, false);
+    this.update(pad);
+    const out = new Uint8Array(32);
+    for (let i = 0; i < 8; i++) { out[i * 4] = this.state[i] >>> 24; out[i * 4 + 1] = (this.state[i] >>> 16) & 255; out[i * 4 + 2] = (this.state[i] >>> 8) & 255; out[i * 4 + 3] = this.state[i] & 255; }
+    return hex(out);
+  }
+}
+export async function fileChecksum(file: Blob, onProgress?: (done: number, total: number) => void) {
+  if (file.size <= LIMITS.inMemoryDigestBytes || typeof file.stream !== "function") {
+    const digest = await crypto.subtle.digest("SHA-256", await file.arrayBuffer());
+    return hex(new Uint8Array(digest));
+  }
+  const sha = new Sha256Stream();
+  const reader = file.stream().getReader();
+  let done = 0;
+  for (;;) {
+    const next = await reader.read();
+    if (next.done) break;
+    sha.update(next.value); done += next.value.length; onProgress?.(done, file.size);
+  }
+  return sha.digestHex();
 }
 
 export type InventoryScanProgress = { processed: number; discovered: number; currentName: string; phase?: "inventarisieren" | "analysieren" | "speichern" | "pausiert" | "abgeschlossen"; skippedUnchanged?: number };
@@ -1989,19 +2113,19 @@ async function inventoryTextHint(file: File): Promise<{ textHint: string; conten
     const decoded = decodeInventoryText(new Uint8Array(await file.arrayBuffer()));
     return decoded.readable ? { textHint: decoded.text.slice(0, 300000), contentStatus: "gelesen" } : { textHint: "", contentStatus: "manuelle_pruefung_erforderlich" };
   }
-  if (name.endsWith(".docx") && file.size <= 25 * 1024 * 1024) {
+  if (name.endsWith(".docx") && file.size <= LIMITS.textExtractBytes) {
     const textHint = await docxTextHint(file);
     return { textHint: isMeaningfulDocumentText(textHint) ? textHint : "", contentStatus: isMeaningfulDocumentText(textHint) ? "gelesen" : "manuelle_pruefung_erforderlich" };
   }
-  if (name.endsWith(".doc") && file.size <= 25 * 1024 * 1024) {
+  if (name.endsWith(".doc") && file.size <= LIMITS.textExtractBytes) {
     const textHint = extractLegacyOfficeText(new Uint8Array(await file.arrayBuffer())).slice(0, 300000);
     return { textHint, contentStatus: textHint ? "teilweise_gelesen" : "manuelle_pruefung_erforderlich" };
   }
-  if (name.endsWith(".msg") && file.size <= 25 * 1024 * 1024) {
+  if (name.endsWith(".msg") && file.size <= LIMITS.textExtractBytes) {
     const textHint = extractLegacyOfficeText(new Uint8Array(await file.arrayBuffer())).slice(0, 300000);
     return { textHint, contentStatus: textHint ? "teilweise_gelesen" : "manuelle_pruefung_erforderlich" };
   }
-  if (name.endsWith(".pdf") && file.size <= 25 * 1024 * 1024) {
+  if (name.endsWith(".pdf") && file.size <= LIMITS.textExtractBytes) {
     const raw = new TextDecoder("latin1", { fatal: false }).decode(await file.arrayBuffer());
     const readable = [...raw.matchAll(/[\x20-\x7EÄÖÜäöüß]{6,}/g)].map((match) => match[0]).join(" ").replace(/\s+/g, " ").slice(0, 300000);
     return { textHint: isMeaningfulDocumentText(readable) ? readable : "", contentStatus: isMeaningfulDocumentText(readable) ? "teilweise_gelesen" : "nicht_automatisch_lesbar" };
@@ -2474,7 +2598,7 @@ export async function getVaultSummary(handle: FileSystemDirectoryHandle): Promis
 
 export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file: File, data: { category: string; documentDate: string | null; notes: string | null; migration?: boolean; allowDuplicate?: boolean; assignmentLinks?: Array<{ toType: FamilyRecordType; toId: string; relationType: string }>; scanPageCount?: number; scanOriginals?: File[] }) {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
-  if (file.size > 20 * 1024 * 1024) throw new Error("Die Datei ist größer als 20 MB.");
+  if (file.size > LIMITS.documentBytes) throw new Error("Die Datei ist größer als 20 MB.");
   const index = await readIndex(handle);
   const checksum = await fileChecksum(file);
   const possibleDuplicate = index.documents.find((document) => document.checksum === checksum || (document.originalName.toLocaleLowerCase("de") === file.name.toLocaleLowerCase("de") && document.sizeBytes === file.size));
@@ -2518,8 +2642,14 @@ export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file:
     if (index.relations.some((relation) => relation.fromType === "document" && relation.fromId === item.id && relation.toType === link.toType && relation.toId === link.toId)) continue;
     index.relations.push({ id: crypto.randomUUID(), fromType: "document", fromId: item.id, toType: link.toType, toId: link.toId, relationType: link.relationType, createdAt: addedAt, source: "Bestätigter Dokumenteneingang", notes: null });
   }
+  // A5: Schlägt das Registerschreiben fehl, bleibt keine Dateileiche zurück.
+  const rueckgaengig = async () => {
+    try { await folder.removeEntry(storedName); } catch { /* bereits weg */ }
+    if (scanOriginalsPath) { try { await (await folder.getDirectoryHandle("Scan-Originale")).removeEntry(id, { recursive: true }); } catch { /* bereits weg */ } }
+  };
   index.auditLog.unshift({ id: crypto.randomUUID(), at: addedAt, action: "Dokument erfasst", recordId: item.id, details: `${item.originalName} wurde nach Benutzerbestätigung registriert; ${data.assignmentLinks?.length || 0} vorhandene Zuordnung${data.assignmentLinks?.length === 1 ? "" : "en"} verknüpft.${data.scanPageCount ? ` PDF aus ${data.scanPageCount} Scan-Seite${data.scanPageCount === 1 ? "" : "n"}; ${scanOriginals.length ? "Originalaufnahmen als Anlagen behalten" : "keine zusätzlichen Scan-Fotos gespeichert"}.` : ""}` });
-  await writeIndex(handle, index); return item;
+  try { await writeIndex(handle, index); } catch (error) { await rueckgaengig(); throw error; }
+  return item;
 }
 
 export async function updateLocalStatus(handle: FileSystemDirectoryHandle, id: string, status: LocalDocument["status"]) {
@@ -2816,6 +2946,7 @@ export async function restoreFullFamilyBackup(input: {
   };
   await writeIndexToRegisterDirectory(resolveRestoredRegisterDirectory, index, {
     preserveTimestamp: true,
+    revision: "beliebig",
     diagnostics: input.diagnostics,
     trace: input.trace,
     relativeDirectoryPath: `${targetPath}/${ROOT}/00_Register`,
@@ -3096,7 +3227,7 @@ function validateMemoryMediaFiles(files: File[]) {
   if (files.length > 12) throw new Error("Bitte höchstens zwölf Fotos oder Videos pro Erinnerungsereignis auswählen.");
   const unsupported = files.find((file) => !file.type.startsWith("image/") && !file.type.startsWith("video/"));
   if (unsupported) throw new Error(`Das Dateiformat von „${unsupported.name}“ wird als Memory-Medium derzeit nicht unterstützt.`);
-  const tooLarge = files.find((file) => file.size > (file.type.startsWith("video/") ? 200 : 25) * 1024 * 1024);
+  const tooLarge = files.find((file) => file.size > (file.type.startsWith("video/") ? LIMITS.mediaVideoBytes : LIMITS.mediaPhotoBytes));
   if (tooLarge) throw new Error(`„${tooLarge.name}“ ist für diese Erfassung zu groß.`);
 }
 
@@ -3454,6 +3585,21 @@ export async function removeVaultEntries(handle: FileSystemDirectoryHandle, ids:
       for (const part of parts) directory = await directory.getDirectoryHandle(part);
       if (fileName) await directory.removeEntry(fileName);
     } catch { /* Datei fehlt bereits – Registereintrag wird trotzdem entfernt */ }
+    // A5: zugehörige Scan-Originale mit entfernen
+    if (document.scanOriginalsPath) {
+      try {
+        const parts = document.scanOriginalsPath.split("/").filter(Boolean);
+        if (parts[0] === ROOT) parts.shift();
+        const folderName = parts.pop();
+        let directory = await root(handle);
+        for (const part of parts) directory = await directory.getDirectoryHandle(part);
+        if (folderName) await directory.removeEntry(folderName, { recursive: true });
+      } catch { /* bereits weg */ }
+    }
+  }
+  // A5: Erinnerungsmedien der entfernten Einträge (03_Erinnerungsmedien/<ID>)
+  for (const record of index.records.filter((item) => ids.has(item.id))) {
+    try { const mediaRoot = await (await root(handle)).getDirectoryHandle("03_Erinnerungsmedien"); await mediaRoot.removeEntry(record.id, { recursive: true }); } catch { /* keine Medien */ }
   }
   const before = index.documents.length + index.records.length + index.memoryDrafts.length;
   index.documents = index.documents.filter((item) => !ids.has(item.id));
@@ -3468,3 +3614,6 @@ export async function removeVaultEntries(handle: FileSystemDirectoryHandle, ids:
   await writeIndex(handle, index);
   return { removedEntries: removed, removedFiles: removedDocuments.length };
 }
+
+/** Nur für scripts/run-vault-safety-tests.mjs: Zugriff auf Register lesen/schreiben, um Konflikte nachzustellen. */
+export const vaultInternalsForTests = { readIndex, writeIndex };

@@ -47,7 +47,7 @@ import releaseSystemCheckReport from "@/lib/release-system-check-report.json";
 const AssistantCenter = lazy(() => import("./assistant-center").then((m) => ({ default: m.AssistantCenter })));
 import { runFamilyAssistantSelfTests, type CorrespondenceKind } from "@/lib/family-assistant";
 import { createLocalCorrespondenceBundle } from "./local-vault";
-import { isBrowserVault } from "./local-vault";
+import { isBrowserVault, browserStorageKind } from "./local-vault";
 import { removeSampleFamily, SAMPLE_FAMILY_NAME, SAMPLE_NOTICE, sampleDataPresent, seedSampleFamily } from "./sample-family";
 
 type UploadedDocument = {
@@ -566,6 +566,10 @@ function HealthPortalContent() {
       }
       if (local) {
         setLocalVaultHandle(local); setLocalVaultName(local.name);
+        if (isBrowserVault(local)) {
+          // A2: Der Browser konnte beim ersten Start nicht in den Dateispeicher schreiben und nutzt IndexedDB; das wird einmal gesagt.
+          try { if (browserStorageKind() === "indexeddb" && !localStorage.getItem("mmi-browser-speicher-hinweis")) { localStorage.setItem("mmi-browser-speicher-hinweis", "1"); setNotice({ kind: "info", text: "Der Browser-Datentresor liegt in diesem Browser in IndexedDB, weil der Dateispeicher (OPFS) nicht beschreibbar war. Diese Wahl bleibt gespeichert; es wird nicht automatisch gewechselt." }); } } catch { /* optional */ }
+        }
         if (isBrowserVault(local)) { setSampleBusy(true); await seedSampleFamily(local).catch((error) => { console.error("Beispieldaten konnten nicht geladen werden", error); return false; }); setSampleBusy(false); }
         if (await requestVaultPermission(local)) {
           if (!oneDrive) { const data = await readLocalVaultData(local); applyLocalData(data); }

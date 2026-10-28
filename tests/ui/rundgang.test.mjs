@@ -3,7 +3,7 @@
 // und prüft, dass keine Seite einen Seitenfehler wirft.
 import { writeFileSync } from "node:fs";
 import path from "node:path";
-import { startApp, launchBrowser, DESKTOP, HANDY, ready, check, step, summary, collectErrors, ROOT } from "./_harness.mjs";
+import { startApp, launchBrowser, DESKTOP, HANDY, ready, check, step, summary, collectErrors, ROOT, ruhig } from "./_harness.mjs";
 
 const app = await startApp();
 const browser = await launchBrowser();
@@ -106,6 +106,7 @@ try {
     await sammeln(mobile, `${clusters[i].trim()} › ${erster}`, "handy"); mSeiten++;
   }
   for (const eintrag of ["Interaktives Cockpit", "Dokumentenbibliothek", "Eingangszentrale", "Sicherheitscenter", "Fristen und Aufgaben", "Tagebuch & Erinnerungen", "Hilfe", "Systemprüfung"]) {
+    await ruhig(mobile);
     await mobile.locator(".footer-directory button", { hasText: eintrag }).first().click({ force: true });
     await mobile.waitForTimeout(300);
     await sammeln(mobile, `Fußzeile › ${eintrag}`, "handy"); mSeiten++;
