@@ -133,3 +133,46 @@ Offline sowie den Schalter; Android- und Windows-Prüfung in der CI wie in den V
    Tresor? Für den ersten Bau: eigener Tresor. Die Anbindung ist ein späterer Schritt.
 3. KI: das Anonymisierungs-Schloss aus BookLedgerPro übernehmen (Empfehlung) – erst nach der
    Analyse in Paket C entscheiden.
+
+## Startauftrag zum Einfügen
+
+```
+Repo: lausiklauskn-png/Meine-Familienakte (Branch frisch von origin/main abzweigen).
+Sprache: durchgehend Deutsch. Freibrief: eigene PRs zusammenführen, wenn alle Prüfungen grün sind.
+
+Zuerst lesen, in dieser Reihenfolge:
+1. BRIEF_SITZUNG_ANALYSE-UND-ERSTBAU.md (dieser Auftrag)
+2. BRIEF_ABSCHLUSS_2026-10-28_NEUAUFBAU.md
+3. docs/forschung/FORSCHUNG-2026-10-28-NEUAUFBAU-UND-PLATTFORMEN.md
+4. docs/ANALYSE_AUFTRAG.md (Pakete A–G)
+5. README.md, NEUSTART_AUFTRAG.md (Regeln für Beispieldaten)
+Vorlagen per add_repo dazunehmen, nur lesen: Privat-Brain-Pro, BookLedgerPro, Kim-sync,
+dazu für Paket C: Workflow-PDF, Workflow-PDF-Pro, Privat-Brain, Privat-Brain-Pro-V3,
+Sende-Pruefer, Sendepruefer-Made-GPT, Auslieferung-Pruefer, Auslieferungspruefer-Made-GPT.
+
+Teil 1 – Analyse (zuerst, eigener PR):
+- A: alle Knöpfe inventarisieren und testen (Playwright), u. a. Mikrofon, Copy, Drucken, Export, Sicherung – je Umgebung
+- B: Beispiele, Tipps, Rückfragen; ist KI dahinter vorgesehen?
+- C: KI-Einsatz und Anonymisierung (anonymisieren → KI füllt aus → zurückführen), Abgleich mit den anderen Repos
+- D: Dateieingang mit erfundenen Testdateien
+- E: technischer Baum (Knopf → Handler → lib → Tresor)
+- F: Mikrofonwahl (Windows später), PWA, APK, Aktualisierung über das Repo
+- G: Dateien vom Handy, Scanner und aus anderen Apps (Kim-sync, Tresorordner, Teilen-Ziel)
+Ergebnisse nach docs/analyse/, danach mir die 5 wichtigsten Befunde im Chat.
+
+Teil 2 – erster Bau, je ein PR:
+1. Internetschalter wie in Private Brain Pro (native/native-network.js): Standard aus, Knopf an/aus, überlebt Neustart
+2. offline-fähige PWA (Service Worker, PNG-Symbole). Öffentliches Auslieferungs-Repo plus GitHub Pages ERST nach meinem Ja
+3. APK (Capacitor, Workflows nach BookLedgerPro/Private Brain Pro, natives Diktat, „Teilen → Familienakte“), Release-Link an mich
+4. Windows (Tauri nach Privat-Brain-Pro/windows, NSIS), Release-Link an mich. Mikrofonauswahl nur als Plan
+Danach docs/PLATTFORMEN.md, BRIEF_ABSCHLUSS_… und den Startauftrag für die nächste Sitzung.
+
+Was nicht passieren darf:
+- Design, Aufbau und Wortlaut der Oberfläche meines Freundes verändern
+- echte Daten verwenden; Beispieldaten bleiben erfunden
+- Schlüssel, Passwörter oder Signaturen ins Repo legen
+- in den anderen Repos etwas ändern
+- Prüfungen abschalten (nur anpassen, wenn sich der Wortlaut bewusst ändert)
+- etwas veröffentlichen ohne mein Wort
+- über offene Entscheidungen raten (Pages ja/nein, Tresorordner, KI-Schloss) – kurz fragen
+```
