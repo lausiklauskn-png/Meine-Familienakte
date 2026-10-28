@@ -38,6 +38,16 @@ gebauten Dateien aus `dist/`; die Hüllen unterscheiden sich nur in Diktat, Date
 - **Windows**: [Familienakte-Windows-2.28.1-x64-setup.exe](https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/windows-v2.28.1/Familienakte-Windows-2.28.1-x64-setup.exe) – Release-Lauf 40767264852, Quelle `7124c4b`, 2.194.018 Bytes, SHA-256 `24e7df51f9b76a3fdb1ee1d588f4271913bad7769a1230b47df21ab1471c947d`, unabhängig über die API geladen und gleich `SHA256SUMS`; `latest.json` zeigt auf die Pages-Adresse `windows/…` (Pages-Lauf 40769147047 legt Installer und `latest.json` bei). Unsigniert: SmartScreen einmal mit „Trotzdem ausführen“ bestätigen.
 - Das Repo ist privat: Release-Downloads verlangen eine GitHub-Anmeldung im Browser; die Pages-Adresse ist öffentlich lesbar.
 
+## Nachtrag 2026-10-28 abends, Quelle `459401a` (PR #18)
+
+- **Android**: [Familienakte-android-v2.28.1-test.2.apk](https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.1-test.2/Familienakte-android-v2.28.1-test.2.apk),
+  Release-Lauf 40782725441, 3.937.584 Bytes, SHA-256 `95f3b8e70ffc02c457b14e289a1eb2959c6e6692cd38aad54e5836487d8cd787`,
+  über die API geladen und gleich `SHA256SUMS`. Neu: Schrift wie im Browser (WebView-Textzoom fest 100 %), volle Breite,
+  Diktat auch bei ausgeschaltetem Internet. Wieder ein Wegwerfschlüssel: **test.1 erst deinstallieren**, dann installieren.
+- **PWA**: dieselben Änderungen über Pages (volle Breite, Hinweis am Mikrofon, wenn das Internet der App aus ist).
+- **Windows**: unverändert 2.28.1. Die neue Breite kommt erst mit einer neuen Fassung (Tag `windows-v2.28.1` ist vergeben,
+  dafür muss die Version steigen).
+
 ## Grenzen
 
 - Kein Gerät im Behälter: APK und Installer sind nur in den Workflows gebaut, nicht auf Tablet oder PC gestartet.
