@@ -12,13 +12,14 @@ try {
   const meta = await page.evaluate(() => ({ build: document.querySelector('meta[name="familienakte-build"]')?.content, version: document.querySelector('meta[name="familienakte-version"]')?.content }));
   check(!!meta.build && !!meta.version, "Bau-Kennung und Fassung stehen in der Seite", JSON.stringify(meta));
   await step("version.json passt zur Seite", async () => { const v = await (await fetch(app.base + "version.json")).json(); return v.build === meta.build && v.version === meta.version ? `Bau ${v.build}, ${v.files} Dateien` : JSON.stringify(v); });
-  await step("Manifest hat PNG-Symbole (192, 512, maskable) und eine feste id", async () => { const m = await (await fetch(app.base + "manifest.webmanifest")).json(); const sizes = m.icons.map((i) => i.sizes + (i.purpose ? ":" + i.purpose : "")); return sizes.includes("192x192") && sizes.includes("512x512") && sizes.includes("512x512:maskable") && m.id === "./index.html" ? sizes.join(" ") : sizes.join(" "); });
+  await step("Manifest hat PNG-Symbole (192, 512, maskable) und eine feste id", async () => { const m = await (await fetch(app.base + "manifest.webmanifest")).json(); const sizes = m.icons.map((i) => i.sizes + (i.purpose ? ":" + i.purpose : "")); return sizes.includes("192x192") && sizes.includes("512x512") && sizes.includes("512x512:maskable") && m.id === "./index.html" ? sizes.join(" ") : false; });
   await step("Service Worker ist angemeldet und hat den Vorrat gefüllt", async () => {
     await page.waitForFunction(async () => { const r = await navigator.serviceWorker.getRegistration(); return !!(r && r.active); }, null, { timeout: 30000 });
     await page.waitForFunction(async () => (await caches.keys()).some((k) => k.startsWith("familienakte-")), null, { timeout: 30000 });
     const keys = await page.evaluate(async () => { const k = (await caches.keys()).filter((k) => k.startsWith("familienakte-")); const c = await caches.open(k[0]); return [k[0], (await c.keys()).length]; });
     const expected = JSON.parse(readFileSync(path.join(ROOT, "dist/version.json"), "utf8")).files;
-    return keys[1] >= expected ? `${keys[0]}: ${keys[1]} Dateien` : `nur ${keys[1]} von ${expected}`;
+    if (!(keys[1] >= expected)) throw new Error(`nur ${keys[1]} von ${expected}`);
+    return `${keys[0]}: ${keys[1]} Dateien`;
   });
   await step("Ohne Netz neu geladen: die App startet aus dem Vorrat", async () => {
     await page.waitForFunction(() => !!navigator.serviceWorker.controller, null, { timeout: 30000 });
@@ -39,7 +40,8 @@ try {
     await k.waitFor({ timeout: 8000 });
     const letzter = await page.evaluate(() => document.querySelector(".header-actions").lastElementChild?.hasAttribute("data-install-knopf"));
     const text = (await k.innerText()).replace(/\s+/g, " ").trim();
-    return letzter && /Installieren/.test(text) && (await k.isVisible()) ? `„${text}“, Lage ${await k.getAttribute("data-lage")}` : `letzter=${letzter} „${text}“`;
+    if (!(letzter && /Installieren/.test(text) && (await k.isVisible()))) throw new Error(`letzter=${letzter} „${text}“`);
+    return `„${text}“, Lage ${await k.getAttribute("data-lage")}`;
   });
   await step("Ohne Angebot des Browsers: Tipp zeigt die lesbare Erklärung, nichts geht ins Netz", async () => {
     await page.click(".header-actions [data-install-knopf]");
@@ -51,7 +53,8 @@ try {
     const lage = await page.getAttribute(".header-actions [data-install-knopf]", "data-lage");
     await page.click(".header-actions [data-install-knopf]");
     await page.waitForFunction(() => window.__promptCalled === true && /Installiert/.test(document.querySelector("#install-meldung-text")?.textContent || ""));
-    return lage === "angeboten" ? "angeboten → Dialog → Installiert" : `Lage vorher ${lage}`;
+    if (!(lage === "angeboten")) throw new Error(`Lage vorher ${lage}`);
+    return "angeboten → Dialog → Installiert";
   });
   await step("Als installierte App (display-mode: standalone): kein Knopf", async () => {
     const app2 = await context.newPage();
@@ -61,8 +64,9 @@ try {
     await app2.waitForTimeout(600);
     const n = await app2.locator(".header-actions [data-install-knopf]:visible").count();
     await app2.close();
-    return n === 0 ? "kein sichtbarer Knopf" : `${n} sichtbar`;
+    if (!(n === 0)) throw new Error(`${n} sichtbar`);
+    return "kein sichtbarer Knopf";
   });
-  await step("Versionszeile trägt die Bau-Kennung als Tipp", async () => { const t = await page.getAttribute(".site-brand-version", "title"); return t && t.includes(meta.build) ? t : t; });
+  await step("Versionszeile trägt die Bau-Kennung als Tipp", async () => { const t = await page.getAttribute(".site-brand-version", "title"); return t && t.includes(meta.build) ? t : false; });
 } finally { await browser.close(); await app.stop(); }
 process.exit(summary("PWA"));

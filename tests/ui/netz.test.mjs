@@ -32,7 +32,8 @@ try {
     await page.waitForSelector('.netz-schalter[data-netz="an"]');
     const html = await page.getAttribute("html", "data-app-offline");
     const stored = await page.evaluate(() => localStorage.getItem("familienakte-internet"));
-    return html === "false" && stored === "an" ? `gespeichert: ${stored}` : `html=${html}, stored=${stored}`;
+    if (!(html === "false" && stored === "an")) throw new Error(`html=${html}, stored=${stored}`);
+    return `gespeichert: ${stored}`;
   });
   await step("fetch nach außen geht jetzt durch die Hülle (hier vom Test abgefangen, nicht APP_OFFLINE)", async () => page.evaluate(async () => { try { await fetch("https://example.invalid/x"); return true; } catch (e) { return e.message !== "APP_OFFLINE"; } }));
   await step("Diktatknopf ist bei „an“ freigegeben", async () => !(await page.locator(".dictation-button").first().isDisabled()));

@@ -21,12 +21,14 @@ try {
     await button.click(); await page.waitForTimeout(1200);
     const value = await button.evaluate((b) => (b.closest(".voice-field, .dictation-field, .search-panel, form, label, .search-row") || b.parentElement?.parentElement)?.querySelector("input, textarea")?.value || "");
     const spoken = await page.evaluate(() => window.__tauriState.diktat);
-    return /Arenberg-Hof/.test(value) && spoken.length === 1 ? `„${value}“` : `Wert „${value}“, Aufrufe ${spoken.length}`;
+    if (!(/Arenberg-Hof/.test(value) && spoken.length === 1)) throw new Error(`Wert „${value}“, Aufrufe ${spoken.length}`);
+    return `„${value}“`;
   });
   await step("Versionszeile ist der Update-Knopf; bei Internet aus kommt der Hinweis, nichts geht ins Netz", async () => {
     await page.click(".site-brand-version");
     const text = await page.locator(".familienakte-hinweis span").innerText();
-    return /Internet für die App ist aus/.test(text) ? text : text;
+    if (!/Internet für die App ist aus/.test(text)) throw new Error(text);
+    return text;
   });
   await step("Mit Internet an: neue Fassung gefunden, Knopf öffnet die https-Adresse des Installers", async () => {
     await page.click(".netz-schalter"); await page.waitForSelector('.netz-schalter[data-netz="an"]');
