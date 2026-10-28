@@ -1,0 +1,89 @@
+name: Windows-Installer veröffentlichen
+
+# Von Hand, nur von main (Klaus 2026-10-28). Baut den NSIS-Installer (unsigniert, pro Benutzer) und legt ein Release
+# mit Installer, SHA256SUMS und latest.json an. Danach stellt pages.yml latest.json und den Installer unter
+# windows/ auf der Pages-Adresse bereit; die App prüft dort über die Versionszeile auf eine neue Fassung.
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Versions-Tag, etwa windows-v2.28.1
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: windows-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - run: git config --global core.autocrlf false
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: windows/src-tauri -> target
+      - name: Tag prüfen
+        shell: bash
+        env:
+          TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          [[ "$TAG" =~ ^windows-v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          version="${TAG#windows-v}"
+          test "$(node -p "require('./package.json').version")" = "$version"
+          if git ls-remote --exit-code --tags origin "refs/tags/$TAG" >/dev/null 2>&1; then echo "Tag $TAG gibt es schon"; exit 1; fi
+      - run: npm ci
+      - run: npm ci --prefix windows
+      - run: npm run typecheck
+      - run: npm run check
+      - run: node windows/tools/version.mjs && node tools/native/test-windows.mjs
+      - name: Rust-Proben
+        working-directory: windows/src-tauri
+        run: cargo test --release
+      - name: Installer bauen (NSIS)
+        run: npm run tauri --prefix windows -- build --bundles nsis
+        env:
+          FAMILIENAKTE_COMMIT: ${{ github.sha }}
+      - name: Installer, Prüfsummen, latest.json
+        shell: bash
+        env:
+          TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          version="${TAG#windows-v}"
+          mkdir -p release
+          name="Familienakte-Windows-$version-x64-setup.exe"
+          cp windows/src-tauri/target/release/bundle/nsis/*-setup.exe "release/$name"
+          (cd release && sha256sum "$name" > SHA256SUMS)
+          sha=$(cut -d' ' -f1 release/SHA256SUMS)
+          size=$(stat -c %s "release/$name")
+          node -e "require('fs').writeFileSync('release/latest.json', JSON.stringify({ version: '$version', tag: '$TAG', file: '$name', url: 'https://lausiklauskn-png.github.io/Meine-Familienakte/windows/$name', releaseUrl: 'https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$name', sha256: '$sha', size: $size, commit: '$GITHUB_SHA', date: new Date().toISOString().slice(0,10) }, null, 2) + '\n')"
+          cat release/latest.json
+          {
+            echo "Meine Familienakte für Windows $version (unsigniertes NSIS-Setup pro Benutzer), Quelle \`$GITHUB_SHA\`."
+            echo
+            echo "Installieren: Setup herunterladen und ausführen; über eine vorhandene Fassung einfach drüberinstallieren. Windows-SmartScreen: „Weitere Informationen → Trotzdem ausführen“ (unsigniert)."
+            echo
+            echo "SHA-256:"; echo '```'; cat release/SHA256SUMS; echo '```'
+          } > release/notes.md
+      - name: Release anlegen
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --title "Familienakte Windows $TAG" --notes-file release/notes.md release/*.exe release/SHA256SUMS release/latest.json
+          echo "Download: https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/$(ls release/*.exe | xargs -n1 basename)"

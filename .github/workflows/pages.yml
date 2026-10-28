@@ -7,6 +7,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Nach einer Windows-Veröffentlichung kommen latest.json und der Installer unter windows/ auf die Pages-Adresse,
+  # damit die Windows-App über die Versionszeile eine neue Fassung findet (Klaus 2026-10-28).
+  workflow_run:
+    workflows: ["Windows-Installer veröffentlichen"]
+    types: [completed]
 
 permissions:
   contents: read
@@ -32,6 +37,17 @@ jobs:
         run: npm run build
         env:
           FAMILIENAKTE_COMMIT: ${{ github.sha }}
+      - name: Neueste Windows-Fassung beilegen (windows/latest.json und Installer aus dem Release)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag=$(gh release list --repo "$GITHUB_REPOSITORY" --limit 50 --json tagName --jq '[.[].tagName | select(startswith("windows-v"))] | sort_by(. | sub("windows-v";"") | split(".") | map(tonumber)) | last // empty')
+          if [ -z "$tag" ]; then echo "Noch keine Windows-Veröffentlichung."; exit 0; fi
+          mkdir -p dist/windows
+          gh release download "$tag" --repo "$GITHUB_REPOSITORY" --dir dist/windows --pattern 'latest.json' --pattern '*.exe' --pattern 'SHA256SUMS'
+          (cd dist/windows && sha256sum -c SHA256SUMS)
+          echo "Windows-Fassung $tag beigelegt:"; cat dist/windows/latest.json
       - name: Vorrat und Bau-Kennung prüfen
         run: |
           set -euo pipefail
