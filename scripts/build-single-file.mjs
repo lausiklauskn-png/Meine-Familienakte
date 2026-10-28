@@ -19,6 +19,9 @@ const script = readFileSync(join(dist, scriptPath), "utf8").replaceAll("</script
 const style = readFileSync(join(dist, stylePath), "utf8").replaceAll("</style", "<\\/style");
 const icon = `data:image/svg+xml;base64,${readFileSync(join(dist, "favicon.svg")).toString("base64")}`;
 // pdf.js (A8) liegt im Paket; in der Einzeldatei wird es eingebettet, damit die PDF-Vorschau auch dort ohne Netz geht.
+// Hülle (Internetschalter, Hinweisleiste): dieselben Skripte wie in index.html, eingebettet. Ohne Service Worker (Einzeldatei).
+const huelle = ["native/familienakte-netz.js", "native/native-network.js", "native/familienakte-app.js"].map((name) => readFileSync(join(dist, name), "utf8").replaceAll("</script", "<\\/script")).join("\n");
+const huelleStyle = readFileSync(join(dist, "native/familienakte-app.css"), "utf8").replaceAll("</style", "<\\/style");
 const pdfjs = ["pdf.min.js", "pdf.worker.min.js"].map((name) => readFileSync(join(dist, "vendor/pdfjs", name), "utf8").replaceAll("</script", "<\\/script")).join("\n");
 
 // Seiteninhalt ohne eigenes <html>/<head>/<body>: Die Plattform ergänzt das Grundgerüst.
@@ -27,9 +30,13 @@ const page = `<title>Meine Familienakte</title>
 <link rel="icon" type="image/svg+xml" href="${icon}">
 <style>
 ${style}
+${huelleStyle}
 </style>
 <div id="root"></div>
 <script>document.body.classList.add("antialiased");</script>
+<script>
+${huelle}
+</script>
 <script>
 ${pdfjs}
 </script>
