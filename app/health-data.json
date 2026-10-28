@@ -1,0 +1,67 @@
+{
+  "meta": {
+    "owner": "Familie Lindqvist-Arenberg (Beispielfamilie)",
+    "title": "Gesundheits- und Vorsorgeübersicht (Beispiel)",
+    "documentStatus": "14.03.2026",
+    "coveredFrom": "01.09.2021",
+    "plannedUntil": "31.08.2027",
+    "privacy": "Beispieldaten – frei erfunden",
+    "note": "Alle Angaben sind KI-generierte Beispieldaten für die Vorführung der App. Es gibt keine echten Personen, Orte oder Nummern."
+  },
+  "keyFacts": [
+    { "label": "Dokumentierter Zeitraum", "value": "2021–2026", "detail": "Beispielzeitraum" },
+    { "label": "Vorsorgetermine", "value": "5", "detail": "davon einer offen" },
+    { "label": "Impfungen", "value": "3", "detail": "im Beispiel-Impfpass" },
+    { "label": "Offene Aufgaben", "value": "3", "detail": "zum Ausprobieren" }
+  ],
+  "currentDiagnoses": [
+    { "area": "Vorsorge", "codes": "BSP-7A", "diagnosis": "Jährlicher Vorsorgetermin", "evidence": "Beispieleintrag vom 14.01.2026", "status": "aktuell" },
+    { "area": "Sehen", "codes": "BSP-22", "diagnosis": "Neue Brille angepasst", "evidence": "Beispielbeleg vom 03.10.2025", "status": "erledigt" },
+    { "area": "Impfung", "codes": "BSP-310", "diagnosis": "Auffrischimpfung eingetragen", "evidence": "Beispiel-Impfpass, Eintrag 2024", "status": "erledigt" }
+  ],
+  "doctors": [
+    { "name": "Gesundheitskontakt Nord", "field": "Vorsorge", "confirmed": "Beispielkontakt für Vorsorgetermine.", "open": "Nächsten Termin im Kalender eintragen." },
+    { "name": "Optikstube Wiesengrund", "field": "Sehen", "confirmed": "Beispielkontakt für Brille und Sehtest.", "open": "Keine offenen Punkte." }
+  ],
+  "auTimeline": [
+    { "start": "09.02.2026", "end": "11.02.2026", "codes": "BSP-7A", "group": "Beispielgruppe Erkältungszeit", "kind": "AU" },
+    { "start": "17.11.2025", "end": "18.11.2025", "codes": "BSP-7A", "group": "Beispielgruppe Erkältungszeit", "kind": "AU" },
+    { "start": "02.05.2024", "end": "03.05.2024", "codes": "BSP-44", "group": "Beispielgruppe Sonstiges", "kind": "AU" }
+  ],
+  "oldAuWithoutCodes": [
+    "Beispiel-Krankmeldung Herbst 2022",
+    "Beispiel-Krankmeldung Frühjahr 2023"
+  ],
+  "sickPay": [
+    { "period": "Beispielzeitraum 2024", "group": "Beispielfall", "amount": "0,00 €", "clarification": "Keine Leistung nötig – Beispieleintrag." }
+  ],
+  "blockCases": [
+    { "period": "2024–2027", "code": "BSP-44", "diagnosis": "Beispielfall für eine Fristberechnung", "detail": "Zeigt, wie Fristen in der App dargestellt werden." }
+  ],
+  "priorCases": [
+    "Beispielhafter früherer Zeitraum 2022",
+    "Beispielhafter früherer Zeitraum 2023"
+  ],
+  "employerPriorPeriods": [
+    { "current": "Beispielzeitraum 2026", "prior": "Beispielzeitraum 2025" }
+  ],
+  "workHistory": [
+    { "period": "März 2026", "entry": "Teilzeit", "assessment": "Beispieleintrag: Wechsel auf vier Arbeitstage pro Woche." },
+    { "period": "Februar 2026", "entry": "AU", "assessment": "Beispielhafte Krankmeldung, siehe Zeitleiste." },
+    { "period": "Oktober 2025", "entry": "Urlaub", "assessment": "Beispieleintrag: zwei Wochen Familienurlaub." }
+  ],
+  "correspondence": [
+    { "date": "21.01.2026", "type": "Anfrage an Krankenkasse", "subject": "Zuschuss für die neue Brille", "request": "Frage, ob ein Zuschuss möglich ist (Beispiel).", "answer": "Beispielantwort: Zuschuss von 50 € bewilligt.", "status": "erledigt" },
+    { "date": "02.03.2026", "type": "Anfrage an Arbeitgeber", "subject": "Wechsel auf Teilzeit", "request": "Antrag auf vier Arbeitstage pro Woche (Beispiel).", "answer": "", "status": "offen" }
+  ],
+  "openItems": [
+    { "title": "Vorsorgetermin vereinbaren", "next": "Termin für April eintragen (Beispiel).", "priority": "mittel" },
+    { "title": "Impfpass prüfen", "next": "Nächste Auffrischung notieren (Beispiel).", "priority": "niedrig" },
+    { "title": "Antwort Arbeitgeber abwarten", "next": "Nach zwei Wochen nachfragen (Beispiel).", "priority": "niedrig" }
+  ],
+  "sources": [
+    "Beispiel-Impfpass (Demo)",
+    "Beispielbeleg Brille 2025 (Demo)",
+    "Beispielschreiben Krankenkasse 2026 (Demo)"
+  ]
+}
