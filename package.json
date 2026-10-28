@@ -1,0 +1,58 @@
+{
+  "name": "meine-familienakte",
+  "private": true,
+  "version": "2.28.1",
+  "type": "module",
+  "description": "Private Familienakte im Browser – Unterlagen, Termine und Aufgaben übersichtlich geordnet.",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "node scripts/run-assignment-tests.mjs && node scripts/run-export-tests.mjs && node scripts/run-reminder-tests.mjs && node scripts/run-news-tests.mjs && node scripts/run-cockpit-tests.mjs && node scripts/run-search-tests.mjs && node scripts/run-document-library-tests.mjs && node scripts/run-menu-optimization-tests.mjs && node scripts/run-optical-package-tests.mjs && node scripts/run-document-intake-tests.mjs && node scripts/run-central-intake-tests.mjs && node scripts/run-fawoga-inventory-tests.mjs && node scripts/run-fawoga-onedrive-tests.mjs && node scripts/run-test-workspace-tests.mjs && node scripts/run-test-register-tests.mjs && node scripts/run-automatic-test-environment-tests.mjs && node scripts/run-document-scan-tests.mjs && node scripts/run-memory-tests.mjs && node scripts/run-context-linking-tests.mjs && node scripts/run-consolidation-tests.mjs && node scripts/run-system-check.mjs && node scripts/run-family-assistant-tests.mjs && node scripts/run-ui-activity-tests.mjs && node scripts/run-ui-orientation-tests.mjs && node scripts/run-practical-acceptance-tests.mjs && tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "check": "node scripts/run-assignment-tests.mjs && node scripts/run-export-tests.mjs && node scripts/run-reminder-tests.mjs && node scripts/run-news-tests.mjs && node scripts/run-cockpit-tests.mjs && node scripts/run-search-tests.mjs && node scripts/run-document-library-tests.mjs && node scripts/run-menu-optimization-tests.mjs && node scripts/run-optical-package-tests.mjs && node scripts/run-document-intake-tests.mjs && node scripts/run-central-intake-tests.mjs && node scripts/run-fawoga-inventory-tests.mjs && node scripts/run-fawoga-onedrive-tests.mjs && node scripts/run-test-workspace-tests.mjs && node scripts/run-test-register-tests.mjs && node scripts/run-automatic-test-environment-tests.mjs && node scripts/run-document-scan-tests.mjs && node scripts/run-memory-tests.mjs && node scripts/run-context-linking-tests.mjs && node scripts/run-consolidation-tests.mjs && node scripts/run-system-check.mjs && node scripts/run-family-assistant-tests.mjs && node scripts/run-ui-activity-tests.mjs && node scripts/run-ui-orientation-tests.mjs && node scripts/run-practical-acceptance-tests.mjs",
+    "check:assignment": "node scripts/run-assignment-tests.mjs",
+    "check:export": "node scripts/run-export-tests.mjs",
+    "check:reminders": "node scripts/run-reminder-tests.mjs",
+    "check:news": "node scripts/run-news-tests.mjs",
+    "check:cockpit": "node scripts/run-cockpit-tests.mjs",
+    "check:search": "node scripts/run-search-tests.mjs",
+    "check:documents": "node scripts/run-document-library-tests.mjs",
+    "check:menus": "node scripts/run-menu-optimization-tests.mjs",
+    "check:optical": "node scripts/run-optical-package-tests.mjs",
+    "check:acceptance": "node scripts/run-practical-acceptance-tests.mjs",
+    "check:ui-orientation": "node scripts/run-ui-orientation-tests.mjs",
+    "check:ui-activity": "node scripts/run-ui-activity-tests.mjs",
+    "check:intake": "node scripts/run-document-intake-tests.mjs",
+    "check:central-intake": "node scripts/run-central-intake-tests.mjs",
+    "check:inventory": "node scripts/run-fawoga-inventory-tests.mjs",
+    "check:fawoga-onedrive": "node scripts/run-fawoga-onedrive-tests.mjs",
+    "check:test-workspace": "node scripts/run-test-workspace-tests.mjs",
+    "check:test-register": "node scripts/run-test-register-tests.mjs",
+    "check:auto-test-environment": "node scripts/run-automatic-test-environment-tests.mjs",
+    "check:scan": "node scripts/run-document-scan-tests.mjs",
+    "check:memory": "node scripts/run-memory-tests.mjs",
+    "check:context": "node scripts/run-context-linking-tests.mjs",
+    "check:consolidation": "node scripts/run-consolidation-tests.mjs",
+    "check:assistant": "node scripts/run-family-assistant-tests.mjs",
+    "check:system": "node scripts/run-system-check.mjs",
+    "screenshots": "node scripts/screenshots.mjs"
+  },
+  "dependencies": {
+    "lucide-react": "1.31.0",
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "4.2.1",
+    "@types/node": "22.19.19",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "5.2.0",
+    "tailwindcss": "4.2.1",
+    "typescript": "5.9.3",
+    "vite": "6.4.1"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Me, Myself and I – Meine Familienakte",
+  "short_name": "Familienakte",
+  "description": "Privater Aktenschrank für die Familie – alle Daten bleiben im Browser.",
+  "lang": "de",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f2f7fa",
+  "theme_color": "#0b3154",
+  "icons": [{ "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

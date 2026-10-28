@@ -1,0 +1,180 @@
+{
+  "meta": {
+    "owner": "Familie Lindqvist-Arenberg (Beispielfamilie)",
+    "title": "Gesundheits- und Vorsorgeübersicht (Beispiel)",
+    "documentStatus": "14.03.2026",
+    "coveredFrom": "01.09.2021",
+    "plannedUntil": "31.08.2027",
+    "privacy": "Beispieldaten – frei erfunden",
+    "note": "Alle Angaben sind frei erfundene Beispieldaten für die Vorführung der App. Es gibt keine echten Personen, Orte, Einrichtungen, Codes oder Nummern."
+  },
+  "keyFacts": [
+    {
+      "label": "Dokumentierter Zeitraum",
+      "value": "2021–2026",
+      "detail": "Beispielzeitraum"
+    },
+    {
+      "label": "Vorsorgetermine",
+      "value": "5",
+      "detail": "davon einer offen"
+    },
+    {
+      "label": "Impfungen",
+      "value": "3",
+      "detail": "im Beispiel-Impfpass"
+    },
+    {
+      "label": "Offene Aufgaben",
+      "value": "3",
+      "detail": "zum Ausprobieren"
+    }
+  ],
+  "currentDiagnoses": [
+    {
+      "area": "Vorsorge",
+      "codes": "–",
+      "diagnosis": "Jährlicher Vorsorgetermin Ella",
+      "evidence": "Beispieleintrag – Termin wird noch vereinbart",
+      "status": "aktuell"
+    },
+    {
+      "area": "Sehen",
+      "codes": "–",
+      "diagnosis": "Neue Brille Mattis",
+      "evidence": "Beispielbeleg „Beleg neue Brille Mattis“",
+      "status": "erledigt"
+    },
+    {
+      "area": "Impfpass",
+      "codes": "–",
+      "diagnosis": "Impfpass Ella aktualisiert",
+      "evidence": "Beispiel „Impfpass Ella – Kopie“",
+      "status": "erledigt"
+    }
+  ],
+  "doctors": [
+    {
+      "name": "Vorsorgekalender der Familie",
+      "field": "Vorsorge",
+      "confirmed": "Beispiel: Vorsorgetermine aller Familienmitglieder an einem Ort.",
+      "open": "Termin für Ella im Kalender eintragen."
+    },
+    {
+      "name": "Brillenpass Mattis",
+      "field": "Sehen",
+      "confirmed": "Beispiel: Beleg und Werte der neuen Brille abgelegt.",
+      "open": "Keine offenen Punkte."
+    }
+  ],
+  "auTimeline": [
+    {
+      "start": "09.02.2026",
+      "end": "11.02.2026",
+      "codes": "–",
+      "group": "Beispiel: krank gemeldet",
+      "kind": "AU"
+    },
+    {
+      "start": "17.11.2025",
+      "end": "18.11.2025",
+      "codes": "–",
+      "group": "Beispiel: krank gemeldet",
+      "kind": "AU"
+    },
+    {
+      "start": "02.05.2024",
+      "end": "03.05.2024",
+      "codes": "–",
+      "group": "Beispiel: krank gemeldet",
+      "kind": "AU"
+    }
+  ],
+  "oldAuWithoutCodes": [
+    "Beispiel-Krankmeldung Herbst 2022",
+    "Beispiel-Krankmeldung Frühjahr 2023"
+  ],
+  "sickPay": [
+    {
+      "period": "Beispielzeitraum 2024",
+      "group": "Beispielfall",
+      "amount": "0,00 €",
+      "clarification": "Keine Leistung nötig – Beispieleintrag."
+    }
+  ],
+  "blockCases": [
+    {
+      "period": "2024–2027",
+      "code": "–",
+      "diagnosis": "Beispielfall für eine Fristberechnung",
+      "detail": "Zeigt, wie Fristen in der App dargestellt werden."
+    }
+  ],
+  "priorCases": [
+    "Beispielhafter früherer Zeitraum 2022",
+    "Beispielhafter früherer Zeitraum 2023"
+  ],
+  "employerPriorPeriods": [
+    {
+      "current": "Beispielzeitraum 2026",
+      "prior": "Beispielzeitraum 2025"
+    }
+  ],
+  "workHistory": [
+    {
+      "period": "März 2026",
+      "entry": "Teilzeit",
+      "assessment": "Beispieleintrag: Wechsel auf vier Arbeitstage pro Woche."
+    },
+    {
+      "period": "Februar 2026",
+      "entry": "AU",
+      "assessment": "Beispielhafte Krankmeldung, siehe Zeitleiste."
+    },
+    {
+      "period": "Oktober 2025",
+      "entry": "Urlaub",
+      "assessment": "Beispieleintrag: zwei Wochen Familienurlaub."
+    }
+  ],
+  "correspondence": [
+    {
+      "date": "21.01.2026",
+      "type": "Anfrage an Krankenversicherung",
+      "subject": "Zuschuss für die neue Brille",
+      "request": "Frage, ob ein Zuschuss möglich ist (Beispiel).",
+      "answer": "Beispielantwort: Zuschuss von 50 € bewilligt.",
+      "status": "erledigt"
+    },
+    {
+      "date": "02.03.2026",
+      "type": "Anfrage an Arbeitgeber",
+      "subject": "Wechsel auf Teilzeit",
+      "request": "Antrag auf vier Arbeitstage pro Woche (Beispiel).",
+      "answer": "",
+      "status": "offen"
+    }
+  ],
+  "openItems": [
+    {
+      "title": "Vorsorgetermin vereinbaren",
+      "next": "Termin für April eintragen (Beispiel).",
+      "priority": "mittel"
+    },
+    {
+      "title": "Impfpass prüfen",
+      "next": "Nächste Auffrischung notieren (Beispiel).",
+      "priority": "niedrig"
+    },
+    {
+      "title": "Antwort Arbeitgeber abwarten",
+      "next": "Nach zwei Wochen nachfragen (Beispiel).",
+      "priority": "niedrig"
+    }
+  ],
+  "sources": [
+    "Beispiel-Impfpass (Demo)",
+    "Beispielbeleg Brille 2025 (Demo)",
+    "Beispielschreiben Krankenversicherung 2026 (Demo)"
+  ]
+}
