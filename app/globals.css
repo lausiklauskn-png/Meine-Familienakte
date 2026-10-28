@@ -471,7 +471,7 @@ code { display: inline-block; color: var(--navy); background: var(--blue-soft); 
 .mega-group strong, .mega-group small { display: block; }
 .mega-group strong { color: var(--navy); font-size: .9rem; }
 .mega-group small { margin-top: 2px; color: var(--muted); font-size: .75rem; line-height: 1.35; }
-.site-main { width: min(1320px,calc(100% - 40px)); min-height: calc(100vh - 230px); margin: 0 auto; padding: 18px 0 40px; }
+.site-main { overflow-x: clip; /* Zierkreis des Startbanners (right: -120px) ragt bei voller Breite sonst aus dem Fenster */ width: calc(100% - 40px); min-height: calc(100vh - 230px); margin: 0 auto; padding: 18px 0 40px; }
 .search-command-bar { display: grid; grid-template-columns: minmax(210px,270px) minmax(0,1fr); align-items: center; gap: 18px; margin-bottom: 8px; border: 1px solid #c8d7e1; border-radius: 6px; padding: 13px 15px; background: #e9f0f5; }
 .search-command-label { display: flex; align-items: center; gap: 10px; min-width: 0; color: var(--navy); }
 .search-command-label > svg { flex: 0 0 auto; color: var(--teal); }
@@ -1308,7 +1308,7 @@ button.object-card:hover { transform: translateY(-2px); border-color: #8fb2c9; b
   .main-navigation > button, .nav-cluster > button { width: 100%; justify-content: space-between; padding: 0 13px; }
   .mega-menu { position: static; width: 100%; transform: none; grid-template-columns: 1fr; gap: 13px; border: 0; border-radius: 8px; padding: 14px; box-shadow: none; }
   .mega-intro { padding: 0 0 10px; border-right: 0; border-bottom: 1px solid var(--line); }
-  .site-main { width: min(100% - 26px,1320px); padding-top: 12px; }
+  .site-main { width: calc(100% - 26px); padding-top: 12px; }
   .search-command-bar { grid-template-columns: 1fr; gap: 9px; }
   .family-hero { grid-template-columns: 1fr; padding: 28px 24px; }
   .hero-cockpit { width: 100%; }
