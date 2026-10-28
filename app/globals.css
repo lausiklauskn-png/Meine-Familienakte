@@ -501,7 +501,7 @@ code { display: inline-block; color: var(--navy); background: var(--blue-soft); 
 .version-badge { display: inline-flex; align-items: center; border-radius: 999px; padding: 7px 10px; color: #0c5e54; background: #e4f5ef; font-size: .8rem; font-weight: 900; }
 
 .family-hero { position: relative; overflow: visible; display: grid; grid-template-columns: minmax(0,1.85fr) minmax(340px,1fr); align-items: stretch; gap: 30px; padding: 36px 40px; border-radius: 12px; color: white; background: linear-gradient(115deg,#0a3155 0%,#155a8a 66%,#147a82 100%); box-shadow: var(--shadow); }
-.family-hero:after { content: ""; position: absolute; width: 310px; height: 310px; right: -120px; top: -160px; border: 64px solid rgba(255,255,255,.07); border-radius: 50%; }
+.family-hero:after { content: ""; position: absolute; width: 310px; height: 310px; right: -120px; top: -160px; border: 64px solid rgba(255,255,255,.07); border-radius: 50%; pointer-events: none; /* D1: Zierkreis darf den Knopf „Beispieldaten entfernen“ nicht abdecken */ }
 .family-hero h1 { max-width: 770px; margin: 7px 0 11px; font-size: clamp(2rem,4vw,3.25rem); line-height: 1.05; }
 .family-hero p { max-width: 830px; margin: 0; color: #e7f0f6; }
 .hero-actions { display: flex; gap: 9px; margin-top: 22px; }
