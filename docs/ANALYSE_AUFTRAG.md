@@ -1,5 +1,7 @@
 # Auftrag für eine neue Sitzung: „Meine Familienakte“ analysieren und Funktionen prüfen
 
+> Einstieg für die Sitzung: zuerst `BRIEF_SITZUNG_ANALYSE-UND-ERSTBAU.md` lesen. Dieser Auftrag ist dessen Teil 1.
+
 **Sprache:** Bitte durchgehend auf Deutsch antworten und alle Ergebnisse auf Deutsch schreiben.
 
 ## Hintergrund
@@ -200,8 +202,9 @@ beim Bedienen der App auswählen kann. Ich selbst teste zunächst auf dem **Andr
    - eine Update-Anzeige in der App („Neue Version verfügbar“)
 
    Ergebnis von Paket F: `docs/analyse/PLATTFORMEN.md` mit Ist-Stand, Vorschlag und
-   Schritt-für-Schritt-Plan. **Umsetzen** (Capacitor, Workflows, Pages) erst nach meiner
-   Zustimmung in einer eigenen Sitzung bzw. einem eigenen PR.
+   Schritt-für-Schritt-Plan. Den **ersten Bau** von PWA, APK und Windows-App (offline-fähig,
+   mit Internetschalter) hat Klaus freigegeben. Er steht in Teil 2 von
+   `BRIEF_SITZUNG_ANALYSE-UND-ERSTBAU.md`, jeweils als eigener PR nach der Analyse.
 
 ### G · Dateien von anderen Geräten: Handy-Foto, Scanner, andere Apps
 
@@ -285,8 +288,7 @@ im Chat eine kurze Zusammenfassung mit den fünf wichtigsten Ergebnissen.
 
 ## Offene Entscheidungen (vorher kurz nachfragen)
 
-- **APK bauen:** Paket F liefert nur den Plan. Ob die Sitzung die APK gleich baut, frage ich
-  bei der Abgabe des Plans.
+- **APK, PWA und Windows bauen:** freigegeben, siehe `BRIEF_SITZUNG_ANALYSE-UND-ERSTBAU.md`.
 - **https-Adresse:** Für das Mikrofon auf dem Handy braucht die App eine echte https-Adresse. Vorschlag: ein
 separates öffentliches Repo (z. B. `familienakte-app`) nur mit der gebauten App und GitHub
 Pages. Den Schalter in den Pages-Einstellungen muss ich einmal selbst umlegen. Das ist erst
