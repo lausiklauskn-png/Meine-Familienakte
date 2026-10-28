@@ -85,3 +85,4 @@ Ein Offline-Cache (Service Worker) oder eine Desktop-App kann später ergänzt w
 | ![Fristen](docs/screenshots/04-fristen-und-aufgaben.png) | ![Tagebuch](docs/screenshots/05-tagebuch.png) | ![Handy](docs/screenshots/11-handy-startseite.png) |
 
 Der ursprüngliche Arbeitsauftrag steht in [NEUSTART_AUFTRAG.md](NEUSTART_AUFTRAG.md).
+Der Auftrag für die Funktions- und KI-Analyse steht in [docs/ANALYSE_AUFTRAG.md](docs/ANALYSE_AUFTRAG.md).
