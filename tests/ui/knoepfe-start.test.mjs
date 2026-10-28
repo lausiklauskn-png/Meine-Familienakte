@@ -1,6 +1,6 @@
 // Startseite, Kopf- und Fußzeile: Suche, Diktat, Drucken, Ausloggen, Objekt-Cockpit, Erinnerung erfassen,
 // Dokumenteneingang-Kacheln, Beispieldaten entfernen/laden.
-import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, collectErrors, footer, openMenu } from "./_harness.mjs";
+import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, collectErrors, footer } from "./_harness.mjs";
 import { speechStub, windowStub, directoryPickerStub, schliesseDialoge, bekannt, verdecktVon } from "./_stubs.mjs";
 
 const app = await startApp();
@@ -31,7 +31,7 @@ try {
     await page.waitForSelector(".search-results");
     const verstanden = await page.locator(".search-interpretation").count();
     const treffer = await page.locator(".search-results article").count();
-    return `Verstanden-als: ${verstanden ? "ja" : "nein"}, Treffer: ${treffer}` && verstanden === 1 && treffer > 0;
+    return verstanden === 1 && treffer > 0 ? `Verstanden-als: ja, Treffer: ${treffer}` : false;
   });
   await step("Suche: Treffer öffnen springt zur Seite", async () => { await page.locator(".search-results article > button").first().click(); return (await page.locator(".search-results").count()) === 0; });
   await step("Suche: „Zusammenhang öffnen“ führt ins Cockpit", async () => {

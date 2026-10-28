@@ -4,7 +4,7 @@
 // nicht erlaubten Typ, danach Bibliothek, Suche, Cockpit, Vorschau und Statuswechsel.
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { startApp, launchBrowser, DESKTOP, ready, footer, check, step, fail, ok, summary, collectErrors, ROOT } from "./_harness.mjs";
+import { startApp, launchBrowser, DESKTOP, ready, footer, check, step, fail, summary, collectErrors, ROOT } from "./_harness.mjs";
 
 const T = path.join(ROOT, "tests/testdateien");
 const f = (name) => path.join(T, name);
@@ -241,7 +241,7 @@ try {
     const camera = page.locator(".central-intake input[type=file][capture]");
     await camera.setInputFiles([f("Foto_Garantiebeleg_Lavorix.png"), f("Foto_Garantiebeleg_Lavorix_Seite2.jpg")]);
     try { await page.locator(".scan-modal").waitFor({ timeout: 20000 }); }
-    catch (e) { await page.screenshot({ path: path.join(LAUFZEIT, "fehler-scan.png"), fullPage: true }).catch(() => {}); throw new Error("Scan-Fenster fehlt: " + (await page.locator("body").innerText()).replace(/\s+/g, " ").match(/.{0,120}(Fehler|Bitte zuerst|Kamera).{0,160}/)?.[0]); }
+    catch { await page.screenshot({ path: path.join(LAUFZEIT, "fehler-scan.png"), fullPage: true }).catch(() => {}); throw new Error("Scan-Fenster fehlt: " + (await page.locator("body").innerText()).replace(/\s+/g, " ").match(/.{0,120}(Fehler|Bitte zuerst|Kamera).{0,160}/)?.[0]); }
     await page.waitForTimeout(500);
     const text = await page.locator(".scan-modal").innerText();
     if (!/2 Seite|Seite 1|Seite 2/.test(text)) throw new Error(text.slice(0, 200));

@@ -1,6 +1,6 @@
 // Leere Akte: Beispieldaten entfernen, dann alle Seiten und die wichtigsten Knöpfe ohne Daten prüfen (keine Fehler, ehrliche Leermeldungen).
 import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, collectErrors, footer, openMenu } from "./_harness.mjs";
-import { windowStub, directoryPickerStub, schliesseDialoge, aufraeumen } from "./_stubs.mjs";
+import { windowStub, directoryPickerStub, schliesseDialoge } from "./_stubs.mjs";
 
 const app = await startApp();
 const browser = await launchBrowser();

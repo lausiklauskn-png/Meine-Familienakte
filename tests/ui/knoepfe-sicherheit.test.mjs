@@ -1,7 +1,7 @@
 // Sicherheitscenter, Export, Sicherung/Wiederherstellung, Bestand prüfen, Systemprüfung, Praktische Abnahme, Hilfe-Knöpfe.
 // Ordnerauswahl ist mit echten OPFS-Ordnern gestellt (window.showDirectoryPicker).
-import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, collectErrors, footer, openMenu } from "./_harness.mjs";
-import { windowStub, directoryPickerStub, schliesseDialoge, aufraeumen, bekannt } from "./_stubs.mjs";
+import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, collectErrors, footer } from "./_harness.mjs";
+import { windowStub, directoryPickerStub, schliesseDialoge, bekannt } from "./_stubs.mjs";
 
 const app = await startApp();
 const browser = await launchBrowser();

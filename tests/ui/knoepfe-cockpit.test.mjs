@@ -1,7 +1,7 @@
 // Cockpit, Fristen und Aufgaben, Tagebuch: Statuswechsel, Notiz, Verknüpfen/Lösen, Frist anlegen/erledigen/zurückstellen,
 // Entwurf prüfen/ergänzen/löschen, Memory bearbeiten/löschen, offene Punkte.
-import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, collectErrors, footer, openMenu } from "./_harness.mjs";
-import { speechStub, windowStub, schliesseDialoge, aufraeumen } from "./_stubs.mjs";
+import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, collectErrors, footer } from "./_harness.mjs";
+import { speechStub, windowStub, aufraeumen } from "./_stubs.mjs";
 
 const app = await startApp();
 const browser = await launchBrowser();

@@ -73,7 +73,7 @@ try {
   });
 
   // ---------- Korrespondenz, Gesundheit & Arbeit, Unterseiten ----------
-  for (const [nav, eintrag, erwartet] of [[0, "Korrespondenz", /Schriftverkehr|Anfragen/], [1, "Diagnosen, AU & ICD-Codes", /Gesundheitsdokumente/], [1, "Krankenkasse & Leistungen", /Leistung/], [1, "Arbeit & Arbeitgeber", /Arbeit/], [1, "Anträge & Bescheide", /Antr/], [2, "Familienübersicht", /Öffnen/]]) {
+  for (const [nav, eintrag] of [[0, "Korrespondenz", /Schriftverkehr|Anfragen/], [1, "Diagnosen, AU & ICD-Codes", /Gesundheitsdokumente/], [1, "Krankenkasse & Leistungen", /Leistung/], [1, "Arbeit & Arbeitgeber", /Arbeit/], [1, "Anträge & Bescheide", /Antr/], [2, "Familienübersicht", /Öffnen/]]) {
     if (eintrag === "Familienübersicht") {
       await step("Unterseite „Familienübersicht“: „Öffnen“-Karten führen zu Tagebuch, Cockpit, Fristen, Bibliothek", async () => {
         await aufraeumen(page); await openMenu(page, 2, "Familienübersicht");
