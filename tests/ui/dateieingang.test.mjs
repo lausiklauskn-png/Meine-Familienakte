@@ -393,7 +393,7 @@ const page2 = await context2.newPage(); page2.setDefaultTimeout(8000);
 const errors2 = collectErrors(page2);
 try {
   await step("Bestand prüfen: Seite öffnen, gestellten Hauptordner (3 Dateien + Unterordner mit 2 Dateien) wählen", async () => {
-    await page2.goto(app.base, { waitUntil: "networkidle" }); await ready(page2);
+    await page2.goto(app.base + "?experte=1", { waitUntil: "networkidle" }); await ready(page2); // Bestand nur im Expertenmodus (B2)
     for (const [n, t, inSub] of [["Nebenkostenabrechnung_2025_Arenberg-Hof.pdf", "application/pdf", false], ["Mietvertrag_Arenberg-Hof_Nachtrag.docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", true], ["Notiz_Fahrradkauf_Velotrix.txt", "text/plain", true], ["Foto_Garantiebeleg_Lavorix.png", "image/png", false], ["Mail_Garantiefall_mit_PDF.eml", "message/rfc822", false]]) {
       await page2.evaluate(([n, b, t, s]) => window.__add(n, b, t, s), [n, readFileSync(f(n)).toString("base64"), t, inSub]);
     }

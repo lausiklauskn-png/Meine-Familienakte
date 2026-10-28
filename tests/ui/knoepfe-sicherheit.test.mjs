@@ -11,6 +11,8 @@ try {
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
   const page = await context.newPage();
   page.setDefaultTimeout(8000);
+  // „Bestand prüfen“ ist seit B2 nur im Expertenmodus (?experte=1 / familienakte-experte) im Produkt sichtbar.
+  await page.addInitScript(() => { try { localStorage.setItem("familienakte-experte", "1"); } catch { /* ohne Speicher */ } });
   await page.addInitScript(windowStub);
   await page.addInitScript(directoryPickerStub);
   const errors = collectErrors(page);

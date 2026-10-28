@@ -1,5 +1,5 @@
 // Assistenzzentrale, Korrespondenz, Gesundheit & Arbeit, Familie, Wohnen/Fahrzeuge/Käufe (vorbereitete Bereiche), Verzeichnis, Was gibt’s Neues.
-import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, collectErrors, footer, openMenu } from "./_harness.mjs";
+import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, collectErrors, internetAn, footer, openMenu } from "./_harness.mjs";
 import { speechStub, windowStub, schliesseDialoge, aufraeumen, verdecktVon } from "./_stubs.mjs";
 
 const app = await startApp();
@@ -19,6 +19,7 @@ try {
     await modi.nth(1).click();
     return n === 5 && (await modi.nth(1).getAttribute("aria-pressed")) === "true" ? `${n} Modi` : false;
   });
+  await internetAn(page);
   await step("Assistenz: Diktat füllt die Frage", async () => {
     const mic = page.locator(".dictation-button").nth(1);
     if (await mic.isDisabled()) return false;

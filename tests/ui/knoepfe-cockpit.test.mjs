@@ -1,6 +1,6 @@
 // Cockpit, Fristen und Aufgaben, Tagebuch: Statuswechsel, Notiz, Verknüpfen/Lösen, Frist anlegen/erledigen/zurückstellen,
 // Entwurf prüfen/ergänzen/löschen, Memory bearbeiten/löschen, offene Punkte.
-import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, collectErrors, footer } from "./_harness.mjs";
+import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, collectErrors, internetAn, footer } from "./_harness.mjs";
 import { speechStub, windowStub, aufraeumen } from "./_stubs.mjs";
 
 const app = await startApp();
@@ -88,6 +88,7 @@ try {
     const aktiv = await page.locator("button.schedule-filter.active").innerText();
     return aktiv.includes("Bald fällig");
   });
+  await internetAn(page);
   await step("Fristen: Diktat in „Bezeichnung“ setzt Text ein", async () => {
     const mic = page.locator('.dictation-button[aria-label^="Titel"]');
     if (!(await mic.count()) || await mic.isDisabled()) return false;
