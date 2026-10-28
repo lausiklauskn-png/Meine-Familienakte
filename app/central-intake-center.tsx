@@ -1,4 +1,3 @@
-"use client";
 import { UI_HELP } from "../lib/ui-help";
 import { InfoPopover } from "./ui-controls";
 

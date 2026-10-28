@@ -1,4 +1,3 @@
-"use client";
 import { askConfirm } from "./page-dialogs";
 import { UI_HELP } from "../lib/ui-help";
 

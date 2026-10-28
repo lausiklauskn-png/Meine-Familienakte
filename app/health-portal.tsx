@@ -1,4 +1,3 @@
-"use client";
 import { askConfirm, askPrompt } from "./page-dialogs";
 import { openFile } from "./file-viewer";
 import { PracticalAcceptance, StoredUserAcceptance } from "./practical-acceptance";
@@ -45,7 +44,6 @@ import releaseSystemCheckReport from "@/lib/release-system-check-report.json";
 import { AssistantCenter } from "./assistant-center";
 import { runFamilyAssistantSelfTests, type CorrespondenceKind } from "@/lib/family-assistant";
 import { createLocalCorrespondenceBundle } from "./local-vault";
-import { browserUploadSummary, listBrowserUploads, setBrowserUploadStatus } from "./browser-uploads";
 import { isBrowserVault } from "./local-vault";
 import { removeSampleFamily, SAMPLE_FAMILY_NAME, SAMPLE_NOTICE, sampleDataPresent, seedSampleFamily } from "./sample-family";
 
@@ -474,7 +472,8 @@ function HealthPortalContent() {
   const [lastSystemReport, setLastSystemReport] = useState<SystemCheckReport | null>(() =>
     readSystemCheckReports().find((item) => item.kind === "check") || normalizeSystemReport(releaseSystemCheckReport as unknown as StoredSystemCheck),
   );
-  const [documents, setDocuments] = useState<UploadedDocument[]>([]);
+  // Kein Online-Speicher mehr (B3): die frühere Cloudflare-Liste ist dauerhaft leer; die Anzeige bleibt unverändert.
+  const documents: UploadedDocument[] = useMemo(() => [], []);
   const [loadingDocs, setLoadingDocs] = useState(true);
   const [busy, setBusy] = useState(false);
   const setNotice = useCallback((next: Notice) => {
@@ -681,16 +680,9 @@ function HealthPortalContent() {
     if (!vaultHandle) return;
     setVaultBusy(true);
     try {
-      let copied = 0;
-      for (const item of documents) {
-        if (localDocuments.some((local) => local.notes?.includes(`Online-ID: ${item.id}`))) continue;
-        const response = await fetch(item.downloadUrl); if (!response.ok) throw new Error(`${item.originalName} konnte nicht geladen werden.`);
-        const blob = await response.blob();
-        await saveLocalDocument(vaultHandle, new File([blob], item.originalName, { type: item.mimeType }), { category: item.category, documentDate: item.documentDate, notes: `${item.notes ? `${item.notes} · ` : ""}Gesicherter Online-Altbestand · Online-ID: ${item.id}`, migration: true });
-        copied++;
-      }
+      // Es gibt keinen Online-Bestand mehr; die Sicherung bleibt als Weg erhalten und meldet ehrlich den Stand.
       await refreshLocal(vaultHandle);
-      setNotice({ kind: "success", text: copied ? `${copied} Online-Datei${copied === 1 ? " wurde" : "en wurden"} lokal gesichert. Die Online-Originale wurden noch nicht gelöscht.` : "Der Online-Bestand war bereits lokal gesichert." });
+      setNotice({ kind: "success", text: "Der Online-Bestand war bereits lokal gesichert." });
     } catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die lokale Sicherung ist fehlgeschlagen." }); }
     finally { setVaultBusy(false); }
   };
@@ -835,27 +827,12 @@ function HealthPortalContent() {
   const searchResults = useMemo(() => buildSearchResults(query, documents, localDocuments, familyRecords, familyRelations), [query, documents, localDocuments, familyRecords, familyRelations]);
   const searchInterpretation = useMemo(() => interpretFamilySearchQuery(query), [query]);
 
-  const loadDocuments = async () => {
-    setLoadingDocs(true);
-    try {
-      setDocuments(await listBrowserUploads());
-    } catch (error) {
-      setNotice({ kind: "error", text: error instanceof Error ? error.message : "Dokumente konnten nicht geladen werden." });
-    } finally { setLoadingDocs(false); }
-  };
-  useEffect(() => {
-    let activeRequest = true;
-    listBrowserUploads()
-      .then((items) => { if (activeRequest) setDocuments(items); })
-      .catch((error: unknown) => {
-        if (activeRequest) setNotice({ kind: "error", text: error instanceof Error ? error.message : "Dokumente konnten nicht geladen werden." });
-      })
-      .finally(() => { if (activeRequest) setLoadingDocs(false); });
-    return () => { activeRequest = false; };
-  }, []);
+  const loadDocuments = async () => { setLoadingDocs(false); };
+  useEffect(() => { setLoadingDocs(false); }, []);
 
   const changeStatus = async (id: string, status: UploadedDocument["status"]) => {
-    await setBrowserUploadStatus(id, status);
+    void id; void status;
+    throw new Error("Unterlagen werden im Datentresor bearbeitet. Ein Online-Speicher wird nicht verwendet.");
   };
   const startComparison = async () => {
     const pending = documents.filter((item) => item.status === "hochgeladen");
@@ -1007,8 +984,6 @@ function HealthPortalContent() {
     setNotice({ kind: "success", text: input.status === "Versendet" ? "Das geprüfte Schreiben wurde als versendet dokumentiert und mit dem Vorgang verknüpft. Es wurde nicht automatisch verschickt." : `Der geprüfte Korrespondenzeintrag wurde als „${input.status}“ im vorhandenen Familienaktenregister gespeichert.` });
   };
   const openDocument = async (id: string) => {
-    const online = documents.find((item) => item.id === id);
-    if (online) { window.open(online.downloadUrl, "_blank", "noopener,noreferrer"); return; }
     const local = localDocuments.find((item) => item.id === id);
     if (!local || !vaultHandle) { go("inbox"); setNotice({ kind: "error", text: "Bitte den zugehörigen Datentresor verbinden und das Dokument im Dokumenteneingang öffnen." }); return; }
     try {
@@ -2217,7 +2192,8 @@ function SystemCheck({ documents, localDocuments, vaultHandle, onCompleted }: {
   };
 
   const evaluateSystem = async (mode: "full" | "changes"): Promise<SystemCheckReport> => {
-      const online = await browserUploadSummary() as SystemCheckApiSummary;
+      // Kein Online-Speicher (B3): die Bestandsprüfung ist ausschließlich lokal und nur lesend.
+      const online: SystemCheckApiSummary = { documentCount: 0, duplicateDocumentHashes: 0, familyRecordCount: 0, familyRecordTypes: [], relationCount: 0, relationPairs: [] };
       const local = vaultHandle ? await readLocalSystemSnapshot(vaultHandle) : null;
       const areas: SystemCheckArea[] = [];
       const addArea = (area: SystemCheckArea) => areas.push(area);
@@ -2527,7 +2503,7 @@ function SystemCheck({ documents, localDocuments, vaultHandle, onCompleted }: {
         details: [`Das flexible Relationsmodell unterstützt technisch ${relationshipPairs.length} vorgesehene Beziehungstypen.`, storedRelations ? `${storedRelations} gespeicherte Verknüpfung${storedRelations === 1 ? "" : "en"} gefunden.` : "Der leere Verknüpfungsbestand ist zulässig; es wird keine Verknüpfung ohne Bestätigung angelegt."],
       });
 
-      const probeTerms = [topNavigation[0]?.label, healthData.doctors[0]?.name, healthData.correspondence[0]?.subject, healthData.currentDiagnoses[0]?.codes, (localDocuments[0] || documents[0])?.originalName].filter((value): value is string => !!value);
+      const probeTerms = [topNavigation[0]?.label, healthData.doctors[0]?.name, healthData.correspondence[0]?.subject, healthData.currentDiagnoses[0]?.codes, (localDocuments[0] || documents[0])?.originalName].filter((value): value is string => !!value && value !== "–"); // „–“ ist ein Platzhalter (keine Codes in Beispieldaten), kein Suchbegriff
       const successfulProbes = probeTerms.filter((term) => buildSearchResults(term, documents, localDocuments).length > 0).length;
       const assistantTests = runFamilyAssistantSelfTests();
       const searchOnlyTests = runFamilySearchSelfTests();
@@ -2896,7 +2872,6 @@ function NewsPreview({ item, onOpen }: { item: FamilyNewsItem; onOpen: () => voi
   const [imageFailed, setImageFailed] = useState(false);
   const Icon = item.preview.kind === "software" ? History : item.area.includes("GESUND") || item.sensitive ? ShieldCheck : item.area.includes("FAHRZEUG") ? Car : item.area.includes("HAUS") ? Home : item.area.includes("FRIST") || item.area.includes("AUFGAB") || item.area.includes("ERINNER") ? FileClock : FileText;
   // Die Vorschau kann aus einer lokalen Blob-URL stammen und wird deshalb nicht über einen externen Bildoptimierer geladen.
-  // eslint-disable-next-line @next/next/no-img-element
   const imagePreview = item.preview.kind === "image" && item.preview.url && !imageFailed ? <img src={item.preview.url} alt="" onError={() => setImageFailed(true)}/> : null;
   return <button className={`news-preview ${item.sensitive ? "sensitive" : ""}`} onClick={onOpen} aria-label={`${item.preview.label}: ${item.title}`}>
     {imagePreview || <Icon aria-hidden="true"/>}

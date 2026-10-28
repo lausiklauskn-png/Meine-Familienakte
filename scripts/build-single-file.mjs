@@ -18,6 +18,8 @@ if (!scriptPath || !stylePath) throw new Error("Im Build wurden Skript oder Styl
 const script = readFileSync(join(dist, scriptPath), "utf8").replaceAll("</script", "<\\/script").replaceAll("\uFFFD", "\\uFFFD");
 const style = readFileSync(join(dist, stylePath), "utf8").replaceAll("</style", "<\\/style");
 const icon = `data:image/svg+xml;base64,${readFileSync(join(dist, "favicon.svg")).toString("base64")}`;
+// pdf.js (A8) liegt im Paket; in der Einzeldatei wird es eingebettet, damit die PDF-Vorschau auch dort ohne Netz geht.
+const pdfjs = ["pdf.min.js", "pdf.worker.min.js"].map((name) => readFileSync(join(dist, "vendor/pdfjs", name), "utf8").replaceAll("</script", "<\\/script")).join("\n");
 
 // Seiteninhalt ohne eigenes <html>/<head>/<body>: Die Plattform ergänzt das Grundgerüst.
 const page = `<title>Meine Familienakte</title>
@@ -28,6 +30,9 @@ ${style}
 </style>
 <div id="root"></div>
 <script>document.body.classList.add("antialiased");</script>
+<script>
+${pdfjs}
+</script>
 <script type="module">
 ${script}
 </script>

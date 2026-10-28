@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useId, useRef, useState, type ComponentPropsWithoutRef } from "react";
 import { CircleHelp, Mic, MicOff, X } from "lucide-react";
 import { createDictationSession, microphoneBlockedReason, speechConstructor, type SpeechBrowser } from "../lib/browser-dictation";

@@ -1,4 +1,3 @@
-"use client";
 import { UI_HELP } from "../lib/ui-help";
 
 import { VoiceInput, VoiceTextarea, InfoPopover } from "./ui-controls";

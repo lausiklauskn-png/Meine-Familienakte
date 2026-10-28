@@ -1,4 +1,3 @@
-"use client";
 // Rückfragen und Eingaben als Dialog innerhalb der Seite.
 // Ersetzt window.confirm() und window.prompt(), die in eingebetteten Seiten
 // (z. B. als Link auf claude.ai) vom Browser unterdrückt werden.

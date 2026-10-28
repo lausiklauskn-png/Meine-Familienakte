@@ -6,7 +6,41 @@ const portal = readFileSync("app/health-portal.tsx", "utf8");
 const styles = readFileSync("app/globals.css", "utf8");
 const manifest = JSON.parse(readFileSync("lib/system-check-manifest.json", "utf8"));
 
+// Quelltext-Wächter (A1): früher Laufzeit-Selbsttests per Funktion.toString(); im Produktionsbuild werden Bezeichner
+// umbenannt, deshalb prüfen sie hier den Quelltext der jeweiligen Funktion.
+const fn = (name) => {
+  // Funktionskörper von der Deklaration bis zur nächsten Deklaration am Zeilenanfang (auch generische Funktionen).
+  const match = new RegExp(`(^|\\n)(export )?(async )?function ${name}\\b`).exec(localVault);
+  if (!match) throw new Error(`Funktion ${name} nicht gefunden`);
+  const rest = localVault.slice(match.index + 1);
+  const end = rest.search(/\n(?=(export |async function |function |type |const [A-Za-z_]+ = ))/);
+  return end < 0 ? rest : rest.slice(0, end);
+};
+const quelltextWaechter = [
+  ["auto-test-no-external", !fn("setupAutomatedTestEnvironment").includes("fetch(")],
+  ["auto-test-existing-register", fn("setupAutomatedTestEnvironment").includes("scanInventoryFolder") && fn("setupAutomatedTestEnvironment").includes("writeFullFamilyBackup")],
+  ["auto-test-controlled-reset", fn("resetAutomatedTestEnvironment").includes("AUTOMATED_TEST_WORKSPACE") && fn("resetAutomatedTestEnvironment").includes("recursive: true")],
+  ["auto-test-report", fn("setupAutomatedTestEnvironment").includes("Automatische_Testumgebung_Letzter_Bericht.json")],
+  ["auto-test-repair", fn("setupAutomatedTestEnvironment").includes("ensureAutomatedTestVault") && fn("ensureAutomatedTestVault").includes("Beschaedigtes_Testregister")],
+  ["auto-test-browser-permission", fn("setupAutomatedTestEnvironment").includes("verifiedDirectoryPermission")],
+  ["auto-test-cleanup-not-commit", fn("writeIndexToRegisterDirectoryUnlocked").includes("cleanupStaleRegisterTemporaryFiles") && fn("writeIndexToRegisterDirectoryUnlocked").includes("options?.diagnostics?.push")],
+  ["auto-test-written-files-reread", fn("ensureSyntheticTestFile").includes("konnte aber nicht identisch wieder eingelesen werden") && fn("setupAutomatedTestEnvironment").includes("Prüfbericht schreiben und wieder einlesen")],
+  ["auto-test-stage-diagnosis", fn("automatedTestStep").includes("Arbeitsschritt") && fn("setupAutomatedTestEnvironment").includes("Testregister erzeugen und sicher wieder einlesen")],
+  ["auto-test-stable-parent-resolution", fn("setupAutomatedTestEnvironment").includes("refreshTarget") && fn("setupAutomatedTestEnvironment").includes("refreshBackup")],
+  ["auto-test-write-probe", fn("restoreFullFamilyBackup").includes("verifyWritableDirectory") && fn("verifyWritableDirectory").includes("Schreibprobe wieder einlesen")],
+  ["auto-test-diagnostic-scope", localVault.includes('diagnostics: "06_Diagnose"') && fn("runAutomatedStorageDiagnostic").includes("personalDocumentContentsIncluded: false")],
+  ["auto-test-direct-write-diagnosis", fn("runAutomatedStorageDiagnostic").includes("Kleine_Schreibprobe.txt")],
+  ["auto-test-seven-diagnostic-phases", ["permission", "target", "small_file", "temporary_register", "short_path", "long_path", "backup_restore"].every((id) => fn("runAutomatedStorageDiagnostic").includes(`id: "${id}"`))],
+  ["auto-test-phase-isolation", fn("runAutomatedStorageDiagnostic").includes("Diagnosephase fehlgeschlagen") && fn("runAutomatedStorageDiagnostic").includes("return null")],
+  ["auto-test-prewrite-state", fn("writeAndVerifyRegisterFile").includes("Ziel unmittelbar vor dem Schreiben prüfen") && fn("writeAndVerifyRegisterFile").includes("parentExists") && fn("writeAndVerifyRegisterFile").includes("targetExists")],
+  ["auto-test-postfailure-reread", fn("writeAndVerifyRegisterFile").includes("Erneuter Leseversuch nach Schreibfehler")],
+  ["auto-test-no-unproven-cause", fn("runAutomatedStorageDiagnostic").includes("const provenRootCause") && fn("runAutomatedStorageDiagnostic").includes("FEHLER_REPRODUZIERT")],
+  ["auto-test-write-stage-tracing", ["Dateihandle erstellen", "Schreibstrom öffnen", "Inhalt schreiben", "Schreibstrom schließen"].every((operation) => fn("runAutomatedStorageDiagnostic").includes(operation))],
+  ["keine Laufzeit-Selbsttests per toString", !fn("runAutomatedTestEnvironmentSelfTests").includes(".toString()")],
+];
+
 const tests = [
+  ...quelltextWaechter.map(([name, ok]) => [`Quelltext-Wächter ${name}`, ok]),
   ["eindeutiger Arbeitsbereich", localVault.includes('AUTOMATED_TEST_WORKSPACE = "Familienakte_Automatische_Testumgebung_2.28.1"')],
   ["sechs getrennte Unterordner", ["01_Analysequelle", "02_Testdatentresor", "03_Sicherungen", "04_R", "05_Pruefberichte", "06_Diagnose"].every((name) => localVault.includes(name))],
   ["gespeicherte Entwicklungsbasis", localVault.includes("chooseDevelopmentBaseFolder") && localVault.includes("rememberedDevelopmentBaseFolder") && localVault.includes('DEVELOPMENT_BASE_KEY = "family-development-base"')],

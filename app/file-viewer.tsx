@@ -1,4 +1,3 @@
-"use client";
 // Zeigt Dokumente direkt in der Seite an, wenn neue Fenster nicht erlaubt sind
 // (z. B. wenn die Familienakte eingebettet als Link auf claude.ai läuft).
 // Bilder und Text werden direkt gezeigt, PDFs Seite für Seite gezeichnet.
@@ -46,9 +45,12 @@ function loadScript(src: string) {
 }
 function loadPdfJs(): Promise<PdfJs> {
   if (!pdfJsPromise) {
-    const base = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDFJS_VERSION}`;
+    // pdf.js liegt im Paket (public/vendor/pdfjs, A8): keine Verbindung nach außen, geht offline und bei ausgeschaltetem
+    // Internetschalter. In der Einzeldatei ist die Bibliothek schon eingebettet (window.pdfjsLib vorhanden).
+    const base = new URL("vendor/pdfjs", document.baseURI).href;
+    const preloaded = (window as unknown as { pdfjsLib?: PdfJs }).pdfjsLib;
     // Der Worker wird im Hauptfenster geladen; pdf.js nutzt ihn dann ohne eigenen Hintergrundprozess.
-    pdfJsPromise = loadScript(`${base}/pdf.min.js`).then(() => loadScript(`${base}/pdf.worker.min.js`)).then(() => {
+    pdfJsPromise = (preloaded ? Promise.resolve() : loadScript(`${base}/pdf.min.js`).then(() => loadScript(`${base}/pdf.worker.min.js`))).then(() => {
       const lib = (window as unknown as { pdfjsLib?: PdfJs }).pdfjsLib;
       if (!lib) throw new Error("Die PDF-Anzeige ist nicht verfügbar.");
       lib.GlobalWorkerOptions.workerSrc = `${base}/pdf.worker.min.js`;

@@ -1,5 +1,3 @@
-"use client";
-
 import {
   createFamilyRecord,
   type DocumentStorageType,
@@ -1478,7 +1476,7 @@ export const automatedTestStructure = {
 const syntheticTestDocuments = [
   { path: ["Haus", "Rechnung_Elektro_Synthetisch.txt"], content: "SYNTHETISCHE TESTDATEI – keine Personendaten\nRechnung Elektroarbeiten\nObjekt: Testhaus\nBetrag: 123,45 EUR\nRechnungsnummer: TEST-RE-1001\n" },
   { path: ["Technik", "Reparatur_Smartphone_Synthetisch.txt"], content: "SYNTHETISCHE TESTDATEI – keine Personendaten\nReparaturbericht Smartphone\nObjekt: Testgerät\nVorgang: Displayreparatur\n" },
-  { path: ["Versicherung", "Versicherung_Synthetisch.eml"], content: "From: test@synthetisch.invalid\r\nTo: familie@synthetisch.invalid\r\nSubject: Synthetischer Versicherungs-Test\r\nDate: Wed, 14 Oct 2026 10:00:00 +0200\r\nMessage-ID: <synthetisch-2281@test.invalid>\r\n\r\nNur Testdaten. Bitte Vertragsunterlage bis 31.12.2026 pruefen.\r\n" },
+  { path: ["Versicherung", "Versicherung_Synthetisch.eml"], content: "From: test@synthetisch.invalid\r\nTo: familie@synthetisch.invalid\r\nSubject: Synthetischer Versicherungs-Test\r\nDate: Wed, 14 Oct 2026 10:00:00 +0200\r\nMessage-ID: <synthetisch-2281@test.invalid>\r\n\r\nSYNTHETISCHE TESTDATEI – keine Personendaten\r\nNur Testdaten. Bitte Vertragsunterlage bis 31.12.2026 pruefen.\r\n" },
   { path: ["Gesundheit", "Gesundheitsunterlage_Synthetisch.txt"], content: "SYNTHETISCHE TESTDATEI – keine echte Diagnose und keine Personendaten\nGesundheitsunterlage fuer Datenschutztest\n" },
 ] as const;
 
@@ -1864,41 +1862,24 @@ export async function resetAutomatedTestEnvironment(base: FileSystemDirectoryHan
   return setupAutomatedTestEnvironment(base);
 }
 
+// Laufzeit-Selbsttests: nur Verhalten und Konstanten. Quelltext-Wächter (früher per Funktion.toString()) stehen in
+// scripts/run-automatic-test-environment-tests.mjs, weil der Produktionsbuild Bezeichner umbenennt und sie dort rot wurden (A1).
 export function runAutomatedTestEnvironmentSelfTests() {
   const folders = Object.values(automatedTestStructure);
   return [
     { id: "auto-test-fixed-root", passed: AUTOMATED_TEST_WORKSPACE === "Familienakte_Automatische_Testumgebung_2.28.1", summary: "Der automatische Arbeitsbereich besitzt einen eindeutigen, versionsgebundenen Namen." },
     { id: "auto-test-separated-folders", passed: new Set(folders).size === folders.length, summary: "Analysequelle, Testdatentresor, Sicherung, Wiederherstellung und Berichte sind getrennt." },
     { id: "auto-test-synthetic-only", passed: syntheticTestDocuments.every((document) => document.content.includes("SYNTHETISCHE TESTDATEI")), summary: "Die erzeugten Dokumente enthalten ausschließlich gekennzeichnete synthetische Testdaten." },
-    { id: "auto-test-no-external", passed: !setupAutomatedTestEnvironment.toString().includes("fetch("), summary: "Die automatische Testumgebung überträgt keine Inhalte an externe Dienste." },
-    { id: "auto-test-existing-register", passed: setupAutomatedTestEnvironment.toString().includes("scanInventoryFolder") && setupAutomatedTestEnvironment.toString().includes("writeFullFamilyBackup"), summary: "Vorhandene Register-, Bestands- und Sicherungslogik wird wiederverwendet." },
-    { id: "auto-test-controlled-reset", passed: resetAutomatedTestEnvironment.toString().includes("AUTOMATED_TEST_WORKSPACE") && resetAutomatedTestEnvironment.toString().includes("recursive: true"), summary: "Zurücksetzen ist auf den eindeutig benannten automatischen Testbereich begrenzt." },
-    { id: "auto-test-report", passed: setupAutomatedTestEnvironment.toString().includes("Automatische_Testumgebung_Letzter_Bericht.json"), summary: "Der letzte technische Prüfbericht wird im eigenen Berichtsordner gespeichert." },
-    { id: "auto-test-repair", passed: setupAutomatedTestEnvironment.toString().includes("ensureAutomatedTestVault") && ensureAutomatedTestVault.toString().includes("Beschaedigtes_Testregister"), summary: "Beschädigte Testregister werden vor der Neuerzeugung innerhalb des Testbereichs gesichert." },
-    { id: "auto-test-browser-permission", passed: setupAutomatedTestEnvironment.toString().includes("verifiedDirectoryPermission"), summary: "Browserberechtigungen werden vor jeder Verwendung erneut geprüft." },
     { id: "auto-test-original-protection", passed: automatedTestStructure.workspace.startsWith("Familienakte_Automatische_Testumgebung"), summary: "Automatische Schreib- und Löschvorgänge bleiben auf den gekennzeichneten Testarbeitsbereich beschränkt." },
     { id: "auto-test-permission-diagnosis", passed: registerWriteFailureMessage("Registerdatei ersetzen", "NotAllowedError").includes("Schreibberechtigung"), summary: "Fehlende oder abgelaufene Schreibberechtigungen erhalten eine konkrete deutsche Diagnose." },
     { id: "auto-test-missing-diagnosis", passed: registerWriteFailureMessage("Registerdatei ersetzen", "NotFoundError").includes("nicht mehr erreichbar"), summary: "Während des Schreibens verschwundene Ordner oder Dateien werden eindeutig benannt." },
     { id: "auto-test-invalid-handle-diagnosis", passed: registerWriteFailureMessage("Registerdatei ersetzen", "InvalidStateError").includes("Ordnerreferenz"), summary: "Ungültige gespeicherte Browserreferenzen werden von echten Registerfehlern unterschieden." },
     { id: "auto-test-lock-diagnosis", passed: registerWriteFailureMessage("Registerdatei ersetzen", "NoModificationAllowedError").includes("vorübergehend gesperrt"), summary: "Windows- und Synchronisationssperren werden verständlich erklärt." },
-    { id: "auto-test-storage-diagnosis", passed: registerWriteFailureMessage("Registerdatei ersetzen", "QuotaExceededError").includes("freien Speicher"), summary: "Fehlender Speicherplatz wird als eigene Ursache ausgewiesen." },
-    { id: "auto-test-cleanup-not-commit", passed: writeIndexToRegisterDirectoryUnlocked.toString().includes("cleanupStaleRegisterTemporaryFiles") && writeIndexToRegisterDirectoryUnlocked.toString().includes("options?.diagnostics?.push"), summary: "Eine gesperrte TEMP-Datei macht einen bereits geschriebenen und geprüften Register-Commit nicht mehr rückwirkend ungültig." },
-    { id: "auto-test-written-files-reread", passed: ensureSyntheticTestFile.toString().includes("konnte aber nicht identisch wieder eingelesen werden") && setupAutomatedTestEnvironment.toString().includes("Prüfbericht schreiben und wieder einlesen"), summary: "Synthetische Dateien und Prüfbericht werden nach dem Schreiben tatsächlich wieder eingelesen." },
-    { id: "auto-test-stage-diagnosis", passed: automatedTestStep.toString().includes("Arbeitsschritt") && setupAutomatedTestEnvironment.toString().includes("Testregister erzeugen und sicher wieder einlesen"), summary: "Fehler nennen künftig den konkreten Arbeitsschritt statt einer unbestimmten Sammelmeldung." },
-    { id: "auto-test-stable-parent-resolution", passed: setupAutomatedTestEnvironment.toString().includes("refreshTarget") && setupAutomatedTestEnvironment.toString().includes("refreshBackup"), summary: "Sicherungs- und Wiederherstellungsordner werden für jeden Pflichtschritt erneut aus ihren stabilen Elternordnern aufgelöst." },
-    { id: "auto-test-write-probe", passed: restoreFullFamilyBackup.toString().includes("verifyWritableDirectory") && verifyWritableDirectory.toString().includes("Schreibprobe wieder einlesen"), summary: "Das Wiederherstellungsziel wird vor dem eigentlichen Schreiben durch Schreiben, Wiedereinlesen und Löschen geprüft." },
+    { id: "auto-test-storage-diagnosis", passed: registerWriteFailureMessage("Registerdatei ersetzen", "QuotaExceededError").includes("freier Speicher"), summary: "Fehlender Speicherplatz wird als eigene Ursache ausgewiesen." },
     { id: "auto-test-not-found-retry", passed: retryableRegisterWriteError({ name: "NotFoundError" }), summary: "Kurzzeitige NotFound-Fehler werden begrenzt wiederholt und nicht sofort als endgültiger Registerverlust gewertet." },
     { id: "auto-test-critical-report", passed: buildAutomatedTestFailureReport(new Error("Automatische Testumgebung – Arbeitsschritt „Wiederherstellung“ fehlgeschlagen.")).workStep === "Wiederherstellung", summary: "Kritische Fehler werden mit Arbeitsschritt, Ursache und unverändertem Produktivstatus strukturiert protokolliert." },
-    { id: "auto-test-diagnostic-scope", passed: automatedTestStructure.diagnostics === "06_Diagnose" && runAutomatedStorageDiagnostic.toString().includes("personalDocumentContentsIncluded: false"), summary: "Der Diagnosemodus schreibt ausschließlich in den gekennzeichneten Testbereich und protokolliert keine persönlichen Dokumentinhalte." },
-    { id: "auto-test-direct-write-diagnosis", passed: runAutomatedStorageDiagnostic.toString().includes("Kleine_Schreibprobe.txt"), summary: "Ein frisch aufgelöster Ordnerzugriff wird vor der Wiederherstellung separat durch Schreiben und Wiedereinlesen geprüft." },
-    { id: "auto-test-seven-diagnostic-phases", passed: ["permission", "target", "small_file", "temporary_register", "short_path", "long_path", "backup_restore"].every((id) => runAutomatedStorageDiagnostic.toString().includes(`id: \"${id}\"`)), summary: "Zugriff, Zielordner, direkte Schreibproben, kurzer und langer Pfad sowie Sicherung und Wiederherstellung werden getrennt diagnostiziert." },
-    { id: "auto-test-phase-isolation", passed: runAutomatedStorageDiagnostic.toString().includes("Diagnosephase fehlgeschlagen") && runAutomatedStorageDiagnostic.toString().includes("return null"), summary: "Ein fehlgeschlagener Diagnoseschritt beendet den Bericht nicht und nachfolgende unabhängige Prüfungen bleiben ausführbar." },
-    { id: "auto-test-prewrite-state", passed: writeAndVerifyRegisterFile.toString().includes("Ziel unmittelbar vor dem Schreiben prüfen") && writeAndVerifyRegisterFile.toString().includes("parentExists") && writeAndVerifyRegisterFile.toString().includes("targetExists"), summary: "Unmittelbar vor dem Registerschreiben werden Berechtigung, Elternordner und Zielzustand protokolliert." },
-    { id: "auto-test-postfailure-reread", passed: writeAndVerifyRegisterFile.toString().includes("Erneuter Leseversuch nach Schreibfehler"), summary: "Nach einem Schreibfehler wird ein frisch aufgelöster Leseversuch separat protokolliert." },
-    { id: "auto-test-no-unproven-cause", passed: runAutomatedStorageDiagnostic.toString().includes("const provenRootCause") && runAutomatedStorageDiagnostic.toString().includes("FEHLER_REPRODUZIERT"), summary: "Eine nicht belegte Windows-Ursache bleibt ausdrücklich offen und wird nicht als behoben ausgegeben." },
     { id: "auto-test-long-path-measured", passed: automatedWindowsPathInfo(`${AUTOMATED_TEST_WORKSPACE}/04_Wiederherstellung/Testwiederherstellung_2026-10-14T20-00-00-000Z/${ROOT}/00_Register/Familienakte_Register_TEMP_12345678-1234-1234-1234-123456789012.json`).pathLength === 293, summary: "Der gemeldete bisherige Wiederherstellungspfad wird vollständig als 293 Zeichen langer Windows-Pfad gemessen." },
     { id: "auto-test-short-restore-path", passed: automatedTestStructure.restore === "04_R" && automatedWindowsPathInfo(`${AUTOMATED_TEST_WORKSPACE}/04_R/R_20261014T200000Z/${ROOT}/00_Register/FA_TEMP_12345678.json`).pathLength === 202, summary: "Der neue interne Wiederherstellungspfad bleibt mit 202 Zeichen deutlich unter der vorsorglichen 260-Zeichen-Grenze." },
-    { id: "auto-test-write-stage-tracing", passed: ["Dateihandle erstellen", "Schreibstrom öffnen", "Inhalt schreiben", "Schreibstrom schließen"].every((operation) => runAutomatedStorageDiagnostic.toString().includes(operation)), summary: "Der Vergleich protokolliert den exakten fehlgeschlagenen Teilschritt des Schreibvorgangs." },
   ];
 }
 

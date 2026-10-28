@@ -192,7 +192,17 @@ export function runFamilyAssistantSelfTests() {
     { id: "assistant-four-cases", passed: results.length === 4 && results.every((result) => result.archiveFacts.length > 0), summary: "Rente, Reparatur, Arzttermin und Arbeitgeber werden als vier getrennte Praxissituationen eingeordnet." },
     { id: "assistant-evidence-separation", passed: results.every((result) => result.research.status === "not_configured" && Array.isArray(result.assessment.options)), summary: "Familienakte, aktuelle Recherche und Einschätzung bleiben getrennt." },
     { id: "assistant-release-gate", passed: results.every((result) => !result.sourceDocumentIds.includes("DOC-5")), summary: "Nicht freigegebene und nicht ausdrücklich vorgangsbezogene Dokumente werden ausgeschlossen." },
-    { id: "assistant-no-auto-send", passed: !buildCorrespondenceDraft.toString().includes("fetch("), summary: "Entwürfe werden nicht automatisch versendet." },
+    { id: "assistant-no-auto-send", passed: (() => {
+      // Verhaltenstest (A1): Ein Entwurf entsteht ohne jede Netzverbindung und bleibt ein Entwurf (nur Betreff und Text).
+      const scope = globalThis as { fetch?: unknown };
+      const original = scope.fetch;
+      let calls = 0;
+      scope.fetch = () => { calls++; return Promise.reject(new Error("Versand ist nicht vorgesehen")); };
+      try {
+        const draft = buildCorrespondenceDraft({ analysis: results[1], kind: "Brief", tone: "freundlich", recipient: "Reparaturwerkstatt" });
+        return calls === 0 && Object.keys(draft).sort().join(",") === "body,subject" && draft.body.endsWith("Mit freundlichen Grüßen");
+      } finally { scope.fetch = original; }
+    })(), summary: "Entwürfe werden nicht automatisch versendet." },
     { id: "assistant-medical-boundary", passed: results[2].assessment.important.some((item) => item.includes("keine Diagnose")), summary: "Terminvorbereitung stellt keine medizinische Diagnose." },
   ];
 }
