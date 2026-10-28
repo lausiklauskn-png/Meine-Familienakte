@@ -93,3 +93,15 @@ export function createDictationSession(options: {
     dispose() { disposed = true; stop(); },
   };
 }
+
+/** Grund, warum der Browser das Mikrofon hier grundsätzlich nicht freigibt – oder null.
+ *  Das ist der Fall bei lokal geöffneten Dateien (keine sichere Webadresse) und bei
+ *  eingebetteten Seiten, denen das Mikrofon per Berechtigungsrichtlinie entzogen ist. */
+export function microphoneBlockedReason(): string | null {
+  if (typeof window === "undefined" || typeof document === "undefined") return null;
+  if (window.isSecureContext === false) return "Spracheingabe braucht eine sichere Webadresse (https). Diese Ansicht erlaubt kein Mikrofon – bitte tippen.";
+  const policy = (document as Document & { permissionsPolicy?: { allowsFeature?: (feature: string) => boolean }; featurePolicy?: { allowsFeature?: (feature: string) => boolean } }).permissionsPolicy
+    || (document as Document & { featurePolicy?: { allowsFeature?: (feature: string) => boolean } }).featurePolicy;
+  try { if (policy?.allowsFeature && policy.allowsFeature("microphone") === false) return "In dieser eingebetteten Ansicht ist das Mikrofon gesperrt – bitte tippen."; } catch { /* unbekannt: Diktat bleibt möglich */ }
+  return null;
+}
