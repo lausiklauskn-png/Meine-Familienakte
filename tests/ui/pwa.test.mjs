@@ -34,6 +34,35 @@ try {
     await page.click(".familienakte-hinweis-zu");
     return text === "Probe-Hinweis" && (await page.locator(".familienakte-hinweis").count()) === 0;
   });
+  await step("Installieren-Knopf (Kanon installieren.js) steht hinten in den Kopfleisten-Aktionen", async () => {
+    const k = page.locator(".header-actions [data-install-knopf]");
+    await k.waitFor({ timeout: 8000 });
+    const letzter = await page.evaluate(() => document.querySelector(".header-actions").lastElementChild?.hasAttribute("data-install-knopf"));
+    const text = (await k.innerText()).replace(/\s+/g, " ").trim();
+    return letzter && /Installieren/.test(text) && (await k.isVisible()) ? `„${text}“, Lage ${await k.getAttribute("data-lage")}` : `letzter=${letzter} „${text}“`;
+  });
+  await step("Ohne Angebot des Browsers: Tipp zeigt die lesbare Erklärung, nichts geht ins Netz", async () => {
+    await page.click(".header-actions [data-install-knopf]");
+    const m = page.locator("#install-meldung"); await m.waitFor();
+    return /bietet die Installation gerade nicht an/.test(await m.innerText()) ? `data-lesbar=${await m.getAttribute("data-lesbar")}` : (await m.innerText()).slice(0, 120);
+  });
+  await step("Mit Angebot des Browsers (beforeinstallprompt gestellt): Tipp ruft den Dialog, danach „Installiert“", async () => {
+    await page.evaluate(() => { const e = new Event("beforeinstallprompt"); e.prompt = () => { window.__promptCalled = true; }; e.userChoice = Promise.resolve({ outcome: "accepted" }); window.dispatchEvent(e); });
+    const lage = await page.getAttribute(".header-actions [data-install-knopf]", "data-lage");
+    await page.click(".header-actions [data-install-knopf]");
+    await page.waitForFunction(() => window.__promptCalled === true && /Installiert/.test(document.querySelector("#install-meldung-text")?.textContent || ""));
+    return lage === "angeboten" ? "angeboten → Dialog → Installiert" : `Lage vorher ${lage}`;
+  });
+  await step("Als installierte App (display-mode: standalone): kein Knopf", async () => {
+    const app2 = await context.newPage();
+    await app2.addInitScript(() => { const orig = window.matchMedia.bind(window); window.matchMedia = (q) => /display-mode: standalone/.test(q) ? { matches: true, media: q, addEventListener() {}, removeEventListener() {}, addListener() {}, removeListener() {} } : orig(q); });
+    await app2.goto(app.base, { waitUntil: "networkidle" }); await ready(app2);
+    await app2.waitForSelector(".header-actions");
+    await app2.waitForTimeout(600);
+    const n = await app2.locator(".header-actions [data-install-knopf]:visible").count();
+    await app2.close();
+    return n === 0 ? "kein sichtbarer Knopf" : `${n} sichtbar`;
+  });
   await step("Versionszeile trägt die Bau-Kennung als Tipp", async () => { const t = await page.getAttribute(".site-brand-version", "title"); return t && t.includes(meta.build) ? t : t; });
 } finally { await browser.close(); await app.stop(); }
 process.exit(summary("PWA"));

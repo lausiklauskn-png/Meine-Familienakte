@@ -7,6 +7,13 @@
       "commit": "b0a28ddfb57f7efb285099f7b58f18433037f663",
       "sha256": "5c0fc2ea29a97ed75ee2c9ca10ada135e7a3173cf1442d82ac6055fbbd7232e6",
       "zweck": "App-Internetschalter: fetch/XMLHttpRequest/WebSocket-Hülle, APP_OFFLINE, data-app-offline, Ereignis pb:network"
+    },
+    "public/native/installieren.js": {
+      "repo": "lausiklauskn-png/Privat-Brain-Pro",
+      "pfad": "assets/installieren.js",
+      "commit": "b0a28ddfb57f7efb285099f7b58f18433037f663",
+      "sha256": "e0644084e2e72773608633190a3e5ed287f93d88f438e7473f03c765c7f873c3",
+      "zweck": "Knopf „Installieren“ (Kanon aus Sage-Protokol): als installierte App weg, sonst Browser-Dialog oder Erklärung"
     }
   }
 }
