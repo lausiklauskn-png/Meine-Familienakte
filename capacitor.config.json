@@ -1,0 +1,9 @@
+{
+  "appId": "de.familyprojekt.familienakte",
+  "appName": "Familienakte",
+  "webDir": "dist",
+  "loggingBehavior": "none",
+  "server": { "androidScheme": "https" },
+  "android": { "allowMixedContent": false, "webContentsDebuggingEnabled": false, "resolveServiceWorkerRequests": true },
+  "plugins": { "CapacitorHttp": { "enabled": false } }
+}
