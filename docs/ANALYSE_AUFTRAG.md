@@ -111,6 +111,8 @@ werden. Die Sitzung soll prüfen, wie weit das vorbereitet ist.
    - Private Brain: `Privat-Brain`, `Privat-Brain-Pro`, `Privat-Brain-Pro-V3`
    - Sendeprüfer: `Sende-Pruefer`, `Sendepruefer-Made-GPT`
    - Auslieferungsprüfer: `Auslieferung-Pruefer`, `Auslieferungspruefer-Made-GPT`
+   - zusätzlich `BookLedgerPro` („KI On-Device-first, externe KI strikt opt-in (BYOK). Kein
+     Klartext verlässt das Gerät ohne ausdrückliche Bestätigung.“) und `Kim-sync`
 
    Gesucht wird:
    - **Anonymisierung / Pseudonymisierung:** Namen, Adressen, Nummern und Daten erkennen,
@@ -178,6 +180,12 @@ beim Bedienen der App auswählen kann. Ich selbst teste zunächst auf dem **Andr
    - Hülle mit **Capacitor** um den bestehenden Vite-Build (`dist/`), Build der APK per
      GitHub Actions. Die fertige APK liegt dann als herunterladbare Datei an einem
      Actions-Lauf oder Release im Repo.
+   - **Vorlage gibt es schon:** `BookLedgerPro` hat `capacitor.config.json`, `android/`
+     und die Workflows `.github/workflows/android.yml`, `android-release.yml` und
+     `signing-identity.yml`, außerdem `BRIEF_ABSCHLUSS_2026-10-26_ANDROID-SCHRITT-A.md`.
+     Weitere Vorlagen in `Privat-Brain-Pro` (`docs/ANDROID.md`,
+     `docs/SIGNIERUNG-UND-GITHUB.md`) und `Workflow-PDF-Pro`. Diesen Weg übernehmen, statt
+     einen neuen zu erfinden.
    - **Wichtig:** In der Android-WebView gibt es die Web-Speech-Spracherkennung **nicht**.
      Für das Diktat in der APK braucht es ein natives Plugin (z. B. Capacitor Speech
      Recognition) plus Berechtigung `RECORD_AUDIO`. Ebenso prüfen: Ordnerauswahl (in der APK
@@ -194,6 +202,54 @@ beim Bedienen der App auswählen kann. Ich selbst teste zunächst auf dem **Andr
    Ergebnis von Paket F: `docs/analyse/PLATTFORMEN.md` mit Ist-Stand, Vorschlag und
    Schritt-für-Schritt-Plan. **Umsetzen** (Capacitor, Workflows, Pages) erst nach meiner
    Zustimmung in einer eigenen Sitzung bzw. einem eigenen PR.
+
+### G · Dateien von anderen Geräten: Handy-Foto, Scanner, andere Apps
+
+**Wunsch:** Ich mache mit dem Android-Handy in derselben Software ein Foto und schicke es an
+die Familienakte, etwa an den PC oder an ein anderes Gerät. Dort kommt es an, oder ich
+importiere es aus einem Sende- bzw. Eingangsordner. Ebenso sollen Scanner und andere Apps
+Dateien liefern können, damit sich die Familienakte füllen und verwalten lässt.
+
+1. **Ist-Stand in der Familienakte prüfen:**
+   - „Dokument fotografieren“ (mehrere Seiten werden zu einem PDF): auf Handy und PC
+   - „Eingangsordner auswählen“ und „OneDrive-Familienordner prüfen“ (Ordner `00_Posteingang`)
+   - E-Mail-Dateien (`.eml`/`.msg`) mit Anhängen, ZIP
+   - die Eingangszentrale (`app/central-intake-center.tsx`, `lib/central-intake.ts`)
+2. **Vorlagen in meinen Repos ansehen** (nur lesen):
+   - **`Kim-sync`** (PWA, https://lausiklauskn-png.github.io/Kim-sync/): Geräte über einen
+     **Raum-Code** koppeln. Fotos, Videos und beliebige Dateien werden auf dem Gerät
+     verschlüsselt (AES-GCM) und in Teilen über Relais übertragen, mit Abholbestätigung,
+     Teilen-Ziel und neu gezeichneten Bildern (Metadaten wie Standort fallen weg). Module:
+     `modules/krypto.js`, `05b_nostr_relay.js`, `23_rendezvous*.js`, `echtheit.js`.
+   - **`BookLedgerPro`**: Plan **gemeinsamer Tresorordner** für alle Pro-Apps
+     (`docs/design/PLAN-TRESORORDNER-2026-10-26.md`). Ein Passwort, ein Schloss, je App ein
+     Fach und **Eingangsfächer** (z. B. `Eingang-BookLedgerPro/`), Marke „übernommen“.
+     PWAs nutzen stattdessen Teilen und Links (`share_target`, `?uebernahme=`). Dazu der
+     Briefkasten-Austausch `docs/SAGE_SYNC_BRIEFKASTEN.md` und der Ordner `sbkim/`.
+   - `Privat-Brain-Pro` / `Workflow-PDF-Pro`: Schreibseite ins Eingangsfach, `DocumentVault`
+3. **Vorschläge ausarbeiten und bewerten** (Aufwand, Datenschutz, Handy/PC/Windows,
+   PWA/APK). Mindestens diese Varianten:
+   - **a) Teilen an die Familienakte:** Auf dem Handy in der Galerie, Kamera, Scanner-App
+     oder E-Mail „Teilen → Familienakte“. Die PWA braucht dafür `share_target` im Manifest,
+     die APK einen Android-Intent. Die Datei landet direkt im Dokumenteneingang mit
+     Zuordnungsvorschlag.
+   - **b) Kim-sync-Kopplung:** Handy und PC teilen einen Raum-Code. Das Handy fotografiert
+     bzw. scannt in der Familienakte und sendet verschlüsselt. Die Familienakte auf dem PC
+     zeigt die Datei in der Eingangszentrale als „Eingang: anderes Gerät“. Die Kim-sync-
+     Bausteine nach Möglichkeit wiederverwenden, nicht neu schreiben.
+   - **c) Gemeinsamer Eingangsordner:** Ein Fach `Eingang-Familienakte/` im gemeinsamen
+     Tresorordner der Pro-Apps (nativ: APK/Windows), alternativ ein synchronisierter Ordner
+     (OneDrive o. ä.), den die Familienakte als Eingangsordner überwacht. Andere Apps
+     (Private Brain Pro, BookLedgerPro, Workflow PDF Pro) legen dort Dateien ab.
+   - **d) Scanner:** Netzwerk- bzw. Multifunktionsgeräte, die in einen Ordner scannen
+     (dann wie c) oder per E-Mail versenden (dann `.eml`-Import). Mobile Scanner-Apps
+     übergeben ihre Datei über a.
+   - **e) QR-Code-Kopplung:** Der PC zeigt einen QR-Code, das Handy scannt ihn und ist
+     gekoppelt. Kein Abtippen von Codes.
+4. **Ergebnis:** `docs/analyse/DATEI-EINGANG-GERAETE.md` mit Ist-Stand, Bewertungstabelle
+   der Varianten, empfohlener Reihenfolge und Datenfluss-Skizze (Mermaid):
+   Gerät → Übertragung → Eingangszentrale → Zuordnung → Datentresor.
+   Umsetzen erst nach meiner Zustimmung.
 
 ## Werkzeuge und Grenzen
 
@@ -217,10 +273,11 @@ Alles unter `docs/analyse/`, verlinkt aus der README:
 3. `TECHNISCHER-BAUM.md` – die Diagramme aus Paket E
 4. `KI-UND-ANONYMISIERUNG.md` – Paket C mit Reifegrad-Tabelle und Datenfluss-Vorschlag
 5. `HANDPRUEFUNG.md` – Liste der Dinge, die ich selbst auf Handy und PC prüfen muss
-6. `PLATTFORMEN.md` – Paket F: Mikrofon-Auswahl, PWA, APK, späterer Windows-Umbau und der Weg vom Repo zur aktualisierten App
-7. `FRAGEN-AN-DEN-FREUND.md` – nur die Punkte, die sich aus Code und Texten wirklich nicht
+6. `DATEI-EINGANG-GERAETE.md` – Paket G: Handy-Foto, Scanner und andere Apps als Dateiquelle, mit Vorschlägen
+7. `PLATTFORMEN.md` – Paket F: Mikrofon-Auswahl, PWA, APK, späterer Windows-Umbau und der Weg vom Repo zur aktualisierten App
+8. `FRAGEN-AN-DEN-FREUND.md` – nur die Punkte, die sich aus Code und Texten wirklich nicht
    klären lassen
-8. die Playwright-Tests unter `tests/` und als `npm run test:ui` startbar, damit sie
+9. die Playwright-Tests unter `tests/` und als `npm run test:ui` startbar, damit sie
    später wiederholt werden können
 
 Am Ende: Commit, Push, Pull Request. Die Analyse darf ich zusammenführen lassen. Außerdem
