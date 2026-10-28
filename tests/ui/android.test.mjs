@@ -42,6 +42,22 @@ try {
   await step("Teilen → Familienakte: nichts wird ohne Bestätigung übernommen", async () => page.evaluate(() => !document.body.innerText.includes("übernommen") || document.body.innerText.includes("Nicht übernommen") || true));
   check(errors.filter((e) => !/APP_OFFLINE|ERR_FAILED|Failed to load resource/.test(e)).length === 0, "keine unerwarteten Seitenfehler", errors.join(" | ").slice(0, 300));
 
+  // Gerätefall (Klaus 2026-10-28, Tablet): bei Internet „aus“ meldet die WebView navigator.onLine = false.
+  const ohneNetz = await browser.newContext(DESKTOP);
+  await ohneNetz.addInitScript(capacitorStub);
+  await ohneNetz.addInitScript(() => { Object.defineProperty(Navigator.prototype, "onLine", { get: () => false, configurable: true }); });
+  const geraet = await ohneNetz.newPage();
+  await geraet.goto(app.base, { waitUntil: "networkidle" }); await ready(geraet);
+  await step("Gerät ohne Netz (navigator.onLine false): Android-Diktat bleibt frei, kein „Offline – bitte tippen“", async () => {
+    await geraet.waitForTimeout(600);
+    const knopf = geraet.locator(".dictation-button").first();
+    const frei = !(await knopf.isDisabled());
+    const hinweis = await geraet.locator(".dictation-status").first().textContent().catch(() => "");
+    if (!frei || /Offline/.test(hinweis || "")) throw new Error(`gesperrt=${!frei} Hinweis „${hinweis}“`);
+    return "Mikrofon frei";
+  });
+  await ohneNetz.close();
+
   // PWA: share_target über den Service Worker (ohne Capacitor)
   const pwa = await (await browser.newContext(DESKTOP)).newPage();
   await pwa.goto(app.base, { waitUntil: "networkidle" }); await ready(pwa);

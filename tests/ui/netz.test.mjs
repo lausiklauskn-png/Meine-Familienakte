@@ -20,10 +20,12 @@ try {
     const hinweis = await page.locator(".familienakte-hinweis span").first().innerText().catch(() => "");
     return result && /Internet für die App ist aus/.test(hinweis) ? hinweis : false;
   });
-  await step("Diktatknopf ist bei „aus“ gesperrt mit Hinweis „Offline – bitte tippen.“", async () => {
+  // Hinweis bewusst geändert (Klaus 2026-10-28: „warum geht das Mikrofon nicht“): bei Schalter „aus“ nennt er den Weg.
+  await step("Diktatknopf ist bei „aus“ gesperrt mit Hinweis „Internet für die App ist aus – oben einschalten oder tippen.“", async () => {
     const title = await page.locator(".dictation-button").first().getAttribute("title");
     const disabled = await page.locator(".dictation-button").first().isDisabled();
-    return disabled && /Offline – bitte tippen/.test(title || "") ? title : `disabled=${disabled}, title=${title}`;
+    if (!disabled || !/Internet für die App ist aus – oben einschalten/.test(title || "")) throw new Error(`disabled=${disabled}, title=${title}`);
+    return title;
   });
   await step("Einschalten über den Knopf in der Kopfleiste", async () => {
     await page.click(".netz-schalter");
