@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState, type ComponentPropsWithoutRef } from "react";
 import { CircleHelp, Mic, MicOff, X } from "lucide-react";
-import { createDictationSession, speechConstructor, type SpeechBrowser } from "../lib/browser-dictation";
+import { createDictationSession, microphoneBlockedReason, speechConstructor, type SpeechBrowser } from "../lib/browser-dictation";
 import { useActivity } from "./ui-activity";
 
 export function InfoPopover({ text, label = "Weitere Informationen" }: { text: string; label?: string }) {
@@ -33,13 +33,14 @@ export function DictationButton({ value, onChange, label, append = true, onDicta
   const [listening, setListening] = useState(false);
   const [hint, setHint] = useState("");
   const [available, setAvailable] = useState(false);
+  const [blocked, setBlocked] = useState<string | null>(null);
   const sessionRef = useRef<ReturnType<typeof createDictationSession> | null>(null);
   useEffect(() => {
     const supported = () => !!speechConstructor(window as unknown as SpeechBrowser);
     const online = () => navigator.onLine !== false;
     const session = createDictationSession({ constructor: () => speechConstructor(window as unknown as SpeechBrowser), online, onText: (text) => latest.current.onChange(text), onState: setListening, onHint: (text, error) => { setHint(text); if (text && error) latest.current.report({ kind: "error", text: `Spracheingabe · ${text}` }); } });
     sessionRef.current = session;
-    const availability = () => { setAvailable(supported() && online()); setHint(!online() ? "Offline – bitte tippen." : !supported() ? "Sprache nicht verfügbar – bitte tippen." : ""); };
+    const availability = () => { const reason = microphoneBlockedReason(); setBlocked(reason); setAvailable(supported() && online() && !reason); setHint(!online() ? "Offline – bitte tippen." : !supported() ? "Sprache nicht verfügbar – bitte tippen." : ""); };
     const offline = () => { session.offline(); availability(); };
     const other = (event: Event) => { if ((event as CustomEvent<string>).detail !== id) session.stop(); };
     const typed = () => session.stop();
@@ -56,7 +57,7 @@ export function DictationButton({ value, onChange, label, append = true, onDicta
     onDictationStart?.(); session.start(value, append);
   };
   return <span className="dictation-control">
-    <button type="button" className={`dictation-button ${listening ? "listening" : ""}`} disabled={!available} onClick={toggle} aria-pressed={listening} aria-label={`${label}: ${listening ? "Diktat beenden" : "Diktat starten"}`} title={hint || (listening ? "Aufnahme läuft bis zum Ausschalten – hier beenden" : "Diktat starten")}>
+    <button type="button" className={`dictation-button ${listening ? "listening" : ""}`} disabled={!available} onClick={toggle} aria-pressed={listening} aria-label={`${label}: ${listening ? "Diktat beenden" : "Diktat starten"}`} title={blocked || hint || (listening ? "Aufnahme läuft bis zum Ausschalten – hier beenden" : "Diktat starten")}>
       {available ? <Mic size={19}/> : <MicOff size={19}/>}
     </button>
     {(listening || hint) && <span className="dictation-status" role="status">{listening ? "Aufnahme läuft" : hint}</span>}
