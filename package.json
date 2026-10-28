@@ -38,7 +38,8 @@
     "check:consolidation": "node scripts/run-consolidation-tests.mjs",
     "check:assistant": "node scripts/run-family-assistant-tests.mjs",
     "check:system": "node scripts/run-system-check.mjs",
-    "screenshots": "node scripts/screenshots.mjs"
+    "screenshots": "node scripts/screenshots.mjs",
+    "build:single": "npm run build && node scripts/build-single-file.mjs"
   },
   "dependencies": {
     "lucide-react": "1.31.0",

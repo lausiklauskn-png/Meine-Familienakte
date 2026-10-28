@@ -22,7 +22,7 @@ const tests = [
   ["Hauptaktion sichtbar", portal.includes("Testumgebung automatisch einrichten und prüfen")],
   ["Ergebnis und Prüfpunkte sichtbar", portal.includes("automaticTestReport.checks.map") && portal.includes("Automatische Testumgebung eingerichtet und geprüft")],
   ["erneute Freigabe verständlich", localVault.includes("Browserfreigabe bestätigen") && portal.includes("Berechtigung bei jeder Verwendung erneut")],
-  ["Reset nur nach Bestätigung", portal.includes("Nur der eindeutig gekennzeichnete Ordner") && portal.includes("window.confirm")],
+  ["Reset nur nach Bestätigung", portal.includes("Nur der eindeutig gekennzeichnete Ordner") && portal.includes("await askConfirm(\"Nur der eindeutig gekennzeichnete Ordner")],
   ["responsive Darstellung", styles.includes(".automatic-test-checks") && styles.includes(".automatic-test-action")],
   ["Systemprüfung registriert", manifest.completedCapabilities?.includes("Automatische wiederverwendbare Testumgebung 2.28.1")],
   ["Commit und TEMP-Aufräumen getrennt", localVault.includes("Eine solche Sperre darf den gültigen Commit nicht") && localVault.includes("options?.diagnostics?.push(diagnostic)")],

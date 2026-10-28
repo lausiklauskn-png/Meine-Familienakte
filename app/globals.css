@@ -1655,3 +1655,20 @@ button.object-card:hover { transform: translateY(-2px); border-color: #8fb2c9; b
   .sample-data-notice { grid-template-columns: auto minmax(0,1fr); }
   .sample-data-notice .button { grid-column: 1 / -1; justify-self: start; }
 }
+
+/* Rückfragen innerhalb der Seite (Ersatz für Browser-Dialoge) */
+.page-dialog-backdrop { z-index: 120; }
+.page-dialog { width: min(540px, 100%); }
+.page-dialog .modal-head p { margin-top: 6px; }
+
+/* Dokumentvorschau innerhalb der Seite */
+.file-viewer-backdrop { z-index: 110; }
+.file-viewer { width: min(980px, 100%); }
+.file-viewer-body { margin-top: 14px; min-height: 120px; }
+.file-viewer-pages { display: grid; gap: 14px; justify-items: center; }
+.file-viewer-pages canvas { max-width: 100%; height: auto !important; border: 1px solid var(--line); border-radius: 6px; box-shadow: var(--shadow); background: white; }
+.file-viewer-image { display: block; max-width: 100%; margin: 0 auto; border-radius: 8px; }
+.file-viewer-text { max-height: 70vh; overflow: auto; white-space: pre-wrap; border: 1px solid var(--line); border-radius: 10px; padding: 14px; background: var(--canvas); font-size: .88rem; }
+.file-viewer-spin { animation: file-viewer-spin 1s linear infinite; }
+@keyframes file-viewer-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .file-viewer-spin { animation: none; } }
