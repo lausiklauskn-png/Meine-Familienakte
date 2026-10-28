@@ -50,14 +50,15 @@ export async function startApp() {
   if (process.env.UI_BASE) return { base: process.env.UI_BASE, stop: async () => {} };
   if (process.env.UI_BUILD === "1" || !existsSync(path.join(ROOT, "dist/index.html"))) await run("npx", ["vite", "build"]);
   const port = await freePort();
-  const child = spawn("npx", ["vite", "preview", "--port", String(port), "--strictPort", "--host", "127.0.0.1"], { cwd: ROOT, stdio: "ignore" });
+  // Eigene Prozessgruppe: npx startet vite als Kind; SIGTERM an npx allein ließ den Vorschau-Server stehen (verwaiste Prozesse in der CI).
+  const child = spawn("npx", ["vite", "preview", "--port", String(port), "--strictPort", "--host", "127.0.0.1"], { cwd: ROOT, stdio: "ignore", detached: true });
   const base = `http://127.0.0.1:${port}/`;
   const deadline = Date.now() + 30000;
   while (Date.now() < deadline) {
     try { const r = await fetch(base); if (r.ok) break; } catch { /* noch nicht da */ }
     await new Promise((r) => setTimeout(r, 200));
   }
-  return { base, stop: async () => { child.kill("SIGTERM"); } };
+  return { base, stop: async () => { try { process.kill(-child.pid, "SIGTERM"); } catch { child.kill("SIGTERM"); } } };
 }
 
 export async function launchBrowser() {

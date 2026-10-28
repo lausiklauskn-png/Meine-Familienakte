@@ -253,6 +253,9 @@ try {
     if (!head.includes("fotografierten")) throw new Error(head);
     await page.locator(".intake-modal button[type=submit]").click();
     await page.locator(".intake-modal").waitFor({ state: "detached", timeout: 20000 });
+    // Nach einem Kamera-Scan zeigt die App die Quittung auf der Startseite (uploadFromStart) – einen Augenblick nach dem
+    // Schließen des Fensters. Erst dort ankommen, sonst sucht die Probe den Scan auf der falschen Seite (war ein Wackler).
+    await page.waitForFunction(() => location.hash === "#startseite", null, { timeout: 10000 }).catch(() => {});
     if (!(await page.locator("h1", { hasText: "Eingangszentrale" }).count())) { await footer(page, "Eingangszentrale"); await page.locator("h1", { hasText: "Eingangszentrale" }).waitFor(); }
     const saved = page.locator(".document-item", { hasText: "Dokumentscan_" }).first();
     await saved.waitFor({ timeout: 20000 });
