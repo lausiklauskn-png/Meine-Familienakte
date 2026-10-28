@@ -37,10 +37,10 @@ export function DictationButton({ value, onChange, label, append = true, onDicta
     const supported = () => !!speechConstructor(window as unknown as SpeechBrowser);
     // Internetschalter der App (Standard aus): Browser-Diktat nur mit eingeschaltetem Internet; ein natives Diktat
     // (Android/Windows, window.FamilienakteDiktat) arbeitet auf dem Gerät und bleibt auch bei „aus“ erlaubt.
-    const online = () => { const w = window as unknown as { PBNetwork?: { ready: boolean; offline: boolean }; FamilienakteDiktat?: { offlineFaehig?: boolean } }; if (navigator.onLine === false) return false; if (w.FamilienakteDiktat?.offlineFaehig) return true; return !w.PBNetwork || (w.PBNetwork.ready && !w.PBNetwork.offline); };
+    const online = () => { const w = window as unknown as { PBNetwork?: { ready: boolean; offline: boolean }; FamilienakteDiktat?: { offlineFaehig?: boolean } }; if (w.FamilienakteDiktat?.offlineFaehig) return true; if (navigator.onLine === false) return false; return !w.PBNetwork || (w.PBNetwork.ready && !w.PBNetwork.offline); };
     const session = createDictationSession({ constructor: () => speechConstructor(window as unknown as SpeechBrowser), online, onText: (text) => latest.current.onChange(text), onState: setListening, onHint: (text, error) => { setHint(text); if (text && error) latest.current.report({ kind: "error", text: `Spracheingabe · ${text}` }); } });
     sessionRef.current = session;
-    const availability = () => { const reason = microphoneBlockedReason(); setBlocked(reason); setAvailable(supported() && online() && !reason); setHint(!online() ? "Offline – bitte tippen." : !supported() ? "Sprache nicht verfügbar – bitte tippen." : ""); };
+    const availability = () => { const reason = microphoneBlockedReason(); setBlocked(reason); setAvailable(supported() && online() && !reason); setHint(!online() ? (navigator.onLine !== false && (window as unknown as { PBNetwork?: { offline: boolean } }).PBNetwork?.offline ? "Internet für die App ist aus – oben einschalten oder tippen." : "Offline – bitte tippen.") : !supported() ? "Sprache nicht verfügbar – bitte tippen." : ""); };
     const offline = () => { session.offline(); availability(); };
     const other = (event: Event) => { if ((event as CustomEvent<string>).detail !== id) session.stop(); };
     const typed = () => session.stop();

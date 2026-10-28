@@ -35,6 +35,8 @@
     }
     window.SpeechRecognition = FamilienakteSpeech; window.webkitSpeechRecognition = FamilienakteSpeech;
     window.FamilienakteDiktat = { offlineFaehig: true, art: 'android-sprachfenster' };
+    // Schon gezeichnete Diktatknöpfe prüfen ihre Verfügbarkeit bei diesem Ereignis neu.
+    window.dispatchEvent(new Event('pb:network'));
   }
 
   // 2 · Geteilte Dateien in die Eingangszentrale

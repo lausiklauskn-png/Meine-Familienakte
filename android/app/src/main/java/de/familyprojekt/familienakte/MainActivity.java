@@ -24,6 +24,9 @@ public class MainActivity extends BridgeActivity {
         super.onCreate(state);
         if (bridge == null) return;
         // Internetschalter (Standard aus): auch Bilder, Schriften und der Service Worker bleiben im Gerät.
+        // Textzoom fest 100 %: die WebView vergrößert sonst nur den Text nach der System-Schriftgröße (Chrome zoomt die
+        // ganze Seite). Folge war eine 1,5-fach große, zerschossene Darstellung gegenüber der PWA (Klaus 2026-10-28).
+        bridge.getWebView().getSettings().setTextZoom(100);
         bridge.getWebView().getSettings().setBlockNetworkLoads(AppNetwork.isOffline());
         bridge.getWebView().setNetworkAvailable(!AppNetwork.isOffline());
         bridge.setWebViewClient(new BridgeWebViewClient(bridge) {

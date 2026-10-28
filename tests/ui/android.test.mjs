@@ -29,7 +29,8 @@ try {
     await page.waitForTimeout(500);
     const spoken = await page.evaluate(() => window.__capState.spoken);
     const pressed = await page.locator(".dictation-button").first().getAttribute("aria-pressed");
-    return spoken.length === 1 && spoken[0] === "de-DE" && pressed === "false" ? `Wert: ${await field.inputValue()}` : `spoken=${spoken.length}, pressed=${pressed}`;
+    if (!(spoken.length === 1 && spoken[0] === "de-DE" && pressed === "false")) throw new Error(`spoken=${spoken.length}, pressed=${pressed}`);
+    return `Wert: ${await field.inputValue()}`;
   });
   await step("Teilen → Familienakte: geteilte Datei erscheint in der Eingangszentrale", async () => {
     await page.evaluate(() => window.__capShare("Garantiebeleg_Lavorix.txt", "text/plain", "Garantiebeleg Waschautomat Lavorix, Kauf 2026-03-02, erfunden."));
@@ -37,10 +38,27 @@ try {
     const done = await page.evaluate(() => window.__capState.done);
     const inbox = await page.locator("h1").allInnerTexts();
     const row = await page.locator(".queue-title-row").first().innerText();
-    return done === 1 && inbox.some((t) => /Eingangszentrale/.test(t)) ? `Eingang „${row.split("\n")[0]}“, Datei im Gerät freigegeben` : `done=${done}`;
+    if (!(done === 1 && inbox.some((t) => /Eingangszentrale/.test(t)))) throw new Error(`done=${done}`);
+    return `Eingang „${row.split("\n")[0]}“, Datei im Gerät freigegeben`;
   });
   await step("Teilen → Familienakte: nichts wird ohne Bestätigung übernommen", async () => page.evaluate(() => !document.body.innerText.includes("übernommen") || document.body.innerText.includes("Nicht übernommen") || true));
   check(errors.filter((e) => !/APP_OFFLINE|ERR_FAILED|Failed to load resource/.test(e)).length === 0, "keine unerwarteten Seitenfehler", errors.join(" | ").slice(0, 300));
+
+  // Gerätefall (Klaus 2026-10-28, Tablet): bei Internet „aus“ meldet die WebView navigator.onLine = false.
+  const ohneNetz = await browser.newContext(DESKTOP);
+  await ohneNetz.addInitScript(capacitorStub);
+  await ohneNetz.addInitScript(() => { Object.defineProperty(Navigator.prototype, "onLine", { get: () => false, configurable: true }); });
+  const geraet = await ohneNetz.newPage();
+  await geraet.goto(app.base, { waitUntil: "networkidle" }); await ready(geraet);
+  await step("Gerät ohne Netz (navigator.onLine false): Android-Diktat bleibt frei, kein „Offline – bitte tippen“", async () => {
+    await geraet.waitForTimeout(600);
+    const knopf = geraet.locator(".dictation-button").first();
+    const frei = !(await knopf.isDisabled());
+    const hinweis = await geraet.locator(".dictation-status").first().textContent().catch(() => "");
+    if (!frei || /Offline/.test(hinweis || "")) throw new Error(`gesperrt=${!frei} Hinweis „${hinweis}“`);
+    return "Mikrofon frei";
+  });
+  await ohneNetz.close();
 
   // PWA: share_target über den Service Worker (ohne Capacitor)
   const pwa = await (await browser.newContext(DESKTOP)).newPage();
@@ -59,7 +77,8 @@ try {
     await pwa.goto(app.base + "?geteilt=1", { waitUntil: "networkidle" }); await ready(pwa);
     await pwa.waitForFunction(() => /1 Eingang wurde erkannt/.test(document.body.innerText) && document.querySelectorAll(".queue-title-row").length >= 1, null, { timeout: 15000 });
     const left = await pwa.evaluate(async () => (await (await caches.open("familienakte-geteilt")).keys()).length);
-    return left === 0 ? "Vorrat geleert" : `noch ${left} im Vorrat`;
+    if (!(left === 0)) throw new Error(`noch ${left} im Vorrat`);
+    return "Vorrat geleert";
   });
 } finally { await browser.close(); await app.stop(); }
 process.exit(summary("Android-Hülle"));

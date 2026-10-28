@@ -12,6 +12,7 @@ const gradle = read("android/app/build.gradle");
 const main = read("android/app/src/main/java/de/familyprojekt/familienakte/MainActivity.java");
 const cap = JSON.parse(read("capacitor.config.json"));
 check("capacitor.config: Paket de.familyprojekt.familienakte, webDir dist, https", cap.appId === "de.familyprojekt.familienakte" && cap.webDir === "dist" && cap.server?.androidScheme === "https");
+check("WebView: Textzoom fest 100 % (Darstellung wie in Chrome, Klaus 2026-10-28)", main.includes("setTextZoom(100)"));
 check("versionName im Gradle = package.json", gradle.includes(`versionName "${pkg.version}"`), pkg.version);
 check("versionCode aus FAMILIENAKTE_BUILD_NUMBER", gradle.includes("FAMILIENAKTE_BUILD_NUMBER"));
 check("Manifest: keine Android-Sicherung des App-Speichers, kein Klartext-HTTP", manifest.includes('android:allowBackup="false"') && manifest.includes('android:usesCleartextTraffic="false"'));
