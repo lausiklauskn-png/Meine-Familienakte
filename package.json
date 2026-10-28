@@ -46,7 +46,8 @@
     "screenshots": "node scripts/screenshots.mjs",
     "build:single": "npm run build && node scripts/build-single-file.mjs",
     "sync:android": "npm run build && cap sync android",
-    "check:android": "node tools/native/test-android.mjs"
+    "check:android": "node tools/native/test-android.mjs",
+    "check:windows": "node tools/native/test-windows.mjs"
   },
   "dependencies": {
     "lucide-react": "1.31.0",

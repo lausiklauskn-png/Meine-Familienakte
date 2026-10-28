@@ -1,0 +1,12 @@
+{
+  "name": "familienakte-windows",
+  "private": true,
+  "version": "2.28.1",
+  "type": "module",
+  "scripts": {
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "2.12.4"
+  }
+}

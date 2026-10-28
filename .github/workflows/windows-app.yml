@@ -1,0 +1,65 @@
+name: Windows-App (Prüf-Bau)
+
+# Baut die Windows-App (Tauri 2, NSIS pro Benutzer, unsigniert) aus demselben dist/ wie PWA und APK.
+# Muster: Privat-Brain-Pro windows-app.yml, stark verkleinert (kein Java-Kern).
+on:
+  pull_request:
+    paths: ['windows/**', 'public/native/**', '.github/workflows/windows-app.yml', 'app/**', 'lib/**', 'src/**', 'index.html', 'package.json']
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: windows-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - name: Quellen ohne Zeilenumwandlung
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: windows/src-tauri -> target
+      - run: npm ci
+      - run: npm ci --prefix windows
+      - name: Fassungen und Hülle prüfen
+        run: |
+          node windows/tools/version.mjs
+          node tools/native/test-windows.mjs
+      - name: Web-App bauen (dist/ muss vor den Rust-Proben da sein, generate_context! liest frontendDist)
+        run: node windows/tools/build-web.mjs
+        env:
+          FAMILIENAKTE_COMMIT: ${{ github.sha }}
+      - name: Rust-Proben
+        working-directory: windows/src-tauri
+        run: cargo test --release
+      - name: Installer bauen (NSIS)
+        run: npm run tauri --prefix windows -- build --bundles nsis
+        env:
+          FAMILIENAKTE_COMMIT: ${{ github.sha }}
+      - name: Installer benennen und Prüfsumme
+        shell: bash
+        run: |
+          set -euo pipefail
+          version=$(node -p "require('./package.json').version")
+          mkdir -p windows/distribution
+          cp windows/src-tauri/target/release/bundle/nsis/*-setup.exe "windows/distribution/Familienakte-Windows-$version-x64-setup.exe"
+          (cd windows/distribution && sha256sum *.exe > SHA256SUMS && cat SHA256SUMS)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: familienakte-windows-installer
+          path: windows/distribution/
+          if-no-files-found: error
+          retention-days: 14

@@ -1,0 +1,23 @@
+// Prüft die Windows-Hülle ohne Windows/Rust: Fassungen, Tauri-Konfiguration, Befehle, Klebstoff, keine Schlüssel. Rückgabe 1 bei Rot.
+import { existsSync, readFileSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+const read = (p) => readFileSync(path.join(root, p), "utf8");
+let gruen = 0, rot = 0;
+const check = (name, ok, detail = "") => { if (ok) { gruen++; console.log(`🟢 ${name}`); } else { rot++; console.log(`🔴 ${name}${detail ? " – " + detail : ""}`); } };
+const pkg = JSON.parse(read("package.json")), conf = JSON.parse(read("windows/src-tauri/tauri.conf.json")), cargo = read("windows/src-tauri/Cargo.toml"), main = read("windows/src-tauri/src/main.rs"), caps = JSON.parse(read("windows/src-tauri/capabilities/default.json")), glue = read("public/native/familienakte-windows.js");
+check("Fassung gleich in package.json, tauri.conf.json, Cargo.toml, windows/package.json", conf.version === pkg.version && cargo.includes(`version = "${pkg.version}"`) && JSON.parse(read("windows/package.json")).version === pkg.version);
+check("tauri.conf: Kennung de.familyprojekt.familienakte, frontendDist ../../dist, NSIS pro Benutzer, nur ein Fenster „main“", conf.identifier === "de.familyprojekt.familienakte" && conf.build.frontendDist === "../../dist" && conf.bundle.targets.includes("nsis") && conf.bundle.windows.nsis.installMode === "currentUser" && conf.app.windows.length === 1 && conf.app.windows[0].label === "main");
+check("Befehle: Diktat (SAPI), Abbrechen, Plattform, Startdateien, Adresse öffnen (nur https)", ["fa_diktat", "fa_diktat_abbrechen", "fa_plattform", "fa_startdateien", "fa_adresse_oeffnen"].every((c) => main.includes(`fn ${c}(`)) && main.includes('url.starts_with("https://")'));
+check("Startdateien: nur echte Dateien bis 200 MB, zweite Instanz reicht sie weiter", main.includes("MAX_DATEI") && main.includes("tauri_plugin_single_instance") && main.includes("familienakte:startdateien"));
+check("Capability: keine Shell-, Datei- oder Netzrechte für die Seite", caps.permissions.every((p) => /^core:/.test(p)) && !JSON.stringify(caps).includes("shell:"));
+check("Klebstoff: Capacitor-Brücke für native-network.js (windows, ipc.localhost), SAPI-Diktat, Update über Versionszeile, Startdateien", glue.includes("getPlatform: () => 'windows'") && glue.includes("fa_diktat") && glue.includes("site-brand-version") && glue.includes("windows/latest.json") && glue.includes("fa_startdateien"));
+check("Klebstoff läuft nur in der Windows-App (window.__TAURI__) und vor familienakte-netz.js", glue.includes("window.__TAURI__") && read("index.html").indexOf("familienakte-windows.js") < read("index.html").indexOf("familienakte-netz.js"));
+check("Update-Prüfung nur bei eingeschaltetem Internet", glue.includes("offline()") && glue.includes("Internet für die App ist aus"));
+check("Workflows vorhanden: windows-app.yml (Prüf-Bau) und windows-release.yml (von Hand, nur main)", existsSync(path.join(root, ".github/workflows/windows-app.yml")) && read(".github/workflows/windows-release.yml").includes("refs/heads/main"));
+check("Pages legt windows/latest.json und den Installer bei", read(".github/workflows/pages.yml").includes("dist/windows") && read(".github/workflows/pages.yml").includes("latest.json"));
+check("Mikrofonauswahl bleibt Plan (kein SetInput-Zweig im Diktat)", !main.includes("SetInput(&device") && !read("windows/src-tauri/src/speech.rs").includes("input_id"));
+check("Symbole für Installer und Fenster", existsSync(path.join(root, "windows/src-tauri/icons/icon.ico")) && existsSync(path.join(root, "windows/src-tauri/icons/icon.png")));
+console.log(`Windows-Hülle: ${gruen} grün · ${rot} rot`);
+process.exit(rot ? 1 : 0);
