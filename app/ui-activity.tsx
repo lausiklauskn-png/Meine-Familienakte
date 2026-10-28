@@ -1,5 +1,3 @@
-"use client";
-
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { CheckCircle2, CircleHelp, Copy, TriangleAlert } from "lucide-react";
 import { activityEntry, appendActivity, copyActivityText, type ActivityEntry, type ActivityFeedback, type ActivityKind } from "../lib/ui-activity";

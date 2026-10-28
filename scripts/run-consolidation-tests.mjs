@@ -182,5 +182,5 @@ console.log("🟢 Echter Registerschutz: beschädigte vorhandene Datei erkannt, 
 await runNestedVaultDetectionTest();
 console.log("🟢 Tresorerkennung: Der vollständigste vorhandene Registerbestand wird auch bei doppelt verschachtelten Familienakten-Ordnern gefunden.");
 
-console.log("🟢 Standard-Testbefehl: pnpm check:consolidation");
+console.log("🟢 Standard-Testbefehl: npm run check:consolidation");
 console.log("🟢 Produktive Originaldaten werden von diesem Testlauf nicht verändert.");

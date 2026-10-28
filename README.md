@@ -13,7 +13,7 @@ Server und ohne bestimmten Hosting-Anbieter.
 
 ## Starten
 
-Voraussetzung: Node.js 22.
+Voraussetzung: Node.js 22.18 oder neuer (die Prüfskripte laden TypeScript direkt).
 
 ```
 npm install

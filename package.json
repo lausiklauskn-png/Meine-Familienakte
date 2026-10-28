@@ -5,7 +5,7 @@
   "type": "module",
   "description": "Private Familienakte im Browser – Unterlagen, Termine und Aufgaben übersichtlich geordnet.",
   "engines": {
-    "node": ">=22.13.0"
+    "node": ">=22.18.0"
   },
   "scripts": {
     "dev": "vite",

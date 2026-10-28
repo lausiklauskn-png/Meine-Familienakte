@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { CheckCircle2, ClipboardCheck, Pause, Play, RotateCcw } from "lucide-react";
 import type { SystemCheckReport } from "../lib/system-check";

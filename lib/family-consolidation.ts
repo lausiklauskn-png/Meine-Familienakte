@@ -9,7 +9,7 @@ import { safeRegisterWritePlan } from "./family-register.ts";
 
 export const CONSOLIDATION_VERSION = "2.27.1" as const;
 export const LEADING_DATA_AUTHORITY = "Lokales Familienakten-Register" as const;
-export const STANDARD_CONSOLIDATION_TEST_COMMAND = "pnpm check:consolidation" as const;
+export const STANDARD_CONSOLIDATION_TEST_COMMAND = "npm run check:consolidation" as const;
 export const MINIMUM_SUPPORTED_NODE_MAJOR = 22 as const;
 
 export type ConsolidationTestResult = { id: string; label: string; passed: boolean; summary: string };
@@ -19,7 +19,7 @@ export function runCoreConsolidationSelfTests(): ConsolidationTestResult[] {
   // kein Node-`process`-Objekt. Der echte Node-Test wird beim Build ausgeführt;
   // im Browser prüfen wir deshalb den verbindlich dokumentierten Testvertrag.
   const runtimeNodeMajor = typeof process !== "undefined" ? Number(process.versions.node.split(".")[0]) : null;
-  const standardCommandReady = STANDARD_CONSOLIDATION_TEST_COMMAND === "pnpm check:consolidation"
+  const standardCommandReady = STANDARD_CONSOLIDATION_TEST_COMMAND === "npm run check:consolidation"
     && MINIMUM_SUPPORTED_NODE_MAJOR >= 22
     && (runtimeNodeMajor === null || runtimeNodeMajor >= MINIMUM_SUPPORTED_NODE_MAJOR);
   const now = "2026-10-10T20:00:00.000Z";
