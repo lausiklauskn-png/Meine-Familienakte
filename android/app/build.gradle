@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 
+def bauNummer = (System.getenv("FAMILIENAKTE_BUILD_NUMBER") ?: "1").toInteger()
+
 android {
     namespace = "de.familyprojekt.familienakte"
     compileSdk = rootProject.ext.compileSdkVersion
@@ -8,7 +10,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         // Version: versionName = package.json, versionCode = Bau-Nummer (FAMILIENAKTE_BUILD_NUMBER in der CI, sonst 1).
-        versionCode (System.getenv("FAMILIENAKTE_BUILD_NUMBER") ?: "1").toInteger()
+        // Als eigene Variable: „versionCode (…).toInteger()“ las Gradle als Aufruf von versionCode(…) → „Value is null“.
+        versionCode bauNummer
         versionName "2.28.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
