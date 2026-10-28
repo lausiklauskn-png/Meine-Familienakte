@@ -151,6 +151,50 @@ Speicherfunktion in `app/local-vault.ts` → Datei im Tresor** (`00_Register`,
 Gesundheit & Arbeit, Familie & Personen, Wohnen, Fahrzeuge, Käufe & Garantien,
 Dokumente, Hilfe).
 
+### F · Mikrofon-Auswahl und Plattformen (PWA, APK, später Windows)
+
+**Hintergrund:** Mein Freund arbeitet am **Windows-PC** und hat **mehrere Mikrofone**, die er
+beim Bedienen der App auswählen kann. Ich selbst teste zunächst auf dem **Android-Handy**.
+
+1. **Mikrofon-Auswahl prüfen:** Der Code enthält bisher **keine eigene Mikrofonauswahl**
+   (kein `enumerateDevices` / `deviceId`, weder auf `main` noch in der Referenz-Version).
+   Das Diktat nutzt die Spracherkennung des Browsers (Web Speech API), und die nimmt immer
+   das Standardmikrofon des Systems bzw. das Mikrofon, das in den Browser-Einstellungen
+   gewählt ist. Zu klären und zu dokumentieren:
+   - Wie wählt er heute unter Windows das Mikrofon (Windows-Sound-Einstellungen,
+     Chrome/Edge-Einstellungen pro Website)?
+   - Was wäre nötig für eine Auswahl **in der App**? Etwa eine Liste der Mikrofone über
+     `navigator.mediaDevices.enumerateDevices()`, Aufnahme über `getUserMedia({ audio:
+     { deviceId } })` und Spracherkennung über einen Dienst, der Audio-Daten annimmt
+     (lokal oder per API). Die Web Speech API selbst kann **kein** Mikrofon auswählen.
+   - Gibt es in den anderen Repos schon Code dafür?
+
+   Der **Windows-Umbau** ist ausdrücklich **später** dran. Jetzt nur Bestandsaufnahme und
+   Vorschlag, nichts umbauen.
+2. **PWA (Browser-App) vorbereiten:** Manifest ist vorhanden. Prüfen und vorschlagen, was
+   noch fehlt: Service Worker / Offline-Cache, Symbole in PNG-Größen, https-Adresse (siehe
+   offene Entscheidung unten), Installation auf Android und Windows.
+3. **APK für mich zum Testen planen** (neben der PWA). Vorschlag mit Aufwand und Risiken:
+   - Hülle mit **Capacitor** um den bestehenden Vite-Build (`dist/`), Build der APK per
+     GitHub Actions. Die fertige APK liegt dann als herunterladbare Datei an einem
+     Actions-Lauf oder Release im Repo.
+   - **Wichtig:** In der Android-WebView gibt es die Web-Speech-Spracherkennung **nicht**.
+     Für das Diktat in der APK braucht es ein natives Plugin (z. B. Capacitor Speech
+     Recognition) plus Berechtigung `RECORD_AUDIO`. Ebenso prüfen: Ordnerauswahl (in der APK
+     nicht vorhanden, Datentresor also im App-Speicher), Dateiauswahl, Kamera-Scan, Teilen und
+     Herunterladen von Sicherungen.
+   - **Signierung:** Debug-APK zum Testen reicht. Keine Schlüssel ins Repo, gegebenenfalls
+     als GitHub-Secret.
+4. **Aktualisierung über das Repo:** Für PWA **und** APK beschreiben, wie eine neue Version
+   aus dem Repo entsteht und hochgeladen wird. Jeder Merge nach `main` baut automatisch:
+   - die PWA (GitHub Pages bzw. Einzeldatei)
+   - die APK als Release-Datei mit Versionsnummer
+   - eine Update-Anzeige in der App („Neue Version verfügbar“)
+
+   Ergebnis von Paket F: `docs/analyse/PLATTFORMEN.md` mit Ist-Stand, Vorschlag und
+   Schritt-für-Schritt-Plan. **Umsetzen** (Capacitor, Workflows, Pages) erst nach meiner
+   Zustimmung in einer eigenen Sitzung bzw. einem eigenen PR.
+
 ## Werkzeuge und Grenzen
 
 - Playwright mit dem vorinstallierten Chromium (Desktop- und Handy-Ansicht), Zwischenablage
@@ -173,17 +217,20 @@ Alles unter `docs/analyse/`, verlinkt aus der README:
 3. `TECHNISCHER-BAUM.md` – die Diagramme aus Paket E
 4. `KI-UND-ANONYMISIERUNG.md` – Paket C mit Reifegrad-Tabelle und Datenfluss-Vorschlag
 5. `HANDPRUEFUNG.md` – Liste der Dinge, die ich selbst auf Handy und PC prüfen muss
-6. `FRAGEN-AN-DEN-FREUND.md` – nur die Punkte, die sich aus Code und Texten wirklich nicht
+6. `PLATTFORMEN.md` – Paket F: Mikrofon-Auswahl, PWA, APK, späterer Windows-Umbau und der Weg vom Repo zur aktualisierten App
+7. `FRAGEN-AN-DEN-FREUND.md` – nur die Punkte, die sich aus Code und Texten wirklich nicht
    klären lassen
-7. die Playwright-Tests unter `tests/` und als `npm run test:ui` startbar, damit sie
+8. die Playwright-Tests unter `tests/` und als `npm run test:ui` startbar, damit sie
    später wiederholt werden können
 
 Am Ende: Commit, Push, Pull Request. Die Analyse darf ich zusammenführen lassen. Außerdem
 im Chat eine kurze Zusammenfassung mit den fünf wichtigsten Ergebnissen.
 
-## Offene Entscheidung (vorher kurz nachfragen)
+## Offene Entscheidungen (vorher kurz nachfragen)
 
-Für das Mikrofon auf dem Handy braucht die App eine echte https-Adresse. Vorschlag: ein
+- **APK bauen:** Paket F liefert nur den Plan. Ob die Sitzung die APK gleich baut, frage ich
+  bei der Abgabe des Plans.
+- **https-Adresse:** Für das Mikrofon auf dem Handy braucht die App eine echte https-Adresse. Vorschlag: ein
 separates öffentliches Repo (z. B. `familienakte-app`) nur mit der gebauten App und GitHub
 Pages. Den Schalter in den Pages-Einstellungen muss ich einmal selbst umlegen. Das ist erst
 nach meiner Zustimmung umzusetzen.
