@@ -18,6 +18,10 @@ const rote = [];
 export function ok(name, detail = "") { gruen++; console.log(`🟢 ${name}${detail ? ` – ${detail}` : ""}`); }
 export function fail(name, detail = "") { rot++; rote.push(name); console.log(`🔴 ${name}${detail ? ` – ${detail}` : ""}`); }
 export function check(cond, name, detail = "") { (cond ? ok : fail)(name, detail); return !!cond; }
+// Browser-Diktat braucht seit dem Internetschalter (PR #10, Standard aus) ein eingeschaltetes Internet.
+export async function internetAn(page) {
+  if ((await page.getAttribute(".netz-schalter", "data-netz")) === "aus") { await page.click(".netz-schalter"); await page.waitForSelector('.netz-schalter[data-netz="an"]'); }
+}
 export async function step(name, fn) {
   try { const r = await fn(); if (r === false) fail(name); else ok(name, typeof r === "string" ? r : ""); return r; }
   catch (e) { fail(name, String(e?.message || e).split("\n")[0].slice(0, 200)); return false; }
@@ -46,14 +50,15 @@ export async function startApp() {
   if (process.env.UI_BASE) return { base: process.env.UI_BASE, stop: async () => {} };
   if (process.env.UI_BUILD === "1" || !existsSync(path.join(ROOT, "dist/index.html"))) await run("npx", ["vite", "build"]);
   const port = await freePort();
-  const child = spawn("npx", ["vite", "preview", "--port", String(port), "--strictPort", "--host", "127.0.0.1"], { cwd: ROOT, stdio: "ignore" });
+  // Eigene Prozessgruppe: npx startet vite als Kind; SIGTERM an npx allein ließ den Vorschau-Server stehen (verwaiste Prozesse in der CI).
+  const child = spawn("npx", ["vite", "preview", "--port", String(port), "--strictPort", "--host", "127.0.0.1"], { cwd: ROOT, stdio: "ignore", detached: true });
   const base = `http://127.0.0.1:${port}/`;
   const deadline = Date.now() + 30000;
   while (Date.now() < deadline) {
     try { const r = await fetch(base); if (r.ok) break; } catch { /* noch nicht da */ }
     await new Promise((r) => setTimeout(r, 200));
   }
-  return { base, stop: async () => { child.kill("SIGTERM"); } };
+  return { base, stop: async () => { try { process.kill(-child.pid, "SIGTERM"); } catch { child.kill("SIGTERM"); } } };
 }
 
 export async function launchBrowser() {

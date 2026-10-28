@@ -55,7 +55,7 @@ export function PageDialogHost() {
     if (!current) return;
     setValue(current.defaultValue);
     window.setTimeout(() => (current.kind === "prompt" ? inputRef.current?.focus() : confirmRef.current?.focus()), 0);
-  }, [current?.id]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [current?.id]);  
   if (!current) return null;
   const cancel = () => finish(current, current.kind === "prompt" ? null : false);
   const accept = () => finish(current, current.kind === "prompt" ? value : true);

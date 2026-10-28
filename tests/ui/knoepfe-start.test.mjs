@@ -1,6 +1,6 @@
 // Startseite, Kopf- und Fußzeile: Suche, Diktat, Drucken, Ausloggen, Objekt-Cockpit, Erinnerung erfassen,
 // Dokumenteneingang-Kacheln, Beispieldaten entfernen/laden.
-import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, collectErrors, footer, openMenu } from "./_harness.mjs";
+import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, collectErrors, footer } from "./_harness.mjs";
 import { speechStub, windowStub, directoryPickerStub, schliesseDialoge, bekannt, verdecktVon } from "./_stubs.mjs";
 
 const app = await startApp();
@@ -31,7 +31,7 @@ try {
     await page.waitForSelector(".search-results");
     const verstanden = await page.locator(".search-interpretation").count();
     const treffer = await page.locator(".search-results article").count();
-    return `Verstanden-als: ${verstanden ? "ja" : "nein"}, Treffer: ${treffer}` && verstanden === 1 && treffer > 0;
+    return verstanden === 1 && treffer > 0 ? `Verstanden-als: ja, Treffer: ${treffer}` : false;
   });
   await step("Suche: Treffer öffnen springt zur Seite", async () => { await page.locator(".search-results article > button").first().click(); return (await page.locator(".search-results").count()) === 0; });
   await step("Suche: „Zusammenhang öffnen“ führt ins Cockpit", async () => {
@@ -42,6 +42,15 @@ try {
   });
   await step("Suche: Unsinn ergibt ehrliche Leermeldung", async () => { await suche.fill("xyzqq-nichts"); await page.waitForSelector(".search-results"); return (await page.locator(".search-results .empty-state").count()) === 1; });
   await step("Suche löschen (✕) leert das Feld", async () => { await page.locator(".search-clear").click(); return (await suche.inputValue()) === "" && (await page.locator(".search-results").count()) === 0; });
+  // Seit dem Internetschalter (PR #10) ist das Browser-Diktat bei „Internet aus“ gesperrt (die Erkennung läuft beim
+  // Browser-Hersteller). Die Probe prüft die Sperre und schaltet dann für die Diktat-Schritte ein.
+  await step("Diktat bei Internet aus: Mikrofon gesperrt, Schalter an gibt es frei", async () => {
+    const mic = page.locator('.global-search .dictation-button');
+    if (!(await mic.isDisabled())) return false;
+    await page.click(".netz-schalter"); await page.waitForSelector('.netz-schalter[data-netz="an"]');
+    await page.waitForFunction(() => !document.querySelector(".global-search .dictation-button")?.disabled);
+    return true;
+  });
   await step("Diktat in der Suche: Mikrofon setzt den erkannten Text ein", async () => {
     const mic = page.locator('.global-search .dictation-button');
     if (await mic.isDisabled()) return false;

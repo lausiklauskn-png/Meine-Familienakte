@@ -70,7 +70,6 @@ export async function verdecktVon(page, locator) {
   const box = await locator.boundingBox();
   if (!box) return "nicht sichtbar";
   return page.evaluate(({ x, y }) => {
-    const e = document.elementFromPoint(x, y);
     const ziel = document.elementFromPoint(x, y);
     return ziel ? `${ziel.tagName.toLowerCase()}${ziel.className ? "." + String(ziel.className).split(" ")[0] : ""}` : "nichts";
   }, { x: box.x + box.width / 2, y: box.y + box.height / 2 });

@@ -943,7 +943,7 @@ export function inventoryPathIsExcluded(path: string, excludedPaths: string[]) {
 }
 
 async function directoryRelationship(source: FileSystemDirectoryHandle, register: FileSystemDirectoryHandle) {
-  const sourceComparable = source as ComparableHandle; const registerComparable = register as ComparableHandle;
+  const sourceComparable = source as ComparableHandle;
   if (sourceComparable.isSameEntry && await sourceComparable.isSameEntry(register)) return { same: true, registerWithinSource: null, sourceWithinRegister: null };
   const registerWithinSourceParts = await (source as DirectoryWithResolve).resolve?.(register) || null;
   const sourceWithinRegisterParts = await (register as DirectoryWithResolve).resolve?.(source) || null;
@@ -1698,7 +1698,7 @@ export async function runAutomatedStorageDiagnostic(base: FileSystemDirectoryHan
   };
   let directWriteWithoutRestore: AutomatedStorageDiagnosticReport["directWriteWithoutRestore"] = "fehlgeschlagen";
   let automaticEnvironmentCompleted = false;
-  let reportSavedInTestArea = false;
+  const reportSavedInTestArea = false;
   let diagnosticRunName = `Diagnoselauf_${new Date().toISOString().replace(/[:.]/g, "-")}`;
   const resolveDiagnosticRoot = async () => {
     const workspace = await base.getDirectoryHandle(automatedTestStructure.workspace, { create: true });

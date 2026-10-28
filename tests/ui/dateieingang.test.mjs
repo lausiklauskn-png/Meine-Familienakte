@@ -4,7 +4,7 @@
 // nicht erlaubten Typ, danach Bibliothek, Suche, Cockpit, Vorschau und Statuswechsel.
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { startApp, launchBrowser, DESKTOP, ready, footer, check, step, fail, ok, summary, collectErrors, ROOT } from "./_harness.mjs";
+import { startApp, launchBrowser, DESKTOP, ready, footer, check, step, fail, summary, collectErrors, ROOT } from "./_harness.mjs";
 
 const T = path.join(ROOT, "tests/testdateien");
 const f = (name) => path.join(T, name);
@@ -241,7 +241,7 @@ try {
     const camera = page.locator(".central-intake input[type=file][capture]");
     await camera.setInputFiles([f("Foto_Garantiebeleg_Lavorix.png"), f("Foto_Garantiebeleg_Lavorix_Seite2.jpg")]);
     try { await page.locator(".scan-modal").waitFor({ timeout: 20000 }); }
-    catch (e) { await page.screenshot({ path: path.join(LAUFZEIT, "fehler-scan.png"), fullPage: true }).catch(() => {}); throw new Error("Scan-Fenster fehlt: " + (await page.locator("body").innerText()).replace(/\s+/g, " ").match(/.{0,120}(Fehler|Bitte zuerst|Kamera).{0,160}/)?.[0]); }
+    catch { await page.screenshot({ path: path.join(LAUFZEIT, "fehler-scan.png"), fullPage: true }).catch(() => {}); throw new Error("Scan-Fenster fehlt: " + (await page.locator("body").innerText()).replace(/\s+/g, " ").match(/.{0,120}(Fehler|Bitte zuerst|Kamera).{0,160}/)?.[0]); }
     await page.waitForTimeout(500);
     const text = await page.locator(".scan-modal").innerText();
     if (!/2 Seite|Seite 1|Seite 2/.test(text)) throw new Error(text.slice(0, 200));
@@ -253,6 +253,9 @@ try {
     if (!head.includes("fotografierten")) throw new Error(head);
     await page.locator(".intake-modal button[type=submit]").click();
     await page.locator(".intake-modal").waitFor({ state: "detached", timeout: 20000 });
+    // Nach einem Kamera-Scan zeigt die App die Quittung auf der Startseite (uploadFromStart) – einen Augenblick nach dem
+    // Schließen des Fensters. Erst dort ankommen, sonst sucht die Probe den Scan auf der falschen Seite (war ein Wackler).
+    await page.waitForFunction(() => location.hash === "#startseite", null, { timeout: 10000 }).catch(() => {});
     if (!(await page.locator("h1", { hasText: "Eingangszentrale" }).count())) { await footer(page, "Eingangszentrale"); await page.locator("h1", { hasText: "Eingangszentrale" }).waitFor(); }
     const saved = page.locator(".document-item", { hasText: "Dokumentscan_" }).first();
     await saved.waitFor({ timeout: 20000 });
@@ -393,7 +396,7 @@ const page2 = await context2.newPage(); page2.setDefaultTimeout(8000);
 const errors2 = collectErrors(page2);
 try {
   await step("Bestand prüfen: Seite öffnen, gestellten Hauptordner (3 Dateien + Unterordner mit 2 Dateien) wählen", async () => {
-    await page2.goto(app.base, { waitUntil: "networkidle" }); await ready(page2);
+    await page2.goto(app.base + "?experte=1", { waitUntil: "networkidle" }); await ready(page2); // Bestand nur im Expertenmodus (B2)
     for (const [n, t, inSub] of [["Nebenkostenabrechnung_2025_Arenberg-Hof.pdf", "application/pdf", false], ["Mietvertrag_Arenberg-Hof_Nachtrag.docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", true], ["Notiz_Fahrradkauf_Velotrix.txt", "text/plain", true], ["Foto_Garantiebeleg_Lavorix.png", "image/png", false], ["Mail_Garantiefall_mit_PDF.eml", "message/rfc822", false]]) {
       await page2.evaluate(([n, b, t, s]) => window.__add(n, b, t, s), [n, readFileSync(f(n)).toString("base64"), t, inSub]);
     }

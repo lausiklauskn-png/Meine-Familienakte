@@ -255,7 +255,6 @@ export function familyRecordToAssignmentRecord(record: FamilyRecordUnion): Assig
 
 export function proposeFamilyAssignment(input: AssignmentInput, context: AssignmentContext): AssignmentProposal {
   const identifiers = unique([...(input.identifiers || []), input.contractNumber]);
-  const documentHints = unique([input.title, input.fileName, input.documentType]);
   const personHints = unique([...(input.personHints || []), input.recipientName]);
   const organisationHints = unique([...(input.organisationHints || []), input.sourceName]);
   const objectHints = unique(input.objectHints || []);

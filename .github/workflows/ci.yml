@@ -1,0 +1,48 @@
+name: Prüfung bei jedem PR
+
+# D1: Typprüfung, Fachprüfungen, Lint, Build, Herkunft der byte-gleichen Bausteine und die Oberflächenproben (Playwright).
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pruefung:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Typprüfung
+        run: npm run typecheck
+      - name: Lint
+        run: npm run lint
+      - name: Herkunft der byte-gleichen Bausteine
+        run: npm run check:herkunft
+      - name: Fachprüfungen und Systemprüfung
+        run: npm run check
+      - name: Build und Einzeldatei
+        run: npm run build:single
+      - name: Browser für die Oberflächenproben
+        run: npx playwright install --with-deps chromium
+      - name: Oberflächenproben (Playwright)
+        run: npm run test:ui
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: familienakte-pwa-dist
+          path: |
+            dist/
+            dist-single/
+          retention-days: 7

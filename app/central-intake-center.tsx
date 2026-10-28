@@ -110,7 +110,7 @@ export function CentralIntakeCenter({
         {queue.map((item) => {
           const analysis = item.analysis;
           return <article className={`intake-queue-item status-${statusClass[item.status]}`} key={item.id}>
-            <label className="queue-select" title="Für Sammelbearbeitung auswählen"><input type="checkbox" checked={item.selected} disabled={item.status === "Übernommen" || item.status === "Nicht übernommen"} onChange={() => onToggle(item.id)}/></label>
+            <label className="queue-select" title="Für Sammelbearbeitung auswählen" aria-label="Für Sammelbearbeitung auswählen"><input type="checkbox" checked={item.selected} disabled={item.status === "Übernommen" || item.status === "Nicht übernommen"} onChange={() => onToggle(item.id)}/></label>
             <div className="queue-icon">{analysis?.email ? <Mail/> : <FileText/>}</div>
             <div className="queue-copy"><div className="queue-title-row"><strong>{analysis ? centralIntakeDisplayTitle(analysis) : item.file.name}</strong><span className={`badge ${statusClass[item.status]}`}>{item.status}</span></div>
               <small>{analysis ? `${analysis.fileKind} · ${analysis.plan.lifeArea} · ${fmtBytes(item.file.size)}` : `${fmtBytes(item.file.size)} · Analyse läuft`}</small>

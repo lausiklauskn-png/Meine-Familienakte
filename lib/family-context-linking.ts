@@ -295,7 +295,6 @@ export function buildCaseTimeline(caseId: string, input: ContextInput): CaseTime
   const records = input.records.filter((record) => linked.has(record.id) && ["event", "task", "deadline"].includes(record.recordType));
   const documents = input.documents.filter((document) => linked.has(document.id));
   const recordItems = records.flatMap<CaseTimelineItem>((record) => {
-    const data = record.data as Record<string, unknown>;
     const memory = memoryData(record);
     const type: CaseTimelineItem["type"] = record.recordType === "task" ? "Aufgabe" : record.recordType === "deadline" ? "Frist" : memory?.eventType === "Termin" ? "Termin" : "Memory";
     const sensitive = memory?.sensitive || isSensitiveText(recordText(record));
