@@ -29,6 +29,14 @@ gebauten Dateien aus `dist/`; die Hüllen unterscheiden sich nur in Diktat, Date
 4. **Veröffentlichen** heißt: `android-release.yml` bzw. `windows-release.yml` von Hand auf `main` starten (Actions → Workflow →
    „Run workflow“, Tag z. B. `android-v2.28.1-test.1` / `windows-v2.28.1`). Beide prüfen vorher Typen, Fachprüfungen und Hülle.
 
+## Veröffentlicht am 2026-10-28 (Klaus' Wort), Quelle `7124c4b`
+
+- **PWA**: https://lausiklauskn-png.github.io/Meine-Familienakte/ (Pages-Lauf grün; aus dem Behälter nicht abrufbar, Netzrichtlinie).
+- **Android**: [Familienakte-android-v2.28.1-test.1.apk](https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.1-test.1/Familienakte-android-v2.28.1-test.1.apk),
+  3.929.310 Bytes, SHA-256 `6c2afba830abe240a55b0fb41cd6faae04d5be24becd7bc4c4e5fa77b7bc610d`, Wegwerfschlüssel (siehe oben), Vorab-Release.
+- **Windows**: __EXE__
+- Das Repo ist privat: Release-Downloads verlangen eine GitHub-Anmeldung im Browser; die Pages-Adresse ist öffentlich lesbar.
+
 ## Grenzen
 
 - Kein Gerät im Behälter: APK und Installer sind nur in den Workflows gebaut, nicht auf Tablet oder PC gestartet.
