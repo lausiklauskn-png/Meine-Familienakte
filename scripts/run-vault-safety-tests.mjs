@@ -14,9 +14,9 @@ class FakeFile {
   constructor(name, dir) { this.kind = "file"; this.name = name; this.dir = dir; this.bytes = new Uint8Array(); this.lastModified = Date.now(); }
   async getFile() { const bytes = this.bytes; return new File([bytes], this.name, { lastModified: this.lastModified }); }
   async createWritable() {
-    const file = this; const parts = [];
-    if (file.dir.fs.failWrites.has(file.name)) { file.dir.fs.failWrites.delete(file.name); throw Object.assign(new Error("Simulierter Schreibfehler"), { name: "QuotaExceededError" }); }
-    return { async write(data) { parts.push(typeof data === "string" ? new TextEncoder().encode(data) : data instanceof Blob ? new Uint8Array(await data.arrayBuffer()) : new Uint8Array(data)); }, async close() { const total = parts.reduce((n, p) => n + p.length, 0); const out = new Uint8Array(total); let o = 0; for (const p of parts) { out.set(p, o); o += p.length; } file.bytes = out; file.lastModified = Date.now(); } };
+    const parts = [];
+    if (this.dir.fs.failWrites.has(this.name)) { this.dir.fs.failWrites.delete(this.name); throw Object.assign(new Error("Simulierter Schreibfehler"), { name: "QuotaExceededError" }); }
+    return { write: async (data) => { parts.push(typeof data === "string" ? new TextEncoder().encode(data) : data instanceof Blob ? new Uint8Array(await data.arrayBuffer()) : new Uint8Array(data)); }, close: async () => { const total = parts.reduce((n, p) => n + p.length, 0); const out = new Uint8Array(total); let o = 0; for (const p of parts) { out.set(p, o); o += p.length; } this.bytes = out; this.lastModified = Date.now(); } };
   }
 }
 class FakeDir {
@@ -27,11 +27,11 @@ class FakeDir {
   async *values() { yield* this.entries.values(); }
   async *keys() { yield* this.entries.keys(); }
   async *entries_() { yield* this.entries.entries(); }
-  find(path) { let d = this; for (const part of path.split("/")) { d = d.entries.get(part); if (!d) return null; } return d; }
+  find(path) { return path.split("/").reduce((d, part) => (d && d.entries ? d.entries.get(part) ?? null : null), this); }
 }
 const newFs = () => { const fs = { failWrites: new Set() }; fs.root = new FakeDir("Testordner", fs); return fs; };
 
-const { fileChecksum, Sha256Stream, LIMITS, saveLocalDocument, removeVaultEntries, readLocalVaultData, vaultInternalsForTests, browserStorageKind, VaultRegisterError } = await import("../app/local-vault.ts");
+const { fileChecksum, Sha256Stream, LIMITS, saveLocalDocument, removeVaultEntries, vaultInternalsForTests, browserStorageKind, VaultRegisterError } = await import("../app/local-vault.ts");
 const { readIndex, writeIndex } = vaultInternalsForTests;
 let passed = 0; const fails = [];
 const ok = (name) => { passed++; console.log(`🟢 ${name}`); };
