@@ -1,6 +1,6 @@
 // Android-Hülle (gestellte Capacitor-Brücke): Internetschalter über das native Plugin, Diktat über das Sprachfenster,
 // „Teilen → Familienakte“ in die Eingangszentrale; dazu der PWA-Weg share_target über den Service Worker.
-import { startApp, launchBrowser, DESKTOP, ready, footer, check, step, summary, collectErrors } from "./_harness.mjs";
+import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, collectErrors } from "./_harness.mjs";
 import { capacitorStub } from "./_capacitor-stub.mjs";
 
 const app = await startApp();
