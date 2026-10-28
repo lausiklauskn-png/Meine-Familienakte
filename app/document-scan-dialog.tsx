@@ -1,4 +1,5 @@
 "use client";
+import { askConfirm } from "./page-dialogs";
 import { UI_HELP } from "../lib/ui-help";
 
 import { ArrowDown, ArrowUp, Camera, CheckCircle2, Crop, FileImage, FileText, ImagePlus, LoaderCircle, RotateCw, Sparkles, Trash2, X } from "lucide-react";
@@ -88,8 +89,8 @@ export function DocumentScanDialog({ initialFiles, onClose, onComplete }: {
     if (selectedId === removed.id) setSelectedId(next[Math.min(index, next.length - 1)]?.id || null);
   };
 
-  const requestClose = () => {
-    if (pages.length && !window.confirm("Scan verwerfen? Die aufgenommenen Seiten wurden noch nicht in der Familienakte gespeichert.")) return;
+  const requestClose = async () => {
+    if (pages.length && !await askConfirm("Scan verwerfen? Die aufgenommenen Seiten wurden noch nicht in der Familienakte gespeichert.")) return;
     onClose();
   };
 

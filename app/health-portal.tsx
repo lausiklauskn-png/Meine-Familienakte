@@ -1,4 +1,6 @@
 "use client";
+import { askConfirm, askPrompt } from "./page-dialogs";
+import { openFile } from "./file-viewer";
 import { PracticalAcceptance, StoredUserAcceptance } from "./practical-acceptance";
 import { UI_HELP } from "../lib/ui-help";
 
@@ -518,7 +520,7 @@ function HealthPortalContent() {
   const samplePresent = useMemo(() => sampleDataPresent({ documents: localDocuments, records: familyRecords }), [localDocuments, familyRecords]);
   const removeSampleData = async () => {
     if (!vaultHandle) return;
-    if (!window.confirm("Alle Beispieldaten entfernen?\n\nEntfernt werden nur die erfundenen Beispieleinträge und Beispieldokumente. Deine eigenen Unterlagen und Einträge bleiben erhalten.")) return;
+    if (!await askConfirm("Alle Beispieldaten entfernen?\n\nEntfernt werden nur die erfundenen Beispieleinträge und Beispieldokumente. Deine eigenen Unterlagen und Einträge bleiben erhalten.")) return;
     setSampleBusy(true);
     try { const result = await removeSampleFamily(vaultHandle); await refreshLocal(vaultHandle); setNotice({ kind: "success", text: `Beispieldaten entfernt: ${result.removedEntries} Einträge und ${result.removedFiles} Beispieldokumente. Die Familienakte ist jetzt bereit für deine eigenen Unterlagen.` }); }
     catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die Beispieldaten konnten nicht entfernt werden." }); }
@@ -778,7 +780,7 @@ function HealthPortalContent() {
   const runInventoryArchive = async (ids: string[]) => {
     if (!vaultHandle || !inventorySourceHandle || !inventoryArchiveHandle) { setNotice({ kind: "error", text: `Archivierung nicht ausgeführt · nicht verbunden: ${[!vaultHandle && "Familienakten-Tresor", !inventorySourceHandle && "Analysequelle", !inventoryArchiveHandle && "Archivdatenträger"].filter(Boolean).join(", ")}.` }); return; }
     if (!ids.length) { setNotice({ kind: "error", text: "Bitte zuerst mindestens eine noch nicht archivierte Datei über das kleine Auswahlkästchen markieren. Dubletten und Dateien mit geringer Relevanz werden nicht versehentlich archiviert." }); return; }
-    if (!window.confirm(`${ids.length} ausgewählte Datei${ids.length === 1 ? "" : "en"} als geprüfte Kopie archivieren? Die Originale bleiben unverändert.`)) return;
+    if (!await askConfirm(`${ids.length} ausgewählte Datei${ids.length === 1 ? "" : "en"} als geprüfte Kopie archivieren? Die Originale bleiben unverändert.`)) return;
     setInventoryBusy(true);
     try {
       const result = await archiveInventoryItems({ register: vaultHandle, source: inventorySourceHandle, archive: inventoryArchiveHandle, itemIds: ids, onProgress: setInventoryProgress });
@@ -789,7 +791,7 @@ function HealthPortalContent() {
   };
   const runInventoryRelease = async (ids: string[]) => {
     if (!vaultHandle || !inventoryArchiveHandle) { setNotice({ kind: "error", text: `Assistenzfreigabe nicht ausgeführt · nicht verbunden: ${[!vaultHandle && "Familienakten-Tresor", !inventoryArchiveHandle && "Archivdatenträger"].filter(Boolean).join(", ")}.` }); return; }
-    if (!ids.length || !window.confirm(`${ids.length} archivierte Datei${ids.length === 1 ? "" : "en"} für Bibliothek, Suche und Familienassistent freigeben?`)) return;
+    if (!ids.length || !await askConfirm(`${ids.length} archivierte Datei${ids.length === 1 ? "" : "en"} für Bibliothek, Suche und Familienassistent freigeben?`)) return;
     setInventoryBusy(true);
     try {
       const result = await releaseInventoryItemsForAssistant({ register: vaultHandle, archive: inventoryArchiveHandle, itemIds: ids });
@@ -801,7 +803,7 @@ function HealthPortalContent() {
   const runInventoryReset = async (ids: string[]) => {
     if (!vaultHandle || !inventoryArchiveHandle) { setNotice({ kind: "error", text: "Bitte Familienakten-Tresor und Testarchiv verbinden." }); return; }
     if (!ids.length) { setNotice({ kind: "error", text: "Bitte zuerst mindestens eine archivierte oder assistenzfreigegebene Testdatei markieren." }); return; }
-    if (!window.confirm(`${ids.length} markierte Testdatei${ids.length === 1 ? "" : "en"} auf „Quelle analysiert“ zurücksetzen? Die zugehörigen Testarchiv-Kopien und Assistenzfreigaben werden entfernt. Originaldateien bleiben unverändert.`)) return;
+    if (!await askConfirm(`${ids.length} markierte Testdatei${ids.length === 1 ? "" : "en"} auf „Quelle analysiert“ zurücksetzen? Die zugehörigen Testarchiv-Kopien und Assistenzfreigaben werden entfernt. Originaldateien bleiben unverändert.`)) return;
     setInventoryBusy(true);
     try {
       const result = await resetInventoryItemsForRetest({ register: vaultHandle, archive: inventoryArchiveHandle, itemIds: ids });
@@ -955,7 +957,7 @@ function HealthPortalContent() {
   };
   const removeMemoryDraft = async (draftId: string) => {
     if (!ensureMemoryVault() || !vaultHandle) return;
-    if (!window.confirm("Diesen noch nicht bearbeiteten Memory-Entwurf wirklich löschen?")) return;
+    if (!await askConfirm("Diesen noch nicht bearbeiteten Memory-Entwurf wirklich löschen?")) return;
     try { await deleteLocalMemoryDraft(vaultHandle, draftId); await refreshLocal(vaultHandle); setNotice({ kind: "success", text: "Nur der ausgewählte Entwurf wurde gelöscht. Andere Entwürfe und gespeicherte Erinnerungen blieben unverändert." }); }
     catch (reason) { setNotice({ kind: "error", text: reason instanceof Error ? reason.message : "Der Entwurf konnte nicht gelöscht werden." }); }
   };
@@ -1011,20 +1013,18 @@ function HealthPortalContent() {
     if (!local || !vaultHandle) { go("inbox"); setNotice({ kind: "error", text: "Bitte den zugehörigen Datentresor verbinden und das Dokument im Dokumenteneingang öffnen." }); return; }
     try {
       const file = await readLocalDocumentFile(vaultHandle, id);
-      const url = URL.createObjectURL(file);
-      window.open(url, "_blank", "noopener,noreferrer");
-      window.setTimeout(() => URL.revokeObjectURL(url), 60000);
+      openFile(file, local.originalName);
     } catch (reason) { setNotice({ kind: "error", text: reason instanceof Error ? reason.message : "Das Dokument konnte nicht geöffnet werden." }); }
   };
   const updateCockpitTask = async (id: string, status: LocalScheduleStatus) => {
     if (!vaultHandle) { go("security"); setNotice({ kind: "error", text: "Bitte zuerst den lokalen OneDrive-, PC- oder USB-Datentresor verbinden." }); return; }
-    if (!window.confirm(`Soll der Status von ${id} wirklich auf „${status.replaceAll("_", " ")}“ gesetzt werden?`)) return;
+    if (!await askConfirm(`Soll der Status von ${id} wirklich auf „${status.replaceAll("_", " ")}“ gesetzt werden?`)) return;
     try { await updateLocalScheduleStatus(vaultHandle, id, status); await refreshLocal(vaultHandle); setNotice({ kind: "success", text: "Der Aufgabenstatus wurde nach deiner Bestätigung aktualisiert und protokolliert." }); }
     catch (reason) { setNotice({ kind: "error", text: reason instanceof Error ? reason.message : "Der Aufgabenstatus konnte nicht geändert werden." }); }
   };
   const appendCockpitNote = async (id: string, note: string) => {
     if (!vaultHandle) { go("security"); setNotice({ kind: "error", text: "Bitte zuerst den lokalen OneDrive-, PC- oder USB-Datentresor verbinden." }); return false; }
-    if (!window.confirm("Soll diese Notiz wirklich beim ausgewählten Datensatz ergänzt werden?")) return false;
+    if (!await askConfirm("Soll diese Notiz wirklich beim ausgewählten Datensatz ergänzt werden?")) return false;
     try { await appendLocalFamilyRecordNote(vaultHandle, id, note); await refreshLocal(vaultHandle); setNotice({ kind: "success", text: "Die Notiz wurde nach deiner Bestätigung ergänzt und protokolliert." }); return true; }
     catch (reason) { setNotice({ kind: "error", text: reason instanceof Error ? reason.message : "Die Notiz konnte nicht ergänzt werden." }); return false; }
   };
@@ -1039,7 +1039,7 @@ function HealthPortalContent() {
     catch (reasonValue) { setNotice({ kind: "error", text: reasonValue instanceof Error ? reasonValue.message : "Die Entscheidung konnte nicht gespeichert werden." }); }
   };
   const unlinkContext = async (relationId: string) => {
-    if (!vaultHandle || !window.confirm("Nur diese Verbindung lösen? Dokument, Erinnerung und Vorgang bleiben vollständig erhalten.")) return;
+    if (!vaultHandle || !await askConfirm("Nur diese Verbindung lösen? Dokument, Erinnerung und Vorgang bleiben vollständig erhalten.")) return;
     try { await removeLocalContextLink(vaultHandle, relationId); await refreshLocal(vaultHandle); setNotice({ kind: "success", text: "Nur die Verbindung wurde gelöst. Kein Datensatz und keine Originaldatei wurde gelöscht." }); }
     catch (reasonValue) { setNotice({ kind: "error", text: reasonValue instanceof Error ? reasonValue.message : "Die Verbindung konnte nicht gelöst werden." }); }
   };
@@ -1478,12 +1478,12 @@ function MemoryCapturePanel({ initialDraft, suggestedCaseId, queueCount, openPoi
   };
   const leaveToMemory = async () => {
     if (!hasInput) { onGo("memory"); return; }
-    if (window.confirm("Aktuelle Erinnerung wurde noch nicht übernommen. Soll sie jetzt in die Warteschlange gelegt werden?")) {
+    if (await askConfirm("Aktuelle Erinnerung wurde noch nicht übernommen. Soll sie jetzt in die Warteschlange gelegt werden?")) {
       const saved = await onQueue(currentDraft);
       if (saved) { clear(); onGo("memory"); }
       return;
     }
-    if (window.confirm("Aktuelle Eingabe verwerfen und das Tagebuch öffnen?")) onGo("memory");
+    if (await askConfirm("Aktuelle Eingabe verwerfen und das Tagebuch öffnen?")) onGo("memory");
   };
   return <section className="memory-capture card" aria-labelledby="memory-capture-title">
     <div className="card-heading"><div><span className="eyebrow dark">Lokales Erinnerungsprotokoll</span><div className="start-title-row"><h2 className="start-section-title" id="memory-capture-title">Was ist heute passiert?</h2><InfoPopover label="Erinnerungsprotokoll erklären" text="Hier kannst du ein Erlebnis, einen Gedanken oder eine Beobachtung schreiben, diktieren oder mit Fotos ergänzen."/></div><p>{initialDraft ? "Ergänze oder korrigiere diesen unbehandelten Entwurf." : "Erfasse mehrere Erinnerungen nacheinander und prüfe sie anschließend einzeln."}</p></div></div>
@@ -1593,22 +1593,22 @@ function MemoryCenter({ documents, records, relations, drafts, initialFocusId, v
   useEffect(() => { if (initialFocusId) setSelectedId(initialFocusId); }, [initialFocusId]);
   const changeOpenStatus = async (eventId: string, status: MemoryOpenStatus) => {
     if (!vaultHandle) { onGo("security"); return; }
-    if (!window.confirm(`Soll dieser offene Punkt wirklich auf „${memoryStatusLabel[status]}“ gesetzt werden?`)) return;
+    if (!await askConfirm(`Soll dieser offene Punkt wirklich auf „${memoryStatusLabel[status]}“ gesetzt werden?`)) return;
     try { await updateLocalMemoryOpenPointStatus(vaultHandle, eventId, status); await onRefresh(); onNotice({ kind: "success", text: "Der Memory-Status wurde nach deiner Bestätigung geändert und protokolliert." }); }
     catch (reason) { onNotice({ kind: "error", text: reason instanceof Error ? reason.message : "Der Status konnte nicht geändert werden." }); }
   };
   const openMedia = async (eventId: string, mediaId: string) => {
     if (!vaultHandle) { onGo("security"); return; }
-    try { const file = await readLocalMemoryMediaFile(vaultHandle, eventId, mediaId); const url = URL.createObjectURL(file); window.open(url, "_blank", "noopener,noreferrer"); window.setTimeout(() => URL.revokeObjectURL(url), 60000); }
+    try { const file = await readLocalMemoryMediaFile(vaultHandle, eventId, mediaId); openFile(file); }
     catch (reason) { onNotice({ kind: "error", text: reason instanceof Error ? reason.message : "Das Medium konnte nicht geöffnet werden." }); }
   };
   const editSavedMemory = async () => {
     if (!vaultHandle || !selected || !selectedData) { onGo("security"); return; }
-    const title = window.prompt("Titel des Memory-Eintrags", selectedData.title);
+    const title = await askPrompt("Titel des Memory-Eintrags", selectedData.title);
     if (title === null) return;
-    const originalText = window.prompt("Gespeicherten Text ergänzen oder bearbeiten", selectedData.originalText);
+    const originalText = await askPrompt("Gespeicherten Text ergänzen oder bearbeiten", selectedData.originalText);
     if (originalText === null) return;
-    if (!window.confirm("Diese Änderungen jetzt im gespeicherten Memory-Eintrag übernehmen?")) return;
+    if (!await askConfirm("Diese Änderungen jetzt im gespeicherten Memory-Eintrag übernehmen?")) return;
     try { await updateLocalMemoryRecord(vaultHandle, selected.id, { title, originalText }); await onRefresh(); onNotice({ kind: "success", text: "Der gespeicherte Memory-Eintrag wurde aktualisiert und im Änderungsprotokoll vermerkt." }); }
     catch (reason) { onNotice({ kind: "error", text: reason instanceof Error ? reason.message : "Der Memory-Eintrag konnte nicht bearbeitet werden." }); }
   };
@@ -1616,10 +1616,10 @@ function MemoryCenter({ documents, records, relations, drafts, initialFocusId, v
     if (!vaultHandle || !selected) { onGo("security"); return; }
     try {
       const impact = await getLocalMemoryDeleteImpact(vaultHandle, selected.id);
-      if (!window.confirm("Diesen gespeicherten Memory-Eintrag wirklich löschen? Gemeinsam verwendete Personen, Organisationen, Objekte, Vorgänge und Dokumente bleiben erhalten.")) return;
+      if (!await askConfirm("Diesen gespeicherten Memory-Eintrag wirklich löschen? Gemeinsam verwendete Personen, Organisationen, Objekte, Vorgänge und Dokumente bleiben erhalten.")) return;
       let keepLinkedSchedules = true;
       if (impact.linkedScheduleCount) {
-        const choice = window.prompt(`${impact.linkedScheduleCount} verbundene Aufgabe(n) oder Frist(en) wurden gefunden. Bitte VERBLEIBEN, MITLÖSCHEN oder ABBRECHEN eingeben.`, "VERBLEIBEN");
+        const choice = await askPrompt(`${impact.linkedScheduleCount} verbundene Aufgabe(n) oder Frist(en) wurden gefunden. Bitte VERBLEIBEN, MITLÖSCHEN oder ABBRECHEN eingeben.`, "VERBLEIBEN");
         if (choice === null || choice.trim().toLocaleUpperCase("de") === "ABBRECHEN") return;
         if (!["VERBLEIBEN", "MITLÖSCHEN"].includes(choice.trim().toLocaleUpperCase("de"))) throw new Error("Bitte VERBLEIBEN, MITLÖSCHEN oder ABBRECHEN eingeben.");
         keepLinkedSchedules = choice.trim().toLocaleUpperCase("de") === "VERBLEIBEN";
@@ -1951,7 +1951,7 @@ function InventoryCenter({ vaultReady, vaultHandle, sourceHandle, sourceName, ar
     } finally { setAutomaticTestBusy(false); }
   };
   const resetAutomaticTestWorkspace = async () => {
-    if (automaticTestBlocked || !developmentBase || !window.confirm("Nur der eindeutig gekennzeichnete Ordner „Familienakte_Automatische_Testumgebung_2.28.1“ wird gelöscht und vollständig mit synthetischen Testdaten neu erstellt. Fortfahren?")) return;
+    if (automaticTestBlocked || !developmentBase || !await askConfirm("Nur der eindeutig gekennzeichnete Ordner „Familienakte_Automatische_Testumgebung_2.28.1“ wird gelöscht und vollständig mit synthetischen Testdaten neu erstellt. Fortfahren?")) return;
     setAutomaticTestBusy(true); setAutomaticTestError("");
     try { const result = await resetAutomatedTestEnvironment(developmentBase); setAutomaticTestReport(result); clearAutomaticTestFailure(); reportActivity({ kind: result.checks.every((check) => check.status === "bestanden") ? "success" : "info", text: `Eigene automatische Testumgebung kontrolliert neu erstellt und geprüft · ${result.checks.filter((check) => check.status === "bestanden").length} von ${result.checks.length} Prüfungen bestanden. Dateien außerhalb des Testbereichs unverändert.` }); }
     catch (error) { storeAutomaticTestFailure(error); }
@@ -1988,7 +1988,7 @@ function InventoryCenter({ vaultReady, vaultHandle, sourceHandle, sourceName, ar
   const confirmPreparedTestRegister = async () => {
     if (!testRegisterPreview || !vaultHandle) return;
     const sensitiveNote = testRegisterPreview.sensitiveDocuments ? `\n\n${testRegisterPreview.sensitiveDocuments} sensible Unterlage${testRegisterPreview.sensitiveDocuments === 1 ? " wurde" : "n wurden"} erkannt. Verwende für weitere Funktionstests möglichst anonymisierte oder synthetische Daten.` : "";
-    if (!window.confirm(`${testRegisterPreview.recognizedDocuments} vorbereitete Testdokumente jetzt in das bestehende Testregister übernehmen? Neue Einträge erhalten ausschließlich den Status QUELLE_ANALYSIERT. Originaldateien werden nicht verändert, kopiert, archiviert oder für die Assistenz freigegeben.${sensitiveNote}`)) return;
+    if (!await askConfirm(`${testRegisterPreview.recognizedDocuments} vorbereitete Testdokumente jetzt in das bestehende Testregister übernehmen? Neue Einträge erhalten ausschließlich den Status QUELLE_ANALYSIERT. Originaldateien werden nicht verändert, kopiert, archiviert oder für die Assistenz freigegeben.${sensitiveNote}`)) return;
     setTestRegisterBusy(true); setTestRegisterError("");
     try {
       const result = await savePreparedTestRegister({ register: vaultHandle, preview: testRegisterPreview });

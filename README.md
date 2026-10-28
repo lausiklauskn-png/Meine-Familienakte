@@ -36,6 +36,12 @@ Beim ersten Start legt die App die erfundene Beispielfamilie im Browser-Datentre
 Der Ordner `dist/` kann auf jeden beliebigen Webserver oder in einen beliebigen
 Unterordner kopiert werden.
 
+`npm run build:single` erzeugt zusätzlich `dist-single/meine-familienakte.html` – die ganze
+App in einer einzigen Datei. So läuft sie auch als eingebettete Seite (z. B. als Link auf
+claude.ai). Dort gelten Browser-Einschränkungen: Rückfragen erscheinen als Dialog in der
+Seite, Dokumente öffnen sich in einer Vorschau, Ordnerauswahl, Drucken, Mikrofon und
+Datei-Downloads stehen eingebettet nicht zur Verfügung.
+
 ## Beispieldaten entfernen
 
 Oben auf jeder Seite steht der Hinweis „Alle Daten sind Beispieldaten.“ mit dem Knopf
@@ -47,7 +53,9 @@ wieder anlegen.
 ## Wo liegen die Daten?
 
 - **Browser-Datentresor (Standard):** Die Daten liegen im geschützten Dateispeicher dieses
-  Browsers (Origin Private File System). Sie verlassen das Gerät nicht.
+  Browsers (Origin Private File System). Kann der Browser dort nicht schreiben (z. B. ältere
+  Safari-Versionen auf iPhone/iPad), nutzt die App automatisch IndexedDB. Die Daten
+  verlassen das Gerät nicht.
 - **Eigener Ordner:** In Chrome oder Edge kann unter „Datentresor & Sicherung“ ein Ordner
   auf dem PC, USB-Stick oder im OneDrive-Ordner gewählt werden – wie in der bisherigen App.
 - **Sicherung, Wiederherstellung und Export** laufen über das Sicherheitscenter und

@@ -16,6 +16,7 @@ import {
 import { inspectFamilyIntegrity } from "../lib/family-integrity.ts";
 import { createFamilyBackupManifest, verifyFamilyBackupRestore, type FamilyBackupFile, type FamilyBackupManifest } from "../lib/family-backup.ts";
 import { classifyRegisterText, safeRegisterWritePlan } from "../lib/family-register.ts";
+import { idbRootDirectory, idbStorageSupported } from "./idb-directory.ts";
 import { FAMILY_CATEGORIES } from "../lib/family-categories.ts";
 import {
   type AssignmentInput,
@@ -175,17 +176,36 @@ function db(): Promise<IDBDatabase> {
 }
 
 export const folderPickerSupported = () => typeof window !== "undefined" && !!(window as PickerWindow).showDirectoryPicker;
-const browserStorageSupported = () => typeof navigator !== "undefined" && typeof navigator.storage?.getDirectory === "function";
+const browserStorageSupported = () => (typeof navigator !== "undefined" && typeof navigator.storage?.getDirectory === "function") || idbStorageSupported();
 export const vaultSupported = () => folderPickerSupported() || browserStorageSupported();
 export const BROWSER_VAULT_NAME = "Browser-Datentresor";
 
 /** Datentresor im geschützten Speicher dieses Browsers (Origin Private File System).
  *  Funktioniert ohne Ordnerauswahl in allen aktuellen Browsern; die Daten verlassen das Gerät nicht. */
-export async function browserVault(): Promise<FileSystemDirectoryHandle> {
+let browserVaultPromise: Promise<FileSystemDirectoryHandle> | null = null;
+export function browserVault(): Promise<FileSystemDirectoryHandle> {
+  if (!browserVaultPromise) browserVaultPromise = openBrowserVault().catch((error) => { browserVaultPromise = null; throw error; });
+  return browserVaultPromise;
+}
+
+async function openBrowserVault(): Promise<FileSystemDirectoryHandle> {
   if (!browserStorageSupported()) throw new Error("Dieser Browser bietet keinen lokalen Dateispeicher an.");
-  const storageRoot = await navigator.storage.getDirectory();
-  try { await navigator.storage.persist?.(); } catch { /* optional */ }
-  return storageRoot.getDirectoryHandle(BROWSER_VAULT_NAME, { create: true });
+  try { await navigator.storage?.persist?.(); } catch { /* optional */ }
+  let forceIdb = false;
+  try { forceIdb = localStorage.getItem("mmi-browser-speicher") === "indexeddb"; } catch { /* optional */ }
+  if (!forceIdb && typeof navigator.storage?.getDirectory === "function") {
+    try {
+      const storageRoot = await navigator.storage.getDirectory();
+      const vault = await storageRoot.getDirectoryHandle(BROWSER_VAULT_NAME, { create: true });
+      // Probe: Manche Browser (z. B. ältere Safari-Versionen) können im Dateispeicher nicht schreiben.
+      const probe = await vault.getFileHandle(".schreibprobe", { create: true });
+      if (typeof (probe as FileSystemFileHandle & { createWritable?: unknown }).createWritable !== "function") throw new Error("kein createWritable");
+      const writable = await probe.createWritable(); await writable.write("ok"); await writable.close();
+      await vault.removeEntry(".schreibprobe");
+      return vault;
+    } catch { /* weiter mit IndexedDB */ }
+  }
+  return idbRootDirectory(BROWSER_VAULT_NAME);
 }
 export const isBrowserVault = (handle: FileSystemDirectoryHandle | null | undefined) => handle?.name === BROWSER_VAULT_NAME;
 
