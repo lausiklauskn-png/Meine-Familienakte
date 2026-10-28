@@ -10,6 +10,10 @@
   const isRemote = (value) => { try { const u = new URL(value, location.href); return /^(https?|wss?):$/.test(u.protocol) && u.origin !== location.origin; } catch { return true; } };
   const offline = () => !window.PBNetwork || !window.PBNetwork.ready || window.PBNetwork.offline;
 
+  // In der Android- und der Windows-App läuft die Seite nicht im Browser: der Installieren-Knopf der PWA (installieren.js)
+  // bleibt dort weg; im Browser verschwindet er von selbst, sobald die Seite als installierte App läuft.
+  if (window.Capacitor?.isNativePlatform?.() || window.__TAURI__) document.documentElement.classList.add('app-installiert');
+
   // 1. Fremde Fenster nur mit Internet
   const originalOpen = window.open.bind(window);
   window.open = function (url, ...rest) {

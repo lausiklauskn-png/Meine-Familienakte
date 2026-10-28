@@ -12,6 +12,7 @@ gebauten Dateien aus `dist/`; die Hüllen unterscheiden sich nur in Diktat, Date
 | Diktat | Browser-Erkennung (Chrome/Edge), **nur bei Internet an** (Audio geht zum Browser-Hersteller) | Android-Sprachfenster (`RecognizerIntent`), auch offline wenn Sprachpaket da | Windows SAPI auf dem Rechner, auch bei Internet aus |
 | Dateien hinein | Dateiauswahl, Kamera, **Teilen** (Web Share Target `./teilen-empfang`) | Dateiauswahl, Kamera, **„Teilen → Familienakte“**, „Öffnen mit“ | Dateiauswahl, **„Öffnen mit“** / Datei auf das Symbol ziehen (Startargumente) |
 | Speicher | Browser-Datentresor (OPFS, Rückfall IndexedDB) oder eigener Ordner | WebView-Speicher der App | WebView2-Speicher der App (`%LOCALAPPDATA%`) |
+| Installieren | Knopf „⬇ Installieren“ hinten in der Kopfleiste (Kanon `installieren.js` aus Private Brain Pro, byte-gleich): Browser-Dialog, sonst Erklärung; **weg, sobald die Seite als installierte App läuft** (Klaus 2026-10-28) | kein Knopf (APK) | kein Knopf (Installer) |
 | Update | von selbst: neue Fassung im Vorrat, Hinweis „Neu laden“ | neue APK über die alte installieren (gleiches Zertifikat) | **Tipp auf die Versionszeile** → `windows/latest.json` auf Pages → Installer laden und ausführen |
 | Probe | `tests/ui/pwa.test.mjs` | `tools/native/test-android.mjs`, `tests/ui/android.test.mjs` | `tools/native/test-windows.mjs`, `tests/ui/windows.test.mjs` |
 | Workflow | `pages.yml` (jeder Merge nach main) | `android.yml` (Prüf-Bau), `android-release.yml` (von Hand) | `windows-app.yml` (Prüf-Bau), `windows-release.yml` (von Hand) |
