@@ -32,6 +32,8 @@ jobs:
         run: npm run check:herkunft
       - name: Fachprüfungen und Systemprüfung
         run: npm run check
+      - name: Signierwerkzeug (Wegwerf-Schlüssel, kein echter)
+        run: npm run check:signing
       - name: Build und Einzeldatei
         run: npm run build:single
       - name: Browser für die Oberflächenproben

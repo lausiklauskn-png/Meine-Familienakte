@@ -8,8 +8,8 @@ const browser = await launchBrowser();
 try {
   const context = await browser.newContext(DESKTOP);
   await context.addInitScript(tauriStub);
-  await context.route(/lausiklauskn-png\.github\.io\/Meine-Familienakte\/windows\/latest\.json/, (route) => route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ version: "2.28.2", url: "https://lausiklauskn-png.github.io/Meine-Familienakte/windows/Familienakte-Windows-2.28.2-x64-setup.exe" }) }));
-  await context.route(/^https?:\/\/(?!127\.0\.0\.1|lausiklauskn-png\.github\.io)/, (route) => route.abort());
+  const fremd = [];
+  await context.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => { fremd.push(route.request().url()); return route.abort(); });
   const page = await context.newPage();
   const errors = collectErrors(page);
   await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page);
@@ -30,13 +30,24 @@ try {
     if (!/Internet für die App ist aus/.test(text)) throw new Error(text);
     return text;
   });
-  await step("Mit Internet an: neue Fassung gefunden, Knopf öffnet die https-Adresse des Installers", async () => {
+  await step("Mit Internet an: neue Fassung gefunden (Prüfung in der Hülle), „Laden und installieren“ ruft die Hülle", async () => {
     await page.click(".netz-schalter"); await page.waitForSelector('.netz-schalter[data-netz="an"]');
     await page.click(".site-brand-version");
-    await page.waitForFunction(() => /Neu: Fassung 2\.28\.2/.test(document.querySelector(".familienakte-hinweis span")?.textContent || ""), null, { timeout: 8000 });
+    await page.waitForFunction(() => /Neu: Fassung 2\.28\.3 \(du hast 2\.28\.2\), 40 MB/.test(document.querySelector(".familienakte-hinweis span")?.textContent || ""), null, { timeout: 8000 });
     await page.click(".familienakte-hinweis button:not(.familienakte-hinweis-zu)");
-    const opened = await page.evaluate(() => window.__tauriState.geoeffnet);
-    return opened.length === 1 && /setup\.exe$/.test(opened[0]) ? opened[0] : JSON.stringify(opened);
+    await page.waitForFunction(() => window.__tauriState.installiert.length === 1, null, { timeout: 5000 });
+    const text = await page.locator(".familienakte-hinweis span").innerText();
+    if (!/Setup wird geladen … 20 MB von 40 MB/.test(text)) throw new Error(`Stand: ${text}`);
+    if (fremd.some((u) => /family-projekt|github\.io/.test(u))) throw new Error(`Seite selbst im Netz: ${fremd.join(", ")}`);
+    return text;
+  });
+  await step("Falsch unterschriebener Feed: klare Meldung, nichts wird geladen", async () => {
+    const vorher = await page.evaluate(() => { window.__tauriState.updateFehler = "UPDATE_UNTERSCHRIFT_FALSCH"; return window.__tauriState.installiert.length; });
+    await page.click(".site-brand-version");
+    await page.waitForFunction(() => /nicht richtig unterschrieben/.test(document.querySelector(".familienakte-hinweis span")?.textContent || ""), null, { timeout: 8000 });
+    const nachher = await page.evaluate(() => window.__tauriState.installiert.length);
+    if (nachher !== vorher || await page.locator(".familienakte-hinweis button:not(.familienakte-hinweis-zu):not([hidden])").count()) throw new Error("trotzdem Laden angeboten");
+    return "abgewiesen";
   });
   await step("„Öffnen mit“: eine zweite Instanz reicht die Datei weiter, sie landet in der Eingangszentrale", async () => {
     await page.evaluate(() => window.__tauriEmit("familienakte:startdateien", { dateien: [{ name: "Garantiebeleg_Velotrix.txt", size: 20, data: btoa("Fahrradkauf Velotrix, erfunden") }] }));

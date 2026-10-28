@@ -1,15 +1,17 @@
 // Meine Familienakte für Windows: Tauri-2-Hülle um den gemeinsamen Vite-Build (dist/).
 // Die Oberfläche ist dieselbe wie im Browser; die Hülle liefert Fenster, eine Instanz, das Diktat über die
-// Windows-Spracherkennung, „Öffnen mit“ (Dateien als Startargumente) und den Weg zum Installer einer neuen
-// Fassung. Vorbild: Privat-Brain-Pro/windows (b0a28dd), stark verkleinert.
+// Windows-Spracherkennung, „Öffnen mit“ (Dateien als Startargumente) und Updates vom eigenen Server (update.rs). Vorbild: Privat-Brain-Pro/windows (b0a28dd), stark verkleinert.
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 mod speech;
+mod update;
 use serde_json::{json, Value};
 use std::sync::{atomic::{AtomicBool, Ordering}, Arc, Mutex};
 use tauri::{Emitter, Manager};
 
 struct Diktat { cancel: Mutex<Option<Arc<AtomicBool>>> }
 struct Startdateien(Mutex<Vec<String>>);
+/// Das zuletzt geprüfte (unterschriebene) Angebot; nur dieses darf geladen werden.
+struct Geprueft(Mutex<Option<update::Angebot>>);
 
 const MAX_DATEI: u64 = 200 * 1024 * 1024;
 
@@ -67,6 +69,34 @@ fn fa_adresse_oeffnen(url: String) -> Result<(), String> {
     { Err("OPEN_UNSUPPORTED".into()) }
 }
 
+/// „Auf Updates prüfen“ (Versionszeile): Feed von family-projekt.de, nur mit gültiger Unterschrift, nur eine neuere Fassung.
+#[tauri::command]
+async fn fa_update_pruefen(state: tauri::State<'_, Geprueft>) -> Result<Value, String> {
+    let ich = env!("CARGO_PKG_VERSION");
+    let r = tauri::async_runtime::spawn_blocking(move || update::pruefen(ich)).await.map_err(|_| "UPDATE_NICHT_ERREICHBAR".to_string())?;
+    let mut slot = state.0.lock().map_err(|_| "STATE")?;
+    *slot = None;
+    match r {
+        Ok(None) => Ok(json!({ "aktuell": true, "version": ich })),
+        Ok(Some(a)) => { let out = json!({ "neu": a.version, "installiert": ich, "groesse": a.groesse }); *slot = Some(a); Ok(out) }
+        Err(code) => Err(code.into()),
+    }
+}
+
+/// Lädt das zuletzt geprüfte Setup (Größe und SHA-256 wie im unterschriebenen Feed), startet es und schließt die App.
+#[tauri::command]
+async fn fa_update_installieren(app: tauri::AppHandle, state: tauri::State<'_, Geprueft>) -> Result<Value, String> {
+    let a = state.0.lock().map_err(|_| "STATE")?.clone().ok_or("UPDATE_NICHT_GEPRUEFT")?;
+    let ordner = app.path().app_local_data_dir().map_err(|_| "UPDATE_SPEICHER")?.join("updates");
+    let melder = app.clone();
+    let groesse = a.groesse;
+    let pfad = tauri::async_runtime::spawn_blocking(move || update::laden(&a, &ordner, |n| { let _ = melder.emit("familienakte:update-stand", json!({ "geladen": n, "groesse": groesse })); }))
+        .await.map_err(|_| "UPDATE_NICHT_ERREICHBAR".to_string())??;
+    std::process::Command::new(&pfad).spawn().map_err(|_| "UPDATE_START".to_string())?;
+    app.exit(0);
+    Ok(json!({ "gestartet": true }))
+}
+
 fn main() {
     tauri::Builder::default()
         .plugin(tauri_plugin_single_instance::init(|app, args, _cwd| {
@@ -75,8 +105,9 @@ fn main() {
             if !dateien.is_empty() { let _ = app.emit("familienakte:startdateien", json!({ "dateien": dateien })); }
         }))
         .manage(Diktat { cancel: Mutex::new(None) })
+        .manage(Geprueft(Mutex::new(None)))
         .manage(Startdateien(Mutex::new(dateiargumente(&std::env::args().collect::<Vec<_>>()))))
-        .invoke_handler(tauri::generate_handler![fa_diktat, fa_diktat_abbrechen, fa_plattform, fa_startdateien, fa_adresse_oeffnen])
+        .invoke_handler(tauri::generate_handler![fa_diktat, fa_diktat_abbrechen, fa_plattform, fa_startdateien, fa_adresse_oeffnen, fa_update_pruefen, fa_update_installieren])
         .run(tauri::generate_context!())
         .expect("Meine Familienakte konnte nicht gestartet werden");
 }

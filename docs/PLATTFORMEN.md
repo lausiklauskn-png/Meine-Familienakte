@@ -13,7 +13,7 @@ gebauten Dateien aus `dist/`; die Hüllen unterscheiden sich nur in Diktat, Date
 | Dateien hinein | Dateiauswahl, Kamera, **Teilen** (Web Share Target `./teilen-empfang`) | Dateiauswahl, Kamera, **„Teilen → Familienakte“**, „Öffnen mit“ | Dateiauswahl, **„Öffnen mit“** / Datei auf das Symbol ziehen (Startargumente) |
 | Speicher | Browser-Datentresor (OPFS, Rückfall IndexedDB) oder eigener Ordner | WebView-Speicher der App | WebView2-Speicher der App (`%LOCALAPPDATA%`) |
 | Installieren | Knopf „⬇ Installieren“ hinten in der Kopfleiste (Kanon `installieren.js` aus Private Brain Pro, byte-gleich): Browser-Dialog, sonst Erklärung; **weg, sobald die Seite als installierte App läuft** (Klaus 2026-10-28) | kein Knopf (APK) | kein Knopf (Installer) |
-| Update | von selbst: neue Fassung im Vorrat, Hinweis „Neu laden“ | neue APK über die alte installieren (gleiches Zertifikat) | **Tipp auf die Versionszeile** → `windows/latest.json` auf Pages → Installer laden und ausführen |
+| Update | von selbst: neue Fassung im Vorrat, Hinweis „Neu laden“ | **Tipp auf die Versionszeile** → unterschriebener Feed auf family-projekt.de → APK prüfen → Androids Installieren-Fenster (ab der ersten dauerhaft signierten APK) | **Tipp auf die Versionszeile** → unterschriebener Feed auf family-projekt.de → Setup laden, prüfen, starten (ab 2.28.3; bis 2.28.2 über `windows/latest.json` auf Pages) |
 | Probe | `tests/ui/pwa.test.mjs` | `tools/native/test-android.mjs`, `tests/ui/android.test.mjs` | `tools/native/test-windows.mjs`, `tests/ui/windows.test.mjs` |
 | Workflow | `pages.yml` (jeder Merge nach main) | `android.yml` (Prüf-Bau), `android-release.yml` (von Hand) | `windows-app.yml` (Prüf-Bau), `windows-release.yml` (von Hand) |
 
@@ -21,10 +21,9 @@ gebauten Dateien aus `dist/`; die Hüllen unterscheiden sich nur in Diktat, Date
 
 1. **Pages-Quelle auf „GitHub Actions“** stellen (Repo → Settings → Pages → Build and deployment → Source), falls der
    Pages-Lauf das nicht selbst geschafft hat (`configure-pages` versucht es mit `enablement: true`).
-2. **Android-Signatur**: ohne die Secrets `FA_ANDROID_KEYSTORE_B64`, `FA_ANDROID_KEYSTORE_PASSWORD`, `FA_ANDROID_KEY_ALIAS`
-   signiert `android-release.yml` mit einem **Wegwerfschlüssel** (steht so im Release-Text). Eine so signierte APK lässt
-   sich später nicht über eine anders signierte aktualisieren (deinstallieren nötig). Für die Dauer braucht es einen festen
-   Schlüssel wie bei BookLedgerPro (`signing/`), nie im Repo.
+2. **Android-Signatur** (vorbereitet 2026-10-28, `docs/UPDATES-EIGENER-SERVER.md`): Freigabe `FA_SIGNING_UNLOCK` liegt in der
+   Umgebung `android-production`. Einmal Actions → „Dauerhafte Familienakte-Signieridentität“ → **initialize** auf main, danach
+   den PR `signing/android-identity` übernehmen. Bis dahin signiert `android-release.yml` mit einem Wegwerfschlüssel.
 3. **Windows**: der Installer ist unsigniert. Windows SmartScreen fragt beim ersten Start („Weitere Informationen → Trotzdem
    ausführen“). Das ist bei Private Brain Pro genauso.
 4. **Veröffentlichen** heißt: `android-release.yml` bzw. `windows-release.yml` von Hand auf `main` starten (Actions → Workflow →
@@ -47,6 +46,13 @@ gebauten Dateien aus `dist/`; die Hüllen unterscheiden sich nur in Diktat, Date
 - **PWA**: dieselben Änderungen über Pages (volle Breite, Hinweis am Mikrofon, wenn das Internet der App aus ist).
 - **Windows**: unverändert 2.28.1. Die neue Breite kommt erst mit einer neuen Fassung (Tag `windows-v2.28.1` ist vergeben,
   dafür muss die Version steigen).
+
+## Nachtrag 2026-10-29 nachts, Quelle `a49c2d8` (PR #20)
+
+- **Windows 2.28.2**: [Familienakte-Windows-2.28.2-x64-setup.exe](https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/windows-v2.28.2/Familienakte-Windows-2.28.2-x64-setup.exe),
+  Release-Lauf 40786176514, 2.200.407 Bytes, SHA-256 `bca319034526cd60d2615c56ba2435ba1b535da774789a93b0caa940352d2cca`, über die
+  API geladen und gleich `SHA256SUMS`. Volle Breite und Diktat-Hinweis wie Android test.2. Sichtbare Version bleibt „2.28.1“
+  (Code des Freundes), nur die Paketfassung ist 2.28.2. Wer 2.28.1 hat, findet sie über die Versionszeile (Pages `latest.json`).
 
 ## Grenzen
 

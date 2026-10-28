@@ -47,23 +47,41 @@
   window.addEventListener('familienakte:bereit', startdateien, { once: true });
   tauri.event?.listen?.('familienakte:startdateien', (ev) => uebergeben(ev?.payload?.dateien)).catch?.(() => {});
 
-  // Update über die Versionszeile: Tipp → Prüfung gegen windows/latest.json auf der Pages-Adresse (nur bei Internet an).
-  const LATEST = 'https://lausiklauskn-png.github.io/Meine-Familienakte/windows/latest.json';
+  // Update über die Versionszeile (Klaus 2026-10-28: „wie bei Private Brain Pro im Versionsknopf“, seit 2026-10-28 vom
+  // eigenen Server wie BookLedgerPro): die Hülle holt aktuell-windows.json von family-projekt.de, glaubt nur der Ed25519-
+  // Unterschrift, nimmt nur eine neuere Fassung, lädt das Setup mit Größe + SHA-256 und startet es. Nur bei Internet an.
   const offline = () => !window.PBNetwork || !window.PBNetwork.ready || window.PBNetwork.offline;
-  const vergleich = (a, b) => { const pa = String(a).split('.').map(Number), pb = String(b).split('.').map(Number); for (let i = 0; i < 3; i++) { if ((pa[i] || 0) !== (pb[i] || 0)) return (pa[i] || 0) - (pb[i] || 0); } return 0; };
+  const MELDUNG = {
+    UPDATE_NICHT_ERREICHBAR: 'Updateprüfung derzeit nicht möglich. Verbindung prüfen und später erneut versuchen.',
+    UPDATE_UNTERSCHRIFT_FALSCH: 'Die Update-Angaben auf dem Server sind nicht richtig unterschrieben. Es wird nichts geladen.',
+    UPDATE_UNGUELTIG: 'Die Update-Angaben auf dem Server sind unvollständig. Es wird nichts geladen.',
+    UPDATE_BESCHAEDIGT: 'Das geladene Setup stimmt nicht mit der Prüfsumme überein und wurde verworfen.',
+    UPDATE_NICHT_EINGERICHTET: 'Updates vom Server sind in dieser Fassung noch nicht eingerichtet.',
+    UPDATE_SPEICHER: 'Das Setup konnte nicht gespeichert werden.',
+    UPDATE_START: 'Das Setup konnte nicht gestartet werden.',
+    UPDATE_NICHT_GEPRUEFT: 'Bitte zuerst erneut auf eine neue Fassung prüfen.'
+  };
+  const fehler = (app, e) => app.hinweis(MELDUNG[String(e)] || MELDUNG.UPDATE_NICHT_ERREICHBAR, 8000);
+  const mb = (n) => (n / 1048576).toLocaleString('de-DE', { maximumFractionDigits: 1 }) + ' MB';
+  tauri.event?.listen?.('familienakte:update-stand', (ev) => {
+    const d = ev?.payload; if (d?.groesse) window.FamilienakteApp?.hinweis(`Setup wird geladen … ${mb(d.geladen)} von ${mb(d.groesse)}`, 0);
+  })?.catch?.(() => {});
+  async function installieren() {
+    const app = window.FamilienakteApp; if (!app) return;
+    if (offline()) { app.hinweis('Internet für die App ist aus – zum Laden oben einschalten.', 8000); return; }
+    app.hinweis('Setup wird geladen …', 0);
+    try { await invoke('fa_update_installieren'); } catch (e) { fehler(app, e); }
+  }
   async function updatePruefen() {
     const app = window.FamilienakteApp; if (!app) return;
     const ich = await invoke('fa_plattform').then((p) => p?.fassung || app.version).catch(() => app.version);
     if (offline()) { app.hinweis(`Fassung ${ich} (Windows). Internet für die App ist aus – zum Prüfen auf eine neue Fassung oben einschalten.`, 8000); return; }
     app.hinweis(`Fassung ${ich} (Windows). Prüfung läuft …`, 0);
     try {
-      const antwort = await fetch(LATEST + '?t=' + Date.now(), { cache: 'no-store' });
-      if (!antwort.ok) throw new Error('HTTP ' + antwort.status);
-      const neu = await antwort.json();
-      if (!neu?.version || !neu?.url || !/^https:\/\//.test(neu.url)) throw new Error('unvollständig');
-      if (vergleich(neu.version, ich) > 0) app.hinweis(`Neu: Fassung ${neu.version} (du hast ${ich}).`, 0, { text: 'Installer herunterladen', run: () => invoke('fa_adresse_oeffnen', { url: neu.url }).catch(() => app.hinweis('Der Download konnte nicht geöffnet werden.', 6000)) });
-      else app.hinweis(`Du verwendest die aktuelle Fassung ${ich}.`, 6000);
-    } catch { app.hinweis('Updateprüfung derzeit nicht möglich. Verbindung prüfen und später erneut versuchen.', 8000); }
+      const r = await invoke('fa_update_pruefen');
+      if (r?.neu) app.hinweis(`Neu: Fassung ${r.neu} (du hast ${r.installiert}), ${mb(r.groesse)}.`, 0, { text: 'Laden und installieren', run: installieren });
+      else app.hinweis(`Du verwendest die aktuelle Fassung ${r?.version || ich}.`, 6000);
+    } catch (e) { fehler(app, e); }
   }
   const versionsknopf = () => {
     const el = document.querySelector('.site-brand-version');
@@ -75,5 +93,5 @@
   };
   new MutationObserver(versionsknopf).observe(document.documentElement, { childList: true, subtree: true });
   versionsknopf();
-  window.FamilienakteWindows = { updatePruefen, uebergeben };
+  window.FamilienakteWindows = { updatePruefen, installieren, uebergeben };
 })();

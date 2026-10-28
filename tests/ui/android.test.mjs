@@ -42,6 +42,31 @@ try {
     return `Eingang „${row.split("\n")[0]}“, Datei im Gerät freigegeben`;
   });
   await step("Teilen → Familienakte: nichts wird ohne Bestätigung übernommen", async () => page.evaluate(() => !document.body.innerText.includes("übernommen") || document.body.innerText.includes("Nicht übernommen") || true));
+  await step("Update (Versionszeile): bei Internet aus nur der Hinweis, die Hülle wird nicht gefragt", async () => {
+    await page.click(".site-brand-version");
+    const text = await page.locator(".familienakte-hinweis span").innerText();
+    const n = await page.evaluate(() => window.__capState.updatePruefungen);
+    if (!/Internet für die App ist aus/.test(text) || n !== 0) throw new Error(`${text} · Prüfungen ${n}`);
+    return text;
+  });
+  await step("Update mit Internet an: neue Fassung, „Laden und installieren“ ruft die Hülle, Stand in MB", async () => {
+    await page.click(".netz-schalter"); await page.waitForSelector('.netz-schalter[data-netz="an"]');
+    await page.click(".site-brand-version");
+    await page.waitForFunction(() => /Neu: Fassung 2\.28\.3 \(du hast 2\.28\.2\), 4 MB/.test(document.querySelector(".familienakte-hinweis span")?.textContent || ""), null, { timeout: 8000 });
+    await page.click(".familienakte-hinweis button:not(.familienakte-hinweis-zu)");
+    await page.waitForFunction(() => window.__capState.installiert === 1, null, { timeout: 5000 });
+    const text = await page.locator(".familienakte-hinweis span").innerText();
+    if (!/Android fragt jetzt/.test(text)) throw new Error(text);
+    return text;
+  });
+  await step("Update: falsches Zertifikat der neuen APK → klare Meldung, kein Laden-Knopf", async () => {
+    await page.evaluate(() => { window.__capState.updateFehler = "UPDATE_ZERTIFIKAT"; });
+    await page.click(".site-brand-version");
+    await page.waitForFunction(() => /nicht mit demselben Schlüssel/.test(document.querySelector(".familienakte-hinweis span")?.textContent || ""), null, { timeout: 8000 });
+    if (await page.locator(".familienakte-hinweis button:not(.familienakte-hinweis-zu):not([hidden])").count()) throw new Error("Laden trotzdem angeboten");
+    await page.click(".netz-schalter"); await page.waitForSelector('.netz-schalter[data-netz="aus"]');
+    return "abgewiesen";
+  });
   check(errors.filter((e) => !/APP_OFFLINE|ERR_FAILED|Failed to load resource/.test(e)).length === 0, "keine unerwarteten Seitenfehler", errors.join(" | ").slice(0, 300));
 
   // Gerätefall (Klaus 2026-10-28, Tablet): bei Internet „aus“ meldet die WebView navigator.onLine = false.
