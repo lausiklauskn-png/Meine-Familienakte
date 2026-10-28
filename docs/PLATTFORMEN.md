@@ -34,7 +34,7 @@ gebauten Dateien aus `dist/`; die Hüllen unterscheiden sich nur in Diktat, Date
 - **PWA**: https://lausiklauskn-png.github.io/Meine-Familienakte/ (Pages-Lauf grün; aus dem Behälter nicht abrufbar, Netzrichtlinie).
 - **Android**: [Familienakte-android-v2.28.1-test.1.apk](https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.1-test.1/Familienakte-android-v2.28.1-test.1.apk),
   3.929.310 Bytes, SHA-256 `6c2afba830abe240a55b0fb41cd6faae04d5be24becd7bc4c4e5fa77b7bc610d`, Wegwerfschlüssel (siehe oben), Vorab-Release.
-- **Windows**: __EXE__
+- **Windows**: [Familienakte-Windows-2.28.1-x64-setup.exe](https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/windows-v2.28.1/Familienakte-Windows-2.28.1-x64-setup.exe) – Release-Lauf 40767264852, Quelle `7124c4b`, 2.194.018 Bytes, SHA-256 `24e7df51f9b76a3fdb1ee1d588f4271913bad7769a1230b47df21ab1471c947d`, unabhängig über die API geladen und gleich `SHA256SUMS`; `latest.json` zeigt auf die Pages-Adresse `windows/…` (Pages-Lauf 40769147047 legt Installer und `latest.json` bei). Unsigniert: SmartScreen einmal mit „Trotzdem ausführen“ bestätigen.
 - Das Repo ist privat: Release-Downloads verlangen eine GitHub-Anmeldung im Browser; die Pages-Adresse ist öffentlich lesbar.
 
 ## Grenzen

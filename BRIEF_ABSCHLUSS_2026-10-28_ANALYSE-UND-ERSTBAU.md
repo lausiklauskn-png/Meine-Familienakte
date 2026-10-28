@@ -25,7 +25,7 @@
 
 - PWA: https://lausiklauskn-png.github.io/Meine-Familienakte/ (Pages-Lauf auf `7124c4b` grün, bauen + veröffentlichen; Adresse aus dem Behälter nicht abrufbar (Netzrichtlinie), Klaus prüft im Browser)
 - Android: [Familienakte-android-v2.28.1-test.1.apk](https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.1-test.1/Familienakte-android-v2.28.1-test.1.apk) – Release-Lauf 40766479452, Quelle `7124c4b`, 3.929.310 Bytes, SHA-256 `6c2afba830abe240a55b0fb41cd6faae04d5be24becd7bc4c4e5fa77b7bc610d`, unabhängig über die API geladen und gleich `SHA256SUMS`; `familienakte-android.js` und `native-network.js` in der APK byte-gleich mit main. **Wegwerfschlüssel** (keine Secrets im Repo), Vorab-Release. Das Repo ist privat: der Download verlangt eine GitHub-Anmeldung im Browser des Tablets.
-- Windows: __EXE__
+- Windows: [Familienakte-Windows-2.28.1-x64-setup.exe](https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/windows-v2.28.1/Familienakte-Windows-2.28.1-x64-setup.exe) – Release-Lauf 40767264852, Quelle `7124c4b`, 2.194.018 Bytes, SHA-256 `24e7df51f9b76a3fdb1ee1d588f4271913bad7769a1230b47df21ab1471c947d`, unabhängig über die API geladen und gleich `SHA256SUMS`; `latest.json` zeigt auf die Pages-Adresse `windows/…` (Pages-Lauf 40769147047 legt Installer und `latest.json` bei). Unsigniert: SmartScreen einmal mit „Trotzdem ausführen“ bestätigen.
 
 **Geprüft:** `tsc` · ESLint 0 Fehler · 26 Prüfskripte (`npm run check`) · `check:herkunft` · `check:android` 16 · `check:windows` 12 ·
 14 Oberflächenproben (`npm run test:ui`, 420+ grüne Zeilen) · CI je PR (`ci.yml`, `android.yml`, `windows-app.yml`).
