@@ -2,7 +2,7 @@
  {
   "ort": "Startseite",
   "umgebung": "desktop",
-  "anzahl": 87,
+  "anzahl": 88,
   "elemente": [
    {
     "art": "Knopf",
@@ -26,6 +26,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -530,7 +536,7 @@
  {
   "ort": "ASSISTENZ › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 53,
+  "anzahl": 54,
   "elemente": [
    {
     "art": "Knopf",
@@ -554,6 +560,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -854,7 +866,7 @@
  {
   "ort": "ASSISTENZ › Assistenzzentrale",
   "umgebung": "desktop",
-  "anzahl": 53,
+  "anzahl": 54,
   "elemente": [
    {
     "art": "Knopf",
@@ -878,6 +890,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -1178,7 +1196,7 @@
  {
   "ort": "ASSISTENZ › Korrespondenz",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
@@ -1202,6 +1220,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -1460,7 +1484,7 @@
  {
   "ort": "ASSISTENZ › Vorgänge weiterbearbeiten",
   "umgebung": "desktop",
-  "anzahl": 114,
+  "anzahl": 115,
   "elemente": [
    {
     "art": "Knopf",
@@ -1484,6 +1508,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -2150,7 +2180,7 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 44,
+  "anzahl": 45,
   "elemente": [
    {
     "art": "Knopf",
@@ -2174,6 +2204,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -2420,7 +2456,7 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Diagnosen, AU & ICD-Codes",
   "umgebung": "desktop",
-  "anzahl": 55,
+  "anzahl": 56,
   "elemente": [
    {
     "art": "Knopf",
@@ -2444,6 +2480,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -2756,7 +2798,7 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Krankenkasse & Leistungen",
   "umgebung": "desktop",
-  "anzahl": 45,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
@@ -2780,6 +2822,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -3032,7 +3080,7 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Arbeit & Arbeitgeber",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
@@ -3056,6 +3104,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -3314,7 +3368,7 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Anträge & Bescheide",
   "umgebung": "desktop",
-  "anzahl": 49,
+  "anzahl": 50,
   "elemente": [
    {
     "art": "Knopf",
@@ -3338,6 +3392,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -3614,7 +3674,7 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Anfragen & Antworten",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
@@ -3638,6 +3698,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -3896,7 +3962,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 43,
+  "anzahl": 44,
   "elemente": [
    {
     "art": "Knopf",
@@ -3920,6 +3986,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -4160,7 +4232,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Interaktives Cockpit",
   "umgebung": "desktop",
-  "anzahl": 114,
+  "anzahl": 115,
   "elemente": [
    {
     "art": "Knopf",
@@ -4184,6 +4256,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -4850,7 +4928,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Familienübersicht",
   "umgebung": "desktop",
-  "anzahl": 43,
+  "anzahl": 44,
   "elemente": [
    {
     "art": "Knopf",
@@ -4874,6 +4952,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -5114,7 +5198,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Fristen und Aufgaben",
   "umgebung": "desktop",
-  "anzahl": 126,
+  "anzahl": 127,
   "elemente": [
    {
     "art": "Knopf",
@@ -5138,6 +5222,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -5357,7 +5447,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: d13f3baf-9778-4f3c-82de-ea25c47bfd72",
+    "text": "Dokument: 3ece9783-a2dd-4ef0-9378-0e72bef3bb31",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5429,7 +5519,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 39987e01-b106-4387-9736-ff7aeb3fab52",
+    "text": "Dokument: 2b7119ee-b49b-4660-a685-6a2c7151ef15",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5459,7 +5549,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: f272049d-41d9-4dce-b4d2-55550dde996f",
+    "text": "Dokument: 39023b5e-9ae5-4db6-95a5-f3b3f1229d41",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5567,7 +5657,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: f272049d-41d9-4dce-b4d2-55550dde996f",
+    "text": "Dokument: 39023b5e-9ae5-4db6-95a5-f3b3f1229d41",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5876,7 +5966,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Tagebuch & Erinnerungen",
   "umgebung": "desktop",
-  "anzahl": 69,
+  "anzahl": 70,
   "elemente": [
    {
     "art": "Knopf",
@@ -5900,6 +5990,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -6296,7 +6392,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Gesamtes Verzeichnis",
   "umgebung": "desktop",
-  "anzahl": 80,
+  "anzahl": 81,
   "elemente": [
    {
     "art": "Knopf",
@@ -6320,6 +6416,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -6782,7 +6884,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Vollmachten & Vorsorge",
   "umgebung": "desktop",
-  "anzahl": 43,
+  "anzahl": 44,
   "elemente": [
    {
     "art": "Knopf",
@@ -6806,6 +6908,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -7046,7 +7154,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Versicherungen & Verträge",
   "umgebung": "desktop",
-  "anzahl": 43,
+  "anzahl": 44,
   "elemente": [
    {
     "art": "Knopf",
@@ -7070,6 +7178,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -7310,7 +7424,7 @@
  {
   "ort": "WOHNEN › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 45,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
@@ -7334,6 +7448,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -7586,7 +7706,7 @@
  {
   "ort": "WOHNEN › Miet- & Vermieterunterlagen",
   "umgebung": "desktop",
-  "anzahl": 45,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
@@ -7610,6 +7730,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -7862,7 +7988,7 @@
  {
   "ort": "WOHNEN › Nebenkosten & Zahlungen",
   "umgebung": "desktop",
-  "anzahl": 45,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
@@ -7886,6 +8012,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -8138,7 +8270,7 @@
  {
   "ort": "WOHNEN › Mängel & Reparaturen",
   "umgebung": "desktop",
-  "anzahl": 45,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
@@ -8162,6 +8294,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -8414,7 +8552,7 @@
  {
   "ort": "FAHRZEUGE › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 45,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
@@ -8438,6 +8576,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -8690,7 +8834,7 @@
  {
   "ort": "FAHRZEUGE › Fahrzeugpapiere",
   "umgebung": "desktop",
-  "anzahl": 45,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
@@ -8714,6 +8858,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -8966,7 +9116,7 @@
  {
   "ort": "FAHRZEUGE › Werkstatt & Wartung",
   "umgebung": "desktop",
-  "anzahl": 45,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
@@ -8990,6 +9140,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -9242,7 +9398,7 @@
  {
   "ort": "FAHRZEUGE › TÜV & Versicherung",
   "umgebung": "desktop",
-  "anzahl": 45,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
@@ -9266,6 +9422,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -9518,7 +9680,7 @@
  {
   "ort": "KÄUFE & GARANTIEN › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 45,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
@@ -9542,6 +9704,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -9794,7 +9962,7 @@
  {
   "ort": "KÄUFE & GARANTIEN › Käufe & Rechnungen",
   "umgebung": "desktop",
-  "anzahl": 45,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
@@ -9818,6 +9986,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -10070,7 +10244,7 @@
  {
   "ort": "KÄUFE & GARANTIEN › Garantie & Reparatur",
   "umgebung": "desktop",
-  "anzahl": 45,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
@@ -10094,6 +10268,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -10346,7 +10526,7 @@
  {
   "ort": "KÄUFE & GARANTIEN › Geräte & Technik",
   "umgebung": "desktop",
-  "anzahl": 45,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
@@ -10370,6 +10550,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -10622,7 +10808,7 @@
  {
   "ort": "DOKUMENTE › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 294,
+  "anzahl": 295,
   "elemente": [
    {
     "art": "Knopf",
@@ -10646,6 +10832,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -12392,7 +12584,7 @@
  {
   "ort": "DOKUMENTE › Dokumentenbibliothek",
   "umgebung": "desktop",
-  "anzahl": 294,
+  "anzahl": 295,
   "elemente": [
    {
     "art": "Knopf",
@@ -12416,6 +12608,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -14162,7 +14360,7 @@
  {
   "ort": "DOKUMENTE › Bestand prüfen",
   "umgebung": "desktop",
-  "anzahl": 37,
+  "anzahl": 38,
   "elemente": [
    {
     "art": "Knopf",
@@ -14186,6 +14384,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -14390,7 +14594,7 @@
  {
   "ort": "DOKUMENTE › Eingangszentrale",
   "umgebung": "desktop",
-  "anzahl": 75,
+  "anzahl": 76,
   "elemente": [
    {
     "art": "Knopf",
@@ -14414,6 +14618,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -14846,7 +15056,7 @@
  {
   "ort": "DOKUMENTE › Sicherheit & lokaler Tresor",
   "umgebung": "desktop",
-  "anzahl": 53,
+  "anzahl": 54,
   "elemente": [
    {
     "art": "Knopf",
@@ -14870,6 +15080,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -15170,7 +15386,7 @@
  {
   "ort": "DOKUMENTE › Unterlagen & Quellen",
   "umgebung": "desktop",
-  "anzahl": 52,
+  "anzahl": 53,
   "elemente": [
    {
     "art": "Knopf",
@@ -15194,6 +15410,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -15488,7 +15710,7 @@
  {
   "ort": "DOKUMENTE › Alle Bereiche",
   "umgebung": "desktop",
-  "anzahl": 80,
+  "anzahl": 81,
   "elemente": [
    {
     "art": "Knopf",
@@ -15512,6 +15734,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -15974,7 +16202,7 @@
  {
   "ort": "HILFE › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 66,
+  "anzahl": 67,
   "elemente": [
    {
     "art": "Knopf",
@@ -15998,6 +16226,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -16376,7 +16610,7 @@
  {
   "ort": "HILFE › Hilfe & erste Schritte",
   "umgebung": "desktop",
-  "anzahl": 66,
+  "anzahl": 67,
   "elemente": [
    {
     "art": "Knopf",
@@ -16400,6 +16634,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -16778,7 +17018,7 @@
  {
   "ort": "HILFE › Systemprüfung",
   "umgebung": "desktop",
-  "anzahl": 96,
+  "anzahl": 97,
   "elemente": [
    {
     "art": "Knopf",
@@ -16802,6 +17042,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -17360,7 +17606,7 @@
  {
   "ort": "HILFE › Was gibt’s Neues?",
   "umgebung": "desktop",
-  "anzahl": 394,
+  "anzahl": 395,
   "elemente": [
    {
     "art": "Knopf",
@@ -17384,6 +17630,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -19730,7 +19982,7 @@
  {
   "ort": "HILFE › Versionshistorie",
   "umgebung": "desktop",
-  "anzahl": 37,
+  "anzahl": 38,
   "elemente": [
    {
     "art": "Knopf",
@@ -19754,6 +20006,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -19958,7 +20216,7 @@
  {
   "ort": "HILFE › Datentresor-Hilfe",
   "umgebung": "desktop",
-  "anzahl": 53,
+  "anzahl": 54,
   "elemente": [
    {
     "art": "Knopf",
@@ -19982,6 +20240,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -20282,7 +20546,7 @@
  {
   "ort": "Fußzeile › Interaktives Cockpit",
   "umgebung": "desktop",
-  "anzahl": 114,
+  "anzahl": 115,
   "elemente": [
    {
     "art": "Knopf",
@@ -20306,6 +20570,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -20972,7 +21242,7 @@
  {
   "ort": "Fußzeile › Tagebuch & Erinnerungen",
   "umgebung": "desktop",
-  "anzahl": 69,
+  "anzahl": 70,
   "elemente": [
    {
     "art": "Knopf",
@@ -20996,6 +21266,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -21392,7 +21668,7 @@
  {
   "ort": "Fußzeile › Fristen und Aufgaben",
   "umgebung": "desktop",
-  "anzahl": 126,
+  "anzahl": 127,
   "elemente": [
    {
     "art": "Knopf",
@@ -21416,6 +21692,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -21635,7 +21917,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: d13f3baf-9778-4f3c-82de-ea25c47bfd72",
+    "text": "Dokument: 3ece9783-a2dd-4ef0-9378-0e72bef3bb31",
     "disabled": false,
     "cls": "text-link"
    },
@@ -21707,7 +21989,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 39987e01-b106-4387-9736-ff7aeb3fab52",
+    "text": "Dokument: 2b7119ee-b49b-4660-a685-6a2c7151ef15",
     "disabled": false,
     "cls": "text-link"
    },
@@ -21737,7 +22019,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: f272049d-41d9-4dce-b4d2-55550dde996f",
+    "text": "Dokument: 39023b5e-9ae5-4db6-95a5-f3b3f1229d41",
     "disabled": false,
     "cls": "text-link"
    },
@@ -21845,7 +22127,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: f272049d-41d9-4dce-b4d2-55550dde996f",
+    "text": "Dokument: 39023b5e-9ae5-4db6-95a5-f3b3f1229d41",
     "disabled": false,
     "cls": "text-link"
    },
@@ -22154,7 +22436,7 @@
  {
   "ort": "Fußzeile › Gesamtes Verzeichnis",
   "umgebung": "desktop",
-  "anzahl": 80,
+  "anzahl": 81,
   "elemente": [
    {
     "art": "Knopf",
@@ -22178,6 +22460,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -22640,7 +22928,7 @@
  {
   "ort": "Fußzeile › Lebensbereiche",
   "umgebung": "desktop",
-  "anzahl": 87,
+  "anzahl": 88,
   "elemente": [
    {
     "art": "Knopf",
@@ -22664,6 +22952,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -23168,7 +23462,7 @@
  {
   "ort": "Fußzeile › Dokumentenbibliothek",
   "umgebung": "desktop",
-  "anzahl": 294,
+  "anzahl": 295,
   "elemente": [
    {
     "art": "Knopf",
@@ -23192,6 +23486,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -24938,7 +25238,7 @@
  {
   "ort": "Fußzeile › Eingangszentrale",
   "umgebung": "desktop",
-  "anzahl": 75,
+  "anzahl": 76,
   "elemente": [
    {
     "art": "Knopf",
@@ -24962,6 +25262,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -25394,7 +25700,7 @@
  {
   "ort": "Fußzeile › Bestand prüfen",
   "umgebung": "desktop",
-  "anzahl": 37,
+  "anzahl": 38,
   "elemente": [
    {
     "art": "Knopf",
@@ -25418,6 +25724,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -25622,7 +25934,7 @@
  {
   "ort": "Fußzeile › Was gibt’s Neues?",
   "umgebung": "desktop",
-  "anzahl": 394,
+  "anzahl": 395,
   "elemente": [
    {
     "art": "Knopf",
@@ -25646,6 +25958,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -27992,7 +28310,7 @@
  {
   "ort": "Fußzeile › Hilfe",
   "umgebung": "desktop",
-  "anzahl": 66,
+  "anzahl": 67,
   "elemente": [
    {
     "art": "Knopf",
@@ -28016,6 +28334,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -28394,7 +28718,7 @@
  {
   "ort": "Fußzeile › Systemprüfung",
   "umgebung": "desktop",
-  "anzahl": 96,
+  "anzahl": 97,
   "elemente": [
    {
     "art": "Knopf",
@@ -28418,6 +28742,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -28976,7 +29306,7 @@
  {
   "ort": "Fußzeile › Prüfberichte",
   "umgebung": "desktop",
-  "anzahl": 96,
+  "anzahl": 97,
   "elemente": [
    {
     "art": "Knopf",
@@ -29000,6 +29330,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -29558,7 +29894,7 @@
  {
   "ort": "Fußzeile › Sicherheitscenter",
   "umgebung": "desktop",
-  "anzahl": 53,
+  "anzahl": 54,
   "elemente": [
    {
     "art": "Knopf",
@@ -29582,6 +29918,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -29882,7 +30224,7 @@
  {
   "ort": "Fußzeile › Versionshistorie",
   "umgebung": "desktop",
-  "anzahl": 37,
+  "anzahl": 38,
   "elemente": [
    {
     "art": "Knopf",
@@ -29906,6 +30248,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -30110,7 +30458,7 @@
  {
   "ort": "Dialog › Mit ChatGPT arbeiten",
   "umgebung": "desktop",
-  "anzahl": 42,
+  "anzahl": 43,
   "elemente": [
    {
     "art": "Knopf",
@@ -30134,6 +30482,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -30367,7 +30721,7 @@
  {
   "ort": "Dialog › Familienakte exportieren",
   "umgebung": "desktop",
-  "anzahl": 51,
+  "anzahl": 52,
   "elemente": [
    {
     "art": "Knopf",
@@ -30391,6 +30745,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -30679,7 +31039,7 @@
  {
   "ort": "Startseite",
   "umgebung": "handy",
-  "anzahl": 79,
+  "anzahl": 80,
   "elemente": [
    {
     "art": "Knopf",
@@ -30709,6 +31069,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -31159,7 +31525,7 @@
  {
   "ort": "ASSISTENZ › Assistenzzentrale",
   "umgebung": "handy",
-  "anzahl": 45,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
@@ -31189,6 +31555,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -31435,7 +31807,7 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Diagnosen, AU & ICD-Codes",
   "umgebung": "handy",
-  "anzahl": 47,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
@@ -31465,6 +31837,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -31723,7 +32101,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Interaktives Cockpit",
   "umgebung": "handy",
-  "anzahl": 106,
+  "anzahl": 107,
   "elemente": [
    {
     "art": "Knopf",
@@ -31753,6 +32131,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -32365,7 +32749,7 @@
  {
   "ort": "WOHNEN › Miet- & Vermieterunterlagen",
   "umgebung": "handy",
-  "anzahl": 37,
+  "anzahl": 38,
   "elemente": [
    {
     "art": "Knopf",
@@ -32395,6 +32779,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -32593,7 +32983,7 @@
  {
   "ort": "FAHRZEUGE › Fahrzeugpapiere",
   "umgebung": "handy",
-  "anzahl": 37,
+  "anzahl": 38,
   "elemente": [
    {
     "art": "Knopf",
@@ -32623,6 +33013,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -32821,7 +33217,7 @@
  {
   "ort": "KÄUFE & GARANTIEN › Käufe & Rechnungen",
   "umgebung": "handy",
-  "anzahl": 37,
+  "anzahl": 38,
   "elemente": [
    {
     "art": "Knopf",
@@ -32851,6 +33247,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -33049,7 +33451,7 @@
  {
   "ort": "DOKUMENTE › Dokumentenbibliothek",
   "umgebung": "handy",
-  "anzahl": 262,
+  "anzahl": 263,
   "elemente": [
    {
     "art": "Knopf",
@@ -33079,6 +33481,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -34627,7 +35035,7 @@
  {
   "ort": "HILFE › Hilfe & erste Schritte",
   "umgebung": "handy",
-  "anzahl": 58,
+  "anzahl": 59,
   "elemente": [
    {
     "art": "Knopf",
@@ -34657,6 +35065,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -34981,7 +35395,7 @@
  {
   "ort": "Fußzeile › Interaktives Cockpit",
   "umgebung": "handy",
-  "anzahl": 106,
+  "anzahl": 107,
   "elemente": [
    {
     "art": "Knopf",
@@ -35011,6 +35425,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -35623,7 +36043,7 @@
  {
   "ort": "Fußzeile › Dokumentenbibliothek",
   "umgebung": "handy",
-  "anzahl": 262,
+  "anzahl": 263,
   "elemente": [
    {
     "art": "Knopf",
@@ -35653,6 +36073,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -37201,7 +37627,7 @@
  {
   "ort": "Fußzeile › Eingangszentrale",
   "umgebung": "handy",
-  "anzahl": 67,
+  "anzahl": 68,
   "elemente": [
    {
     "art": "Knopf",
@@ -37231,6 +37657,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -37609,7 +38041,7 @@
  {
   "ort": "Fußzeile › Sicherheitscenter",
   "umgebung": "handy",
-  "anzahl": 45,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
@@ -37639,6 +38071,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -37885,7 +38323,7 @@
  {
   "ort": "Fußzeile › Fristen und Aufgaben",
   "umgebung": "handy",
-  "anzahl": 118,
+  "anzahl": 119,
   "elemente": [
    {
     "art": "Knopf",
@@ -37915,6 +38353,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -38080,7 +38524,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 537a6ab5-62a1-4c47-973c-aad8e9982632",
+    "text": "Dokument: 9d983439-aa76-4b54-81f6-7fe60d7e6671",
     "disabled": false,
     "cls": "text-link"
    },
@@ -38152,7 +38596,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: bafeb47d-f8d3-49ab-a05d-2deb6ec97d42",
+    "text": "Dokument: b6dea44e-5d66-4f21-b301-20bfcc5c622f",
     "disabled": false,
     "cls": "text-link"
    },
@@ -38182,7 +38626,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 1b035e38-3168-497d-b053-123446d62679",
+    "text": "Dokument: 654ec5cd-a6cd-4a39-9059-f1494cdade9d",
     "disabled": false,
     "cls": "text-link"
    },
@@ -38290,7 +38734,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 1b035e38-3168-497d-b053-123446d62679",
+    "text": "Dokument: 654ec5cd-a6cd-4a39-9059-f1494cdade9d",
     "disabled": false,
     "cls": "text-link"
    },
@@ -38599,7 +39043,7 @@
  {
   "ort": "Fußzeile › Tagebuch & Erinnerungen",
   "umgebung": "handy",
-  "anzahl": 61,
+  "anzahl": 62,
   "elemente": [
    {
     "art": "Knopf",
@@ -38629,6 +39073,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -38971,7 +39421,7 @@
  {
   "ort": "Fußzeile › Hilfe",
   "umgebung": "handy",
-  "anzahl": 58,
+  "anzahl": 59,
   "elemente": [
    {
     "art": "Knopf",
@@ -39001,6 +39451,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -39325,7 +39781,7 @@
  {
   "ort": "Fußzeile › Systemprüfung",
   "umgebung": "handy",
-  "anzahl": 88,
+  "anzahl": 89,
   "elemente": [
    {
     "art": "Knopf",
@@ -39355,6 +39811,12 @@
     "art": "Link",
     "text": "Ausloggen",
     "cls": "logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
