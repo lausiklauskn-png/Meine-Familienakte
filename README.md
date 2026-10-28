@@ -87,6 +87,8 @@ Ein Offline-Cache (Service Worker) oder eine Desktop-App kann später ergänzt w
 Der ursprüngliche Arbeitsauftrag steht in [NEUSTART_AUFTRAG.md](NEUSTART_AUFTRAG.md).
 Weiterarbeit:
 
+- [docs/analyse/BERICHT.md](docs/analyse/BERICHT.md): **Analyse der App (2026-10-28)** – was funktioniert, was nicht, KI-Stand, Empfehlungen; dazu [Funktionsmatrix](docs/analyse/FUNKTIONSMATRIX.md), [technischer Baum](docs/analyse/TECHNISCHER-BAUM.md), [KI und Anonymisierung](docs/analyse/KI-UND-ANONYMISIERUNG.md), [Dateieingang](docs/analyse/DATEIEINGANG.md), [Geräte-Eingang](docs/analyse/DATEI-EINGANG-GERAETE.md), [Plattformen](docs/analyse/PLATTFORMEN.md), [Handprüfung](docs/analyse/HANDPRUEFUNG.md), [Fragen an den Freund](docs/analyse/FRAGEN-AN-DEN-FREUND.md)
+- `npm run test:ui`: Oberflächenproben (Playwright, Chromium) unter `tests/ui/`, einzeln mit Filter: `node tests/run-ui.mjs knoepfe-start`
 - [BRIEF_SITZUNG_ANALYSE-UND-ERSTBAU.md](BRIEF_SITZUNG_ANALYSE-UND-ERSTBAU.md): Brief für die nächste Sitzung (Analyse, dann PWA, APK und Windows mit Internetschalter)
 - [docs/ANALYSE_AUFTRAG.md](docs/ANALYSE_AUFTRAG.md): Analyse in den Paketen A bis G
 - [BRIEF_ABSCHLUSS_2026-10-28_NEUAUFBAU.md](BRIEF_ABSCHLUSS_2026-10-28_NEUAUFBAU.md): Abschluss der Neuaufbau-Sitzung

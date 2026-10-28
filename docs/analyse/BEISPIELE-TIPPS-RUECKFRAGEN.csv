@@ -1,0 +1,57 @@
+Art;Nr;Text (gekürzt);Ort;Passt zur Funktion;Auswertung dahinter;KI vorgesehen
+Beispiel;B1;Zum Beispiel: Zeige mir meine Krankenkasse-Schreiben …;Suchfeld Kopfleiste, app/health-portal.tsx:1090;ja;Regeln: interpretFamilySearchQuery (lib/family-search.ts:55–78), 15 Absichten mit Auslösewörtern;nein
+Beispiel;B2;Zum Beispiel: Welche Unterlagen fehlen für meine Reklamation und wie formuliere ich die E-Mail?;Assistenz, app/assistant-center.tsx:121;ja;Regeln: buildAssistantAnalysis (lib/family-assistant.ts) Wortüberlappung, Muster arzt/termin, widerspruch/frist;nein
+Beispiel;B3;Person oder Organisation;Assistenz Entwurf, app/assistant-center.tsx:141;ja;keine;nein
+Beispiel;B4;Zum Beispiel: Krankenkasse Schreiben Zuschuss;Dokument fotografieren, app/document-scan-dialog.tsx:140;ja;Regeln: classifyFile (lib/document-intake.ts:42–66) Wortlisten;nein
+Beispiel;B5;Zum Beispiel: Der Elektriker war heute da. Die zweite Lampe flackert weiterhin …;Tagebuch, app/health-portal.tsx:1491;ja;Regeln: buildMemoryAnalysis (lib/family-memory.ts:110–267) Lebensbereich, offener Punkt, Aufgabe, Schlagwörter;nein
+Beispiel;B6;Antwort ist freiwillig;Tagebuch Rückfrage, app/health-portal.tsx:1543;ja;followUpAnswer in buildMemoryAnalysis;nein
+Beispiel;B7;Optional auswählen oder neu eingeben;Bestand prüfen, app/health-portal.tsx:1702;ja;keine;nein
+Beispiel;B8;Zum Beispiel Rechnung;Bestand prüfen Dokumentenart, app/health-portal.tsx:1703;ja;INTAKE_DOCUMENT_TYPES + Dateiname;nein
+Beispiel;B9;Stichworte durch Komma trennen;Bestand prüfen, app/health-portal.tsx:1704;ja;Lernsignal inventoryLearningSignals;nein
+Beispiel;B10;Zum Beispiel: Ich selbst, Mutter / Versicherung oder Handwerksfirma / Haus, Auto, Smartphone / Smartphone-Reparatur;Bestand prüfen Zuordnung, app/health-portal.tsx:1705–1708;ja;Regeln: proposeFamilyAssignment (lib/family-assignment.ts:155–230) Punktzahl, Vertrauen;nein
+Beispiel;B11;Titel, Dateiname, Person, Vorgang, Aktenzeichen …;Dokumentenbibliothek Filter, app/health-portal.tsx:3076;ja;Wortsuche filterDocumentLibraryItems;nein
+Beispiel;B12;Nur bestätigte eigene Notiz eintragen;Cockpit Notiz, app/health-portal.tsx:3237;ja;keine;nein
+Beispiel;B13;Zum Beispiel: Antwort an Krankenkasse / Schreiben vom 07.10.2026 / PER-000001 / OBJ-000001 / VORG-000001 / DOC-000001;Fristen und Aufgaben Formular, app/health-portal.tsx:3300;teils (technische Kennungen);keine;nein
+Beispiel;B14;Zum Beispiel: Ergänze im Bereich Fahrzeuge einen Unterpunkt für TÜV-Termine.;Mit ChatGPT arbeiten, app/health-portal.tsx:3358;ja;"keine; Auftrag wird kopiert";nein (ChatGPT von Hand)
+Beispiel;B15;Bezeichnung des neuen Vorgangs / Zum Beispiel: Antwort auf meine Anfrage vom 02.10.2026;Neue Unterlage prüfen, app/health-portal.tsx:3518–3520;ja;keine;nein
+Beispiel;B16;Was hat nicht funktioniert? Kurzer Hinweis genügt.;Praktische Abnahme, app/practical-acceptance.tsx:40;ja;keine;nein
+Beispiel;B17;"Suchbeispiele: Schreiben der Krankenkasse zum Zuschuss; Rechnung der Waschmaschine; Mietvertrag Pustelblumenweg; Impfpass und Vorsorge";Hilfe, app/health-portal.tsx:2124;ja;wie B1;nein
+Tipp;T1;Die lokale interaktive Suche erkennt häufige Alltagssätze …;UI_HELP Wie suche ich etwas?, lib/ui-help.ts;ja;Regeln (B1);nein
+Tipp;T2;"Gesucht wird nur in bereits vorhandenen Angaben; PDF- oder Word-Inhalte werden nicht automatisch gelesen";Hilfe, app/health-portal.tsx:2124;ja;keine Volltextsuche, keine OCR;nein
+Tipp;T3;Die Familienakte schlägt Werte vor …;UI_HELP Zuordnung prüfen und bestätigen;ja;Regeln (B10);nein
+Tipp;T4;Die Assistenz prüft zuerst vorhandene Vorgänge … Sie legt nichts automatisch an.;UI_HELP Was möchtest du klären?;ja;Regeln (B2);nein
+Tipp;T5;Eine aktuelle Internetrecherche ist … noch nicht sicher eingerichtet;"Hilfe Assistenz, app/health-portal.tsx:2136ff; lib/family-assistant.ts:124";ja;research.status = not_configured;ja (angedeutet, kein Code)
+Tipp;T6;Beschreibe deinen Wunsch. Die Familienakte erstellt daraus einen passenden Auftrag für ChatGPT.;UI_HELP Familienakte mit ChatGPT ändern;ja;Schablone + Nutzertext;nein (ChatGPT von Hand)
+Tipp;T7;Es erfolgt keine kostenpflichtige Online-Analyse.;UI_HELP Neue Unterlage prüfen und lokal ablegen;ja;classifyFile-Wortlisten;nein
+Tipp;T8;Aus Dokumenten erkannte Angaben werden hier nicht automatisch übernommen …;UI_HELP Frist oder Aufgabe anlegen;ja;findPossibleDeadline (lib/central-intake.ts:222) nur Hinweis;nein
+Tipp;T9;Nach der Assistenzfreigabe wird die Schaltfläche wieder weiß. / nicht an einen kostenpflichtigen externen Dienst übertragen;Bestand prüfen, app/health-portal.tsx:2096,2104;ja;Marke assistantReleased;nein
+Tipp;T10;Die vorhandene Spracherkennung des Browsers kann … Internetverbindung und Verarbeitung durch dessen Anbieter benötigen.;Hilfe Mikrofon, app/health-portal.tsx:2136ff;ja;Web Speech API;nein (Audio an Browser-Anbieter)
+Tipp;T11;Diese Fragen gehören ausschließlich zu bereits bestätigten Erinnerungen.;UI_HELP Offene Memory-Punkte;ja;keine;nein
+Tipp;T12;Die Strukturierung verwendet lokale, nachvollziehbare Regeln und keinen kostenpflichtigen API-Schlüssel.;Hilfe Tagebuch;ja;Regeln (B5);nein
+Tipp;T13;Alle Daten sind Beispieldaten. (Knopf Beispieldaten entfernen);Kopfbereich, app/health-portal.tsx:1093–1094;ja;keine;nein
+Tipp;T14;Antwort der Krankenkasse steht noch aus – Die Beispielanfrage vom 02.03.2026 ist dokumentiert.;Gesundheit → Krankenkasse, app/health-portal.tsx:3319;nein (fester Beispieltext aus app/health-data.json);keine;nein
+Tipp;T15;Verwende den bereits vorbereiteten und verbundenen Testbestand …;Bestand prüfen, app/health-portal.tsx:2120;teils (Entwicklerumgebung);keine;nein
+Tipp;T16;Hilfe-Abschnitt Testakte für Weiterentwicklung, fester Ordner SOFTWARE TESTORDNER;Hilfe, app/health-portal.tsx:2140ff;teils (Entwicklerwerkzeug);keine;nein
+Tipp;T17;51 UI_HELP-Texte an 89 ⓘ-Knöpfen (InfoPopover) und in der Hilfe;"lib/ui-help.ts; app/*.tsx";ja;keine;nein
+Tipp;T18;23 Hilfe-Abschnitte (details/summary);Hilfe, app/health-portal.tsx:2124–2160;ja;keine;nein (T5 ausgenommen)
+Rückfrage;R1;Alle Beispieldaten entfernen? …;app/health-portal.tsx:523;ja;keine;nein
+Rückfrage;R2;N ausgewählte Dateien als geprüfte Kopie archivieren?;app/health-portal.tsx:783;ja;keine;nein
+Rückfrage;R3;N archivierte Dateien für Bibliothek, Suche und Familienassistent freigeben?;app/health-portal.tsx:794;ja;keine;nein
+Rückfrage;R4;N markierte Testdateien auf Quelle analysiert zurücksetzen?;app/health-portal.tsx:806;ja;keine;nein
+Rückfrage;R5;Scan verwerfen? …;app/document-scan-dialog.tsx:93;ja;keine;nein
+Rückfrage;R6;Diesen noch nicht bearbeiteten Memory-Entwurf wirklich löschen?;app/health-portal.tsx:960;ja;keine;nein
+Rückfrage;R7;Soll der Status von … wirklich auf … gesetzt werden?;app/health-portal.tsx:1021;ja;keine;nein
+Rückfrage;R8;Soll diese Notiz wirklich beim ausgewählten Datensatz ergänzt werden?;app/health-portal.tsx:1027;ja;keine;nein
+Rückfrage;R9;Nur diese Verbindung lösen? …;app/health-portal.tsx:1042;ja;keine;nein
+Rückfrage;R10;Aktuelle Erinnerung wurde noch nicht übernommen. Soll sie jetzt in die Warteschlange gelegt werden?;app/health-portal.tsx:1481;ja;keine;nein
+Rückfrage;R11;Aktuelle Eingabe verwerfen und das Tagebuch öffnen?;app/health-portal.tsx:1486;ja;keine;nein
+Rückfrage;R12;Soll dieser offene Punkt wirklich auf … gesetzt werden?;app/health-portal.tsx:1596;ja;keine;nein
+Rückfrage;R13;Titel des Memory-Eintrags / Gespeicherten Text ergänzen oder bearbeiten / Änderungen übernehmen?;app/health-portal.tsx:1607–1611;ja;keine;nein
+Rückfrage;R14;Memory-Eintrag löschen? / VERBLEIBEN, MITLÖSCHEN oder ABBRECHEN eingeben;app/health-portal.tsx:1619–1622;teils (Tippwort statt Knöpfe);keine;nein
+Rückfrage;R15;Nur der eindeutig gekennzeichnete Ordner … wird gelöscht …;app/health-portal.tsx:1954;ja (Entwicklerwerkzeug);keine;nein
+Rückfrage;R16;N vorbereitete Testdokumente jetzt in das bestehende Testregister übernehmen?;app/health-portal.tsx:1991;ja (Entwicklerwerkzeug);keine;nein
+Fachliche Rückfrage;F1;Eine gezielte Rückfrage (Tagebuch);"app/health-portal.tsx:1543; lib/family-memory.ts:301";ja;Regel: nur bei mehrdeutiger Zuordnung, höchstens eine;nein
+Fachliche Rückfrage;F2;Ist die Reparatur inzwischen vollständig abgeschlossen? / Hat sich dieser offene Punkt inzwischen geklärt?;lib/family-memory.ts:243–255;ja;Regel: Muster teilweise/aber/weiterhin/keine antwort;nein
+Fachliche Rückfrage;F3;Der offene Punkt … scheint erledigt zu sein. Als erledigt markieren?;lib/family-memory.ts:348;ja;Regel: Wortüberlappung, Vertrauen ab Punktzahl 2;nein
+Fachliche Rückfrage;F4;Mögliche Dublette – Trotzdem übernehmen;"lib/document-intake.ts:100; lib/central-intake.ts:284";ja;Regel: gleicher Dateiname und gleiche Größe;nein
+Fachliche Rückfrage;F5;Zuordnungsvorschlag Sicher/Wahrscheinlich/Unklar;"app/health-portal.tsx:1699; lib/family-assignment.ts:149";ja;Regel: Punktzahl aus Wortüberlappung;nein

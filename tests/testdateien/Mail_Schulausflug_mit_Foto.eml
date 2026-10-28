@@ -1,0 +1,51 @@
+From: elternrat@schule-wolkenhain.invalid
+To: familie@lindqvist-arenberg.invalid
+Subject: Schulausflug Wolkenhain – Foto und Elternbrief
+Date: Mon, 01 Jun 2026 18:00:00 +0200
+Message-ID: <68fcb6980793a@beispiel.invalid>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="----=_Testdatei_Grenze_0815"
+
+------=_Testdatei_Grenze_0815
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+Liebe Eltern, anbei ein Foto vom letzten Ausflug. Der Elternbrief liegt als Textdatei bei.
+
+------=_Testdatei_Grenze_0815
+Content-Type: image/png; name="Ausflug_Wolkenhain.png"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="Ausflug_Wolkenhain.png"
+
+iVBORw0KGgoAAAANSUhEUgAAAPAAAAFACAIAAAANimYEAAAEqklEQVR4nO3cMWpkRwBF0c69EafO
+J/YKvGgvyAtwMDAgUCLNa3XV1Tk8fvhpmpsUFP/xx1//mGX2ePkvMBtO0JaaoC01QVtqgrbUBG2p
+CdpSE7SlJmhLTdCWmqAtNUFbaoK21ARtqQnaUhO0pSZoS03QlpqgLTVBW2qCttQEbakJ2lJ7/Ach
+giZF0KQImhRBkyJoUgRNiqBJETQpgiZF0KQImhRBkyJoUgRNiqBJETQpgiZF0KQImpTfCvrHj7/N
+5hO0pSZoS03QltrLgobTCJoUQZMiaFIETYqgSRE0KYImRdCkCJoUQZMiaFIETYqgSXF91L56u3rf
+IWj76u3qfYeg7au3q/cdgrav3q7edzgUkiJoUgRNiqBJETQpgiZF0KQImhRBkyJoUgRNiqBJETQp
+gibF9VEbbxfnZwjaxtvF+RmCtvF2cX6GoG28XZyf4VBIiqBJETQpgiZF0KQImhRBkyJoUgRNiqBJ
+ETQpgiZF0KQImhTXR+1j27X3FIK2j23X3lMI2j62XXtPIWj72HbtPYVDISmCJkXQpAiaFEGTImhS
+BE2KoEkRNCmCJkXQpAiaFEGTImhSXB+1N9ul9RqCtjfbpfUagrY326X1GoK2N9ul9RoOhaQImhRB
+kyJoUgRNiqBJETQpgiZF0KQImhRBkyJoUgRNiqBJcX30e21XzqEE/b22K+dQgv5e25VzKEF/r+3K
+OZRDISmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEEXPB6P657P+iue92q+zAmBFoJ++WVI
++7nH4/Hz+fJMBW2DCfoXQRcm6F8EXZigf3niq/kyJwQqaGZOCFTQzJwQqKCZOSFQQTNzQqCCZuaE
+QAXNzAmBCpqZEwIVNDMnBCpoZk4IVNDMnBCooJk5IVBBM3NCoIJm5oRABc3MCYEKmpkTAhU0MycE
+KmhmTghU0MycEKigmTkhUEEzc0KggmbmhEAFzcwJgQqamRMCFTTsCZoUQZMiaFIETYqgSRE0KYIm
+RdCkCJqU3wr63z//tJdvF0OBoK/fLoYCQV+/XQwFgr5+uxgKBH39djEUCPr67WIoEPT128VQIOjr
+t4uhQNDXbxdDgaCv3y6GAkFfv10MBYK+frsYCgR9/XYxFAj6+u1iKBD09dvFUCDo67eLoUDQ128X
+Q4Ggr98uhgJBX79dDAWCvn67GAoEff12MRQI+vrtYijwGQNSBE2KoEkRNCmCJkXQpAiaFEGTImhS
+BE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAia
+FEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmC
+JkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2K
+oEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCmCJkXQpAiaFEGT
+ImhSBE2KoEkRNCmCJkXQpAiaFEGTImhSBE2KoEkRNCn/AwDX6wgGoh2TAAAAAElFTkSuQmCC
+
+------=_Testdatei_Grenze_0815
+Content-Type: text/plain; name="Elternbrief.txt"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="Elternbrief.txt"
+
+RWx0ZXJuYnJpZWY6IEJpdHRlIGJpcyB6dW0gMDUuMDYuMjAyNiB1bnRlcnNjaHJlaWJlbi4gRnJl
+aSBlcmZ1bmRlbi4=
+
+------=_Testdatei_Grenze_0815--

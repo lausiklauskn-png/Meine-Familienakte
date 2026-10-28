@@ -1,0 +1,50 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+6 0 obj
+<< /Length 1207 >>
+stream
+q 0.93 0.95 0.97 rg BT /F2 110 Tf 0.7071 0.7071 -0.7071 0.7071 135 230 Tm (BEISPIEL) Tj ET Q
+q 0.043 0.192 0.329 rg 0 790 595 52 re f Q
+BT /F2 11 Tf 1 1 1 rg 50 818 Td (Hausverwaltung Pustelblume \(erfunden\)) Tj ET
+BT /F1 8 Tf 1 1 1 rg 50 803 Td (Testdatei \226 alle Angaben sind frei erfunden) Tj ET
+BT /F2 15 Tf 0.043 0.192 0.329 rg 50 740 Td (Nebenkostenabrechnung 2025 \226 Arenberg-Hof 7, 99999 Nebelquell) Tj ET
+BT /F1 10.5 Tf 0.08 0.16 0.23 rg 50 710 Td (Mieter: Familie Lindqvist-Arenberg, Arenberg-Hof 7, 99999 Nebelquell \(erfundener Ort\)) Tj ET
+BT /F1 10.5 Tf 0.08 0.16 0.23 rg 50 695 Td (Abrechnungszeitraum: 01.01.2025 bis 31.12.2025. Vertragsnummer MV-000-TEST-1.) Tj ET
+BT /F1 10.5 Tf 0.08 0.16 0.23 rg 50 680 Td (Summe der umlagef\344higen Nebenkosten: 2.345,00 EUR. Vorauszahlungen: 2.400,00 EUR.) Tj ET
+BT /F1 10.5 Tf 0.08 0.16 0.23 rg 50 665 Td (Guthaben zu Ihren Gunsten: 55,00 EUR. Bitte innerhalb von vier Wochen pr\374fen.) Tj ET
+BT /F1 10.5 Tf 0.08 0.16 0.23 rg 50 650 Td (R\374ckfragen bitte bis zum 30.11.2026 an die Hausverwaltung richten.) Tj ET
+BT /F1 10.5 Tf 0.08 0.16 0.23 rg 50 635 Td (Alle Angaben sind frei erfunden und dienen nur der Pr\374fung des Dateieingangs.) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Title (Nebenkostenabrechnung 2025 \226 Arenberg-Hof 7, 99999 Nebelquell) /Producer (Meine Familienakte  Testdateien) >>
+endobj
+xref
+0 8
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000251 00000 n 
+0000000348 00000 n 
+0000000450 00000 n 
+0000001709 00000 n 
+trailer
+<< /Size 8 /Root 1 0 R /Info 7 0 R >>
+startxref
+1849
+%%EOF
