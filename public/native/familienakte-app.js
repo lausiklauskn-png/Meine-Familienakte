@@ -69,5 +69,34 @@
   };
   new MutationObserver(stempel).observe(document.documentElement, { childList: true, subtree: true });
   stempel();
-  window.FamilienakteApp = { build: BUILD, version: VERSION, hinweis };
+  // Übergabe von Dateien aus Hüllen (Android-Teilen, PWA share_target, Windows „Öffnen mit“) an die Eingangszentrale.
+  // Die React-Seite meldet sich mit `familienakte:bereit`; bis dahin werden Dateien aufgehoben.
+  let bereit = false; const wartend = [];
+  window.addEventListener('familienakte:bereit', () => { bereit = true; for (const files of wartend.splice(0)) window.dispatchEvent(new CustomEvent('familienakte:dateien', { detail: { files } })); });
+  async function dateienUebergeben(files) {
+    if (!files?.length) return false;
+    if (!bereit) { wartend.push(files); return true; }
+    window.dispatchEvent(new CustomEvent('familienakte:dateien', { detail: { files } }));
+    return true;
+  }
+  // PWA: Androids „Teilen“ kommt als POST an ./teilen-empfang (share_target); der Service Worker legt die
+  // Dateien in den Vorrat „familienakte-geteilt“ und leitet auf ./?geteilt=1 weiter.
+  if (new URLSearchParams(location.search).get('geteilt') === '1' && 'caches' in window) {
+    (async () => {
+      try {
+        const cache = await caches.open('familienakte-geteilt');
+        const files = [];
+        for (const request of await cache.keys()) {
+          const response = await cache.match(request);
+          if (!response) continue;
+          const name = decodeURIComponent(response.headers.get('x-name') || 'Geteilte Datei');
+          files.push(new File([await response.blob()], name, { type: response.headers.get('content-type') || 'application/octet-stream' }));
+          await cache.delete(request);
+        }
+        if (files.length) await dateienUebergeben(files);
+      } catch { /* ohne Vorrat kam nichts an */ }
+      try { history.replaceState(null, '', location.pathname); } catch { /* egal */ }
+    })();
+  }
+  window.FamilienakteApp = { build: BUILD, version: VERSION, hinweis, dateienUebergeben };
 })();

@@ -1,0 +1,53 @@
+name: Android-Hülle (Prüf-Bau)
+
+# Baut die Android-App aus demselben Vite-Build wie PWA und Windows (Teil 2.3). Nur ein Prüf-Bau (debug) als
+# Artefakt; die veröffentlichte APK kommt aus android-release.yml. Muster: BookLedgerPro android.yml.
+on:
+  pull_request:
+    paths: ['android/**', 'public/native/**', 'capacitor.config.json', 'tools/native/**', '.github/workflows/android.yml', 'app/**', 'lib/**', 'src/**', 'index.html', 'package.json']
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  android:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: npm ci
+      - name: Hülle ohne Android prüfen (Manifest, Plugins, Klebstoff, Version)
+        run: npm run check:android
+      - name: Web-Paket bauen und in die Hülle legen
+        run: npm run sync:android
+        env:
+          FAMILIENAKTE_COMMIT: ${{ github.sha }}
+      - name: Bauen und Lint
+        working-directory: android
+        run: ./gradlew --no-daemon --max-workers=2 assembleDebug lintDebug
+        env:
+          FAMILIENAKTE_BUILD_NUMBER: ${{ github.run_number }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: familienakte-android-debug
+          path: |
+            android/app/build/outputs/apk/debug/*.apk
+            android/app/build/reports/
+          if-no-files-found: warn
+          retention-days: 14

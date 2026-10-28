@@ -44,12 +44,16 @@
     "check:system": "node scripts/run-system-check.mjs",
     "check:vault-safety": "node scripts/run-vault-safety-tests.mjs",
     "screenshots": "node scripts/screenshots.mjs",
-    "build:single": "npm run build && node scripts/build-single-file.mjs"
+    "build:single": "npm run build && node scripts/build-single-file.mjs",
+    "sync:android": "npm run build && cap sync android",
+    "check:android": "node tools/native/test-android.mjs"
   },
   "dependencies": {
     "lucide-react": "1.31.0",
     "react": "19.2.6",
-    "react-dom": "19.2.6"
+    "react-dom": "19.2.6",
+    "@capacitor/android": "8.5.3",
+    "@capacitor/core": "8.5.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
@@ -66,6 +70,7 @@
     "tailwindcss": "4.2.1",
     "typescript": "5.9.3",
     "typescript-eslint": "^8.72.1",
-    "vite": "6.4.1"
+    "vite": "6.4.1",
+    "@capacitor/cli": "8.5.3"
   }
 }

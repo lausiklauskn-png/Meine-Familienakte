@@ -633,6 +633,20 @@ function HealthPortalContent() {
       setNotice({ kind: "error", text: "Mindestens ein Eingang konnte nicht vollständig analysiert werden. Die Originaldateien blieben unverändert." });
     } finally { setIntakeBusy(false); }
   };
+  // Dateien aus der Hülle (Android „Teilen → Familienakte“, PWA share_target, Windows „Öffnen mit“): wie Dateiauswahl
+  // in die Eingangszentrale, nichts wird ohne Bestätigung übernommen. Klebstoff: public/native/familienakte-app.js.
+  const queueFromShell = useRef(queueCentralIntakeFiles); queueFromShell.current = queueCentralIntakeFiles;
+  useEffect(() => {
+    const handler = (event: Event) => {
+      const files = (event as CustomEvent<{ files?: File[] }>).detail?.files || [];
+      if (!files.length) return;
+      go("inbox");
+      void queueFromShell.current(files, "file-picker");
+    };
+    window.addEventListener("familienakte:dateien", handler);
+    window.dispatchEvent(new Event("familienakte:bereit"));
+    return () => window.removeEventListener("familienakte:dateien", handler);
+  }, []);
   const reviewCentralIntake = (id: string) => {
     const item = centralIntakeQueue.find((candidate) => candidate.id === id);
     if (!item) return;

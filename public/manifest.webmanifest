@@ -9,6 +9,12 @@
   "background_color": "#f2f7fa",
   "theme_color": "#0b3154",
   "id": "./index.html",
+  "share_target": {
+    "action": "./teilen-empfang",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": { "title": "title", "text": "text", "url": "url", "files": [{ "name": "dateien", "accept": ["application/pdf", "image/*", "message/rfc822", "text/plain", "application/zip", ".docx", ".xlsx", ".eml", ".msg", ".vtt"] }] }
+  },
   "icons": [
     { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },

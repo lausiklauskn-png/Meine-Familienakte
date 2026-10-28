@@ -49,6 +49,24 @@ self.addEventListener("message", (event) => { if (event.data?.typ === "jetzt-akt
 // Nur der eigene Ursprung kommt aus dem Vorrat; fremde Adressen gehen unverändert durch (der Internetschalter der Seite entscheidet).
 self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
+  // Teilen → Familienakte (share_target): Dateien in den Vorrat „familienakte-geteilt“, dann zur App.
+  if (event.request.method === "POST" && url.origin === self.location.origin && url.pathname.endsWith("/teilen-empfang")) {
+    event.respondWith((async () => {
+      try {
+        const form = await event.request.formData();
+        const cache = await caches.open("familienakte-geteilt");
+        let n = 0;
+        for (const entry of form.getAll("dateien")) {
+          if (!(entry instanceof File)) continue;
+          await cache.put(new Request(new URL(\`./geteilt/\${Date.now()}-\${n++}\`, self.registration.scope).href), new Response(entry, { headers: { "content-type": entry.type || "application/octet-stream", "x-name": encodeURIComponent(entry.name || "Geteilte Datei") } }));
+        }
+        const text = form.get("text") || form.get("title");
+        if (!n && typeof text === "string" && text.trim()) { await cache.put(new Request(new URL(\`./geteilt/\${Date.now()}-text\`, self.registration.scope).href), new Response(text, { headers: { "content-type": "text/plain", "x-name": encodeURIComponent((form.get("title") || "Geteilter Text") + ".txt") } })); n++; }
+        return Response.redirect(new URL(\`./?geteilt=\${n ? 1 : 0}\`, self.registration.scope).href, 303);
+      } catch { return Response.redirect(new URL("./?geteilt=fehler", self.registration.scope).href, 303); }
+    })());
+    return;
+  }
   if (event.request.method !== "GET" || url.origin !== self.location.origin) return;
   if (url.pathname.endsWith("/version.json")) { event.respondWith(fetch(event.request).catch(() => new Response("{}", { headers: { "content-type": "application/json" } }))); return; }
   event.respondWith((async () => {
