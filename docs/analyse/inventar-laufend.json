@@ -2,13 +2,19 @@
  {
   "ort": "Startseite",
   "umgebung": "desktop",
-  "anzahl": 86,
+  "anzahl": 87,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -78,7 +84,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -306,7 +312,7 @@
    {
     "art": "Knopf",
     "text": "Erinnerung: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -524,13 +530,19 @@
  {
   "ort": "ASSISTENZ › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 52,
+  "anzahl": 53,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -600,7 +612,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -702,7 +714,7 @@
    {
     "art": "Knopf",
     "text": "Assistenzfrage: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -842,13 +854,19 @@
  {
   "ort": "ASSISTENZ › Assistenzzentrale",
   "umgebung": "desktop",
-  "anzahl": 52,
+  "anzahl": 53,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -918,7 +936,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -1020,7 +1038,7 @@
    {
     "art": "Knopf",
     "text": "Assistenzfrage: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -1160,13 +1178,19 @@
  {
   "ort": "ASSISTENZ › Korrespondenz",
   "umgebung": "desktop",
-  "anzahl": 45,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -1236,7 +1260,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -1436,13 +1460,19 @@
  {
   "ort": "ASSISTENZ › Vorgänge weiterbearbeiten",
   "umgebung": "desktop",
-  "anzahl": 113,
+  "anzahl": 114,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -1512,7 +1542,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -2120,13 +2150,19 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 43,
+  "anzahl": 44,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -2196,7 +2232,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -2384,13 +2420,19 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Diagnosen, AU & ICD-Codes",
   "umgebung": "desktop",
-  "anzahl": 54,
+  "anzahl": 55,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -2460,7 +2502,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -2714,13 +2756,19 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Krankenkasse & Leistungen",
   "umgebung": "desktop",
-  "anzahl": 44,
+  "anzahl": 45,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -2790,7 +2838,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -2984,13 +3032,19 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Arbeit & Arbeitgeber",
   "umgebung": "desktop",
-  "anzahl": 45,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -3060,7 +3114,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -3260,13 +3314,19 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Anträge & Bescheide",
   "umgebung": "desktop",
-  "anzahl": 48,
+  "anzahl": 49,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -3336,7 +3396,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -3554,13 +3614,19 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Anfragen & Antworten",
   "umgebung": "desktop",
-  "anzahl": 45,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -3630,7 +3696,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -3830,13 +3896,19 @@
  {
   "ort": "FAMILIE & PERSONEN › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 42,
+  "anzahl": 43,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -3906,7 +3978,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -4088,13 +4160,19 @@
  {
   "ort": "FAMILIE & PERSONEN › Interaktives Cockpit",
   "umgebung": "desktop",
-  "anzahl": 113,
+  "anzahl": 114,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -4164,7 +4242,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -4772,13 +4850,19 @@
  {
   "ort": "FAMILIE & PERSONEN › Familienübersicht",
   "umgebung": "desktop",
-  "anzahl": 42,
+  "anzahl": 43,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -4848,7 +4932,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -5030,13 +5114,19 @@
  {
   "ort": "FAMILIE & PERSONEN › Fristen und Aufgaben",
   "umgebung": "desktop",
-  "anzahl": 125,
+  "anzahl": 126,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -5106,7 +5196,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -5178,19 +5268,19 @@
    {
     "art": "Knopf",
     "text": "Titel: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
     "art": "Knopf",
     "text": "Quelle: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
     "art": "Knopf",
     "text": "Notizen: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -5267,7 +5357,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 27ee03c2-acf5-40f0-84a6-e2377bd134af",
+    "text": "Dokument: d13f3baf-9778-4f3c-82de-ea25c47bfd72",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5339,7 +5429,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: c9435b71-60a8-4f19-853c-a35798026816",
+    "text": "Dokument: 39987e01-b106-4387-9736-ff7aeb3fab52",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5369,7 +5459,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 7d6c44a4-cb68-463b-9eea-3c0eb8971e58",
+    "text": "Dokument: f272049d-41d9-4dce-b4d2-55550dde996f",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5477,7 +5567,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 7d6c44a4-cb68-463b-9eea-3c0eb8971e58",
+    "text": "Dokument: f272049d-41d9-4dce-b4d2-55550dde996f",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5786,13 +5876,19 @@
  {
   "ort": "FAMILIE & PERSONEN › Tagebuch & Erinnerungen",
   "umgebung": "desktop",
-  "anzahl": 68,
+  "anzahl": 69,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -5862,7 +5958,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -5910,7 +6006,7 @@
    {
     "art": "Knopf",
     "text": "Erinnerung: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -6200,13 +6296,19 @@
  {
   "ort": "FAMILIE & PERSONEN › Gesamtes Verzeichnis",
   "umgebung": "desktop",
-  "anzahl": 79,
+  "anzahl": 80,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -6276,7 +6378,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -6680,13 +6782,19 @@
  {
   "ort": "FAMILIE & PERSONEN › Vollmachten & Vorsorge",
   "umgebung": "desktop",
-  "anzahl": 42,
+  "anzahl": 43,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -6756,7 +6864,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -6938,13 +7046,19 @@
  {
   "ort": "FAMILIE & PERSONEN › Versicherungen & Verträge",
   "umgebung": "desktop",
-  "anzahl": 42,
+  "anzahl": 43,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -7014,7 +7128,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -7196,13 +7310,19 @@
  {
   "ort": "WOHNEN › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 44,
+  "anzahl": 45,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -7272,7 +7392,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -7466,13 +7586,19 @@
  {
   "ort": "WOHNEN › Miet- & Vermieterunterlagen",
   "umgebung": "desktop",
-  "anzahl": 44,
+  "anzahl": 45,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -7542,7 +7668,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -7736,13 +7862,19 @@
  {
   "ort": "WOHNEN › Nebenkosten & Zahlungen",
   "umgebung": "desktop",
-  "anzahl": 44,
+  "anzahl": 45,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -7812,7 +7944,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -8006,13 +8138,19 @@
  {
   "ort": "WOHNEN › Mängel & Reparaturen",
   "umgebung": "desktop",
-  "anzahl": 44,
+  "anzahl": 45,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -8082,7 +8220,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -8276,13 +8414,19 @@
  {
   "ort": "FAHRZEUGE › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 44,
+  "anzahl": 45,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -8352,7 +8496,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -8546,13 +8690,19 @@
  {
   "ort": "FAHRZEUGE › Fahrzeugpapiere",
   "umgebung": "desktop",
-  "anzahl": 44,
+  "anzahl": 45,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -8622,7 +8772,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -8816,13 +8966,19 @@
  {
   "ort": "FAHRZEUGE › Werkstatt & Wartung",
   "umgebung": "desktop",
-  "anzahl": 44,
+  "anzahl": 45,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -8892,7 +9048,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -9086,13 +9242,19 @@
  {
   "ort": "FAHRZEUGE › TÜV & Versicherung",
   "umgebung": "desktop",
-  "anzahl": 44,
+  "anzahl": 45,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -9162,7 +9324,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -9356,13 +9518,19 @@
  {
   "ort": "KÄUFE & GARANTIEN › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 44,
+  "anzahl": 45,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -9432,7 +9600,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -9626,13 +9794,19 @@
  {
   "ort": "KÄUFE & GARANTIEN › Käufe & Rechnungen",
   "umgebung": "desktop",
-  "anzahl": 44,
+  "anzahl": 45,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -9702,7 +9876,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -9896,13 +10070,19 @@
  {
   "ort": "KÄUFE & GARANTIEN › Garantie & Reparatur",
   "umgebung": "desktop",
-  "anzahl": 44,
+  "anzahl": 45,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -9972,7 +10152,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -10166,13 +10346,19 @@
  {
   "ort": "KÄUFE & GARANTIEN › Geräte & Technik",
   "umgebung": "desktop",
-  "anzahl": 44,
+  "anzahl": 45,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -10242,7 +10428,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -10436,13 +10622,19 @@
  {
   "ort": "DOKUMENTE › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 293,
+  "anzahl": 294,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -10512,7 +10704,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -10554,7 +10746,7 @@
    {
     "art": "Knopf",
     "text": "Dokumentensuche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -12200,13 +12392,19 @@
  {
   "ort": "DOKUMENTE › Dokumentenbibliothek",
   "umgebung": "desktop",
-  "anzahl": 293,
+  "anzahl": 294,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -12276,7 +12474,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -12318,7 +12516,7 @@
    {
     "art": "Knopf",
     "text": "Dokumentensuche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -13964,13 +14162,19 @@
  {
   "ort": "DOKUMENTE › Bestand prüfen",
   "umgebung": "desktop",
-  "anzahl": 45,
+  "anzahl": 37,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -14040,7 +14244,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -14078,60 +14282,6 @@
     "text": "Bestand prüfen erklären",
     "disabled": false,
     "cls": "start-info-trigger"
-   },
-   {
-    "art": "Knopf",
-    "text": "Testakte für Weiterentwicklung erklären",
-    "disabled": false,
-    "cls": "start-info-trigger"
-   },
-   {
-    "art": "Knopf",
-    "text": "Testumgebung automatisch einrichten und prüfen",
-    "disabled": false,
-    "cls": "button primary automatic-test-action critical-dependent"
-   },
-   {
-    "art": "Knopf",
-    "text": "Windows-Dateisystem diagnostizieren",
-    "disabled": false,
-    "cls": "button primary diagnostic-test-action"
-   },
-   {
-    "art": "Knopf",
-    "text": "Testakte für Weiterentwicklung",
-    "disabled": false,
-    "cls": "button primary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Testregister vorbereiten",
-    "disabled": false,
-    "cls": "button primary test-register-action critical-dependent"
-   },
-   {
-    "art": "Knopf",
-    "text": "Hauptordner einschließlich Unterordner auswählen",
-    "disabled": false,
-    "cls": "button primary inventory-step-action"
-   },
-   {
-    "art": "Knopf",
-    "text": "Inkrementell prüfen erklären",
-    "disabled": false,
-    "cls": "start-info-trigger"
-   },
-   {
-    "art": "Knopf",
-    "text": "Bestand jetzt prüfen",
-    "disabled": true,
-    "cls": "button primary inventory-step-action"
-   },
-   {
-    "art": "Knopf",
-    "text": "Archivdatenträger auswählen",
-    "disabled": false,
-    "cls": "button primary inventory-step-action"
    },
    {
     "art": "Knopf",
@@ -14240,13 +14390,19 @@
  {
   "ort": "DOKUMENTE › Eingangszentrale",
   "umgebung": "desktop",
-  "anzahl": 74,
+  "anzahl": 75,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -14316,7 +14472,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -14690,13 +14846,19 @@
  {
   "ort": "DOKUMENTE › Sicherheit & lokaler Tresor",
   "umgebung": "desktop",
-  "anzahl": 52,
+  "anzahl": 53,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -14766,7 +14928,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -15008,13 +15170,19 @@
  {
   "ort": "DOKUMENTE › Unterlagen & Quellen",
   "umgebung": "desktop",
-  "anzahl": 51,
+  "anzahl": 52,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -15084,7 +15252,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -15320,13 +15488,19 @@
  {
   "ort": "DOKUMENTE › Alle Bereiche",
   "umgebung": "desktop",
-  "anzahl": 79,
+  "anzahl": 80,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -15396,7 +15570,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -15800,13 +15974,19 @@
  {
   "ort": "HILFE › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 65,
+  "anzahl": 66,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -15876,7 +16056,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -16196,13 +16376,19 @@
  {
   "ort": "HILFE › Hilfe & erste Schritte",
   "umgebung": "desktop",
-  "anzahl": 65,
+  "anzahl": 66,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -16272,7 +16458,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -16592,13 +16778,19 @@
  {
   "ort": "HILFE › Systemprüfung",
   "umgebung": "desktop",
-  "anzahl": 95,
+  "anzahl": 96,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -16668,7 +16860,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -17168,13 +17360,19 @@
  {
   "ort": "HILFE › Was gibt’s Neues?",
   "umgebung": "desktop",
-  "anzahl": 393,
+  "anzahl": 394,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -17244,7 +17442,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -19532,13 +19730,19 @@
  {
   "ort": "HILFE › Versionshistorie",
   "umgebung": "desktop",
-  "anzahl": 36,
+  "anzahl": 37,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -19608,7 +19812,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -19754,13 +19958,19 @@
  {
   "ort": "HILFE › Datentresor-Hilfe",
   "umgebung": "desktop",
-  "anzahl": 52,
+  "anzahl": 53,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -19830,7 +20040,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -20072,13 +20282,19 @@
  {
   "ort": "Fußzeile › Interaktives Cockpit",
   "umgebung": "desktop",
-  "anzahl": 113,
+  "anzahl": 114,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -20148,7 +20364,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -20756,13 +20972,19 @@
  {
   "ort": "Fußzeile › Tagebuch & Erinnerungen",
   "umgebung": "desktop",
-  "anzahl": 68,
+  "anzahl": 69,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -20832,7 +21054,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -20880,7 +21102,7 @@
    {
     "art": "Knopf",
     "text": "Erinnerung: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -21170,13 +21392,19 @@
  {
   "ort": "Fußzeile › Fristen und Aufgaben",
   "umgebung": "desktop",
-  "anzahl": 125,
+  "anzahl": 126,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -21246,7 +21474,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -21318,19 +21546,19 @@
    {
     "art": "Knopf",
     "text": "Titel: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
     "art": "Knopf",
     "text": "Quelle: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
     "art": "Knopf",
     "text": "Notizen: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -21407,7 +21635,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 27ee03c2-acf5-40f0-84a6-e2377bd134af",
+    "text": "Dokument: d13f3baf-9778-4f3c-82de-ea25c47bfd72",
     "disabled": false,
     "cls": "text-link"
    },
@@ -21479,7 +21707,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: c9435b71-60a8-4f19-853c-a35798026816",
+    "text": "Dokument: 39987e01-b106-4387-9736-ff7aeb3fab52",
     "disabled": false,
     "cls": "text-link"
    },
@@ -21509,7 +21737,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 7d6c44a4-cb68-463b-9eea-3c0eb8971e58",
+    "text": "Dokument: f272049d-41d9-4dce-b4d2-55550dde996f",
     "disabled": false,
     "cls": "text-link"
    },
@@ -21617,7 +21845,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 7d6c44a4-cb68-463b-9eea-3c0eb8971e58",
+    "text": "Dokument: f272049d-41d9-4dce-b4d2-55550dde996f",
     "disabled": false,
     "cls": "text-link"
    },
@@ -21926,13 +22154,19 @@
  {
   "ort": "Fußzeile › Gesamtes Verzeichnis",
   "umgebung": "desktop",
-  "anzahl": 79,
+  "anzahl": 80,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -22002,7 +22236,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -22406,13 +22640,19 @@
  {
   "ort": "Fußzeile › Lebensbereiche",
   "umgebung": "desktop",
-  "anzahl": 86,
+  "anzahl": 87,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -22482,7 +22722,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -22710,7 +22950,7 @@
    {
     "art": "Knopf",
     "text": "Erinnerung: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -22928,13 +23168,19 @@
  {
   "ort": "Fußzeile › Dokumentenbibliothek",
   "umgebung": "desktop",
-  "anzahl": 293,
+  "anzahl": 294,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -23004,7 +23250,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -23046,7 +23292,7 @@
    {
     "art": "Knopf",
     "text": "Dokumentensuche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -24692,13 +24938,19 @@
  {
   "ort": "Fußzeile › Eingangszentrale",
   "umgebung": "desktop",
-  "anzahl": 74,
+  "anzahl": 75,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -24768,7 +25020,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -25142,13 +25394,19 @@
  {
   "ort": "Fußzeile › Bestand prüfen",
   "umgebung": "desktop",
-  "anzahl": 45,
+  "anzahl": 37,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -25218,7 +25476,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -25256,60 +25514,6 @@
     "text": "Bestand prüfen erklären",
     "disabled": false,
     "cls": "start-info-trigger"
-   },
-   {
-    "art": "Knopf",
-    "text": "Testakte für Weiterentwicklung erklären",
-    "disabled": false,
-    "cls": "start-info-trigger"
-   },
-   {
-    "art": "Knopf",
-    "text": "Testumgebung automatisch einrichten und prüfen",
-    "disabled": false,
-    "cls": "button primary automatic-test-action critical-dependent"
-   },
-   {
-    "art": "Knopf",
-    "text": "Windows-Dateisystem diagnostizieren",
-    "disabled": false,
-    "cls": "button primary diagnostic-test-action"
-   },
-   {
-    "art": "Knopf",
-    "text": "Testakte für Weiterentwicklung",
-    "disabled": false,
-    "cls": "button primary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Testregister vorbereiten",
-    "disabled": false,
-    "cls": "button primary test-register-action critical-dependent"
-   },
-   {
-    "art": "Knopf",
-    "text": "Hauptordner einschließlich Unterordner auswählen",
-    "disabled": false,
-    "cls": "button primary inventory-step-action"
-   },
-   {
-    "art": "Knopf",
-    "text": "Inkrementell prüfen erklären",
-    "disabled": false,
-    "cls": "start-info-trigger"
-   },
-   {
-    "art": "Knopf",
-    "text": "Bestand jetzt prüfen",
-    "disabled": true,
-    "cls": "button primary inventory-step-action"
-   },
-   {
-    "art": "Knopf",
-    "text": "Archivdatenträger auswählen",
-    "disabled": false,
-    "cls": "button primary inventory-step-action"
    },
    {
     "art": "Knopf",
@@ -25418,13 +25622,19 @@
  {
   "ort": "Fußzeile › Was gibt’s Neues?",
   "umgebung": "desktop",
-  "anzahl": 393,
+  "anzahl": 394,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -25494,7 +25704,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -27782,13 +27992,19 @@
  {
   "ort": "Fußzeile › Hilfe",
   "umgebung": "desktop",
-  "anzahl": 65,
+  "anzahl": 66,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -27858,7 +28074,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -28178,13 +28394,19 @@
  {
   "ort": "Fußzeile › Systemprüfung",
   "umgebung": "desktop",
-  "anzahl": 95,
+  "anzahl": 96,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -28254,7 +28476,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -28754,13 +28976,19 @@
  {
   "ort": "Fußzeile › Prüfberichte",
   "umgebung": "desktop",
-  "anzahl": 95,
+  "anzahl": 96,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -28830,7 +29058,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -29330,13 +29558,19 @@
  {
   "ort": "Fußzeile › Sicherheitscenter",
   "umgebung": "desktop",
-  "anzahl": 52,
+  "anzahl": 53,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -29406,7 +29640,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -29648,13 +29882,19 @@
  {
   "ort": "Fußzeile › Versionshistorie",
   "umgebung": "desktop",
-  "anzahl": 36,
+  "anzahl": 37,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -29724,7 +29964,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -29870,13 +30110,19 @@
  {
   "ort": "Dialog › Mit ChatGPT arbeiten",
   "umgebung": "desktop",
-  "anzahl": 41,
+  "anzahl": 42,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -29946,7 +30192,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -30102,7 +30348,7 @@
    {
     "art": "Knopf",
     "text": "Änderungswunsch: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -30121,13 +30367,19 @@
  {
   "ort": "Dialog › Familienakte exportieren",
   "umgebung": "desktop",
-  "anzahl": 50,
+  "anzahl": 51,
   "elemente": [
    {
     "art": "Knopf",
     "text": "MMI FAMILIENAKTE Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
    },
    {
     "art": "Knopf",
@@ -30197,7 +30449,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -30427,7 +30679,7 @@
  {
   "ort": "Startseite",
   "umgebung": "handy",
-  "anzahl": 78,
+  "anzahl": 79,
   "elemente": [
    {
     "art": "Knopf",
@@ -30443,6 +30695,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
     "cls": "icon-button"
@@ -30455,7 +30713,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -30683,7 +30941,7 @@
    {
     "art": "Knopf",
     "text": "Erinnerung: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -30901,7 +31159,7 @@
  {
   "ort": "ASSISTENZ › Assistenzzentrale",
   "umgebung": "handy",
-  "anzahl": 44,
+  "anzahl": 45,
   "elemente": [
    {
     "art": "Knopf",
@@ -30917,6 +31175,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
     "cls": "icon-button"
@@ -30929,7 +31193,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -31031,7 +31295,7 @@
    {
     "art": "Knopf",
     "text": "Assistenzfrage: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -31171,7 +31435,7 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Diagnosen, AU & ICD-Codes",
   "umgebung": "handy",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
@@ -31187,6 +31451,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
     "cls": "icon-button"
@@ -31199,7 +31469,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -31453,7 +31723,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Interaktives Cockpit",
   "umgebung": "handy",
-  "anzahl": 105,
+  "anzahl": 106,
   "elemente": [
    {
     "art": "Knopf",
@@ -31469,6 +31739,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
     "cls": "icon-button"
@@ -31481,7 +31757,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -32089,7 +32365,7 @@
  {
   "ort": "WOHNEN › Miet- & Vermieterunterlagen",
   "umgebung": "handy",
-  "anzahl": 36,
+  "anzahl": 37,
   "elemente": [
    {
     "art": "Knopf",
@@ -32105,6 +32381,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
     "cls": "icon-button"
@@ -32117,7 +32399,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -32311,7 +32593,7 @@
  {
   "ort": "FAHRZEUGE › Fahrzeugpapiere",
   "umgebung": "handy",
-  "anzahl": 36,
+  "anzahl": 37,
   "elemente": [
    {
     "art": "Knopf",
@@ -32327,6 +32609,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
     "cls": "icon-button"
@@ -32339,7 +32627,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -32533,7 +32821,7 @@
  {
   "ort": "KÄUFE & GARANTIEN › Käufe & Rechnungen",
   "umgebung": "handy",
-  "anzahl": 36,
+  "anzahl": 37,
   "elemente": [
    {
     "art": "Knopf",
@@ -32549,6 +32837,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
     "cls": "icon-button"
@@ -32561,7 +32855,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -32755,7 +33049,7 @@
  {
   "ort": "DOKUMENTE › Dokumentenbibliothek",
   "umgebung": "handy",
-  "anzahl": 261,
+  "anzahl": 262,
   "elemente": [
    {
     "art": "Knopf",
@@ -32771,6 +33065,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
     "cls": "icon-button"
@@ -32783,7 +33083,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -32825,7 +33125,7 @@
    {
     "art": "Knopf",
     "text": "Dokumentensuche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -34327,7 +34627,7 @@
  {
   "ort": "HILFE › Hilfe & erste Schritte",
   "umgebung": "handy",
-  "anzahl": 57,
+  "anzahl": 58,
   "elemente": [
    {
     "art": "Knopf",
@@ -34343,6 +34643,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
     "cls": "icon-button"
@@ -34355,7 +34661,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -34675,7 +34981,7 @@
  {
   "ort": "Fußzeile › Interaktives Cockpit",
   "umgebung": "handy",
-  "anzahl": 105,
+  "anzahl": 106,
   "elemente": [
    {
     "art": "Knopf",
@@ -34691,6 +34997,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
     "cls": "icon-button"
@@ -34703,7 +35015,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -35311,7 +35623,7 @@
  {
   "ort": "Fußzeile › Dokumentenbibliothek",
   "umgebung": "handy",
-  "anzahl": 261,
+  "anzahl": 262,
   "elemente": [
    {
     "art": "Knopf",
@@ -35327,6 +35639,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
     "cls": "icon-button"
@@ -35339,7 +35657,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -35381,7 +35699,7 @@
    {
     "art": "Knopf",
     "text": "Dokumentensuche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -36883,7 +37201,7 @@
  {
   "ort": "Fußzeile › Eingangszentrale",
   "umgebung": "handy",
-  "anzahl": 66,
+  "anzahl": 67,
   "elemente": [
    {
     "art": "Knopf",
@@ -36899,6 +37217,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
     "cls": "icon-button"
@@ -36911,7 +37235,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -37285,7 +37609,7 @@
  {
   "ort": "Fußzeile › Sicherheitscenter",
   "umgebung": "handy",
-  "anzahl": 44,
+  "anzahl": 45,
   "elemente": [
    {
     "art": "Knopf",
@@ -37301,6 +37625,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
     "cls": "icon-button"
@@ -37313,7 +37643,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -37555,7 +37885,7 @@
  {
   "ort": "Fußzeile › Fristen und Aufgaben",
   "umgebung": "handy",
-  "anzahl": 117,
+  "anzahl": 118,
   "elemente": [
    {
     "art": "Knopf",
@@ -37571,6 +37901,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
     "cls": "icon-button"
@@ -37583,7 +37919,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -37655,19 +37991,19 @@
    {
     "art": "Knopf",
     "text": "Titel: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
     "art": "Knopf",
     "text": "Quelle: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
     "art": "Knopf",
     "text": "Notizen: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -37744,7 +38080,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: e5144b56-ba9a-4105-9ddf-422e7c4f9bbc",
+    "text": "Dokument: 537a6ab5-62a1-4c47-973c-aad8e9982632",
     "disabled": false,
     "cls": "text-link"
    },
@@ -37816,7 +38152,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 42c6214b-6288-4ccd-bfdb-843bc5c99ec4",
+    "text": "Dokument: bafeb47d-f8d3-49ab-a05d-2deb6ec97d42",
     "disabled": false,
     "cls": "text-link"
    },
@@ -37846,7 +38182,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: c63ac92a-1270-4275-ac66-7a82827dbab4",
+    "text": "Dokument: 1b035e38-3168-497d-b053-123446d62679",
     "disabled": false,
     "cls": "text-link"
    },
@@ -37954,7 +38290,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: c63ac92a-1270-4275-ac66-7a82827dbab4",
+    "text": "Dokument: 1b035e38-3168-497d-b053-123446d62679",
     "disabled": false,
     "cls": "text-link"
    },
@@ -38263,7 +38599,7 @@
  {
   "ort": "Fußzeile › Tagebuch & Erinnerungen",
   "umgebung": "handy",
-  "anzahl": 117,
+  "anzahl": 61,
   "elemente": [
    {
     "art": "Knopf",
@@ -38279,6 +38615,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
     "cls": "icon-button"
@@ -38291,7 +38633,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -38326,543 +38668,201 @@
    },
    {
     "art": "Knopf",
-    "text": "Fristen und Aufgaben erklären",
+    "text": "Tagebuch & Erinnerungsprotokoll erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
    {
     "art": "Knopf",
-    "text": "Überfällig 1 Anzeigen",
-    "disabled": false,
-    "cls": "card schedule-filter "
-   },
-   {
-    "art": "Knopf",
-    "text": "Bald fällig 6 Anzeigen",
-    "disabled": false,
-    "cls": "card schedule-filter "
-   },
-   {
-    "art": "Knopf",
-    "text": "Offen 13 Anzeigen",
-    "disabled": false,
-    "cls": "card schedule-filter "
-   },
-   {
-    "art": "Knopf",
-    "text": "Frist oder Aufgabe anlegen erklären",
+    "text": "Erinnerungsprotokoll erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
    {
-    "art": "Auswahlliste",
-    "text": "Frist Aufgabe",
-    "disabled": false,
-    "cls": ""
-   },
-   {
     "art": "Knopf",
-    "text": "Titel: Diktat starten",
-    "disabled": false,
+    "text": "Erinnerung: Diktat starten",
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
-    "art": "Knopf",
-    "text": "Quelle: Diktat starten",
+    "art": "Datei-Eingang",
+    "text": "image/*,video/*",
     "disabled": false,
-    "cls": "dictation-button "
+    "cls": "sr-only"
    },
    {
     "art": "Knopf",
-    "text": "Notizen: Diktat starten",
+    "text": "Fotos oder Videos",
     "disabled": false,
-    "cls": "dictation-button "
-   },
-   {
-    "art": "Schalter",
-    "text": "",
-    "disabled": false,
-    "cls": ""
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
-    "text": "Frist oder Aufgabe bestätigt anlegen",
+    "text": "Tagebuch erklären",
     "disabled": false,
+    "cls": "start-info-trigger"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch öffnen",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Nächste Eingabe",
+    "disabled": true,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Eintrag prüfen",
+    "disabled": true,
     "cls": "button primary"
    },
    {
     "art": "Knopf",
-    "text": "Offene Fristen und Aufgaben erklären",
+    "text": "Unbehandelte Erinnerungen: 0 Zurzeit wartet kein Entwurf",
+    "disabled": true,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Offene Memory-Fragen: 1 Bereits gespeicherte Einträge mit Klärungsbedarf",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Unbehandelte Memory-Ereignisse erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
    {
     "art": "Knopf",
-    "text": "Objekt: OBJ-000001",
+    "text": "Älteste zuerst",
     "disabled": false,
     "cls": "text-link"
    },
    {
     "art": "Knopf",
-    "text": "Organisation / Kontaktstelle: ORG-000001",
+    "text": "Tag zusammenfassen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zwei getrennte Arbeitslisten erklären",
+    "disabled": false,
+    "cls": "start-info-trigger"
+   },
+   {
+    "art": "Knopf",
+    "text": "Unbehandelte Erinnerungen: 0 noch prüfen und endgültig speichern",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Offene Memory-Fragen: 1 gehören zu bereits gespeicherten Einträgen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Offene Memory-Punkte erklären",
+    "disabled": false,
+    "cls": "start-info-trigger"
+   },
+   {
+    "art": "Knopf",
+    "text": "Erster Abend in der neuen Wohnung in Wolkenhain Haus & Wohnung · teilweise erled",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Als erledigt bestätigen",
     "disabled": false,
     "cls": "text-link"
    },
    {
     "art": "Knopf",
-    "text": "Als erledigt markieren",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Zurückstellen",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Frist: FRIST-000001",
+    "text": "Weiter beobachten",
     "disabled": false,
     "cls": "text-link"
    },
    {
     "art": "Knopf",
-    "text": "Als erledigt markieren",
+    "text": "Chronologie erklären",
+    "disabled": false,
+    "cls": "start-info-trigger"
+   },
+   {
+    "art": "Knopf",
+    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 22.10.2026, 19:00 · Reis",
+    "disabled": false,
+    "cls": "active"
+   },
+   {
+    "art": "Knopf",
+    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 19.10.2026, 19:00 · Technik, Ge",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 16.10.2026, 19:00 ·",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 29.08.202",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 22.09.2025, 19:00 · Haus & Wohnu",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Person Ella Lindqvist-Arenberg PER-000003",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Vorgang Schulausflug Klasse 4 zum Wolkensee VORG-000005",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Auswahlliste",
+    "text": "Kein Vorgang ausgewählt Waschmaschine – Garantiefall Umzug nach Wolkenhain Fahrr",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Verbindung lösen",
+    "disabled": false,
+    "cls": "text-link danger-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "Memory bearbeiten",
     "disabled": false,
     "cls": "button secondary"
    },
    {
     "art": "Knopf",
-    "text": "Zurückstellen",
+    "text": "Memory löschen",
     "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Vorgang: VORG-000005",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Person: PER-000003",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Dokument: e5144b56-ba9a-4105-9ddf-422e7c4f9bbc",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Erinnerung: REM-000001",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Als erledigt markieren",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Zurückstellen",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Vorgang: VORG-000006",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Organisation / Kontaktstelle: ORG-000002",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Als erledigt markieren",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Zurückstellen",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Aufgabe: TASK-000004",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Als erledigt markieren",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Zurückstellen",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Vorgang: VORG-000001",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Dokument: 42c6214b-6288-4ccd-bfdb-843bc5c99ec4",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Erinnerung: REM-000004",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Als erledigt markieren",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Zurückstellen",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Vorgang: VORG-000004",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Dokument: c63ac92a-1270-4275-ac66-7a82827dbab4",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Als erledigt markieren",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Zurückstellen",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Aufgabe: TASK-000001",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Als erledigt markieren",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Zurückstellen",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Vorgang: VORG-000005",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Zahlung / Kosten: PAY-000002",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Erinnerung: REM-000002",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Als erledigt markieren",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Zurückstellen",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Frist: FRIST-000002",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Als erledigt markieren",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Zurückstellen",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Person: PER-000003",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Als erledigt markieren",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Zurückstellen",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Vorgang: VORG-000004",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Dokument: c63ac92a-1270-4275-ac66-7a82827dbab4",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Zahlung / Kosten: PAY-000001",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Erinnerung: REM-000003",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Als erledigt markieren",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Zurückstellen",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Objekt: OBJ-000004",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Person: PER-000004",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Als erledigt markieren",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Zurückstellen",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Person: PER-000005",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Als erledigt markieren",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Zurückstellen",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Frist: FRIST-000004",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Als erledigt markieren",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Zurückstellen",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Person: PER-000004",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Als erledigt markieren",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Zurückstellen",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Vertrag: VERTRAG-000003",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Als erledigt markieren",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Zurückstellen",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Objekt: OBJ-000003",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Organisation / Kontaktstelle: ORG-000011",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Erinnerung: REM-000006",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Als erledigt markieren",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Zurückstellen",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Frist: FRIST-000003",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Als erledigt markieren",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Zurückstellen",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Garantie: GAR-000001",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Objekt: OBJ-000002",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Erinnerung: REM-000005",
-    "disabled": false,
-    "cls": "text-link"
-   },
-   {
-    "art": "Knopf",
-    "text": "Als erledigt markieren",
-    "disabled": false,
-    "cls": "button secondary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Zurückstellen",
-    "disabled": false,
-    "cls": "button secondary"
+    "cls": "button secondary danger-link"
    },
    {
     "art": "Knopf",
@@ -38971,7 +38971,7 @@
  {
   "ort": "Fußzeile › Hilfe",
   "umgebung": "handy",
-  "anzahl": 57,
+  "anzahl": 58,
   "elemente": [
    {
     "art": "Knopf",
@@ -38987,6 +38987,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
     "cls": "icon-button"
@@ -38999,7 +39005,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {
@@ -39319,7 +39325,7 @@
  {
   "ort": "Fußzeile › Systemprüfung",
   "umgebung": "handy",
-  "anzahl": 87,
+  "anzahl": 88,
   "elemente": [
    {
     "art": "Knopf",
@@ -39335,6 +39341,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
     "cls": "icon-button"
@@ -39347,7 +39359,7 @@
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
-    "disabled": false,
+    "disabled": true,
     "cls": "dictation-button "
    },
    {

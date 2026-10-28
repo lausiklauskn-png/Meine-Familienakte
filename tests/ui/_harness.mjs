@@ -77,7 +77,13 @@ export async function openMenu(page, navIndex, itemText) {
   await page.waitForTimeout(400);
 }
 /** Fußzeilen-Verzeichnis („Interaktives Cockpit“, „Dokumentenbibliothek“, „Eingangszentrale“, „Sicherheitscenter“, „Hilfe“ …). */
+// Wartet, bis das sanfte Rollen (go() rollt nach oben mit behavior: smooth) zur Ruhe gekommen ist – sonst meldet
+// Playwright „Element is outside of the viewport“, wenn der Knopf während der Animation wegrutscht (Wackler in der CI).
+export async function ruhig(page, maxMs = 2000) {
+  await page.evaluate((max) => new Promise((resolve) => { const start = Date.now(); let last = window.scrollY; let still = 0; const tick = () => { if (window.scrollY === last) still += 1; else { still = 0; last = window.scrollY; } if (still >= 3 || Date.now() - start > max) return resolve(); setTimeout(tick, 60); }; tick(); }), maxMs);
+}
 export async function footer(page, text) {
+  await ruhig(page);
   await page.locator(".footer-directory button", { hasText: text }).first().click();
   await page.waitForTimeout(400);
   await page.evaluate(() => window.scrollTo(0, 0));
