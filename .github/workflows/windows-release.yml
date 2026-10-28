@@ -49,6 +49,10 @@ jobs:
       - run: npm run typecheck
       - run: npm run check
       - run: node windows/tools/version.mjs && node tools/native/test-windows.mjs
+      - name: Web-App bauen (dist/ muss vor den Rust-Proben da sein, generate_context! liest frontendDist)
+        run: node windows/tools/build-web.mjs
+        env:
+          FAMILIENAKTE_COMMIT: ${{ github.sha }}
       - name: Rust-Proben
         working-directory: windows/src-tauri
         run: cargo test --release
