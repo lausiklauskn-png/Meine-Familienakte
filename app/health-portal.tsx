@@ -8,7 +8,7 @@ import {
   FileText, Folder, FolderHeart, HeartPulse, Home, Landmark, Menu, PackageCheck,
   Plus, Printer, RefreshCw, Search, ShieldCheck, ShoppingBag, Upload, UserRound,
   Users, X, HardDrive, LockKeyhole, Usb, LogOut, HelpCircle, History, Cloud, LifeBuoy, Mic, MicOff,
-  MessageSquarePlus, Copy, ExternalLink, BookHeart, Camera, Video, NotebookPen, CircleHelp, Tags, FolderSearch, Eye, ListChecks, Save, Bot,
+  MessageSquarePlus, Copy, ExternalLink, BookHeart, Camera, Video, NotebookPen, Trash2, CircleHelp, Tags, FolderSearch, Eye, ListChecks, Save, Bot,
 } from "lucide-react";
 import { DictationButton, InfoPopover, VoiceInput, VoiceTextarea } from "./ui-controls";
 import { FormEvent, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
@@ -44,6 +44,8 @@ import { AssistantCenter } from "./assistant-center";
 import { runFamilyAssistantSelfTests, type CorrespondenceKind } from "@/lib/family-assistant";
 import { createLocalCorrespondenceBundle } from "./local-vault";
 import { browserUploadSummary, listBrowserUploads, setBrowserUploadStatus } from "./browser-uploads";
+import { isBrowserVault } from "./local-vault";
+import { removeSampleFamily, SAMPLE_FAMILY_NAME, SAMPLE_NOTICE, sampleDataPresent, seedSampleFamily } from "./sample-family";
 
 type UploadedDocument = {
   id: string; originalName: string; category: string; documentDate: string | null;
@@ -512,6 +514,23 @@ function HealthPortalContent() {
     vault: "pending", upload: "pending", compare: "pending", update: "pending", chatgpt: "pending",
   });
   const vaultHandle = oneDriveHandle || localVaultHandle;
+  const [sampleBusy, setSampleBusy] = useState(false);
+  const samplePresent = useMemo(() => sampleDataPresent({ documents: localDocuments, records: familyRecords }), [localDocuments, familyRecords]);
+  const removeSampleData = async () => {
+    if (!vaultHandle) return;
+    if (!window.confirm("Alle Beispieldaten entfernen?\n\nEntfernt werden nur die erfundenen Beispieleinträge und Beispieldokumente. Deine eigenen Unterlagen und Einträge bleiben erhalten.")) return;
+    setSampleBusy(true);
+    try { const result = await removeSampleFamily(vaultHandle); await refreshLocal(vaultHandle); setNotice({ kind: "success", text: `Beispieldaten entfernt: ${result.removedEntries} Einträge und ${result.removedFiles} Beispieldokumente. Die Familienakte ist jetzt bereit für deine eigenen Unterlagen.` }); }
+    catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die Beispieldaten konnten nicht entfernt werden." }); }
+    finally { setSampleBusy(false); }
+  };
+  const loadSampleData = async () => {
+    if (!vaultHandle) { setNotice({ kind: "info", text: "Bitte zuerst den Datentresor verbinden." }); return; }
+    setSampleBusy(true);
+    try { await seedSampleFamily(vaultHandle, { force: true }); await refreshLocal(vaultHandle); setNotice({ kind: "success", text: "Die erfundene Beispielfamilie wurde geladen. Eigene Einträge blieben unverändert." }); }
+    catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die Beispieldaten konnten nicht geladen werden." }); }
+    finally { setSampleBusy(false); }
+  };
   const oneDriveReachable = !!oneDriveHandle && !!oneDriveSummary;
   const localVaultReachable = !!localVaultHandle && !!localVaultSummary;
   const vaultReachable = oneDriveReachable || localVaultReachable;
@@ -543,6 +562,7 @@ function HealthPortalContent() {
       }
       if (local) {
         setLocalVaultHandle(local); setLocalVaultName(local.name);
+        if (isBrowserVault(local)) { setSampleBusy(true); await seedSampleFamily(local).catch((error) => { console.error("Beispieldaten konnten nicht geladen werden", error); return false; }); setSampleBusy(false); }
         if (await requestVaultPermission(local)) {
           if (!oneDrive) { const data = await readLocalVaultData(local); applyLocalData(data); }
           setLocalVaultSummary(await getVaultSummary(local));
@@ -1070,6 +1090,8 @@ function HealthPortalContent() {
           <label className="global-search"><Search size={19}/><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Zum Beispiel: Zeige mir meine Krankenkasse-Schreiben …" aria-label="Gesamte Akte in natürlichen Worten durchsuchen"/><DictationButton value={query} onChange={setQuery} label="Suche" append={false}/>{query && <button type="button" className="search-clear" onClick={() => setQuery("")} aria-label="Suche löschen"><X size={16}/></button>}</label>
         </section>
         <ActivityLines/>
+        {sampleBusy && !samplePresent && <section className="info-notice sample-data-notice" aria-live="polite"><span>Info</span><div><strong>Beispieldaten werden vorbereitet …</strong><div>Beim ersten Start legt die App eine frei erfundene Beispielfamilie im Browser-Datentresor an. Das dauert nur wenige Sekunden.</div></div></section>}
+        {samplePresent && <section className="info-notice sample-data-notice" aria-label="Hinweis zu Beispieldaten"><span>Info</span><div><strong>{SAMPLE_NOTICE}</strong><div>Die {SAMPLE_FAMILY_NAME}, alle Orte, Firmen, Fahrzeuge und Nummern sind frei erfunden. Wenn du deine eigenen Unterlagen einpflegen möchtest, entferne die Beispieldaten mit einem Klick – eigene Einträge bleiben erhalten.</div></div><button type="button" className="button secondary" disabled={sampleBusy} onClick={() => void removeSampleData()}><Trash2 size={16}/> Beispieldaten entfernen</button></section>}
         <div className="breadcrumb"><button onClick={() => go("overview")}>Startseite</button>{active !== "overview" && <><ChevronRight size={14}/>{parentArea && parentArea.label !== sectionLabels[active] && <><button onClick={() => go(parentArea.landing)}>{parentArea.label}</button><ChevronRight size={14}/></>}<span>{sectionLabels[active]}</span></>}</div>
         {query && <SearchPanel query={query} results={searchResults} interpretation={searchInterpretation} onOpen={go}/>} 
         {!query && active === "overview" && <Overview
@@ -1199,7 +1221,7 @@ function HealthPortalContent() {
             <section><h2>Unterstützung</h2><ul><li><button onClick={() => go("help")}>Hilfe</button></li><li><button onClick={() => openChatGPTEdit()}>Mit ChatGPT arbeiten</button></li><li><button onClick={() => go("systemcheck")}>Systemprüfung</button></li><li><button onClick={openFooterSystemReports}>Prüfberichte</button></li></ul></section>
             <section><h2>Sicherheit und Verwaltung</h2><ul><li><button onClick={() => go("security")}>Sicherheitscenter</button></li><li><button onClick={() => { setExportOpen(true); reportActivity({ kind: "info", text: "Exportvorbereitung geöffnet. Umfang und Zielordner müssen vor dem Start ausdrücklich bestätigt werden; noch keine Datei geschrieben." }); }}>Familienakte exportieren</button></li><li><button onClick={() => go("versions")}>Versionshistorie</button></li></ul></section>
           </nav>
-          <div className="footer-meta"><span>Me, Myself and I – Meine Familienakte</span><button onClick={() => go("security")}><LockKeyhole size={14}/> Datenschutz & Sicherheit</button></div>
+          <div className="footer-meta"><span>Me, Myself and I – Meine Familienakte{samplePresent ? ` · ${SAMPLE_NOTICE}` : ""}{!samplePresent && vaultHandle && <> · <button type="button" className="footer-sample-link" disabled={sampleBusy} onClick={() => void loadSampleData()}>Beispieldaten laden</button></>}</span><button onClick={() => go("security")}><LockKeyhole size={14}/> Datenschutz & Sicherheit</button></div>
         </div>
       </footer>
       {scanOpen && (
@@ -2100,7 +2122,7 @@ function InventoryCenter({ vaultReady, vaultHandle, sourceHandle, sourceName, ar
 }
 
 function HelpCenter({ onGo, onSearch }: { onGo: (id: SectionId) => void; onSearch: (value: string) => void }) {
-  const examples = ["Schreiben der Krankenkasse zum Zuschuss", "Rechnung der Waschmaschine", "Mietvertrag Lerchenweg", "Impfpass und Vorsorge"];
+  const examples = ["Schreiben der Krankenkasse zum Zuschuss", "Rechnung der Waschmaschine", "Mietvertrag Pustelblumenweg", "Impfpass und Vorsorge"];
   return <><PageTitle icon={<LifeBuoy/>} title="Hilfe" text="Kurze und verständliche Erklärungen zur Familienakte – ohne technische Fachsprache."/>
     <section className="help-start card"><div><span className="badge success">Erste Schritte</span><span className="ui-heading-help"><h2>Was möchtest du tun?</h2><InfoPopover label="Was möchtest du tun? erklären" text={UI_HELP["Was möchtest du tun?"]}/></span></div><div className="help-actions"><button onClick={() => onGo("documents")}><Archive/><span><strong>Dokumente finden</strong><small>Bibliothek durchsuchen und filtern</small></span></button><button onClick={() => onGo("inventory")}><FolderSearch/><span><strong>Bestand prüfen</strong><small>Testordner analysieren und bewerten</small></span></button><button onClick={() => onGo("inbox")}><Upload/><span><strong>Dokument ablegen</strong><small>lokal auf PC oder USB-Stick</small></span></button><button onClick={() => onGo("memory")}><BookHeart/><span><strong>Erinnerung festhalten</strong><small>diktieren, prüfen und lokal speichern</small></span></button><button onClick={() => onGo("security")}><HardDrive/><span><strong>Datentresor öffnen</strong><small>verbinden, prüfen oder sperren</small></span></button><button onClick={() => onGo("systemcheck")}><ShieldCheck/><span><strong>Systemprüfung</strong><small>prüfen, Bericht öffnen oder sicher reparieren</small></span></button><button onClick={() => onGo("changelog")}><History/><span><strong>Was gibt’s Neues?</strong><small>Neue Inhalte und wichtige Veränderungen</small></span></button></div></section>
     <section className="card"><div className="card-heading"><div><span className="ui-heading-help"><h2>Wie suche ich etwas?</h2><InfoPopover label="Wie suche ich etwas? erklären" text={UI_HELP["Wie suche ich etwas?"]}/></span></div><span className="badge success">lokal</span></div><div className="search-examples">{examples.map((example) => <button key={example} onClick={() => onSearch(example)}><Search size={16}/>{example}</button>)}</div><p className="fine-print">Das Mikrofon schreibt Gesprochenes in das Suchfeld. Danach erkennt die Familienakte Themen wie Krankenkasse, Leistung, Schreiben, Ärzte, ICD-Codes, Aufgaben oder Fristen. Gesucht wird nur in bereits vorhandenen Angaben; PDF- oder Word-Inhalte werden nicht automatisch gelesen und es werden keine Treffer erfunden.</p></section>
@@ -2935,7 +2957,7 @@ function HealthHub({ onGo, onDocuments }: { onGo: (id: SectionId, targetId?: str
 }
 
 function FamilyArea({ onGo, onDocuments }: { onGo: (id: SectionId, targetId?: string) => void; onDocuments: (request?: Partial<Omit<DocumentLibraryRequest, "key">>) => void }) {
-  const icons = [UserRound, Users, FileClock, Archive];
+  const icons = [BookOpen, UserRound, Users, FileClock, Archive];
   const open = (action: MenuAction) => action.section === "documents" ? onDocuments({ area: action.area || "", query: action.query || "" }) : onGo(action.section as SectionId, action.targetId);
   return <><PageTitle icon={<Users/>} title="Familie und Personen" text="Vorbereitete Personen- und Familienakten. Namen und Inhalte werden erst aus bestätigten Unterlagen ergänzt."/>
     <InfoNotice title="Struktur vorbereitet – kein behaupteter Aktenbestand"><p>Personenbezogene Inhalte erscheinen erst, wenn sie aus bestätigten Unterlagen oder vorhandenen Datensätzen stammen.</p></InfoNotice>

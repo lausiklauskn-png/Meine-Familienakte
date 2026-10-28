@@ -1645,3 +1645,13 @@ button.object-card:hover { transform: translateY(-2px); border-color: #8fb2c9; b
 @media (max-width: 720px) { .user-block-tabs { grid-template-columns: minmax(0,1fr); } .user-block-tabs button { min-height: 48px; } }
 @media (max-width: 480px) { .user-test { grid-template-columns: 30px minmax(0,1fr); gap: 8px; } .user-test-number { width: 30px; font-size: 1.1rem; } .user-result-option { flex: 1 1 120px; } .user-acceptance-submit > button { width: 100%; flex-basis: 100%; } }
 @media (prefers-reduced-motion: reduce) { .dictation-button { animation: none; } }
+
+/* Hinweis auf Beispieldaten (gleiche Gestaltung wie die übrigen Info-Hinweise) */
+.sample-data-notice { grid-template-columns: auto minmax(0,1fr) auto; align-items: center; margin: 6px 0 4px; }
+.sample-data-notice > div > div { color: var(--navy); font-size: .86rem; }
+.sample-data-notice .button { white-space: nowrap; }
+.footer-meta .footer-sample-link { display: inline; padding: 0; text-decoration: underline; font-weight: 700; }
+@media (max-width: 720px) {
+  .sample-data-notice { grid-template-columns: auto minmax(0,1fr); }
+  .sample-data-notice .button { grid-column: 1 / -1; justify-self: start; }
+}

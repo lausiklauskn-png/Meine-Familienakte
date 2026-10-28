@@ -3437,3 +3437,33 @@ export async function copyMissingDocuments(source: FileSystemDirectoryHandle, ta
   await logWritable.close();
   return { ...preview, copiedDocuments, skippedDocuments, completedAt };
 }
+
+/** Entfernt ausgewählte Einträge (z. B. die Beispieldaten) samt ihrer Dateien und Verknüpfungen.
+ *  Alle anderen Einträge bleiben unverändert. Das Register wird vorher wie üblich gesichert. */
+export async function removeVaultEntries(handle: FileSystemDirectoryHandle, ids: Set<string>, label = "Beispieldaten entfernt") {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  const index = await readIndex(handle);
+  const removedDocuments = index.documents.filter((item) => ids.has(item.id));
+  for (const document of removedDocuments) {
+    try {
+      const parts = document.storedPath.split("/").filter(Boolean);
+      if (parts[0] === ROOT) parts.shift();
+      const fileName = parts.pop();
+      let directory = await root(handle);
+      for (const part of parts) directory = await directory.getDirectoryHandle(part);
+      if (fileName) await directory.removeEntry(fileName);
+    } catch { /* Datei fehlt bereits – Registereintrag wird trotzdem entfernt */ }
+  }
+  const before = index.documents.length + index.records.length + index.memoryDrafts.length;
+  index.documents = index.documents.filter((item) => !ids.has(item.id));
+  index.records = index.records.filter((item) => !ids.has(item.id));
+  index.memoryDrafts = index.memoryDrafts.filter((item) => !ids.has(item.id));
+  index.relations = index.relations.filter((item) => !ids.has(item.id) && !ids.has(item.fromId) && !ids.has(item.toId));
+  index.linkDecisions = index.linkDecisions.filter((item) => !ids.has((item as { id?: string }).id || ""));
+  index.auditLog = index.auditLog.filter((item) => !item.recordId || !ids.has(item.recordId));
+  if (!index.documents.length && !index.records.length) index.sequences = {};
+  const removed = before - (index.documents.length + index.records.length + index.memoryDrafts.length);
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: new Date().toISOString(), action: label, recordId: null, details: `${removed} Einträge und ${removedDocuments.length} Dateien wurden nach Benutzerbestätigung entfernt. Eigene Einträge blieben unverändert.` });
+  await writeIndex(handle, index);
+  return { removedEntries: removed, removedFiles: removedDocuments.length };
+}

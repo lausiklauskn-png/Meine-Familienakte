@@ -9,7 +9,7 @@ const controls = read("app/ui-controls.tsx");
 const dictation = read("lib/browser-dictation.ts");
 const styles = read("app/globals.css");
 const checkTypes = read("lib/system-check.ts");
-const api = read("app/api/system-check/route.ts");
+const api = read("app/browser-uploads.ts");
 const localVault = read("app/local-vault.ts");
 const assignment = read("lib/family-assignment.ts");
 const assignmentTests = read("scripts/run-assignment-tests.mjs");
@@ -79,7 +79,7 @@ check("Oberfläche", portal.includes("Alles Wichtige an einem Ort") && portal.in
 check("Menütypografie", styles.includes("color: #fff") && styles.includes("font-weight: 400") && styles.includes("text-transform: uppercase") && styles.includes("letter-spacing: .045em"), "Die obere Navigation verwendet nicht die freigegebene weiße Regular-Typografie.");
 check("Navigation", portal.includes('label: "Interaktives Cockpit"') && portal.includes('active === "cockpit"') && portal.includes('label: "Dokumentenbibliothek"') && portal.includes('active === "documents"') && portal.includes('label: "Systemprüfung"') && portal.includes('active === "systemcheck"') && portal.includes('active === "versions"') && ["Familienakte", "Dokumente", "Unterstützung", "Sicherheit und Verwaltung"].every((label) => portal.includes(`<h2>${label}</h2>`)) && ["Gesamtes Verzeichnis", "Dokumentenbibliothek", "Eingangszentrale", "Bestand prüfen", "Mit ChatGPT arbeiten", "Hilfe", "Systemprüfung", "Was gibt’s Neues?", "Versionshistorie", "Prüfberichte", "Sicherheitscenter"].every((label) => portal.includes(`>${label}<`) || portal.includes(`>${label}</button>`)), "Cockpit, Dokumentenbibliothek, Hauptnavigation, Neuigkeiten, Systemprüfung, Versionshistorie oder eine freigegebene Servicenavigation fehlt.");
 check("Mobile Navigation", styles.includes(".footer-directory { grid-template-columns: 1fr") && styles.includes(".footer-directory { grid-template-columns: repeat(2"), "Die unteren Linkgruppen sind auf kleinen Bildschirmen nicht eindeutig ein- beziehungsweise zweispaltig vorbereitet.");
-check("Datenbestand", api.includes(".select(") && !api.includes(".insert(") && !api.includes(".update(") && !api.includes(".delete("), "Die Serverprüfung ist nicht eindeutig nur lesend.");
+check("Datenbestand", api.includes("browserUploadSummary") && !api.includes("fetch(") && !api.includes(".insert(") && !api.includes(".update(") && !api.includes(".delete("), "Die Bestandsprüfung ist nicht eindeutig lokal und nur lesend.");
 const localSnapshot = localVault.slice(localVault.indexOf("export async function readLocalSystemSnapshot"), localVault.indexOf("export async function getVaultSummary"));
 check("Lokaler Tresor", localSnapshot.length > 0 && !localSnapshot.includes("writeIndex") && !localSnapshot.includes("createWritable") && !localSnapshot.includes("{ create: true }"), "Der lokale Prüflauf darf keine Dateien oder Ordner verändern.");
 check("Gesundheitsakte", portal.includes("Medizinische Gesundheitsakte") && portal.includes("Arbeitsunfähigkeitszeiten"), "Die bestehende Gesundheitsakte ist nicht vollständig registriert.");

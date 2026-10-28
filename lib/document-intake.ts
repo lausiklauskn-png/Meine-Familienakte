@@ -71,8 +71,8 @@ function organisationHints(fileName: string, textHint = "") {
     ["tuv", "TÜV"], ["finanzamt", "Finanzamt"], ["arbeitsagentur", "Agentur für Arbeit"],
     ["technova", "Technova Electronics GmbH"], ["reparaturservice", "Technova Electronics GmbH"],
     ["vertragsportal", "Vertragsportal"],
-    ["vorsorgeheft", "Vorsorgezentrum Nord"], ["optik", "Optikstube Wiesengrund"],
-    ["kleeblatt", "Servicefirma Kleeblatt"], ["birkenhain", "Bürgerbüro Birkenhain"],
+    ["schraubengluck", "Reparaturdienst Schraubenglück (erfunden)"], ["pustelblume", "Hausverwaltung Pustelblume (erfunden)"],
+    ["funkenflug", "Elektrohaus Funkenflug (erfunden)"], ["wolkenhain", "Bürgerbüro Wolkenhain (erfunden)"],
     ["personalabteilung", "Personalabteilung"],
   ].filter(([needle]) => text.includes(needle)).map(([, label]) => label);
 }

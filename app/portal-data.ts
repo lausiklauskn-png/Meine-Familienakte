@@ -32,38 +32,38 @@ export const portalAreas = [
 
 export const assessmentGroups = [
   {
-    title: "Umzug nach Birkenhain",
+    title: "Umzug nach Wolkenhain",
     description: "Ummeldung, Mietvertrag und Übergabeprotokoll der neuen Wohnung (Beispiel).",
     files: [
-      "2025-08-01_Mietvertrag_Lerchenweg_17b.pdf",
-      "2025-08-29_Uebergabeprotokoll_Wohnung.pdf",
-      "2025-09-03_Ummeldung_Buergerbuero_Birkenhain.pdf",
+      "Mietvertrag_Pustelblumenweg_7.pdf",
+      "Uebergabeprotokoll_Wohnung.pdf",
+      "Ummeldung_Buergerbuero_Wolkenhain.pdf",
     ],
   },
   {
     title: "Teilzeitantrag",
     description: "Antrag auf vier Arbeitstage pro Woche und Antwort des Arbeitgebers (Beispiel).",
     files: [
-      "2026-03-02_Antrag_Teilzeit.docx",
-      "2026-03-09_Eingangsbestaetigung_Arbeitgeber.pdf",
+      "Antrag_Teilzeit_Jonna.pdf",
+      "Gehaltsabrechnung_Jonna.pdf",
     ],
   },
   {
     title: "Waschmaschine – Garantiefall",
     description: "Kaufbeleg, Fehlerbeschreibung und Reparaturauftrag (Beispiel).",
     files: [
-      "2024-11-12_Rechnung_Waschmaschine_Aquamira_W7.pdf",
-      "2026-02-18_Garantieanfrage_Pumpe_defekt.pdf",
-      "2026-02-25_Reparaturauftrag_Servicefirma_Kleeblatt.pdf",
+      "Rechnung_Waschmaschine_Waschwunder_7.pdf",
+      "Garantieanfrage_Waschmaschine_Pumpe.pdf",
+      "Reparaturauftrag_Schraubenglueck.pdf",
     ],
   },
 ];
 
 export const coreDocuments = [
-  { date: "14.03.2026", name: "Familienübersicht (Beispiel)", area: "Hauptakte", status: "aktuell" },
+  { date: "14.03.2026", name: "Familienübersicht Lindqvist-Arenberg (Beispiel)", area: "Hauptakte", status: "aktuell" },
   { date: "03.10.2025", name: "Beleg neue Brille", area: "Gesundheit", status: "berücksichtigt" },
-  { date: "21.01.2026", name: "Zuschuss Brille – Antwort Krankenkasse", area: "Krankenkasse", status: "berücksichtigt" },
+  { date: "21.01.2026", name: "Zuschuss Brille – Antwort Krankenversicherung", area: "Krankenversicherung", status: "berücksichtigt" },
   { date: "02.03.2026", name: "Antrag auf Teilzeit", area: "Arbeit / Arbeitgeber", status: "Antwort offen" },
-  { date: "01.08.2025", name: "Mietvertrag Lerchenweg 17b", area: "Wohnen", status: "berücksichtigt" },
+  { date: "01.08.2025", name: "Mietvertrag Pustelblumenweg 7", area: "Wohnen", status: "berücksichtigt" },
   { date: "12.11.2024", name: "Rechnung Waschmaschine", area: "Käufe & Garantien", status: "berücksichtigt" },
 ];
