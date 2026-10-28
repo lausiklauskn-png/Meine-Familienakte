@@ -12,4 +12,13 @@ export default defineConfig({
     alias: { "@": fileURLToPath(new URL(".", import.meta.url)) },
   },
   server: { port: 5173 },
+  build: {
+    // E1: React und die Symbole als eigener Vendor-Teil; der Service Worker cacht ihn über Updates hinweg.
+    rollupOptions: { output: { manualChunks(id) {
+      if (/node_modules\/(react|react-dom|scheduler)\//.test(id)) return "react";
+      if (id.includes("node_modules/lucide-react/")) return "icons";
+      return undefined;
+    } } },
+    chunkSizeWarningLimit: 900,
+  },
 });

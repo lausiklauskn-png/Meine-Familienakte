@@ -1,0 +1,71 @@
+name: Familienakte als installierbare PWA (GitHub Pages)
+
+# Teil 2.2: Jeder Merge nach main baut die PWA und liefert sie über GitHub Pages aus
+# (Muster: Privat-Brain-Pro/.github/workflows/pages.yml, verkürzt). Die Pages-Quelle muss
+# „GitHub Actions“ sein; beim ersten Lauf versucht configure-pages, die Site anzulegen.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  bauen:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run check
+      - name: PWA bauen (dist mit Service Worker und version.json)
+        run: npm run build
+        env:
+          FAMILIENAKTE_COMMIT: ${{ github.sha }}
+      - name: Vorrat und Bau-Kennung prüfen
+        run: |
+          set -euo pipefail
+          test -f dist/sw.js && test -f dist/version.json && test -f dist/icons/icon-512.png
+          node -e "const v=require('./dist/version.json'); const h=require('fs').readFileSync('dist/index.html','utf8'); if(!h.includes('content=\"'+v.build+'\"')) process.exit(1); console.log('Bau', v.build, 'Quelle', v.commit)"
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+          retention-days: 7
+  veroeffentlichen:
+    if: github.repository == 'lausiklauskn-png/Meine-Familienakte'
+    needs: bauen
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Öffentlich ausgelieferte Fassung gegen den Bau prüfen
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          for i in 1 2 3 4 5 6; do
+            if curl -fsS "${PAGE_URL}version.json" -o live.json; then break; fi
+            sleep 10
+          done
+          cat live.json

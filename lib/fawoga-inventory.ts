@@ -196,8 +196,8 @@ function detectMetadata(file: InventorySourceFile): InventoryDetectedMetadata {
   const source = `${file.name}\n${file.textHint || ""}`;
   const unique = (values: string[]) => [...new Set(values.map((value) => value.trim()).filter(Boolean))].slice(0, 8);
   const dates = unique([...source.matchAll(/\b(?:0?[1-9]|[12]\d|3[01])[.\-/](?:0?[1-9]|1[0-2])[.\-/](?:19|20)\d{2}\b/g)].map((match) => match[0]));
-  const invoiceNumbers = unique([...source.matchAll(/(?:rechnungs?\s*(?:nummer|nr\.?|\-nr\.?)|invoice)\s*[:#]?\s*([A-Z0-9][A-Z0-9_\-/]{3,})/gi)].map((match) => match[1]));
-  const contractNumbers = unique([...source.matchAll(/(?:vertrags?\s*(?:nummer|nr\.?|\-nr\.?)|policen?\s*(?:nummer|nr\.?)|kundennummer)\s*[:#]?\s*([A-Z0-9][A-Z0-9_\-/]{3,})/gi)].map((match) => match[1]));
+  const invoiceNumbers = unique([...source.matchAll(/(?:rechnungs?\s*(?:nummer|nr\.?|-nr\.?)|invoice)\s*[:#]?\s*([A-Z0-9][A-Z0-9_\-/]{3,})/gi)].map((match) => match[1]));
+  const contractNumbers = unique([...source.matchAll(/(?:vertrags?\s*(?:nummer|nr\.?|-nr\.?)|policen?\s*(?:nummer|nr\.?)|kundennummer)\s*[:#]?\s*([A-Z0-9][A-Z0-9_\-/]{3,})/gi)].map((match) => match[1]));
   const referenceNumbers = unique([...source.matchAll(/(?:aktenzeichen|geschäftszeichen|vorgangsnummer|zeichen)\s*[:#]?\s*([A-Z0-9][A-Z0-9_\-/]{3,})/gi)].map((match) => match[1]));
   const normalized = normal(source);
   const possibleTask = includesAny(normalized, ["bitte senden", "bitte reichen", "antwort erforderlich", "rückruf", "unterlagen nachreichen"]) ? "Möglicher Handlungsbedarf – vor Anlage einer Aufgabe bestätigen" : null;

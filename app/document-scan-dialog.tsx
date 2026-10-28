@@ -2,7 +2,7 @@ import { askConfirm } from "./page-dialogs";
 import { UI_HELP } from "../lib/ui-help";
 
 import { ArrowDown, ArrowUp, Camera, CheckCircle2, Crop, FileImage, FileText, ImagePlus, LoaderCircle, RotateCw, Sparkles, Trash2, X } from "lucide-react";
-import { VoiceInput, VoiceTextarea, InfoPopover } from "./ui-controls";
+import { VoiceInput, InfoPopover } from "./ui-controls";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useActivity, useActivityMessage } from "./ui-activity";
 import { createDocumentScanPdf, moveScanPage, removeScanPage, replaceScanPage, rotateScanPage, type DocumentScanPdfFile, type ScanRotation } from "@/lib/document-scan";

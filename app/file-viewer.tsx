@@ -29,7 +29,7 @@ function isPreviewable(file: File) {
   return file.type.startsWith("image/") || file.type === "application/pdf" || file.type.startsWith("text/") || /\.(pdf|txt|json|csv|png|jpe?g|webp|gif)$/i.test(file.name);
 }
 
-const PDFJS_VERSION = "3.11.174";
+// pdf.js 3.11.174, siehe public/vendor/pdfjs/HERKUNFT.md
 type PdfJs = {
   GlobalWorkerOptions: { workerSrc: string };
   getDocument: (input: { data: Uint8Array }) => { promise: Promise<{ numPages: number; getPage: (n: number) => Promise<{ getViewport: (o: { scale: number }) => { width: number; height: number }; render: (o: { canvasContext: CanvasRenderingContext2D; viewport: unknown }) => { promise: Promise<void> } }> }> };

@@ -62,7 +62,7 @@ export function PracticalAcceptance({ reports, onSave, websiteVersion, familyVer
     setSavedAt(stored?.updatedAt || "");
     if (reports.some((report) => report.kind === "acceptance" && !isUserAcceptanceRun(report.userAcceptance))) setError("Ein früherer Benutzerbericht ist nicht lesbar. Er bleibt erhalten; Ergebnisse daraus werden nicht als bestanden gewertet.");
     // Initialize once per app version. A save updates the report list, not this draft.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [familyVersion]);
   if (!run) return <section className="card user-acceptance" id="benutzerabnahme"><h2>Praktische Benutzerabnahme</h2><p>Gespeicherte Prüfblöcke werden geladen …</p></section>;
   const persist = (next: UserAcceptanceRun, confirmed = false, message = "") => {

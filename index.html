@@ -11,6 +11,7 @@
     <link rel="manifest" href="./manifest.webmanifest" />
     <meta name="color-scheme" content="light" />
     <link rel="stylesheet" href="./native/familienakte-app.css" />
+    <style>.familienakte-start{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#f2f7fa;color:#0b3154;font-family:system-ui,sans-serif}.familienakte-start-marke{display:flex;align-items:center;gap:10px}.familienakte-start-marke span{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:12px;background:#0b3154;color:#fff;font-weight:700;font-size:14px}.familienakte-start-marke strong{letter-spacing:.08em}.familienakte-start p{margin:0;font-size:15px;color:#4b5d6b}</style>
     <!-- Internetschalter (Standard aus): Zustand für Browser/Windows, dann die byte-gleiche Hülle aus Private Brain Pro. -->
     <script src="./native/familienakte-netz.js"></script>
     <script src="./native/native-network.js"></script>
@@ -18,7 +19,9 @@
     <title>Me, Myself and I – Meine Familienakte</title>
   </head>
   <body class="antialiased">
-    <div id="root"></div>
+    <div id="root"><!-- Startbild (E2), bis die App gezeichnet ist; React ersetzt den Inhalt. -->
+      <div class="familienakte-start" aria-hidden="true"><div class="familienakte-start-marke"><span>MMI</span><strong>FAMILIENAKTE</strong></div><p>Die Familienakte wird geöffnet …</p></div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

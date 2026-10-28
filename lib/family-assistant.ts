@@ -76,7 +76,6 @@ export function buildAssistantAnalysis(input: {
   const bestCase = [...cases].sort((a, b) => overlapScore(question, recordLabel(b)) - overlapScore(question, recordLabel(a)))[0] || null;
   const selectedCase = cases.find((record) => record.id === input.selectedCaseId)
     || (bestCase && overlapScore(question, recordLabel(bestCase)) > 0 ? bestCase : null);
-  const caseScore = selectedCase ? overlapScore(question, recordLabel(selectedCase)) : 0;
   const connected = selectedCase ? relatedIds(selectedCase.id, input.relations) : new Set<string>();
   const relevantRecords = selectedCase
     ? input.records.filter((record) => connected.has(record.id))

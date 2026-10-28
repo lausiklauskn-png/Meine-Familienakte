@@ -1,6 +1,8 @@
 import { askConfirm, askPrompt } from "./page-dialogs";
 import { openFile } from "./file-viewer";
+import { lazy, Suspense } from "react";
 import { PracticalAcceptance, StoredUserAcceptance } from "./practical-acceptance";
+// E1: große Teilansichten werden erst beim Öffnen geladen (eigene Dateien im Build).
 import { UI_HELP } from "../lib/ui-help";
 
 import {
@@ -8,17 +10,17 @@ import {
   ChevronDown, ChevronRight, ClipboardCheck, Download, FileClock,
   FileText, Folder, FolderHeart, HeartPulse, Home, Landmark, Menu, PackageCheck,
   Plus, Printer, RefreshCw, Search, ShieldCheck, ShoppingBag, Upload, UserRound,
-  Users, X, HardDrive, LockKeyhole, Usb, LogOut, HelpCircle, History, Cloud, LifeBuoy, Mic, MicOff,
-  MessageSquarePlus, Copy, ExternalLink, BookHeart, Camera, Video, NotebookPen, Trash2, CircleHelp, Tags, FolderSearch, Eye, ListChecks, Save, Bot,
+  Users, X, HardDrive, LockKeyhole, Usb, LogOut, HelpCircle, History, Cloud, LifeBuoy, Mic,
+  Copy, ExternalLink, BookHeart, Camera, Video, NotebookPen, Trash2, CircleHelp, Tags, FolderSearch, Eye, ListChecks, Save, Bot,
 } from "lucide-react";
 import { DictationButton, InfoPopover, VoiceInput, VoiceTextarea } from "./ui-controls";
-import { FormEvent, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ActivityLines, ActivityProvider, useActivity, useActivityMessage } from "./ui-activity";
 import { NetzSchalter } from "./netz-schalter";
 import { inventoryScanFeedback, inventoryAssignmentFeedback, inventoryArchiveFeedback, inventoryReleaseFeedback } from "../lib/ui-activity";
 import healthData from "./health-data.json";
 import { assessmentGroups, categories, coreDocuments, portalAreas } from "./portal-data";
-import { appendLocalFamilyRecordNote, archiveInventoryItems, buildAutomatedTestFailureReport, changeLocalContextLink, chooseDevelopmentBaseFolder, chooseExportDestination, chooseInboxFolder, chooseInventoryArchiveFolder, chooseInventorySourceFolder, chooseOneDriveVault, chooseVault, compareVaults, confirmInventoryAssignment, confirmLocalContextLink, copyMissingDocuments, createLocalFamilyRecord, createLocalFamilyRelation, createLocalMemoryBundle, createLocalScheduleBundle, createOrUpdateLocalMemoryDraft, deleteLocalMemoryDraft, deleteLocalMemoryRecord, forgetOneDriveVault, forgetVault, getLocalMemoryDeleteImpact, getVaultSummary, inspectTestWorkspace, inventorySourcePermission, type AutomatedStorageDiagnosticReport, type AutomatedTestFailureReport, type AutomatedTestEnvironmentReport, type IncomingFolderFile, type InventoryArchiveResult, type InventoryReferenceChoice, type InventoryScanProgress, type InventoryScanResult, linkLocalDocuments, LocalDocument, LocalScheduleStatus, prepareTestRegisterPreview, type PreparedTestRegister, readInventorySourcePreview, readLocalDocumentFile, readLocalMemoryDraftFiles, readLocalMemoryMediaFile, readLocalSystemSnapshot, readLocalVaultData, rejectLocalContextLink, releaseInventoryItemsForAssistant, rememberedDevelopmentBaseFolder, rememberedInboxFolder, rememberedInventoryArchiveFolder, rememberedInventorySourceFolder, rememberedOneDriveVault, rememberedVault, removeLocalContextLink, requestVaultPermission, resetAutomatedTestEnvironment, resetInventoryItemsForRetest, restoreFullFamilyBackup, runAutomatedStorageDiagnostic, runAutomatedTestEnvironmentSelfTests, runInventoryTextDecodingSelfTests, runPreparedTestRegisterSelfTests, runTestWorkspaceSelfTests, saveLocalDocument, savePreparedTestRegister, scanInventoryFolder, scanLocalInbox, scanOneDriveInbox, setupAutomatedTestEnvironment, type TestWorkspaceReport, updateLocalMemoryDraftStatus, updateLocalMemoryOpenPointStatus, updateLocalMemoryRecord, updateLocalScheduleStatus, updateLocalStatus, VaultSummary, VaultSyncPreview, VaultSyncResult, vaultSupported, writeFamilyArchiveExport, writeFullFamilyBackup } from "./local-vault";
+import { appendLocalFamilyRecordNote, archiveInventoryItems, buildAutomatedTestFailureReport, changeLocalContextLink, chooseDevelopmentBaseFolder, chooseExportDestination, chooseInboxFolder, chooseInventoryArchiveFolder, chooseInventorySourceFolder, chooseOneDriveVault, chooseVault, compareVaults, confirmInventoryAssignment, confirmLocalContextLink, copyMissingDocuments, createLocalFamilyRecord, createLocalMemoryBundle, createLocalScheduleBundle, createOrUpdateLocalMemoryDraft, deleteLocalMemoryDraft, deleteLocalMemoryRecord, forgetOneDriveVault, forgetVault, getLocalMemoryDeleteImpact, getVaultSummary, inspectTestWorkspace, inventorySourcePermission, type AutomatedStorageDiagnosticReport, type AutomatedTestFailureReport, type AutomatedTestEnvironmentReport, type IncomingFolderFile, type InventoryArchiveResult, type InventoryReferenceChoice, type InventoryScanProgress, type InventoryScanResult, linkLocalDocuments, LocalDocument, LocalScheduleStatus, prepareTestRegisterPreview, type PreparedTestRegister, readInventorySourcePreview, readLocalDocumentFile, readLocalMemoryDraftFiles, readLocalMemoryMediaFile, readLocalSystemSnapshot, readLocalVaultData, rejectLocalContextLink, releaseInventoryItemsForAssistant, rememberedDevelopmentBaseFolder, rememberedInboxFolder, rememberedInventoryArchiveFolder, rememberedInventorySourceFolder, rememberedOneDriveVault, rememberedVault, removeLocalContextLink, requestVaultPermission, resetAutomatedTestEnvironment, resetInventoryItemsForRetest, restoreFullFamilyBackup, runAutomatedStorageDiagnostic, runAutomatedTestEnvironmentSelfTests, runInventoryTextDecodingSelfTests, runPreparedTestRegisterSelfTests, runTestWorkspaceSelfTests, saveLocalDocument, savePreparedTestRegister, scanInventoryFolder, scanLocalInbox, scanOneDriveInbox, setupAutomatedTestEnvironment, type TestWorkspaceReport, updateLocalMemoryDraftStatus, updateLocalMemoryOpenPointStatus, updateLocalMemoryRecord, updateLocalScheduleStatus, updateLocalStatus, VaultSummary, VaultSyncPreview, VaultSyncResult, vaultSupported, writeFamilyArchiveExport, writeFullFamilyBackup } from "./local-vault";
 import { createFamilyRecord, FamilyRecordUnion, FamilyRelation, formatFamilyRecordId, recordTypeDefinitions } from "@/lib/family-data-model";
 import { assignmentProposalHasNoAutomaticWrites, assignmentSequence, FAMILY_ASSIGNMENT_VERSION, proposeFamilyAssignment } from "@/lib/family-assignment";
 import { allFamilyExportScopes, buildFamilyArchiveExport, familyExportScopeLabels, FamilyExportScope, runFamilyExportSelfTest } from "@/lib/family-export";
@@ -31,9 +33,9 @@ import { dossierTypeOrder, menuPageActions, runMenuOptimizationSelfTests, target
 import { buildDocumentIntakePlan, extractDocumentIntakeTextHint, FAWOGA_LIFE_AREAS, type DocumentIntakePlan, type DocumentIntakeSource, runDocumentIntakeSelfTests } from "@/lib/document-intake";
 import { buildIntakeChoiceOptions, buildStoredPersonalLifeAreas, INTAKE_PRIVACY_CLASSES, type IntakePrivacyClass } from "@/lib/document-intake-metadata";
 import { analyzeCentralIntakeFile, extractEmlAttachments, groupCentralIntakeAnalyses, initialCentralIntakeStatus, runCentralIntakeSelfTests, type CentralIntakeQueueItem, type CentralIntakeStatus } from "@/lib/central-intake";
-import { CentralIntakeCenter } from "./central-intake-center";
+const CentralIntakeCenter = lazy(() => import("./central-intake-center").then((m) => ({ default: m.CentralIntakeCenter })));
 import { runDocumentScanSelfTests, type DocumentScanPdfFile } from "@/lib/document-scan";
-import { DocumentScanDialog } from "./document-scan-dialog";
+const DocumentScanDialog = lazy(() => import("./document-scan-dialog").then((m) => ({ default: m.DocumentScanDialog })));
 import { buildMemoryAnalysis, buildMemoryOpenPoints, buildTodayMemorySummary, isMemoryRecord, memoryData, runFamilyMemorySelfTests, runMemoryQueueSelfTests, sortMemoryDraftQueue, type MemoryAnalysis, type MemoryCaptureType, type MemoryDraftEntry, type MemoryDraftStatus, type MemoryOpenStatus, type MemoryStatementKind } from "@/lib/family-memory";
 import { buildCaseOpenSummary, buildCaseTimeline, buildContextLinkSuggestions, buildRelatedContext, runContextLinkingSelfTests, suggestIncomingDocumentContext, suggestIncomingMemoryContext, type ContextDocument, type ContextLinkDecision, type ContextLinkSuggestion, type ContextSourceType } from "@/lib/family-context-linking";
 import { StoredSystemCheck, SystemCheckArea, SystemCheckLevel, SystemCheckProblem, SystemCheckReport, systemCheckLevelLabel, systemCheckOverall, systemCheckOverallLabel } from "@/lib/system-check";
@@ -42,7 +44,7 @@ import { runCoreConsolidationSelfTests } from "@/lib/family-consolidation";
 import { FAWOGA_INVENTORY_VERSION, inventoryPhotoSeries, inventoryPreviewMode, runFawogaInventorySelfTests, runFawogaLearningSelfTests, runFawogaOneDriveSelfTests, runInventoryPreviewSelfTests, summarizeInventory, type InventoryAssignmentReference, type InventoryItem, type InventoryReviewGroup } from "@/lib/fawoga-inventory";
 import systemCheckManifest from "@/lib/system-check-manifest.json";
 import releaseSystemCheckReport from "@/lib/release-system-check-report.json";
-import { AssistantCenter } from "./assistant-center";
+const AssistantCenter = lazy(() => import("./assistant-center").then((m) => ({ default: m.AssistantCenter })));
 import { runFamilyAssistantSelfTests, type CorrespondenceKind } from "@/lib/family-assistant";
 import { createLocalCorrespondenceBundle } from "./local-vault";
 import { isBrowserVault } from "./local-vault";
@@ -463,7 +465,7 @@ function HealthPortalContent() {
   const [assistantCaseId, setAssistantCaseId] = useState<string | null>(null);
   const [documentLibraryFocusId, setDocumentLibraryFocusId] = useState<string | null>(null);
   const [documentLibraryRequest, setDocumentLibraryRequest] = useState<DocumentLibraryRequest>({ key: 0, focusId: null, area: "", query: "" });
-  const [checkRecommended, setCheckRecommended] = useState(() => {
+  const [, setCheckRecommended] = useState(() => {
     if (typeof window === "undefined") return false;
     try {
       const saved = JSON.parse(localStorage.getItem(SYSTEM_CHECK_STORAGE_KEY) || "null") as StoredSystemCheck | null;
@@ -1114,13 +1116,13 @@ function HealthPortalContent() {
           onTestRegisterSaved={async () => { if (vaultHandle) await refreshLocal(vaultHandle); }}
           onGo={go}
         />}
-        {!query && active === "inbox" && <><CentralIntakeCenter
+        {!query && active === "inbox" && <><Suspense fallback={null}><CentralIntakeCenter
           queue={centralIntakeQueue} storageReady={!!vaultHandle} oneDriveConnected={!!oneDriveHandle} inboxFolderName={inboxFolderName} busy={intakeBusy} checkedAt={intakeCheckedAt}
           onFiles={(files, source) => void queueCentralIntakeFiles(files, source)} onStartDocumentScan={openDocumentScan}
           onSelectInbox={selectInboxFolder} onScanInbox={() => void scanSelectedInbox()} onScanOneDrive={checkOneDriveInbox}
           onReview={reviewCentralIntake} onExtractAttachments={(id) => void extractCentralEmailAttachments(id)} onToggle={toggleCentralIntake} onSetStatus={setCentralIntakeStatus}
           onGo={(id) => go(id)}
-        /><Inbox compact documents={documents} localDocuments={localDocuments} loading={loadingDocs} onUpload={openLocalUpload} onOpenDocument={openDocument} onRefresh={async () => { await loadDocuments(); await refreshLocal(); }} onLocalStatus={async (id, status) => { if (!vaultHandle) return; await updateLocalStatus(vaultHandle, id, status); await refreshLocal(vaultHandle); }} onStatus={async (id, status) => {
+        /></Suspense><Inbox compact documents={documents} localDocuments={localDocuments} loading={loadingDocs} onUpload={openLocalUpload} onOpenDocument={openDocument} onRefresh={async () => { await loadDocuments(); await refreshLocal(); }} onLocalStatus={async (id, status) => { if (!vaultHandle) return; await updateLocalStatus(vaultHandle, id, status); await refreshLocal(vaultHandle); }} onStatus={async (id, status) => {
           setBusy(true);
           try { await changeStatus(id, status); await loadDocuments(); setNotice({ kind: "success", text: `Bearbeitungsstand: ${statusLabel[status]}.` }); }
           catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Speichern nicht möglich." }); }
@@ -1139,7 +1141,7 @@ function HealthPortalContent() {
         {!query && active === "benefits" && <Benefits onGo={go} onDocuments={openDocumentLibrary} onSearch={setQuery}/>}
         {!query && active === "work" && <Work onGo={go} onDocuments={openDocumentLibrary}/>}
         {!query && active === "assessment" && <Assessment onGo={go} onDocuments={openDocumentLibrary}/>}
-        {!query && active === "assistant" && <AssistantCenter
+        {!query && active === "assistant" && <Suspense fallback={null}><AssistantCenter
           records={familyRecords}
           relations={familyRelations}
           documents={localDocuments.map((document) => ({
@@ -1155,7 +1157,7 @@ function HealthPortalContent() {
           onOpenDocument={(id) => void openDocument(id)}
           onSaveCorrespondence={saveAssistantCorrespondence}
           onNotice={setNotice}
-        />}
+        /></Suspense>}
         {!query && active === "correspondence" && <Correspondence onGo={go} onDocuments={openDocumentLibrary} onSearch={setQuery}/>}
         {!query && active === "sources" && <Sources onDocuments={openDocumentLibrary}/>}
         {!query && active === "family" && <FamilyArea onGo={go} onDocuments={openDocumentLibrary}/>}
@@ -1200,7 +1202,7 @@ function HealthPortalContent() {
           <div className="footer-meta"><span>Me, Myself and I – Meine Familienakte{samplePresent ? ` · ${SAMPLE_NOTICE}` : ""}{!samplePresent && vaultHandle && <> · <button type="button" className="footer-sample-link" disabled={sampleBusy} onClick={() => void loadSampleData()}>Beispieldaten laden</button></>}</span><button onClick={() => go("security")}><LockKeyhole size={14}/> Datenschutz & Sicherheit</button></div>
         </div>
       </footer>
-      {scanOpen && (
+      {scanOpen && (<Suspense fallback={null}>
         <DocumentScanDialog
           initialFiles={scanInitialFiles}
           onClose={() => {
@@ -1214,7 +1216,7 @@ function HealthPortalContent() {
             beginLocalUpload(file, "camera-scan", true);
           }}
         />
-      )}
+      </Suspense>)}
       {uploadOpen && vaultHandle && <UploadDialog initialFile={uploadInitialFile} source={uploadSource} knownDocuments={[...localDocuments, ...documents]} records={familyRecords} relations={familyRelations} decisions={linkDecisions} suggestedCaseId={uploadSuggestedCaseId} onOpenExisting={(id) => {
         const queued = uploadQueueId ? centralIntakeQueue.find((item) => item.id === uploadQueueId) : null;
         setCentralIntakeQueue((current) => current.map((item) => item.id === uploadQueueId ? { ...item, status: "Übernommen", selected: false, savedDocumentId: id, error: "Vorhandener Dokumentdatensatz wurde wiederverwendet; es wurde keine Kopie angelegt." } : item));
@@ -1773,6 +1775,14 @@ function InventoryPreviewDialog({ item, sourceHandle, areaOptions, records, busy
   </div>;
 }
 
+// B2: Entwicklungs- und Testwerkzeuge (Testakten-Verwaltung, automatische Testumgebung, Windows-Dateisystem-Diagnose)
+// gehören zur Entwicklungsumgebung des Freundes. Sie erscheinen im Entwicklungsmodus (npm run dev) oder im Expertenmodus
+// (Adresse mit ?experte=1 oder localStorage familienakte-experte=1), nicht in PWA, APK und Windows-App für Privatnutzer.
+const expertenModus = (() => {
+  if (import.meta.env.DEV) return true;
+  try { if (new URLSearchParams(window.location.search).get("experte") === "1") { localStorage.setItem("familienakte-experte", "1"); return true; } } catch { /* ohne Adresse */ }
+  try { return localStorage.getItem("familienakte-experte") === "1"; } catch { return false; }
+})();
 function InventoryCenter({ vaultReady, vaultHandle, sourceHandle, sourceName, archiveName, items, records, busy, progress, lastRun, archiveResult, onSelectSource, onSelectArchive, onScan, onPause, onArchive, onRelease, onReset, onConfirmAssignment, onTestRegisterSaved, onGo }: {
   vaultReady: boolean;
   vaultHandle: FileSystemDirectoryHandle | null;
@@ -1975,7 +1985,7 @@ function InventoryCenter({ vaultReady, vaultHandle, sourceHandle, sourceName, ar
   };
   return <>
     <PageTitle icon={<FolderSearch/>} title="Bestand prüfen" text="Wähle einen großen Hauptordner aus. FaWoGa bezieht automatisch alle darin enthaltenen Unterordner und tiefer verschachtelten Dokumente ein."/>
-    <section className="card test-workspace-card">
+    {expertenModus && <section className="card test-workspace-card">
       <div className="test-workspace-intro"><div className="test-workspace-icon"><FolderHeart/></div><div><span className="eyebrow">Private Testfassung 2.28.1</span><span className="ui-heading-help"><h2>Testakte für Weiterentwicklung</h2><InfoPopover label="Testakte für Weiterentwicklung erklären" text={UI_HELP["Testakte für Weiterentwicklung"]}/></span></div></div>
       <div className="test-workspace-actions"><button className="button primary automatic-test-action critical-dependent" title={automaticTestBlocked ? "Durch kritischen Fehler gesperrt" : undefined} disabled={busy || automaticTestBusy || storageDiagnosticBusy || automaticTestBlocked} onClick={() => void runAutomaticTestEnvironment()}><PackageCheck className={automaticTestBusy ? "spin" : ""}/> {automaticTestBusy ? "Testumgebung wird eingerichtet und geprüft …" : "Testumgebung automatisch einrichten und prüfen"}</button><button className="button primary diagnostic-test-action" disabled={busy || automaticTestBusy || storageDiagnosticBusy} onClick={() => void runStorageDiagnostic()}><ClipboardCheck className={storageDiagnosticBusy ? "spin" : ""}/> {storageDiagnosticBusy ? "Windows-Diagnose läuft …" : "Windows-Dateisystem diagnostizieren"}</button><button className="button primary" disabled={busy || testWorkspaceBusy || testRegisterBusy || automaticTestBusy || storageDiagnosticBusy} onClick={chooseAndInspectWorkspace}><FolderSearch/> Testakte für Weiterentwicklung</button><button className="button primary test-register-action critical-dependent" title={automaticTestBlocked ? "Durch kritischen Fehler gesperrt" : undefined} disabled={busy || testWorkspaceBusy || testRegisterBusy || automaticTestBusy || storageDiagnosticBusy || automaticTestBlocked} onClick={prepareTestRegister}><ListChecks/> {testRegisterBusy ? "Testregister wird vorbereitet …" : "Testregister vorbereiten"}</button>{sourceHandle && <button className="button secondary" disabled={busy || testWorkspaceBusy || testRegisterBusy || automaticTestBusy || storageDiagnosticBusy} onClick={() => { setTestWorkspaceOpen(true); void inspectWorkspace(sourceHandle); }}><RefreshCw className={testWorkspaceBusy ? "spin" : ""}/> {testWorkspaceBusy ? "Testakte wird geprüft …" : "Gespeicherte Testakte erneut prüfen"}</button>}</div>
       <small className="test-workspace-saved">{developmentBase ? <>Entwicklungsbasis: <strong>{developmentBase.name}</strong>. Der Browser prüft die Berechtigung bei jeder Verwendung erneut.</> : <>Beim ersten Klick bitte einmal den festen Ordner <strong>SOFTWARE TESTORDNER</strong> auswählen.</>}</small>
@@ -2034,7 +2044,7 @@ function InventoryCenter({ vaultReady, vaultHandle, sourceHandle, sourceName, ar
         <p className="test-workspace-safety">Erst „Testregister ausdrücklich übernehmen“ speichert neue Vorschläge im bestehenden Register. Dabei entstehen keine Archivkopien und keine Assistenzfreigaben.</p>
       </section>}
       {testRegisterSaved && <div className="test-register-success" role="status"><CheckCircle2/><span>{testRegisterSaved}</span></div>}
-    </section>
+    </section>}
     {!vaultReady && <section className="info-note"><span>Info</span><p>Bitte zuerst den führenden lokalen Familienakten-Tresor verbinden. Analyseergebnisse werden nur im bestehenden Register gespeichert.</p><button className="text-link" onClick={() => onGo("security")}>Sicherheitscenter öffnen</button></section>}
     {progress && (busy || progress.phase === "pausiert") && <section className="card inventory-progress" aria-live="polite"><RefreshCw className={busy ? "spin" : ""}/><div><strong>{progress.currentName}</strong><p>{progress.processed} von {progress.discovered} Dateien geprüft{progress.skippedUnchanged ? ` · ${progress.skippedUnchanged} unverändert wiedererkannt` : ""}</p><progress value={progress.processed} max={Math.max(1, progress.discovered)}/></div></section>}
     {!!items.length && <>
@@ -2695,7 +2705,7 @@ function SystemCheck({ documents, localDocuments, vaultHandle, onCompleted }: {
   };
 
   // Der begrenzte Reparaturlauf wird absichtlich nur über Ereignisse und nicht als Render-Abhängigkeit ausgeführt.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   const runRepair = async (source: SystemCheckReport, automatic: boolean, attempt = 1): Promise<void> => {
     setRunning("repair"); setRunError("");
     const startedAt = new Date().toISOString();
@@ -2744,7 +2754,7 @@ function SystemCheck({ documents, localDocuments, vaultHandle, onCompleted }: {
     }
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   const runCheck = async (mode: "full" | "changes") => {
     setRunning(mode); setRunError("");
     try {
@@ -2759,7 +2769,7 @@ function SystemCheck({ documents, localDocuments, vaultHandle, onCompleted }: {
 
   return <>
     <PageTitle icon={<ShieldCheck/>} title="Systemprüfung" text="Prüfstatus, Freigabe und gespeicherte Berichte."/>
-    <PracticalAcceptance reports={reports} onSave={saveUserAcceptance} websiteVersion="40" familyVersion={APP_VERSION}/>
+    <Suspense fallback={null}>    <PracticalAcceptance reports={reports} onSave={saveUserAcceptance} websiteVersion="40" familyVersion={APP_VERSION}/></Suspense>
     <section className="system-check-facts" aria-label="Stand der Systemprüfung">
       <article className="card"><small>Aktuelle Version</small><strong>{APP_VERSION}</strong></article>
       <article className="card"><small>Letzte Systemprüfung</small><strong>{lastCheck ? new Intl.DateTimeFormat("de-DE", { dateStyle: "medium", timeStyle: "short" }).format(new Date(lastCheck.checkedAt)) : "Noch nicht durchgeführt"}</strong></article>

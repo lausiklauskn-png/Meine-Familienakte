@@ -1,5 +1,5 @@
 import type { FamilyRecordUnion, FamilyRelation } from "./family-data-model";
-import { isMemoryRecord, memoryData } from "./family-memory.ts";
+import { memoryData } from "./family-memory.ts";
 import { protectedFamilyLabel, protectedFamilySummary } from "./family-privacy.ts";
 
 export const FAMILY_NEWS_VERSION = 1 as const;
