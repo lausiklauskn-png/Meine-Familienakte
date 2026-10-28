@@ -13,7 +13,9 @@ const scriptPath = html.match(/<script type="module"[^>]*src="\.\/([^"]+)"/)?.[1
 const stylePath = html.match(/<link rel="stylesheet"[^>]*href="\.\/([^"]+)"/)?.[1];
 if (!scriptPath || !stylePath) throw new Error("Im Build wurden Skript oder Stylesheet nicht gefunden.");
 
-const script = readFileSync(join(dist, scriptPath), "utf8").replaceAll("</script", "<\\/script");
+// U+FFFD (Ersatzzeichen) kommt nur in Zeichenketten der Textprüfung vor; als Escape-Folge
+// bleibt die Bedeutung gleich und die Datei enthält kein Ersatzzeichen mehr.
+const script = readFileSync(join(dist, scriptPath), "utf8").replaceAll("</script", "<\\/script").replaceAll("\uFFFD", "\\uFFFD");
 const style = readFileSync(join(dist, stylePath), "utf8").replaceAll("</style", "<\\/style");
 const icon = `data:image/svg+xml;base64,${readFileSync(join(dist, "favicon.svg")).toString("base64")}`;
 
