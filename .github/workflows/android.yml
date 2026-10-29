@@ -4,7 +4,7 @@ name: Android-Hülle (Prüf-Bau)
 # Artefakt; die veröffentlichte APK kommt aus android-release.yml. Muster: BookLedgerPro android.yml.
 on:
   pull_request:
-    paths: ['android/**', 'public/native/**', 'capacitor.config.json', 'tools/native/**', '.github/workflows/android.yml', 'app/**', 'lib/**', 'src/**', 'index.html', 'package.json']
+    paths: ['android/**', 'public/native/**', 'capacitor.config.json', 'tools/native/**', 'tools/signing/**', '.github/workflows/android.yml', '.github/workflows/android-release.yml', 'app/**', 'lib/**', 'src/**', 'index.html', 'package.json']
   push:
     branches: [main]
   workflow_dispatch:
@@ -33,6 +33,11 @@ jobs:
       - run: npm ci
       - name: Hülle ohne Android prüfen (Manifest, Plugins, Klebstoff, Version)
         run: npm run check:android
+      - name: Signierweg mit echten Android-Werkzeugen (Wegwerf-Identität, build-tools 36.0.0)
+        run: |
+          set -euo pipefail
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install 'build-tools;36.0.0' 'platforms;android-36' > /dev/null
+          FA_ANDROID_SDK="$ANDROID_HOME" TMPDIR="$RUNNER_TEMP" node --test tools/signing/test-apk.mjs
       - name: Web-Paket bauen und in die Hülle legen
         run: npm run sync:android
         env:
