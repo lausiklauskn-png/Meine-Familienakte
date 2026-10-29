@@ -93,17 +93,23 @@ jobs:
             echo "art=wegwerf" >> "$GITHUB_OUTPUT"
           fi
           "$BT/apksigner" verify --print-certs "$out" | head -5
+      - name: Einzeldatei für die Platte (App als eine HTML-Datei, läuft per Doppelklick in Chrome/Edge)
+        run: |
+          set -euo pipefail
+          node scripts/build-single-file.mjs
+          cp dist-single/meine-familienakte.html "$RUNNER_TEMP/Familienakte-Einzeldatei-$(node -p "require('./package.json').version").html"
       - name: Prüfsummen und Hinweise
         id: sums
         run: |
           set -euo pipefail
           cd "$RUNNER_TEMP"
-          sha256sum "Familienakte-${{ inputs.tag }}.apk" > SHA256SUMS
+          sha256sum "Familienakte-${{ inputs.tag }}.apk" Familienakte-Einzeldatei-*.html > SHA256SUMS
           cat SHA256SUMS
           {
             echo "Familienakte für Android (Test-APK), Quelle \`${{ github.sha }}\`, Bau ${{ github.run_number }}."
             echo
             echo "Installieren: APK herunterladen, öffnen, Installation aus dieser Quelle erlauben."
+            echo "Dazu: Familienakte-Einzeldatei-….html – die App als eine Datei, z. B. für eine externe Platte; per Doppelklick in Chrome oder Edge, ohne Internet."
             if [ "${{ steps.signing.outputs.art }}" = "wegwerf" ]; then
               echo
               echo "⚠ Signiert mit einem Wegwerf-Schlüssel dieses Laufs: Vor der nächsten Test-APK die alte App deinstallieren (andere Signatur). Für dauerhafte Updates einmal den Lauf „Dauerhafte Familienakte-Signieridentität“ (initialize) ausführen (docs/PLATTFORMEN.md)."
@@ -119,7 +125,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          gh release create "${{ inputs.tag }}" --repo "$GITHUB_REPOSITORY" --title "Familienakte Android ${{ inputs.tag }}" --notes-file "$RUNNER_TEMP/notes.md" --prerelease "$RUNNER_TEMP/Familienakte-${{ inputs.tag }}.apk" "$RUNNER_TEMP/SHA256SUMS"
+          gh release create "${{ inputs.tag }}" --repo "$GITHUB_REPOSITORY" --title "Familienakte Android ${{ inputs.tag }}" --notes-file "$RUNNER_TEMP/notes.md" --prerelease "$RUNNER_TEMP/Familienakte-${{ inputs.tag }}.apk" "$RUNNER_TEMP"/Familienakte-Einzeldatei-*.html "$RUNNER_TEMP/SHA256SUMS"
           echo "Download: https://github.com/$GITHUB_REPOSITORY/releases/download/${{ inputs.tag }}/Familienakte-${{ inputs.tag }}.apk"
       # Updates vom eigenen Server (Klaus 2026-10-28, Vorbild BookLedgerPro): dieselbe APK nach family-projekt.de/updates/familienakte/,
       # Feed unterschrieben (Ed25519) und gegen den in der App eingebauten Schlüssel geprüft. Nur Android-Dateien werden abgeglichen.
