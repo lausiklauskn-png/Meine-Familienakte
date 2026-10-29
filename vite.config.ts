@@ -14,7 +14,9 @@ export default defineConfig({
   server: { port: 5173 },
   build: {
     // E1: React und die Symbole als eigener Vendor-Teil; der Service Worker cacht ihn über Updates hinweg.
-    rollupOptions: { output: { manualChunks(id) {
+    // Einzeldatei (scripts/build-single-file.mjs, FAMILIENAKTE_EINZELDATEI=1): alles in einem Block. Von der Platte (file://)
+    // verbietet der Browser das Nachladen weiterer Teile; mit Code-Splitting blieb die Seite dort leer.
+    rollupOptions: { output: process.env.FAMILIENAKTE_EINZELDATEI === "1" ? { inlineDynamicImports: true } : { manualChunks(id) {
       if (/node_modules\/(react|react-dom|scheduler)\//.test(id)) return "react";
       if (id.includes("node_modules/lucide-react/")) return "icons";
       return undefined;

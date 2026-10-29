@@ -2,16 +2,24 @@
 // JavaScript, CSS und Symbol werden eingebettet. So lässt sich die App als eine Datei
 // weitergeben oder als einzelne Seite veröffentlichen (z. B. als Link auf claude.ai).
 // Aufruf nach „npm run build“: node scripts/build-single-file.mjs
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+// Eigener Bau ohne Code-Splitting nach dist-einzel/ (FAMILIENAKTE_EINZELDATEI=1): von der Platte (file://) darf eine Seite
+// keine weiteren Skriptteile nachladen. Geprüft von tests/ui/einzeldatei.test.mjs (öffnet die Datei per file://).
+import { spawnSync } from "node:child_process";
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const dist = join(root, "dist");
+const dist = join(root, "dist-einzel");
+rmSync(dist, { recursive: true, force: true });
+const bau = spawnSync("npx", ["vite", "build", "--outDir", "dist-einzel", "--emptyOutDir"], { cwd: root, stdio: "inherit", env: { ...process.env, FAMILIENAKTE_EINZELDATEI: "1" } });
+if (bau.status !== 0) throw new Error("Bau der Einzeldatei fehlgeschlagen.");
 const html = readFileSync(join(dist, "index.html"), "utf8");
 const scriptPath = html.match(/<script type="module"[^>]*src="\.\/([^"]+)"/)?.[1];
 const stylePath = html.match(/<link rel="stylesheet"[^>]*href="\.\/([^"]+)"/)?.[1];
 if (!scriptPath || !stylePath) throw new Error("Im Build wurden Skript oder Stylesheet nicht gefunden.");
+// Kein Nachladen weiterer Teile: sonst bleibt die Seite von der Platte leer.
+if ((html.match(/<script type="module"/g) || []).length !== 1 || /rel="modulepreload"/.test(html)) throw new Error("Einzeldatei-Bau enthält mehrere Skriptteile.");
 
 // U+FFFD (Ersatzzeichen) kommt nur in Zeichenketten der Textprüfung vor; als Escape-Folge
 // bleibt die Bedeutung gleich und die Datei enthält kein Ersatzzeichen mehr.
