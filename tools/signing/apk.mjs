@@ -20,8 +20,9 @@ export async function signApk({ input, output, signer, aapt, tag, commit, direct
         '--ks-pass', 'env:FA_STORE_PASSWORD', '--key-pass', 'env:FA_STORE_PASSWORD',
         '--v4-signing-enabled', 'false', '--out', output, input], { FA_STORE_PASSWORD: identity.password });
       const verified = checked(signer, ['verify', '--verbose', '--print-certs', output], {}).toString('utf8');
-      const fingerprints = [...verified.matchAll(/^Signer #\d+ certificate SHA-256 digest:\s*([a-f0-9]+)\s*$/gmi)].map(m => m[1].toLowerCase());
-      if (fingerprints.length !== 1 || fingerprints[0] !== identity.fingerprint) throw new Error('APK-Zertifikat stimmt nicht mit der dauerhaften Identität überein.');
+      // Öffentliche Fingerabdrücke (kein Geheimnis): jede Signaturfassung (v1/v2/v3) darf denselben Signierer nennen.
+      const fingerprints = [...new Set([...verified.matchAll(/^Signer #\d+ certificate SHA-256 digest:\s*([a-f0-9]+)\s*$/gmi)].map(m => m[1].toLowerCase()))];
+      if (fingerprints.length !== 1 || fingerprints[0] !== identity.fingerprint) throw new Error(`APK-Zertifikat stimmt nicht mit der dauerhaften Identität überein (in der APK: ${fingerprints.join(', ') || 'keins gefunden'}; erwartet: ${identity.fingerprint}).`);
       const badging = checked(aapt, ['dump', 'badging', output], {}).toString('utf8');
       if (!badging.startsWith("package: name='" + APP_ID + "' ")) throw new Error('APK gehört nicht zur Familienakte.');
       const versionName = badging.match(/^package: .*?versionName='([^']+)'/m)?.[1];

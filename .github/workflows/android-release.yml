@@ -66,7 +66,10 @@ jobs:
         run: |
           set -euo pipefail
           ./gradlew --no-daemon --max-workers=2 assembleRelease lintRelease testReleaseUnitTest
-          BT="$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -1)"
+          # Feste Werkzeugfassung wie BookLedgerPro (build-tools 36.0.0): die Signaturprüfung liest deren Ausgabe.
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install 'build-tools;36.0.0' > /dev/null
+          BT="$ANDROID_HOME/build-tools/36.0.0"
+          test -x "$BT/apksigner" && test -x "$BT/aapt" && test -x "$BT/zipalign"
           echo "BT=$BT" >> "$GITHUB_ENV"
           "$BT/zipalign" -f -p 4 app/build/outputs/apk/release/app-release-unsigned.apk "$RUNNER_TEMP/aligned.apk"
       - name: Signieren (dauerhafte Identität oder Wegwerf-Schlüssel)
