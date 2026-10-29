@@ -54,6 +54,24 @@ gebauten Dateien aus `dist/`; die Hüllen unterscheiden sich nur in Diktat, Date
   API geladen und gleich `SHA256SUMS`. Volle Breite und Diktat-Hinweis wie Android test.2. Sichtbare Version bleibt „2.28.1“
   (Code des Freundes), nur die Paketfassung ist 2.28.2. Wer 2.28.1 hat, findet sie über die Versionszeile (Pages `latest.json`).
 
+## Fassung 2.28.3 zum Vergleich (2026-10-29, Quelle `f3fdf5c` / Android `138f292`)
+
+Erste Fassung mit **festem APK-Schlüssel** (Zertifikat SHA-256 `1f06819ff85a4a48c0bfc2c24409094141b5f86e9ac5e0bf715aa87a5fbf8f19`,
+aus der geladenen APK nachgemessen) und **Updates vom eigenen Server**. Sichtbar bleibt „Version 2.28.1“.
+
+| Was | Öffentlich (ohne Anmeldung) | Release (mit GitHub-Anmeldung) | Größe · SHA-256 |
+| --- | --- | --- | --- |
+| Android | https://family-projekt.de/updates/familienakte/Familienakte-android-v2.28.3.apk | [android-v2.28.3](https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.3) | 3.970.352 B · `35f0190ba05a84bf9298ff23e60f92100c9df1c2407cd60f114a32bd53131ed2` |
+| Windows | https://family-projekt.de/updates/familienakte/Familienakte-Windows-2.28.3-x64-setup.exe | [windows-v2.28.3](https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.3) | 2.806.559 B · `9f3320b49926e602bf4733f8da4b5faf47cd46a92c4b4dbd1b2b46a9dc02b04c` |
+| Einzeldatei | – | im Android-Release: `Familienakte-Einzeldatei-2.28.3.html` | 2.509.336 B · `f9ca9b334f218e7bbd51e4e5858b11e1786159cc87687e59109b1626a6b2374e` |
+| PWA | https://lausiklauskn-png.github.io/Meine-Familienakte/ | – | – |
+
+Release-Läufe: Windows 40793912684 (mit Server-Job), Android 40796279917 (erster Versuch 40793910294 brach beim Signieren ab:
+neueste build-tools; behoben in PR #25, Werkzeug fest 36.0.0, echte Signierprobe in `android.yml`). Alle Dateien über die API
+geladen und gleich `SHA256SUMS`; beide Läufe haben Feed und Datei auf family-projekt.de von außen verglichen (aus dem Behälter
+nicht erreichbar, Netzsperre). **Android test.1/test.2 einmal deinstallieren**, dann 2.28.3 installieren; ab da Updates über die
+Versionszeile. Vergleichsblatt für den Freund: `docs/FUER-DEN-VERGLEICH.md`.
+
 ## Grenzen
 
 - Kein Gerät im Behälter: APK und Installer sind nur in den Workflows gebaut, nicht auf Tablet oder PC gestartet.
