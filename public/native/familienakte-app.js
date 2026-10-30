@@ -66,6 +66,9 @@
     });
   }
 
+  // Nach „Neue Fassung laden“ (app/neu-laden.tsx) die Hilfsangabe ?frisch= wieder aus der Adresse nehmen.
+  try { if (/[?&]frisch=/.test(location.search)) history.replaceState(null, '', location.pathname + location.hash); } catch { /* egal */ }
+
   // 3. Bau-Kennung sichtbar als Tipp
   const stempel = () => {
     const el = document.querySelector('.site-brand-version');

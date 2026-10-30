@@ -1683,6 +1683,9 @@ button.object-card:hover { transform: translateY(-2px); border-color: #8fb2c9; b
 
 /* Internetschalter in der Kopfleiste (Standard aus): Lampe rot = aus, grün = an. */
 .netz-schalter { position: relative; }
+.neu-laden .dreht { animation: neu-laden-dreht 0.9s linear infinite; }
+@keyframes neu-laden-dreht { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .neu-laden .dreht { animation: none; } }
 .netz-schalter .netz-lampe { position: absolute; right: 5px; bottom: 5px; width: 8px; height: 8px; border-radius: 50%; background: #d64545; box-shadow: 0 0 0 2px #fff; }
 .netz-schalter.netz-an .netz-lampe { background: #2f9e5b; }
 .netz-schalter:disabled .netz-lampe { background: #b8c2cc; }

@@ -17,6 +17,7 @@ import { DictationButton, InfoPopover, VoiceInput, VoiceTextarea } from "./ui-co
 import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ActivityLines, ActivityProvider, useActivity, useActivityMessage } from "./ui-activity";
 import { NetzSchalter } from "./netz-schalter";
+import { NeuLadenKnopf } from "./neu-laden";
 import { inventoryScanFeedback, inventoryAssignmentFeedback, inventoryArchiveFeedback, inventoryReleaseFeedback } from "../lib/ui-activity";
 import healthData from "./health-data.json";
 import { assessmentGroups, categories, coreDocuments, portalAreas } from "./portal-data";
@@ -1067,7 +1068,7 @@ function HealthPortalContent() {
         <div className="masthead">
           <button className="mobile-menu-button" onClick={() => setMobileOpen((value) => !value)} aria-label="Hauptmenü öffnen"><Menu size={22}/></button>
           <button className="site-brand" onClick={() => go("overview")}><span className="brand-symbol">MMI</span><span><strong>FAMILIENAKTE</strong><small className="site-brand-version">Version {APP_VERSION}</small></span></button>
-          <div className="header-actions"><NetzSchalter/><button className="icon-button" onClick={() => window.print()} title="Aktuelle Seite drucken"><Printer size={18}/></button><a className="logout-button" href="./" onClick={(event) => { event.preventDefault(); window.location.reload(); }} title="Sicher aus der Familienakte ausloggen"><LogOut size={17}/> Ausloggen</a></div>
+          <div className="header-actions"><NetzSchalter/><NeuLadenKnopf/><button className="icon-button" onClick={() => window.print()} title="Aktuelle Seite drucken"><Printer size={18}/></button><a className="logout-button" href="./" onClick={(event) => { event.preventDefault(); window.location.reload(); }} title="Sicher aus der Familienakte ausloggen"><LogOut size={17}/> Ausloggen</a></div>
         </div>
         <nav className={`main-navigation ${mobileOpen ? "mobile-open" : ""}`} aria-label="Hauptnavigation">
           <button className={active === "overview" ? "active" : ""} onClick={() => go("overview")}><Home size={17}/> Startseite</button>

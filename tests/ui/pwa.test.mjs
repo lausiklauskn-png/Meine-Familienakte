@@ -1,7 +1,7 @@
 // PWA: Service Worker, Offline-Neustart, Manifest mit PNG-Symbolen, version.json und Bau-Kennung, Hinweisleiste.
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, ROOT } from "./_harness.mjs";
+import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, ROOT, internetAn } from "./_harness.mjs";
 
 const app = await startApp();
 const browser = await launchBrowser();
@@ -66,6 +66,26 @@ try {
     await app2.close();
     if (!(n === 0)) throw new Error(`${n} sichtbar`);
     return "kein sichtbarer Knopf";
+  });
+  await step("Neu-laden-Knopf in der Kopfleiste: bei Internet aus nur der Hinweis, Vorrat und Seite bleiben", async () => {
+    await page.evaluate(async () => { const c = await caches.open("familienakte-geteilt"); await c.put("./geteilt/probe", new Response("geteilt")); window.__nichtNeu = true; });
+    const vorher = await page.evaluate(async () => (await caches.keys()).sort().join(","));
+    await page.click(".header-actions [data-neu-laden]");
+    await page.waitForFunction(() => /Internet für die App ist aus/.test(document.querySelector(".familienakte-hinweis span")?.textContent || ""), null, { timeout: 8000 });
+    const nachher = await page.evaluate(async () => (await caches.keys()).sort().join(","));
+    const gleich = await page.evaluate(() => window.__nichtNeu === true);
+    if (vorher !== nachher || !gleich) throw new Error(`Vorrat ${vorher} → ${nachher}, Seite neu: ${!gleich}`);
+    return "Hinweis, nichts gelöscht";
+  });
+  await step("Mit Internet an: eigener Vorrat weg und neu gefüllt, Seite neu geladen, geteilte Dateien bleiben, ?frisch= wieder weg", async () => {
+    await internetAn(page);
+    const alt = await page.evaluate(async () => (await caches.keys()).find((k) => k.startsWith("familienakte-") && k !== "familienakte-geteilt"));
+    await Promise.all([page.waitForEvent("load", { timeout: 30000 }), page.click(".header-actions [data-neu-laden]")]);
+    await ready(page);
+    const r = await page.evaluate(async () => ({ neu: window.__nichtNeu !== true, frisch: /frisch=/.test(location.search), geteilt: !!(await (await caches.open("familienakte-geteilt")).match("./geteilt/probe")) }));
+    await page.waitForFunction(async () => (await caches.keys()).some((k) => k.startsWith("familienakte-") && k !== "familienakte-geteilt"), null, { timeout: 30000 });
+    if (!(r.neu && !r.frisch && r.geteilt && alt)) throw new Error(JSON.stringify({ ...r, alt }));
+    return `neu geladen, Vorrat ${alt} neu gefüllt, geteilte Datei noch da`;
   });
   await step("Versionszeile trägt die Bau-Kennung als Tipp", async () => { const t = await page.getAttribute(".site-brand-version", "title"); return t && t.includes(meta.build) ? t : false; });
 } finally { await browser.close(); await app.stop(); }

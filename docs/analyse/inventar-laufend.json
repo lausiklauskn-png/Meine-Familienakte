@@ -2,7 +2,7 @@
  {
   "ort": "Startseite",
   "umgebung": "desktop",
-  "anzahl": 88,
+  "anzahl": 89,
   "elemente": [
    {
     "art": "Knopf",
@@ -15,6 +15,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -203,7 +209,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 8.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 10.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -221,7 +227,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 26",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 28",
     "disabled": false,
     "cls": ""
    },
@@ -536,7 +542,7 @@
  {
   "ort": "ASSISTENZ › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 54,
+  "anzahl": 55,
   "elemente": [
    {
     "art": "Knopf",
@@ -549,6 +555,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -866,7 +878,7 @@
  {
   "ort": "ASSISTENZ › Assistenzzentrale",
   "umgebung": "desktop",
-  "anzahl": 54,
+  "anzahl": 55,
   "elemente": [
    {
     "art": "Knopf",
@@ -879,6 +891,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -1196,7 +1214,7 @@
  {
   "ort": "ASSISTENZ › Korrespondenz",
   "umgebung": "desktop",
-  "anzahl": 47,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
@@ -1209,6 +1227,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -1484,7 +1508,7 @@
  {
   "ort": "ASSISTENZ › Vorgänge weiterbearbeiten",
   "umgebung": "desktop",
-  "anzahl": 115,
+  "anzahl": 116,
   "elemente": [
    {
     "art": "Knopf",
@@ -1497,6 +1521,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -1643,7 +1673,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 8.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 10.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -1661,7 +1691,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 26",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 28",
     "disabled": false,
     "cls": ""
    },
@@ -1715,7 +1745,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 26.10.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 28.10.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -1733,7 +1763,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 31.10.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 02.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -1751,7 +1781,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 02.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 04.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -1769,7 +1799,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 03.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 05.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -1787,7 +1817,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 08.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 10.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -1805,7 +1835,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 11.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 13.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -1949,25 +1979,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 28.10.2026 Nächste Aufgabe: Beim Ar",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 30.10.2026 Nächste Aufgabe: Beim Ar",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 28.10.2026 Nächste A",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 30.10.2026 Nächste A",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 28.10.2026 Nächste Aufgabe: Z",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 30.10.2026 Nächste Aufgabe: Z",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 28.10.2026 Nächste Aufgabe:",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 30.10.2026 Nächste Aufgabe:",
     "disabled": false,
     "cls": ""
    },
@@ -2039,19 +2069,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 28.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 30.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 28.10.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 30.10.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 28.10.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 30.10.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -2063,7 +2093,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 28.10.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 30.10.",
     "disabled": false,
     "cls": ""
    },
@@ -2180,7 +2210,7 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 45,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
@@ -2193,6 +2223,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -2456,7 +2492,7 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Diagnosen, AU & ICD-Codes",
   "umgebung": "desktop",
-  "anzahl": 56,
+  "anzahl": 57,
   "elemente": [
    {
     "art": "Knopf",
@@ -2469,6 +2505,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -2798,7 +2840,7 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Krankenkasse & Leistungen",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
@@ -2811,6 +2853,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -3080,7 +3128,7 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Arbeit & Arbeitgeber",
   "umgebung": "desktop",
-  "anzahl": 47,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
@@ -3093,6 +3141,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -3368,7 +3422,7 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Anträge & Bescheide",
   "umgebung": "desktop",
-  "anzahl": 50,
+  "anzahl": 51,
   "elemente": [
    {
     "art": "Knopf",
@@ -3381,6 +3435,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -3674,7 +3734,7 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Anfragen & Antworten",
   "umgebung": "desktop",
-  "anzahl": 47,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
@@ -3687,6 +3747,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -3962,7 +4028,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 44,
+  "anzahl": 45,
   "elemente": [
    {
     "art": "Knopf",
@@ -3975,6 +4041,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -4232,7 +4304,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Interaktives Cockpit",
   "umgebung": "desktop",
-  "anzahl": 115,
+  "anzahl": 116,
   "elemente": [
    {
     "art": "Knopf",
@@ -4245,6 +4317,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -4391,7 +4469,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 8.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 10.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -4409,7 +4487,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 26",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 28",
     "disabled": false,
     "cls": ""
    },
@@ -4463,7 +4541,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 26.10.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 28.10.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4481,7 +4559,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 31.10.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 02.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4499,7 +4577,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 02.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 04.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4517,7 +4595,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 03.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 05.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4535,7 +4613,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 08.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 10.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4553,7 +4631,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 11.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 13.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4697,25 +4775,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 28.10.2026 Nächste Aufgabe: Beim Ar",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 30.10.2026 Nächste Aufgabe: Beim Ar",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 28.10.2026 Nächste A",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 30.10.2026 Nächste A",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 28.10.2026 Nächste Aufgabe: Z",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 30.10.2026 Nächste Aufgabe: Z",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 28.10.2026 Nächste Aufgabe:",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 30.10.2026 Nächste Aufgabe:",
     "disabled": false,
     "cls": ""
    },
@@ -4787,19 +4865,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 28.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 30.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 28.10.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 30.10.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 28.10.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 30.10.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -4811,7 +4889,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 28.10.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 30.10.",
     "disabled": false,
     "cls": ""
    },
@@ -4928,7 +5006,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Familienübersicht",
   "umgebung": "desktop",
-  "anzahl": 44,
+  "anzahl": 45,
   "elemente": [
    {
     "art": "Knopf",
@@ -4941,6 +5019,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -5198,7 +5282,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Fristen und Aufgaben",
   "umgebung": "desktop",
-  "anzahl": 127,
+  "anzahl": 128,
   "elemente": [
    {
     "art": "Knopf",
@@ -5211,6 +5295,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -5447,7 +5537,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 7c3405af-8792-4066-babf-1982e1ba3615",
+    "text": "Dokument: a72bd073-89f3-476e-8407-bbc342fc3309",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5519,7 +5609,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 1c74a549-4ee1-4d17-b946-1841d5e111c6",
+    "text": "Dokument: af77a5fb-f4ba-4ff1-a1b5-98b85980ddb4",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5549,7 +5639,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 70a705ff-6a14-4870-913c-ac7c93d7e75b",
+    "text": "Dokument: a26bda9d-0f67-4d69-905c-9497e78e7309",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5657,7 +5747,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 70a705ff-6a14-4870-913c-ac7c93d7e75b",
+    "text": "Dokument: a26bda9d-0f67-4d69-905c-9497e78e7309",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5966,7 +6056,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Tagebuch & Erinnerungen",
   "umgebung": "desktop",
-  "anzahl": 70,
+  "anzahl": 71,
   "elemente": [
    {
     "art": "Knopf",
@@ -5979,6 +6069,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -6221,31 +6317,31 @@
    },
    {
     "art": "Knopf",
-    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 22.10.2026, 19:00 · Reis",
+    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 24.10.2026, 19:00 · Reis",
     "disabled": false,
     "cls": "active"
    },
    {
     "art": "Knopf",
-    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 19.10.2026, 19:00 · Technik, Ge",
+    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 21.10.2026, 19:00 · Technik, Ge",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 16.10.2026, 19:00 ·",
+    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 18.10.2026, 19:00 ·",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 29.08.202",
+    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 31.08.202",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 22.09.2025, 19:00 · Haus & Wohnu",
+    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 24.09.2025, 19:00 · Haus & Wohnu",
     "disabled": false,
     "cls": ""
    },
@@ -6392,7 +6488,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Gesamtes Verzeichnis",
   "umgebung": "desktop",
-  "anzahl": 81,
+  "anzahl": 82,
   "elemente": [
    {
     "art": "Knopf",
@@ -6405,6 +6501,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -6884,7 +6986,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Vollmachten & Vorsorge",
   "umgebung": "desktop",
-  "anzahl": 44,
+  "anzahl": 45,
   "elemente": [
    {
     "art": "Knopf",
@@ -6897,6 +6999,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -7154,7 +7262,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Versicherungen & Verträge",
   "umgebung": "desktop",
-  "anzahl": 44,
+  "anzahl": 45,
   "elemente": [
    {
     "art": "Knopf",
@@ -7167,6 +7275,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -7424,7 +7538,7 @@
  {
   "ort": "WOHNEN › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
@@ -7437,6 +7551,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -7706,7 +7826,7 @@
  {
   "ort": "WOHNEN › Miet- & Vermieterunterlagen",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
@@ -7719,6 +7839,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -7988,7 +8114,7 @@
  {
   "ort": "WOHNEN › Nebenkosten & Zahlungen",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
@@ -8001,6 +8127,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -8270,7 +8402,7 @@
  {
   "ort": "WOHNEN › Mängel & Reparaturen",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
@@ -8283,6 +8415,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -8552,7 +8690,7 @@
  {
   "ort": "FAHRZEUGE › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
@@ -8565,6 +8703,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -8834,7 +8978,7 @@
  {
   "ort": "FAHRZEUGE › Fahrzeugpapiere",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
@@ -8847,6 +8991,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -9116,7 +9266,7 @@
  {
   "ort": "FAHRZEUGE › Werkstatt & Wartung",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
@@ -9129,6 +9279,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -9398,7 +9554,7 @@
  {
   "ort": "FAHRZEUGE › TÜV & Versicherung",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
@@ -9411,6 +9567,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -9680,7 +9842,7 @@
  {
   "ort": "KÄUFE & GARANTIEN › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
@@ -9693,6 +9855,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -9962,7 +10130,7 @@
  {
   "ort": "KÄUFE & GARANTIEN › Käufe & Rechnungen",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
@@ -9975,6 +10143,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -10244,7 +10418,7 @@
  {
   "ort": "KÄUFE & GARANTIEN › Garantie & Reparatur",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
@@ -10257,6 +10431,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -10526,7 +10706,7 @@
  {
   "ort": "KÄUFE & GARANTIEN › Geräte & Technik",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
@@ -10539,6 +10719,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -10808,7 +10994,7 @@
  {
   "ort": "DOKUMENTE › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 295,
+  "anzahl": 296,
   "elemente": [
    {
     "art": "Knopf",
@@ -10821,6 +11007,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -10985,7 +11177,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "28.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11045,7 +11237,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "24.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11111,7 +11303,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "21.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11171,7 +11363,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "18.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11237,7 +11429,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.10.2026",
+    "text": "15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11291,7 +11483,7 @@
    },
    {
     "art": "Knopf",
-    "text": "08.10.2026",
+    "text": "10.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11351,7 +11543,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2026",
+    "text": "03.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11405,7 +11597,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.08.2026",
+    "text": "16.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11531,7 +11723,7 @@
    },
    {
     "art": "Knopf",
-    "text": "27.11.2024",
+    "text": "29.11.2024",
     "disabled": false,
     "cls": ""
    },
@@ -11591,7 +11783,7 @@
    },
    {
     "art": "Knopf",
-    "text": "08.10.2026",
+    "text": "10.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11657,7 +11849,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.08.2026",
+    "text": "16.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11717,7 +11909,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.02.2025",
+    "text": "27.02.2025",
     "disabled": false,
     "cls": ""
    },
@@ -11789,7 +11981,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "24.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11861,7 +12053,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.10.2026",
+    "text": "15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11921,7 +12113,7 @@
    },
    {
     "art": "Knopf",
-    "text": "10.06.2026",
+    "text": "12.06.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11975,7 +12167,7 @@
    },
    {
     "art": "Knopf",
-    "text": "11.04.2026",
+    "text": "13.04.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12029,7 +12221,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "18.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12095,7 +12287,7 @@
    },
    {
     "art": "Knopf",
-    "text": "21.09.2025",
+    "text": "23.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -12149,7 +12341,7 @@
    },
    {
     "art": "Knopf",
-    "text": "24.08.2025",
+    "text": "26.08.2025",
     "disabled": false,
     "cls": ""
    },
@@ -12215,7 +12407,7 @@
    },
    {
     "art": "Knopf",
-    "text": "28.09.2025",
+    "text": "30.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -12269,7 +12461,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "28.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12329,7 +12521,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "21.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12395,7 +12587,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2026",
+    "text": "03.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12449,7 +12641,7 @@
    },
    {
     "art": "Knopf",
-    "text": "23.09.2025",
+    "text": "25.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -12584,7 +12776,7 @@
  {
   "ort": "DOKUMENTE › Dokumentenbibliothek",
   "umgebung": "desktop",
-  "anzahl": 295,
+  "anzahl": 296,
   "elemente": [
    {
     "art": "Knopf",
@@ -12597,6 +12789,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -12761,7 +12959,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "28.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12821,7 +13019,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "24.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12887,7 +13085,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "21.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12947,7 +13145,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "18.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13013,7 +13211,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.10.2026",
+    "text": "15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13067,7 +13265,7 @@
    },
    {
     "art": "Knopf",
-    "text": "08.10.2026",
+    "text": "10.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13127,7 +13325,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2026",
+    "text": "03.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13181,7 +13379,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.08.2026",
+    "text": "16.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13307,7 +13505,7 @@
    },
    {
     "art": "Knopf",
-    "text": "27.11.2024",
+    "text": "29.11.2024",
     "disabled": false,
     "cls": ""
    },
@@ -13367,7 +13565,7 @@
    },
    {
     "art": "Knopf",
-    "text": "08.10.2026",
+    "text": "10.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13433,7 +13631,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.08.2026",
+    "text": "16.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13493,7 +13691,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.02.2025",
+    "text": "27.02.2025",
     "disabled": false,
     "cls": ""
    },
@@ -13565,7 +13763,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "24.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13637,7 +13835,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.10.2026",
+    "text": "15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13697,7 +13895,7 @@
    },
    {
     "art": "Knopf",
-    "text": "10.06.2026",
+    "text": "12.06.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13751,7 +13949,7 @@
    },
    {
     "art": "Knopf",
-    "text": "11.04.2026",
+    "text": "13.04.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13805,7 +14003,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "18.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13871,7 +14069,7 @@
    },
    {
     "art": "Knopf",
-    "text": "21.09.2025",
+    "text": "23.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -13925,7 +14123,7 @@
    },
    {
     "art": "Knopf",
-    "text": "24.08.2025",
+    "text": "26.08.2025",
     "disabled": false,
     "cls": ""
    },
@@ -13991,7 +14189,7 @@
    },
    {
     "art": "Knopf",
-    "text": "28.09.2025",
+    "text": "30.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -14045,7 +14243,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "28.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14105,7 +14303,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "21.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14171,7 +14369,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2026",
+    "text": "03.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14225,7 +14423,7 @@
    },
    {
     "art": "Knopf",
-    "text": "23.09.2025",
+    "text": "25.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -14360,7 +14558,7 @@
  {
   "ort": "DOKUMENTE › Bestand prüfen",
   "umgebung": "desktop",
-  "anzahl": 38,
+  "anzahl": 39,
   "elemente": [
    {
     "art": "Knopf",
@@ -14373,6 +14571,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -14594,7 +14798,7 @@
  {
   "ort": "DOKUMENTE › Eingangszentrale",
   "umgebung": "desktop",
-  "anzahl": 76,
+  "anzahl": 77,
   "elemente": [
    {
     "art": "Knopf",
@@ -14607,6 +14811,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -15056,7 +15266,7 @@
  {
   "ort": "DOKUMENTE › Sicherheit & lokaler Tresor",
   "umgebung": "desktop",
-  "anzahl": 54,
+  "anzahl": 55,
   "elemente": [
    {
     "art": "Knopf",
@@ -15069,6 +15279,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -15386,7 +15602,7 @@
  {
   "ort": "DOKUMENTE › Unterlagen & Quellen",
   "umgebung": "desktop",
-  "anzahl": 53,
+  "anzahl": 54,
   "elemente": [
    {
     "art": "Knopf",
@@ -15399,6 +15615,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -15710,7 +15932,7 @@
  {
   "ort": "DOKUMENTE › Alle Bereiche",
   "umgebung": "desktop",
-  "anzahl": 81,
+  "anzahl": 82,
   "elemente": [
    {
     "art": "Knopf",
@@ -15723,6 +15945,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -16202,7 +16430,7 @@
  {
   "ort": "HILFE › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 67,
+  "anzahl": 68,
   "elemente": [
    {
     "art": "Knopf",
@@ -16215,6 +16443,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -16610,7 +16844,7 @@
  {
   "ort": "HILFE › Hilfe & erste Schritte",
   "umgebung": "desktop",
-  "anzahl": 67,
+  "anzahl": 68,
   "elemente": [
    {
     "art": "Knopf",
@@ -16623,6 +16857,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -17018,7 +17258,7 @@
  {
   "ort": "HILFE › Systemprüfung",
   "umgebung": "desktop",
-  "anzahl": 97,
+  "anzahl": 98,
   "elemente": [
    {
     "art": "Knopf",
@@ -17031,6 +17271,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -17606,7 +17852,7 @@
  {
   "ort": "HILFE › Was gibt’s Neues?",
   "umgebung": "desktop",
-  "anzahl": 395,
+  "anzahl": 396,
   "elemente": [
    {
     "art": "Knopf",
@@ -17619,6 +17865,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -19982,7 +20234,7 @@
  {
   "ort": "HILFE › Versionshistorie",
   "umgebung": "desktop",
-  "anzahl": 38,
+  "anzahl": 39,
   "elemente": [
    {
     "art": "Knopf",
@@ -19995,6 +20247,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -20216,7 +20474,7 @@
  {
   "ort": "HILFE › Datentresor-Hilfe",
   "umgebung": "desktop",
-  "anzahl": 54,
+  "anzahl": 55,
   "elemente": [
    {
     "art": "Knopf",
@@ -20229,6 +20487,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -20546,7 +20810,7 @@
  {
   "ort": "Fußzeile › Interaktives Cockpit",
   "umgebung": "desktop",
-  "anzahl": 115,
+  "anzahl": 116,
   "elemente": [
    {
     "art": "Knopf",
@@ -20559,6 +20823,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -20705,7 +20975,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 8.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 10.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -20723,7 +20993,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 26",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 28",
     "disabled": false,
     "cls": ""
    },
@@ -20777,7 +21047,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 26.10.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 28.10.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -20795,7 +21065,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 31.10.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 02.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -20813,7 +21083,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 02.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 04.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -20831,7 +21101,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 03.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 05.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -20849,7 +21119,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 08.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 10.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -20867,7 +21137,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 11.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 13.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -21011,25 +21281,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 28.10.2026 Nächste Aufgabe: Beim Ar",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 30.10.2026 Nächste Aufgabe: Beim Ar",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 28.10.2026 Nächste A",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 30.10.2026 Nächste A",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 28.10.2026 Nächste Aufgabe: Z",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 30.10.2026 Nächste Aufgabe: Z",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 28.10.2026 Nächste Aufgabe:",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 30.10.2026 Nächste Aufgabe:",
     "disabled": false,
     "cls": ""
    },
@@ -21101,19 +21371,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 28.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 30.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 28.10.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 30.10.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 28.10.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 30.10.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -21125,7 +21395,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 28.10.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 30.10.",
     "disabled": false,
     "cls": ""
    },
@@ -21242,7 +21512,7 @@
  {
   "ort": "Fußzeile › Tagebuch & Erinnerungen",
   "umgebung": "desktop",
-  "anzahl": 70,
+  "anzahl": 71,
   "elemente": [
    {
     "art": "Knopf",
@@ -21255,6 +21525,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -21497,31 +21773,31 @@
    },
    {
     "art": "Knopf",
-    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 22.10.2026, 19:00 · Reis",
+    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 24.10.2026, 19:00 · Reis",
     "disabled": false,
     "cls": "active"
    },
    {
     "art": "Knopf",
-    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 19.10.2026, 19:00 · Technik, Ge",
+    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 21.10.2026, 19:00 · Technik, Ge",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 16.10.2026, 19:00 ·",
+    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 18.10.2026, 19:00 ·",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 29.08.202",
+    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 31.08.202",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 22.09.2025, 19:00 · Haus & Wohnu",
+    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 24.09.2025, 19:00 · Haus & Wohnu",
     "disabled": false,
     "cls": ""
    },
@@ -21668,7 +21944,7 @@
  {
   "ort": "Fußzeile › Fristen und Aufgaben",
   "umgebung": "desktop",
-  "anzahl": 127,
+  "anzahl": 128,
   "elemente": [
    {
     "art": "Knopf",
@@ -21681,6 +21957,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -21917,7 +22199,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 7c3405af-8792-4066-babf-1982e1ba3615",
+    "text": "Dokument: a72bd073-89f3-476e-8407-bbc342fc3309",
     "disabled": false,
     "cls": "text-link"
    },
@@ -21989,7 +22271,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 1c74a549-4ee1-4d17-b946-1841d5e111c6",
+    "text": "Dokument: af77a5fb-f4ba-4ff1-a1b5-98b85980ddb4",
     "disabled": false,
     "cls": "text-link"
    },
@@ -22019,7 +22301,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 70a705ff-6a14-4870-913c-ac7c93d7e75b",
+    "text": "Dokument: a26bda9d-0f67-4d69-905c-9497e78e7309",
     "disabled": false,
     "cls": "text-link"
    },
@@ -22127,7 +22409,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 70a705ff-6a14-4870-913c-ac7c93d7e75b",
+    "text": "Dokument: a26bda9d-0f67-4d69-905c-9497e78e7309",
     "disabled": false,
     "cls": "text-link"
    },
@@ -22436,7 +22718,7 @@
  {
   "ort": "Fußzeile › Gesamtes Verzeichnis",
   "umgebung": "desktop",
-  "anzahl": 81,
+  "anzahl": 82,
   "elemente": [
    {
     "art": "Knopf",
@@ -22449,6 +22731,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -22928,7 +23216,7 @@
  {
   "ort": "Fußzeile › Lebensbereiche",
   "umgebung": "desktop",
-  "anzahl": 88,
+  "anzahl": 89,
   "elemente": [
    {
     "art": "Knopf",
@@ -22941,6 +23229,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -23129,7 +23423,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 8.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 10.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -23147,7 +23441,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 26",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 28",
     "disabled": false,
     "cls": ""
    },
@@ -23462,7 +23756,7 @@
  {
   "ort": "Fußzeile › Dokumentenbibliothek",
   "umgebung": "desktop",
-  "anzahl": 295,
+  "anzahl": 296,
   "elemente": [
    {
     "art": "Knopf",
@@ -23475,6 +23769,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -23639,7 +23939,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "28.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -23699,7 +23999,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "24.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -23765,7 +24065,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "21.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -23825,7 +24125,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "18.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -23891,7 +24191,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.10.2026",
+    "text": "15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -23945,7 +24245,7 @@
    },
    {
     "art": "Knopf",
-    "text": "08.10.2026",
+    "text": "10.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24005,7 +24305,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2026",
+    "text": "03.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24059,7 +24359,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.08.2026",
+    "text": "16.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24185,7 +24485,7 @@
    },
    {
     "art": "Knopf",
-    "text": "27.11.2024",
+    "text": "29.11.2024",
     "disabled": false,
     "cls": ""
    },
@@ -24245,7 +24545,7 @@
    },
    {
     "art": "Knopf",
-    "text": "08.10.2026",
+    "text": "10.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24311,7 +24611,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.08.2026",
+    "text": "16.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24371,7 +24671,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.02.2025",
+    "text": "27.02.2025",
     "disabled": false,
     "cls": ""
    },
@@ -24443,7 +24743,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "24.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24515,7 +24815,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.10.2026",
+    "text": "15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24575,7 +24875,7 @@
    },
    {
     "art": "Knopf",
-    "text": "10.06.2026",
+    "text": "12.06.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24629,7 +24929,7 @@
    },
    {
     "art": "Knopf",
-    "text": "11.04.2026",
+    "text": "13.04.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24683,7 +24983,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "18.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24749,7 +25049,7 @@
    },
    {
     "art": "Knopf",
-    "text": "21.09.2025",
+    "text": "23.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -24803,7 +25103,7 @@
    },
    {
     "art": "Knopf",
-    "text": "24.08.2025",
+    "text": "26.08.2025",
     "disabled": false,
     "cls": ""
    },
@@ -24869,7 +25169,7 @@
    },
    {
     "art": "Knopf",
-    "text": "28.09.2025",
+    "text": "30.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -24923,7 +25223,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "28.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24983,7 +25283,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "21.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -25049,7 +25349,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2026",
+    "text": "03.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -25103,7 +25403,7 @@
    },
    {
     "art": "Knopf",
-    "text": "23.09.2025",
+    "text": "25.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -25238,7 +25538,7 @@
  {
   "ort": "Fußzeile › Eingangszentrale",
   "umgebung": "desktop",
-  "anzahl": 76,
+  "anzahl": 77,
   "elemente": [
    {
     "art": "Knopf",
@@ -25251,6 +25551,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -25700,7 +26006,7 @@
  {
   "ort": "Fußzeile › Bestand prüfen",
   "umgebung": "desktop",
-  "anzahl": 38,
+  "anzahl": 39,
   "elemente": [
    {
     "art": "Knopf",
@@ -25713,6 +26019,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -25934,7 +26246,7 @@
  {
   "ort": "Fußzeile › Was gibt’s Neues?",
   "umgebung": "desktop",
-  "anzahl": 395,
+  "anzahl": 396,
   "elemente": [
    {
     "art": "Knopf",
@@ -25947,6 +26259,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -28310,7 +28628,7 @@
  {
   "ort": "Fußzeile › Hilfe",
   "umgebung": "desktop",
-  "anzahl": 67,
+  "anzahl": 68,
   "elemente": [
    {
     "art": "Knopf",
@@ -28323,6 +28641,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -28718,7 +29042,7 @@
  {
   "ort": "Fußzeile › Systemprüfung",
   "umgebung": "desktop",
-  "anzahl": 97,
+  "anzahl": 98,
   "elemente": [
    {
     "art": "Knopf",
@@ -28731,6 +29055,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -29306,7 +29636,7 @@
  {
   "ort": "Fußzeile › Prüfberichte",
   "umgebung": "desktop",
-  "anzahl": 97,
+  "anzahl": 98,
   "elemente": [
    {
     "art": "Knopf",
@@ -29319,6 +29649,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -29894,7 +30230,7 @@
  {
   "ort": "Fußzeile › Sicherheitscenter",
   "umgebung": "desktop",
-  "anzahl": 54,
+  "anzahl": 55,
   "elemente": [
    {
     "art": "Knopf",
@@ -29907,6 +30243,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -30224,7 +30566,7 @@
  {
   "ort": "Fußzeile › Versionshistorie",
   "umgebung": "desktop",
-  "anzahl": 38,
+  "anzahl": 39,
   "elemente": [
    {
     "art": "Knopf",
@@ -30237,6 +30579,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -30458,7 +30806,7 @@
  {
   "ort": "Dialog › Mit ChatGPT arbeiten",
   "umgebung": "desktop",
-  "anzahl": 43,
+  "anzahl": 44,
   "elemente": [
    {
     "art": "Knopf",
@@ -30471,6 +30819,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -30721,7 +31075,7 @@
  {
   "ort": "Dialog › Familienakte exportieren",
   "umgebung": "desktop",
-  "anzahl": 52,
+  "anzahl": 53,
   "elemente": [
    {
     "art": "Knopf",
@@ -30734,6 +31088,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -31039,7 +31399,7 @@
  {
   "ort": "Startseite",
   "umgebung": "handy",
-  "anzahl": 80,
+  "anzahl": 81,
   "elemente": [
    {
     "art": "Knopf",
@@ -31058,6 +31418,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -31192,7 +31558,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 8.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 10.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -31210,7 +31576,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 26",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 28",
     "disabled": false,
     "cls": ""
    },
@@ -31525,7 +31891,7 @@
  {
   "ort": "ASSISTENZ › Assistenzzentrale",
   "umgebung": "handy",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
@@ -31544,6 +31910,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -31807,7 +32179,7 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Diagnosen, AU & ICD-Codes",
   "umgebung": "handy",
-  "anzahl": 48,
+  "anzahl": 49,
   "elemente": [
    {
     "art": "Knopf",
@@ -31826,6 +32198,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -32101,7 +32479,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Interaktives Cockpit",
   "umgebung": "handy",
-  "anzahl": 107,
+  "anzahl": 108,
   "elemente": [
    {
     "art": "Knopf",
@@ -32120,6 +32498,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -32212,7 +32596,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 8.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 10.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -32230,7 +32614,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 26",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 28",
     "disabled": false,
     "cls": ""
    },
@@ -32284,7 +32668,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 26.10.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 28.10.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -32302,7 +32686,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 31.10.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 02.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -32320,7 +32704,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 02.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 04.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -32338,7 +32722,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 03.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 05.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -32356,7 +32740,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 08.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 10.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -32374,7 +32758,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 11.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 13.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -32518,25 +32902,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 28.10.2026 Nächste Aufgabe: Beim Ar",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 30.10.2026 Nächste Aufgabe: Beim Ar",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 28.10.2026 Nächste A",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 30.10.2026 Nächste A",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 28.10.2026 Nächste Aufgabe: Z",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 30.10.2026 Nächste Aufgabe: Z",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 28.10.2026 Nächste Aufgabe:",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 30.10.2026 Nächste Aufgabe:",
     "disabled": false,
     "cls": ""
    },
@@ -32608,19 +32992,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 28.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 30.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 28.10.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 30.10.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 28.10.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 30.10.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -32632,7 +33016,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 28.10.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 30.10.",
     "disabled": false,
     "cls": ""
    },
@@ -32749,7 +33133,7 @@
  {
   "ort": "WOHNEN › Miet- & Vermieterunterlagen",
   "umgebung": "handy",
-  "anzahl": 38,
+  "anzahl": 39,
   "elemente": [
    {
     "art": "Knopf",
@@ -32768,6 +33152,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -32983,7 +33373,7 @@
  {
   "ort": "FAHRZEUGE › Fahrzeugpapiere",
   "umgebung": "handy",
-  "anzahl": 38,
+  "anzahl": 39,
   "elemente": [
    {
     "art": "Knopf",
@@ -33002,6 +33392,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -33217,7 +33613,7 @@
  {
   "ort": "KÄUFE & GARANTIEN › Käufe & Rechnungen",
   "umgebung": "handy",
-  "anzahl": 38,
+  "anzahl": 39,
   "elemente": [
    {
     "art": "Knopf",
@@ -33236,6 +33632,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -33451,7 +33853,7 @@
  {
   "ort": "DOKUMENTE › Dokumentenbibliothek",
   "umgebung": "handy",
-  "anzahl": 263,
+  "anzahl": 264,
   "elemente": [
    {
     "art": "Knopf",
@@ -33470,6 +33872,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -33580,7 +33988,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "28.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -33634,7 +34042,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "24.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -33694,7 +34102,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "21.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -33748,7 +34156,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "18.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -33808,7 +34216,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.10.2026",
+    "text": "15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -33856,7 +34264,7 @@
    },
    {
     "art": "Knopf",
-    "text": "08.10.2026",
+    "text": "10.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -33910,7 +34318,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2026",
+    "text": "03.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -33958,7 +34366,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.08.2026",
+    "text": "16.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -34078,7 +34486,7 @@
    },
    {
     "art": "Knopf",
-    "text": "27.11.2024",
+    "text": "29.11.2024",
     "disabled": false,
     "cls": ""
    },
@@ -34132,7 +34540,7 @@
    },
    {
     "art": "Knopf",
-    "text": "08.10.2026",
+    "text": "10.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -34192,7 +34600,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.08.2026",
+    "text": "16.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -34246,7 +34654,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.02.2025",
+    "text": "27.02.2025",
     "disabled": false,
     "cls": ""
    },
@@ -34312,7 +34720,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "24.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -34378,7 +34786,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.10.2026",
+    "text": "15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -34432,7 +34840,7 @@
    },
    {
     "art": "Knopf",
-    "text": "10.06.2026",
+    "text": "12.06.2026",
     "disabled": false,
     "cls": ""
    },
@@ -34480,7 +34888,7 @@
    },
    {
     "art": "Knopf",
-    "text": "11.04.2026",
+    "text": "13.04.2026",
     "disabled": false,
     "cls": ""
    },
@@ -34528,7 +34936,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "18.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -34588,7 +34996,7 @@
    },
    {
     "art": "Knopf",
-    "text": "21.09.2025",
+    "text": "23.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -34636,7 +35044,7 @@
    },
    {
     "art": "Knopf",
-    "text": "24.08.2025",
+    "text": "26.08.2025",
     "disabled": false,
     "cls": ""
    },
@@ -34696,7 +35104,7 @@
    },
    {
     "art": "Knopf",
-    "text": "28.09.2025",
+    "text": "30.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -34744,7 +35152,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "28.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -34798,7 +35206,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "21.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -34858,7 +35266,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2026",
+    "text": "03.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -34906,7 +35314,7 @@
    },
    {
     "art": "Knopf",
-    "text": "23.09.2025",
+    "text": "25.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -35035,7 +35443,7 @@
  {
   "ort": "HILFE › Hilfe & erste Schritte",
   "umgebung": "handy",
-  "anzahl": 59,
+  "anzahl": 60,
   "elemente": [
    {
     "art": "Knopf",
@@ -35054,6 +35462,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -35395,7 +35809,7 @@
  {
   "ort": "Fußzeile › Interaktives Cockpit",
   "umgebung": "handy",
-  "anzahl": 107,
+  "anzahl": 108,
   "elemente": [
    {
     "art": "Knopf",
@@ -35414,6 +35828,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -35506,7 +35926,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 8.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 10.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -35524,7 +35944,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 26",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 28",
     "disabled": false,
     "cls": ""
    },
@@ -35578,7 +35998,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 26.10.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 28.10.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -35596,7 +36016,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 31.10.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 02.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -35614,7 +36034,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 02.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 04.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -35632,7 +36052,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 03.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 05.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -35650,7 +36070,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 08.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 10.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -35668,7 +36088,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 11.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 13.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -35812,25 +36232,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 28.10.2026 Nächste Aufgabe: Beim Ar",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 30.10.2026 Nächste Aufgabe: Beim Ar",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 28.10.2026 Nächste A",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 30.10.2026 Nächste A",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 28.10.2026 Nächste Aufgabe: Z",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 30.10.2026 Nächste Aufgabe: Z",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 28.10.2026 Nächste Aufgabe:",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 30.10.2026 Nächste Aufgabe:",
     "disabled": false,
     "cls": ""
    },
@@ -35902,19 +36322,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 28.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 30.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 28.10.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 30.10.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 28.10.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 30.10.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -35926,7 +36346,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 28.10.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 30.10.",
     "disabled": false,
     "cls": ""
    },
@@ -36043,7 +36463,7 @@
  {
   "ort": "Fußzeile › Dokumentenbibliothek",
   "umgebung": "handy",
-  "anzahl": 263,
+  "anzahl": 264,
   "elemente": [
    {
     "art": "Knopf",
@@ -36062,6 +36482,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -36172,7 +36598,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "28.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36226,7 +36652,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "24.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36286,7 +36712,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "21.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36340,7 +36766,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "18.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36400,7 +36826,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.10.2026",
+    "text": "15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36448,7 +36874,7 @@
    },
    {
     "art": "Knopf",
-    "text": "08.10.2026",
+    "text": "10.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36502,7 +36928,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2026",
+    "text": "03.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36550,7 +36976,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.08.2026",
+    "text": "16.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36670,7 +37096,7 @@
    },
    {
     "art": "Knopf",
-    "text": "27.11.2024",
+    "text": "29.11.2024",
     "disabled": false,
     "cls": ""
    },
@@ -36724,7 +37150,7 @@
    },
    {
     "art": "Knopf",
-    "text": "08.10.2026",
+    "text": "10.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36784,7 +37210,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.08.2026",
+    "text": "16.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36838,7 +37264,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.02.2025",
+    "text": "27.02.2025",
     "disabled": false,
     "cls": ""
    },
@@ -36904,7 +37330,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "24.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36970,7 +37396,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.10.2026",
+    "text": "15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -37024,7 +37450,7 @@
    },
    {
     "art": "Knopf",
-    "text": "10.06.2026",
+    "text": "12.06.2026",
     "disabled": false,
     "cls": ""
    },
@@ -37072,7 +37498,7 @@
    },
    {
     "art": "Knopf",
-    "text": "11.04.2026",
+    "text": "13.04.2026",
     "disabled": false,
     "cls": ""
    },
@@ -37120,7 +37546,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "18.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -37180,7 +37606,7 @@
    },
    {
     "art": "Knopf",
-    "text": "21.09.2025",
+    "text": "23.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -37228,7 +37654,7 @@
    },
    {
     "art": "Knopf",
-    "text": "24.08.2025",
+    "text": "26.08.2025",
     "disabled": false,
     "cls": ""
    },
@@ -37288,7 +37714,7 @@
    },
    {
     "art": "Knopf",
-    "text": "28.09.2025",
+    "text": "30.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -37336,7 +37762,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "28.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -37390,7 +37816,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "21.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -37450,7 +37876,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2026",
+    "text": "03.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -37498,7 +37924,7 @@
    },
    {
     "art": "Knopf",
-    "text": "23.09.2025",
+    "text": "25.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -37627,7 +38053,7 @@
  {
   "ort": "Fußzeile › Eingangszentrale",
   "umgebung": "handy",
-  "anzahl": 68,
+  "anzahl": 69,
   "elemente": [
    {
     "art": "Knopf",
@@ -37646,6 +38072,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -38041,7 +38473,7 @@
  {
   "ort": "Fußzeile › Sicherheitscenter",
   "umgebung": "handy",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
@@ -38060,6 +38492,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -38323,7 +38761,7 @@
  {
   "ort": "Fußzeile › Fristen und Aufgaben",
   "umgebung": "handy",
-  "anzahl": 119,
+  "anzahl": 120,
   "elemente": [
    {
     "art": "Knopf",
@@ -38342,6 +38780,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -38524,7 +38968,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 65de33f1-3b3f-42f4-8799-27e78a294e92",
+    "text": "Dokument: da2bea90-e5dc-4752-a49b-9ff3da7fa9ba",
     "disabled": false,
     "cls": "text-link"
    },
@@ -38596,7 +39040,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 5b02fffd-ab07-495a-afed-ad219f7b9cd8",
+    "text": "Dokument: 96817ee7-2068-4fbd-b171-6d0d9b63e09c",
     "disabled": false,
     "cls": "text-link"
    },
@@ -38626,7 +39070,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 9e181ce2-a7ed-45a0-b751-aa83b606e164",
+    "text": "Dokument: 0d5ccc43-d92a-407d-bc1e-1a36a3082367",
     "disabled": false,
     "cls": "text-link"
    },
@@ -38734,7 +39178,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 9e181ce2-a7ed-45a0-b751-aa83b606e164",
+    "text": "Dokument: 0d5ccc43-d92a-407d-bc1e-1a36a3082367",
     "disabled": false,
     "cls": "text-link"
    },
@@ -39043,7 +39487,7 @@
  {
   "ort": "Fußzeile › Tagebuch & Erinnerungen",
   "umgebung": "handy",
-  "anzahl": 62,
+  "anzahl": 63,
   "elemente": [
    {
     "art": "Knopf",
@@ -39062,6 +39506,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -39250,31 +39700,31 @@
    },
    {
     "art": "Knopf",
-    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 22.10.2026, 19:00 · Reis",
+    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 24.10.2026, 19:00 · Reis",
     "disabled": false,
     "cls": "active"
    },
    {
     "art": "Knopf",
-    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 19.10.2026, 19:00 · Technik, Ge",
+    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 21.10.2026, 19:00 · Technik, Ge",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 16.10.2026, 19:00 ·",
+    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 18.10.2026, 19:00 ·",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 29.08.202",
+    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 31.08.202",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 22.09.2025, 19:00 · Haus & Wohnu",
+    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 24.09.2025, 19:00 · Haus & Wohnu",
     "disabled": false,
     "cls": ""
    },
@@ -39421,7 +39871,7 @@
  {
   "ort": "Fußzeile › Hilfe",
   "umgebung": "handy",
-  "anzahl": 59,
+  "anzahl": 60,
   "elemente": [
    {
     "art": "Knopf",
@@ -39440,6 +39890,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",
@@ -39781,7 +40237,7 @@
  {
   "ort": "Fußzeile › Systemprüfung",
   "umgebung": "handy",
-  "anzahl": 89,
+  "anzahl": 90,
   "elemente": [
    {
     "art": "Knopf",
@@ -39800,6 +40256,12 @@
     "text": "Internet für die App: aus – antippen zum Einschalten",
     "disabled": false,
     "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Neue Fassung laden (Vorrat leeren und neu laden – deine Daten bleiben)",
+    "disabled": false,
+    "cls": "icon-button neu-laden"
    },
    {
     "art": "Knopf",

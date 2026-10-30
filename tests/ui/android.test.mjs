@@ -11,6 +11,7 @@ try {
   const page = await context.newPage();
   const errors = collectErrors(page);
   await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page);
+  await step("Kein Neu-laden-Knopf in der App (Updates über die Versionszeile)", async () => { await page.waitForSelector(".header-actions"); const n = await page.locator("[data-neu-laden]").count(); if (n !== 0) throw new Error(`${n} Knöpfe`); return "keiner"; });
   await step("Kein Installieren-Knopf in der Android-App (html.app-installiert)", async () => { await page.waitForSelector(".header-actions"); await page.waitForTimeout(600); return (await page.evaluate(() => document.documentElement.classList.contains("app-installiert") && !document.querySelector(".header-actions [data-install-knopf]:not([hidden])")?.offsetParent)); });
   await step("Internetschalter liest den Zustand aus dem nativen Plugin (aus)", async () => (await page.getAttribute(".netz-schalter", "data-netz")) === "aus");
   await step("Einschalten geht über das Plugin und wird dort gespeichert", async () => { await page.click(".netz-schalter"); await page.waitForSelector('.netz-schalter[data-netz="an"]'); return page.evaluate(() => window.__capState.offline === false); });

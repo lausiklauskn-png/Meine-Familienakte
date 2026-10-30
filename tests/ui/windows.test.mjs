@@ -14,6 +14,7 @@ try {
   const errors = collectErrors(page);
   await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page);
   await step("Windows-Brücke erkannt: Plattform windows, Internet standardmäßig aus, kein Service Worker", async () => page.evaluate(async () => window.Capacitor?.getPlatform() === "windows" && document.documentElement.dataset.appOffline === "true" && !(await navigator.serviceWorker.getRegistration())));
+  await step("Kein Neu-laden-Knopf in der App (Updates über die Versionszeile)", async () => { await page.waitForSelector(".header-actions"); const n = await page.locator("[data-neu-laden]").count(); if (n !== 0) throw new Error(`${n} Knöpfe`); return "keiner"; });
   await step("Kein Installieren-Knopf in der Windows-App (html.app-installiert)", async () => { await page.waitForSelector(".header-actions"); await page.waitForTimeout(600); return page.evaluate(() => document.documentElement.classList.contains("app-installiert") && !document.querySelector(".header-actions [data-install-knopf]")?.offsetParent); });
   await step("Diktat über SAPI: Tipp → Text im Feld, Diktat endet, auch bei Internet aus", async () => {
     const button = page.locator(".dictation-button").first();
