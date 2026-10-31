@@ -107,8 +107,10 @@ function UnterschriftFeld({ onFertig, onAbbrechen }: { onFertig: (png: string) =
   </div>;
 }
 
-export function AusfuellenDialog({ dokument, leseDatei, personen, namen, ablage, onVormerken, onErgebnis, onClose, onNotice: meldeAussen }: {
+export function AusfuellenDialog({ dokument, geschuetzt = false, leseDatei, personen, namen, ablage, onVormerken, onErgebnis, onClose, onNotice: meldeAussen }: {
   dokument: LocalDocument;
+  /** Geschützte Gesundheitsunterlage (Klaus 2026-10-31: ausfüllen erlaubt): kein Weg zur KI, auch nicht unkenntlich. */
+  geschuetzt?: boolean;
   leseDatei: () => Promise<File>;
   personen: AusfuellPerson[];
   namen: string[];
@@ -206,6 +208,7 @@ export function AusfuellenDialog({ dokument, leseDatei, personen, namen, ablage,
 
   // ---------- Mit KI benennen (Text-Weg, unkenntlich) ----------
   const kiVorbereiten = async () => {
+    if (geschuetzt) return; // Gesundheitsunterlage: nie an eine KI
     const p = pseudo();
     if (!p) { onNotice({ kind: "error", text: "Die Unkenntlich-Funktion (Modul 25) ist nicht geladen. Ohne sie geht nichts an eine KI." }); return; }
     if (!felder.length) { onNotice({ kind: "info", text: "Erst Felder erkennen oder setzen — die KI benennt sie dann." }); return; }
@@ -364,7 +367,7 @@ export function AusfuellenDialog({ dokument, leseDatei, personen, namen, ablage,
           </div>
           {modus === "setzen" ? <>
             <button className="button secondary compact-button" onClick={() => void erkennen()} disabled={!!arbeit} data-af-erkennen><Wand2 size={16}/> Felder erkennen</button>
-            <button className="button secondary compact-button" onClick={() => void kiVorbereiten()} disabled={!!arbeit} data-af-ki><Sparkles size={16}/> Mit KI benennen</button>
+            {!geschuetzt && <button className="button secondary compact-button" onClick={() => void kiVorbereiten()} disabled={!!arbeit} data-af-ki><Sparkles size={16}/> Mit KI benennen</button>}
             <label className="af-werkzeug"><span>Neues Feld</span><select value={werkzeug || ""} onChange={(e) => setWerkzeug((e.target.value || null) as AusfuellTyp | null)} data-af-werkzeug><option value="">— wählen, dann auf die Seite tippen —</option>{(Object.keys(AUSFUELL_TYPEN) as AusfuellTyp[]).map((t) => <option key={t} value={t}>{AUSFUELL_TYPEN[t]}</option>)}</select></label>
             <button className="button secondary compact-button" onClick={() => void neuScannen()}><ScanLine size={16}/> Neu scannen</button>
           </> : <>

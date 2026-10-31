@@ -30,6 +30,10 @@ const icon = `data:image/svg+xml;base64,${readFileSync(join(dist, "favicon.svg")
 // Hülle (Internetschalter, Hinweisleiste): dieselben Skripte wie in index.html, eingebettet. Ohne Service Worker (Einzeldatei).
 const huelle = ["native/familienakte-netz.js", "native/native-network.js", "native/25_pseudonym.js", "native/familienakte-app.js"].map((name) => readFileSync(join(dist, name), "utf8").replaceAll("</script", "<\\/script")).join("\n");
 const huelleStyle = readFileSync(join(dist, "native/familienakte-app.css"), "utf8").replaceAll("</style", "<\\/style");
+// Kern von Workflow PDF fürs Ausfüllen (Klaus 2026-10-31, Frage 4 aus Sitzung F: „Ja, einbetten“): byte-1:1 aus public/wfpdf/,
+// ohne Scanner und Texterkennung (die bleiben dem Paket vorbehalten). app/wfpdf-kern.ts lädt diese Dateien dann nicht nach.
+const KERN_EINGEBETTET = ["pdf-lib.min.js", "export.js", "erkennung.js", "reinigung.js", "schluesseltresor.js"];
+const kern = `window.__FA_KERN_EINGEBETTET = ${JSON.stringify(KERN_EINGEBETTET)};\n` + KERN_EINGEBETTET.map((name) => readFileSync(join(dist, "wfpdf", name), "utf8").replaceAll("</script", "<\\/script")).join("\n");
 const pdfjs = ["pdf.min.js", "pdf.worker.min.js"].map((name) => readFileSync(join(dist, "vendor/pdfjs", name), "utf8").replaceAll("</script", "<\\/script")).join("\n");
 
 // Seiteninhalt ohne eigenes <html>/<head>/<body>: Die Plattform ergänzt das Grundgerüst.
@@ -47,6 +51,9 @@ ${huelle}
 </script>
 <script>
 ${pdfjs}
+</script>
+<script>
+${kern}
 </script>
 <script type="module">
 ${script}

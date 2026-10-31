@@ -7,7 +7,10 @@ Autoausfüllung. Ausschalten oder einschalten.“
 ## Bedienung
 
 1. **Unterlage → „Ausfüllen“** (Dokumentenbibliothek: Knopf auf der Karte; Eingangszentrale: Knopf in der Zeile). Geht mit PDFs und
-   Fotos (JPEG, PNG, WebP). Geschützte Gesundheitsunterlagen haben keinen Knopf.
+   Fotos (JPEG, PNG, WebP). **Seit 2.28.5** auch geschützte Gesundheitsunterlagen (Klaus 2026-10-31) — dort ohne „Mit KI benennen“
+   (nichts geht an eine KI); die ausgefüllte Fassung trägt die Angaben des Originals mit und bleibt geschützt.
+   **Direkter Einstieg (2.28.5):** Eingangszentrale → **„Formular scannen und ausfüllen“** → Scanner von Workflow PDF → der Scan
+   liegt als Unterlage (Bereich „Formular“) in der Akte und das Ausfüllen öffnet sich.
 2. **Felder setzen**
    - **Felder erkennen** – offline: Linien, Rahmen, Kästchen (Workflow PDF `erkennung.js`), Beschriftung aus der Textebene; bei Scans
      ohne Textebene liest die Texterkennung (Tesseract, auf dem Gerät) die Beschriftungen. Echte Formularfelder eines PDF werden
@@ -23,6 +26,8 @@ Autoausfüllung. Ausschalten oder einschalten.“
 3. **Ausfüllen**
    - **Angaben aus der Akte**: Person wählen → **Vorbelegen** füllt leere Felder (Name, Vorname, Nachname, Geburtsdatum und, falls
      an der Person vorhanden, Anschrift/E-Mail/Telefon). Vorschläge sind **gelb**, bis man sie ändert.
+     **Anschrift und Kontakt eintragen (2.28.5):** Person öffnen (z. B. über die Suche) → in der Detailansicht **„Anschrift und
+     Kontakt“** aufklappen → Straße, PLZ, Ort, E-Mail, Telefon → Speichern. Bleibt im Register auf dem Gerät (`lib/person-kontakt.ts`).
    - **Eingabe-Speicher**: was in ein Feld getippt und gespeichert wurde, merkt die Akte je Feldart (E-Mail, Telefon, Straße, PLZ/Ort …;
      sonst je Beschriftung). Beim nächsten Mal genügen die ersten Buchstaben („to“ → „tommy…“). Schalter **„Eingaben merken und
      vorschlagen“** an/aus, **„Gemerkte Eingaben löschen (N)“**, in der Vorschlagsliste „Diese Vorschläge löschen“. Kästchen und
@@ -72,3 +77,15 @@ sondern beim ersten Gebrauch.
 - **Befund beim Bau:** Chromium im Prüf-Behälter legt im Browser-Speicher (OPFS) keine Datei mit Umlaut im Namen an (TypeMismatchError).
   Deshalb heißt die Fassung „ausgefuellt“. Ob echte Geräte das auch tun, ist nicht gemessen; vorhandene Uploads mit Umlauten sind davon
   unabhängig (nicht angefasst).
+
+## Einzeldatei (2.28.5)
+
+Die Einzeldatei (`scripts/build-single-file.mjs`) trägt den Kern fürs Ausfüllen eingebettet, byte-1:1: pdf-lib, Export, Erkennung,
+Reinigung, Schloss (~0,6 MB). **Nicht** dabei: Scanner und Texterkennung (zu groß) und die Noto-Schrift — in der Einzeldatei gehen
+also PDFs mit Textebene; Fotos bekommen Felder aus den Linien, aber keine Beschriftung; Einträge außerhalb von Latin-1 gehen dort nicht.
+
+## Proben 2.28.5
+
+`tests/ui/ausfuellen-gesundheit.test.mjs` 5 · `tests/ui/formular-scannen.test.mjs` 6 (Scanner im Prüfbrowser durch einen Stellvertreter
+ersetzt, der ein erfundenes PDF liefert) · `tests/ui/person-kontakt.test.mjs` 6 · `tests/ui/einzeldatei.test.mjs` 6 ·
+`scripts/run-ausfuellen-tests.mjs` (+3 Kontakt) · Gegenprobe `node tests/gegenprobe-sitzung-b.mjs` 9/9.

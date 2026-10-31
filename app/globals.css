@@ -1769,3 +1769,12 @@ input.af-feld, textarea.af-feld { width: auto; min-height: 0; resize: none; }
 .af-marke-offen { background: var(--amber-soft); color: var(--amber); }
 .af-marke-ergebnis, .af-marke-ausgefuellt { background: var(--green-soft); color: var(--green); }
 @media (max-width: 640px) { .af-dialog { padding: 12px; } .af-feld { font-size: 10px; } }
+
+/* Anschrift und Kontakt an einer Person (Klaus 2026-10-31) */
+.person-kontakt { margin: 12px 0; border: 1px solid var(--line, #d8dee4); border-radius: 10px; padding: 8px 12px; }
+.person-kontakt > summary { cursor: pointer; font-weight: 600; min-height: 32px; display: flex; align-items: center; }
+.person-kontakt-hinweis { font-size: .9em; opacity: .8; margin: 4px 0 8px; }
+.person-kontakt-felder { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px 12px; margin-bottom: 10px; }
+.person-kontakt-felder label { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.person-kontakt-felder input { width: 100%; box-sizing: border-box; }
+.person-kontakt-fehler { color: #b42318; margin: 0 0 8px; }
