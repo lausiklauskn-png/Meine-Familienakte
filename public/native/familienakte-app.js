@@ -102,5 +102,18 @@
       try { history.replaceState(null, '', location.pathname); } catch { /* egal */ }
     })();
   }
-  window.FamilienakteApp = { build: BUILD, version: VERSION, hinweis, dateienUebergeben };
+  // Knopf „Aktualisieren“ oben (zwei Pfeile im Kreis): in den Apps dieselbe Prüfung wie der Tipp auf die Versionszeile,
+  // in der PWA fragt der Service Worker nach einer neuen Fassung. Nur bei eingeschaltetem Internet.
+  async function aktualisieren() {
+    if (offline()) { hinweis('Internet für die App ist aus. Oben in der Kopfleiste einschalten, dann erneut prüfen.', 6000); return; }
+    const app = window.FamilienakteAndroid || window.FamilienakteWindows;
+    if (app?.updatePruefen) { app.updatePruefen(); return; }
+    const reg = 'serviceWorker' in navigator ? await navigator.serviceWorker.getRegistration().catch(() => null) : null;
+    if (!reg) { location.reload(); return; }
+    hinweis('Prüfung läuft …', 0);
+    try { await reg.update(); } catch { /* unten gemeldet */ }
+    if (reg.waiting || reg.installing) { if (reg.waiting) neueVersion(reg); else hinweis('Neue Fassung wird geladen …', 0); return; }
+    hinweis(`Du verwendest die aktuelle Fassung ${VERSION || ''}.`.replace(' .', '.'), 6000);
+  }
+  window.FamilienakteApp = { build: BUILD, version: VERSION, hinweis, dateienUebergeben, aktualisieren };
 })();

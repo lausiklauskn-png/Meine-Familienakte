@@ -414,7 +414,6 @@ code { display: inline-block; color: var(--navy); background: var(--blue-soft); 
 @media (max-width: 860px) {
   .security-grid { grid-template-columns: 1fr; }
   .vault-pill { display: none; }
-  .logout-button { padding: 9px; font-size: 0; gap: 0; }
 }
 
 /* Familienakte: mehrstufige Navigation und Objekt-Cockpit */
@@ -446,7 +445,7 @@ code { display: inline-block; color: var(--navy); background: var(--blue-soft); 
 .global-search .dictation-button svg, .global-search .search-clear svg { position: static; color: currentColor; }
 .global-search .search-clear { right: 7px; }
 .header-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
-.logout-button { display: inline-flex; align-items: center; gap: 6px; border: 1px solid #c8d5de; border-radius: 9px; padding: 9px 11px; color: var(--navy); background: white; font-size: .78rem; font-weight: 900; text-decoration: none; }
+.logout-button { border-color: #c8d5de; padding: 0; text-decoration: none; }
 .logout-button:hover { border-color: #9fb3c1; background: var(--blue-soft); }
 .vault-pill { display: inline-flex; align-items: center; gap: 6px; border: 1px solid #cf9c58; border-radius: 999px; padding: 8px 10px; color: #80511a; background: #fff6e8; font-size: .74rem; font-weight: 900; }
 .vault-pill.connected { border-color: #82bda7; color: #176548; background: #eaf8f2; }
@@ -1373,7 +1372,9 @@ button.object-card:hover { transform: translateY(-2px); border-color: #8fb2c9; b
   .system-check-control-card, .system-check-result-card, .system-findings { min-height: 0; }
   .site-brand small, .header-actions .button { display: none; }
   .site-brand .site-brand-version { display: block; }
-  .header-actions { gap: 3px; }
+  .header-actions { gap: 3px; flex: 0 0 auto; }
+  .header-actions .icon-button, .header-actions .familienakte-install { width: 30px; height: 30px; padding: 0; justify-content: center; border-radius: 8px; }
+  .header-actions .icon-button svg, .header-actions .familienakte-install svg { width: 16px; height: 16px; }
   .family-hero h1 { font-size: 2rem; }
   .family-hero { gap: 20px; }
   .hero-cockpit-grid { grid-template-columns: 1fr; }
