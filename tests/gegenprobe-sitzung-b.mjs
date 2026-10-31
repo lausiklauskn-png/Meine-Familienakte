@@ -19,6 +19,7 @@ const faelle = [
   { name: "Netz: schwebender Knopf sichtbar", datei: "app/globals.css", alt: "#sbkim-rdv-btn { display: none !important; }", neu: "", probe: "netz-mycel", rot: /Kein schwebender/ },
   { name: "Netz: Gerätename fehlt im Fenster", datei: "public/native/familienakte-mycel.js", alt: "if (panel.querySelector('[data-sbkim-geraetename]')) return true;", neu: "return true;", probe: "netz-mycel", rot: /Gerätename steht darin/ },
   { name: "Netz: ein Byte im Kanon-Modul 23", datei: "public/sbkim/23_rendezvous.js", alt: "Rendezvous", neu: "Rendezvouz", befehl: [process.execPath, ["tools/herkunft-pruefen.mjs"]], rot: /23_rendezvous\.js weicht ab/ },
+  { name: "Menü: Leiste bei 1000 px abgeschnitten (alter Stand)", datei: "app/globals.css", alt: "@media (min-width: 901px) and (max-width: 1439px)", neu: "@media (min-width: 1001px) and (max-width: 1439px)", probe: "menue-breite", rot: /1000 px: alle acht Menüs/ },
 ];
 const filter = process.argv[2] || "";
 const bauen = (einzel) => {
