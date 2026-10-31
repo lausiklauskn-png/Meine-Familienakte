@@ -48,6 +48,19 @@ Kontaktangaben liegen im Register (wie Eingabe-Speicher, nicht zusätzlich versc
 2. **Stück 2b:** Siegel und Lampen auf der Netz-Seite brauchen weitere Kanon-Module (07 Apoptose, 15 Membran, 16 Siegel, 16b Wizard) — einverstanden?
 3. **Stück 3 (Chefcode):** im eigenen Netz antwortet die Familienakte mit Titel und Datum, mit Ausschnitt nur auf Schalter (wie BookLedgerPro)? Gesundheitsunterlagen nie?
 
+## Nachtrag: Klaus' Tablet-Test am Abend (2.28.7, 2.28.8)
+
+| Befund (Klaus) | Ursache | Fassung |
+| --- | --- | --- |
+| „finde nicht mal das Wort Eingangszentrale“ | Menüleiste lief bei 901–1000 px auf 1090 px hinaus (Dokumente/Hilfe unsichtbar, Querrollen) | 2.28.7 (#39), Probe `menue-breite` 24 |
+| Mikrofon „es es könnte es könnte sein …“ | Chrome Android wiederholt im Dauer-Diktat den bisherigen Satz in jedem fertigen Stück | 2.28.7, `diktatZusammenfuegen` |
+| „Möglicher vorhandener Zusammenhang“ springt zurück | „Verknüpfen“ setzte den Vorschlag, Automatik überschrieb leere Auswahl, Überschrift nannte nur den Vorschlag | 2.28.7, Probe `kontext-auswahl` 6 |
+| nicht das ganze Werkzeug von Workflow PDF beim Fotografieren | „Dokument fotografieren“ war der alte Fotodialog | 2.28.8: öffnet den Scanner von Workflow PDF (Klaus: „überall der volle Scanner“) |
+| Texterkennung nur „Dokumentscan“ + Datum | der Eingang las PDFs und Fotos gar nicht | 2.28.8: Textebene, sonst Texterkennung; Zusammenhang aus dem Inhalt. Probe `eingang-liest` 6 |
+
+Briefkopf („Brief von …“) und die ganze Übernahme von Workflow PDF: neuer Brief `BRIEF_SITZUNG_2026-11-01_WORKFLOW-PDF-IN-FAMILIENAKTE.md`.
+Gegenproben dazu: Menü 1 · Zusammenhang 3 · Diktat 1 · Eingang 2 — alle gefangen.
+
 ## Stundennachweis (UTC; Ortszeit +1)
 
 | Zeit | Arbeit |
@@ -58,7 +71,7 @@ Kontaktangaben liegen im Register (wie Eingabe-Speicher, nicht zusätzlich versc
 | 16:16–16:40 | Stück 2a (Kanon-Module, Klebstoff, Seite, Probe, Gegenprobe), Merge #36, Veröffentlichung 2.28.5, PR #37 |
 | 16:40–17:10 | Brief, CI #37, Merge, Veröffentlichung 2.28.6 und Prüfung der Lauf-Logs, Brief nachgetragen |
 
-Erste Spur 15:12 (Checkout), letzte ≈ 17:10: **≈ 2 h** (Obergrenze). Wartezeit auf CI in den Blöcken enthalten (je ≈ 10 min). Klaus' eigene Angabe geht vor.
+Erste Spur 15:12 (Checkout), letzte ≈ 17:10: **≈ 2 h** (Obergrenze). Abend: 19:20–20:50 (Befunde 2.28.7/2.28.8, Brief) ≈ 1 h 30; zusammen **≈ 3 h 30** (Obergrenze, inkl. CI-Wartezeit). Wartezeit auf CI in den Blöcken enthalten (je ≈ 10 min). Klaus' eigene Angabe geht vor.
 
 ## Startauftrag zum Einfügen
 

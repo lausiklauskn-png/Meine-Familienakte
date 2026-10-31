@@ -95,7 +95,12 @@ export function buildDocumentIntakePlan(input: {
   records?: FamilyRecordUnion[];
 }): DocumentIntakePlan {
   const analysisText = `${input.file.name} ${input.file.textHint || ""}`;
-  const detected = classifyFile(input.file.name, input.file.textHint);
+  // Klaus 2026-10-31: seit der Eingang PDFs/Fotos liest, steht der ganze Brieftext im Hinweis. Die Stichwortliste nimmt das erste
+  // Wort, das passt („Schaden“ machte aus einem Garantiebeleg eine Versicherung). Darum: Dateiname zuerst (wie bisher bei Mail und
+  // Text), der lange Text nur, wenn der Name nichts hergibt (z. B. „Dokumentscan …“).
+  const nachName = classifyFile(input.file.name);
+  const kurzerHinweis = /\.(eml|msg|txt|vtt)$/i.test(input.file.name);
+  const detected = kurzerHinweis || nachName.lifeArea === "Archiv" ? classifyFile(input.file.name, input.file.textHint) : nachName;
   const title = input.file.titleHint?.trim() || titleFromName(input.file.name) || input.file.name;
   const duplicateIds = input.documents.filter((document) => normalize(document.originalName) === normalize(input.file.name) && document.sizeBytes === input.file.size).map((document) => document.id);
   const assignment = proposeFamilyAssignment({
