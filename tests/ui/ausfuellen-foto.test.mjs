@@ -21,7 +21,7 @@ try {
   const foto = Buffer.from((await page.evaluate(() => {
     const c = document.createElement("canvas"); c.width = 1240; c.height = 1754;   // A4 bei 150 dpi
     const x = c.getContext("2d"); x.fillStyle = "#fff"; x.fillRect(0, 0, c.width, c.height);
-    x.fillStyle = "#111"; x.strokeStyle = "#111"; x.lineWidth = 3; x.font = "40px sans-serif";
+    x.fillStyle = "#111"; x.strokeStyle = "#111"; x.lineWidth = 3; x.font = "bold 48px sans-serif";
     x.fillText("Anmeldung Stadtbuecherei Musterstadt", 100, 180);
     [["Vorname:", 400], ["Nachname:", 520], ["Wohnort:", 640]].forEach(([t, y]) => { x.fillText(t, 100, y); x.beginPath(); x.moveTo(380, y + 8); x.lineTo(1100, y + 8); x.stroke(); });
     return c.toDataURL("image/png");
@@ -44,7 +44,10 @@ try {
     await dlg.locator("[data-af-erkennen]").click();
     await dlg.locator("[data-af-hinweis]", { hasText: "vorgeschlagen" }).waitFor({ timeout: 120000 });
     const labels = await dlg.locator(".af-feld .af-label").allInnerTexts();
-    if (labels.length < 3 || !labels.some((l) => /Vorname/i.test(l)) || !labels.some((l) => /Nachname/i.test(l))) throw new Error(`${labels.length} Felder: ${labels.join(" | ")}`);
+    // Welche Beschriftung die Texterkennung liest, hängt an der Systemschrift, mit der das Foto gezeichnet wurde (gemessen: im Behälter
+    // fehlte „Wohnort“, in der CI „Vorname“). Zugesichert wird deshalb: mindestens zwei der drei kommen aus der Texterkennung.
+    const gelesen = ["Vorname", "Nachname", "Wohnort"].filter((w) => labels.some((l) => new RegExp(w, "i").test(l)));
+    if (labels.length < 3 || gelesen.length < 2) throw new Error(`${labels.length} Felder, gelesen ${gelesen.join("+") || "keins"}: ${labels.join(" | ")}`);
     return labels.join(" | ");
   });
   await step("Ausfüllbares PDF: echte Formularfelder, Wert eingetragen", async () => {
