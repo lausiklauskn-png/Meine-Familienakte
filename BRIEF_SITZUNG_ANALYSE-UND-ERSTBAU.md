@@ -13,7 +13,7 @@ oder auch wieder eingeschaltet werden kann.“*
 ## Zuerst lesen (in dieser Reihenfolge)
 
 1. `BRIEF_ABSCHLUSS_2026-10-28_NEUAUFBAU.md`: was es gibt, was offen ist
-2. `docs/forschung/FORSCHUNG-2026-10-28-NEUAUFBAU-UND-PLATTFORMEN.md`: Befunde,
+2. Kimhub forschung/messungen/familienakte-2026-10-28-neuaufbau-und-plattformen.md: Befunde,
    Browser-Grenzen, Vorlagen in den anderen Repos
 3. `docs/ANALYSE_AUFTRAG.md`: die Analyse in den Paketen A bis G (gilt vollständig)
 4. `README.md` und `NEUSTART_AUFTRAG.md`: Start, Regeln für Beispieldaten
@@ -143,7 +143,7 @@ Sprache: durchgehend Deutsch. Freibrief: eigene PRs zusammenführen, wenn alle P
 Zuerst lesen, in dieser Reihenfolge:
 1. BRIEF_SITZUNG_ANALYSE-UND-ERSTBAU.md (dieser Auftrag)
 2. BRIEF_ABSCHLUSS_2026-10-28_NEUAUFBAU.md
-3. docs/forschung/FORSCHUNG-2026-10-28-NEUAUFBAU-UND-PLATTFORMEN.md
+3. Kimhub forschung/messungen/familienakte-2026-10-28-neuaufbau-und-plattformen.md
 4. docs/ANALYSE_AUFTRAG.md (Pakete A–G)
 5. README.md, NEUSTART_AUFTRAG.md (Regeln für Beispieldaten)
 Vorlagen per add_repo dazunehmen, nur lesen: Privat-Brain-Pro, BookLedgerPro, Kim-sync,

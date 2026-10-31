@@ -8,7 +8,7 @@
 - **Android test.2** veröffentlicht (Wegwerf-Schlüssel), **Windows 2.28.2** veröffentlicht (PR #20, Paketfassung; sichtbar bleibt
   „2.28.1“). Links und Prüfsummen: `docs/PLATTFORMEN.md`.
 - **Neu in diesem PR:** fester APK-Schlüssel (Werkzeug + Lauf, noch nicht erzeugt) und Updates vom eigenen Server für Windows und
-  Android: `docs/UPDATES-EIGENER-SERVER.md`, Forschung `docs/forschung/FORSCHUNG-2026-10-28-SCHLUESSEL-UND-SERVER-UPDATES.md`.
+  Android: `docs/UPDATES-EIGENER-SERVER.md`, Forschung Kimhub forschung/messungen/familienakte-2026-10-28-schluessel-und-server-updates.md.
 - Bei Klaus erledigt (Termux): Server-Ordner `familienakte`, `UPDATE_SIGNING_KEY`, `UPDATE_UPLOAD_KEY`, Umgebung
   `android-production` mit `FA_SIGNING_UNLOCK`, Sicherung `~/familienakte-update-schluessel.age`.
 
