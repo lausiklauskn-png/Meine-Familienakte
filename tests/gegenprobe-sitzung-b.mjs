@@ -20,6 +20,10 @@ const faelle = [
   { name: "Netz: Gerätename fehlt im Fenster", datei: "public/native/familienakte-mycel.js", alt: "if (panel.querySelector('[data-sbkim-geraetename]')) return true;", neu: "return true;", probe: "netz-mycel", rot: /Gerätename steht darin/ },
   { name: "Netz: ein Byte im Kanon-Modul 23", datei: "public/sbkim/23_rendezvous.js", alt: "Rendezvous", neu: "Rendezvouz", befehl: [process.execPath, ["tools/herkunft-pruefen.mjs"]], rot: /23_rendezvous\.js weicht ab/ },
   { name: "Menü: Leiste bei 1000 px abgeschnitten (alter Stand)", datei: "app/globals.css", alt: "@media (min-width: 901px) and (max-width: 1439px)", neu: "@media (min-width: 1001px) and (max-width: 1439px)", probe: "menue-breite", rot: /1000 px: alle acht Menüs/ },
+  { name: "Zusammenhang: Verknüpfen setzt wieder den Vorschlag", datei: HP, alt: "onClick={() => { setSelectedCaseId(selectedCaseId || contextSuggestions[0].caseId);", neu: "onClick={() => { setSelectedCaseId(contextSuggestions[0].caseId);", probe: "kontext-auswahl", rot: /behält die eigene Wahl/ },
+  { name: "Zusammenhang: Automatik setzt leere Auswahl zurück", datei: HP, alt: "if (vorschlagGesetzt.current) return;", neu: "if (selectedCaseId) return;", probe: "kontext-auswahl", rot: /Nicht verknüpfen|Noch nicht verknüpfen/ },
+  { name: "Zusammenhang: Überschrift nennt nur den Vorschlag", datei: HP, alt: "{selectedCaseId && selectedCaseId !== contextSuggestions[0].caseId ?", neu: "{false ?", probe: "kontext-auswahl", rot: /Überschrift nennt die Wahl/ },
+  { name: "Diktat: Android-Echo wieder angehängt", datei: "lib/browser-dictation.ts", alt: "  return aus;\n}", neu: "  return teile.map((t) => t.trim()).filter(Boolean);\n}", befehl: [process.execPath, ["scripts/run-ui-orientation-tests.mjs"]], rot: /.*/, rotStderr: /AssertionError/ },
 ];
 const filter = process.argv[2] || "";
 const bauen = (einzel) => {
@@ -38,7 +42,7 @@ for (const f of faelle.filter((x) => x.name.includes(filter))) {
     const gebaut = f.befehl ? true : bauen(f.einzel);
     const r = !gebaut ? { status: 1, stdout: "🔴 Bau scheiterte" } : f.befehl ? spawnSync(f.befehl[0], f.befehl[1], { encoding: "utf8" }) : spawnSync(process.execPath, [`tests/ui/${f.probe}.test.mjs`], { encoding: "utf8" });
     const rote = (r.stdout || "").split("\n").filter((z) => z.startsWith("🔴"));
-    const ok = gebaut && r.status !== 0 && rote.some((z) => f.rot.test(z));
+    const ok = gebaut && r.status !== 0 && (f.rotStderr ? f.rotStderr.test(r.stderr || "") : rote.some((z) => f.rot.test(z)));
     if (ok) gefangen++; else durch++;
     console.log(`${ok ? "✔ gefangen" : "✗ DURCHGERUTSCHT"}: ${f.name}${rote.length ? ` – ${rote.map((z) => z.slice(2, 60)).join(" | ")}` : ""}`);
   } finally { writeFileSync(f.datei, original); }

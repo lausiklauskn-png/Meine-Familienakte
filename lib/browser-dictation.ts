@@ -12,6 +12,25 @@ export type SpeechConstructor = new () => SpeechRecognitionLike;
 export type SpeechBrowser = { SpeechRecognition?: SpeechConstructor; webkitSpeechRecognition?: SpeechConstructor };
 export const speechConstructor = (browser: SpeechBrowser): SpeechConstructor | undefined => browser.SpeechRecognition || browser.webkitSpeechRecognition;
 
+/** Chrome auf Android (Dauer-Diktat) meldet jedes Zwischenergebnis als „fertig“ und wiederholt dabei den bisherigen Satz:
+ *  „es“, „es könnte“, „es könnte sein“ … (Klaus' Tablet 2026-10-31: „es es könnte es könnte sein …“). Ein Stück, das mit dem
+ *  vorigen beginnt, ersetzt es; eines, das im vorigen schon steckt, fällt weg. Sonst wird angehängt. */
+export function diktatZusammenfuegen(teile: string[]): string[] {
+  const norm = (t: string) => t.toLocaleLowerCase("de-DE").replace(/[^\p{L}\p{N}]+/gu, " ").trim();
+  const aus: string[] = [];
+  for (const roh of teile) {
+    const t = roh.trim(); if (!t) continue;
+    const letzte = aus[aus.length - 1];
+    if (letzte !== undefined) {
+      const a = norm(letzte), b = norm(t);
+      if (b === a || (b.startsWith(a) && b.length > a.length)) { aus[aus.length - 1] = t; continue; }
+      if (a.startsWith(b)) continue;
+    }
+    aus.push(t);
+  }
+  return aus;
+}
+
 export function createDictationSession(options: {
   constructor: () => SpeechConstructor | undefined;
   online: () => boolean;
@@ -60,8 +79,8 @@ export function createDictationSession(options: {
           if (!text) continue;
           if (result.isFinal) finals.set(index, text); else interim.push(text);
         }
-        finalText = [priorFinal, ...[...finals].sort((a,b) => a[0]-b[0]).map(([,text]) => text)].filter(Boolean).join(" ");
-        options.onText([base, finalText, ...interim].filter(Boolean).join(" ").trim());
+        finalText = diktatZusammenfuegen([priorFinal, ...[...finals].sort((a,b) => a[0]-b[0]).map(([,text]) => text)]).join(" ");
+        options.onText([base, ...diktatZusammenfuegen([finalText, ...interim])].filter(Boolean).join(" ").trim());
       };
       current.onerror = (event) => {
         if (!active || disposed || recognition !== current) return;

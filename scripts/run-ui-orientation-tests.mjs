@@ -30,6 +30,14 @@ check("Diktat fügt Text an, aktualisiert Zwischenstand und verdoppelt finale Er
   r.onresult({ resultIndex: 0, results: [result("Ein Satz", true)] }); r.onresult({ resultIndex: 0, results: [result("Ein Satz", true), result("Zweiter Satz", true)] });
   assert.equal(f.texts.at(-1), "Vorhanden Ein Satz Zweiter Satz"); f.session.stop();
 });
+check("Android-Chrome wiederholt den bisherigen Satz in jedem fertigen Stück: kein Echo (Klaus 2026-10-31)", () => {
+  const f = fixture(); f.session.start(""); const r = f.instances[0];
+  const stuecke = ["es", "es könnte", "es könnte sein", "es könnte sein dass", "es könnte sein dass die Mikrofonaufnahme nicht richtig"];
+  stuecke.forEach((_, i) => r.onresult({ resultIndex: i, results: stuecke.slice(0, i + 1).map((t) => result(t, true)) }));
+  assert.equal(f.texts.at(-1), "es könnte sein dass die Mikrofonaufnahme nicht richtig");
+  r.onresult({ resultIndex: 5, results: [...stuecke.map((t) => result(t, true)), result("es könnte sein dass die Mikrofonaufnahme nicht richtig ist", false)] });
+  assert.equal(f.texts.at(-1), "es könnte sein dass die Mikrofonaufnahme nicht richtig ist"); f.session.stop();
+});
 check("Suchdiktat ersetzt Suchtext, ohne vorherigen Suchbegriff anzuhängen", () => { const f = fixture(); f.session.start("Alt", false); f.instances[0].onresult({ results: [result("Neue Suche", true)], resultIndex: 0 }); assert.equal(f.texts.at(-1), "Neue Suche"); });
 check("Browserunterbrechung setzt Diktat fort und erhält bestätigten Text", () => {
   const f = fixture(); f.session.start(""); f.instances[0].onresult({ results: [result("Erster Satz", true)], resultIndex: 0 }); f.instances[0].onend();
