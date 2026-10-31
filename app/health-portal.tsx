@@ -12,6 +12,7 @@ import {
   Plus, Printer, RefreshCw, Search, ShieldCheck, ShoppingBag, Upload, UserRound,
   Users, X, HardDrive, LockKeyhole, Usb, LogOut, HelpCircle, History, Cloud, LifeBuoy, Mic,
   Copy, ExternalLink, BookHeart, Camera, Video, NotebookPen, Trash2, CircleHelp, Tags, FolderSearch, Eye, ListChecks, Save, Bot, Sparkles,
+  PenLine,
 } from "lucide-react";
 import { DictationButton, InfoPopover, VoiceInput, VoiceTextarea } from "./ui-controls";
 import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -21,12 +22,14 @@ import { KiAuftragDialog } from "./ki-auftrag-dialog";
 import { inventoryScanFeedback, inventoryAssignmentFeedback, inventoryArchiveFeedback, inventoryReleaseFeedback } from "../lib/ui-activity";
 import healthData from "./health-data.json";
 import { assessmentGroups, categories, coreDocuments, portalAreas } from "./portal-data";
-import { appendLocalFamilyRecordNote, archiveInventoryItems, buildAutomatedTestFailureReport, changeLocalContextLink, chooseDevelopmentBaseFolder, chooseExportDestination, chooseInboxFolder, chooseInventoryArchiveFolder, chooseInventorySourceFolder, chooseOneDriveVault, chooseVault, compareVaults, confirmInventoryAssignment, confirmLocalContextLink, copyMissingDocuments, createLocalFamilyRecord, createLocalMemoryBundle, createLocalScheduleBundle, createOrUpdateLocalMemoryDraft, deleteLocalMemoryDraft, deleteLocalMemoryRecord, forgetOneDriveVault, forgetVault, getLocalMemoryDeleteImpact, getVaultSummary, inspectTestWorkspace, inventorySourcePermission, type AutomatedStorageDiagnosticReport, type AutomatedTestFailureReport, type AutomatedTestEnvironmentReport, type IncomingFolderFile, type InventoryArchiveResult, type InventoryReferenceChoice, type InventoryScanProgress, type InventoryScanResult, linkLocalDocuments, LocalDocument, LocalScheduleStatus, prepareTestRegisterPreview, type PreparedTestRegister, readInventorySourcePreview, readLocalDocumentFile, readLocalMemoryDraftFiles, readLocalMemoryMediaFile, readLocalSystemSnapshot, readLocalVaultData, rejectLocalContextLink, releaseInventoryItemsForAssistant, rememberedDevelopmentBaseFolder, rememberedInboxFolder, rememberedInventoryArchiveFolder, rememberedInventorySourceFolder, rememberedOneDriveVault, rememberedVault, removeLocalContextLink, requestVaultPermission, resetAutomatedTestEnvironment, resetInventoryItemsForRetest, restoreFullFamilyBackup, runAutomatedStorageDiagnostic, runAutomatedTestEnvironmentSelfTests, runInventoryTextDecodingSelfTests, runPreparedTestRegisterSelfTests, runTestWorkspaceSelfTests, saveLocalDocument, savePreparedTestRegister, scanInventoryFolder, scanLocalInbox, scanOneDriveInbox, setupAutomatedTestEnvironment, type TestWorkspaceReport, updateLocalMemoryDraftStatus, updateLocalMemoryOpenPointStatus, updateLocalMemoryRecord, updateLocalScheduleStatus, updateLocalStatus, VaultSummary, VaultSyncPreview, VaultSyncResult, vaultSupported, writeFamilyArchiveExport, writeFullFamilyBackup } from "./local-vault";
+import { appendLocalFamilyRecordNote, archiveInventoryItems, buildAutomatedTestFailureReport, changeLocalContextLink, chooseDevelopmentBaseFolder, chooseExportDestination, chooseInboxFolder, chooseInventoryArchiveFolder, chooseInventorySourceFolder, chooseOneDriveVault, chooseVault, compareVaults, confirmInventoryAssignment, confirmLocalContextLink, copyMissingDocuments, createLocalFamilyRecord, createLocalMemoryBundle, createLocalScheduleBundle, createOrUpdateLocalMemoryDraft, deleteLocalMemoryDraft, deleteLocalMemoryRecord, forgetOneDriveVault, forgetVault, getLocalMemoryDeleteImpact, getVaultSummary, inspectTestWorkspace, inventorySourcePermission, type AutomatedStorageDiagnosticReport, type AutomatedTestFailureReport, type AutomatedTestEnvironmentReport, type IncomingFolderFile, type InventoryArchiveResult, type InventoryReferenceChoice, type InventoryScanProgress, type InventoryScanResult, linkLocalDocuments, LocalDocument, LocalScheduleStatus, prepareTestRegisterPreview, type PreparedTestRegister, readInventorySourcePreview, readLocalDocumentFile, readLocalMemoryDraftFiles, readLocalMemoryMediaFile, readLocalSystemSnapshot, readLocalVaultData, rejectLocalContextLink, releaseInventoryItemsForAssistant, rememberedDevelopmentBaseFolder, rememberedInboxFolder, rememberedInventoryArchiveFolder, rememberedInventorySourceFolder, rememberedOneDriveVault, rememberedVault, removeLocalContextLink, requestVaultPermission, resetAutomatedTestEnvironment, resetInventoryItemsForRetest, restoreFullFamilyBackup, runAutomatedStorageDiagnostic, runAutomatedTestEnvironmentSelfTests, runInventoryTextDecodingSelfTests, runPreparedTestRegisterSelfTests, runTestWorkspaceSelfTests, saveLocalDocument, savePreparedTestRegister, scanInventoryFolder, scanLocalInbox, scanOneDriveInbox, setupAutomatedTestEnvironment, type TestWorkspaceReport, updateLocalMemoryDraftStatus, updateLocalMemoryOpenPointStatus, updateLocalMemoryRecord, updateLocalScheduleStatus, updateLocalStatus, setLocalDocumentAusfuellen, readAusfuellAblage, writeAusfuellAblage, VaultSummary, VaultSyncPreview, VaultSyncResult, vaultSupported, writeFamilyArchiveExport, writeFullFamilyBackup } from "./local-vault";
 import { createFamilyRecord, FamilyRecordUnion, FamilyRelation, formatFamilyRecordId, recordTypeDefinitions } from "@/lib/family-data-model";
 import { assignmentProposalHasNoAutomaticWrites, assignmentSequence, FAMILY_ASSIGNMENT_VERSION, proposeFamilyAssignment } from "@/lib/family-assignment";
 import { allFamilyExportScopes, buildFamilyArchiveExport, familyExportScopeLabels, FamilyExportScope, runFamilyExportSelfTest } from "@/lib/family-export";
 import { buildScheduleItems, runFamilyReminderSelfTest, scheduleStatusLabels } from "@/lib/family-reminders";
 import { buildFamilyNewsItems, FamilyNewsItem, FamilyNewsPeriod, filterFamilyNews, runFamilyNewsSelfTest } from "@/lib/family-news";
+import { ausfuellMarke, offeneAusfuellungen, type AusfuellInfo } from "@/lib/ausfuellen";
+import type { AusfuellPerson } from "./ausfuellen-dialog";
 import { buildCockpitDossier, buildFamilyCockpit, cockpitRecordLabel, FamilyCockpitDocument, runFamilyCockpitSelfTests, type CockpitPriorityItem, type CockpitReference, type CockpitTodoItem } from "@/lib/family-cockpit";
 import { interpretFamilySearchQuery, runFamilySearchSelfTests, scoreFamilySearchText, type FamilySearchInterpretation } from "@/lib/family-search";
 import { buildDocumentLibraryItems, filterDocumentLibraryItems, runDocumentLibrarySelfTests, type DocumentLibraryItem, type DocumentLibrarySort, type DocumentLibraryReference } from "@/lib/document-library";
@@ -36,6 +39,7 @@ import { buildIntakeChoiceOptions, buildStoredPersonalLifeAreas, INTAKE_PRIVACY_
 import { analyzeCentralIntakeFile, extractEmlAttachments, groupCentralIntakeAnalyses, initialCentralIntakeStatus, runCentralIntakeSelfTests, type CentralIntakeQueueItem, type CentralIntakeStatus } from "@/lib/central-intake";
 const CentralIntakeCenter = lazy(() => import("./central-intake-center").then((m) => ({ default: m.CentralIntakeCenter })));
 import { runDocumentScanSelfTests, type DocumentScanPdfFile } from "@/lib/document-scan";
+const AusfuellenDialog = lazy(() => import("./ausfuellen-dialog").then((m) => ({ default: m.AusfuellenDialog })));
 const DocumentScanDialog = lazy(() => import("./document-scan-dialog").then((m) => ({ default: m.DocumentScanDialog })));
 import { buildMemoryAnalysis, buildMemoryOpenPoints, buildTodayMemorySummary, isMemoryRecord, memoryData, runFamilyMemorySelfTests, runMemoryQueueSelfTests, sortMemoryDraftQueue, type MemoryAnalysis, type MemoryCaptureType, type MemoryDraftEntry, type MemoryDraftStatus, type MemoryOpenStatus, type MemoryStatementKind } from "@/lib/family-memory";
 import { buildCaseOpenSummary, buildCaseTimeline, buildContextLinkSuggestions, buildRelatedContext, runContextLinkingSelfTests, suggestIncomingDocumentContext, suggestIncomingMemoryContext, type ContextDocument, type ContextLinkDecision, type ContextLinkSuggestion, type ContextSourceType } from "@/lib/family-context-linking";
@@ -192,6 +196,8 @@ const fmtDate = (value: string | null) => value
 const fmtBytes = (value: number) => value < 1024 * 1024
   ? `${Math.max(1, Math.round(value / 1024))} KB`
   : `${(value / 1024 / 1024).toFixed(1)} MB`;
+type FillState = { stand: string; marke: string | null; fuellbar: boolean };
+const fillStateOf = (item: LocalDocument): FillState => ({ stand: item.ausfuellen?.stand || "", marke: ausfuellMarke(item), fuellbar: !isSensitiveHealthText(item.originalName, item.category, item.notes) && (/^application\/pdf$|^image\/(jpeg|png|webp)$/.test(item.mimeType) || /\.(pdf|jpe?g|png|webp)$/i.test(item.originalName)) });
 const visibleDocumentTitle = (item: { originalName: string; category?: string | null; notes?: string | null }) => protectedFamilyLabel({ label: item.originalName, category: item.category, notes: item.notes });
 
 type SystemCheckBackup = {
@@ -469,6 +475,7 @@ function HealthPortalContent() {
   const [editInitialRequest, setEditInitialRequest] = useState("");
   const [exportOpen, setExportOpen] = useState(false);
   const [cockpitFocusId, setCockpitFocusId] = useState<string | null>(null);
+  const [fillDocId, setFillDocId] = useState<string | null>(null);
   const [assistantCaseId, setAssistantCaseId] = useState<string | null>(null);
   const [documentLibraryFocusId, setDocumentLibraryFocusId] = useState<string | null>(null);
   const [documentLibraryRequest, setDocumentLibraryRequest] = useState<DocumentLibraryRequest>({ key: 0, focusId: null, area: "", query: "" });
@@ -1021,6 +1028,19 @@ function HealthPortalContent() {
       openFile(file, local.originalName);
     } catch (reason) { setNotice({ kind: "error", text: reason instanceof Error ? reason.message : "Das Dokument konnte nicht geöffnet werden." }); }
   };
+  // Ausfüllen (Sitzung F): neue Fassung neben dem Original, Original bleibt unverändert; Stand am Dokument im Register.
+  const fillPersons: AusfuellPerson[] = useMemo(() => familyRecords.filter((r) => r.recordType === "person").map((r) => { const d = (r.data || {}) as Record<string, string | undefined>; return { id: r.id, name: d.displayName || r.id, angaben: { displayName: d.displayName, birthDate: d.birthDate, birthPlace: d.birthPlace, address: d.address, street: d.street, postalCode: d.postalCode, city: d.city, email: d.email, phone: d.phone } }; }), [familyRecords]);
+  const fillStates = useMemo(() => Object.fromEntries(localDocuments.map((item) => [item.id, fillStateOf(item)])), [localDocuments]);
+  const fillDocument = localDocuments.find((item) => item.id === fillDocId) || null;
+  const saveFillResult = async (original: LocalDocument, file: File, modus: "fest" | "ausfuellbar", info: AusfuellInfo) => {
+    if (!vaultHandle) throw new Error("Bitte zuerst den Datentresor verbinden.");
+    const links = familyRelations.filter((relation) => relation.fromType === "document" && relation.fromId === original.id).map((relation) => ({ toType: relation.toType, toId: relation.toId, relationType: relation.relationType }));
+    const neu = await saveLocalDocument(vaultHandle, file, { category: original.category, documentDate: new Date().toISOString().slice(0, 10), notes: `Ausgefüllte Fassung (${modus === "fest" ? "fest" : "ausfüllbar"}) von „${original.originalName}“. Das Original bleibt unverändert.`, allowDuplicate: true, assignmentLinks: links });
+    await setLocalDocumentAusfuellen(vaultHandle, neu.id, { stand: "ergebnis", ausId: original.id, modus, geaendertAm: new Date().toISOString() });
+    const alt = original.ausfuellen && "ergebnisIds" in original.ausfuellen ? original.ausfuellen.ergebnisIds || [] : [];
+    if (info.stand !== "ergebnis") await setLocalDocumentAusfuellen(vaultHandle, original.id, { ...info, ergebnisIds: [...alt, neu.id] });
+    await refreshLocal(vaultHandle);
+  };
   const updateCockpitTask = async (id: string, status: LocalScheduleStatus) => {
     if (!vaultHandle) { go("security"); setNotice({ kind: "error", text: "Bitte zuerst den lokalen OneDrive-, PC- oder USB-Datentresor verbinden." }); return; }
     if (!await askConfirm(`Soll der Status von ${id} wirklich auf „${status.replaceAll("_", " ")}“ gesetzt werden?`)) return;
@@ -1118,7 +1138,7 @@ function HealthPortalContent() {
         {!query && active === "documents" && <DocumentLibrary key={`${documentLibraryRequest.key}-${documentLibraryFocusId || "document-library"}`}
           documents={cockpitDocuments(documents, localDocuments)} records={familyRecords} relations={familyRelations}
           initialFocusId={documentLibraryFocusId} initialArea={documentLibraryRequest.area} initialQuery={documentLibraryRequest.query}
-          onOpenDocument={openDocument} onGo={go} onUpload={openLocalUpload} onUnlink={unlinkContext} onChange={changeContextLink}
+          fillStates={fillStates} onFill={setFillDocId} onOpenDocument={openDocument} onGo={go} onUpload={openLocalUpload} onUnlink={unlinkContext} onChange={changeContextLink}
         />}
         {!query && active === "inventory" && <InventoryCenter
           vaultReady={!!vaultHandle}
@@ -1149,7 +1169,7 @@ function HealthPortalContent() {
           onSelectInbox={selectInboxFolder} onScanInbox={() => void scanSelectedInbox()} onScanOneDrive={checkOneDriveInbox}
           onReview={reviewCentralIntake} onExtractAttachments={(id) => void extractCentralEmailAttachments(id)} onToggle={toggleCentralIntake} onSetStatus={setCentralIntakeStatus}
           onGo={(id) => go(id)}
-        /></Suspense><Inbox compact documents={documents} localDocuments={localDocuments} loading={loadingDocs} onUpload={openLocalUpload} onOpenDocument={openDocument} onRefresh={async () => { await loadDocuments(); await refreshLocal(); }} onLocalStatus={async (id, status) => { if (!vaultHandle) return; await updateLocalStatus(vaultHandle, id, status); await refreshLocal(vaultHandle); }} onStatus={async (id, status) => {
+        /></Suspense><Inbox compact documents={documents} localDocuments={localDocuments} loading={loadingDocs} onUpload={openLocalUpload} onOpenDocument={openDocument} onFill={setFillDocId} onRefresh={async () => { await loadDocuments(); await refreshLocal(); }} onLocalStatus={async (id, status) => { if (!vaultHandle) return; await updateLocalStatus(vaultHandle, id, status); await refreshLocal(vaultHandle); }} onStatus={async (id, status) => {
           setBusy(true);
           try { await changeStatus(id, status); await loadDocuments(); setNotice({ kind: "success", text: `Bearbeitungsstand: ${statusLabel[status]}.` }); }
           catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Speichern nicht möglich." }); }
@@ -1194,7 +1214,7 @@ function HealthPortalContent() {
         />}
         {!query && active === "cockpit" && <InteractiveCockpit key={cockpitFocusId || "cockpit"}
           documents={documents} localDocuments={localDocuments} records={familyRecords} relations={familyRelations} decisions={linkDecisions}
-          initialFocusId={cockpitFocusId} onGo={go} onOpenDocument={openDocument}
+          initialFocusId={cockpitFocusId} onGo={go} onOpenDocument={openDocument} onFill={setFillDocId}
           onTaskStatus={updateCockpitTask} onAddNote={appendCockpitNote} onAssistant={(caseId) => go("assistant", caseId)}
           onConfirmContext={confirmContextLink} onRejectContext={rejectContextLink} onAddMemoryToCase={addMemoryToCase} onAddDocumentToCase={addDocumentToCase}
         />}
@@ -1298,6 +1318,12 @@ function HealthPortalContent() {
           throw error;
         }
       }}/>} 
+      {fillDocument && vaultHandle && <Suspense fallback={null}><AusfuellenDialog dokument={fillDocument} personen={fillPersons} namen={kiNamen}
+        leseDatei={() => readLocalDocumentFile(vaultHandle, fillDocument.id)}
+        ablage={{ lesen: () => readAusfuellAblage(vaultHandle), schreiben: (teil) => writeAusfuellAblage(vaultHandle, teil) }}
+        onVormerken={async (info) => { await setLocalDocumentAusfuellen(vaultHandle, fillDocument.id, info); await refreshLocal(vaultHandle); }}
+        onErgebnis={(file, modus, info) => saveFillResult(fillDocument, file, modus, info)}
+        onClose={() => setFillDocId(null)} onNotice={setNotice}/></Suspense>}
       {editOpen && <KiAuftragDialog seiteId={active} seite={sectionLabels[active] || "Startseite"} initialRequest={editInitialRequest} documents={localDocuments} namen={kiNamen} readDocument={(id) => vaultHandle ? readLocalDocumentFile(vaultHandle, id) : Promise.reject(new Error("Kein Tresor geöffnet."))} onSaveAnswer={(file) => window.dispatchEvent(new CustomEvent("familienakte:dateien", { detail: { files: [file] } }))} onClose={() => setEditOpen(false)} onNotice={setNotice} onStateChange={(state) => setActionState("chatgpt", state)}/>}
       <button type="button" className="ki-fab" onClick={() => openChatGPTEdit()} aria-label="Mit KI arbeiten" title={`Mit KI arbeiten – Seite „${sectionLabels[active] || "Startseite"}“`}><Sparkles size={20}/></button>
       {memoryReviewOpen && memoryDraft && vaultHandle && <MemoryReviewDialog
@@ -3029,8 +3055,10 @@ function DocumentLibraryAreaIcon({ area }: { area: string }) {
   return <FileText aria-hidden="true"/>;
 }
 
-function DocumentLibraryCard({ item, onOpen, onArea, onType, onDate, onReference }: {
+function DocumentLibraryCard({ item, fill, onFill, onOpen, onArea, onType, onDate, onReference }: {
   item: DocumentLibraryItem;
+  fill?: FillState;
+  onFill?: () => void;
   onOpen: () => void;
   onArea: () => void;
   onType: () => void;
@@ -3048,14 +3076,17 @@ function DocumentLibraryCard({ item, onOpen, onArea, onType, onDate, onReference
       <button className="library-document-title" onClick={onOpen}>{item.title}</button>
       <div className="library-document-meta"><button onClick={onDate}>{item.date ? fmtDate(item.date) : "Ohne Dokumentdatum"}</button><button onClick={onOpen}>{statusLabel[item.status as keyof typeof statusLabel] || item.status}</button></div>
       <p>{item.description}</p>
+      {fill && (fill.marke || fill.fuellbar) && !item.protectedHealth && <div className="af-karte" data-af-karte>{fill.marke && <span className={`badge af-marke af-marke-${fill.stand}`} data-af-marke>{fill.marke}</span>}{fill.fuellbar && onFill && <button type="button" className="button secondary compact-button" onClick={onFill} data-af-oeffnen><PenLine size={15}/> Ausfüllen</button>}</div>}
       {item.references.length > 0 && <div className="library-reference-list" aria-label="Verknüpfte Datensätze">{item.references.slice(0, 4).map((reference) => <button key={`${reference.type}-${reference.id}`} onClick={() => onReference(reference)}><span>{recordTypeDefinitions[reference.type].label}</span><strong>{reference.label}</strong></button>)}</div>}
     </div>
     <button className="library-card-open" onClick={onOpen} aria-label={`${item.title} öffnen`}><ChevronRight/></button>
   </article>;
 }
 
-function DocumentLibrary({ documents, records, relations, initialFocusId, initialArea, initialQuery, onOpenDocument, onGo, onUpload, onUnlink, onChange }: {
+function DocumentLibrary({ documents, records, relations, initialFocusId, initialArea, initialQuery, fillStates, onFill, onOpenDocument, onGo, onUpload, onUnlink, onChange }: {
   documents: FamilyCockpitDocument[];
+  fillStates: Record<string, FillState>;
+  onFill: (id: string) => void;
   records: FamilyRecordUnion[];
   relations: FamilyRelation[];
   initialFocusId: string | null;
@@ -3085,7 +3116,7 @@ function DocumentLibrary({ documents, records, relations, initialFocusId, initia
   };
   const openItem = (item: DocumentLibraryItem) => item.protectedHealth ? onGo("health") : void onOpenDocument(item.id);
   const openReference = (reference: DocumentLibraryReference) => onGo(reference.sensitive ? "health" : reference.section as SectionId, reference.id);
-  const card = (item: DocumentLibraryItem) => <DocumentLibraryCard key={item.id} item={item} onOpen={() => openItem(item)} onArea={() => showAll({ area: item.area })} onType={() => showAll({ documentType: item.documentType })} onDate={() => item.date ? showAll({ startDate: item.date, endDate: item.date }) : openItem(item)} onReference={openReference}/>;
+  const card = (item: DocumentLibraryItem) => <DocumentLibraryCard key={item.id} item={item} fill={fillStates[item.id]} onFill={() => onFill(item.id)} onOpen={() => openItem(item)} onArea={() => showAll({ area: item.area })} onType={() => showAll({ documentType: item.documentType })} onDate={() => item.date ? showAll({ startDate: item.date, endDate: item.date }) : openItem(item)} onReference={openReference}/>;
   return <><PageTitle icon={<Archive/>} title="Dokumentenbibliothek" text="Der zentrale Zugang zu deinen bereits vorhandenen Dokumenten – aus demselben Datenbestand wie Cockpit, Vorgänge und „Was gibt’s Neues?“."/>
     <section className="library-toolbar card"><label><span><Search size={17}/> Dokumente durchsuchen</span><div className="library-search"><Search size={18}/><input value={query} onChange={(event) => { setQuery(event.target.value); setView("all"); }} placeholder="Titel, Dateiname, Person, Vorgang, Aktenzeichen …"/><DictationButton value={query} onChange={(value) => { setQuery(value); setView("all"); }} label="Dokumentensuche" append={false}/>{query && <button onClick={() => setQuery("")} aria-label="Dokumentensuche löschen"><X size={16}/></button>}</div></label><div className="button-row"><button className="button secondary" onClick={() => showAll()}><Archive size={17}/> Alle ansehen</button><button className="button primary" onClick={onUpload}><Plus size={17}/> Neue Unterlage</button></div></section>
     <InfoNotice title="Datensparsame Dokumentvorschau"><p>Bei Gesundheits-, Behörden- und Finanzunterlagen werden keine lesbaren vertraulichen Miniaturen angezeigt. Gesundheitsdokumente öffnen den geschützten Gesundheitsbereich.</p></InfoNotice>
@@ -3102,7 +3133,8 @@ function DocumentLibrary({ documents, records, relations, initialFocusId, initia
   </>;
 }
 
-function Inbox({ documents, localDocuments, loading, onUpload, onOpenDocument, onRefresh, onStatus, onLocalStatus, busy, compact = false }: {
+function Inbox({ documents, localDocuments, loading, onUpload, onOpenDocument, onFill, onRefresh, onStatus, onLocalStatus, busy, compact = false }: {
+  onFill?: (id: string) => void;
   documents: UploadedDocument[]; localDocuments: LocalDocument[]; loading: boolean; compact?: boolean; onUpload: () => void; onOpenDocument: (id: string) => Promise<void>; onRefresh: () => void;
   onStatus: (id: string, status: UploadedDocument["status"]) => Promise<void>; onLocalStatus: (id: string, status: LocalDocument["status"]) => Promise<void>; busy: boolean;
 }) {
@@ -3110,7 +3142,7 @@ function Inbox({ documents, localDocuments, loading, onUpload, onOpenDocument, o
     {!compact && <PageTitle icon={<Upload/>} title="Eingangszentrale" text="Neue Unterlagen bleiben im lokalen Tresor auf deinem PC oder USB-Stick." />}
     <section className="card action-row"><div><h2>{compact ? "Übernommene Unterlagen" : "Neue Unterlage lokal hinzufügen"}</h2><p>{compact ? "Bereits bestätigte Eingänge erscheinen im gemeinsamen Dokumentregister." : "Die Originaldatei wird unverändert im gewählten Ordner gespeichert. Sie wird nicht an den Webserver übertragen."}</p></div><div className="button-row"><button className="button primary" onClick={onUpload}><Plus size={18}/> Einzelne Unterlage prüfen</button><button className="button secondary" onClick={onRefresh}><RefreshCw size={18}/> Neu laden</button></div></section>
     <section className="card"><div className="card-heading"><div><span className="ui-heading-help"><h2>Lokale Unterlagen</h2><InfoPopover label="Lokale Unterlagen erklären" text={UI_HELP["Lokale Unterlagen"]}/></span></div><span className="badge success">{localDocuments.length} lokal</span></div>
-      {localDocuments.length === 0 ? <div className="empty-state"><HardDrive size={34}/><strong>Noch keine lokale Unterlage</strong><span>Verbinde zuerst den lokalen Tresor im Sicherheitscenter.</span></div> : <div className="document-list">{localDocuments.map((item) => { const sensitive = isSensitiveHealthText(item.originalName, item.category, item.notes); return <article className="document-item" key={item.id}><div className="file-icon"><FileText size={22}/></div><div className="document-copy"><button className="document-title-link" onClick={() => void onOpenDocument(item.id)}>{visibleDocumentTitle(item)}</button><span>{sensitive ? "Geschützte Gesundheitsunterlage" : item.category} · {fmtDate(item.documentDate)} · {fmtBytes(item.sizeBytes)}</span>{sensitive ? <small>Speicherort und Einzelheiten sind nur im geschützten Gesundheitsbereich sichtbar.</small> : <><small>{item.storedPath}</small>{item.notes && <small>{item.notes}</small>}</>}</div><span className={`badge status-${item.status}`}>{statusLabel[item.status]}</span><div className="document-actions">{item.status === "hochgeladen" && <button disabled={busy} onClick={() => onLocalStatus(item.id, "abgleich_offen")}>Abgleich vormerken</button>}{item.status === "abgleich_offen" && <button disabled={busy} onClick={() => onLocalStatus(item.id, "geprüft")}>Als geprüft bestätigen</button>}{item.status === "geprüft" && <button disabled={busy} onClick={() => onLocalStatus(item.id, "eingearbeitet")}>Als eingearbeitet bestätigen</button>}</div></article>; })}</div>}
+      {localDocuments.length === 0 ? <div className="empty-state"><HardDrive size={34}/><strong>Noch keine lokale Unterlage</strong><span>Verbinde zuerst den lokalen Tresor im Sicherheitscenter.</span></div> : <div className="document-list">{localDocuments.map((item) => { const sensitive = isSensitiveHealthText(item.originalName, item.category, item.notes); return <article className="document-item" key={item.id}><div className="file-icon"><FileText size={22}/></div><div className="document-copy"><button className="document-title-link" onClick={() => void onOpenDocument(item.id)}>{visibleDocumentTitle(item)}</button><span>{sensitive ? "Geschützte Gesundheitsunterlage" : item.category} · {fmtDate(item.documentDate)} · {fmtBytes(item.sizeBytes)}</span>{sensitive ? <small>Speicherort und Einzelheiten sind nur im geschützten Gesundheitsbereich sichtbar.</small> : <><small>{item.storedPath}</small>{item.notes && <small>{item.notes}</small>}</>}</div><span className={`badge status-${item.status}`}>{statusLabel[item.status]}</span>{!sensitive && ausfuellMarke(item) && <span className={`badge af-marke af-marke-${item.ausfuellen?.stand}`} data-af-marke>{ausfuellMarke(item)}</span>}<div className="document-actions">{onFill && fillStateOf(item).fuellbar && <button disabled={busy} onClick={() => onFill(item.id)} data-af-oeffnen>Ausfüllen</button>}{item.status === "hochgeladen" && <button disabled={busy} onClick={() => onLocalStatus(item.id, "abgleich_offen")}>Abgleich vormerken</button>}{item.status === "abgleich_offen" && <button disabled={busy} onClick={() => onLocalStatus(item.id, "geprüft")}>Als geprüft bestätigen</button>}{item.status === "geprüft" && <button disabled={busy} onClick={() => onLocalStatus(item.id, "eingearbeitet")}>Als eingearbeitet bestätigen</button>}</div></article>; })}</div>}
     </section>
     <section className="card"><div className="card-heading"><div><span className="ui-heading-help"><h2>Online-Altbestand</h2><InfoPopover label="Online-Altbestand erklären" text={UI_HELP["Online-Altbestand"]}/></span></div><span className="badge warning">{documents.length} online</span></div>
       {loading ? <div className="empty-state">Unterlagen werden geladen …</div> : documents.length === 0 ? <div className="empty-state"><FolderHeart size={34}/><strong>Noch keine Unterlage über diese Seite hochgeladen</strong><span>Bereits vorhandene Aktenbestandteile findest du unter „Unterlagen“.</span></div> : <div className="document-list">{documents.map((item) => { const sensitive = isSensitiveHealthText(item.originalName, item.category, item.notes); return <article className="document-item" key={item.id}><div className="file-icon"><FileText size={22}/></div><div className="document-copy"><button className="document-title-link" onClick={() => void onOpenDocument(item.id)}>{visibleDocumentTitle(item)}</button><span>{sensitive ? "Geschützte Gesundheitsunterlage" : item.category} · {fmtDate(item.documentDate)} · {fmtBytes(item.sizeBytes)}</span>{!sensitive && item.notes && <small>{item.notes}</small>}</div><span className={`badge status-${item.status}`}>{statusLabel[item.status]}</span><div className="document-actions"><a className="icon-button" href={item.downloadUrl} title="Originaldatei herunterladen"><Download size={18}/></a>{item.status === "hochgeladen" && <button disabled={busy} onClick={() => onStatus(item.id, "abgleich_offen")}>Abgleich vormerken</button>}{item.status === "abgleich_offen" && <button disabled={busy} onClick={() => onStatus(item.id, "geprüft")}>Als geprüft bestätigen</button>}{item.status === "geprüft" && <button disabled={busy} onClick={() => onStatus(item.id, "eingearbeitet")}>Als eingearbeitet bestätigen</button>}</div></article>; })}</div>}
@@ -3176,7 +3208,7 @@ function isDateToday(value: string) {
   return !Number.isNaN(date.getTime()) && date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth() && date.getDate() === now.getDate();
 }
 
-function InteractiveCockpit({ documents, localDocuments, records, relations, decisions, initialFocusId, onGo, onOpenDocument, onTaskStatus, onAddNote, onAssistant, onConfirmContext, onRejectContext, onAddMemoryToCase, onAddDocumentToCase }: {
+function InteractiveCockpit({ documents, localDocuments, records, relations, decisions, initialFocusId, onGo, onOpenDocument, onFill, onTaskStatus, onAddNote, onAssistant, onConfirmContext, onRejectContext, onAddMemoryToCase, onAddDocumentToCase }: {
   documents: UploadedDocument[];
   localDocuments: LocalDocument[];
   records: FamilyRecordUnion[];
@@ -3185,6 +3217,7 @@ function InteractiveCockpit({ documents, localDocuments, records, relations, dec
   initialFocusId: string | null;
   onGo: (id: SectionId, targetId?: string) => void;
   onOpenDocument: (id: string) => Promise<void>;
+  onFill: (id: string) => void;
   onTaskStatus: (id: string, status: LocalScheduleStatus) => Promise<void>;
   onAddNote: (id: string, note: string) => Promise<boolean>;
   onAssistant: (caseId: string) => void;
@@ -3230,6 +3263,7 @@ function InteractiveCockpit({ documents, localDocuments, records, relations, dec
 
     <section className="cockpit-layout">
       <article className="card cockpit-panel cockpit-priorities" id="cockpit-priorities"><div className="card-heading"><div><span className="eyebrow dark">Priorisiert</span><span className="ui-heading-help"><h2>Was ist jetzt wichtig?</h2><InfoPopover label="Was ist jetzt wichtig? erklären" text={UI_HELP["Was ist jetzt wichtig?"]}/></span></div><span className="badge neutral">{snapshot.priorities.length} Punkte</span></div>{snapshot.priorities.length ? <div className="cockpit-action-list">{snapshot.priorities.slice(0, 10).map((item) => <button key={item.id} onClick={() => openPriority(item)}><span className={`priority-dot urgency-${item.urgency}`}/><span><strong>{item.title}</strong><small>{cockpitUrgencyLabel[item.urgency]} · {item.detail}</small></span><ChevronRight/></button>)}</div> : <div className="empty-state compact-empty"><CheckCircle2 size={28}/><strong>Nichts Dringendes offen</strong><span>Es werden keine Beispielaufgaben erzeugt.</span></div>}</article>
+      {offeneAusfuellungen(localDocuments).length > 0 && <article className="card cockpit-panel" id="cockpit-ausfuellen" data-cockpit-ausfuellen><div className="card-heading"><div><span className="eyebrow dark">Formulare</span><span className="ui-heading-help"><h2>Muss noch ausgefüllt werden</h2><InfoPopover label="Muss noch ausgefüllt werden erklären" text="Unterlagen, die beim Ausfüllen als „Später ausfüllen“ vorgemerkt wurden. Die Felder sind gemerkt; ein Klick öffnet das Ausfüllen."/></span></div><span className="badge neutral">{offeneAusfuellungen(localDocuments).length}</span></div><div className="cockpit-action-list">{offeneAusfuellungen(localDocuments).map((item) => <button key={item.id} onClick={() => onFill(item.id)}><span className="priority-dot urgency-attention"/><span><strong>{visibleDocumentTitle(item)}</strong><small>{item.category} · vorgemerkt {fmtDate((item.ausfuellen?.geaendertAm || "").slice(0, 10) || null)}</small></span><ChevronRight/></button>)}</div></article>}
 
       <article className="card cockpit-panel" id="cockpit-todos"><div className="card-heading"><div><span className="eyebrow dark">Aktuelle Arbeit</span><span className="ui-heading-help"><h2>To-do-Liste</h2><InfoPopover label="To-do-Liste erklären" text={UI_HELP["To-do-Liste"]}/></span></div><button className="text-link" onClick={() => onGo("reminders")}>Alle Fristen und Aufgaben</button></div>{snapshot.todos.length ? <div className="cockpit-todo-list">{snapshot.todos.slice(0, 6).map((item) => <CockpitTodoRow key={`${item.id}-${item.status}`} item={item} onOpen={() => item.sensitive ? onGo("health") : focus(item.id)} onStatus={(status) => onTaskStatus(item.id, status)}/>)}</div> : <div className="empty-state compact-empty"><CheckCircle2 size={28}/><strong>Keine aktive Aufgabe</strong><span>Erledigte und zurückgestellte Aufgaben bleiben in der Historie erhalten.</span></div>}</article>
     </section>

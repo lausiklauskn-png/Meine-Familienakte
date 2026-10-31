@@ -43,6 +43,7 @@ oder ohne KI … beschriften … wieder zurücksenden mit Unterschrift“.
   Teilen/Senden. Vorlage zum späteren Ausfüllen merken („muss noch ausgefüllt werden“ als Status, erscheint im Cockpit).
 - Mit dabei: Scanner (Foto → PDF, Ecken, Filter, Texterkennung → **damit gehen dann auch Scans unkenntlich an die KI**), Dateien auswählen/umbenennen.
 - Offen für Klaus: Feldnamen aus der Akte vorbelegen (Name, Anschrift, Geburtsdatum der gewählten Person)? Unterschrift einmal speichern (verschlüsselt im Tresor)?
+- **Gebaut am 2026-10-31** (Klaus: Ja zu beidem, dazu Eingabe-Speicher): `BRIEF_ABSCHLUSS_2026-10-31_AUSFUELLEN-SITZUNG-F.md`, Bedienung `docs/AUSFUELLEN.md`.
 
 Geprüft am 2026-10-31 (Stand `cdcd3b4`): Aktualisieren oben, Mycel, Chefcode, Überall suchen und Briefkopf sind hier noch nicht gebaut; die Themen (Lebensbereiche) schon. Es gelten die Regeln dieses Repos (Oberfläche des Freundes bleibt,
 sichtbare Änderungen nur mit Klaus' Ja je Punkt, Beispieldaten erfunden, kein Release ohne sein Wort).

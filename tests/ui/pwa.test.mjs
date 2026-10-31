@@ -17,7 +17,7 @@ try {
     await page.waitForFunction(async () => { const r = await navigator.serviceWorker.getRegistration(); return !!(r && r.active); }, null, { timeout: 30000 });
     await page.waitForFunction(async () => (await caches.keys()).some((k) => k.startsWith("familienakte-")), null, { timeout: 30000 });
     const keys = await page.evaluate(async () => { const k = (await caches.keys()).filter((k) => k.startsWith("familienakte-")); const c = await caches.open(k[0]); return [k[0], (await c.keys()).length]; });
-    const expected = JSON.parse(readFileSync(path.join(ROOT, "dist/version.json"), "utf8")).files;
+    const v = JSON.parse(readFileSync(path.join(ROOT, "dist/version.json"), "utf8")); const expected = v.vorrat ?? v.files;   // Texterkennung/Blatterkennung (wfpdf/vendor) kommen erst beim ersten Gebrauch
     if (!(keys[1] >= expected)) throw new Error(`nur ${keys[1]} von ${expected}`);
     return `${keys[0]}: ${keys[1]} Dateien`;
   });

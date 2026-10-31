@@ -1,0 +1,132 @@
+{
+  "repo": "lausiklauskn-png/Workflow-PDF",
+  "commit": "2ac96d43896abad915474c7d9673b4fad62e4b13",
+  "stand": "2026-10-31",
+  "dateien": {
+    "public/wfpdf/scanner.js": {
+      "quelle": "assets/scanner.js",
+      "sha256": "ef9db8c62ed8eab72aed6a3b81788ef8bc3c0cf299467066ad68c3e3a3cbe4cb"
+    },
+    "public/wfpdf/scan-bild.js": {
+      "quelle": "assets/scan-bild.js",
+      "sha256": "96da5878d68d42e4e66ad48247bba998e543a4249a7074c38bcb58852b0dc739"
+    },
+    "public/wfpdf/blatt.js": {
+      "quelle": "assets/blatt.js",
+      "sha256": "88e8ae8c03b662ce7f8bbfe0401cd0c5c59ca78a5b788b747518ace1d90a7188"
+    },
+    "public/wfpdf/zip.js": {
+      "quelle": "assets/zip.js",
+      "sha256": "5c5a721c9a13aa551f453b3d42f9c4fcbe49555276a70ff53959e01caba0dce3"
+    },
+    "public/wfpdf/erkennung.js": {
+      "quelle": "assets/erkennung.js",
+      "sha256": "89863116242d3d832487d1f525a2f471a19d8b20ec7da21a51ce0bbe5ae84f0c"
+    },
+    "public/wfpdf/export.js": {
+      "quelle": "assets/export.js",
+      "sha256": "7bfa6b7ea32aca38f29556ad7ab086b3dbad5431adec280114174365981c3d8d"
+    },
+    "public/wfpdf/reinigung.js": {
+      "quelle": "assets/reinigung.js",
+      "sha256": "c3420fb57875db193096b13bd586387d41b383bd9625b54145dece8c4b65ac0e"
+    },
+    "public/wfpdf/schluesseltresor.js": {
+      "quelle": "assets/schluesseltresor.js",
+      "sha256": "eaed30e8f3921835a3f58b69f89d9b008831f69f164ad1dfec630fa43161f666"
+    },
+    "public/wfpdf/pdf-lib.min.js": {
+      "quelle": "vendor/pdf-lib.min.js",
+      "sha256": "0f9a5cad07941f0826586c94e089d89b918c46e5c17cf2d5a3c6f666e3bc694f"
+    },
+    "public/wfpdf/fontkit.umd.min.js": {
+      "quelle": "vendor/fontkit.umd.min.js",
+      "sha256": "d8df561b9fba98e24f2e5130e40948809281bbbc55a20c412359f1a0a5eb35a6"
+    },
+    "public/wfpdf/fontkit-LICENSE.txt": {
+      "quelle": "vendor/fontkit-LICENSE.txt",
+      "sha256": "9855615bf84733e86e0b527971ed2c1e479c6c9aef2e003d9229154ea688191e"
+    },
+    "public/wfpdf/fonts/NotoSans-Regular.ttf": {
+      "quelle": "vendor/fonts/NotoSans-Regular.ttf",
+      "sha256": "f3961a9cde016d41a4879aecda1474d3a36d6bf54fa0e4643de029cc2248b0e8"
+    },
+    "public/wfpdf/fonts/OFL.txt": {
+      "quelle": "vendor/fonts/OFL.txt",
+      "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a"
+    },
+    "public/wfpdf/vendor/scanic/LICENSE-scanic.txt": {
+      "quelle": "vendor/scanic/LICENSE-scanic.txt",
+      "sha256": "6a229290ec93f6d725561f6789c9226f4837f4fc515d17f6418202fa1bd49ae2"
+    },
+    "public/wfpdf/vendor/scanic/doccornernet_lean.ort": {
+      "quelle": "vendor/scanic/doccornernet_lean.ort",
+      "sha256": "732eb8d02d83cc63efb3f9467f01e0c458205a89b2547de3870bc6db1a80c8b3"
+    },
+    "public/wfpdf/vendor/scanic/ort-wasm-simd-threaded.mjs": {
+      "quelle": "vendor/scanic/ort-wasm-simd-threaded.mjs",
+      "sha256": "d6841aca121bba413020e1de9009c9e557cc8b424cc4b5d3ebfd8c5e0fec4fce"
+    },
+    "public/wfpdf/vendor/scanic/ort-wasm-simd-threaded.wasm": {
+      "quelle": "vendor/scanic/ort-wasm-simd-threaded.wasm",
+      "sha256": "8acb4d26fe0537379e83478e52b20e681035ca70a3eca45f2a147c19e1241f87"
+    },
+    "public/wfpdf/vendor/scanic/scanic-mlDetector.js": {
+      "quelle": "vendor/scanic/scanic-mlDetector.js",
+      "sha256": "d3e37f0e1b2a298f157bb221798cb15718c99fa1a854d71980f3a3652dcd71e3"
+    },
+    "public/wfpdf/vendor/scanic/scanic-ort.wasm.min.js": {
+      "quelle": "vendor/scanic/scanic-ort.wasm.min.js",
+      "sha256": "6d185727fae93105c8b91a1334c9c6767464776875a5937b48b9b5c41c348e6c"
+    },
+    "public/wfpdf/vendor/scanic/scanic.js": {
+      "quelle": "vendor/scanic/scanic.js",
+      "sha256": "4f4f494d291d8a18daf2833e6b68ac4e8f712f150331a85c1e4b3d227ef24680"
+    },
+    "public/wfpdf/vendor/tesseract/LICENSE-Apache-2.0.txt": {
+      "quelle": "vendor/tesseract/LICENSE-Apache-2.0.txt",
+      "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08"
+    },
+    "public/wfpdf/vendor/tesseract/tesseract-core-lstm.wasm.js": {
+      "quelle": "vendor/tesseract/tesseract-core-lstm.wasm.js",
+      "sha256": "eef5f8b2f8e20e150680b20adaec4a60babafee3adbe8a94583c81fee46e8680"
+    },
+    "public/wfpdf/vendor/tesseract/tesseract-core-relaxedsimd-lstm.wasm.js": {
+      "quelle": "vendor/tesseract/tesseract-core-relaxedsimd-lstm.wasm.js",
+      "sha256": "861a536cf9ef8e63cb644d57bab39c388f37f7d6b6f60024b741c5f6b39a59b3"
+    },
+    "public/wfpdf/vendor/tesseract/tesseract-core-simd-lstm.wasm.js": {
+      "quelle": "vendor/tesseract/tesseract-core-simd-lstm.wasm.js",
+      "sha256": "c58b46a4c796c0b8afccf77591d5b875b6896b45d402bbce8caa6f5362447b38"
+    },
+    "public/wfpdf/vendor/tesseract/tesseract.min.js": {
+      "quelle": "vendor/tesseract/tesseract.min.js",
+      "sha256": "000c27d9cd0def655f77b36c72a389c0ab13793aa31cb4d7aab56d09c0afbc7e"
+    },
+    "public/wfpdf/vendor/tesseract/tesseract.min.js.LICENSE.txt": {
+      "quelle": "vendor/tesseract/tesseract.min.js.LICENSE.txt",
+      "sha256": "cdf963ced7d25a0f98901a547647b4d6e2dbe0197fd78c87a059a87b0e542fe2"
+    },
+    "public/wfpdf/vendor/tesseract/worker.min.js": {
+      "quelle": "vendor/tesseract/worker.min.js",
+      "sha256": "576b7df7e3393e137e51849357c9adb53fe7ac1bb69bfa06cf3d61520f182c6d"
+    },
+    "public/wfpdf/vendor/tesseract/worker.min.js.LICENSE.txt": {
+      "quelle": "vendor/tesseract/worker.min.js.LICENSE.txt",
+      "sha256": "45f54171aeaa1d10c0c1a66f374b7bba1f02472b1487fbe892eec04f840002ac"
+    },
+    "public/wfpdf/vendor/tesseract/lang/deu.traineddata": {
+      "quelle": "vendor/tesseract/lang/deu.traineddata",
+      "sha256": "19d219bbb6672c869d20a9636c6816a81eb9a71796cb93ebe0cb1530e2cdb22d"
+    },
+    "public/wfpdf/vendor/tesseract/lang/eng.traineddata": {
+      "quelle": "vendor/tesseract/lang/eng.traineddata",
+      "sha256": "7d4322bd2a7749724879683fc3912cb542f19906c83bcc1a52132556427170b2"
+    },
+    "public/wfpdf/vendor/tesseract/lang/rus.traineddata": {
+      "quelle": "vendor/tesseract/lang/rus.traineddata",
+      "sha256": "e16e5e036cce1d9ec2b00063cf8b54472625b9e14d893a169e2b0dedeb4df225"
+    }
+  },
+  "hinweis": "Byte-1:1 aus Workflow-PDF (tools/wfpdf-nachziehen.mjs). Nie von Hand ändern. Der Klebstoff (app/ausfuellen-*.tsx, app/wfpdf-kern.ts, public/wfpdf-fa/scanner.css) ist Familienakte-eigen."
+}

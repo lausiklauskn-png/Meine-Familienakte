@@ -1,3 +1,4 @@
+import type { AusfuellInfo } from "../lib/ausfuellen";
 import {
   createFamilyRecord,
   type DocumentStorageType,
@@ -43,6 +44,8 @@ export type LocalDocument = {
   oneDrivePath?: string | null; relativePath?: string | null;
   scanPageCount?: number; scanOriginalCount?: number; scanOriginalsPath?: string | null;
   checksum?: string | null; storageLocations?: DocumentStorageLocation[];
+  /** Ausfüllen (Sitzung F): Felder/Stand am Original, Verweis an der ausgefüllten Fassung. */
+  ausfuellen?: AusfuellInfo | null;
 };
 
 export type VaultAuditEntry = {
@@ -3617,3 +3620,34 @@ export async function removeVaultEntries(handle: FileSystemDirectoryHandle, ids:
 
 /** Nur für scripts/run-vault-safety-tests.mjs: Zugriff auf Register lesen/schreiben, um Konflikte nachzustellen. */
 export const vaultInternalsForTests = { readIndex, writeIndex };
+
+
+// ---------- Ausfüllen (Sitzung F, Klaus 2026-10-31) ----------
+// Stand und Feldmaske stehen am Dokument im Register (`ausfuellen`), der Eingabe-Speicher und die verschlüsselten Unterschriften
+// im Register unter `ausfuellSpeicher` / `ausfuellUnterschriften`. Damit reisen sie mit Sicherung und Wiederherstellung.
+// ⚠ Das Register selbst ist nicht verschlüsselt: der Eingabe-Speicher liegt dort lesbar wie die übrigen Angaben der Akte.
+//   Unterschriften liegen nur als Paket des Schlosses (PBKDF2 + AES-GCM, public/wfpdf/schluesseltresor.js) dort.
+export async function setLocalDocumentAusfuellen(handle: FileSystemDirectoryHandle, id: string, info: AusfuellInfo | null) {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  const index = await readIndex(handle);
+  const item = index.documents.find((document) => document.id === id);
+  if (!item) throw new Error("Das Dokument wurde im lokalen Register nicht gefunden.");
+  item.ausfuellen = info; item.updatedAt = new Date().toISOString();
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: item.updatedAt, action: info ? `Ausfüllen: ${info.stand === "offen" ? "als „muss noch ausgefüllt werden“ vorgemerkt" : info.stand === "ausgefuellt" ? "ausgefüllt" : "ausgefüllte Fassung"}` : "Ausfüllen: Vormerkung entfernt", recordId: id, details: `${item.originalName}${info && "felder" in info ? ` · ${info.felder.length} Feld${info.felder.length === 1 ? "" : "er"}` : ""}. Die Originaldatei blieb unverändert.` });
+  await writeIndex(handle, index);
+  return item;
+}
+
+export type AusfuellAblage = { speicher: unknown; unterschriften: Record<string, unknown> };
+export async function readAusfuellAblage(handle: FileSystemDirectoryHandle): Promise<AusfuellAblage> {
+  const index = await readIndex(handle);
+  const u = index.ausfuellUnterschriften;
+  return { speicher: index.ausfuellSpeicher ?? null, unterschriften: u && typeof u === "object" ? structuredClone(u as Record<string, unknown>) : {} };
+}
+export async function writeAusfuellAblage(handle: FileSystemDirectoryHandle, teil: Partial<AusfuellAblage>) {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  const index = await readIndex(handle);
+  if ("speicher" in teil) index.ausfuellSpeicher = teil.speicher;
+  if ("unterschriften" in teil) index.ausfuellUnterschriften = teil.unterschriften;
+  await writeIndex(handle, index);
+}
