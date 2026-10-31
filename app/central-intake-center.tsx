@@ -1,7 +1,7 @@
 import { UI_HELP } from "../lib/ui-help";
 import { InfoPopover } from "./ui-controls";
 
-import { Camera, CheckCircle2, ChevronRight, Cloud, FileText, Folder, Mail, RefreshCw, ShieldCheck, Upload } from "lucide-react";
+import { Camera, CheckCircle2, ChevronRight, Cloud, FileText, Folder, Mail, PenLine, RefreshCw, ShieldCheck, Upload } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
 import {
   centralIntakeDisplayTitle,
@@ -33,6 +33,7 @@ export function CentralIntakeCenter({
   checkedAt,
   onFiles,
   onStartDocumentScan,
+  onScanForm,
   onSelectInbox,
   onScanInbox,
   onScanOneDrive,
@@ -52,6 +53,8 @@ export function CentralIntakeCenter({
   onStartDocumentScan: (files: File[]) => void;
   onSelectInbox: () => void;
   onScanInbox: () => void;
+  /** Formular scannen und gleich ausfüllen (Klaus 2026-10-31, Frage 1 aus Sitzung F). */
+  onScanForm?: () => void;
   onScanOneDrive: () => void;
   onReview: (id: string) => void;
   onExtractAttachments: (id: string) => void;
@@ -91,6 +94,7 @@ export function CentralIntakeCenter({
       </div>
       <div className="central-source-grid">
         <button type="button" className="intake-source" onClick={() => storageReady ? cameraRef.current?.click() : onGo("security")}><Camera/><span><strong>Dokument fotografieren</strong><small>{storageReady ? "Vorhandene Mehrseiten- und PDF-Funktion" : "Zuerst lokalen Tresor verbinden"}</small></span><ChevronRight/></button>
+        {onScanForm && <button type="button" className="intake-source" onClick={() => storageReady ? onScanForm() : onGo("security")} disabled={busy} data-formular-scannen><PenLine/><span><strong>Formular scannen und ausfüllen</strong><small>{storageReady ? "Papierformular scannen, dann gleich ausfüllen" : "Zuerst lokalen Tresor verbinden"}</small></span><ChevronRight/></button>}
         <button type="button" className="intake-source" onClick={inboxFolderName ? onScanInbox : onSelectInbox} disabled={busy}><Folder/><span><strong>{inboxFolderName ? "Eingangsordner jetzt prüfen" : "Eingangsordner auswählen"}</strong><small>{inboxFolderName ? `Freigegeben: ${inboxFolderName}` : "Nur den bewusst ausgewählten Ordner"}</small></span><ChevronRight/></button>
         <button type="button" className="intake-source" onClick={onScanOneDrive} disabled={busy}><Cloud/><span><strong>OneDrive-Familienordner prüfen</strong><small>{oneDriveConnected ? `Verbunden · letzte Prüfung: ${lastChecked}` : "Keine Dauerüberwachung · zuerst im Sicherheitscenter verbinden"}</small></span><ChevronRight/></button>
       </div>

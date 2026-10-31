@@ -1,3 +1,4 @@
+import { kontaktPruefen, kontaktUebernehmen, type PersonKontakt } from "../lib/person-kontakt.ts";
 import type { AusfuellInfo } from "../lib/ausfuellen";
 import {
   createFamilyRecord,
@@ -3198,6 +3199,22 @@ export async function updateLocalScheduleStatus(handle: FileSystemDirectoryHandl
   record.updatedAt = now;
   if (record.recordType === "task") record.data.completedAt = status === "erledigt" ? now : undefined;
   index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Status geändert", recordId: record.id, details: `${record.id}: ${previous} → ${status}; Änderung durch Benutzerbefehl.` });
+  await writeIndex(handle, index);
+  return record;
+}
+
+/** Anschrift und Kontakt an einer Person (Klaus 2026-10-31): nur nach ausdrücklichem Speichern, mit Protokollzeile ohne Inhalte. */
+export async function updateLocalPersonContact(handle: FileSystemDirectoryHandle, id: string, kontakt: PersonKontakt) {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  const { kontakt: sauber, fehler } = kontaktPruefen(kontakt);
+  if (fehler.length) throw new Error(fehler.join(" "));
+  const index = await readIndex(handle);
+  const record = index.records.find((item) => item.id === id);
+  if (!record || record.recordType !== "person") throw new Error("Die Person wurde im lokalen Register nicht gefunden.");
+  const now = new Date().toISOString();
+  record.data = kontaktUebernehmen((record.data || {}) as Record<string, unknown>, sauber) as typeof record.data;
+  record.updatedAt = now;
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Kontaktangaben geändert", recordId: record.id, details: `${record.id}: Anschrift/Kontakt nach ausdrücklichem Speichern geändert (${Object.keys(sauber).length} Angaben).` });
   await writeIndex(handle, index);
   return record;
 }

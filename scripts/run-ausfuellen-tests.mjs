@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync, existsSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { runAusfuellenSelfTests } from "../lib/ausfuellen.ts";
+import { runPersonKontaktSelfTests } from "../lib/person-kontakt.ts";
 
 const herkunft = JSON.parse(readFileSync("public/wfpdf/HERKUNFT.json", "utf8"));
 assert.equal(herkunft.repo, "lausiklauskn-png/Workflow-PDF");
@@ -23,7 +24,7 @@ if (existsSync(`${klon}/assets/scanner.js`)) {
   for (const [ziel, { quelle }] of dateien) if (existsSync(`${klon}/${quelle}`) && !readFileSync(`${klon}/${quelle}`).equals(readFileSync(ziel))) { anders++; console.log(`🟡 ${ziel} ist im Klon inzwischen anders (nachziehen?)`); }
   if (!anders) console.log("🟢 Gleich mit dem Workflow-PDF-Klon daneben");
 }
-for (const test of runAusfuellenSelfTests()) {
+for (const test of [...runAusfuellenSelfTests(), ...runPersonKontaktSelfTests()]) {
   assert.equal(test.passed, true, `${test.label}: ${test.summary}`);
   console.log(`🟢 ${test.label}: ${test.summary}`);
 }

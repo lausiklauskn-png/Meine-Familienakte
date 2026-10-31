@@ -20,6 +20,8 @@ const w = () => window as Fenster;
 export const basis = () => new URL("wfpdf/", document.baseURI).href;
 const geladen = new Map<string, Promise<void>>();
 function skript(datei: string) {
+  // Einzeldatei (scripts/build-single-file.mjs): dort steht ein Teil des Kerns schon eingebettet in der Seite.
+  if ((window as Window & { __FA_KERN_EINGEBETTET?: string[] }).__FA_KERN_EINGEBETTET?.includes(datei)) return Promise.resolve();
   const url = new URL(datei, basis()).href;
   let p = geladen.get(url);
   if (!p) {

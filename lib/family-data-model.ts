@@ -30,7 +30,7 @@ export type DocumentStorageLocation = {
 };
 
 export type FamilyRecordPayloadMap = {
-  person: { displayName?: string; birthDate?: string };
+  person: { displayName?: string; birthDate?: string; street?: string; postalCode?: string; city?: string; email?: string; phone?: string };
   organisation: { name?: string; contactType?: string };
   object: { name?: string; objectType?: string };
   case: { title?: string; caseType?: string };
