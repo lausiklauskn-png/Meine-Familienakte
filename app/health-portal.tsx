@@ -50,6 +50,10 @@ import { createLocalCorrespondenceBundle } from "./local-vault";
 import { isBrowserVault, browserStorageKind } from "./local-vault";
 import { removeSampleFamily, SAMPLE_FAMILY_NAME, SAMPLE_NOTICE, sampleDataPresent, seedSampleFamily } from "./sample-family";
 
+// Welche Fassung läuft (Klaus 2026-10-31: „damit ich nicht nur am Icon erkenne, was es für eine Version ist“):
+// in der Android- und der Windows-App „Pro“, im Browser (PWA) „Basic“ — wie BookLedgerPro / BookLedger Basic.
+const APP_VARIANTE: "Pro" | "Basic" = typeof window !== "undefined" && ((window as unknown as { Capacitor?: { isNativePlatform?: () => boolean } }).Capacitor?.isNativePlatform?.() || "__TAURI__" in window) ? "Pro" : "Basic";
+
 type UploadedDocument = {
   id: string; originalName: string; category: string; documentDate: string | null;
   mimeType: string; sizeBytes: number;
@@ -1066,7 +1070,7 @@ function HealthPortalContent() {
       <header className="site-header" onClick={(event) => event.stopPropagation()}>
         <div className="masthead">
           <button className="mobile-menu-button" onClick={() => setMobileOpen((value) => !value)} aria-label="Hauptmenü öffnen"><Menu size={22}/></button>
-          <button className="site-brand" onClick={() => go("overview")}><span className="brand-symbol">MMI</span><span><strong>FAMILIENAKTE</strong><small className="site-brand-version">Version {APP_VERSION}</small></span></button>
+          <button className="site-brand" onClick={() => go("overview")}><span className="brand-symbol brand-symbol-icon" data-variante={APP_VARIANTE.toLowerCase()}><img src="./favicon.svg" alt="" aria-hidden="true"/></span><span><strong>FAMILIENAKTE <span className="site-brand-variante" data-variante={APP_VARIANTE.toLowerCase()}>{APP_VARIANTE}</span></strong><small className="site-brand-version">Version {APP_VERSION}</small></span></button>
           <div className="header-actions"><NetzSchalter/><button className="icon-button" onClick={() => window.print()} title="Aktuelle Seite drucken"><Printer size={18}/></button><a className="logout-button" href="./" onClick={(event) => { event.preventDefault(); window.location.reload(); }} title="Sicher aus der Familienakte ausloggen"><LogOut size={17}/> Ausloggen</a></div>
         </div>
         <nav className={`main-navigation ${mobileOpen ? "mobile-open" : ""}`} aria-label="Hauptnavigation">
@@ -1210,7 +1214,7 @@ function HealthPortalContent() {
       </main>
       <footer className="site-footer">
         <div className="footer-inner">
-          <div className="footer-brand-row"><div><strong>FAMILIENAKTE</strong><span><b>Version {APP_VERSION}</b> · zuletzt aktualisiert am {APP_VERSION_DATE}</span></div><small>Originalunterlagen bleiben verbindlich. Vorbereitete Bereiche enthalten noch keine behaupteten Aktenbestände.</small></div>
+          <div className="footer-brand-row"><div><strong>FAMILIENAKTE {APP_VARIANTE}</strong><span><b>Version {APP_VERSION}</b> · zuletzt aktualisiert am {APP_VERSION_DATE}</span></div><small>Originalunterlagen bleiben verbindlich. Vorbereitete Bereiche enthalten noch keine behaupteten Aktenbestände.</small></div>
           <nav className="footer-directory" aria-label="Weiterführende Bereiche der Familienakte">
             <section><h2>Familienakte</h2><ul><li><button onClick={() => go("cockpit")}>Interaktives Cockpit</button></li><li><button onClick={() => go("memory")}>Tagebuch & Erinnerungen</button></li><li><button onClick={() => go("reminders")}>Fristen und Aufgaben</button></li><li><button onClick={() => go("directory")}>Gesamtes Verzeichnis</button></li><li><button onClick={openLifeAreas}>Lebensbereiche</button></li></ul></section>
             <section><h2>Dokumente</h2><ul><li><button onClick={() => go("documents")}>Dokumentenbibliothek</button></li><li><button onClick={() => go("inbox")}>Eingangszentrale</button></li><li><button onClick={() => go("inventory")}>Bestand prüfen</button></li><li><button onClick={() => go("changelog")}>Was gibt’s Neues?</button></li></ul></section>

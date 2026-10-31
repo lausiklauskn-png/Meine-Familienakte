@@ -427,6 +427,18 @@ code { display: inline-block; color: var(--navy); background: var(--blue-soft); 
 .site-brand strong { color: var(--navy); font-size: 1.06rem; }
 .site-brand small { margin-top: 2px; color: var(--muted); font-size: .75rem; }
 .site-brand .site-brand-version { color: var(--navy-2); font-weight: 850; letter-spacing: .025em; }
+/* Klaus 2026-10-31: statt „MMI“ das App-Icon, damit seine Fassung (Pro/Basic) vom Stand des Freundes zu unterscheiden ist. */
+.brand-symbol.brand-symbol-icon { background: #f2f6fb; border: 1px solid var(--navy-2); }
+.brand-symbol.brand-symbol-icon img { width: 30px; height: 30px; display: block; }
+.site-brand .brand-symbol { flex: 0 0 auto; }
+.site-brand > span:last-child { min-width: 0; }
+.site-brand .site-brand-variante { white-space: nowrap; }
+@media (max-width: 620px) {
+  .site-brand .brand-symbol { width: 34px; height: 34px; }
+  .brand-symbol.brand-symbol-icon img { width: 24px; height: 24px; }
+  .site-brand strong { font-size: .92rem; }
+}
+.site-brand .site-brand-variante { font-size: .78em; font-weight: 850; letter-spacing: .06em; color: var(--navy-2); }
 .brand-symbol { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 7px; color: white; background: linear-gradient(145deg,var(--navy),var(--navy-2)); font-size: .72rem; font-weight: 900; letter-spacing: .06em; }
 .global-search button { position: absolute; right: 7px; display: grid; place-items: center; width: 30px; height: 30px; border: 0; border-radius: 7px; color: var(--muted); background: transparent; }
 .global-search .dictation-button { right: 39px; border: 1px solid transparent; }
