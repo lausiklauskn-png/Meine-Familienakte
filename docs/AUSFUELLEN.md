@@ -51,7 +51,7 @@ schickt den Text unkenntlich mit; die Liste sagt „per Texterkennung gelesen �
 | Fenster | `app/ausfuellen-dialog.tsx` |
 | Reine Rechnung (Feldart, Vorbelegen, Eingabe-Speicher, Stand, KI-Auftrag/Antwort) | `lib/ausfuellen.ts` |
 | Ablage | `app/local-vault.ts`: `ausfuellen` am Dokument, `ausfuellSpeicher`/`ausfuellUnterschriften` im Register |
-| Proben | `scripts/run-ausfuellen-tests.mjs` (Pins + 8 Fälle, in `npm run check`), `tests/ui/ausfuellen.test.mjs` (17), `tests/ui/ki-ocr.test.mjs` (4) |
+| Proben | `scripts/run-ausfuellen-tests.mjs` (Pins + 8 Fälle, in `npm run check`), `tests/ui/ausfuellen.test.mjs` (17), `tests/ui/ausfuellen-foto.test.mjs` (8: Foto mit Texterkennung, ausfüllbares PDF, Scanner öffnet), `tests/ui/ki-ocr.test.mjs` (4) |
 
 Die PWA legt Texterkennung und Blatterkennung (zusammen ~25 MB) **nicht** beim Installieren in den Vorrat (`scripts/build-pwa.mjs`),
 sondern beim ersten Gebrauch.

@@ -25,7 +25,7 @@ Schließt an `BRIEF_SITZUNG_2026-10-31_NETZ-CHEFCODE-SORTIERUNG.md` (Abschnitt �
 | Unterschrift zeichnen, mit eigenem Passwort verschlüsselt merken, einsetzen | gebaut | Schloss `public/wfpdf/schluesseltresor.js`; im Register `ausfuellUnterschriften` |
 | Festes / ausfüllbares PDF als **neue** Unterlage neben dem Original, Verknüpfungen übernommen, Teilen | gebaut | `saveFillResult` in `app/health-portal.tsx` |
 | Vormerken → Cockpit „Muss noch ausgefüllt werden“, Marken an der Unterlage | gebaut | `InteractiveCockpit`, `DocumentLibraryCard`, `Inbox` |
-| Scanner von Workflow PDF („Neu scannen“ im Ausfüllen) | gebaut, im Browser **nicht** geprobt | `scannen()` in `app/wfpdf-kern.ts`, Stil `public/wfpdf-fa/scanner.css` |
+| Scanner von Workflow PDF („Neu scannen“ im Ausfüllen) | gebaut, Öffnen/Schließen geprobt, ein Scan bis zum PDF **nicht** | `scannen()` in `app/wfpdf-kern.ts`, Stil `public/wfpdf-fa/scanner.css` |
 | „Mit KI arbeiten“: Fotos und gescannte PDF-Seiten per Texterkennung, unkenntlich | gebaut | `dokumentTextOcr` in `app/ki-auftrag-dialog.tsx` |
 | PWA: Texterkennung/Blatterkennung nicht im Installations-Vorrat | gebaut | `scripts/build-pwa.mjs` |
 
@@ -38,6 +38,7 @@ Schließt an `BRIEF_SITZUNG_2026-10-31_NETZ-CHEFCODE-SORTIERUNG.md` (Abschnitt �
   Kennzeichen, Linie, 2 Kästchen) → KI-Vorschau ohne Werte, Antwort übernommen → Feld von Hand → Vorbelegen „Gerlinde“ (3 gelb) →
   festes PDF (Einträge im entpackten Inhalt gefunden) → Marken → Eingabe-Speicher „to“ → Vorschlag, aus → keiner → Unterschrift
   verschlüsselt (kein PNG im Register) → falsches Passwort abgewiesen, richtiges setzt ein → vormerken → Cockpit → Handy 390 px ohne Querrollen.
+- `tests/ui/ausfuellen-foto.test.mjs` **8 grün** (Nachtrag): Foto-Unterlage ohne Textebene → Felder über die Texterkennung beschriftet (Vorname, Nachname; „Wohnort“ blieb „Feld 1.3“) → ausfüllbares PDF mit echtem Textfeld und Wert → „Neu scannen“ öffnet den Scanner (Stil in Familienakte-Farbe), Schließen geht. Gegenprobe: Texterkennung im Erkennen abgeschaltet → rot („Feld 1.1 | Feld 1.2 | Feld 1.3“).
 - `tests/ui/ki-ocr.test.mjs` **4 grün**: erfundenes Briefbild → Texterkennung → Vorschau mit „Bewohnerparkausweis“, Name als `⟦NAME-2⟧`.
 - **Gegenproben** (je absichtlich kaputt, dann zurück): Schalter aus wirkungslos → rot · Vorbelegen überschreibt → rot · ein Byte im Kern →
   rot mit Dateinamen · Unterschrift im Klartext abgelegt → 2 rote Zeilen im Browser.
@@ -49,7 +50,7 @@ eigenes Feld über den Seiten. (3) Nach falschem Passwort schloss sich das Unter
 
 ## Nicht gemessen / Grenzen
 
-Tablet, Android-App, Windows · Teilen in der App · echte KI-Antwort · Scanner im Browser dieser Akte · Einzeldatei ohne Kern (Meldung) ·
+Tablet, Android-App, Windows · Teilen in der App · echte KI-Antwort · Scannen bis zum fertigen PDF (geprüft ist nur, dass der Scanner öffnet und schließt) · Einzeldatei ohne Kern (Meldung) ·
 Register unverschlüsselt (Eingabe-Speicher lesbar) · Vorbelegen nur Name/Geburtsdatum (mehr hat die Person nicht) · Unterschriftslinie mit
 Beschriftung darunter heißt „Feld …“ · App-Paket +26 MB · höchstens 20 Seiten. Einzelheiten in `docs/AUSFUELLEN.md`.
 
