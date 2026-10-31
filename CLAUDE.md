@@ -13,9 +13,9 @@ sondern nur KimHub.“
 - In der Familienakte entsteht **nichts davon**: keine Dateien unter `docs/forschung/`, kein Abschnitt „Forschung“ in Briefen, im
   Abschlussbrief oder in PR-Beschreibungen, kein Verweis „Forschung § …“. Ein Befund aus einer Sitzung wird hier nur so weit
   beschrieben, wie er für den Bau nötig ist (Grenzen, Proben). Der Forschungsteil geht nach KimHub
-  (`Kimhub/forschung/familienakte/`).
+  (`Kimhub/forschung/messungen/`, Dateien `familienakte-…`).
 - Die zwei älteren Forschungsdateien (2026-10-28) sind am 2026-10-31 auf Klaus' Wort nach KimHub umgezogen
-  (`Kimhub/forschung/familienakte/`) und hier gelöscht; in der Git-Historie stehen sie weiter.
+  (`Kimhub/forschung/messungen/`, Dateien `familienakte-…`) und hier gelöscht; in der Git-Historie stehen sie weiter.
 - Ist KimHub in einer Sitzung nicht verfügbar, wird das Repo `lausiklauskn-png/Kimhub` in die Sitzung geholt und der Eintrag dort
   abgelegt (Klaus 2026-10-31).
 

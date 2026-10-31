@@ -92,4 +92,4 @@ Weiterarbeit:
 - [BRIEF_SITZUNG_ANALYSE-UND-ERSTBAU.md](BRIEF_SITZUNG_ANALYSE-UND-ERSTBAU.md): Brief für die nächste Sitzung (Analyse, dann PWA, APK und Windows mit Internetschalter)
 - [docs/ANALYSE_AUFTRAG.md](docs/ANALYSE_AUFTRAG.md): Analyse in den Paketen A bis G
 - [BRIEF_ABSCHLUSS_2026-10-28_NEUAUFBAU.md](BRIEF_ABSCHLUSS_2026-10-28_NEUAUFBAU.md): Abschluss der Neuaufbau-Sitzung
-- Forschungsunterlagen liegen nicht hier, sondern in KimHub: https://github.com/lausiklauskn-png/Kimhub/tree/main/forschung/familienakte (Regel in `CLAUDE.md`)
+- **Forschung nur in Kimhub (Klaus 2026-10-31):** jeder Forschungseintrag (Sitzungs-Befunde, Messungen, Stunden-Auswertungen, Forschungsnotizen) kommt nach Kimhub `forschung/messungen/`; in diesem Repo werden keine Forschungseinträge geführt und keine Forschungsdateien angelegt. Öffentliche Forschungsaufgaben stehen in Sage-Protokol.
