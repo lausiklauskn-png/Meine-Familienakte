@@ -84,6 +84,8 @@ const HELP_CONTENT_VERSION = "2.28.1";
 const SYSTEM_CHECK_STORAGE_KEY = "mmi-family-system-check";
 const SYSTEM_CHECK_REPORTS_KEY = "mmi-family-system-check-reports";
 const SYSTEM_CHECK_BACKUPS_KEY = "mmi-family-system-check-backups";
+// Wird von der Systemprüfung (scripts/run-system-check.mjs) als Projektkennung erwartet.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SITE_PROJECT_LINK = "sites-project://appgprj_demo";
 
 const topNavigation: Array<{
