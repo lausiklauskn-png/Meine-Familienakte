@@ -26,7 +26,7 @@ Die Web Speech API nimmt immer das Mikrofon, das der Browser bekommt, und der ni
 2. **Chrome/Edge je Website:** Schloss-Symbol in der Adresszeile → Website-Einstellungen → Mikrofon → Gerät. Das gilt pro
    Adresse (also pro Familienakte-Adresse) und überlebt den Neustart. In Chrome/Edge ab Version 135 kann eine Seite der
    Spracherkennung zusätzlich eine eigene Audiospur geben (Chrome-135-Release-Notes, in Private Brain Pro als PWA-Weg gebaut).
-3. **Firefox** hat keine Spracherkennung; dort bleibt nur Tippen (schon in `docs/forschung/…` festgehalten).
+3. **Firefox** hat keine Spracherkennung; dort bleibt nur Tippen (festgehalten in KimHub `forschung/familienakte/`).
 
 ### Was eine Auswahl **in der App** bräuchte
 
