@@ -22,7 +22,7 @@ Klaus' Wort: in Stücken bauen, nur ein fertiges Stück veröffentlichen (Probe 
 | --- | --- | --- | --- | --- |
 | 0 | main nach Sitzung F | 2.28.4 | #35 | Android Bau 5 + Windows, beide auf family-projekt.de (Läufe haben Feed und Datei von außen verglichen) |
 | 1 + 1b | Suche abgesichert (Probe) · Formular scannen und ausfüllen · Ausfüllen für Gesundheitsunterlagen (ohne KI-Weg) · Anschrift/Kontakt an Personen · Kern in der Einzeldatei | 2.28.5 | #36 | Android Bau 6 + Windows, server = ja |
-| 2a | Seite „Netz (Mycel)“, Kanon-Module byte-1:1 (`public/sbkim/`), nichts beim Laden, Verbinden nur auf Tipp | 2.28.6 | #37 | siehe unten |
+| 2a | Seite „Netz (Mycel)“, Kanon-Module byte-1:1 (`public/sbkim/`), nichts beim Laden, Verbinden nur auf Tipp | 2.28.6 | #37 | Android Bau 7 + Windows, server = ja |
 
 Sichtbar bleibt überall „Version 2.28.1“ (Oberfläche des Freundes). Bedienung: `docs/AUSFUELLEN.md` (Abschnitte 2.28.5), `docs/MYCEL.md`.
 
@@ -56,9 +56,9 @@ Kontaktangaben liegen im Register (wie Eingabe-Speicher, nicht zusätzlich versc
 | 15:30–15:50 | Stück 1 (Probe + Gegenprobe), 1b Gesundheitsunterlagen; Merge #35, Veröffentlichung 2.28.4, Lauf-Logs geprüft |
 | 15:50–16:16 | 1b Kontakt an Personen, Formular scannen, Einzeldatei, Gegenprobe 9/9, voller Lauf, PR #36 |
 | 16:16–16:40 | Stück 2a (Kanon-Module, Klebstoff, Seite, Probe, Gegenprobe), Merge #36, Veröffentlichung 2.28.5, PR #37 |
-| 16:40–… | CI #37, Merge, Veröffentlichung 2.28.6, dieser Brief |
+| 16:40–17:10 | Brief, CI #37, Merge, Veröffentlichung 2.28.6 und Prüfung der Lauf-Logs, Brief nachgetragen |
 
-Erste Spur 15:12 (Checkout), letzte siehe PR dieses Briefs. Wartezeit auf CI in den Blöcken enthalten (je ≈ 10 min). Klaus' eigene Angabe geht vor.
+Erste Spur 15:12 (Checkout), letzte ≈ 17:10: **≈ 2 h** (Obergrenze). Wartezeit auf CI in den Blöcken enthalten (je ≈ 10 min). Klaus' eigene Angabe geht vor.
 
 ## Startauftrag zum Einfügen
 
