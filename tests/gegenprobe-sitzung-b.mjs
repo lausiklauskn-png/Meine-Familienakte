@@ -24,6 +24,8 @@ const faelle = [
   { name: "Zusammenhang: Automatik setzt leere Auswahl zurück", datei: HP, alt: "if (vorschlagGesetzt.current) return;", neu: "if (selectedCaseId) return;", probe: "kontext-auswahl", rot: /Nicht verknüpfen|Noch nicht verknüpfen/ },
   { name: "Zusammenhang: Überschrift nennt nur den Vorschlag", datei: HP, alt: "{selectedCaseId && selectedCaseId !== contextSuggestions[0].caseId ?", neu: "{false ?", probe: "kontext-auswahl", rot: /Überschrift nennt die Wahl/ },
   { name: "Diktat: Android-Echo wieder angehängt", datei: "lib/browser-dictation.ts", alt: "  return aus;\n}", neu: "  return teile.map((t) => t.trim()).filter(Boolean);\n}", befehl: [process.execPath, ["scripts/run-ui-orientation-tests.mjs"]], rot: /.*/, rotStderr: /AssertionError/ },
+  { name: "Eingang: Foto-Knopf wieder ohne Workflow-PDF-Scanner", datei: "app/central-intake-center.tsx", alt: "onClick={() => storageReady ? onStartDocumentScan([]) : onGo(\"security\")} data-dokument-scannen", neu: "onClick={() => storageReady ? cameraRef.current?.click() : onGo(\"security\")} data-dokument-scannen", probe: "eingang-liest", rot: /öffnet den Scanner von Workflow PDF/ },
+  { name: "Eingang: liest PDFs/Fotos nicht", datei: HP, alt: "if (!value.trim() && (istPdf || istBild)) {", neu: "if (false) {", probe: "eingang-liest", rot: /liest den Text/ },
 ];
 const filter = process.argv[2] || "";
 const bauen = (einzel) => {
