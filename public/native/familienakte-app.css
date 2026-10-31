@@ -8,4 +8,8 @@
 .familienakte-install{display:inline-flex;align-items:center;gap:6px;width:auto;height:auto;border:1px solid #c8d5de;border-radius:9px;padding:9px 11px;color:var(--navy,#0b3154);background:#fff;font-size:.78rem;line-height:1.15;font-weight:900;font-family:inherit;cursor:pointer;white-space:nowrap}
 .familienakte-install:hover{border-color:#9fb3c1;background:var(--blue-soft,#eaf3fa)}
 @media (max-width:620px){.familienakte-install{padding:9px}.familienakte-install .t{display:none}}
+/* Klaus 2026-10-31: ein nackter Pfeil nach unten sieht nach „minimieren“ aus. Statt ⬇ ein Strich-Symbol „in die Ablage laden“
+   (Pfeil in eine Schale), die Kanon-Datei installieren.js bleibt byte-gleich. */
+.familienakte-install [data-z]{display:inline-block;width:16px;height:16px;font-size:0;background:currentColor;-webkit-mask:var(--fa-install-ic) center/contain no-repeat;mask:var(--fa-install-ic) center/contain no-repeat}
+.familienakte-install{--fa-install-ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='2' width='14' height='20' rx='2'/%3E%3Cpath d='M12 6v8M8.5 10.5 12 14l3.5-3.5M10 18h4'/%3E%3C/svg%3E")}
 html.app-installiert [data-install-knopf]{display:none!important}

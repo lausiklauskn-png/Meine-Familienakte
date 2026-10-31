@@ -414,7 +414,6 @@ code { display: inline-block; color: var(--navy); background: var(--blue-soft); 
 @media (max-width: 860px) {
   .security-grid { grid-template-columns: 1fr; }
   .vault-pill { display: none; }
-  .logout-button { padding: 9px; font-size: 0; gap: 0; }
 }
 
 /* Familienakte: mehrstufige Navigation und Objekt-Cockpit */
@@ -427,6 +426,18 @@ code { display: inline-block; color: var(--navy); background: var(--blue-soft); 
 .site-brand strong { color: var(--navy); font-size: 1.06rem; }
 .site-brand small { margin-top: 2px; color: var(--muted); font-size: .75rem; }
 .site-brand .site-brand-version { color: var(--navy-2); font-weight: 850; letter-spacing: .025em; }
+/* Klaus 2026-10-31: statt „MMI“ das App-Icon, damit seine Fassung (Pro/Basic) vom Stand des Freundes zu unterscheiden ist. */
+.brand-symbol.brand-symbol-icon { background: #f2f6fb; border: 1px solid var(--navy-2); }
+.brand-symbol.brand-symbol-icon svg { width: 30px; height: 30px; display: block; }
+.site-brand .brand-symbol { flex: 0 0 auto; }
+.site-brand > span:last-child { min-width: 0; }
+.site-brand .site-brand-variante { white-space: nowrap; }
+@media (max-width: 620px) {
+  .site-brand .brand-symbol { width: 34px; height: 34px; }
+  .brand-symbol.brand-symbol-icon svg { width: 24px; height: 24px; }
+  .site-brand strong { font-size: .92rem; }
+}
+.site-brand .site-brand-variante { font-size: .78em; font-weight: 850; letter-spacing: .06em; color: var(--navy-2); }
 .brand-symbol { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 7px; color: white; background: linear-gradient(145deg,var(--navy),var(--navy-2)); font-size: .72rem; font-weight: 900; letter-spacing: .06em; }
 .global-search button { position: absolute; right: 7px; display: grid; place-items: center; width: 30px; height: 30px; border: 0; border-radius: 7px; color: var(--muted); background: transparent; }
 .global-search .dictation-button { right: 39px; border: 1px solid transparent; }
@@ -434,7 +445,7 @@ code { display: inline-block; color: var(--navy); background: var(--blue-soft); 
 .global-search .dictation-button svg, .global-search .search-clear svg { position: static; color: currentColor; }
 .global-search .search-clear { right: 7px; }
 .header-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
-.logout-button { display: inline-flex; align-items: center; gap: 6px; border: 1px solid #c8d5de; border-radius: 9px; padding: 9px 11px; color: var(--navy); background: white; font-size: .78rem; font-weight: 900; text-decoration: none; }
+.logout-button { border-color: #c8d5de; padding: 0; text-decoration: none; }
 .logout-button:hover { border-color: #9fb3c1; background: var(--blue-soft); }
 .vault-pill { display: inline-flex; align-items: center; gap: 6px; border: 1px solid #cf9c58; border-radius: 999px; padding: 8px 10px; color: #80511a; background: #fff6e8; font-size: .74rem; font-weight: 900; }
 .vault-pill.connected { border-color: #82bda7; color: #176548; background: #eaf8f2; }
@@ -1361,7 +1372,9 @@ button.object-card:hover { transform: translateY(-2px); border-color: #8fb2c9; b
   .system-check-control-card, .system-check-result-card, .system-findings { min-height: 0; }
   .site-brand small, .header-actions .button { display: none; }
   .site-brand .site-brand-version { display: block; }
-  .header-actions { gap: 3px; }
+  .header-actions { gap: 3px; flex: 0 0 auto; }
+  .header-actions .icon-button, .header-actions .familienakte-install { width: 30px; height: 30px; padding: 0; justify-content: center; border-radius: 8px; }
+  .header-actions .icon-button svg, .header-actions .familienakte-install svg { width: 16px; height: 16px; }
   .family-hero h1 { font-size: 2rem; }
   .family-hero { gap: 20px; }
   .hero-cockpit-grid { grid-template-columns: 1fr; }
@@ -1686,3 +1699,22 @@ button.object-card:hover { transform: translateY(-2px); border-color: #8fb2c9; b
 .netz-schalter .netz-lampe { position: absolute; right: 5px; bottom: 5px; width: 8px; height: 8px; border-radius: 50%; background: #d64545; box-shadow: 0 0 0 2px #fff; }
 .netz-schalter.netz-an .netz-lampe { background: #2f9e5b; }
 .netz-schalter:disabled .netz-lampe { background: #b8c2cc; }
+
+/* KI-Auftrag (Klaus 2026-10-31): Knopf unten rechts auf jeder Seite, Fenster „Mit KI arbeiten“. */
+.ki-fab { position: fixed; right: 16px; bottom: 16px; z-index: 40; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--navy-2); background: var(--navy); color: white; display: grid; place-items: center; box-shadow: 0 4px 14px rgba(11, 49, 84, .28); cursor: pointer; }
+.ki-fab:hover { background: var(--navy-2); }
+@media print { .ki-fab { display: none; } }
+.ki-dialog { max-height: 92vh; overflow-y: auto; }
+.ki-zeile { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 6px 0; }
+.ki-zeile input:not([type]) , .ki-zeile .ki-suche { flex: 1 1 180px; min-width: 0; border: 1px solid var(--line); border-radius: 8px; padding: 7px 9px; font: inherit; }
+.ki-wahl { display: inline-flex; align-items: center; gap: 5px; border: 1px solid #c8d5de; border-radius: 999px; padding: 5px 12px; background: white; color: var(--navy); font-weight: 800; font-size: .82rem; cursor: pointer; }
+.ki-wahl.aktiv { background: var(--navy); border-color: var(--navy); color: white; }
+.ki-seite { margin-left: auto; font-size: .8rem; color: var(--muted, #5b6b78); }
+.ki-liste { list-style: none; margin: 4px 0; padding: 0; max-height: 200px; overflow-y: auto; border: 1px solid var(--line); border-radius: 8px; }
+.ki-liste li label { display: flex; align-items: baseline; gap: 6px; padding: 5px 8px; border-bottom: 1px solid var(--line); cursor: pointer; }
+.ki-liste li label span { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ki-liste li small { color: var(--muted, #5b6b78); white-space: nowrap; }
+.ki-datei { cursor: pointer; }
+.ki-sitzung, .ki-rueckweg { border-top: 1px solid var(--line); margin-top: 10px; padding-top: 8px; display: grid; gap: 4px; }
+.ki-sitzung label { display: inline-flex; gap: 6px; align-items: center; font-size: .86rem; }
+.ki-rueckweg textarea { width: 100%; font: inherit; border: 1px solid var(--line); border-radius: 8px; padding: 7px 9px; }

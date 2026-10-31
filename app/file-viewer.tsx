@@ -60,6 +60,19 @@ function loadPdfJs(): Promise<PdfJs> {
   return pdfJsPromise;
 }
 
+/** Text aus der Textebene eines PDF (für den KI-Auftrag), höchstens `maxSeiten` Seiten. Gescannte Seiten ohne Textebene liefern nichts. */
+export async function pdfText(file: File, maxSeiten = 30): Promise<string> {
+  const lib = await loadPdfJs();
+  type TextSeite = { getTextContent: () => Promise<{ items: Array<{ str?: string; hasEOL?: boolean }> }> };
+  const doc = await (lib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise as unknown as Promise<{ numPages: number; getPage: (n: number) => Promise<TextSeite> }>);
+  const teile: string[] = [];
+  for (let n = 1; n <= Math.min(doc.numPages, maxSeiten); n++) {
+    const inhalt = await (await doc.getPage(n)).getTextContent();
+    teile.push(inhalt.items.map((i) => (i.str || "") + (i.hasEOL ? "\n" : " ")).join("").replace(/[ \t]+/g, " ").trim());
+  }
+  return teile.filter(Boolean).join("\n\n");
+}
+
 function PdfPages({ file }: { file: File }) {
   const holder = useRef<HTMLDivElement>(null);
   const [state, setState] = useState<"laden" | "fertig" | "fehler">("laden");

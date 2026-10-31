@@ -2107,7 +2107,7 @@ function extractLegacyOfficeText(bytes: Uint8Array) {
   return candidates.find(isMeaningfulDocumentText) || "";
 }
 
-async function inventoryTextHint(file: File): Promise<{ textHint: string; contentStatus: InventoryContentStatus }> {
+export async function inventoryTextHint(file: File): Promise<{ textHint: string; contentStatus: InventoryContentStatus }> {
   const name = file.name.toLocaleLowerCase("de");
   if (name.endsWith(".txt") || name.endsWith(".vtt") || name.endsWith(".eml") || file.type.startsWith("text/") || file.type === "message/rfc822") {
     const decoded = decodeInventoryText(new Uint8Array(await file.arrayBuffer()));

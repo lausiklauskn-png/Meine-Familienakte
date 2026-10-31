@@ -11,12 +11,13 @@ import {
   FileText, Folder, FolderHeart, HeartPulse, Home, Landmark, Menu, PackageCheck,
   Plus, Printer, RefreshCw, Search, ShieldCheck, ShoppingBag, Upload, UserRound,
   Users, X, HardDrive, LockKeyhole, Usb, LogOut, HelpCircle, History, Cloud, LifeBuoy, Mic,
-  Copy, ExternalLink, BookHeart, Camera, Video, NotebookPen, Trash2, CircleHelp, Tags, FolderSearch, Eye, ListChecks, Save, Bot,
+  Copy, ExternalLink, BookHeart, Camera, Video, NotebookPen, Trash2, CircleHelp, Tags, FolderSearch, Eye, ListChecks, Save, Bot, Sparkles,
 } from "lucide-react";
 import { DictationButton, InfoPopover, VoiceInput, VoiceTextarea } from "./ui-controls";
 import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ActivityLines, ActivityProvider, useActivity, useActivityMessage } from "./ui-activity";
 import { NetzSchalter } from "./netz-schalter";
+import { KiAuftragDialog } from "./ki-auftrag-dialog";
 import { inventoryScanFeedback, inventoryAssignmentFeedback, inventoryArchiveFeedback, inventoryReleaseFeedback } from "../lib/ui-activity";
 import healthData from "./health-data.json";
 import { assessmentGroups, categories, coreDocuments, portalAreas } from "./portal-data";
@@ -50,6 +51,10 @@ import { createLocalCorrespondenceBundle } from "./local-vault";
 import { isBrowserVault, browserStorageKind } from "./local-vault";
 import { removeSampleFamily, SAMPLE_FAMILY_NAME, SAMPLE_NOTICE, sampleDataPresent, seedSampleFamily } from "./sample-family";
 
+// Welche Fassung läuft (Klaus 2026-10-31: „damit ich nicht nur am Icon erkenne, was es für eine Version ist“):
+// in der Android- und der Windows-App „Pro“, im Browser (PWA) „Basic“ — wie BookLedgerPro / BookLedger Basic.
+const APP_VARIANTE: "Pro" | "Basic" = typeof window !== "undefined" && ((window as unknown as { Capacitor?: { isNativePlatform?: () => boolean } }).Capacitor?.isNativePlatform?.() || "__TAURI__" in window) ? "Pro" : "Basic";
+
 type UploadedDocument = {
   id: string; originalName: string; category: string; documentDate: string | null;
   mimeType: string; sizeBytes: number;
@@ -79,6 +84,8 @@ const HELP_CONTENT_VERSION = "2.28.1";
 const SYSTEM_CHECK_STORAGE_KEY = "mmi-family-system-check";
 const SYSTEM_CHECK_REPORTS_KEY = "mmi-family-system-check-reports";
 const SYSTEM_CHECK_BACKUPS_KEY = "mmi-family-system-check-backups";
+// Wird von der Systemprüfung (scripts/run-system-check.mjs) als Projektkennung erwartet.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SITE_PROJECT_LINK = "sites-project://appgprj_demo";
 
 const topNavigation: Array<{
@@ -890,6 +897,8 @@ function HealthPortalContent() {
     } catch (error) { setActionState("update", "failed"); setNotice({ kind: "error", text: error instanceof Error ? error.message : "Aktualisierung konnte nicht gespeichert werden." }); }
     finally { setBusy(false); }
   };
+  // Namen, die vor dem KI-Auftrag unkenntlich werden: Personen, Firmen, Objekte, Vertragsnummern und Empfänger der Akte.
+  const kiNamen = useMemo(() => familyRecords.flatMap((r) => { const d = (r as unknown as { data?: Record<string, unknown> }).data || {}; return ["displayName", "name", "contractNumber", "recipient", "recipientEmail"].map((k) => d[k]).filter((v): v is string => typeof v === "string" && v.trim().length >= 3); }), [familyRecords]);
   const openChatGPTEdit = (initialRequest = "") => { setActionState("chatgpt", "pending"); setEditInitialRequest(initialRequest); setEditOpen(true); };
   const openDocumentLibrary = (request: Partial<Omit<DocumentLibraryRequest, "key">> = {}) => {
     const next = { key: Date.now(), focusId: request.focusId || null, area: request.area || "", query: request.query || "" };
@@ -1066,8 +1075,8 @@ function HealthPortalContent() {
       <header className="site-header" onClick={(event) => event.stopPropagation()}>
         <div className="masthead">
           <button className="mobile-menu-button" onClick={() => setMobileOpen((value) => !value)} aria-label="Hauptmenü öffnen"><Menu size={22}/></button>
-          <button className="site-brand" onClick={() => go("overview")}><span className="brand-symbol">MMI</span><span><strong>FAMILIENAKTE</strong><small className="site-brand-version">Version {APP_VERSION}</small></span></button>
-          <div className="header-actions"><NetzSchalter/><button className="icon-button" onClick={() => window.print()} title="Aktuelle Seite drucken"><Printer size={18}/></button><a className="logout-button" href="./" onClick={(event) => { event.preventDefault(); window.location.reload(); }} title="Sicher aus der Familienakte ausloggen"><LogOut size={17}/> Ausloggen</a></div>
+          <button className="site-brand" onClick={() => go("overview")}><span className="brand-symbol brand-symbol-icon" data-variante={APP_VARIANTE.toLowerCase()}><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 19.2727C22 20.779 20.779 22 19.2727 22H14.7273C13.221 22 12 20.779 12 19.2727V12H19.2727C20.779 12 22 13.221 22 14.7273V19.2727Z" fill="#68C4FF"/><path d="M20 2C21.1046 2 22 2.89543 22 4V7C22 8.10457 21.1046 9 20 9H17C15.8954 9 15 8.10457 15 7V4C15 2.89543 15.8954 2 17 2H20Z" fill="#0C79D8"/><path d="M7 15C8.10457 15 9 15.8954 9 17V20C9 21.1046 8.10457 22 7 22H4C2.89543 22 2 21.1046 2 20V17C2 15.8954 2.89543 15 4 15H7Z" fill="#0C79D8"/><path d="M12 12H4.72727C3.22104 12 2 10.779 2 9.27273V4.72727C2 3.22104 3.22104 2 4.72727 2H9.27273C10.779 2 12 3.22104 12 4.72727V12Z" fill="#2E9EFF"/></svg></span><span><strong>FAMILIENAKTE <span className="site-brand-variante" data-variante={APP_VARIANTE.toLowerCase()}>{APP_VARIANTE}</span></strong><small className="site-brand-version">Version {APP_VERSION}</small></span></button>
+          <div className="header-actions"><NetzSchalter/><button className="icon-button" onClick={() => window.print()} title="Aktuelle Seite drucken"><Printer size={18}/></button><button type="button" className="icon-button aktualisieren-knopf" onClick={() => (window as unknown as { FamilienakteApp?: { aktualisieren?: () => void } }).FamilienakteApp?.aktualisieren?.()} title="Auf eine neue Fassung prüfen" aria-label="Auf eine neue Fassung prüfen"><RefreshCw size={18}/></button><a className="icon-button logout-button" href="./" onClick={(event) => { event.preventDefault(); window.location.reload(); }} title="Sicher aus der Familienakte ausloggen" aria-label="Ausloggen"><LogOut size={18}/></a></div>
         </div>
         <nav className={`main-navigation ${mobileOpen ? "mobile-open" : ""}`} aria-label="Hauptnavigation">
           <button className={active === "overview" ? "active" : ""} onClick={() => go("overview")}><Home size={17}/> Startseite</button>
@@ -1210,11 +1219,11 @@ function HealthPortalContent() {
       </main>
       <footer className="site-footer">
         <div className="footer-inner">
-          <div className="footer-brand-row"><div><strong>FAMILIENAKTE</strong><span><b>Version {APP_VERSION}</b> · zuletzt aktualisiert am {APP_VERSION_DATE}</span></div><small>Originalunterlagen bleiben verbindlich. Vorbereitete Bereiche enthalten noch keine behaupteten Aktenbestände.</small></div>
+          <div className="footer-brand-row"><div><strong>FAMILIENAKTE {APP_VARIANTE}</strong><span><b>Version {APP_VERSION}</b> · zuletzt aktualisiert am {APP_VERSION_DATE}</span></div><small>Originalunterlagen bleiben verbindlich. Vorbereitete Bereiche enthalten noch keine behaupteten Aktenbestände.</small></div>
           <nav className="footer-directory" aria-label="Weiterführende Bereiche der Familienakte">
             <section><h2>Familienakte</h2><ul><li><button onClick={() => go("cockpit")}>Interaktives Cockpit</button></li><li><button onClick={() => go("memory")}>Tagebuch & Erinnerungen</button></li><li><button onClick={() => go("reminders")}>Fristen und Aufgaben</button></li><li><button onClick={() => go("directory")}>Gesamtes Verzeichnis</button></li><li><button onClick={openLifeAreas}>Lebensbereiche</button></li></ul></section>
             <section><h2>Dokumente</h2><ul><li><button onClick={() => go("documents")}>Dokumentenbibliothek</button></li><li><button onClick={() => go("inbox")}>Eingangszentrale</button></li><li><button onClick={() => go("inventory")}>Bestand prüfen</button></li><li><button onClick={() => go("changelog")}>Was gibt’s Neues?</button></li></ul></section>
-            <section><h2>Unterstützung</h2><ul><li><button onClick={() => go("help")}>Hilfe</button></li><li><button onClick={() => openChatGPTEdit()}>Mit ChatGPT arbeiten</button></li><li><button onClick={() => go("systemcheck")}>Systemprüfung</button></li><li><button onClick={openFooterSystemReports}>Prüfberichte</button></li></ul></section>
+            <section><h2>Unterstützung</h2><ul><li><button onClick={() => go("help")}>Hilfe</button></li><li><button onClick={() => openChatGPTEdit()}>Mit KI arbeiten</button></li><li><button onClick={() => go("systemcheck")}>Systemprüfung</button></li><li><button onClick={openFooterSystemReports}>Prüfberichte</button></li></ul></section>
             <section><h2>Sicherheit und Verwaltung</h2><ul><li><button onClick={() => go("security")}>Sicherheitscenter</button></li><li><button onClick={() => { setExportOpen(true); reportActivity({ kind: "info", text: "Exportvorbereitung geöffnet. Umfang und Zielordner müssen vor dem Start ausdrücklich bestätigt werden; noch keine Datei geschrieben." }); }}>Familienakte exportieren</button></li><li><button onClick={() => go("versions")}>Versionshistorie</button></li></ul></section>
           </nav>
           <div className="footer-meta"><span>Me, Myself and I – Meine Familienakte{samplePresent ? ` · ${SAMPLE_NOTICE}` : ""}{!samplePresent && vaultHandle && <> · <button type="button" className="footer-sample-link" disabled={sampleBusy} onClick={() => void loadSampleData()}>Beispieldaten laden</button></>}</span><button onClick={() => go("security")}><LockKeyhole size={14}/> Datenschutz & Sicherheit</button></div>
@@ -1289,7 +1298,8 @@ function HealthPortalContent() {
           throw error;
         }
       }}/>} 
-      {editOpen && <ChatGPTEditDialog initialRequest={editInitialRequest} onClose={() => setEditOpen(false)} onNotice={setNotice} onStateChange={(state) => setActionState("chatgpt", state)}/>}
+      {editOpen && <KiAuftragDialog seiteId={active} seite={sectionLabels[active] || "Startseite"} initialRequest={editInitialRequest} documents={localDocuments} namen={kiNamen} readDocument={(id) => vaultHandle ? readLocalDocumentFile(vaultHandle, id) : Promise.reject(new Error("Kein Tresor geöffnet."))} onSaveAnswer={(file) => window.dispatchEvent(new CustomEvent("familienakte:dateien", { detail: { files: [file] } }))} onClose={() => setEditOpen(false)} onNotice={setNotice} onStateChange={(state) => setActionState("chatgpt", state)}/>}
+      <button type="button" className="ki-fab" onClick={() => openChatGPTEdit()} aria-label="Mit KI arbeiten" title={`Mit KI arbeiten – Seite „${sectionLabels[active] || "Startseite"}“`}><Sparkles size={20}/></button>
       {memoryReviewOpen && memoryDraft && vaultHandle && <MemoryReviewDialog
         draft={memoryDraft} documents={contextDocuments(documents, localDocuments)} records={familyRecords} relations={familyRelations} decisions={linkDecisions}
         onOpenDocument={openDocument}
@@ -3345,26 +3355,6 @@ function Sources({ onDocuments }: { onDocuments: OpenDocumentLibrary }) { return
 
 function PageTitle({ icon, title, text }: { icon: React.ReactNode; title: string; text: string }) { return <header className="page-title"><div>{icon}</div><span className="ui-heading-help"><h1>{title}</h1><InfoPopover label={`${title} erklären`} text={text}/></span></header>; }
 
-function ChatGPTEditDialog({ initialRequest, onClose, onNotice, onStateChange }: { initialRequest?: string; onClose: () => void; onNotice: (notice: Notice) => void; onStateChange: (state: ActionState) => void }) {
-  const [request, setRequest] = useState(initialRequest || "");
-  const fullPrompt = `Nimm die folgenden Änderungen an [Me, Myself and I – Meine Familienakte](${SITE_PROJECT_LINK}) vor:\n\n${request.trim() || "[Hier meinen Änderungswunsch einfügen]"}`;
-  const copyPrompt = async () => {
-    try {
-      await navigator.clipboard.writeText(fullPrompt);
-      onStateChange("success");
-      onNotice({ kind: "success", text: "Der Änderungsauftrag wurde kopiert. Öffne jetzt ChatGPT und füge ihn dort ein." });
-    } catch {
-      onStateChange("failed");
-      onNotice({ kind: "error", text: "Der Auftrag konnte nicht automatisch kopiert werden. Bitte markiere den Text und kopiere ihn von Hand." });
-    }
-  };
-  return <div className="modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}><div className="modal edit-dialog" role="dialog" aria-modal="true" aria-labelledby="edit-title"><div className="modal-head"><div><span className="badge success">Ohne kostenpflichtige API</span><span className="ui-heading-help"><h2 id="edit-title">Familienakte mit ChatGPT ändern</h2><InfoPopover label="Familienakte mit ChatGPT ändern erklären" text={UI_HELP["Familienakte mit ChatGPT ändern"]}/></span></div><button className="icon-button" onClick={onClose} aria-label="Fenster schließen"><X/></button></div>
-    <label><span>Was möchtest du verändern?</span><div className="dictation-field"><textarea rows={5} value={request} onChange={(event) => setRequest(event.target.value)} placeholder="Zum Beispiel: Ergänze im Bereich Fahrzeuge einen Unterpunkt für TÜV-Termine."/><DictationButton value={request} onChange={setRequest} label="Änderungswunsch"/></div></label>
-    <div className="edit-prompt-preview"><strong>Vorbereiteter Auftrag</strong><textarea readOnly rows={5} value={fullPrompt} onFocus={(event) => event.currentTarget.select()}/></div>
-    <p className="fine-print">Hier wird keine OpenAI-API verwendet. Du kopierst den Auftrag und öffnest damit dein normales ChatGPT. Erst dort entscheidest du, ob du ihn absendest.</p>
-    <div className="modal-actions"><button type="button" className="button secondary" onClick={copyPrompt}><Copy size={17}/> Auftrag kopieren</button><a className="button primary" href="https://chatgpt.com/" target="_blank" rel="noreferrer" onClick={() => onStateChange("success")}><ExternalLink size={17}/> ChatGPT öffnen</a></div>
-  </div></div>;
-}
 
 function ExportDialog({ sourceHandle, documents, localDocuments, records, relations, auditLog, onClose, onNotice }: {
   sourceHandle: FileSystemDirectoryHandle | null;
