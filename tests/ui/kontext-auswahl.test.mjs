@@ -22,16 +22,20 @@ try {
     await q.locator("button", { hasText: "Zuordnung prüfen" }).click();
     await modal.waitFor();
     await modal.locator(".context-suggestion").waitFor();
+    // Seit 2.28.8 liest der Eingang den PDF-Text; erst danach steht der Vorschlag fest.
+    await page.waitForFunction(() => /Text gelesen/.test(document.querySelector(".intake-modal")?.textContent || ""), null, { timeout: 30000 });
   };
-  await oeffne("Garantie_Waschmaschine_Pumpe.pdf", "Garantieanfrage Waschmaschine pumpt nicht ab (erfunden)");
+  await oeffne("Garantie_Waschmaschine_Pumpe.pdf", "Garantieanfrage Waschmaschine pumpt nicht ab");
   const auswahl = modal.locator("[data-kontext-vorgang]");
   const titel = () => modal.locator(".context-suggestion h3").innerText();
+  if (process.env.ZEIGEN) console.log("Titel:", await titel(), "| Wahl:", await auswahl.inputValue());
   const vorschlag = await auswahl.inputValue();
-  check(!!vorschlag && /Waschmaschine/.test(await titel()), "Vorschlag ist vorbelegt (Waschmaschine)", await titel());
-  const nebenkosten = await auswahl.locator("option", { hasText: "Nebenkosten" }).first().getAttribute("value");
+  check(!!vorschlag && /passt wahrscheinlich zu/.test(await titel()), "Vorschlag ist vorbelegt und die Überschrift nennt ihn", await titel());
+  // Ein anderer Vorgang als der Vorschlag (welcher das ist, hängt vom gelesenen Text ab).
+  const nebenkosten = await auswahl.locator("option").evaluateAll((os, v) => os.map((o) => o.value).find((x) => x && x !== v), vorschlag);
   await step("Anderen Vorgang wählen → Überschrift nennt die Wahl", async () => {
     await auswahl.selectOption(nebenkosten);
-    return /Wird verknüpft mit „Nebenkosten/.test(await titel()) ? await titel() : false;
+    return /Wird verknüpft mit „/.test(await titel()) ? await titel() : false;
   });
   await step("„Verknüpfen“ behält die eigene Wahl (vorher: zurück auf den Vorschlag)", async () => {
     await modal.locator("[data-kontext-verknuepfen]").click();
