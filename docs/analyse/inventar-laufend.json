@@ -2,11 +2,11 @@
  {
   "ort": "Startseite",
   "umgebung": "desktop",
-  "anzahl": 88,
+  "anzahl": 90,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -23,9 +23,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -203,7 +209,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 8.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 11.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -221,7 +227,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 26",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 29",
     "disabled": false,
     "cls": ""
    },
@@ -491,7 +497,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -530,17 +536,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "ASSISTENZ › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 54,
+  "anzahl": 56,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -557,9 +569,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -821,7 +839,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -860,17 +878,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "ASSISTENZ › Assistenzzentrale",
   "umgebung": "desktop",
-  "anzahl": 54,
+  "anzahl": 56,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -887,9 +911,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -1151,7 +1181,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -1190,17 +1220,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "ASSISTENZ › Korrespondenz",
   "umgebung": "desktop",
-  "anzahl": 47,
+  "anzahl": 49,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -1217,9 +1253,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -1439,7 +1481,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -1478,17 +1520,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "ASSISTENZ › Vorgänge weiterbearbeiten",
   "umgebung": "desktop",
-  "anzahl": 115,
+  "anzahl": 117,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -1505,9 +1553,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -1643,7 +1697,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 8.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 11.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -1661,7 +1715,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 26",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 29",
     "disabled": false,
     "cls": ""
    },
@@ -1715,7 +1769,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 26.10.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 29.10.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -1733,7 +1787,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 31.10.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 03.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -1751,7 +1805,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 02.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 05.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -1769,7 +1823,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 03.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 06.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -1787,7 +1841,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 08.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 11.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -1805,7 +1859,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 11.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 14.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -1949,25 +2003,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 28.10.2026 Nächste Aufgabe: Beim Ar",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 31.10.2026 Nächste Aufgabe: Beim Ar",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 28.10.2026 Nächste A",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 31.10.2026 Nächste A",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 28.10.2026 Nächste Aufgabe: Z",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 31.10.2026 Nächste Aufgabe: Z",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 28.10.2026 Nächste Aufgabe:",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 31.10.2026 Nächste Aufgabe:",
     "disabled": false,
     "cls": ""
    },
@@ -2039,19 +2093,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 28.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 31.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 28.10.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 31.10.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 28.10.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 31.10.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -2063,7 +2117,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 28.10.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 31.10.",
     "disabled": false,
     "cls": ""
    },
@@ -2135,7 +2189,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -2174,17 +2228,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "GESUNDHEIT & ARBEIT › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 45,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -2201,9 +2261,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -2411,7 +2477,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -2450,17 +2516,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "GESUNDHEIT & ARBEIT › Diagnosen, AU & ICD-Codes",
   "umgebung": "desktop",
-  "anzahl": 56,
+  "anzahl": 58,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -2477,9 +2549,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -2753,7 +2831,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -2792,17 +2870,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "GESUNDHEIT & ARBEIT › Krankenkasse & Leistungen",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -2819,9 +2903,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -3035,7 +3125,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -3074,17 +3164,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "GESUNDHEIT & ARBEIT › Arbeit & Arbeitgeber",
   "umgebung": "desktop",
-  "anzahl": 47,
+  "anzahl": 49,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -3101,9 +3197,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -3323,7 +3425,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -3362,17 +3464,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "GESUNDHEIT & ARBEIT › Anträge & Bescheide",
   "umgebung": "desktop",
-  "anzahl": 50,
+  "anzahl": 52,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -3389,9 +3497,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -3629,7 +3743,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -3668,17 +3782,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "GESUNDHEIT & ARBEIT › Anfragen & Antworten",
   "umgebung": "desktop",
-  "anzahl": 47,
+  "anzahl": 49,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -3695,9 +3815,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -3917,7 +4043,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -3956,17 +4082,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "FAMILIE & PERSONEN › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 44,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -3983,9 +4115,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -4187,7 +4325,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -4226,17 +4364,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "FAMILIE & PERSONEN › Interaktives Cockpit",
   "umgebung": "desktop",
-  "anzahl": 115,
+  "anzahl": 117,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -4253,9 +4397,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -4391,7 +4541,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 8.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 11.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -4409,7 +4559,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 26",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 29",
     "disabled": false,
     "cls": ""
    },
@@ -4463,7 +4613,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 26.10.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 29.10.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4481,7 +4631,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 31.10.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 03.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4499,7 +4649,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 02.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 05.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4517,7 +4667,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 03.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 06.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4535,7 +4685,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 08.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 11.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4553,7 +4703,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 11.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 14.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4697,25 +4847,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 28.10.2026 Nächste Aufgabe: Beim Ar",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 31.10.2026 Nächste Aufgabe: Beim Ar",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 28.10.2026 Nächste A",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 31.10.2026 Nächste A",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 28.10.2026 Nächste Aufgabe: Z",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 31.10.2026 Nächste Aufgabe: Z",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 28.10.2026 Nächste Aufgabe:",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 31.10.2026 Nächste Aufgabe:",
     "disabled": false,
     "cls": ""
    },
@@ -4787,19 +4937,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 28.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 31.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 28.10.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 31.10.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 28.10.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 31.10.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -4811,7 +4961,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 28.10.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 31.10.",
     "disabled": false,
     "cls": ""
    },
@@ -4883,7 +5033,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -4922,17 +5072,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "FAMILIE & PERSONEN › Familienübersicht",
   "umgebung": "desktop",
-  "anzahl": 44,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -4949,9 +5105,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -5153,7 +5315,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -5192,17 +5354,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "FAMILIE & PERSONEN › Fristen und Aufgaben",
   "umgebung": "desktop",
-  "anzahl": 127,
+  "anzahl": 129,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -5219,9 +5387,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -5447,7 +5621,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 7c3405af-8792-4066-babf-1982e1ba3615",
+    "text": "Dokument: e5dae2dd-1c5c-4a67-9949-ecf8ca1ea43b",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5519,7 +5693,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 1c74a549-4ee1-4d17-b946-1841d5e111c6",
+    "text": "Dokument: 5d6ab0a2-e2d3-4d7c-9e2f-8c993473841e",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5549,7 +5723,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 70a705ff-6a14-4870-913c-ac7c93d7e75b",
+    "text": "Dokument: b52659b0-1c11-476e-b8bc-a69851f42a1b",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5657,7 +5831,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 70a705ff-6a14-4870-913c-ac7c93d7e75b",
+    "text": "Dokument: b52659b0-1c11-476e-b8bc-a69851f42a1b",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5921,7 +6095,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -5960,17 +6134,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "FAMILIE & PERSONEN › Tagebuch & Erinnerungen",
   "umgebung": "desktop",
-  "anzahl": 70,
+  "anzahl": 72,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -5987,9 +6167,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -6221,31 +6407,31 @@
    },
    {
     "art": "Knopf",
-    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 22.10.2026, 19:00 · Reis",
+    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 25.10.2026, 19:00 · Reis",
     "disabled": false,
     "cls": "active"
    },
    {
     "art": "Knopf",
-    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 19.10.2026, 19:00 · Technik, Ge",
+    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 22.10.2026, 19:00 · Technik, Ge",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 16.10.2026, 19:00 ·",
+    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 19.10.2026, 19:00 ·",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 29.08.202",
+    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 01.09.202",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 22.09.2025, 19:00 · Haus & Wohnu",
+    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 25.09.2025, 19:00 · Haus & Wohnu",
     "disabled": false,
     "cls": ""
    },
@@ -6347,7 +6533,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -6386,17 +6572,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "FAMILIE & PERSONEN › Gesamtes Verzeichnis",
   "umgebung": "desktop",
-  "anzahl": 81,
+  "anzahl": 83,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -6413,9 +6605,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -6839,7 +7037,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -6878,17 +7076,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "FAMILIE & PERSONEN › Vollmachten & Vorsorge",
   "umgebung": "desktop",
-  "anzahl": 44,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -6905,9 +7109,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -7109,7 +7319,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -7148,17 +7358,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "FAMILIE & PERSONEN › Versicherungen & Verträge",
   "umgebung": "desktop",
-  "anzahl": 44,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -7175,9 +7391,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -7379,7 +7601,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -7418,17 +7640,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "WOHNEN › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -7445,9 +7673,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -7661,7 +7895,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -7700,17 +7934,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "WOHNEN › Miet- & Vermieterunterlagen",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -7727,9 +7967,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -7943,7 +8189,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -7982,17 +8228,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "WOHNEN › Nebenkosten & Zahlungen",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -8009,9 +8261,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -8225,7 +8483,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -8264,17 +8522,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "WOHNEN › Mängel & Reparaturen",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -8291,9 +8555,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -8507,7 +8777,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -8546,17 +8816,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "FAHRZEUGE › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -8573,9 +8849,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -8789,7 +9071,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -8828,17 +9110,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "FAHRZEUGE › Fahrzeugpapiere",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -8855,9 +9143,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -9071,7 +9365,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -9110,17 +9404,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "FAHRZEUGE › Werkstatt & Wartung",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -9137,9 +9437,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -9353,7 +9659,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -9392,17 +9698,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "FAHRZEUGE › TÜV & Versicherung",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -9419,9 +9731,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -9635,7 +9953,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -9674,17 +9992,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "KÄUFE & GARANTIEN › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -9701,9 +10025,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -9917,7 +10247,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -9956,17 +10286,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "KÄUFE & GARANTIEN › Käufe & Rechnungen",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -9983,9 +10319,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -10199,7 +10541,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -10238,17 +10580,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "KÄUFE & GARANTIEN › Garantie & Reparatur",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -10265,9 +10613,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -10481,7 +10835,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -10520,17 +10874,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "KÄUFE & GARANTIEN › Geräte & Technik",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -10547,9 +10907,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -10763,7 +11129,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -10802,17 +11168,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "DOKUMENTE › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 295,
+  "anzahl": 319,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -10829,9 +11201,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -10985,7 +11363,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "29.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -10994,6 +11372,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -11045,7 +11429,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "25.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11054,6 +11438,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -11111,7 +11501,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "22.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11120,6 +11510,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -11171,7 +11567,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "19.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11180,6 +11576,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -11237,7 +11639,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.10.2026",
+    "text": "16.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11246,6 +11648,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -11291,7 +11699,7 @@
    },
    {
     "art": "Knopf",
-    "text": "08.10.2026",
+    "text": "11.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11300,6 +11708,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -11351,7 +11765,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2026",
+    "text": "04.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11360,6 +11774,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -11405,7 +11825,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.08.2026",
+    "text": "17.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11414,6 +11834,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -11531,7 +11957,7 @@
    },
    {
     "art": "Knopf",
-    "text": "27.11.2024",
+    "text": "30.11.2024",
     "disabled": false,
     "cls": ""
    },
@@ -11540,6 +11966,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -11591,7 +12023,7 @@
    },
    {
     "art": "Knopf",
-    "text": "08.10.2026",
+    "text": "11.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11600,6 +12032,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -11657,7 +12095,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.08.2026",
+    "text": "17.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11666,6 +12104,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -11717,7 +12161,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.02.2025",
+    "text": "28.02.2025",
     "disabled": false,
     "cls": ""
    },
@@ -11726,6 +12170,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -11789,7 +12239,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "25.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11798,6 +12248,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -11861,7 +12317,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.10.2026",
+    "text": "16.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11870,6 +12326,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -11921,7 +12383,7 @@
    },
    {
     "art": "Knopf",
-    "text": "10.06.2026",
+    "text": "13.06.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11975,7 +12437,7 @@
    },
    {
     "art": "Knopf",
-    "text": "11.04.2026",
+    "text": "14.04.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12029,7 +12491,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "19.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12038,6 +12500,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -12095,7 +12563,7 @@
    },
    {
     "art": "Knopf",
-    "text": "21.09.2025",
+    "text": "24.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -12104,6 +12572,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -12149,7 +12623,7 @@
    },
    {
     "art": "Knopf",
-    "text": "24.08.2025",
+    "text": "27.08.2025",
     "disabled": false,
     "cls": ""
    },
@@ -12158,6 +12632,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -12215,7 +12695,7 @@
    },
    {
     "art": "Knopf",
-    "text": "28.09.2025",
+    "text": "01.10.2025",
     "disabled": false,
     "cls": ""
    },
@@ -12224,6 +12704,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -12269,7 +12755,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "29.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12278,6 +12764,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -12329,7 +12821,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "22.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12338,6 +12830,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -12395,7 +12893,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2026",
+    "text": "04.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12404,6 +12902,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -12449,7 +12953,7 @@
    },
    {
     "art": "Knopf",
-    "text": "23.09.2025",
+    "text": "26.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -12458,6 +12962,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -12539,7 +13049,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -12578,17 +13088,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "DOKUMENTE › Dokumentenbibliothek",
   "umgebung": "desktop",
-  "anzahl": 295,
+  "anzahl": 319,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -12605,9 +13121,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -12761,7 +13283,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "29.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12770,6 +13292,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -12821,7 +13349,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "25.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12830,6 +13358,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -12887,7 +13421,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "22.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12896,6 +13430,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -12947,7 +13487,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "19.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12956,6 +13496,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -13013,7 +13559,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.10.2026",
+    "text": "16.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13022,6 +13568,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -13067,7 +13619,7 @@
    },
    {
     "art": "Knopf",
-    "text": "08.10.2026",
+    "text": "11.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13076,6 +13628,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -13127,7 +13685,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2026",
+    "text": "04.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13136,6 +13694,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -13181,7 +13745,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.08.2026",
+    "text": "17.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13190,6 +13754,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -13307,7 +13877,7 @@
    },
    {
     "art": "Knopf",
-    "text": "27.11.2024",
+    "text": "30.11.2024",
     "disabled": false,
     "cls": ""
    },
@@ -13316,6 +13886,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -13367,7 +13943,7 @@
    },
    {
     "art": "Knopf",
-    "text": "08.10.2026",
+    "text": "11.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13376,6 +13952,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -13433,7 +14015,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.08.2026",
+    "text": "17.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13442,6 +14024,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -13493,7 +14081,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.02.2025",
+    "text": "28.02.2025",
     "disabled": false,
     "cls": ""
    },
@@ -13502,6 +14090,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -13565,7 +14159,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "25.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13574,6 +14168,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -13637,7 +14237,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.10.2026",
+    "text": "16.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13646,6 +14246,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -13697,7 +14303,7 @@
    },
    {
     "art": "Knopf",
-    "text": "10.06.2026",
+    "text": "13.06.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13751,7 +14357,7 @@
    },
    {
     "art": "Knopf",
-    "text": "11.04.2026",
+    "text": "14.04.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13805,7 +14411,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "19.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13814,6 +14420,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -13871,7 +14483,7 @@
    },
    {
     "art": "Knopf",
-    "text": "21.09.2025",
+    "text": "24.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -13880,6 +14492,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -13925,7 +14543,7 @@
    },
    {
     "art": "Knopf",
-    "text": "24.08.2025",
+    "text": "27.08.2025",
     "disabled": false,
     "cls": ""
    },
@@ -13934,6 +14552,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -13991,7 +14615,7 @@
    },
    {
     "art": "Knopf",
-    "text": "28.09.2025",
+    "text": "01.10.2025",
     "disabled": false,
     "cls": ""
    },
@@ -14000,6 +14624,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -14045,7 +14675,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "29.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14054,6 +14684,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -14105,7 +14741,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "22.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14114,6 +14750,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -14171,7 +14813,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2026",
+    "text": "04.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14180,6 +14822,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -14225,7 +14873,7 @@
    },
    {
     "art": "Knopf",
-    "text": "23.09.2025",
+    "text": "26.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -14234,6 +14882,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -14315,7 +14969,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -14354,17 +15008,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "DOKUMENTE › Bestand prüfen",
   "umgebung": "desktop",
-  "anzahl": 38,
+  "anzahl": 40,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -14381,9 +15041,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -14549,7 +15215,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -14588,17 +15254,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "DOKUMENTE › Eingangszentrale",
   "umgebung": "desktop",
-  "anzahl": 76,
+  "anzahl": 92,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -14615,9 +15287,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -14819,6 +15497,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Abgleich vormerken",
     "disabled": false,
     "cls": ""
@@ -14831,15 +15515,33 @@
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Versicherungsschein_Hausrat.pdf",
     "disabled": false,
     "cls": "document-title-link"
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Antrag_Teilzeit_Jonna.pdf",
     "disabled": false,
     "cls": "document-title-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -14852,6 +15554,12 @@
     "text": "Gehaltsabrechnung_Jonna.pdf",
     "disabled": false,
     "cls": "document-title-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -14873,6 +15581,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Abgleich vormerken",
     "disabled": false,
     "cls": ""
@@ -14885,9 +15599,21 @@
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Nebenkostenabrechnung_2025.pdf",
     "disabled": false,
     "cls": "document-title-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -14903,9 +15629,21 @@
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Uebergabeprotokoll_Wohnung.pdf",
     "disabled": false,
     "cls": "document-title-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -14915,9 +15653,21 @@
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Reparaturauftrag_Schraubenglueck.pdf",
     "disabled": false,
     "cls": "document-title-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -14933,6 +15683,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Als eingearbeitet bestätigen",
     "disabled": false,
     "cls": ""
@@ -14942,6 +15698,12 @@
     "text": "Rechnung_Waschmaschine_Waschwunder_7.pdf",
     "disabled": false,
     "cls": "document-title-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -15011,7 +15773,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -15050,17 +15812,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "DOKUMENTE › Sicherheit & lokaler Tresor",
   "umgebung": "desktop",
-  "anzahl": 54,
+  "anzahl": 56,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -15077,9 +15845,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -15341,7 +16115,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -15380,17 +16154,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "DOKUMENTE › Unterlagen & Quellen",
   "umgebung": "desktop",
-  "anzahl": 53,
+  "anzahl": 55,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -15407,9 +16187,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -15665,7 +16451,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -15704,17 +16490,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "DOKUMENTE › Alle Bereiche",
   "umgebung": "desktop",
-  "anzahl": 81,
+  "anzahl": 83,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -15731,9 +16523,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -16157,7 +16955,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -16196,17 +16994,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "HILFE › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 67,
+  "anzahl": 69,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -16223,9 +17027,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -16565,7 +17375,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -16604,17 +17414,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "HILFE › Hilfe & erste Schritte",
   "umgebung": "desktop",
-  "anzahl": 67,
+  "anzahl": 69,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -16631,9 +17447,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -16973,7 +17795,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -17012,17 +17834,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "HILFE › Systemprüfung",
   "umgebung": "desktop",
-  "anzahl": 97,
+  "anzahl": 99,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -17039,9 +17867,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -17561,7 +18395,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -17600,17 +18434,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "HILFE › Was gibt’s Neues?",
   "umgebung": "desktop",
-  "anzahl": 395,
+  "anzahl": 397,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -17627,9 +18467,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -19937,7 +20783,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -19976,17 +20822,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "HILFE › Versionshistorie",
   "umgebung": "desktop",
-  "anzahl": 38,
+  "anzahl": 40,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -20003,9 +20855,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -20171,7 +21029,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -20210,17 +21068,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "HILFE › Datentresor-Hilfe",
   "umgebung": "desktop",
-  "anzahl": 54,
+  "anzahl": 56,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -20237,9 +21101,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -20501,7 +21371,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -20540,17 +21410,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Fußzeile › Interaktives Cockpit",
   "umgebung": "desktop",
-  "anzahl": 115,
+  "anzahl": 117,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -20567,9 +21443,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -20705,7 +21587,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 8.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 11.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -20723,7 +21605,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 26",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 29",
     "disabled": false,
     "cls": ""
    },
@@ -20777,7 +21659,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 26.10.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 29.10.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -20795,7 +21677,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 31.10.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 03.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -20813,7 +21695,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 02.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 05.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -20831,7 +21713,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 03.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 06.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -20849,7 +21731,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 08.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 11.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -20867,7 +21749,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 11.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 14.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -21011,25 +21893,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 28.10.2026 Nächste Aufgabe: Beim Ar",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 31.10.2026 Nächste Aufgabe: Beim Ar",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 28.10.2026 Nächste A",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 31.10.2026 Nächste A",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 28.10.2026 Nächste Aufgabe: Z",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 31.10.2026 Nächste Aufgabe: Z",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 28.10.2026 Nächste Aufgabe:",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 31.10.2026 Nächste Aufgabe:",
     "disabled": false,
     "cls": ""
    },
@@ -21101,19 +21983,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 28.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 31.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 28.10.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 31.10.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 28.10.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 31.10.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -21125,7 +22007,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 28.10.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 31.10.",
     "disabled": false,
     "cls": ""
    },
@@ -21197,7 +22079,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -21236,17 +22118,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Fußzeile › Tagebuch & Erinnerungen",
   "umgebung": "desktop",
-  "anzahl": 70,
+  "anzahl": 72,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -21263,9 +22151,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -21497,31 +22391,31 @@
    },
    {
     "art": "Knopf",
-    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 22.10.2026, 19:00 · Reis",
+    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 25.10.2026, 19:00 · Reis",
     "disabled": false,
     "cls": "active"
    },
    {
     "art": "Knopf",
-    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 19.10.2026, 19:00 · Technik, Ge",
+    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 22.10.2026, 19:00 · Technik, Ge",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 16.10.2026, 19:00 ·",
+    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 19.10.2026, 19:00 ·",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 29.08.202",
+    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 01.09.202",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 22.09.2025, 19:00 · Haus & Wohnu",
+    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 25.09.2025, 19:00 · Haus & Wohnu",
     "disabled": false,
     "cls": ""
    },
@@ -21623,7 +22517,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -21662,17 +22556,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Fußzeile › Fristen und Aufgaben",
   "umgebung": "desktop",
-  "anzahl": 127,
+  "anzahl": 129,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -21689,9 +22589,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -21917,7 +22823,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 7c3405af-8792-4066-babf-1982e1ba3615",
+    "text": "Dokument: e5dae2dd-1c5c-4a67-9949-ecf8ca1ea43b",
     "disabled": false,
     "cls": "text-link"
    },
@@ -21989,7 +22895,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 1c74a549-4ee1-4d17-b946-1841d5e111c6",
+    "text": "Dokument: 5d6ab0a2-e2d3-4d7c-9e2f-8c993473841e",
     "disabled": false,
     "cls": "text-link"
    },
@@ -22019,7 +22925,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 70a705ff-6a14-4870-913c-ac7c93d7e75b",
+    "text": "Dokument: b52659b0-1c11-476e-b8bc-a69851f42a1b",
     "disabled": false,
     "cls": "text-link"
    },
@@ -22127,7 +23033,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 70a705ff-6a14-4870-913c-ac7c93d7e75b",
+    "text": "Dokument: b52659b0-1c11-476e-b8bc-a69851f42a1b",
     "disabled": false,
     "cls": "text-link"
    },
@@ -22391,7 +23297,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -22430,17 +23336,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Fußzeile › Gesamtes Verzeichnis",
   "umgebung": "desktop",
-  "anzahl": 81,
+  "anzahl": 83,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -22457,9 +23369,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -22883,7 +23801,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -22922,17 +23840,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Fußzeile › Lebensbereiche",
   "umgebung": "desktop",
-  "anzahl": 88,
+  "anzahl": 90,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -22949,9 +23873,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -23129,7 +24059,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 8.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 11.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -23147,7 +24077,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 26",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 29",
     "disabled": false,
     "cls": ""
    },
@@ -23417,7 +24347,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -23456,17 +24386,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Fußzeile › Dokumentenbibliothek",
   "umgebung": "desktop",
-  "anzahl": 295,
+  "anzahl": 319,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -23483,9 +24419,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -23639,7 +24581,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "29.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -23648,6 +24590,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -23699,7 +24647,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "25.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -23708,6 +24656,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -23765,7 +24719,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "22.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -23774,6 +24728,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -23825,7 +24785,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "19.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -23834,6 +24794,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -23891,7 +24857,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.10.2026",
+    "text": "16.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -23900,6 +24866,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -23945,7 +24917,7 @@
    },
    {
     "art": "Knopf",
-    "text": "08.10.2026",
+    "text": "11.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -23954,6 +24926,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -24005,7 +24983,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2026",
+    "text": "04.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24014,6 +24992,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -24059,7 +25043,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.08.2026",
+    "text": "17.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24068,6 +25052,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -24185,7 +25175,7 @@
    },
    {
     "art": "Knopf",
-    "text": "27.11.2024",
+    "text": "30.11.2024",
     "disabled": false,
     "cls": ""
    },
@@ -24194,6 +25184,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -24245,7 +25241,7 @@
    },
    {
     "art": "Knopf",
-    "text": "08.10.2026",
+    "text": "11.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24254,6 +25250,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -24311,7 +25313,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.08.2026",
+    "text": "17.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24320,6 +25322,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -24371,7 +25379,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.02.2025",
+    "text": "28.02.2025",
     "disabled": false,
     "cls": ""
    },
@@ -24380,6 +25388,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -24443,7 +25457,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "25.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24452,6 +25466,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -24515,7 +25535,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.10.2026",
+    "text": "16.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24524,6 +25544,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -24575,7 +25601,7 @@
    },
    {
     "art": "Knopf",
-    "text": "10.06.2026",
+    "text": "13.06.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24629,7 +25655,7 @@
    },
    {
     "art": "Knopf",
-    "text": "11.04.2026",
+    "text": "14.04.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24683,7 +25709,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "19.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24692,6 +25718,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -24749,7 +25781,7 @@
    },
    {
     "art": "Knopf",
-    "text": "21.09.2025",
+    "text": "24.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -24758,6 +25790,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -24803,7 +25841,7 @@
    },
    {
     "art": "Knopf",
-    "text": "24.08.2025",
+    "text": "27.08.2025",
     "disabled": false,
     "cls": ""
    },
@@ -24812,6 +25850,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -24869,7 +25913,7 @@
    },
    {
     "art": "Knopf",
-    "text": "28.09.2025",
+    "text": "01.10.2025",
     "disabled": false,
     "cls": ""
    },
@@ -24878,6 +25922,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -24923,7 +25973,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "29.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24932,6 +25982,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -24983,7 +26039,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "22.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24992,6 +26048,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -25049,7 +26111,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2026",
+    "text": "04.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -25058,6 +26120,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -25103,7 +26171,7 @@
    },
    {
     "art": "Knopf",
-    "text": "23.09.2025",
+    "text": "26.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -25112,6 +26180,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -25193,7 +26267,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -25232,17 +26306,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Fußzeile › Eingangszentrale",
   "umgebung": "desktop",
-  "anzahl": 76,
+  "anzahl": 92,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -25259,9 +26339,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -25463,6 +26549,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Abgleich vormerken",
     "disabled": false,
     "cls": ""
@@ -25475,15 +26567,33 @@
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Versicherungsschein_Hausrat.pdf",
     "disabled": false,
     "cls": "document-title-link"
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Antrag_Teilzeit_Jonna.pdf",
     "disabled": false,
     "cls": "document-title-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -25496,6 +26606,12 @@
     "text": "Gehaltsabrechnung_Jonna.pdf",
     "disabled": false,
     "cls": "document-title-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -25517,6 +26633,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Abgleich vormerken",
     "disabled": false,
     "cls": ""
@@ -25529,9 +26651,21 @@
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Nebenkostenabrechnung_2025.pdf",
     "disabled": false,
     "cls": "document-title-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -25547,9 +26681,21 @@
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Uebergabeprotokoll_Wohnung.pdf",
     "disabled": false,
     "cls": "document-title-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -25559,9 +26705,21 @@
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Reparaturauftrag_Schraubenglueck.pdf",
     "disabled": false,
     "cls": "document-title-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -25577,6 +26735,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Als eingearbeitet bestätigen",
     "disabled": false,
     "cls": ""
@@ -25586,6 +26750,12 @@
     "text": "Rechnung_Waschmaschine_Waschwunder_7.pdf",
     "disabled": false,
     "cls": "document-title-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -25655,7 +26825,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -25694,17 +26864,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Fußzeile › Bestand prüfen",
   "umgebung": "desktop",
-  "anzahl": 38,
+  "anzahl": 40,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -25721,9 +26897,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -25889,7 +27071,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -25928,17 +27110,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Fußzeile › Was gibt’s Neues?",
   "umgebung": "desktop",
-  "anzahl": 395,
+  "anzahl": 397,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -25955,9 +27143,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -28265,7 +29459,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -28304,17 +29498,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Fußzeile › Hilfe",
   "umgebung": "desktop",
-  "anzahl": 67,
+  "anzahl": 69,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -28331,9 +29531,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -28673,7 +29879,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -28712,17 +29918,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Fußzeile › Systemprüfung",
   "umgebung": "desktop",
-  "anzahl": 97,
+  "anzahl": 99,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -28739,9 +29951,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -29261,7 +30479,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -29300,17 +30518,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Fußzeile › Prüfberichte",
   "umgebung": "desktop",
-  "anzahl": 97,
+  "anzahl": 99,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -29327,9 +30551,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -29849,7 +31079,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -29888,17 +31118,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Fußzeile › Sicherheitscenter",
   "umgebung": "desktop",
-  "anzahl": 54,
+  "anzahl": 56,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -29915,9 +31151,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -30179,7 +31421,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -30218,17 +31460,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Fußzeile › Versionshistorie",
   "umgebung": "desktop",
-  "anzahl": 38,
+  "anzahl": 40,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -30245,9 +31493,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -30413,7 +31667,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -30452,17 +31706,23 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
-  "ort": "Dialog › Mit ChatGPT arbeiten",
+  "ort": "Dialog › Mit KI arbeiten",
   "umgebung": "desktop",
-  "anzahl": 43,
+  "anzahl": 51,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -30479,9 +31739,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -30647,7 +31913,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -30689,7 +31955,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Familienakte mit ChatGPT ändern erklären",
+    "text": "Mit KI arbeiten erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
@@ -30701,9 +31967,45 @@
    },
    {
     "art": "Knopf",
-    "text": "Änderungswunsch: Diktat starten",
+    "text": "ChatGPT",
+    "disabled": false,
+    "cls": "ki-wahl aktiv"
+   },
+   {
+    "art": "Knopf",
+    "text": "Claude",
+    "disabled": false,
+    "cls": "ki-wahl "
+   },
+   {
+    "art": "Knopf",
+    "text": "Claude Code",
+    "disabled": false,
+    "cls": "ki-wahl "
+   },
+   {
+    "art": "Knopf",
+    "text": "App ändern",
+    "disabled": false,
+    "cls": "ki-wahl aktiv"
+   },
+   {
+    "art": "Knopf",
+    "text": "Unterlage bearbeiten",
+    "disabled": false,
+    "cls": "ki-wahl "
+   },
+   {
+    "art": "Knopf",
+    "text": "Wunsch: Diktat starten",
     "disabled": true,
     "cls": "dictation-button "
+   },
+   {
+    "art": "Knopf",
+    "text": "Merken",
+    "disabled": true,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
@@ -30712,20 +32014,27 @@
     "cls": "button secondary"
    },
    {
-    "art": "Link",
-    "text": "ChatGPT öffnen",
+    "art": "Knopf",
+    "text": "In ChatGPT öffnen",
+    "disabled": true,
     "cls": "button primary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Dialog › Familienakte exportieren",
   "umgebung": "desktop",
-  "anzahl": 52,
+  "anzahl": 54,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -30742,9 +32051,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -30910,7 +32225,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -30949,6 +32264,12 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    },
    {
     "art": "Knopf",
@@ -31039,7 +32360,7 @@
  {
   "ort": "Startseite",
   "umgebung": "handy",
-  "anzahl": 80,
+  "anzahl": 82,
   "elemente": [
    {
     "art": "Knopf",
@@ -31049,7 +32370,7 @@
    },
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -31066,9 +32387,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -31192,7 +32519,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 8.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 11.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -31210,7 +32537,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 26",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 29",
     "disabled": false,
     "cls": ""
    },
@@ -31480,7 +32807,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -31519,13 +32846,19 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "ASSISTENZ › Assistenzzentrale",
   "umgebung": "handy",
-  "anzahl": 46,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
@@ -31535,7 +32868,7 @@
    },
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -31552,9 +32885,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -31762,7 +33101,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -31801,13 +33140,19 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "GESUNDHEIT & ARBEIT › Diagnosen, AU & ICD-Codes",
   "umgebung": "handy",
-  "anzahl": 48,
+  "anzahl": 50,
   "elemente": [
    {
     "art": "Knopf",
@@ -31817,7 +33162,7 @@
    },
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -31834,9 +33179,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -32056,7 +33407,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -32095,13 +33446,19 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "FAMILIE & PERSONEN › Interaktives Cockpit",
   "umgebung": "handy",
-  "anzahl": 107,
+  "anzahl": 109,
   "elemente": [
    {
     "art": "Knopf",
@@ -32111,7 +33468,7 @@
    },
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -32128,9 +33485,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -32212,7 +33575,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 8.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 11.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -32230,7 +33593,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 26",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 29",
     "disabled": false,
     "cls": ""
    },
@@ -32284,7 +33647,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 26.10.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 29.10.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -32302,7 +33665,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 31.10.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 03.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -32320,7 +33683,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 02.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 05.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -32338,7 +33701,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 03.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 06.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -32356,7 +33719,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 08.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 11.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -32374,7 +33737,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 11.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 14.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -32518,25 +33881,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 28.10.2026 Nächste Aufgabe: Beim Ar",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 31.10.2026 Nächste Aufgabe: Beim Ar",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 28.10.2026 Nächste A",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 31.10.2026 Nächste A",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 28.10.2026 Nächste Aufgabe: Z",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 31.10.2026 Nächste Aufgabe: Z",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 28.10.2026 Nächste Aufgabe:",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 31.10.2026 Nächste Aufgabe:",
     "disabled": false,
     "cls": ""
    },
@@ -32608,19 +33971,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 28.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 31.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 28.10.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 31.10.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 28.10.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 31.10.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -32632,7 +33995,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 28.10.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 31.10.",
     "disabled": false,
     "cls": ""
    },
@@ -32704,7 +34067,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -32743,13 +34106,19 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "WOHNEN › Miet- & Vermieterunterlagen",
   "umgebung": "handy",
-  "anzahl": 38,
+  "anzahl": 40,
   "elemente": [
    {
     "art": "Knopf",
@@ -32759,7 +34128,7 @@
    },
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -32776,9 +34145,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -32938,7 +34313,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -32977,13 +34352,19 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "FAHRZEUGE › Fahrzeugpapiere",
   "umgebung": "handy",
-  "anzahl": 38,
+  "anzahl": 40,
   "elemente": [
    {
     "art": "Knopf",
@@ -32993,7 +34374,7 @@
    },
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -33010,9 +34391,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -33172,7 +34559,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -33211,13 +34598,19 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "KÄUFE & GARANTIEN › Käufe & Rechnungen",
   "umgebung": "handy",
-  "anzahl": 38,
+  "anzahl": 40,
   "elemente": [
    {
     "art": "Knopf",
@@ -33227,7 +34620,7 @@
    },
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -33244,9 +34637,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -33406,7 +34805,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -33445,13 +34844,19 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "DOKUMENTE › Dokumentenbibliothek",
   "umgebung": "handy",
-  "anzahl": 263,
+  "anzahl": 287,
   "elemente": [
    {
     "art": "Knopf",
@@ -33461,7 +34866,7 @@
    },
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -33478,9 +34883,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -33580,7 +34991,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "29.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -33589,6 +35000,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -33634,7 +35051,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "25.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -33643,6 +35060,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -33694,7 +35117,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "22.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -33703,6 +35126,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -33748,7 +35177,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "19.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -33757,6 +35186,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -33808,7 +35243,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.10.2026",
+    "text": "16.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -33817,6 +35252,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -33856,7 +35297,7 @@
    },
    {
     "art": "Knopf",
-    "text": "08.10.2026",
+    "text": "11.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -33865,6 +35306,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -33910,7 +35357,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2026",
+    "text": "04.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -33919,6 +35366,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -33958,7 +35411,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.08.2026",
+    "text": "17.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -33967,6 +35420,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -34078,7 +35537,7 @@
    },
    {
     "art": "Knopf",
-    "text": "27.11.2024",
+    "text": "30.11.2024",
     "disabled": false,
     "cls": ""
    },
@@ -34087,6 +35546,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -34132,7 +35597,7 @@
    },
    {
     "art": "Knopf",
-    "text": "08.10.2026",
+    "text": "11.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -34141,6 +35606,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -34192,7 +35663,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.08.2026",
+    "text": "17.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -34201,6 +35672,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -34246,7 +35723,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.02.2025",
+    "text": "28.02.2025",
     "disabled": false,
     "cls": ""
    },
@@ -34255,6 +35732,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -34312,7 +35795,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "25.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -34321,6 +35804,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -34378,7 +35867,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.10.2026",
+    "text": "16.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -34387,6 +35876,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -34432,7 +35927,7 @@
    },
    {
     "art": "Knopf",
-    "text": "10.06.2026",
+    "text": "13.06.2026",
     "disabled": false,
     "cls": ""
    },
@@ -34480,7 +35975,7 @@
    },
    {
     "art": "Knopf",
-    "text": "11.04.2026",
+    "text": "14.04.2026",
     "disabled": false,
     "cls": ""
    },
@@ -34528,7 +36023,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "19.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -34537,6 +36032,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -34588,7 +36089,7 @@
    },
    {
     "art": "Knopf",
-    "text": "21.09.2025",
+    "text": "24.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -34597,6 +36098,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -34636,7 +36143,7 @@
    },
    {
     "art": "Knopf",
-    "text": "24.08.2025",
+    "text": "27.08.2025",
     "disabled": false,
     "cls": ""
    },
@@ -34645,6 +36152,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -34696,7 +36209,7 @@
    },
    {
     "art": "Knopf",
-    "text": "28.09.2025",
+    "text": "01.10.2025",
     "disabled": false,
     "cls": ""
    },
@@ -34705,6 +36218,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -34744,7 +36263,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "29.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -34753,6 +36272,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -34798,7 +36323,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "22.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -34807,6 +36332,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -34858,7 +36389,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2026",
+    "text": "04.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -34867,6 +36398,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -34906,7 +36443,7 @@
    },
    {
     "art": "Knopf",
-    "text": "23.09.2025",
+    "text": "26.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -34915,6 +36452,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -34990,7 +36533,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -35029,13 +36572,19 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "HILFE › Hilfe & erste Schritte",
   "umgebung": "handy",
-  "anzahl": 59,
+  "anzahl": 61,
   "elemente": [
    {
     "art": "Knopf",
@@ -35045,7 +36594,7 @@
    },
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -35062,9 +36611,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -35350,7 +36905,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -35389,13 +36944,19 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Fußzeile › Interaktives Cockpit",
   "umgebung": "handy",
-  "anzahl": 107,
+  "anzahl": 109,
   "elemente": [
    {
     "art": "Knopf",
@@ -35405,7 +36966,7 @@
    },
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -35422,9 +36983,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -35506,7 +37073,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 8.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 11.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -35524,7 +37091,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 26",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 29",
     "disabled": false,
     "cls": ""
    },
@@ -35578,7 +37145,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 26.10.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 29.10.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -35596,7 +37163,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 31.10.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 03.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -35614,7 +37181,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 02.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 05.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -35632,7 +37199,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 03.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 06.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -35650,7 +37217,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 08.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 11.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -35668,7 +37235,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 11.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 14.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -35812,25 +37379,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 28.10.2026 Nächste Aufgabe: Beim Ar",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 31.10.2026 Nächste Aufgabe: Beim Ar",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 28.10.2026 Nächste A",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 31.10.2026 Nächste A",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 28.10.2026 Nächste Aufgabe: Z",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 31.10.2026 Nächste Aufgabe: Z",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 28.10.2026 Nächste Aufgabe:",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 31.10.2026 Nächste Aufgabe:",
     "disabled": false,
     "cls": ""
    },
@@ -35902,19 +37469,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 28.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 31.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 28.10.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 31.10.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 28.10.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 31.10.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -35926,7 +37493,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 28.10.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 31.10.",
     "disabled": false,
     "cls": ""
    },
@@ -35998,7 +37565,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -36037,13 +37604,19 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Fußzeile › Dokumentenbibliothek",
   "umgebung": "handy",
-  "anzahl": 263,
+  "anzahl": 287,
   "elemente": [
    {
     "art": "Knopf",
@@ -36053,7 +37626,7 @@
    },
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -36070,9 +37643,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -36172,7 +37751,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "29.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36181,6 +37760,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -36226,7 +37811,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "25.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36235,6 +37820,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -36286,7 +37877,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "22.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36295,6 +37886,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -36340,7 +37937,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "19.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36349,6 +37946,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -36400,7 +38003,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.10.2026",
+    "text": "16.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36409,6 +38012,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -36448,7 +38057,7 @@
    },
    {
     "art": "Knopf",
-    "text": "08.10.2026",
+    "text": "11.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36457,6 +38066,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -36502,7 +38117,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2026",
+    "text": "04.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36511,6 +38126,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -36550,7 +38171,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.08.2026",
+    "text": "17.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36559,6 +38180,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -36670,7 +38297,7 @@
    },
    {
     "art": "Knopf",
-    "text": "27.11.2024",
+    "text": "30.11.2024",
     "disabled": false,
     "cls": ""
    },
@@ -36679,6 +38306,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -36724,7 +38357,7 @@
    },
    {
     "art": "Knopf",
-    "text": "08.10.2026",
+    "text": "11.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36733,6 +38366,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -36784,7 +38423,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.08.2026",
+    "text": "17.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36793,6 +38432,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -36838,7 +38483,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.02.2025",
+    "text": "28.02.2025",
     "disabled": false,
     "cls": ""
    },
@@ -36847,6 +38492,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -36904,7 +38555,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "25.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36913,6 +38564,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -36970,7 +38627,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.10.2026",
+    "text": "16.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36979,6 +38636,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -37024,7 +38687,7 @@
    },
    {
     "art": "Knopf",
-    "text": "10.06.2026",
+    "text": "13.06.2026",
     "disabled": false,
     "cls": ""
    },
@@ -37072,7 +38735,7 @@
    },
    {
     "art": "Knopf",
-    "text": "11.04.2026",
+    "text": "14.04.2026",
     "disabled": false,
     "cls": ""
    },
@@ -37120,7 +38783,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "19.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -37129,6 +38792,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -37180,7 +38849,7 @@
    },
    {
     "art": "Knopf",
-    "text": "21.09.2025",
+    "text": "24.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -37189,6 +38858,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -37228,7 +38903,7 @@
    },
    {
     "art": "Knopf",
-    "text": "24.08.2025",
+    "text": "27.08.2025",
     "disabled": false,
     "cls": ""
    },
@@ -37237,6 +38912,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -37288,7 +38969,7 @@
    },
    {
     "art": "Knopf",
-    "text": "28.09.2025",
+    "text": "01.10.2025",
     "disabled": false,
     "cls": ""
    },
@@ -37297,6 +38978,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -37336,7 +39023,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "29.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -37345,6 +39032,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -37390,7 +39083,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "22.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -37399,6 +39092,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -37450,7 +39149,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2026",
+    "text": "04.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -37459,6 +39158,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -37498,7 +39203,7 @@
    },
    {
     "art": "Knopf",
-    "text": "23.09.2025",
+    "text": "26.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -37507,6 +39212,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -37582,7 +39293,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -37621,13 +39332,19 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Fußzeile › Eingangszentrale",
   "umgebung": "handy",
-  "anzahl": 68,
+  "anzahl": 84,
   "elemente": [
    {
     "art": "Knopf",
@@ -37637,7 +39354,7 @@
    },
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -37654,9 +39371,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -37804,6 +39527,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Abgleich vormerken",
     "disabled": false,
     "cls": ""
@@ -37816,15 +39545,33 @@
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Versicherungsschein_Hausrat.pdf",
     "disabled": false,
     "cls": "document-title-link"
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Antrag_Teilzeit_Jonna.pdf",
     "disabled": false,
     "cls": "document-title-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -37837,6 +39584,12 @@
     "text": "Gehaltsabrechnung_Jonna.pdf",
     "disabled": false,
     "cls": "document-title-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -37858,6 +39611,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Abgleich vormerken",
     "disabled": false,
     "cls": ""
@@ -37870,9 +39629,21 @@
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Nebenkostenabrechnung_2025.pdf",
     "disabled": false,
     "cls": "document-title-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -37888,9 +39659,21 @@
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Uebergabeprotokoll_Wohnung.pdf",
     "disabled": false,
     "cls": "document-title-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -37900,9 +39683,21 @@
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Reparaturauftrag_Schraubenglueck.pdf",
     "disabled": false,
     "cls": "document-title-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -37918,6 +39713,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Als eingearbeitet bestätigen",
     "disabled": false,
     "cls": ""
@@ -37927,6 +39728,12 @@
     "text": "Rechnung_Waschmaschine_Waschwunder_7.pdf",
     "disabled": false,
     "cls": "document-title-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -37996,7 +39803,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -38035,13 +39842,19 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Fußzeile › Sicherheitscenter",
   "umgebung": "handy",
-  "anzahl": 46,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
@@ -38051,7 +39864,7 @@
    },
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -38068,9 +39881,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -38278,7 +40097,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -38317,13 +40136,19 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Fußzeile › Fristen und Aufgaben",
   "umgebung": "handy",
-  "anzahl": 119,
+  "anzahl": 121,
   "elemente": [
    {
     "art": "Knopf",
@@ -38333,7 +40158,7 @@
    },
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -38350,9 +40175,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -38524,7 +40355,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 65de33f1-3b3f-42f4-8799-27e78a294e92",
+    "text": "Dokument: a252ac6e-cc1f-4799-a859-18f84a4eb909",
     "disabled": false,
     "cls": "text-link"
    },
@@ -38596,7 +40427,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 5b02fffd-ab07-495a-afed-ad219f7b9cd8",
+    "text": "Dokument: a9f78752-ed76-4b0c-b1ce-865ea6334e8d",
     "disabled": false,
     "cls": "text-link"
    },
@@ -38626,7 +40457,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 9e181ce2-a7ed-45a0-b751-aa83b606e164",
+    "text": "Dokument: 8f1f6b13-cb17-4564-9a07-1891272a6efe",
     "disabled": false,
     "cls": "text-link"
    },
@@ -38734,7 +40565,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 9e181ce2-a7ed-45a0-b751-aa83b606e164",
+    "text": "Dokument: 8f1f6b13-cb17-4564-9a07-1891272a6efe",
     "disabled": false,
     "cls": "text-link"
    },
@@ -38998,7 +40829,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -39037,13 +40868,19 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Fußzeile › Tagebuch & Erinnerungen",
   "umgebung": "handy",
-  "anzahl": 62,
+  "anzahl": 64,
   "elemente": [
    {
     "art": "Knopf",
@@ -39053,7 +40890,7 @@
    },
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -39070,9 +40907,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -39250,31 +41093,31 @@
    },
    {
     "art": "Knopf",
-    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 22.10.2026, 19:00 · Reis",
+    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 25.10.2026, 19:00 · Reis",
     "disabled": false,
     "cls": "active"
    },
    {
     "art": "Knopf",
-    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 19.10.2026, 19:00 · Technik, Ge",
+    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 22.10.2026, 19:00 · Technik, Ge",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 16.10.2026, 19:00 ·",
+    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 19.10.2026, 19:00 ·",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 29.08.202",
+    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 01.09.202",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 22.09.2025, 19:00 · Haus & Wohnu",
+    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 25.09.2025, 19:00 · Haus & Wohnu",
     "disabled": false,
     "cls": ""
    },
@@ -39376,7 +41219,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -39415,13 +41258,19 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Fußzeile › Hilfe",
   "umgebung": "handy",
-  "anzahl": 59,
+  "anzahl": 61,
   "elemente": [
    {
     "art": "Knopf",
@@ -39431,7 +41280,7 @@
    },
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -39448,9 +41297,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -39736,7 +41591,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -39775,13 +41630,19 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  },
  {
   "ort": "Fußzeile › Systemprüfung",
   "umgebung": "handy",
-  "anzahl": 89,
+  "anzahl": 91,
   "elemente": [
    {
     "art": "Knopf",
@@ -39791,7 +41652,7 @@
    },
    {
     "art": "Knopf",
-    "text": "MMI FAMILIENAKTE Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -39808,9 +41669,15 @@
     "cls": "icon-button"
    },
    {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
     "art": "Link",
     "text": "Ausloggen",
-    "cls": "logout-button"
+    "cls": "icon-button logout-button"
    },
    {
     "art": "Knopf",
@@ -40276,7 +42143,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Mit ChatGPT arbeiten",
+    "text": "Mit KI arbeiten",
     "disabled": false,
     "cls": ""
    },
@@ -40315,6 +42182,12 @@
     "text": "Datenschutz & Sicherheit",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
    }
   ]
  }
