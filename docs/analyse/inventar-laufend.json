@@ -5621,7 +5621,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 3b463c7b-3982-4418-ad60-2c4cab7af0cc",
+    "text": "Dokument: 66e78384-167d-4124-a0fc-7f2a5e3b6129",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5693,7 +5693,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 28e6f280-9a44-47c1-8588-9e56a13b6011",
+    "text": "Dokument: 4041a647-df90-4904-b0a2-40ab39776ee0",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5723,7 +5723,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: bb82e48e-c7fd-451b-b419-545c5000b2df",
+    "text": "Dokument: 76742fe5-6b99-49c4-aa57-090c091a64f2",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5831,7 +5831,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: bb82e48e-c7fd-451b-b419-545c5000b2df",
+    "text": "Dokument: 76742fe5-6b99-49c4-aa57-090c091a64f2",
     "disabled": false,
     "cls": "text-link"
    },
@@ -6584,7 +6584,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Gesamtes Verzeichnis",
   "umgebung": "desktop",
-  "anzahl": 83,
+  "anzahl": 84,
   "elemente": [
    {
     "art": "Knopf",
@@ -6924,6 +6924,12 @@
    {
     "art": "Knopf",
     "text": "Sicherheit & lokaler Tresor PC/USB-Speicher, Sicherung und Zwei-Faktor-Schutz",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Netz (Mycel) Mit anderen Geräten verbinden – nur wenn du es antippst",
     "disabled": false,
     "cls": ""
    },
@@ -16206,6 +16212,258 @@
   ]
  },
  {
+  "ort": "DOKUMENTE › Netz (Mycel)",
+  "umgebung": "desktop",
+  "anzahl": 41,
+  "elemente": [
+   {
+    "art": "Knopf",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "disabled": false,
+    "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Aktuelle Seite drucken",
+    "disabled": false,
+    "cls": "icon-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
+    "art": "Link",
+    "text": "Ausloggen",
+    "cls": "icon-button logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
+   },
+   {
+    "art": "Knopf",
+    "text": "STARTSEITE",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "ASSISTENZ",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "GESUNDHEIT & ARBEIT",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "FAMILIE & PERSONEN",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "WOHNEN",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "FAHRZEUGE",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "KÄUFE & GARANTIEN",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "DOKUMENTE",
+    "disabled": false,
+    "cls": "active"
+   },
+   {
+    "art": "Knopf",
+    "text": "HILFE",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Suche: Diktat starten",
+    "disabled": true,
+    "cls": "dictation-button "
+   },
+   {
+    "art": "Knopf",
+    "text": "Aktivitätszeile 1 kopieren",
+    "disabled": true,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Aktivitätszeile 2 kopieren",
+    "disabled": true,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Beispieldaten entfernen",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Startseite",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Dokumente",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Netz (Mycel) erklären",
+    "disabled": false,
+    "cls": "start-info-trigger"
+   },
+   {
+    "art": "Knopf",
+    "text": "Verbinden …",
+    "disabled": true,
+    "cls": "button primary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Interaktives Cockpit",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch & Erinnerungen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Fristen und Aufgaben",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Gesamtes Verzeichnis",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Lebensbereiche",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Dokumentenbibliothek",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Eingangszentrale",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Bestand prüfen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Was gibt’s Neues?",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Hilfe",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Systemprüfung",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Prüfberichte",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Sicherheitscenter",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Familienakte exportieren",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Versionshistorie",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Datenschutz & Sicherheit",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
+   }
+  ]
+ },
+ {
   "ort": "DOKUMENTE › Unterlagen & Quellen",
   "umgebung": "desktop",
   "anzahl": 55,
@@ -16544,7 +16802,7 @@
  {
   "ort": "DOKUMENTE › Alle Bereiche",
   "umgebung": "desktop",
-  "anzahl": 83,
+  "anzahl": 84,
   "elemente": [
    {
     "art": "Knopf",
@@ -16884,6 +17142,12 @@
    {
     "art": "Knopf",
     "text": "Sicherheit & lokaler Tresor PC/USB-Speicher, Sicherung und Zwei-Faktor-Schutz",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Netz (Mycel) Mit anderen Geräten verbinden – nur wenn du es antippst",
     "disabled": false,
     "cls": ""
    },
@@ -22865,7 +23129,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 3b463c7b-3982-4418-ad60-2c4cab7af0cc",
+    "text": "Dokument: 66e78384-167d-4124-a0fc-7f2a5e3b6129",
     "disabled": false,
     "cls": "text-link"
    },
@@ -22937,7 +23201,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 28e6f280-9a44-47c1-8588-9e56a13b6011",
+    "text": "Dokument: 4041a647-df90-4904-b0a2-40ab39776ee0",
     "disabled": false,
     "cls": "text-link"
    },
@@ -22967,7 +23231,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: bb82e48e-c7fd-451b-b419-545c5000b2df",
+    "text": "Dokument: 76742fe5-6b99-49c4-aa57-090c091a64f2",
     "disabled": false,
     "cls": "text-link"
    },
@@ -23075,7 +23339,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: bb82e48e-c7fd-451b-b419-545c5000b2df",
+    "text": "Dokument: 76742fe5-6b99-49c4-aa57-090c091a64f2",
     "disabled": false,
     "cls": "text-link"
    },
@@ -23390,7 +23654,7 @@
  {
   "ort": "Fußzeile › Gesamtes Verzeichnis",
   "umgebung": "desktop",
-  "anzahl": 83,
+  "anzahl": 84,
   "elemente": [
    {
     "art": "Knopf",
@@ -23730,6 +23994,12 @@
    {
     "art": "Knopf",
     "text": "Sicherheit & lokaler Tresor PC/USB-Speicher, Sicherung und Zwei-Faktor-Schutz",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Netz (Mycel) Mit anderen Geräten verbinden – nur wenn du es antippst",
     "disabled": false,
     "cls": ""
    },
@@ -32543,9 +32813,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Datentresor verbunden. Status: erfolgreich erledigt",
+    "text": "Datentresor erneut verbinden. Status: zuletzt nicht möglich",
     "disabled": false,
-    "cls": "vault-action state-success"
+    "cls": "vault-action state-failed"
    },
    {
     "art": "Knopf",
@@ -32669,7 +32939,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Fotofunktion öffnen Eine oder mehrere Seiten als PDF prüfen",
+    "text": "Fotofunktion öffnen Zuerst lokalen Datentresor verbinden",
     "disabled": false,
     "cls": "intake-source"
    },
@@ -40469,7 +40739,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: f9c156a7-ba58-4d62-b3f8-5ced840bc2c0",
+    "text": "Dokument: 363fb9d6-3967-4760-aedf-891f41162665",
     "disabled": false,
     "cls": "text-link"
    },
@@ -40541,7 +40811,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: be982e23-62a4-4399-a03b-466389ece89d",
+    "text": "Dokument: b41aaa2a-dfab-4a28-8eff-3caf7119a7e4",
     "disabled": false,
     "cls": "text-link"
    },
@@ -40571,7 +40841,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: b81699e2-7dc1-499e-a42e-4ed5d8172e1d",
+    "text": "Dokument: 8449cbaa-234a-4336-825c-fa39ede02829",
     "disabled": false,
     "cls": "text-link"
    },
@@ -40679,7 +40949,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: b81699e2-7dc1-499e-a42e-4ed5d8172e1d",
+    "text": "Dokument: 8449cbaa-234a-4336-825c-fa39ede02829",
     "disabled": false,
     "cls": "text-link"
    },

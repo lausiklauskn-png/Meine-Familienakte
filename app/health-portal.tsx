@@ -9,7 +9,7 @@ import {
   Archive, BookOpen, BriefcaseMedical, Building2, Car, CheckCircle2,
   ChevronDown, ChevronRight, ClipboardCheck, Download, FileClock,
   FileText, Folder, FolderHeart, HeartPulse, Home, Landmark, Menu, PackageCheck,
-  Plus, Printer, RefreshCw, Search, ShieldCheck, ShoppingBag, Upload, UserRound,
+  Network, Plus, Printer, RefreshCw, Search, ShieldCheck, ShoppingBag, Upload, UserRound,
   Users, X, HardDrive, LockKeyhole, Usb, LogOut, HelpCircle, History, Cloud, LifeBuoy, Mic,
   Copy, ExternalLink, BookHeart, Camera, Video, NotebookPen, Trash2, CircleHelp, Tags, FolderSearch, Eye, ListChecks, Save, Bot, Sparkles,
   PenLine,
@@ -41,6 +41,7 @@ import { buildIntakeChoiceOptions, buildStoredPersonalLifeAreas, INTAKE_PRIVACY_
 import { analyzeCentralIntakeFile, extractEmlAttachments, groupCentralIntakeAnalyses, initialCentralIntakeStatus, runCentralIntakeSelfTests, type CentralIntakeQueueItem, type CentralIntakeStatus } from "@/lib/central-intake";
 const CentralIntakeCenter = lazy(() => import("./central-intake-center").then((m) => ({ default: m.CentralIntakeCenter })));
 import { runDocumentScanSelfTests, type DocumentScanPdfFile } from "@/lib/document-scan";
+const NetzSeite = lazy(() => import("./netz-seite").then((m) => ({ default: m.NetzSeite })));
 const AusfuellenDialog = lazy(() => import("./ausfuellen-dialog").then((m) => ({ default: m.AusfuellenDialog })));
 const DocumentScanDialog = lazy(() => import("./document-scan-dialog").then((m) => ({ default: m.DocumentScanDialog })));
 import { buildMemoryAnalysis, buildMemoryOpenPoints, buildTodayMemorySummary, isMemoryRecord, memoryData, runFamilyMemorySelfTests, runMemoryQueueSelfTests, sortMemoryDraftQueue, type MemoryAnalysis, type MemoryCaptureType, type MemoryDraftEntry, type MemoryDraftStatus, type MemoryOpenStatus, type MemoryStatementKind } from "@/lib/family-memory";
@@ -80,7 +81,7 @@ type MemoryCompletion = { id: string; title: string; remaining: number; total: n
 type MemorySaveInput = Parameters<typeof createLocalMemoryBundle>[1] & { rejectedContext?: ContextLinkSuggestion };
 type UiAutomatedTestFailureReport = Omit<AutomatedTestFailureReport, "websiteVersion"> & { websiteVersion: number };
 
-type SectionId = "overview" | "documents" | "inventory" | "inbox" | "medical" | "benefits" | "work" |
+type SectionId = "overview" | "netz" | "documents" | "inventory" | "inbox" | "medical" | "benefits" | "work" |
   "assessment" | "correspondence" | "assistant" | "sources" | "health" | "family" |
   "home" | "vehicles" | "purchases" | "reminders" | "memory" | "cockpit" | "directory" | "security" | "help" | "changelog" | "versions" | "systemcheck";
 
@@ -156,6 +157,7 @@ const topNavigation: Array<{
       { id: "inventory", label: "Bestand prüfen", detail: "Ausgewählte Test-, PC- oder OneDrive-Ordner kontrolliert analysieren" },
       { id: "inbox", label: "Eingangszentrale", detail: "PDF, Word, Fotos, Scans und E-Mails gemeinsam prüfen" },
       { id: "security", label: "Sicherheit & lokaler Tresor", detail: "PC/USB-Speicher, Sicherung und Zwei-Faktor-Schutz" },
+      { id: "netz", label: "Netz (Mycel)", detail: "Mit anderen Geräten verbinden – nur wenn du es antippst" },
       { id: "sources", label: "Unterlagen & Quellen", detail: "Kerndokumente und Beweiswert" },
       { id: "directory", label: "Alle Bereiche", detail: "Vollständige Navigationsstruktur" },
     ] },
@@ -179,7 +181,7 @@ const sectionLabels: Record<SectionId, string> = {
   reminders: "Fristen und Aufgaben", cockpit: "Interaktives Cockpit",
   memory: "Tagebuch & Erinnerungsprotokoll",
   sources: "Unterlagen & Quellen", directory: "Gesamtes Verzeichnis",
-  security: "Sicherheit & lokaler Tresor",
+  security: "Sicherheit & lokaler Tresor", netz: "Netz (Mycel)",
   help: "Hilfe", systemcheck: "Systemprüfung", changelog: "Was gibt’s Neues?", versions: "Versionshistorie",
 };
 
@@ -1195,6 +1197,7 @@ function HealthPortalContent() {
           catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Speichern nicht möglich." }); }
           finally { setBusy(false); }
         }} busy={busy}/></>} 
+        {!query && active === "netz" && <Suspense fallback={null}><NetzSeite kopf={<PageTitle icon={<Network/>} title="Netz (Mycel)" text="Verbindet die Familienakte auf Wunsch mit anderen Geräten im SBKIM-Netz. Beim Öffnen der Akte geht nichts ins Netz; hinaus geht nur die Visitenkarte, keine Unterlagen."/>}/></Suspense>}
         {!query && active === "security" && <SecurityCenter
           oneDriveConnected={oneDriveReachable} oneDriveName={oneDriveName} oneDriveSummary={oneDriveSummary}
           localConnected={localVaultReachable} localVaultName={localVaultName} localVaultSummary={localVaultSummary}

@@ -14,6 +14,11 @@ const faelle = [
   { name: "Kontakt: falsche E-Mail geht durch", datei: "lib/person-kontakt.ts", alt: 'if (k === "email" && !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(w))', neu: "if (false)", probe: "person-kontakt", rot: /Falsche E-Mail/ },
   { name: "Formular scannen: Ausfüllen öffnet nicht", datei: HP, alt: "        setFillDocId(neu.id);\n", neu: "", probe: "formular-scannen", rot: /Ausfüllen öffnet sich/ },
   { name: "Einzeldatei: Kern nicht eingebettet", datei: "scripts/build-single-file.mjs", alt: "<script>\n${kern}\n</script>", neu: "", probe: "einzeldatei", rot: /byte-gleich in der Einzeldatei|rechnet/, einzel: true },
+  { name: "Netz: SBKIM schon beim Start geladen", datei: "index.html", alt: '<script defer src="./native/familienakte-android.js"></script>', neu: '<script defer src="./native/familienakte-android.js"></script>\n    <script src="./sbkim/01_storage.js" data-familienakte-sbkim="01"></script>', probe: "netz-mycel", rot: /Start: kein SBKIM/ },
+  { name: "Netz: verbindet von selbst", datei: "public/native/familienakte-mycel.js", alt: "try { window.SbkimRendezvousUI.hide(); }", neu: "try { new WebSocket('wss://relay.family-projekt.de'); window.SbkimRendezvousUI.hide(); }", probe: "netz-mycel", rot: /keine Verbindung/ },
+  { name: "Netz: schwebender Knopf sichtbar", datei: "app/globals.css", alt: "#sbkim-rdv-btn { display: none !important; }", neu: "", probe: "netz-mycel", rot: /Kein schwebender/ },
+  { name: "Netz: Gerätename fehlt im Fenster", datei: "public/native/familienakte-mycel.js", alt: "if (panel.querySelector('[data-sbkim-geraetename]')) return true;", neu: "return true;", probe: "netz-mycel", rot: /Gerätename steht darin/ },
+  { name: "Netz: ein Byte im Kanon-Modul 23", datei: "public/sbkim/23_rendezvous.js", alt: "Rendezvous", neu: "Rendezvouz", befehl: [process.execPath, ["tools/herkunft-pruefen.mjs"]], rot: /23_rendezvous\.js weicht ab/ },
 ];
 const filter = process.argv[2] || "";
 const bauen = (einzel) => {
@@ -29,8 +34,8 @@ for (const f of faelle.filter((x) => x.name.includes(filter))) {
   try {
     writeFileSync(f.datei, original.replace(f.alt, f.neu));
     if (readFileSync(f.datei, "utf8") === original) { console.log(`⚠ nichts geändert: ${f.name}`); durch++; continue; }
-    const gebaut = bauen(f.einzel);
-    const r = gebaut ? spawnSync(process.execPath, [`tests/ui/${f.probe}.test.mjs`], { encoding: "utf8" }) : { status: 1, stdout: "🔴 Bau scheiterte" };
+    const gebaut = f.befehl ? true : bauen(f.einzel);
+    const r = !gebaut ? { status: 1, stdout: "🔴 Bau scheiterte" } : f.befehl ? spawnSync(f.befehl[0], f.befehl[1], { encoding: "utf8" }) : spawnSync(process.execPath, [`tests/ui/${f.probe}.test.mjs`], { encoding: "utf8" });
     const rote = (r.stdout || "").split("\n").filter((z) => z.startsWith("🔴"));
     const ok = gebaut && r.status !== 0 && rote.some((z) => f.rot.test(z));
     if (ok) gefangen++; else durch++;
