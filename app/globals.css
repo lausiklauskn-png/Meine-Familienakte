@@ -1699,3 +1699,22 @@ button.object-card:hover { transform: translateY(-2px); border-color: #8fb2c9; b
 .netz-schalter .netz-lampe { position: absolute; right: 5px; bottom: 5px; width: 8px; height: 8px; border-radius: 50%; background: #d64545; box-shadow: 0 0 0 2px #fff; }
 .netz-schalter.netz-an .netz-lampe { background: #2f9e5b; }
 .netz-schalter:disabled .netz-lampe { background: #b8c2cc; }
+
+/* KI-Auftrag (Klaus 2026-10-31): Knopf unten rechts auf jeder Seite, Fenster „Mit KI arbeiten“. */
+.ki-fab { position: fixed; right: 16px; bottom: 16px; z-index: 40; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--navy-2); background: var(--navy); color: white; display: grid; place-items: center; box-shadow: 0 4px 14px rgba(11, 49, 84, .28); cursor: pointer; }
+.ki-fab:hover { background: var(--navy-2); }
+@media print { .ki-fab { display: none; } }
+.ki-dialog { max-height: 92vh; overflow-y: auto; }
+.ki-zeile { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 6px 0; }
+.ki-zeile input:not([type]) , .ki-zeile .ki-suche { flex: 1 1 180px; min-width: 0; border: 1px solid var(--line); border-radius: 8px; padding: 7px 9px; font: inherit; }
+.ki-wahl { display: inline-flex; align-items: center; gap: 5px; border: 1px solid #c8d5de; border-radius: 999px; padding: 5px 12px; background: white; color: var(--navy); font-weight: 800; font-size: .82rem; cursor: pointer; }
+.ki-wahl.aktiv { background: var(--navy); border-color: var(--navy); color: white; }
+.ki-seite { margin-left: auto; font-size: .8rem; color: var(--muted, #5b6b78); }
+.ki-liste { list-style: none; margin: 4px 0; padding: 0; max-height: 200px; overflow-y: auto; border: 1px solid var(--line); border-radius: 8px; }
+.ki-liste li label { display: flex; align-items: baseline; gap: 6px; padding: 5px 8px; border-bottom: 1px solid var(--line); cursor: pointer; }
+.ki-liste li label span { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ki-liste li small { color: var(--muted, #5b6b78); white-space: nowrap; }
+.ki-datei { cursor: pointer; }
+.ki-sitzung, .ki-rueckweg { border-top: 1px solid var(--line); margin-top: 10px; padding-top: 8px; display: grid; gap: 4px; }
+.ki-sitzung label { display: inline-flex; gap: 6px; align-items: center; font-size: .86rem; }
+.ki-rueckweg textarea { width: 100%; font: inherit; border: 1px solid var(--line); border-radius: 8px; padding: 7px 9px; }

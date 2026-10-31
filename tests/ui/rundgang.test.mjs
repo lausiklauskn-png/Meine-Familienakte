@@ -63,7 +63,7 @@ try {
   const fussEintraege = await page.locator(".footer-directory button").allInnerTexts();
   check(fussEintraege.length >= 15, "Fußzeilen-Verzeichnis vollständig", `${fussEintraege.length}: ${fussEintraege.join(" · ")}`);
   for (const eintrag of fussEintraege) {
-    if (/ChatGPT|exportieren/.test(eintrag)) continue; // Dialoge – eigene Proben
+    if (/Mit KI|exportieren/.test(eintrag)) continue; // Dialoge – eigene Proben
     const vorher = errors.length;
     await page.locator(".footer-directory button", { hasText: eintrag }).first().click();
     await page.waitForTimeout(350);
@@ -72,7 +72,7 @@ try {
     check(errors.length === vorher, `Fußzeile „${eintrag}“ ohne Fehler`, errors.slice(vorher).join(" | "));
   }
   // Dialoge aus der Fußzeile
-  for (const [eintrag, erwartet] of [["Mit ChatGPT arbeiten", "ChatGPT"], ["Familienakte exportieren", "Export"]]) {
+  for (const [eintrag, erwartet] of [["Mit KI arbeiten", "Das sieht die KI"], ["Familienakte exportieren", "Export"]]) {
     await page.locator(".footer-directory button", { hasText: eintrag }).first().click();
     const modal = page.locator(".modal").last();
     const ok = await modal.isVisible().catch(() => false);

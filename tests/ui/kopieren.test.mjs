@@ -29,7 +29,7 @@ try {
   });
   await step("Zweite Aktion rückt die erste in Zeile 2; „Aktivitätszeile 2 kopieren“ liefert die ältere", async () => {
     const alt = (await page.locator(".global-activity-row").first().locator(".global-activity-text").innerText()).trim();
-    await page.locator(".footer-directory button", { hasText: "Mit ChatGPT arbeiten" }).click(); await page.waitForSelector(".modal");
+    await page.locator(".footer-directory button", { hasText: "Mit KI arbeiten" }).click(); await page.waitForSelector(".modal");
     await page.locator(".modal button", { hasText: "Auftrag kopieren" }).click(); await page.waitForTimeout(300); await schliesseDialoge(page);
     await page.evaluate(() => window.scrollTo(0, 0));
     const k = page.locator('button[aria-label="Aktivitätszeile 2 kopieren"]'); await k.focus(); await page.keyboard.press("Enter"); await page.waitForTimeout(200);
@@ -37,14 +37,14 @@ try {
     return clip === alt;
   });
   await step("ChatGPT-Dialog: „Auftrag kopieren“ kopiert den vorbereiteten Auftrag samt Wunsch", async () => {
-    await page.locator(".footer-directory button", { hasText: "Mit ChatGPT arbeiten" }).click();
+    await page.locator(".footer-directory button", { hasText: "Mit KI arbeiten" }).click();
     await page.waitForSelector(".modal");
     await page.locator(".modal textarea").first().fill("Ergänze im Bereich Fahrzeuge einen Unterpunkt für TÜV-Termine.");
     await page.locator(".modal button", { hasText: "Auftrag kopieren" }).click(); await page.waitForTimeout(300);
     const clip = await page.evaluate(() => navigator.clipboard.readText());
-    const link = await page.locator('.modal a[href="https://chatgpt.com/"]').count();
+    const link = await page.locator('.modal button', { hasText: "In ChatGPT öffnen" }).count();
     await schliesseDialoge(page);
-    return clip.includes("Nimm die folgenden Änderungen") && clip.includes("TÜV-Termine") && link === 1 ? "Auftrag kopiert; „ChatGPT öffnen“ ist ein Link in neuem Tab" : false;
+    return clip.includes("Ändere die App") && clip.includes("TÜV-Termine") && link === 1 ? "Auftrag kopiert; „In ChatGPT öffnen“ steht bereit" : false;
   });
   await step("Assistenz: Schreiben vorbereiten → „Kopieren“ legt Betreff + Entwurf in die Zwischenablage", async () => {
     await openMenu(page, 0, "Assistenzzentrale");
@@ -72,7 +72,7 @@ try {
     return /fehl|nicht möglich/i.test(status) ? `Status: „${status}“` : (console.log("   ↳ Status:", status), false);
   });
   await step("Ohne Berechtigung: ChatGPT „Auftrag kopieren“ nennt den Handweg", async () => {
-    await p2.locator(".footer-directory button", { hasText: "Mit ChatGPT arbeiten" }).click(); await p2.waitForSelector(".modal");
+    await p2.locator(".footer-directory button", { hasText: "Mit KI arbeiten" }).click(); await p2.waitForSelector(".modal");
     await p2.locator(".modal button", { hasText: "Auftrag kopieren" }).click(); await p2.waitForTimeout(400);
     const text = (await p2.locator("[aria-live], .notice").allInnerTexts()).join(" ");
     await schliesseDialoge(p2);

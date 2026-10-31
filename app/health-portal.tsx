@@ -11,12 +11,13 @@ import {
   FileText, Folder, FolderHeart, HeartPulse, Home, Landmark, Menu, PackageCheck,
   Plus, Printer, RefreshCw, Search, ShieldCheck, ShoppingBag, Upload, UserRound,
   Users, X, HardDrive, LockKeyhole, Usb, LogOut, HelpCircle, History, Cloud, LifeBuoy, Mic,
-  Copy, ExternalLink, BookHeart, Camera, Video, NotebookPen, Trash2, CircleHelp, Tags, FolderSearch, Eye, ListChecks, Save, Bot,
+  Copy, ExternalLink, BookHeart, Camera, Video, NotebookPen, Trash2, CircleHelp, Tags, FolderSearch, Eye, ListChecks, Save, Bot, Sparkles,
 } from "lucide-react";
 import { DictationButton, InfoPopover, VoiceInput, VoiceTextarea } from "./ui-controls";
 import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ActivityLines, ActivityProvider, useActivity, useActivityMessage } from "./ui-activity";
 import { NetzSchalter } from "./netz-schalter";
+import { KiAuftragDialog } from "./ki-auftrag-dialog";
 import { inventoryScanFeedback, inventoryAssignmentFeedback, inventoryArchiveFeedback, inventoryReleaseFeedback } from "../lib/ui-activity";
 import healthData from "./health-data.json";
 import { assessmentGroups, categories, coreDocuments, portalAreas } from "./portal-data";
@@ -894,6 +895,8 @@ function HealthPortalContent() {
     } catch (error) { setActionState("update", "failed"); setNotice({ kind: "error", text: error instanceof Error ? error.message : "Aktualisierung konnte nicht gespeichert werden." }); }
     finally { setBusy(false); }
   };
+  // Namen, die vor dem KI-Auftrag unkenntlich werden: Personen, Firmen, Objekte, Vertragsnummern und Empfänger der Akte.
+  const kiNamen = useMemo(() => familyRecords.flatMap((r) => { const d = (r as unknown as { data?: Record<string, unknown> }).data || {}; return ["displayName", "name", "contractNumber", "recipient", "recipientEmail"].map((k) => d[k]).filter((v): v is string => typeof v === "string" && v.trim().length >= 3); }), [familyRecords]);
   const openChatGPTEdit = (initialRequest = "") => { setActionState("chatgpt", "pending"); setEditInitialRequest(initialRequest); setEditOpen(true); };
   const openDocumentLibrary = (request: Partial<Omit<DocumentLibraryRequest, "key">> = {}) => {
     const next = { key: Date.now(), focusId: request.focusId || null, area: request.area || "", query: request.query || "" };
@@ -1218,7 +1221,7 @@ function HealthPortalContent() {
           <nav className="footer-directory" aria-label="Weiterführende Bereiche der Familienakte">
             <section><h2>Familienakte</h2><ul><li><button onClick={() => go("cockpit")}>Interaktives Cockpit</button></li><li><button onClick={() => go("memory")}>Tagebuch & Erinnerungen</button></li><li><button onClick={() => go("reminders")}>Fristen und Aufgaben</button></li><li><button onClick={() => go("directory")}>Gesamtes Verzeichnis</button></li><li><button onClick={openLifeAreas}>Lebensbereiche</button></li></ul></section>
             <section><h2>Dokumente</h2><ul><li><button onClick={() => go("documents")}>Dokumentenbibliothek</button></li><li><button onClick={() => go("inbox")}>Eingangszentrale</button></li><li><button onClick={() => go("inventory")}>Bestand prüfen</button></li><li><button onClick={() => go("changelog")}>Was gibt’s Neues?</button></li></ul></section>
-            <section><h2>Unterstützung</h2><ul><li><button onClick={() => go("help")}>Hilfe</button></li><li><button onClick={() => openChatGPTEdit()}>Mit ChatGPT arbeiten</button></li><li><button onClick={() => go("systemcheck")}>Systemprüfung</button></li><li><button onClick={openFooterSystemReports}>Prüfberichte</button></li></ul></section>
+            <section><h2>Unterstützung</h2><ul><li><button onClick={() => go("help")}>Hilfe</button></li><li><button onClick={() => openChatGPTEdit()}>Mit KI arbeiten</button></li><li><button onClick={() => go("systemcheck")}>Systemprüfung</button></li><li><button onClick={openFooterSystemReports}>Prüfberichte</button></li></ul></section>
             <section><h2>Sicherheit und Verwaltung</h2><ul><li><button onClick={() => go("security")}>Sicherheitscenter</button></li><li><button onClick={() => { setExportOpen(true); reportActivity({ kind: "info", text: "Exportvorbereitung geöffnet. Umfang und Zielordner müssen vor dem Start ausdrücklich bestätigt werden; noch keine Datei geschrieben." }); }}>Familienakte exportieren</button></li><li><button onClick={() => go("versions")}>Versionshistorie</button></li></ul></section>
           </nav>
           <div className="footer-meta"><span>Me, Myself and I – Meine Familienakte{samplePresent ? ` · ${SAMPLE_NOTICE}` : ""}{!samplePresent && vaultHandle && <> · <button type="button" className="footer-sample-link" disabled={sampleBusy} onClick={() => void loadSampleData()}>Beispieldaten laden</button></>}</span><button onClick={() => go("security")}><LockKeyhole size={14}/> Datenschutz & Sicherheit</button></div>
@@ -1293,7 +1296,8 @@ function HealthPortalContent() {
           throw error;
         }
       }}/>} 
-      {editOpen && <ChatGPTEditDialog initialRequest={editInitialRequest} onClose={() => setEditOpen(false)} onNotice={setNotice} onStateChange={(state) => setActionState("chatgpt", state)}/>}
+      {editOpen && <KiAuftragDialog seiteId={active} seite={sectionLabels[active] || "Startseite"} initialRequest={editInitialRequest} documents={localDocuments} namen={kiNamen} readDocument={(id) => vaultHandle ? readLocalDocumentFile(vaultHandle, id) : Promise.reject(new Error("Kein Tresor geöffnet."))} onSaveAnswer={(file) => window.dispatchEvent(new CustomEvent("familienakte:dateien", { detail: { files: [file] } }))} onClose={() => setEditOpen(false)} onNotice={setNotice} onStateChange={(state) => setActionState("chatgpt", state)}/>}
+      <button type="button" className="ki-fab" onClick={() => openChatGPTEdit()} aria-label="Mit KI arbeiten" title={`Mit KI arbeiten – Seite „${sectionLabels[active] || "Startseite"}“`}><Sparkles size={20}/></button>
       {memoryReviewOpen && memoryDraft && vaultHandle && <MemoryReviewDialog
         draft={memoryDraft} documents={contextDocuments(documents, localDocuments)} records={familyRecords} relations={familyRelations} decisions={linkDecisions}
         onOpenDocument={openDocument}
@@ -3349,26 +3353,6 @@ function Sources({ onDocuments }: { onDocuments: OpenDocumentLibrary }) { return
 
 function PageTitle({ icon, title, text }: { icon: React.ReactNode; title: string; text: string }) { return <header className="page-title"><div>{icon}</div><span className="ui-heading-help"><h1>{title}</h1><InfoPopover label={`${title} erklären`} text={text}/></span></header>; }
 
-function ChatGPTEditDialog({ initialRequest, onClose, onNotice, onStateChange }: { initialRequest?: string; onClose: () => void; onNotice: (notice: Notice) => void; onStateChange: (state: ActionState) => void }) {
-  const [request, setRequest] = useState(initialRequest || "");
-  const fullPrompt = `Nimm die folgenden Änderungen an [Me, Myself and I – Meine Familienakte](${SITE_PROJECT_LINK}) vor:\n\n${request.trim() || "[Hier meinen Änderungswunsch einfügen]"}`;
-  const copyPrompt = async () => {
-    try {
-      await navigator.clipboard.writeText(fullPrompt);
-      onStateChange("success");
-      onNotice({ kind: "success", text: "Der Änderungsauftrag wurde kopiert. Öffne jetzt ChatGPT und füge ihn dort ein." });
-    } catch {
-      onStateChange("failed");
-      onNotice({ kind: "error", text: "Der Auftrag konnte nicht automatisch kopiert werden. Bitte markiere den Text und kopiere ihn von Hand." });
-    }
-  };
-  return <div className="modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}><div className="modal edit-dialog" role="dialog" aria-modal="true" aria-labelledby="edit-title"><div className="modal-head"><div><span className="badge success">Ohne kostenpflichtige API</span><span className="ui-heading-help"><h2 id="edit-title">Familienakte mit ChatGPT ändern</h2><InfoPopover label="Familienakte mit ChatGPT ändern erklären" text={UI_HELP["Familienakte mit ChatGPT ändern"]}/></span></div><button className="icon-button" onClick={onClose} aria-label="Fenster schließen"><X/></button></div>
-    <label><span>Was möchtest du verändern?</span><div className="dictation-field"><textarea rows={5} value={request} onChange={(event) => setRequest(event.target.value)} placeholder="Zum Beispiel: Ergänze im Bereich Fahrzeuge einen Unterpunkt für TÜV-Termine."/><DictationButton value={request} onChange={setRequest} label="Änderungswunsch"/></div></label>
-    <div className="edit-prompt-preview"><strong>Vorbereiteter Auftrag</strong><textarea readOnly rows={5} value={fullPrompt} onFocus={(event) => event.currentTarget.select()}/></div>
-    <p className="fine-print">Hier wird keine OpenAI-API verwendet. Du kopierst den Auftrag und öffnest damit dein normales ChatGPT. Erst dort entscheidest du, ob du ihn absendest.</p>
-    <div className="modal-actions"><button type="button" className="button secondary" onClick={copyPrompt}><Copy size={17}/> Auftrag kopieren</button><a className="button primary" href="https://chatgpt.com/" target="_blank" rel="noreferrer" onClick={() => onStateChange("success")}><ExternalLink size={17}/> ChatGPT öffnen</a></div>
-  </div></div>;
-}
 
 function ExportDialog({ sourceHandle, documents, localDocuments, records, relations, auditLog, onClose, onNotice }: {
   sourceHandle: FileSystemDirectoryHandle | null;

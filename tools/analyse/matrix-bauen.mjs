@@ -19,7 +19,7 @@ const ORT = {
   HealthHub: "Gesundheit & Arbeit", FamilyArea: "Familie & Personen", PreparedArea: "Wohnen / Fahrzeuge / Käufe & Garantien", Directory: "Gesamtes Verzeichnis", DocumentLibraryCard: "Dokumentenbibliothek › Karte",
   DocumentLibrary: "Dokumentenbibliothek", Inbox: "Eingangszentrale › Lokale Unterlagen / Online-Altbestand", SecurityCenter: "Sicherheitscenter", CockpitTodoRow: "Cockpit › To-do", InteractiveCockpit: "Interaktives Cockpit",
   ReminderCenter: "Fristen und Aufgaben", Medical: "Diagnosen, AU & ICD-Codes", Benefits: "Krankenkasse & Leistungen", Work: "Arbeit & Arbeitgeber", Assessment: "Anträge & Bescheide", Correspondence: "Anfragen & Antworten",
-  Sources: "Unterlagen & Quellen", ChatGPTEditDialog: "Dialog › Mit ChatGPT arbeiten", ExportDialog: "Dialog › Familienakte exportieren", UploadDialog: "Dialog › Neue Unterlage ablegen", PageDialogHost: "Rückfrage-Dialog (Seite)",
+  Sources: "Unterlagen & Quellen", KiAuftragDialog: "Dialog › Mit KI arbeiten", ExportDialog: "Dialog › Familienakte exportieren", UploadDialog: "Dialog › Neue Unterlage ablegen", PageDialogHost: "Rückfrage-Dialog (Seite)",
   PracticalAcceptanceView: "Systemprüfung › Praktische Abnahme", ActivityRow: "Aktivitätszeilen (oben)", InfoPopover: "ⓘ-Hinweis (überall)", DictationButton: "Mikrofon (überall)", AssistantCenter: "Assistenzzentrale",
   CentralIntakeCenter: "Eingangszentrale", DocumentScanDialog: "Dialog › Dokument fotografieren", FileViewerHost: "Dialog › Dokumentvorschau",
 };
@@ -117,7 +117,7 @@ const MESSUNG = [
   [/news-preview|Alle Neuigkeiten anzeigen|^open$/, "✅", "✅", "Vorschau-Karten / Aktionskarten öffnen die Quelle (118 Karten, 19 geschützt → Gesundheitsbereich)", "knoepfe-assistenz"],
   [/^Lebensbereiche$|openLifeAreas/, "✅", "✅", "Startseite, rollt zu den Lebensbereichen", "rundgang"],
   [/^Prüfberichte$|openFooterSystemReports/, "✅", "✅", "Systemprüfung, rollt zu den Prüfberichten", "rundgang"],
-  [/openChatGPTEdit|Mit ChatGPT arbeiten/, "✅", "✅", "öffnet den ChatGPT-Dialog (nur Auftrag kopieren + Link)", "rundgang, kopieren"],
+  [/openChatGPTEdit|Mit KI arbeiten/, "✅", "✅", "öffnet den ChatGPT-Dialog (nur Auftrag kopieren + Link)", "rundgang, kopieren"],
   [/onStartIntake|Neue Unterlage ablegen/, "✅", "✅", "öffnet den Ablage-Dialog", "knoepfe-start"],
   [/onUpdate|Akte aktualisieren/, "✅", "✅", "Statuskachel; ohne geprüfte Dokumente Hinweis", "knoepfe-start"],
   [/onLockOneDrive|onLockLocal/, "✅", "✅", "Sperren: trennt die Ordnerfreigabe in diesem Browser, löscht nichts", "knoepfe-sicherheit"],
