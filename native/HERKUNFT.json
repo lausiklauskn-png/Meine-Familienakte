@@ -14,6 +14,69 @@
       "commit": "b0a28ddfb57f7efb285099f7b58f18433037f663",
       "sha256": "e0644084e2e72773608633190a3e5ed287f93d88f438e7473f03c765c7f873c3",
       "zweck": "Knopf „Installieren“ (Kanon aus Sage-Protokol): als installierte App weg, sonst Browser-Dialog oder Erklärung"
+    },
+    "public/sbkim/01_storage.js": {
+      "repo": "lausiklauskn-png/Sage-Protokol",
+      "pfad": "src/modules/01_storage.js",
+      "commit": "c199dbdcabda38ed803d6076ce94395024cfd60d",
+      "sha256": "5a5a4bf64dfcc107da7ed70fb755d7db5cce7d80e963b3e2fbc2004537747820",
+      "zweck": "SBKIM-Kanon (Mycel), Schublade familienakte"
+    },
+    "public/sbkim/02_spore.js": {
+      "repo": "lausiklauskn-png/Sage-Protokol",
+      "pfad": "src/modules/02_spore.js",
+      "commit": "c199dbdcabda38ed803d6076ce94395024cfd60d",
+      "sha256": "0cbf0664e2a79f1301c03e52f7ac0030d4b2961f03b97b38e8634827a52353c5",
+      "zweck": "SBKIM-Kanon (Mycel), Schublade familienakte"
+    },
+    "public/sbkim/03_embedding.js": {
+      "repo": "lausiklauskn-png/Sage-Protokol",
+      "pfad": "src/modules/03_embedding.js",
+      "commit": "c199dbdcabda38ed803d6076ce94395024cfd60d",
+      "sha256": "2e31baa09a2959c95efff8eecd224e8343e75695b4b293aa35209d8f96d1f3b5",
+      "zweck": "SBKIM-Kanon (Mycel), Schublade familienakte"
+    },
+    "public/sbkim/04_match.js": {
+      "repo": "lausiklauskn-png/Sage-Protokol",
+      "pfad": "src/modules/04_match.js",
+      "commit": "c199dbdcabda38ed803d6076ce94395024cfd60d",
+      "sha256": "721eecc3c0d6ea4c259259e6071215ec1cd16f1c43c87b42ce9e72e9a0b5e41c",
+      "zweck": "SBKIM-Kanon (Mycel), Schublade familienakte"
+    },
+    "public/sbkim/05b_nostr_relay.js": {
+      "repo": "lausiklauskn-png/Sage-Protokol",
+      "pfad": "src/modules/05b_nostr_relay.js",
+      "commit": "c199dbdcabda38ed803d6076ce94395024cfd60d",
+      "sha256": "37eee5b196b3efad57131edd1cc3c0ee23acb97b5ca40740d6a0771db4b4a421",
+      "zweck": "SBKIM-Kanon (Mycel), Schublade familienakte"
+    },
+    "public/sbkim/noble-secp256k1.js": {
+      "repo": "lausiklauskn-png/Sage-Protokol",
+      "pfad": "src/modules/noble-secp256k1.js",
+      "commit": "c199dbdcabda38ed803d6076ce94395024cfd60d",
+      "sha256": "8f3879ca422c4fdfe7ca0361688636fa7cc550a59bd94d512ed6ec79aa3d55d1",
+      "zweck": "SBKIM-Kanon (Mycel), Schublade familienakte"
+    },
+    "public/sbkim/23_rendezvous.js": {
+      "repo": "lausiklauskn-png/Sage-Protokol",
+      "pfad": "src/modules/23_rendezvous.js",
+      "commit": "c199dbdcabda38ed803d6076ce94395024cfd60d",
+      "sha256": "5aa8262638eeaf70f5e5563592a730f240a95ed80daf41a4df5d7d51824afb74",
+      "zweck": "SBKIM-Kanon (Mycel), Schublade familienakte"
+    },
+    "public/sbkim/23_rendezvous_ui.js": {
+      "repo": "lausiklauskn-png/Sage-Protokol",
+      "pfad": "src/modules/23_rendezvous_ui.js",
+      "commit": "c199dbdcabda38ed803d6076ce94395024cfd60d",
+      "sha256": "66b2c6b95d27e35cb3b9697a5edc3250dfb50eb960375f9a68ab696ab05b82d2",
+      "zweck": "SBKIM-Kanon (Mycel), Schublade familienakte"
+    },
+    "public/sbkim/05_anastomose.js": {
+      "repo": "lausiklauskn-png/Sage-Protokol",
+      "pfad": "src/modules/05_anastomose.js",
+      "commit": "c199dbdcabda38ed803d6076ce94395024cfd60d",
+      "sha256": "255ac79aeb3b0203e92f0cebd0a905e47c488b43efe18f41332a7d35520bbf23",
+      "zweck": "SBKIM-Kanon (Mycel), Schublade familienakte"
     }
   }
 }

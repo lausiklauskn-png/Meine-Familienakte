@@ -1778,3 +1778,17 @@ input.af-feld, textarea.af-feld { width: auto; min-height: 0; resize: none; }
 .person-kontakt-felder label { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .person-kontakt-felder input { width: 100%; box-sizing: border-box; }
 .person-kontakt-fehler { color: #b42318; margin: 0 0 8px; }
+
+/* Netz (Mycel), Sitzung B Stück 2a: kein schwebender Kanon-Knopf (Klaus 2026-10-31: „Eigene Seite Netz“). */
+#sbkim-rdv-btn { display: none !important; }
+.fa-netz-satz { margin: 0 0 12px; }
+.fa-netz-zustand { display: grid; gap: 6px; margin: 0 0 12px; }
+.fa-netz-zeile { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--line, #e3e7eb); padding: 4px 0; }
+.fa-netz-zeile strong.gut { color: #1f7a4d; }
+.fa-netz-zeile strong.aus { color: #8a5a00; }
+.fa-netz-geraet { display: flex; flex-direction: column; gap: 4px; margin: 0 0 12px; max-width: 420px; }
+.fa-netz-geraet input { width: 100%; box-sizing: border-box; }
+.fa-netz-hinweis { margin: 0 0 10px; color: #8a5a00; }
+.fa-netz-fehler { color: #b42318; }
+.fa-mycel-geraet { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin: 8px 0; }
+.fa-mycel-geraet input { flex: 1; min-width: 120px; }
