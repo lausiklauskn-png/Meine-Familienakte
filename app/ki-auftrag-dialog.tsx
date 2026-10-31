@@ -1,13 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { Copy, ExternalLink, FileText, Sparkles, Undo2, Upload, X } from "lucide-react";
 import { DictationButton, InfoPopover } from "./ui-controls";
-import { pdfText } from "./file-viewer";
+import { loadPdfJs, pdfText } from "./file-viewer";
+import { ocrZeilen } from "./wfpdf-kern";
 import { inventoryTextHint, type LocalDocument } from "./local-vault";
 import { auftragAnonym, KI_ZIELE, oeffnenAdresse, sitzungGueltig, zurueckSetzen, type Anonymisiert, type KiArt, type KiZiel, type Pseudonymisierer } from "../lib/ki-auftrag";
 
 type Notice = { kind: "success" | "error" | "info"; text: string } | null;
 type ActionState = "pending" | "success" | "failed";
-type Gewaehlt = { key: string; titel: string; text: string; lesbar: boolean };
+type Gewaehlt = { key: string; titel: string; text: string; lesbar: boolean; ocr?: boolean };
 
 const SITZUNGEN_KEY = "familienakte_ki_sitzungen_v1";
 const WAHL_KEY = "familienakte_ki_wahl_v1";
@@ -16,6 +17,30 @@ const MAX_DOKUMENTE = 5;
 function lesen<T>(key: string, vorgabe: T): T { try { return { ...vorgabe, ...JSON.parse(localStorage.getItem(key) || "{}") }; } catch { return vorgabe; } }
 function schreiben(key: string, wert: unknown) { try { localStorage.setItem(key, JSON.stringify(wert)); } catch { /* ohne Speicher geht es weiter */ } }
 const pseudo = () => (window as unknown as { SbkimPseudonym?: Pseudonymisierer }).SbkimPseudonym;
+
+const OCR_SEITEN = 5;
+type OcrPdf = { numPages: number; getPage: (n: number) => Promise<{ getViewport: (o: { scale: number }) => { width: number; height: number }; render: (o: { canvasContext: CanvasRenderingContext2D; viewport: unknown }) => { promise: Promise<void> } }> };
+/** Texterkennung auf dem Gerät (Tesseract aus Workflow PDF, Sitzung F): gescannte PDF-Seiten ohne Textebene und Fotos. */
+export async function dokumentTextOcr(file: File): Promise<string> {
+  const leinwaende: HTMLCanvasElement[] = [];
+  if (/\.pdf$/i.test(file.name) || file.type === "application/pdf") {
+    const lib = await loadPdfJs() as unknown as { getDocument: (o: { data: Uint8Array }) => { promise: Promise<OcrPdf> } };
+    const pdf = await lib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
+    for (let n = 1; n <= Math.min(pdf.numPages, OCR_SEITEN); n++) {
+      const page = await pdf.getPage(n); const v1 = page.getViewport({ scale: 1 }); const vp = page.getViewport({ scale: 1800 / v1.width });
+      const c = document.createElement("canvas"); c.width = Math.round(vp.width); c.height = Math.round(vp.height);
+      const x = c.getContext("2d")!; x.fillStyle = "#fff"; x.fillRect(0, 0, c.width, c.height);
+      await page.render({ canvasContext: x, viewport: vp }).promise; leinwaende.push(c);
+    }
+  } else if (file.type.startsWith("image/")) {
+    const bmp = await createImageBitmap(file); const f = Math.min(1, 2400 / Math.max(bmp.width, bmp.height));
+    const c = document.createElement("canvas"); c.width = Math.round(bmp.width * f); c.height = Math.round(bmp.height * f);
+    c.getContext("2d")!.drawImage(bmp, 0, 0, c.width, c.height); leinwaende.push(c);
+  }
+  const teile: string[] = [];
+  for (const c of leinwaende) { teile.push((await ocrZeilen(c)).map((z) => z.text).join("\n")); c.width = c.height = 0; }
+  return teile.filter(Boolean).join("\n\n");
+}
 
 export async function dokumentText(file: File): Promise<string> {
   if (/\.pdf$/i.test(file.name) || file.type === "application/pdf") {
@@ -67,8 +92,13 @@ export function KiAuftragDialog({ seiteId, seite, initialRequest, documents, nam
     if (gewaehlt.length >= MAX_DOKUMENTE) { onNotice({ kind: "info", text: `Höchstens ${MAX_DOKUMENTE} Unterlagen auf einmal.` }); return; }
     setLade(true);
     try {
-      const text = (await dokumentText(await file())).slice(0, 40000);
-      setGewaehlt((alt) => [...alt, { key, titel, text, lesbar: Boolean(text.trim()) }]);
+      const datei = await file();
+      let text = (await dokumentText(datei)).slice(0, 40000), ocr = false;
+      if (!text.trim() && (/\.pdf$/i.test(datei.name) || datei.type === "application/pdf" || datei.type.startsWith("image/"))) {
+        onNotice({ kind: "info", text: `„${titel}“ hat keine Textebene — Texterkennung auf dem Gerät läuft …` });
+        try { text = (await dokumentTextOcr(datei)).slice(0, 40000); ocr = Boolean(text.trim()); } catch (e) { onNotice({ kind: "error", text: `Texterkennung für „${titel}“ ging nicht: ${(e as Error).message}` }); }
+      }
+      setGewaehlt((alt) => [...alt, { key, titel, text, lesbar: Boolean(text.trim()), ocr }]);
     } catch (e) {
       onNotice({ kind: "error", text: `„${titel}“ konnte nicht gelesen werden: ${(e as Error).message}` });
     } finally { setLade(false); }
@@ -125,10 +155,10 @@ export function KiAuftragDialog({ seiteId, seite, initialRequest, documents, nam
 
     {art === "dokument" && <div className="ki-dokumente">
       <div className="ki-zeile"><input className="ki-suche" value={suche} onChange={(event) => setSuche(event.target.value)} placeholder="Unterlage suchen …" aria-label="Unterlage suchen"/>
-        <label className="button secondary ki-datei"><Upload size={16}/> Datei wählen<input type="file" hidden accept=".pdf,.txt,.eml,.docx,.doc,.msg,text/*" onChange={(event) => { const f = event.target.files?.[0]; if (f) void hinzu(`datei:${f.name}:${f.size}`, f.name, async () => f); event.target.value = ""; }}/></label></div>
+        <label className="button secondary ki-datei"><Upload size={16}/> Datei wählen<input type="file" hidden accept=".pdf,.txt,.eml,.docx,.doc,.msg,text/*,image/*" onChange={(event) => { const f = event.target.files?.[0]; if (f) void hinzu(`datei:${f.name}:${f.size}`, f.name, async () => f); event.target.value = ""; }}/></label></div>
       <ul className="ki-liste" aria-label="Unterlagen der Akte">{treffer.map((d) => { const an = gewaehlt.some((g) => g.key === d.id); return <li key={d.id}><label><input type="checkbox" checked={an} disabled={lade} onChange={() => void hinzu(d.id, d.originalName, () => readDocument(d.id))}/> <span>{d.originalName}</span><small>{d.category}{d.documentDate ? ` · ${d.documentDate}` : ""}</small></label></li>; })}
         {!treffer.length && <li className="fine-print">Keine Unterlage gefunden.</li>}</ul>
-      {gewaehlt.length > 0 && <p className="fine-print">Gewählt: {gewaehlt.map((g) => `${g.titel}${g.lesbar ? "" : " (kein lesbarer Text, geht nicht mit)"}`).join(" · ")}</p>}
+      {gewaehlt.length > 0 && <p className="fine-print">Gewählt: {gewaehlt.map((g) => `${g.titel}${g.lesbar ? g.ocr ? " (per Texterkennung gelesen — bitte in der Vorschau prüfen)" : "" : " (kein lesbarer Text, geht nicht mit)"}`).join(" · ")}</p>}
       <p className="fine-print">Gelesen wird der Text von PDF (Textebene), Word, E-Mail und Textdateien. Fotos und gescannte Seiten ohne Text gehen nicht mit.</p>
     </div>}
 

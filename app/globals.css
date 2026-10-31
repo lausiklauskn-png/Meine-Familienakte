@@ -1718,3 +1718,54 @@ button.object-card:hover { transform: translateY(-2px); border-color: #8fb2c9; b
 .ki-sitzung, .ki-rueckweg { border-top: 1px solid var(--line); margin-top: 10px; padding-top: 8px; display: grid; gap: 4px; }
 .ki-sitzung label { display: inline-flex; gap: 6px; align-items: center; font-size: .86rem; }
 .ki-rueckweg textarea { width: 100%; font: inherit; border: 1px solid var(--line); border-radius: 8px; padding: 7px 9px; }
+
+/* Ausfüllen (Sitzung F, 2026-10-31): Fenster über der App, Seiten mit Feldern in Prozent (wie Workflow PDF). */
+.af-backdrop { z-index: 90; padding: 10px; }
+.af-dialog { width: min(1100px, 100%); max-height: calc(100vh - 20px); display: flex; flex-direction: column; gap: 10px; }
+.af-leiste { display: flex; flex-wrap: wrap; align-items: end; gap: 8px; }
+.af-reiter { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.af-reiter button { border: 0; background: var(--paper); padding: 7px 12px; font: inherit; cursor: pointer; }
+.af-reiter button.aktiv { background: var(--teal); color: #fff; }
+.af-werkzeug { display: grid; gap: 2px; font-size: .82rem; color: var(--muted); }
+.af-werkzeug select { min-height: 32px; }
+.af-schalter { display: inline-flex; align-items: center; gap: 6px; font-size: .9rem; }
+.af-arbeit, .af-hinweis { display: flex; align-items: center; gap: 8px; margin: 0; padding: 6px 10px; border-radius: 10px; background: var(--blue-soft); }
+.af-hinweis { justify-content: space-between; }
+.af-hinweis-success { background: var(--green-soft); }
+.af-hinweis-error { background: var(--red-soft); }
+.af-warnung { color: var(--red); font-weight: 600; }
+.af-seiten { display: grid; gap: 14px; overflow: auto; flex: 1; min-height: 240px; padding: 4px; background: var(--canvas); border-radius: 12px; }
+.af-seite { position: relative; width: 100%; background: #fff center / 100% 100% no-repeat; box-shadow: 0 2px 10px rgba(16,52,83,.14); touch-action: pan-y; }
+.af-seite.af-setzt { cursor: crosshair; }
+.af-feld { position: absolute; box-sizing: border-box; margin: 0; padding: 0 3px; border: 1px solid rgba(8,127,122,.55); border-radius: 3px; background: rgba(232,246,245,.55); font: 12px/1.15 system-ui, sans-serif; color: #0b1f63; }
+input.af-feld, textarea.af-feld { width: auto; min-height: 0; resize: none; }
+.af-feld:focus { outline: 2px solid var(--teal); background: rgba(255,255,255,.92); }
+.af-feld.af-vorschlag { background: rgba(255,236,150,.75); border-color: #c48525; }
+.af-feld.af-ungeprueft { border-style: dashed; }
+.af-feld.af-gewaehlt { outline: 2px solid var(--navy); z-index: 2; }
+.af-check { display: grid; place-items: center; font-weight: 700; cursor: pointer; padding: 0; }
+.af-unterschrift { display: grid; place-items: center; cursor: pointer; overflow: hidden; }
+.af-unterschrift img { max-width: 100%; max-height: 100%; }
+.af-unterschrift span { display: inline-flex; gap: 4px; align-items: center; font-size: 11px; color: var(--muted); }
+.af-label { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 10px; color: var(--navy); pointer-events: none; }
+.af-griff { position: absolute; right: -6px; bottom: -6px; width: 12px; height: 12px; border-radius: 50%; background: var(--navy); cursor: nwse-resize; touch-action: none; }
+.af-seite .af-feld[data-af-feld] { touch-action: none; }
+.af-vorschlaege { position: absolute; z-index: 5; display: grid; background: #fff; border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow); overflow: hidden; }
+.af-vorschlaege button { border: 0; background: #fff; text-align: left; padding: 6px 9px; font: inherit; font-size: .88rem; cursor: pointer; }
+.af-vorschlaege button:hover, .af-vorschlaege button:focus { background: var(--teal-soft); }
+.af-vorschlaege .af-vorschlag-weg { font-size: .76rem; color: var(--muted); border-top: 1px solid var(--line); }
+.af-ki, .af-pad, .af-feld-bearbeiten { display: grid; gap: 8px; padding: 12px; }
+.af-dialog > :not(.af-seiten) { flex-shrink: 0; }
+.af-ki { max-height: 55vh; overflow: auto; }
+.af-pad { position: fixed; z-index: 95; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(680px, calc(100vw - 20px)); max-height: calc(100vh - 20px); overflow: auto; box-shadow: 0 24px 80px rgba(6,28,46,.35); }
+.af-feld-bearbeiten { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); align-items: end; }
+.af-ki textarea { width: 100%; font-size: .85rem; }
+.af-unterschrift-pad canvas { width: 100%; max-width: 640px; aspect-ratio: 3 / 1; border: 1px dashed var(--line); border-radius: 10px; background: #fff; touch-action: none; }
+.af-us-gemerkt { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.af-us-merken input { margin: 4px 6px 0 0; }
+.af-aktionen { flex-wrap: wrap; align-items: center; }
+.af-aktionen .fine-print { margin-right: auto; }
+.af-karte { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 4px 0; }
+.af-marke-offen { background: var(--amber-soft); color: var(--amber); }
+.af-marke-ergebnis, .af-marke-ausgefuellt { background: var(--green-soft); color: var(--green); }
+@media (max-width: 640px) { .af-dialog { padding: 12px; } .af-feld { font-size: 10px; } }

@@ -6,7 +6,7 @@ import jsxA11y from "eslint-plugin-jsx-a11y";
 import globals from "globals";
 
 export default tseslint.config(
-  { ignores: ["dist/**", "dist-single/**", "dist-einzel/**", "node_modules/**", "public/vendor/**", "public/native/native-network.js", "public/native/installieren.js", "public/native/25_pseudonym.js", "android/**", "windows/**"] },
+  { ignores: ["dist/**", "dist-single/**", "dist-einzel/**", "node_modules/**", "public/vendor/**", "public/wfpdf/**", "public/native/native-network.js", "public/native/installieren.js", "public/native/25_pseudonym.js", "android/**", "windows/**"] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {

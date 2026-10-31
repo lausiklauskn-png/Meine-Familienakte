@@ -30,12 +30,15 @@ const hash = createHash("sha256");
 for (const rel of list) hash.update(rel).update(readFileSync(path.join(dist, rel)));
 const build = `${count}.${hash.digest("hex").slice(0, 8)}`;
 
-const version = { version: pkg.version, build, commit, date, files: list.length };
+// Texterkennung (21 MB) und Blatterkennung (3,5 MB) von Workflow PDF kommen nicht in den Installations-Vorrat: der Worker legt sie
+// beim ersten Gebrauch ab (Sitzung F). Sonst lüde jede Installation und jedes Update 25 MB.
+const vorrat = list.filter((f) => !f.startsWith("wfpdf/vendor/"));
+const version = { version: pkg.version, build, commit, date, files: list.length, vorrat: vorrat.length };
 writeFileSync(path.join(dist, "version.json"), JSON.stringify(version, null, 2) + "\n");
 
 const sw = `/* Familienakte Service Worker – erzeugt von scripts/build-pwa.mjs, nicht von Hand ändern. */
 const VORRAT = "familienakte-${build}";
-const DATEIEN = ${JSON.stringify(list.map((f) => `./${f}`))};
+const DATEIEN = ${JSON.stringify(vorrat.map((f) => `./${f}`))};
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(VORRAT).then((cache) => cache.addAll(DATEIEN)));
 });

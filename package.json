@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/run-assignment-tests.mjs && node scripts/run-export-tests.mjs && node scripts/run-reminder-tests.mjs && node scripts/run-news-tests.mjs && node scripts/run-cockpit-tests.mjs && node scripts/run-search-tests.mjs && node scripts/run-document-library-tests.mjs && node scripts/run-menu-optimization-tests.mjs && node scripts/run-optical-package-tests.mjs && node scripts/run-document-intake-tests.mjs && node scripts/run-central-intake-tests.mjs && node scripts/run-fawoga-inventory-tests.mjs && node scripts/run-fawoga-onedrive-tests.mjs && node scripts/run-test-workspace-tests.mjs && node scripts/run-test-register-tests.mjs && node scripts/run-automatic-test-environment-tests.mjs && node scripts/run-document-scan-tests.mjs && node scripts/run-memory-tests.mjs && node scripts/run-context-linking-tests.mjs && node scripts/run-consolidation-tests.mjs && node scripts/run-system-check.mjs && node scripts/run-family-assistant-tests.mjs && node scripts/run-ui-activity-tests.mjs && node scripts/run-ui-orientation-tests.mjs && node scripts/run-practical-acceptance-tests.mjs && node scripts/run-vault-safety-tests.mjs && node scripts/run-ki-auftrag-tests.mjs && tsc --noEmit && vite build && node scripts/build-pwa.mjs",
+    "build": "node scripts/run-assignment-tests.mjs && node scripts/run-export-tests.mjs && node scripts/run-reminder-tests.mjs && node scripts/run-news-tests.mjs && node scripts/run-cockpit-tests.mjs && node scripts/run-search-tests.mjs && node scripts/run-document-library-tests.mjs && node scripts/run-menu-optimization-tests.mjs && node scripts/run-optical-package-tests.mjs && node scripts/run-document-intake-tests.mjs && node scripts/run-central-intake-tests.mjs && node scripts/run-fawoga-inventory-tests.mjs && node scripts/run-fawoga-onedrive-tests.mjs && node scripts/run-test-workspace-tests.mjs && node scripts/run-test-register-tests.mjs && node scripts/run-automatic-test-environment-tests.mjs && node scripts/run-document-scan-tests.mjs && node scripts/run-memory-tests.mjs && node scripts/run-context-linking-tests.mjs && node scripts/run-consolidation-tests.mjs && node scripts/run-system-check.mjs && node scripts/run-family-assistant-tests.mjs && node scripts/run-ui-activity-tests.mjs && node scripts/run-ui-orientation-tests.mjs && node scripts/run-practical-acceptance-tests.mjs && node scripts/run-vault-safety-tests.mjs && node scripts/run-ki-auftrag-tests.mjs && node scripts/run-ausfuellen-tests.mjs && tsc --noEmit && vite build && node scripts/build-pwa.mjs",
     "preview": "vite preview",
     "build:pwa": "node scripts/build-pwa.mjs",
     "test:ui": "node tests/run-ui.mjs",
@@ -43,6 +43,7 @@
     "check:assistant": "node scripts/run-family-assistant-tests.mjs",
     "check:system": "node scripts/run-system-check.mjs",
     "check:vault-safety": "node scripts/run-vault-safety-tests.mjs && node scripts/run-ki-auftrag-tests.mjs",
+    "check:ausfuellen": "node scripts/run-ausfuellen-tests.mjs",
     "screenshots": "node scripts/screenshots.mjs",
     "build:single": "npm run build && node scripts/build-single-file.mjs",
     "sync:android": "npm run build && cap sync android",

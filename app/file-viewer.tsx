@@ -43,7 +43,7 @@ function loadScript(src: string) {
     document.head.appendChild(script);
   });
 }
-function loadPdfJs(): Promise<PdfJs> {
+export function loadPdfJs(): Promise<PdfJs> {
   if (!pdfJsPromise) {
     // pdf.js liegt im Paket (public/vendor/pdfjs, A8): keine Verbindung nach außen, geht offline und bei ausgeschaltetem
     // Internetschalter. In der Einzeldatei ist die Bibliothek schon eingebettet (window.pdfjsLib vorhanden).
