@@ -95,9 +95,10 @@ try {
     if (info.text.includes("Dublette")) throw new Error("unerwartet gemeldet: " + info.text.slice(0, 200));
   });
   await step("Gleicher Inhalt, anderer Name, im SELBEN Stapel: Dublette innerhalb der Auswahl wird gemeldet", async () => {
+    const vorher = await page.locator(".intake-queue-item").count();
     await picker.setInputFiles([f("Nebenkostenabrechnung_2025_Arenberg-Hof.pdf"), f("Kopie_Abrechnung_Pustelblume.pdf")]);
-    await page.locator(".intake-queue-item").nth(1).waitFor();
-    await page.waitForFunction(() => !document.querySelector(".intake-queue-item .badge")?.textContent?.includes("läuft"));
+    await page.waitForFunction((n) => document.querySelectorAll(".intake-queue-item").length === n + 2, vorher);
+    await page.waitForFunction(() => [...document.querySelectorAll(".intake-queue-item")].slice(0, 2).every((e) => !e.querySelector(".badge")?.textContent?.includes("läuft")));
     const text = await page.locator(".intake-queue-item").first().innerText();
     if (!text.includes("Dublette innerhalb dieser Auswahl")) throw new Error(text.replace(/\s+/g, " ").slice(0, 200));
   });
