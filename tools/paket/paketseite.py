@@ -2,7 +2,9 @@
 # dem Speichern geprüft), „Was neu ist“ mit Bildschirmfotos (Markierung: roter Rahmen, Nummer, Zeigehand) und Codex-Auftrag.
 # Nachfolger von abgleichsseite.py (2.28.3). Aufruf:
 #   python3 -I tools/paket/paketseite.py <fassung> <apk> <setup.exe> <einzeldatei.html> <quelle.zip> <bilder-ordner> <ausgabe.html>
-# Dateien vorher aus den Releases laden und gegen SHA256SUMS prüfen. Bilder: Aufnahme-Skript siehe docs/PAKET.md.
+# Dateien vorher aus den Releases laden und gegen SHA256SUMS prüfen. Bilder: tools/paket/bilder-aufnehmen.mjs.
+# Schlanke Fassung (Klaus 2026-11-01: 82 MB ließen sich in der App nicht laden): statt der vier Dateien je „-“ angeben — dann
+# führen die Knöpfe auf die Release-Dateien bei GitHub, die Seite ist nur wenige MB groß.
 import sys, base64, hashlib, html, json, os
 from pathlib import Path
 V, APK, EXE, EINZEL, ZIP, BILDER, ZIEL = sys.argv[1:8]
@@ -16,17 +18,27 @@ dateien = [
   ("zip", ZIP, f"familienakte-{V}-quelle.zip", "application/zip"),
   ("md", None, "CODEX-ABGLEICH-FAMILIENAKTE.md", "text/markdown"),
 ]
+REL = "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download"
+LINK = {"apk": f"{REL}/android-v{V}/Familienakte-android-v{V}.apk", "exe": f"{REL}/windows-v{V}/Familienakte-Windows-{V}-x64-setup.exe",
+        "html": f"{REL}/android-v{V}/Familienakte-Einzeldatei-{V}.html", "zip": f"https://github.com/lausiklauskn-png/Meine-Familienakte/archive/refs/tags/android-v{V}.zip"}
 meta, blobs = {}, []
 for key, pfad, name, mime in dateien:
+    if pfad == "-": meta[key] = {"name": name, "link": LINK[key]}; continue
     data = md.encode("utf-8") if pfad is None else open(pfad, "rb").read()
     meta[key] = {"name": name, "mime": mime, "size": len(data), "sha": hashlib.sha256(data).hexdigest()}
     blobs.append(f'<script type="application/octet-stream" id="d-{key}">{base64.b64encode(data).decode()}</script>')
-def mb(k): return f"{meta[k]['size']/1048576:.1f}".replace(".", ",") + " MB"
+def mb(k):
+    if "size" not in meta[k]: return "von GitHub"
+    return f"{meta[k]['size']/1048576:.1f}".replace(".", ",") + " MB"
 def bild(n):
     p = Path(BILDER) / f"{n}.jpg"
     return "data:image/jpeg;base64," + base64.b64encode(p.read_bytes()).decode() if p.exists() else ""
-def knopf(k, text): return f'<button class="btn" data-laden="{k}">⬇ {text}</button>'
-def pruef(k): return f'<p class="pruef">{mb(k)} · SHA-256 <code>{meta[k]["sha"][:16]}…</code> <span class="stand" data-stand="{k}"></span></p>'
+def knopf(k, text):
+    if "link" in meta[k]: return f'<a class="btn" href="{meta[k]["link"]}" download>⬇ {text}</a>'
+    return f'<button class="btn" data-laden="{k}">⬇ {text}</button>'
+def pruef(k):
+    if "link" in meta[k]: return '<p class="pruef">Lädt direkt von GitHub (Internet nötig).</p>'
+    return f'<p class="pruef">{mb(k)} · SHA-256 <code>{meta[k]["sha"][:16]}…</code> <span class="stand" data-stand="{k}"></span></p>'
 def legende(punkte): return '<ol class="legende">' + "".join(f'<li><span class="nr">{i}</span><div>{t}</div></li>' for i, t in enumerate(punkte, 1)) + "</ol>"
 def figur(n, titel, punkte, text=""):
     src = bild(n)
@@ -128,7 +140,7 @@ nav.inhalt{{display:flex;flex-wrap:wrap;gap:8px}}
 footer{{color:var(--leise);font-size:.85rem;text-align:center}}
 </style></head><body><main>
 <header class="kopf"><img src="{logo}" alt="Logo Meine Familienakte"><div><h1>Meine Familienakte · Fassung {V}</h1>
-<p class="unter">Alle Fassungen stecken in dieser einen Datei – speichern direkt von hier, auch ohne Internet. Darunter: was seit deiner Fassung neu ist, mit Bildern.</p></div></header>
+<p class="unter">{"Alle Fassungen stecken in dieser einen Datei – speichern direkt von hier, auch ohne Internet." if "size" in meta["apk"] else "Alle Fassungen hier zum Laden (Links zu GitHub)."} Darunter: was seit deiner Fassung neu ist, mit Bildern.</p></div></header>
 <nav class="inhalt"><a class="link" href="#laden">Laden</a><a class="link" href="#neu">Was neu ist</a><a class="link" href="#weitere">Weitere Änderungen</a><a class="link" href="#codex">Abgleich mit Codex</a></nav>
 
 <h2 id="laden">Laden</h2>

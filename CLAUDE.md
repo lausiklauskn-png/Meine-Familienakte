@@ -58,4 +58,7 @@ Grenzen: nur erfundene Briefe; die Warteschlange selbst zeigt den Briefkopf noch
 **Paket für den Freund (2.28.13, Klaus 2026-11-01):** eine HTML-Datei mit APK, Windows-Setup, Einzeldatei, Quellcode und Codex-Auftrag
 eingebettet (Speichern mit SHA-256-Prüfung) und „Was neu ist“ mit markierten Bildschirmfotos. Bilder: `node tools/paket/bilder-aufnehmen.mjs <ordner>`
 (nach `npm run build`; Zeigehand `tools/paket/zeigehand.png` von Klaus), Seite: `python3 -I tools/paket/paketseite.py <fassung> <apk> <exe>
-<einzeldatei> <quelle.zip> <ordner> <ausgabe.html>`. Die Datei (≈ 82 MB) liegt nicht im Repo.
+<einzeldatei> <quelle.zip> <ordner> <ausgabe.html>`; statt der vier Dateien je „-“ = schlanke Fassung mit Links (≈ 2 MB). Die Datei liegt nicht im Repo.
+
+**Stand nach 2.28.14 (Kacheln sagen Import/Ausfüllen, #45; Paket-Werkzeug #46):** Abschluss `BRIEF_ABSCHLUSS_2026-11-01_BRIEFKOPF-UND-PAKET.md`
+(Offenes und Startauftrag dort).
