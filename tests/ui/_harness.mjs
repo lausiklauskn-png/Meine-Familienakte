@@ -48,7 +48,9 @@ function run(cmd, args, opts = {}) {
 /** Baut dist/ wenn nötig (oder bei UI_BUILD=1 immer) und startet vite preview. */
 export async function startApp() {
   if (process.env.UI_BASE) return { base: process.env.UI_BASE, stop: async () => {} };
-  if (process.env.UI_BUILD === "1" || !existsSync(path.join(ROOT, "dist/index.html"))) await run("npx", ["vite", "build"]);
+  if (process.env.UI_BUILD === "1" || !existsSync(path.join(ROOT, "dist/index.html")) || !existsSync(path.join(ROOT, "dist/sw.js"))) {
+    await run("npm", ["run", "build"]);
+  }
   const port = await freePort();
   // Eigene Prozessgruppe: npx startet vite als Kind; SIGTERM an npx allein ließ den Vorschau-Server stehen (verwaiste Prozesse in der CI).
   const child = spawn("npx", ["vite", "preview", "--port", String(port), "--strictPort", "--host", "127.0.0.1"], { cwd: ROOT, stdio: "ignore", detached: true });
