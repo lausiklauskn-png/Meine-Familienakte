@@ -44,8 +44,9 @@ sichtbar bleibt „Version 2.28.1“):
    `wfpdf_*` → `fa_wfpdf_*`, kein Service Worker, ⟳ sieht nur `fa-wfpdf-*`-Vorräte), Farben `public/apps/fa-wfpdf-thema.css`, Seite
    `app/workflow-pdf-seite.tsx` (Menü Dokumente → „Workflow PDF“, `active === "workflowpdf"`). Tesseract/Scanic nur noch einmal im Paket
    (Klon-`vendor/`; `public/wfpdf/vendor` gelöscht, `app/wfpdf-kern.ts` `vendorBasis()`). Probe in `scripts/run-ausfuellen-tests.mjs`.
-   **Offen:** UI-Probe `tests/ui/workflow-pdf-klon.test.mjs`, Gegenprobe-Fälle, Fassung 2.28.9, PR, Veröffentlichung.
-2. Brücke Ergebnis → Dokumenteneingang (Teilen/Herunterladen im Klon abfangen) und Unterlage → Klon (`launchQueue` stellen), „Dokument
+   **Fertig gemessen:** `tests/ui/workflow-pdf-klon.test.mjs` 16 grün · Gegenprobe `"Klon:"` 7/7 · `run-ui` 27/27 · lint 0 Fehler ·
+   check:android/windows/herkunft grün · Fassung **2.28.9**. Doku `docs/WORKFLOW-PDF-KLON.md`. Danach: PR, CI, Merge, Veröffentlichung.
+2. (Entwurf liegt außerhalb des Repos nicht vor — neu bauen:) Brücke Ergebnis → Dokumenteneingang (Teilen/Herunterladen im Klon abfangen) und Unterlage → Klon (`launchQueue` stellen), „Dokument
    fotografieren“ → Klon `?scan=1`.
 3. „Direkt übernehmen“ (Massenscan, siehe oben) — Klebstoff mit `WFP.Scanner` (`hinzu`, `erkennen`, `pdfBauen`; `entscheiden` in scan-bild.js
    liefert `sicher`), unsichere Seiten markieren statt anhalten.

@@ -12,14 +12,15 @@
   "use strict";
   var W = window, eingebettet = W.parent !== W;
   var DB_ALT = "WorkflohPDF1", DB_NEU = "FamilienakteWFPDF1";
-  var KEY_ALT = "wfpdf_", KEY_NEU = "fa_wfpdf_", VORRAT = "fa-wfpdf-";
+  var KEY_ALT = "wfpdf_", KEY_NEU = "fa_", VORRAT = "fa-wfpdf-";
   // 1a. Einstellungen
   try {
     var SP = W.Storage && W.Storage.prototype;
+    // wfpdf_x → fa_wfpdf_x
     var um = function (k) { k = String(k); return k.indexOf(KEY_ALT) === 0 ? KEY_NEU + k : k; };
     ["getItem", "removeItem"].forEach(function (n) { var o = SP[n]; SP[n] = function (k) { return o.call(this, um(k)); }; });
     var set = SP.setItem; SP.setItem = function (k, v) { return set.call(this, um(k), v); };
-  } catch (_e) {}
+  } catch { /* still: ohne diese Fähigkeit läuft der Klon wie vorher */ }
   // 1b. Datenbank
   try {
     var IF = W.IDBFactory && W.IDBFactory.prototype;
@@ -34,14 +35,14 @@
         });
       };
     }
-  } catch (_e) {}
+  } catch { /* still: ohne diese Fähigkeit läuft der Klon wie vorher */ }
   // 2a. Vorräte: nur eigene sichtbar, „workfloh-pdf-geteilt“ → „fa-wfpdf-geteilt“
   try {
     var CS = W.CacheStorage && W.CacheStorage.prototype;
     var vUm = function (n) { n = String(n); return n === "workfloh-pdf-geteilt" ? VORRAT + "geteilt" : n; };
     var keys = CS.keys; CS.keys = function () { return keys.call(this).then(function (l) { return l.filter(function (n) { return n.indexOf(VORRAT) === 0; }); }); };
     ["open", "delete", "has"].forEach(function (n) { var o = CS[n]; CS[n] = function (x) { return o.call(this, vUm(x)); }; });
-  } catch (_e) {}
+  } catch { /* still: ohne diese Fähigkeit läuft der Klon wie vorher */ }
   // 2b. Kein Service Worker im Klon
   try {
     var SWC = W.ServiceWorkerContainer && W.ServiceWorkerContainer.prototype;
@@ -50,11 +51,11 @@
       SWC.getRegistrations = function () { return Promise.resolve([]); };
       SWC.getRegistration = function () { return Promise.resolve(undefined); };
     }
-  } catch (_e) {}
+  } catch { /* still: ohne diese Fähigkeit läuft der Klon wie vorher */ }
   // 3. Marke und Bereit-Meldung
   var html = document.documentElement;
   html.setAttribute("data-fa-eingebettet", eingebettet ? "1" : "0");
-  function melde(d) { if (!eingebettet) return; try { W.parent.postMessage(d, location.origin); } catch (_e) {} }
+  function melde(d) { if (!eingebettet) return; try { W.parent.postMessage(d, location.origin); } catch { /* still: ohne diese Fähigkeit läuft der Klon wie vorher */ } }
   W.FA_BRUECKE = { eingebettet: eingebettet, db: DB_NEU, schluessel: KEY_NEU, melde: melde };
   W.addEventListener("load", function () { melde({ typ: "fa-wfpdf-bereit" }); });
 })();

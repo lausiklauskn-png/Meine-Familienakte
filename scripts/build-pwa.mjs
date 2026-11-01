@@ -75,11 +75,13 @@ self.addEventListener("fetch", (event) => {
   if (url.pathname.endsWith("/version.json")) { event.respondWith(fetch(event.request).catch(() => new Response("{}", { headers: { "content-type": "application/json" } }))); return; }
   event.respondWith((async () => {
     const cache = await caches.open(VORRAT);
-    const key = event.request.mode === "navigate" ? new Request(new URL("./index.html", self.registration.scope).href) : event.request;
+    // Eingebettete Apps (apps/…, z. B. der Klon von Workflow PDF) sind eigene Seiten: dort NICHT die Akte ausliefern.
+    const eigeneSeite = url.pathname.startsWith(new URL("./apps/", self.registration.scope).pathname);
+    const key = event.request.mode === "navigate" && !eigeneSeite ? new Request(new URL("./index.html", self.registration.scope).href) : event.request;
     const hit = await cache.match(key, { ignoreSearch: true, ignoreVary: true });
     if (hit) return hit;
     try { const antwort = await fetch(event.request); if (antwort.ok && url.pathname.startsWith(new URL(self.registration.scope).pathname)) cache.put(event.request, antwort.clone()); return antwort; }
-    catch (error) { const index = await cache.match(new URL("./index.html", self.registration.scope).href); if (index && event.request.mode === "navigate") return index; throw error; }
+    catch (error) { const index = await cache.match(new URL("./index.html", self.registration.scope).href); if (index && event.request.mode === "navigate" && !eigeneSeite) return index; throw error; }
   })());
 });
 `;

@@ -27,6 +27,14 @@ const faelle = [
   { name: "Eingang: Foto-Knopf wieder ohne Workflow-PDF-Scanner", datei: "app/central-intake-center.tsx", alt: "onClick={() => storageReady ? onStartDocumentScan([]) : onGo(\"security\")} data-dokument-scannen", neu: "onClick={() => storageReady ? cameraRef.current?.click() : onGo(\"security\")} data-dokument-scannen", probe: "eingang-liest", rot: /öffnet den Scanner von Workflow PDF/ },
   { name: "Eingang: liest PDFs/Fotos nicht", datei: HP, alt: "if (!value.trim() && (istPdf || istBild)) {", neu: "if (false) {", probe: "eingang-liest", rot: /liest den Text/ },
   { name: "Eingang: langer Text überstimmt den Dateinamen", datei: "lib/document-intake.ts", alt: "kurzerHinweis || nachName.lifeArea === \"Archiv\" ? classifyFile(input.file.name, input.file.textHint) : nachName", neu: "classifyFile(input.file.name, input.file.textHint)", probe: "dateieingang", rot: /Übernommenes Dokument/ },
+  // Stück 1 „Workflow PDF als Klon“ (2026-11-01)
+  { name: "Klon: Datenbank nicht umgeleitet", datei: "public/apps/fa-wfpdf-bruecke.js", alt: "var open = IF.open; IF.open = function (n, v) { return arguments.length > 1 ? open.call(this, dbUm(n), v) : open.call(this, dbUm(n)); };", neu: "", probe: "workflow-pdf-klon", rot: /Eigene Datenbank|unberührt/ },
+  { name: "Klon: Einstellungen nicht umgeleitet", datei: "public/apps/fa-wfpdf-bruecke.js", alt: "var set = SP.setItem; SP.setItem = function (k, v) { return set.call(this, um(k), v); };", neu: "", probe: "workflow-pdf-klon", rot: /fa_wfpdf_/ },
+  { name: "Klon: ⟳ sieht Vorräte der Akte", datei: "public/apps/fa-wfpdf-bruecke.js", alt: "return l.filter(function (n) { return n.indexOf(VORRAT) === 0; });", neu: "return l;", probe: "workflow-pdf-klon", rot: /⟳-Weg/ },
+  { name: "Klon: Mycel-Knoten wieder geladen", datei: "public/apps/workflow-pdf/index.html", alt: "<!-- Familienakte: kein Mycel-Knoten im Klon — die Akte hat ihre eigene Netz-Seite -->", neu: '<script defer src="assets/sbkim-init.js?v=1"></script>', probe: "workflow-pdf-klon", rot: /Mycel/ },
+  { name: "Klon: Farben der Akte fehlen", datei: "public/apps/workflow-pdf/index.html", alt: '<link rel="stylesheet" href="../fa-wfpdf-thema.css?v=1">', neu: "", probe: "workflow-pdf-klon", rot: /Farben der Familienakte/ },
+  { name: "Klon: Worker der Akte liefert die Akte statt des Klons", datei: "scripts/build-pwa.mjs", alt: 'const eigeneSeite = url.pathname.startsWith(new URL("./apps/", self.registration.scope).pathname);', neu: "const eigeneSeite = false;", probe: "workflow-pdf-klon", rot: /Klon erscheint im Rahmen/ },
+  { name: "Klon: ein Byte in app.js", datei: "public/apps/workflow-pdf/assets/app.js", alt: "Workfloh", neu: "Workfloq", befehl: [process.execPath, ["scripts/run-ausfuellen-tests.mjs"]], rot: /.*/, rotStderr: /weicht vom Pin ab/ },
 ];
 const filter = process.argv[2] || "";
 const bauen = (einzel) => {

@@ -161,9 +161,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Datentresor verbunden. Status: erfolgreich erledigt",
+    "text": "Datentresor erneut verbinden. Status: zuletzt nicht möglich",
     "disabled": false,
-    "cls": "vault-action state-success"
+    "cls": "vault-action state-failed"
    },
    {
     "art": "Knopf",
@@ -209,7 +209,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 11.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 12.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -227,7 +227,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 29",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 30",
     "disabled": false,
     "cls": ""
    },
@@ -287,7 +287,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Fotofunktion öffnen Eine oder mehrere Seiten als PDF prüfen",
+    "text": "Fotofunktion öffnen Zuerst lokalen Datentresor verbinden",
     "disabled": false,
     "cls": "intake-source"
    },
@@ -1697,7 +1697,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 11.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 12.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -1715,7 +1715,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 29",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 30",
     "disabled": false,
     "cls": ""
    },
@@ -1769,7 +1769,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 29.10.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 30.10.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -1787,7 +1787,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 03.11.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 04.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -1805,7 +1805,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 05.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 06.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -1823,7 +1823,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 06.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 07.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -1841,7 +1841,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 11.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 12.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -1859,7 +1859,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 14.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 15.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -2003,25 +2003,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 31.10.2026 Nächste Aufgabe: Beim Ar",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: Beim Arb",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 31.10.2026 Nächste A",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 1.11.2026 Nächste Au",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 31.10.2026 Nächste Aufgabe: Z",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: Zä",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 31.10.2026 Nächste Aufgabe:",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: ",
     "disabled": false,
     "cls": ""
    },
@@ -2093,19 +2093,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 31.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 01.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 31.10.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 01.11.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 31.10.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 01.11.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -2117,7 +2117,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 31.10.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 01.11.",
     "disabled": false,
     "cls": ""
    },
@@ -4541,7 +4541,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 11.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 12.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -4559,7 +4559,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 29",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 30",
     "disabled": false,
     "cls": ""
    },
@@ -4613,7 +4613,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 29.10.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 30.10.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4631,7 +4631,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 03.11.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 04.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4649,7 +4649,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 05.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 06.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4667,7 +4667,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 06.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 07.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4685,7 +4685,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 11.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 12.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4703,7 +4703,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 14.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 15.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4847,25 +4847,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 31.10.2026 Nächste Aufgabe: Beim Ar",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: Beim Arb",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 31.10.2026 Nächste A",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 1.11.2026 Nächste Au",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 31.10.2026 Nächste Aufgabe: Z",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: Zä",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 31.10.2026 Nächste Aufgabe:",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: ",
     "disabled": false,
     "cls": ""
    },
@@ -4937,19 +4937,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 31.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 01.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 31.10.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 01.11.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 31.10.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 01.11.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -4961,7 +4961,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 31.10.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 01.11.",
     "disabled": false,
     "cls": ""
    },
@@ -5621,7 +5621,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 66e78384-167d-4124-a0fc-7f2a5e3b6129",
+    "text": "Dokument: 639c2d72-9966-4e29-be12-eaec65af4661",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5693,7 +5693,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 4041a647-df90-4904-b0a2-40ab39776ee0",
+    "text": "Dokument: 51f58596-534a-4298-8073-f801c416711b",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5723,7 +5723,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 76742fe5-6b99-49c4-aa57-090c091a64f2",
+    "text": "Dokument: 130dede1-2c1b-4ca9-a2e1-169a13fe11b8",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5831,7 +5831,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 76742fe5-6b99-49c4-aa57-090c091a64f2",
+    "text": "Dokument: 130dede1-2c1b-4ca9-a2e1-169a13fe11b8",
     "disabled": false,
     "cls": "text-link"
    },
@@ -6407,31 +6407,31 @@
    },
    {
     "art": "Knopf",
-    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 25.10.2026, 19:00 · Reis",
+    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 26.10.2026, 19:00 · Reis",
     "disabled": false,
     "cls": "active"
    },
    {
     "art": "Knopf",
-    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 22.10.2026, 19:00 · Technik, Ge",
+    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 23.10.2026, 19:00 · Technik, Ge",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 19.10.2026, 19:00 ·",
+    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 20.10.2026, 19:00 ·",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 01.09.202",
+    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 02.09.202",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 25.09.2025, 19:00 · Haus & Wohnu",
+    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 26.09.2025, 19:00 · Haus & Wohnu",
     "disabled": false,
     "cls": ""
    },
@@ -6584,7 +6584,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Gesamtes Verzeichnis",
   "umgebung": "desktop",
-  "anzahl": 84,
+  "anzahl": 85,
   "elemente": [
    {
     "art": "Knopf",
@@ -6918,6 +6918,12 @@
    {
     "art": "Knopf",
     "text": "Eingangszentrale PDF, Word, Fotos, Scans und E-Mails gemeinsam prüfen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Workflow PDF Scannen, zuschneiden, Felder setzen, ausfüllen, prüfen, PDF ausgebe",
     "disabled": false,
     "cls": ""
    },
@@ -11369,7 +11375,7 @@
    },
    {
     "art": "Knopf",
-    "text": "29.10.2026",
+    "text": "30.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11435,7 +11441,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.10.2026",
+    "text": "26.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11507,7 +11513,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "23.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11573,7 +11579,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11645,7 +11651,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "17.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11705,7 +11711,7 @@
    },
    {
     "art": "Knopf",
-    "text": "11.10.2026",
+    "text": "12.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11771,7 +11777,7 @@
    },
    {
     "art": "Knopf",
-    "text": "04.10.2026",
+    "text": "05.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11831,7 +11837,7 @@
    },
    {
     "art": "Knopf",
-    "text": "17.08.2026",
+    "text": "18.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11963,7 +11969,7 @@
    },
    {
     "art": "Knopf",
-    "text": "30.11.2024",
+    "text": "01.12.2024",
     "disabled": false,
     "cls": ""
    },
@@ -12029,7 +12035,7 @@
    },
    {
     "art": "Knopf",
-    "text": "11.10.2026",
+    "text": "12.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12101,7 +12107,7 @@
    },
    {
     "art": "Knopf",
-    "text": "17.08.2026",
+    "text": "18.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12167,7 +12173,7 @@
    },
    {
     "art": "Knopf",
-    "text": "28.02.2025",
+    "text": "01.03.2025",
     "disabled": false,
     "cls": ""
    },
@@ -12245,7 +12251,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.10.2026",
+    "text": "26.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12323,7 +12329,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "17.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12389,7 +12395,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.06.2026",
+    "text": "14.06.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12449,7 +12455,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.04.2026",
+    "text": "15.04.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12509,7 +12515,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12581,7 +12587,7 @@
    },
    {
     "art": "Knopf",
-    "text": "24.09.2025",
+    "text": "25.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -12641,7 +12647,7 @@
    },
    {
     "art": "Knopf",
-    "text": "27.08.2025",
+    "text": "28.08.2025",
     "disabled": false,
     "cls": ""
    },
@@ -12713,7 +12719,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2025",
+    "text": "02.10.2025",
     "disabled": false,
     "cls": ""
    },
@@ -12773,7 +12779,7 @@
    },
    {
     "art": "Knopf",
-    "text": "29.10.2026",
+    "text": "30.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12839,7 +12845,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "23.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12911,7 +12917,7 @@
    },
    {
     "art": "Knopf",
-    "text": "04.10.2026",
+    "text": "05.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12971,7 +12977,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.09.2025",
+    "text": "27.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -13301,7 +13307,7 @@
    },
    {
     "art": "Knopf",
-    "text": "29.10.2026",
+    "text": "30.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13367,7 +13373,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.10.2026",
+    "text": "26.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13439,7 +13445,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "23.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13505,7 +13511,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13577,7 +13583,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "17.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13637,7 +13643,7 @@
    },
    {
     "art": "Knopf",
-    "text": "11.10.2026",
+    "text": "12.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13703,7 +13709,7 @@
    },
    {
     "art": "Knopf",
-    "text": "04.10.2026",
+    "text": "05.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13763,7 +13769,7 @@
    },
    {
     "art": "Knopf",
-    "text": "17.08.2026",
+    "text": "18.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13895,7 +13901,7 @@
    },
    {
     "art": "Knopf",
-    "text": "30.11.2024",
+    "text": "01.12.2024",
     "disabled": false,
     "cls": ""
    },
@@ -13961,7 +13967,7 @@
    },
    {
     "art": "Knopf",
-    "text": "11.10.2026",
+    "text": "12.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14033,7 +14039,7 @@
    },
    {
     "art": "Knopf",
-    "text": "17.08.2026",
+    "text": "18.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14099,7 +14105,7 @@
    },
    {
     "art": "Knopf",
-    "text": "28.02.2025",
+    "text": "01.03.2025",
     "disabled": false,
     "cls": ""
    },
@@ -14177,7 +14183,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.10.2026",
+    "text": "26.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14255,7 +14261,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "17.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14321,7 +14327,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.06.2026",
+    "text": "14.06.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14381,7 +14387,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.04.2026",
+    "text": "15.04.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14441,7 +14447,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14513,7 +14519,7 @@
    },
    {
     "art": "Knopf",
-    "text": "24.09.2025",
+    "text": "25.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -14573,7 +14579,7 @@
    },
    {
     "art": "Knopf",
-    "text": "27.08.2025",
+    "text": "28.08.2025",
     "disabled": false,
     "cls": ""
    },
@@ -14645,7 +14651,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2025",
+    "text": "02.10.2025",
     "disabled": false,
     "cls": ""
    },
@@ -14705,7 +14711,7 @@
    },
    {
     "art": "Knopf",
-    "text": "29.10.2026",
+    "text": "30.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14771,7 +14777,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "23.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14843,7 +14849,7 @@
    },
    {
     "art": "Knopf",
-    "text": "04.10.2026",
+    "text": "05.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14903,7 +14909,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.09.2025",
+    "text": "27.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -15756,6 +15762,252 @@
    {
     "art": "Knopf",
     "text": "Online-Altbestand erklären",
+    "disabled": false,
+    "cls": "start-info-trigger"
+   },
+   {
+    "art": "Knopf",
+    "text": "Interaktives Cockpit",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch & Erinnerungen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Fristen und Aufgaben",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Gesamtes Verzeichnis",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Lebensbereiche",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Dokumentenbibliothek",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Eingangszentrale",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Bestand prüfen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Was gibt’s Neues?",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Hilfe",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Systemprüfung",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Prüfberichte",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Sicherheitscenter",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Familienakte exportieren",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Versionshistorie",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Datenschutz & Sicherheit",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
+   }
+  ]
+ },
+ {
+  "ort": "DOKUMENTE › Workflow PDF",
+  "umgebung": "desktop",
+  "anzahl": 40,
+  "elemente": [
+   {
+    "art": "Knopf",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "disabled": false,
+    "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Aktuelle Seite drucken",
+    "disabled": false,
+    "cls": "icon-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
+    "art": "Link",
+    "text": "Ausloggen",
+    "cls": "icon-button logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
+   },
+   {
+    "art": "Knopf",
+    "text": "STARTSEITE",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "ASSISTENZ",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "GESUNDHEIT & ARBEIT",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "FAMILIE & PERSONEN",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "WOHNEN",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "FAHRZEUGE",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "KÄUFE & GARANTIEN",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "DOKUMENTE",
+    "disabled": false,
+    "cls": "active"
+   },
+   {
+    "art": "Knopf",
+    "text": "HILFE",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Suche: Diktat starten",
+    "disabled": true,
+    "cls": "dictation-button "
+   },
+   {
+    "art": "Knopf",
+    "text": "Aktivitätszeile 1 kopieren",
+    "disabled": true,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Aktivitätszeile 2 kopieren",
+    "disabled": true,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Beispieldaten entfernen",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Startseite",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Dokumente",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Workflow PDF erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
@@ -16802,7 +17054,7 @@
  {
   "ort": "DOKUMENTE › Alle Bereiche",
   "umgebung": "desktop",
-  "anzahl": 84,
+  "anzahl": 85,
   "elemente": [
    {
     "art": "Knopf",
@@ -17136,6 +17388,12 @@
    {
     "art": "Knopf",
     "text": "Eingangszentrale PDF, Word, Fotos, Scans und E-Mails gemeinsam prüfen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Workflow PDF Scannen, zuschneiden, Felder setzen, ausfüllen, prüfen, PDF ausgebe",
     "disabled": false,
     "cls": ""
    },
@@ -21893,7 +22151,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 11.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 12.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -21911,7 +22169,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 29",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 30",
     "disabled": false,
     "cls": ""
    },
@@ -21965,7 +22223,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 29.10.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 30.10.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -21983,7 +22241,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 03.11.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 04.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -22001,7 +22259,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 05.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 06.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -22019,7 +22277,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 06.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 07.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -22037,7 +22295,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 11.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 12.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -22055,7 +22313,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 14.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 15.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -22199,25 +22457,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 31.10.2026 Nächste Aufgabe: Beim Ar",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: Beim Arb",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 31.10.2026 Nächste A",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 1.11.2026 Nächste Au",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 31.10.2026 Nächste Aufgabe: Z",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: Zä",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 31.10.2026 Nächste Aufgabe:",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: ",
     "disabled": false,
     "cls": ""
    },
@@ -22289,19 +22547,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 31.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 01.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 31.10.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 01.11.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 31.10.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 01.11.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -22313,7 +22571,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 31.10.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 01.11.",
     "disabled": false,
     "cls": ""
    },
@@ -22697,31 +22955,31 @@
    },
    {
     "art": "Knopf",
-    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 25.10.2026, 19:00 · Reis",
+    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 26.10.2026, 19:00 · Reis",
     "disabled": false,
     "cls": "active"
    },
    {
     "art": "Knopf",
-    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 22.10.2026, 19:00 · Technik, Ge",
+    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 23.10.2026, 19:00 · Technik, Ge",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 19.10.2026, 19:00 ·",
+    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 20.10.2026, 19:00 ·",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 01.09.202",
+    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 02.09.202",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 25.09.2025, 19:00 · Haus & Wohnu",
+    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 26.09.2025, 19:00 · Haus & Wohnu",
     "disabled": false,
     "cls": ""
    },
@@ -23129,7 +23387,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 66e78384-167d-4124-a0fc-7f2a5e3b6129",
+    "text": "Dokument: 639c2d72-9966-4e29-be12-eaec65af4661",
     "disabled": false,
     "cls": "text-link"
    },
@@ -23201,7 +23459,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 4041a647-df90-4904-b0a2-40ab39776ee0",
+    "text": "Dokument: 51f58596-534a-4298-8073-f801c416711b",
     "disabled": false,
     "cls": "text-link"
    },
@@ -23231,7 +23489,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 76742fe5-6b99-49c4-aa57-090c091a64f2",
+    "text": "Dokument: 130dede1-2c1b-4ca9-a2e1-169a13fe11b8",
     "disabled": false,
     "cls": "text-link"
    },
@@ -23339,7 +23597,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 76742fe5-6b99-49c4-aa57-090c091a64f2",
+    "text": "Dokument: 130dede1-2c1b-4ca9-a2e1-169a13fe11b8",
     "disabled": false,
     "cls": "text-link"
    },
@@ -23654,7 +23912,7 @@
  {
   "ort": "Fußzeile › Gesamtes Verzeichnis",
   "umgebung": "desktop",
-  "anzahl": 84,
+  "anzahl": 85,
   "elemente": [
    {
     "art": "Knopf",
@@ -23988,6 +24246,12 @@
    {
     "art": "Knopf",
     "text": "Eingangszentrale PDF, Word, Fotos, Scans und E-Mails gemeinsam prüfen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Workflow PDF Scannen, zuschneiden, Felder setzen, ausfüllen, prüfen, PDF ausgebe",
     "disabled": false,
     "cls": ""
    },
@@ -24371,7 +24635,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 11.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 12.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24389,7 +24653,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 29",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 30",
     "disabled": false,
     "cls": ""
    },
@@ -24893,7 +25157,7 @@
    },
    {
     "art": "Knopf",
-    "text": "29.10.2026",
+    "text": "30.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -24959,7 +25223,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.10.2026",
+    "text": "26.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -25031,7 +25295,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "23.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -25097,7 +25361,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -25169,7 +25433,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "17.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -25229,7 +25493,7 @@
    },
    {
     "art": "Knopf",
-    "text": "11.10.2026",
+    "text": "12.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -25295,7 +25559,7 @@
    },
    {
     "art": "Knopf",
-    "text": "04.10.2026",
+    "text": "05.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -25355,7 +25619,7 @@
    },
    {
     "art": "Knopf",
-    "text": "17.08.2026",
+    "text": "18.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -25487,7 +25751,7 @@
    },
    {
     "art": "Knopf",
-    "text": "30.11.2024",
+    "text": "01.12.2024",
     "disabled": false,
     "cls": ""
    },
@@ -25553,7 +25817,7 @@
    },
    {
     "art": "Knopf",
-    "text": "11.10.2026",
+    "text": "12.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -25625,7 +25889,7 @@
    },
    {
     "art": "Knopf",
-    "text": "17.08.2026",
+    "text": "18.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -25691,7 +25955,7 @@
    },
    {
     "art": "Knopf",
-    "text": "28.02.2025",
+    "text": "01.03.2025",
     "disabled": false,
     "cls": ""
    },
@@ -25769,7 +26033,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.10.2026",
+    "text": "26.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -25847,7 +26111,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "17.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -25913,7 +26177,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.06.2026",
+    "text": "14.06.2026",
     "disabled": false,
     "cls": ""
    },
@@ -25973,7 +26237,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.04.2026",
+    "text": "15.04.2026",
     "disabled": false,
     "cls": ""
    },
@@ -26033,7 +26297,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -26105,7 +26369,7 @@
    },
    {
     "art": "Knopf",
-    "text": "24.09.2025",
+    "text": "25.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -26165,7 +26429,7 @@
    },
    {
     "art": "Knopf",
-    "text": "27.08.2025",
+    "text": "28.08.2025",
     "disabled": false,
     "cls": ""
    },
@@ -26237,7 +26501,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2025",
+    "text": "02.10.2025",
     "disabled": false,
     "cls": ""
    },
@@ -26297,7 +26561,7 @@
    },
    {
     "art": "Knopf",
-    "text": "29.10.2026",
+    "text": "30.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -26363,7 +26627,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "23.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -26435,7 +26699,7 @@
    },
    {
     "art": "Knopf",
-    "text": "04.10.2026",
+    "text": "05.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -26495,7 +26759,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.09.2025",
+    "text": "27.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -32813,9 +33077,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Datentresor erneut verbinden. Status: zuletzt nicht möglich",
+    "text": "Datentresor verbunden. Status: erfolgreich erledigt",
     "disabled": false,
-    "cls": "vault-action state-failed"
+    "cls": "vault-action state-success"
    },
    {
     "art": "Knopf",
@@ -32861,7 +33125,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 11.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 12.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -32879,7 +33143,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 29",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 30",
     "disabled": false,
     "cls": ""
    },
@@ -32939,7 +33203,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Fotofunktion öffnen Zuerst lokalen Datentresor verbinden",
+    "text": "Fotofunktion öffnen Eine oder mehrere Seiten als PDF prüfen",
     "disabled": false,
     "cls": "intake-source"
    },
@@ -33917,7 +34181,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 11.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 12.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -33935,7 +34199,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 29",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 30",
     "disabled": false,
     "cls": ""
    },
@@ -33989,7 +34253,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 29.10.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 30.10.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -34007,7 +34271,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 03.11.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 04.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -34025,7 +34289,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 05.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 06.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -34043,7 +34307,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 06.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 07.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -34061,7 +34325,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 11.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 12.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -34079,7 +34343,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 14.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 15.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -34223,25 +34487,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 31.10.2026 Nächste Aufgabe: Beim Ar",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: Beim Arb",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 31.10.2026 Nächste A",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 1.11.2026 Nächste Au",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 31.10.2026 Nächste Aufgabe: Z",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: Zä",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 31.10.2026 Nächste Aufgabe:",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: ",
     "disabled": false,
     "cls": ""
    },
@@ -34313,19 +34577,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 31.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 01.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 31.10.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 01.11.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 31.10.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 01.11.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -34337,7 +34601,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 31.10.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 01.11.",
     "disabled": false,
     "cls": ""
    },
@@ -35333,7 +35597,7 @@
    },
    {
     "art": "Knopf",
-    "text": "29.10.2026",
+    "text": "30.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -35393,7 +35657,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.10.2026",
+    "text": "26.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -35459,7 +35723,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "23.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -35519,7 +35783,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -35585,7 +35849,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "17.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -35639,7 +35903,7 @@
    },
    {
     "art": "Knopf",
-    "text": "11.10.2026",
+    "text": "12.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -35699,7 +35963,7 @@
    },
    {
     "art": "Knopf",
-    "text": "04.10.2026",
+    "text": "05.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -35753,7 +36017,7 @@
    },
    {
     "art": "Knopf",
-    "text": "17.08.2026",
+    "text": "18.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -35879,7 +36143,7 @@
    },
    {
     "art": "Knopf",
-    "text": "30.11.2024",
+    "text": "01.12.2024",
     "disabled": false,
     "cls": ""
    },
@@ -35939,7 +36203,7 @@
    },
    {
     "art": "Knopf",
-    "text": "11.10.2026",
+    "text": "12.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36005,7 +36269,7 @@
    },
    {
     "art": "Knopf",
-    "text": "17.08.2026",
+    "text": "18.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36065,7 +36329,7 @@
    },
    {
     "art": "Knopf",
-    "text": "28.02.2025",
+    "text": "01.03.2025",
     "disabled": false,
     "cls": ""
    },
@@ -36137,7 +36401,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.10.2026",
+    "text": "26.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36209,7 +36473,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "17.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36269,7 +36533,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.06.2026",
+    "text": "14.06.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36323,7 +36587,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.04.2026",
+    "text": "15.04.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36377,7 +36641,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36443,7 +36707,7 @@
    },
    {
     "art": "Knopf",
-    "text": "24.09.2025",
+    "text": "25.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -36497,7 +36761,7 @@
    },
    {
     "art": "Knopf",
-    "text": "27.08.2025",
+    "text": "28.08.2025",
     "disabled": false,
     "cls": ""
    },
@@ -36563,7 +36827,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2025",
+    "text": "02.10.2025",
     "disabled": false,
     "cls": ""
    },
@@ -36617,7 +36881,7 @@
    },
    {
     "art": "Knopf",
-    "text": "29.10.2026",
+    "text": "30.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36677,7 +36941,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "23.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36743,7 +37007,7 @@
    },
    {
     "art": "Knopf",
-    "text": "04.10.2026",
+    "text": "05.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36797,7 +37061,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.09.2025",
+    "text": "27.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -37427,7 +37691,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 11.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 12.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -37445,7 +37709,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 29",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 30",
     "disabled": false,
     "cls": ""
    },
@@ -37499,7 +37763,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 29.10.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 30.10.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -37517,7 +37781,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 03.11.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 04.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -37535,7 +37799,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 05.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 06.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -37553,7 +37817,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 06.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 07.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -37571,7 +37835,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 11.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 12.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -37589,7 +37853,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 14.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 15.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -37733,25 +37997,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 31.10.2026 Nächste Aufgabe: Beim Ar",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: Beim Arb",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 31.10.2026 Nächste A",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 1.11.2026 Nächste Au",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 31.10.2026 Nächste Aufgabe: Z",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: Zä",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 31.10.2026 Nächste Aufgabe:",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: ",
     "disabled": false,
     "cls": ""
    },
@@ -37823,19 +38087,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 31.10.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 01.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 31.10.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 01.11.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 31.10.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 01.11.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -37847,7 +38111,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 31.10.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 01.11.",
     "disabled": false,
     "cls": ""
    },
@@ -38105,7 +38369,7 @@
    },
    {
     "art": "Knopf",
-    "text": "29.10.2026",
+    "text": "30.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -38165,7 +38429,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.10.2026",
+    "text": "26.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -38231,7 +38495,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "23.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -38291,7 +38555,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -38357,7 +38621,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "17.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -38411,7 +38675,7 @@
    },
    {
     "art": "Knopf",
-    "text": "11.10.2026",
+    "text": "12.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -38471,7 +38735,7 @@
    },
    {
     "art": "Knopf",
-    "text": "04.10.2026",
+    "text": "05.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -38525,7 +38789,7 @@
    },
    {
     "art": "Knopf",
-    "text": "17.08.2026",
+    "text": "18.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -38651,7 +38915,7 @@
    },
    {
     "art": "Knopf",
-    "text": "30.11.2024",
+    "text": "01.12.2024",
     "disabled": false,
     "cls": ""
    },
@@ -38711,7 +38975,7 @@
    },
    {
     "art": "Knopf",
-    "text": "11.10.2026",
+    "text": "12.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -38777,7 +39041,7 @@
    },
    {
     "art": "Knopf",
-    "text": "17.08.2026",
+    "text": "18.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -38837,7 +39101,7 @@
    },
    {
     "art": "Knopf",
-    "text": "28.02.2025",
+    "text": "01.03.2025",
     "disabled": false,
     "cls": ""
    },
@@ -38909,7 +39173,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.10.2026",
+    "text": "26.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -38981,7 +39245,7 @@
    },
    {
     "art": "Knopf",
-    "text": "16.10.2026",
+    "text": "17.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -39041,7 +39305,7 @@
    },
    {
     "art": "Knopf",
-    "text": "13.06.2026",
+    "text": "14.06.2026",
     "disabled": false,
     "cls": ""
    },
@@ -39095,7 +39359,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.04.2026",
+    "text": "15.04.2026",
     "disabled": false,
     "cls": ""
    },
@@ -39149,7 +39413,7 @@
    },
    {
     "art": "Knopf",
-    "text": "19.10.2026",
+    "text": "20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -39215,7 +39479,7 @@
    },
    {
     "art": "Knopf",
-    "text": "24.09.2025",
+    "text": "25.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -39269,7 +39533,7 @@
    },
    {
     "art": "Knopf",
-    "text": "27.08.2025",
+    "text": "28.08.2025",
     "disabled": false,
     "cls": ""
    },
@@ -39335,7 +39599,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.10.2025",
+    "text": "02.10.2025",
     "disabled": false,
     "cls": ""
    },
@@ -39389,7 +39653,7 @@
    },
    {
     "art": "Knopf",
-    "text": "29.10.2026",
+    "text": "30.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -39449,7 +39713,7 @@
    },
    {
     "art": "Knopf",
-    "text": "22.10.2026",
+    "text": "23.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -39515,7 +39779,7 @@
    },
    {
     "art": "Knopf",
-    "text": "04.10.2026",
+    "text": "05.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -39569,7 +39833,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.09.2025",
+    "text": "27.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -40739,7 +41003,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 363fb9d6-3967-4760-aedf-891f41162665",
+    "text": "Dokument: 2d126fd3-b427-4c8a-ba99-9fc5d4fa0741",
     "disabled": false,
     "cls": "text-link"
    },
@@ -40811,7 +41075,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: b41aaa2a-dfab-4a28-8eff-3caf7119a7e4",
+    "text": "Dokument: d69b5da0-6abb-4b4f-80d2-6a9a86d14e95",
     "disabled": false,
     "cls": "text-link"
    },
@@ -40841,7 +41105,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 8449cbaa-234a-4336-825c-fa39ede02829",
+    "text": "Dokument: b0f52007-42ad-4538-ade3-f0722adfb01b",
     "disabled": false,
     "cls": "text-link"
    },
@@ -40949,7 +41213,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 8449cbaa-234a-4336-825c-fa39ede02829",
+    "text": "Dokument: b0f52007-42ad-4538-ade3-f0722adfb01b",
     "disabled": false,
     "cls": "text-link"
    },
@@ -41477,31 +41741,31 @@
    },
    {
     "art": "Knopf",
-    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 25.10.2026, 19:00 · Reis",
+    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 26.10.2026, 19:00 · Reis",
     "disabled": false,
     "cls": "active"
    },
    {
     "art": "Knopf",
-    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 22.10.2026, 19:00 · Technik, Ge",
+    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 23.10.2026, 19:00 · Technik, Ge",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 19.10.2026, 19:00 ·",
+    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 20.10.2026, 19:00 ·",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 01.09.202",
+    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 02.09.202",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 25.09.2025, 19:00 · Haus & Wohnu",
+    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 26.09.2025, 19:00 · Haus & Wohnu",
     "disabled": false,
     "cls": ""
    },
