@@ -31,8 +31,9 @@ try {
     const ok = await step(name, async () => {
       try { return await fn(); }
       catch (e) {
+        console.error("Pro-Dokumentenfehler:", e.stack || String(e));
         mkdirSync("work", { recursive: true });
-        writeFileSync("work/pro-dokumente-fehler.json", JSON.stringify({ name, error: e.stack, text: await page.locator("body").innerText() }, null, 2));
+        writeFileSync("work/pro-dokumente-fehler.json", JSON.stringify({ name, error: e.stack, text: await page.locator("body").innerText().catch(() => "Seite nicht mehr erreichbar") }, null, 2));
         throw e;
       }
     });
@@ -98,6 +99,7 @@ try {
   await probe("Pro-Dokumente: Neustart behält Zuordnung, Original nach Entsperren wieder lesbar", async () => {
     await page.reload({ waitUntil: "networkidle" }); await page.locator(".site-brand-version").first().waitFor(); await footer(page, "Sicherheitscenter");
     await panel.getByText("Gesperrt", { exact: true }).waitFor();
+    await panel.locator("[data-pro-ablage]", { hasText: "erfundener-tresor-a" }).waitFor();
     assert.match(await panel.locator("[data-pro-ablage]").innerText(), /erfundener-tresor-a/);
     await panel.getByRole("button", { name: "Pro-Tresor entsperren …", exact: true }).click();
     await panel.getByText("Entsperrt", { exact: true }).waitFor();
