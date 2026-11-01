@@ -39,7 +39,11 @@ try {
   let klon;
   await step("„In Workflow PDF öffnen“: die Unterlage liegt in der Bibliothek des Klons", async () => {
     await page.locator(".document-item", { hasText: "Garantiebeleg_Waschautomat_Lavorix" }).first().locator("[data-wfpdf-oeffnen]").click();
-    await page.frameLocator("[data-wfpdf-rahmen]").locator("#sc-bib").waitFor({ timeout: 30000 });
+    // Eine einzelne Datei öffnet sich automatisch im Editor. Die Bibliothek ist dann
+    // bereits wieder unsichtbar: auf ihren sichtbaren Zwischenzustand zu warten war ein Wettlauf.
+    const rahmen = page.frameLocator("[data-wfpdf-rahmen]");
+    await rahmen.locator("#sc-ed.on").waitFor({ timeout: 30000 });
+    await rahmen.locator("#sc-bib").waitFor({ state: "attached", timeout: 30000 });
     klon = page.frames().find((x) => x.url().includes("/apps/workflow-pdf/"));
     await klon.waitForFunction(() => document.querySelectorAll(".dok").length > 0 || document.querySelector("#sc-ed.on"), null, { timeout: 30000 });
     if (await klon.locator("#sc-ed.on").count()) await klon.locator("#edZurueck").click();
