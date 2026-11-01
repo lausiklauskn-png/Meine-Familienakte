@@ -72,8 +72,10 @@ public class FamilienakteTresorPlugin extends Plugin {
         }
         String uri = data.getData().toString();
         try {
-            int flags = data.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            getContext().getContentResolver().takePersistableUriPermission(data.getData(), flags);
+            int benoetigt = Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
+            if ((data.getFlags() & benoetigt) != benoetigt) throw new IOException("FA_TRESOR_FREIGABE_FEHLT");
+            getContext().getContentResolver().takePersistableUriPermission(data.getData(),
+                Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             dialog(call, uri, null);
         } catch (Exception e) { ungenutztFreigeben(uri); fehler(call, e); }
     }
