@@ -7,7 +7,7 @@
 //   2. Familienakte-Farben (public/apps/fa-wfpdf-thema.css) als letztes Stylesheet.
 //   3. Keine eigene Service-Worker-Anmeldung (die Dateien kommen aus dem Vorrat der Familienakte).
 //   4. Kein Mycel-Knoten (Klaus: „Weglassen“; die Akte hat ihre eigene Netz-Seite): sbkim-init.js wird nicht geladen.
-export const BRUECKE_ZEILE = '<script src="../fa-wfpdf-bruecke.js?v=1"></script>';
+export const BRUECKE_ZEILE = '<script src="../fa-wfpdf-bruecke.js?v=2"></script>';
 export const THEMA_ZEILE = '<link rel="stylesheet" href="../fa-wfpdf-thema.css?v=1">';
 export const SW_ERSATZ = "<!-- Familienakte: kein eigener Service Worker im Klon — der Vorrat kommt von der Familienakte (public/apps/HERKUNFT.json) -->";
 export const MYCEL_ERSATZ = "<!-- Familienakte: kein Mycel-Knoten im Klon — die Akte hat ihre eigene Netz-Seite -->";

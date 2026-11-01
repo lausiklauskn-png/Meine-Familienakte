@@ -111,12 +111,14 @@ try {
     const [chooser] = await Promise.all([page.waitForEvent("filechooser", { timeout: 4000 }), page.locator("button", { hasText: "Datei auswählen" }).first().click()]);
     return !!chooser;
   });
-  // Seit 2.28.8 (Klaus 2026-10-31: „überall der volle Scanner“) öffnet die Fotofunktion den Scanner von Workflow PDF.
-  await step("„Fotofunktion öffnen“ öffnet den Scanner von Workflow PDF, ✕ schließt ihn", async () => {
+  // Seit 2.28.10 (Klaus 2026-11-01: „‚Dokument fotografieren‘ öffnet den Klon“): die ganze App Workflow PDF mit offenem Scanner.
+  await step("„Fotofunktion öffnen“ öffnet Workflow PDF mit dem Scanner, ✕ schließt ihn", async () => {
     await page.locator("button", { hasText: "Fotofunktion öffnen" }).first().click();
-    await page.locator(".scan[role=dialog]").waitFor({ timeout: 15000 });
-    await page.locator(".scan [data-schliessen]").click();
-    await page.locator(".scan[role=dialog]").waitFor({ state: "detached", timeout: 5000 });
+    const klon = page.frameLocator("[data-wfpdf-rahmen]");
+    await klon.locator(".scan[role=dialog]").waitFor({ timeout: 30000 });
+    await klon.locator(".scan [data-schliessen]").click();
+    await klon.locator(".scan[role=dialog]").waitFor({ state: "detached", timeout: 5000 });
+    await page.locator(".site-brand").click();
     return true;
   });
   await step("„Ordner auswählen“ (Eingangsordner) nimmt den gewählten Ordner an", async () => {

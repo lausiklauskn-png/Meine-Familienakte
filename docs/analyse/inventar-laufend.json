@@ -161,9 +161,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Datentresor erneut verbinden. Status: zuletzt nicht möglich",
+    "text": "Datentresor verbunden. Status: erfolgreich erledigt",
     "disabled": false,
-    "cls": "vault-action state-failed"
+    "cls": "vault-action state-success"
    },
    {
     "art": "Knopf",
@@ -287,7 +287,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Fotofunktion öffnen Zuerst lokalen Datentresor verbinden",
+    "text": "Fotofunktion öffnen Eine oder mehrere Seiten als PDF prüfen",
     "disabled": false,
     "cls": "intake-source"
    },
@@ -5621,7 +5621,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 639c2d72-9966-4e29-be12-eaec65af4661",
+    "text": "Dokument: bbe3798f-2b4c-4db0-9c74-3da5ab4713b1",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5693,7 +5693,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 51f58596-534a-4298-8073-f801c416711b",
+    "text": "Dokument: edbae79f-25b1-4aff-849c-0ba2dd2e6916",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5723,7 +5723,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 130dede1-2c1b-4ca9-a2e1-169a13fe11b8",
+    "text": "Dokument: c0442684-af62-4c8b-832c-28a82d41315b",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5831,7 +5831,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 130dede1-2c1b-4ca9-a2e1-169a13fe11b8",
+    "text": "Dokument: c0442684-af62-4c8b-832c-28a82d41315b",
     "disabled": false,
     "cls": "text-link"
    },
@@ -6584,7 +6584,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Gesamtes Verzeichnis",
   "umgebung": "desktop",
-  "anzahl": 85,
+  "anzahl": 86,
   "elemente": [
    {
     "art": "Knopf",
@@ -6924,6 +6924,12 @@
    {
     "art": "Knopf",
     "text": "Workflow PDF Scannen, zuschneiden, Felder setzen, ausfüllen, prüfen, PDF ausgebe",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Stapel (noch einordnen) Viele Fotos/Scans auf einmal: gerade gezogen, erst späte",
     "disabled": false,
     "cls": ""
    },
@@ -11192,7 +11198,7 @@
  {
   "ort": "DOKUMENTE › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 321,
+  "anzahl": 330,
   "elemente": [
    {
     "art": "Knopf",
@@ -11453,6 +11459,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
+   },
+   {
+    "art": "Knopf",
     "text": "Ausfüllen",
     "disabled": false,
     "cls": "button secondary compact-button"
@@ -11522,6 +11534,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -11720,6 +11738,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -11981,6 +12005,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
+   },
+   {
+    "art": "Knopf",
     "text": "Ausfüllen",
     "disabled": false,
     "cls": "button secondary compact-button"
@@ -12044,6 +12074,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -12260,6 +12296,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -12599,6 +12641,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
+   },
+   {
+    "art": "Knopf",
     "text": "Ausfüllen",
     "disabled": false,
     "cls": "button secondary compact-button"
@@ -12656,6 +12704,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -12854,6 +12908,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -13124,7 +13184,7 @@
  {
   "ort": "DOKUMENTE › Dokumentenbibliothek",
   "umgebung": "desktop",
-  "anzahl": 321,
+  "anzahl": 330,
   "elemente": [
    {
     "art": "Knopf",
@@ -13385,6 +13445,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
+   },
+   {
+    "art": "Knopf",
     "text": "Ausfüllen",
     "disabled": false,
     "cls": "button secondary compact-button"
@@ -13454,6 +13520,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -13652,6 +13724,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -13913,6 +13991,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
+   },
+   {
+    "art": "Knopf",
     "text": "Ausfüllen",
     "disabled": false,
     "cls": "button secondary compact-button"
@@ -13976,6 +14060,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -14192,6 +14282,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -14531,6 +14627,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
+   },
+   {
+    "art": "Knopf",
     "text": "Ausfüllen",
     "disabled": false,
     "cls": "button secondary compact-button"
@@ -14588,6 +14690,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -14786,6 +14894,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -15302,7 +15416,7 @@
  {
   "ort": "DOKUMENTE › Eingangszentrale",
   "umgebung": "desktop",
-  "anzahl": 95,
+  "anzahl": 111,
   "elemente": [
    {
     "art": "Knopf",
@@ -15454,6 +15568,12 @@
     "cls": "sr-only"
    },
    {
+    "art": "Datei-Eingang",
+    "text": "image/*,application/pdf",
+    "disabled": false,
+    "cls": "sr-only"
+   },
+   {
     "art": "Knopf",
     "text": "Datei auswählen",
     "disabled": false,
@@ -15462,6 +15582,12 @@
    {
     "art": "Knopf",
     "text": "Dokument fotografieren Vorhandene Mehrseiten- und PDF-Funktion",
+    "disabled": false,
+    "cls": "intake-source"
+   },
+   {
+    "art": "Knopf",
+    "text": "Stapel direkt übernehmen Viele Fotos oder Scans: Blatt finden, gerade ziehen, sp",
     "disabled": false,
     "cls": "intake-source"
    },
@@ -15545,6 +15671,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Abgleich vormerken",
     "disabled": false,
     "cls": ""
@@ -15563,6 +15695,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Versicherungsschein_Hausrat.pdf",
     "disabled": false,
     "cls": "document-title-link"
@@ -15575,6 +15713,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Antrag_Teilzeit_Jonna.pdf",
     "disabled": false,
     "cls": "document-title-link"
@@ -15582,6 +15726,12 @@
    {
     "art": "Knopf",
     "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
     "disabled": false,
     "cls": ""
    },
@@ -15600,6 +15750,12 @@
    {
     "art": "Knopf",
     "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
     "disabled": false,
     "cls": ""
    },
@@ -15641,6 +15797,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Abgleich vormerken",
     "disabled": false,
     "cls": ""
@@ -15659,6 +15821,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Nebenkostenabrechnung_2025.pdf",
     "disabled": false,
     "cls": "document-title-link"
@@ -15666,6 +15834,12 @@
    {
     "art": "Knopf",
     "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
     "disabled": false,
     "cls": ""
    },
@@ -15689,6 +15863,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Uebergabeprotokoll_Wohnung.pdf",
     "disabled": false,
     "cls": "document-title-link"
@@ -15696,6 +15876,12 @@
    {
     "art": "Knopf",
     "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
     "disabled": false,
     "cls": ""
    },
@@ -15713,6 +15899,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Reparaturauftrag_Schraubenglueck.pdf",
     "disabled": false,
     "cls": "document-title-link"
@@ -15720,6 +15912,12 @@
    {
     "art": "Knopf",
     "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
     "disabled": false,
     "cls": ""
    },
@@ -15743,6 +15941,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Als eingearbeitet bestätigen",
     "disabled": false,
     "cls": ""
@@ -15756,6 +15960,12 @@
    {
     "art": "Knopf",
     "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
     "disabled": false,
     "cls": ""
    },
@@ -16010,6 +16220,270 @@
     "text": "Workflow PDF erklären",
     "disabled": false,
     "cls": "start-info-trigger"
+   },
+   {
+    "art": "Knopf",
+    "text": "Interaktives Cockpit",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch & Erinnerungen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Fristen und Aufgaben",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Gesamtes Verzeichnis",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Lebensbereiche",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Dokumentenbibliothek",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Eingangszentrale",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Bestand prüfen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Was gibt’s Neues?",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Hilfe",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Systemprüfung",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Prüfberichte",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Sicherheitscenter",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Familienakte exportieren",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Versionshistorie",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Datenschutz & Sicherheit",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Mit KI arbeiten",
+    "disabled": false,
+    "cls": "ki-fab"
+   }
+  ]
+ },
+ {
+  "ort": "DOKUMENTE › Stapel (noch einordnen)",
+  "umgebung": "desktop",
+  "anzahl": 43,
+  "elemente": [
+   {
+    "art": "Knopf",
+    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "disabled": false,
+    "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Internet für die App: aus – antippen zum Einschalten",
+    "disabled": false,
+    "cls": "icon-button netz-schalter netz-aus"
+   },
+   {
+    "art": "Knopf",
+    "text": "Aktuelle Seite drucken",
+    "disabled": false,
+    "cls": "icon-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Auf eine neue Fassung prüfen",
+    "disabled": false,
+    "cls": "icon-button aktualisieren-knopf"
+   },
+   {
+    "art": "Link",
+    "text": "Ausloggen",
+    "cls": "icon-button logout-button"
+   },
+   {
+    "art": "Knopf",
+    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
+    "disabled": false,
+    "cls": "familienakte-install"
+   },
+   {
+    "art": "Knopf",
+    "text": "STARTSEITE",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "ASSISTENZ",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "GESUNDHEIT & ARBEIT",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "FAMILIE & PERSONEN",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "WOHNEN",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "FAHRZEUGE",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "KÄUFE & GARANTIEN",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "DOKUMENTE",
+    "disabled": false,
+    "cls": "active"
+   },
+   {
+    "art": "Knopf",
+    "text": "HILFE",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Suche: Diktat starten",
+    "disabled": true,
+    "cls": "dictation-button "
+   },
+   {
+    "art": "Knopf",
+    "text": "Aktivitätszeile 1 kopieren",
+    "disabled": true,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Aktivitätszeile 2 kopieren",
+    "disabled": true,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Beispieldaten entfernen",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Startseite",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Dokumente",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Stapel (noch einordnen) erklären",
+    "disabled": false,
+    "cls": "start-info-trigger"
+   },
+   {
+    "art": "Datei-Eingang",
+    "text": "image/*,application/pdf",
+    "disabled": false,
+    "cls": "sr-only"
+   },
+   {
+    "art": "Knopf",
+    "text": "Fotos oder Scans hinzufügen",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Einordnen (0)",
+    "disabled": true,
+    "cls": "button primary fa-stapel-einordnen"
    },
    {
     "art": "Knopf",
@@ -17054,7 +17528,7 @@
  {
   "ort": "DOKUMENTE › Alle Bereiche",
   "umgebung": "desktop",
-  "anzahl": 85,
+  "anzahl": 86,
   "elemente": [
    {
     "art": "Knopf",
@@ -17394,6 +17868,12 @@
    {
     "art": "Knopf",
     "text": "Workflow PDF Scannen, zuschneiden, Felder setzen, ausfüllen, prüfen, PDF ausgebe",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Stapel (noch einordnen) Viele Fotos/Scans auf einmal: gerade gezogen, erst späte",
     "disabled": false,
     "cls": ""
    },
@@ -23387,7 +23867,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 639c2d72-9966-4e29-be12-eaec65af4661",
+    "text": "Dokument: bbe3798f-2b4c-4db0-9c74-3da5ab4713b1",
     "disabled": false,
     "cls": "text-link"
    },
@@ -23459,7 +23939,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 51f58596-534a-4298-8073-f801c416711b",
+    "text": "Dokument: edbae79f-25b1-4aff-849c-0ba2dd2e6916",
     "disabled": false,
     "cls": "text-link"
    },
@@ -23489,7 +23969,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 130dede1-2c1b-4ca9-a2e1-169a13fe11b8",
+    "text": "Dokument: c0442684-af62-4c8b-832c-28a82d41315b",
     "disabled": false,
     "cls": "text-link"
    },
@@ -23597,7 +24077,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 130dede1-2c1b-4ca9-a2e1-169a13fe11b8",
+    "text": "Dokument: c0442684-af62-4c8b-832c-28a82d41315b",
     "disabled": false,
     "cls": "text-link"
    },
@@ -23912,7 +24392,7 @@
  {
   "ort": "Fußzeile › Gesamtes Verzeichnis",
   "umgebung": "desktop",
-  "anzahl": 85,
+  "anzahl": 86,
   "elemente": [
    {
     "art": "Knopf",
@@ -24252,6 +24732,12 @@
    {
     "art": "Knopf",
     "text": "Workflow PDF Scannen, zuschneiden, Felder setzen, ausfüllen, prüfen, PDF ausgebe",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Stapel (noch einordnen) Viele Fotos/Scans auf einmal: gerade gezogen, erst späte",
     "disabled": false,
     "cls": ""
    },
@@ -24974,7 +25460,7 @@
  {
   "ort": "Fußzeile › Dokumentenbibliothek",
   "umgebung": "desktop",
-  "anzahl": 321,
+  "anzahl": 330,
   "elemente": [
    {
     "art": "Knopf",
@@ -25235,6 +25721,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
+   },
+   {
+    "art": "Knopf",
     "text": "Ausfüllen",
     "disabled": false,
     "cls": "button secondary compact-button"
@@ -25304,6 +25796,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -25502,6 +26000,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -25763,6 +26267,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
+   },
+   {
+    "art": "Knopf",
     "text": "Ausfüllen",
     "disabled": false,
     "cls": "button secondary compact-button"
@@ -25826,6 +26336,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -26042,6 +26558,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -26381,6 +26903,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
+   },
+   {
+    "art": "Knopf",
     "text": "Ausfüllen",
     "disabled": false,
     "cls": "button secondary compact-button"
@@ -26438,6 +26966,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -26636,6 +27170,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -26906,7 +27446,7 @@
  {
   "ort": "Fußzeile › Eingangszentrale",
   "umgebung": "desktop",
-  "anzahl": 95,
+  "anzahl": 111,
   "elemente": [
    {
     "art": "Knopf",
@@ -27058,6 +27598,12 @@
     "cls": "sr-only"
    },
    {
+    "art": "Datei-Eingang",
+    "text": "image/*,application/pdf",
+    "disabled": false,
+    "cls": "sr-only"
+   },
+   {
     "art": "Knopf",
     "text": "Datei auswählen",
     "disabled": false,
@@ -27066,6 +27612,12 @@
    {
     "art": "Knopf",
     "text": "Dokument fotografieren Vorhandene Mehrseiten- und PDF-Funktion",
+    "disabled": false,
+    "cls": "intake-source"
+   },
+   {
+    "art": "Knopf",
+    "text": "Stapel direkt übernehmen Viele Fotos oder Scans: Blatt finden, gerade ziehen, sp",
     "disabled": false,
     "cls": "intake-source"
    },
@@ -27149,6 +27701,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Abgleich vormerken",
     "disabled": false,
     "cls": ""
@@ -27167,6 +27725,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Versicherungsschein_Hausrat.pdf",
     "disabled": false,
     "cls": "document-title-link"
@@ -27179,6 +27743,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Antrag_Teilzeit_Jonna.pdf",
     "disabled": false,
     "cls": "document-title-link"
@@ -27186,6 +27756,12 @@
    {
     "art": "Knopf",
     "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
     "disabled": false,
     "cls": ""
    },
@@ -27204,6 +27780,12 @@
    {
     "art": "Knopf",
     "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
     "disabled": false,
     "cls": ""
    },
@@ -27245,6 +27827,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Abgleich vormerken",
     "disabled": false,
     "cls": ""
@@ -27263,6 +27851,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Nebenkostenabrechnung_2025.pdf",
     "disabled": false,
     "cls": "document-title-link"
@@ -27270,6 +27864,12 @@
    {
     "art": "Knopf",
     "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
     "disabled": false,
     "cls": ""
    },
@@ -27293,6 +27893,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Uebergabeprotokoll_Wohnung.pdf",
     "disabled": false,
     "cls": "document-title-link"
@@ -27300,6 +27906,12 @@
    {
     "art": "Knopf",
     "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
     "disabled": false,
     "cls": ""
    },
@@ -27317,6 +27929,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Reparaturauftrag_Schraubenglueck.pdf",
     "disabled": false,
     "cls": "document-title-link"
@@ -27324,6 +27942,12 @@
    {
     "art": "Knopf",
     "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
     "disabled": false,
     "cls": ""
    },
@@ -27347,6 +27971,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Als eingearbeitet bestätigen",
     "disabled": false,
     "cls": ""
@@ -27360,6 +27990,12 @@
    {
     "art": "Knopf",
     "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
     "disabled": false,
     "cls": ""
    },
@@ -35462,7 +36098,7 @@
  {
   "ort": "DOKUMENTE › Dokumentenbibliothek",
   "umgebung": "handy",
-  "anzahl": 289,
+  "anzahl": 298,
   "elemente": [
    {
     "art": "Knopf",
@@ -35669,6 +36305,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
+   },
+   {
+    "art": "Knopf",
     "text": "Ausfüllen",
     "disabled": false,
     "cls": "button secondary compact-button"
@@ -35732,6 +36374,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -35912,6 +36560,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -36155,6 +36809,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
+   },
+   {
+    "art": "Knopf",
     "text": "Ausfüllen",
     "disabled": false,
     "cls": "button secondary compact-button"
@@ -36212,6 +36872,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -36410,6 +37076,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -36719,6 +37391,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
+   },
+   {
+    "art": "Knopf",
     "text": "Ausfüllen",
     "disabled": false,
     "cls": "button secondary compact-button"
@@ -36770,6 +37448,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -36950,6 +37634,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -38234,7 +38924,7 @@
  {
   "ort": "Fußzeile › Dokumentenbibliothek",
   "umgebung": "handy",
-  "anzahl": 289,
+  "anzahl": 298,
   "elemente": [
    {
     "art": "Knopf",
@@ -38441,6 +39131,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
+   },
+   {
+    "art": "Knopf",
     "text": "Ausfüllen",
     "disabled": false,
     "cls": "button secondary compact-button"
@@ -38504,6 +39200,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -38684,6 +39386,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -38927,6 +39635,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
+   },
+   {
+    "art": "Knopf",
     "text": "Ausfüllen",
     "disabled": false,
     "cls": "button secondary compact-button"
@@ -38984,6 +39698,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -39182,6 +39902,12 @@
     "text": "neu hochgeladen",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -39491,6 +40217,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
+   },
+   {
+    "art": "Knopf",
     "text": "Ausfüllen",
     "disabled": false,
     "cls": "button secondary compact-button"
@@ -39542,6 +40274,12 @@
     "text": "eingearbeitet",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -39722,6 +40460,12 @@
     "text": "geprüft",
     "disabled": false,
     "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
@@ -39974,7 +40718,7 @@
  {
   "ort": "Fußzeile › Eingangszentrale",
   "umgebung": "handy",
-  "anzahl": 87,
+  "anzahl": 103,
   "elemente": [
    {
     "art": "Knopf",
@@ -40078,6 +40822,12 @@
     "cls": "sr-only"
    },
    {
+    "art": "Datei-Eingang",
+    "text": "image/*,application/pdf",
+    "disabled": false,
+    "cls": "sr-only"
+   },
+   {
     "art": "Knopf",
     "text": "Datei auswählen",
     "disabled": false,
@@ -40086,6 +40836,12 @@
    {
     "art": "Knopf",
     "text": "Dokument fotografieren Vorhandene Mehrseiten- und PDF-Funktion",
+    "disabled": false,
+    "cls": "intake-source"
+   },
+   {
+    "art": "Knopf",
+    "text": "Stapel direkt übernehmen Viele Fotos oder Scans: Blatt finden, gerade ziehen, sp",
     "disabled": false,
     "cls": "intake-source"
    },
@@ -40169,6 +40925,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Abgleich vormerken",
     "disabled": false,
     "cls": ""
@@ -40187,6 +40949,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Versicherungsschein_Hausrat.pdf",
     "disabled": false,
     "cls": "document-title-link"
@@ -40199,6 +40967,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Antrag_Teilzeit_Jonna.pdf",
     "disabled": false,
     "cls": "document-title-link"
@@ -40206,6 +40980,12 @@
    {
     "art": "Knopf",
     "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
     "disabled": false,
     "cls": ""
    },
@@ -40224,6 +41004,12 @@
    {
     "art": "Knopf",
     "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
     "disabled": false,
     "cls": ""
    },
@@ -40265,6 +41051,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Abgleich vormerken",
     "disabled": false,
     "cls": ""
@@ -40283,6 +41075,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Nebenkostenabrechnung_2025.pdf",
     "disabled": false,
     "cls": "document-title-link"
@@ -40290,6 +41088,12 @@
    {
     "art": "Knopf",
     "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
     "disabled": false,
     "cls": ""
    },
@@ -40313,6 +41117,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Uebergabeprotokoll_Wohnung.pdf",
     "disabled": false,
     "cls": "document-title-link"
@@ -40320,6 +41130,12 @@
    {
     "art": "Knopf",
     "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
     "disabled": false,
     "cls": ""
    },
@@ -40337,6 +41153,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Reparaturauftrag_Schraubenglueck.pdf",
     "disabled": false,
     "cls": "document-title-link"
@@ -40344,6 +41166,12 @@
    {
     "art": "Knopf",
     "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
     "disabled": false,
     "cls": ""
    },
@@ -40367,6 +41195,12 @@
    },
    {
     "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Als eingearbeitet bestätigen",
     "disabled": false,
     "cls": ""
@@ -40380,6 +41214,12 @@
    {
     "art": "Knopf",
     "text": "Ausfüllen",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "In Workflow PDF öffnen",
     "disabled": false,
     "cls": ""
    },
@@ -41003,7 +41843,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 2d126fd3-b427-4c8a-ba99-9fc5d4fa0741",
+    "text": "Dokument: 635c4357-af9c-483d-af30-1bd8fdac1e19",
     "disabled": false,
     "cls": "text-link"
    },
@@ -41075,7 +41915,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: d69b5da0-6abb-4b4f-80d2-6a9a86d14e95",
+    "text": "Dokument: f5c3b4c4-e0b3-44c9-a442-0a2ff14194a8",
     "disabled": false,
     "cls": "text-link"
    },
@@ -41105,7 +41945,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: b0f52007-42ad-4538-ade3-f0722adfb01b",
+    "text": "Dokument: 5831fc20-5c9b-428c-a57e-61852756576e",
     "disabled": false,
     "cls": "text-link"
    },
@@ -41213,7 +42053,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: b0f52007-42ad-4538-ade3-f0722adfb01b",
+    "text": "Dokument: 5831fc20-5c9b-428c-a57e-61852756576e",
     "disabled": false,
     "cls": "text-link"
    },
