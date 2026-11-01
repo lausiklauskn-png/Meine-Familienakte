@@ -1811,3 +1811,9 @@ input.af-feld, textarea.af-feld { width: auto; min-height: 0; resize: none; }
 .fa-stapel-detail img { max-width: 100%; max-height: 70vh; justify-self: start; border: 1px solid var(--line); border-radius: 8px; }
 .fa-stapel-grund { margin: 0; color: var(--muted); font-size: .85rem; }
 .fa-stapel-leer { color: var(--muted); }
+.fa-stapel-einst { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; padding: 8px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); }
+.fa-stapel-einst label { display: flex; align-items: center; gap: 6px; }
+.fa-stapel-einst select { max-width: 260px; }
+.fa-stapel-haken { flex: 1 1 260px; }
+.fa-stapel-griff { border: 0; background: none; color: var(--muted); padding: 4px; cursor: grab; touch-action: none; }
+.fa-stapel-liste > li.ziel { outline: 2px dashed var(--teal); outline-offset: -2px; background: var(--teal-soft); }

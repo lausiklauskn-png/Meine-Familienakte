@@ -45,7 +45,12 @@ const faelle = [
   { name: "Stapel: unsicheres Blatt wird trotzdem zugeschnitten", datei: "app/stapel.ts", alt: "const ecken = e.sicher ? e.ecken : SB.ganz(c.width, c.height);", neu: "const ecken = e.ecken;", probe: "stapel", rot: /Bild ohne Blatt/ },
   { name: "Stapel: Anhalten wirkt nicht", datei: "app/stapel.ts", alt: 'if (jetzt() === "angehalten") await new Promise', neu: 'if (jetzt() === "nie") await new Promise', probe: "stapel", rot: /Anhalten/ },
   { name: "Stapel: Liste mit Vorschaubildern", datei: "app/stapel-seite.tsx", alt: "<small>{groesse(e.groesse)}</small>", neu: '<small>{groesse(e.groesse)}</small><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt=""/>', probe: "stapel", rot: /ohne Vorschaubilder/ },
-  { name: "Stapel: Einordnen leert den Stapel nicht", datei: "app/stapel-seite.tsx", alt: "for (const e of eintraege) await stapelWeg(e.id); ", neu: "", probe: "stapel", rot: /Stapel ist leer/ },
+  { name: "Stapel: Einordnen leert den Stapel nicht", datei: "app/stapel-seite.tsx", alt: "try { await onEinordnen(eintraege.map(stapelDatei)); for (const e of eintraege) await stapelWeg(e.id); ", neu: "try { await onEinordnen(eintraege.map(stapelDatei)); ", probe: "stapel", rot: /Stapel ist leer/ },
+  // 2.28.12 (Klaus' Antworten 1 und 2): Filter, Zusammenfügen, Ziehen, „ein Brief“
+  { name: "Stapel: Farbwahl wird nicht angewandt", datei: "app/stapel.ts", alt: 'if (einst.filter !== "original" || einst.schaerfe > 0) SB.filtern(', neu: "if (false) SB.filtern(", probe: "stapel", rot: /Schwarzweiß/ },
+  { name: "Stapel: Zusammenfügen lässt die Quellen stehen", datei: "app/stapel-seite.tsx", alt: "  for (const e of eintraege) await stapelWeg(e.id);\n  window.dispatchEvent", neu: "  window.dispatchEvent", probe: "stapel", rot: /Zusammenfügen/ },
+  { name: "Stapel: Ziehen fügt nicht zusammen", datei: "app/stapel-seite.tsx", alt: "if (a && b) void fuegen([a, b]);", neu: "if (false) void fuegen([a, b]);", probe: "stapel", rot: /Ziehen/ },
+  { name: "Stapel: Haken „ein Brief“ wirkungslos", datei: "app/stapel-seite.tsx", alt: "ende: einst.zusammen ?", neu: "ende: false ?", probe: "stapel", rot: /ein Brief/ },
 ];
 const filter = process.argv[2] || "";
 const bauen = (einzel) => {

@@ -78,13 +78,17 @@ try {
     await page.locator("[data-stapel-eingabe]").setInputFiles(viele);
     await page.locator("[data-stapel-anhalten]").click();
     await page.locator('[data-stapel-lauf="angehalten"]').waitFor();
-    await page.waitForTimeout(2500);   // das Blatt, das gerade gerechnet wird, darf noch fertig werden
+    // das Blatt, das gerade gerechnet wird, darf noch fertig werden: warten, bis die Zahl zweimal hintereinander gleich ist
+    await page.locator('[data-stapel-lauf="angehalten"][data-stapel-rechnet="0"]').waitFor({ timeout: 60000 });
+    await page.waitForTimeout(500);
     const halt = await page.locator("[data-stapel-zeile]").count();
     await page.waitForTimeout(2500);
     const still = await page.locator("[data-stapel-zeile]").count();
     await page.locator("[data-stapel-weiter]").click();
     await page.locator('[data-stapel-lauf="fertig"]').waitFor({ timeout: 90000 });
-    return still === halt && still < 5 && await page.locator("[data-stapel-zeile]").count() === 5 ? `angehalten bei ${halt}, danach 5` : false;
+    const ende = await page.locator("[data-stapel-zeile]").count();
+    if (!(still === halt && still < 5 && ende === 5)) throw new Error(`angehalten ${halt}, still ${still}, ende ${ende}`);
+    return `angehalten bei ${halt}, danach 5`;
   });
   await step("Abbrechen behält die fertigen, der Rest kommt nicht", async () => {
     const viele = Array.from({ length: 6 }, (_, i) => ({ name: `Abbruch-${i}.png`, mimeType: "image/png", buffer: Buffer.from(bilder.blatt) }));
@@ -95,6 +99,52 @@ try {
     const n = await page.locator("[data-stapel-zeile]", { hasText: "Abbruch-" }).count();
     return n < 6 ? `${n} von 6 übernommen` : false;
   });
+  // --- 2.28.12: Filter, Schärfe, Zusammenfügen (Auswahl, Ziehen, „ein Brief“) ---
+  const seitenZahl = async (name) => page.evaluate(async (n) => new Promise((ok) => { const r = indexedDB.open("FamilienakteStapel1"); r.onsuccess = () => { const t = r.result.transaction("stapel").objectStore("stapel").getAll(); t.onsuccess = async () => { const e = t.result.find((x) => x.name.includes(n)); r.result.close(); if (!e) return ok(-1); const d = await window.PDFLib.PDFDocument.load(new Uint8Array(await e.pdf.arrayBuffer())); ok(d.getPageCount()); }; }; }), name);
+  await step("Liste leeren für den zweiten Teil", async () => {
+    while (await page.locator("[data-stapel-weg]").count() || await page.locator("[data-stapel-zeile]").count()) {
+      const z = page.locator("[data-stapel-zeile]").first(); await z.locator(".fa-stapel-name").click(); await z.locator("[data-stapel-weg]").click(); await page.waitForTimeout(150);
+    }
+    return true;
+  });
+  await step("Farbe „Schwarzweiß“ gewählt: das gerade gezogene Blatt hat keine Farbe mehr", async () => {
+    await page.locator("[data-stapel-filter]").selectOption("sw");
+    await page.locator("[data-stapel-eingabe]").setInputFiles([{ name: "Farbe-01.png", mimeType: "image/png", buffer: Buffer.from(bilder.ohne) }]);
+    await page.locator('[data-stapel-lauf="fertig"]').waitFor({ timeout: 60000 });
+    await page.locator("[data-stapel-zeile]", { hasText: "Farbe-01" }).locator(".fa-stapel-name").click();
+    const bunt = await page.locator("[data-stapel-vorschau]").evaluate(async (img) => { await img.decode(); const c = document.createElement("canvas"); c.width = img.naturalWidth; c.height = img.naturalHeight; const g = c.getContext("2d"); g.drawImage(img, 0, 0); const d = g.getImageData(0, 0, c.width, c.height).data; let n = 0; for (let i = 0; i < d.length; i += 4 * 97) if (Math.max(d[i], d[i + 1], d[i + 2]) - Math.min(d[i], d[i + 1], d[i + 2]) > 40) n++; return n; });
+    if (bunt !== 0) throw new Error(`${bunt} bunte Bildpunkte`); return "keine bunten Bildpunkte";
+  });
+  check(await page.evaluate(() => JSON.parse(localStorage.getItem("fa_stapel_einst_v1") || "{}").filter) === "sw", "Die Farbwahl wird gemerkt");
+  await page.locator("[data-stapel-filter]").selectOption("original");
+  await step("Zwei Blätter auswählen → „Zusammenfügen (2)“ → eine Unterlage mit 2 Seiten", async () => {
+    await page.locator("[data-stapel-eingabe]").setInputFiles([{ name: "Brief-A.png", mimeType: "image/png", buffer: Buffer.from(bilder.blatt) }, { name: "Brief-B.png", mimeType: "image/png", buffer: Buffer.from(bilder.blatt) }]);
+    await page.locator('[data-stapel-lauf="fertig"]').waitFor({ timeout: 90000 });
+    for (const n of ["Brief-A", "Brief-B"]) await page.locator("[data-stapel-zeile]", { hasText: n }).locator("input[type=checkbox]").check();
+    await page.locator("[data-stapel-fuegen]").click();
+    await page.locator("[data-stapel-zeile]", { hasText: "Brief-A (2 Blätter)" }).waitFor();
+    const n = await seitenZahl("Brief-A (2 Blätter)");
+    if (n !== 2 || await page.locator("[data-stapel-zeile]", { hasText: "Brief-B" }).count()) throw new Error(`Seiten ${n}`); return "2 Seiten, Quellen weg";
+  });
+  await step("Ziehen: ein Blatt auf ein anderes legen fügt beide zusammen", async () => {
+    await page.locator("[data-stapel-eingabe]").setInputFiles([{ name: "Zieh-C.png", mimeType: "image/png", buffer: Buffer.from(bilder.blatt) }]);
+    await page.locator('[data-stapel-lauf="fertig"]').waitFor({ timeout: 60000 });
+    const griff = page.locator("[data-stapel-zeile]", { hasText: "Zieh-C" }).locator("[data-stapel-griff]");
+    const ziel = page.locator("[data-stapel-zeile]", { hasText: "Brief-A (2 Blätter)" }).locator(".fa-stapel-name");
+    const a = await griff.boundingBox(), b = await ziel.boundingBox();
+    await page.mouse.move(a.x + a.width / 2, a.y + a.height / 2); await page.mouse.down();
+    await page.mouse.move(b.x + 20, b.y + b.height / 2, { steps: 8 }); await page.mouse.up();
+    await page.locator("[data-stapel-zeile]", { hasText: "Brief-A (3 Blätter)" }).waitFor({ timeout: 20000 });
+    return (await seitenZahl("Brief-A (3 Blätter)")) === 3 ? "3 Seiten" : false;
+  });
+  await step("Haken „ein Brief“: ein Durchgang mit 3 Blättern wird EINE Unterlage", async () => {
+    await page.locator("[data-stapel-zusammen]").check();
+    await page.locator("[data-stapel-eingabe]").setInputFiles(["1", "2", "3"].map((k) => ({ name: `Ein-Brief-${k}.png`, mimeType: "image/png", buffer: Buffer.from(bilder.blatt) })));
+    await page.locator('[data-stapel-lauf="fertig"]').waitFor({ timeout: 90000 });
+    await page.locator("[data-stapel-zeile]", { hasText: "Ein-Brief-1 (3 Blätter)" }).waitFor({ timeout: 20000 });
+    return (await seitenZahl("Ein-Brief-1 (3 Blätter)")) === 3 && await page.locator("[data-stapel-zeile]", { hasText: "Ein-Brief-2" }).count() === 0;
+  });
+  await page.locator("[data-stapel-zusammen]").uncheck();
   const handy = await (await browser.newContext({ ...HANDY, serviceWorkers: "block" })).newPage();
   await handy.goto(app.base, { waitUntil: "networkidle" }); await ready(handy);
   await step("Handy 390 px: Stapel-Seite ohne Querrollen, „Einordnen“ sichtbar", async () => {

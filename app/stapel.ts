@@ -85,8 +85,8 @@ export async function stapelSeite(file: File, einst: StapelEinst = STAPEL_VORGAB
 }
 // ---------- Ablauf mit Anhalten · Weiter · Abbrechen (Klaus 2026-11-01) ----------
 // Läuft unabhängig von der Seite weiter (Modulzustand); jedes fertige Blatt liegt sofort in der Stapel-Ablage (IndexedDB).
-export type StapelLauf = { zustand: "ruht" | "laeuft" | "angehalten" | "fertig" | "abgebrochen"; i: number; n: number; aktuell: string; fertig: number; offen: number };
-let lauf: StapelLauf = { zustand: "ruht", i: 0, n: 0, aktuell: "", fertig: 0, offen: 0 };
+export type StapelLauf = { zustand: "ruht" | "laeuft" | "angehalten" | "fertig" | "abgebrochen"; i: number; n: number; aktuell: string; fertig: number; offen: number; rechnet: boolean };
+let lauf: StapelLauf = { zustand: "ruht", i: 0, n: 0, aktuell: "", fertig: 0, offen: 0, rechnet: false };
 let warteschlange: File[] = [];
 let weiter: (() => void) | null = null;
 const hoerer = new Set<(l: StapelLauf) => void>();
@@ -103,20 +103,20 @@ export async function stapelStarten(dateien: File[], ablegen: (e: StapelErgebnis
   const einst = opt.einst || STAPEL_VORGABE;
   warteschlange.push(...dateien);
   if (lauf.zustand === "laeuft" || lauf.zustand === "angehalten") { melde({ n: lauf.n + dateien.length }); return; }
-  melde({ zustand: "laeuft", i: 0, n: dateien.length, aktuell: "", fertig: 0, offen: 0 });
+  melde({ zustand: "laeuft", i: 0, n: dateien.length, aktuell: "", fertig: 0, offen: 0, rechnet: false });
   const protokoll: Array<{ name: string; sicher: boolean; quelle: string; seite?: [number, number] }> = [];
   while (warteschlange.length) {
     if (jetzt() === "angehalten") await new Promise<void>((ok) => { weiter = ok; });
     if (jetzt() === "abgebrochen") break;
     const f = warteschlange.shift()!;
-    melde({ aktuell: f.name });
+    melde({ aktuell: f.name, rechnet: true });
     let e: StapelErgebnis;
     if (/^application\/pdf$/.test(f.type) || /\.pdf$/i.test(f.name)) e = { file: f, sicher: true, grund: "PDF unverändert übernommen", quelle: "pdf" };
     else { try { e = await stapelSeite(f, einst); } catch (reason) { e = { file: f, sicher: false, grund: reason instanceof Error ? reason.message : "Bild nicht lesbar", quelle: "fehler" }; } }
     await ablegen(e);
     protokoll.push({ name: e.file.name, sicher: e.sicher, quelle: e.quelle, seite: e.seite });
     (window as Window & { __faStapel?: unknown }).__faStapel = protokoll;   // für die Probe
-    melde({ i: lauf.i + 1, fertig: lauf.fertig + 1, offen: lauf.offen + (e.sicher ? 0 : 1) });
+    melde({ i: lauf.i + 1, fertig: lauf.fertig + 1, offen: lauf.offen + (e.sicher ? 0 : 1), rechnet: false });
   }
   if (opt.ende) { try { await opt.ende(); } catch { /* das Zusammenfügen meldet sich selbst */ } }
   if (jetzt() !== "abgebrochen") melde({ zustand: "fertig", aktuell: "" });
@@ -124,7 +124,7 @@ export async function stapelStarten(dateien: File[], ablegen: (e: StapelErgebnis
 
 /** Mehrere Stapel-PDFs zu EINEM zusammenfügen (Klaus 2026-11-01: „ob ich den Stapel zusammenfasse … per Drag and Drop … zusammenfügen“).
  *  Seiten in der gegebenen Reihenfolge, je Quelle alle ihre Seiten. pdf-lib aus dem Kern von Workflow PDF. */
-export async function pdfsZusammenfuegen(dateien: Blob[]): Promise<Uint8Array> {
+export async function pdfsZusammenfuegen(dateien: Blob[]): Promise<{ bytes: Uint8Array; seiten: number }> {
   await kern();
   const P = w().PDFLib!.PDFDocument, ziel = await P.create();
   ziel.setProducer("Familienakte"); ziel.setCreator("Familienakte · Stapel zusammengefügt (Workflow PDF)");
@@ -132,5 +132,5 @@ export async function pdfsZusammenfuegen(dateien: Blob[]): Promise<Uint8Array> {
     const quelle = await P.load(new Uint8Array(await d.arrayBuffer()), { ignoreEncryption: true });
     for (const s of await ziel.copyPages(quelle, quelle.getPageIndices())) ziel.addPage(s);
   }
-  return await ziel.save();
+  return { bytes: await ziel.save(), seiten: ziel.getPageIndices().length };
 }
