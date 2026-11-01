@@ -64,4 +64,4 @@ eingebettet (Speichern mit SHA-256-Prüfung) und „Was neu ist“ mit markierte
 **Stand nach 2.28.14 (Kacheln sagen Import/Ausfüllen, #45; Paket-Werkzeug #46):** Abschluss `BRIEF_ABSCHLUSS_2026-11-01_BRIEFKOPF-UND-PAKET.md`
 (Offenes und Startauftrag dort).
 
-**Aktualisierung Codex, 2026-11-01:** Brückenprobe und vollständiger PWA-Bau für UI-Proben auf Klaus' Auftrag lokal auf `main` zusammengeführt; Remote-Übertragung wegen der automatischen Pages-Veröffentlichung noch durch die Freigabeprüfung blockiert. Gemeinsamer Stand: `codex/main-uebergabe`. Maßgeblicher neuer Übergabestand: `BRIEF_ABSCHLUSS_2026-11-01_CODEX-MAIN.md` (Prüfungen und verbleibende Cloud-Einschränkung).
+**Aktualisierung Codex, 2026-11-01:** Brückenprobe und vollständiger PWA-Bau für UI-Proben auf Klaus' Auftrag auf `main` zusammengeführt. Klaus hat den Main-Push einschließlich der automatischen öffentlichen Pages-Veröffentlichung ausdrücklich freigegeben. Maßgeblicher neuer Übergabestand: `BRIEF_ABSCHLUSS_2026-11-01_CODEX-MAIN.md` (Prüfungen und verbleibende Cloud-Einschränkung).

@@ -4,10 +4,9 @@ Klaus hat am 2026-11-01 ausdrücklich die Zusammenführung auf `main` angeordnet
 und die nächste Claude-Code-Sitzung darauf zugreifen kann. Diese Regel steht jetzt in `CLAUDE.md`.
 Dieser Brief aktualisiert den Übergabestand der beiden früheren CODEX-Abschlussbriefe.
 
-> Aktueller Übertragungsstand: lokal zusammengeführt und geprüft, **noch nicht nach `origin/main` übertragen**.
-> Die automatische Freigabeprüfung blockiert den Main-Push wegen der dadurch ausgelösten öffentlichen
-> GitHub-Pages-Veröffentlichung. Dafür wird Klaus' ausdrückliche Zustimmung benötigt.
-> Der gemeinsame prüfbare Stand wird auf `codex/main-uebergabe` gesichert.
+> Klaus hat den Push auf `main` **einschließlich der automatischen öffentlichen GitHub-Pages-Veröffentlichung**
+> am 2026-11-01 ausdrücklich freigegeben („Ja, mache das bitte.“). Die zuvor ausstehende Zustimmung liegt damit vor.
+> Beide Korrekturen und die Abschlussbriefe sind in diesem gemeinsamen Hauptzweig-Stand enthalten.
 
 ## Zusammenführung
 
@@ -47,12 +46,16 @@ Gesicherte Spuren dieses Nachtrags: 10:24:01–10:26:15 UTC / 11:24:01–11:26:1
 anschließend Abschlussbrief und Übertragung. Vorangegangene 35 Minuten 17 Sekunden sind im vorherigen Brief ausgewiesen.
 Nicht gemessen: echte Geräte, Einzeldatei im Browser, aktuelle Remote-CI/Pages-Ergebnisse, Wiederherstellung einer neuen Cloud-Aufgabe.
 
+Freigabe-Nachtrag: 2026-11-01, ab 10:50:37 UTC / 11:50:37 Berlin. Remote-main vor Übertragung erneut geprüft:
+weiterhin `ce83c38`, keine zwischenzeitlichen Änderungen. Nur Freigabe-/Übergabetexte aktualisiert;
+keine Änderung am bereits geprüften Code und daher kein weiterer identischer Testlauf.
+
 ## Startauftrag für Claude Code
 
 ```text
 CLAUDE.md und BRIEF_ABSCHLUSS_2026-11-01_CODEX-MAIN.md lesen, main aktualisieren.
-Beide Codex-Korrekturen sind lokal zusammengeführt; gemeinsamer Stand auf codex/main-uebergabe.
-Vor Übernahme nach origin/main Klaus' ausdrückliche Zustimmung zur automatischen Pages-Veröffentlichung einholen.
+Beide Codex-Korrekturen sind auf main zusammengeführt; die Arbeitszweige nicht nochmals übernehmen.
+Klaus hat den Main-Push einschließlich automatischer öffentlicher Pages-Veröffentlichung ausdrücklich freigegeben.
 Klaus' Regel: fertige geprüfte Stücke auf main zusammenführen, damit Dateien für ihn und Folgesitzungen verfügbar sind.
 CI und Pages für den Main-Push prüfen; lokal ist die Einzeldatei wegen Browserrichtlinie weiterhin nicht geprüft.
 Briefkopf-Vorschläge nur nach Klaus' Ja je Punkt umsetzen; Tablet-Rückmeldungen abwarten.
