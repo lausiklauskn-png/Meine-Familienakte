@@ -22,6 +22,7 @@ sondern nur KimHub.“
 ## Weitere Regeln (Kurzfassung, Einzelheiten in den Briefen)
 
 - Oberfläche und Wortlaut des Freundes nur mit Klaus' Ja je sichtbarer Änderung. Beispieldaten erfunden.
+- **Fertige, geprüfte Stücke auf `main` zusammenführen** (Klaus 2026-11-01), damit Klaus und die nächste Claude-Code-Sitzung auf dieselben Dateien zugreifen können. Arbeit auf eigenem Zweig; je Stück ein PR, soweit der Zugang verfügbar ist. Zusammenführung und App-Veröffentlichung sind getrennte Schritte; Einschränkungen der Prüfungen offen benennen.
 - Kein Release ohne Klaus' Wort. Keine Schlüssel, PINs, Passwörter oder Chefcodes in Dateien oder im Chat.
 - Byte-1:1-Bausteine nie von Hand ändern: Workflow PDF über `tools/wfpdf-nachziehen.mjs` (Pins `public/wfpdf/HERKUNFT.json`),
   übrige über `native/HERKUNFT.json` (`npm run check:herkunft`), Modul 25 per Pin in `scripts/run-ki-auftrag-tests.mjs`.
@@ -62,3 +63,5 @@ eingebettet (Speichern mit SHA-256-Prüfung) und „Was neu ist“ mit markierte
 
 **Stand nach 2.28.14 (Kacheln sagen Import/Ausfüllen, #45; Paket-Werkzeug #46):** Abschluss `BRIEF_ABSCHLUSS_2026-11-01_BRIEFKOPF-UND-PAKET.md`
 (Offenes und Startauftrag dort).
+
+**Aktualisierung Codex, 2026-11-01:** Brückenprobe und vollständiger PWA-Bau für UI-Proben auf Klaus' Auftrag auf `main` zusammengeführt. Maßgeblicher neuer Übergabestand: `BRIEF_ABSCHLUSS_2026-11-01_CODEX-MAIN.md` (Prüfungen und verbleibende Cloud-Einschränkung).

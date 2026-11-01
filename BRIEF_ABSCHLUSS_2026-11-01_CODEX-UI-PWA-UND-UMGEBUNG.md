@@ -1,5 +1,8 @@
 # Abschluss: Codex – UI-Bau und Cloud-Umgebung, 2026-11-01
 
+> Aktualisierung: Die Zusammenführung auf `main` ist inzwischen von Klaus angeordnet und ausgeführt.
+> Maßgeblich ist `BRIEF_ABSCHLUSS_2026-11-01_CODEX-MAIN.md`; die folgenden offenen Merge-/PR-Punkte beschreiben den vorherigen Stand.
+
 ## Übergabestand für Montag
 
 Ausgang beider getrennten Zweige: `origin/main` = `ce83c38`, Fassung **2.28.14**.
