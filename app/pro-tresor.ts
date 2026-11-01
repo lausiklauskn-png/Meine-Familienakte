@@ -7,7 +7,7 @@ interface ProTresorPlugin {
 }
 type NativeWindow = Window & { Capacitor?: { isNativePlatform?: () => boolean; getPlatform?: () => string; Plugins?: { FamilienakteTresor?: ProTresorPlugin } } };
 const cap = () => (window as NativeWindow).Capacitor;
-export const proTresorVerfuegbar = () => Boolean(cap()?.isNativePlatform?.() && cap()?.getPlatform?.() === "android" && cap()?.Plugins?.FamilienakteTresor);
+export const proTresorVerfuegbar = () => Boolean(cap()?.isNativePlatform?.() && ["android", "windows"].includes(cap()?.getPlatform?.() || "") && cap()?.Plugins?.FamilienakteTresor);
 async function aufrufen<K extends keyof ProTresorPlugin>(name: K): Promise<Awaited<ReturnType<ProTresorPlugin[K]>>> {
   const plugin = cap()?.Plugins?.FamilienakteTresor;
   if (!plugin) throw new Error("Pro-Tresor ist auf diesem Gerät nicht verfügbar.");

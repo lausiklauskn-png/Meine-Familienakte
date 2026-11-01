@@ -15,6 +15,11 @@
     getPlatform: () => 'windows', isNativePlatform: () => true,
     Plugins: { ProNetwork: { async getState() { return { offline: read() }; }, async setOffline({ offline }) { if (typeof offline !== 'boolean') throw new Error('INVALID_INPUT'); write(offline); return { offline: read() }; } } }
   };
+  // Derselbe freiwillige Pro-Anschluss wie unter Android. Dialoge und Schlüssel bleiben nativ.
+  window.Capacitor.Plugins.FamilienakteTresor = Object.fromEntries(
+    ['zustand', 'verbinden', 'entsperren', 'sperren', 'speichern', 'lesen'].map((aktion) =>
+      [aktion, (daten = {}) => invoke('fa_pro_tresor', { anfrage: { ...daten, aktion } })])
+  );
 
   // Diktat über SAPI, einmal je Tipp (oneShot), auch bei Internet „aus“ (läuft auf dem Gerät).
   class WindowsSpeech {

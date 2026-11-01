@@ -26,7 +26,7 @@ export function ProTresorAnschluss() {
   const text = { getrennt: "Noch nicht verbunden", offen: "Entsperrt", gesperrt: "Gesperrt", nicht_erreichbar: "Nicht erreichbar – gewählten Speicher und Ordnerfreigabe prüfen" };
   return <section className="card" data-pro-tresor>
     <h3>Gemeinsamer Pro-Tresor</h3>
-    <p>Vorhandenen Tresor von Workflow PDF Pro, Private Brain Pro oder BookLedgerPro verbinden. Der Ordner kann im Gerät, auf SD-Karte oder USB liegen, soweit Android ihn freigibt.</p>
+    <p>Vorhandenen Tresor von Workflow PDF Pro, Private Brain Pro oder BookLedgerPro verbinden. Der Ordner kann im Gerät, auf SD-Karte, USB oder in einem freigegebenen Laufwerk liegen, soweit das Betriebssystem ihn freigibt.</p>
     <p role="status">{text[stand.status]}</p>
     {stand.ort && <p style={{ overflowWrap: "anywhere" }}>Gewählter Ort: {stand.ort}</p>}
     {stand.id && <p>Tresorkennung: {stand.id}</p>}

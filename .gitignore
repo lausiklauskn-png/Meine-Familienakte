@@ -4,3 +4,5 @@ dist
 .DS_Store
 dist-single
 dist-einzel
+work/
+windows/src-tauri/pro-tresor/

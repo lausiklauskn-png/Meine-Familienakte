@@ -28,6 +28,7 @@
   },
   "bundle": {
     "active": true,
+    "resources": ["pro-tresor/**"],
     "targets": [
       "nsis"
     ],
