@@ -3,6 +3,7 @@ import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import assert from "node:assert/strict";
+import { grossePipe } from "./pro-tresor-pipe-probe.mjs";
 execFileSync(process.execPath, ["windows/tools/build-pro-tresor.mjs", "--nur-jar"], { stdio: "inherit" });
 const ziel = mkdtempSync(path.join(tmpdir(), "fa-engine-probe-"));
 const jar = path.resolve("windows/src-tauri/pro-tresor/familienakte-tresor.jar");
@@ -17,4 +18,6 @@ try {
   const zeilen = pipe.stdout.trim().split("\n").map((s) => JSON.parse(s));
   assert.deepEqual(zeilen, [{ ok: { status: "getrennt" } }, { error: "FA_TRESOR_AKTION_UNGUELTIG" }]);
   console.log("Windows-Engine: echte Prozess-Pipe, Antwortformat und Ende bei EOF grün");
+  await grossePipe("java", jar, ziel);
+
 } finally { rmSync(ziel, { recursive: true, force: true }); }

@@ -18,7 +18,7 @@ try {
   if ($LASTEXITCODE -ne 0) { throw 'Probe ließ sich nicht bauen' }
   & $java -Xmx256m -Djava.awt.headless=true -cp "$jar;$classes" de.familyprojekt.familienakte.ProTresorEngineProbe
   if ($LASTEXITCODE -ne 0) { throw 'Installierte Laufzeit besteht Tresorprobe nicht' }
-  node windows/tools/test-pro-install-pipe.mjs $java $jar $root
+  node windows/tools/test-pro-install-pipe.mjs $java $jar $root $classes
   if ($LASTEXITCODE -ne 0) { throw 'Installierte Prozess-Pipe fehlgeschlagen' }
   Write-Output 'Echter NSIS-Installer: App, Ressourcen, gebündelte Laufzeit, Tresorprobe und Pipe geprüft.'
 } finally {

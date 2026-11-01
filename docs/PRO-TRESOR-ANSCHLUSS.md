@@ -86,7 +86,7 @@ Die Originalprobe `TresorOrdnerTest` läuft zusätzlich in Androids Unit-Tests.
 `node tools/native/test-pro-tresor-engine.mjs`: echte Windows-Engine mit gestellten Dialogen, echte
 Kanon-Dateien; Zustand, Originalbytes, falsche Kennung, Fehlwechsel/Abbruch, Sperre, gesperrter Neustart,
 entfernter Speicher, kanonischer Leser einer anderen App und bewusste Reparatur einer beschädigten Verbindung bei erhaltener Altdatei. Auch die erfolgreiche 20-MiB-Ablage samt Rücklesen läuft mit dem Produktionslimit von 256 MiB Java-Heap. Zusätzlich echter
-Unterprozess mit Produktionsprotokoll, geschlossener Eingabe und ungültiger Aktion.
+Unterprozess mit Produktionsprotokoll, geschlossener Eingabe und ungültiger Aktion. Zusätzlich gehen 20 MiB durch das wirkliche Produktions-JSON und die Prozess-Pipe; dabei gilt ebenfalls das Limit von 256 MiB Heap. Dieselbe Probe läuft mit der installierten Laufzeit.
 
 `tests/ui/pro-tresor.test.mjs`: gestellte Android-/Tauri-Brücke, bewusste Verbindung, Ort/Kennung, Sperre,
 abgebrochener Wechsel, entfernte SD-Karte, Windows-Bedienung und kein nativer Anschluss in der PWA.

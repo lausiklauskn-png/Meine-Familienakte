@@ -21,7 +21,22 @@ public final class ProTresorEngineProbe {
         public Path ordner() { return ordner; }
         public char[] kennwort() { return zugang == null ? null : zugang.toCharArray(); }
     }
+    static void pipeProbe() throws Exception {
+        Path root = Files.createTempDirectory("fa-windows-pipe-");
+        try {
+            Dialoge dialog = new Dialoge(); dialog.ordner = root.resolve("tresor"); dialog.zugang = UUID.randomUUID().toString();
+            try (TresorOrdner t = TresorOrdner.anlegen(new DateiAblage(dialog.ordner.toFile()), Fach.WORKFLOW_PDF_APP, dialog.zugang)) { }
+            try (ProTresorEngine e = new ProTresorEngine(root.resolve("config.json"), dialog);
+                 Reader in = new BufferedReader(new InputStreamReader(System.in, java.nio.charset.StandardCharsets.UTF_8));
+                 PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out, java.nio.charset.StandardCharsets.UTF_8), true)) {
+                out.println(Json.schreiben(Map.of("bereit", aufruf(e, "verbinden"))));
+                ProTresorEngine.bedienen(e, in, out);
+            }
+        } finally { try (var files = Files.walk(root)) { for (Path p : files.sorted(Comparator.reverseOrder()).toList()) Files.delete(p); } }
+        System.exit(0);
+    }
     public static void main(String[] args) throws Exception {
+        if (args.length == 1 && args[0].equals("--pipe")) { pipeProbe(); return; }
         Path root = Files.createTempDirectory("fa-windows-pro-");
         try {
             Path tresor = root.resolve("sd-karte"), config = root.resolve("arbeitsstand/pro-tresor.json");

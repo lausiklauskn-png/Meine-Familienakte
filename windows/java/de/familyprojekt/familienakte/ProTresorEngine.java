@@ -160,16 +160,7 @@ public final class ProTresorEngine implements Closeable {
         }
         return c == -1 && s.length() == 0 ? null : s.toString();
     }
-    public static void main(String[] args) throws Exception {
-        if (args.length != 1) return;
-        System.setProperty("apple.awt.application.name", "Familienakte Pro");
-        if (!GraphicsEnvironment.isHeadless()) {
-            try { UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); }
-            catch (Exception optionalesAussehen) { /* Standard-Swing bleibt benutzbar. */ }
-        }
-        try (ProTresorEngine engine = new ProTresorEngine(Path.of(args[0]), new WindowsDialoge());
-             Reader in = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
-             PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out, StandardCharsets.UTF_8), true)) {
+    static void bedienen(ProTresorEngine engine, Reader in, PrintWriter out) throws IOException {
             String line;
             while ((line = zeile(in)) != null) {
                 Map<String, Object> response = new LinkedHashMap<>();
@@ -180,6 +171,18 @@ public final class ProTresorEngine implements Closeable {
                 }
                 out.println(Json.schreiben(response));
             }
+    }
+    public static void main(String[] args) throws Exception {
+        if (args.length != 1) return;
+        System.setProperty("apple.awt.application.name", "Familienakte Pro");
+        if (!GraphicsEnvironment.isHeadless()) {
+            try { UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); }
+            catch (Exception optionalesAussehen) { /* Standard-Swing bleibt benutzbar. */ }
+        }
+        try (ProTresorEngine engine = new ProTresorEngine(Path.of(args[0]), new WindowsDialoge());
+             Reader in = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+             PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out, StandardCharsets.UTF_8), true)) {
+            bedienen(engine, in, out);
         }
         // Swing bleibt sonst auch nach dem Schließen der privaten Pipe als eigener Prozess stehen.
         System.exit(0);
