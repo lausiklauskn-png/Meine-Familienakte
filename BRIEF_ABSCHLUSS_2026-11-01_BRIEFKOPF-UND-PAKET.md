@@ -66,3 +66,55 @@ Nur fertige Stücke veröffentlichen (Probe + Gegenprobe + alle Proben + CI grü
 Nicht: Kern von Hand ändern, Forschung hier (nur Kimhub), Schlüssel/PINs in Dateien oder Chat, „Version 2.28.1“ ändern.
 Am Ende Abschlussbrief mit Stundennachweis und Startauftrag.
 ```
+
+## Übergabe an Codex (Klaus 2026-11-01: „in Codex weiterarbeiten … Montag hier weiter“)
+
+Startauftrag für Codex, vollständig für sich lesbar (Codex kennt diese Sitzung nicht):
+
+```
+Du arbeitest im Repo lausiklauskn-png/Meine-Familienakte (PWA mit Vite + React + TypeScript, dazu Android-Hülle mit Capacitor
+und Windows-Hülle mit Tauri). Sprache mit mir: Deutsch, kurz, ich bin kein Programmierer. Ich heiße Klaus.
+
+ZUERST LESEN (in dieser Reihenfolge):
+1. CLAUDE.md (Regeln und Stand),
+2. BRIEF_ABSCHLUSS_2026-11-01_BRIEFKOPF-UND-PAKET.md (Stand 2.28.14, offene Punkte),
+3. docs/STAPEL.md und docs/WORKFLOW-PDF-KLON.md (wie Stapel und eingebettetes Workflow PDF gebaut sind).
+
+ARBEITSWEISE
+- Eigener Zweig codex/<kurzer-name> von origin/main; ein PR je fertigem Stück, als Entwurf.
+- Prüfen vor jedem PR:
+    npm ci
+    npm run build            (alle Selbsttests + tsc + vite + Service Worker; NICHT nur vite build)
+    node tests/run-ui.mjs    (Oberflächenproben im echten Browser, Playwright; Ziel: alle grün, aktuell 32/32)
+    npm run lint             (0 Fehler)
+    npm run check:herkunft   (byte-1:1-Bausteine unverändert)
+  Gegenproben (absichtlich eingebaute Fehler müssen rot werden): node tests/gegenprobe-sitzung-b.mjs "<Filter>"
+  Wer eine Prüfung ergänzt, ergänzt dort einen Fall und zeigt, dass er gefangen wird.
+- Sichtbare Änderungen an der Oberfläche NUR mit meinem Ja je Punkt. Design nicht brechen (keine neuen Zeilen, Ränder, Kästen ohne Ja).
+- Fassung +1 nur für ein fertiges, veröffentlichtes Stück: package.json, package-lock.json (Zeile 3 und 9), android/app/build.gradle
+  (versionName), windows/package.json, windows/package-lock.json, windows/src-tauri/Cargo.toml, windows/src-tauri/tauri.conf.json.
+  Sichtbar in der App bleibt „Version 2.28.1“ – NIE ändern.
+- Veröffentlichen erst nach meinem Wort: Workflows android-release.yml und windows-release.yml (workflow_dispatch, tag
+  android-v<Fassung> bzw. windows-v<Fassung>, server = ja).
+
+NICHT TUN
+- Byte-1:1-Bausteine von Hand ändern: public/apps/workflow-pdf/ (nur über tools/wfpdf-app-nachziehen.mjs), public/wfpdf/
+  (tools/wfpdf-nachziehen.mjs), native/ (native/HERKUNFT.json). Die Brücke public/apps/fa-wfpdf-bruecke.js nie umgehen.
+- Forschungseinträge in diesem Repo (die gehören nur nach lausiklauskn-png/Kimhub).
+- Schlüssel, PINs, Passwörter in Dateien oder im Chat. Beispieldaten nur erfunden.
+
+OFFENE AUFGABEN (der Reihe nach)
+1. Probe tests/ui/workflow-pdf-bruecke.test.mjs war in der CI einmal rot: nach „In Workflow PDF öffnen“ kam die Bibliothek des
+   Klons (#sc-bib im iframe [data-wfpdf-rahmen]) nicht in 30 s; beim Neustart grün. Ursache finden (Wettlauf beim Laden des
+   iframes? Datei zu früh geschickt, bevor „fa-wfpdf-bereit“ kam? siehe app/workflow-pdf-seite.tsx), beheben, mehrmals hintereinander
+   grün zeigen. Nicht nur Wartezeit verlängern, keine Probe abschalten.
+2. tests/ui/_harness.mjs: bei UI_BUILD=1 läuft nur „vite build“, ohne scripts/build-pwa.mjs → kein dist/sw.js → viele Proben rot an
+   „unsupported MIME type“. Rahmen so ändern, dass er den Service Worker mitbaut. Unsichtbar, braucht kein Ja.
+3. Briefkopf auch in der Liste der Warteschlange (app/central-intake-center.tsx) und im Stapel zeigen (Absender · Nummer) –
+   SICHTBAR: erst einen Vorschlag mit Bild/Text an mich, dann mein Ja abwarten.
+4. Meine Rückmeldungen vom Tablet zu 2.28.14 abarbeiten, wenn ich sie schicke.
+
+ABSCHLUSS
+Am Ende eine Datei BRIEF_ABSCHLUSS_<Datum>_CODEX-….md: was gebaut, welche Proben/Gegenproben grün, was NICHT gemessen,
+Zeiten (erste bis letzte Spur), offene Punkte. Montag übernimmt wieder Claude Code mit diesem Brief.
+```
