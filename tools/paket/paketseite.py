@@ -41,9 +41,9 @@ NEU = [
    "<b>Installieren</b> – nur im Browser: macht die Seite zu einer App mit eigenem Fenster und Symbol, läuft danach auch ohne Internet."],
    "Neu sind Internet-Schalter, Update-Knopf und Installieren. Drucken und Ausloggen gab es schon."),
  figur("02-eingang", "Neue Unterlagen erfassen (Eingangszentrale)", [
-   "<b>Dokument fotografieren</b> – öffnet jetzt den vollen Scanner aus Workflow PDF: Blatt wird im Foto gefunden, gerade gezogen, Filter, mehrere Seiten, PDF. Danach geht es gleich in die Prüfung.",
-   "<b>Stapel direkt übernehmen</b> – <i>neu</i>: viele Fotos oder Scans auf einmal; jedes Blatt wird automatisch gefunden und gerade gezogen, unsichere bleiben als ganzes Foto mit „Ecken prüfen“. Eingeordnet wird später.",
-   "<b>Formular scannen und ausfüllen</b> – <i>neu</i>: Papierformular scannen und gleich am Bildschirm ausfüllen."]),
+   "<b>Dokument fotografieren</b> (Unterzeile „Import“) – öffnet jetzt den vollen Scanner aus Workflow PDF: Blatt wird im Foto gefunden, gerade gezogen, Filter, mehrere Seiten, PDF. Danach geht es gleich in die Prüfung.",
+   "<b>Stapel direkt übernehmen</b> (Unterzeile „Import“) – <i>neu</i>: viele Fotos oder Scans auf einmal; jedes Blatt wird automatisch gefunden und gerade gezogen, unsichere bleiben als ganzes Foto mit „Ecken prüfen“. Eingeordnet wird später.",
+   "<b>Formular scannen und ausfüllen</b> (Unterzeile „Ausfüllen“) – <i>neu</i>: Papierformular scannen und gleich am Bildschirm ausfüllen."]),
  '<div class="box wofuer-box"><h3>Welcher Knopf wofür?</h3><div class="hints">'
  '<div class="hint"><b>Zum Ausfüllen: „Formular scannen und ausfüllen“</b><p>Ein Papierformular scannen und gleich am Bildschirm ausfüllen. Das Ergebnis wird eine neue Unterlage, das Original bleibt unverändert.</p></div>'
  '<div class="hint"><b>Zum Import, ein Brief: „Dokument fotografieren“</b><p>Einen Brief oder Beleg in die Akte holen – er geht gleich in die Prüfung (Briefkopf, Zuordnung).</p></div>'
