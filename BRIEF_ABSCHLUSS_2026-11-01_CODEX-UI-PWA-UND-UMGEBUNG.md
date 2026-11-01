@@ -87,6 +87,9 @@ Build-/Browserwartezeiten. Früheres Lesen und anfängliche Einrichtung ohne ges
 09:37–09:54: Brückenprobe, Gegenprobe, drei Wiederholungen, erster Gesamtlauf.
 09:55–10:11: zweiter Zweig, UI-Bau/Gegenprobe, zweiter Gesamtlauf, gespeicherte Einrichtung und Wiederanlauf.
 
+Abschlussbrief und Bestätigung beider GitHub-Zweige: bis **10:12:52 UTC / 11:12:52 Berlin**.
+Gesamte dokumentierte Spanne ab 09:37:35 UTC damit **35 Minuten 17 Sekunden**, einschließlich Wartezeiten.
+
 ## Startauftrag
 
 ```text
