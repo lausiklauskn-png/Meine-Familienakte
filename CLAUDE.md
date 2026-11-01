@@ -34,4 +34,14 @@ Abschluss: `BRIEF_ABSCHLUSS_2026-11-01_WORKFLOW-PDF-KLON.md` (Ergebnis, Fragen a
 `public/apps/workflow-pdf/` byte-1:1 (`tools/wfpdf-app-nachziehen.mjs`, Pins `public/apps/HERKUNFT.json`, Patch `tools/wfpdf-app-patch.mjs`),
 Brücke `public/apps/fa-wfpdf-bruecke.js` (**nie umgehen**: eigene DB `FamilienakteWFPDF1`, kein Worker, ⟳ ohne fremde Vorräte), Seite
 `app/workflow-pdf-seite.tsx`; Stapel `app/stapel*.ts(x)` (`docs/STAPEL.md`). Tesseract/Scanic liegen **nur** im Klon (`vendorBasis()`).
-2.28.9 = #41 gemergt und veröffentlicht; 2.28.11 (Stücke 2+3) = PR #42.
+2.28.9 = #41 und 2.28.11 = #42 gemergt und veröffentlicht (Android, Windows, server = ja; Pages).
+
+**Klaus' Antworten auf die 4 Fragen (2026-11-01, IN ARBEIT, Fassung 2.28.12 ff.):**
+1. Stapel zusammenfassen: beim Einscannen wählbar („ein Brief“); sonst einzeln, und von Hand zusammenfügen — Auswahl + „Zusammenfügen“
+   und eine Zeile per Ziehen auf eine andere legen (wie Dateien in einen Ordner). Code: `pdfsZusammenfuegen` in `app/stapel.ts`.
+2. Filter wählbar wie Workflow PDF (Original · Farbe verbessern · Graustufen · Dokument · Schwarzweiß) und Schärfe — `StapelEinst`,
+   `ScanBild.filtern`. Vorgabe Original, Schärfe 40.
+3. Prüfbericht (versteckter Text, KI-Anweisungen) **nur auf manuelle Wahl** (Amtspost braucht ihn nicht) — Prüfkern aus dem Klon
+   (`apps/workflow-pdf/assets/pruefer-*.js`), eigener Klebstoff (eingang.js lädt relativ und passt nicht in die Akte).
+4. Titel-Vorschlag „Brief von <Absender>, <Datum>“ im Eingang — `briefkopf.js` byte-1:1 nach `public/wfpdf/` (wfpdf-nachziehen), Titel in
+   `lib/central-intake.ts`/Eingang-Fenster.
