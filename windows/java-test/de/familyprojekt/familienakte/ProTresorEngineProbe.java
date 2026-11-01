@@ -69,7 +69,31 @@ public final class ProTresorEngineProbe {
                 try (InputStream in = fremd.oeffnen(Fach.FAMILIENAKTE.slug, e)) { pruefe(Arrays.equals(original, in.readAllBytes()), "Windows-Datei nicht kanonisch lesbar"); }
             }
             Files.writeString(config, "kaputt");
-            fehler("FA_TRESOR_ZUSTAND_BESCHAEDIGT", () -> new ProTresorEngine(config, dialog));
+            try (ProTresorEngine e = new ProTresorEngine(config, dialog)) {
+                Map<String, Object> defekt = aufruf(e, "zustand");
+                pruefe("nicht_erreichbar".equals(defekt.get("status")) && "FA_TRESOR_ZUSTAND_BESCHAEDIGT".equals(defekt.get("code")), "Beschädigte Konfiguration als leer behandelt");
+                pruefe("kaputt".equals(Files.readString(config)), "Beschädigte Konfiguration ungefragt verändert");
+                dialog.ordner = tresor;
+                pruefe("offen".equals(aufruf(e, "verbinden").get("status")), "Beschädigte Konfiguration verhindert bewusste Reparatur");
+                try (var files = Files.list(config.getParent())) {
+                    Path alt = files.filter(p -> p.getFileName().toString().startsWith("pro-tresor.json.beschaedigt-")).findFirst().orElseThrow();
+                    pruefe("kaputt".equals(Files.readString(alt)), "Alter Konfigurationsstand nicht erhalten");
+                }
+            }
+            // Die zugesagte Obergrenze muss mit demselben Heap wie in der Tauri-Hülle funktionieren.
+            try (ProTresorEngine e = new ProTresorEngine(config, dialog)) {
+                aufruf(e, "entsperren");
+                byte[] grenze = new byte[20 * 1024 * 1024];
+                new Random(71).nextBytes(grenze);
+                String erwarteterHash = HexFormat.of().formatHex(java.security.MessageDigest.getInstance("SHA-256").digest(grenze));
+                @SuppressWarnings("unchecked") Map<String, Object> receipt = (Map<String, Object>) e.aufruf(Map.of("aktion", "speichern", "vaultId", id,
+                    "documentId", "grenzdatei", "name", "Grenze.bin", "mime", "application/octet-stream", "date", 0L, "data", Base64.getEncoder().encodeToString(grenze)));
+                pruefe(erwarteterHash.equals(receipt.get("sha256")), "20-MiB-Ablage verändert Inhalt");
+                grenze = null;
+                @SuppressWarnings("unchecked") Map<String, Object> read = (Map<String, Object>) e.aufruf(Map.of("aktion", "lesen", "vaultId", id, "entryId", receipt.get("entryId")));
+                byte[] rueckweg = Base64.getDecoder().decode((String) read.get("data"));
+                pruefe(rueckweg.length == 20 * 1024 * 1024 && erwarteterHash.equals(HexFormat.of().formatHex(java.security.MessageDigest.getInstance("SHA-256").digest(rueckweg))), "20-MiB-Rückweg verändert Inhalt");
+            }
             System.out.println("Windows-Pro-Tresor: Zustand, native Dialoggrenze, Ablage, Rückweg, Fehlwechsel, Sperre, Neustart und entfernter Speicher grün");
         } finally { try (var files = Files.walk(root)) { for (Path p : files.sorted(Comparator.reverseOrder()).toList()) Files.delete(p); } }
     }

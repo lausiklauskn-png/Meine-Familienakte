@@ -9,8 +9,8 @@ const jar = path.resolve("windows/src-tauri/pro-tresor/familienakte-tresor.jar")
 try {
   execFileSync("java", ["com.sun.tools.javac.Main", "-encoding", "UTF-8", "-cp", jar, "-d", ziel,
     "windows/java-test/de/familyprojekt/familienakte/ProTresorEngineProbe.java"], { stdio: "inherit" });
-  execFileSync("java", ["-Djava.awt.headless=true", "-cp", jar + path.delimiter + ziel, "de.familyprojekt.familienakte.ProTresorEngineProbe"], { stdio: "inherit" });
-  const pipe = spawnSync("java", ["-Djava.awt.headless=true", "-cp", jar, "de.familyprojekt.familienakte.ProTresorEngine", path.join(ziel, "config.json")], {
+  execFileSync("java", ["-Xmx256m", "-Djava.awt.headless=true", "-cp", jar + path.delimiter + ziel, "de.familyprojekt.familienakte.ProTresorEngineProbe"], { stdio: "inherit" });
+  const pipe = spawnSync("java", ["-Xmx256m", "-Djava.awt.headless=true", "-cp", jar, "de.familyprojekt.familienakte.ProTresorEngine", path.join(ziel, "config.json")], {
     input: '{"aktion":"zustand"}\n{"aktion":"shell"}\n', encoding: "utf8", timeout: 15000,
   });
   assert.equal(pipe.status, 0, pipe.stderr);
