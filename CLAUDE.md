@@ -46,8 +46,12 @@ sichtbar bleibt „Version 2.28.1“):
    (Klon-`vendor/`; `public/wfpdf/vendor` gelöscht, `app/wfpdf-kern.ts` `vendorBasis()`). Probe in `scripts/run-ausfuellen-tests.mjs`.
    **Fertig gemessen:** `tests/ui/workflow-pdf-klon.test.mjs` 16 grün · Gegenprobe `"Klon:"` 7/7 · `run-ui` 27/27 · lint 0 Fehler ·
    check:android/windows/herkunft grün · Fassung **2.28.9**. Doku `docs/WORKFLOW-PDF-KLON.md`. Danach: PR, CI, Merge, Veröffentlichung.
-2. (Entwurf liegt außerhalb des Repos nicht vor — neu bauen:) Brücke Ergebnis → Dokumenteneingang (Teilen/Herunterladen im Klon abfangen) und Unterlage → Klon (`launchQueue` stellen), „Dokument
-   fotografieren“ → Klon `?scan=1`.
-3. „Direkt übernehmen“ (Massenscan, siehe oben) — Klebstoff mit `WFP.Scanner` (`hinzu`, `erkennen`, `pdfBauen`; `entscheiden` in scan-bild.js
+2. **Brücke** — fertig gemessen (2.28.10, Commit nach #41): „📤 Teilen“ im Klon → Eingangszentrale, „In Workflow PDF öffnen“ an Unterlagen
+   (nicht bei Gesundheit) über gestellte `launchQueue`, „Dokument fotografieren“ → Klon `?scan=1&von=Familienakte`, Scan geht gleich in die Prüfung.
+   Probe `tests/ui/workflow-pdf-bruecke.test.mjs` 8 · Gegenprobe `"Brücke:"` 5/5 · run-ui 28/28. Push erst nach Merge von #41.
+3. **Stapel** (Klaus' Nachtrag: Anhalten/Weiter/Abbrechen beim Einscannen, schlanke Liste ohne Vorschaubilder, große Vorschau erst beim
+   Antippen, dort Workflow PDF/Einordnen/Entfernen, „Einordnen“ rechts oben, erst ungeprüft ablegen und später einordnen) — IN ARBEIT:
+   `app/stapel.ts` (Ablauf), `app/stapel-ablage.ts` (IndexedDB `FamilienakteStapel1`), `app/stapel-seite.tsx`, Menü „Stapel (noch einordnen)“.
+   Ursprünglicher Plan: „Direkt übernehmen“ (Massenscan, siehe oben) — Klebstoff mit `WFP.Scanner` (`hinzu`, `erkennen`, `pdfBauen`; `entscheiden` in scan-bild.js
    liefert `sicher`), unsichere Seiten markieren statt anhalten.
 4. Prüfbericht beim Einlesen in der Akte (`eingang.js` aus dem Klon) · 5. Briefkopf (`briefkopf.js`, in Workflow-PDF schon fertig, 1.1.6).

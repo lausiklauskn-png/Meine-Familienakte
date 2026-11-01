@@ -1,7 +1,7 @@
 {
   "name": "meine-familienakte",
   "private": true,
-  "version": "2.28.9",
+  "version": "2.28.10",
   "type": "module",
   "description": "Private Familienakte im Browser – Unterlagen, Termine und Aufgaben übersichtlich geordnet.",
   "engines": {

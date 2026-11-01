@@ -30,15 +30,25 @@ Suche (Wort, Bedeutung), Briefkopf, Übersetzen, Teilen, PDF ausgeben. Farben de
 (`apps/workflow-pdf/vendor/`); Scanner, Ausfüllen und Eingang der Akte laden sie dort (`app/wfpdf-kern.ts` `vendorBasis()`).
 `public/wfpdf/` trägt nur noch den Kern ohne diese Ordner. Nicht im Installations-Vorrat (beim ersten Gebrauch).
 
+## Brücke Akte ⟷ Workflow PDF (Stück 2, 2.28.10)
+
+- **„📤 Teilen“ im Klon** (Karte, Auswahl, Editor) legt PDFs und Bilder in die **Eingangszentrale** der Akte (zur Prüfung), statt das
+  Teilen-Fenster des Geräts zu öffnen. Wer nach außen teilen will, teilt die Unterlage aus der Akte.
+- **„In Workflow PDF öffnen“** an einer Unterlage (Dokumentenbibliothek, Eingangszentrale): die Datei geht in die Bibliothek des Klons
+  (über `launchQueue`, das die Brücke im Klon stellt). Nicht bei geschützten Gesundheitsunterlagen (der Klon hat keinen Gesundheitsschutz).
+- **„Dokument fotografieren“** (Startseite, Eingangszentrale) öffnet den Klon mit offenem Scanner (`?scan=1&von=Familienakte`).
+  „PDF erstellen“ legt den Scan im Klon ab **und** gibt ihn gleich an die Prüfung der Akte (wie bisher: Einordnen, Text lesen, Zusammenhang).
+  In der Einzeldatei (ohne Klon) bleibt der Scanner allein.
+
 ## Proben
 
 `scripts/run-ausfuellen-tests.mjs` (Pins, Pflichtdateien, Patch, Gleichheit mit dem Klon daneben) · `tests/ui/workflow-pdf-klon.test.mjs` 16 ·
-Gegenprobe `node tests/gegenprobe-sitzung-b.mjs "Klon:"` (7 Fälle).
+Gegenprobe `node tests/gegenprobe-sitzung-b.mjs "Klon:"` (7 Fälle) · `tests/ui/workflow-pdf-bruecke.test.mjs` 8 ·
+Gegenprobe `"Brücke:"` (5 Fälle).
 
 ## Grenzen (benannt)
 
 - Nicht am Tablet, nicht am Windows-PC gemessen.
-- Ergebnisse des Klons gehen noch **nicht** von selbst in die Akte (Stück 2: Brücke in den Dokumenteneingang). Bis dahin: Teilen/Herunterladen.
 - Der **Internetschalter** der Akte wirkt im Rahmen nicht; der Klon geht nur auf eigenen Tipp ins Netz (Modell laden für Bedeutungssuche/
   Bildbeschreibung, KI mit eigenem Schlüssel), wie Workflow PDF selbst.
 - Der Klon spricht Workflow PDFs Wortlaut (Sprachen DE/EN/RU/AR, Hilfe, Erklärvideo mit Link zur Workflow-PDF-Webseite).

@@ -35,6 +35,12 @@ const faelle = [
   { name: "Klon: Farben der Akte fehlen", datei: "public/apps/workflow-pdf/index.html", alt: '<link rel="stylesheet" href="../fa-wfpdf-thema.css?v=1">', neu: "", probe: "workflow-pdf-klon", rot: /Farben der Familienakte/ },
   { name: "Klon: Worker der Akte liefert die Akte statt des Klons", datei: "scripts/build-pwa.mjs", alt: 'const eigeneSeite = url.pathname.startsWith(new URL("./apps/", self.registration.scope).pathname);', neu: "const eigeneSeite = false;", probe: "workflow-pdf-klon", rot: /Klon erscheint im Rahmen/ },
   { name: "Klon: ein Byte in app.js", datei: "public/apps/workflow-pdf/assets/app.js", alt: "Workfloh", neu: "Workfloq", befehl: [process.execPath, ["scripts/run-ausfuellen-tests.mjs"]], rot: /.*/, rotStderr: /weicht vom Pin ab/ },
+  // Stück 2 „Brücke Akte ⟷ Workflow PDF“ (2026-11-01)
+  { name: "Brücke: Teilen geht am Akte vorbei", datei: "public/apps/fa-wfpdf-bruecke.js", alt: "N.share = function (daten) {", neu: "N.shareAlt = function (daten) {", probe: "workflow-pdf-bruecke", rot: /Teilen/ },
+  { name: "Brücke: Unterlage kommt im Klon nicht an", datei: "public/apps/fa-wfpdf-bruecke.js", alt: 'Object.defineProperty(W, "launchQueue",', neu: 'Object.defineProperty(W, "launchQueueAlt",', probe: "workflow-pdf-bruecke", rot: /In Workflow PDF öffnen/ },
+  { name: "Brücke: Scan geht nicht an die Akte", datei: "public/apps/fa-wfpdf-bruecke.js", alt: 'melde({ typ: "fa-wfpdf-ablegen", quelle: "scan",', neu: 'void ({ typ: "fa-wfpdf-ablegen", quelle: "scan",', probe: "workflow-pdf-bruecke", rot: /Fotofunktion/ },
+  { name: "Brücke: Gesundheitsunterlage geht in den Klon", datei: HP, alt: "{onWfpdf && !sensitive && fillStateOf(item).fuellbar &&", neu: "{onWfpdf && fillStateOf(item).fuellbar &&", probe: "workflow-pdf-bruecke", rot: /Geschützte/ },
+  { name: "Brücke: Fotofunktion wieder ohne Klon", datei: HP, alt: "if (!files.length && !wfpdfAlt()) {", neu: "if (false) {", probe: "workflow-pdf-bruecke", rot: /Fotofunktion/ },
 ];
 const filter = process.argv[2] || "";
 const bauen = (einzel) => {
