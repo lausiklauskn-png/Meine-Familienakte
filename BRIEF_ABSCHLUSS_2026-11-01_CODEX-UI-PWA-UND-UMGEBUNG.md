@@ -1,6 +1,6 @@
 # Abschluss: Codex – UI-Bau und Cloud-Umgebung, 2026-11-01
 
-> Aktualisierung: Die Zusammenführung auf `main` ist inzwischen von Klaus angeordnet und ausgeführt.
+> Aktualisierung: Die Zusammenführung auf `main` ist inzwischen von Klaus angeordnet und lokal ausgeführt; der Push ist wegen der automatischen Pages-Veröffentlichung noch blockiert.
 > Maßgeblich ist `BRIEF_ABSCHLUSS_2026-11-01_CODEX-MAIN.md`; die folgenden offenen Merge-/PR-Punkte beschreiben den vorherigen Stand.
 
 ## Übergabestand für Montag

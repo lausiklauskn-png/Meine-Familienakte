@@ -4,6 +4,11 @@ Klaus hat am 2026-11-01 ausdrücklich die Zusammenführung auf `main` angeordnet
 und die nächste Claude-Code-Sitzung darauf zugreifen kann. Diese Regel steht jetzt in `CLAUDE.md`.
 Dieser Brief aktualisiert den Übergabestand der beiden früheren CODEX-Abschlussbriefe.
 
+> Aktueller Übertragungsstand: lokal zusammengeführt und geprüft, **noch nicht nach `origin/main` übertragen**.
+> Die automatische Freigabeprüfung blockiert den Main-Push wegen der dadurch ausgelösten öffentlichen
+> GitHub-Pages-Veröffentlichung. Dafür wird Klaus' ausdrückliche Zustimmung benötigt.
+> Der gemeinsame prüfbare Stand wird auf `codex/main-uebergabe` gesichert.
+
 ## Zusammenführung
 
 - Ausgang `origin/main`: `ce83c38`; keine zwischenzeitlichen Änderungen beim Abruf.
@@ -46,7 +51,8 @@ Nicht gemessen: echte Geräte, Einzeldatei im Browser, aktuelle Remote-CI/Pages-
 
 ```text
 CLAUDE.md und BRIEF_ABSCHLUSS_2026-11-01_CODEX-MAIN.md lesen, main aktualisieren.
-Beide Codex-Korrekturen sind im Hauptzweig zusammengeführt; die Arbeitszweige nicht nochmals übernehmen.
+Beide Codex-Korrekturen sind lokal zusammengeführt; gemeinsamer Stand auf codex/main-uebergabe.
+Vor Übernahme nach origin/main Klaus' ausdrückliche Zustimmung zur automatischen Pages-Veröffentlichung einholen.
 Klaus' Regel: fertige geprüfte Stücke auf main zusammenführen, damit Dateien für ihn und Folgesitzungen verfügbar sind.
 CI und Pages für den Main-Push prüfen; lokal ist die Einzeldatei wegen Browserrichtlinie weiterhin nicht geprüft.
 Briefkopf-Vorschläge nur nach Klaus' Ja je Punkt umsetzen; Tablet-Rückmeldungen abwarten.
