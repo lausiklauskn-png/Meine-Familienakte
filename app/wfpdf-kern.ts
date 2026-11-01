@@ -18,6 +18,8 @@ type TessWorker = { recognize: (bild: HTMLCanvasElement, o?: unknown, a?: unknow
 const w = () => window as Fenster;
 
 export const basis = () => new URL("wfpdf/", document.baseURI).href;
+// Scanic und Tesseract liegen nur einmal im Paket: im Klon von Workflow PDF (public/apps/workflow-pdf/vendor/, byte-1:1).
+export const vendorBasis = () => new URL("apps/workflow-pdf/vendor/", document.baseURI).href;
 const geladen = new Map<string, Promise<void>>();
 function skript(datei: string) {
   // Einzeldatei (scripts/build-single-file.mjs): dort steht ein Teil des Kerns schon eingebettet in der Seite.
@@ -98,7 +100,8 @@ export async function scannen(opt: { titel?: string; fertigText?: string; name?:
   for (const d of ["pdf-lib.min.js", "scan-bild.js", "blatt.js", "zip.js", "scanner.js"]) await skript(d);
   const SC = w().WFP!.Scanner!;
   const b = basis();
-  SC.pfade({ vendor: b, scanic: `${b}vendor/scanic/`, ocr: `${b}vendor/` });
+  const vb = vendorBasis();
+  SC.pfade({ vendor: b, scanic: `${vb}scanic/`, ocr: vb });
   SC.oeffnen({
     titel: opt.titel || "Unterlage scannen", fertigText: opt.fertigText || "Weiter zum Ausfüllen", name: opt.name,
     ort: "in der Familienakte", ortKurz: "in der Familienakte",
@@ -116,8 +119,8 @@ export type OcrZeile = { text: string; x: number; y: number; w: number; h: numbe
 let ocr: Promise<TessWorker> | null = null;
 async function ocrWorker() {
   if (!ocr) ocr = (async () => {
-    await skript("vendor/tesseract/tesseract.min.js");
-    const t = `${basis()}vendor/tesseract/`;
+    const t = `${vendorBasis()}tesseract/`;
+    await skript(`${t}tesseract.min.js`);
     return w().Tesseract!.createWorker("deu", 1, { workerPath: `${t}worker.min.js`, corePath: t, langPath: `${t}lang`, gzip: false, cacheMethod: "none" });
   })();
   ocr.catch(() => { ocr = null; });

@@ -32,7 +32,8 @@ const build = `${count}.${hash.digest("hex").slice(0, 8)}`;
 
 // Texterkennung (21 MB) und Blatterkennung (3,5 MB) von Workflow PDF kommen nicht in den Installations-Vorrat: der Worker legt sie
 // beim ersten Gebrauch ab (Sitzung F). Sonst lüde jede Installation und jedes Update 25 MB.
-const vorrat = list.filter((f) => !f.startsWith("wfpdf/vendor/"));
+// Seit 2026-11-01 liegen beide nur noch im Klon von Workflow PDF (apps/workflow-pdf/vendor/).
+const vorrat = list.filter((f) => !/^apps\/workflow-pdf\/vendor\/(tesseract|scanic)\//.test(f));
 const version = { version: pkg.version, build, commit, date, files: list.length, vorrat: vorrat.length };
 writeFileSync(path.join(dist, "version.json"), JSON.stringify(version, null, 2) + "\n");
 
@@ -74,11 +75,13 @@ self.addEventListener("fetch", (event) => {
   if (url.pathname.endsWith("/version.json")) { event.respondWith(fetch(event.request).catch(() => new Response("{}", { headers: { "content-type": "application/json" } }))); return; }
   event.respondWith((async () => {
     const cache = await caches.open(VORRAT);
-    const key = event.request.mode === "navigate" ? new Request(new URL("./index.html", self.registration.scope).href) : event.request;
+    // Eingebettete Apps (apps/…, z. B. der Klon von Workflow PDF) sind eigene Seiten: dort NICHT die Akte ausliefern.
+    const eigeneSeite = url.pathname.startsWith(new URL("./apps/", self.registration.scope).pathname);
+    const key = event.request.mode === "navigate" && !eigeneSeite ? new Request(new URL("./index.html", self.registration.scope).href) : event.request;
     const hit = await cache.match(key, { ignoreSearch: true, ignoreVary: true });
     if (hit) return hit;
     try { const antwort = await fetch(event.request); if (antwort.ok && url.pathname.startsWith(new URL(self.registration.scope).pathname)) cache.put(event.request, antwort.clone()); return antwort; }
-    catch (error) { const index = await cache.match(new URL("./index.html", self.registration.scope).href); if (index && event.request.mode === "navigate") return index; throw error; }
+    catch (error) { const index = await cache.match(new URL("./index.html", self.registration.scope).href); if (index && event.request.mode === "navigate" && !eigeneSeite) return index; throw error; }
   })());
 });
 `;

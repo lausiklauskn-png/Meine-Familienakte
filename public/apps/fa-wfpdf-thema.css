@@ -1,0 +1,23 @@
+/* public/apps/fa-wfpdf-thema.css — Farben der Familienakte im eingebetteten Klon von Workflow PDF (Klaus 2026-11-01:
+   „in den Farben von Familienakte“). Letztes Stylesheet (tools/wfpdf-app-patch.mjs); der Klon selbst ist byte-1:1.
+   Workflow-PDF-Rot (#E0231B) → Petrol der Akte, Blau → Navy, Flächen und Linien wie app/globals.css.
+   Ausgeblendet: Mycel-Leiste (Klaus: „Weglassen“), Installieren und ⟳ (gehören zur Akte, nicht zum Klon),
+   „Im Netz antworten“ (braucht den Mycel-Knoten). */
+:root{
+  --rot:#087f7a;--rot-d:#0b3154;--rot-h:#e8f6f5;--blau:#164f7d;--blau-h:#edf5fb;
+  --ink:#15283a;--ink2:#627181;--linie:#d8e2ea;--grund:#f2f7fa;--flaeche:#fff;--ok:#167249;
+  --schatten:0 9px 30px rgba(16,52,83,.08);
+}
+.kopf{border-bottom-color:#087f7a}
+.netzleiste,#btnInstall,#stInstall,#btnNeu,[data-netz-antworten]{display:none!important}
+.sprach-liste .wahl.on{outline-color:#087f7a}
+#bibMic.hoert{background:#087f7a}
+.fund.akt{border-color:#087f7a;box-shadow:0 0 0 3px rgba(8,127,122,.35)}
+.scan-linie polygon{fill:rgba(8,127,122,.12);stroke:#087f7a}
+.scan-griff{background:rgba(8,127,122,.85);box-shadow:0 0 0 2px #087f7a,0 2px 6px rgba(0,0,0,.4)}
+.scan-zeile.hell{outline-color:#087f7a;background:rgba(8,127,122,.14)}
+.ablage{background:rgba(8,127,122,.12)}
+.feld.sel{outline-color:rgba(8,127,122,.55)}
+@keyframes hoert{50%{box-shadow:0 0 0 6px rgba(8,127,122,.25)}}
+.knopf.ki-knopf{background:linear-gradient(90deg,#0b3154,#087f7a,#164f7d,#087f7a,#0b3154);background-size:400% 100%;box-shadow:0 3px 16px rgba(8,127,122,.42),inset 0 1px 0 rgba(255,255,255,.55),inset 0 -2px 0 rgba(0,0,0,.18)}
+.sortier-box .zeitraum-kurz{background:rgba(8,127,122,.12)}

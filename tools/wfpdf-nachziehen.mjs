@@ -28,12 +28,9 @@ export const DATEIEN = [
   ["public/wfpdf/fonts/NotoSans-Regular.ttf", "vendor/fonts/NotoSans-Regular.ttf"],
   ["public/wfpdf/fonts/OFL.txt", "vendor/fonts/OFL.txt"],
 ];
-// ganze Ordner: Blatterkennung (Modell, ONNX-Laufzeit, Lizenz) und Texterkennung (Tesseract samt Sprachen DE/EN/RU)
-export const ORDNER = [
-  ["public/wfpdf/vendor/scanic", "vendor/scanic"],
-  ["public/wfpdf/vendor/tesseract", "vendor/tesseract"],
-  ["public/wfpdf/vendor/tesseract/lang", "vendor/tesseract/lang"],
-];
+// Blatterkennung (Scanic) und Texterkennung (Tesseract) liegen seit 2026-11-01 nur noch EINMAL im Paket: im Klon
+// public/apps/workflow-pdf/vendor/ (tools/wfpdf-app-nachziehen.mjs, Pins public/apps/HERKUNFT.json). app/wfpdf-kern.ts lädt sie dort.
+export const ORDNER = [];
 export const HINWEIS = "Byte-1:1 aus Workflow-PDF (tools/wfpdf-nachziehen.mjs). Nie von Hand ändern. Der Klebstoff (app/ausfuellen-*.tsx, app/wfpdf-kern.ts, public/wfpdf-fa/scanner.css) ist Familienakte-eigen.";
 const sha = (b) => createHash("sha256").update(b).digest("hex");
 
