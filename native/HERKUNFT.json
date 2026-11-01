@@ -77,6 +77,83 @@
       "commit": "c199dbdcabda38ed803d6076ce94395024cfd60d",
       "sha256": "255ac79aeb3b0203e92f0cebd0a905e47c488b43efe18f41332a7d35520bbf23",
       "zweck": "SBKIM-Kanon (Mycel), Schublade familienakte"
+    },
+    "android/app/src/main/java/de/familyprojekt/tresor/Json.java": {
+      "repo": "lausiklauskn-png/Workflow-PDF-Pro",
+      "pfad": "android/app/src/main/java/de/familyprojekt/tresor/Json.java",
+      "commit": "5e78919de6dfb04cf65cec1dce884f4bc628c274",
+      "sha256": "478353b515e25550a3e3899943359d2074cf16a4e60a8eb6761f83a979598369",
+      "zweck": "Gemeinsamer Pro-Tresor, kanonisches Java-Paket und Originalprobe"
+    },
+    "android/app/src/main/java/de/familyprojekt/tresor/Ersatzschluessel.java": {
+      "repo": "lausiklauskn-png/Workflow-PDF-Pro",
+      "pfad": "android/app/src/main/java/de/familyprojekt/tresor/Ersatzschluessel.java",
+      "commit": "5e78919de6dfb04cf65cec1dce884f4bc628c274",
+      "sha256": "552a39ca0e82a3690beb6ab53bc09528881a4a696964b7675fc9ddfda5bfbcff",
+      "zweck": "Gemeinsamer Pro-Tresor, kanonisches Java-Paket und Originalprobe"
+    },
+    "android/app/src/main/java/de/familyprojekt/tresor/Eintrag.java": {
+      "repo": "lausiklauskn-png/Workflow-PDF-Pro",
+      "pfad": "android/app/src/main/java/de/familyprojekt/tresor/Eintrag.java",
+      "commit": "5e78919de6dfb04cf65cec1dce884f4bc628c274",
+      "sha256": "62cef80a1bfcf792e33f3de0a43e929b9010dc7314fc698e0e58f5dbf31be9a3",
+      "zweck": "Gemeinsamer Pro-Tresor, kanonisches Java-Paket und Originalprobe"
+    },
+    "android/app/src/main/java/de/familyprojekt/tresor/Umzug.java": {
+      "repo": "lausiklauskn-png/Workflow-PDF-Pro",
+      "pfad": "android/app/src/main/java/de/familyprojekt/tresor/Umzug.java",
+      "commit": "5e78919de6dfb04cf65cec1dce884f4bc628c274",
+      "sha256": "9150aea15a9313bd3e9462478f1146452d45de1d54ca296c0735cf9c8f425497",
+      "zweck": "Gemeinsamer Pro-Tresor, kanonisches Java-Paket und Originalprobe"
+    },
+    "android/app/src/main/java/de/familyprojekt/tresor/Fach.java": {
+      "repo": "lausiklauskn-png/Workflow-PDF-Pro",
+      "pfad": "android/app/src/main/java/de/familyprojekt/tresor/Fach.java",
+      "commit": "5e78919de6dfb04cf65cec1dce884f4bc628c274",
+      "sha256": "515c7b110ddc59231011eaf4ed48c86070886c635bbad3ba26d48af4f34042cd",
+      "zweck": "Gemeinsamer Pro-Tresor, kanonisches Java-Paket und Originalprobe"
+    },
+    "android/app/src/main/java/de/familyprojekt/tresor/TresorOrdner.java": {
+      "repo": "lausiklauskn-png/Workflow-PDF-Pro",
+      "pfad": "android/app/src/main/java/de/familyprojekt/tresor/TresorOrdner.java",
+      "commit": "5e78919de6dfb04cf65cec1dce884f4bc628c274",
+      "sha256": "cac580294e3922420d0108a8bf495d3701cdb9c9c795a5e448a06d2f7d591921",
+      "zweck": "Gemeinsamer Pro-Tresor, kanonisches Java-Paket und Originalprobe"
+    },
+    "android/app/src/main/java/de/familyprojekt/tresor/DateiAblage.java": {
+      "repo": "lausiklauskn-png/Workflow-PDF-Pro",
+      "pfad": "android/app/src/main/java/de/familyprojekt/tresor/DateiAblage.java",
+      "commit": "5e78919de6dfb04cf65cec1dce884f4bc628c274",
+      "sha256": "12914d32621406d08f91c95417a5bedafbf261af71d95e61742f839441225593",
+      "zweck": "Gemeinsamer Pro-Tresor, kanonisches Java-Paket und Originalprobe"
+    },
+    "android/app/src/main/java/de/familyprojekt/tresor/VaultCrypto.java": {
+      "repo": "lausiklauskn-png/Workflow-PDF-Pro",
+      "pfad": "android/app/src/main/java/de/familyprojekt/tresor/VaultCrypto.java",
+      "commit": "5e78919de6dfb04cf65cec1dce884f4bc628c274",
+      "sha256": "ba8d5328acbedfe1780babcac45351c29664adf7430ba01ba646b21ba64962d2",
+      "zweck": "Gemeinsamer Pro-Tresor, kanonisches Java-Paket und Originalprobe"
+    },
+    "android/app/src/main/java/de/familyprojekt/tresor/Ablage.java": {
+      "repo": "lausiklauskn-png/Workflow-PDF-Pro",
+      "pfad": "android/app/src/main/java/de/familyprojekt/tresor/Ablage.java",
+      "commit": "5e78919de6dfb04cf65cec1dce884f4bc628c274",
+      "sha256": "dd9795665dfe8d2146ff189edd672ba7ec8932ceeebc4867d389aa43910a24cf",
+      "zweck": "Gemeinsamer Pro-Tresor, kanonisches Java-Paket und Originalprobe"
+    },
+    "android/app/src/main/java/de/familyprojekt/tresor/SafAblage.java": {
+      "repo": "lausiklauskn-png/Workflow-PDF-Pro",
+      "pfad": "android/app/src/main/java/de/familyprojekt/tresor/SafAblage.java",
+      "commit": "5e78919de6dfb04cf65cec1dce884f4bc628c274",
+      "sha256": "1a363a2c559cc300d27fef852960e16d2cc56c3bc6d88804a1dc8c647e789d23",
+      "zweck": "Gemeinsamer Pro-Tresor, kanonisches Java-Paket und Originalprobe"
+    },
+    "android/app/src/test/java/de/familyprojekt/tresor/TresorOrdnerTest.java": {
+      "repo": "lausiklauskn-png/Workflow-PDF-Pro",
+      "pfad": "android/app/src/test/java/de/familyprojekt/tresor/TresorOrdnerTest.java",
+      "commit": "5e78919de6dfb04cf65cec1dce884f4bc628c274",
+      "sha256": "78fd9becdf4fd8ebbbba8d827ffd460ac9e1a6d0b3e52065369e073734671206",
+      "zweck": "Gemeinsamer Pro-Tresor, kanonisches Java-Paket und Originalprobe"
     }
   }
 }

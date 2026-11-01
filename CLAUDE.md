@@ -21,6 +21,11 @@ sondern nur KimHub.“
 
 ## Weitere Regeln (Kurzfassung, Einzelheiten in den Briefen)
 
+- **Neue Freigabe von Klaus in der Sitzung Pro-Verbund (2026-11-01):** Auftrag aus dem Sitzungsbrief selbstständig umsetzen,
+  fertige geprüfte Stücke zusammenführen und veröffentlichen, damit Klaus Website und Apps prüfen kann. Diese ausdrückliche
+  Freigabe ersetzt für diesen Auftrag das frühere „nichts veröffentlichen“ und die Einzelabstimmung sichtbarer Änderungen.
+  Grenzen der Teilstücke und fehlende Geräteproben weiterhin klar nennen. Parallel geschriebene Übergaben vor Merge erneut lesen.
+
 - Oberfläche und Wortlaut des Freundes nur mit Klaus' Ja je sichtbarer Änderung. Beispieldaten erfunden.
 - **Fertige, geprüfte Stücke auf `main` zusammenführen** (Klaus 2026-11-01), damit Klaus und die nächste Claude-Code-Sitzung auf dieselben Dateien zugreifen können. Arbeit auf eigenem Zweig; je Stück ein PR, soweit der Zugang verfügbar ist. Zusammenführung und App-Veröffentlichung sind getrennte Schritte; Einschränkungen der Prüfungen offen benennen.
 - Kein Release ohne Klaus' Wort. Keine Schlüssel, PINs, Passwörter oder Chefcodes in Dateien oder im Chat.

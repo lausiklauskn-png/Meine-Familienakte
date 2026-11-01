@@ -31,6 +31,8 @@ jobs:
           distribution: temurin
           java-version: '21'
       - run: npm ci
+      - name: Pro-Tresor mit erfundener Kopie prüfen
+        run: node tools/native/test-pro-tresor.mjs
       - name: Hülle ohne Android prüfen (Manifest, Plugins, Klebstoff, Version)
         run: npm run check:android
       - name: Signierweg mit echten Android-Werkzeugen (Wegwerf-Identität, build-tools 36.0.0)
