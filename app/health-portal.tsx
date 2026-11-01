@@ -42,6 +42,7 @@ import { analyzeCentralIntakeFile, extractEmlAttachments, groupCentralIntakeAnal
 const CentralIntakeCenter = lazy(() => import("./central-intake-center").then((m) => ({ default: m.CentralIntakeCenter })));
 import { runDocumentScanSelfTests, type DocumentScanPdfFile } from "@/lib/document-scan";
 const NetzSeite = lazy(() => import("./netz-seite").then((m) => ({ default: m.NetzSeite })));
+const StapelSeite = lazy(() => import("./stapel-seite").then((m) => ({ default: m.StapelSeite })));
 const WorkflowPdfSeite = lazy(() => import("./workflow-pdf-seite").then((m) => ({ default: m.WorkflowPdfSeite })));
 import type { WfpdfAblage } from "./workflow-pdf-seite";
 // Einzeldatei: dort gibt es den Klon nicht — „Dokument fotografieren“ behält den Scanner allein.
@@ -85,7 +86,7 @@ type MemoryCompletion = { id: string; title: string; remaining: number; total: n
 type MemorySaveInput = Parameters<typeof createLocalMemoryBundle>[1] & { rejectedContext?: ContextLinkSuggestion };
 type UiAutomatedTestFailureReport = Omit<AutomatedTestFailureReport, "websiteVersion"> & { websiteVersion: number };
 
-type SectionId = "overview" | "netz" | "workflowpdf" | "documents" | "inventory" | "inbox" | "medical" | "benefits" | "work" |
+type SectionId = "overview" | "netz" | "workflowpdf" | "stapel" | "documents" | "inventory" | "inbox" | "medical" | "benefits" | "work" |
   "assessment" | "correspondence" | "assistant" | "sources" | "health" | "family" |
   "home" | "vehicles" | "purchases" | "reminders" | "memory" | "cockpit" | "directory" | "security" | "help" | "changelog" | "versions" | "systemcheck";
 
@@ -161,6 +162,7 @@ const topNavigation: Array<{
       { id: "inventory", label: "Bestand prüfen", detail: "Ausgewählte Test-, PC- oder OneDrive-Ordner kontrolliert analysieren" },
       { id: "inbox", label: "Eingangszentrale", detail: "PDF, Word, Fotos, Scans und E-Mails gemeinsam prüfen" },
       { id: "workflowpdf", label: "Workflow PDF", detail: "Scannen, zuschneiden, Felder setzen, ausfüllen, prüfen, PDF ausgeben" },
+      { id: "stapel", label: "Stapel (noch einordnen)", detail: "Viele Fotos/Scans auf einmal: gerade gezogen, erst später einordnen" },
       { id: "security", label: "Sicherheit & lokaler Tresor", detail: "PC/USB-Speicher, Sicherung und Zwei-Faktor-Schutz" },
       { id: "netz", label: "Netz (Mycel)", detail: "Mit anderen Geräten verbinden – nur wenn du es antippst" },
       { id: "sources", label: "Unterlagen & Quellen", detail: "Kerndokumente und Beweiswert" },
@@ -186,7 +188,7 @@ const sectionLabels: Record<SectionId, string> = {
   reminders: "Fristen und Aufgaben", cockpit: "Interaktives Cockpit",
   memory: "Tagebuch & Erinnerungsprotokoll",
   sources: "Unterlagen & Quellen", directory: "Gesamtes Verzeichnis",
-  security: "Sicherheit & lokaler Tresor", netz: "Netz (Mycel)", workflowpdf: "Workflow PDF",
+  security: "Sicherheit & lokaler Tresor", netz: "Netz (Mycel)", workflowpdf: "Workflow PDF", stapel: "Stapel (noch einordnen)",
   help: "Hilfe", systemcheck: "Systemprüfung", changelog: "Was gibt’s Neues?", versions: "Versionshistorie",
 };
 
@@ -488,6 +490,7 @@ function HealthPortalContent() {
   const [wfpdfOeffnen, setWfpdfOeffnen] = useState<File[] | null>(null);
   const [wfpdfScan, setWfpdfScan] = useState(false);
   const [wfpdfStart, setWfpdfStart] = useState(0);
+  const [stapelNeu, setStapelNeu] = useState<File[] | null>(null);
   const [assistantCaseId, setAssistantCaseId] = useState<string | null>(null);
   const [documentLibraryFocusId, setDocumentLibraryFocusId] = useState<string | null>(null);
   const [documentLibraryRequest, setDocumentLibraryRequest] = useState<DocumentLibraryRequest>({ key: 0, focusId: null, area: "", query: "" });
@@ -700,6 +703,7 @@ function HealthPortalContent() {
     try { setWfpdfOeffnen([await readLocalDocumentFile(vaultHandle, id)]); setWfpdfScan(false); setWfpdfStart((n) => n + 1); go("workflowpdf"); }
     catch (reason) { setNotice({ kind: "error", text: reason instanceof Error ? reason.message : "Die Unterlage konnte nicht geöffnet werden." }); }
   };
+  const dateiInWorkflowPdf = (datei: File) => { setWfpdfOeffnen([datei]); setWfpdfScan(false); setWfpdfStart((n) => n + 1); go("workflowpdf"); };
   const ausWorkflowPdf = ({ quelle, dateien }: WfpdfAblage) => {
     if (quelle === "scan" && dateien.length === 1) { beginLocalUpload(dateien[0], "camera-scan", true); return; }
     void queueCentralIntakeFiles(dateien, "file-picker");
@@ -1218,7 +1222,7 @@ function HealthPortalContent() {
         />}
         {!query && active === "inbox" && <><Suspense fallback={null}><CentralIntakeCenter
           queue={centralIntakeQueue} storageReady={!!vaultHandle} oneDriveConnected={!!oneDriveHandle} inboxFolderName={inboxFolderName} busy={intakeBusy} checkedAt={intakeCheckedAt}
-          onFiles={(files, source) => void queueCentralIntakeFiles(files, source)} onStartDocumentScan={openDocumentScan} onScanForm={() => void scanFormular()}
+          onFiles={(files, source) => void queueCentralIntakeFiles(files, source)} onStartDocumentScan={openDocumentScan} onScanForm={() => void scanFormular()} onStapel={(files) => { setStapelNeu(files); go("stapel"); }}
           onSelectInbox={selectInboxFolder} onScanInbox={() => void scanSelectedInbox()} onScanOneDrive={checkOneDriveInbox}
           onReview={reviewCentralIntake} onExtractAttachments={(id) => void extractCentralEmailAttachments(id)} onToggle={toggleCentralIntake} onSetStatus={setCentralIntakeStatus}
           onGo={(id) => go(id)}
@@ -1228,6 +1232,7 @@ function HealthPortalContent() {
           catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Speichern nicht möglich." }); }
           finally { setBusy(false); }
         }} busy={busy}/></>} 
+        {!query && active === "stapel" && <Suspense fallback={null}><StapelSeite neu={stapelNeu} onNeuGenommen={() => setStapelNeu(null)} onWorkflowPdf={dateiInWorkflowPdf} onEinordnen={async (dateien) => { void queueCentralIntakeFiles(dateien, "camera-scan"); setNotice({ kind: "success", text: `${dateien.length} Unterlage${dateien.length === 1 ? "" : "n"} aus dem Stapel liegen in der Eingangszentrale: Text lesen, Einordnen und Zusammenhang laufen dort.` }); }} kopf={<PageTitle icon={<Upload/>} title="Stapel (noch einordnen)" text="Viele Fotos oder Scans auf einmal: Workflow PDF findet je Bild das Blatt und zieht es gerade. Wo sich die Verfahren nicht einig sind, bleibt das ganze Foto stehen („Ecken prüfen“). Erst „Einordnen“ gibt die Unterlagen an die Eingangszentrale."/>}/></Suspense>}
         {!query && active === "workflowpdf" && <Suspense fallback={null}><WorkflowPdfSeite key={wfpdfStart} scan={wfpdfScan} oeffnen={wfpdfOeffnen} onAblegen={ausWorkflowPdf} onGeoeffnet={() => { setWfpdfOeffnen(null); setWfpdfScan(false); }} kopf={<PageTitle icon={<FileText/>} title="Workflow PDF" text="Das ganze Werkzeug von Workflow PDF in der Familienakte: scannen, zuschneiden, Felder erkennen und setzen, ausfüllen, Prüfbericht, PDF ausgeben. Eigene Bibliothek, getrennt von der Workflow-PDF-App; nichts geht ins Netz, bis du es selbst wählst."/>}/></Suspense>}
         {!query && active === "netz" && <Suspense fallback={null}><NetzSeite kopf={<PageTitle icon={<Network/>} title="Netz (Mycel)" text="Verbindet die Familienakte auf Wunsch mit anderen Geräten im SBKIM-Netz. Beim Öffnen der Akte geht nichts ins Netz; hinaus geht nur die Visitenkarte, keine Unterlagen."/>}/></Suspense>}
         {!query && active === "security" && <SecurityCenter

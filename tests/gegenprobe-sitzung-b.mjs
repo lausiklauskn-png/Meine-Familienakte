@@ -41,6 +41,11 @@ const faelle = [
   { name: "Brücke: Scan geht nicht an die Akte", datei: "public/apps/fa-wfpdf-bruecke.js", alt: 'melde({ typ: "fa-wfpdf-ablegen", quelle: "scan",', neu: 'void ({ typ: "fa-wfpdf-ablegen", quelle: "scan",', probe: "workflow-pdf-bruecke", rot: /Fotofunktion/ },
   { name: "Brücke: Gesundheitsunterlage geht in den Klon", datei: HP, alt: "{onWfpdf && !sensitive && fillStateOf(item).fuellbar &&", neu: "{onWfpdf && fillStateOf(item).fuellbar &&", probe: "workflow-pdf-bruecke", rot: /Geschützte/ },
   { name: "Brücke: Fotofunktion wieder ohne Klon", datei: HP, alt: "if (!files.length && !wfpdfAlt()) {", neu: "if (false) {", probe: "workflow-pdf-bruecke", rot: /Fotofunktion/ },
+  // Stück 3 „Stapel direkt übernehmen“ (2026-11-01)
+  { name: "Stapel: unsicheres Blatt wird trotzdem zugeschnitten", datei: "app/stapel.ts", alt: "const ecken = e.sicher ? e.ecken : SB.ganz(c.width, c.height);", neu: "const ecken = e.ecken;", probe: "stapel", rot: /Bild ohne Blatt/ },
+  { name: "Stapel: Anhalten wirkt nicht", datei: "app/stapel.ts", alt: 'if (jetzt() === "angehalten") await new Promise', neu: 'if (jetzt() === "nie") await new Promise', probe: "stapel", rot: /Anhalten/ },
+  { name: "Stapel: Liste mit Vorschaubildern", datei: "app/stapel-seite.tsx", alt: "<small>{groesse(e.groesse)}</small>", neu: '<small>{groesse(e.groesse)}</small><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt=""/>', probe: "stapel", rot: /ohne Vorschaubilder/ },
+  { name: "Stapel: Einordnen leert den Stapel nicht", datei: "app/stapel-seite.tsx", alt: "for (const e of eintraege) await stapelWeg(e.id); ", neu: "", probe: "stapel", rot: /Stapel ist leer/ },
 ];
 const filter = process.argv[2] || "";
 const bauen = (einzel) => {

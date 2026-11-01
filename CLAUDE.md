@@ -48,10 +48,10 @@ sichtbar bleibt „Version 2.28.1“):
    check:android/windows/herkunft grün · Fassung **2.28.9**. Doku `docs/WORKFLOW-PDF-KLON.md`. Danach: PR, CI, Merge, Veröffentlichung.
 2. **Brücke** — fertig gemessen (2.28.10, Commit nach #41): „📤 Teilen“ im Klon → Eingangszentrale, „In Workflow PDF öffnen“ an Unterlagen
    (nicht bei Gesundheit) über gestellte `launchQueue`, „Dokument fotografieren“ → Klon `?scan=1&von=Familienakte`, Scan geht gleich in die Prüfung.
-   Probe `tests/ui/workflow-pdf-bruecke.test.mjs` 8 · Gegenprobe `"Brücke:"` 5/5 · run-ui 28/28. Push erst nach Merge von #41.
+   Probe `tests/ui/workflow-pdf-bruecke.test.mjs` 8 · Gegenprobe `"Brücke:"` 5/5 · run-ui 28/28. **PR #42.** (#41 = 2.28.9 gemergt, Release Android/Windows server=ja ausgelöst.)
 3. **Stapel** (Klaus' Nachtrag: Anhalten/Weiter/Abbrechen beim Einscannen, schlanke Liste ohne Vorschaubilder, große Vorschau erst beim
    Antippen, dort Workflow PDF/Einordnen/Entfernen, „Einordnen“ rechts oben, erst ungeprüft ablegen und später einordnen) — IN ARBEIT:
-   `app/stapel.ts` (Ablauf), `app/stapel-ablage.ts` (IndexedDB `FamilienakteStapel1`), `app/stapel-seite.tsx`, Menü „Stapel (noch einordnen)“.
+   `app/stapel.ts` (Ablauf), `app/stapel-ablage.ts` (IndexedDB `FamilienakteStapel1`), `app/stapel-seite.tsx`, Menü „Stapel (noch einordnen)“. Probe `tests/ui/stapel.test.mjs` 13 · Gegenprobe `"Stapel:"` 4/4 · Doku `docs/STAPEL.md` · Fassung 2.28.11.
    Ursprünglicher Plan: „Direkt übernehmen“ (Massenscan, siehe oben) — Klebstoff mit `WFP.Scanner` (`hinzu`, `erkennen`, `pdfBauen`; `entscheiden` in scan-bild.js
    liefert `sicher`), unsichere Seiten markieren statt anhalten.
 4. Prüfbericht beim Einlesen in der Akte (`eingang.js` aus dem Klon) · 5. Briefkopf (`briefkopf.js`, in Workflow-PDF schon fertig, 1.1.6).

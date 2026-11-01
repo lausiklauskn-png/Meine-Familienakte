@@ -34,6 +34,7 @@ export function CentralIntakeCenter({
   onFiles,
   onStartDocumentScan,
   onScanForm,
+  onStapel,
   onSelectInbox,
   onScanInbox,
   onScanOneDrive,
@@ -55,6 +56,8 @@ export function CentralIntakeCenter({
   onScanInbox: () => void;
   /** Formular scannen und gleich ausfüllen (Klaus 2026-10-31, Frage 1 aus Sitzung F). */
   onScanForm?: () => void;
+  /** Stapel direkt übernehmen (Klaus 2026-11-01): viele Fotos/Scans, Blatt finden und gerade ziehen, später einordnen. */
+  onStapel?: (files: File[]) => void;
   onScanOneDrive: () => void;
   onReview: (id: string) => void;
   onExtractAttachments: (id: string) => void;
@@ -65,6 +68,7 @@ export function CentralIntakeCenter({
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const cameraRef = useRef<HTMLInputElement>(null);
+  const stapelRef = useRef<HTMLInputElement>(null);
   const activeQueue = queue.filter((item) => item.status !== "Übernommen" && item.status !== "Nicht übernommen");
   const selectedIds = activeQueue.filter((item) => item.selected).map((item) => item.id);
   const selectedImages = activeQueue.filter((item) => item.selected && item.analysis?.fileKind === "Foto / Bild");
@@ -89,11 +93,13 @@ export function CentralIntakeCenter({
       <div className="card-heading"><div><span className="ui-heading-help"><h2 id="central-intake-drop-title">Neue Unterlagen erfassen</h2><InfoPopover label="Neue Unterlagen erfassen erklären" text={UI_HELP["Neue Unterlagen erfassen"]}/></span></div><button className="text-link" onClick={() => onGo("help")}>Hilfe <ChevronRight size={16}/></button></div>
       <input ref={inputRef} className="sr-only" type="file" multiple onChange={(event) => { add(event.target.files, "file-picker"); event.currentTarget.value = ""; }}/>
       <input ref={cameraRef} className="sr-only" type="file" accept="image/*" capture="environment" multiple onChange={(event) => { const files = event.target.files ? Array.from(event.target.files) : []; if (files.length) onStartDocumentScan(files); event.currentTarget.value = ""; }}/>
+      <input ref={stapelRef} className="sr-only" type="file" accept="image/*,application/pdf" multiple data-stapel-start onChange={(event) => { const files = event.target.files ? Array.from(event.target.files) : []; if (files.length && onStapel) onStapel(files); event.currentTarget.value = ""; }}/>
       <div className={`central-drop ${dragging ? "dragging" : ""}`} onDragOver={(event) => { event.preventDefault(); setDragging(true); }} onDragLeave={() => setDragging(false)} onDrop={(event) => { event.preventDefault(); setDragging(false); add(event.dataTransfer.files, "drag-drop"); }}>
         <Upload size={42}/><strong>Dateien hier hineinziehen</strong><span>PDF, Word, Foto, Scan, E-Mail oder mehrere Dateien gleichzeitig</span><button type="button" className="button primary" onClick={() => inputRef.current?.click()}>Datei auswählen</button>
       </div>
       <div className="central-source-grid">
         <button type="button" className="intake-source" onClick={() => storageReady ? onStartDocumentScan([]) : onGo("security")} data-dokument-scannen><Camera/><span><strong>Dokument fotografieren</strong><small>{storageReady ? "Vorhandene Mehrseiten- und PDF-Funktion" : "Zuerst lokalen Tresor verbinden"}</small></span><ChevronRight/></button>
+        {onStapel && <button type="button" className="intake-source" onClick={() => stapelRef.current?.click()} disabled={busy} data-stapel><Upload/><span><strong>Stapel direkt übernehmen</strong><small>Viele Fotos oder Scans: Blatt finden, gerade ziehen, später einordnen</small></span><ChevronRight/></button>}
         {onScanForm && <button type="button" className="intake-source" onClick={() => storageReady ? onScanForm() : onGo("security")} disabled={busy} data-formular-scannen><PenLine/><span><strong>Formular scannen und ausfüllen</strong><small>{storageReady ? "Papierformular scannen, dann gleich ausfüllen" : "Zuerst lokalen Tresor verbinden"}</small></span><ChevronRight/></button>}
         <button type="button" className="intake-source" onClick={inboxFolderName ? onScanInbox : onSelectInbox} disabled={busy}><Folder/><span><strong>{inboxFolderName ? "Eingangsordner jetzt prüfen" : "Eingangsordner auswählen"}</strong><small>{inboxFolderName ? `Freigegeben: ${inboxFolderName}` : "Nur den bewusst ausgewählten Ordner"}</small></span><ChevronRight/></button>
         <button type="button" className="intake-source" onClick={onScanOneDrive} disabled={busy}><Cloud/><span><strong>OneDrive-Familienordner prüfen</strong><small>{oneDriveConnected ? `Verbunden · letzte Prüfung: ${lastChecked}` : "Keine Dauerüberwachung · zuerst im Sicherheitscenter verbinden"}</small></span><ChevronRight/></button>
