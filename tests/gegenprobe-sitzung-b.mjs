@@ -41,6 +41,7 @@ const faelle = [
   { name: "Brücke: Scan geht nicht an die Akte", datei: "public/apps/fa-wfpdf-bruecke.js", alt: 'melde({ typ: "fa-wfpdf-ablegen", quelle: "scan",', neu: 'void ({ typ: "fa-wfpdf-ablegen", quelle: "scan",', probe: "workflow-pdf-bruecke", rot: /Fotofunktion/ },
   { name: "Brücke: Gesundheitsunterlage geht in den Klon", datei: HP, alt: "{onWfpdf && !sensitive && fillStateOf(item).fuellbar &&", neu: "{onWfpdf && fillStateOf(item).fuellbar &&", probe: "workflow-pdf-bruecke", rot: /Geschützte/ },
   { name: "Brücke: Fotofunktion wieder ohne Klon", datei: HP, alt: "if (!files.length && !wfpdfAlt()) {", neu: "if (false) {", probe: "workflow-pdf-bruecke", rot: /Fotofunktion/ },
+  { name: "UI-Bau: Service Worker beim Neubau vergessen", datei: "tests/ui/_harness.mjs", alt: 'await run("npm", ["run", "build"]);', neu: 'await run("npx", ["vite", "build"]);', probe: "pwa", rot: /Bau-Kennung|version.json|Service Worker|Ohne Netz/ },
   // Stück 3 „Stapel direkt übernehmen“ (2026-11-01)
   { name: "Stapel: unsicheres Blatt wird trotzdem zugeschnitten", datei: "app/stapel.ts", alt: "const ecken = e.sicher ? e.ecken : SB.ganz(c.width, c.height);", neu: "const ecken = e.ecken;", probe: "stapel", rot: /Bild ohne Blatt/ },
   { name: "Stapel: Anhalten wirkt nicht", datei: "app/stapel.ts", alt: 'if (jetzt() === "angehalten") await new Promise', neu: 'if (jetzt() === "nie") await new Promise', probe: "stapel", rot: /Anhalten/ },

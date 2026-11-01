@@ -3,6 +3,8 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, ROOT } from "./_harness.mjs";
 
+// Auch bei vorhandenem dist frisch bauen: prüft den UI_BUILD-Weg einschließlich Service Worker.
+process.env.UI_BUILD = "1";
 const app = await startApp();
 const browser = await launchBrowser();
 try {
