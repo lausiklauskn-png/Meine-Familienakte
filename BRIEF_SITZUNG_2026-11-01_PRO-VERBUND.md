@@ -2,7 +2,9 @@
 
 Auftrag von Klaus, 1. November 2026. Dieser Brief beschreibt den nächsten Bau; die Anschlüsse sind damit noch nicht umgesetzt.
 Er ergänzt [den Abschluss zum gesicherten Eingang](BRIEF_ABSCHLUSS_2026-11-01_CODEX-EINGANG-UND-TRESOR.md).
-Die laufende Übergabe liegt im [Entwurf #48](https://github.com/lausiklauskn-png/Meine-Familienakte/pull/48).
+Die Speicherreparatur liegt im [Entwurf #48](https://github.com/lausiklauskn-png/Meine-Familienakte/pull/48).
+**Aktualisierung auf Klaus' Auftrag:** Diesen Plan getrennt davon auf `main` übernehmen, damit die bereits laufende andere Sitzung
+ihn laden kann. Klaus hat auch die dadurch ausgelöste automatische Veröffentlichung ausdrücklich freigegeben.
 
 ## Ziel und Bedienung
 
@@ -27,8 +29,8 @@ PR #48 enthält den dauerhaften Eingang, Wiederaufnahme nach Neustart und die at
 Code-Stand `eeaa61a2354168b1f81362addc945277af21e1ac`: GitHub-Hauptprüfung sowie Android- und Windows-Prüfbau erfolgreich.
 Die früheren Brücken-/PWA-Prüfkorrekturen stehen bereits auf main. Nichts davon noch einmal bauen.
 
-Klaus hat zuletzt „nichts veröffentlichen“ angeordnet. Ein Main-Push startet derzeit Pages automatisch.
-Den Entwurf deshalb nicht ohne neue Freigabe nach main bringen; nächste Sitzung den Stand des PR zuerst prüfen.
+Die neue Freigabe betrifft diesen Dokumentationsstand einschließlich automatischer Pages-Veröffentlichung.
+PR #48 mit der Speicherreparatur bleibt ein separates Stück; nächste Sitzung den Stand des PR zuerst prüfen.
 Neue fertige Stücke auf eigenen `codex/…`-Zweigen mit je einem Entwurfs-PR bauen, Abhängigkeit von #48 benennen.
 
 ### 1. Vorhandenen Pro-Tresor anschließen
@@ -167,5 +169,6 @@ Familienakte Pro ↔ eigenständige Workflow PDF Pro / Private Brain Pro / BookL
 Lokaler Weg ohne Relay; für Geräte über das Netz Kim-sync plus ergänzende Datei-Post vorschlagen.
 Keine zweite Raumverwaltung, keine automatische Gesamtsynchronisierung, keine erfundene Empfangsbestätigung.
 Jede App bleibt einzeln nutzbar. Sichtbare Bedienung erst konkret vorschlagen und Klaus' Ja abwarten.
-Nichts veröffentlichen; Main-Push löst derzeit Pages aus. Keine Versionsanhebung für diesen Plan.
+Der Plan wird auf Klaus' neues Wort nach main übernommen, automatische Pages-Veröffentlichung ist dafür erlaubt.
+PR #48 bleibt separat. Keine Versionsanhebung für diesen Plan; keine APK-/Windows-Release-Workflows beauftragt.
 ```

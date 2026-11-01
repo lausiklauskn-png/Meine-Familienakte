@@ -29,6 +29,7 @@ sondern nur KimHub.“
 - Jede Sitzung endet mit einem Abschlussbrief (`BRIEF_ABSCHLUSS_<Datum>_….md`) mit Stundennachweis und Startauftrag als Codeblock.
 - Aktueller Stand: der jüngste `BRIEF_ABSCHLUSS_*.md`; Plan der nächsten Schritte im jüngsten `BRIEF_SITZUNG_*.md`.
 - Nächster Bau (Klaus, 2026-11-01): `BRIEF_SITZUNG_2026-11-01_PRO-VERBUND.md` — Familienakte Pro, vorhandener Tresor mit freier Speicherwahl, Geräte-/Modellwahl, Portal aufteilen, bestätigte Übergaben zu den eigenständigen Pro-Apps. Kim-sync und Datei-Post als ergänzende Transportwege vorgeschlagen.
+- Übergabe auf main: `BRIEF_ABSCHLUSS_2026-11-01_CODEX-UEBERGABE-AUF-MAIN.md`. Klaus hat diese Dokumentationsübernahme einschließlich automatischer Veröffentlichung freigegeben; die Speicherreparatur in PR #48 bleibt separat.
 
 ## Stand nach der Sitzung 2026-11-01 „Workflow PDF ganz übernehmen“
 
