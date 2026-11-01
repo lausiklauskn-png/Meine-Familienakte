@@ -31,7 +31,10 @@ try {
   await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page);
   const titel = async (datei, warte) => {
     await footer(page, "Eingangszentrale");
+    const vorher = await page.locator(".intake-queue-item").count();
     await page.locator(".central-intake input[type=file]:not([accept])").setInputFiles([datei]);
+    // Der neue Eingang erscheint erst nach bestätigtem Speichern; nicht die vorherige Zeile öffnen.
+    await page.waitForFunction((n) => document.querySelectorAll(".intake-queue-item").length === n + 1, vorher);
     const q = page.locator(".intake-queue-item").first();
     await q.locator("button", { hasText: "Zuordnung prüfen" }).click();
     const kopf = page.locator(".intake-modal .intake-analysis-head strong");

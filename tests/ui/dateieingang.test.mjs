@@ -172,6 +172,7 @@ try {
     await queueItem("Mail_Garantiefall_mit_PDF.eml").locator("button", { hasText: "Anlagen in Warteschlange" }).click();
     await page.waitForFunction((n) => document.querySelectorAll(".intake-queue-item").length === n + 1, vorher);
     const neu = page.locator(".intake-queue-item").first();
+    await neu.locator(".badge:not(:has-text('läuft'))").first().waitFor();
     const text = await neu.innerText();
     if (!text.includes("Garantiebeleg Waschautomat Lavorix") || !text.includes("PDF")) throw new Error(text.slice(0, 120));
   });
@@ -301,8 +302,11 @@ try {
     await item.locator("button", { hasText: "Nicht übernehmen" }).count();
   });
   await step("Sammelauswahl: zwei Häkchen → „Nicht übernehmen“", async () => {
-    await queueItem("Nebenkosten_Uebersicht_2025.xlsx").locator("input[type=checkbox]").check();
-    await queueItem("Foto_Garantiebeleg_Lavorix_Seite2.jpg").locator("input[type=checkbox]").check();
+    for (const name of ["Nebenkosten_Uebersicht_2025.xlsx", "Foto_Garantiebeleg_Lavorix_Seite2.jpg"]) {
+      const item = queueItem(name);
+      await item.locator("input[type=checkbox]").click();
+      await item.locator("input[type=checkbox]:checked").waitFor();
+    }
     await page.locator(".queue-batch button", { hasText: "Nicht übernehmen" }).click();
     await queueItem("Nebenkosten_Uebersicht_2025.xlsx").locator(".badge", { hasText: "Nicht übernommen" }).waitFor();
   });

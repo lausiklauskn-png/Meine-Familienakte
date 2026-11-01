@@ -33,6 +33,7 @@ export function CentralIntakeCenter({
   checkedAt,
   onFiles,
   onStartDocumentScan,
+  onScanQueued,
   onScanForm,
   onStapel,
   onSelectInbox,
@@ -52,6 +53,7 @@ export function CentralIntakeCenter({
   checkedAt: string | null;
   onFiles: (files: File[], source: DocumentIntakeSource) => void;
   onStartDocumentScan: (files: File[]) => void;
+  onScanQueued: (ids: string[]) => void;
   onSelectInbox: () => void;
   onScanInbox: () => void;
   /** Formular scannen und gleich ausfüllen (Klaus 2026-10-31, Frage 1 aus Sitzung F). */
@@ -115,7 +117,7 @@ export function CentralIntakeCenter({
         <button onClick={() => document.getElementById("intake-queue-list")?.scrollIntoView({ behavior: "smooth" })}><strong>{counts.review}</strong><span>prüfen</span></button>
         <button onClick={() => document.getElementById("intake-queue-list")?.scrollIntoView({ behavior: "smooth" })}><strong>{counts.deferred}</strong><span>zurückgestellt</span></button>
       </div>
-      {selectedIds.length > 0 && <div className="queue-batch"><strong>{selectedIds.length} ausgewählt</strong>{selectedImages.length > 1 && selectedImages.length === selectedIds.length && <button className="button primary" onClick={() => onStartDocumentScan(selectedImages.map((item) => item.file))}>Als gemeinsames Scan-Dokument prüfen</button>}<button className="button secondary" onClick={() => onSetStatus(selectedIds, "Bereit zur Übernahme")}>Sichere Vorschläge vormerken</button><button className="button secondary" onClick={() => onSetStatus(selectedIds, "Zurückgestellt")}>Zurückstellen</button><button className="button secondary" onClick={() => onSetStatus(selectedIds, "Nicht übernommen")}>Nicht übernehmen</button></div>}
+      {selectedIds.length > 0 && <div className="queue-batch"><strong>{selectedIds.length} ausgewählt</strong>{selectedImages.length > 1 && selectedImages.length === selectedIds.length && <button className="button primary" onClick={() => onScanQueued(selectedImages.map((item) => item.id))}>Als gemeinsames Scan-Dokument prüfen</button>}<button className="button secondary" onClick={() => onSetStatus(selectedIds, "Bereit zur Übernahme")}>Sichere Vorschläge vormerken</button><button className="button secondary" onClick={() => onSetStatus(selectedIds, "Zurückgestellt")}>Zurückstellen</button><button className="button secondary" onClick={() => onSetStatus(selectedIds, "Nicht übernommen")}>Nicht übernehmen</button></div>}
       {!queue.length ? <div className="empty-state"><FileText size={34}/><strong>Noch keine neuen Eingänge</strong><span>Ziehe oben Dateien hinein oder prüfe einen bewusst ausgewählten Ordner.</span></div> : <div className="intake-queue-list" id="intake-queue-list">
         {queue.map((item) => {
           const analysis = item.analysis;
@@ -129,7 +131,7 @@ export function CentralIntakeCenter({
             </div>
             <div className="queue-actions">
               {analysis?.email?.attachmentNames.length ? <button className="text-link" onClick={() => onExtractAttachments(item.id)}>Anlagen in Warteschlange prüfen</button> : null}
-              {item.status !== "Übernommen" && item.status !== "Nicht übernommen" && <button className="button primary" disabled={!analysis || item.status === "Analyse läuft"} onClick={() => onReview(item.id)}>Zuordnung prüfen</button>}
+              {item.status !== "Übernommen" && item.status !== "Nicht übernommen" && <button className="button primary" disabled={item.status === "Analyse läuft"} onClick={() => onReview(item.id)}>Zuordnung prüfen</button>}
               {item.status !== "Übernommen" && item.status !== "Nicht übernommen" && <button className="button secondary" onClick={() => onSetStatus([item.id], "Zurückgestellt")}>Zurückstellen</button>}
               {item.status === "Zurückgestellt" && <button className="button secondary" onClick={() => onSetStatus([item.id], analysis?.plan.requiresReview ? "Prüfung erforderlich" : "Bereit zur Übernahme")}>Weiterbearbeiten</button>}
             </div>

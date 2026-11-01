@@ -55,4 +55,24 @@ Gegenprobe `node tests/gegenprobe-sitzung-b.mjs "Stapel:"` 4/4.
   (in Workflow PDF zusammenfügbar).
 - 200 dpi, JPEG 90 %. Texterkennung erst beim Einordnen (Eingangszentrale). Ein zusammengefügtes PDF lässt sich hier nicht wieder trennen
   (in Workflow PDF schon). Der Titel-Vorschlag erscheint nur im Eingangs-Fenster (wo der Text gelesen wird), nicht in der Warteschlange.
-- Die Stapel-Ablage liegt im Browser-Speicher des Geräts (nicht im Tresor), bis „Einordnen“.
+- Die Stapel-Ablage liegt im Browser-Speicher des Geräts. „Einordnen“ übergibt sie an den vorläufigen Eingangsspeicher; erst die bestätigte Ablage übernimmt ein Dokument in den gewählten Dokument-Tresor.
+
+## Gesicherte Übergabe (Codex, 2026-11-01)
+
+`FamilienakteStapel1` wird ohne Löschen alter Stapel auf Fassung 2 erweitert. `eingang` enthält kleine JSON-fähige Arbeitsstände,
+`eingang-dateien` die noch benötigten Originaldateien. Empfang und Entfernen aus `stapel` geschehen in derselben IndexedDB-Transaktion;
+erst `oncomplete` bestätigt die Übergabe. Ein Abbruch rollt beide Seiten zurück.
+
+Beim Start wird nur der Arbeitsstand geladen. Originalbytes werden bei Bedarf gelesen. Unterbrochene Analysen werden fortgesetzt.
+Nach bestätigter Dokumentablage bleibt der Arbeitsstand samt Dokumentkennung erhalten; die vorläufige PDF-Kopie wird entfernt.
+Anlagen einer bereits übernommenen E-Mail werden bei Bedarf aus dem verbundenen Dokument-Tresor gelesen.
+
+Das ist die Reparatur des bestehenden Eingangswegs, **noch kein Anschluss an den gemeinsamen SD-Karten-Tresor der Pro-Apps**.
+Der vorhandene Browser-Arbeitsspeicher ersetzt diesen Dokument-Tresor nicht. Die künftige Anbindung soll das vorhandene Paket
+`de.familyprojekt.tresor` aus Workflow-PDF-Pro verwenden (wie Private Brain Pro und BookLedgerPro), die vorbereiteten Fächer
+`familienakte` und `eingang-familienakte` nutzen und Originale, Arbeitsstand und modellgebundene Suchvektoren unterscheiden.
+Klaus’ Klarstellung: SD-Karte bleibt optional. Vollständiges Arbeiten mit Gerätespeicher, einem freigegebenen Ordner auf dem Rechner
+oder einem anderen Laufwerk muss möglich bleiben. Der ausdrücklich gewählte Speicherort bleibt maßgeblich. Ein fehlender/gesperrter
+Datenträger darf keine erfolgreiche Übergabe oder einen stillen Wechsel in einen leeren Ersatzspeicher auslösen.
+
+Probe: `tests/ui/eingang-sichern.test.mjs`; Gegenproben: `node tests/gegenprobe-sitzung-b.mjs "Eingang sichern:"`.
