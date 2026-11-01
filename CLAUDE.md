@@ -54,3 +54,8 @@ Nummer → frühere Unterlage mit derselben Nummer (≥ 5 Zeichen) und deren Vor
 Rechnung rein in `lib/briefkopf-titel.ts`; Eingangszentrale und Stapel laufen beim „Zuordnung prüfen“ durch denselben Eingang.
 Proben: `scripts/run-ausfuellen-tests.mjs` (+14), `tests/ui/briefkopf-eingang.test.mjs` (10), Gegenprobe `Briefkopf2:` 5 gefangen.
 Grenzen: nur erfundene Briefe; die Warteschlange selbst zeigt den Briefkopf noch nicht in ihrer Liste; schräge Scans/Handschrift.
+
+**Paket für den Freund (2.28.13, Klaus 2026-11-01):** eine HTML-Datei mit APK, Windows-Setup, Einzeldatei, Quellcode und Codex-Auftrag
+eingebettet (Speichern mit SHA-256-Prüfung) und „Was neu ist“ mit markierten Bildschirmfotos. Bilder: `node tools/paket/bilder-aufnehmen.mjs <ordner>`
+(nach `npm run build`; Zeigehand `tools/paket/zeigehand.png` von Klaus), Seite: `python3 -I tools/paket/paketseite.py <fassung> <apk> <exe>
+<einzeldatei> <quelle.zip> <ordner> <ausgabe.html>`. Die Datei (≈ 82 MB) liegt nicht im Repo.
