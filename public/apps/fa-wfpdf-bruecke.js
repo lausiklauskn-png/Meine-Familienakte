@@ -61,31 +61,77 @@
   // 4. Stück 2 (Klaus 2026-11-01): Ergebnis in die Akte, Unterlage aus der Akte. Nur eingebettet.
   if (eingebettet) {
     var istDatei = function (f) { return f && typeof f.name === "string" && typeof f.size === "number"; };
-    // 4a. „📤 Teilen“ im Klon legt PDFs und Bilder in die Eingangszentrale der Akte (statt ins Teilen-Fenster des Geräts).
+    var hex = function (b) { return Array.from(new Uint8Array(b), function (x) { return x.toString(16).padStart(2, "0"); }).join(""); };
+    var hash = async function (b) { return hex(await crypto.subtle.digest("SHA-256", b)); };
+    var quittungen = new Map();
+    W.addEventListener("message", function (e) {
+      if (e.origin !== location.origin || e.source !== W.parent) return;
+      var d = e.data || {}, p = quittungen.get(d.id);
+      if (d.typ !== "fa-wfpdf-abgelegt" || !p) return;
+      quittungen.delete(d.id); clearTimeout(p.timer);
+      if (d.ok === true) p.resolve(); else p.reject(new Error("Die Familienakte hat den Eingang nicht bestätigt. Die Quelle bleibt erhalten."));
+    });
+    var abgeben = async function (fs, quelle) {
+      var vertraege = [];
+      for (var f of fs) {
+        if (!istDatei(f) || f.size > 20 * 1024 * 1024) throw new Error("Die Familienakte nimmt höchstens 20 MiB je Dokument an.");
+        var sha = await hash(await f.arrayBuffer());
+        // Inhaltskennung bleibt beim erneuten Teilen derselben Fassung gleich, auch nach Neustart.
+        var id = "wfpdf-" + await hash(new TextEncoder().encode(JSON.stringify([f.name, f.type, sha])));
+        vertraege.push({ vertrag: "familienakte-uebergabe/1", id: id, quelle: "workflow-pdf-pro", ziel: "familienakte", dokumentId: "d-" + await hash(new TextEncoder().encode(f.name)),
+          name: f.name, mime: f.type, groesse: f.size, sha256: sha });
+      }
+      var anfrage = crypto.randomUUID();
+      return new Promise(function (resolve, reject) {
+        var timer = setTimeout(function () { quittungen.delete(anfrage); reject(new Error("Noch keine Eingangsbestätigung. Quelle behalten und erneut teilen.")); }, 60000);
+        quittungen.set(anfrage, { resolve: resolve, reject: reject, timer: timer });
+        melde({ typ: "fa-wfpdf-ablegen", id: anfrage, quelle: quelle, dateien: fs, vertraege: vertraege });
+      });
+    };
+    // 4a. Teilen wartet auf Datei + Eingangsdatensatz + wiederholbare Quittung der Familienakte.
     try {
       var N = W.navigator;
-      var abgeben = function (daten) {
-        var fs = (daten && daten.files ? Array.prototype.slice.call(daten.files) : []).filter(function (f) { return istDatei(f) && /^(application\/pdf|image\/)/.test(f.type || "") || /\.(pdf|jpe?g|png|webp)$/i.test(f && f.name || ""); });
-        if (!fs.length) return null;
-        melde({ typ: "fa-wfpdf-ablegen", quelle: "teilen", dateien: fs });
-        return Promise.resolve();
-      };
       var teilen = N.share ? N.share.bind(N) : null;
-      N.share = function (daten) { var p = abgeben(daten); if (p) return p; return teilen ? teilen(daten) : Promise.reject(new Error("Teilen nicht möglich.")); };
+      N.share = function (daten) {
+        var fs = daten && daten.files ? Array.from(daten.files) : [];
+        if (fs.length) return abgeben(fs, "teilen");
+        return teilen ? teilen(daten) : Promise.reject(new Error("Teilen nicht möglich."));
+      };
       var kann = N.canShare ? N.canShare.bind(N) : null;
-      N.canShare = function (daten) { if (daten && daten.files && daten.files.length) return true; return kann ? kann(daten) : false; };
-    } catch { /* still: ohne diese Fähigkeit läuft der Klon wie vorher */ }
-    // 4b. Unterlage aus der Akte öffnen: Workflow PDF liest „Öffnen mit“ über launchQueue — hier gestellt.
-    try {
-      var verbraucher = null, warte = [];
-      var reichen = function (fs) { var p = { files: fs.map(function (f) { return { kind: "file", name: f.name, getFile: function () { return Promise.resolve(f); } }; }) }; if (verbraucher) verbraucher(p); else warte.push(p); };
-      Object.defineProperty(W, "launchQueue", { configurable: true, value: { setConsumer: function (fn) { verbraucher = fn; warte.splice(0).forEach(function (p) { fn(p); }); } } });
-      W.addEventListener("message", function (e) {
-        if (e.origin !== location.origin || e.source !== W.parent) return;
-        var d = e.data || {};
-        if (d.typ === "fa-wfpdf-oeffnen" && d.dateien && d.dateien.length) reichen(Array.prototype.slice.call(d.dateien).filter(istDatei));
-      });
-    } catch { /* still: ohne diese Fähigkeit läuft der Klon wie vorher */ }
+      N.canShare = function (daten) { if (daten && daten.files && daten.files.length) return Array.from(daten.files).every(function(f) { return istDatei(f) && f.size <= 20 * 1024 * 1024; }); return kann ? kann(daten) : false; };
+    } catch { /* ohne Browserfähigkeit bleibt das Werkzeug verfügbar */ }
+    // 4b. Die kanonische launchQueue gibt den Import NICHT als Promise zurück. Deshalb benutzt
+    // diese bestehende Brücke den bereits offengelegten normalen Importer (gleiche Prüfung/Ablage).
+    // Der Klon bleibt bytegleich. Vor einer Quittung werden Metadaten UND Originalbytes nachgelesen.
+    var oeffnenLauf = Promise.resolve();
+    var empfangen = async function (fs) {
+      if (!W.__wfpdf || !W.WFP || !W.WFP.DB) throw new Error("Workflow PDF ist noch nicht bereit.");
+      var db = W.WFP.DB;
+      for (var f of fs) {
+        if (!istDatei(f) || f.size > 20 * 1024 * 1024) throw new Error("Dateigrenze überschritten.");
+        var sha = await hash(await f.arrayBuffer()), name = f.name.replace(/\.[^.]+$/, "");
+        var originalId = function (d) { return /^image\//.test(f.type) || /\.(jpe?g|png|webp)$/i.test(f.name) ? d.id + "~original" : d.id; };
+        var passt = async function (d) {
+          if (!d || d.name !== name) return false;
+          var bytes = await db.getFile(originalId(d));
+          return bytes && await hash(bytes) === sha && !!await db.get("docs", d.id) && !!await db.getFile(d.id);
+        };
+        var gefunden = null;
+        for (var d of await db.all("docs")) { if (await passt(d)) { gefunden = d; break; } }
+        if (!gefunden) {
+          var neu = await W.__wfpdf.importDateien([f]);
+          if (!neu || neu.length !== 1 || !await passt(neu[0])) throw new Error("Workflow PDF hat die Datei nicht dauerhaft bestätigt.");
+        }
+      }
+    };
+    W.addEventListener("message", function (e) {
+      if (e.origin !== location.origin || e.source !== W.parent) return;
+      var d = e.data || {};
+      if (d.typ !== "fa-wfpdf-oeffnen" || typeof d.id !== "string" || d.id.length > 160 || !Array.isArray(d.dateien) || !d.dateien.length) return;
+      var lauf = oeffnenLauf.then(function () { return empfangen(d.dateien); });
+      oeffnenLauf = lauf.catch(function () {});
+      lauf.then(function () { melde({ typ: "fa-wfpdf-geoeffnet", id: d.id, ok: true }); }, function () { melde({ typ: "fa-wfpdf-geoeffnet", id: d.id, ok: false }); });
+    });
     // 4c. Scan aus der Akte (?scan=1&von=Familienakte): das fertige PDF des Scanners geht zusätzlich gleich in die Akte.
     try {
       var q = new URLSearchParams(location.search);
@@ -98,7 +144,7 @@
               SC.__faErst = true;   // nur der Scan, mit dem die Akte den Klon geöffnet hat
               var f0 = opt.fertig; opt.__fa = true;
               opt.fertig = function (bytes, info) {
-                try { var n = String((info && info.name) || "Scan").replace(/[\\/:*?"<>|]+/g, "_").trim() || "Scan"; melde({ typ: "fa-wfpdf-ablegen", quelle: "scan", dateien: [new File([bytes], n + ".pdf", { type: "application/pdf" })] }); } catch { /* still: ohne diese Fähigkeit läuft der Klon wie vorher */ }
+                try { var n = String((info && info.name) || "Scan").replace(/[\\/:*?"<>|]+/g, "_").trim() || "Scan"; abgeben([new File([bytes], n + ".pdf", { type: "application/pdf" })], "scan").catch(function (e) { if (W.__wfpdf) W.__wfpdf.dlg.toast(e.message); }); } catch { /* still: ohne diese Fähigkeit läuft der Klon wie vorher */ }
                 return f0.apply(this, arguments);
               };
             }

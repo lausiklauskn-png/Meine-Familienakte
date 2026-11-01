@@ -1,3 +1,4 @@
+import { proUebergabeAnnehmen } from "./pro-uebergabe";
 import { askConfirm, askPrompt } from "./page-dialogs";
 import { useEingang } from "./use-eingang";
 import { ProTresorAnschluss } from "./pro-tresor-anschluss";
@@ -742,10 +743,13 @@ function HealthPortalContent() {
       setNotice({ kind: "success", text: "Das ausgewählte Original liegt geprüft im Pro-Tresor. Der bisherige Bestand wurde beibehalten." });
     } catch (e) { setNotice({ kind: "error", text: e instanceof Error ? e.message : "Das Original wurde nicht übernommen; die Quelle bleibt erhalten." }); }
   };
-  const ausWorkflowPdf = ({ quelle, dateien }: WfpdfAblage) => {
-    if (quelle === "scan" && dateien.length === 1) { beginLocalUpload(dateien[0], "camera-scan", true); return; }
-    void queueCentralIntakeFiles(dateien, "file-picker");
-    setNotice({ kind: "success", text: `${dateien.length} Datei${dateien.length === 1 ? "" : "en"} aus Workflow PDF liegen in der Eingangszentrale zur Prüfung.` });
+  const ausWorkflowPdf = async ({ quelle, dateien, vertraege }: WfpdfAblage) => {
+    const quittungen = [];
+    for (const [i, file] of dateien.entries()) quittungen.push(await proUebergabeAnnehmen(vertraege[i], file));
+    if (!await setCentralIntakeQueue(current => current)) throw new Error("Eingang gespeichert, Anzeige konnte nicht neu geladen werden. Erneutes Senden bleibt möglich.");
+    if (quelle === "scan" && dateien.length === 1) beginLocalUpload(dateien[0], "camera-scan", true, null, quittungen[0].eingangId);
+    else setNotice({ kind: "success", text: `${dateien.length} Datei${dateien.length === 1 ? "" : "en"} aus Workflow PDF liegen in der Eingangszentrale zur Prüfung.` });
+    return quittungen;
   };
   const openDocumentScan = (files: File[]) => {
     if (!vaultHandle) { setActionState("upload", "failed"); go("security"); setNotice({ kind: "error", text: "Bitte zuerst den lokalen OneDrive-Ordner oder einen PC-/USB-Tresor verbinden. Erst danach wird die Kamera geöffnet." }); return; }
