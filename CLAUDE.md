@@ -36,7 +36,8 @@ Brücke `public/apps/fa-wfpdf-bruecke.js` (**nie umgehen**: eigene DB `Familiena
 `app/workflow-pdf-seite.tsx`; Stapel `app/stapel*.ts(x)` (`docs/STAPEL.md`). Tesseract/Scanic liegen **nur** im Klon (`vendorBasis()`).
 2.28.9 = #41 und 2.28.11 = #42 gemergt und veröffentlicht (Android, Windows, server = ja; Pages).
 
-**Klaus' Antworten auf die 4 Fragen (2026-11-01, IN ARBEIT, Fassung 2.28.12 ff.):**
+**Klaus' Antworten auf die 4 Fragen (2026-11-01) — gebaut als Fassung 2.28.12** (Proben stapel 19 · stapel-pruefen 5 ·
+briefkopf-titel 5, Gegenproben 8 + 2 + 2 gefangen; danach PR, CI, Merge, Veröffentlichung):
 1. Stapel zusammenfassen: beim Einscannen wählbar („ein Brief“); sonst einzeln, und von Hand zusammenfügen — Auswahl + „Zusammenfügen“
    und eine Zeile per Ziehen auf eine andere legen (wie Dateien in einen Ordner). Code: `pdfsZusammenfuegen` in `app/stapel.ts`.
 2. Filter wählbar wie Workflow PDF (Original · Farbe verbessern · Graustufen · Dokument · Schwarzweiß) und Schärfe — `StapelEinst`,

@@ -6,6 +6,7 @@ import { ChevronDown, ChevronRight, FileText, GripVertical, Layers, Pause, Play,
 import { FILTER_NAMEN, STAPEL_VORGABE, pdfsZusammenfuegen, stapelAbbrechen, stapelAnhalten, stapelHoeren, stapelLauf, stapelStarten, stapelWeiter, type StapelEinst, type StapelErgebnis, type StapelLauf } from "./stapel";
 import { stapelAlle, stapelDatei, stapelLegen, stapelWeg, type StapelEintrag } from "./stapel-ablage";
 import { openFile } from "./file-viewer";
+import { ShieldCheck } from "lucide-react";
 
 const groesse = (n: number) => n < 1024 * 1024 ? `${Math.max(1, Math.round(n / 1024))} KB` : `${(n / 1024 / 1024).toFixed(1).replace(".", ",")} MB`;
 export async function stapelAblegen(e: StapelErgebnis) {
@@ -75,6 +76,17 @@ export function StapelSeite({ kopf, neu, onNeuGenommen, onEinordnen, onWorkflowP
     try { await onEinordnen(eintraege.map(stapelDatei)); for (const e of eintraege) await stapelWeg(e.id); setWahl(new Set()); setOffen(null); await laden(); }
     finally { setBusy(false); }
   };
+  // Prüfbericht nur auf Wahl (Klaus: „Dokumente vom Amt brauchen das nicht. Spart Rechnerleistung.“)
+  const [prueft, setPrueft] = useState(0);
+  const pruefen = async (eintraege: StapelEintrag[]) => {
+    if (!eintraege.length) return;
+    setBusy(true); setPrueft(eintraege.length);
+    try {
+      const { dateiPruefen } = await import("./wfpdf-kern");
+      for (const e of eintraege) { const p = await dateiPruefen(e.name, e.pdf); await stapelLegen({ ...e, pruefung: p }); setPrueft((n) => n - 1); }
+      await laden();
+    } finally { setBusy(false); setPrueft(0); }
+  };
   const fuegen = async (eintraege: StapelEintrag[]) => {
     if (eintraege.length < 2) return;
     setBusy(true);
@@ -103,6 +115,7 @@ export function StapelSeite({ kopf, neu, onNeuGenommen, onEinordnen, onWorkflowP
         <input ref={eingabe} className="sr-only" type="file" accept="image/*,application/pdf" multiple data-stapel-eingabe
           onChange={(ev) => { const f = ev.target.files ? Array.from(ev.target.files) : []; if (f.length) void stapelStartenMitEinst(f, einst); ev.currentTarget.value = ""; }}/>
         <button type="button" className="button secondary" onClick={() => eingabe.current?.click()} data-stapel-mehr><Upload size={16}/> Fotos oder Scans hinzufügen</button>
+        {gewaehlt.length >= 1 && <button type="button" className="button secondary" disabled={busy || laeuft} onClick={() => void pruefen(gewaehlt)} data-stapel-pruefen-wahl><ShieldCheck size={16}/> {prueft ? `Prüfe … noch ${prueft}` : `Prüfen (${gewaehlt.length})`}</button>}
         {gewaehlt.length >= 2 && <button type="button" className="button secondary" disabled={busy || laeuft} onClick={() => void fuegen(gewaehlt)} data-stapel-fuegen><Layers size={16}/> Zusammenfügen ({gewaehlt.length})</button>}
         <button type="button" className="button primary fa-stapel-einordnen" disabled={busy || !liste.length || laeuft} onClick={() => void einordnen(auswahlZiel)} data-stapel-einordnen>
           Einordnen ({auswahlZiel.length})
@@ -134,13 +147,17 @@ export function StapelSeite({ kopf, neu, onNeuGenommen, onEinordnen, onWorkflowP
                 {offen === e.id ? <ChevronDown size={16}/> : <ChevronRight size={16}/>}<span>{e.name}</span>
               </button>
               <span className={`badge ${e.sicher ? "" : "warn"}`} data-stapel-stand={e.sicher ? "sicher" : "pruefen"}>{e.quelle === "pdf" ? "PDF" : e.quelle === "zusammen" ? "zusammengefügt" : e.sicher ? "gerade gezogen" : "Ecken prüfen"}</span>
+              {e.pruefung && <span className={`badge ${e.pruefung.stand === "warnung" ? "warn" : ""}`} data-stapel-geprueft={e.pruefung.stand}>{e.pruefung.stand === "warnung" ? "Prüfung: Befund" : e.pruefung.stand === "sauber" ? "geprüft" : "ungeprüft"}</span>}
               <small>{groesse(e.groesse)}</small>
             </div>
             {offen === e.id && <div className="fa-stapel-detail" data-stapel-detail>
               {bild ? <img src={bild} alt={`Vorschau ${e.name}`} data-stapel-vorschau/> : <button type="button" className="button secondary" onClick={() => openFile(stapelDatei(e))}><FileText size={16}/> PDF ansehen</button>}
               <p className="fa-stapel-grund">{e.grund}</p>
+              {e.pruefung && <div className="fa-stapel-bericht" data-stapel-bericht={e.pruefung.stand}><strong>Prüfbericht: {e.pruefung.stand === "warnung" ? `${e.pruefung.funde.length} Befund(e)` : e.pruefung.stand === "sauber" ? "nichts Verstecktes gefunden" : "nicht geprüft"}</strong>
+                {e.pruefung.funde.map((f, i) => <span key={i}>{f.name}: {f.satz}</span>)}{e.pruefung.stand !== "sauber" && e.pruefung.hinweise.slice(0, 3).map((h, i) => <small key={`h${i}`}>{h}</small>)}</div>}
               <div className="button-row">
                 <button type="button" className="button secondary" onClick={() => onWorkflowPdf(stapelDatei(e))} data-stapel-wfpdf>In Workflow PDF öffnen (anpassen, zuschneiden, prüfen)</button>
+                <button type="button" className="button secondary" disabled={busy} onClick={() => void pruefen([e])} data-stapel-pruefen><ShieldCheck size={15}/> Prüfen (versteckter Text, Anweisungen an eine KI)</button>
                 <button type="button" className="button primary" disabled={busy} onClick={() => void einordnen([e])} data-stapel-einzeln>Einordnen</button>
                 <button type="button" className="button secondary" onClick={() => void entfernen(e)} data-stapel-weg><Trash2 size={15}/> Entfernen</button>
               </div>

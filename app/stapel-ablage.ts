@@ -1,7 +1,8 @@
 // Stapel-Ablage (Klaus 2026-11-01: „erstmal ungeprüft einpflegen und dann später, wenn ich Zeit habe, alle Dokumente einordnen“).
 // Eigene kleine Datenbank im Browser des Geräts: die gescannten PDFs bleiben hier, bis „Einordnen“ sie an die Eingangszentrale gibt.
 // Kein Klartext verlässt das Gerät; Einordnen (Text lesen, Embedding, Zusammenhang) geschieht erst auf Knopfdruck.
-export type StapelEintrag = { id: string; name: string; sicher: boolean; grund: string; quelle: string; groesse: number; zeit: string; pdf: Blob; vorschau?: Blob };
+export type StapelEintrag = { id: string; name: string; sicher: boolean; grund: string; quelle: string; groesse: number; zeit: string; pdf: Blob; vorschau?: Blob;
+  pruefung?: { stand: "warnung" | "sauber" | "ungeprueft"; funde: Array<{ name: string; satz: string }>; hinweise: string[]; zeit: string } };
 const DB = "FamilienakteStapel1", FACH = "stapel";
 function oeffnen() {
   return new Promise<IDBDatabase>((ok, nein) => {

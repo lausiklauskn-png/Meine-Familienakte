@@ -41,6 +41,7 @@ import { buildIntakeChoiceOptions, buildStoredPersonalLifeAreas, INTAKE_PRIVACY_
 import { analyzeCentralIntakeFile, extractEmlAttachments, groupCentralIntakeAnalyses, initialCentralIntakeStatus, runCentralIntakeSelfTests, type CentralIntakeQueueItem, type CentralIntakeStatus } from "@/lib/central-intake";
 const CentralIntakeCenter = lazy(() => import("./central-intake-center").then((m) => ({ default: m.CentralIntakeCenter })));
 import { runDocumentScanSelfTests, type DocumentScanPdfFile } from "@/lib/document-scan";
+import { briefTitel } from "@/lib/briefkopf-titel";
 const NetzSeite = lazy(() => import("./netz-seite").then((m) => ({ default: m.NetzSeite })));
 const StapelSeite = lazy(() => import("./stapel-seite").then((m) => ({ default: m.StapelSeite })));
 const WorkflowPdfSeite = lazy(() => import("./workflow-pdf-seite").then((m) => ({ default: m.WorkflowPdfSeite })));
@@ -3525,13 +3526,25 @@ function UploadDialog({ initialFile, source, knownDocuments, records, relations,
   const inputRef = useRef<HTMLInputElement>(null); const [file, setFile] = useState<File | null>(initialFile);
   const [textHint, setTextHint] = useState("");
   const [textLesen, setTextLesen] = useState(false);
+  // Klaus 2026-11-01 (Antwort 4): „Brief von …, Datum“ als Titel-Vorschlag — aus dem gelesenen Text mit briefkopf.js (Workflow PDF)
+  const [briefTitelHint, setBriefTitelHint] = useState("");
   const [dragging, setDragging] = useState(false); const [submitting, setSubmitting] = useState(false); const [error, setError] = useActivityMessage("error", "Unterlage lokal speichern");
   const [category, setCategory] = useState(initialPlan?.category || "Ärztliche Unterlage / Befund");
   const [documentDate, setDocumentDate] = useState("");
   const [notes, setNotes] = useState("");
   const [dictationHint, setDictationHint] = useState("");
   const [allowDuplicate, setAllowDuplicate] = useState(false);
-  const plan: DocumentIntakePlan | null = useMemo(() => file ? buildDocumentIntakePlan({ file: { name: file.name, size: file.size, type: file.type, lastModified: file.lastModified, textHint }, source, documents: knownDocuments, records }) : null, [file, textHint, source, knownDocuments, records]);
+  const plan: DocumentIntakePlan | null = useMemo(() => file ? buildDocumentIntakePlan({ file: { name: file.name, size: file.size, type: file.type, lastModified: file.lastModified, textHint, titleHint: briefTitelHint || undefined }, source, documents: knownDocuments, records }) : null, [file, textHint, briefTitelHint, source, knownDocuments, records]);
+  useEffect(() => {
+    let aus = false; setBriefTitelHint("");
+    if (!textHint.trim()) return () => { aus = true; };
+    void (async () => {
+      const { briefkopfLesen } = await import("./wfpdf-kern");
+      const t = briefTitel(await briefkopfLesen(textHint.split(/\r?\n/)));
+      if (!aus && t) setBriefTitelHint(t);
+    })().catch(() => { /* ohne Baustein bleibt der alte Titel */ });
+    return () => { aus = true; };
+  }, [textHint]);
   const [lifeArea, setLifeArea] = useState<string>(initialPlan?.lifeArea || "Archiv");
   const [documentType, setDocumentType] = useState<string>(initialPlan?.documentType || "Dokument");
   const [privacyClass, setPrivacyClass] = useState<IntakePrivacyClass>(initialPlan?.privacyClass || "vertraulich");

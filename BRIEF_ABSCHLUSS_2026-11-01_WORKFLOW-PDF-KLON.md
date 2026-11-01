@@ -41,7 +41,19 @@ Tablet, Windows-PC · echte Fotos im Stapel (nur gezeichnete Blätter) · echtes
 Rahmen nicht (der Klon geht nur auf eigenen Tipp ins Netz) · der Klon spricht Workflow PDFs Wortlaut · Stapel: eine Seite je Bild, ohne Filter,
 200 dpi.
 
-## Fragen an Klaus
+## Nachtrag: Klaus' Antworten → Fassung 2.28.12
+
+| Frage | Antwort | gebaut |
+| --- | --- | --- |
+| 1 Stapel mehrseitig | Ja, wählbar; sonst einzeln, von Hand per Ziehen/Zusammenfügen | Haken „ein Brief“, „Zusammenfügen (N)“, Griff ⠿ ziehen |
+| 2 Filter | wählbar wie Workflow PDF, dazu Schärfe | Original · Farbe verbessern · Graustufen · Dokument · Schwarzweiß, Schärfe 0–100 |
+| 3 Prüfbericht | ja, aber nur auf manuelle Wahl | „Prüfen“ an der Zeile und über die Auswahl; beim Einlesen nichts |
+| 4 Briefkopf-Titel | ja | „Brief von <Absender>, <Datum>“ im Eingangs-Fenster |
+
+Proben: `stapel` 19 · `stapel-pruefen` 5 · `briefkopf-titel` 5 · Gegenproben `Stapel:` 8/8 · `Prüfen2:` 2/2 · `Briefkopf:` 2/2.
+Freigaben in dieser Sitzung (zum Prüfen): 2.28.11 als PWA, APK, Windows und Einzeldatei (Links im Chat).
+
+## Fragen an Klaus (beantwortet, siehe Nachtrag)
 
 1. **Stapel mehrseitig:** soll ein Stapel aus aufeinanderfolgenden Blättern eines Briefes zu **einer** Unterlage zusammengefasst werden können
    (Haken „zusammenfügen“ an der Auswahl)? Heute ist jedes Blatt eine Unterlage.

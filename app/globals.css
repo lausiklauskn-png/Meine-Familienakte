@@ -1817,3 +1817,6 @@ input.af-feld, textarea.af-feld { width: auto; min-height: 0; resize: none; }
 .fa-stapel-haken { flex: 1 1 260px; }
 .fa-stapel-griff { border: 0; background: none; color: var(--muted); padding: 4px; cursor: grab; touch-action: none; }
 .fa-stapel-liste > li.ziel { outline: 2px dashed var(--teal); outline-offset: -2px; background: var(--teal-soft); }
+.fa-stapel-bericht { display: grid; gap: 2px; padding: 8px 10px; border-radius: 8px; background: var(--green-soft); font-size: .9rem; }
+.fa-stapel-bericht[data-stapel-bericht="warnung"] { background: var(--amber-soft); }
+.fa-stapel-bericht[data-stapel-bericht="ungeprueft"] { background: var(--blue-soft); }

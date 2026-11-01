@@ -51,6 +51,11 @@ const faelle = [
   { name: "Stapel: Zusammenfügen lässt die Quellen stehen", datei: "app/stapel-seite.tsx", alt: "  for (const e of eintraege) await stapelWeg(e.id);\n  window.dispatchEvent", neu: "  window.dispatchEvent", probe: "stapel", rot: /Zusammenfügen/ },
   { name: "Stapel: Ziehen fügt nicht zusammen", datei: "app/stapel-seite.tsx", alt: "if (a && b) void fuegen([a, b]);", neu: "if (false) void fuegen([a, b]);", probe: "stapel", rot: /Ziehen/ },
   { name: "Stapel: Haken „ein Brief“ wirkungslos", datei: "app/stapel-seite.tsx", alt: "ende: einst.zusammen ?", neu: "ende: false ?", probe: "stapel", rot: /ein Brief/ },
+  // 2.28.12 (Klaus' Antworten 3 und 4): Prüfbericht auf Wahl, Titel aus dem Briefkopf
+  { name: "Prüfen2: Befund wird nicht als Warnung gemeldet", datei: "app/wfpdf-kern.ts", alt: 'stand: funde.length ? "warnung"', neu: 'stand: false ? "warnung"', probe: "stapel-pruefen", rot: /Befund/ },
+  { name: "Prüfen2: Auswahl prüft nichts", datei: "app/stapel-seite.tsx", alt: "onClick={() => void pruefen(gewaehlt)}", neu: "onClick={() => void pruefen([])}", probe: "stapel-pruefen", rot: /Auswahl/ },
+  { name: "Briefkopf: Vorschlag kommt nicht an", datei: HP, alt: "if (!aus && t) setBriefTitelHint(t);", neu: "if (false) setBriefTitelHint(t);", probe: "briefkopf-titel", rot: /Titel genau|Vorschlag/ },
+  { name: "Briefkopf: ohne Absender wird geraten", datei: "lib/briefkopf-titel.ts", alt: "if (!absender) return null;", neu: 'if (!absender) return "Brief von unbekannt";', probe: "briefkopf-titel", rot: /geratener/ },
 ];
 const filter = process.argv[2] || "";
 const bauen = (einzel) => {
