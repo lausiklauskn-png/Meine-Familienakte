@@ -46,3 +46,11 @@ briefkopf-titel 5, Gegenproben 8 + 2 + 2 gefangen; danach PR, CI, Merge, Veröff
    (`apps/workflow-pdf/assets/pruefer-*.js`), eigener Klebstoff (eingang.js lädt relativ und passt nicht in die Akte).
 4. Titel-Vorschlag „Brief von <Absender>, <Datum>“ im Eingang — `briefkopf.js` byte-1:1 nach `public/wfpdf/` (wfpdf-nachziehen), Titel in
    `lib/central-intake.ts`/Eingang-Fenster.
+
+**Briefkopf im Eingang — Fassung 2.28.13 (Klaus 2026-11-01: „ja“).** Der Eingang zeigt „Aus dem Briefkopf“ (`[data-briefkopf]`):
+Absender, Empfänger, Kunden-/Aktennummer änderbar, Thema; Briefdatum füllt das Dokumentdatum, wenn es leer ist. Daraus: Empfänger → Person
+der Akte (`recipientName` in der vorhandenen Zuordnung), Absender → Organisation, Thema → Lebensbereich (nur, wenn der Dateiname nichts sagt),
+Nummer → frühere Unterlage mit derselben Nummer (≥ 5 Zeichen) und deren Vorgang als Vorschlag. Gemerkt in der Notiz („Briefkopf: …“).
+Rechnung rein in `lib/briefkopf-titel.ts`; Eingangszentrale und Stapel laufen beim „Zuordnung prüfen“ durch denselben Eingang.
+Proben: `scripts/run-ausfuellen-tests.mjs` (+14), `tests/ui/briefkopf-eingang.test.mjs` (10), Gegenprobe `Briefkopf2:` 5 gefangen.
+Grenzen: nur erfundene Briefe; die Warteschlange selbst zeigt den Briefkopf noch nicht in ihrer Liste; schräge Scans/Handschrift.

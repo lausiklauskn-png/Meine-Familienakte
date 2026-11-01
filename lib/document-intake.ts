@@ -1,3 +1,4 @@
+import type { BriefAngaben } from "./briefkopf-titel.ts";
 import type { FamilyRecordUnion } from "./family-data-model.ts";
 import { familyRecordToAssignmentRecord, proposeFamilyAssignment, type AssignmentProposal } from "./family-assignment.ts";
 import { FAMILY_CATEGORIES } from "./family-categories.ts";
@@ -33,7 +34,7 @@ export type DocumentIntakePlan = {
   safeguards: readonly string[];
 };
 
-export type IntakeFile = { name: string; size: number; type?: string; lastModified?: number; textHint?: string; titleHint?: string };
+export type IntakeFile = { name: string; size: number; type?: string; lastModified?: number; textHint?: string; titleHint?: string; brief?: BriefAngaben | null };
 
 const normalize = (value: string) => value.toLocaleLowerCase("de").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ß/g, "ss");
 const has = (text: string, words: string[]) => words.some((word) => text.includes(normalize(word)));
@@ -100,7 +101,10 @@ export function buildDocumentIntakePlan(input: {
   // Text), der lange Text nur, wenn der Name nichts hergibt (z. B. „Dokumentscan …“).
   const nachName = classifyFile(input.file.name);
   const kurzerHinweis = /\.(eml|msg|txt|vtt)$/i.test(input.file.name);
-  const detected = kurzerHinweis || nachName.lifeArea === "Archiv" ? classifyFile(input.file.name, input.file.textHint) : nachName;
+  const nachText = kurzerHinweis || nachName.lifeArea === "Archiv" ? classifyFile(input.file.name, input.file.textHint) : nachName;
+  // Klaus 2026-11-01: der Briefkopf (Thema mit Gleichstand-Riegel) geht vor der Stichwortliste, aber nie vor einem Dateinamen, der etwas sagt.
+  const brief = input.file.brief || null;
+  const detected = brief?.thema && nachName.lifeArea === "Archiv" && !kurzerHinweis ? { ...nachText, lifeArea: brief.thema as typeof nachText.lifeArea } : nachText;
   const title = input.file.titleHint?.trim() || titleFromName(input.file.name) || input.file.name;
   const duplicateIds = input.documents.filter((document) => normalize(document.originalName) === normalize(input.file.name) && document.sizeBytes === input.file.size).map((document) => document.id);
   const assignment = proposeFamilyAssignment({
@@ -108,7 +112,10 @@ export function buildDocumentIntakePlan(input: {
     fileName: input.file.name,
     documentType: detected.documentType,
     areaHint: detected.lifeArea,
-    organisationHints: organisationHints(input.file.name, input.file.textHint),
+    organisationHints: [...organisationHints(input.file.name, input.file.textHint), ...(brief?.absender ? [brief.absender] : [])],
+    recipientName: brief?.empfaenger || undefined,
+    identifiers: brief?.nummern.map((n) => n.wert),
+    documentDate: brief?.datum || undefined,
     objectHints: has(normalize(input.file.name), ["motoria", "strada"]) ? ["Motoria Strada"] : [],
     caseHints: has(normalize(input.file.name), ["tuv", "hauptuntersuchung"])
       ? ["TÜV", "Hauptuntersuchung"]

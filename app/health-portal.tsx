@@ -41,7 +41,7 @@ import { buildIntakeChoiceOptions, buildStoredPersonalLifeAreas, INTAKE_PRIVACY_
 import { analyzeCentralIntakeFile, extractEmlAttachments, groupCentralIntakeAnalyses, initialCentralIntakeStatus, runCentralIntakeSelfTests, type CentralIntakeQueueItem, type CentralIntakeStatus } from "@/lib/central-intake";
 const CentralIntakeCenter = lazy(() => import("./central-intake-center").then((m) => ({ default: m.CentralIntakeCenter })));
 import { runDocumentScanSelfTests, type DocumentScanPdfFile } from "@/lib/document-scan";
-import { briefTitel } from "@/lib/briefkopf-titel";
+import { briefTitel, briefAngaben, briefZeile, gleicheNummer, vorgangVon, nummernAusText, nummernText, type BriefAngaben, type BriefkopfRoh } from "@/lib/briefkopf-titel";
 const NetzSeite = lazy(() => import("./netz-seite").then((m) => ({ default: m.NetzSeite })));
 const StapelSeite = lazy(() => import("./stapel-seite").then((m) => ({ default: m.StapelSeite })));
 const WorkflowPdfSeite = lazy(() => import("./workflow-pdf-seite").then((m) => ({ default: m.WorkflowPdfSeite })));
@@ -3528,23 +3528,37 @@ function UploadDialog({ initialFile, source, knownDocuments, records, relations,
   const [textLesen, setTextLesen] = useState(false);
   // Klaus 2026-11-01 (Antwort 4): „Brief von …, Datum“ als Titel-Vorschlag — aus dem gelesenen Text mit briefkopf.js (Workflow PDF)
   const [briefTitelHint, setBriefTitelHint] = useState("");
+  // Klaus 2026-11-01: Absender · Empfänger · Datum · Nummern sichtbar und änderbar; von Hand Geändertes überschreibt kein neues Lesen.
+  const [brief, setBrief] = useState<BriefAngaben | null>(null);
+  const [briefHand, setBriefHand] = useState(false);
+  const [briefNummern, setBriefNummern] = useState("");
   const [dragging, setDragging] = useState(false); const [submitting, setSubmitting] = useState(false); const [error, setError] = useActivityMessage("error", "Unterlage lokal speichern");
   const [category, setCategory] = useState(initialPlan?.category || "Ärztliche Unterlage / Befund");
   const [documentDate, setDocumentDate] = useState("");
   const [notes, setNotes] = useState("");
   const [dictationHint, setDictationHint] = useState("");
   const [allowDuplicate, setAllowDuplicate] = useState(false);
-  const plan: DocumentIntakePlan | null = useMemo(() => file ? buildDocumentIntakePlan({ file: { name: file.name, size: file.size, type: file.type, lastModified: file.lastModified, textHint, titleHint: briefTitelHint || undefined }, source, documents: knownDocuments, records }) : null, [file, textHint, briefTitelHint, source, knownDocuments, records]);
+  const plan: DocumentIntakePlan | null = useMemo(() => file ? buildDocumentIntakePlan({ file: { name: file.name, size: file.size, type: file.type, lastModified: file.lastModified, textHint, titleHint: briefTitelHint || undefined, brief }, source, documents: knownDocuments, records }) : null, [file, textHint, briefTitelHint, brief, source, knownDocuments, records]);
   useEffect(() => {
     let aus = false; setBriefTitelHint("");
+    if (!briefHand) { setBrief(null); setBriefNummern(""); }
     if (!textHint.trim()) return () => { aus = true; };
     void (async () => {
       const { briefkopfLesen } = await import("./wfpdf-kern");
-      const t = briefTitel(await briefkopfLesen(textHint.split(/\r?\n/)));
+      const kopf = await briefkopfLesen(textHint.split(/\r?\n/));
+      const t = briefTitel(kopf);
       if (!aus && t) setBriefTitelHint(t);
+      const a = briefAngaben(kopf as BriefkopfRoh);
+      if (!aus && a && !briefHand) { setBrief(a); setBriefNummern(nummernText(a.nummern)); if (a.datum) setDocumentDate((d) => d || a.datum); }
     })().catch(() => { /* ohne Baustein bleibt der alte Titel */ });
     return () => { aus = true; };
+    // briefHand absichtlich nicht als Abhängigkeit: von Hand Geändertes soll nicht neu gelesen werden
   }, [textHint]);
+  const briefAendern = (feld: "absender" | "empfaenger", wert: string) => { setBriefHand(true); setBrief((b) => ({ ...(b || { absender: "", empfaenger: "", datum: "", nummern: [], thema: "", betreff: "" }), [feld]: wert })); };
+  const nummernAendern = (text: string) => { setBriefHand(true); setBriefNummern(text); setBrief((b) => ({ ...(b || { absender: "", empfaenger: "", datum: "", nummern: [], thema: "", betreff: "" }), nummern: nummernAusText(text) })); };
+  // Frühere Unterlagen mit derselben Nummer — und deren Vorgang als Vorschlag
+  const gleich = useMemo(() => gleicheNummer(knownDocuments, brief?.nummern || []).slice(0, 3), [knownDocuments, brief]);
+  const vorgangAusNummer = useMemo(() => vorgangVon(relations, gleich.map((g) => g.dokument.id)), [relations, gleich]);
   const [lifeArea, setLifeArea] = useState<string>(initialPlan?.lifeArea || "Archiv");
   const [documentType, setDocumentType] = useState<string>(initialPlan?.documentType || "Dokument");
   const [privacyClass, setPrivacyClass] = useState<IntakePrivacyClass>(initialPlan?.privacyClass || "vertraulich");
@@ -3588,9 +3602,9 @@ function UploadDialog({ initialFile, source, knownDocuments, records, relations,
   // eine Automatik jede leere Auswahl sofort wieder auf den Vorschlag; „Nicht verknüpfen“ war wirkungslos.
   const selbstGewaehlt = useRef(false);
   const waehle = (id: string) => { selbstGewaehlt.current = true; setSelectedCaseId(id); };
-  useEffect(() => { if (selbstGewaehlt.current) return; const vorschlag = suggestedCaseId || contextSuggestions[0]?.caseId || ""; if (vorschlag && vorschlag !== selectedCaseId) setSelectedCaseId(vorschlag); }, [suggestedCaseId, contextSuggestions, selectedCaseId]);
+  useEffect(() => { if (selbstGewaehlt.current) return; const vorschlag = suggestedCaseId || vorgangAusNummer || contextSuggestions[0]?.caseId || ""; if (vorschlag && vorschlag !== selectedCaseId) setSelectedCaseId(vorschlag); }, [suggestedCaseId, vorgangAusNummer, contextSuggestions, selectedCaseId]);
   const selectFile = (selected: File | null) => {
-    setFile(selected); setTextHint(""); setAllowDuplicate(false); setError(""); setChoiceField(null); setCustomChoice("");
+    setFile(selected); setTextHint(""); setBriefHand(false); setBrief(null); setBriefNummern(""); setAllowDuplicate(false); setError(""); setChoiceField(null); setCustomChoice("");
     setOverrides({ lifeArea: false, documentType: false, privacyClass: false, category: false });
     if (selected) {
       const nextPlan = buildDocumentIntakePlan({ file: selected, source, documents: knownDocuments, records });
@@ -3625,7 +3639,7 @@ function UploadDialog({ initialFile, source, knownDocuments, records, relations,
     setSubmitting(true); setError(""); const form = new FormData(event.currentTarget);
     const userNotes = String(form.get("notes") || "").trim();
     const manuallyAdjusted = Object.values(overrides).some(Boolean);
-    const intakeNotes = plan ? [`FaWoGa: ${lifeArea}`, `Dokumentart: ${documentType}`, `Datenschutz: ${privacyClass}`, `Eingang: ${source}`, manuallyAdjusted ? "Zuordnung vom Benutzer angepasst" : "Intelligenter Vorschlag übernommen"].join(" · ") : "";
+    const intakeNotes = plan ? [`FaWoGa: ${lifeArea}`, `Dokumentart: ${documentType}`, `Datenschutz: ${privacyClass}`, `Eingang: ${source}`, manuallyAdjusted ? "Zuordnung vom Benutzer angepasst" : "Intelligenter Vorschlag übernommen", briefZeile(brief)].filter(Boolean).join(" · ") : "";
     const stageType: Partial<Record<string, FamilyRecordUnion["recordType"]>> = { person: "person", organisation: "organisation", object: "object", case: "case", deadline: "deadline", task: "task" };
     const assignmentLinks = (plan?.assignment.steps || []).filter((step) => step.selectedId && stageType[step.stage] && step.stage !== "case" && (step.stage !== "area" || step.selectedLabel === lifeArea)).map((step) => ({ toType: stageType[step.stage]!, toId: step.selectedId!, relationType: "betrifft" }));
     if (selectedCaseId) assignmentLinks.push({ toType: "case", toId: selectedCaseId, relationType: "gehört zu" });
@@ -3635,6 +3649,13 @@ function UploadDialog({ initialFile, source, knownDocuments, records, relations,
   return <div className="modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}><div className="modal intake-modal" role="dialog" aria-modal="true" aria-labelledby="upload-title"><div className="modal-head"><div><span className="badge success">Gemeinsamer Dokumenteneingang</span><span className="ui-heading-help"><h2 id="upload-title">Neue Unterlage prüfen und lokal ablegen</h2><InfoPopover label="Neue Unterlage prüfen und lokal ablegen erklären" text={UI_HELP["Neue Unterlage prüfen und lokal ablegen"]}/></span></div><button className="icon-button" onClick={onClose} aria-label="Fenster schließen"><X/></button></div><form onSubmit={submit}>
     <input ref={inputRef} className="sr-only" type="file" accept=".pdf,.docx,.xlsx,.jpg,.jpeg,.png,.webp,.txt,.vtt,.msg,.zip" onChange={(event) => selectFile(event.target.files?.[0] || null)} />
     <button type="button" className={`drop-zone ${dragging ? "dragging" : ""}`} onClick={() => inputRef.current?.click()} onDragOver={(event) => { event.preventDefault(); setDragging(true); }} onDragLeave={() => setDragging(false)} onDrop={(event) => { event.preventDefault(); setDragging(false); selectFile(event.dataTransfer.files?.[0] || null); }}><Upload size={32}/><strong>{file ? file.name : "Datei hier ablegen oder auswählen"}</strong><span>{file ? `${fmtBytes(file.size)}${textLesen ? " · Text wird gelesen …" : textHint.trim() ? " · Text gelesen" : ""}` : "PDF, DOCX, XLSX, MSG, VTT, ZIP oder Bilddatei · höchstens 20 MB"}</span></button>
+    {file && (brief || textHint.trim()) && <section className="intake-briefkopf" data-briefkopf aria-label="Aus dem Briefkopf"><strong>Aus dem Briefkopf</strong>{!brief && <small data-briefkopf-leer>Kein Briefkopf erkannt — die Angaben bleiben leer, nichts wird geraten.</small>}
+      <label><span>Absender</span><input data-brief-feld="absender" value={brief?.absender || ""} onChange={(e) => briefAendern("absender", e.target.value)} placeholder="nicht erkannt"/></label>
+      <label><span>Empfänger</span><input data-brief-feld="empfaenger" value={brief?.empfaenger || ""} onChange={(e) => briefAendern("empfaenger", e.target.value)} placeholder="nicht erkannt"/></label>
+      <label><span>Kunden-/Aktennummer</span><input data-brief-feld="nummern" value={briefNummern} onChange={(e) => nummernAendern(e.target.value)} placeholder="z. B. Kundennummer 12345"/></label>
+      {brief?.thema && <small data-brief-thema>Thema: {brief.thema}</small>}
+      {gleich.length > 0 && <div className="intake-brief-gleich" data-brief-gleich>{gleich.map((g) => <span key={g.dokument.id}>{g.nummer.art} {g.nummer.wert} auch in <button type="button" className="text-link" onClick={() => onOpenExisting(g.dokument.id)}>{g.dokument.originalName}</button></span>)}{vorgangAusNummer && <small data-brief-vorgang>Vorgang dieser Unterlage vorgeschlagen.</small>}</div>}
+    </section>}
     {plan && <section className={`intake-analysis confidence-${plan.confidence}`} aria-label="Vorschlag der Dokumentenverarbeitung"><div className="intake-analysis-head"><div><span>Zuordnung prüfen</span><strong>{plan.title}</strong><small>Quelle: {source === "camera-scan" ? "PDF aus fotografierten Dokumentseiten" : source === "onedrive-inbox" ? "OneDrive-Familienordner" : source === "local-inbox" ? "Lokaler Eingangsordner" : source === "drag-drop" ? "Drag & Drop" : "Dateiauswahl"}</small></div><span className="badge neutral">{plan.confidence}</span></div><dl className="intake-choice-grid"><div className="intake-choice-card"><dt>Lebensbereich</dt><dd>{lifeArea}<small>{overrides.lifeArea ? "von dir gewählt" : "Vorschlag der Software"}</small></dd><button type="button" className="intake-choice-tab" onClick={() => openChoice("lifeArea")} aria-label="Lebensbereich auswählen"><Menu size={15}/></button></div><div className="intake-choice-card"><dt>Dokumentenart</dt><dd>{documentType}<small>{overrides.documentType ? "von dir gewählt" : "Vorschlag der Software"}</small></dd><button type="button" className="intake-choice-tab" onClick={() => openChoice("documentType")} aria-label="Dokumentenart auswählen"><Menu size={15}/></button></div><div className="intake-choice-card"><dt>Datenschutz</dt><dd>{privacyClass}<small>{overrides.privacyClass ? "von dir gewählt" : "Vorschlag der Software"}</small></dd><button type="button" className="intake-choice-tab" onClick={() => openChoice("privacyClass")} aria-label="Datenschutzstufe auswählen"><Menu size={15}/></button></div><div className="intake-choice-card"><dt>Bereich</dt><dd>{category}<small>{overrides.category ? "von dir gewählt" : "Vorschlag der Software"}</small></dd><button type="button" className="intake-choice-tab" onClick={() => openChoice("category")} aria-label="Bereich auswählen"><Menu size={15}/></button></div></dl>
       {plan.assignment.steps.filter((step) => step.selectedId && step.stage !== "area").slice(0, 4).map((step) => <div className="intake-assignment" key={step.stage}><span>{step.stage}</span><strong>{step.selectedLabel}</strong><small>{step.message}</small></div>)}
       {plan.duplicateIds.length > 0 && <div className="duplicate-warning"><strong>Mögliche Dublette</strong><span>Ein gleich benanntes Dokument mit gleicher Dateigröße ist bereits registriert.</span>{plan.duplicateIds.map((id) => <button type="button" className="text-link" key={id} onClick={() => onOpenExisting(id)}>Vorhandenes Dokument {id} öffnen <ChevronRight size={15}/></button>)}<label className="check-row"><input type="checkbox" checked={allowDuplicate} onChange={(event) => { setAllowDuplicate(event.target.checked); reportActivity({ kind: "info", text: event.target.checked ? "Mögliche Dublette: „Trotzdem übernehmen“ von dir bestätigt. Erst der Speicherbefehl übernimmt die Datei." : "Zusätzliche Übernahme der möglichen Dublette nicht bestätigt. Noch keine Datei gespeichert." }); }}/><span><strong>Trotzdem übernehmen</strong><small>Nur auswählen, wenn es sich tatsächlich um eine andere Datei handelt.</small></span></label></div>}

@@ -56,6 +56,11 @@ const faelle = [
   { name: "Prüfen2: Auswahl prüft nichts", datei: "app/stapel-seite.tsx", alt: "onClick={() => void pruefen(gewaehlt)}", neu: "onClick={() => void pruefen([])}", probe: "stapel-pruefen", rot: /Auswahl/ },
   { name: "Briefkopf: Vorschlag kommt nicht an", datei: HP, alt: "if (!aus && t) setBriefTitelHint(t);", neu: "if (false) setBriefTitelHint(t);", probe: "briefkopf-titel", rot: /Titel genau|Vorschlag/ },
   { name: "Briefkopf: ohne Absender wird geraten", datei: "lib/briefkopf-titel.ts", alt: "if (!absender) return null;", neu: 'if (!absender) return "Brief von unbekannt";', probe: "briefkopf-titel", rot: /geratener/ },
+  { name: "Briefkopf2: Empfänger geht nicht in die Zuordnung", datei: "lib/document-intake.ts", alt: "    recipientName: brief?.empfaenger || undefined,\n", neu: "", befehl: [process.execPath, ["scripts/run-ausfuellen-tests.mjs"]], rot: /.*/, rotStderr: /findet die Person/ },
+  { name: "Briefkopf2: Thema schlägt einen sprechenden Namen", datei: "lib/document-intake.ts", alt: 'brief?.thema && nachName.lifeArea === "Archiv" && !kurzerHinweis', neu: "brief?.thema", befehl: [process.execPath, ["scripts/run-ausfuellen-tests.mjs"]], rot: /.*/, rotStderr: /sprechender Dateiname/ },
+  { name: "Briefkopf2: kurze Nummern treffen zufällig", datei: "lib/briefkopf-titel.ts", alt: "x.f.length >= 5", neu: "x.f.length >= 1", befehl: [process.execPath, ["scripts/run-ausfuellen-tests.mjs"]], rot: /.*/, rotStderr: /kurze Nummern/ },
+  { name: "Briefkopf2: Zeile im Eingang fehlt", datei: HP, alt: 'if (!aus && a && !briefHand) { setBrief(a);', neu: 'if (false) { setBrief(a);', probe: "briefkopf-eingang", rot: /Absender erkannt|Empfänger getrennt/ },
+  { name: "Briefkopf2: gleiche Nummer nicht gemerkt", datei: HP, alt: '"Intelligenter Vorschlag übernommen", briefZeile(brief)]', neu: '"Intelligenter Vorschlag übernommen"]', probe: "briefkopf-eingang", rot: /frühere Unterlage/ },
 ];
 const filter = process.argv[2] || "";
 const bauen = (einzel) => {

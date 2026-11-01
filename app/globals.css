@@ -1820,3 +1820,10 @@ input.af-feld, textarea.af-feld { width: auto; min-height: 0; resize: none; }
 .fa-stapel-bericht { display: grid; gap: 2px; padding: 8px 10px; border-radius: 8px; background: var(--green-soft); font-size: .9rem; }
 .fa-stapel-bericht[data-stapel-bericht="warnung"] { background: var(--amber-soft); }
 .fa-stapel-bericht[data-stapel-bericht="ungeprueft"] { background: var(--blue-soft); }
+
+/* Briefkopf im Eingang (Klaus 2026-11-01): Absender · Empfänger · Nummer, änderbar */
+.intake-briefkopf { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 6px 12px; padding: 10px 12px; margin: 8px 0; border: 1px solid var(--line, #d6dde4); border-radius: 10px; }
+.intake-briefkopf > strong, .intake-briefkopf > small, .intake-brief-gleich { grid-column: 1 / -1; }
+.intake-briefkopf label { display: grid; gap: 2px; font-size: .85rem; }
+.intake-briefkopf input { min-height: 32px; }
+.intake-brief-gleich { display: grid; gap: 2px; font-size: .85rem; }

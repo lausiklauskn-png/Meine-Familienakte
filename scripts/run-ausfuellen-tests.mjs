@@ -5,6 +5,7 @@ import { createHash } from "node:crypto";
 import { runAusfuellenSelfTests } from "../lib/ausfuellen.ts";
 import { runPersonKontaktSelfTests } from "../lib/person-kontakt.ts";
 import { runBriefkopfTitelSelfTests } from "../lib/briefkopf-titel.ts";
+import { buildDocumentIntakePlan } from "../lib/document-intake.ts";
 
 const herkunft = JSON.parse(readFileSync("public/wfpdf/HERKUNFT.json", "utf8"));
 assert.equal(herkunft.repo, "lausiklauskn-png/Workflow-PDF");
@@ -56,4 +57,22 @@ if (existsSync(`${klon}/assets/scanner.js`)) {
 for (const test of [...runAusfuellenSelfTests(), ...runPersonKontaktSelfTests(), ...runBriefkopfTitelSelfTests()]) {
   assert.equal(test.passed, true, `${test.label}: ${test.summary}`);
   console.log(`🟢 ${test.label}: ${test.summary}`);
+}
+
+// Briefkopf → Zuordnung (Klaus 2026-11-01): Empfänger findet die Person der Akte, Thema den Lebensbereich — nur, wenn der Name nichts sagt.
+{
+  const person = { id: "PER-000009", recordType: "person", createdAt: "2026-10-01", updatedAt: "2026-10-01", status: "aktiv", source: "Test", notes: null, data: { displayName: "Erika Probe" } };
+  const brief = { absender: "Stadtwerke Lindwurm GmbH", empfaenger: "Erika Probe", datum: "2026-10-12", nummern: [{ art: "Kundennummer", wert: "KD-48213" }], thema: "Energie & Versorgung", betreff: "" };
+  const datei = { name: "Dokumentscan 2026-11-01.pdf", size: 10, type: "application/pdf", textHint: "Sehr geehrte Frau Probe", brief };
+  const mit = buildDocumentIntakePlan({ file: datei, source: "camera-scan", documents: [], records: [person] });
+  const ohne = buildDocumentIntakePlan({ file: { ...datei, brief: null }, source: "camera-scan", documents: [], records: [person] });
+  const benannt = buildDocumentIntakePlan({ file: { ...datei, name: "Arztbrief Befund.pdf" }, source: "camera-scan", documents: [], records: [person] });
+  const pSchritt = (p) => p.assignment.steps.find((s) => s.stage === "person");
+  const proben = [
+    ["Briefkopf-Empfänger findet die Person der Akte", pSchritt(mit)?.selectedId === "PER-000009" || pSchritt(mit)?.candidates?.[0]?.id === "PER-000009"],
+    ["ohne Briefkopf keine Person geraten", !pSchritt(ohne)?.selectedId],
+    ["Thema aus dem Briefkopf wird Lebensbereich", mit.lifeArea === "Energie & Versorgung"],
+    ["ein sprechender Dateiname geht vor dem Thema", benannt.lifeArea === "Gesundheit & Pflege"],
+  ];
+  for (const [label, ok] of proben) { assert.equal(ok, true, label); console.log(`🟢 ${label}`); }
 }
