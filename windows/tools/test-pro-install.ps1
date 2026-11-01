@@ -16,7 +16,7 @@ try {
   New-Item -ItemType Directory -Path $classes | Out-Null
   & java com.sun.tools.javac.Main -encoding UTF-8 -cp $jar -d $classes windows/java-test/de/familyprojekt/familienakte/ProTresorEngineProbe.java
   if ($LASTEXITCODE -ne 0) { throw 'Probe ließ sich nicht bauen' }
-  & $java -Xmx256m -Djava.awt.headless=true -cp "$jar;$classes" de.familyprojekt.familienakte.ProTresorEngineProbe
+  & $java "-Xmx256m" "-Djava.awt.headless=true" -cp "$jar;$classes" de.familyprojekt.familienakte.ProTresorEngineProbe
   if ($LASTEXITCODE -ne 0) { throw 'Installierte Laufzeit besteht Tresorprobe nicht' }
   node windows/tools/test-pro-install-pipe.mjs $java $jar $root $classes
   if ($LASTEXITCODE -ne 0) { throw 'Installierte Prozess-Pipe fehlgeschlagen' }
