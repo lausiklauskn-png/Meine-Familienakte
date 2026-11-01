@@ -27,3 +27,26 @@ sondern nur KimHub.“
   übrige über `native/HERKUNFT.json` (`npm run check:herkunft`), Modul 25 per Pin in `scripts/run-ki-auftrag-tests.mjs`.
 - Jede Sitzung endet mit einem Abschlussbrief (`BRIEF_ABSCHLUSS_<Datum>_….md`) mit Stundennachweis und Startauftrag als Codeblock.
 - Aktueller Stand: der jüngste `BRIEF_ABSCHLUSS_*.md`; Plan der nächsten Schritte im jüngsten `BRIEF_SITZUNG_*.md`.
+
+## Zwischenstand laufende Sitzung 2026-11-01 „Workflow PDF ganz übernehmen“ (für nahtloses Weiterarbeiten, auch Codex)
+
+Brief: `BRIEF_SITZUNG_2026-11-01_WORKFLOW-PDF-IN-FAMILIENAKTE.md`. Branch `ccr-253d5c30-8i5u1c`. **Klaus' Antworten (2026-11-01):**
+Weg **B zuerst, A später** (Klon der ganzen App) · Bibliothek **getrennt** von der Workflow-PDF-PWA · Mycel im Klon **weglassen** ·
+Einstiege **alle drei**: Menüpunkt „Workflow PDF“ (Dokumente), Knopf „In Workflow PDF öffnen“ an einer Unterlage, „Dokument fotografieren“
+öffnet den Klon. **Neu von Klaus (Stück „Direkt übernehmen“):** ein Knopf für Stapel-/Massenscan: Ecken automatisch abgleichen (deckt das
+Blatt ab?), gerade ziehen, verzerrungsfrei wie Workflow PDF darstellen, ohne Einzelprüfung einfügen; nur zum Nacharbeiten einzeln öffnen.
+Ausgabe in der Sitzung knapp halten (Token sparen). Forschungseintrag am Ende nach Kimhub `forschung/messungen/familienakte-…`.
+
+Stücke (je: Probe + Gegenprobe in `tests/gegenprobe-sitzung-b.mjs` + alle Proben + CI grün → Fassung +1 → Android/Windows `server = ja`;
+sichtbar bleibt „Version 2.28.1“):
+1. **Klon + Menüpunkt** — IN ARBEIT. Gebaut: `tools/wfpdf-app-nachziehen.mjs` + `tools/wfpdf-app-patch.mjs` → `public/apps/workflow-pdf/`
+   (77 Dateien, Pins `public/apps/HERKUNFT.json`, Workflow-PDF `fb85507`), Brücke `public/apps/fa-wfpdf-bruecke.js` (DB → `FamilienakteWFPDF1`,
+   `wfpdf_*` → `fa_wfpdf_*`, kein Service Worker, ⟳ sieht nur `fa-wfpdf-*`-Vorräte), Farben `public/apps/fa-wfpdf-thema.css`, Seite
+   `app/workflow-pdf-seite.tsx` (Menü Dokumente → „Workflow PDF“, `active === "workflowpdf"`). Tesseract/Scanic nur noch einmal im Paket
+   (Klon-`vendor/`; `public/wfpdf/vendor` gelöscht, `app/wfpdf-kern.ts` `vendorBasis()`). Probe in `scripts/run-ausfuellen-tests.mjs`.
+   **Offen:** UI-Probe `tests/ui/workflow-pdf-klon.test.mjs`, Gegenprobe-Fälle, Fassung 2.28.9, PR, Veröffentlichung.
+2. Brücke Ergebnis → Dokumenteneingang (Teilen/Herunterladen im Klon abfangen) und Unterlage → Klon (`launchQueue` stellen), „Dokument
+   fotografieren“ → Klon `?scan=1`.
+3. „Direkt übernehmen“ (Massenscan, siehe oben) — Klebstoff mit `WFP.Scanner` (`hinzu`, `erkennen`, `pdfBauen`; `entscheiden` in scan-bild.js
+   liefert `sicher`), unsichere Seiten markieren statt anhalten.
+4. Prüfbericht beim Einlesen in der Akte (`eingang.js` aus dem Klon) · 5. Briefkopf (`briefkopf.js`, in Workflow-PDF schon fertig, 1.1.6).

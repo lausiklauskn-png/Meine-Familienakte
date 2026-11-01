@@ -32,7 +32,8 @@ const build = `${count}.${hash.digest("hex").slice(0, 8)}`;
 
 // Texterkennung (21 MB) und Blatterkennung (3,5 MB) von Workflow PDF kommen nicht in den Installations-Vorrat: der Worker legt sie
 // beim ersten Gebrauch ab (Sitzung F). Sonst lüde jede Installation und jedes Update 25 MB.
-const vorrat = list.filter((f) => !f.startsWith("wfpdf/vendor/"));
+// Seit 2026-11-01 liegen beide nur noch im Klon von Workflow PDF (apps/workflow-pdf/vendor/).
+const vorrat = list.filter((f) => !/^apps\/workflow-pdf\/vendor\/(tesseract|scanic)\//.test(f));
 const version = { version: pkg.version, build, commit, date, files: list.length, vorrat: vorrat.length };
 writeFileSync(path.join(dist, "version.json"), JSON.stringify(version, null, 2) + "\n");
 

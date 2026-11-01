@@ -42,6 +42,7 @@ import { analyzeCentralIntakeFile, extractEmlAttachments, groupCentralIntakeAnal
 const CentralIntakeCenter = lazy(() => import("./central-intake-center").then((m) => ({ default: m.CentralIntakeCenter })));
 import { runDocumentScanSelfTests, type DocumentScanPdfFile } from "@/lib/document-scan";
 const NetzSeite = lazy(() => import("./netz-seite").then((m) => ({ default: m.NetzSeite })));
+const WorkflowPdfSeite = lazy(() => import("./workflow-pdf-seite").then((m) => ({ default: m.WorkflowPdfSeite })));
 const AusfuellenDialog = lazy(() => import("./ausfuellen-dialog").then((m) => ({ default: m.AusfuellenDialog })));
 const DocumentScanDialog = lazy(() => import("./document-scan-dialog").then((m) => ({ default: m.DocumentScanDialog })));
 import { buildMemoryAnalysis, buildMemoryOpenPoints, buildTodayMemorySummary, isMemoryRecord, memoryData, runFamilyMemorySelfTests, runMemoryQueueSelfTests, sortMemoryDraftQueue, type MemoryAnalysis, type MemoryCaptureType, type MemoryDraftEntry, type MemoryDraftStatus, type MemoryOpenStatus, type MemoryStatementKind } from "@/lib/family-memory";
@@ -81,7 +82,7 @@ type MemoryCompletion = { id: string; title: string; remaining: number; total: n
 type MemorySaveInput = Parameters<typeof createLocalMemoryBundle>[1] & { rejectedContext?: ContextLinkSuggestion };
 type UiAutomatedTestFailureReport = Omit<AutomatedTestFailureReport, "websiteVersion"> & { websiteVersion: number };
 
-type SectionId = "overview" | "netz" | "documents" | "inventory" | "inbox" | "medical" | "benefits" | "work" |
+type SectionId = "overview" | "netz" | "workflowpdf" | "documents" | "inventory" | "inbox" | "medical" | "benefits" | "work" |
   "assessment" | "correspondence" | "assistant" | "sources" | "health" | "family" |
   "home" | "vehicles" | "purchases" | "reminders" | "memory" | "cockpit" | "directory" | "security" | "help" | "changelog" | "versions" | "systemcheck";
 
@@ -156,6 +157,7 @@ const topNavigation: Array<{
       { id: "documents", label: "Dokumentenbibliothek", detail: "Vorhandene Dokumente suchen, filtern und im Zusammenhang öffnen" },
       { id: "inventory", label: "Bestand prüfen", detail: "Ausgewählte Test-, PC- oder OneDrive-Ordner kontrolliert analysieren" },
       { id: "inbox", label: "Eingangszentrale", detail: "PDF, Word, Fotos, Scans und E-Mails gemeinsam prüfen" },
+      { id: "workflowpdf", label: "Workflow PDF", detail: "Scannen, zuschneiden, Felder setzen, ausfüllen, prüfen, PDF ausgeben" },
       { id: "security", label: "Sicherheit & lokaler Tresor", detail: "PC/USB-Speicher, Sicherung und Zwei-Faktor-Schutz" },
       { id: "netz", label: "Netz (Mycel)", detail: "Mit anderen Geräten verbinden – nur wenn du es antippst" },
       { id: "sources", label: "Unterlagen & Quellen", detail: "Kerndokumente und Beweiswert" },
@@ -181,7 +183,7 @@ const sectionLabels: Record<SectionId, string> = {
   reminders: "Fristen und Aufgaben", cockpit: "Interaktives Cockpit",
   memory: "Tagebuch & Erinnerungsprotokoll",
   sources: "Unterlagen & Quellen", directory: "Gesamtes Verzeichnis",
-  security: "Sicherheit & lokaler Tresor", netz: "Netz (Mycel)",
+  security: "Sicherheit & lokaler Tresor", netz: "Netz (Mycel)", workflowpdf: "Workflow PDF",
   help: "Hilfe", systemcheck: "Systemprüfung", changelog: "Was gibt’s Neues?", versions: "Versionshistorie",
 };
 
@@ -1206,6 +1208,7 @@ function HealthPortalContent() {
           catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Speichern nicht möglich." }); }
           finally { setBusy(false); }
         }} busy={busy}/></>} 
+        {!query && active === "workflowpdf" && <Suspense fallback={null}><WorkflowPdfSeite kopf={<PageTitle icon={<FileText/>} title="Workflow PDF" text="Das ganze Werkzeug von Workflow PDF in der Familienakte: scannen, zuschneiden, Felder erkennen und setzen, ausfüllen, Prüfbericht, PDF ausgeben. Eigene Bibliothek, getrennt von der Workflow-PDF-App; nichts geht ins Netz, bis du es selbst wählst."/>}/></Suspense>}
         {!query && active === "netz" && <Suspense fallback={null}><NetzSeite kopf={<PageTitle icon={<Network/>} title="Netz (Mycel)" text="Verbindet die Familienakte auf Wunsch mit anderen Geräten im SBKIM-Netz. Beim Öffnen der Akte geht nichts ins Netz; hinaus geht nur die Visitenkarte, keine Unterlagen."/>}/></Suspense>}
         {!query && active === "security" && <SecurityCenter
           oneDriveConnected={oneDriveReachable} oneDriveName={oneDriveName} oneDriveSummary={oneDriveSummary}
