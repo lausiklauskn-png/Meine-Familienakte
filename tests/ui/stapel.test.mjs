@@ -30,6 +30,9 @@ try {
     { name: "Stapel-02.png", mimeType: "image/png", buffer: Buffer.from(bilder.ohne) },
     { name: "Stapel-03.pdf", mimeType: "application/pdf", buffer: readFileSync(PDF) },
   ];
+  await footer(page, "Eingangszentrale");
+  const kacheln = await page.evaluate(() => Object.fromEntries([["foto", "[data-dokument-scannen]"], ["stapel", "[data-stapel]"], ["formular", "[data-formular-scannen]"]].map(([k, sel]) => [k, document.querySelector(sel)?.querySelector("small")?.textContent || ""])));
+  check(/^Import:/.test(kacheln.foto) && /^Import:/.test(kacheln.stapel) && /^Ausfüllen:/.test(kacheln.formular), "Kacheln sagen, wofür: Import (Foto, Stapel) · Ausfüllen (Formular)", JSON.stringify(kacheln));
   await step("Eingangszentrale → „Stapel direkt übernehmen“: drei Dateien, Seite „Stapel“ mit Fortschritt", async () => {
     await footer(page, "Eingangszentrale");
     await page.locator("[data-stapel-start]").setInputFiles(dateien);

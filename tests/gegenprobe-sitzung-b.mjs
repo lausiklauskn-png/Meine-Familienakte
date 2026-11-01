@@ -61,6 +61,7 @@ const faelle = [
   { name: "Briefkopf2: kurze Nummern treffen zufällig", datei: "lib/briefkopf-titel.ts", alt: "x.f.length >= 5", neu: "x.f.length >= 1", befehl: [process.execPath, ["scripts/run-ausfuellen-tests.mjs"]], rot: /.*/, rotStderr: /kurze Nummern/ },
   { name: "Briefkopf2: Zeile im Eingang fehlt", datei: HP, alt: 'if (!aus && a && !briefHand) { setBrief(a);', neu: 'if (false) { setBrief(a);', probe: "briefkopf-eingang", rot: /Absender erkannt|Empfänger getrennt/ },
   { name: "Briefkopf2: gleiche Nummer nicht gemerkt", datei: HP, alt: '"Intelligenter Vorschlag übernommen", briefZeile(brief)]', neu: '"Intelligenter Vorschlag übernommen"]', probe: "briefkopf-eingang", rot: /frühere Unterlage/ },
+  { name: "Kacheln: Unterzeile sagt nicht, wofür", datei: "app/central-intake-center.tsx", alt: "<><b>Ausfüllen:</b> Formular scannen und am Bildschirm ausfüllen</>", neu: '"Papierformular scannen, dann gleich ausfüllen"', probe: "stapel", rot: /Kacheln sagen, wofür/ },
 ];
 const filter = process.argv[2] || "";
 const bauen = (einzel) => {
