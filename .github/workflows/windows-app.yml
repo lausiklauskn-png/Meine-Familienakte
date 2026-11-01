@@ -29,11 +29,17 @@ jobs:
           node-version: '22'
           cache: npm
       - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: windows/src-tauri -> target
       - run: npm ci
       - run: npm ci --prefix windows
+      - name: Gemeinsamen Pro-Tresor und lokale Engine prüfen
+        run: node tools/native/test-pro-tresor-engine.mjs
       - name: Fassungen und Hülle prüfen
         run: |
           node windows/tools/version.mjs

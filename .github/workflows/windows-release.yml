@@ -38,6 +38,10 @@ jobs:
           node-version: '22'
           cache: npm
       - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: windows/src-tauri -> target
@@ -53,6 +57,8 @@ jobs:
           if git ls-remote --exit-code --tags origin "refs/tags/$TAG" >/dev/null 2>&1; then echo "Tag $TAG gibt es schon"; exit 1; fi
       - run: npm ci
       - run: npm ci --prefix windows
+      - name: Gemeinsamen Pro-Tresor und lokale Engine prüfen
+        run: node tools/native/test-pro-tresor-engine.mjs
       - run: npm run typecheck
       - run: npm run check
       - run: node windows/tools/version.mjs && node tools/native/test-windows.mjs

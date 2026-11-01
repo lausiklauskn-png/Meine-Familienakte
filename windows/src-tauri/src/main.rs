@@ -4,6 +4,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 mod speech;
 mod update;
+mod pro_tresor;
 use serde_json::{json, Value};
 use std::sync::{atomic::{AtomicBool, Ordering}, Arc, Mutex};
 use tauri::{Emitter, Manager};
@@ -106,8 +107,9 @@ fn main() {
         }))
         .manage(Diktat { cancel: Mutex::new(None) })
         .manage(Geprueft(Mutex::new(None)))
+        .manage(pro_tresor::EngineState::default())
         .manage(Startdateien(Mutex::new(dateiargumente(&std::env::args().collect::<Vec<_>>()))))
-        .invoke_handler(tauri::generate_handler![fa_diktat, fa_diktat_abbrechen, fa_plattform, fa_startdateien, fa_adresse_oeffnen, fa_update_pruefen, fa_update_installieren])
+        .invoke_handler(tauri::generate_handler![fa_diktat, fa_diktat_abbrechen, fa_plattform, fa_startdateien, fa_adresse_oeffnen, fa_update_pruefen, fa_update_installieren, pro_tresor::fa_pro_tresor])
         .run(tauri::generate_context!())
         .expect("Meine Familienakte konnte nicht gestartet werden");
 }
