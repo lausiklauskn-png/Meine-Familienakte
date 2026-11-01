@@ -29,7 +29,19 @@ sondern nur KimHub.“
 - Jede Sitzung endet mit einem Abschlussbrief (`BRIEF_ABSCHLUSS_<Datum>_….md`) mit Stundennachweis und Startauftrag als Codeblock.
 - Aktueller Stand: der jüngste `BRIEF_ABSCHLUSS_*.md`; Plan der nächsten Schritte im jüngsten `BRIEF_SITZUNG_*.md`.
 - Nächster Bau (Klaus, 2026-11-01): `BRIEF_SITZUNG_2026-11-01_PRO-VERBUND.md` — Familienakte Pro, vorhandener Tresor mit freier Speicherwahl, Geräte-/Modellwahl, Portal aufteilen, bestätigte Übergaben zu den eigenständigen Pro-Apps. Kim-sync und Datei-Post als ergänzende Transportwege vorgeschlagen.
-- Übergabe auf main: `BRIEF_ABSCHLUSS_2026-11-01_CODEX-UEBERGABE-AUF-MAIN.md`. Klaus hat diese Dokumentationsübernahme einschließlich automatischer Veröffentlichung freigegeben; die Speicherreparatur in PR #48 bleibt separat.
+- Übergabe auf main: `BRIEF_ABSCHLUSS_2026-11-01_CODEX-UEBERGABE-AUF-MAIN.md`. Klaus hat die Übernahme einschließlich automatischer Veröffentlichung freigegeben. PR #48 samt Speicherreparatur und Plan ist seit Merge `1c7ac24` auf main; nicht erneut übernehmen.
+
+## Speicherwege (Klaus, 2026-11-01)
+
+- Klaus nutzt vor allem die Android-APK. Dokumente sollen auf Wunsch im vorhandenen Pro-Tresor auf der SD-Karte liegen;
+  dafür die bestehende Technik aus Workflow-PDF-Pro, Private Brain Pro und BookLedgerPro prüfen und wiederverwenden.
+- **SD-Karte ist optional.** Gerätespeicher, ein freigegebener Ordner auf dem Rechner und andere Laufwerke müssen möglich bleiben.
+  Ein gewählter, gerade nicht erreichbarer Speicher wird nicht still durch einen anderen ersetzt.
+- Dauerhafte Dokumente, vorläufige Arbeitskopien, kleine JSON-Arbeitsstände und Suchvektoren unterscheiden. Keine dauerhafte interne
+  Zweitsammlung aller PDFs. Vektoren gehören zum jeweiligen Dokument-/Textstand und Embedding-Modell; unterschiedliche Modelle
+  nicht vermischen. Die vorhandene Geräteprüfung und Modellwahl berücksichtigen, keine zweite unabhängige Lösung erfinden.
+- Die vorbereiteten gemeinsamen Fächer `familienakte` / `eingang-familienakte` sind noch kein fertiger Anschluss der Familienakte-APK.
+  Speicherreparaturen im bestehenden Eingang ausdrücklich von dieser noch offenen Integration unterscheiden.
 
 ## Stand nach der Sitzung 2026-11-01 „Workflow PDF ganz übernehmen“
 

@@ -2,9 +2,11 @@
 
 Auftrag von Klaus, 1. November 2026. Dieser Brief beschreibt den nächsten Bau; die Anschlüsse sind damit noch nicht umgesetzt.
 Er ergänzt [den Abschluss zum gesicherten Eingang](BRIEF_ABSCHLUSS_2026-11-01_CODEX-EINGANG-UND-TRESOR.md).
-Die Speicherreparatur liegt im [Entwurf #48](https://github.com/lausiklauskn-png/Meine-Familienakte/pull/48).
+Die Speicherreparatur und der Plan wurden während dieser Übergabe mit [PR #48](https://github.com/lausiklauskn-png/Meine-Familienakte/pull/48)
+bereits nach `main` übernommen (Merge `1c7ac24`, 2026-11-01, 12:59:09 UTC).
 **Aktualisierung auf Klaus' Auftrag:** Diesen Plan getrennt davon auf `main` übernehmen, damit die bereits laufende andere Sitzung
-ihn laden kann. Klaus hat auch die dadurch ausgelöste automatische Veröffentlichung ausdrücklich freigegeben.
+ihn laden kann. Diese Übernahme ist inzwischen erfolgt; dieser Nachtrag gleicht die Statusangaben ab.
+Klaus hat auch die dadurch ausgelöste automatische Veröffentlichung ausdrücklich freigegeben.
 
 ## Ziel und Bedienung
 
@@ -30,7 +32,7 @@ Code-Stand `eeaa61a2354168b1f81362addc945277af21e1ac`: GitHub-Hauptprüfung sowi
 Die früheren Brücken-/PWA-Prüfkorrekturen stehen bereits auf main. Nichts davon noch einmal bauen.
 
 Die neue Freigabe betrifft diesen Dokumentationsstand einschließlich automatischer Pages-Veröffentlichung.
-PR #48 mit der Speicherreparatur bleibt ein separates Stück; nächste Sitzung den Stand des PR zuerst prüfen.
+PR #48 ist inzwischen zusammengeführt. Die Speicherreparatur nicht erneut übernehmen; den aktuellen Stand vor weiteren Änderungen holen.
 Neue fertige Stücke auf eigenen `codex/…`-Zweigen mit je einem Entwurfs-PR bauen, Abhängigkeit von #48 benennen.
 
 ### 1. Vorhandenen Pro-Tresor anschließen
@@ -161,7 +163,7 @@ Ende-zu-Ende-Geräteprobe oder einer vollständigen Sicherheitsprüfung. Sichtba
 
 ```text
 CLAUDE.md, BRIEF_SITZUNG_2026-11-01_PRO-VERBUND.md und den jüngsten Abschlussbrief lesen.
-PR #48 zuerst prüfen: Eingang bereits repariert; Brücken-/PWA-Prüfkorrekturen bereits auf main.
+PR #48 ist gemergt: Eingang, Brücken-/PWA-Prüfkorrekturen und der Pro-Plan stehen bereits auf main.
 Erstes neues Stück: Adapter für den vorhandenen gemeinsamen Pro-Tresor, Android zuerst.
 Freie Speicherwahl, vorhandene Originale erhalten, kein stiller Ersatzspeicher.
 Danach bestehende Geräte-/Modellwahl, Portal weiter aufteilen und quittierte Übergaben in beide Richtungen.
@@ -169,6 +171,6 @@ Familienakte Pro ↔ eigenständige Workflow PDF Pro / Private Brain Pro / BookL
 Lokaler Weg ohne Relay; für Geräte über das Netz Kim-sync plus ergänzende Datei-Post vorschlagen.
 Keine zweite Raumverwaltung, keine automatische Gesamtsynchronisierung, keine erfundene Empfangsbestätigung.
 Jede App bleibt einzeln nutzbar. Sichtbare Bedienung erst konkret vorschlagen und Klaus' Ja abwarten.
-Der Plan wird auf Klaus' neues Wort nach main übernommen, automatische Pages-Veröffentlichung ist dafür erlaubt.
-PR #48 bleibt separat. Keine Versionsanhebung für diesen Plan; keine APK-/Windows-Release-Workflows beauftragt.
+Der Plan steht auf Klaus' neues Wort auf main; automatische Pages-Veröffentlichung ist dafür erlaubt.
+Keine Versionsanhebung für diesen Plan; keine APK-/Windows-Release-Workflows beauftragt.
 ```

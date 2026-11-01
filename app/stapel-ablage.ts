@@ -4,16 +4,27 @@
 export type StapelEintrag = { id: string; name: string; sicher: boolean; grund: string; quelle: string; groesse: number; zeit: string; pdf: Blob; vorschau?: Blob;
   pruefung?: { stand: "warnung" | "sauber" | "ungeprueft"; funde: Array<{ name: string; satz: string }>; hinweise: string[]; zeit: string } };
 const DB = "FamilienakteStapel1", FACH = "stapel";
-function oeffnen() {
+export function stapelDatenbank() {
   return new Promise<IDBDatabase>((ok, nein) => {
-    const r = indexedDB.open(DB, 1);
-    r.onupgradeneeded = () => { if (!r.result.objectStoreNames.contains(FACH)) r.result.createObjectStore(FACH, { keyPath: "id" }); };
-    r.onsuccess = () => ok(r.result); r.onerror = () => nein(r.error);
+    const r = indexedDB.open(DB, 2);
+    r.onupgradeneeded = () => {
+      for (const fach of [FACH, "eingang", "eingang-dateien"]) {
+        if (!r.result.objectStoreNames.contains(fach)) r.result.createObjectStore(fach, { keyPath: "id" });
+      }
+    };
+    r.onsuccess = () => { r.result.onversionchange = () => r.result.close(); ok(r.result); };
+    r.onerror = () => nein(r.error);
   });
 }
 async function tx<T>(modus: IDBTransactionMode, f: (s: IDBObjectStore) => IDBRequest<T>) {
-  const db = await oeffnen();
-  try { return await new Promise<T>((ok, nein) => { const r = f(db.transaction(FACH, modus).objectStore(FACH)); r.onsuccess = () => ok(r.result); r.onerror = () => nein(r.error); }); }
+  const db = await stapelDatenbank();
+  try { return await new Promise<T>((ok, nein) => {
+    const t = db.transaction(FACH, modus);
+    const r = f(t.objectStore(FACH));
+    t.oncomplete = () => ok(r.result);
+    t.onabort = () => nein(t.error || new Error("Stapel konnte nicht gespeichert werden."));
+    t.onerror = () => nein(t.error);
+  }); }
   finally { db.close(); }
 }
 export const stapelAlle = async () => (await tx<StapelEintrag[]>("readonly", (s) => s.getAll() as IDBRequest<StapelEintrag[]>)).sort((a, b) => a.zeit.localeCompare(b.zeit));
