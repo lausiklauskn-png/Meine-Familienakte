@@ -62,7 +62,7 @@ export type CentralIntakeAnalysis = {
 
 export type CentralIntakeQueueItem = {
   id: string;
-  file: File;
+  file: Pick<File, "name" | "type" | "size" | "lastModified">;
   source: DocumentIntakeSource;
   status: CentralIntakeStatus;
   selected: boolean;

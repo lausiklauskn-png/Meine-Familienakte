@@ -46,7 +46,7 @@ export function stapelStartenMitEinst(dateien: File[], einst = stapelEinst()) {
 
 export function StapelSeite({ kopf, neu, onNeuGenommen, onEinordnen, onWorkflowPdf }: {
   kopf: React.ReactNode; neu: File[] | null; onNeuGenommen: () => void;
-  onEinordnen: (dateien: File[]) => Promise<void>; onWorkflowPdf: (datei: File) => void;
+  onEinordnen: (dateien: File[], ids: string[]) => Promise<boolean>; onWorkflowPdf: (datei: File) => void;
 }) {
   const [liste, setListe] = useState<StapelEintrag[]>([]);
   const [lauf, setLauf] = useState<StapelLauf>(stapelLauf());
@@ -73,7 +73,7 @@ export function StapelSeite({ kopf, neu, onNeuGenommen, onEinordnen, onWorkflowP
   const einordnen = async (eintraege: StapelEintrag[]) => {
     if (!eintraege.length) return;
     setBusy(true);
-    try { await onEinordnen(eintraege.map(stapelDatei)); for (const e of eintraege) await stapelWeg(e.id); setWahl(new Set()); setOffen(null); await laden(); }
+    try { if (!await onEinordnen(eintraege.map(stapelDatei), eintraege.map((e) => e.id))) return; setWahl(new Set()); setOffen(null); await laden(); }
     finally { setBusy(false); }
   };
   // Prüfbericht nur auf Wahl (Klaus: „Dokumente vom Amt brauchen das nicht. Spart Rechnerleistung.“)

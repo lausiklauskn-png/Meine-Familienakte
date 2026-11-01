@@ -1,4 +1,6 @@
 import { askConfirm, askPrompt } from "./page-dialogs";
+import { useEingang } from "./use-eingang";
+import { eingangDatei } from "./eingang-ablage";
 import { openFile } from "./file-viewer";
 import { lazy, Suspense } from "react";
 import { PracticalAcceptance, StoredUserAcceptance } from "./practical-acceptance";
@@ -475,7 +477,6 @@ function HealthPortalContent() {
   const [uploadFromStart, setUploadFromStart] = useState(false);
   const [uploadQueueId, setUploadQueueId] = useState<string | null>(null);
   const [lastIntakeReceipt, setLastIntakeReceipt] = useState<IntakeReceipt | null>(null);
-  const [centralIntakeQueue, setCentralIntakeQueue] = useState<CentralIntakeQueueItem[]>([]);
   const [scanOpen, setScanOpen] = useState(false);
   const [scanInitialFiles, setScanInitialFiles] = useState<File[]>([]);
   const [scanQueueIds, setScanQueueIds] = useState<string[]>([]);
@@ -512,6 +513,8 @@ function HealthPortalContent() {
   const setNotice = useCallback((next: Notice) => {
     if (next) reportActivity(next);
   }, [reportActivity]);
+  const [centralIntakeQueue, setCentralIntakeQueue] = useEingang((error) => setNotice({ kind: "error", text: error instanceof Error ? error.message : "Der Eingang konnte nicht im Arbeitsspeicher gesichert werden." }));
+  const intakeAnalyses = useRef(new Set<string>());
   const [oneDriveHandle, setOneDriveHandle] = useState<FileSystemDirectoryHandle | null>(null);
   const [localVaultHandle, setLocalVaultHandle] = useState<FileSystemDirectoryHandle | null>(null);
   const [inboxFolderHandle, setInboxFolderHandle] = useState<FileSystemDirectoryHandle | null>(null);
@@ -640,29 +643,43 @@ function HealthPortalContent() {
   };
   const openLocalUpload = () => beginLocalUpload(null, "file-picker", false);
   const openStartIntake = (file: File | null = null, source: DocumentIntakeSource = file ? "drag-drop" : "file-picker") => beginLocalUpload(file, source, true);
-  const queueCentralIntakeFiles = async (files: File[], source: DocumentIntakeSource, parentQueueId: string | null = null) => {
-    if (!files.length) return;
-    const placeholders: CentralIntakeQueueItem[] = files.map((file) => ({ id: crypto.randomUUID(), file, source, status: "Analyse läuft", selected: false, addedAt: new Date().toISOString(), analysis: null, error: null, parentQueueId }));
-    setCentralIntakeQueue((current) => [...placeholders, ...current]);
+  const analyzeQueuedIntake = async (placeholders: CentralIntakeQueueItem[]) => {
     setIntakeBusy(true);
     try {
-      const analyzed = groupCentralIntakeAnalyses(await Promise.all(placeholders.map((item) => analyzeCentralIntakeFile({ file: item.file, source: item.source, documents: [...localDocuments, ...documents], records: familyRecords }))));
+      const analyzed = groupCentralIntakeAnalyses(await Promise.all(placeholders.map(async (item) => analyzeCentralIntakeFile({ file: await eingangDatei(item), source: item.source, documents: [...localDocuments, ...documents], records: familyRecords }))));
       const checksumCounts = new Map<string, number>();
       analyzed.forEach((item) => checksumCounts.set(item.checksum, (checksumCounts.get(item.checksum) || 0) + 1));
-      setCentralIntakeQueue((current) => current.map((item) => {
+      const saved = await setCentralIntakeQueue((current) => current.map((item) => {
         const position = placeholders.findIndex((candidate) => candidate.id === item.id);
-        if (position < 0) return item;
+        if (position < 0 || item.status !== "Analyse läuft") return item;
         const analysis = analyzed[position];
         const batchDuplicate = (checksumCounts.get(analysis.checksum) || 0) > 1;
         return { ...item, analysis, status: batchDuplicate ? "Prüfung erforderlich" : initialCentralIntakeStatus(analysis), error: batchDuplicate ? "Mögliche Dublette innerhalb dieser Auswahl – bitte vergleichen." : null };
       }));
+      if (!saved) return;
       const reviewCount = analyzed.filter((analysis) => analysis.plan.requiresReview || analysis.plan.duplicateIds.length || (checksumCounts.get(analysis.checksum) || 0) > 1).length;
-      setNotice({ kind: reviewCount ? "info" : "success", text: `${files.length} Eingang${files.length === 1 ? " wurde" : "sfälle wurden"} erkannt und in „Eingänge prüfen“ vorbereitet.${reviewCount ? ` ${reviewCount} erfordern eine Prüfung, beispielsweise wegen unklarer Zuordnung oder möglicher Dubletten.` : ""} Es wurde noch nichts übernommen.` });
+      setNotice({ kind: reviewCount ? "info" : "success", text: `${placeholders.length} Eingang${placeholders.length === 1 ? " wurde" : "sfälle wurden"} erkannt und in „Eingänge prüfen“ vorbereitet.${reviewCount ? ` ${reviewCount} erfordern eine Prüfung, beispielsweise wegen unklarer Zuordnung oder möglicher Dubletten.` : ""} Es wurde noch nichts übernommen.` });
     } catch (error) {
-      setCentralIntakeQueue((current) => current.map((item) => placeholders.some((candidate) => candidate.id === item.id) ? { ...item, status: "Prüfung erforderlich", error: error instanceof Error ? error.message : "Die Datei konnte nicht automatisch analysiert werden." } : item));
+      await setCentralIntakeQueue((current) => current.map((item) => item.status === "Analyse läuft" && placeholders.some((candidate) => candidate.id === item.id) ? { ...item, status: "Prüfung erforderlich", error: error instanceof Error ? error.message : "Die Datei konnte nicht automatisch analysiert werden." } : item));
       setNotice({ kind: "error", text: "Mindestens ein Eingang konnte nicht vollständig analysiert werden. Die Originaldateien blieben unverändert." });
     } finally { setIntakeBusy(false); }
   };
+  const queueCentralIntakeFiles = async (files: File[], source: DocumentIntakeSource, parentQueueId: string | null = null, stapelIds: string[] = []) => {
+    if (!files.length) return false;
+    const placeholders: CentralIntakeQueueItem[] = files.map((file) => ({ id: crypto.randomUUID(), file, source, status: "Analyse läuft", selected: false, addedAt: new Date().toISOString(), analysis: null, error: null, parentQueueId }));
+    placeholders.forEach((item) => intakeAnalyses.current.add(item.id));
+    // Erst die bestätigte Transaktion darf den Stapel freigeben; Analyse darf später fertig werden.
+    if (!await setCentralIntakeQueue((current) => [...placeholders, ...current], stapelIds)) return false;
+    void analyzeQueuedIntake(placeholders);
+    return true;
+  };
+  const resumeIntake = useRef(analyzeQueuedIntake); resumeIntake.current = analyzeQueuedIntake;
+  useEffect(() => {
+    const pending = centralIntakeQueue.filter((item) => item.status === "Analyse läuft" && !intakeAnalyses.current.has(item.id));
+    if (!pending.length) return;
+    pending.forEach((item) => intakeAnalyses.current.add(item.id));
+    void resumeIntake.current(pending);
+  }, [centralIntakeQueue]);
   // Dateien aus der Hülle (Android „Teilen → Familienakte“, PWA share_target, Windows „Öffnen mit“): wie Dateiauswahl
   // in die Eingangszentrale, nichts wird ohne Bestätigung übernommen. Klebstoff: public/native/familienakte-app.js.
   const queueFromShell = useRef(queueCentralIntakeFiles); queueFromShell.current = queueCentralIntakeFiles;
@@ -677,24 +694,27 @@ function HealthPortalContent() {
     window.dispatchEvent(new Event("familienakte:bereit"));
     return () => window.removeEventListener("familienakte:dateien", handler);
   }, []);
-  const reviewCentralIntake = (id: string) => {
+  const reviewCentralIntake = async (id: string) => {
     const item = centralIntakeQueue.find((candidate) => candidate.id === id);
     if (!item) return;
-    beginLocalUpload(item.file, item.source, false, null, item.id);
+    try { beginLocalUpload(await eingangDatei(item), item.source, false, null, item.id); }
+    catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die Arbeitsdatei konnte nicht geladen werden." }); }
   };
   const extractCentralEmailAttachments = async (id: string) => {
     const item = centralIntakeQueue.find((candidate) => candidate.id === id);
     if (!item) return;
     setIntakeBusy(true);
     try {
-      const attachments = await extractEmlAttachments(item.file);
+      const file = item.savedDocumentId && item.status === "Übernommen"
+        ? await readLocalDocumentFile(vaultHandle!, item.savedDocumentId) : await eingangDatei(item);
+      const attachments = await extractEmlAttachments(file);
       if (!attachments.length) setNotice({ kind: "error", text: "Die E-Mail nennt Anlagen, sie konnten aus dieser Exportdatei aber nicht automatisch herausgelöst werden. Die Original-E-Mail bleibt vollständig erhalten." });
       else await queueCentralIntakeFiles(attachments, item.source, item.id);
     } catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die E-Mail-Anlagen konnten nicht gelesen werden." }); }
     finally { setIntakeBusy(false); }
   };
-  const setCentralIntakeStatus = (ids: string[], status: CentralIntakeStatus) => {
-    setCentralIntakeQueue((current) => current.map((item) => ids.includes(item.id) ? { ...item, status, selected: false } : item));
+  const setCentralIntakeStatus = async (ids: string[], status: CentralIntakeStatus) => {
+    if (!await setCentralIntakeQueue((current) => current.map((item) => ids.includes(item.id) ? { ...item, status, selected: false } : item))) return;
     reportActivity({ kind: "info", text: `${ids.length} Eingang${ids.length === 1 ? " wurde" : "sfälle wurden"} als „${status}“ vorgemerkt. Es wurde keine Datei gespeichert oder gelöscht.` });
   };
   const toggleCentralIntake = (id: string) => setCentralIntakeQueue((current) => current.map((item) => item.id === id ? { ...item, selected: !item.selected } : item));
@@ -724,7 +744,7 @@ function HealthPortalContent() {
         await scannen({ titel: "Dokument scannen", fertigText: "Weiter zur Prüfung", name: `Dokumentscan ${new Date().toISOString().slice(0, 10)}`, fertig: (file) => { beginLocalUpload(file, "camera-scan", true); } });
       } catch (reason) { setActionState("upload", "failed"); setNotice({ kind: "error", text: reason instanceof Error ? reason.message : "Der Scanner konnte nicht geöffnet werden." }); }
     })(); return; }
-    setScanInitialFiles(files); setScanQueueIds(centralIntakeQueue.filter((item) => files.includes(item.file)).map((item) => item.id)); setScanOpen(true); setActionState("upload", "pending");
+    setScanInitialFiles(files); setScanQueueIds(centralIntakeQueue.filter((item) => files.some((file) => file === item.file)).map((item) => item.id)); setScanOpen(true); setActionState("upload", "pending");
     reportActivity({ kind: "info", text: `Dokumentfotografie geöffnet · ${files.length} Aufnahme${files.length === 1 ? "" : "n"} zur Prüfung vorbereitet. Es wurde noch nichts gespeichert.` });
   };
   const scanSelectedInbox = async (handle = inboxFolderHandle) => {
@@ -1222,6 +1242,12 @@ function HealthPortalContent() {
           onGo={go}
         />}
         {!query && active === "inbox" && <><Suspense fallback={null}><CentralIntakeCenter
+          onScanQueued={async (ids) => {
+            try {
+              const files = await Promise.all(ids.map((id) => eingangDatei(centralIntakeQueue.find((item) => item.id === id)!)));
+              openDocumentScan(files); setScanQueueIds(ids);
+            } catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die Arbeitsdateien konnten nicht geladen werden." }); }
+          }}
           queue={centralIntakeQueue} storageReady={!!vaultHandle} oneDriveConnected={!!oneDriveHandle} inboxFolderName={inboxFolderName} busy={intakeBusy} checkedAt={intakeCheckedAt}
           onFiles={(files, source) => void queueCentralIntakeFiles(files, source)} onStartDocumentScan={openDocumentScan} onScanForm={() => void scanFormular()} onStapel={(files) => { setStapelNeu(files); go("stapel"); }}
           onSelectInbox={selectInboxFolder} onScanInbox={() => void scanSelectedInbox()} onScanOneDrive={checkOneDriveInbox}
@@ -1233,7 +1259,7 @@ function HealthPortalContent() {
           catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Speichern nicht möglich." }); }
           finally { setBusy(false); }
         }} busy={busy}/></>} 
-        {!query && active === "stapel" && <Suspense fallback={null}><StapelSeite neu={stapelNeu} onNeuGenommen={() => setStapelNeu(null)} onWorkflowPdf={dateiInWorkflowPdf} onEinordnen={async (dateien) => { void queueCentralIntakeFiles(dateien, "camera-scan"); setNotice({ kind: "success", text: `${dateien.length} Unterlage${dateien.length === 1 ? "" : "n"} aus dem Stapel liegen in der Eingangszentrale: Text lesen, Einordnen und Zusammenhang laufen dort.` }); }} kopf={<PageTitle icon={<Upload/>} title="Stapel (noch einordnen)" text="Viele Fotos oder Scans auf einmal: Workflow PDF findet je Bild das Blatt und zieht es gerade. Wo sich die Verfahren nicht einig sind, bleibt das ganze Foto stehen („Ecken prüfen“). Erst „Einordnen“ gibt die Unterlagen an die Eingangszentrale."/>}/></Suspense>}
+        {!query && active === "stapel" && <Suspense fallback={null}><StapelSeite neu={stapelNeu} onNeuGenommen={() => setStapelNeu(null)} onWorkflowPdf={dateiInWorkflowPdf} onEinordnen={(dateien, ids) => queueCentralIntakeFiles(dateien, "camera-scan", null, ids)} kopf={<PageTitle icon={<Upload/>} title="Stapel (noch einordnen)" text="Viele Fotos oder Scans auf einmal: Workflow PDF findet je Bild das Blatt und zieht es gerade. Wo sich die Verfahren nicht einig sind, bleibt das ganze Foto stehen („Ecken prüfen“). Erst „Einordnen“ gibt die Unterlagen an die Eingangszentrale."/>}/></Suspense>}
         {!query && active === "workflowpdf" && <Suspense fallback={null}><WorkflowPdfSeite key={wfpdfStart} scan={wfpdfScan} oeffnen={wfpdfOeffnen} onAblegen={ausWorkflowPdf} onGeoeffnet={() => { setWfpdfOeffnen(null); setWfpdfScan(false); }} kopf={<PageTitle icon={<FileText/>} title="Workflow PDF" text="Das ganze Werkzeug von Workflow PDF in der Familienakte: scannen, zuschneiden, Felder erkennen und setzen, ausfüllen, Prüfbericht, PDF ausgeben. Eigene Bibliothek, getrennt von der Workflow-PDF-App; nichts geht ins Netz, bis du es selbst wählst."/>}/></Suspense>}
         {!query && active === "netz" && <Suspense fallback={null}><NetzSeite kopf={<PageTitle icon={<Network/>} title="Netz (Mycel)" text="Verbindet die Familienakte auf Wunsch mit anderen Geräten im SBKIM-Netz. Beim Öffnen der Akte geht nichts ins Netz; hinaus geht nur die Visitenkarte, keine Unterlagen."/>}/></Suspense>}
         {!query && active === "security" && <SecurityCenter
@@ -1325,9 +1351,9 @@ function HealthPortalContent() {
           }}
         />
       </Suspense>)}
-      {uploadOpen && vaultHandle && <UploadDialog initialFile={uploadInitialFile} source={uploadSource} knownDocuments={[...localDocuments, ...documents]} records={familyRecords} relations={familyRelations} decisions={linkDecisions} suggestedCaseId={uploadSuggestedCaseId} onOpenExisting={(id) => {
+      {uploadOpen && vaultHandle && <UploadDialog initialFile={uploadInitialFile} source={uploadSource} knownDocuments={[...localDocuments, ...documents]} records={familyRecords} relations={familyRelations} decisions={linkDecisions} suggestedCaseId={uploadSuggestedCaseId} onOpenExisting={async (id) => {
         const queued = uploadQueueId ? centralIntakeQueue.find((item) => item.id === uploadQueueId) : null;
-        setCentralIntakeQueue((current) => current.map((item) => item.id === uploadQueueId ? { ...item, status: "Übernommen", selected: false, savedDocumentId: id, error: "Vorhandener Dokumentdatensatz wurde wiederverwendet; es wurde keine Kopie angelegt." } : item));
+        if (!await setCentralIntakeQueue((current) => current.map((item) => item.id === uploadQueueId ? { ...item, status: "Übernommen", selected: false, savedDocumentId: id, error: "Vorhandener Dokumentdatensatz wurde wiederverwendet; es wurde keine Kopie angelegt." } : item))) return;
         if (queued?.parentQueueId) {
           const parent = centralIntakeQueue.find((item) => item.id === queued.parentQueueId);
           if (parent?.savedDocumentId && localDocuments.some((item) => item.id === id)) void linkLocalDocuments(vaultHandle, parent.savedDocumentId, id, "enthält Anlage").catch(() => undefined);
@@ -1355,10 +1381,10 @@ function HealthPortalContent() {
           if (uploadQueueId) {
             const children = centralIntakeQueue.filter((entry) => entry.parentQueueId === uploadQueueId && entry.savedDocumentId);
             for (const child of children) await linkLocalDocuments(vaultHandle, item.id, child.savedDocumentId!, "enthält Anlage");
-            setCentralIntakeQueue((current) => current.map((entry) => entry.id === uploadQueueId ? { ...entry, status: "Übernommen", selected: false, savedDocumentId: item.id, error: null } : entry));
+            if (!await setCentralIntakeQueue((current) => current.map((entry) => entry.id === uploadQueueId ? { ...entry, status: "Übernommen", selected: false, savedDocumentId: item.id, error: null } : entry))) throw new Error("Das Dokument ist abgelegt, der Arbeitsstand konnte noch nicht bestätigt werden.");
           }
           if (scan?.pageCount && scanQueueIds.length) {
-            setCentralIntakeQueue((current) => current.map((entry) => scanQueueIds.includes(entry.id) ? { ...entry, status: "Übernommen", selected: false, savedDocumentId: item.id, error: "Als Seiten desselben PDF-Dokuments übernommen." } : entry));
+            if (!await setCentralIntakeQueue((current) => current.map((entry) => scanQueueIds.includes(entry.id) ? { ...entry, status: "Übernommen", selected: false, savedDocumentId: item.id, error: "Als Seiten desselben PDF-Dokuments übernommen." } : entry))) throw new Error("Das Scan-Dokument ist abgelegt, der Arbeitsstand konnte noch nicht bestätigt werden.");
             setScanQueueIds([]);
           }
           if (rejectedContext) {

@@ -147,8 +147,8 @@ try {
   });
   await step("Eingangszentrale: Eingang ankreuzen → Sammelknöpfe; „Nicht übernehmen“ nimmt ihn aus der Prüfung", async () => {
     const vorher = (await page.locator("body").innerText()).match(/(\d+) Eingänge/)[1];
-    await page.locator('main input[type="checkbox"]').first().check();
-    await page.waitForTimeout(200);
+    await page.locator('main input[type="checkbox"]').first().click();
+    await page.locator('main input[type="checkbox"]:checked').first().waitFor();
     const sammel = await page.locator("button", { hasText: "Sichere Vorschläge vormerken" }).count();
     await page.locator("button", { hasText: "Nicht übernehmen" }).first().click(); await page.waitForTimeout(300);
     const nachher = (await page.locator("body").innerText()).match(/(\d+) Eingänge/)[1];
