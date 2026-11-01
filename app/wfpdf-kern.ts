@@ -139,3 +139,36 @@ export async function ocrZeilen(c: HTMLCanvasElement): Promise<OcrZeile[]> {
   }
   return out;
 }
+
+// ---------- Briefkopf (Klaus 2026-11-01, Antwort 4): briefkopf.js aus Workflow PDF, byte-1:1 im Klon ----------
+type Briefkopf = { lesen: (zeilen: string[], opt?: Record<string, unknown>) => { datum?: { wert?: string } | null; absender?: { wert?: string } | null } };
+/** Liest Absender, Datum … aus Textzeilen. Lädt den Baustein erst beim ersten Gebrauch. */
+export async function briefkopfLesen(zeilen: string[]) {
+  const fw = window as Window & { WFP?: { Briefkopf?: Briefkopf } };
+  if (!fw.WFP?.Briefkopf) await skript(new URL("apps/workflow-pdf/assets/briefkopf.js", document.baseURI).href);
+  return fw.WFP!.Briefkopf!.lesen(zeilen.slice(0, 400));
+}
+
+// ---------- Prüfbericht auf Wahl (Klaus 2026-11-01, Antwort 3: „Ja, auf manuelle Wahl … Amtspost braucht das nicht“) ----------
+// Der Prüfkern von Workflow PDF (pruefer-formate/-mail/-anhang.js) und die Namen der Befunde (eingang.js) liegen byte-1:1 im Klon.
+// eingang.js lädt den Kern relativ zur Seite — das passt in der Akte nicht; deshalb lädt dieser Klebstoff ihn selbst und rechnet
+// den Stand nach derselben Regel: ein Befund aus WARN = Warnung, sonst sauber, und was nicht lief, heißt „ungeprüft“ mit Grund.
+type PruefKern = { pruefe: (name: string, b: Uint8Array) => Promise<{ befunde: Array<{ kennung: string; satz: string }>; hinweise: string[]; art: string; bildUngeprueft?: boolean }>;
+  pfade: (p: Record<string, string>) => unknown };
+export type PruefErgebnis = { stand: "warnung" | "sauber" | "ungeprueft"; funde: Array<{ kennung: string; name: string; satz: string }>; hinweise: string[]; zeit: string };
+export async function dateiPruefen(name: string, daten: Blob): Promise<PruefErgebnis> {
+  const zeit = new Date().toISOString();
+  try {
+    const k = new URL("apps/workflow-pdf/", document.baseURI).href;
+    const fw = window as Window & { PrueferAnhang?: PruefKern; WFP?: { Eingang?: { WARN: string[]; NAME: Record<string, string> } } };
+    for (const d of ["assets/pruefer-formate.js", "assets/pruefer-mail.js", "assets/pruefer-anhang.js", "assets/eingang.js"]) await skript(k + d);
+    const A = fw.PrueferAnhang, E = fw.WFP?.Eingang;
+    if (!A?.pruefe || !E) throw new Error("der Prüfkern meldet sich nicht");
+    A.pfade({ pdfjs: `${k}vendor/pdfjs/`, tesseract: `${k}vendor/tesseract/` });
+    const r = await A.pruefe(name, new Uint8Array(await daten.arrayBuffer()));
+    const funde = r.befunde.filter((x) => E.WARN.includes(x.kennung)).map((x) => ({ kennung: x.kennung, name: E.NAME[x.kennung] || x.kennung, satz: x.satz }));
+    return { stand: funde.length ? "warnung" : r.bildUngeprueft ? "ungeprueft" : "sauber", funde, hinweise: r.hinweise || [], zeit };
+  } catch (e) {
+    return { stand: "ungeprueft", funde: [], hinweise: [`Die Prüfung lief nicht: ${e instanceof Error ? e.message : String(e)}`], zeit };
+  }
+}
