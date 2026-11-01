@@ -46,6 +46,7 @@
   async function readShared(item) {
     const parts = []; let offset = 0;
     for (;;) { const { data } = await share.read({ id: item.id, offset }); if (!data) break; const bytes = bytesFromBase64(data); if (!bytes.length) break; parts.push(bytes); offset += bytes.length; if (offset >= item.size) break; }
+    if (offset !== item.size) throw new Error('Geteilte Datei unvollständig');
     return new File(parts, item.name, { type: item.mime || 'application/octet-stream' });
   }
   let holt = false;
@@ -53,11 +54,11 @@
     if (!share?.pending || holt) return; holt = true;
     try {
       const { items = [], refused = 0 } = await share.pending();
-      const files = [];
-      for (const item of items) { try { files.push(await readShared(item)); } catch { /* bleibt im Eingang der App, nächster Versuch */ } }
+      const files = []; const gelesen = [];
+      for (const item of items) { try { files.push(await readShared(item)); gelesen.push(item); } catch { /* bleibt im Eingang der App, nächster Versuch */ } }
       if (files.length) {
         const zugestellt = await window.FamilienakteApp?.dateienUebergeben?.(files);
-        if (zugestellt) for (const item of items) { try { await share.done({ id: item.id }); } catch { /* wird beim nächsten Start geräumt */ } }
+        if (zugestellt) for (const item of gelesen) { try { await share.done({ id: item.id }); } catch { /* wird beim nächsten Start geräumt */ } }
       }
       if (refused) window.FamilienakteApp?.hinweis?.(`${refused} geteilte Datei(en) konnten nicht gelesen werden.`, 8000);
     } finally { holt = false; }

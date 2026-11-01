@@ -1,6 +1,9 @@
 import { askConfirm, askPrompt } from "./page-dialogs";
 import { useEingang } from "./use-eingang";
 import { ProTresorAnschluss } from "./pro-tresor-anschluss";
+import { ProDokumentKnopf } from "./pro-dokument-knopf";
+import { istProOriginal, proTresor, proTresorVerfuegbar } from "./pro-tresor";
+import { copyLocalDocumentToPro } from "./local-vault";
 import { eingangDatei } from "./eingang-ablage";
 import { openFile } from "./file-viewer";
 import { lazy, Suspense } from "react";
@@ -686,10 +689,14 @@ function HealthPortalContent() {
   const queueFromShell = useRef(queueCentralIntakeFiles); queueFromShell.current = queueCentralIntakeFiles;
   useEffect(() => {
     const handler = (event: Event) => {
-      const files = (event as CustomEvent<{ files?: File[] }>).detail?.files || [];
-      if (!files.length) return;
+      const detail = (event as CustomEvent<{ files?: File[]; bestaetigen?: (ok: boolean) => void }>).detail;
+      const files = detail?.files || [];
+      if (!files.length) { detail?.bestaetigen?.(false); return; }
       go("inbox");
-      void queueFromShell.current(files, "file-picker");
+      void queueFromShell.current(files, "file-picker").then(
+        (ok) => detail?.bestaetigen?.(ok),
+        () => detail?.bestaetigen?.(false),
+      );
     };
     window.addEventListener("familienakte:dateien", handler);
     window.dispatchEvent(new Event("familienakte:bereit"));
@@ -726,6 +733,15 @@ function HealthPortalContent() {
     catch (reason) { setNotice({ kind: "error", text: reason instanceof Error ? reason.message : "Die Unterlage konnte nicht geöffnet werden." }); }
   };
   const dateiInWorkflowPdf = (datei: File) => { setWfpdfOeffnen([datei]); setWfpdfScan(false); setWfpdfStart((n) => n + 1); go("workflowpdf"); };
+  const inProTresor = async (id: string) => {
+    if (!vaultHandle) return;
+    try {
+      const stand = await proTresor.zustand();
+      if (stand.status !== "offen" || !stand.id) { go("security"); setNotice({ kind: "info", text: "Bitte zuerst den gewünschten Pro-Tresor verbinden und entsperren. Danach die einzelne Unterlage erneut wählen." }); return; }
+      await copyLocalDocumentToPro(vaultHandle, id, stand.id); await refreshLocal(vaultHandle);
+      setNotice({ kind: "success", text: "Das ausgewählte Original liegt geprüft im Pro-Tresor. Der bisherige Bestand wurde beibehalten." });
+    } catch (e) { setNotice({ kind: "error", text: e instanceof Error ? e.message : "Das Original wurde nicht übernommen; die Quelle bleibt erhalten." }); }
+  };
   const ausWorkflowPdf = ({ quelle, dateien }: WfpdfAblage) => {
     if (quelle === "scan" && dateien.length === 1) { beginLocalUpload(dateien[0], "camera-scan", true); return; }
     void queueCentralIntakeFiles(dateien, "file-picker");
@@ -1217,6 +1233,7 @@ function HealthPortalContent() {
         {!query && active === "documents" && <DocumentLibrary key={`${documentLibraryRequest.key}-${documentLibraryFocusId || "document-library"}`}
           documents={cockpitDocuments(documents, localDocuments)} records={familyRecords} relations={familyRelations}
           initialFocusId={documentLibraryFocusId} initialArea={documentLibraryRequest.area} initialQuery={documentLibraryRequest.query}
+          onPro={proTresorVerfuegbar() ? inProTresor : undefined} proKandidaten={new Set(localDocuments.filter((d) => !istProOriginal(d.storedPath)).map((d) => d.id))}
           fillStates={fillStates} onFill={setFillDocId} onWfpdf={(id) => void inWorkflowPdf(id)} onOpenDocument={openDocument} onGo={go} onUpload={openLocalUpload} onUnlink={unlinkContext} onChange={changeContextLink}
         />}
         {!query && active === "inventory" && <InventoryCenter
@@ -1264,6 +1281,7 @@ function HealthPortalContent() {
         {!query && active === "workflowpdf" && <Suspense fallback={null}><WorkflowPdfSeite key={wfpdfStart} scan={wfpdfScan} oeffnen={wfpdfOeffnen} onAblegen={ausWorkflowPdf} onGeoeffnet={() => { setWfpdfOeffnen(null); setWfpdfScan(false); }} kopf={<PageTitle icon={<FileText/>} title="Workflow PDF" text="Das ganze Werkzeug von Workflow PDF in der Familienakte: scannen, zuschneiden, Felder erkennen und setzen, ausfüllen, Prüfbericht, PDF ausgeben. Eigene Bibliothek, getrennt von der Workflow-PDF-App; nichts geht ins Netz, bis du es selbst wählst."/>}/></Suspense>}
         {!query && active === "netz" && <Suspense fallback={null}><NetzSeite kopf={<PageTitle icon={<Network/>} title="Netz (Mycel)" text="Verbindet die Familienakte auf Wunsch mit anderen Geräten im SBKIM-Netz. Beim Öffnen der Akte geht nichts ins Netz; hinaus geht nur die Visitenkarte, keine Unterlagen."/>}/></Suspense>}
         {!query && active === "security" && <SecurityCenter
+          aktenHandle={vaultHandle}
           oneDriveConnected={oneDriveReachable} oneDriveName={oneDriveName} oneDriveSummary={oneDriveSummary}
           localConnected={localVaultReachable} localVaultName={localVaultName} localVaultSummary={localVaultSummary}
           supported={vaultSupported()} onlineCount={documents.length} localCount={localDocuments.length} busy={vaultBusy || busy}
@@ -3143,11 +3161,12 @@ function DocumentLibraryAreaIcon({ area }: { area: string }) {
   return <FileText aria-hidden="true"/>;
 }
 
-function DocumentLibraryCard({ item, fill, onFill, onWfpdf, onOpen, onArea, onType, onDate, onReference }: {
+function DocumentLibraryCard({ item, fill, onFill, onWfpdf, onPro, onOpen, onArea, onType, onDate, onReference }: {
   item: DocumentLibraryItem;
   fill?: FillState;
   onFill?: () => void;
   onWfpdf?: () => void;
+  onPro?: () => Promise<void>;
   onOpen: () => void;
   onArea: () => void;
   onType: () => void;
@@ -3165,6 +3184,7 @@ function DocumentLibraryCard({ item, fill, onFill, onWfpdf, onOpen, onArea, onTy
       <button className="library-document-title" onClick={onOpen}>{item.title}</button>
       <div className="library-document-meta"><button onClick={onDate}>{item.date ? fmtDate(item.date) : "Ohne Dokumentdatum"}</button><button onClick={onOpen}>{statusLabel[item.status as keyof typeof statusLabel] || item.status}</button></div>
       <p>{item.description}</p>
+      {onPro && <ProDokumentKnopf onUebernehmen={onPro}/>}
       {fill && (fill.marke || fill.fuellbar) && <div className="af-karte" data-af-karte>{fill.fuellbar && onWfpdf && !item.sensitive && <button type="button" className="button secondary compact-button" onClick={onWfpdf} data-wfpdf-oeffnen><FileText size={15}/> In Workflow PDF öffnen</button>}{fill.marke && <span className={`badge af-marke af-marke-${fill.stand}`} data-af-marke>{fill.marke}</span>}{fill.fuellbar && onFill && <button type="button" className="button secondary compact-button" onClick={onFill} data-af-oeffnen><PenLine size={15}/> Ausfüllen</button>}</div>}
       {item.references.length > 0 && <div className="library-reference-list" aria-label="Verknüpfte Datensätze">{item.references.slice(0, 4).map((reference) => <button key={`${reference.type}-${reference.id}`} onClick={() => onReference(reference)}><span>{recordTypeDefinitions[reference.type].label}</span><strong>{reference.label}</strong></button>)}</div>}
     </div>
@@ -3172,11 +3192,13 @@ function DocumentLibraryCard({ item, fill, onFill, onWfpdf, onOpen, onArea, onTy
   </article>;
 }
 
-function DocumentLibrary({ documents, records, relations, initialFocusId, initialArea, initialQuery, fillStates, onFill, onWfpdf, onOpenDocument, onGo, onUpload, onUnlink, onChange }: {
+function DocumentLibrary({ documents, records, relations, initialFocusId, initialArea, initialQuery, fillStates, onFill, onWfpdf, onPro, proKandidaten, onOpenDocument, onGo, onUpload, onUnlink, onChange }: {
   documents: FamilyCockpitDocument[];
   fillStates: Record<string, FillState>;
   onFill: (id: string) => void;
   onWfpdf?: (id: string) => void;
+  onPro?: (id: string) => Promise<void>;
+  proKandidaten?: Set<string>;
   records: FamilyRecordUnion[];
   relations: FamilyRelation[];
   initialFocusId: string | null;
@@ -3206,7 +3228,7 @@ function DocumentLibrary({ documents, records, relations, initialFocusId, initia
   };
   const openItem = (item: DocumentLibraryItem) => item.protectedHealth ? onGo("health") : void onOpenDocument(item.id);
   const openReference = (reference: DocumentLibraryReference) => onGo(reference.sensitive ? "health" : reference.section as SectionId, reference.id);
-  const card = (item: DocumentLibraryItem) => <DocumentLibraryCard key={item.id} item={item} fill={fillStates[item.id]} onFill={() => onFill(item.id)} onWfpdf={onWfpdf ? () => onWfpdf(item.id) : undefined} onOpen={() => openItem(item)} onArea={() => showAll({ area: item.area })} onType={() => showAll({ documentType: item.documentType })} onDate={() => item.date ? showAll({ startDate: item.date, endDate: item.date }) : openItem(item)} onReference={openReference}/>;
+  const card = (item: DocumentLibraryItem) => <DocumentLibraryCard key={item.id} item={item} fill={fillStates[item.id]} onFill={() => onFill(item.id)} onWfpdf={onWfpdf ? () => onWfpdf(item.id) : undefined} onPro={onPro && proKandidaten?.has(item.id) ? () => onPro(item.id) : undefined} onOpen={() => openItem(item)} onArea={() => showAll({ area: item.area })} onType={() => showAll({ documentType: item.documentType })} onDate={() => item.date ? showAll({ startDate: item.date, endDate: item.date }) : openItem(item)} onReference={openReference}/>;
   return <><PageTitle icon={<Archive/>} title="Dokumentenbibliothek" text="Der zentrale Zugang zu deinen bereits vorhandenen Dokumenten – aus demselben Datenbestand wie Cockpit, Vorgänge und „Was gibt’s Neues?“."/>
     <section className="library-toolbar card"><label><span><Search size={17}/> Dokumente durchsuchen</span><div className="library-search"><Search size={18}/><input value={query} onChange={(event) => { setQuery(event.target.value); setView("all"); }} placeholder="Titel, Dateiname, Person, Vorgang, Aktenzeichen …"/><DictationButton value={query} onChange={(value) => { setQuery(value); setView("all"); }} label="Dokumentensuche" append={false}/>{query && <button onClick={() => setQuery("")} aria-label="Dokumentensuche löschen"><X size={16}/></button>}</div></label><div className="button-row"><button className="button secondary" onClick={() => showAll()}><Archive size={17}/> Alle ansehen</button><button className="button primary" onClick={onUpload}><Plus size={17}/> Neue Unterlage</button></div></section>
     <InfoNotice title="Datensparsame Dokumentvorschau"><p>Bei Gesundheits-, Behörden- und Finanzunterlagen werden keine lesbaren vertraulichen Miniaturen angezeigt. Gesundheitsdokumente öffnen den geschützten Gesundheitsbereich.</p></InfoNotice>
@@ -3233,7 +3255,7 @@ function Inbox({ documents, localDocuments, loading, onUpload, onOpenDocument, o
     {!compact && <PageTitle icon={<Upload/>} title="Eingangszentrale" text="Neue Unterlagen bleiben im lokalen Tresor auf deinem PC oder USB-Stick." />}
     <section className="card action-row"><div><h2>{compact ? "Übernommene Unterlagen" : "Neue Unterlage lokal hinzufügen"}</h2><p>{compact ? "Bereits bestätigte Eingänge erscheinen im gemeinsamen Dokumentregister." : "Die Originaldatei wird unverändert im gewählten Ordner gespeichert. Sie wird nicht an den Webserver übertragen."}</p></div><div className="button-row"><button className="button primary" onClick={onUpload}><Plus size={18}/> Einzelne Unterlage prüfen</button><button className="button secondary" onClick={onRefresh}><RefreshCw size={18}/> Neu laden</button></div></section>
     <section className="card"><div className="card-heading"><div><span className="ui-heading-help"><h2>Lokale Unterlagen</h2><InfoPopover label="Lokale Unterlagen erklären" text={UI_HELP["Lokale Unterlagen"]}/></span></div><span className="badge success">{localDocuments.length} lokal</span></div>
-      {localDocuments.length === 0 ? <div className="empty-state"><HardDrive size={34}/><strong>Noch keine lokale Unterlage</strong><span>Verbinde zuerst den lokalen Tresor im Sicherheitscenter.</span></div> : <div className="document-list">{localDocuments.map((item) => { const sensitive = isSensitiveHealthText(item.originalName, item.category, item.notes); return <article className="document-item" key={item.id}><div className="file-icon"><FileText size={22}/></div><div className="document-copy"><button className="document-title-link" onClick={() => void onOpenDocument(item.id)}>{visibleDocumentTitle(item)}</button><span>{sensitive ? "Geschützte Gesundheitsunterlage" : item.category} · {fmtDate(item.documentDate)} · {fmtBytes(item.sizeBytes)}</span>{sensitive ? <small>Speicherort und Einzelheiten sind nur im geschützten Gesundheitsbereich sichtbar.</small> : <><small>{item.storedPath}</small>{item.notes && <small>{item.notes}</small>}</>}</div><span className={`badge status-${item.status}`}>{statusLabel[item.status]}</span>{!sensitive && ausfuellMarke(item) && <span className={`badge af-marke af-marke-${item.ausfuellen?.stand}`} data-af-marke>{ausfuellMarke(item)}</span>}<div className="document-actions">{onFill && fillStateOf(item).fuellbar && <button disabled={busy} onClick={() => onFill(item.id)} data-af-oeffnen>Ausfüllen</button>}{onWfpdf && !sensitive && fillStateOf(item).fuellbar && <button disabled={busy} onClick={() => onWfpdf(item.id)} data-wfpdf-oeffnen>In Workflow PDF öffnen</button>}{item.status === "hochgeladen" && <button disabled={busy} onClick={() => onLocalStatus(item.id, "abgleich_offen")}>Abgleich vormerken</button>}{item.status === "abgleich_offen" && <button disabled={busy} onClick={() => onLocalStatus(item.id, "geprüft")}>Als geprüft bestätigen</button>}{item.status === "geprüft" && <button disabled={busy} onClick={() => onLocalStatus(item.id, "eingearbeitet")}>Als eingearbeitet bestätigen</button>}</div></article>; })}</div>}
+      {localDocuments.length === 0 ? <div className="empty-state"><HardDrive size={34}/><strong>Noch keine lokale Unterlage</strong><span>Verbinde zuerst den lokalen Tresor im Sicherheitscenter.</span></div> : <div className="document-list">{localDocuments.map((item) => { const sensitive = isSensitiveHealthText(item.originalName, item.category, item.notes); return <article className="document-item" key={item.id}><div className="file-icon"><FileText size={22}/></div><div className="document-copy"><button className="document-title-link" onClick={() => void onOpenDocument(item.id)}>{visibleDocumentTitle(item)}</button><span>{sensitive ? "Geschützte Gesundheitsunterlage" : item.category} · {fmtDate(item.documentDate)} · {fmtBytes(item.sizeBytes)}</span>{sensitive ? <small>Speicherort und Einzelheiten sind nur im geschützten Gesundheitsbereich sichtbar.</small> : <><small>{istProOriginal(item.storedPath) ? "Gemeinsamer Pro-Tresor · Original verschlüsselt" : item.storedPath}</small>{item.notes && <small>{item.notes}</small>}</>}</div><span className={`badge status-${item.status}`}>{statusLabel[item.status]}</span>{!sensitive && ausfuellMarke(item) && <span className={`badge af-marke af-marke-${item.ausfuellen?.stand}`} data-af-marke>{ausfuellMarke(item)}</span>}<div className="document-actions">{onFill && fillStateOf(item).fuellbar && <button disabled={busy} onClick={() => onFill(item.id)} data-af-oeffnen>Ausfüllen</button>}{onWfpdf && !sensitive && fillStateOf(item).fuellbar && <button disabled={busy} onClick={() => onWfpdf(item.id)} data-wfpdf-oeffnen>In Workflow PDF öffnen</button>}{item.status === "hochgeladen" && <button disabled={busy} onClick={() => onLocalStatus(item.id, "abgleich_offen")}>Abgleich vormerken</button>}{item.status === "abgleich_offen" && <button disabled={busy} onClick={() => onLocalStatus(item.id, "geprüft")}>Als geprüft bestätigen</button>}{item.status === "geprüft" && <button disabled={busy} onClick={() => onLocalStatus(item.id, "eingearbeitet")}>Als eingearbeitet bestätigen</button>}</div></article>; })}</div>}
     </section>
     <section className="card"><div className="card-heading"><div><span className="ui-heading-help"><h2>Online-Altbestand</h2><InfoPopover label="Online-Altbestand erklären" text={UI_HELP["Online-Altbestand"]}/></span></div><span className="badge warning">{documents.length} online</span></div>
       {loading ? <div className="empty-state">Unterlagen werden geladen …</div> : documents.length === 0 ? <div className="empty-state"><FolderHeart size={34}/><strong>Noch keine Unterlage über diese Seite hochgeladen</strong><span>Bereits vorhandene Aktenbestandteile findest du unter „Unterlagen“.</span></div> : <div className="document-list">{documents.map((item) => { const sensitive = isSensitiveHealthText(item.originalName, item.category, item.notes); return <article className="document-item" key={item.id}><div className="file-icon"><FileText size={22}/></div><div className="document-copy"><button className="document-title-link" onClick={() => void onOpenDocument(item.id)}>{visibleDocumentTitle(item)}</button><span>{sensitive ? "Geschützte Gesundheitsunterlage" : item.category} · {fmtDate(item.documentDate)} · {fmtBytes(item.sizeBytes)}</span>{!sensitive && item.notes && <small>{item.notes}</small>}</div><span className={`badge status-${item.status}`}>{statusLabel[item.status]}</span><div className="document-actions"><a className="icon-button" href={item.downloadUrl} title="Originaldatei herunterladen"><Download size={18}/></a>{item.status === "hochgeladen" && <button disabled={busy} onClick={() => onStatus(item.id, "abgleich_offen")}>Abgleich vormerken</button>}{item.status === "abgleich_offen" && <button disabled={busy} onClick={() => onStatus(item.id, "geprüft")}>Als geprüft bestätigen</button>}{item.status === "geprüft" && <button disabled={busy} onClick={() => onStatus(item.id, "eingearbeitet")}>Als eingearbeitet bestätigen</button>}</div></article>; })}</div>}
@@ -3242,7 +3264,8 @@ function Inbox({ documents, localDocuments, loading, onUpload, onOpenDocument, o
   </>;
 }
 
-function SecurityCenter({ oneDriveConnected, oneDriveName, oneDriveSummary, localConnected, localVaultName, localVaultSummary, supported, onlineCount, localCount, busy, syncPreview, syncResult, onConnectOneDrive, onConnectLocal, onLockOneDrive, onLockLocal, onMigrate, onHelp, onCompare, onCheckSync, onRunSync, onExport, onFullBackup, onRestoreTest }: {
+function SecurityCenter({ aktenHandle, oneDriveConnected, oneDriveName, oneDriveSummary, localConnected, localVaultName, localVaultSummary, supported, onlineCount, localCount, busy, syncPreview, syncResult, onConnectOneDrive, onConnectLocal, onLockOneDrive, onLockLocal, onMigrate, onHelp, onCompare, onCheckSync, onRunSync, onExport, onFullBackup, onRestoreTest }: {
+  aktenHandle: FileSystemDirectoryHandle | null;
   oneDriveConnected: boolean; oneDriveName: string; oneDriveSummary: VaultSummary | null; localConnected: boolean; localVaultName: string; localVaultSummary: VaultSummary | null; supported: boolean; onlineCount: number; localCount: number; busy: boolean;
   syncPreview: VaultSyncPreview | null; syncResult: VaultSyncResult | null;
   onConnectOneDrive: () => void; onConnectLocal: () => void; onLockOneDrive: () => void; onLockLocal: () => void; onMigrate: () => void; onHelp: () => void; onCompare: () => void; onCheckSync: () => void; onRunSync: () => void; onExport: () => void; onFullBackup: () => void; onRestoreTest: () => void;
@@ -3254,8 +3277,8 @@ function SecurityCenter({ oneDriveConnected, oneDriveName, oneDriveSummary, loca
     : localConnected
       ? (localVaultName ? `PC/USB – ${localVaultName}` : "PC/USB")
       : "";
-  return <><PageTitle icon={<ShieldCheck/>} title="Sicherheit und lokaler Tresor" text="Neue Originalunterlagen werden vorrangig im ausgewählten OneDrive-Ordner gespeichert – ohne Upload in den Webspeicher dieser Seite."/>
-    <ProTresorAnschluss/>
+  return <><PageTitle icon={<ShieldCheck/>} title="Sicherheit und lokaler Tresor" text="Du wählst, wo neue Originalunterlagen abgelegt werden. Die Familienakte lädt sie nicht in den Webspeicher dieser Seite hoch."/>
+    <ProTresorAnschluss aktenHandle={aktenHandle}/>
     <section className="security-grid security-grid-three">
       <article className="card security-card compact-security-card"><Cloud/><div><div className="security-card-heading"><h2>OneDrive-Ordner verbinden</h2><InfoPopover label="OneDrive-Verbindung erklären" text="Verbindet ausschließlich einen von dir gewählten, lokal synchronisierten OneDrive-Ordner. Die Familienakte erhält keinen Zugriff auf dein Microsoft-Passwort und durchsucht keine anderen OneDrive-Bereiche."/></div><span className={`badge ${oneDriveConnected ? "success" : "warning"}`}>{oneDriveConnected ? "verbunden" : "nicht verbunden"}</span><p>{oneDriveConnected ? oneDriveName : "Noch kein OneDrive-Ordner ausgewählt."}</p>{oneDriveSummary && <p className="vault-id"><strong>Tresor-Kennung:</strong> {oneDriveSummary.vaultId}</p>}<div className="button-row"><button className="button primary" disabled={!supported || busy} onClick={onConnectOneDrive}><Cloud size={17}/>{oneDriveConnected ? "Anderen OneDrive-Ordner wählen" : "OneDrive-Ordner verbinden"}</button>{oneDriveConnected && <button className="button secondary" disabled={busy} onClick={onLockOneDrive}><LockKeyhole size={17}/> Sperren</button>}</div>{!supported && <p className="form-error">Bitte diese Seite in Chrome oder Edge auf einem PC öffnen.</p>}</div></article>
       <article className="card security-card compact-security-card"><Usb/><div><div className="security-card-heading"><h2>PC-/USB-Ordner verbinden</h2><InfoPopover label="PC- oder USB-Verbindung erklären" text="Verbindet einen ausdrücklich ausgewählten PC-Ordner oder entsperrten USB-Datenträger. Dateien werden nur nach deinem Befehl gelesen oder als Sicherung kopiert; vorhandene Originale werden nicht überschrieben."/></div><span className={`badge ${localConnected ? "success" : "warning"}`}>{localConnected ? "verbunden" : "nicht verbunden"}</span><p>{localConnected ? localVaultName : "Noch kein PC-/USB-Ordner ausgewählt."}</p>{localVaultSummary && <p className="vault-id"><strong>Tresor-Kennung:</strong> {localVaultSummary.vaultId}</p>}<div className="button-row"><button className="button primary" disabled={!supported || busy} onClick={onConnectLocal}><Usb size={17}/>{localConnected ? "Anderen PC-/USB-Ordner wählen" : "PC-/USB-Ordner verbinden"}</button>{localConnected && <button className="button secondary" disabled={busy} onClick={onLockLocal}><LockKeyhole size={17}/> Sperren</button>}</div></div></article>

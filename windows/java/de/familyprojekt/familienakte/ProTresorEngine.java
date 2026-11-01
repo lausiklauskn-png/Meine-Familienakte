@@ -18,15 +18,21 @@ public final class ProTresorEngine implements Closeable {
     private Path ort;
     private String id;
     private ProTresorAdapter adapter;
+    private boolean konfigurationBeschaedigt;
 
     public ProTresorEngine(Path einstellungen, Dialoge dialoge) throws IOException {
-        this.einstellungen = einstellungen; this.dialoge = dialoge;
+        this.einstellungen = einstellungen.toAbsolutePath().normalize(); this.dialoge = dialoge;
         if (Files.exists(einstellungen)) {
             try {
+                if (Files.size(einstellungen) > 256 * 1024) throw new IOException();
                 Map<String, Object> m = Json.objekt(Files.readString(einstellungen));
                 ort = Path.of(Json.text(m, "ort")); id = Json.text(m, "id");
                 if (!ort.isAbsolute() || id.isEmpty()) throw new IOException();
-            } catch (Exception e) { throw new IOException("FA_TRESOR_ZUSTAND_BESCHAEDIGT"); }
+            } catch (Exception e) { konfigurationBeschaedigt = true; ort = null; id = null; }
+        } else if (Files.isDirectory(this.einstellungen.getParent())) {
+            try (var files = Files.list(this.einstellungen.getParent())) {
+                konfigurationBeschaedigt = files.anyMatch(p -> p.getFileName().toString().startsWith(einstellungen.getFileName() + ".beschaedigt-"));
+            }
         }
     }
     private static Map<String, Object> antwort(String status, String id, Path ort) {
@@ -44,11 +50,16 @@ public final class ProTresorEngine implements Closeable {
         return a;
     }
     private Map<String, Object> zustand() {
+        if (konfigurationBeschaedigt) {
+            Map<String, Object> m = antwort("nicht_erreichbar", null, null);
+            m.put("code", "FA_TRESOR_ZUSTAND_BESCHAEDIGT"); return m;
+        }
         if (ort == null) return antwort("getrennt", null, null);
         try { ablage(ort, id); return antwort(adapter == null ? "gesperrt" : "offen", id, ort); }
         catch (IOException e) { close(); return antwort("nicht_erreichbar", id, ort); }
     }
     private Map<String, Object> verbinden(boolean waehlen) throws IOException {
+        if (!waehlen && konfigurationBeschaedigt) throw new IOException("FA_TRESOR_ZUSTAND_BESCHAEDIGT");
         Path neu = waehlen ? dialoge.ordner() : ort;
         if (neu == null) throw new IOException("FA_TRESOR_ABGEBROCHEN");
         neu = neu.toAbsolutePath().normalize();
@@ -65,10 +76,22 @@ public final class ProTresorEngine implements Closeable {
             try {
                 Map<String, Object> m = new LinkedHashMap<>(); m.put("ort", neu.toString()); m.put("id", neuId);
                 Files.writeString(vorlaeufig, Json.schreiben(m), StandardCharsets.UTF_8);
-                Files.move(vorlaeufig, einstellungen, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
+                Path sicherung = null;
+                if (konfigurationBeschaedigt && Files.exists(einstellungen)) {
+                    sicherung = einstellungen.resolveSibling(einstellungen.getFileName() + ".beschaedigt-" + UUID.randomUUID());
+                    Files.move(einstellungen, sicherung, StandardCopyOption.ATOMIC_MOVE);
+                }
+                try { Files.move(vorlaeufig, einstellungen, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING); }
+                catch (IOException fehler) {
+                    if (sicherung != null && !Files.exists(einstellungen)) {
+                        try { Files.move(sicherung, einstellungen, StandardCopyOption.ATOMIC_MOVE); }
+                        catch (IOException rueckweg) { fehler.addSuppressed(rueckweg); }
+                    }
+                    throw fehler;
+                }
             } finally { Files.deleteIfExists(vorlaeufig); }
         } catch (IOException e) { offen.close(); throw new IOException("FA_TRESOR_ORT_NICHT_GESPEICHERT"); }
-        close(); ort = neu; id = neuId; adapter = offen;
+        close(); ort = neu; id = neuId; adapter = offen; konfigurationBeschaedigt = false;
         return zustand();
     }
     private ProTresorAdapter offen(Map<String, Object> m) throws IOException {
@@ -137,16 +160,7 @@ public final class ProTresorEngine implements Closeable {
         }
         return c == -1 && s.length() == 0 ? null : s.toString();
     }
-    public static void main(String[] args) throws Exception {
-        if (args.length != 1) return;
-        System.setProperty("apple.awt.application.name", "Familienakte Pro");
-        if (!GraphicsEnvironment.isHeadless()) {
-            try { UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); }
-            catch (Exception optionalesAussehen) { /* Standard-Swing bleibt benutzbar. */ }
-        }
-        try (ProTresorEngine engine = new ProTresorEngine(Path.of(args[0]), new WindowsDialoge());
-             Reader in = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
-             PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out, StandardCharsets.UTF_8), true)) {
+    static void bedienen(ProTresorEngine engine, Reader in, PrintWriter out) throws IOException {
             String line;
             while ((line = zeile(in)) != null) {
                 Map<String, Object> response = new LinkedHashMap<>();
@@ -157,6 +171,18 @@ public final class ProTresorEngine implements Closeable {
                 }
                 out.println(Json.schreiben(response));
             }
+    }
+    public static void main(String[] args) throws Exception {
+        if (args.length != 1) return;
+        System.setProperty("apple.awt.application.name", "Familienakte Pro");
+        if (!GraphicsEnvironment.isHeadless()) {
+            try { UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); }
+            catch (Exception optionalesAussehen) { /* Standard-Swing bleibt benutzbar. */ }
+        }
+        try (ProTresorEngine engine = new ProTresorEngine(Path.of(args[0]), new WindowsDialoge());
+             Reader in = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+             PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out, StandardCharsets.UTF_8), true)) {
+            bedienen(engine, in, out);
         }
         // Swing bleibt sonst auch nach dem Schließen der privaten Pipe als eigener Prozess stehen.
         System.exit(0);

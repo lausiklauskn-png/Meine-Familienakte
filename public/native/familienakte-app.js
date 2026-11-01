@@ -76,12 +76,17 @@
   // Übergabe von Dateien aus Hüllen (Android-Teilen, PWA share_target, Windows „Öffnen mit“) an die Eingangszentrale.
   // Die React-Seite meldet sich mit `familienakte:bereit`; bis dahin werden Dateien aufgehoben.
   let bereit = false; const wartend = [];
-  window.addEventListener('familienakte:bereit', () => { bereit = true; for (const files of wartend.splice(0)) window.dispatchEvent(new CustomEvent('familienakte:dateien', { detail: { files } })); });
+  const zustellen = ({ files, resolve }) => {
+    window.dispatchEvent(new CustomEvent('familienakte:dateien', { detail: { files, bestaetigen: resolve } }));
+  };
+  window.addEventListener('familienakte:bereit', () => { bereit = true; for (const auftrag of wartend.splice(0)) zustellen(auftrag); });
   async function dateienUebergeben(files) {
     if (!files?.length) return false;
-    if (!bereit) { wartend.push(files); return true; }
-    window.dispatchEvent(new CustomEvent('familienakte:dateien', { detail: { files } }));
-    return true;
+    return new Promise((resolve) => {
+      const auftrag = { files, resolve };
+      if (!bereit) wartend.push(auftrag);
+      else zustellen(auftrag);
+    });
   }
   // PWA: Androids „Teilen“ kommt als POST an ./teilen-empfang (share_target); der Service Worker legt die
   // Dateien in den Vorrat „familienakte-geteilt“ und leitet auf ./?geteilt=1 weiter.
@@ -89,16 +94,18 @@
     (async () => {
       try {
         const cache = await caches.open('familienakte-geteilt');
-        const files = [];
+        const files = []; const requests = [];
         for (const request of await cache.keys()) {
           const response = await cache.match(request);
           if (!response) continue;
           const name = decodeURIComponent(response.headers.get('x-name') || 'Geteilte Datei');
           files.push(new File([await response.blob()], name, { type: response.headers.get('content-type') || 'application/octet-stream' }));
-          await cache.delete(request);
+          requests.push(request);
         }
-        if (files.length) await dateienUebergeben(files);
-      } catch { /* ohne Vorrat kam nichts an */ }
+        if (files.length && await dateienUebergeben(files)) {
+          for (const request of requests) await cache.delete(request);
+        } else return;
+      } catch { return; /* Vorrat und Wiederaufnahme-Adresse bleiben erhalten */ }
       try { history.replaceState(null, '', location.pathname); } catch { /* egal */ }
     })();
   }

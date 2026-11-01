@@ -1,4 +1,5 @@
 import { kontaktPruefen, kontaktUebernehmen, type PersonKontakt } from "../lib/person-kontakt.ts";
+import { istProOriginal, proOriginalLesen, proOriginalName, proOriginalSpeichern, proOriginalVaultId, proOriginalMerkmale, proTresor } from "./pro-tresor.ts";
 import type { AusfuellInfo } from "../lib/ausfuellen";
 import {
   createFamilyRecord,
@@ -44,6 +45,7 @@ export type LocalDocument = {
   source?: string | null; updatedAt?: string; storageType?: DocumentStorageType;
   oneDrivePath?: string | null; relativePath?: string | null;
   scanPageCount?: number; scanOriginalCount?: number; scanOriginalsPath?: string | null;
+  proScanOriginals?: string[];
   checksum?: string | null; storageLocations?: DocumentStorageLocation[];
   /** Ausfüllen (Sitzung F): Felder/Stand am Original, Verweis an der ausgefüllten Fassung. */
   ausfuellen?: AusfuellInfo | null;
@@ -61,6 +63,7 @@ type VaultIndex = {
   version: 5;
   /** Zähler je Schreibvorgang (A3): wer ein älteres Register zurückschreibt, bekommt einen Konflikt statt die Änderungen anderer zu überschreiben. */
   revision: number;
+  proTresorId?: string | null;
   modelVersion: typeof FAMILY_DATA_MODEL_VERSION;
   updatedAt: string;
   documents: LocalDocument[];
@@ -799,6 +802,7 @@ async function writeIndex(handle: FileSystemDirectoryHandle, index: VaultIndex, 
 }
 
 async function fileFromStoredPath(handle: FileSystemDirectoryHandle, storedPath: string) {
+  if (istProOriginal(storedPath)) return proOriginalLesen(storedPath);
   const parts = storedPath.split("/").filter(Boolean);
   if (parts[0] === ROOT) parts.shift();
   const fileName = parts.pop();
@@ -813,10 +817,20 @@ export async function readLocalDocumentFile(handle: FileSystemDirectoryHandle, i
   const index = await readIndex(handle);
   const document = index.documents.find((item) => item.id === id);
   if (!document) throw new Error("Das Dokument wurde im lokalen Register nicht gefunden.");
+  return documentFile(handle, document);
+}
+
+async function documentFile(handle: FileSystemDirectoryHandle, document: LocalDocument) {
+  if (istProOriginal(document.storedPath)) {
+    const m = proOriginalMerkmale(document.storedPath);
+    if (m.size !== document.sizeBytes || (document.checksum && document.checksum !== m.sha256))
+      throw new Error("Pro-Tresor-Verweis und Aktenregister beschreiben nicht dieselbe Originaldatei.");
+  }
   return fileFromStoredPath(handle, document.storedPath);
 }
 
 async function unusedTargetPath(handle: FileSystemDirectoryHandle, storedPath: string, id: string) {
+  if (istProOriginal(storedPath)) storedPath = `${ROOT}/01_Dokumente/Pro-Tresor/${clean(id)}_${clean(proOriginalName(storedPath))}`;
   const parts = storedPath.split("/").filter(Boolean);
   if (parts[0] === ROOT) parts.shift();
   const requestedName = parts.pop();
@@ -2535,6 +2549,59 @@ export async function listLocalDocuments(handle: FileSystemDirectoryHandle) {
   return (await readIndex(handle)).documents.sort((a, b) => b.addedAt.localeCompare(a.addedAt));
 }
 
+function proZiel(index: VaultIndex): string | null {
+  if (index.proTresorId == null) return null;
+  if (typeof index.proTresorId !== "string" || !/^[a-z0-9-]{1,80}$/.test(index.proTresorId)) throw new Error("Die gespeicherte Pro-Tresor-Zuordnung ist beschädigt. Es wurde kein Ersatzspeicher gewählt.");
+  return index.proTresorId;
+}
+export async function readProDocumentVault(handle: FileSystemDirectoryHandle) { return proZiel(await readIndex(handle)); }
+export async function setProDocumentVault(handle: FileSystemDirectoryHandle, vaultId: string | null) {
+  const index = await readIndex(handle);
+  if (vaultId !== null) {
+    const stand = await proTresor.zustand();
+    if (stand.status !== "offen" || stand.id !== vaultId) throw new Error("Bitte zuerst den gewählten Pro-Tresor entsperren.");
+  }
+  index.proTresorId = vaultId;
+  proZiel(index);
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: new Date().toISOString(), action: "Ablage neuer Originale gewählt", details: vaultId ? `Gemeinsamer Pro-Tresor ${vaultId}; vorhandene Dateien bleiben an ihrem Ort.` : "Bisheriger Aktenordner; vorhandene Pro-Tresor-Verweise bleiben erhalten." });
+  await writeIndex(handle, index);
+}
+
+/** Nur ein ausdrücklich gewähltes Bestandsdokument. Der alte Bestand wird beim Einzug nicht gelöscht. */
+export async function copyLocalDocumentToPro(handle: FileSystemDirectoryHandle, documentId: string, vaultId: string) {
+  const index = await readIndex(handle);
+  const document = index.documents.find((d) => d.id === documentId);
+  if (!document) throw new Error("Das gewählte Dokument fehlt im Aktenregister.");
+  if (istProOriginal(document.storedPath)) throw new Error("Dieses Original liegt bereits im Pro-Tresor.");
+  const source = await fileFromStoredPath(handle, document.storedPath);
+  const checksum = await fileChecksum(source);
+  if (source.size !== document.sizeBytes || (document.checksum && document.checksum !== checksum)) throw new Error("Die Quelldatei stimmt nicht mit dem Aktenregister überein.");
+  const file = new File([source], document.originalName, { type: document.mimeType || "application/octet-stream" });
+  const proPath = await proOriginalSpeichern(vaultId, file, checksum, document.documentDate ? Date.parse(document.documentDate) : 0);
+  const scanPaths: string[] = [];
+  if (document.scanOriginalsPath) {
+    const parts = document.scanOriginalsPath.split("/").filter(Boolean); if (parts[0] === ROOT) parts.shift();
+    let folder = await root(handle);
+    for (const part of parts) folder = await folder.getDirectoryHandle(part);
+    for await (const entry of (folder as DirectoryWithEntries).values()) {
+      if (entry.kind !== "file") continue;
+      const bild = await (entry as FileSystemFileHandle).getFile();
+      scanPaths.push(await proOriginalSpeichern(vaultId, bild, await fileChecksum(bild)));
+    }
+  }
+  const now = new Date().toISOString();
+  document.storageLocations ||= [{ id: `LOC-${crypto.randomUUID()}`, storageType: document.storageType || "local", path: document.storedPath,
+    source: document.source || "Bisheriger Aktenordner", checksum, fileSize: file.size, verifiedAt: now }];
+  document.storageLocations.push({ id: `LOC-${crypto.randomUUID()}`, storageType: "external", path: proPath, source: "Gemeinsamer Pro-Tresor", checksum, fileSize: file.size, verifiedAt: now });
+  document.storedPath = proPath; document.relativePath = proPath; document.storageType = "external";
+  document.oneDrivePath = null; document.source = "Gemeinsamer Pro-Tresor"; document.checksum = checksum; document.updatedAt = now;
+  if (scanPaths.length) { document.proScanOriginals = scanPaths; document.scanOriginalsPath = null; }
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Ausgewähltes Original in Pro-Tresor übernommen", recordId: documentId,
+    details: "Datei und vorhandene Scan-Originale geprüft gespeichert. Der bisherige Bestand bleibt unverändert erhalten." });
+  await writeIndex(handle, index);
+  return document;
+}
+
 export async function readLocalSystemSnapshot(handle: FileSystemDirectoryHandle): Promise<LocalSystemSnapshot> {
   let index = emptyIndex();
   let registerState: LocalSystemSnapshot["registerState"] = "missing";
@@ -2607,19 +2674,29 @@ export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file:
   const checksum = await fileChecksum(file);
   const possibleDuplicate = index.documents.find((document) => document.checksum === checksum || (document.originalName.toLocaleLowerCase("de") === file.name.toLocaleLowerCase("de") && document.sizeBytes === file.size));
   if (possibleDuplicate && !data.allowDuplicate) throw new Error(`Mögliche Dublette: ${possibleDuplicate.id}. Bitte das vorhandene Dokument zuerst vergleichen oder die bewusste Übernahme bestätigen.`);
-  const base = await root(handle);
-  const parent = await base.getDirectoryHandle(data.migration ? "02_Online-Bestand_gesichert" : "01_Dokumente", { create: true });
-  const folder = await parent.getDirectoryHandle(clean(data.category), { create: true });
   const id = crypto.randomUUID();
   const storedName = `${data.documentDate || new Date().toISOString().slice(0, 10)}_${id.slice(0, 8)}_${clean(file.name)}`;
-  const target = await folder.getFileHandle(storedName, { create: true });
-  const writable = await target.createWritable(); await writable.write(file); await writable.close();
+  const proId = proZiel(index);
+  let folder: FileSystemDirectoryHandle | null = null;
+  let storedPath: string;
+  if (proId) {
+    storedPath = await proOriginalSpeichern(proId, file, checksum, data.documentDate ? Date.parse(data.documentDate) : 0);
+  } else {
+    const base = await root(handle);
+    const parent = await base.getDirectoryHandle(data.migration ? "02_Online-Bestand_gesichert" : "01_Dokumente", { create: true });
+    folder = await parent.getDirectoryHandle(clean(data.category), { create: true });
+    const target = await folder.getFileHandle(storedName, { create: true });
+    const writable = await target.createWritable(); await writable.write(file); await writable.close();
+    storedPath = `${ROOT}/${data.migration ? "02_Online-Bestand_gesichert" : "01_Dokumente"}/${clean(data.category)}/${storedName}`;
+  }
   const identity = await vaultIdentity(handle);
   const addedAt = new Date().toISOString();
-  const storedPath = `${ROOT}/${data.migration ? "02_Online-Bestand_gesichert" : "01_Dokumente"}/${clean(data.category)}/${storedName}`;
   let scanOriginalsPath: string | null = null;
+  const proScanOriginals: string[] = [];
   const scanOriginals = (data.scanOriginals || []).filter((original) => original.type.startsWith("image/")).slice(0, 30);
-  if (scanOriginals.length) {
+  if (proId) {
+    for (const original of scanOriginals) proScanOriginals.push(await proOriginalSpeichern(proId, original, await fileChecksum(original)));
+  } else if (scanOriginals.length && folder) {
     const scanRoot = await folder.getDirectoryHandle("Scan-Originale", { create: true });
     const scanFolder = await scanRoot.getDirectoryHandle(id, { create: true });
     for (const [index, original] of scanOriginals.entries()) {
@@ -2631,15 +2708,15 @@ export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file:
     }
     scanOriginalsPath = `${ROOT}/${data.migration ? "02_Online-Bestand_gesichert" : "01_Dokumente"}/${clean(data.category)}/Scan-Originale/${id}`;
   }
-  const storageType = identity.storageKind || "local";
+  const storageType = proId ? "external" : identity.storageKind || "local";
   const item: LocalDocument = { id, originalName: file.name, category: data.category, documentDate: data.documentDate,
     mimeType: file.type || "application/octet-stream", sizeBytes: file.size, status: "hochgeladen", notes: data.notes,
     addedAt, updatedAt: addedAt, storedPath, relativePath: storedPath,
-    storageType, oneDrivePath: identity.storageKind === "onedrive" ? storedPath : null,
-    source: identity.storageKind === "onedrive" ? "OneDrive-Datentresor" : "Lokaler Datentresor",
+    storageType, oneDrivePath: !proId && identity.storageKind === "onedrive" ? storedPath : null,
+    source: proId ? "Gemeinsamer Pro-Tresor" : identity.storageKind === "onedrive" ? "OneDrive-Datentresor" : "Lokaler Datentresor",
     checksum,
-    storageLocations: [{ id: `LOC-${crypto.randomUUID()}`, storageType, path: storedPath, source: identity.storageKind === "onedrive" ? "OneDrive-Datentresor" : "Lokaler Datentresor", checksum, fileSize: file.size, verifiedAt: addedAt }],
-    scanPageCount: data.scanPageCount, scanOriginalCount: scanOriginals.length, scanOriginalsPath };
+    storageLocations: [{ id: `LOC-${crypto.randomUUID()}`, storageType, path: storedPath, source: proId ? "Gemeinsamer Pro-Tresor" : identity.storageKind === "onedrive" ? "OneDrive-Datentresor" : "Lokaler Datentresor", checksum, fileSize: file.size, verifiedAt: addedAt }],
+    scanPageCount: data.scanPageCount, scanOriginalCount: scanOriginals.length, scanOriginalsPath, ...(proId ? { proScanOriginals } : {}) };
   index.documents.unshift(item);
   for (const link of data.assignmentLinks || []) {
     if (!index.records.some((record) => record.id === link.toId && record.recordType === link.toType)) continue;
@@ -2648,8 +2725,12 @@ export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file:
   }
   // A5: Schlägt das Registerschreiben fehl, bleibt keine Dateileiche zurück.
   const rueckgaengig = async () => {
-    try { await folder.removeEntry(storedName); } catch { /* bereits weg */ }
-    if (scanOriginalsPath) { try { await (await folder.getDirectoryHandle("Scan-Originale")).removeEntry(id, { recursive: true }); } catch { /* bereits weg */ } }
+    // Kanonische Originale niemals löschen. Bei Registerabbruch bleiben Quelle und native Fassung
+    // erhalten; dieselbe Datei verwendet beim Wiederholen dieselbe native Dokumentkennung.
+    if (folder) {
+      try { await folder.removeEntry(storedName); } catch { /* bereits weg */ }
+      if (scanOriginalsPath) { try { await (await folder.getDirectoryHandle("Scan-Originale")).removeEntry(id, { recursive: true }); } catch { /* bereits weg */ } }
+    }
   };
   index.auditLog.unshift({ id: crypto.randomUUID(), at: addedAt, action: "Dokument erfasst", recordId: item.id, details: `${item.originalName} wurde nach Benutzerbestätigung registriert; ${data.assignmentLinks?.length || 0} vorhandene Zuordnung${data.assignmentLinks?.length === 1 ? "" : "en"} verknüpft.${data.scanPageCount ? ` PDF aus ${data.scanPageCount} Scan-Seite${data.scanPageCount === 1 ? "" : "n"}; ${scanOriginals.length ? "Originalaufnahmen als Anlagen behalten" : "keine zusätzlichen Scan-Fotos gespeichert"}.` : ""}` });
   try { await writeIndex(handle, index); } catch (error) { await rueckgaengig(); throw error; }
@@ -2755,7 +2836,7 @@ export async function writeFamilyArchiveExport(input: {
       const index = await readIndex(input.source);
       for (const document of index.documents) {
         try {
-          const original = await fileFromStoredPath(input.source, document.storedPath);
+          const original = await documentFile(input.source, document);
           const exportName = `${document.id}_${safeExportName(document.originalName)}`;
           const target = await originalDirectory.getFileHandle(exportName, { create: true });
           const writable = await target.createWritable();
@@ -2879,12 +2960,50 @@ export async function writeFullFamilyBackup(input: {
       if (!isNotFoundError(error)) throw error;
     }
   }
+  // Portable Vollsicherung: Pro-Verweise werden nur in DIESER Sicherung durch geprüfte Dateien
+  // ersetzt. Die aktive Akte und ihre kanonischen Originale bleiben unverändert.
+  for (const document of index.documents) {
+    if (!istProOriginal(document.storedPath)) continue;
+    const original = await documentFile(input.source, document);
+    const relative = `01_Dokumente/Pro-Tresor/${clean(document.id)}_${clean(original.name)}`;
+    await writeBackupOriginal(dataDirectory, relative, original, files);
+    document.storedPath = `${ROOT}/${relative}`; document.relativePath = document.storedPath;
+    document.storageType = "local"; document.oneDrivePath = null;
+    document.source = "Sicherung aus gemeinsamem Pro-Tresor";
+    document.storageLocations = [{ id: `LOC-${crypto.randomUUID()}`, storageType: "local", path: document.storedPath,
+      source: document.source, checksum: await fileChecksum(original), fileSize: original.size, verifiedAt: createdAt }];
+    if (document.proScanOriginals?.length) {
+      const scanPath = `01_Dokumente/Pro-Tresor/Scan-Originale/${clean(document.id)}`;
+      for (const [n, pfad] of document.proScanOriginals.entries()) {
+        const bild = await proOriginalLesen(pfad);
+        await writeBackupOriginal(dataDirectory, `${scanPath}/${n + 1}_${clean(bild.name)}`, bild, files);
+      }
+      document.scanOriginalsPath = `${ROOT}/${scanPath}`;
+      delete document.proScanOriginals;
+    }
+  }
+  if (index.proTresorId != null) index.proTresorId = null;
   const registerText = JSON.stringify(index, null, 2);
   const registerChecksum = await fileChecksum(new Blob([registerText], { type: "application/json" }));
   const manifest = createFamilyBackupManifest({ appVersion: input.appVersion, createdAt, registerChecksum, register: index, files });
   await writeTextFile(backup.handle, "Familienakte_Register.json", registerText);
   await writeTextFile(backup.handle, "Vollsicherung_Manifest.json", JSON.stringify(manifest, null, 2));
   return { folderName: backup.name, manifest };
+}
+
+async function writeBackupOriginal(directory: FileSystemDirectoryHandle, relative: string, file: File, files: FamilyBackupFile[]) {
+  const parts = relative.split("/"); const name = parts.pop()!;
+  let ziel = directory;
+  for (const part of parts) ziel = await ziel.getDirectoryHandle(part, { create: true });
+  // Ein Sicherungslauf hat ein neues Ziel; unerwartete fremde Dateien niemals überschreiben.
+  try { await ziel.getFileHandle(name); throw new Error("Die Pro-Tresor-Sicherung würde eine vorhandene Datei überschreiben."); }
+  catch (error) { if (!isNotFoundError(error)) throw error; }
+  const handle = await ziel.getFileHandle(name, { create: true });
+  const writer = await handle.createWritable(); await writer.write(file); await writer.close();
+  const written = await handle.getFile();
+  const checksum = await fileChecksum(file);
+  if (written.size !== file.size || await fileChecksum(written) !== checksum) throw new Error("Die Pro-Tresor-Sicherung stimmt nach dem Wiedereinlesen nicht überein.");
+  files.push({ path: relative, sizeBytes: file.size, checksum });
 }
 
 async function assertEmptyRestoreTarget(target: FileSystemDirectoryHandle) {
@@ -3528,6 +3647,9 @@ export async function compareVaults(source: FileSystemDirectoryHandle, target: F
   if (!(await requestVaultPermission(source)) || !(await requestVaultPermission(target))) throw new Error("Beide Datentresore müssen freigegeben sein.");
   if (await (source as ComparableHandle).isSameEntry?.(target)) throw new Error("OneDrive und Sicherung zeigen auf denselben Ordner. Bitte einen getrennten PC- oder USB-Ordner wählen.");
   const sourceIndex = await readIndex(source); const targetIndex = await readIndex(target);
+  const proOrte = (index: VaultIndex) => new Set([proZiel(index), ...index.documents.filter((d) => istProOriginal(d.storedPath)).map((d) => proOriginalVaultId(d.storedPath))].filter(Boolean));
+  const sourceProOrte = proOrte(sourceIndex);
+  if ([...proOrte(targetIndex)].some((id) => sourceProOrte.has(id))) throw new Error("Beide Arbeitsstände verwenden denselben Pro-Tresor. Für eine Sicherung bitte einen getrennten Zielordner wählen.");
   const targetById = new Map(targetIndex.documents.map((document) => [document.id, document]));
   let existingDocuments = 0; let conflictingDocuments = 0; let missingDocuments = 0;
   for (const document of sourceIndex.documents) {
@@ -3552,6 +3674,38 @@ export async function copyMissingDocuments(source: FileSystemDirectoryHandle, ta
   const preview = await compareVaults(source, target);
   const sourceIndex = await readIndex(source); const targetIndex = await readIndex(target);
   const targetById = new Map(targetIndex.documents.map((document) => [document.id, document]));
+  const targetProId = proZiel(targetIndex);
+  async function kopie(document: LocalDocument, file: File): Promise<LocalDocument> {
+    const checksum = await fileChecksum(file);
+    if (file.size !== document.sizeBytes || (document.checksum && document.checksum !== checksum)) throw new Error("Die Quelldatei stimmt nicht mehr mit dem Aktenregister überein.");
+    let storedPath: string;
+    if (targetProId) storedPath = await proOriginalSpeichern(targetProId, file, checksum, document.documentDate ? Date.parse(document.documentDate) : 0);
+    else {
+      const destination = await unusedTargetPath(target, document.storedPath, document.id);
+      // Auch ein wiederholter Sicherungslauf überschreibt niemals einen unerwarteten Bestand.
+      try { await destination.directory.getFileHandle(destination.fileName); throw new Error("Die Sicherungsdatei ist bereits vorhanden."); }
+      catch (error) { if (!isNotFoundError(error)) throw error; }
+      const fileHandle = await destination.directory.getFileHandle(destination.fileName, { create: true });
+      const writable = await fileHandle.createWritable(); await writable.write(file); await writable.close();
+      if (await fileChecksum(await fileHandle.getFile()) !== checksum) throw new Error("Die Sicherungsdatei stimmt nach dem Schreiben nicht überein.");
+      storedPath = destination.storedPath;
+    }
+    const item: LocalDocument = { ...document, storedPath, relativePath: storedPath, checksum,
+      storageType: targetProId ? "external" : "local", oneDrivePath: null, source: targetProId ? "Gemeinsamer Pro-Tresor" : "Dokumentensicherung" };
+    item.storageLocations = [{ id: `LOC-${crypto.randomUUID()}`, storageType: item.storageType!, path: storedPath, source: item.source!, checksum, fileSize: file.size, verifiedAt: new Date().toISOString() }];
+    if (document.proScanOriginals?.length) {
+      const scans: string[] = [];
+      const scanFolder = `01_Dokumente/Pro-Tresor/Scan-Originale/${clean(document.id)}`;
+      for (const [n, pfad] of document.proScanOriginals.entries()) {
+        const bild = await proOriginalLesen(pfad);
+        if (targetProId) scans.push(await proOriginalSpeichern(targetProId, bild, await fileChecksum(bild)));
+        else await writeBackupOriginal(await root(target), `${scanFolder}/${n + 1}_${clean(bild.name)}`, bild, []);
+      }
+      if (targetProId) { item.proScanOriginals = scans; item.scanOriginalsPath = null; }
+      else { delete item.proScanOriginals; item.scanOriginalsPath = `${ROOT}/${scanFolder}`; }
+    }
+    return item;
+  }
   let copiedDocuments = 0; let skippedDocuments = 0;
   for (const document of sourceIndex.documents) {
     const existing = targetById.get(document.id);
@@ -3562,20 +3716,12 @@ export async function copyMissingDocuments(source: FileSystemDirectoryHandle, ta
         skippedDocuments++; continue;
       } catch {
         const sourceFile = await fileFromStoredPath(source, document.storedPath);
-        const destination = await unusedTargetPath(target, existing.storedPath, document.id);
-        const fileHandle = await destination.directory.getFileHandle(destination.fileName, { create: true });
-        const writable = await fileHandle.createWritable();
-        await writable.write(sourceFile); await writable.close();
-        existing.storedPath = destination.storedPath; copiedDocuments++;
+        Object.assign(existing, await kopie(document, sourceFile)); copiedDocuments++;
         await writeIndex(target, targetIndex); continue;
       }
     }
     const sourceFile = await fileFromStoredPath(source, document.storedPath);
-    const destination = await unusedTargetPath(target, document.storedPath, document.id);
-    const fileHandle = await destination.directory.getFileHandle(destination.fileName, { create: true });
-    const writable = await fileHandle.createWritable();
-    await writable.write(sourceFile); await writable.close();
-    const copiedDocument = { ...document, storedPath: destination.storedPath };
+    const copiedDocument = await kopie(document, sourceFile);
     targetIndex.documents.push(copiedDocument); targetById.set(document.id, copiedDocument); copiedDocuments++;
     await writeIndex(target, targetIndex);
   }
@@ -3596,7 +3742,9 @@ export async function removeVaultEntries(handle: FileSystemDirectoryHandle, ids:
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   const index = await readIndex(handle);
   const removedDocuments = index.documents.filter((item) => ids.has(item.id));
+  const retainedProOriginals = removedDocuments.filter((item) => istProOriginal(item.storedPath)).length;
   for (const document of removedDocuments) {
+    if (istProOriginal(document.storedPath)) continue; // Nur den Aktenverweis entfernen; Kanon-Originale bleiben.
     try {
       const parts = document.storedPath.split("/").filter(Boolean);
       if (parts[0] === ROOT) parts.shift();
@@ -3630,9 +3778,9 @@ export async function removeVaultEntries(handle: FileSystemDirectoryHandle, ids:
   index.auditLog = index.auditLog.filter((item) => !item.recordId || !ids.has(item.recordId));
   if (!index.documents.length && !index.records.length) index.sequences = {};
   const removed = before - (index.documents.length + index.records.length + index.memoryDrafts.length);
-  index.auditLog.unshift({ id: crypto.randomUUID(), at: new Date().toISOString(), action: label, recordId: null, details: `${removed} Einträge und ${removedDocuments.length} Dateien wurden nach Benutzerbestätigung entfernt. Eigene Einträge blieben unverändert.` });
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: new Date().toISOString(), action: label, recordId: null, details: `${removed} Einträge und ${removedDocuments.length - retainedProOriginals} lokale Dateien wurden nach Benutzerbestätigung entfernt. ${retainedProOriginals} Originale im gemeinsamen Pro-Tresor blieben erhalten. Eigene Einträge blieben unverändert.` });
   await writeIndex(handle, index);
-  return { removedEntries: removed, removedFiles: removedDocuments.length };
+  return { removedEntries: removed, removedFiles: removedDocuments.length - retainedProOriginals, retainedProOriginals };
 }
 
 /** Nur für scripts/run-vault-safety-tests.mjs: Zugriff auf Register lesen/schreiben, um Konflikte nachzustellen. */

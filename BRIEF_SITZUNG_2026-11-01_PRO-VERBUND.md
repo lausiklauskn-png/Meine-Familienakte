@@ -1,5 +1,14 @@
 # Nächste Sitzung: Familienakte Pro und die verbundenen Pro-Apps
 
+**Aktualisierung im ausführenden Chat, 1. November 2026:** Klaus hat die selbstständige Umsetzung,
+sichtbare Änderungen, das Zusammenführen geprüfter Stücke auf main und die Veröffentlichung ausdrücklich
+freigegeben. Damit ist die frühere Veröffentlichungssperre unten für diesen Auftrag aufgehoben.
+Alle neuen Funktionen müssen auch unter Windows umgesetzt und geprüft werden; ein anschließendes
+Windows-Update gehört dazu. **Die Geschenk-HTML kommt erst ganz am Ende, wenn der vereinbarte Bau fertig ist.**
+Sie erhält dann die tatsächlichen aktuellen Dateien, Erläuterungen und Bilder zur freiwilligen Zusammenarbeit
+von Familienakte Pro, Workflow PDF Pro, Private Brain Pro und BookLedgerPro. Der Metapher „SAP für Privatleute“
+entspricht ein Verbund eigenständiger Apps, keine neue Pflichtzentrale. Bisherige Prüf- und Herkunftsregeln gelten weiter.
+
 Auftrag von Klaus, 1. November 2026. Dieser Brief beschreibt den nächsten Bau; die Anschlüsse sind damit noch nicht umgesetzt.
 Er ergänzt [den Abschluss zum gesicherten Eingang](BRIEF_ABSCHLUSS_2026-11-01_CODEX-EINGANG-UND-TRESOR.md).
 Die Speicherreparatur und der Plan wurden während dieser Übergabe mit [PR #48](https://github.com/lausiklauskn-png/Meine-Familienakte/pull/48)
