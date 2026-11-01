@@ -28,7 +28,7 @@
   },
   "bundle": {
     "active": true,
-    "resources": ["pro-tresor/**"],
+    "resources": ["pro-tresor/familienakte-tresor.jar", "pro-tresor/runtime/**/*"],
     "targets": [
       "nsis"
     ],
