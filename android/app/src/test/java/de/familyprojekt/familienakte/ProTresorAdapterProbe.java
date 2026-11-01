@@ -10,6 +10,19 @@ import java.util.*;
 /** Echte JVM-Dateien und echte Kanon-Kryptografie; ausschließlich erfundene Originale.
  * Ohne Testbibliothek lokal ausführbar, derselbe Lauf wird in der CI verlangt. */
 public final class ProTresorAdapterProbe {
+    static final class Schreibgesperrt implements Ablage {
+        final Ablage basis;
+        Schreibgesperrt(Ablage basis) { this.basis = basis; }
+        public List<String> liste(String p) throws IOException { return basis.liste(p); }
+        public boolean gibtEs(String p) throws IOException { return basis.gibtEs(p); }
+        public boolean istOrdner(String p) throws IOException { return basis.istOrdner(p); }
+        public void ordner(String p) throws IOException { basis.ordner(p); }
+        public byte[] lesen(String p, int n) throws IOException { return basis.lesen(p, n); }
+        public OutputStream neu(String p) throws IOException { throw new IOException("Probe: Speicher voll oder schreibgeschützt"); }
+        public Kanal kanal(String p) throws IOException { return basis.kanal(p); }
+        public long groesse(String p) throws IOException { return basis.groesse(p); }
+        public void loeschen(String p) throws IOException { throw new IOException("Probe: schreibgeschützt"); }
+    }
     interface Aktion { void run() throws Exception; }
     static void pruefe(boolean ok, String was) { if (!ok) throw new AssertionError(was); }
     static void fehler(String code, Aktion a) throws Exception {
@@ -65,6 +78,11 @@ public final class ProTresorAdapterProbe {
                 pruefe(unveraendert.equals(bestand(alt)), "Migration verändert Quelle");
                 for (var f : vorOeffnen.entrySet()) pruefe(f.getValue().equals(bestand(kopie).get(f.getKey())), "Fremdes Original verändert");
             }
+            Map<String, String> vorSchreibfehler = bestand(kopie);
+            try (ProTresorAdapter gesperrt = ProTresorAdapter.oeffnen(new Schreibgesperrt(k), id, zugang)) {
+                fehler("Speicher voll", () -> gesperrt.ablegen("schreibfehler", "Neu.txt", "text/plain", 4, quelle(original)));
+            }
+            pruefe(vorSchreibfehler.equals(bestand(kopie)), "Schreibfehler verliert Bestand");
             try (ProTresorAdapter neu = ProTresorAdapter.oeffnen(k, id, zugang)) {
                 pruefe(Arrays.equals(original, neu.lesen(e.id)), "Neustart verliert Original");
                 // „Rückweg“: Original im gemeinsamen Format mit dem kanonischen Leser lesbar.

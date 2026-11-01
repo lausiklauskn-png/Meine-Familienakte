@@ -24,16 +24,18 @@ export function ProTresorAnschluss() {
     finally { setBusy(false); }
   }
   const text = { getrennt: "Noch nicht verbunden", offen: "Entsperrt", gesperrt: "Gesperrt", nicht_erreichbar: "Nicht erreichbar – gewählten Speicher und Ordnerfreigabe prüfen" };
-  return <section className="panel" data-pro-tresor>
+  return <section className="card" data-pro-tresor>
     <h3>Gemeinsamer Pro-Tresor</h3>
     <p>Vorhandenen Tresor von Workflow PDF Pro, Private Brain Pro oder BookLedgerPro verbinden. Der Ordner kann im Gerät, auf SD-Karte oder USB liegen, soweit Android ihn freigibt.</p>
     <p role="status">{text[stand.status]}</p>
     {stand.ort && <p style={{ overflowWrap: "anywhere" }}>Gewählter Ort: {stand.ort}</p>}
     {stand.id && <p>Tresorkennung: {stand.id}</p>}
     <p>Dieser erste Anschluss prüft Ort und Entsperren. Die bisherige Dokumentablage wird noch nicht umgestellt; es werden keine bestehenden Dateien verschoben.</p>
-    <button type="button" disabled={busy} onClick={() => void ausfuehren("verbinden")}>{stand.id ? "Anderen Pro-Tresor wählen …" : "Vorhandenen Pro-Tresor verbinden …"}</button>
-    {stand.status === "gesperrt" && <button type="button" disabled={busy} onClick={() => void ausfuehren("entsperren")}>Pro-Tresor entsperren …</button>}
-    {stand.status === "offen" && <button type="button" disabled={busy} onClick={() => void ausfuehren("sperren")}>Pro-Tresor sperren</button>}
+    <div className="button-row">
+      <button className="button secondary" type="button" disabled={busy} onClick={() => void ausfuehren("verbinden")}>{stand.id ? "Anderen Pro-Tresor wählen …" : "Vorhandenen Pro-Tresor verbinden …"}</button>
+      {stand.status === "gesperrt" && <button className="button primary" type="button" disabled={busy} onClick={() => void ausfuehren("entsperren")}>Pro-Tresor entsperren …</button>}
+      {stand.status === "offen" && <button className="button secondary" type="button" disabled={busy} onClick={() => void ausfuehren("sperren")}>Pro-Tresor sperren</button>}
+    </div>
     {meldung && <p role="alert">{meldung}</p>}
   </section>;
 }

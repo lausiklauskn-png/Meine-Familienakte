@@ -25,6 +25,12 @@ public class FamilienakteTresorPlugin extends Plugin {
     private final ExecutorService worker = Executors.newSingleThreadExecutor();
     private ProTresorAdapter adapter;
     private SharedPreferences prefs() { return getContext().getSharedPreferences("familienakte-pro-tresor", 0); }
+    private void ungenutztFreigeben(String uri) {
+        if (uri == null || uri.isEmpty() || uri.equals(prefs().getString("uri", ""))) return;
+        try { getContext().getContentResolver().releasePersistableUriPermission(Uri.parse(uri),
+            Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION); }
+        catch (SecurityException ignored) { /* keine ungenutzte Freigabe vorhanden */ }
+    }
     private SafAblage ablage(String uri) throws IOException {
         if (uri == null || uri.isEmpty()) throw new IOException("FA_TRESOR_NICHT_VERBUNDEN");
         Uri baum = Uri.parse(uri);
@@ -69,7 +75,7 @@ public class FamilienakteTresorPlugin extends Plugin {
             int flags = data.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             getContext().getContentResolver().takePersistableUriPermission(data.getData(), flags);
             dialog(call, uri, null);
-        } catch (Exception e) { fehler(call, e); }
+        } catch (Exception e) { ungenutztFreigeben(uri); fehler(call, e); }
     }
     @PluginMethod public void entsperren(PluginCall call) {
         dialog(call, prefs().getString("uri", ""), prefs().getString("id", ""));
@@ -81,8 +87,8 @@ public class FamilienakteTresorPlugin extends Plugin {
             feld.setSaveEnabled(false);
             new AlertDialog.Builder(getActivity()).setTitle("Pro-Tresor entsperren").setView(feld)
                 .setMessage("Passwort des vorhandenen gemeinsamen Tresors. Es wird kein neuer Tresor angelegt.")
-                .setNegativeButton("Abbrechen", (d, w) -> { feld.setText(""); call.reject("Abgebrochen", "FA_TRESOR_ABGEBROCHEN"); })
-                .setOnCancelListener(d -> { feld.setText(""); call.reject("Abgebrochen", "FA_TRESOR_ABGEBROCHEN"); })
+                .setNegativeButton("Abbrechen", (d, w) -> { feld.setText(""); ungenutztFreigeben(uri); call.reject("Abgebrochen", "FA_TRESOR_ABGEBROCHEN"); })
+                .setOnCancelListener(d -> { feld.setText(""); ungenutztFreigeben(uri); call.reject("Abgebrochen", "FA_TRESOR_ABGEBROCHEN"); })
                 .setPositiveButton("Entsperren", (d, w) -> {
                     char[] geheim = new char[feld.length()];
                     feld.getText().getChars(0, feld.length(), geheim, 0); feld.setText("");
@@ -91,13 +97,15 @@ public class FamilienakteTresorPlugin extends Plugin {
                             SafAblage a = ablage(uri);
                             String id = erwartet == null ? TresorOrdner.kennung(a) : erwartet;
                             ProTresorAdapter neu = ProTresorAdapter.oeffnen(a, id, java.nio.CharBuffer.wrap(geheim));
+                            String vorher = prefs().getString("uri", "");
                             if (!prefs().edit().putString("uri", uri).putString("id", id).commit()) {
                                 neu.close(); throw new IOException("FA_TRESOR_ORT_NICHT_GESPEICHERT");
                             }
                             if (adapter != null) adapter.close();
                             adapter = neu;
+                            ungenutztFreigeben(vorher);
                             call.resolve(new JSObject().put("id", id).put("ort", uri).put("status", "offen"));
-                        } catch (Exception e) { fehler(call, e); }
+                        } catch (Exception e) { ungenutztFreigeben(uri); fehler(call, e); }
                         finally { java.util.Arrays.fill(geheim, '\0'); }
                     });
                 }).show();
