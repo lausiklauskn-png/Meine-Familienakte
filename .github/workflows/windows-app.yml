@@ -40,6 +40,8 @@ jobs:
       - run: npm ci --prefix windows
       - name: Gemeinsamen Pro-Tresor und lokale Engine prüfen
         run: node tools/native/test-pro-tresor-engine.mjs
+      - name: Gemeinsamen Modelladapter mit erfundenen Dateien prüfen
+        run: node tools/native/test-models.mjs
       - name: Fassungen und Hülle prüfen
         run: |
           node windows/tools/version.mjs
@@ -55,9 +57,6 @@ jobs:
         run: npm run tauri --prefix windows -- build --bundles nsis
         env:
           FAMILIENAKTE_COMMIT: ${{ github.sha }}
-      - name: Echten Installer und gebündelte Pro-Tresor-Laufzeit prüfen
-        shell: pwsh
-        run: ./windows/tools/test-pro-install.ps1
       - name: Installer benennen und Prüfsumme
         shell: bash
         run: |
@@ -66,6 +65,20 @@ jobs:
           mkdir -p windows/distribution
           cp windows/src-tauri/target/release/bundle/nsis/*-setup.exe "windows/distribution/Familienakte-Windows-$version-x64-setup.exe"
           (cd windows/distribution && sha256sum *.exe > SHA256SUMS && cat SHA256SUMS)
+      - name: Getrennten Prüfinstaller mit lokalem WebView2-Prüfzugang bauen
+        run: npm run tauri --prefix windows -- build --bundles nsis --features modelprobe --config src-tauri/tauri.modelprobe.conf.json
+        env:
+          FAMILIENAKTE_COMMIT: ${{ github.sha }}
+      - name: Echten Prüfinstaller, gebündelte Laufzeit und Modelloberfläche prüfen
+        shell: pwsh
+        run: ./windows/tools/test-pro-install.ps1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: familienakte-windows-modelle
+          path: work/model-installed/
+          if-no-files-found: warn
+          retention-days: 14
       - uses: actions/upload-artifact@v4
         with:
           name: familienakte-windows-installer

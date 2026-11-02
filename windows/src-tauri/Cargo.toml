@@ -9,6 +9,9 @@ license = "UNLICENSED"
 [build-dependencies]
 tauri-build = { version = "2", features = [] }
 
+[features]
+modelprobe = ["tauri/devtools"]
+
 [dependencies]
 tauri = { version = "=2.12.5", features = [] }
 tauri-plugin-single-instance = "2"
@@ -20,8 +23,9 @@ sha2 = "0.10"
 ureq = { version = "2", default-features = false, features = ["tls"] }
 
 [target.'cfg(windows)'.dependencies]
+webview2-com = "=0.39.1"
 windows = { version = "=0.62.2", features = [
-  "Win32_Foundation", "Win32_Media_Speech", "Win32_System_Com",
+  "Win32_Foundation", "Win32_Media_Speech", "Win32_System_Com", "Win32_UI_Shell", "Win32_Storage_FileSystem",
 ] }
 
 [profile.release]

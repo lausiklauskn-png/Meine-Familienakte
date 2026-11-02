@@ -25,6 +25,12 @@ fn aktion_erlaubt(request: &Value) -> bool {
 }
 impl Engine {
     fn starten(resources: &Path, config: &Path) -> Result<Self, String> {
+        Self::starten_fuer(resources, config, false)
+    }
+    pub(crate) fn starten_modelle(resources: &Path, data: &Path) -> Result<Self, String> {
+        Self::starten_fuer(resources, data, true)
+    }
+    fn starten_fuer(resources: &Path, config: &Path, modelle: bool) -> Result<Self, String> {
         let basis = resources.join("pro-tresor");
         let java = basis.join("runtime").join("bin").join(if cfg!(windows) { "java.exe" } else { "java" });
         let jar = basis.join("familienakte-tresor.jar");
@@ -34,8 +40,10 @@ impl Engine {
         // Präfix beim Klassenpfad nicht; die geprüfte JAR ist relativ zum festen Laufzeitordner.
         command.current_dir(basis.canonicalize().map_err(|_| "FA_TRESOR_ENGINE_FEHLT")?)
             .env_remove("JAVA_TOOL_OPTIONS").env_remove("_JAVA_OPTIONS").env_remove("JDK_JAVA_OPTIONS")
-            .arg("-Xmx256m").arg("-cp").arg("familienakte-tresor.jar")
-            .arg("de.familyprojekt.familienakte.ProTresorEngine").arg(config)
+            .arg("-Xmx256m").arg("-cp").arg(if modelle {
+                if cfg!(windows) { "familienakte-tresor.jar;json-20250517.jar" } else { "familienakte-tresor.jar:json-20250517.jar" }
+            } else { "familienakte-tresor.jar" })
+            .arg(if modelle { "de.familyprojekt.privatebrain.pro.FamilyModelsEngine" } else { "de.familyprojekt.familienakte.ProTresorEngine" }).arg(config)
             .stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::null());
         #[cfg(windows)]
         { use std::os::windows::process::CommandExt; command.creation_flags(0x08000000); }
@@ -44,7 +52,7 @@ impl Engine {
         let stdout = BufReader::new(child.stdout.take().ok_or("FA_TRESOR_ENGINE_PIPE")?);
         Ok(Self { child, stdin, stdout })
     }
-    fn aufrufen(&mut self, bytes: &[u8]) -> Result<Value, String> {
+    pub(crate) fn aufrufen(&mut self, bytes: &[u8]) -> Result<Value, String> {
         self.stdin.write_all(bytes).and_then(|_| self.stdin.write_all(b"\n"))
             .and_then(|_| self.stdin.flush()).map_err(|_| "FA_TRESOR_ENGINE_PIPE")?;
         let mut response = Vec::new();

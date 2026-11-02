@@ -161,6 +161,48 @@
       "commit": "f3569f0d835fb31194b94dab6eb0eb4af7cfc51a",
       "sha256": "a7d959aabb68940109d2092c291ef97b0fde9db50c6c6d39ae95b34d426162c0",
       "zweck": "Gemeinsamer Pro-Tresor, kanonisches Java-Paket und Originalprobe"
+    },
+    "public/native/pro-geraet.js": {
+      "repo": "lausiklauskn-png/Privat-Brain-Pro",
+      "pfad": "native/pro-geraet.js",
+      "commit": "326dc3d4ba1c709c0f818247e01bfb383c063ad3",
+      "sha256": "b18c26f8d0bd755c6a4fe5a8948e8457f7d9ed73b69dac938f8c9bab1326f710",
+      "zweck": "Vorhandene Geräteprüfung, fortsetzbarer Modell-Download und feste Modellquellen; eigene Adapter getrennt"
+    },
+    "public/native/meaning-models.json": {
+      "repo": "lausiklauskn-png/Privat-Brain-Pro",
+      "pfad": "tools/native/meaning-models.json",
+      "commit": "326dc3d4ba1c709c0f818247e01bfb383c063ad3",
+      "sha256": "5234209c91c06b7511059fb3858ca10787ebc93cebf673b628b31d820c550cb4",
+      "zweck": "Vorhandene Geräteprüfung, fortsetzbarer Modell-Download und feste Modellquellen; eigene Adapter getrennt"
+    },
+    "public/native/semantic-model.json": {
+      "repo": "lausiklauskn-png/Privat-Brain-Pro",
+      "pfad": "tools/native/semantic-model.json",
+      "commit": "326dc3d4ba1c709c0f818247e01bfb383c063ad3",
+      "sha256": "a12421e3b89a2a95ba94088ad0e8101fd1c87cebe68d21520c637d93be7c5311",
+      "zweck": "Vorhandene Geräteprüfung, fortsetzbarer Modell-Download und feste Modellquellen; eigene Adapter getrennt"
+    },
+    "android/app/src/main/java/de/familyprojekt/privatebrain/pro/SemanticModel.java": {
+      "repo": "lausiklauskn-png/Privat-Brain-Pro",
+      "pfad": "android/app/src/main/java/de/familyprojekt/privatebrain/pro/SemanticModel.java",
+      "commit": "326dc3d4ba1c709c0f818247e01bfb383c063ad3",
+      "sha256": "69ec4f1c1d4262d98cdf3d4a4f03e65bbe54705a9f4ce6f383dc8f2255cd59e6",
+      "zweck": "Vorhandene Geräteprüfung, fortsetzbarer Modell-Download und feste Modellquellen; eigene Adapter getrennt"
+    },
+    "android/app/src/main/java/de/familyprojekt/privatebrain/pro/ProDevicePlugin.java": {
+      "repo": "lausiklauskn-png/Privat-Brain-Pro",
+      "pfad": "android/app/src/main/java/de/familyprojekt/privatebrain/pro/ProDevicePlugin.java",
+      "commit": "326dc3d4ba1c709c0f818247e01bfb383c063ad3",
+      "sha256": "e6a6c42eae995cc7816dff0bec029010f1d1b8609aaf6e5c97e4ad98a5afb5bd",
+      "zweck": "Vorhandene Geräteprüfung, fortsetzbarer Modell-Download und feste Modellquellen; eigene Adapter getrennt"
+    },
+    "windows/java/de/familyprojekt/privatebrain/pro/DesktopGeraet.java": {
+      "repo": "lausiklauskn-png/Privat-Brain-Pro",
+      "pfad": "windows/engine/src/DesktopGeraet.java",
+      "commit": "326dc3d4ba1c709c0f818247e01bfb383c063ad3",
+      "sha256": "7828b7a4d0f0e8953b4efced02a4218866c5087d01cca2e0012f301b2de97ead",
+      "zweck": "Vorhandene Geräteprüfung, fortsetzbarer Modell-Download und feste Modellquellen; eigene Adapter getrennt"
     }
   }
 }

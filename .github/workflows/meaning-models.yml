@@ -1,0 +1,45 @@
+name: Private Bedeutungssuche – wirkliche Modelle
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'app/private-meaning-*.ts'
+      - 'public/native/familienakte-meaning-worker.js'
+      - 'tools/native/measure-family-models.mjs'
+      - 'android/app/src/main/java/de/familyprojekt/privatebrain/**'
+      - 'windows/java/de/familyprojekt/privatebrain/**'
+      - '.github/workflows/meaning-models.yml'
+permissions:
+  contents: read
+concurrency:
+  group: meaning-models-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  models:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - uses: actions/cache@v4
+        with:
+          path: work/meaning-model-probe/models
+          key: family-models-${{ hashFiles('public/native/meaning-models.json', 'public/native/semantic-model.json') }}
+      - name: Gepinnte Modelle mit Original-Downloader, Worker und privatem Index vergleichen
+        run: node tools/native/measure-family-models.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: familienakte-modelle-messung
+          path: work/meaning-model-probe/family-model-measured.json
+          if-no-files-found: error
+          retention-days: 30

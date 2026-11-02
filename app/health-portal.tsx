@@ -1,4 +1,5 @@
 import type { SectionId, UploadedDocument } from "./portal-types";
+import { PrivateMeaningPanel } from "./private-meaning-panel";
 import { fmtDate } from "./portal-format";
 import { buildPortalSearchResults, type SearchResult } from "./portal-suche";
 import { ProUebergabeKnopf } from "./pro-uebergabe-knopf";
@@ -1160,7 +1161,7 @@ function HealthPortalContent() {
         {sampleBusy && !samplePresent && <section className="info-notice sample-data-notice" aria-live="polite"><span>Info</span><div><strong>Beispieldaten werden vorbereitet …</strong><div>Beim ersten Start legt die App eine frei erfundene Beispielfamilie im Browser-Datentresor an. Das dauert nur wenige Sekunden.</div></div></section>}
         {samplePresent && <section className="info-notice sample-data-notice" aria-label="Hinweis zu Beispieldaten"><span>Info</span><div><strong>{SAMPLE_NOTICE}</strong><div>Die {SAMPLE_FAMILY_NAME}, alle Orte, Firmen, Fahrzeuge und Nummern sind frei erfunden. Wenn du deine eigenen Unterlagen einpflegen möchtest, entferne die Beispieldaten mit einem Klick – eigene Einträge bleiben erhalten.</div></div><button type="button" className="button secondary" disabled={sampleBusy} onClick={() => void removeSampleData()}><Trash2 size={16}/> Beispieldaten entfernen</button></section>}
         <div className="breadcrumb"><button onClick={() => go("overview")}>Startseite</button>{active !== "overview" && <><ChevronRight size={14}/>{parentArea && parentArea.label !== sectionLabels[active] && <><button onClick={() => go(parentArea.landing)}>{parentArea.label}</button><ChevronRight size={14}/></>}<span>{sectionLabels[active]}</span></>}</div>
-        {query && <SearchPanel query={query} results={searchResults} interpretation={searchInterpretation} onOpen={go}/>} 
+        {query && <><SearchPanel query={query} results={searchResults} interpretation={searchInterpretation} onOpen={go}/><PrivateMeaningPanel handle={vaultHandle} query={query} onOpen={go}/></>}
         {!query && active === "overview" && <Overview
           documents={documents} localDocuments={localDocuments} oneDriveSummary={oneDriveSummary}
           oneDriveName={oneDriveName} localVaultName={localVaultName}
@@ -1228,7 +1229,7 @@ function HealthPortalContent() {
         {!query && active === "workflowpdf" && <Suspense fallback={null}><WorkflowPdfSeite key={wfpdfStart} scan={wfpdfScan} oeffnen={wfpdfOeffnen} onAblegen={ausWorkflowPdf} onGeoeffnet={() => { setWfpdfOeffnen(null); setWfpdfScan(false); }} kopf={<PageTitle icon={<FileText/>} title="Workflow PDF" text="Das ganze Werkzeug von Workflow PDF in der Familienakte: scannen, zuschneiden, Felder erkennen und setzen, ausfüllen, Prüfbericht, PDF ausgeben. Eigene Bibliothek, getrennt von der Workflow-PDF-App; nichts geht ins Netz, bis du es selbst wählst."/>}/></Suspense>}
         {!query && active === "netz" && <Suspense fallback={null}><NetzSeite kopf={<PageTitle icon={<Network/>} title="Netz (Mycel)" text="Verbindet die Familienakte auf Wunsch mit anderen Geräten im SBKIM-Netz. Beim Öffnen der Akte geht nichts ins Netz; hinaus geht nur die Visitenkarte, keine Unterlagen."/>}/></Suspense>}
         {!query && active === "security" && <SecurityCenter
-          aktenHandle={vaultHandle}
+          aktenHandle={vaultHandle} onMeaningOpen={go}
           oneDriveConnected={oneDriveReachable} oneDriveName={oneDriveName} oneDriveSummary={oneDriveSummary}
           localConnected={localVaultReachable} localVaultName={localVaultName} localVaultSummary={localVaultSummary}
           supported={vaultSupported()} onlineCount={documents.length} localCount={localDocuments.length} busy={vaultBusy || busy}
@@ -3214,8 +3215,9 @@ function Inbox({ documents, localDocuments, loading, onUpload, onOpenDocument, o
   </>;
 }
 
-function SecurityCenter({ aktenHandle, oneDriveConnected, oneDriveName, oneDriveSummary, localConnected, localVaultName, localVaultSummary, supported, onlineCount, localCount, busy, syncPreview, syncResult, onConnectOneDrive, onConnectLocal, onLockOneDrive, onLockLocal, onMigrate, onHelp, onCompare, onCheckSync, onRunSync, onExport, onFullBackup, onRestoreTest }: {
+function SecurityCenter({ aktenHandle, onMeaningOpen, oneDriveConnected, oneDriveName, oneDriveSummary, localConnected, localVaultName, localVaultSummary, supported, onlineCount, localCount, busy, syncPreview, syncResult, onConnectOneDrive, onConnectLocal, onLockOneDrive, onLockLocal, onMigrate, onHelp, onCompare, onCheckSync, onRunSync, onExport, onFullBackup, onRestoreTest }: {
   aktenHandle: FileSystemDirectoryHandle | null;
+  onMeaningOpen: (section: SectionId, targetId?: string) => void;
   oneDriveConnected: boolean; oneDriveName: string; oneDriveSummary: VaultSummary | null; localConnected: boolean; localVaultName: string; localVaultSummary: VaultSummary | null; supported: boolean; onlineCount: number; localCount: number; busy: boolean;
   syncPreview: VaultSyncPreview | null; syncResult: VaultSyncResult | null;
   onConnectOneDrive: () => void; onConnectLocal: () => void; onLockOneDrive: () => void; onLockLocal: () => void; onMigrate: () => void; onHelp: () => void; onCompare: () => void; onCheckSync: () => void; onRunSync: () => void; onExport: () => void; onFullBackup: () => void; onRestoreTest: () => void;
@@ -3229,6 +3231,7 @@ function SecurityCenter({ aktenHandle, oneDriveConnected, oneDriveName, oneDrive
       : "";
   return <><PageTitle icon={<ShieldCheck/>} title="Sicherheit und lokaler Tresor" text="Du wählst, wo neue Originalunterlagen abgelegt werden. Die Familienakte lädt sie nicht in den Webspeicher dieser Seite hoch."/>
     <ProTresorAnschluss aktenHandle={aktenHandle}/>
+    <PrivateMeaningPanel handle={aktenHandle} onOpen={onMeaningOpen}/>
     <section className="security-grid security-grid-three">
       <article className="card security-card compact-security-card"><Cloud/><div><div className="security-card-heading"><h2>OneDrive-Ordner verbinden</h2><InfoPopover label="OneDrive-Verbindung erklären" text="Verbindet ausschließlich einen von dir gewählten, lokal synchronisierten OneDrive-Ordner. Die Familienakte erhält keinen Zugriff auf dein Microsoft-Passwort und durchsucht keine anderen OneDrive-Bereiche."/></div><span className={`badge ${oneDriveConnected ? "success" : "warning"}`}>{oneDriveConnected ? "verbunden" : "nicht verbunden"}</span><p>{oneDriveConnected ? oneDriveName : "Noch kein OneDrive-Ordner ausgewählt."}</p>{oneDriveSummary && <p className="vault-id"><strong>Tresor-Kennung:</strong> {oneDriveSummary.vaultId}</p>}<div className="button-row"><button className="button primary" disabled={!supported || busy} onClick={onConnectOneDrive}><Cloud size={17}/>{oneDriveConnected ? "Anderen OneDrive-Ordner wählen" : "OneDrive-Ordner verbinden"}</button>{oneDriveConnected && <button className="button secondary" disabled={busy} onClick={onLockOneDrive}><LockKeyhole size={17}/> Sperren</button>}</div>{!supported && <p className="form-error">Bitte diese Seite in Chrome oder Edge auf einem PC öffnen.</p>}</div></article>
       <article className="card security-card compact-security-card"><Usb/><div><div className="security-card-heading"><h2>PC-/USB-Ordner verbinden</h2><InfoPopover label="PC- oder USB-Verbindung erklären" text="Verbindet einen ausdrücklich ausgewählten PC-Ordner oder entsperrten USB-Datenträger. Dateien werden nur nach deinem Befehl gelesen oder als Sicherung kopiert; vorhandene Originale werden nicht überschrieben."/></div><span className={`badge ${localConnected ? "success" : "warning"}`}>{localConnected ? "verbunden" : "nicht verbunden"}</span><p>{localConnected ? localVaultName : "Noch kein PC-/USB-Ordner ausgewählt."}</p>{localVaultSummary && <p className="vault-id"><strong>Tresor-Kennung:</strong> {localVaultSummary.vaultId}</p>}<div className="button-row"><button className="button primary" disabled={!supported || busy} onClick={onConnectLocal}><Usb size={17}/>{localConnected ? "Anderen PC-/USB-Ordner wählen" : "PC-/USB-Ordner verbinden"}</button>{localConnected && <button className="button secondary" disabled={busy} onClick={onLockLocal}><LockKeyhole size={17}/> Sperren</button>}</div></div></article>

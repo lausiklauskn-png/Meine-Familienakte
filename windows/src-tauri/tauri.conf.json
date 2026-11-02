@@ -28,7 +28,7 @@
   },
   "bundle": {
     "active": true,
-    "resources": ["pro-tresor/familienakte-tresor.jar", "pro-tresor/runtime/**/*"],
+    "resources": ["pro-tresor/familienakte-tresor.jar", "pro-tresor/json-20250517.jar", "pro-tresor/meaning-models.json", "pro-tresor/semantic-model.json", "pro-tresor/runtime/**/*"],
     "targets": [
       "nsis"
     ],

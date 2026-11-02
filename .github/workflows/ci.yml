@@ -24,6 +24,12 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Vorhandenen Modell-Download mit Abbruch und Wiederaufnahme prüfen
+        run: node tools/native/test-models.mjs
       - name: Typprüfung
         run: npm run typecheck
       - name: Lint
@@ -38,6 +44,8 @@ jobs:
         run: npm run build:single
       - name: Browser für die Oberflächenproben
         run: npx playwright install --with-deps chromium
+      - name: Privaten Index mit wirklicher IndexedDB prüfen
+        run: node tools/native/test-private-index.mjs
       - name: Diagnose der Pro-Ablage nach Neustart
         run: |
           DEBUG=pw:browser node tests/ui/_opfs-reload-diagnose.mjs
