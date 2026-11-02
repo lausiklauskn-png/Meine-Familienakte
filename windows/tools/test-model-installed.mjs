@@ -6,7 +6,7 @@ import {resolve,join} from 'node:path';
 import {setTimeout as pause} from 'node:timers/promises';
 import {chromium} from 'playwright';
 const out=resolve(process.argv[2]);await mkdir(out,{recursive:true});
-const report={checks:[],kind:'Installed Windows / WebView2 on CI, no physical user device'},errors=[];
+const report={checks:[],assets:[],console:[],kind:'Installed Windows / WebView2 on CI, no physical user device'},errors=[];
 let browser,page,lastConnectionError;
 try {
  const deadline=Date.now()+60000;
@@ -25,6 +25,9 @@ try {
  report.targets=await targets();report.pages=browser.contexts().flatMap(c=>c.pages()).map(p=>p.url());
  assert.ok(page,'Family window: '+JSON.stringify({pages:report.pages,targets:report.targets}));
  page.on('pageerror',e=>errors.push(e.message));
+ page.on('console',m=>{if(['error','warning'].includes(m.type()))report.console.push(m.text().slice(0,1000));});
+ page.on('response',r=>{if(r.url().includes('/_fa_models/'))report.assets.push({url:r.url(),status:r.status(),type:r.headers()['content-type']});});
+ page.on('requestfailed',r=>{if(r.url().includes('/_fa_models/'))report.assets.push({url:r.url(),failure:r.failure()});});
  await page.waitForSelector('.sample-data-notice strong',{timeout:120000});
  await page.waitForFunction(()=>window.PBNetwork?.ready&&window.Capacitor?.Plugins?.FamilyModels);
  const initial=await page.evaluate(async()=>{await window.PBNetwork.setOffline(true);return {state:await window.Capacitor.Plugins.FamilyModels.getState(),device:await window.Capacitor.Plugins.ProDevice.measure(),blocked:await window.Capacitor.Plugins.FamilyModels.install({stage:'klein'}).then(()=>false,()=>true)};});
@@ -37,6 +40,8 @@ try {
  await panel.getByText(/Modell vollständig abgelegt/).waitFor({timeout:720000});
  await page.locator('.netz-schalter').click();await page.waitForSelector('.netz-schalter[data-netz="aus"]');
  report.checks.push('Explicit small model download with the bundled JRE');
+ const config=await page.evaluate(async()=>{const r=await fetch('/_fa_models/klein/model/config.json');return {status:r.status,type:r.headers.get('content-type'),prefix:(await r.text()).slice(0,100)};});
+ report.localConfig=config;assert.equal(config.status,200,'Local verified config');assert.match(config.type||'',/json/,'Local route must return a model asset');
  await panel.getByRole('button',{name:'Index aufbauen / fortsetzen',exact:true}).click();await panel.getByRole('status').filter({hasText:'Suchindex bereit:'}).waitFor({timeout:240000});
  report.checks.push('Production Worker, actual pinned model and private IndexedDB activate the sample index');
  await page.reload();await page.waitForSelector('.sample-data-notice strong',{timeout:120000});
@@ -48,5 +53,5 @@ try {
  await page.screenshot({path:join(out,'private-meaning-windows.png'),fullPage:true});
  await panel.locator('.search-results button').first().click();await page.waitForFunction(()=>!document.querySelector('.private-meaning'));
  assert.deepEqual(errors,[]);report.checks.push('Actual result opens the document');report.complete=true;
-} catch(error) {report.error=String(error);await page?.screenshot({path:join(out,'failure.png'),fullPage:true}).catch(()=>{});throw error;}
+} catch(error) {report.error=String(error);report.panel=await page?.locator('.private-meaning').innerText().catch(()=>null);await page?.screenshot({path:join(out,'failure.png'),fullPage:true}).catch(()=>{});throw error;}
 finally {report.pageErrors=errors;await writeFile(join(out,'installed-model.json'),JSON.stringify(report,null,2)+'\n');await browser?.close();}
