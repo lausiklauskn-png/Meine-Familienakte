@@ -23,6 +23,8 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(FamilienakteSharePlugin.class);
         registerPlugin(FamilienakteUpdatesPlugin.class);
         registerPlugin(FamilienakteTresorPlugin.class);
+        registerPlugin(FamilienakteDevicePlugin.class);
+        registerPlugin(FamilienakteModelsPlugin.class);
         super.onCreate(state);
         if (bridge == null) return;
         // Internetschalter (Standard aus): auch Bilder, Schriften und der Service Worker bleiben im Gerät.
@@ -32,6 +34,10 @@ public class MainActivity extends BridgeActivity {
         bridge.getWebView().getSettings().setBlockNetworkLoads(AppNetwork.isOffline());
         bridge.getWebView().setNetworkAvailable(!AppNetwork.isOffline());
         bridge.setWebViewClient(new BridgeWebViewClient(bridge) {
+            @Override public android.webkit.WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+                var local = FamilienakteModelsPlugin.asset(MainActivity.this, request.getUrl());
+                return local != null ? local : super.shouldInterceptRequest(view, request);
+            }
             @Override public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 Uri uri = request.getUrl();
                 if ("https".equals(uri.getScheme()) && "localhost".equals(uri.getHost()) && uri.getPort() == -1)

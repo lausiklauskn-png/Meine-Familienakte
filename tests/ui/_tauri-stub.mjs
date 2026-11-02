@@ -5,6 +5,7 @@ export const tauriStub = `(() => {
   const listeners = {};
   window.__TAURI__ = {
     core: { invoke: async (cmd, args) => {
+      if (cmd === 'fa_modelle' && args.anfrage.method === 'network') { state.modelOffline = args.anfrage.offline; return { offline: state.modelOffline }; }
       if (cmd === 'fa_diktat') { state.diktat.push(args?.language); return state.nextSpeech ?? { cancelled: false, text: 'Nebenkostenabrechnung für Arenberg-Hof prüfen' }; }
       if (cmd === 'fa_diktat_abbrechen') return null;
       if (cmd === 'fa_plattform') return { plattform: 'windows', fassung: state.fassung || '2.28.1' };

@@ -1827,3 +1827,8 @@ input.af-feld, textarea.af-feld { width: auto; min-height: 0; resize: none; }
 .intake-briefkopf label { display: grid; gap: 2px; font-size: .85rem; }
 .intake-briefkopf input { min-height: 32px; }
 .intake-brief-gleich { display: grid; gap: 2px; font-size: .85rem; }
+/* Freiwillige private Suche: dieselben Formulare auch im schmalen App-Fenster. */
+.private-meaning { margin-block: 1rem; padding: 1rem; overflow-wrap: anywhere; }
+.private-meaning label { display: block; margin-block: .8rem; }
+.private-meaning select, .private-meaning input { display: block; width: 100%; max-width: 36rem; box-sizing: border-box; margin-top: .35rem; padding: .6rem; }
+.private-meaning .search-results { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }

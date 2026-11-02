@@ -13,13 +13,23 @@
   const write = (offline) => { try { localStorage.setItem(KEY, offline ? 'aus' : 'an'); } catch { /* bleibt aus */ } };
   window.Capacitor = {
     getPlatform: () => 'windows', isNativePlatform: () => true,
-    Plugins: { ProNetwork: { async getState() { return { offline: read() }; }, async setOffline({ offline }) { if (typeof offline !== 'boolean') throw new Error('INVALID_INPUT'); write(offline); return { offline: read() }; } } }
+    Plugins: { ProNetwork: {
+      async getState() { return invoke('fa_modelle', { anfrage: { method: 'network', offline: read() } }); },
+      async setOffline({ offline }) {
+        if (typeof offline !== 'boolean') throw new Error('INVALID_INPUT');
+        write(offline);
+        return invoke('fa_modelle', { anfrage: { method: 'network', offline: read() } });
+      }
+    } }
   };
   // Derselbe freiwillige Pro-Anschluss wie unter Android. Dialoge und Schlüssel bleiben nativ.
   window.Capacitor.Plugins.FamilienakteTresor = Object.fromEntries(
     ['zustand', 'verbinden', 'entsperren', 'sperren', 'speichern', 'lesen', 'uebergabeSenden', 'uebergabeEingang', 'uebergabeLesen', 'uebergabeQuittieren', 'uebergabeStand'].map((aktion) =>
       [aktion, (daten = {}) => invoke('fa_pro_tresor', { anfrage: { ...daten, aktion } })])
   );
+  window.Capacitor.Plugins.ProDevice = { measure: () => invoke('fa_modelle', { anfrage: { method: 'measure' } }) };
+  window.Capacitor.Plugins.FamilyModels = Object.fromEntries(['getState', 'install', 'cancel', 'remove'].map(method =>
+    [method, (options = {}) => invoke('fa_modelle', { anfrage: { ...options, method } })]));
 
   // Diktat über SAPI, einmal je Tipp (oneShot), auch bei Internet „aus“ (läuft auf dem Gerät).
   class WindowsSpeech {

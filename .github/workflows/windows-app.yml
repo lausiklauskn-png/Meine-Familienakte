@@ -40,6 +40,8 @@ jobs:
       - run: npm ci --prefix windows
       - name: Gemeinsamen Pro-Tresor und lokale Engine prüfen
         run: node tools/native/test-pro-tresor-engine.mjs
+      - name: Gemeinsamen Modelladapter mit erfundenen Dateien prüfen
+        run: node tools/native/test-models.mjs
       - name: Fassungen und Hülle prüfen
         run: |
           node windows/tools/version.mjs

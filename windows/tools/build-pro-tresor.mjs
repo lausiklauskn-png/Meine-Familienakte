@@ -1,18 +1,24 @@
 // Gemeinsamer kanonischer Tresor für Windows: eigenes kleines JRE im Installer, kein System-Java.
 import { execFileSync, spawnSync } from "node:child_process";
-import { readdirSync, mkdirSync, rmSync, existsSync } from "node:fs";
+import { readdirSync, mkdirSync, rmSync, existsSync, copyFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { jsonDependency, JSON_NAME } from "../../tools/native/model-json-dependency.mjs";
 const root = fileURLToPath(new URL("../../", import.meta.url));
 const ziel = path.join(root, "windows/src-tauri/pro-tresor");
 const klassen = path.join(root, "work/pro-tresor-klassen");
 const basis = "android/app/src/main/java/de/familyprojekt/";
 const quellen = readdirSync(path.join(root, basis, "tresor")).filter((f) => f.endsWith(".java") && f !== "SafAblage.java").map((f) => basis + "tresor/" + f);
+const models = ["AppNetwork.java", "SemanticModel.java", "FamilyModels.java"].map(f => basis + "privatebrain/pro/" + f);
+models.push("windows/java/de/familyprojekt/privatebrain/pro/DesktopGeraet.java", "windows/java/de/familyprojekt/privatebrain/pro/FamilyModelsEngine.java");
+const jsonJar = await jsonDependency();
 mkdirSync(ziel, { recursive: true }); rmSync(klassen, { recursive: true, force: true }); mkdirSync(klassen, { recursive: true });
 const java = process.env.JAVA_HOME ? path.join(process.env.JAVA_HOME, "bin", process.platform === "win32" ? "java.exe" : "java") : "java";
-execFileSync(java, ["com.sun.tools.javac.Main", "-encoding", "UTF-8", "-d", klassen, ...quellen,
+execFileSync(java, ["com.sun.tools.javac.Main", "-encoding", "UTF-8", "-cp", jsonJar, "-d", klassen, ...quellen, ...models,
   basis + "familienakte/ProTresorAdapter.java", "windows/java/de/familyprojekt/familienakte/ProTresorEngine.java"], { cwd: root, stdio: "inherit" });
 execFileSync(java, ["sun.tools.jar.Main", "--create", "--file", path.join(ziel, "familienakte-tresor.jar"), "-C", klassen, "."], { cwd: root, stdio: "inherit" });
+copyFileSync(jsonJar, path.join(ziel, JSON_NAME));
+for (const name of ["meaning-models.json", "semantic-model.json"]) copyFileSync(path.join(root, "public/native", name), path.join(ziel, name));
 if (!process.argv.includes("--nur-jar")) {
   const runtime = path.join(ziel, "runtime");
   if (existsSync(runtime)) rmSync(runtime, { recursive: true, force: true });
