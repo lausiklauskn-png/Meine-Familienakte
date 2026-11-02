@@ -53,7 +53,7 @@ async function stop(which){const a=apps[which];if(!a)return;await a.browser?.clo
 const fp=()=>apps.family.page,pp=()=>apps.peer.page;
 const footer=async name=>{await activate('family');return fp().locator('.footer-directory button',{hasText:name}).click();};
 const familyRows=()=>fp().evaluate(async()=>{const r=indexedDB.open('FamilienakteStapel1'),db=await new Promise((ok,no)=>{r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)});try{return await new Promise((ok,no)=>{const t=db.transaction('uebergaben'),q=t.objectStore('uebergaben').getAll();t.oncomplete=()=>ok(q.result);t.onabort=()=>no(t.error);});}finally{db.close();}});
-async function swing(kind,value){if(android)return kind==='folder'?chooseFolder():androidPassword(value);await new Promise((ok,no)=>{const p=spawn('powershell.exe',['-NoProfile','-STA','-ExecutionPolicy','Bypass','-File','tools/native/pairs/family-dialog.ps1','-Kind',kind,'-Value',value],{stdio:'inherit'});p.on('error',no);p.on('exit',c=>c===0?ok():no(Error('Native dialog failed: '+kind)));});}
+async function swing(kind,value){if(android)return kind==='folder'?chooseFolder():androidPassword(value);await new Promise((ok,no)=>{const p=spawn('pwsh.exe',['-NoProfile','-STA','-ExecutionPolicy','Bypass','-File','tools/native/pairs/family-dialog.ps1','-Kind',kind,'-Value',value],{stdio:'inherit'});p.on('error',no);p.on('exit',c=>c===0?ok():no(Error('Native dialog failed: '+kind)));});}
 async function connectFamily(first){
  await footer('Sicherheitscenter');const panel=fp().locator('[data-pro-tresor]');
  if(first){await panel.getByRole('button',{name:'Vorhandenen Pro-Tresor verbinden …',exact:true}).click();await swing('folder',process.env.PAIR_VAULT);}
