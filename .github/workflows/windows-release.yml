@@ -73,7 +73,18 @@ jobs:
         run: npm run tauri --prefix windows -- build --bundles nsis
         env:
           FAMILIENAKTE_COMMIT: ${{ github.sha }}
-      - name: Echten Installer und gebündelte Pro-Tresor-Laufzeit prüfen
+      - name: Auslieferungsinstaller vor dem getrennten Prüfbau sichern
+        shell: bash
+        run: |
+          set -euo pipefail
+          version=$(node -p "require('./package.json').version")
+          mkdir -p release
+          cp windows/src-tauri/target/release/bundle/nsis/*-setup.exe "release/Familienakte-Windows-$version-x64-setup.exe"
+      - name: Getrennten Prüfinstaller für die Modell- und Ausgabeoberfläche bauen
+        run: npm run tauri --prefix windows -- build --bundles nsis --features modelprobe --config src-tauri/tauri.modelprobe.conf.json
+        env:
+          FAMILIENAKTE_COMMIT: ${{ github.sha }}
+      - name: Installierte Oberfläche und gebündelte Pro-Tresor-Laufzeit prüfen
         shell: pwsh
         run: ./windows/tools/test-pro-install.ps1
       - name: Installer, Prüfsummen, latest.json
@@ -83,9 +94,8 @@ jobs:
         run: |
           set -euo pipefail
           version="${TAG#windows-v}"
-          mkdir -p release
           name="Familienakte-Windows-$version-x64-setup.exe"
-          cp windows/src-tauri/target/release/bundle/nsis/*-setup.exe "release/$name"
+          test -s "release/$name"
           (cd release && sha256sum "$name" > SHA256SUMS)
           sha=$(cut -d' ' -f1 release/SHA256SUMS)
           size=$(stat -c %s "release/$name")

@@ -1,0 +1,96 @@
+{
+  "sourceFamily": "caffdd1758c6a786e595af4a2b2e0afcf2c8842c",
+  "run": 41506243317,
+  "platforms": [
+    {
+      "name": "windows-workflow",
+      "job": 125490024575,
+      "partnerSource": "e2c57b3f514c0c3f118c23f243bf5ee9fe756bb7",
+      "report": {
+        "partner": "workflow-pdf-pro",
+        "kind": "Two NSIS-installed Windows apps on CI; no physical user device",
+        "checks": [
+          "Family UI sends exactly one selected PDF twice with one stable ID; target app has never started and no receipt exists",
+          "Cold-started partner commits exact original in its ordinary library; only then does actual Family confirm",
+          "Warm target receives another selected PDF; both independent originals remain available",
+          "Partner process restart preserves document bytes and a single durable receipt",
+          "Partner returns a chosen PDF version with source relation; still open before Family acceptance",
+          "Cold Family inbox rejects forged confirmation, durably takes the actual return, and only then the installed sender confirms"
+        ],
+        "errors": [],
+        "complete": true
+      }
+    },
+    {
+      "name": "windows-bookledger",
+      "job": 125490024327,
+      "partnerSource": "3ca7bb919245bb0ff7a293fe93beee92fbd28f61",
+      "report": {
+        "partner": "bookledgerpro",
+        "kind": "Two NSIS-installed Windows apps on CI; no physical user device",
+        "checks": [
+          "Family UI sends exactly one selected PDF twice with one stable ID; target app has never started and no receipt exists",
+          "Cold-started partner commits exact original in its ordinary library; only then does actual Family confirm",
+          "Warm target receives another selected PDF; both independent originals remain available",
+          "Partner process restart preserves document bytes and a single durable receipt",
+          "Partner returns a chosen PDF version with source relation; still open before Family acceptance",
+          "Cold Family inbox rejects forged confirmation, durably takes the actual return, and only then the installed sender confirms"
+        ],
+        "errors": [],
+        "complete": true
+      }
+    },
+    {
+      "name": "android-private-brain",
+      "job": 125488987065,
+      "partnerSource": "326dc3d4ba1c709c0f818247e01bfb383c063ad3",
+      "report": {
+        "partner": "private-brain",
+        "kind": "Two installed Android APKs, API 35 emulator, actual SAF picker; no physical user device",
+        "checks": [
+          "Family UI sends exactly one selected PDF twice with one stable ID; target app has never started and no receipt exists",
+          "Cold-started partner commits exact original in its ordinary library; only then does actual Family confirm",
+          "Warm target receives another selected PDF; both independent originals remain available",
+          "Partner process restart preserves document bytes and a single durable receipt",
+          "Partner returns a chosen PDF version with source relation; still open before Family acceptance",
+          "Cold Family inbox rejects forged confirmation, durably takes the actual return, and only then the installed sender confirms"
+        ],
+        "errors": [],
+        "complete": true
+      }
+    },
+    {
+      "name": "windows-private-brain",
+      "job": 125490024310,
+      "partnerSource": "326dc3d4ba1c709c0f818247e01bfb383c063ad3",
+      "report": {
+        "partner": "private-brain",
+        "kind": "Two NSIS-installed Windows apps on CI; no physical user device",
+        "checks": [
+          "Family UI sends exactly one selected PDF twice with one stable ID; target app has never started and no receipt exists",
+          "Cold-started partner commits exact original in its ordinary library; only then does actual Family confirm",
+          "Warm target receives another selected PDF; both independent originals remain available",
+          "Partner process restart preserves document bytes and a single durable receipt",
+          "Partner returns a chosen PDF version with source relation; still open before Family acceptance",
+          "Cold Family inbox rejects forged confirmation, durably takes the actual return, and only then the installed sender confirms"
+        ],
+        "errors": [],
+        "complete": true
+      }
+    }
+  ],
+  "limits": "Installed debug/modelprobe builds on GitHub CI; test access is absent from production builds. No physical user devices or scanner.",
+  "overall_complete": false,
+  "open_android_pairs": {
+    "run": 41514065036,
+    "source": "fb3cb6130d11c26b6d7dc3ad2e52dfadd2544665",
+    "workflow-pdf-pro": {
+      "job": 125515603016,
+      "result": "failure; emulator unavailable during native password dialog"
+    },
+    "bookledgerpro": {
+      "job": 125515602769,
+      "result": "failure; emulator unavailable during DocumentsUI; two Family triggerEvent errors"
+    }
+  }
+}
