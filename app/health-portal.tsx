@@ -5,6 +5,7 @@ import { buildPortalSearchResults, type SearchResult } from "./portal-suche";
 import { ProUebergabeKnopf } from "./pro-uebergabe-knopf";
 import { proDateiWeitergeben, proVerbundFehler, PRO_ZIELE, type ProZiel } from "./pro-verbund";
 import { proUebergabeAnnehmen } from "./pro-uebergabe";
+import { uebergabeVorschlaege, type UebergabeVorschlag } from "../lib/uebergabe-vorschlaege";
 import { askConfirm, askPrompt } from "./page-dialogs";
 import { useEingang } from "./use-eingang";
 import { ProTresorAnschluss } from "./pro-tresor-anschluss";
@@ -608,7 +609,8 @@ function HealthPortalContent() {
   };
   const queueCentralIntakeFiles = async (files: File[], source: DocumentIntakeSource, parentQueueId: string | null = null, stapelIds: string[] = []) => {
     if (!files.length) return false;
-    const placeholders: CentralIntakeQueueItem[] = files.map((file) => ({ id: crypto.randomUUID(), file, source, status: "Analyse läuft", selected: false, addedAt: new Date().toISOString(), analysis: null, error: null, parentQueueId }));
+    const metadata = await uebergabeVorschlaege(files);
+    const placeholders: CentralIntakeQueueItem[] = files.map((file) => ({ id: crypto.randomUUID(), file, source, status: "Analyse läuft", selected: false, addedAt: new Date().toISOString(), analysis: null, error: null, parentQueueId, uebergabeVorschlag: metadata.vorschlaege.get(file), uebergabeHinweis: metadata.hinweise.get(file) }));
     placeholders.forEach((item) => intakeAnalyses.current.add(item.id));
     // Erst die bestätigte Transaktion darf den Stapel freigeben; Analyse darf später fertig werden.
     if (!await setCentralIntakeQueue((current) => [...placeholders, ...current], stapelIds)) return false;
@@ -1318,7 +1320,7 @@ function HealthPortalContent() {
           }}
         />
       </Suspense>)}
-      {uploadOpen && vaultHandle && <UploadDialog initialFile={uploadInitialFile} source={uploadSource} knownDocuments={[...localDocuments, ...documents]} records={familyRecords} relations={familyRelations} decisions={linkDecisions} suggestedCaseId={uploadSuggestedCaseId} onOpenExisting={async (id) => {
+      {uploadOpen && vaultHandle && <UploadDialog initialFile={uploadInitialFile} uebergabeVorschlag={centralIntakeQueue.find(item => item.id === uploadQueueId)?.uebergabeVorschlag} source={uploadSource} knownDocuments={[...localDocuments, ...documents]} records={familyRecords} relations={familyRelations} decisions={linkDecisions} suggestedCaseId={uploadSuggestedCaseId} onOpenExisting={async (id) => {
         const queued = uploadQueueId ? centralIntakeQueue.find((item) => item.id === uploadQueueId) : null;
         if (!await setCentralIntakeQueue((current) => current.map((item) => item.id === uploadQueueId ? { ...item, status: "Übernommen", selected: false, savedDocumentId: id, error: "Vorhandener Dokumentdatensatz wurde wiederverwendet; es wurde keine Kopie angelegt." } : item))) return;
         if (queued?.parentQueueId) {
@@ -3519,8 +3521,9 @@ function ExportDialog({ sourceHandle, documents, localDocuments, records, relati
   </div></div>;
 }
 
-function UploadDialog({ initialFile, source, knownDocuments, records, relations, decisions, suggestedCaseId, onClose, onOpenExisting, onSave }: {
+function UploadDialog({ initialFile, uebergabeVorschlag, source, knownDocuments, records, relations, decisions, suggestedCaseId, onClose, onOpenExisting, onSave }: {
   initialFile: File | null; source: DocumentIntakeSource;
+  uebergabeVorschlag?: UebergabeVorschlag;
   knownDocuments: Array<{ id: string; originalName: string; sizeBytes: number; documentDate?: string | null; updatedAt?: string | null; category?: string | null; notes?: string | null }>;
   records: FamilyRecordUnion[]; relations: FamilyRelation[]; decisions: ContextLinkDecision[]; suggestedCaseId: string | null; onClose: () => void; onOpenExisting: (id: string) => void;
   onSave: (file: File, data: { category: string; documentDate: string | null; notes: string | null; allowDuplicate?: boolean; assignmentLinks?: Array<{ toType: FamilyRecordUnion["recordType"]; toId: string; relationType: string }>; newCaseTitle?: string; rejectedContext?: ContextLinkSuggestion; resolveOpenPointEventId?: string }) => Promise<LocalDocument>;
@@ -3575,6 +3578,7 @@ function UploadDialog({ initialFile, source, knownDocuments, records, relations,
   const [newCaseTitle, setNewCaseTitle] = useState("");
   const [rejectedContext, setRejectedContext] = useState<ContextLinkSuggestion | undefined>();
   const [resolveOpenPointEventId, setResolveOpenPointEventId] = useState("");
+  const [fremdVerwendet, setFremdVerwendet] = useState(false);
   useEffect(() => {
     let cancelled = false;
     if (!file) { setTextHint(""); return () => { cancelled = true; }; }
@@ -3609,6 +3613,8 @@ function UploadDialog({ initialFile, source, knownDocuments, records, relations,
   useEffect(() => { if (selbstGewaehlt.current) return; const vorschlag = suggestedCaseId || vorgangAusNummer || contextSuggestions[0]?.caseId || ""; if (vorschlag && vorschlag !== selectedCaseId) setSelectedCaseId(vorschlag); }, [suggestedCaseId, vorgangAusNummer, contextSuggestions, selectedCaseId]);
   const selectFile = (selected: File | null) => {
     setFile(selected); setTextHint(""); setBriefHand(false); setBrief(null); setBriefNummern(""); setAllowDuplicate(false); setError(""); setChoiceField(null); setCustomChoice("");
+    setNotes(""); setDocumentDate(""); setFremdVerwendet(false);
+    setSelectedCaseId(suggestedCaseId || ""); setNewCaseTitle(""); setRejectedContext(undefined); setResolveOpenPointEventId(""); selbstGewaehlt.current = false;
     setOverrides({ lifeArea: false, documentType: false, privacyClass: false, category: false });
     if (selected) {
       const nextPlan = buildDocumentIntakePlan({ file: selected, source, documents: knownDocuments, records });
@@ -3653,6 +3659,20 @@ function UploadDialog({ initialFile, source, knownDocuments, records, relations,
   return <div className="modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}><div className="modal intake-modal" role="dialog" aria-modal="true" aria-labelledby="upload-title"><div className="modal-head"><div><span className="badge success">Gemeinsamer Dokumenteneingang</span><span className="ui-heading-help"><h2 id="upload-title">Neue Unterlage prüfen und lokal ablegen</h2><InfoPopover label="Neue Unterlage prüfen und lokal ablegen erklären" text={UI_HELP["Neue Unterlage prüfen und lokal ablegen"]}/></span></div><button className="icon-button" onClick={onClose} aria-label="Fenster schließen"><X/></button></div><form onSubmit={submit}>
     <input ref={inputRef} className="sr-only" type="file" accept=".pdf,.docx,.xlsx,.jpg,.jpeg,.png,.webp,.txt,.vtt,.msg,.zip" onChange={(event) => selectFile(event.target.files?.[0] || null)} />
     <button type="button" className={`drop-zone ${dragging ? "dragging" : ""}`} onClick={() => inputRef.current?.click()} onDragOver={(event) => { event.preventDefault(); setDragging(true); }} onDragLeave={() => setDragging(false)} onDrop={(event) => { event.preventDefault(); setDragging(false); selectFile(event.dataTransfer.files?.[0] || null); }}><Upload size={32}/><strong>{file ? file.name : "Datei hier ablegen oder auswählen"}</strong><span>{file ? `${fmtBytes(file.size)}${textLesen ? " · Text wird gelesen …" : textHint.trim() ? " · Text gelesen" : ""}` : "PDF, DOCX, XLSX, MSG, VTT, ZIP oder Bilddatei · höchstens 20 MB"}</span></button>
+    {file && file === initialFile && uebergabeVorschlag && <section className="card" data-uebergabe-vorschlag aria-label="Vorschläge der anderen App">
+      <strong>Vorschläge aus „{uebergabeVorschlag.quelle}“</strong>
+      <p>Diese Angaben kommen aus einer anderen App. Prüfe sie selbst; sie bestätigen weder den Inhalt noch die Ablage.</p>
+      <dl>{([['lebensbereich', 'Lebensbereich'], ['dokumentart', 'Dokumentenart'], ['vorgang', 'Vorgang'], ['hinweis', 'Hinweis']] as const).map(([key, label]) => uebergabeVorschlag[key] && <div key={key}><dt>{label}</dt><dd>{uebergabeVorschlag[key]}</dd></div>)}</dl>
+      <button type="button" className="button secondary" disabled={fremdVerwendet} onClick={() => {
+        if (!selbstGewaehlt.current) waehle("");
+        if (uebergabeVorschlag.lebensbereich) applyChoice("lifeArea", uebergabeVorschlag.lebensbereich);
+        if (uebergabeVorschlag.dokumentart) applyChoice("documentType", uebergabeVorschlag.dokumentart);
+        const hint = [uebergabeVorschlag.vorgang ? `Vorgang laut ${uebergabeVorschlag.quelle}: ${uebergabeVorschlag.vorgang}` : "", uebergabeVorschlag.hinweis].filter(Boolean).join(" · ");
+        if (hint) setNotes(previous => [previous, hint].filter(Boolean).join(" · "));
+        setFremdVerwendet(true);
+      }}>{fremdVerwendet ? "Vorschläge im Formular – weiter änderbar" : "Vorschläge in das Formular übernehmen"}</button>
+      <p>Ein genannter Vorgang wird als Hinweis eingetragen. Eine Verknüpfung oder ein neuer Vorgang entsteht erst durch deine Auswahl und den Speicherbefehl.</p>
+    </section>}
     {file && (brief || textHint.trim()) && <section className="intake-briefkopf" data-briefkopf aria-label="Aus dem Briefkopf"><strong>Aus dem Briefkopf</strong>{!brief && <small data-briefkopf-leer>Kein Briefkopf erkannt — die Angaben bleiben leer, nichts wird geraten.</small>}
       <label><span>Absender</span><input data-brief-feld="absender" value={brief?.absender || ""} onChange={(e) => briefAendern("absender", e.target.value)} placeholder="nicht erkannt"/></label>
       <label><span>Empfänger</span><input data-brief-feld="empfaenger" value={brief?.empfaenger || ""} onChange={(e) => briefAendern("empfaenger", e.target.value)} placeholder="nicht erkannt"/></label>

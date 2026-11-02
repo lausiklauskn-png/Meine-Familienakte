@@ -1,4 +1,5 @@
 import type { ProUebergabe } from "./pro-verbund-vertrag";
+import type { UebergabeVorschlag } from "./uebergabe-vorschlaege";
 import type { FamilyRecordUnion } from "./family-data-model.ts";
 import {
   buildDocumentIntakePlan,
@@ -63,6 +64,8 @@ export type CentralIntakeAnalysis = {
 
 export type CentralIntakeQueueItem = {
   proUebergabe?: ProUebergabe;
+  uebergabeVorschlag?: UebergabeVorschlag;
+  uebergabeHinweis?: string;
   id: string;
   file: Pick<File, "name" | "type" | "size" | "lastModified">;
   source: DocumentIntakeSource;
