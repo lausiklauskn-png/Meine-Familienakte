@@ -86,7 +86,10 @@ async function connectPeer(first){
 async function sendFamily(index){
  await footer('Dokumentenbibliothek');
  const cards=fp().locator('.library-document-card').filter({has:fp().getByRole('button',{name:'An Pro-App geben …',exact:true})}).filter({has:fp().locator('.library-document-title').filter({hasText:/\.pdf$/i})});
- const card=cards.nth(index),name=await card.locator('.library-document-title').innerText();
+ const name=await cards.nth(index).locator('.library-document-title').innerText();
+ // The closed chooser button disappears after opening. Keep the selected
+ // document, rather than re-evaluating a filter for that now absent button.
+ const card=fp().locator('.library-document-card').filter({has:fp().getByText(name,{exact:true})});
  await card.getByRole('button',{name:'An Pro-App geben …',exact:true}).click();await card.locator('select').selectOption(partner);
  for(let n=0;n<2;n++){await card.getByRole('button',{name:'Ausgewählte Unterlage weitergeben',exact:true}).click();await card.getByRole('button',{name:'Ausgewählte Unterlage weitergeben',exact:true}).waitFor();await fp().getByText('An '+({'workflow-pdf-pro':'Workflow PDF Pro','private-brain':'Private Brain Pro',bookledgerpro:'BookLedgerPro'}[partner])+' weitergegeben.',{exact:false}).first().waitFor();}
  const rows=(await familyRows()).filter(r=>r.typ==='ausgang'&&r.vertrag.ziel===partner&&r.vertrag.name===name);assert.equal(rows.length,1);assert.equal(rows[0].stand,'weitergegeben');return rows[0];
