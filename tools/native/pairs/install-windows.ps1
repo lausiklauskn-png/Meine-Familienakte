@@ -31,6 +31,7 @@ try {
  $env:WFP_PRUEF_PRO_TRESOR = $vault
  $env:PB_WINDOWS_TEST_FOLDER = $vault
  $env:BLP_WINDOWS_TEST_FOLDER = $vault
+ $env:BLP_WINDOWS_TEST_SAVE_FOLDER = $root
  New-Item -ItemType Directory -Force $env:WFP_PRUEF_ARBEIT | Out-Null
  node tools/native/pairs/windows.mjs $Partner
  if ($LASTEXITCODE -ne 0) { throw 'Das wirkliche App-Paar hat die Übergabe nicht bestanden' }

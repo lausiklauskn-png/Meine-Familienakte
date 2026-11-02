@@ -5,16 +5,26 @@ import {chromium} from 'playwright';
 import {spawn,execFileSync} from 'node:child_process';
 import {writeFile,mkdir} from 'node:fs/promises';
 import {join,resolve} from 'node:path';
+import {tmpdir} from 'node:os';
 import {setTimeout as pause} from 'node:timers/promises';
-import {adb,chooseFolder,password as androidPassword} from './android-ui.mjs';
+import {adb,chooseFolder,saveFile,password as androidPassword} from './android-ui.mjs';
 const android=process.env.PAIR_ANDROID==='1';
 const partner=process.argv[2],out=resolve('work/pair-proof'),PASSWORD='Pair-Probe-2026-only';
 assert.ok(['workflow-pdf-pro','private-brain','bookledgerpro'].includes(partner));
 const report={partner,kind:android?'Two installed Android APKs, API 35 emulator, actual SAF picker; no physical user device':'Two NSIS-installed Windows apps on CI; no physical user device',checks:[],errors:[]};
 const apps={},port=partner==='workflow-pdf-pro'?9222:9223;
 await mkdir(out,{recursive:true});
-const packages={family:'de.familyprojekt.familienakte',peer:partner==='private-brain'?'de.familyprojekt.privatebrain.pro':partner==='workflow-pdf-pro'?'de.familyprojekt.workflowpdf.pro':'de.familyprojekt.bookledgerpro'};
-async function activate(which){if(android)adb('shell','am','start','-W','-n',packages[which]+'/.MainActivity');}
+const packages={family:'de.familyprojekt.familienakte',peer:partner==='private-brain'?'de.familyprojekt.privatebrain.pro.preview.debug':partner==='workflow-pdf-pro'?'de.familyprojekt.workflowpdf.pro.debug':'de.familyprojekt.bookledgerpro.debug'};
+const activities={};
+async function activate(which){if(android){
+ // Debug APK IDs differ from production, while MainActivity keeps its Java
+ // namespace. Resolve the installed launch activity instead of guessing it.
+ if(!activities[which]){
+  activities[which]=adb('shell','cmd','package','resolve-activity','--brief','-a','android.intent.action.MAIN','-c','android.intent.category.LAUNCHER',packages[which]).trim().split(/\r?\n/).at(-1);
+  assert.ok(activities[which].startsWith(packages[which]+'/'),'Installed launcher for '+packages[which]);
+ }
+ adb('shell','am','start','-W','-n',activities[which]);
+}}
 const pass=message=>{report.checks.push(message);console.log('PASS '+message);};
 async function start(which){
  const endpoint=which==='family'?9333:port;
@@ -68,7 +78,21 @@ async function peerPassword(){
  else {await d.locator('#password').fill(PASSWORD);if(await d.locator('#remember').isVisible())await d.locator('#remember').check();await d.locator('#submit').click();}
 }
 async function connectPeer(first){
- if(partner==='bookledgerpro')await pp().evaluate(async({first,password})=>{const v=await import('/src/core/vault.js');if(first)await v.setupVault(password);else await v.unlockVault(password);},{first,password:PASSWORD});
+ if(partner==='bookledgerpro'){
+  // Ordinary onboarding/login must finish so the shell subscribes to route
+  // changes. Calling setupVault alone leaves the app at its intro screen.
+  if(first){
+   const intro=pp().locator('.intro-screen');await intro.waitFor();await intro.locator('input[type="checkbox"]').check();await intro.getByRole('button',{name:'Zur Anmeldung',exact:true}).click();
+   const form=pp().locator('.lock-form');await form.locator('input[type="password"]').nth(0).fill(PASSWORD);await form.locator('input[type="password"]').nth(1).fill(PASSWORD);await form.locator('button[type="submit"]').click();
+   await pp().locator('.share-code').first().waitFor();const shares=await pp().locator('.share-code').allTextContents();assert.equal(shares.length,3);
+   await writeFile(join(tmpdir(),'pair-invented-blp-recovery.txt'),shares.join('\n'),{mode:0o600});
+   await pp().getByRole('button',{name:'Anteile gesichert – weiter',exact:true}).click();await pp().getByRole('button',{name:'Privat',exact:true}).click();
+   await pp().getByRole('button',{name:'Verschlüsseltes Backup herunterladen',exact:true}).click();
+   if(android)await saveFile();
+   await pp().getByText(/^Gespeichert: /).waitFor();await pp().getByRole('button',{name:"Los geht's",exact:true}).click();
+  }else{await pp().locator('.lock-form input[type="password"]').fill(PASSWORD);await pp().locator('.lock-form button[type="submit"]').click();}
+  await pp().locator('.app #content').waitFor();
+ }
  if(first){
   await pp().evaluate(async partner=>{
    window.__pairConnection=null;const promise=(async()=>{
