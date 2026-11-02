@@ -1,6 +1,7 @@
 // Kleine Browserprobe ohne App: im OPFS gewählten Ordner nach Seitenneustart aus IndexedDB lesen.
 import { startApp, launchBrowser } from './_harness.mjs';
-const app = await startApp(), browser = await launchBrowser({ channel: 'chromium' });
+const app = await startApp(), browser = await launchBrowser({ channel: 'chrome' });
+console.log('OPFS: Browser', browser.version());
 try {
   const page = await browser.newPage();
   page.on('console', m => console.log('OPFS:', m.text()));
