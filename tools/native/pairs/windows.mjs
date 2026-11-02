@@ -38,7 +38,7 @@ async function start(which){
   state.page=state.browser.contexts().flatMap(c=>c.pages()).find(p=>/^https:\/\/(?:tauri\.)?localhost\/(index\.html)?([?#].*)?$/.test(p.url()));
   if(state.page)break;
   // WebView2 can publish its page after CDP has connected.
-  if(i===20)state.browser=await chromium.connectOverCDP('http://127.0.0.1:'+endpoint,{noDefaults:android});
+  if(i===20){await state.browser.close();state.browser=await chromium.connectOverCDP('http://127.0.0.1:'+endpoint,{noDefaults:android});}
   await pause(500);
  }
  assert.ok(state.page,'Installed main window '+which);
