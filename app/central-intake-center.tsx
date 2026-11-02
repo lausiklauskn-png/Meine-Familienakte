@@ -128,6 +128,8 @@ export function CentralIntakeCenter({
               <small>{analysis ? `${analysis.fileKind} · ${analysis.plan.lifeArea} · ${fmtBytes(item.file.size)}` : `${fmtBytes(item.file.size)} · Analyse läuft`}</small>
               {analysis && <><p>{analysis.contentMessage}</p>{analysis.groupHint && <p><b>Zusammenhang:</b> {analysis.groupHint}</p>}{analysis.email && <p><b>E-Mail:</b> {analysis.plan.privacyClass === "besonders geschützt" ? "geschützte Absender- und Betreffdaten" : `${analysis.email.sender || "Absender unbekannt"} · ${analysis.email.attachmentNames.length} Anlage${analysis.email.attachmentNames.length === 1 ? "" : "n"}`}</p>}{analysis.possibleTask && <p><b>Aufgabe:</b> {analysis.possibleTask}</p>}{analysis.possibleDeadline && <p><b>Frist:</b> {analysis.possibleDeadline}</p>}{analysis.plan.duplicateIds.length > 0 && <p className="queue-warning"><b>Mögliche Dublette:</b> vorhandenes Dokument zuerst vergleichen.</p>}</>}
               {item.error && <p className="form-error">{item.error}</p>}
+              {item.uebergabeVorschlag && <p>Fremde Einordnungsvorschläge aus „{item.uebergabeVorschlag.quelle}“ sind in „Zuordnung prüfen“ verfügbar.</p>}
+              {item.uebergabeHinweis && <p>{item.uebergabeHinweis}</p>}
             </div>
             <div className="queue-actions">
               {analysis?.email?.attachmentNames.length ? <button className="text-link" onClick={() => onExtractAttachments(item.id)}>Anlagen in Warteschlange prüfen</button> : null}
