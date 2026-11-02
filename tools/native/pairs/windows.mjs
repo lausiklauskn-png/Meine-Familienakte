@@ -38,7 +38,7 @@ async function start(which){
   state.page=state.browser.contexts().flatMap(c=>c.pages()).find(p=>/^https:\/\/(?:tauri\.)?localhost\/(index\.html)?([?#].*)?$/.test(p.url()));
   if(state.page)break;
   // WebView2 can publish its page after CDP has connected.
-  if(i===20)state.browser=await chromium.connectOverCDP('http://127.0.0.1:'+endpoint,{noDefaults:android});
+  if(i===20){await state.browser.close();state.browser=await chromium.connectOverCDP('http://127.0.0.1:'+endpoint,{noDefaults:android});}
   await pause(500);
  }
  assert.ok(state.page,'Installed main window '+which);
@@ -86,7 +86,12 @@ async function connectPeer(first){
 async function sendFamily(index){
  await footer('Dokumentenbibliothek');
  const cards=fp().locator('.library-document-card').filter({has:fp().getByRole('button',{name:'An Pro-App geben …',exact:true})}).filter({has:fp().locator('.library-document-title').filter({hasText:/\.pdf$/i})});
- const card=cards.nth(index),name=await card.locator('.library-document-title').innerText();
+ const position=await cards.nth(index).evaluate(e=>[...document.querySelectorAll('.library-document-card')].indexOf(e));
+ // The closed chooser button disappears after opening. Keep the selected
+ // document, rather than re-evaluating a filter for that now absent button.
+ // Example documents can share a title. The ordinary library UI probe uses
+ // the chosen card's absolute position for this reason, too.
+ const card=fp().locator('.library-document-card').nth(position),name=await card.locator('.library-document-title').innerText();
  await card.getByRole('button',{name:'An Pro-App geben …',exact:true}).click();await card.locator('select').selectOption(partner);
  for(let n=0;n<2;n++){await card.getByRole('button',{name:'Ausgewählte Unterlage weitergeben',exact:true}).click();await card.getByRole('button',{name:'Ausgewählte Unterlage weitergeben',exact:true}).waitFor();await fp().getByText('An '+({'workflow-pdf-pro':'Workflow PDF Pro','private-brain':'Private Brain Pro',bookledgerpro:'BookLedgerPro'}[partner])+' weitergegeben.',{exact:false}).first().waitFor();}
  const rows=(await familyRows()).filter(r=>r.typ==='ausgang'&&r.vertrag.ziel===partner&&r.vertrag.name===name);assert.equal(rows.length,1);assert.equal(rows[0].stand,'weitergegeben');return rows[0];
