@@ -190,7 +190,10 @@ jobs:
         run: |
           mkdir -p work/pair-proof
           free -m > work/pair-proof/host-memory.txt
-          sudo dmesg -T | rg -i 'out of memory|oom-kill|killed process|qemu|segfault' > work/pair-proof/host-kernel.txt || true
+          # Hosted runners do not promise ripgrep. Keep the full kernel log,
+          # including a possible emulator crash or host OOM, without a filter.
+          sudo dmesg -T > work/pair-proof/host-kernel.txt
+          df -h > work/pair-proof/host-disk.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
