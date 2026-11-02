@@ -12,7 +12,18 @@ try {
  const deadline=Date.now()+60000;
  while(!browser&&Date.now()<deadline){try{browser=await chromium.connectOverCDP('http://127.0.0.1:9333',{timeout:3000});}catch(error){lastConnectionError=String(error);await pause(500);}}
  assert.ok(browser,'Installed WebView2 is reachable: '+lastConnectionError);
- page=browser.contexts().flatMap(c=>c.pages()).find(p=>p.url().startsWith('https://tauri.localhost/'));assert.ok(page,'Family window');
+ const isMain=url=>/^https:\/\/tauri\.localhost\/(index\.html)?(\?[^#]*)?(#.*)?$/.test(url);
+ const targets=()=>fetch('http://127.0.0.1:9333/json').then(r=>r.json()).then(list=>list.map(t=>t.url)).catch(()=>[]);
+ let reconnected=false;
+ // CDP may be ready before WebView2 publishes its main page. Reuse the same
+ // startup budget and reconnect once if CDP knows a target Playwright missed.
+ while(!page&&Date.now()<deadline){
+  page=browser.contexts().flatMap(c=>c.pages()).find(p=>isMain(p.url()));if(page)break;
+  if(!reconnected&&(await targets()).some(isMain)){reconnected=true;browser=await chromium.connectOverCDP('http://127.0.0.1:9333',{timeout:3000});}
+  else await pause(250);
+ }
+ report.targets=await targets();report.pages=browser.contexts().flatMap(c=>c.pages()).map(p=>p.url());
+ assert.ok(page,'Family window: '+JSON.stringify({pages:report.pages,targets:report.targets}));
  page.on('pageerror',e=>errors.push(e.message));
  await page.waitForSelector('.sample-data-notice strong',{timeout:120000});
  await page.waitForFunction(()=>window.PBNetwork?.ready&&window.Capacitor?.Plugins?.FamilyModels);

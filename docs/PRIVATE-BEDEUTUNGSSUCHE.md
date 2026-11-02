@@ -53,9 +53,29 @@ Downloadadapter und Index werden erkannt. Die gebaute Oberfläche besteht zwölf
 Bedienproben; Geräte-/Downloadantworten und e5-Vektoren sind dabei gestellt.
 Die bestehende Windows-Brückenprobe besteht weiterhin acht Fälle.
 
-Offen vor Freigabe: vollständige native Android-/Windows-Prüfbauten dieses
-Standes, tatsächliches Laden aller drei gepinnten e5-Modelle und Vergleich auf
-erfundenen passenden Unterlagen. Modellgröße allein ist kein Qualitätsnachweis.
+Die wirklichen drei Modelle wurden mit dem produktiven Java-Downloader,
+Worker und IndexedDB auf acht erfundenen Unterlagen mit zehn Fragen geprüft
+(darunter zwei englische Fragen). Alle drei trafen zehn von zehn erwarteten
+Unterlagen; während Indexaufbau und Suche gab es keine externen Anfragen.
+Das ist ein kleiner Abnahmesatz, kein Nachweis allgemeiner Suchqualität.
+
+| Modell | Abgelegte Bytes einschließlich Laufzeit | Zeit je Abschnitt | Höchster gemessener Renderer-Speicher |
+| --- | ---: | ---: | ---: |
+| e5-small | 155.527.856 | 51 ms | 741 MiB |
+| e5-base | 315.867.266 | 128 ms | 1.313 MiB |
+| e5-large | 598.988.472 | 436 ms | 2.230 MiB |
+
+Gemessen auf dem Linux-CI-Rechner, nicht auf Klaus' Tablet oder PC. Quelle:
+[Modellprobe 41462584350](https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41462584350),
+wiederholt mit [41464815367](https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41464815367).
+Ein größeres Modell brachte in diesen Fällen keinen zusätzlichen richtigen Treffer.
+
+Die installierte Android-App besteht auf API 31 und 35 die Probe mit echtem
+kleinem Modell, ausdrücklichem Download, Offline-Index, erneuter Activity und
+Trefferöffnung: [41464815587, Versuch 2](https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41464815587/attempts/2).
+Der erste Versuch scheiterte vor der App-Probe am offiziellen SDK-Archivdownload.
+Native Android- und Windows-Bauten sind erfolgreich; die zusätzliche sichtbare
+Windows-Modellprobe ist noch offen. Modellgröße allein ist kein Qualitätsnachweis.
 Der Browser hat in diesem Entwurf die gemeinsame Geräteprüfung; die dauerhafte
 Modellablage ist zunächst an die beiden nativen Hüllen angebunden. Dieser Stand
 ist noch keine abgeschlossene Veröffentlichung und kein fertiges Geschenk.
