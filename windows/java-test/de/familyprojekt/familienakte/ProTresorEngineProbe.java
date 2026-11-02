@@ -17,14 +17,15 @@ public final class ProTresorEngineProbe {
         return (Map<String, Object>) e.aufruf(Map.of("aktion", aktion));
     }
     static final class Dialoge implements ProTresorEngine.Dialoge {
-        Path ordner; String zugang;
+        Path ordner, ausgabe; String zugang; int outputCalls;
         public Path ordner() { return ordner; }
         public char[] kennwort() { return zugang == null ? null : zugang.toCharArray(); }
+        public Path ausgabe(String name) { outputCalls++; return ausgabe; }
     }
     static void pipeProbe() throws Exception {
         Path root = Files.createTempDirectory("fa-windows-pipe-");
         try {
-            Dialoge dialog = new Dialoge(); dialog.ordner = root.resolve("tresor"); dialog.zugang = UUID.randomUUID().toString();
+            Dialoge dialog = new Dialoge(); dialog.ordner = root.resolve("tresor"); dialog.zugang = UUID.randomUUID().toString(); dialog.ausgabe = root.resolve("Paket.familienakte-paket");
             try (TresorOrdner t = TresorOrdner.anlegen(new DateiAblage(dialog.ordner.toFile()), Fach.WORKFLOW_PDF_APP, dialog.zugang)) { }
             try (ProTresorEngine e = new ProTresorEngine(root.resolve("config.json"), dialog);
                  Reader in = new BufferedReader(new InputStreamReader(System.in, java.nio.charset.StandardCharsets.UTF_8));
@@ -41,6 +42,29 @@ public final class ProTresorEngineProbe {
         try {
             Path tresor = root.resolve("sd-karte"), config = root.resolve("arbeitsstand/pro-tresor.json");
             Dialoge dialog = new Dialoge(); dialog.ordner = tresor; dialog.zugang = UUID.randomUUID().toString();
+            byte[] outputBytes = "Erfundene Ausgabedatei".getBytes(java.nio.charset.StandardCharsets.UTF_8);
+            String outputHash = HexFormat.of().formatHex(java.security.MessageDigest.getInstance("SHA-256").digest(outputBytes));
+            Map<String,Object> output = Map.of("aktion", "dateiExportieren", "name", "Empfang.familienakte-quittung", "data", Base64.getEncoder().encodeToString(outputBytes), "sha256", outputHash);
+            try (ProTresorEngine engine = new ProTresorEngine(config, dialog)) {
+                pruefe(Boolean.TRUE.equals(((Map<?,?>)engine.aufruf(output)).get("cancelled")), "Abbruch der Ausgabe als Erfolg");
+                dialog.ausgabe = root.resolve("Empfang.familienakte-quittung");
+                Files.writeString(dialog.ausgabe, "Vorhandene erfundene Datei");
+                Map<String,Object> bad = new HashMap<>(output); bad.put("sha256", "0".repeat(64));
+                int count = dialog.outputCalls;
+                final Map<String,Object> hashInput = bad;
+                fehler("FA_AUSGABE_PRUEFSUMME", () -> engine.aufruf(hashInput));
+                pruefe(dialog.outputCalls == count && Files.readString(dialog.ausgabe).equals("Vorhandene erfundene Datei"), "Fehlerhafte Ausgabe verändert vorhandene Datei");
+                bad = new HashMap<>(output); bad.put("name", "../Pfad"); final Map<String,Object> pathInput = bad;
+                fehler("FA_AUSGABE_NAME", () -> engine.aufruf(pathInput));
+                pruefe(Boolean.TRUE.equals(((Map<?,?>)engine.aufruf(output)).get("saved")) && Arrays.equals(outputBytes, Files.readAllBytes(dialog.ausgabe)), "Native Ausgabe verändert Bytes");
+                dialog.ausgabe = root.resolve("entfernt/Paket.bin");
+                fehler("FA_AUSGABE_ORT", () -> engine.aufruf(output));
+                byte[] tooBig = new byte[FamilyFileOutput.MAX_BYTES + 1];
+                Map<String,Object> large = new HashMap<>(output); large.put("data", Base64.getEncoder().encodeToString(tooBig));
+                fehler("FA_AUSGABE_ZU_GROSS", () -> engine.aufruf(large));
+                pruefe(!Files.exists(config), "Dateiausgabe legt ungefragt Tresor an");
+            }
+            System.out.println("Windows-Ausgabe: Abbruch, Hash, Pfad, Originalerhalt, Systemdialoggrenze und Größenlimit grün");
             String id;
             try (TresorOrdner t = TresorOrdner.anlegen(new DateiAblage(tresor.toFile()), Fach.WORKFLOW_PDF_APP, dialog.zugang)) { id = t.id(); }
             String eintrag;

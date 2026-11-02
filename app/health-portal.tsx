@@ -1,5 +1,6 @@
 import type { SectionId, UploadedDocument } from "./portal-types";
 import { PrivateMeaningPanel } from "./private-meaning-panel";
+import { ProGeraetetransportPanel } from "./pro-geraetetransport-panel";
 import { fmtDate } from "./portal-format";
 import { buildPortalSearchResults, type SearchResult } from "./portal-suche";
 import { ProUebergabeKnopf } from "./pro-uebergabe-knopf";
@@ -685,7 +686,11 @@ function HealthPortalContent() {
   const anProApp = async (id: string, ziel: ProZiel) => {
     if (!vaultHandle) return;
     try {
-      const r = await proDateiWeitergeben(await readLocalDocumentFile(vaultHandle, id), id, ziel, localDocuments.find(d => d.id === id)?.proUebergabe?.id || localDocuments.find(d => d.id === id)?.proBezug);
+      const document = localDocuments.find(d => d.id === id);
+      if (!document) throw new Error("Die ausgewählte Unterlage ist nicht mehr im geöffneten Bestand.");
+      const stored = await readLocalDocumentFile(vaultHandle, id);
+      const file = new File([stored], document.originalName, { type: document.mimeType || stored.type, lastModified: stored.lastModified });
+      const r = await proDateiWeitergeben(file, id, ziel, document.proUebergabe?.id || document.proBezug);
       setNotice({ kind: "success", text: r.stand === "im-eingang" ? `${PRO_ZIELE[ziel]} hat diese Fassung bereits im Eingang bestätigt. Die Quelle bleibt erhalten.` : `An ${PRO_ZIELE[ziel]} weitergegeben. Die Zielbestätigung ist noch offen; die Quelle bleibt erhalten. Im Sicherheitscenter kannst du die Bestätigung prüfen.` });
     } catch (e) { setNotice({ kind: "error", text: proVerbundFehler(e) }); }
   };
@@ -3243,6 +3248,7 @@ function SecurityCenter({ aktenHandle, onMeaningOpen, oneDriveConnected, oneDriv
   return <><PageTitle icon={<ShieldCheck/>} title="Sicherheit und lokaler Tresor" text="Du wählst, wo neue Originalunterlagen abgelegt werden. Die Familienakte lädt sie nicht in den Webspeicher dieser Seite hoch."/>
     <ProTresorAnschluss aktenHandle={aktenHandle}/>
     <PrivateMeaningPanel handle={aktenHandle} onOpen={onMeaningOpen}/>
+    <ProGeraetetransportPanel handle={aktenHandle}/>
     <section className="security-grid security-grid-three">
       <article className="card security-card compact-security-card"><Cloud/><div><div className="security-card-heading"><h2>OneDrive-Ordner verbinden</h2><InfoPopover label="OneDrive-Verbindung erklären" text="Verbindet ausschließlich einen von dir gewählten, lokal synchronisierten OneDrive-Ordner. Die Familienakte erhält keinen Zugriff auf dein Microsoft-Passwort und durchsucht keine anderen OneDrive-Bereiche."/></div><span className={`badge ${oneDriveConnected ? "success" : "warning"}`}>{oneDriveConnected ? "verbunden" : "nicht verbunden"}</span><p>{oneDriveConnected ? oneDriveName : "Noch kein OneDrive-Ordner ausgewählt."}</p>{oneDriveSummary && <p className="vault-id"><strong>Tresor-Kennung:</strong> {oneDriveSummary.vaultId}</p>}<div className="button-row"><button className="button primary" disabled={!supported || busy} onClick={onConnectOneDrive}><Cloud size={17}/>{oneDriveConnected ? "Anderen OneDrive-Ordner wählen" : "OneDrive-Ordner verbinden"}</button>{oneDriveConnected && <button className="button secondary" disabled={busy} onClick={onLockOneDrive}><LockKeyhole size={17}/> Sperren</button>}</div>{!supported && <p className="form-error">Bitte diese Seite in Chrome oder Edge auf einem PC öffnen.</p>}</div></article>
       <article className="card security-card compact-security-card"><Usb/><div><div className="security-card-heading"><h2>PC-/USB-Ordner verbinden</h2><InfoPopover label="PC- oder USB-Verbindung erklären" text="Verbindet einen ausdrücklich ausgewählten PC-Ordner oder entsperrten USB-Datenträger. Dateien werden nur nach deinem Befehl gelesen oder als Sicherung kopiert; vorhandene Originale werden nicht überschrieben."/></div><span className={`badge ${localConnected ? "success" : "warning"}`}>{localConnected ? "verbunden" : "nicht verbunden"}</span><p>{localConnected ? localVaultName : "Noch kein PC-/USB-Ordner ausgewählt."}</p>{localVaultSummary && <p className="vault-id"><strong>Tresor-Kennung:</strong> {localVaultSummary.vaultId}</p>}<div className="button-row"><button className="button primary" disabled={!supported || busy} onClick={onConnectLocal}><Usb size={17}/>{localConnected ? "Anderen PC-/USB-Ordner wählen" : "PC-/USB-Ordner verbinden"}</button>{localConnected && <button className="button secondary" disabled={busy} onClick={onLockLocal}><LockKeyhole size={17}/> Sperren</button>}</div></div></article>

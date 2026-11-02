@@ -26,6 +26,8 @@ try {
   try {
     node windows/tools/test-model-installed.mjs (Join-Path $PWD 'work/model-installed')
     if ($LASTEXITCODE -ne 0) { throw 'Installierte Modelloberfläche fehlgeschlagen' }
+    node windows/tools/test-output-installed.mjs (Join-Path $PWD 'work/model-installed')
+    if ($LASTEXITCODE -ne 0) { throw 'Installierte native Dateiausgabe fehlgeschlagen' }
   } catch {
     $modelApp.Refresh()
     if ($modelApp.HasExited) { Write-Output "App-Prozess beendet: $($modelApp.ExitCode)" }

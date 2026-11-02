@@ -21,7 +21,7 @@ const MAX_ZEILE: u64 = 30 * 1024 * 1024;
 
 fn aktion_erlaubt(request: &Value) -> bool {
     matches!(request.get("aktion").and_then(Value::as_str),
-        Some("zustand" | "verbinden" | "entsperren" | "sperren" | "speichern" | "lesen" | "uebergabeSenden" | "uebergabeEingang" | "uebergabeLesen" | "uebergabeQuittieren" | "uebergabeStand"))
+        Some("zustand" | "verbinden" | "entsperren" | "sperren" | "speichern" | "lesen" | "uebergabeSenden" | "uebergabeEingang" | "uebergabeLesen" | "uebergabeQuittieren" | "uebergabeStand" | "dateiExportieren"))
 }
 impl Engine {
     fn starten(resources: &Path, config: &Path) -> Result<Self, String> {
@@ -68,7 +68,11 @@ impl Engine {
 }
 
 #[tauri::command]
-pub async fn fa_pro_tresor(app: tauri::AppHandle, state: tauri::State<'_, EngineState>, anfrage: Value) -> Result<Value, String> {
+pub async fn fa_pro_tresor(app: tauri::AppHandle, window: tauri::WebviewWindow, state: tauri::State<'_, EngineState>, anfrage: Value) -> Result<Value, String> {
+    let url = window.url().map_err(|_| "FA_TRESOR_HERKUNFT")?;
+    if window.label() != "main" || url.scheme() != "https" || url.host_str() != Some("tauri.localhost") || url.port().is_some() {
+        return Err("FA_TRESOR_HERKUNFT".into());
+    }
     if !aktion_erlaubt(&anfrage) { return Err("FA_TRESOR_AKTION_UNGUELTIG".into()); }
     let bytes = serde_json::to_vec(&anfrage).map_err(|_| "FA_TRESOR_ANFRAGE")?;
     if bytes.len() as u64 > MAX_ZEILE { return Err("FA_DOKUMENT_ZU_GROSS".into()); }

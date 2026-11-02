@@ -21,7 +21,10 @@ export async function grossePipe(java, jar, classes) {
     gross.stdin.write(JSON.stringify({ aktion:"lesen", vaultId, entryId:receipt.ok.entryId }) + "\n");
     const gelesen = await antwort(); assert.ok(gelesen.ok?.data, "Keine Originalbytes in der Antwort");
     assert.equal(createHash("sha256").update(Buffer.from(gelesen.ok.data,"base64")).digest("hex"),sha);
+    const packet=Buffer.concat([original,Buffer.alloc(8192+12)]);
+    gross.stdin.write(JSON.stringify({aktion:'dateiExportieren',name:'Grenze.familienakte-paket',data:packet.toString('base64'),sha256:createHash('sha256').update(packet).digest('hex')})+'\n');
+    assert.deepEqual(await antwort(),{ok:{saved:true}},'Bounded packet export through the production pipe');
     gross.stdin.end(); const [code] = await beendet; assert.equal(code,0,stderr);
-    console.log("Windows-Engine: 20 MiB durch Produktions-JSON/Pipe mit 256 MiB Heap grün");
+    console.log("Windows-Engine: 20 MiB Original plus Paketkopf durch Produktions-JSON/Pipe mit 256 MiB Heap grün");
   } finally { clearTimeout(timeout); gross.kill(); }
 }
