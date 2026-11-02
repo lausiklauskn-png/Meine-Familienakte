@@ -28,4 +28,5 @@ jobs:
       - name: Zwei getrennte Browserprofile mit echten Dateien und Neustart
         run: node tests/run-ui.mjs geraetetransport
       - name: Absichtliche Verletzungen der Empfangsgrenze erkennen
-        run: node tests/gegenprobe-sitzung-b.mjs Gerätetransport:
+        run: |
+          node tests/gegenprobe-sitzung-b.mjs Gerätetransport:
