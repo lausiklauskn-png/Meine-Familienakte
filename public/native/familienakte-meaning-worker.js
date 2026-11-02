@@ -8,7 +8,10 @@ self.onmessage = event => {
     if (request.kind === 'init') {
       const { stage, model } = request;
       if (!['klein', 'mittel', 'gross'].includes(stage) || ![384, 768, 1024].includes(model.dim)) throw Error('MODEL_INVALID');
-      const base = new URL('/_fa_models/' + stage + '/', location.origin).href;
+      // Windows' application host has an HTML fallback. Its separate virtual
+      // model host is intercepted by WebView2; no DNS/server is used.
+      const origin = location.origin === 'https://tauri.localhost' ? 'https://familienakte-model.localhost' : location.origin;
+      const base = new URL('/_fa_models/' + stage + '/', origin).href;
       const originalFetch = self.fetch.bind(self);
       self.fetch = (input, options) => {
         const url = new URL(input instanceof Request ? input.url : input, location.href);
