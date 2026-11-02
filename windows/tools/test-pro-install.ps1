@@ -20,6 +20,16 @@ try {
   if ($LASTEXITCODE -ne 0) { throw 'Installierte Laufzeit besteht Tresorprobe nicht' }
   node windows/tools/test-pro-install-pipe.mjs $java $jar $root $classes
   if ($LASTEXITCODE -ne 0) { throw 'Installierte Prozess-Pipe fehlgeschlagen' }
+  $env:WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS = '--remote-debugging-port=9333'
+  $env:WEBVIEW2_USER_DATA_FOLDER = Join-Path $root 'webview-probe'
+  $modelApp = Start-Process -FilePath (Join-Path $install 'familienakte.exe') -PassThru
+  try {
+    node windows/tools/test-model-installed.mjs (Join-Path $PWD 'work/model-installed')
+    if ($LASTEXITCODE -ne 0) { throw 'Installierte Modelloberfläche fehlgeschlagen' }
+  } finally {
+    Stop-Process -Id $modelApp.Id -Force -ErrorAction SilentlyContinue
+    Remove-Item Env:WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS,Env:WEBVIEW2_USER_DATA_FOLDER -ErrorAction SilentlyContinue
+  }
   Write-Output 'Echter NSIS-Installer: App, Ressourcen, gebündelte Laufzeit, Tresorprobe und Pipe geprüft.'
 } finally {
   $uninstaller = Join-Path $install 'uninstall.exe'

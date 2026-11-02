@@ -22,7 +22,7 @@ for (const name of ["meaning-models.json", "semantic-model.json"]) copyFileSync(
 if (!process.argv.includes("--nur-jar")) {
   const runtime = path.join(ziel, "runtime");
   if (existsSync(runtime)) rmSync(runtime, { recursive: true, force: true });
-  execFileSync(java, ["--module", "jdk.jlink/jdk.tools.jlink.internal.Main", "--add-modules", "java.base,java.desktop",
+  execFileSync(java, ["--module", "jdk.jlink/jdk.tools.jlink.internal.Main", "--add-modules", "java.base,java.desktop,jdk.crypto.ec",
     "--strip-debug", "--no-header-files", "--no-man-pages", "--output", runtime], { cwd: root, stdio: "inherit" });
   const probe = spawnSync(path.join(runtime, "bin", process.platform === "win32" ? "java.exe" : "java"),
     ["-Djava.awt.headless=true", "-cp", path.join(ziel, "familienakte-tresor.jar"), "de.familyprojekt.familienakte.ProTresorEngine", path.join(klassen, "probe-config.json")],

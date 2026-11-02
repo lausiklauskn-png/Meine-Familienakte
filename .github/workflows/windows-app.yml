@@ -69,6 +69,13 @@ jobs:
           cp windows/src-tauri/target/release/bundle/nsis/*-setup.exe "windows/distribution/Familienakte-Windows-$version-x64-setup.exe"
           (cd windows/distribution && sha256sum *.exe > SHA256SUMS && cat SHA256SUMS)
       - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: familienakte-windows-modelle
+          path: work/model-installed/
+          if-no-files-found: warn
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
         with:
           name: familienakte-windows-installer
           path: windows/distribution/

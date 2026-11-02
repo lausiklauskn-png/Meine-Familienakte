@@ -1,0 +1,100 @@
+name: Android – installierte private Aktensuche
+on:
+  workflow_dispatch:
+  pull_request:
+    paths: ['android/**', 'app/private-meaning-*', 'public/native/**', 'tools/native/**', '.github/workflows/android-models.yml']
+permissions:
+  contents: read
+concurrency:
+  group: android-models-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  webview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Unveränderte WebView aus dem offiziellen SDK-Abbild
+        uses: reactivecircus/android-emulator-runner@4c44018e59b437e86cdfc41da381398f93ed8808
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
+          script: python3 tools/native/webview-runtime.py collect work/webview-runtime
+      - uses: actions/upload-artifact@v4
+        with:
+          name: family-webview-runtime
+          path: work/webview-runtime/
+          if-no-files-found: error
+          retention-days: 7
+  product:
+    needs: webview
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - api: 31
+            profile: pixel_c
+          - api: 35
+            profile: pixel_2
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: npm ci
+      - run: npm run sync:android
+      - uses: actions/download-artifact@v4
+        with:
+          name: family-webview-runtime
+          path: work/webview-runtime
+      - name: KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Installierte APK, echtes Modell, Offline-Index und Neustart
+        uses: reactivecircus/android-emulator-runner@4c44018e59b437e86cdfc41da381398f93ed8808
+        with:
+          api-level: ${{ matrix.api }}
+          target: google_apis
+          arch: x86_64
+          profile: ${{ matrix.profile }}
+          ram-size: 4096M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
+          script: python3 tools/native/webview-runtime.py install work/webview-runtime && cd android && ./gradlew --no-daemon --max-workers=2 connectedDebugAndroidTest
+      - name: Tatsächlich ausgeführte Produktprobe verlangen
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          cases = [c for p in Path('android/app/build/outputs/androidTest-results').rglob('*.xml') for c in ET.parse(p).iter('testcase') if c.get('classname') == 'de.familyprojekt.familienakte.FamilyModelProductTest']
+          assert len(cases) == 1, ('Expected one real product test', len(cases))
+          assert not any(c.find(tag) is not None for c in cases for tag in ('failure', 'error', 'skipped'))
+          print('Actual model product test executed and passed')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: familienakte-modelle-android-${{ matrix.api }}-${{ github.run_attempt }}
+          path: |
+            android/app/build/outputs/androidTest-results/
+            android/app/build/reports/
+          if-no-files-found: error
+          retention-days: 14
