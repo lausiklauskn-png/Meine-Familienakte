@@ -16,7 +16,7 @@ Neue, passende Teilstücke dieser Sitzung werden nach ihren vorgesehenen Prüfun
 | BookLedgerPro #417, #393 | Historische Abschlussnachträge; enthalten zudem Änderungen an inzwischen nach Kimhub verlagerten Einträgen. Diese Dateien nicht im Produktrepo wiederherstellen. |
 | BookLedger Basic #37 | Älterer Nachziehstand a47f0d0. Der geprüfte aktuelle Pin ist bereits 3ca7bb9; keine Rückstufung. |
 | Familienakte #59 | Zusätzliche App-Paar-Prüfung bleibt Entwurf: vier Paare bestanden, zwei Android-Paare wegen abgebrochener Testmaschinen offen. Nicht mit der Veröffentlichungsvorbereitung übernehmen. |
-| Familienakte #60 | Bisher auf #59 gestapelte Veröffentlichungsvorbereitung. Die Versions-/Titeländerung und der Schutz des normalen Windows-Installers werden ohne den offenen Prüfentwurf auf aktuellem main separat geprüft. Nach deren Übernahme ist #60 überholt. |
+| Familienakte #60 | Bisher auf #59 gestapelte Veröffentlichungsvorbereitung. Die Versions-/Titeländerung und der Schutz des normalen Windows-Installers werden ohne den offenen Prüfentwurf auf aktuellem main separat geprüft. Mit #63 vollständig geprüft übernommen; #60 ist als überholt geschlossen. |
 | Familienakte #61 / #62 | Praxisunterlagen und Speichern-Knopf auf main übernommen. Klaus bestätigt nur den Download der separaten reinen Anleitung; große Gesamt-HTML auf seinem Gerät weiter nicht erfolgreich nachgewiesen. |
 
 Die älteren Entwürfe bleiben für ihre ursprünglichen Autoren und spätere Entscheidungen erhalten.

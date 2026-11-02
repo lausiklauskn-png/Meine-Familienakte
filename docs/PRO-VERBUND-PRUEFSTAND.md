@@ -32,6 +32,21 @@ GitHub-Rechnern. Produktionspakete haben keinen solchen Prüfzugang und werden d
 die vorgesehenen Veröffentlichungsprüfungen zusätzlich installiert. Ein CI-Emulator
 ist kein persönliches Tablet; ein CI-Windows-Rechner ist nicht Klaus' Rechner.
 
+## Pflichtprüfungen und tatsächliche Veröffentlichung 2.28.15
+
+PR #63 am Kopf e9b0bf0326989eb246259133a838546658ab4ea0 ist vollständig grün:
+Browser/Fach/Herkunft 41527487481, Android-Bau 41527487514, installierte Android-Suche
+API 31/35 41527487442, Windows 41527487548 Versuch 2. Im ersten Windows-Job
+125558855602 war der Prüfport 9333 trotz ansprechbarer App und bestandener nativer
+Proben nicht erreichbar. Eine unveränderte gezielte Wiederholung 125569962920 bestand;
+Ursache des ersten Startfehlers unbewiesen. Kein rückwirkend behaupteter Erfolg.
+
+Die Produktquelle d00902f10a5b57902084e42950d62751385a9d93 ist auf Android
+(41533299440), Windows einschließlich Server-Feed (41533308106) und Pages
+(41533260856) veröffentlicht. Die spätere Windows-Installationsprobe besteht ebenfalls.
+[Öffentliche Downloads und Hashnachweise](VEROEFFENTLICHUNG-2.28.15.json).
+Das ändert den offenen vollständigen Sechs-Paare-Nachweis nicht.
+
 ## Zwei offene Android-Paare
 
 Der letzte begrenzte Diagnoseversuch ist Lauf

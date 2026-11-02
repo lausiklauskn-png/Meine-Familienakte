@@ -7,7 +7,7 @@ Diese Datei liest jede Sitzung zuerst. Was hier steht, gilt für jede Arbeit in 
 Die Funktionen aus `BRIEF_SITZUNG_2026-11-01_PRO-VERBUND.md` stehen auf main:
 nativer gemeinsamer Tresor, freiwillige ausgewählte Übergaben und Rückbestätigung,
 Geräte-/Modellwahl, abgegrenzte Portalmodule sowie Gerätepakete für Kim/Datei-Post.
-Die Veröffentlichungsvorbereitung trägt technisch **2.28.15** und sichtbar
+Android, Windows und PWA sind als technische Fassung **2.28.15** veröffentlicht, sichtbar
 **Familienakte Pro**; die gewünschte sichtbare Versionszeile **2.28.1** bleibt.
 Bestehende Kennungen, Datenpfade und Signieridentitäten bleiben erhalten.
 
@@ -16,8 +16,10 @@ in `docs/pro-verbund-nachweise.json`: drei Windows-App-Paare und Android mit Pri
 Pro vollständig bestanden. Android mit Workflow PDF Pro und BookLedgerPro ist wegen
 abgebrochener Testmaschinen nicht vollständig geprüft; PR #59 bleibt Entwurf. **Keine
 vollständige Gesamtabnahme behaupten, keine fehlgeschlagenen Prüfungen abschalten.**
-Die regulär geprüften Produktstände werden auf Klaus' ausdrücklichen Freibrief
-veröffentlicht; tatsächliche Veröffentlichung erst nach erfolgreichem Release-Lauf melden.
+Die regulär geprüften Familienakte-Pakete sind auf Klaus' ausdrücklichen Freibrief
+veröffentlicht. Aktuell: `BRIEF_ABSCHLUSS_2026-11-02_PRO-VERBUND.md`, Nachfolge
+`BRIEF_SITZUNG_2026-11-02_NACH-PRO-VERBUND.md`; Downloads/Prüfsummen in
+`docs/VEROEFFENTLICHUNG-2.28.15.json`. Dieselben Versionen nicht erneut veröffentlichen.
 Keine weiteren allgemeinen Testserien im Abschluss. Die bereits bereitgestellten
 manuellen Testreihen bleiben für konkrete Geräte-Rückmeldungen bestehen.
 
