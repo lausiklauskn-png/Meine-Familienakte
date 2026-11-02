@@ -86,8 +86,11 @@ async function connectPeer(first){
  if(partner==='bookledgerpro'){
   // Ordinary onboarding/login must finish so the shell subscribes to route
   // changes. Calling setupVault alone leaves the app at its intro screen.
+  await pp().locator('.intro-screen, .lock-form').first().waitFor();
+  if(await pp().locator('.intro-screen').count()){
+   const intro=pp().locator('.intro-screen');await intro.locator('input[type="checkbox"]').check();await intro.getByRole('button',{name:'Zur Anmeldung',exact:true}).click();
+  }
   if(first){
-   const intro=pp().locator('.intro-screen');await intro.waitFor();await intro.locator('input[type="checkbox"]').check();await intro.getByRole('button',{name:'Zur Anmeldung',exact:true}).click();
    const form=pp().locator('.lock-form');await form.locator('input[type="password"]').nth(0).fill(PASSWORD);await form.locator('input[type="password"]').nth(1).fill(PASSWORD);await form.locator('button[type="submit"]').click();
    await pp().locator('.share-code').first().waitFor();const shares=await pp().locator('.share-code').allTextContents();assert.equal(shares.length,3);
    await writeFile(join(tmpdir(),'pair-invented-blp-recovery.txt'),shares.join('\n'),{mode:0o600});
@@ -95,7 +98,7 @@ async function connectPeer(first){
    await pp().getByRole('button',{name:'Verschlüsseltes Backup herunterladen',exact:true}).click();
    if(android)await saveFile();
    await pp().getByText(/^Gespeichert: /).waitFor();await pp().getByRole('button',{name:"Los geht's",exact:true}).click();
-  }else{await pp().locator('.lock-form input[type="password"]').fill(PASSWORD);await pp().locator('.lock-form button[type="submit"]').click();}
+  }else{await pp().locator('.lock-form input[autocomplete="current-password"]').fill(PASSWORD);await pp().locator('.lock-form button[type="submit"]').click();}
   await pp().locator('.app #content').waitFor();
  }
  if(first){

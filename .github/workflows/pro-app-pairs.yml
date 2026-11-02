@@ -170,13 +170,14 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: pixel_c
-          ram-size: 4096M
+          ram-size: 3072M
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
+          emulator-options: -no-window -gpu swiftshader_indirect -feature -Vulkan -no-snapshot -noaudio -no-boot-anim -camera-back none -camera-front none
           script: |
             python3 tools/native/webview-runtime.py install work/family-android/work/pair-webview
             # Same tablet layout (1280 x 900 dp), fewer software-rendered pixels.
-            # The original Pixel C framebuffer stalled/terminated the emulator.
+            # Bound rendering load after lost/stalled emulator runs; this is
+            # an infrastructure setting, not a change to either APK.
             adb shell wm size 1280x900
             adb shell wm density 160
             adb install -r work/family-android/android/app/build/outputs/apk/debug/app-debug.apk
@@ -184,6 +185,12 @@ jobs:
             mkdir -p work/pair-proof
             adb logcat -v threadtime > work/pair-proof/android-logcat.txt 2>&1 &
             PAIR_ANDROID=1 node tools/native/pairs/windows.mjs ${{ matrix.app }}
+      - name: Hostdiagnose bei abgebrochener Geräteprobe
+        if: failure()
+        run: |
+          mkdir -p work/pair-proof
+          free -m > work/pair-proof/host-memory.txt
+          sudo dmesg -T | rg -i 'out of memory|oom-kill|killed process|qemu|segfault' > work/pair-proof/host-kernel.txt || true
       - uses: actions/upload-artifact@v4
         if: always()
         with:
