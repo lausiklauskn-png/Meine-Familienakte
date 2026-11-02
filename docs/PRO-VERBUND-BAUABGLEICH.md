@@ -2,7 +2,10 @@
 
 Stand: 2. November 2026, Veröffentlichungsvorbereitung. Der Auftrag und Klaus' Freibrief
 umfassen Android, Windows, geprüfte Übernahmen und Veröffentlichungen. Das Geschenk kommt
-zuletzt. Die [feste Abnahmegrenze](ABNAHME-UND-PRAXISTEST.md) ersetzt offene allgemeine Testserien.
+zuletzt. Die [feste Abnahmegrenze](ABNAHME-UND-PRAXISTEST.md) begrenzt allgemeine Testserien.
+Die vollständige Gesamtabnahme ist noch offen: vier App-Paare sind nachgewiesen,
+zwei Android-Paare wegen abgebrochener Testmaschinen nicht vollständig geprüft.
+Der [tatsächliche Prüfstand](PRO-VERBUND-PRUEFSTAND.md) nennt Läufe und Grenzen.
 
 | Auftrag | Gebaut und geprüft | Noch vor dem Abschluss |
 | --- | --- | --- |
@@ -10,7 +13,7 @@ zuletzt. Die [feste Abnahmegrenze](ABNAHME-UND-PRAXISTEST.md) ersetzt offene all
 | Gemeinsamer Pro-Tresor | Vorhandenes kanonisches Java-Paket; Android-SAF, Windows-Tauri mit gebündelter Java-Laufzeit; freie Ordnerwahl, keine stille Ersatzablage | Persönliche SD-/USB-Laufwerke gehören zum anschließenden Praxistest |
 | Originale und Arbeitsdaten | Ausdrückliche Wahl der Ablage, Prüfsummen, Quelle erhalten, getrennte kleine Arbeitsstände und neu aufbaubarer Suchindex | Keine automatische Gesamtsynchronisierung |
 | Eingebettetes Workflow PDF | Unveränderter Kern 1.1.8; bestehende Brücke quittiert erst nach dauerhafter Speicherung, Ausgabe behält Herkunft | PWA-Einzeldatei bleibt gesondert geprüft |
-| Eigenständige Pro-Apps | Familienakte, Workflow PDF Pro, Private Brain Pro und BookLedgerPro haben native Anschlüsse, beständige Übergabekennungen und geprüfte Rückwege; Gegenstellen auf main | Die abschließende tatsächliche App-Paar-Abnahme für Android und Windows läuft in PR #59 |
+| Eigenständige Pro-Apps | Alle vier Apps haben native Anschlüsse auf main; alle drei Windows-Paare und Android mit Private Brain Pro vollständig geprüft | Android mit Workflow PDF Pro / BookLedgerPro nicht vollständig geprüft; PR #59 bleibt Entwurf |
 | Metadaten | PR #56: begrenzte optionale Begleitdatei; Angaben bleiben ausdrücklich anzunehmende Vorschläge | Keine fremde automatische Einordnung |
 | Geräte und Modelle | PR #55: bestehende Geräteprüfung und drei festgelegte e5-Modelle; bewusster Download, Fortsetzung, offline nutzbarer Index; tatsächliche installierte Android-/Windows-Proben bestanden | PWA hat Geräteprüfung, aber keine native Modellablage |
 | Portal aufteilen | Tresoranbindung, Dokumentaktionen, Eingangsablage und Suchergebnisse in abgegrenzten Modulen | Kein zusätzlicher Umbau allein zur Verschönerung des Codes |

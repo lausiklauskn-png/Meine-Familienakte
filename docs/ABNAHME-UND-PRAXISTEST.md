@@ -1,8 +1,30 @@
 # Begrenzte Abnahme und anschließender Praxistest
 
 Klaus hat am 2. November 2026 eine feste Grenze für die technischen Prüfungen verlangt.
-Nach dieser Abnahme folgen Veröffentlichung, Download-Links und zuletzt die Geschenk-HTML.
-Danach werden konkrete Rückmeldungen aus dem wirklichen Gebrauch ausgewertet.
+Das Ziel bleibt eine vollständige Abnahme aller sechs App-Paare. Der aktuelle, davon
+abweichende Prüfstand ist unten ausdrücklich festgehalten. Danach werden konkrete
+Rückmeldungen aus dem wirklichen Gebrauch ausgewertet.
+
+## Tatsächlicher Abschlussstand am 2. November 2026
+
+Vier der sechs zusätzlichen App-Paar-Proben sind vollständig bestanden: alle drei
+Windows-Paare und Familienakte ↔ Private Brain Pro unter Android. Die Android-Paare
+mit Workflow PDF Pro und BookLedgerPro sind **nicht bestanden beziehungsweise nicht
+vollständig geprüft**. Im letzten gezielten Lauf verschwindet die Android-Testmaschine
+während der nativen Ordner-/Passwortbedienung. Die ausgewerteten Gast- und Hostprotokolle
+belegen keine Ursache. Ein fehlender App-Absturzbericht beweist keine fehlerfreie App.
+
+PR #59 bleibt deshalb Entwurf. Seine fehlgeschlagenen Proben werden weder abgeschaltet
+noch als Erfolg gewertet. Die regulären Produktprüfungen, native Aufnahmeproben und die
+vier erfolgreichen Paare bleiben separat gültige Nachweise. Weitere allgemeine
+Emulatorvarianten werden in dieser Sitzung nicht angehängt. Für die beiden offenen Wege
+stehen die bereits erstellten manuellen Testreihen mit erfundenen Dateien bereit.
+
+Klaus hat die Veröffentlichung geprüfter Teilstücke ausdrücklich beauftragt. Die
+Veröffentlichung der regulär geprüften App-Stände ist daher von einer **noch offenen
+Gesamtabnahme des Pro-Verbunds** zu unterscheiden. Download, Geschenk und Abschluss dürfen
+keinen vollständigen Sechs-Paare-Nachweis behaupten. Einzelne Ergebnisse und Quellstände:
+[PRO-VERBUND-PRUEFSTAND.md](PRO-VERBUND-PRUEFSTAND.md).
 
 ## Ende der technischen Abnahme
 

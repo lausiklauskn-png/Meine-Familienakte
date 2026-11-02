@@ -2,6 +2,25 @@
 
 Diese Datei liest jede Sitzung zuerst. Was hier steht, gilt für jede Arbeit in diesem Repo.
 
+## Aktueller Bau: Pro-Verbund, 2. November 2026
+
+Die Funktionen aus `BRIEF_SITZUNG_2026-11-01_PRO-VERBUND.md` stehen auf main:
+nativer gemeinsamer Tresor, freiwillige ausgewählte Übergaben und Rückbestätigung,
+Geräte-/Modellwahl, abgegrenzte Portalmodule sowie Gerätepakete für Kim/Datei-Post.
+Die Veröffentlichungsvorbereitung trägt technisch **2.28.15** und sichtbar
+**Familienakte Pro**; die gewünschte sichtbare Versionszeile **2.28.1** bleibt.
+Bestehende Kennungen, Datenpfade und Signieridentitäten bleiben erhalten.
+
+Maßgeblich für die Abnahme sind `docs/PRO-VERBUND-PRUEFSTAND.md` und die Originalberichte
+in `docs/pro-verbund-nachweise.json`: drei Windows-App-Paare und Android mit Private Brain
+Pro vollständig bestanden. Android mit Workflow PDF Pro und BookLedgerPro ist wegen
+abgebrochener Testmaschinen nicht vollständig geprüft; PR #59 bleibt Entwurf. **Keine
+vollständige Gesamtabnahme behaupten, keine fehlgeschlagenen Prüfungen abschalten.**
+Die regulär geprüften Produktstände werden auf Klaus' ausdrücklichen Freibrief
+veröffentlicht; tatsächliche Veröffentlichung erst nach erfolgreichem Release-Lauf melden.
+Keine weiteren allgemeinen Testserien im Abschluss. Die bereits bereitgestellten
+manuellen Testreihen bleiben für konkrete Geräte-Rückmeldungen bestehen.
+
 ## Feste Regel: keine Forschung in diesem Repo (Klaus 2026-10-31)
 
 Klaus: „Forschungsaufträge, Forschungseinträge haben in Familienakte nichts zu suchen. KimHub ist die Quelle, wo es hinkommt,
@@ -45,8 +64,8 @@ sondern nur KimHub.“
 - Dauerhafte Dokumente, vorläufige Arbeitskopien, kleine JSON-Arbeitsstände und Suchvektoren unterscheiden. Keine dauerhafte interne
   Zweitsammlung aller PDFs. Vektoren gehören zum jeweiligen Dokument-/Textstand und Embedding-Modell; unterschiedliche Modelle
   nicht vermischen. Die vorhandene Geräteprüfung und Modellwahl berücksichtigen, keine zweite unabhängige Lösung erfinden.
-- Die vorbereiteten gemeinsamen Fächer `familienakte` / `eingang-familienakte` sind noch kein fertiger Anschluss der Familienakte-APK.
-  Speicherreparaturen im bestehenden Eingang ausdrücklich von dieser noch offenen Integration unterscheiden.
+- Die gemeinsamen Fächer `familienakte` / `eingang-familienakte` sind über den nativen Adapter angeschlossen.
+  Die Prüfung einzelner Adapter ist von der noch offenen vollständigen App-Paar-Abnahme zu unterscheiden.
 
 ## Stand nach der Sitzung 2026-11-01 „Workflow PDF ganz übernehmen“
 
