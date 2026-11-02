@@ -29,14 +29,16 @@ async function start(which){
  }
  const state=apps[which]={proc};let last;
  for(let i=0;i<120;i++){
-  try{state.browser=await chromium.connectOverCDP('http://127.0.0.1:'+endpoint,{timeout:1500});break;}catch(e){last=e;await pause(500);}
+  // Android WebView has no Browser.setDownloadBehavior/context management.
+  // Attach without desktop context overrides; all file output stays native.
+  try{state.browser=await chromium.connectOverCDP('http://127.0.0.1:'+endpoint,{timeout:1500,noDefaults:android});break;}catch(e){last=e;await pause(500);}
  }
  assert.ok(state.browser,String(last));
  for(let i=0;i<120;i++){
   state.page=state.browser.contexts().flatMap(c=>c.pages()).find(p=>/^https:\/\/(?:tauri\.)?localhost\/(index\.html)?([?#].*)?$/.test(p.url()));
   if(state.page)break;
   // WebView2 can publish its page after CDP has connected.
-  if(i===20)state.browser=await chromium.connectOverCDP('http://127.0.0.1:'+endpoint);
+  if(i===20)state.browser=await chromium.connectOverCDP('http://127.0.0.1:'+endpoint,{noDefaults:android});
   await pause(500);
  }
  assert.ok(state.page,'Installed main window '+which);
