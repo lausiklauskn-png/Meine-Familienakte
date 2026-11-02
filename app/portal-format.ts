@@ -1,0 +1,3 @@
+export const fmtDate = (value: string | null) => value
+  ? new Intl.DateTimeFormat("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" }).format(new Date(`${value}T12:00:00Z`))
+  : "ohne Dokumentdatum";

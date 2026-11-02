@@ -1,3 +1,6 @@
+import type { SectionId, UploadedDocument } from "./portal-types";
+import { fmtDate } from "./portal-format";
+import { buildPortalSearchResults, type SearchResult } from "./portal-suche";
 import { ProUebergabeKnopf } from "./pro-uebergabe-knopf";
 import { proDateiWeitergeben, proVerbundFehler, PRO_ZIELE, type ProZiel } from "./pro-verbund";
 import { proUebergabeAnnehmen } from "./pro-uebergabe";
@@ -42,7 +45,7 @@ import type { AusfuellPerson } from "./ausfuellen-dialog";
 import { PersonKontaktKasten } from "./person-kontakt";
 import type { PersonKontakt } from "@/lib/person-kontakt";
 import { buildCockpitDossier, buildFamilyCockpit, cockpitRecordLabel, FamilyCockpitDocument, runFamilyCockpitSelfTests, type CockpitPriorityItem, type CockpitReference, type CockpitTodoItem } from "@/lib/family-cockpit";
-import { interpretFamilySearchQuery, runFamilySearchSelfTests, scoreFamilySearchText, type FamilySearchInterpretation } from "@/lib/family-search";
+import { interpretFamilySearchQuery, runFamilySearchSelfTests, type FamilySearchInterpretation } from "@/lib/family-search";
 import { buildDocumentLibraryItems, filterDocumentLibraryItems, runDocumentLibrarySelfTests, type DocumentLibraryItem, type DocumentLibrarySort, type DocumentLibraryReference } from "@/lib/document-library";
 import { dossierTypeOrder, menuPageActions, runMenuOptimizationSelfTests, targetForRelation, type MenuAction } from "@/lib/menu-optimization";
 import { buildDocumentIntakePlan, extractDocumentIntakeTextHint, FAWOGA_LIFE_AREAS, type DocumentIntakePlan, type DocumentIntakeSource, runDocumentIntakeSelfTests } from "@/lib/document-intake";
@@ -77,14 +80,7 @@ import { removeSampleFamily, SAMPLE_FAMILY_NAME, SAMPLE_NOTICE, sampleDataPresen
 // in der Android- und der Windows-App „Pro“, im Browser (PWA) „Basic“ — wie BookLedgerPro / BookLedger Basic.
 const APP_VARIANTE: "Pro" | "Basic" = typeof window !== "undefined" && ((window as unknown as { Capacitor?: { isNativePlatform?: () => boolean } }).Capacitor?.isNativePlatform?.() || "__TAURI__" in window) ? "Pro" : "Basic";
 
-type UploadedDocument = {
-  id: string; originalName: string; category: string; documentDate: string | null;
-  mimeType: string; sizeBytes: number;
-  status: "hochgeladen" | "abgleich_offen" | "geprüft" | "eingearbeitet";
-  notes: string | null; uploadedAt: string; downloadUrl: string;
-};
 type Notice = { kind: "success" | "error" | "info"; text: string } | null;
-type SearchResult = { id: string; section: SectionId; targetId?: string; contextCaseId?: string; title: string; detail: string; kind: string; reason: string; score: number };
 type ActionKey = "vault" | "upload" | "compare" | "update" | "chatgpt";
 type ActionState = "pending" | "success" | "failed";
 type DocumentLibraryRequest = { key: number; focusId: string | null; area: string; query: string };
@@ -96,9 +92,7 @@ type MemoryCompletion = { id: string; title: string; remaining: number; total: n
 type MemorySaveInput = Parameters<typeof createLocalMemoryBundle>[1] & { rejectedContext?: ContextLinkSuggestion };
 type UiAutomatedTestFailureReport = Omit<AutomatedTestFailureReport, "websiteVersion"> & { websiteVersion: number };
 
-type SectionId = "overview" | "netz" | "workflowpdf" | "stapel" | "documents" | "inventory" | "inbox" | "medical" | "benefits" | "work" |
-  "assessment" | "correspondence" | "assistant" | "sources" | "health" | "family" |
-  "home" | "vehicles" | "purchases" | "reminders" | "memory" | "cockpit" | "directory" | "security" | "help" | "changelog" | "versions" | "systemcheck";
+
 
 const APP_VERSION = "2.28.1";
 const APP_VERSION_DATE = "15.10.2026";
@@ -211,9 +205,7 @@ const actionStateLabel: Record<ActionState, string> = {
 const cockpitUrgencyLabel: Record<CockpitPriorityItem["urgency"], string> = {
   overdue: "überfällig", today: "heute", dueSoon: "bald fällig", attention: "Handlungsbedarf", open: "offen", new: "neu",
 };
-const fmtDate = (value: string | null) => value
-  ? new Intl.DateTimeFormat("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" }).format(new Date(`${value}T12:00:00Z`))
-  : "ohne Dokumentdatum";
+const buildSearchResults = buildPortalSearchResults.bind(null, topNavigation);
 const fmtBytes = (value: number) => value < 1024 * 1024
   ? `${Math.max(1, Math.round(value / 1024))} KB`
   : `${(value / 1024 / 1024).toFixed(1)} MB`;
@@ -409,64 +401,6 @@ function contextDocuments(documents: UploadedDocument[], localDocuments: LocalDo
   return cockpitDocuments(documents, localDocuments).map((item) => ({ id: item.id, originalName: item.originalName, category: item.category, documentDate: item.documentDate, createdAt: item.createdAt, updatedAt: item.updatedAt, notes: item.notes }));
 }
 
-function linkedCaseId(sourceId: string, relations: FamilyRelation[]) {
-  const link = relations.find((relation) => (relation.fromId === sourceId && relation.toType === "case") || (relation.toId === sourceId && relation.fromType === "case"));
-  return link ? (link.fromType === "case" ? link.fromId : link.toId) : undefined;
-}
-
-function buildSearchResults(query: string, documents: UploadedDocument[], localDocuments: LocalDocument[], records: FamilyRecordUnion[] = [], relations: FamilyRelation[] = []): SearchResult[] {
-  const interpretation = interpretFamilySearchQuery(query); if (!interpretation.terms.length && !interpretation.intents.length) return [];
-  const candidates: SearchResult[] = [];
-  const add = (result: Omit<SearchResult, "score">, searchable: string) => { const score = scoreFamilySearchText(searchable, interpretation); if (score) candidates.push({ ...result, score }); };
-  interpretation.intents.forEach((intent, index) => candidates.push({
-    id: `intent-${intent.id}`, section: intent.section as SectionId, title: intent.label, detail: intent.detail,
-    kind: intent.kind, reason: intent.reason, score: 100 - index,
-  }));
-  topNavigation.forEach((area) => area.groups.forEach((group) => group.items.forEach((item) => add(
-    { id: `nav-${area.id}-${item.label}`, section: item.id, title: item.label, detail: `${area.label} · ${item.detail}`, kind: "Bereich", reason: "Passender Bereich oder Hilfetext" },
-    [area.label, group.title, item.label, item.detail].join(" "),
-  ))));
-  healthData.currentDiagnoses.forEach((item) => add(
-    { id: `diag-${item.area}-${item.codes}`, section: "medical", title: "Geschützte Diagnose", detail: "Einzelheiten im geschützten Gesundheitsbereich", kind: "Diagnose", reason: "Passende Diagnose, ICD-Code oder ärztlicher Beleg" },
-    [item.area, item.codes, item.diagnosis, item.evidence, item.status].join(" "),
-  ));
-  healthData.doctors.forEach((item) => add(
-    { id: `doctor-${item.name}`, section: "medical", title: "Behandelnde Praxis", detail: "Einzelheiten im geschützten Gesundheitsbereich", kind: "Arzt/Praxis", reason: "Passende behandelnde Stelle" },
-    [item.name, item.field, item.confirmed, item.open].join(" "),
-  ));
-  healthData.correspondence.forEach((item) => add(
-    { id: `letter-${item.date}-${item.subject}`, section: "correspondence", title: item.subject, detail: `${item.date} · ${item.answer}`, kind: "Schriftverkehr", reason: "Passendes Schreiben oder beantwortetes Anliegen" },
-    [item.date, item.type, item.subject, item.request, item.answer, item.status].join(" "),
-  ));
-  healthData.sickPay.forEach((item) => add(
-    { id: `pay-${item.period}`, section: "benefits", title: `Leistung ${item.period}`, detail: `${item.group} · ${item.clarification}`, kind: "Leistung", reason: "Passender Leistung- oder Leistungszeitraum" },
-    [item.period, item.group, item.amount, item.clarification, "Krankenkasse Leistung Zahlung"].join(" "),
-  ));
-  healthData.workHistory.forEach((item) => add(
-    { id: `work-${item.period}-${item.entry}`, section: "work", title: `${item.period} · ${item.entry}`, detail: item.assessment, kind: "Arbeit", reason: "Passender Arbeitszeit- oder Belastungseintrag" },
-    [item.period, item.entry, item.assessment, "Arbeitgeber Arbeit Arbeitszeit"].join(" "),
-  ));
-  [...localDocuments, ...documents].forEach((item) => add(
-    { id: `doc-${item.id}`, section: isSensitiveHealthText(item.originalName, item.category, item.notes) ? "health" : "documents", targetId: item.id, contextCaseId: linkedCaseId(item.id, relations), title: protectedFamilyLabel({ label: item.originalName, category: item.category, notes: item.notes }), detail: isSensitiveHealthText(item.originalName, item.category, item.notes) ? "Einzelheiten im geschützten Gesundheitsbereich" : `${item.category} · ${fmtDate(item.documentDate)}`, kind: "Dokument", reason: "Dateiname, Kategorie, Datum oder Beschreibung passen" },
-    [item.originalName, item.category, item.documentDate || "", item.notes || ""].join(" "),
-  ));
-  records.forEach((record) => {
-    const title = cockpitRecordLabel(record);
-    const memory = memoryData(record);
-    const sensitive = memory?.sensitive || /(gesund|arzt|medizin|diagnos|krank|krankenkasse|rente|physio|pflege|heuschnupfen|erkält|rücken|heuschnupfen)/i.test(`${title} ${record.source || ""} ${record.notes || ""}`);
-    const schedule = ["deadline", "task", "reminder"].includes(record.recordType)
-      ? buildScheduleItems([record], [], new Date())[0]
-      : null;
-    const kind = recordTypeDefinitions[record.recordType].label;
-    const detail = schedule ? `${scheduleStatusLabels[schedule.displayStatus]} · ${schedule.date ? fmtDate(schedule.date.slice(0, 10)) : "ohne Datum"}` : `${record.status} · Kennung ${record.id}`;
-    add(
-      { id: `record-${record.id}`, section: sensitive ? "health" : memory ? "memory" : "cockpit", targetId: record.id, contextCaseId: record.recordType === "case" ? record.id : linkedCaseId(record.id, relations), title: sensitive ? "Geschützter Gesundheitseintrag" : title, detail: memory ? `${memory.lifeArea} · ${memory.eventType}` : detail, kind: memory ? "Erinnerung" : kind, reason: memory ? "Passendes Ereignis aus dem Erinnerungsprotokoll" : "Passender Datensatz aus dem gemeinsamen Familienaktenmodell" },
-      [record.id, title, record.recordType, record.status, record.source || "", record.notes || "", JSON.stringify(record.data)].join(" "),
-    );
-  });
-  const unique = [...new Map(candidates.map((item) => [`${item.section}-${item.targetId || ""}-${item.title}`, item])).values()];
-  return unique.sort((a, b) => b.score - a.score || a.title.localeCompare(b.title, "de")).slice(0, 20);
-}
 
 export default function HealthPortal() {
   return <ActivityProvider><HealthPortalContent/></ActivityProvider>;
