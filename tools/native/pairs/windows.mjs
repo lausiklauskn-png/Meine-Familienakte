@@ -11,7 +11,8 @@ import {adb,chooseFolder,saveFile,password as androidPassword} from './android-u
 const android=process.env.PAIR_ANDROID==='1';
 const partner=process.argv[2],out=resolve('work/pair-proof'),PASSWORD='Pair-Probe-2026-only';
 assert.ok(['workflow-pdf-pro','private-brain','bookledgerpro'].includes(partner));
-const report={partner,kind:android?'Two installed Android APKs, API 35 emulator, actual SAF picker; no physical user device':'Two NSIS-installed Windows apps on CI; no physical user device',checks:[],errors:[]};
+const androidAPI=android?Number(adb('shell','getprop','ro.build.version.sdk').trim()):null;
+const report={partner,kind:android?`Two installed Android APKs, API ${androidAPI} emulator, actual SAF picker; no physical user device`:'Two NSIS-installed Windows apps on CI; no physical user device',checks:[],errors:[]};
 const apps={},port=partner==='workflow-pdf-pro'?9222:9223;
 await mkdir(out,{recursive:true});
 const packages={family:'de.familyprojekt.familienakte',peer:partner==='private-brain'?'de.familyprojekt.privatebrain.pro.preview.debug':partner==='workflow-pdf-pro'?'de.familyprojekt.workflowpdf.pro.debug':'de.familyprojekt.bookledgerpro.debug'};
