@@ -6,24 +6,34 @@ import {spawn,execFileSync} from 'node:child_process';
 import {writeFile,mkdir} from 'node:fs/promises';
 import {join,resolve} from 'node:path';
 import {setTimeout as pause} from 'node:timers/promises';
+import {adb,chooseFolder,password as androidPassword} from './android-ui.mjs';
+const android=process.env.PAIR_ANDROID==='1';
 const partner=process.argv[2],out=resolve('work/pair-proof'),PASSWORD='Pair-Probe-2026-only';
 assert.ok(['workflow-pdf-pro','private-brain','bookledgerpro'].includes(partner));
-const report={partner,kind:'Two NSIS-installed Windows apps on CI; no physical user device',checks:[],errors:[]};
+const report={partner,kind:android?'Two installed Android APKs, API 35 emulator, actual SAF picker; no physical user device':'Two NSIS-installed Windows apps on CI; no physical user device',checks:[],errors:[]};
 const apps={},port=partner==='workflow-pdf-pro'?9222:9223;
 await mkdir(out,{recursive:true});
+const packages={family:'de.familyprojekt.familienakte',peer:partner==='private-brain'?'de.familyprojekt.privatebrain.pro':partner==='workflow-pdf-pro'?'de.familyprojekt.workflowpdf.pro':'de.familyprojekt.bookledgerpro'};
+async function activate(which){if(android)adb('shell','am','start','-W','-n',packages[which]+'/.MainActivity');}
 const pass=message=>{report.checks.push(message);console.log('PASS '+message);};
 async function start(which){
  const endpoint=which==='family'?9333:port;
+ let proc;
+ if(android){
+  await activate(which);let pid='';for(let i=0;i<30&&!pid;i++){pid=adb('shell','pidof',packages[which]).trim();if(!pid)await pause(500);}
+  assert.match(pid,/^\d+$/);adb('forward','tcp:'+endpoint,'localabstract:webview_devtools_remote_'+pid);
+ } else {
  const env={...process.env,WEBVIEW2_USER_DATA_FOLDER:join(process.env.PAIR_PROFILE_ROOT,which+'-profile')};
  if(which==='family')env.WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS='--remote-debugging-port=9333';
- const proc=spawn(which==='family'?process.env.PAIR_FAMILY_EXE:process.env.PAIR_PARTNER_EXE,[],{env,stdio:'ignore'});
+ proc=spawn(which==='family'?process.env.PAIR_FAMILY_EXE:process.env.PAIR_PARTNER_EXE,[],{env,stdio:'ignore'});
+ }
  const state=apps[which]={proc};let last;
  for(let i=0;i<120;i++){
   try{state.browser=await chromium.connectOverCDP('http://127.0.0.1:'+endpoint,{timeout:1500});break;}catch(e){last=e;await pause(500);}
  }
  assert.ok(state.browser,String(last));
  for(let i=0;i<120;i++){
-  state.page=state.browser.contexts().flatMap(c=>c.pages()).find(p=>/^https:\/\/tauri\.localhost\/(index\.html)?([?#].*)?$/.test(p.url()));
+  state.page=state.browser.contexts().flatMap(c=>c.pages()).find(p=>/^https:\/\/(?:tauri\.)?localhost\/(index\.html)?([?#].*)?$/.test(p.url()));
   if(state.page)break;
   // WebView2 can publish its page after CDP has connected.
   if(i===20)state.browser=await chromium.connectOverCDP('http://127.0.0.1:'+endpoint);
@@ -37,11 +47,11 @@ async function start(which){
  else await state.page.waitForFunction(()=>window.BLPNative?.tresor,null,{timeout:120000});
  return state.page;
 }
-async function stop(which){const a=apps[which];if(!a)return;await a.browser?.close().catch(()=>{});try{execFileSync('taskkill',['/PID',String(a.proc.pid),'/T','/F'],{stdio:'ignore'});}catch{/* already stopped */}delete apps[which];await pause(1000);}
+async function stop(which){const a=apps[which];if(!a)return;await a.browser?.close().catch(()=>{});try{if(android)adb('shell','am','force-stop',packages[which]);else execFileSync('taskkill',['/PID',String(a.proc.pid),'/T','/F'],{stdio:'ignore'});}catch{/* already stopped */}delete apps[which];await pause(1000);}
 const fp=()=>apps.family.page,pp=()=>apps.peer.page;
-const footer=name=>fp().locator('.footer-directory button',{hasText:name}).click();
+const footer=async name=>{await activate('family');return fp().locator('.footer-directory button',{hasText:name}).click();};
 const familyRows=()=>fp().evaluate(async()=>{const r=indexedDB.open('FamilienakteStapel1'),db=await new Promise((ok,no)=>{r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)});try{return await new Promise((ok,no)=>{const t=db.transaction('uebergaben'),q=t.objectStore('uebergaben').getAll();t.oncomplete=()=>ok(q.result);t.onabort=()=>no(t.error);});}finally{db.close();}});
-async function swing(kind,value){await new Promise((ok,no)=>{const p=spawn('powershell.exe',['-NoProfile','-STA','-ExecutionPolicy','Bypass','-File','tools/native/pairs/family-dialog.ps1','-Kind',kind,'-Value',value],{stdio:'inherit'});p.on('error',no);p.on('exit',c=>c===0?ok():no(Error('Native dialog failed: '+kind)));});}
+async function swing(kind,value){if(android)return kind==='folder'?chooseFolder():androidPassword(value);await new Promise((ok,no)=>{const p=spawn('powershell.exe',['-NoProfile','-STA','-ExecutionPolicy','Bypass','-File','tools/native/pairs/family-dialog.ps1','-Kind',kind,'-Value',value],{stdio:'inherit'});p.on('error',no);p.on('exit',c=>c===0?ok():no(Error('Native dialog failed: '+kind)));});}
 async function connectFamily(first){
  await footer('Sicherheitscenter');const panel=fp().locator('[data-pro-tresor]');
  if(first){await panel.getByRole('button',{name:'Vorhandenen Pro-Tresor verbinden …',exact:true}).click();await swing('folder',process.env.PAIR_VAULT);}
@@ -50,6 +60,7 @@ async function connectFamily(first){
  const state=await fp().evaluate(()=>window.Capacitor.Plugins.FamilienakteTresor.zustand());assert.equal(state.status,'offen');return state.id;
 }
 async function peerPassword(){
+ if(android){await chooseFolder();await androidPassword(PASSWORD);return;}
  let d;for(let i=0;i<120;i++){d=apps.peer.browser.contexts().flatMap(c=>c.pages()).find(p=>/\/windows\/(kennwort.html|dialog\/index.html)/.test(p.url()));if(d)break;await pause(250);}assert.ok(d,'Actual native password window');
  if(partner==='workflow-pdf-pro'){await d.locator('#erstes').fill(PASSWORD);if(await d.locator('#zweites').isVisible())await d.locator('#zweites').fill(PASSWORD);if(await d.locator('#hinweis').isVisible())await d.locator('#hinweis').check();await d.locator('#merken').check();await d.locator('#weiter').click();}
  else {await d.locator('#password').fill(PASSWORD);if(await d.locator('#remember').isVisible())await d.locator('#remember').check();await d.locator('#submit').click();}
@@ -58,10 +69,11 @@ async function connectPeer(first){
  if(partner==='bookledgerpro')await pp().evaluate(async({first,password})=>{const v=await import('/src/core/vault.js');if(first)await v.setupVault(password);else await v.unlockVault(password);},{first,password:PASSWORD});
  if(first){
   await pp().evaluate(async partner=>{
-   window.__pairConnection=null;let promise;
-   if(partner==='workflow-pdf-pro')promise=window.Capacitor.Plugins.WorkflowVault.tresorVerbinden({language:'de',neuWaehlen:true});
-   else if(partner==='private-brain')promise=window.Capacitor.Plugins.ProVault.tresorEinziehen({nurVerbinden:true});
-   else {await window.BLPNative.tresor.ordnerWaehlen();promise=window.BLPNative.tresor.entsperren(true);}
+   window.__pairConnection=null;const promise=(async()=>{
+   if(partner==='workflow-pdf-pro')return window.Capacitor.Plugins.WorkflowVault.tresorVerbinden({language:'de',neuWaehlen:true});
+   else if(partner==='private-brain')return window.Capacitor.Plugins.ProVault.tresorEinziehen({nurVerbinden:true});
+   else {await window.BLPNative.tresor.ordnerWaehlen();return window.BLPNative.tresor.entsperren(true);}
+   })();
    void promise.then(value=>window.__pairConnection={value},error=>window.__pairConnection={error:String(error)});
   },partner);
   await peerPassword();await pp().waitForFunction(()=>window.__pairConnection,null,{timeout:120000});const result=await pp().evaluate(()=>window.__pairConnection);assert.equal(result.error,undefined);assert.equal(result.value.offen,true);
@@ -74,10 +86,11 @@ async function sendFamily(index){
  const cards=fp().locator('.library-document-card').filter({has:fp().getByRole('button',{name:'An Pro-App geben …',exact:true})}).filter({has:fp().locator('.library-document-title').filter({hasText:/\.pdf$/i})});
  const card=cards.nth(index),name=await card.locator('.library-document-title').innerText();
  await card.getByRole('button',{name:'An Pro-App geben …',exact:true}).click();await card.locator('select').selectOption(partner);
- for(let n=0;n<2;n++){await card.getByRole('button',{name:'Ausgewählte Unterlage weitergeben',exact:true}).click();await fp().getByText('An '+({'workflow-pdf-pro':'Workflow PDF Pro','private-brain':'Private Brain Pro',bookledgerpro:'BookLedgerPro'}[partner])+' weitergegeben.',{exact:false}).first().waitFor();}
+ for(let n=0;n<2;n++){await card.getByRole('button',{name:'Ausgewählte Unterlage weitergeben',exact:true}).click();await card.getByRole('button',{name:'Ausgewählte Unterlage weitergeben',exact:true}).waitFor();await fp().getByText('An '+({'workflow-pdf-pro':'Workflow PDF Pro','private-brain':'Private Brain Pro',bookledgerpro:'BookLedgerPro'}[partner])+' weitergegeben.',{exact:false}).first().waitFor();}
  const rows=(await familyRows()).filter(r=>r.typ==='ausgang'&&r.vertrag.ziel===partner&&r.vertrag.name===name);assert.equal(rows.length,1);assert.equal(rows[0].stand,'weitergegeben');return rows[0];
 }
 async function receivePeer(source){
+ await activate('peer');
  if(partner==='workflow-pdf-pro'){
   await pp().evaluate(()=>window.WFPProVerbund.dialog());await pp().locator(`[data-pro-entry="${source.entryId}"] input`).check();await pp().click('#nativeProVerbund [data-pro-action="receive"]');await pp().waitForFunction(()=>document.querySelector('#nativeProVerbund [data-pro-status]')?.textContent.includes('Auswahl gespeichert'));await pp().click('#nativeProVerbund [data-pro-action="close"]');
  }else if(partner==='private-brain'){
@@ -105,6 +118,7 @@ async function familyConfirm(source){
  await fp().waitForFunction(async id=>{const r=indexedDB.open('FamilienakteStapel1'),db=await new Promise(ok=>r.onsuccess=()=>ok(r.result));try{return await new Promise(ok=>{const t=db.transaction('uebergaben'),q=t.objectStore('uebergaben').get(id);t.oncomplete=()=>ok(q.result?.stand==='im-eingang');});}finally{db.close();}},source.id);
 }
 async function returnEdited(source,saved){
+ await activate('peer');
  if(partner==='workflow-pdf-pro'){
   await pp().evaluate(id=>{window.__pairShare={};void window.__wfpdf.dlg.teilenDocs([id]).then(()=>window.__pairShare.done=true,e=>window.__pairShare.error=String(e));},saved.id);
   await pp().click('#nativeProTarget [data-pro-action="familienakte"]');await pp().waitForSelector('#nativeProTarget',{state:'detached'});
@@ -144,7 +158,7 @@ try{
  const panel=fp().locator('[data-pro-verbund]');await panel.getByRole('button',{name:'Pro-Eingang prüfen',exact:true}).click();await panel.getByRole('button',{name:'In Familienakte-Eingang aufnehmen',exact:true}).click();await panel.getByRole('status').filter({hasText:'Dauerhaft im Eingang aufgenommen'}).waitFor();
  const records=(await familyRows()).filter(r=>r.vertrag?.id===back.vertrag.id&&r.quittung);assert.equal(records.length,1);assert.equal(records[0].quittung.sha256,back.vertrag.sha256);assert.equal((await peerConfirm(back)).stand,'im-eingang');
  pass('Cold Family inbox rejects forged confirmation, durably takes the actual return, and only then the installed sender confirms');
- await fp().screenshot({path:join(out,'family-'+partner+'.png'),fullPage:true});await pp().screenshot({path:join(out,partner+'.png'),fullPage:true});
+ await activate('family');await fp().screenshot({path:join(out,'family-'+partner+'.png'),fullPage:true});await activate('peer');await pp().screenshot({path:join(out,partner+'.png'),fullPage:true});
  assert.deepEqual(report.errors,[]);report.complete=true;
 }catch(error){report.failure=String(error.stack||error);console.error(error);for(const [key,a] of Object.entries(apps)){report[key+'Body']=await a.page?.locator('body').innerText().catch(()=>null);await a.page?.screenshot({path:join(out,'failure-'+key+'.png'),fullPage:true}).catch(()=>{});}process.exitCode=1;}
 finally{await writeFile(join(out,'pair.json'),JSON.stringify(report,null,2)+'\n');for(const key of Object.keys(apps))await stop(key);}
