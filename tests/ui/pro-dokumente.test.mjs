@@ -3,7 +3,9 @@ import { writeFileSync, mkdirSync } from "node:fs";
 import { startApp, launchBrowser, DESKTOP, ready, footer, step, summary, collectErrors } from "./_harness.mjs";
 import { capacitorStub } from "./_capacitor-stub.mjs";
 import { directoryPickerStub, windowStub, schliesseDialoge } from "./_stubs.mjs";
-const app = await startApp(), browser = await launchBrowser();
+// Dauerhafte Dateisystem-Handles im vollständigen Chromium prüfen (derselbe Browserkern
+// wie in der Desktop-App); die reduzierte headless-shell beendet sich hier beim Wiederöffnen.
+const app = await startApp(), browser = await launchBrowser({ channel: "chromium" });
 try {
   const context = await browser.newContext(DESKTOP);
   // Die Probe prüft die native Ablage und die Vorschau in der Akte. Ein zusätzliches
