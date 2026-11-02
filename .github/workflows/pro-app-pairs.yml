@@ -174,8 +174,10 @@ jobs:
       - name: Beide APKs, echter SAF-Dialog, Kaltstart und dauerhafter Rückweg
         uses: reactivecircus/android-emulator-runner@4c44018e59b437e86cdfc41da381398f93ed8808
         with:
-          # The API-35 VM exits during DocumentsUI, including with ample host
-          # memory and no host OOM/segfault. Keep that failed run documented.
+          # The VM exits during DocumentsUI on both API 35 and API 31, with
+          # ample host memory and no host OOM/segfault or guest app crash.
+          # Keep these failed runs documented. Use the emulator's current
+          # software backend rather than the legacy indirect GL translator.
           # Exercise the same complete pair on API 31 with the official newer
           # WebView collected above; do not weaken any transfer assertion.
           api-level: 31
@@ -184,7 +186,7 @@ jobs:
           profile: pixel_c
           ram-size: 3072M
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -feature -Vulkan -no-snapshot -noaudio -no-boot-anim -camera-back none -camera-front none
+          emulator-options: -no-window -gpu software -no-snapshot -noaudio -no-boot-anim -camera-back none -camera-front none -verbose
           script: |
             python3 tools/native/webview-runtime.py install work/family-android/work/pair-webview
             # Same tablet layout (1280 x 900 dp), fewer software-rendered pixels.
@@ -206,6 +208,7 @@ jobs:
           # including a possible emulator crash or host OOM, without a filter.
           sudo dmesg -T > work/pair-proof/host-kernel.txt
           df -h > work/pair-proof/host-disk.txt
+          sudo journalctl -u systemd-oomd --no-pager > work/pair-proof/host-oomd.txt
           for report in /tmp/android-runner/emu-crash-*.db; do
             if test -e "$report"; then cp -R "$report" work/pair-proof/; fi
           done
