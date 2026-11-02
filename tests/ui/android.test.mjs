@@ -1,6 +1,6 @@
 // Android-Hülle (gestellte Capacitor-Brücke): Internetschalter über das native Plugin, Diktat über das Sprachfenster,
 // „Teilen → Familienakte“ in die Eingangszentrale; dazu der PWA-Weg share_target über den Service Worker.
-import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, collectErrors } from "./_harness.mjs";
+import { startApp, launchBrowser, DESKTOP, ready, footer, check, step, summary, collectErrors } from "./_harness.mjs";
 import { capacitorStub } from "./_capacitor-stub.mjs";
 
 const app = await startApp();
@@ -41,7 +41,19 @@ try {
     if (!(done === 1 && inbox.some((t) => /Eingangszentrale/.test(t)))) throw new Error(`done=${done}`);
     return `Eingang „${row.split("\n")[0]}“, Datei im Gerät freigegeben`;
   });
-  await step("Teilen → Familienakte: nichts wird ohne Bestätigung übernommen", async () => page.evaluate(() => !document.body.innerText.includes("übernommen") || document.body.innerText.includes("Nicht übernommen") || true));
+  await step("Teilweise unlesbarer Stapel: nur dauerhaft eingegangene Dateien freigeben", async () => {
+    await page.evaluate(() => {
+      window.__capState.shared.push({ id: 'defekt', name: 'Unlesbar.pdf', mime: 'application/pdf', size: 12, readError: true });
+      window.__capShare('Notiz_Übergabe.txt', 'text/plain', 'Erfundene Übergabe mit Umlaut.');
+    });
+    await page.waitForFunction(() => window.__capState.done === 2).catch(async e => { throw new Error(e.message + JSON.stringify(await page.evaluate(() => ({done: window.__capState.done, shared: window.__capState.shared, text: document.body.innerText.slice(-1700)})))) });
+    const rest = await page.evaluate(() => window.__capState.shared.map(f => f.id));
+    if (rest.length !== 1 || rest[0] !== 'defekt') throw new Error('Unlesbare Quelldatei wurde freigegeben');
+    await page.reload(); await ready(page);
+    await footer(page, "Eingangszentrale");
+    await page.waitForFunction(() => /Notiz[ _]Übergabe/.test(document.body.innerText));
+    return 'Erfolgreicher Eingang übersteht Neustart, defekte Quelle bleibt';
+  });
   await step("Update (Versionszeile): bei Internet aus nur der Hinweis, die Hülle wird nicht gefragt", async () => {
     await page.click(".site-brand-version");
     const text = await page.locator(".familienakte-hinweis span").innerText();

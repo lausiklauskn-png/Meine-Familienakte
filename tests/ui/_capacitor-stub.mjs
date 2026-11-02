@@ -11,7 +11,7 @@ export const capacitorStub = `(() => {
       FamilienakteShare: {
         addListener: (name, fn) => { (listeners[name] ||= []).push(fn); return { remove() {} }; },
         pending: async () => ({ items: state.shared.map((f) => ({ id: f.id, name: f.name, mime: f.mime, size: f.size })), refused: state.refused || 0 }),
-        read: async ({ id, offset }) => { const f = state.shared.find((x) => x.id === id); if (!f) throw Object.assign(new Error('x'), { code: 'SHARE_UNAVAILABLE' }); return { data: offset > 0 ? '' : f.base64 }; },
+        read: async ({ id, offset }) => { const f = state.shared.find((x) => x.id === id); if (!f || f.readError) throw Object.assign(new Error('x'), { code: 'SHARE_UNAVAILABLE' }); return { data: offset > 0 ? '' : f.base64 }; },
         done: async ({ id }) => { state.shared = state.shared.filter((x) => x.id !== id); state.done = (state.done || 0) + 1; },
       },
       FamilienakteUpdates: {
@@ -21,5 +21,5 @@ export const capacitorStub = `(() => {
       },
     },
   };
-  window.__capShare = (name, mime, text) => { const base64 = btoa(unescape(encodeURIComponent(text))); state.shared.push({ id: 'g' + state.shared.length, name, mime, size: text.length, base64 }); (listeners.shared || []).forEach((fn) => fn({ added: 1, refused: 0 })); };
+  window.__capShare = (name, mime, text) => { const base64 = btoa(unescape(encodeURIComponent(text))); state.shared.push({ id: 'g' + state.shared.length, name, mime, size: new TextEncoder().encode(text).length, base64 }); (listeners.shared || []).forEach((fn) => fn({ added: 1, refused: 0 })); };
 })();`;

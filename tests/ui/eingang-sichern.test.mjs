@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { chromium, DESKTOP, ROOT, startApp, ready, footer, step, summary } from "./_harness.mjs";
+import { chromium, DESKTOP, ROOT, startApp, footer, step, summary } from "./_harness.mjs";
 
 const app = await startApp();
 const profil = mkdtempSync(path.join(tmpdir(), "fa-eingang-"));
@@ -41,7 +41,13 @@ async function lesen() {
     };
   }));
 }
-async function eingang() { await page.goto(app.base); await ready(page); await footer(page, "Eingangszentrale"); }
+async function eingang() {
+  await page.goto(app.base);
+  // Nach einem echten Profil-Neustart ist der Beispieldaten-Hinweis kein Bereitschaftssignal.
+  // Die Probe wartet danach auf den konkreten wiederhergestellten Eingang und seine Bytes.
+  await page.waitForSelector(".site-brand-version");
+  await footer(page, "Eingangszentrale");
+}
 try {
   await starten();
   // Vor dem ersten App-Start die alte Datenbankfassung mit einem echten PDF anlegen.

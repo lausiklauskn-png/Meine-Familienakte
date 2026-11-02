@@ -89,4 +89,15 @@ mod tests {
     #[test] fn fehlende_engine_ist_keine_ersatzablage() {
         assert!(matches!(Engine::starten(Path::new("fehlende-runtime"), Path::new("config.json")), Err(e) if e == "FA_TRESOR_ENGINE_FEHLT"));
     }
+    #[cfg(windows)]
+    #[test] fn echte_ge_buendelte_engine_ueber_rust_pipe() {
+        let stamp = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos();
+        let config = std::env::temp_dir().join(format!("fa-pro-rust-{}-{stamp}.json", std::process::id()));
+        assert!(!config.exists());
+        let mut engine = Engine::starten(Path::new("."), &config).expect("gebündelte Windows-Laufzeit starten");
+        let result = engine.aufrufen(br#"{"aktion":"zustand"}"#).expect("echte Engine antwortet");
+        assert_eq!(result, json!({"status": "getrennt"}));
+        assert!(!config.exists(), "Zustandsabfrage legt keinen Anschluss oder Ersatzbestand an");
+        assert_eq!(engine.aufrufen(br#"{"aktion":"shell"}"#).unwrap_err(), "FA_TRESOR_AKTION_UNGUELTIG");
+    }
 }

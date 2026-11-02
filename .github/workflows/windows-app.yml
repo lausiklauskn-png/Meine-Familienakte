@@ -55,6 +55,9 @@ jobs:
         run: npm run tauri --prefix windows -- build --bundles nsis
         env:
           FAMILIENAKTE_COMMIT: ${{ github.sha }}
+      - name: Echten Installer und gebündelte Pro-Tresor-Laufzeit prüfen
+        shell: pwsh
+        run: ./windows/tools/test-pro-install.ps1
       - name: Installer benennen und Prüfsumme
         shell: bash
         run: |

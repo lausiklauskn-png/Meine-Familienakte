@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.provider.DocumentsContract;
 import android.text.InputType;
 import android.util.Base64;
 import android.widget.EditText;
@@ -25,6 +26,22 @@ public class FamilienakteTresorPlugin extends Plugin {
     private final ExecutorService worker = Executors.newSingleThreadExecutor();
     private ProTresorAdapter adapter;
     private SharedPreferences prefs() { return getContext().getSharedPreferences("familienakte-pro-tresor", 0); }
+    private String ortName(String uri) {
+        try {
+            Uri baum = Uri.parse(uri);
+            String tree = DocumentsContract.getTreeDocumentId(baum);
+            if ("com.android.externalstorage.documents".equals(baum.getAuthority()) && tree.contains(":")) {
+                String[] teile = tree.split(":", 2);
+                return ("primary".equals(teile[0]) ? "Gerät" : "SD/USB (" + teile[0] + ")") + "/" + teile[1];
+            }
+            Uri wurzel = DocumentsContract.buildDocumentUriUsingTree(baum, tree);
+            try (android.database.Cursor c = getContext().getContentResolver().query(wurzel,
+                new String[] { DocumentsContract.Document.COLUMN_DISPLAY_NAME }, null, null, null)) {
+                if (c != null && c.moveToFirst()) return c.getString(0);
+            }
+        } catch (Exception nichtLesbar) { /* gemerkter Ort bleibt auch ohne Datenträger erkennbar */ }
+        return uri;
+    }
     private void ungenutztFreigeben(String uri) {
         if (uri == null || uri.isEmpty() || uri.equals(prefs().getString("uri", ""))) return;
         try { getContext().getContentResolver().releasePersistableUriPermission(Uri.parse(uri),
@@ -52,10 +69,10 @@ public class FamilienakteTresorPlugin extends Plugin {
                 SafAblage a = ablage(uri);
                 if (!id.equals(TresorOrdner.kennung(a))) throw new IOException("FA_TRESOR_FREMDE_KENNUNG");
                 if (a.gibtEs(Umzug.VERMERK)) throw new IOException("FA_TRESOR_UMGEZOGEN");
-                call.resolve(new JSObject().put("status", adapter == null ? "gesperrt" : "offen").put("id", id).put("ort", uri));
+                call.resolve(new JSObject().put("status", adapter == null ? "gesperrt" : "offen").put("id", id).put("ort", prefs().getString("name", ortName(uri))));
             } catch (Exception e) {
                 if (adapter != null) { adapter.close(); adapter = null; }
-                call.resolve(new JSObject().put("status", "nicht_erreichbar").put("id", id).put("ort", uri));
+                call.resolve(new JSObject().put("status", "nicht_erreichbar").put("id", id).put("ort", prefs().getString("name", ortName(uri))));
             }
         });
     }
@@ -100,13 +117,13 @@ public class FamilienakteTresorPlugin extends Plugin {
                             String id = erwartet == null ? TresorOrdner.kennung(a) : erwartet;
                             ProTresorAdapter neu = ProTresorAdapter.oeffnen(a, id, java.nio.CharBuffer.wrap(geheim));
                             String vorher = prefs().getString("uri", "");
-                            if (!prefs().edit().putString("uri", uri).putString("id", id).commit()) {
+                            if (!prefs().edit().putString("uri", uri).putString("id", id).putString("name", ortName(uri)).commit()) {
                                 neu.close(); throw new IOException("FA_TRESOR_ORT_NICHT_GESPEICHERT");
                             }
                             if (adapter != null) adapter.close();
                             adapter = neu;
                             ungenutztFreigeben(vorher);
-                            call.resolve(new JSObject().put("id", id).put("ort", uri).put("status", "offen"));
+                            call.resolve(new JSObject().put("id", id).put("ort", ortName(uri)).put("status", "offen"));
                         } catch (Exception e) { ungenutztFreigeben(uri); fehler(call, e); }
                         finally { java.util.Arrays.fill(geheim, '\0'); }
                     });
