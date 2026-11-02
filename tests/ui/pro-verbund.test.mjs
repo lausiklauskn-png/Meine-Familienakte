@@ -12,7 +12,7 @@ try {
    window.Capacitor.Plugins.FamilienakteTresor={
      zustand:async()=>({status:'offen',id:state.id,uebergaben:true}),
      uebergabeSenden:async a=>{
-       const calls=JSON.parse(localStorage.getItem('fixture-sends')||'[]');calls.push(a.transferId);localStorage.setItem('fixture-sends',JSON.stringify(calls));
+       window.__verbund.sends.push({name:a.name,mime:a.mime});const calls=JSON.parse(localStorage.getItem('fixture-sends')||'[]');calls.push(a.transferId);localStorage.setItem('fixture-sends',JSON.stringify(calls));
        const bytes=Uint8Array.from(atob(a.data),c=>c.charCodeAt(0));const hash=[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(b=>b.toString(16).padStart(2,'0')).join('');
        if(state.failSend){state.failSend=false;throw new Error('Erfundener Abbruch nach nativer Ablage');}
        return {vaultId:a.vaultId,entryId:'e-'+hash.slice(0,36),sha256:hash,size:bytes.length,stand:'weitergegeben'};
@@ -78,13 +78,14 @@ try {
    await footer(page,'Dokumentenbibliothek');
    const index=await page.locator('.library-document-card').filter({has:page.getByRole('button',{name:'An Pro-App geben …',exact:true})}).first().evaluate(e=>[...document.querySelectorAll('.library-document-card')].indexOf(e));
    const karte=page.locator('.library-document-card').nth(index);
+   const originalName=await karte.locator('.library-document-title').innerText();
    await karte.getByRole('button',{name:'An Pro-App geben …',exact:true}).click();
    await karte.locator('select').selectOption('private-brain');
    await karte.getByRole('button',{name:'Ausgewählte Unterlage weitergeben',exact:true}).click();
    await page.waitForFunction(()=>JSON.parse(localStorage.getItem('fixture-sends')||'[]').length===3);
    await karte.getByRole('button',{name:'Ausgewählte Unterlage weitergeben',exact:true}).click();
    await page.waitForFunction(()=>JSON.parse(localStorage.getItem('fixture-sends')||'[]').length===4);
-   return page.evaluate(()=>{const ids=JSON.parse(localStorage.getItem('fixture-sends'));return ids[2]===ids[3]});
+   return page.evaluate(name=>{const ids=JSON.parse(localStorage.getItem('fixture-sends'));if(window.__verbund.sends.at(-1).name!==name)throw Error('Originalname geht bei Pro-Übergabe verloren');return ids[2]===ids[3]},originalName);
  });
  await step('Sicherheitscenter zeigt Pro-Eingang und gemerkten Ausgang mit offener Zielbestätigung',async()=>{
    await footer(page,'Sicherheitscenter');

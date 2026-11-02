@@ -35,19 +35,39 @@ Windows benutzt den wirklichen nativen Speicherdialog und dieselbe gebündelte
 Java-Laufzeit. Die Seite übergibt keinen Dateisystempfad. Im Browser wird der
 Downloadstart ausdrücklich als solcher bezeichnet.
 
-## Noch offener Prüfstand dieses Entwurfs
+## Prüfstand des Gerätewegs
 
 Java-Engine mit echten Dateien: Abbruch, unveränderte Bytes, fehlerhafte Prüfsumme,
 Pfad-/Größengrenzen, fehlender Zielordner und Erhalt vorhandener Dateien geprüft.
 20 MiB plus Paketkopf laufen durch die Produktions-Pipe mit 256 MiB Java-Heap.
-Native Speicherdialoge und die vollständige Paarprobe sind bis zum grünen
-CI-Nachweis offen. Androids zusätzliche Produktprobe verwendet die wirkliche
+Der installierte Windows-Prüfbau bedient den wirklichen Swing-Speicherdialog
+und prüft Abbruch, Neustart und identische wiederholte Ausgabe. Die Android-
+Produktprobe besteht auf API 31 und 35. Quelle: Windowslauf 41479596042 und
+Androidlauf 41479595973, Quellstand b56443c. Die vollständigen Paare mit den
+anderen drei installierten Pro-Apps bleiben ein eigener Nachweis. Androids zusätzliche Produktprobe verwendet die wirkliche
 Oberfläche und das native Plugin; allein die Antwort des Systemdialogs ist
 im Prüflauf gestellt. Windows bedient den wirklichen Swing-Speicherdialog.
 
 Die lokale Chromium-154-Fassung stürzt nach Neustart beim zweiten Download ab;
 das passiert auch mit einer unabhängigen 14-Byte-Testseite ohne Familienakte.
 Die vollständige Zweiprofil-Probe bleibt aktiv und läuft mit der zum
-Prüfwerkzeug gehörenden Browserfassung in GitHub. Ein solcher lokaler Abbruch
-wird nicht als erfolgreiche Probe gezählt. Transport über den wirklichen
-Datei-Post-Dienst und die Kim-sync-Anbindung ist noch gesondert nachzuweisen.
+Prüfwerkzeug gehörenden Browserfassung in GitHub: Lauf 41479596065 besteht
+zwölf Bedien-/Speicherproben sowie fünf erkannte absichtliche Verletzungen. Ein solcher lokaler Abbruch
+wird nicht als erfolgreiche Probe gezählt. Die zusätzliche Integration verwendet zwei wirkliche Kim-sync-Clients, den
+wirklichen lokalen Datei-Post-Server und die produktiven Familienakte-Paket- und
+Eingangsfunktionen. 20 MiB Original plus Paketkopf laufen über den bestehenden
+Großdateiweg, die passende Familienakte-Empfangsdatei kommt zurück. Eine
+Transportquittung allein bestätigt den Familienakte-Eingang weiterhin nicht.
+Nur das Relay ist eine lokale Testgegenstelle; keine öffentliche Raumprobe.
+
+Dabei wurde ein vorhandener Fehler in Kim-sync behoben: Beim Abschluss des
+Uploads fehlte der Schreibnachweis. Der echte Datei-Post-Server lehnte das
+korrekt mit 403 ab. Kim-sync #54 sendet ihn nun mit; eine Gegenprobe entfernt
+ihn wieder und muss genau an dieser Stelle scheitern. Die Testkette hält beide
+Quellen in `.github/workflows/pro-carriers.yml` fest.
+
+Für diesen Weg genügt Datei-Post als vorhandener Dienst mit seiner Web-App,
+auch unter Windows. Eine zusätzliche Pflicht-App oder zweite Raumverwaltung
+ist dafür nicht nötig. Eigenständige Pro-Hüllen für Kim-sync/Datei-Post bleiben
+das im Sitzungsbrief vorgemerkte Ausbauziel; diese Sitzung behauptet dafür
+keine neuen APK-/Windows-Installer.

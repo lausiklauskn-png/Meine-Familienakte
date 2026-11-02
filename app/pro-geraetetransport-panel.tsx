@@ -38,7 +38,10 @@ export function ProGeraetetransportPanel({ handle }: { handle: FileSystemDirecto
     if (!handle || !visible) throw Error("Bitte zuerst deine Akte öffnen.");
     const id = existing?.vertrag.dokumentId || selected, document = visible.documents.find(d => d.id === id);
     if (!document) throw Error("Bitte eine vorhandene Unterlage auswählen.");
-    const file = await readLocalDocumentFile(handle, id);
+    const stored = await readLocalDocumentFile(handle, id);
+    // The vault's internal filename may contain a checksum/prefix. Transfer the
+    // document's original name and type with exactly the same stored bytes.
+    const file = new File([stored], document.originalName, { type: document.mimeType || stored.type, lastModified: stored.lastModified });
     const outgoing = existing || await geraeteAusgangVorbereiten(visible.vaultId, file, id, recipient, document.proUebergabe?.id || document.proBezug);
     return await output(await geraetePaket(outgoing, file)) + " Empfang noch offen: Paket als Originaldatei an genau das gewählte Gerät weitergeben.";
   }

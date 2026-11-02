@@ -29,7 +29,7 @@ try{
  await step('Gerätetransport: nur gewähltes Original, stabiler Ausgang vor der Dateiausgabe',async()=>{
   const p=panel(0);const value=await p.locator('select option').nth(1).getAttribute('value');await p.locator('select').selectOption(value);await p.getByLabel('Empfänger oder Zielgerät').fill('Erfundener Windows-PC');
   packet=await download(0,p.getByRole('button',{name:'Übergabepaket speichern',exact:true}));
-  const db=await database(0),out=db.transfers.filter(x=>x.typ==='geraete-ausgang');assert.equal(out.length,1);assert.equal(out[0].stand,'offen');assert.equal(out[0].vertrag.dokumentId,value);assert.equal(out[0].vertrag.ziel,'familienakte');
+  const db=await database(0),out=db.transfers.filter(x=>x.typ==='geraete-ausgang');assert.equal(out.length,1);assert.equal(out[0].stand,'offen');assert.equal(out[0].vertrag.dokumentId,value);assert.equal(out[0].vertrag.ziel,'familienakte');assert.equal(out[0].vertrag.name,await p.locator('select option:checked').innerText(),'Originalname bleibt beim Gerätewechsel erhalten');
   assert.equal(Object.values(out[0]).some(x=>x instanceof Blob),false);
   const decoded=await pages[0].evaluate(async p=>{const api=await import('/__transport_probe/pro-geraetetransport'),r=await api.geraetePaketLesen(new File([new Uint8Array(p)],'transport.familienakte-paket'));return {name:r.file.name,size:r.file.size,hash:r.vertrag.sha256};},[...packet.buffer]);
   assert.equal(decoded.hash,out[0].vertrag.sha256);assert.equal(decoded.size,out[0].vertrag.groesse);assert.equal(decoded.name,out[0].vertrag.name);

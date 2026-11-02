@@ -686,7 +686,11 @@ function HealthPortalContent() {
   const anProApp = async (id: string, ziel: ProZiel) => {
     if (!vaultHandle) return;
     try {
-      const r = await proDateiWeitergeben(await readLocalDocumentFile(vaultHandle, id), id, ziel, localDocuments.find(d => d.id === id)?.proUebergabe?.id || localDocuments.find(d => d.id === id)?.proBezug);
+      const document = localDocuments.find(d => d.id === id);
+      if (!document) throw new Error("Die ausgewählte Unterlage ist nicht mehr im geöffneten Bestand.");
+      const stored = await readLocalDocumentFile(vaultHandle, id);
+      const file = new File([stored], document.originalName, { type: document.mimeType || stored.type, lastModified: stored.lastModified });
+      const r = await proDateiWeitergeben(file, id, ziel, document.proUebergabe?.id || document.proBezug);
       setNotice({ kind: "success", text: r.stand === "im-eingang" ? `${PRO_ZIELE[ziel]} hat diese Fassung bereits im Eingang bestätigt. Die Quelle bleibt erhalten.` : `An ${PRO_ZIELE[ziel]} weitergegeben. Die Zielbestätigung ist noch offen; die Quelle bleibt erhalten. Im Sicherheitscenter kannst du die Bestätigung prüfen.` });
     } catch (e) { setNotice({ kind: "error", text: proVerbundFehler(e) }); }
   };
