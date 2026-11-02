@@ -2,11 +2,13 @@ import assert from "node:assert/strict";
 import { writeFileSync, mkdirSync } from "node:fs";
 import { startApp, launchBrowser, DESKTOP, ready, footer, step, summary, collectErrors } from "./_harness.mjs";
 import { capacitorStub } from "./_capacitor-stub.mjs";
-import { directoryPickerStub, schliesseDialoge } from "./_stubs.mjs";
+import { directoryPickerStub, windowStub, schliesseDialoge } from "./_stubs.mjs";
 const app = await startApp(), browser = await launchBrowser();
 try {
   const context = await browser.newContext(DESKTOP);
-  await context.addInitScript(capacitorStub + directoryPickerStub + `
+  // Die Probe prüft die native Ablage und die Vorschau in der Akte. Ein zusätzliches
+  // Blob-Fenster gehört zur gesonderten Fensterprobe; dort gelten keine App-Rechte.
+  await context.addInitScript(`(() => { if (location.origin !== ${JSON.stringify(new URL(app.base).origin)}) return;` + capacitorStub + directoryPickerStub + windowStub + `
     const gespeichert = JSON.parse(localStorage.getItem('pro-test-ort') || 'null');
     window.__proDok = { status: gespeichert ? 'gesperrt' : 'getrennt', id: gespeichert?.id, ort: 'content://erfunden/Pro-Tresor', reads: 0, writes: 0 };
     const daten = () => JSON.parse(localStorage.getItem('pro-test-originale') || '{}');
@@ -25,13 +27,14 @@ try {
         return { vaultId: a.vaultId, entryId, sha256, size: bytes.length };
       },
       lesen: async (a) => { pruefen(a.vaultId); window.__proDok.reads++; return { data: daten()[a.entryId] }; },
-    };`);
+    }; })();`);
   const page = await context.newPage(); const errors = collectErrors(page);
   async function probe(name, fn) {
     const ok = await step(name, async () => {
       try { return await fn(); }
       catch (e) {
         console.error("Pro-Dokumentenfehler:", e.stack || String(e));
+        console.error("Browserzustand:", JSON.stringify({ verbunden: browser.isConnected(), seiteGeschlossen: page.isClosed(), seiten: context.pages().map(p => p.url()) }));
         mkdirSync("work", { recursive: true });
         writeFileSync("work/pro-dokumente-fehler.json", JSON.stringify({ name, error: e.stack, text: await page.locator("body").innerText().catch(() => "Seite nicht mehr erreichbar") }, null, 2));
         throw e;
@@ -85,6 +88,8 @@ try {
     await page.locator("button.library-preview").first().click();
     await page.locator(".file-viewer").waitFor();
     assert.ok(await page.evaluate(() => window.__proDok.reads > 0));
+    assert.equal(context.pages().length, 1, "Ablageprobe öffnet kein weiteres Browserfenster");
+    assert.equal(await page.evaluate(() => window.__geoeffnet.length), 1, "die normale Vorschau hat den Fensterweg versucht");
     await schliesseDialoge(page);
   });
   await probe("Pro-Dokumente: gesperrter Tresor lässt Quelle und Register unbestätigt", async () => {
