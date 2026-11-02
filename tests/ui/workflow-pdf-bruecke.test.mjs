@@ -21,6 +21,25 @@ try {
   const page = await context.newPage();
   page.setDefaultTimeout(20000);
   await page.addInitScript(windowStub);
+  await page.addInitScript(() => {
+    if (window.parent !== window) {
+      let kern;
+      Object.defineProperty(window, '__wfpdf', { configurable: true, get: () => kern, set: v => {
+        const importieren = v.importDateien;
+        v.importDateien = async (...args) => {
+          window.__importWartet = true;
+          while (window.parent.__halteWfpdfImport) await new Promise(resolve => setTimeout(resolve, 25));
+          return importieren(...args);
+        };
+        kern = v;
+      } });
+    }
+    window.addEventListener('message', e => {
+      if (window.__halteUebergabe && e.data?.typ === 'fa-wfpdf-ablegen') {
+        window.__gehalten = { data: e.data, source: e.source }; e.stopImmediatePropagation();
+      }
+    }, true);
+  });
   const errors = collectErrors(page);
   await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page);
 
@@ -38,7 +57,15 @@ try {
   check(await geschuetzt.count() > 0 && await geschuetzt.locator("[data-wfpdf-oeffnen]").count() === 0, "Geschützte Gesundheitsunterlage: kein „In Workflow PDF öffnen“", `${await geschuetzt.count()} geschützte`);
   let klon;
   await step("„In Workflow PDF öffnen“: die Unterlage liegt in der Bibliothek des Klons", async () => {
+    await page.evaluate(() => { window.__halteWfpdfImport = true; });
     await page.locator(".document-item", { hasText: "Garantiebeleg_Waschautomat_Lavorix" }).first().locator("[data-wfpdf-oeffnen]").click();
+    const offen = page.locator('[data-wfpdf-seite]');
+    await offen.waitFor();
+    await page.waitForFunction(() => [...document.querySelectorAll('iframe')].some(f => f.contentWindow?.__importWartet));
+    if (await offen.getAttribute('data-wfpdf-oeffnen-offen') !== '1') throw new Error('Quelle vor dauerhafter Ablage freigegeben');
+    await page.evaluate(() => { window.__halteWfpdfImport = false; });
+    await page.waitForFunction(() => document.querySelector('[data-wfpdf-oeffnen-offen="0"]'));
+
     // Eine einzelne Datei öffnet sich automatisch im Editor. Die Bibliothek ist dann
     // bereits wieder unsichtbar: auf ihren sichtbaren Zwischenzustand zu warten war ein Wettlauf.
     const rahmen = page.frameLocator("[data-wfpdf-rahmen]");
@@ -54,6 +81,38 @@ try {
     await klon.locator(".dok", { hasText: "Garantiebeleg" }).first().locator("[data-teilen]").click();
     await page.getByText("aus Workflow PDF liegen in der Eingangszentrale").first().waitFor({ timeout: 20000 });
     return (await klon.evaluate(() => window.__wfpdfTeilen && window.__wfpdfTeilen.geteilt)) === true ? "über die Brücke, nicht übers Gerät" : false;
+  });
+  await step("Brücke: Teilen bleibt bis zur dauerhaften Eingangsquittung offen", async () => {
+    await page.evaluate(() => { window.__halteUebergabe = true; });
+    await klon.evaluate(async () => {
+      const d = (await window.WFP.DB.all('docs'))[0];
+      window.__brueckenDatei = new File([await window.WFP.DB.getFile(d.id)], 'Quittungsprobe.pdf', {type:'application/pdf'});
+      window.__brueckenStand = 'wartet';
+      navigator.share({files:[window.__brueckenDatei]}).then(() => {window.__brueckenStand='bestaetigt';}, () => {window.__brueckenStand='fehler';});
+    });
+    await page.waitForFunction(() => !!window.__gehalten);
+    if (await klon.evaluate(() => window.__brueckenStand) !== 'wartet') throw new Error('Zu frühe Bestätigung');
+    await page.evaluate(() => {
+      const e = window.__gehalten;
+      e.source.postMessage({typ:'fa-wfpdf-abgelegt',id:'unpassende-kennung',ok:true}, location.origin);
+    });
+    await klon.evaluate(() => new Promise(resolve => setTimeout(resolve, 50)));
+    if (await klon.evaluate(() => window.__brueckenStand) !== 'wartet') throw new Error('Fremde Quittung akzeptiert');
+    await page.evaluate(() => {
+      window.__halteUebergabe=false; const e=window.__gehalten;
+      window.dispatchEvent(new MessageEvent('message',{origin:location.origin,source:e.source,data:e.data}));
+    });
+    await klon.waitForFunction(() => window.__brueckenStand==='bestaetigt');
+    return true;
+  });
+  await step("Erneutes Teilen derselben Fassung erzeugt keinen zweiten Eingang", async () => {
+    const count = () => page.evaluate(() => new Promise((ok,no) => {
+      const r=indexedDB.open('FamilienakteStapel1'); r.onsuccess=()=>{const db=r.result;const t=db.transaction('eingang');const q=t.objectStore('eingang').count();t.oncomplete=()=>{db.close();ok(q.result)};t.onabort=()=>no(t.error)};r.onerror=()=>no(r.error);
+    }));
+    const vorher=await count();
+    await klon.evaluate(() => navigator.share({files:[window.__brueckenDatei]}));
+    if(await count()!==vorher) throw new Error('Doppelter Eingang');
+    return true;
   });
   await step("Die Datei steht in der Eingangszentrale zur Prüfung", async () => {
     await footer(page, "Eingangszentrale");

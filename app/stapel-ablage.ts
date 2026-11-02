@@ -6,9 +6,9 @@ export type StapelEintrag = { id: string; name: string; sicher: boolean; grund: 
 const DB = "FamilienakteStapel1", FACH = "stapel";
 export function stapelDatenbank() {
   return new Promise<IDBDatabase>((ok, nein) => {
-    const r = indexedDB.open(DB, 2);
+    const r = indexedDB.open(DB, 3);
     r.onupgradeneeded = () => {
-      for (const fach of [FACH, "eingang", "eingang-dateien"]) {
+      for (const fach of [FACH, "eingang", "eingang-dateien", "uebergaben"]) {
         if (!r.result.objectStoreNames.contains(fach)) r.result.createObjectStore(fach, { keyPath: "id" });
       }
     };
