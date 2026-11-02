@@ -8,6 +8,17 @@ import {chromium} from 'playwright';
 const out=resolve(process.argv[2]);await mkdir(out,{recursive:true});
 const report={checks:[],assets:[],console:[],kind:'Installed Windows / WebView2 on CI, no physical user device'},errors=[];
 let browser,page,lastConnectionError;
+// Probe the same worker request boundary used by the product. The page's
+// unchanged internet switch must not acquire a new generic network exception.
+const asset = path => page.evaluate(path => new Promise((resolve,reject) => {
+ const code = `onmessage=async e=>{try{const r=await fetch(e.data);postMessage({status:r.status,type:r.headers.get('content-type'),prefix:(await r.text()).slice(0,100)});}catch(e){postMessage({error:String(e)});}}`;
+ const url=URL.createObjectURL(new Blob([code],{type:'text/javascript'})),worker=new Worker(url);
+ const end=()=>{worker.terminate();URL.revokeObjectURL(url);};
+ const timer=setTimeout(()=>{end();reject(Error('Local asset probe timed out'));},10000);
+ worker.onmessage=e=>{clearTimeout(timer);end();e.data.error?reject(Error(e.data.error)):resolve(e.data);};
+ worker.onerror=e=>{clearTimeout(timer);end();reject(Error(e.message));};
+ worker.postMessage('https://familienakte-model.localhost/_fa_models/klein/'+path);
+}),path);
 try {
  const deadline=Date.now()+60000;
  while(!browser&&Date.now()<deadline){try{browser=await chromium.connectOverCDP('http://127.0.0.1:9333',{timeout:3000});}catch(error){lastConnectionError=String(error);await pause(500);}}
@@ -40,7 +51,7 @@ try {
  await panel.getByText(/Modell vollständig abgelegt/).waitFor({timeout:720000});
  await page.locator('.netz-schalter').click();await page.waitForSelector('.netz-schalter[data-netz="aus"]');
  report.checks.push('Explicit small model download with the bundled JRE');
- const config=await page.evaluate(async()=>{const r=await fetch('/_fa_models/klein/model/config.json');return {status:r.status,type:r.headers.get('content-type'),prefix:(await r.text()).slice(0,100)};});
+ const config=await asset('model/config.json');
  report.localConfig=config;assert.equal(config.status,200,'Local verified config');assert.match(config.type||'',/json/,'Local route must return a model asset');
  await panel.getByRole('button',{name:'Index aufbauen / fortsetzen',exact:true}).click();await panel.getByRole('status').filter({hasText:'Suchindex bereit:'}).waitFor({timeout:240000});
  report.checks.push('Production Worker, actual pinned model and private IndexedDB activate the sample index');
@@ -48,7 +59,7 @@ try {
  await page.locator('.footer-directory button',{hasText:'Sicherheitscenter'}).click();await panel.getByRole('button',{name:'Gerät, Modelle und Suchindex',exact:true}).click();
  await panel.getByLabel('Frage an diese Akte').fill('Waschautomat');await panel.getByRole('button',{name:'In dieser Akte nach Bedeutung suchen',exact:true}).click();await panel.locator('.search-results button').first().waitFor({timeout:120000});
  assert.equal(await page.getAttribute('.netz-schalter','data-netz'),'aus');
- assert.equal(await page.evaluate(()=>fetch('/_fa_models/klein/model/not-pinned.json').then(r=>r.status)),404);
+ assert.equal((await asset('model/not-pinned.json')).status,404);
  report.checks.push('Offline search after reload, local missing asset fails closed');
  await page.screenshot({path:join(out,'private-meaning-windows.png'),fullPage:true});
  await panel.locator('.search-results button').first().click();await page.waitForFunction(()=>!document.querySelector('.private-meaning'));
