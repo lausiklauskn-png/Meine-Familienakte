@@ -3,6 +3,9 @@
 1. November 2026. Ergänzung der Übergabe auf `codex/eingang-sichern`, [Entwurf #48](https://github.com/lausiklauskn-png/Meine-Familienakte/pull/48).
 Der neue Arbeitsplan steht in [BRIEF_SITZUNG_2026-11-01_PRO-VERBUND.md](BRIEF_SITZUNG_2026-11-01_PRO-VERBUND.md).
 
+Nachtrag: Klaus hat danach die Übernahme des Briefs nach `main` und die automatische Veröffentlichung freigegeben.
+Der folgende Abschluss beschreibt den vorherigen Entwurfsstand; der Sitzungsbrief enthält den aktualisierten Startauftrag.
+
 ## Ergebnis
 
 Klaus' gewünschte Hin- und Rückwege zu den eigenständigen Workflow PDF Pro, Private Brain Pro und BookLedgerPro festgehalten.

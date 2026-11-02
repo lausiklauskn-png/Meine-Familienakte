@@ -3,7 +3,10 @@ import { writeFileSync, mkdirSync } from "node:fs";
 import { startApp, launchBrowser, DESKTOP, ready, footer, step, summary, collectErrors } from "./_harness.mjs";
 import { capacitorStub } from "./_capacitor-stub.mjs";
 import { directoryPickerStub, windowStub, schliesseDialoge } from "./_stubs.mjs";
-const app = await startApp(), browser = await launchBrowser();
+// Der mit Playwright gelieferte Chromium-Bau 1243 stürzt bereits ohne App beim
+// Deserialisieren gespeicherter OPFS-Handles ab. Diese Probe nutzt den stabilen
+// Chrome des Prüfrechners; lokaler CHROMIUM_PATH bleibt ausdrücklich möglich.
+const app = await startApp(), browser = await launchBrowser({ channel: "chrome" });
 try {
   const context = await browser.newContext(DESKTOP);
   // Die Probe prüft die native Ablage und die Vorschau in der Akte. Ein zusätzliches
