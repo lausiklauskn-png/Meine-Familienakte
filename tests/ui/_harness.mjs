@@ -63,8 +63,8 @@ export async function startApp() {
   return { base, stop: async () => { try { process.kill(-child.pid, "SIGTERM"); } catch { child.kill("SIGTERM"); } } };
 }
 
-export async function launchBrowser() {
-  return chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
+export async function launchBrowser(options = {}) {
+  return chromium.launch({ ...options, ...(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH, channel: undefined } : {}) });
 }
 export const DESKTOP = { viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1, locale: "de-DE" };
 export const HANDY = { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: "de-DE" };
