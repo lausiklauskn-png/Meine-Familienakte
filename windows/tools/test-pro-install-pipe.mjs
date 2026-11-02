@@ -10,7 +10,7 @@ const run = spawnSync(java, ['-Xmx256m', '-Djava.awt.headless=true', '-cp', jar,
 });
 assert.equal(run.status, 0, run.stderr || String(run.error || ''));
 assert.deepEqual(run.stdout.trim().split(/\r?\n/).map(s => JSON.parse(s)),
-  [{ ok: { status: 'getrennt' } }, { error: 'FA_TRESOR_AKTION_UNGUELTIG' }]);
+  [{ ok: { status: 'getrennt', uebergaben: true } }, { error: 'FA_TRESOR_AKTION_UNGUELTIG' }]);
 assert.equal(existsSync(config), false, 'Abfrage legt keinen Ersatzbestand an');
 console.log('Installierte Windows-Engine: echte Prozess-Pipe und EOF grün');
 

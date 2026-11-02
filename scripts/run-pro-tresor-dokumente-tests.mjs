@@ -142,5 +142,17 @@ await probe("Pro-Prüfung: Verweis und Aktenregister müssen denselben Inhalt be
   await assert.rejects(() => vault.writeFullFamilyBackup({ source: f.root, destination: fs("Sicherung").root, appVersion: "2.28.14" }), /nicht dieselbe Originaldatei/);
   assert.equal(nativ.dateien.size, 1, "beschädigte Metadaten verändern keine Originale");
 });
+await probe("Pro-Herkunft: Register und Vollsicherung erhalten Bezug; falsche Originalbytes werden vor Ablage abgelehnt", async () => {
+  const f = await vorbereitet(), file = datei(), ziel = fs("Herkunfts-Sicherung"), restore = fs("Herkunfts-Wiederherstellung");
+  const m = { vertrag: "familienakte-uebergabe/1", id: "transfer-17", quelle: "private-brain", ziel: "familienakte", dokumentId: "doc-17", name: file.name, mime: file.type, groesse: file.size, sha256: summe(Buffer.from(await file.arrayBuffer())), bezug: "vorher-9" };
+  await assert.rejects(() => vault.saveLocalDocument(f.root, file, { ...eingabe, proUebergabe: { ...m, sha256: "0".repeat(64) } }), /Herkunft passt nicht/);
+  assert.equal(nativ.aufrufe, 0); assert.equal((await readIndex(f.root)).documents.length, 0);
+  await vault.saveLocalDocument(f.root, file, { ...eingabe, proUebergabe: m });
+  const backup = await vault.writeFullFamilyBackup({ source: f.root, destination: ziel.root, appVersion: "2.28.14" });
+  await vault.restoreFullFamilyBackup({ backup: await ziel.root.getDirectoryHandle(backup.folderName), emptyTarget: restore.root });
+  assert.deepEqual((await readIndex(restore.root)).documents[0].proUebergabe, m);
+  const neu = await vault.saveLocalDocument(f.root, new File(["Bearbeitete Fassung"], "Bearbeitet.txt"), { ...eingabe, proBezug: m.id });
+  assert.equal(neu.proBezug, m.id); assert.equal(neu.proUebergabe, undefined);
+});
 console.log(`Pro-Tresor Dokumente: ${gruen} grün · ${rot} rot`);
 process.exitCode = rot ? 1 : 0;

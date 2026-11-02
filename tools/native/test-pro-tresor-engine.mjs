@@ -16,7 +16,7 @@ try {
   });
   assert.equal(pipe.status, 0, pipe.stderr);
   const zeilen = pipe.stdout.trim().split("\n").map((s) => JSON.parse(s));
-  assert.deepEqual(zeilen, [{ ok: { status: "getrennt" } }, { error: "FA_TRESOR_AKTION_UNGUELTIG" }]);
+  assert.deepEqual(zeilen, [{ ok: { status: "getrennt", uebergaben: true } }, { error: "FA_TRESOR_AKTION_UNGUELTIG" }]);
   console.log("Windows-Engine: echte Prozess-Pipe, Antwortformat und Ende bei EOF grün");
   await grossePipe("java", jar, ziel);
 

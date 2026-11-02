@@ -21,7 +21,7 @@ const MAX_ZEILE: u64 = 30 * 1024 * 1024;
 
 fn aktion_erlaubt(request: &Value) -> bool {
     matches!(request.get("aktion").and_then(Value::as_str),
-        Some("zustand" | "verbinden" | "entsperren" | "sperren" | "speichern" | "lesen"))
+        Some("zustand" | "verbinden" | "entsperren" | "sperren" | "speichern" | "lesen" | "uebergabeSenden" | "uebergabeEingang" | "uebergabeLesen" | "uebergabeQuittieren" | "uebergabeStand"))
 }
 impl Engine {
     fn starten(resources: &Path, config: &Path) -> Result<Self, String> {
@@ -79,7 +79,7 @@ mod tests {
     use super::*;
     use serde_json::json;
     #[test] fn nur_tresoraktionen() {
-        for aktion in ["zustand", "verbinden", "entsperren", "sperren", "speichern", "lesen"] {
+        for aktion in ["zustand", "verbinden", "entsperren", "sperren", "speichern", "lesen", "uebergabeSenden", "uebergabeEingang", "uebergabeLesen", "uebergabeQuittieren", "uebergabeStand"] {
             assert!(aktion_erlaubt(&json!({"aktion": aktion})));
         }
         for bad in [json!({}), json!({"aktion": "shell"}), json!({"aktion": "dateiLoeschen"})] {
@@ -96,7 +96,7 @@ mod tests {
         assert!(!config.exists());
         let mut engine = Engine::starten(Path::new("."), &config).expect("gebündelte Windows-Laufzeit starten");
         let result = engine.aufrufen(br#"{"aktion":"zustand"}"#).expect("echte Engine antwortet");
-        assert_eq!(result, json!({"status": "getrennt"}));
+        assert_eq!(result, json!({"status": "getrennt", "uebergaben": true}));
         assert!(!config.exists(), "Zustandsabfrage legt keinen Anschluss oder Ersatzbestand an");
         assert_eq!(engine.aufrufen(br#"{"aktion":"shell"}"#).unwrap_err(), "FA_TRESOR_AKTION_UNGUELTIG");
     }

@@ -36,7 +36,7 @@ public final class ProTresorEngine implements Closeable {
         }
     }
     private static Map<String, Object> antwort(String status, String id, Path ort) {
-        Map<String, Object> m = new LinkedHashMap<>(); m.put("status", status);
+        Map<String, Object> m = new LinkedHashMap<>(); m.put("status", status); m.put("uebergaben", true);
         if (id != null) m.put("id", id);
         if (ort != null) m.put("ort", ort.toString());
         return m;
@@ -120,6 +120,24 @@ public final class ProTresorEngine implements Closeable {
             case "lesen": {
                 byte[] bytes = offen(m).lesen(Json.text(m, "entryId"));
                 Map<String, Object> out = new LinkedHashMap<>(); out.put("data", Base64.getEncoder().encodeToString(bytes)); return out;
+            }
+            case "uebergabeEingang": return Map.of("items",offen(m).uebergabeEingang());
+            case "uebergabeLesen": {
+                ProTresorAdapter p=offen(m); String entryId=Json.text(m,"entryId");
+                return Map.of("vertrag",p.uebergabeBeschreibung(entryId),"data",Base64.getEncoder().encodeToString(p.uebergabeLesen(entryId)));
+            }
+            case "uebergabeQuittieren": {
+                offen(m).uebergabeQuittieren(Json.text(m,"entryId"),Json.text(m,"sha256"));
+                return Map.of("stand","im-eingang");
+            }
+            case "uebergabeStand": return Map.of("bestaetigt",offen(m).uebergabeStand(Json.text(m,"ziel"),Json.text(m,"entryId")));
+            case "uebergabeSenden": {
+                ProTresorAdapter p=offen(m); String data=Json.text(m,"data");
+                if(data.length()>((ProTresorAdapter.MAX_BYTES+2L)/3)*4) throw new IOException("FA_DOKUMENT_ZU_GROSS");
+                byte[] bytes;
+                try { bytes=Base64.getDecoder().decode(data); } catch(IllegalArgumentException e) { throw new IOException("FA_DOKUMENT_UNGUELTIG"); }
+                Eintrag e=p.uebergabeSenden(Json.text(m,"ziel"),Json.text(m,"transferId"),Json.text(m,"documentId"),Json.textOder(m,"bezug",""),Json.text(m,"name"),Json.text(m,"mime"),new ByteArrayInputStream(bytes));
+                return Map.of("vaultId",p.kennung(),"entryId",e.id,"sha256",e.sha256,"size",e.groesse,"stand","weitergegeben");
             }
             default: throw new IOException("FA_TRESOR_AKTION_UNGUELTIG");
         }

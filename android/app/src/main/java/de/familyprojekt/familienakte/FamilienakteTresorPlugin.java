@@ -64,12 +64,12 @@ public class FamilienakteTresorPlugin extends Plugin {
     @PluginMethod public void zustand(PluginCall call) {
         worker.execute(() -> {
             String uri = prefs().getString("uri", ""), id = prefs().getString("id", "");
-            if (uri.isEmpty()) { call.resolve(new JSObject().put("status", "getrennt")); return; }
+            if (uri.isEmpty()) { call.resolve(new JSObject().put("status", "getrennt").put("uebergaben",true)); return; }
             try {
                 SafAblage a = ablage(uri);
                 if (!id.equals(TresorOrdner.kennung(a))) throw new IOException("FA_TRESOR_FREMDE_KENNUNG");
                 if (a.gibtEs(Umzug.VERMERK)) throw new IOException("FA_TRESOR_UMGEZOGEN");
-                call.resolve(new JSObject().put("status", adapter == null ? "gesperrt" : "offen").put("id", id).put("ort", prefs().getString("name", ortName(uri))));
+                call.resolve(new JSObject().put("status", adapter == null ? "gesperrt" : "offen").put("uebergaben",true).put("id", id).put("ort", prefs().getString("name", ortName(uri))));
             } catch (Exception e) {
                 if (adapter != null) { adapter.close(); adapter = null; }
                 call.resolve(new JSObject().put("status", "nicht_erreichbar").put("id", id).put("ort", prefs().getString("name", ortName(uri))));
@@ -123,7 +123,7 @@ public class FamilienakteTresorPlugin extends Plugin {
                             if (adapter != null) adapter.close();
                             adapter = neu;
                             ungenutztFreigeben(vorher);
-                            call.resolve(new JSObject().put("id", id).put("ort", ortName(uri)).put("status", "offen"));
+                            call.resolve(new JSObject().put("id", id).put("ort", ortName(uri)).put("status", "offen").put("uebergaben",true));
                         } catch (Exception e) { ungenutztFreigeben(uri); fehler(call, e); }
                         finally { java.util.Arrays.fill(geheim, '\0'); }
                     });
@@ -153,6 +153,35 @@ public class FamilienakteTresorPlugin extends Plugin {
             try { byte[] bytes = offen(call).lesen(call.getString("entryId", ""));
                 call.resolve(new JSObject().put("data", Base64.encodeToString(bytes, Base64.NO_WRAP)));
             } catch (Exception e) { fehler(call, e); }
+        });
+    }
+    private interface UebergabeAktion { JSObject aus(ProTresorAdapter p, PluginCall call) throws Exception; }
+    private void uebergabe(PluginCall call,UebergabeAktion aktion) {
+        worker.execute(() -> { try { call.resolve(aktion.aus(offen(call),call)); } catch(Exception e) { fehler(call,e); } });
+    }
+    @PluginMethod public void uebergabeEingang(PluginCall call) {
+        uebergabe(call,(p,c) -> new JSObject().put("items",new JSArray(Json.schreiben(p.uebergabeEingang()))));
+    }
+    @PluginMethod public void uebergabeLesen(PluginCall call) {
+        uebergabe(call,(p,c) -> {
+            String id=c.getString("entryId","");
+            return new JSObject().put("vertrag",new JSObject(Json.schreiben(p.uebergabeBeschreibung(id))))
+                .put("data",Base64.encodeToString(p.uebergabeLesen(id),Base64.NO_WRAP));
+        });
+    }
+    @PluginMethod public void uebergabeQuittieren(PluginCall call) {
+        uebergabe(call,(p,c) -> { p.uebergabeQuittieren(c.getString("entryId",""),c.getString("sha256","")); return new JSObject().put("stand","im-eingang"); });
+    }
+    @PluginMethod public void uebergabeStand(PluginCall call) {
+        uebergabe(call,(p,c) -> new JSObject().put("bestaetigt",p.uebergabeStand(c.getString("ziel",""),c.getString("entryId",""))));
+    }
+    @PluginMethod public void uebergabeSenden(PluginCall call) {
+        uebergabe(call,(p,c) -> {
+            String data=c.getString("data","");
+            if(data.length()>((ProTresorAdapter.MAX_BYTES+2L)/3)*4) throw new IOException("FA_DOKUMENT_ZU_GROSS");
+            byte[] bytes=Base64.decode(data,Base64.NO_WRAP);
+            Eintrag e=p.uebergabeSenden(c.getString("ziel",""),c.getString("transferId",""),c.getString("documentId",""),c.getString("bezug",""),c.getString("name",""),c.getString("mime",""),new ByteArrayInputStream(bytes));
+            return new JSObject().put("vaultId",p.kennung()).put("entryId",e.id).put("sha256",e.sha256).put("size",e.groesse).put("stand","weitergegeben");
         });
     }
     @PluginMethod public void sperren(PluginCall call) {
