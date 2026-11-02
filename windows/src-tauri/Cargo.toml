@@ -9,6 +9,9 @@ license = "UNLICENSED"
 [build-dependencies]
 tauri-build = { version = "2", features = [] }
 
+[features]
+modelprobe = ["tauri/devtools"]
+
 [dependencies]
 tauri = { version = "=2.12.5", features = [] }
 tauri-plugin-single-instance = "2"

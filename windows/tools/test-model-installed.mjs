@@ -7,11 +7,11 @@ import {setTimeout as pause} from 'node:timers/promises';
 import {chromium} from 'playwright';
 const out=resolve(process.argv[2]);await mkdir(out,{recursive:true});
 const report={checks:[],kind:'Installed Windows / WebView2 on CI, no physical user device'},errors=[];
-let browser,page;
+let browser,page,lastConnectionError;
 try {
  const deadline=Date.now()+60000;
- while(!browser&&Date.now()<deadline){try{browser=await chromium.connectOverCDP('http://127.0.0.1:9333',{timeout:3000});}catch{await pause(500);}}
- assert.ok(browser,'Installed WebView2 is reachable');
+ while(!browser&&Date.now()<deadline){try{browser=await chromium.connectOverCDP('http://127.0.0.1:9333',{timeout:3000});}catch(error){lastConnectionError=String(error);await pause(500);}}
+ assert.ok(browser,'Installed WebView2 is reachable: '+lastConnectionError);
  page=browser.contexts().flatMap(c=>c.pages()).find(p=>p.url().startsWith('https://tauri.localhost/'));assert.ok(page,'Family window');
  page.on('pageerror',e=>errors.push(e.message));
  await page.waitForSelector('.sample-data-notice strong',{timeout:120000});

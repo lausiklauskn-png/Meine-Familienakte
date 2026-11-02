@@ -26,6 +26,11 @@ try {
   try {
     node windows/tools/test-model-installed.mjs (Join-Path $PWD 'work/model-installed')
     if ($LASTEXITCODE -ne 0) { throw 'Installierte Modelloberfläche fehlgeschlagen' }
+  } catch {
+    $modelApp.Refresh()
+    if ($modelApp.HasExited) { Write-Output "App-Prozess beendet: $($modelApp.ExitCode)" }
+    Get-Process familienakte,msedgewebview2 -ErrorAction SilentlyContinue | Select-Object Id,ProcessName,MainWindowTitle,Responding | Format-Table | Out-String | Write-Output
+    throw
   } finally {
     Stop-Process -Id $modelApp.Id -Force -ErrorAction SilentlyContinue
     Remove-Item Env:WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS,Env:WEBVIEW2_USER_DATA_FOLDER -ErrorAction SilentlyContinue

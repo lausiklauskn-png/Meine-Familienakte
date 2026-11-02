@@ -78,7 +78,7 @@ jobs:
           ram-size: 4096M
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
-          script: python3 tools/native/webview-runtime.py install work/webview-runtime && cd android && ./gradlew --no-daemon --max-workers=2 connectedDebugAndroidTest
+          script: python3 tools/native/webview-runtime.py install work/webview-runtime && cd android && ./gradlew --no-daemon --max-workers=2 :app:connectedDebugAndroidTest
       - name: Tatsächlich ausgeführte Produktprobe verlangen
         run: |
           python3 - <<'PY'
