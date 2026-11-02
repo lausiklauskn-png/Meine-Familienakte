@@ -11,7 +11,7 @@ veröffentlichen, Geschenk-HTML erst nach dem vollständigen Bau.
 | Originale im Pro-Tresor | In diesem Teilstück: ausdrückliche Wahl je Arbeitsstand, einzelne Übernahme, Quelle erhalten, Prüfsummen, portable Sicherung | Android-/Windows-Prüfbau vor Merge; echter Installer wird zusätzlich installiert und geprüft |
 | Hülleneingang | In diesem Teilstück: Erfolg erst nach dauerhafter Eingangstransaktion; fehlgeschlagene Android-Lesevorgänge und PWA-Vorräte behalten | Browserprobe und Gegenprobe; keine Android-Ziel-App-Bestätigung aus OS-Teilen ableiten |
 | Geräteprüfung / Modellwahl | Quellen und vorhandene Prüfsummen in Private Brain Pro geprüft; noch nicht angeschlossen | Adapter auf Android und Windows, bewusste Downloads, fortsetzbarer Index mit Modell-/Textstand, bisher nutzbaren Index erhalten |
-| Portal aufteilen | Tresoranbindung und Dokumentknopf getrennte Komponenten | Suchanbindung mit klarem Vertrag herauslösen |
+| Portal aufteilen | Tresoranbindung, Dokumentknopf und Suchergebnisaufbau getrennte Komponenten; Suche in `app/portal-suche.ts` mit ausdrücklichen Eingaben | Bestehende Suchproben und Gegenproben erhalten; keine neue Oberfläche durch die Aufteilung |
 | Eingebettetes Workflow PDF | Im Folgeabschnitt: beide Richtungen warten auf tatsächliche Zielablage; korrelierte Quittungen und idempotenter Familienakte-Eingang gebaut | Datenbank-/Brückenproben und Gegenproben grün; vollständige Plattformprüfbauten vor Merge |
 | Eigenständige Pro-Apps | Kanonisches Paket mit Private-Brain-Eingang und ausgewählten FPT1-Übergaben in Workflow-PDF-Pro #51 gemergt. Familienakte-Seite für Android/Windows gebaut: gemerkter Ausgang, Zielmarken, atomarer Eingang, Quellbezug | Gegenstellen in BookLedgerPro/Private Brain Pro/Workflow PDF Pro und deren Windows-Anschlüsse noch in Arbeit. Java-Akteure sind keine vollständige App-Paar-Probe |
 | Geräteübergreifender Transport | Kim-sync plus Datei-Post empfohlen; kein privater Netzwerkversuch erfolgt | Vorhandene Anbindung und tatsächliche Quittungsgrenze umsetzen; Originaldateimodus für Bilder; kein zweites Raumsystem |
@@ -35,3 +35,23 @@ veröffentlichen, Geschenk-HTML erst nach dem vollständigen Bau.
 Die Modell-/Übergabeabschnitte sind keine erledigten Funktionen. Ein grüner Teilbau darf sie nicht
 als fertig ausweisen. Gestellte native Brücken, echte Java-Dateien, Browser und wirklicher
 Windows-Installer werden in den Nachweisen jeweils bezeichnet.
+
+## Grundlage für Geräte- und Suchanbindung (2. November)
+
+Der eingebettete Workflow-Kern folgt der geprüften Fassung 1.1.8 (Quellcommit
+`1ef7c6fddbb289893e83d54a5aeb2ada764792cb`). Seine gewöhnliche Ausgabe behält die
+Kennungen der tatsächlich beteiligten Dokumente. Die eigene Familienakte-Brücke
+und ihre Datenbank bleiben der Zugangsweg. Das Kopierwerkzeug verlangt einen
+sauberen, festgelegten Git-Stand und prüft alle Quelldateien vor dem Ersetzen der
+bisherigen Kopie. Fehlender Git-Zugriff, lokale Quelländerungen oder ein nicht mehr
+passender Einstieg brechen ohne Verlust der bisherigen Kopie ab.
+
+Die Windows-Java-Engine verwendet den festen Laufzeitordner mit relativem
+JAR-Klassenpfad. Damit funktionieren auch die von Tauri gelieferten erweiterten
+Windows-Pfade. Die Rust-Probe verwendet jetzt selbst einen solchen absoluten
+Ressourcenpfad; die installierte Laufzeit wird weiterhin separat geprüft.
+
+Lokal bestehen Bau und 36 der 37 Oberflächenproben. Die Einzeldatei-Probe kann in
+dieser Cloud-Umgebung wegen `ERR_BLOCKED_BY_ADMINISTRATOR` bei `file://` nicht
+laufen. Sie bleibt unverändert in der vollständigen GitHub-Prüfung. Ein lokaler
+Abbruch wegen dieser Richtlinie gilt nicht als bestandene Einzeldatei-Probe.

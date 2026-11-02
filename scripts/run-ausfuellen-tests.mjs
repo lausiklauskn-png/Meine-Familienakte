@@ -6,6 +6,7 @@ import { runAusfuellenSelfTests } from "../lib/ausfuellen.ts";
 import { runPersonKontaktSelfTests } from "../lib/person-kontakt.ts";
 import { runBriefkopfTitelSelfTests } from "../lib/briefkopf-titel.ts";
 import { buildDocumentIntakePlan } from "../lib/document-intake.ts";
+import "./run-wfpdf-kopie-tests.mjs";
 
 const herkunft = JSON.parse(readFileSync("public/wfpdf/HERKUNFT.json", "utf8"));
 assert.equal(herkunft.repo, "lausiklauskn-png/Workflow-PDF");

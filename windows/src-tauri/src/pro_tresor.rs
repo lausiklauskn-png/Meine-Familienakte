@@ -29,8 +29,12 @@ impl Engine {
         let java = basis.join("runtime").join("bin").join(if cfg!(windows) { "java.exe" } else { "java" });
         let jar = basis.join("familienakte-tresor.jar");
         if !java.is_file() || !jar.is_file() { return Err("FA_TRESOR_ENGINE_FEHLT".into()); }
-        let mut command = Command::new(java);
-        command.arg("-Xmx256m").arg("-cp").arg(jar)
+        let mut command = Command::new(java.canonicalize().map_err(|_| "FA_TRESOR_ENGINE_FEHLT")?);
+        // Tauri liefert unter Windows auch \\?\-Pfade. Java akzeptiert diesen
+        // Präfix beim Klassenpfad nicht; die geprüfte JAR ist relativ zum festen Laufzeitordner.
+        command.current_dir(basis.canonicalize().map_err(|_| "FA_TRESOR_ENGINE_FEHLT")?)
+            .env_remove("JAVA_TOOL_OPTIONS").env_remove("_JAVA_OPTIONS").env_remove("JDK_JAVA_OPTIONS")
+            .arg("-Xmx256m").arg("-cp").arg("familienakte-tresor.jar")
             .arg("de.familyprojekt.familienakte.ProTresorEngine").arg(config)
             .stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::null());
         #[cfg(windows)]
@@ -94,7 +98,8 @@ mod tests {
         let stamp = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos();
         let config = std::env::temp_dir().join(format!("fa-pro-rust-{}-{stamp}.json", std::process::id()));
         assert!(!config.exists());
-        let mut engine = Engine::starten(Path::new("."), &config).expect("gebündelte Windows-Laufzeit starten");
+        let resources = Path::new(".").canonicalize().expect("absoluter Windows-Ressourcenpfad");
+        let mut engine = Engine::starten(&resources, &config).expect("gebündelte Windows-Laufzeit starten");
         let result = engine.aufrufen(br#"{"aktion":"zustand"}"#).expect("echte Engine antwortet");
         assert_eq!(result, json!({"status": "getrennt", "uebergaben": true}));
         assert!(!config.exists(), "Zustandsabfrage legt keinen Anschluss oder Ersatzbestand an");
