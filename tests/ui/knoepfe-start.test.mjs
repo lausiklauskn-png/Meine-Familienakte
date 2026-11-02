@@ -138,7 +138,9 @@ try {
   // --- Erinnerung erfassen ---
   await step("Erinnerung: Diktat füllt das Feld", async () => {
     const mic = page.locator('.memory-text .dictation-button');
-    if (await mic.isDisabled()) return false;
+    // Die gerade neu eingehängte Seite prüft die Mikrofonfreigabe im Effekt.
+    // click wartet wie eine Benutzeraktion auf den bedienbaren Knopf und
+    // scheitert weiterhin, wenn er dauerhaft gesperrt bleibt.
     await mic.click(); await page.waitForFunction(() => (document.querySelector(".memory-text textarea") || {}).value?.includes("Mietvertrag"));
     await page.locator('.memory-text .dictation-button').click().catch(() => {});
     return true;
