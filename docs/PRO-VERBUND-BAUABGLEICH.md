@@ -14,9 +14,10 @@ zuletzt. Die [feste Abnahmegrenze](ABNAHME-UND-PRAXISTEST.md) ersetzt offene all
 | Metadaten | PR #56: begrenzte optionale Begleitdatei; Angaben bleiben ausdrücklich anzunehmende Vorschläge | Keine fremde automatische Einordnung |
 | Geräte und Modelle | PR #55: bestehende Geräteprüfung und drei festgelegte e5-Modelle; bewusster Download, Fortsetzung, offline nutzbarer Index; tatsächliche installierte Android-/Windows-Proben bestanden | PWA hat Geräteprüfung, aber keine native Modellablage |
 | Portal aufteilen | Tresoranbindung, Dokumentaktionen, Eingangsablage und Suchergebnisse in abgegrenzten Modulen | Kein zusätzlicher Umbau allein zur Verschönerung des Codes |
-| Geräteübergreifende Übergabe | PR #58: begrenztes Originalpaket und passende Empfangsdatei; wirklicher 20-MiB-Weg über Kim und Datei-Post, korrekte Rückbestätigung | Abschluss der laufenden Plattform-Abnahme und Übernahme von #58 |
+| Geräteübergreifende Übergabe | PR #58 auf main: begrenztes Originalpaket und passende Empfangsdatei; wirklicher 20-MiB-Weg über Kim und Datei-Post, korrekte Rückbestätigung; Android- und Windows-Abnahme bestanden | Persönliche Geräte und öffentliche Übertragungswege im Praxistest |
 | Speicherabschluss | PR #57: wiederholbarer Speicherfehler, keine doppelte Aufnahme durch Mehrfachklick, Dialog bleibt bis zum Abschluss gesperrt | Erledigt |
 | Name und Updates | Sichtbar Familienakte Pro; technische Fassung 2.28.15 vorbereitet; sichtbare Versionszeile 2.28.1, IDs, Signierer und Datenpfade bleiben | Geprüfte Android-/Windows-Updates veröffentlichen |
+| Rückgebbare Praxisunterlagen | PR #61 auf main: zehn eigenständig speicherbare HTML-Reihen, sechs erfundene A4-Unterlagen mit Sollwerten, Bildprobe, Fünferstapel, Formular, Status und Notizen, HTML-/JSON-Ergebnisexport; sieben Browserabläufe bestanden | Reale Nutzer führen ihre benötigten Wege durch und geben die ausgefüllten Dateien zurück |
 | Geschenk | Hochgeladene Vorlage unverändert; Erläuterungen und tatsächliche Bilder vorgesehen | Erst nach erfolgreicher Veröffentlichung herstellen |
 
 ## Konkrete bei der Gegenprüfung behobene Fehler

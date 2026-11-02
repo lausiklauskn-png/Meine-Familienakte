@@ -49,6 +49,15 @@ Dazu: wiederholbar ja/nein, Original noch vorhanden ja/nein. Bei Bedarf einen be
 Bildschirmausschnitt ergänzen. Keine Passwörter, Freigabecodes oder privaten Originale in die Liste.
 Eine leere Vorlage liegt in [PRAXISTEST.csv](PRAXISTEST.csv).
 
+Das zusätzliche [HTML-Praxispaket](../tools/praxistest/README.md) enthält zehn getrennte
+Reihen mit Downloads und Notizfeld je Schritt. Sechs erfundene Dokumente decken Kauf,
+Rechnung, zugehörige Zahlung, Gesundheit, Schule und Fahrzeug ab; feste Sollwerte nennen
+Person, Absender, Kunden-/Dokumentnummer, Datum und Betrag. Dazu kommen Bild, Formular
+und ein absichtlich ungeordneter Fünferstapel. Automatisches Öffnen wird separat von
+manuellem Import erfasst. Windows, Android, beide Übertragungsrichtungen, Fernrechner
+und die Pro-Apps haben eigene Reihen. Die ausgefüllte HTML oder JSON ausdrücklich
+herunterladen; der Browser überschreibt die ursprünglich geöffnete Datei nicht.
+
 Datenverlust, falsche Empfangsbestätigung und Startblockaden werden zuerst untersucht.
 Ein reproduzierbarer Fehler erhält eine gezielte Gegenprobe, die Korrektur und denselben
 Praxisschritt zur Bestätigung. Bedienwünsche und seltene Sonderfälle werden für das nächste
