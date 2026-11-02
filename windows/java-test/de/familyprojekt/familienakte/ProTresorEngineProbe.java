@@ -57,6 +57,28 @@ public final class ProTresorEngineProbe {
                 eintrag = (String) gespeichert.get("entryId");
                 @SuppressWarnings("unchecked") Map<String, Object> gelesen = (Map<String, Object>) e.aufruf(Map.of("aktion", "lesen", "vaultId", id, "entryId", eintrag));
                 pruefe(Arrays.equals(original, Base64.getDecoder().decode((String) gelesen.get("data"))), "Windows-Brücke verändert Original");
+                for(String ziel:List.of(Fach.WORKFLOW_PDF_APP,Fach.PRIVATE_BRAIN_APP,Fach.BOOKLEDGER_APP)) {
+                    @SuppressWarnings("unchecked") Map<String,Object> hin=(Map<String,Object>)e.aufruf(Map.of("aktion","uebergabeSenden","vaultId",id,"ziel",ziel,"transferId","hin-"+ziel,"documentId","dokument-1","name","Erfunden.bin","mime","application/octet-stream","data",Base64.getEncoder().encodeToString(original)));
+                    String hinId=(String)hin.get("entryId");
+                    pruefe("weitergegeben".equals(hin.get("stand")),"Weitergabe als Empfang behauptet");
+                    @SuppressWarnings("unchecked") Map<String,Object> ohne=(Map<String,Object>)e.aufruf(Map.of("aktion","uebergabeStand","vaultId",id,"ziel",ziel,"entryId",hinId));
+                    pruefe(Boolean.FALSE.equals(ohne.get("bestaetigt")),"Vor Zielaufnahme bestätigt");
+                    String rueckId;
+                    try(TresorOrdner gegenstelle=TresorOrdner.oeffnen(new DateiAblage(tresor.toFile()),ziel,dialog.zugang)) {
+                        Uebergaben u=new Uebergaben(gegenstelle);
+                        pruefe(Arrays.equals(original,u.lesen(hinId)),"Ziel liest andere Originalbytes");
+                        u.quittieren(hinId,(String)u.beschreibung(hinId).get("sha256"));
+                        rueckId=u.senden(Fach.FAMILIENAKTE_APP,"rueck-"+ziel,"dok-1","hin-"+ziel,"Antwort.bin","application/octet-stream",new ByteArrayInputStream(original)).id;
+                    }
+                    @SuppressWarnings("unchecked") Map<String,Object> ja=(Map<String,Object>)e.aufruf(Map.of("aktion","uebergabeStand","vaultId",id,"ziel",ziel,"entryId",hinId));
+                    pruefe(Boolean.TRUE.equals(ja.get("bestaetigt")),"Empfängermarke nicht zurückgemeldet");
+                    @SuppressWarnings("unchecked") Map<String,Object> rueck=(Map<String,Object>)e.aufruf(Map.of("aktion","uebergabeLesen","vaultId",id,"entryId",rueckId));
+                    pruefe(Arrays.equals(original,Base64.getDecoder().decode((String)rueck.get("data"))),"Rückweg verändert Bytes");
+                    @SuppressWarnings("unchecked") Map<String,Object> vertrag=(Map<String,Object>)rueck.get("vertrag");
+                    pruefe(ziel.equals(vertrag.get("quelle")),"Falsche Rückwegquelle");
+                    fehler("TRESOR_UEBERGABE_PRUEFSUMME",()->e.aufruf(Map.of("aktion","uebergabeQuittieren","vaultId",id,"entryId",rueckId,"sha256","0".repeat(64))));
+                    e.aufruf(Map.of("aktion","uebergabeQuittieren","vaultId",id,"entryId",rueckId,"sha256",vertrag.get("sha256")));
+                }
                 fehler("FA_TRESOR_FREMDE_KENNUNG", () -> e.aufruf(Map.of("aktion", "lesen", "vaultId", "fremd", "entryId", eintrag)));
                 fehler("FA_TRESOR_AKTION_UNGUELTIG", () -> aufruf(e, "shell"));
                 Path falsch = root.resolve("falsch"); Files.createDirectories(falsch); dialog.ordner = falsch;

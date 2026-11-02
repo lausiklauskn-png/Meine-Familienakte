@@ -1,4 +1,5 @@
-export type ProTresorZustand = { status: "getrennt" | "offen" | "gesperrt" | "nicht_erreichbar"; id?: string; ort?: string; code?: string };
+import type { ProApp, ProUebergabe } from "./pro-uebergabe";
+export type ProTresorZustand = { status: "getrennt" | "offen" | "gesperrt" | "nicht_erreichbar"; id?: string; ort?: string; code?: string; uebergaben?: boolean };
 interface ProTresorPlugin {
   zustand(): Promise<ProTresorZustand>;
   verbinden(): Promise<ProTresorZustand>;
@@ -6,6 +7,12 @@ interface ProTresorPlugin {
   sperren(): Promise<void>;
   speichern(args: { vaultId: string; documentId: string; name: string; mime: string; date: number; data: string }): Promise<{ vaultId: string; entryId: string; sha256: string; size: number }>;
   lesen(args: { vaultId: string; entryId: string }): Promise<{ data: string }>;
+  uebergabeSenden(args: { vaultId: string; ziel: ProApp; transferId: string; documentId: string; bezug?: string; name: string; mime: string; data: string }): Promise<{ vaultId: string; entryId: string; sha256: string; size: number; stand: string }>;
+  uebergabeEingang(args: { vaultId: string }): Promise<{ items: Array<{ entryId: string; vertrag?: ProUebergabe; fehler?: string }> }>;
+  uebergabeLesen(args: { vaultId: string; entryId: string }): Promise<{ vertrag: ProUebergabe; data: string }>;
+  uebergabeQuittieren(args: { vaultId: string; entryId: string; sha256: string }): Promise<{ stand: string }>;
+  uebergabeStand(args: { vaultId: string; ziel: ProApp; entryId: string }): Promise<{ bestaetigt: boolean }>;
+
 }
 type NativeWindow = Window & { Capacitor?: { isNativePlatform?: () => boolean; getPlatform?: () => string; Plugins?: { FamilienakteTresor?: ProTresorPlugin } } };
 const cap = () => (window as NativeWindow).Capacitor;
@@ -76,3 +83,25 @@ export async function proOriginalLesen(pfad: string): Promise<File> {
     throw new Error("Die Originaldatei stimmt nicht mit ihrem Pro-Tresor-Verweis überein.");
   return new File([bytes], m.name, { type: m.mime, lastModified: m.date });
 }
+
+export const proTresorUebergaben = {
+  eingang: (vaultId: string) => plugin().uebergabeEingang({ vaultId }),
+  stand: (vaultId: string, ziel: ProApp, entryId: string) => plugin().uebergabeStand({ vaultId, ziel, entryId }),
+  async senden(vaultId: string, vertrag: ProUebergabe, file: File) {
+    if (file.size > MAX_BYTES) throw new Error("Höchstens 20 MiB je Übergabe.");
+    const r = await plugin().uebergabeSenden({ vaultId, ziel: vertrag.ziel, transferId: vertrag.id, documentId: vertrag.dokumentId,
+      ...(vertrag.bezug ? { bezug: vertrag.bezug } : {}), name: file.name, mime: file.type, data: await alsBase64(file) });
+    if (r.vaultId !== vaultId || r.size !== vertrag.groesse || r.sha256 !== vertrag.sha256 || r.stand !== "weitergegeben" || !/^[a-z0-9-]{1,80}$/.test(r.entryId)) throw new Error("Der gemeinsame Eingang hat die Weitergabe nicht passend bestätigt.");
+    return r;
+  },
+  async lesen(vaultId: string, entryId: string) {
+    const r = await plugin().uebergabeLesen({ vaultId, entryId });
+    if (typeof r.data !== "string" || r.data.length > Math.ceil(MAX_BYTES / 3) * 4) throw new Error("Die Übergabe überschreitet 20 MiB.");
+    const bytes = Uint8Array.from(atob(r.data), c => c.charCodeAt(0));
+    return { vertrag: r.vertrag, file: new File([bytes], r.vertrag.name, { type: r.vertrag.mime, lastModified: 0 }) };
+  },
+  async quittieren(vaultId: string, entryId: string, sha256: string) {
+    const r = await plugin().uebergabeQuittieren({ vaultId, entryId, sha256 });
+    if (r.stand !== "im-eingang") throw new Error("Eingang gespeichert, Rückmeldung noch offen. Erneut aufnehmen bleibt möglich.");
+  },
+};

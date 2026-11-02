@@ -1,3 +1,4 @@
+import type { ProUebergabe } from "../lib/pro-verbund-vertrag";
 import { kontaktPruefen, kontaktUebernehmen, type PersonKontakt } from "../lib/person-kontakt.ts";
 import { istProOriginal, proOriginalLesen, proOriginalName, proOriginalSpeichern, proOriginalVaultId, proOriginalMerkmale, proTresor } from "./pro-tresor.ts";
 import type { AusfuellInfo } from "../lib/ausfuellen";
@@ -46,6 +47,8 @@ export type LocalDocument = {
   oneDrivePath?: string | null; relativePath?: string | null;
   scanPageCount?: number; scanOriginalCount?: number; scanOriginalsPath?: string | null;
   proScanOriginals?: string[];
+  proUebergabe?: ProUebergabe;
+  proBezug?: string;
   checksum?: string | null; storageLocations?: DocumentStorageLocation[];
   /** Ausfüllen (Sitzung F): Felder/Stand am Original, Verweis an der ausgefüllten Fassung. */
   ausfuellen?: AusfuellInfo | null;
@@ -2667,11 +2670,12 @@ export async function getVaultSummary(handle: FileSystemDirectoryHandle): Promis
   return { vaultId: identity.vaultId, vaultName: identity.vaultName, updatedAt: index.updatedAt, documentCount: index.documents.length };
 }
 
-export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file: File, data: { category: string; documentDate: string | null; notes: string | null; migration?: boolean; allowDuplicate?: boolean; assignmentLinks?: Array<{ toType: FamilyRecordType; toId: string; relationType: string }>; scanPageCount?: number; scanOriginals?: File[] }) {
+export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file: File, data: { category: string; documentDate: string | null; notes: string | null; migration?: boolean; allowDuplicate?: boolean; assignmentLinks?: Array<{ toType: FamilyRecordType; toId: string; relationType: string }>; scanPageCount?: number; scanOriginals?: File[]; proUebergabe?: ProUebergabe; proBezug?: string }) {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   if (file.size > LIMITS.documentBytes) throw new Error("Die Datei ist größer als 20 MB.");
   const index = await readIndex(handle);
   const checksum = await fileChecksum(file);
+  if (data.proUebergabe && (data.proUebergabe.sha256 !== checksum || data.proUebergabe.groesse !== file.size)) throw new Error("Die Übergabe-Herkunft passt nicht zur Originaldatei.");
   const possibleDuplicate = index.documents.find((document) => document.checksum === checksum || (document.originalName.toLocaleLowerCase("de") === file.name.toLocaleLowerCase("de") && document.sizeBytes === file.size));
   if (possibleDuplicate && !data.allowDuplicate) throw new Error(`Mögliche Dublette: ${possibleDuplicate.id}. Bitte das vorhandene Dokument zuerst vergleichen oder die bewusste Übernahme bestätigen.`);
   const id = crypto.randomUUID();
@@ -2714,7 +2718,7 @@ export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file:
     addedAt, updatedAt: addedAt, storedPath, relativePath: storedPath,
     storageType, oneDrivePath: !proId && identity.storageKind === "onedrive" ? storedPath : null,
     source: proId ? "Gemeinsamer Pro-Tresor" : identity.storageKind === "onedrive" ? "OneDrive-Datentresor" : "Lokaler Datentresor",
-    checksum,
+    checksum, ...(data.proUebergabe ? { proUebergabe: data.proUebergabe } : {}), ...(data.proBezug ? { proBezug: data.proBezug } : {}),
     storageLocations: [{ id: `LOC-${crypto.randomUUID()}`, storageType, path: storedPath, source: proId ? "Gemeinsamer Pro-Tresor" : identity.storageKind === "onedrive" ? "OneDrive-Datentresor" : "Lokaler Datentresor", checksum, fileSize: file.size, verifiedAt: addedAt }],
     scanPageCount: data.scanPageCount, scanOriginalCount: scanOriginals.length, scanOriginalsPath, ...(proId ? { proScanOriginals } : {}) };
   index.documents.unshift(item);

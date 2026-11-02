@@ -1,3 +1,5 @@
+import { ProUebergabeKnopf } from "./pro-uebergabe-knopf";
+import { proDateiWeitergeben, proVerbundFehler, PRO_ZIELE, type ProZiel } from "./pro-verbund";
 import { proUebergabeAnnehmen } from "./pro-uebergabe";
 import { askConfirm, askPrompt } from "./page-dialogs";
 import { useEingang } from "./use-eingang";
@@ -743,6 +745,13 @@ function HealthPortalContent() {
       setNotice({ kind: "success", text: "Das ausgewählte Original liegt geprüft im Pro-Tresor. Der bisherige Bestand wurde beibehalten." });
     } catch (e) { setNotice({ kind: "error", text: e instanceof Error ? e.message : "Das Original wurde nicht übernommen; die Quelle bleibt erhalten." }); }
   };
+  const anProApp = async (id: string, ziel: ProZiel) => {
+    if (!vaultHandle) return;
+    try {
+      const r = await proDateiWeitergeben(await readLocalDocumentFile(vaultHandle, id), id, ziel, localDocuments.find(d => d.id === id)?.proUebergabe?.id || localDocuments.find(d => d.id === id)?.proBezug);
+      setNotice({ kind: "success", text: r.stand === "im-eingang" ? `${PRO_ZIELE[ziel]} hat diese Fassung bereits im Eingang bestätigt. Die Quelle bleibt erhalten.` : `An ${PRO_ZIELE[ziel]} weitergegeben. Die Zielbestätigung ist noch offen; die Quelle bleibt erhalten. Im Sicherheitscenter kannst du die Bestätigung prüfen.` });
+    } catch (e) { setNotice({ kind: "error", text: proVerbundFehler(e) }); }
+  };
   const ausWorkflowPdf = async ({ quelle, dateien, vertraege }: WfpdfAblage) => {
     const quittungen = [];
     for (const [i, file] of dateien.entries()) quittungen.push(await proUebergabeAnnehmen(vertraege[i], file));
@@ -1129,7 +1138,7 @@ function HealthPortalContent() {
   const saveFillResult = async (original: LocalDocument, file: File, modus: "fest" | "ausfuellbar", info: AusfuellInfo) => {
     if (!vaultHandle) throw new Error("Bitte zuerst den Datentresor verbinden.");
     const links = familyRelations.filter((relation) => relation.fromType === "document" && relation.fromId === original.id).map((relation) => ({ toType: relation.toType, toId: relation.toId, relationType: relation.relationType }));
-    const neu = await saveLocalDocument(vaultHandle, file, { category: original.category, documentDate: new Date().toISOString().slice(0, 10), notes: `Ausgefüllte Fassung (${modus === "fest" ? "fest" : "ausfüllbar"}) von „${original.originalName}“. Das Original bleibt unverändert.${isSensitiveHealthText(original.originalName, original.category, original.notes) && original.notes ? ` · ${original.notes}` : ""}`, allowDuplicate: true, assignmentLinks: links });
+    const neu = await saveLocalDocument(vaultHandle, file, { category: original.category, documentDate: new Date().toISOString().slice(0, 10), notes: `Ausgefüllte Fassung (${modus === "fest" ? "fest" : "ausfüllbar"}) von „${original.originalName}“. Das Original bleibt unverändert.${isSensitiveHealthText(original.originalName, original.category, original.notes) && original.notes ? ` · ${original.notes}` : ""}`, allowDuplicate: true, assignmentLinks: links, proBezug: original.proUebergabe?.id || original.proBezug });
     await setLocalDocumentAusfuellen(vaultHandle, neu.id, { stand: "ergebnis", ausId: original.id, modus, geaendertAm: new Date().toISOString() });
     const alt = original.ausfuellen && "ergebnisIds" in original.ausfuellen ? original.ausfuellen.ergebnisIds || [] : [];
     if (info.stand !== "ergebnis") await setLocalDocumentAusfuellen(vaultHandle, original.id, { ...info, ergebnisIds: [...alt, neu.id] });
@@ -1237,7 +1246,7 @@ function HealthPortalContent() {
         {!query && active === "documents" && <DocumentLibrary key={`${documentLibraryRequest.key}-${documentLibraryFocusId || "document-library"}`}
           documents={cockpitDocuments(documents, localDocuments)} records={familyRecords} relations={familyRelations}
           initialFocusId={documentLibraryFocusId} initialArea={documentLibraryRequest.area} initialQuery={documentLibraryRequest.query}
-          onPro={proTresorVerfuegbar() ? inProTresor : undefined} proKandidaten={new Set(localDocuments.filter((d) => !istProOriginal(d.storedPath)).map((d) => d.id))}
+          onUebergabe={proTresorVerfuegbar() ? anProApp : undefined} onPro={proTresorVerfuegbar() ? inProTresor : undefined} proKandidaten={new Set(localDocuments.filter((d) => !istProOriginal(d.storedPath)).map((d) => d.id))}
           fillStates={fillStates} onFill={setFillDocId} onWfpdf={(id) => void inWorkflowPdf(id)} onOpenDocument={openDocument} onGo={go} onUpload={openLocalUpload} onUnlink={unlinkContext} onChange={changeContextLink}
         />}
         {!query && active === "inventory" && <InventoryCenter
@@ -1396,7 +1405,7 @@ function HealthPortalContent() {
             documentData.assignmentLinks = [...(documentData.assignmentLinks || []), { toType: "case", toId: createdCase.id, relationType: "gehört zu" }];
           }
           const scan = (file as DocumentScanPdfFile).documentScan;
-          const item = await saveLocalDocument(vaultHandle, file, { ...documentData, scanPageCount: scan?.pageCount, scanOriginals: scan?.keepOriginals ? scan.originals : [] });
+          const item = await saveLocalDocument(vaultHandle, file, { ...documentData, scanPageCount: scan?.pageCount, scanOriginals: scan?.keepOriginals ? scan.originals : [], proUebergabe: queued?.proUebergabe });
           if (queued?.parentQueueId) {
             const parent = centralIntakeQueue.find((entry) => entry.id === queued.parentQueueId);
             if (parent?.savedDocumentId) await linkLocalDocuments(vaultHandle, parent.savedDocumentId, item.id, "enthält Anlage");
@@ -3165,12 +3174,13 @@ function DocumentLibraryAreaIcon({ area }: { area: string }) {
   return <FileText aria-hidden="true"/>;
 }
 
-function DocumentLibraryCard({ item, fill, onFill, onWfpdf, onPro, onOpen, onArea, onType, onDate, onReference }: {
+function DocumentLibraryCard({ item, fill, onFill, onWfpdf, onPro, onUebergabe, onOpen, onArea, onType, onDate, onReference }: {
   item: DocumentLibraryItem;
   fill?: FillState;
   onFill?: () => void;
   onWfpdf?: () => void;
   onPro?: () => Promise<void>;
+  onUebergabe?: (ziel: ProZiel) => Promise<void>;
   onOpen: () => void;
   onArea: () => void;
   onType: () => void;
@@ -3189,6 +3199,7 @@ function DocumentLibraryCard({ item, fill, onFill, onWfpdf, onPro, onOpen, onAre
       <div className="library-document-meta"><button onClick={onDate}>{item.date ? fmtDate(item.date) : "Ohne Dokumentdatum"}</button><button onClick={onOpen}>{statusLabel[item.status as keyof typeof statusLabel] || item.status}</button></div>
       <p>{item.description}</p>
       {onPro && <ProDokumentKnopf onUebernehmen={onPro}/>}
+      {onUebergabe && !item.sensitive && <ProUebergabeKnopf onSenden={onUebergabe}/>}
       {fill && (fill.marke || fill.fuellbar) && <div className="af-karte" data-af-karte>{fill.fuellbar && onWfpdf && !item.sensitive && <button type="button" className="button secondary compact-button" onClick={onWfpdf} data-wfpdf-oeffnen><FileText size={15}/> In Workflow PDF öffnen</button>}{fill.marke && <span className={`badge af-marke af-marke-${fill.stand}`} data-af-marke>{fill.marke}</span>}{fill.fuellbar && onFill && <button type="button" className="button secondary compact-button" onClick={onFill} data-af-oeffnen><PenLine size={15}/> Ausfüllen</button>}</div>}
       {item.references.length > 0 && <div className="library-reference-list" aria-label="Verknüpfte Datensätze">{item.references.slice(0, 4).map((reference) => <button key={`${reference.type}-${reference.id}`} onClick={() => onReference(reference)}><span>{recordTypeDefinitions[reference.type].label}</span><strong>{reference.label}</strong></button>)}</div>}
     </div>
@@ -3196,12 +3207,13 @@ function DocumentLibraryCard({ item, fill, onFill, onWfpdf, onPro, onOpen, onAre
   </article>;
 }
 
-function DocumentLibrary({ documents, records, relations, initialFocusId, initialArea, initialQuery, fillStates, onFill, onWfpdf, onPro, proKandidaten, onOpenDocument, onGo, onUpload, onUnlink, onChange }: {
+function DocumentLibrary({ documents, records, relations, initialFocusId, initialArea, initialQuery, fillStates, onFill, onWfpdf, onPro, onUebergabe, proKandidaten, onOpenDocument, onGo, onUpload, onUnlink, onChange }: {
   documents: FamilyCockpitDocument[];
   fillStates: Record<string, FillState>;
   onFill: (id: string) => void;
   onWfpdf?: (id: string) => void;
   onPro?: (id: string) => Promise<void>;
+  onUebergabe?: (id: string, ziel: ProZiel) => Promise<void>;
   proKandidaten?: Set<string>;
   records: FamilyRecordUnion[];
   relations: FamilyRelation[];
@@ -3232,7 +3244,7 @@ function DocumentLibrary({ documents, records, relations, initialFocusId, initia
   };
   const openItem = (item: DocumentLibraryItem) => item.protectedHealth ? onGo("health") : void onOpenDocument(item.id);
   const openReference = (reference: DocumentLibraryReference) => onGo(reference.sensitive ? "health" : reference.section as SectionId, reference.id);
-  const card = (item: DocumentLibraryItem) => <DocumentLibraryCard key={item.id} item={item} fill={fillStates[item.id]} onFill={() => onFill(item.id)} onWfpdf={onWfpdf ? () => onWfpdf(item.id) : undefined} onPro={onPro && proKandidaten?.has(item.id) ? () => onPro(item.id) : undefined} onOpen={() => openItem(item)} onArea={() => showAll({ area: item.area })} onType={() => showAll({ documentType: item.documentType })} onDate={() => item.date ? showAll({ startDate: item.date, endDate: item.date }) : openItem(item)} onReference={openReference}/>;
+  const card = (item: DocumentLibraryItem) => <DocumentLibraryCard key={item.id} item={item} fill={fillStates[item.id]} onFill={() => onFill(item.id)} onWfpdf={onWfpdf ? () => onWfpdf(item.id) : undefined} onPro={onPro && proKandidaten?.has(item.id) ? () => onPro(item.id) : undefined} onUebergabe={onUebergabe ? (ziel) => onUebergabe(item.id, ziel) : undefined} onOpen={() => openItem(item)} onArea={() => showAll({ area: item.area })} onType={() => showAll({ documentType: item.documentType })} onDate={() => item.date ? showAll({ startDate: item.date, endDate: item.date }) : openItem(item)} onReference={openReference}/>;
   return <><PageTitle icon={<Archive/>} title="Dokumentenbibliothek" text="Der zentrale Zugang zu deinen bereits vorhandenen Dokumenten – aus demselben Datenbestand wie Cockpit, Vorgänge und „Was gibt’s Neues?“."/>
     <section className="library-toolbar card"><label><span><Search size={17}/> Dokumente durchsuchen</span><div className="library-search"><Search size={18}/><input value={query} onChange={(event) => { setQuery(event.target.value); setView("all"); }} placeholder="Titel, Dateiname, Person, Vorgang, Aktenzeichen …"/><DictationButton value={query} onChange={(value) => { setQuery(value); setView("all"); }} label="Dokumentensuche" append={false}/>{query && <button onClick={() => setQuery("")} aria-label="Dokumentensuche löschen"><X size={16}/></button>}</div></label><div className="button-row"><button className="button secondary" onClick={() => showAll()}><Archive size={17}/> Alle ansehen</button><button className="button primary" onClick={onUpload}><Plus size={17}/> Neue Unterlage</button></div></section>
     <InfoNotice title="Datensparsame Dokumentvorschau"><p>Bei Gesundheits-, Behörden- und Finanzunterlagen werden keine lesbaren vertraulichen Miniaturen angezeigt. Gesundheitsdokumente öffnen den geschützten Gesundheitsbereich.</p></InfoNotice>

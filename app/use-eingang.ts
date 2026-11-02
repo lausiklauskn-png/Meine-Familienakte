@@ -25,5 +25,10 @@ export function useEingang(onError: (error: unknown) => void) {
     lauf.current = schritt;
     return schritt;
   }, []);
+  useEffect(() => {
+    const laden = () => { void aendern(current => current); };
+    window.addEventListener("familienakte:pro-eingang", laden);
+    return () => window.removeEventListener("familienakte:pro-eingang", laden);
+  }, [aendern]);
   return [liste, aendern] as const;
 }

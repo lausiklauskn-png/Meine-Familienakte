@@ -5,6 +5,8 @@ import de.familyprojekt.tresor.Eintrag;
 import de.familyprojekt.tresor.Fach;
 import de.familyprojekt.tresor.TresorOrdner;
 import de.familyprojekt.tresor.Umzug;
+import de.familyprojekt.tresor.Uebergaben;
+import java.util.Map;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
@@ -95,6 +97,25 @@ public final class ProTresorAdapter implements Closeable {
         if (bytes.length != gefunden.groesse || !sha256(bytes).equals(gefunden.sha256))
             throw new IOException("FA_DOKUMENT_PRUEFSUMME");
         return bytes;
+    }
+
+    public synchronized Eintrag uebergabeSenden(String ziel,String id,String dokumentId,String bezug,String name,String mime,InputStream quelle) throws IOException {
+        bereit(); return new Uebergaben(tresor).senden(ziel,id,dokumentId,bezug,name,mime,quelle);
+    }
+    public synchronized List<Map<String,Object>> uebergabeEingang() throws IOException {
+        bereit(); return new Uebergaben(tresor).offen();
+    }
+    public synchronized Map<String,Object> uebergabeBeschreibung(String eintragId) throws IOException {
+        bereit(); return new Uebergaben(tresor).beschreibung(eintragId);
+    }
+    public synchronized byte[] uebergabeLesen(String eintragId) throws IOException {
+        bereit(); return new Uebergaben(tresor).lesen(eintragId);
+    }
+    public synchronized void uebergabeQuittieren(String eintragId,String sha256) throws IOException {
+        bereit(); new Uebergaben(tresor).quittieren(eintragId,sha256);
+    }
+    public synchronized boolean uebergabeStand(String ziel,String eintragId) throws IOException {
+        bereit(); return new Uebergaben(tresor).bestaetigt(ziel,eintragId);
     }
 
     private static byte[] begrenztLesen(InputStream in) throws IOException {

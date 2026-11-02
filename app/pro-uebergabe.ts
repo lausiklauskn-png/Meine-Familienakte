@@ -1,14 +1,9 @@
+import type { ProApp, ProUebergabe, ProQuittung } from "../lib/pro-verbund-vertrag";
+export type { ProApp, ProUebergabe, ProQuittung } from "../lib/pro-verbund-vertrag";
 import { stapelDatenbank } from "./stapel-ablage";
 import type { CentralIntakeQueueItem } from "../lib/central-intake";
 
 export const PRO_APPS = ["familienakte", "workflow-pdf-pro", "private-brain", "bookledgerpro"] as const;
-export type ProApp = typeof PRO_APPS[number];
-export type ProUebergabe = {
-  vertrag: "familienakte-uebergabe/1"; id: string; quelle: ProApp; ziel: ProApp;
-  dokumentId: string; name: string; mime: string; groesse: number; sha256: string;
-  bezug?: string;
-};
-export type ProQuittung = { id: string; quelle: ProApp; ziel: ProApp; sha256: string; groesse: number; eingangId: string; stand: "im-eingang" };
 const text = (v: unknown, max: number) => typeof v === "string" && v.length > 0 && v.length <= max && !/[\u0000-\u001f]/.test(v);
 const hex = (b: ArrayBuffer) => [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, "0")).join("");
 export async function proUebergabeBauen(file: File, quelle: ProApp, ziel: ProApp, dokumentId: string, id: string = crypto.randomUUID()): Promise<ProUebergabe> {
@@ -52,7 +47,7 @@ export async function proUebergabeAnnehmen(wert: unknown, file: File): Promise<P
           const eingangId = crypto.randomUUID();
           quittung = { id: m.id, quelle: m.quelle, ziel: m.ziel, sha256: m.sha256, groesse: m.groesse, eingangId, stand: "im-eingang" };
           const item: CentralIntakeQueueItem = { id: eingangId, file: { name: file.name, type: file.type, size: file.size, lastModified: file.lastModified },
-            source: "file-picker", status: "Analyse läuft", selected: false, addedAt: new Date().toISOString(), analysis: null, error: null };
+            source: "file-picker", proUebergabe: m, status: "Analyse läuft", selected: false, addedAt: new Date().toISOString(), analysis: null, error: null };
           // Negative Folge stellt den neuen Eingang vor ältere Fälle; spätere normale Änderungen nummerieren neu.
           t.objectStore("eingang").put({ ...item, folge: -Date.now() });
           t.objectStore("eingang-dateien").put({ id: eingangId, file });

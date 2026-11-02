@@ -1,3 +1,4 @@
+import { ProVerbundAnschluss } from "./pro-verbund-anschluss";
 import { useEffect, useState } from "react";
 import { proTresor, proTresorVerfuegbar, type ProTresorZustand } from "./pro-tresor";
 import { readProDocumentVault, setProDocumentVault } from "./local-vault";
@@ -56,6 +57,7 @@ export function ProTresorAnschluss({ aktenHandle = null }: { aktenHandle?: FileS
       {aktenHandle && stand.status === "offen" && stand.id && ziel !== stand.id && <button className="button primary" type="button" disabled={busy} onClick={() => void zielAendern(stand.id!)}>Neue Originale in diesem Pro-Tresor ablegen</button>}
     </div>}
     {aktenHandle && ziel && <button className="button secondary" type="button" disabled={busy} onClick={() => void zielAendern(null)}>Neue Originale wieder im bisherigen Aktenordner ablegen</button>}
+    <ProVerbundAnschluss stand={stand}/>
     {meldung && <p role="alert">{meldung}</p>}
   </section>;
 }

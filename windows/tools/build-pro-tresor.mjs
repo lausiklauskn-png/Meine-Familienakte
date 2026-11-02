@@ -21,6 +21,6 @@ if (!process.argv.includes("--nur-jar")) {
   const probe = spawnSync(path.join(runtime, "bin", process.platform === "win32" ? "java.exe" : "java"),
     ["-Djava.awt.headless=true", "-cp", path.join(ziel, "familienakte-tresor.jar"), "de.familyprojekt.familienakte.ProTresorEngine", path.join(klassen, "probe-config.json")],
     { input: '{"aktion":"zustand"}\n', encoding: "utf8", timeout: 15000 });
-  if (probe.status !== 0 || probe.stdout.trim() !== '{"ok":{"status":"getrennt"}}') throw new Error("Gebündelte Pro-Tresor-Laufzeit besteht Startprobe nicht.");
+  if (probe.status !== 0 || probe.stdout.trim() !== '{"ok":{"status":"getrennt","uebergaben":true}}') throw new Error("Gebündelte Pro-Tresor-Laufzeit besteht Startprobe nicht.");
 }
 console.log("Windows-Pro-Tresor: Kanon und Adapter im gemeinsamen lokalen Java-Kern gebaut");
