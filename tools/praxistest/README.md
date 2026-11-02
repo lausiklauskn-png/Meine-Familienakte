@@ -20,6 +20,14 @@ kein Konto, keine externen Skripte und keine automatische Übermittlung.
 Das komplette ZIP liegt neben dem Ausgabeordner. Der Bauer nimmt ausschließlich seine
 benannten leeren Vorlagen auf, niemals fremde Dateien oder ausgefüllte Ergebnisbögen.
 
+Die Übersicht hat oben einen eigenen Knopf **„Gesamte HTML zum Weitergeben speichern“**.
+Er speichert `Familienakte-Praxistest-Komplett.html` mit allen zehn eingebetteten Bögen und
+Druckvorlagen. Diese eine Datei kann als Anhang weitergegeben und im Browser geöffnet werden.
+Sie braucht keine Nachbardateien. Das zusätzliche `Familienakte-Praxistest-Weitergeben.zip`
+neben dem Ausgabeordner enthält ausschließlich dieselbe komplette HTML. Der Downloadknopf
+einer externen Vorschau ist dafür nicht erforderlich. Ausgefüllte Ergebnisbögen bleiben
+separate Dateien und werden nicht in die leere Übersicht aufgenommen.
+
 ## Reihen und Grenze
 
 1. Windows: digitale Originale, Papier, Scan, automatische Öffnung, Eingang, Anzeige, Neustart.
@@ -55,6 +63,14 @@ Ergebnis-HTML in einem frischen Browserkontext mit 390 Pixel Breite, unveränder
 gesperrtem Browser-Zwischenspeicher. Notiztext mit HTML-Zeichen wird nicht ausgeführt.
 Die sechs PDFs sind jeweils einseitig; der Stapel enthält die fünf vorgesehenen Seitencodes.
 Bild- und Zahlungsseite sowie der mobile Bogen wurden visuell kontrolliert.
+
+Zusatzprobe für die Weitergabe (Übersicht Ausgabe 2): eigener Gesamtdownload bei 390 Pixel
+Breite, erneutes Öffnen in einem frischen Browserkontext, alle zehn enthaltenen Bögen und
+das Dokumenten-ZIP bytegleich heruntergeladen bei gesperrten Netzanforderungen. Erneutes
+Speichern der weitergegebenen Übersicht bleibt bytegleich, ohne rekursives Wachstum.
+Der automatische Prüfer lässt zwischen den Einzelklicks 300 ms, damit er nicht in Chromiums
+Begrenzung von mehr als zehn Downloads pro Sekunde läuft. Das zusätzliche Ein-Datei-ZIP
+wurde entpackt und mit der erzeugten HTML verglichen.
 
 Das ist eine Prüfung des bereitgestellten Pakets, kein behaupteter Scanner-/Tablet-Test.
 Die Cloud-Richtlinie blockiert lokale `file://`-Navigation; dieser Geräteweg wird ehrlich
