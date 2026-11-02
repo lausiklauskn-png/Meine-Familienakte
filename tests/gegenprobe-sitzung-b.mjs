@@ -5,6 +5,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 const HP = "app/health-portal.tsx";
 const faelle = [
+  { name: "Erinnerung: Schließen mehrfach gestartet", datei: HP, alt: 'operation.current = true; setBusy(true); setError("");\n    try { await onClose', neu: 'setError("");\n    try { await onClose', probe: "knoepfe-start", rot: /fehlgeschlagenes und doppeltes Schließen|Keine Seitenfehler/ },
   { name: "Metadaten: falsche Dateiprüfsumme akzeptiert", datei: "lib/uebergabe-vorschlaege.ts", alt: 'await sha(file) !== e.sha256', neu: 'false', befehl: [process.execPath, ["scripts/run-uebergabe-vorschlaege-tests.mjs"]], rot: /.*/, rotStderr: /veränderte Bytes dürfen keine Vorschläge erhalten/ },
   { name: "Metadaten: mehrdeutigen Namen gewählt", datei: "lib/uebergabe-vorschlaege.ts", alt: 'matches.length !== 1', neu: 'matches.length === 0', befehl: [process.execPath, ["scripts/run-uebergabe-vorschlaege-tests.mjs"]], rot: /.*/, rotStderr: /doppelte Dateinamen bleiben mehrdeutig/ },
   { name: "Metadaten: Hinweis folgt anderer Datei", datei: HP, alt: 'setNotes(""); setDocumentDate(""); setFremdVerwendet(false);', neu: 'setDocumentDate(""); setFremdVerwendet(false);', probe: "uebergabe-vorschlaege", rot: /Dateiaustausch trägt keinen fremden Hinweis/ },
