@@ -43,7 +43,7 @@ Angaben gefunden. Lange Texte werden auf höchstens 60 Abschnitte verteilt;
 begrenzte Abdeckung wird angezeigt. Treffer sind Ähnlichkeitsvorschläge, keine
 behaupteten Antworten auf den Akteninhalt.
 
-## Prüfstand dieses Entwurfs
+## Prüfstand
 
 Die Java-Adapterprobe verwendet erfundene HTTP-Antworten mit echten Dateien:
 25 Prüfungen zu Offline-Sperre, Wiederaufnahme, beschädigten Bytes, Abbruch und
@@ -72,10 +72,15 @@ Ein größeres Modell brachte in diesen Fällen keinen zusätzlichen richtigen T
 
 Die installierte Android-App besteht auf API 31 und 35 die Probe mit echtem
 kleinem Modell, ausdrücklichem Download, Offline-Index, erneuter Activity und
-Trefferöffnung: [41464815587, Versuch 2](https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41464815587/attempts/2).
-Der erste Versuch scheiterte vor der App-Probe am offiziellen SDK-Archivdownload.
-Native Android- und Windows-Bauten sind erfolgreich; die zusätzliche sichtbare
-Windows-Modellprobe ist noch offen. Modellgröße allein ist kein Qualitätsnachweis.
-Der Browser hat in diesem Entwurf die gemeinsame Geräteprüfung; die dauerhafte
-Modellablage ist zunächst an die beiden nativen Hüllen angebunden. Dieser Stand
-ist noch keine abgeschlossene Veröffentlichung und kein fertiges Geschenk.
+Trefferöffnung: [41474036543, Versuch 2](https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41474036543/attempts/2).
+Die installierte Windows-App besteht denselben tatsächlichen Modellweg einschließlich
+Offline-Suche nach Neuladen und Trefferöffnung:
+[41474036536](https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41474036536).
+Die dafür korrigierte lokale Modelladresse ist ein ausschließlich von WebView2
+bedienter virtueller Host; es wird kein Modellserver im Netz kontaktiert.
+
+Der Browser bietet die gemeinsame Geräteprüfung. Die dauerhafte Modellablage
+ist an die Android- und Windows-Hüllen angebunden; die PWA bietet hier noch keine
+Gleichheit der Speicherrechte. Auf einem persönlichen Tablet oder Windows-PC sind
+Reaktionszeit und Speicherbedarf noch im Praxistest zu beurteilen. Dafür gilt die
+[begrenzte Abnahme mit anschließendem Nutzertest](ABNAHME-UND-PRAXISTEST.md).

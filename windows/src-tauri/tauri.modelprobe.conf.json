@@ -1,7 +1,7 @@
 {
   "app": {
     "windows": [{
-      "label": "main", "title": "Meine Familienakte", "url": "index.html",
+      "label": "main", "title": "Familienakte Pro", "url": "index.html",
       "width": 1280, "height": 900, "minWidth": 360, "minHeight": 480,
       "useHttpsScheme": true, "devtools": true,
       "additionalBrowserArgs": "--remote-debugging-port=9333"

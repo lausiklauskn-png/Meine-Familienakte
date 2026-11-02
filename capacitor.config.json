@@ -1,6 +1,6 @@
 {
   "appId": "de.familyprojekt.familienakte",
-  "appName": "Familienakte",
+  "appName": "Familienakte Pro",
   "webDir": "dist",
   "loggingBehavior": "none",
   "server": { "androidScheme": "https" },
