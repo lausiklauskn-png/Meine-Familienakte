@@ -26,6 +26,11 @@ async function activate(which){if(android){
  adb('shell','am','start','-W','-n',activities[which]);
 }}
 const pass=message=>{report.checks.push(message);console.log('PASS '+message);};
+async function until(check,label){
+ const end=Date.now()+45000;
+ do{if(await check())return;await pause(250);}while(Date.now()<end);
+ assert.fail('Actual state did not arrive: '+label);
+}
 async function start(which){
  const endpoint=which==='family'?9333:port;
  let proc;
@@ -129,7 +134,10 @@ async function receivePeer(source){
  }else {
   await pp().evaluate(async()=>{const {navigate}=await import('/src/state.js');navigate('tresorordner');});
   const row=pp().locator(`[data-tresor-eintrag="${source.entryId}"]`);await row.first().waitFor();await row.first().locator('[data-tresor-uebernehmen]').click();
-  await pp().waitForFunction(async id=>(await (await import('/src/domain/documents.js')).listBelege()).some(r=>r.proUebergabe?.id===id),source.vertrag.id);
+  // Navigation happens only after saved bytes and the native receipt. An
+  // async waitForFunction predicate can resolve its Promise(false) once
+  // instead of polling, so wait for the actual completed UI state.
+  await pp().locator('[data-nav="documents"][aria-current="page"]').waitFor();
  }
  const saved=await peerSaved(source);assert.equal(saved.count,1);assert.equal(saved.sha256,source.vertrag.sha256);return saved;
 }
@@ -140,13 +148,15 @@ async function peerSaved(source){return pp().evaluate(async({partner,source})=>{
  }if(partner==='private-brain'){
   const rows=(await window.PBProVerbund.receipts()).filter(r=>r.kind==='eingang'&&r.vertrag.id===source.vertrag.id&&r.stand==='gespeichert');const bytes=await window.PBOriginals.verifyStored(source.vertrag.sha256,source.vertrag.groesse);return {count:rows.length,id:rows[0]?.hashes[0],sha256:await hash(bytes)};
  }
- const docs=await import('/src/domain/documents.js'),rows=(await docs.listBelege()).filter(r=>r.proUebergabe?.id===source.vertrag.id);return {count:rows.length,id:rows[0]?.id,sha256:await hash(await docs.getBelegBytes(rows[0]?.id))};
+ const docs=await import('/src/domain/documents.js'),rows=(await docs.listBelege()).filter(r=>r.proUebergabe?.id===source.vertrag.id);
+ if(rows.length!==1||!rows[0].id)throw Error('Expected one actual BLP receipt for '+source.vertrag.id+', got '+JSON.stringify(rows));
+ return {count:rows.length,id:rows[0].id,sha256:await hash(await docs.getBelegBytes(rows[0].id))};
  },{partner,source});}
 async function familyConfirm(source){
  await footer('Sicherheitscenter');const p=fp().locator('[data-pro-verbund]');
  const line=p.locator('div').filter({has:fp().locator('p').filter({hasText:source.vertrag.name+' →'})}).filter({has:fp().getByRole('button',{name:'Zielbestätigung prüfen',exact:true})}).last();
  await line.getByRole('button',{name:'Zielbestätigung prüfen',exact:true}).click();
- await fp().waitForFunction(async id=>{const r=indexedDB.open('FamilienakteStapel1'),db=await new Promise(ok=>r.onsuccess=()=>ok(r.result));try{return await new Promise(ok=>{const t=db.transaction('uebergaben'),q=t.objectStore('uebergaben').get(id);t.oncomplete=()=>ok(q.result?.stand==='im-eingang');});}finally{db.close();}},source.id);
+ await until(async()=>(await familyRows()).find(r=>r.id===source.id)?.stand==='im-eingang','Family durable receipt '+source.id);
 }
 async function returnEdited(source,saved){
  await activate('peer');

@@ -175,8 +175,14 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
           script: |
             python3 tools/native/webview-runtime.py install work/family-android/work/pair-webview
+            # Same tablet layout (1280 x 900 dp), fewer software-rendered pixels.
+            # The original Pixel C framebuffer stalled/terminated the emulator.
+            adb shell wm size 1280x900
+            adb shell wm density 160
             adb install -r work/family-android/android/app/build/outputs/apk/debug/app-debug.apk
             adb install -r work/partner/android/app/build/outputs/apk/debug/app-debug.apk
+            mkdir -p work/pair-proof
+            adb logcat -v threadtime > work/pair-proof/android-logcat.txt 2>&1 &
             PAIR_ANDROID=1 node tools/native/pairs/windows.mjs ${{ matrix.app }}
       - uses: actions/upload-artifact@v4
         if: always()
