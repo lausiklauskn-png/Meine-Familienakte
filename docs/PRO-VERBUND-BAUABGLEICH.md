@@ -1,6 +1,6 @@
 # Bauabgleich zum Pro-Verbund
 
-Stand: 2. November 2026, Veröffentlichungsvorbereitung. Der Auftrag und Klaus' Freibrief
+Stand: 2. November 2026, Familienakte 2.28.15 veröffentlicht. Der Auftrag und Klaus' Freibrief
 umfassen Android, Windows, geprüfte Übernahmen und Veröffentlichungen. Das Geschenk kommt
 zuletzt. Die [feste Abnahmegrenze](ABNAHME-UND-PRAXISTEST.md) begrenzt allgemeine Testserien.
 Die vollständige Gesamtabnahme ist noch offen: vier App-Paare sind nachgewiesen,
@@ -19,9 +19,9 @@ Der [tatsächliche Prüfstand](PRO-VERBUND-PRUEFSTAND.md) nennt Läufe und Grenz
 | Portal aufteilen | Tresoranbindung, Dokumentaktionen, Eingangsablage und Suchergebnisse in abgegrenzten Modulen | Kein zusätzlicher Umbau allein zur Verschönerung des Codes |
 | Geräteübergreifende Übergabe | PR #58 auf main: begrenztes Originalpaket und passende Empfangsdatei; wirklicher 20-MiB-Weg über Kim und Datei-Post, korrekte Rückbestätigung; Android- und Windows-Abnahme bestanden | Persönliche Geräte und öffentliche Übertragungswege im Praxistest |
 | Speicherabschluss | PR #57: wiederholbarer Speicherfehler, keine doppelte Aufnahme durch Mehrfachklick, Dialog bleibt bis zum Abschluss gesperrt | Erledigt |
-| Name und Updates | Sichtbar Familienakte Pro; technische Fassung 2.28.15 vorbereitet; sichtbare Versionszeile 2.28.1, IDs, Signierer und Datenpfade bleiben | Geprüfte Android-/Windows-Updates veröffentlichen |
+| Name und Updates | Sichtbar Familienakte Pro; technische Fassung 2.28.15 veröffentlicht; sichtbare Versionszeile 2.28.1, IDs, Signierer und Datenpfade bleiben | Android-/Windows-Downloads und Server-Feeds geprüft; persönliche Updates im Praxistest |
 | Rückgebbare Praxisunterlagen | PR #61 auf main: zehn eigenständig speicherbare HTML-Reihen, sechs erfundene A4-Unterlagen mit Sollwerten, Bildprobe, Fünferstapel, Formular, Status und Notizen, HTML-/JSON-Ergebnisexport; sieben Browserabläufe bestanden | Reale Nutzer führen ihre benötigten Wege durch und geben die ausgefüllten Dateien zurück |
-| Geschenk | Hochgeladene Vorlage unverändert; Erläuterungen und tatsächliche Bilder vorgesehen | Erst nach erfolgreicher Veröffentlichung herstellen |
+| Geschenk | Schlanke eigenständige HTML mit tatsächlichen Downloads, Erläuterungen und Bildern zur Zusammenarbeit | Ausgabe im Chat nach dem App-Bau; Prüflücken sichtbar, keine Installer im Repo |
 
 ## Konkrete bei der Gegenprüfung behobene Fehler
 

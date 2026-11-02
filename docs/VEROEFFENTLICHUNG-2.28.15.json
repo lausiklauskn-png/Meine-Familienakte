@@ -1,0 +1,92 @@
+{
+  "source": "d00902f10a5b57902084e42950d62751385a9d93",
+  "releases": [
+    {
+      "repo": "Meine-Familienakte",
+      "tag": "android-v2.28.15",
+      "source": "d00902f10a5b57902084e42950d62751385a9d93",
+      "run": 41533299440,
+      "publishedAt": "2026-11-02T22:02:54Z",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.15",
+      "publicHashCheck": "Anonymous curl download; local size and SHA256 equal public GitHub asset digests. See release workflow for native install/update/feed checks.",
+      "assets": [
+        {
+          "name": "Familienakte-android-v2.28.15.apk",
+          "size": 19783637,
+          "digest": "sha256:0106450679554b0d1e9b0bcdb79447b8b9a040636ac089d0d0442141eafe5654",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.15/Familienakte-android-v2.28.15.apk"
+        },
+        {
+          "name": "Familienakte-Einzeldatei-2.28.15.html",
+          "size": 3297481,
+          "digest": "sha256:b4b4a58086ee4fd0cb5feaf1e1891d3b3b0c4365fdee2b6ca44f66db9ce2a54d",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.15/Familienakte-Einzeldatei-2.28.15.html"
+        },
+        {
+          "name": "SHA256SUMS",
+          "size": 204,
+          "digest": "sha256:65c7785049f403224de4d22242a2b05d38042adad53cd0fb36dd3f27d5c44204",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.15/SHA256SUMS"
+        }
+      ],
+      "downloadProof": [
+        {
+          "name": "Familienakte-android-v2.28.15.apk",
+          "bytes": 19783637,
+          "sha256": "0106450679554b0d1e9b0bcdb79447b8b9a040636ac089d0d0442141eafe5654",
+          "anonymousDownload": true
+        },
+        {
+          "name": "Familienakte-Einzeldatei-2.28.15.html",
+          "bytes": 3297481,
+          "sha256": "b4b4a58086ee4fd0cb5feaf1e1891d3b3b0c4365fdee2b6ca44f66db9ce2a54d",
+          "anonymousDownload": true
+        }
+      ]
+    },
+    {
+      "repo": "Meine-Familienakte",
+      "tag": "windows-v2.28.15",
+      "source": "d00902f10a5b57902084e42950d62751385a9d93",
+      "run": 41533308106,
+      "publishedAt": "2026-11-02T22:18:07Z",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.15",
+      "publicHashCheck": "Anonymous curl download; local size and SHA256 equal public GitHub asset digests. See release workflow for native install/update/feed checks.",
+      "assets": [
+        {
+          "name": "Familienakte-Windows-2.28.15-x64-setup.exe",
+          "size": 33931818,
+          "digest": "sha256:57e05c3d683cf2a2bf472426b306dc3bdf51a1387a9c248c0eef947f5fc91397",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/windows-v2.28.15/Familienakte-Windows-2.28.15-x64-setup.exe"
+        },
+        {
+          "name": "latest.json",
+          "size": 561,
+          "digest": "sha256:78cd77ee8ef200c69641e2bcfef9b0e9edd8514c6ce560091c705e657ae2353c",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/windows-v2.28.15/latest.json"
+        },
+        {
+          "name": "SHA256SUMS",
+          "size": 109,
+          "digest": "sha256:dcad63f19c15b5b7029f1c748cd4c21219ac4f413158be8dd1c1384c8e518842",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/windows-v2.28.15/SHA256SUMS"
+        }
+      ],
+      "downloadProof": [
+        {
+          "name": "Familienakte-Windows-2.28.15-x64-setup.exe",
+          "bytes": 33931818,
+          "sha256": "57e05c3d683cf2a2bf472426b306dc3bdf51a1387a9c248c0eef947f5fc91397",
+          "anonymousDownload": true
+        }
+      ]
+    }
+  ],
+  "pwaRun": 41533260856,
+  "overallAppPairAcceptanceComplete": false,
+  "completePairs": 4,
+  "incompletePairs": [
+    "Android / Workflow PDF Pro",
+    "Android / BookLedgerPro"
+  ]
+}
