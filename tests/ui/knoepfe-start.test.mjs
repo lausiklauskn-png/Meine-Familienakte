@@ -162,11 +162,45 @@ try {
     await page.waitForSelector(".modal");
     const dialog = page.locator(".modal").last();
     if ((await dialog.locator("button", { hasText: "Nicht verknüpfen" }).count()) > 0) await dialog.locator("button", { hasText: "Nicht verknüpfen" }).click();
+    await dialog.getByLabel("Ja, diesen Eintrag lokal speichern", { exact: false }).check();
     await dialog.locator("button", { hasText: "Bestätigt speichern" }).click();
-    await page.waitForTimeout(1000);
+    await page.locator(".memory-completion").waitFor();
     const abschluss = await page.locator(".modal").last().innerText().catch(() => "");
     await schliesseDialoge(page);
     return abschluss ? `Abschlussdialog: ${abschluss.split("\n")[0].slice(0, 60)}` : false;
+  });
+  await step("Erinnerung: fehlgeschlagenes und doppeltes Schließen bleibt ein wiederholbarer Vorgang", async () => {
+    await page.locator("#memory-draft-queue button.text-link", { hasText: "Prüfen" }).first().click();
+    const m = page.locator(".memory-review"); await m.waitFor();
+    await page.evaluate(() => {
+      const original = FileSystemFileHandle.prototype.createWritable;
+      window.__registerWrites = 0; window.__rejectRegisterWrite = true;
+      window.__restoreRegisterWrite = () => { FileSystemFileHandle.prototype.createWritable = original; };
+      FileSystemFileHandle.prototype.createWritable = async function(...args) {
+        if (this.name === "Familienakte_Register.json") {
+          window.__registerWrites++;
+          if (window.__rejectRegisterWrite) throw new DOMException("Erfundene Schreibsperre", "NotAllowedError");
+          if (window.__holdRegisterWrite) await new Promise(resolve => { window.__releaseRegisterWrite = resolve; });
+        }
+        return original.apply(this, args);
+      };
+    });
+    try {
+      await m.getByRole("button", { name: "Zur Warteschlange", exact: true }).click();
+      await m.locator(".form-error").waitFor();
+      if (!(await m.locator(".form-error").innerText()).includes("Register")) return false;
+      await page.evaluate(() => { window.__rejectRegisterWrite = false; window.__registerWrites = 0; window.__holdRegisterWrite = true; });
+      await m.getByRole("button", { name: "Schließen", exact: true }).evaluate(button => {
+        button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+        button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      });
+      await page.waitForFunction(() => Boolean(window.__releaseRegisterWrite));
+      const locked = await m.getByRole("button", { name: "Schließen", exact: true }).isDisabled()
+        && await m.getByRole("button", { name: "Zur Warteschlange", exact: true }).isDisabled();
+      await page.evaluate(() => { window.__holdRegisterWrite = false; window.__releaseRegisterWrite(); });
+      await m.waitFor({ state: "detached" });
+      return locked && (await page.evaluate(() => window.__registerWrites)) === 1;
+    } finally { await page.evaluate(() => { window.__releaseRegisterWrite?.(); window.__restoreRegisterWrite(); }); }
   });
   await step("Erinnerung: „Fotos oder Videos“ öffnet die Dateiauswahl", async () => {
     await schliesseDialoge(page); await page.locator(".site-brand").click();
