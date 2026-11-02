@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Familienakte</string>
-    <string name="title_activity_main">Familienakte</string>
+    <string name="app_name">Familienakte Pro</string>
+    <string name="title_activity_main">Familienakte Pro</string>
     <string name="package_name">de.familyprojekt.familienakte</string>
     <string name="custom_url_scheme">de.familyprojekt.familienakte</string>
 </resources>
