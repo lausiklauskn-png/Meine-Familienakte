@@ -39,6 +39,12 @@ pub async fn fa_modelle(app: tauri::AppHandle, window: tauri::WebviewWindow, anf
     }).await.map_err(|_| "MODEL_RUNTIME".to_string())?
 }
 
+pub(crate) fn asset_route(url: &tauri::Url) -> Option<(&str, &str)> {
+    if url.scheme() != "https" || url.host_str() != Some("familienakte-model.localhost") || url.port().is_some()
+        || !url.username().is_empty() || url.password().is_some() || url.query().is_some() || url.fragment().is_some() { return None; }
+    route(url.path())
+}
+
 pub(crate) fn route(value: &str) -> Option<(&str, &str)> {
     let rest = value.strip_prefix("/_fa_models/")?;
     let (stage, path) = rest.split_once('/')?;
@@ -53,6 +59,16 @@ mod tests {
     #[test] fn only_fixed_model_assets() {
         assert_eq!(route("/_fa_models/klein/model/onnx/model_quantized.onnx"), Some(("klein", "model/onnx/model_quantized.onnx")));
         for bad in ["/_fa_models/klein/../../secret", "/_fa_models/klein/lib/other.js", "/_fa_models/other/model/config.json", "/_fa_models/klein/model/config.json?x=1"] { assert_eq!(route(bad), None); }
+    }
+    #[test] fn separate_model_host_and_no_external_paths() {
+        let valid = tauri::Url::parse("https://familienakte-model.localhost/_fa_models/klein/model/config.json").unwrap();
+        assert_eq!(asset_route(&valid), Some(("klein", "model/config.json")));
+        for bad in ["https://tauri.localhost/_fa_models/klein/model/config.json", "https://example.org/_fa_models/klein/model/config.json",
+            "http://familienakte-model.localhost/_fa_models/klein/model/config.json", "https://familienakte-model.localhost:8443/_fa_models/klein/model/config.json",
+            "https://user@familienakte-model.localhost/_fa_models/klein/model/config.json", "https://familienakte-model.localhost/_fa_models/klein/model/config.json?x=1",
+            "https://familienakte-model.localhost/_fa_models/klein/model/config.json#x", "https://familienakte-model.localhost/private.txt"] {
+            assert_eq!(asset_route(&tauri::Url::parse(bad).unwrap()), None, "{bad}");
+        }
     }
     #[cfg(windows)]
     #[test] fn bundled_device_and_model_pipe() {
