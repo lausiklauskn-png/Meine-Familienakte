@@ -6,3 +6,4 @@ export type ProUebergabe = {
   bezug?: string;
 };
 export type ProQuittung = { id: string; quelle: ProApp; ziel: ProApp; sha256: string; groesse: number; eingangId: string; stand: "im-eingang" };
+export type ProRueckkanal = { nonce: string; empfaenger: string };

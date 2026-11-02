@@ -12,7 +12,11 @@ import javax.swing.*;
  * Installer bündelt eine eigene Laufzeit. Ein Prozess je App; Schlüssel leben nur bis Sperren/Ende.
  * JSON-Zeilen über private stdin/stdout-Pipes, keine TCP-Ports, keine Kennwörter im WebView. */
 public final class ProTresorEngine implements Closeable {
-    public interface Dialoge { Path ordner() throws IOException; char[] kennwort() throws IOException; }
+    public interface Dialoge {
+        Path ordner() throws IOException;
+        char[] kennwort() throws IOException;
+        default Path ausgabe(String name) throws IOException { throw new IOException("FA_AUSGABE_DIALOG"); }
+    }
     private final Path einstellungen;
     private final Dialoge dialoge;
     private Path ort;
@@ -103,6 +107,7 @@ public final class ProTresorEngine implements Closeable {
     public synchronized Object aufruf(Map<String, Object> m) throws IOException {
         String aktion = Json.text(m, "aktion");
         switch (aktion) {
+            case "dateiExportieren": return FamilyFileOutput.save(m, dialoge);
             case "zustand": return zustand();
             case "verbinden": return verbinden(true);
             case "entsperren": return verbinden(false);
@@ -158,6 +163,19 @@ public final class ProTresorEngine implements Closeable {
                 if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) gewaehlt[0] = chooser.getSelectedFile().toPath();
             });
             return gewaehlt[0];
+        }
+        public Path ausgabe(String name) throws IOException {
+            Path[] chosen = new Path[1];
+            fenster(() -> {
+                JFileChooser chooser = new JFileChooser();
+                chooser.setDialogTitle("Familienakte-Datei speichern");
+                chooser.setSelectedFile(new File(name));
+                if (chooser.showSaveDialog(null) != JFileChooser.APPROVE_OPTION) return;
+                File file = chooser.getSelectedFile();
+                if (file.exists() && JOptionPane.showConfirmDialog(null, "Die ausgewählte Datei ersetzen?", "Datei vorhanden", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) return;
+                chosen[0] = file.toPath();
+            });
+            return chosen[0];
         }
         public char[] kennwort() throws IOException {
             char[][] geheim = new char[1][];

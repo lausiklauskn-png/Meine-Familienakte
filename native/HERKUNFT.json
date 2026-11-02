@@ -203,6 +203,27 @@
       "commit": "326dc3d4ba1c709c0f818247e01bfb383c063ad3",
       "sha256": "7828b7a4d0f0e8953b4efced02a4218866c5087d01cca2e0012f301b2de97ead",
       "zweck": "Vorhandene Geräteprüfung, fortsetzbarer Modell-Download und feste Modellquellen; eigene Adapter getrennt"
+    },
+    "android/app/src/main/java/de/familyprojekt/workflowpdf/pro/ProFilesPlugin.java": {
+      "repo": "lausiklauskn-png/Workflow-PDF-Pro",
+      "pfad": "android/app/src/main/java/de/familyprojekt/workflowpdf/pro/ProFilesPlugin.java",
+      "commit": "e2c57b3f514c0c3f118c23f243bf5ee9fe756bb7",
+      "sha256": "86ad72f6aaada683bee6304bd80d143d68a543cb3611490f0c0b588ed7e6a92d",
+      "zweck": "Bewährte Android-Dateiausgabe mit Tickets, Systemdialog und Rückleseprüfung; Family-Adapter daneben"
+    },
+    "android/app/src/main/java/de/familyprojekt/workflowpdf/pro/PluginWorker.java": {
+      "repo": "lausiklauskn-png/Workflow-PDF-Pro",
+      "pfad": "android/app/src/main/java/de/familyprojekt/workflowpdf/pro/PluginWorker.java",
+      "commit": "e2c57b3f514c0c3f118c23f243bf5ee9fe756bb7",
+      "sha256": "bb04e811f48f252f86f79412e76ec5458abd6cde1e2cd2347a1398a588256999",
+      "zweck": "Bewährte Android-Dateiausgabe mit Tickets, Systemdialog und Rückleseprüfung; Family-Adapter daneben"
+    },
+    "android/app/src/main/java/de/familyprojekt/workflowpdf/pro/PdfPrintAdapter.java": {
+      "repo": "lausiklauskn-png/Workflow-PDF-Pro",
+      "pfad": "android/app/src/main/java/de/familyprojekt/workflowpdf/pro/PdfPrintAdapter.java",
+      "commit": "e2c57b3f514c0c3f118c23f243bf5ee9fe756bb7",
+      "sha256": "d08f4a82d06976e43609c293cd40f20bbc4af21671f57df1b4bc4006cd10f92b",
+      "zweck": "Bewährte Android-Dateiausgabe mit Tickets, Systemdialog und Rückleseprüfung; Family-Adapter daneben"
     }
   }
 }

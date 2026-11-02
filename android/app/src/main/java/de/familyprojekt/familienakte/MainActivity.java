@@ -18,6 +18,8 @@ import java.util.Arrays;
 public class MainActivity extends BridgeActivity {
     @Override public void onCreate(Bundle state) {
         AppNetwork.initialize(this);
+        FamilyOutputCache.start(this);
+        registerPlugin(de.familyprojekt.workflowpdf.pro.ProFilesPlugin.class);
         registerPlugin(FamilienakteNetworkPlugin.class);
         registerPlugin(FamilienakteSpeechPlugin.class);
         registerPlugin(FamilienakteSharePlugin.class);

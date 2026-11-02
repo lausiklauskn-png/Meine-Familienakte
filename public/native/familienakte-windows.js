@@ -28,6 +28,7 @@
       [aktion, (daten = {}) => invoke('fa_pro_tresor', { anfrage: { ...daten, aktion } })])
   );
   window.Capacitor.Plugins.ProDevice = { measure: () => invoke('fa_modelle', { anfrage: { method: 'measure' } }) };
+  window.Capacitor.Plugins.FamilyOutput = { save: options => invoke('fa_pro_tresor', { anfrage: { ...options, aktion: 'dateiExportieren' } }) };
   window.Capacitor.Plugins.FamilyModels = Object.fromEntries(['getState', 'install', 'cancel', 'remove'].map(method =>
     [method, (options = {}) => invoke('fa_modelle', { anfrage: { ...options, method } })]));
 

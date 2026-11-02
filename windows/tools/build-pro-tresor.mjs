@@ -15,7 +15,7 @@ const jsonJar = await jsonDependency();
 mkdirSync(ziel, { recursive: true }); rmSync(klassen, { recursive: true, force: true }); mkdirSync(klassen, { recursive: true });
 const java = process.env.JAVA_HOME ? path.join(process.env.JAVA_HOME, "bin", process.platform === "win32" ? "java.exe" : "java") : "java";
 execFileSync(java, ["com.sun.tools.javac.Main", "-encoding", "UTF-8", "-cp", jsonJar, "-d", klassen, ...quellen, ...models,
-  basis + "familienakte/ProTresorAdapter.java", "windows/java/de/familyprojekt/familienakte/ProTresorEngine.java"], { cwd: root, stdio: "inherit" });
+  basis + "familienakte/ProTresorAdapter.java", "windows/java/de/familyprojekt/familienakte/FamilyFileOutput.java", "windows/java/de/familyprojekt/familienakte/ProTresorEngine.java"], { cwd: root, stdio: "inherit" });
 execFileSync(java, ["sun.tools.jar.Main", "--create", "--file", path.join(ziel, "familienakte-tresor.jar"), "-C", klassen, "."], { cwd: root, stdio: "inherit" });
 copyFileSync(jsonJar, path.join(ziel, JSON_NAME));
 for (const name of ["meaning-models.json", "semantic-model.json"]) copyFileSync(path.join(root, "public/native", name), path.join(ziel, name));

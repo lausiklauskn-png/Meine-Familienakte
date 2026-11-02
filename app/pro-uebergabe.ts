@@ -1,4 +1,4 @@
-import type { ProApp, ProUebergabe, ProQuittung } from "../lib/pro-verbund-vertrag";
+import type { ProApp, ProUebergabe, ProQuittung, ProRueckkanal } from "../lib/pro-verbund-vertrag";
 export type { ProApp, ProUebergabe, ProQuittung } from "../lib/pro-verbund-vertrag";
 import { stapelDatenbank } from "./stapel-ablage";
 import type { CentralIntakeQueueItem } from "../lib/central-intake";
@@ -26,8 +26,9 @@ export async function proUebergabePruefen(wert: unknown, file: File, ziel: ProAp
 
 /** Datei, Eingangsdatensatz und wiederholbare Quittung bilden EINE Transaktion.
  * Die Quittung bleibt auch nach späterer Einordnung/Entfernung des Arbeitsfalls erhalten. */
-export async function proUebergabeAnnehmen(wert: unknown, file: File): Promise<ProQuittung> {
+export async function proUebergabeAnnehmen(wert: unknown, file: File, rueckkanal?: ProRueckkanal): Promise<ProQuittung> {
   const m = await proUebergabePruefen(wert, file, "familienakte");
+  if (rueckkanal && (!/^[a-f0-9]{64}$/.test(rueckkanal.nonce) || !text(rueckkanal.empfaenger, 80))) throw Error("Ungültiger Rückkanal.");
   const db = await stapelDatenbank();
   try {
     return await new Promise((resolve, reject) => {
@@ -42,6 +43,7 @@ export async function proUebergabeAnnehmen(wert: unknown, file: File): Promise<P
         try {
           if (lesen.result) {
             if (JSON.stringify(lesen.result.vertrag) !== JSON.stringify(m)) throw new Error("Diese Übergabekennung bezeichnet bereits einen anderen Inhalt.");
+            if (rueckkanal && (lesen.result.rueckkanal?.nonce !== rueckkanal.nonce || lesen.result.rueckkanal?.empfaenger !== rueckkanal.empfaenger)) throw new Error("Diese Übergabekennung hat einen anderen Rückkanal.");
             quittung = lesen.result.quittung; return;
           }
           const eingangId = crypto.randomUUID();
@@ -51,7 +53,7 @@ export async function proUebergabeAnnehmen(wert: unknown, file: File): Promise<P
           // Negative Folge stellt den neuen Eingang vor ältere Fälle; spätere normale Änderungen nummerieren neu.
           t.objectStore("eingang").put({ ...item, folge: -Date.now() });
           t.objectStore("eingang-dateien").put({ id: eingangId, file });
-          fach.put({ id: key, vertrag: m, quittung });
+          fach.put({ id: key, vertrag: m, quittung, ...(rueckkanal ? { rueckkanal: { nonce: rueckkanal.nonce, empfaenger: rueckkanal.empfaenger } } : {}) });
         } catch (error) { fehler = error; t.abort(); }
       };
     });
