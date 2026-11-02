@@ -30,10 +30,16 @@ try {
  // startup budget and reconnect once if CDP knows a target Playwright missed.
  while(!page&&Date.now()<deadline){
   page=browser.contexts().flatMap(c=>c.pages()).find(p=>isMain(p.url()));if(page)break;
-  if(!reconnected&&(await targets()).some(isMain)){reconnected=true;browser=await chromium.connectOverCDP('http://127.0.0.1:9333',{timeout:3000});}
+  if(!reconnected&&(await targets()).some(isMain)){
+   reconnected=true;
+   // A CDP browser close detaches this client. Leaving the first client alive
+   // kept Node running after every model assertion had already passed.
+   await browser.close();
+   browser=await chromium.connectOverCDP('http://127.0.0.1:9333',{timeout:3000});
+  }
   else await pause(250);
  }
- report.targets=await targets();report.pages=browser.contexts().flatMap(c=>c.pages()).map(p=>p.url());
+ report.reconnected=reconnected;report.targets=await targets();report.pages=browser.contexts().flatMap(c=>c.pages()).map(p=>p.url());
  assert.ok(page,'Family window: '+JSON.stringify({pages:report.pages,targets:report.targets}));
  page.on('pageerror',e=>errors.push(e.message));
  page.on('console',m=>{if(['error','warning'].includes(m.type()))report.console.push(m.text().slice(0,1000));});
