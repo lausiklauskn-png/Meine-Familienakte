@@ -1,0 +1,181 @@
+[
+  {
+    "id": "01-windows-eingang", "title": "Windows: Datei und Papier in dieselbe Akte", "time": "15–20 Minuten", "devices": "Ein Windows-Rechner, Scanner; bei Bedarf zwei der vorhandenen Monitore", "docs": ["bild", "brief", "jpg"],
+    "intro": "Zuerst zwei digitale Originale einfügen, danach dieselben beiden Unterlagen als Papier einscannen. Beide Wege sollen im gleichen Eingang enden. Ein Scan hat neue Bilddaten; seine Prüfsumme muss deshalb nicht der digitalen Vorlage entsprechen.",
+    "setup": "Familienakte öffnen und technische Version notieren. Einen Arbeitsstand nur für diese erfundenen Unterlagen verwenden. Scanner einschalten. Scans mit dem Zusatz SCAN speichern, damit sie von den digitalen Originalen unterscheidbar bleiben.",
+    "steps": [
+      ["download", "Vorlagen herunterladen und öffnen", "Bildprobe A und Briefprobe B als PDF herunterladen. Beide lokal öffnen. A trägt FA-P01-4827, B trägt FA-P02-6391. Beide haben genau eine Seite."],
+      ["digital-a", "Digitales Bild zuerst einfügen", "Bildprobe A als JPG über den vorhandenen Dateiimport in die Eingangszentrale geben. Prüfen: richtiges Vorschaubild, lesbarer Kenncode und keine fremde Datei."],
+      ["digital-b", "Direkt danach den digitalen Brief einfügen", "Briefprobe B als PDF einfügen. Erwartet: A und B sind als zwei unterschiedliche Unterlagen vorhanden; B ersetzt A nicht."],
+      ["print", "Beide PDF-Vorlagen auf Papier drucken", "A und B einseitig, A4, 100 % oder An Seite anpassen drucken. Vier Eckmarken, Kenncodes, farbige Formen und der Prüftext sind vollständig sichtbar."],
+      ["scan-a", "Test 1: Bildprobe A scannen", "Nur Blatt A scannen und die Ausgabe als SCAN-A.pdf oder SCAN-A.jpg speichern. Ausrichtung, vollständige Ränder und Lesbarkeit prüfen."],
+      ["auto-open", "Test 2: Öffnet sich die gewünschte App automatisch?", "Beobachten, ob nach dem Scan ohne weiteren Klick die gewünschte App mit genau dieser Datei erscheint. Ja nur bei wirklichem automatischem Start. Bei Nein notieren: nichts passiert, anderes Programm oder Auswahlfenster. Das Ergebnis beschreibt auch die Scanner- und Windows-Einstellung."],
+      ["manual-open", "Falls nötig: denselben Scan bewusst übergeben", "Wenn der automatische Weg fehlt, die gespeicherte Datei mit Öffnen mit, Teilen oder dem Dateiimport öffnen. Erwartet: SCAN-A erreicht die Eingangszentrale. Falls bereits automatisch gelungen: Nicht geprüft wählen und 'schon automatisch angekommen' notieren."],
+      ["scan-b", "Briefprobe B direkt danach scannen und einfügen", "B separat als SCAN-B.pdf speichern und über denselben erfolgreichen Weg übergeben. Erwartet: beide Scans bleiben unterscheidbar; nichts wird überschrieben."],
+      ["compare", "Scan und digitale Vorlage vergleichen", "A: drei farbige Formen und FA-P01-4827. B: FA-P02-6391, 73,40 EUR und 'Der blaue Ordner liegt neben der Lampe.' vergleichen. Gedrehte oder abgeschnittene Scans im Notizfeld beschreiben. Suchtext aus Bildern setzt gegebenenfalls eine ausdrücklich gestartete Texterkennung voraus."],
+      ["save", "Scans in den Testbestand aufnehmen", "Beide ausgewählten Scans prüfen und speichern. Erwartet: die richtigen Namen und Inhalte erscheinen in der Dokumentenbibliothek. Die gewählte Ablage und die Herkunft 'Scan' in den Notizen festhalten."],
+      ["monitor", "Fenster auf einen weiteren Monitor verschieben", "Wenn vorhanden, das Fenster einmal auf einen anders skalierten Monitor ziehen. Vorschau, Auswahl und Speichern müssen erreichbar bleiben. Monitoranzahl und Skalierung notieren. Fünf Monitore erzeugen keine fünf zusätzlichen Übertragungswege."],
+      ["restart", "Programm vollständig schließen und neu öffnen", "A und B erneut öffnen. Erwartet: beide gespeicherten Scans sind vollständig vorhanden. Bei fehlender Datei oder falschem Inhalt hier abbrechen und den Fehler beschreiben."]
+    ]
+  },
+  {
+    "id": "02-android-eingang", "title": "Android: Kamera, Scanner und vorhandene Dateien", "time": "15–20 Minuten je tatsächlich genutztem Gerät", "devices": "Handy oder Tablet; je Android-System einen eigenen Ergebnisbogen", "docs": ["bild", "brief", "jpg"],
+    "intro": "Diese Reihe einmal am Handy und einmal am Tablet ausführen, sofern ihr beide nutzen wollt. Gerät und Android-Version unterscheiden die Ergebnisse. Eine Kameraufnahme und eine digitale Datei sollen in denselben geprüften Eingang gelangen.",
+    "setup": "Familienakte installieren/öffnen und Version notieren. Ausdrucke A und B bereitlegen. Kamera-/Dateiberechtigungen nur für den gewählten Schritt erlauben. Ein vorhandener Dokumentbestand bleibt erhalten.",
+    "steps": [
+      ["download", "A und B auf diesem Gerät herunterladen", "Bildprobe A als JPG sowie Briefprobe B als PDF speichern und aus Downloads öffnen. Beide Kenncodes müssen sichtbar sein."],
+      ["digital-a", "Digitale Bilddatei in Familienakte einfügen", "A über den Dateiimport auswählen. Erwartet: genau die ausgewählte Bildprobe erscheint im Eingang."],
+      ["digital-b", "PDF direkt danach einfügen", "B über denselben Eingang auswählen. Erwartet: zwei getrennte Unterlagen; A bleibt erhalten."],
+      ["print", "Papierunterlagen bereitlegen", "Die beiden PDF-Vorlagen ausdrucken lassen. Prüfen: je eine Seite, Kenncodes und alle Eckmarken vorhanden."],
+      ["scan-a", "Test 1: Bildprobe A mit Kamera oder Scan-App aufnehmen", "Das ganze Blatt im Bild halten. Die Aufnahme als SCAN-A speichern. Kamera-/Scan-App und gewählte Ausgabeart in den Notizen nennen."],
+      ["auto-open", "Test 2: Öffnet Familienakte sich automatisch mit dem Scan?", "Ja nur wählen, wenn die richtige App ohne weiteren Klick mit genau diesem Scan erscheint. Wenn erst Teilen oder eine App-Auswahl nötig ist, Nein wählen und den Ablauf notieren. Das ist ein eigener Bedienwunsch, noch kein Beleg für Dateiverlust."],
+      ["share", "Den Scan ausdrücklich über Teilen oder Dateiimport übergeben", "Falls der automatische Weg fehlt: in der Scan-App Teilen → Familienakte wählen oder die gespeicherte Datei in Familienakte importieren. Erwartet: SCAN-A erscheint vollständig im Eingang. Wenn schon automatisch angekommen, dies bei Nicht geprüft notieren."],
+      ["scan-b", "Briefprobe B direkt danach aufnehmen und übergeben", "B als SCAN-B speichern. Erwartet: die zweite Aufnahme ersetzt die erste nicht. Zwei Scans sind zu unterscheiden."],
+      ["compare", "Bilder und Inhalt kontrollieren", "Kenncodes FA-P01-4827 und FA-P02-6391, Betrag 73,40 EUR sowie alle vier Eckmarken vergleichen. Eine Bilddatei muss nicht sofort durchsuchbaren Text besitzen."],
+      ["save", "Beide Scans in den Testbestand aufnehmen", "Auswahl und Zuordnung prüfen, dann speichern. Erwartet: beide Dateien lassen sich aus der Dokumentenbibliothek öffnen."],
+      ["rotate", "Hochformat und Querformat prüfen", "Gerät einmal drehen. Vorschau, Dateiauswahl, Bestätigung und Notizfelder müssen erreichbar bleiben; nicht gespeicherte Eingaben dürfen dabei nicht verschwinden."],
+      ["restart", "App beenden und neu öffnen", "Beide gespeicherten Scans erneut öffnen. Erwartet: vollständiger Inhalt und passende Namen. Bei fehlenden Originalen abbrechen und Notizen sichern."]
+    ]
+  },
+  {
+    "id": "03-fuenferstapel", "title": "Fünferstapel: Vollständigkeit, Sortieren, Zusammenfassen", "time": "15 Minuten; zunächst auf einem Gerät", "devices": "Windows oder Android, optional Scanner mit Einzug", "docs": ["stapel", "einzeln"],
+    "intro": "Fünf unterschiedliche Testseiten sind absichtlich gemischt: 04, 01, 05, 02, 03. Es gibt dieselben Seiten als eine fünfseitige PDF und als fünf einzelne PDFs im ZIP. Beide Formen erlauben unterschiedliche, klar erkennbare Stapelversuche.",
+    "setup": "Nur die Stapelvorlagen dieser Reihe verwenden. Vor dem Sortieren die tatsächlich angebotene Funktion wählen und notieren: automatische Sortierung, manuelles Verschieben oder Zusammenfügen. Eine nicht vorhandene automatische Funktion als Wunsch erfassen.",
+    "steps": [
+      ["download", "Eine Stapel-PDF und das ZIP herunterladen", "Die PDF öffnen: genau fünf Seiten in der Reihenfolge 04–01–05–02–03. ZIP entpacken: genau fünf einzelne PDF-Dateien, jede mit einer Seite."],
+      ["digital", "Fünf digitale PDFs gemeinsam auswählen", "Die fünf entpackten Dateien in einem Vorgang in den Stapel geben. Erwartet: fünf erkennbare Unterlagen; keine Seite fehlt und keine ist doppelt."],
+      ["digital-sort", "Digitale Unterlagen auf 01–02–03–04–05 ordnen", "Die angebotene Sortierfunktion verwenden oder manuell verschieben. Ja bedeutet: die gewünschte Reihenfolge wurde erreicht. In den Notizen unbedingt festhalten, ob automatisch oder von Hand. Wenn eine gewünschte Funktion fehlt: Nein und Wunsch notieren."],
+      ["print", "Die fünfseitige Vorlage drucken", "Einseitig ausdrucken, anschließend die gedruckte Reihenfolge 04–01–05–02–03 prüfen. Der große Seitencode bleibt beim späteren Scan sichtbar."],
+      ["scan", "Den gemischten Papierstapel in einem Durchgang scannen", "Als SCAN-STAPEL.pdf speichern. Erwartet: genau fünf Seiten. Bei Einzelbildausgabe müssen fünf Dateien entstehen. Gewählte Scanner-Einstellung notieren."],
+      ["open", "Scan-Ausgabe öffnen oder an die App übergeben", "Beobachten, ob dies automatisch oder erst nach einer Auswahl geschieht. Die passende Scan-Datei in den Eingang bringen; keine digitale Vorlage damit verwechseln."],
+      ["count", "Seitenzahl und Reihenfolge vor der Bearbeitung prüfen", "Alle fünf Kenncodes FA-S01 bis FA-S05 suchen. Eine PDF mit fünf Seiten ist eine Unterlage; fünf einzelne PDFs sind fünf Unterlagen. Diese beiden erwarteten Formen nicht als Dublette verwechseln."],
+      ["scan-sort", "Die gescannten Seiten in die gewünschte Reihenfolge bringen", "Die tatsächlich angebotene Seiten-/Stapelfunktion verwenden; bei Bedarf im eingebetteten oder separaten Workflow PDF. Erwartet nach bewusster Bearbeitung: 01–02–03–04–05, ohne fehlende oder doppelte Seite. Fehlt die Funktion, dies als konkreten Wunsch festhalten."],
+      ["combine", "Als einen Brief zusammenfassen und speichern", "Wenn ihr fünf Einzeldateien habt: ausdrücklich zusammenfügen. Bei einer fünfseitigen PDF die bearbeitete Fassung speichern. Ergebnisname TEST-STAPEL-SORTIERT.pdf; genau fünf Seiten."],
+      ["restart", "Nach Neustart jede Seite prüfen", "Gespeichertes Ergebnis öffnen und alle fünf Seitencodes in aufsteigender Reihenfolge abhaken. Die Ausgangsdateien dürfen durch diesen Versuch nicht ungewollt gelöscht sein."]
+    ]
+  },
+  {
+    "id": "04-pro-apps", "title": "Auf einem Gerät: Familienakte ↔ eine Pro-App", "time": "15 Minuten pro tatsächlich genutzter Partner-App", "devices": "Windows-Rechner oder Android-Gerät mit zwei installierten Apps", "docs": ["bild", "brief"],
+    "intro": "Als Partner genau eine App wählen: Workflow PDF Pro, Private Brain Pro oder BookLedgerPro. Für einen anderen Partner einen neuen Ergebnisbogen beginnen. Zuerst zwei digitale PDFs verwenden; nach erfolgreicher Scan-Reihe kann derselbe Ablauf mit euren SCAN-A/SCAN-B wiederholt werden.",
+    "setup": "Beide Apps müssen die Version mit Pro-Verbund-Anschluss besitzen. In beiden ausdrücklich denselben vorhandenen gemeinsamen Pro-Tresor verbinden und entsperren. Dieser Weg ist freiwillig; jede App bleibt allein nutzbar. Keine Passwörter in diesen Bogen schreiben.",
+    "steps": [
+      ["prepare", "A und B in Familienakte bereitstellen", "Die zwei PDFs herunterladen, in den Testbestand aufnehmen und öffnen. Bei Scans stattdessen SCAN-A/SCAN-B verwenden und diese Quelle im Gerätefeld notieren."],
+      ["connect", "Gemeinsamen Ordner in beiden Apps verbinden", "In Familienakte: Sicherheitscenter → Vorhandenen Pro-Tresor verbinden. In der Partner-App deren gemeinsame Tresor-Verbindung verwenden. Erwartet: beide greifen auf denselben ausgewählten Ordner zu; kein stiller Ersatzordner."],
+      ["send-a", "Nur A an den ausgewählten Partner geben", "In der Dokumentenbibliothek bei A 'An Pro-App geben …', Partner wählen und weitergeben. Erwartet: Ausgang offen/weitergegeben. Eine geschlossene Partner-App muss dadurch nicht automatisch starten."],
+      ["cold", "Partner jetzt starten und A bewusst aufnehmen", "Den Pro-/Tresor-Eingang des Partners öffnen und genau A übernehmen. Erwartet: A ist in dessen normalem Bestand lesbar; Kenncode FA-P01-4827 stimmt."],
+      ["receipt-a", "Empfang in Familienakte prüfen", "Erst nach der Aufnahme in der Ziel-App 'Zielbestätigung prüfen' benutzen. Erwartet: Aufnahme bestätigt. Eine bloße Dateiablage oder gestartete Teilen-Auswahl genügt dafür nicht."],
+      ["send-b", "B bei bereits geöffnetem Partner übergeben", "B gezielt senden, im Partner aufnehmen und Empfang prüfen. Erwartet: A und B sind beide vorhanden und bleiben getrennt."],
+      ["repeat", "Dieselbe unveränderte Fassung noch einmal senden", "A erneut an denselben Partner geben. Erwartet: kein zweiter Eingang allein durch die Wiederholung. Eine wirklich bearbeitete Fassung ist dagegen ein neues Dokument mit Bezug zur Quelle."],
+      ["restart", "Beide Apps schließen und erneut öffnen", "Die beiden empfangenen Dateien im Partner öffnen; in Familienakte den Übergabestand ansehen. Erwartet: Dateien und bestätigter Stand bleiben erhalten."],
+      ["return", "A vom Partner zurück an Familienakte geben", "Im Partner die gewünschte PDF auswählen und dessen Familienakte-Ziel benutzen. Bei Workflow PDF kann vorher sichtbar bearbeitet werden. Änderung in den Notizen beschreiben. Erwartet: Rückweg bleibt bis zur Aufnahme offen."],
+      ["take-return", "Rückgabe in Familienakte aufnehmen", "Sicherheitscenter → Pro-Eingang prüfen → ausgewählte Rückgabe in den Familienakte-Eingang aufnehmen. Inhalt ansehen; eine bearbeitete Fassung darf das frühere Original nicht still ersetzen."],
+      ["return-receipt", "Erst jetzt die Bestätigung im Partner prüfen", "Erwartet: die tatsächlich gespeicherte Rückgabe wird bestätigt. Beide ursprünglichen Unterlagen bleiben verfügbar."]
+    ]
+  },
+  {
+    "id": "05-android-windows", "title": "Android → Windows: zwei Geräte, bewusste Dateiübergabe", "time": "15 Minuten", "devices": "Handy oder Tablet als Sender, Windows als Empfänger", "docs": ["bild", "brief"],
+    "intro": "Dieser Versuch nutzt Familienakte auf beiden Geräten. Das Gerätepaket wird über USB, einen bewusst gewählten gemeinsamen Ablageordner oder den vorhandenen Dateitransport befördert. Ein USB-Anschluss allein stellt noch keine Empfangsbestätigung aus.",
+    "setup": "Auf beiden Geräten die Familienakte mit Gerätepaket-Funktion öffnen. Android- und Windows-Version eintragen. A und B auf Android in den Testbestand aufnehmen. Empfänger eindeutig z. B. 'Test-PC' nennen.",
+    "steps": [
+      ["download", "A und B laden und auf Android öffnen", "Beide PDFs im Testbestand prüfen: richtige Kenncodes, je eine Seite."],
+      ["packet-a", "Gerätepaket nur für A speichern", "Sicherheitscenter → Eine Unterlage an ein anderes Gerät geben. A und Empfänger 'Test-PC' wählen, Übergabepaket speichern. Erwartet: eine Datei .familienakte-paket; Empfang bleibt offen."],
+      ["transport-a", "Paket nach Windows kopieren", "Über den gewählten Weg kopieren. Die Paketdatei unverändert lassen. Ein automatischer Programmstart wird hier beobachtet, aber nicht vorausgesetzt; Ablauf notieren."],
+      ["take-a", "Auf Windows Paket bewusst öffnen und aufnehmen", "In Familienakte im Sicherheitscenter 'Übergabepaket öffnen' wählen, Vorschau prüfen und Aufnahme bestätigen. Erwartet: A vollständig im Eingang, richtiger Kenncode und Originalname."],
+      ["packet-b", "Direkt danach B auf demselben Weg senden", "Eigenes Paket für B speichern und auf Windows aufnehmen. Erwartet: A bleibt erhalten; B kommt als eigene Unterlage hinzu."],
+      ["before-receipt", "Sender vor Rückgabe der Empfangsdateien ansehen", "Erwartet auf Android: weitergegeben/Empfang offen. Die erfolgreiche Kopie allein darf nicht als Aufnahme im Ziel erscheinen."],
+      ["receipts", "Die beiden Empfangsdateien zurückkopieren", "Auf Windows für die aufgenommenen Pakete die Empfangsdateien speichern und über denselben Weg nach Android geben. Nicht mit den ursprünglichen Paketen verwechseln."],
+      ["confirm", "Empfangsdateien auf Android prüfen", "Sicherheitscenter → Empfangsdatei prüfen. Erwartet: passende Übergabe A bzw. B bestätigt; keine fremde Übergabe wird bestätigt."],
+      ["repeat", "Paket A auf Windows ein zweites Mal öffnen", "Erwartet: kein zusätzlicher Eingang allein durch Wiederholung. Die bestehende Aufnahme bleibt lesbar."],
+      ["restart", "Auf beiden Geräten neu starten und Dateien öffnen", "Erwartet: A und B auf Windows vollständig, Ursprünge auf Android erhalten, Bestätigungen weiterhin sichtbar."]
+    ]
+  },
+  {
+    "id": "06-windows-android", "title": "Windows → Android: der umgekehrte Geräteweg", "time": "15 Minuten", "devices": "Windows als Sender, Handy oder Tablet als Empfänger", "docs": ["bild", "brief"],
+    "intro": "Der Rückweg wird als eigener Durchlauf protokolliert. So erkennt ihr Unterschiede zwischen Android-Dateiauswahl, Windows-Speichern und dem eigentlichen Eingang. Für Handy und Tablet bei Bedarf getrennte Ergebnisdateien anlegen.",
+    "setup": "Familienakte mit Gerätepaket-Funktion auf beiden Geräten. A und B im Windows-Testbestand bereitstellen. Ablageweg bewusst wählen und Empfänger z. B. 'Test-Tablet' nennen.",
+    "steps": [
+      ["download", "A und B herunterladen und auf Windows öffnen", "Beide PDFs prüfen: unterschiedliche Kenncodes, je eine Seite; anschließend in den Testbestand aufnehmen."],
+      ["packet-a", "Paket A auf Windows speichern", "Sicherheitscenter → Eine Unterlage an ein anderes Gerät geben. A und 'Test-Tablet' auswählen und Übergabepaket speichern. Erwartet: .familienakte-paket, Empfang offen."],
+      ["transport-a", "Paket auf Android bereitstellen", "Per USB, gewählter Ablage oder Dateitransport kopieren. Den genauen Ablageort ohne private Pfade in den Notizen beschreiben, etwa Downloads. Automatischen Start gesondert notieren."],
+      ["take-a", "Paket in Android-Familienakte auswählen", "Sicherheitscenter → Übergabepaket öffnen. Über Androids Dateiauswahl die richtige Paketdatei wählen; Vorschau prüfen und aufnehmen. Erwartet: lesbares A im Eingang."],
+      ["packet-b", "B direkt danach ebenso senden und aufnehmen", "Ein eigenes Paket für B verwenden. Erwartet: zwei unterschiedliche Eingänge und keine Überschreibung."],
+      ["before-receipt", "Offenen Stand auf Windows prüfen", "Vor Rückgabe der Empfangsdateien muss Windows die Übergaben noch als offen/weitergegeben zeigen."],
+      ["receipts", "Empfangsdateien auf Android speichern und zurückgeben", "Für A und B die passende Empfangsdatei speichern. Beide über den gewählten Weg nach Windows kopieren."],
+      ["confirm", "Die zwei Empfangsdateien auf Windows prüfen", "Erwartet: nur die zugehörige Übergabe wird bestätigt, nachdem Android sie aufgenommen hat."],
+      ["repeat", "Unverändertes Paket A auf Android nochmals auswählen", "Erwartet: kein zweiter Eingang durch Wiederholung; die vorherige Aufnahme bleibt vollständig."],
+      ["restart", "Beide Apps beenden und neu öffnen", "A und B auf Android öffnen und den Ausgang auf Windows ansehen. Erwartet: Inhalte und Bestätigungen bleiben erhalten; Quellen bleiben verfügbar."]
+    ]
+  },
+  {
+    "id": "07-fernrechner", "title": "Über das Netz: Familienakte zu einem entfernten Gerät", "time": "15–20 Minuten mit einer zweiten Person", "devices": "Zwei getrennte Geräte, wahlweise Windows oder Android", "docs": ["bild", "brief"],
+    "intro": "Ein Durchlauf über genau einen vorhandenen Transportweg genügt zunächst: Kim-sync als Datei oder Datei-Post. Das Ziel kann der entfernte Rechner sein. Für einen zweiten Weg einen eigenen Bogen verwenden; keine vollständige Kombination aller Geräte nötig.",
+    "setup": "Beide Personen öffnen ihre eigene Familienakte. Vorhandenen Kim-Raum mit bestätigten Geräten oder vorhandenen Datei-Post-Weg verwenden. Nur erfundene Testunterlagen schicken. Keine Kennwörter, Raumcodes oder privaten Originale in diesen Bogen schreiben.",
+    "steps": [
+      ["download", "A und B beim Sender herunterladen", "Beide PDFs im Testbestand aufnehmen und öffnen. Empfängername für diesen Versuch eindeutig festlegen, z. B. 'Fern-PC-Test'."],
+      ["packet-a", "Familienakte-Paket für A speichern", "Sicherheitscenter → Eine Unterlage an ein anderes Gerät geben. Genau A und den Testempfänger wählen. Erwartet: Empfang offen; die Paketdatei enthält das lesbare Original."],
+      ["transport", "Paket als Datei übertragen", "In Kim über die Büroklammer als Datei, nicht als bearbeitetes Bild, senden; oder den bestehenden Datei-Post-Dateiweg verwenden. Erwartet: Empfänger kann die unveränderte Paketdatei herunterladen. Zugangsdaten bleiben außerhalb dieses Bogens."],
+      ["arrival", "Datei beim entfernten Empfänger lokalisieren", "Download tatsächlich öffnen/finden. Automatischen App-Start beobachten und notieren. Eine Versand-/Downloadmeldung bestätigt noch keine Aufnahme in Familienakte."],
+      ["take-a", "A in der empfangenden Familienakte aufnehmen", "Sicherheitscenter → Übergabepaket öffnen, Vorschau und Kenncode prüfen, dann ausdrücklich aufnehmen. Erwartet: A vollständig im dauerhaften Eingang."],
+      ["send-b", "B direkt danach auf demselben Weg übertragen", "Eigenes Paket für B erstellen, übertragen und aufnehmen. Erwartet: A und B getrennt; keine frühzeitige Löschung auf Senderseite."],
+      ["open", "Sender prüft den noch offenen Familienakte-Ausgang", "Solange keine passende Familienakte-Empfangsdatei zurückkam, muss die Übergabe offen bleiben, selbst wenn Kim oder Datei-Post bereits Erfolg meldet."],
+      ["return-receipts", "Empfangsdateien über denselben Kanal zurücksenden", "Empfänger speichert die beiden Familienakte-Empfangsdateien und sendet sie als Dateien zurück."],
+      ["confirm", "Sender prüft die passenden Empfangsdateien", "Erwartet: A und B werden erst jetzt bestätigt. Eine Quittung gilt für das zugehörige Paket; sie beweist keine darüber hinaus geprüfte Personenidentität."],
+      ["repeat", "Paket A erneut beim Empfänger öffnen", "Erwartet: keine zusätzliche dauerhafte Aufnahme allein durch die Wiederholung."],
+      ["restart", "Beide Apps neu starten und Endstand vergleichen", "Empfänger öffnet A und B; Sender prüft erhaltene Originale und Bestätigungen. Beide Personen tragen ihre Beobachtung in die Notizen ein; eine Ergebnisdatei wird gemeinsam zurückgegeben."]
+    ]
+  },
+  {
+    "id": "08-bookledger", "title": "BookLedgerPro: Rechnung, Zahlung und Rückgabe", "time": "15–20 Minuten", "devices": "Windows oder Android mit Familienakte und BookLedgerPro", "docs": ["brief", "zahlung"],
+    "intro": "Zwei zusammengehörige Dokumente: Rechnung B über 73,40 EUR und Zahlungsbeleg E über dieselbe Summe. Ziel ist, beide Belege zu erhalten und ihre Beziehung zu erkennen. Die gleiche Zahlung darf nicht versehentlich als zwei Ausgaben gezählt werden.",
+    "setup": "Einen reinen Testmandanten verwenden. Gemeinsamen Pro-Tresor in beiden Apps verbinden. Die Kontonummern sind ausdrücklich ungültige Platzhalter; es gibt keinen Zahlungsauftrag und keine Bankverbindung zu benutzen.",
+    "steps": [
+      ["download", "Rechnung B und Zahlungsbeleg E herunterladen", "Beide PDFs öffnen. Rechnung RE-TEST-2026-204, Kundennummer KD-ENERGIE-204 und Bruttobetrag 73,40 EUR stehen auf beiden; die Dokumentnummern unterscheiden sich."],
+      ["send-invoice", "Rechnung aus Familienakte an BookLedgerPro geben", "B in Familienakte aufnehmen und über 'An Pro-App geben …' gezielt senden. In BookLedgerPro den Tresor-Eingang öffnen und B ausdrücklich übernehmen."],
+      ["read-invoice", "Erkannte Rechnungsfelder mit Sollwerten vergleichen", "Absender Testenergie Musterstadt, Empfänger Mara Testfeld, Datum 29.10.2026, Nummer RE-TEST-2026-204, netto 61,68 EUR, Steuer 11,72 EUR, brutto 73,40 EUR, fällig 20.11.2026. Automatisch erkannte Werte und notwendige Handkorrekturen getrennt notieren."],
+      ["save-invoice", "Geprüfte Rechnung im Testmandanten speichern", "Erwartet: genau eine Rechnung mit richtigem Original und den bewusst bestätigten Daten. Eine falsche Erkennung darf vor dem Speichern korrigiert werden."],
+      ["send-payment", "Direkt danach den Zahlungsbeleg E übergeben", "E auf demselben Weg aus Familienakte an BookLedgerPro geben und aufnehmen. Beide Originale müssen erhalten bleiben."],
+      ["payment-fields", "Zahlungsangaben prüfen", "Buchung und Wertstellung 01.11.2026, Betrag -73,40 EUR, Partner Testenergie Musterstadt, Verwendungszweck RE-TEST-2026-204 / KD-ENERGIE-204. TEST-KONTO und TEST-IBAN sind ungültige Platzhalter."],
+      ["matching", "Rechnung und Zahlung zuordnen", "Die tatsächlich vorhandene Zuordnungsfunktion benutzen. Erwartet: ein wirtschaftlicher Vorgang über 73,40 EUR mit zwei Originalbelegen, keine unbeabsichtigte doppelte Ausgabe. Fehlt eine gewünschte automatische Zuordnung, Nein wählen und notieren, ob eine manuelle möglich ist."],
+      ["ack", "Dauerhafte Aufnahme in Familienakte bestätigen", "Für B und E die Zielbestätigung prüfen. Erwartet: Bestätigung erst nach tatsächlicher Aufnahme in BookLedgerPro."],
+      ["return", "Einen ausgewählten Beleg zurückgeben", "B oder E in BookLedgerPro gezielt an Familienakte zurückgeben. Dort im Pro-Eingang prüfen und aufnehmen. Original und Quellbezug müssen erhalten bleiben."],
+      ["repeat", "Unveränderte Rechnung erneut übergeben", "Denselben Pro-Vorgang nochmals senden. Erwartet: kein weiterer Eingang allein wegen Wiederholung. Eine neue manuell importierte Datei ist davon getrennt zu beurteilen."],
+      ["restart", "Nach Neustart Belege und Zuordnung ansehen", "Beide Apps schließen und öffnen. Rechnung und Zahlungsbeleg müssen lesbar sein; festgehaltene Zuordnungen bleiben bestehen. Keine echten Buchungen oder Überweisungen auslösen."]
+    ]
+  },
+  {
+    "id": "09-familienakte-fachfelder", "title": "Familienakte: Personen, Briefkopf und Lebensbereiche", "time": "20 Minuten auf einem zuerst gewählten Gerät", "devices": "Windows oder Android; die sechs kleinen Testunterlagen", "docs": ["bild", "brief", "medizin", "familie", "zahlung", "fahrzeug", "alle"],
+    "intro": "Diese Fachprobe prüft die Zuordnung anhand der festen Sollwerte: Käufe/Garantie, Wohnen, Gesundheit, Familie, Zahlung und Fahrzeug. Die Daten sind vollständig erfunden. Vorschläge müssen von euch geprüft werden; nicht jeder vorbereitete Bereich hat schon eine vollständige Bearbeitungsfunktion.",
+    "setup": "Die Testpersonen Mara Testfeld (12.04.1985) und Leon Testfeld (08.09.2014) im Testbestand bewusst anlegen, soweit angeboten. Mara ist die Mutter von Leon. Wohnadresse beider: Musterweg 12, 00000 Teststadt. Niemals eigene Gesundheitsakten für diese Probe verwenden.",
+    "steps": [
+      ["download", "Sechs Vorlagen herunterladen und Sollwerte ansehen", "A bis F öffnen. Jede hat eine eindeutige Dokument-/Datennummer, einen Absender, Empfänger, Datum und Kunden-/Aktennummer. Die Sollwerttabelle in diesem Bogen ist der Vergleich."],
+      ["person", "Testpersonen und Beziehung prüfen", "Mara und Leon eindeutig unterscheiden. Geburtstag und Beziehung nur bewusst speichern. Erwartet: die Unterlagen des Kindes werden nicht allein wegen der gemeinsamen Adresse der Mutter zugeordnet."],
+      ["purchase", "A: Kauf und Garantie zuordnen", "Testgeräte Bildwerk, Mara, KD-KAUF-101, Rechnung RE-TEST-2026-101, 149,90 EUR, Dokumentdatum 28.10.2026, Garantiehinweis 28.10.2028. Prüfen, welche Felder vorgeschlagen werden; Handkorrekturen notieren."],
+      ["home", "B: Wohn-/Energierechnung zuordnen", "Testenergie Musterstadt, Mara, KD-ENERGIE-204, 29.10.2026, 73,40 EUR und Fälligkeit 20.11.2026. Vorgeschlagene Organisation, Person, Thema und Kunden-/Rechnungsnummer vergleichen."],
+      ["medical", "C: Medizinische Testunterlage geschützt aufnehmen", "Testpraxis Sonnenseite, Patient Leon, geb. 08.09.2014, PAT-TEST-303, 30.10.2026. Diagnose ist erfunden. Außerhalb des geschützten Gesundheitsbereichs dürfen sensible Angaben nicht ungewollt offen erscheinen."],
+      ["family", "D: Familien-/Schulbrief dem Kind zuordnen", "Testschule Wolkenhof, Leon, SCH-TEST-404, 31.10.2026, Rückmeldung bis 18.11.2026. Absender ist die Schule; der Empfänger ist Leon, vertreten durch Mara. Die Beziehung nicht mit einer zweiten Person verwechseln."],
+      ["payment", "E: Zahlung mit B verknüpfen", "Testbank Beispielkonto, Mara, DOC-TEST-005, 01.11.2026, -73,40 EUR. Bezug auf Rechnung RE-TEST-2026-204 und KD-ENERGIE-204 prüfen. Zwei Originale, ein zusammengehöriger Vorgang."],
+      ["vehicle", "F: Fahrzeug und Werkstatt zuordnen", "Testwerkstatt Räderklar, Mara, KD-AUTO-606, 02.11.2026, 275,00 EUR, Objekt TEST-AUTO-06 und Termin 01.12.2026. Fahrzeugkennung und FIN sind ungültige Testkennungen."],
+      ["dates", "Nach Dokumentdatum sortieren", "Erwartete Reihenfolge A–B–C–D–E–F entspricht 28.10.–02.11.2026. Auf das Datum im Dokument achten, nicht auf Scan-, Download- oder Importzeit. Nicht angebotene Sortierung als Wunsch erfassen."],
+      ["intake", "Vorschläge bewusst bestätigen und wieder öffnen", "Originale, Namen, Personen und Lebensbereiche kontrollieren, dann speichern. Eine fremde Vorschlagsdatei darf eure Prüfung nicht ersetzen. Nach Neustart die Zuordnung stichprobenweise bei C und E prüfen."],
+      ["coverage", "Vorbereitete Bereiche und fehlende Felder notieren", "Für jeden nicht ausführbaren Schritt den angezeigten Hinweis und den gewünschten Ablauf notieren. 'Vorbereitet' ist kein erfolgreich geprüfter Arbeitsablauf. Eine fehlende Funktion bleibt sichtbar in der Auswertung."]
+    ]
+  },
+  {
+    "id": "10-alltag-und-sicherung", "title": "Alltag: Suchen, Erinnern, Ausfüllen und Sichern", "time": "15–20 Minuten; optionale Funktionen nur bei Nutzung", "devices": "Eine Familienakte mit den Testunterlagen aus Reihe 09", "docs": ["brief", "familie", "formular"],
+    "intro": "Eine begrenzte Runde durch weitere vorhandene Funktionen. Nicht eingerichtete oder noch vorbereitete Funktionen bleiben Nicht geprüft mit Begründung. Kein Modell muss allein für diesen Test heruntergeladen werden.",
+    "setup": "Nur den erfundenen Testbestand verwenden. Testformular herunterladen. Sicherung und Wiederherstellung ausschließlich mit einem leeren, ausdrücklich gewählten Testordner durchführen.",
+    "steps": [
+      ["search", "Mit einer eindeutigen Nummer suchen", "Nach RE-TEST-2026-204 oder KD-ENERGIE-204 suchen. Rechnung B und zugehöriger Zahlungsbeleg E sollen anhand der gespeicherten Daten auffindbar sein. Bei reinen Bildscans vorher bewusst Texterkennung verwenden, soweit vorhanden."],
+      ["semantic", "Optional: vorhandene private Bedeutungssuche nutzen", "Nur wenn bereits ein Modell installiert ist: Testbestand indexieren und 'Welche Unterlage gehört zur Stromzahlung?' fragen. Treffer öffnen und Inhalt prüfen. Verwendetes Modell, Suchdauer und Fehlvorschläge notieren. Kein Downloadzwang; PWA besitzt keine native Modellablage."],
+      ["memory", "Eine erfundene Erinnerung speichern", "Tagebuch/Erinnerungen: 'Am 1. November wurde die Testenergierechnung über 73,40 Euro bezahlt.' eingeben. Vorschläge prüfen, einmal speichern, erneut öffnen und einmal ergänzen. Erwartet: kein doppelter Datensatz durch wiederholten Klick."],
+      ["dictation", "Optional: denselben Satz diktieren", "Mikrofon bewusst starten, den Testsatz sprechen, beenden und Text vor dem Speichern lesen. Erkennungsfehler, Sprache und Berechtigungsdialog notieren. Ohne Mikrofonfunktion Nicht geprüft wählen."],
+      ["deadline", "Frist aus dem Schulbrief ansehen", "18.11.2026 aus D prüfen. Falls Fristenbearbeitung angeboten wird, bewusst als Testfrist übernehmen und im Überblick wiederfinden. Wird der Bereich nur als vorbereitet bezeichnet, genau dies notieren; keine funktionierende Erinnerung behaupten."],
+      ["form", "Testformular öffnen und manuell prüfen", "Mit dem angebotenen Ausfüllen-Weg bearbeiten: Mara Testfeld, KD-ENERGIE-204, RE-TEST-2026-204, 73,40 EUR, Datum 01.11.2026. Nur erfundene Angaben. Keine automatische Verknüpfung ungeprüft bestätigen."],
+      ["save-form", "Ausgefülltes Formular als neue Fassung speichern", "Ergebnis öffnen und alle Felder kontrollieren. Das leere Formular und Rechnung B sollen erhalten bleiben. Falls die App keine passende Ausfüllfunktion anbietet, dies als fehlenden Weg festhalten."],
+      ["backup", "Vollständige Sicherung des Testbestands erstellen", "Sicherheitscenter → Vollständige Sicherung erstellen. Zielordner ausdrücklich wählen. Erwartet: Abschlussbericht; keine vorzeitige Erfolgsmeldung und keine Löschung der Quelle."],
+      ["restore", "Wiederherstellung in leerem Testordner prüfen", "Den vorhandenen Wiederherstellungstest verwenden. Keine produktive Akte ersetzen. Rechnung B, Zahlungsbeleg E und Erinnerung wieder öffnen; Bericht auf fehlende Originale prüfen."],
+      ["offline", "Ohne Netz die bereits gespeicherten Unterlagen öffnen", "Netzschalter ausschalten und B öffnen. Erwartet: gespeichertes Original bleibt lesbar; weitere Downloads starten nicht ungefragt. Danach gewünschten Netzstand wiederherstellen."],
+      ["end", "Ergebnisdateien dieses Testbogens sichern", "HTML-Ergebnis und möglichst auch JSON-Ergebnis herunterladen. Gespeicherte HTML erneut öffnen und eine Notiz kontrollieren. Erst dann den Bogen zur gemeinsamen Auswertung zurückgeben."]
+    ]
+  }
+]
