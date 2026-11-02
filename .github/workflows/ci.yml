@@ -39,7 +39,9 @@ jobs:
       - name: Browser für die Oberflächenproben
         run: npx playwright install --with-deps chromium
       - name: Diagnose der Pro-Ablage nach Neustart
-        run: DEBUG=pw:browser node tests/ui/pro-dokumente.test.mjs
+        run: |
+          DEBUG=pw:browser node tests/ui/_opfs-reload-diagnose.mjs
+          DEBUG=pw:browser node tests/ui/pro-dokumente.test.mjs
       - name: Oberflächenproben (Playwright)
         run: npm run test:ui
       - uses: actions/upload-artifact@v4
