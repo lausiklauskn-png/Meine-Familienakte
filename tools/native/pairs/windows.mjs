@@ -110,7 +110,7 @@ async function receivePeer(source){
  const saved=await peerSaved(source);assert.equal(saved.count,1);assert.equal(saved.sha256,source.vertrag.sha256);return saved;
 }
 async function peerSaved(source){return pp().evaluate(async({partner,source})=>{
- const hash=async bytes=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(x=>x.toString(16).padStart(2,'0')).join('');
+ const hash=async bytes=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes instanceof Blob?await bytes.arrayBuffer():bytes))].map(x=>x.toString(16).padStart(2,'0')).join('');
  if(partner==='workflow-pdf-pro'){
   const rows=(await window.WFPProTransferStore.snapshot()).filter(r=>r.kind==='eingang'&&r.source.transfer===source.vertrag.id);const original=await window.WFP.DB.get('files',rows[0]?.docId+'~original');return {count:rows.length,id:rows[0]?.docId,sha256:await hash(original.bytes)};
  }if(partner==='private-brain'){
