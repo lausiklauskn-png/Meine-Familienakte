@@ -1,6 +1,6 @@
 import type { ProUebergabe } from "../lib/pro-verbund-vertrag";
 import { kontaktPruefen, kontaktUebernehmen, type PersonKontakt } from "../lib/person-kontakt.ts";
-import { istProOriginal, proOriginalLesen, proOriginalName, proOriginalSpeichern, proOriginalVaultId, proOriginalMerkmale, proTresor } from "./pro-tresor.ts";
+import { istProOriginal, proOriginalLesen, proOriginalName, proOriginalSpeichern, proOriginalVaultId, proOriginalMerkmale, proTresor, proTresorVerfuegbar } from "./pro-tresor.ts";
 import type { AusfuellInfo } from "../lib/ausfuellen";
 import {
   createFamilyRecord,
@@ -2233,14 +2233,14 @@ export async function scanInventoryFolder(input: {
   if (!granted) throw new Error("Der ausgewählte Test- oder Bestandsordner wurde nicht zum Lesen freigegeben.");
   if (!(await requestVaultPermission(input.register))) throw new Error("Der führende Familienakten-Tresor wurde nicht freigegeben.");
   const relationship = await directoryRelationship(input.source, input.register);
-  if (relationship.same) throw new Error("Analyse-Hauptordner und Familienakten-Datentresor sind derselbe Ordner. Bitte als Analysequelle den übergeordneten „SOFTWARE TESTORDNER“ auswählen; der Datentresor wird darin geschützt ausgeschlossen.");
-  if (relationship.sourceWithinRegister) throw new Error(`Der Analyse-Hauptordner liegt innerhalb des Datentresors („${relationship.sourceWithinRegister}“). Bitte den übergeordneten „SOFTWARE TESTORDNER“ oder einen getrennten Testbestand als Analysequelle auswählen.`);
+  if (relationship.same) throw new Error("Analysequelle und Familienakten-Datentresor sind derselbe Ordner. Der Datentresor wird zum Schutz nicht als eigene Quelle durchsucht. Bitte als Analysequelle einen getrennten Ordner wählen (z. B. deinen bisherigen Dokumentenordner) oder einen übergeordneten Ordner – der Datentresor wird darin geschützt ausgeschlossen. Den Tresor selbst prüft „Jetzt Abgleich durchführen“ im Sicherheitscenter.");
+  if (relationship.sourceWithinRegister) throw new Error(`Die Analysequelle liegt innerhalb des Datentresors („${relationship.sourceWithinRegister}“). Bitte einen getrennten Ordner außerhalb des Datentresors oder einen übergeordneten Ordner als Analysequelle wählen.`);
   const excludedPaths = relationship.registerWithinSource ? [relationship.registerWithinSource] : [];
   const accessIssues: DirectoryAccessIssue[] = [];
   const index = await readIndex(input.register);
   const sourceFiles = await listInventoryFiles(input.source, "", [], { excludedPaths, issues: accessIssues });
   if (!sourceFiles.length && accessIssues.length) throw new Error(accessIssues[0].reason);
-  if (!sourceFiles.length) throw new Error("Im ausgewählten Analyse-Hauptordner wurden keine zugänglichen Dateien gefunden. Bitte prüfen, ob „SOFTWARE TESTORDNER“ ausgewählt und der Browserzugriff bestätigt wurde.");
+  if (!sourceFiles.length) throw new Error("Im ausgewählten Analyseordner wurden keine zugänglichen Dateien gefunden. Bitte prüfen, ob der richtige Ordner ausgewählt und der Zugriff bestätigt wurde.");
   if (sourceFiles.length > 10000) throw new Error("Der Ordner enthält mehr als 10.000 Dateien. Bitte zunächst einen kleineren Teilbestand auswählen.");
   const sourceKind = input.sourceKind || (/onedrive/i.test(input.source.name) ? "onedrive" : "local");
   const runId = `INVSCAN-${Date.now()}-${crypto.randomUUID().slice(0, 8)}`;
@@ -3645,6 +3645,55 @@ export async function readLocalMemoryMediaFile(handle: FileSystemDirectoryHandle
   const media = event ? memoryData(event)?.media.find((item) => item.id === mediaId) : null;
   if (!media) throw new Error("Das ausgewählte Memory-Medium wurde nicht gefunden.");
   return fileFromStoredPath(handle, media.storedPath);
+}
+
+export type VaultHoldingsCheck = {
+  registerState: LocalSystemSnapshot["registerState"];
+  documentCount: number;
+  /** Tatsächlich gelesen; Größe und – soweit gespeichert – Prüfsumme stimmen. */
+  confirmed: number;
+  missing: string[];
+  changed: string[];
+  /** Original liegt im Pro-Tresor, der gerade nicht verbunden/entsperrt ist: nicht geprüft, nicht als Fehler gezählt. */
+  proNotCheckable: number;
+  integrityLevel: LocalSystemSnapshot["integrityLevel"];
+  integrityIssues: string[];
+};
+
+/**
+ * „Jetzt Abgleich durchführen“ für den verbundenen Datentresor selbst: nur lesend.
+ * Register lesbar? Jede registrierte Originaldatei vorhanden und unverändert? Der Tresor wird dabei NICHT
+ * als eigene Analysequelle durchsucht (Selbstanalyse-Schutz in scanInventoryFolder bleibt unberührt).
+ */
+export async function checkVaultHoldings(handle: FileSystemDirectoryHandle, onProgress?: (done: number, total: number) => void): Promise<VaultHoldingsCheck> {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der Familienakten-Datentresor wurde nicht freigegeben. Bitte im Sicherheitscenter erneut verbinden.");
+  const snapshot = await readLocalSystemSnapshot(handle);
+  const result: VaultHoldingsCheck = { registerState: snapshot.registerState, documentCount: snapshot.documentCount, confirmed: 0, missing: [], changed: [], proNotCheckable: 0, integrityLevel: snapshot.integrityLevel, integrityIssues: snapshot.integrityIssues };
+  if (snapshot.registerState === "corrupted") return result;
+  const index = await readIndex(handle);
+  let proStand: Awaited<ReturnType<typeof proTresor.zustand>> | null = null;
+  if (index.documents.some((document) => istProOriginal(document.storedPath)) && proTresorVerfuegbar()) {
+    try { proStand = await proTresor.zustand(); } catch { proStand = null; }
+  }
+  for (const [position, document] of index.documents.entries()) {
+    onProgress?.(position, index.documents.length);
+    const name = document.originalName || document.id;
+    if (istProOriginal(document.storedPath)) {
+      let vaultId = "";
+      try { vaultId = proOriginalVaultId(document.storedPath); } catch { result.changed.push(name); continue; }
+      if (!proStand || proStand.status !== "offen" || proStand.id !== vaultId) { result.proNotCheckable++; continue; }
+    }
+    let file: File;
+    try { file = await fileFromStoredPath(handle, document.storedPath); }
+    catch (error) {
+      if (error instanceof Error && /stimmt nicht/.test(error.message)) result.changed.push(name); else result.missing.push(name);
+      continue;
+    }
+    if (file.size !== document.sizeBytes || (document.checksum && await fileChecksum(file) !== document.checksum)) { result.changed.push(name); continue; }
+    result.confirmed++;
+  }
+  onProgress?.(index.documents.length, index.documents.length);
+  return result;
 }
 
 export async function compareVaults(source: FileSystemDirectoryHandle, target: FileSystemDirectoryHandle): Promise<VaultSyncPreview> {
