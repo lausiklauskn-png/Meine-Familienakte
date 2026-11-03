@@ -56,9 +56,13 @@ public class MainActivity extends BridgeActivity {
         });
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override public void handleOnBackPressed() {
-                if (bridge == null) { moveTaskToBack(true); return; }
+                if (bridge == null) return;
                 WebView web = bridge.getWebView();
-                if (web.canGoBack()) web.goBack(); else moveTaskToBack(true);
+                // Back belongs to the document/view history. Reaching its beginning
+                // never closes or backgrounds the app (also for a mouse Back key).
+                web.evaluateJavascript("window.familienakteZurueck?.() === true", handled -> {
+                    if (!"true".equals(handled) && web.canGoBack()) web.goBack();
+                });
             }
         });
     }
