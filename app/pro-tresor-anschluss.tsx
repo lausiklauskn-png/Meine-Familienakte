@@ -2,15 +2,20 @@ import { ProVerbundAnschluss } from "./pro-verbund-anschluss";
 import { useEffect, useState } from "react";
 import { proTresor, proTresorVerfuegbar, type ProTresorZustand } from "./pro-tresor";
 import { readProDocumentVault, setProDocumentVault } from "./local-vault";
+import { useResolveActivity } from "./ui-activity";
 
 /** Kleines eigenes Modul: bestehender Aktenbestand und nativer Pro-Anschluss bleiben unterscheidbar. */
 export function ProTresorAnschluss({ aktenHandle = null }: { aktenHandle?: FileSystemDirectoryHandle | null }) {
+  const resolveActivity = useResolveActivity();
   const [stand, setStand] = useState<ProTresorZustand>({ status: "getrennt" });
   const [busy, setBusy] = useState(false);
   const [meldung, setMeldung] = useState("");
   const [zuordnung, setZuordnung] = useState<{ handle: FileSystemDirectoryHandle | null; id: string | null }>({ handle: null, id: null });
   const ziel = zuordnung.handle === aktenHandle ? zuordnung.id : null;
   const verfuegbar = proTresorVerfuegbar();
+  useEffect(() => {
+    if (stand.status === "offen" && stand.id) resolveActivity("pro-tresor-anschluss");
+  }, [stand.status, stand.id, resolveActivity]);
   useEffect(() => {
     let lebt = true;
     if (aktenHandle) void readProDocumentVault(aktenHandle).then((id) => { if (lebt) setZuordnung({ handle: aktenHandle, id }); }).catch(() => { if (lebt) setMeldung("Die gespeicherte Dokumentablage konnte nicht gelesen werden."); });

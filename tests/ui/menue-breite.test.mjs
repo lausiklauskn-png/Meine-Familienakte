@@ -14,6 +14,30 @@ try {
     const lage = await page.evaluate(() => [...document.querySelectorAll(".main-navigation .nav-cluster > button")].map((b) => { const r = b.getBoundingClientRect(); return { t: b.textContent.trim(), l: r.left, r: r.right, sichtbar: r.width > 0 && r.left >= 0 && r.right <= window.innerWidth + 0.5 }; }));
     const weg = lage.filter((x) => !x.sichtbar).map((x) => x.t);
     check(lage.length === 8 && weg.length === 0, `${breite} px: alle acht Menüs ganz im Fenster`, weg.length ? `abgeschnitten: ${weg.join(", ")}` : "");
+    await step(`${breite} px: Menü bleibt unter allen Navigationszeilen; Fahrzeuge und Käufe lassen sich direkt wieder schließen`, async () => {
+      const assistenz = page.locator(".nav-cluster > button", { hasText: "Assistenz" });
+      await assistenz.click();
+      try {
+        const frei = await page.evaluate(() => {
+          const nav = document.querySelector(".main-navigation").getBoundingClientRect();
+          const menu = document.querySelector(".mega-menu").getBoundingClientRect();
+          return menu.top >= nav.bottom - 0.5;
+        });
+        // Bei verdeckter zweiter Zeile sofort rot; keine erzwungenen Klicks,
+        // die einen für Klaus nicht erreichbaren Schalter trotzdem bedienen.
+        if (!frei) return false;
+        for (const name of ["Fahrzeuge", "Käufe & Garantien"]) {
+          const button = page.locator(".nav-cluster > button", { hasText: name });
+          await button.click();
+          await page.locator(".mega-intro h2", { hasText: name }).waitFor();
+          await button.click();
+          await page.locator(".mega-menu").waitFor({ state: "hidden" });
+        }
+        return true;
+      } finally {
+        if (await assistenz.getAttribute("aria-expanded") === "true") await assistenz.click();
+      }
+    });
     await step(`${breite} px: Dokumente → Eingangszentrale erreichbar`, async () => {
       await page.locator(".main-navigation .nav-cluster > button", { hasText: "Dokumente" }).first().click();
       await page.locator(".mega-menu button", { hasText: "Eingangszentrale" }).first().click();
@@ -25,5 +49,17 @@ try {
     check(errors.length === 0, `${breite} px: keine Seitenfehler`, errors.join(" | "));
     await page.context().close();
   }
+  const handy = await (await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, locale: "de-DE" })).newPage();
+  await handy.goto(app.base, { waitUntil: "networkidle" }); await ready(handy);
+  await step("390 px: linkes Menü öffnen, Fahrzeuge auf- und wieder zuklappen", async () => {
+    await handy.locator(".mobile-menu-button").click();
+    const fahrzeuge = handy.locator(".nav-cluster > button", { hasText: "Fahrzeuge" });
+    await fahrzeuge.click();
+    await handy.locator(".mega-intro h2", { hasText: "Fahrzeuge" }).waitFor();
+    await fahrzeuge.click();
+    await handy.locator(".mega-menu").waitFor({ state: "hidden" });
+    return await handy.locator(".main-navigation.mobile-open").isVisible();
+  });
+  await handy.context().close();
 } finally { await browser.close(); await app.stop(); }
 process.exit(summary("Menüleiste je Breite"));

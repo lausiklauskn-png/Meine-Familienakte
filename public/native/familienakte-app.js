@@ -106,7 +106,7 @@
           for (const request of requests) await cache.delete(request);
         } else return;
       } catch { return; /* Vorrat und Wiederaufnahme-Adresse bleiben erhalten */ }
-      try { history.replaceState(null, '', location.pathname); } catch { /* egal */ }
+      try { history.replaceState(history.state, '', location.pathname + location.hash); } catch { /* egal */ }
     })();
   }
   // Knopf „Aktualisieren“ oben (zwei Pfeile im Kreis): in den Apps dieselbe Prüfung wie der Tipp auf die Versionszeile,

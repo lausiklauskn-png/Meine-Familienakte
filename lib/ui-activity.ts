@@ -2,8 +2,8 @@ import { isSensitiveHealthText } from "./family-privacy.ts";
 
 // Presentation only: no register, chronology, file access or durable event store.
 export type ActivityKind = "success" | "error" | "info" | "warning";
-export type ActivityFeedback = { kind: ActivityKind; text: string };
-export type ActivityEntry = { id: number; kind: "success" | "error" | "warning"; text: string };
+export type ActivityFeedback = { kind: ActivityKind; text: string; issue?: string };
+export type ActivityEntry = { id: number; kind: "success" | "error" | "warning"; text: string; issue?: string };
 
 export function activityEntry(feedback: ActivityFeedback, id: number): ActivityEntry | null {
   const message = feedback.text.trim();
@@ -15,11 +15,15 @@ export function activityEntry(feedback: ActivityFeedback, id: number): ActivityE
       ? "Gesundheitsbezogene Aktion ausgeführt. Einzelheiten bleiben im geschützten Gesundheitsbereich."
       : "Gesundheitsbezogene Aktion erfordert Prüfung. Einzelheiten bleiben im geschützten Gesundheitsbereich."
     : message;
-  return { id, kind, text: `${prefix}: ${safeMessage}` };
+  return { id, kind, text: `${prefix}: ${safeMessage}`, ...(feedback.issue ? { issue: feedback.issue } : {}) };
 }
 
 export function appendActivity(current: ActivityEntry[], entry: ActivityEntry | null): ActivityEntry[] {
-  return entry ? [entry, ...current].slice(0, 2) : current;
+  return entry ? [entry, ...current.filter(old => !entry.issue || old.issue !== entry.issue)].slice(0, 2) : current;
+}
+
+export function resolveActivity(current: ActivityEntry[], issue: string): ActivityEntry[] {
+  return current.filter(entry => entry.issue !== issue);
 }
 
 export async function copyActivityText(text: string, writeText: (text: string) => Promise<void>) {

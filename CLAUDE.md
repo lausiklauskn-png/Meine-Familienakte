@@ -2,6 +2,16 @@
 
 Diese Datei liest jede Sitzung zuerst. Was hier steht, gilt für jede Arbeit in diesem Repo.
 
+## Bedienkorrekturen, 3. November 2026 – 2.28.16
+
+Auf Klaus' direkten Auftrag: Basic-Kopfzeichen dunkel, Menüs unter sämtlichen Navigationszeilen,
+Ansichtsverlauf mit Rückkehr zur Position sowie platzsparende, anlassbezogene Hinweise.
+Baustand und abgegrenzte Proben: `BRIEF_ABSCHLUSS_2026-11-03_BASIC-UND-NAVIGATION.md`.
+Technische Fassung 2.28.16; sichtbare Zeile weiterhin 2.28.1. Derselbe Bau gilt für PWA,
+Android und Windows. Nach vorhandener grüner PR-Pipeline auf Klaus' bestehendem Freibrief
+zusammenführen und über die vorhandenen Release-Wege veröffentlichen. Veröffentlichungsnachtrag
+nach Abschluss lesen; keine bereits veröffentlichte Fassung erneut ausgeben.
+
 ## Aktueller Bau: Pro-Verbund, 2. November 2026
 
 Die Funktionen aus `BRIEF_SITZUNG_2026-11-01_PRO-VERBUND.md` stehen auf main:
