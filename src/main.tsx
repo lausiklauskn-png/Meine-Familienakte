@@ -1,3 +1,4 @@
+import { resetDemoStorage } from "../lib/demo-workspace.ts";
 import { Component, StrictMode, type ErrorInfo, type ReactNode } from "react";
 import { createRoot } from "react-dom/client";
 import HealthPortal from "../app/health-portal";
@@ -23,7 +24,15 @@ class Fehlergrenze extends Component<{ children: ReactNode }, { fehler: Error | 
   }
 }
 
-createRoot(document.getElementById("root")!).render(
+const demoAction = new URLSearchParams(location.search).get("demo");
+if (demoAction === "reset" || demoAction === "delete") {
+  void resetDemoStorage().then(() => { const url = new URL(location.href); if (demoAction === "delete") url.searchParams.delete("demo"); else url.searchParams.set("demo", "1"); location.replace(url.href); }).catch((error: unknown) => {
+    const root = document.getElementById("root")!;
+    root.textContent = error instanceof Error ? error.message : "Die Demo konnte nicht zurückgesetzt werden.";
+    const back = document.createElement("button"); back.textContent = "Zur Demo zurück";
+    back.onclick = () => { const url = new URL(location.href); url.searchParams.set("demo", "1"); location.replace(url.href); }; root.append(back);
+  });
+} else createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Fehlergrenze>
       <HealthPortal />

@@ -1,3 +1,4 @@
+import { workspaceName } from "../lib/demo-workspace.ts";
 // Private, rebuildable search data. This module has no network or Mycel access.
 export type MeaningModel = { id: string; revision: string; dim: number };
 export type MeaningDocument = { id: string; text: string };
@@ -42,7 +43,7 @@ async function corpus(scope: string, model: MeaningModel, documents: MeaningDocu
 let opened: Promise<IDBDatabase> | null = null;
 function database() {
   if (!opened) opened = new Promise<IDBDatabase>((resolve, reject) => {
-    const request = indexedDB.open(DB, 1);
+    const request = indexedDB.open(workspaceName(DB), 1);
     request.onupgradeneeded = () => { request.result.createObjectStore("vectors", { keyPath: "key" }); request.result.createObjectStore("active", { keyPath: "scope" }); };
     request.onerror = () => { opened = null; reject(request.error); };
     request.onblocked = () => { opened = null; reject(Error("INDEX_DATABASE_BLOCKED")); };

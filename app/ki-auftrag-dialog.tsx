@@ -1,3 +1,4 @@
+import { workspaceName, workspaceStorage } from "../lib/demo-workspace.ts";
 import { useEffect, useMemo, useState } from "react";
 import { Copy, ExternalLink, FileText, Sparkles, Undo2, Upload, X } from "lucide-react";
 import { DictationButton, InfoPopover } from "./ui-controls";
@@ -14,8 +15,8 @@ const SITZUNGEN_KEY = "familienakte_ki_sitzungen_v1";
 const WAHL_KEY = "familienakte_ki_wahl_v1";
 const MAX_DOKUMENTE = 5;
 
-function lesen<T>(key: string, vorgabe: T): T { try { return { ...vorgabe, ...JSON.parse(localStorage.getItem(key) || "{}") }; } catch { return vorgabe; } }
-function schreiben(key: string, wert: unknown) { try { localStorage.setItem(key, JSON.stringify(wert)); } catch { /* ohne Speicher geht es weiter */ } }
+function lesen<T>(key: string, vorgabe: T): T { try { return { ...vorgabe, ...JSON.parse(workspaceStorage.getItem(key) || "{}") }; } catch { return vorgabe; } }
+function schreiben(key: string, wert: unknown) { try { workspaceStorage.setItem(key, JSON.stringify(wert)); } catch { /* ohne Speicher geht es weiter */ } }
 const pseudo = () => (window as unknown as { SbkimPseudonym?: Pseudonymisierer }).SbkimPseudonym;
 
 const OCR_SEITEN = 5;
@@ -115,7 +116,7 @@ export function KiAuftragDialog({ seiteId, seite, initialRequest, documents, nam
     if (!anon || !bereit) return;
     const sitzung = gemerkteNehmen && gemerkt ? gemerkt : undefined;
     const { url, textInAdresse } = oeffnenAdresse(ziel, anon.text, sitzung);
-    if (art === "dokument") { setMap(anon.map); try { sessionStorage.setItem("familienakte_ki_map", JSON.stringify(anon.map)); } catch { /* nur im Fenster */ } }
+    if (art === "dokument") { setMap(anon.map); try { sessionStorage.setItem(workspaceName("familienakte_ki_map"), JSON.stringify(anon.map)); } catch { /* nur im Fenster */ } }
     if (!textInAdresse) await kopieren(anon.text, `Auftrag kopiert. In ${KI_ZIELE[ziel].name} ins Eingabefeld einfügen.`);
     const fenster = window.open(url, "_blank", "noopener");
     if (!fenster && textInAdresse) onNotice({ kind: "info", text: "Das Fenster wurde nicht geöffnet (Internet aus oder vom Browser blockiert). Der Auftrag kann kopiert werden." });
@@ -130,7 +131,7 @@ export function KiAuftragDialog({ seiteId, seite, initialRequest, documents, nam
   };
   const sitzungVergessen = () => { const neu = { ...sitzungen }; delete neu[sitzKey]; setSitzungen(neu); schreiben(SITZUNGEN_KEY, neu); };
 
-  const zuordnung = Object.keys(map).length ? map : (() => { try { return JSON.parse(sessionStorage.getItem("familienakte_ki_map") || "{}"); } catch { return {}; } })();
+  const zuordnung = Object.keys(map).length ? map : (() => { try { return JSON.parse(sessionStorage.getItem(workspaceName("familienakte_ki_map")) || "{}"); } catch { return {}; } })();
   const rueckweg = () => { if (p) setZurueck(zurueckSetzen(p, antwort, zuordnung)); };
   const ablegen = () => {
     const titel = `KI-Ergebnis ${seite} ${new Date().toISOString().slice(0, 10)}.txt`;

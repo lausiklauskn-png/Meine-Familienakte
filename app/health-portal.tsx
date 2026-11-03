@@ -1,3 +1,5 @@
+import { demoActive, switchDemo } from "../lib/demo-workspace.ts";
+import { workspaceStorage } from "../lib/demo-workspace.ts";
 import type { SectionId, UploadedDocument } from "./portal-types";
 import { PrivateMeaningPanel } from "./private-meaning-panel";
 import { ProGeraetetransportPanel } from "./pro-geraetetransport-panel";
@@ -332,12 +334,12 @@ function runAssignmentSystemTests(): SystemCheckReport["testCases"] {
 function readSystemCheckReports(): SystemCheckReport[] {
   if (typeof window === "undefined") return [];
   try {
-    const stored = JSON.parse(localStorage.getItem(SYSTEM_CHECK_REPORTS_KEY) || "[]") as StoredSystemCheck[];
+    const stored = JSON.parse(workspaceStorage.getItem(SYSTEM_CHECK_REPORTS_KEY) || "[]") as StoredSystemCheck[];
     const builtIn = normalizeSystemReport(releaseSystemCheckReport as StoredSystemCheck);
     const reports = stored.map((item) => normalizeSystemReport(item)).filter((item): item is SystemCheckReport => !!item);
     if (builtIn && !reports.some((item) => item.id === builtIn.id)) reports.push(builtIn);
     if (reports.length) return reports.sort((a, b) => new Date(b.checkedAt).getTime() - new Date(a.checkedAt).getTime());
-    const legacy = normalizeSystemReport(JSON.parse(localStorage.getItem(SYSTEM_CHECK_STORAGE_KEY) || "null") as StoredSystemCheck | null);
+    const legacy = normalizeSystemReport(JSON.parse(workspaceStorage.getItem(SYSTEM_CHECK_STORAGE_KEY) || "null") as StoredSystemCheck | null);
     return legacy ? [legacy] : [];
   } catch { return []; }
 }
@@ -346,14 +348,14 @@ function saveSystemCheckReport(report: SystemCheckReport, makeCurrent = report.k
   const existing = readSystemCheckReports();
   const reports = [report, ...existing.filter((item) => item.id !== report.id)]
     .sort((a, b) => new Date(b.checkedAt).getTime() - new Date(a.checkedAt).getTime());
-  localStorage.setItem(SYSTEM_CHECK_REPORTS_KEY, JSON.stringify(reports));
-  if (makeCurrent) localStorage.setItem(SYSTEM_CHECK_STORAGE_KEY, JSON.stringify(report satisfies StoredSystemCheck));
+  workspaceStorage.setItem(SYSTEM_CHECK_REPORTS_KEY, JSON.stringify(reports));
+  if (makeCurrent) workspaceStorage.setItem(SYSTEM_CHECK_STORAGE_KEY, JSON.stringify(report satisfies StoredSystemCheck));
   return reports;
 }
 
 function createSystemCheckBackup(source: SystemCheckReport) {
   const backups = (() => {
-    try { return JSON.parse(localStorage.getItem(SYSTEM_CHECK_BACKUPS_KEY) || "[]") as SystemCheckBackup[]; }
+    try { return JSON.parse(workspaceStorage.getItem(SYSTEM_CHECK_BACKUPS_KEY) || "[]") as SystemCheckBackup[]; }
     catch { return []; }
   })();
   const backup: SystemCheckBackup = {
@@ -362,12 +364,12 @@ function createSystemCheckBackup(source: SystemCheckReport) {
     sourceReportId: source.id,
     version: APP_VERSION,
     previousCurrent: (() => {
-      try { return JSON.parse(localStorage.getItem(SYSTEM_CHECK_STORAGE_KEY) || "null") as StoredSystemCheck | null; }
+      try { return JSON.parse(workspaceStorage.getItem(SYSTEM_CHECK_STORAGE_KEY) || "null") as StoredSystemCheck | null; }
       catch { return null; }
     })(),
     previousReportCount: readSystemCheckReports().length,
   };
-  localStorage.setItem(SYSTEM_CHECK_BACKUPS_KEY, JSON.stringify([backup, ...backups].slice(0, 20)));
+  workspaceStorage.setItem(SYSTEM_CHECK_BACKUPS_KEY, JSON.stringify([backup, ...backups].slice(0, 20)));
   return backup;
 }
 
@@ -446,7 +448,7 @@ function HealthPortalContent() {
   const [, setCheckRecommended] = useState(() => {
     if (typeof window === "undefined") return false;
     try {
-      const saved = JSON.parse(localStorage.getItem(SYSTEM_CHECK_STORAGE_KEY) || "null") as StoredSystemCheck | null;
+      const saved = JSON.parse(workspaceStorage.getItem(SYSTEM_CHECK_STORAGE_KEY) || "null") as StoredSystemCheck | null;
       return saved?.version !== APP_VERSION;
     } catch { return true; }
   });
@@ -509,12 +511,17 @@ function HealthPortalContent() {
     finally { setSampleBusy(false); }
   };
   const loadSampleData = async () => {
-    if (!vaultHandle) { setNotice({ kind: "info", text: "Bitte zuerst den Datentresor verbinden." }); return; }
+    if (!vaultHandle) return;
     setSampleBusy(true);
-    try { await seedSampleFamily(vaultHandle, { force: true }); await refreshLocal(vaultHandle); setNotice({ kind: "success", text: "Die erfundene Beispielfamilie wurde geladen. Eigene Einträge blieben unverändert." }); }
-    catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die Beispieldaten konnten nicht geladen werden." }); }
+    try {
+      // Nur den tatsächlich aktiven Bestand bereinigen; keine anderen Speicherorte.
+      const data = await readLocalVaultData(vaultHandle);
+      if (sampleDataPresent(data)) await removeSampleFamily(vaultHandle);
+      switchDemo(true);
+    } catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Der bisherige Beispielbestand konnte nicht sicher bereinigt werden." }); }
     finally { setSampleBusy(false); }
   };
+
   const oneDriveReachable = !!oneDriveHandle && !!oneDriveSummary;
   const localVaultReachable = !!localVaultHandle && !!localVaultSummary;
   const vaultReachable = oneDriveReachable || localVaultReachable;
@@ -548,9 +555,9 @@ function HealthPortalContent() {
         setLocalVaultHandle(local); setLocalVaultName(local.name);
         if (isBrowserVault(local)) {
           // A2: Der Browser konnte beim ersten Start nicht in den Dateispeicher schreiben und nutzt IndexedDB; das wird einmal gesagt.
-          try { if (browserStorageKind() === "indexeddb" && !localStorage.getItem("mmi-browser-speicher-hinweis")) { localStorage.setItem("mmi-browser-speicher-hinweis", "1"); setNotice({ kind: "info", text: "Der Browser-Datentresor liegt in diesem Browser in IndexedDB, weil der Dateispeicher (OPFS) nicht beschreibbar war. Diese Wahl bleibt gespeichert; es wird nicht automatisch gewechselt." }); } } catch { /* optional */ }
+          try { if (browserStorageKind() === "indexeddb" && !workspaceStorage.getItem("mmi-browser-speicher-hinweis")) { workspaceStorage.setItem("mmi-browser-speicher-hinweis", "1"); setNotice({ kind: "info", text: "Der Browser-Datentresor liegt in diesem Browser in IndexedDB, weil der Dateispeicher (OPFS) nicht beschreibbar war. Diese Wahl bleibt gespeichert; es wird nicht automatisch gewechselt." }); } } catch { /* optional */ }
         }
-        if (isBrowserVault(local)) { setSampleBusy(true); await seedSampleFamily(local).catch((error) => { console.error("Beispieldaten konnten nicht geladen werden", error); return false; }); setSampleBusy(false); }
+        if (demoActive() && isBrowserVault(local)) { setSampleBusy(true); await seedSampleFamily(local).catch((error) => { console.error("Beispieldaten konnten nicht geladen werden", error); return false; }); setSampleBusy(false); }
         if (await requestVaultPermission(local)) {
           if (!oneDrive) { const data = await readLocalVaultData(local); applyLocalData(data); }
           setLocalVaultSummary(await getVaultSummary(local));
@@ -1175,7 +1182,13 @@ function HealthPortalContent() {
           <label className="global-search"><Search size={19}/><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Zum Beispiel: Zeige mir meine Krankenkasse-Schreiben …" aria-label="Gesamte Akte in natürlichen Worten durchsuchen"/><DictationButton value={query} onChange={setQuery} label="Suche" append={false}/>{query && <button type="button" className="search-clear" onClick={() => setQuery("")} aria-label="Suche löschen"><X size={16}/></button>}</label>
         </section>
         <ActivityLines/>
-        {sampleBusy && !samplePresent && <section className="info-notice sample-data-notice" aria-live="polite"><span>Info</span><div><strong>Beispieldaten werden vorbereitet …</strong><div>Beim ersten Start legt die App eine frei erfundene Beispielfamilie im Browser-Datentresor an. Das dauert nur wenige Sekunden.</div></div></section>}
+        <section className="info-notice demo-workspace" aria-label="Arbeitsbereich">
+          <div><strong>{demoActive() ? "Demo · getrennter Testbestand" : "Deine eigene Familienakte"}</strong><div>{demoActive() ? "Alle Daten sind Beispieldaten. Auch eigene Importe in dieser Demo gehören nur zum Testbestand. Deine echte Akte bleibt getrennt. Externe Tresore und Workflow-PDF-Bibliothek werden hier nicht verbunden." : "Eigene Unterlagen bleiben hier. Die Vorführung öffnet einen getrennten lokalen Testbestand."}</div></div>
+          <button type="button" className="button secondary" disabled={sampleBusy || vaultBusy || intakeBusy || inventoryBusy || !vaultHandle} onClick={() => demoActive() ? switchDemo(false) : void loadSampleData()}>{demoActive() ? "Demo verlassen" : "Demo öffnen"}</button>
+          {demoActive() && <button type="button" className="button secondary" disabled={sampleBusy || vaultBusy || intakeBusy || inventoryBusy} onClick={async () => { if (await askConfirm("Den gesamten getrennten Demobestand einschließlich deiner dort importierten Testdateien löschen und neu anlegen? Deine echte Akte bleibt erhalten. Externe Sicherungen bleiben erhalten.")) { const url = new URL(location.href); url.searchParams.set("demo", "reset"); location.assign(url.href); } }}>Demo zurücksetzen</button>}
+          {demoActive() && <button type="button" className="button secondary" disabled={sampleBusy || vaultBusy || intakeBusy || inventoryBusy} onClick={async () => { if (await askConfirm("Den gesamten getrennten Demobestand einschließlich Testimporten löschen und zur eigenen Akte zurückkehren? Externe Sicherungen bleiben erhalten.")) { const url = new URL(location.href); url.searchParams.set("demo", "delete"); location.assign(url.href); } }}>Demo löschen und verlassen</button>}
+        </section>
+        {sampleBusy && !samplePresent && <section className="info-notice sample-data-notice" aria-live="polite"><span>Info</span><div><strong>Beispieldaten werden vorbereitet …</strong><div>Die Demo legt eine frei erfundene Beispielfamilie im getrennten Demobestand an. Das dauert nur wenige Sekunden.</div></div></section>}
         {samplePresent && <section className="info-notice sample-data-notice" aria-label="Hinweis zu Beispieldaten"><span>Info</span><div><strong>{SAMPLE_NOTICE}</strong><div>Die {SAMPLE_FAMILY_NAME}, alle Orte, Firmen, Fahrzeuge und Nummern sind frei erfunden. Wenn du deine eigenen Unterlagen einpflegen möchtest, entferne die Beispieldaten mit einem Klick – eigene Einträge bleiben erhalten.</div></div><button type="button" className="button secondary" disabled={sampleBusy} onClick={() => void removeSampleData()}><Trash2 size={16}/> Beispieldaten entfernen</button></section>}
         <div className="breadcrumb">
           {(navigation.canBack || navigation.canForward) && <span className="navigation-history" aria-label="Ansichtsverlauf">
@@ -1249,7 +1262,8 @@ function HealthPortalContent() {
           finally { setBusy(false); }
         }} busy={busy}/></>} 
         {!query && active === "stapel" && <Suspense fallback={null}><StapelSeite neu={stapelNeu} onNeuGenommen={() => setStapelNeu(null)} onWorkflowPdf={dateiInWorkflowPdf} onEinordnen={(dateien, ids) => queueCentralIntakeFiles(dateien, "camera-scan", null, ids)} kopf={<PageTitle icon={<Upload/>} title="Stapel (noch einordnen)" text="Viele Fotos oder Scans auf einmal: Workflow PDF findet je Bild das Blatt und zieht es gerade. Wo sich die Verfahren nicht einig sind, bleibt das ganze Foto stehen („Ecken prüfen“). Erst „Einordnen“ gibt die Unterlagen an die Eingangszentrale."/>}/></Suspense>}
-        {!query && active === "workflowpdf" && <Suspense fallback={null}><WorkflowPdfSeite key={wfpdfStart} scan={wfpdfScan} oeffnen={wfpdfOeffnen} onAblegen={ausWorkflowPdf} onGeoeffnet={() => { setWfpdfOeffnen(null); setWfpdfScan(false); }} kopf={<PageTitle icon={<FileText/>} title="Workflow PDF" text="Das ganze Werkzeug von Workflow PDF in der Familienakte: scannen, zuschneiden, Felder erkennen und setzen, ausfüllen, Prüfbericht, PDF ausgeben. Eigene Bibliothek, getrennt von der Workflow-PDF-App; nichts geht ins Netz, bis du es selbst wählst."/>}/></Suspense>}
+        {!query && active === "workflowpdf" && demoActive() && <p>Workflow PDF hat eine eigene Bibliothek. Bitte die Demo verlassen, um sie zu verwenden.</p>}
+        {!query && active === "workflowpdf" && !demoActive() && <Suspense fallback={null}><WorkflowPdfSeite key={wfpdfStart} scan={wfpdfScan} oeffnen={wfpdfOeffnen} onAblegen={ausWorkflowPdf} onGeoeffnet={() => { setWfpdfOeffnen(null); setWfpdfScan(false); }} kopf={<PageTitle icon={<FileText/>} title="Workflow PDF" text="Das ganze Werkzeug von Workflow PDF in der Familienakte: scannen, zuschneiden, Felder erkennen und setzen, ausfüllen, Prüfbericht, PDF ausgeben. Eigene Bibliothek, getrennt von der Workflow-PDF-App; nichts geht ins Netz, bis du es selbst wählst."/>}/></Suspense>}
         {!query && active === "netz" && <Suspense fallback={null}><NetzSeite kopf={<PageTitle icon={<Network/>} title="Netz (Mycel)" text="Verbindet die Familienakte auf Wunsch mit anderen Geräten im SBKIM-Netz. Beim Öffnen der Akte geht nichts ins Netz; hinaus geht nur die Visitenkarte, keine Unterlagen."/>}/></Suspense>}
         {!query && active === "security" && <SecurityCenter
           aktenHandle={vaultHandle} onMeaningOpen={go}
@@ -1920,8 +1934,8 @@ function InventoryPreviewDialog({ item, sourceHandle, areaOptions, records, busy
 // (Adresse mit ?experte=1 oder localStorage familienakte-experte=1), nicht in PWA, APK und Windows-App für Privatnutzer.
 const expertenModus = (() => {
   if (import.meta.env.DEV) return true;
-  try { if (new URLSearchParams(window.location.search).get("experte") === "1") { localStorage.setItem("familienakte-experte", "1"); return true; } } catch { /* ohne Adresse */ }
-  try { return localStorage.getItem("familienakte-experte") === "1"; } catch { return false; }
+  try { if (new URLSearchParams(window.location.search).get("experte") === "1") { workspaceStorage.setItem("familienakte-experte", "1"); return true; } } catch { /* ohne Adresse */ }
+  try { return workspaceStorage.getItem("familienakte-experte") === "1"; } catch { return false; }
 })();
 function InventoryCenter({ vaultReady, vaultHandle, sourceHandle, sourceName, archiveName, items, records, busy, progress, lastRun, archiveResult, onSelectSource, onSelectArchive, onScan, onPause, onArchive, onRelease, onReset, onConfirmAssignment, onTestRegisterSaved, onGo }: {
   vaultReady: boolean;
@@ -2003,9 +2017,9 @@ function InventoryCenter({ vaultReady, vaultHandle, sourceHandle, sourceName, ar
   }, []);
   useEffect(() => {
     try {
-      const stored = window.localStorage.getItem(automaticTestFailureStorageKey) || window.localStorage.getItem(legacyAutomaticTestFailureStorageKey);
+      const stored = workspaceStorage.getItem(automaticTestFailureStorageKey) || workspaceStorage.getItem(legacyAutomaticTestFailureStorageKey);
       if (stored) { setAutomaticTestFailure(JSON.parse(stored) as UiAutomatedTestFailureReport); setAutomaticTestFailureIsPrevious(true); }
-      const storedDiagnostic = window.localStorage.getItem(storageDiagnosticStorageKey);
+      const storedDiagnostic = workspaceStorage.getItem(storageDiagnosticStorageKey);
       if (storedDiagnostic) setStorageDiagnosticReport(JSON.parse(storedDiagnostic) as AutomatedStorageDiagnosticReport);
     } catch { /* Ein nicht lesbarer UI-Diagnosestatus blockiert weder Navigation noch Hilfe. */ }
   }, []);
@@ -2016,14 +2030,14 @@ function InventoryCenter({ vaultReady, vaultHandle, sourceHandle, sourceName, ar
     setAutomaticTestError(failure.cause);
     setAutomaticTestReport(null);
     setAutomaticTestFailureCopied(false);
-    try { window.localStorage.setItem(automaticTestFailureStorageKey, JSON.stringify(failure)); } catch { /* Bericht bleibt in dieser Sitzung sichtbar. */ }
+    try { workspaceStorage.setItem(automaticTestFailureStorageKey, JSON.stringify(failure)); } catch { /* Bericht bleibt in dieser Sitzung sichtbar. */ }
   };
   const clearAutomaticTestFailure = () => {
     setAutomaticTestFailure(null);
     setAutomaticTestFailureIsPrevious(false);
     setAutomaticTestError("");
     setAutomaticTestFailureCopied(false);
-    try { window.localStorage.removeItem(automaticTestFailureStorageKey); window.localStorage.removeItem(legacyAutomaticTestFailureStorageKey); } catch { /* Keine fachlichen Daten betroffen. */ }
+    try { workspaceStorage.removeItem(automaticTestFailureStorageKey); workspaceStorage.removeItem(legacyAutomaticTestFailureStorageKey); } catch { /* Keine fachlichen Daten betroffen. */ }
   };
   const copyAutomaticTestFailure = async () => {
     if (!automaticTestFailure) return;
@@ -2048,13 +2062,13 @@ function InventoryCenter({ vaultReady, vaultHandle, sourceHandle, sourceName, ar
   const runStorageDiagnostic = async () => {
     setStorageDiagnosticBusy(true); setAutomaticTestError(""); setStorageDiagnosticCopied(false);
     setStorageDiagnosticReport(null);
-    try { window.localStorage.removeItem(storageDiagnosticStorageKey); } catch { /* Keine fachlichen Daten betroffen. */ }
+    try { workspaceStorage.removeItem(storageDiagnosticStorageKey); } catch { /* Keine fachlichen Daten betroffen. */ }
     try {
       const handle = developmentBase || await chooseDevelopmentBaseFolder();
       setDevelopmentBase(handle);
       const report = await runAutomatedStorageDiagnostic(handle);
       setStorageDiagnosticReport(report);
-      try { window.localStorage.setItem(storageDiagnosticStorageKey, JSON.stringify(report)); } catch { /* Der Bericht bleibt in dieser Sitzung sichtbar. */ }
+      try { workspaceStorage.setItem(storageDiagnosticStorageKey, JSON.stringify(report)); } catch { /* Der Bericht bleibt in dieser Sitzung sichtbar. */ }
       if (report.outcome === "FEHLER_REPRODUZIERT") {
         storeAutomaticTestFailure(new Error(report.observedFailure || "Der Windows-Dateisystem-Diagnoselauf ist fehlgeschlagen."), handle.name);
       } else { clearAutomaticTestFailure(); reportActivity({ kind: report.automaticEnvironmentCompleted ? "success" : "info", text: `Windows-Dateisystem-Diagnose abgeschlossen · ${report.phases.filter((phase) => phase.status === "bestanden").length} Phasen bestanden. ${report.automaticEnvironmentCompleted ? "Sicherung und Wiederherstellung im Testbereich bestätigt." : "Vollständigen Wiederherstellungsnachweis im Diagnosebericht prüfen."}` }); }
@@ -2329,7 +2343,7 @@ function SystemCheck({ documents, localDocuments, vaultHandle, onCompleted }: {
 
   const saveUserAcceptance = (nextReport: SystemCheckReport) => {
     // Reuse the existing report store, but never overwrite an unreadable report collection.
-    const raw = localStorage.getItem(SYSTEM_CHECK_REPORTS_KEY);
+    const raw = workspaceStorage.getItem(SYSTEM_CHECK_REPORTS_KEY);
     if (raw) {
       try { const entries = JSON.parse(raw) as StoredSystemCheck[]; if (!Array.isArray(entries) || entries.some((entry) => !normalizeSystemReport(entry))) throw new Error("invalid"); }
       catch { throw new Error("Die vorhandenen Prüfberichte sind nicht lesbar. Sie bleiben erhalten. Bitte den technischen Fehler zuerst prüfen lassen."); }
@@ -2337,7 +2351,7 @@ function SystemCheck({ documents, localDocuments, vaultHandle, onCompleted }: {
     let updatedReports: SystemCheckReport[];
     try {
       updatedReports = saveSystemCheckReport(nextReport, false);
-      const stored = JSON.parse(localStorage.getItem(SYSTEM_CHECK_REPORTS_KEY) || "[]") as SystemCheckReport[];
+      const stored = JSON.parse(workspaceStorage.getItem(SYSTEM_CHECK_REPORTS_KEY) || "[]") as SystemCheckReport[];
       if (JSON.stringify(stored.find((item) => item.id === nextReport.id)?.userAcceptance) !== JSON.stringify(nextReport.userAcceptance)) throw new Error("verify");
     } catch { throw new Error("Die Prüfergebnisse konnten im Browser nicht sicher gespeichert und wieder gelesen werden. Bitte die Browser-Speicherberechtigung und freien Speicher prüfen und erneut absenden."); }
     setReports(updatedReports);
@@ -2767,8 +2781,8 @@ function SystemCheck({ documents, localDocuments, vaultHandle, onCompleted }: {
       let reportStorageReady = true;
       try {
         const probeKey = `${SYSTEM_CHECK_REPORTS_KEY}-probe`;
-        localStorage.setItem(probeKey, "bereit");
-        localStorage.removeItem(probeKey);
+        workspaceStorage.setItem(probeKey, "bereit");
+        workspaceStorage.removeItem(probeKey);
       } catch { reportStorageReady = false; }
       addArea({
         id: "reports", label: "Prüfberichte", level: reportStorageReady ? "green" : "red",
@@ -2864,7 +2878,7 @@ function SystemCheck({ documents, localDocuments, vaultHandle, onCompleted }: {
       }
 
       const repairedSource: SystemCheckReport = { ...source, openProblems: buildSystemProblems(source.areas) };
-      localStorage.setItem(SYSTEM_CHECK_STORAGE_KEY, JSON.stringify(repairedSource satisfies StoredSystemCheck));
+      workspaceStorage.setItem(SYSTEM_CHECK_STORAGE_KEY, JSON.stringify(repairedSource satisfies StoredSystemCheck));
       const repairs = ["Prüfstatus und Verknüpfung zum neuesten Prüfbericht sicher neu aufgebaut."];
       setRepairProgress({ percent: 84, area: "Vollständige Kontrollprüfung", attempt });
       setRunning("verification");

@@ -1,3 +1,4 @@
+import { demoActive } from "../lib/demo-workspace.ts";
 import type { ProApp, ProUebergabe } from "./pro-uebergabe";
 export type ProTresorZustand = { status: "getrennt" | "offen" | "gesperrt" | "nicht_erreichbar"; id?: string; ort?: string; code?: string; uebergaben?: boolean };
 interface ProTresorPlugin {
@@ -16,13 +17,15 @@ interface ProTresorPlugin {
 }
 type NativeWindow = Window & { Capacitor?: { isNativePlatform?: () => boolean; getPlatform?: () => string; Plugins?: { FamilienakteTresor?: ProTresorPlugin } } };
 const cap = () => (window as NativeWindow).Capacitor;
-export const proTresorVerfuegbar = () => Boolean(cap()?.isNativePlatform?.() && ["android", "windows"].includes(cap()?.getPlatform?.() || "") && cap()?.Plugins?.FamilienakteTresor);
+export const proTresorVerfuegbar = () => Boolean(!demoActive() && cap()?.isNativePlatform?.() && ["android", "windows"].includes(cap()?.getPlatform?.() || "") && cap()?.Plugins?.FamilienakteTresor);
 function plugin() {
+  if (demoActive()) throw new Error("Der gemeinsame Pro-Tresor bleibt in der Demo getrennt.");
   const p = cap()?.Plugins?.FamilienakteTresor;
   if (!p) throw new Error("Für diesen Pro-Tresor bitte die zugehörige Android- oder Windows-App öffnen.");
   return p;
 }
 async function aufrufen<K extends "zustand" | "verbinden" | "entsperren" | "sperren">(name: K): Promise<Awaited<ReturnType<ProTresorPlugin[K]>>> {
+  if (demoActive()) throw new Error("Der gemeinsame Pro-Tresor bleibt in der Demo getrennt.");
   const plugin = cap()?.Plugins?.FamilienakteTresor;
   if (!plugin) throw new Error("Pro-Tresor ist auf diesem Gerät nicht verfügbar.");
   return await plugin[name]() as Awaited<ReturnType<ProTresorPlugin[K]>>;

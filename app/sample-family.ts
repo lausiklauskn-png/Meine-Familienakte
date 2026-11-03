@@ -1,3 +1,4 @@
+import { workspaceStorage } from "../lib/demo-workspace.ts";
 // Beispielfamilie für die Vorführung der Familienakte.
 //
 // ALLE INHALTE SIND FREI ERFUNDEN:
@@ -21,6 +22,8 @@ export const SAMPLE_NOTICE = "Alle Daten sind Beispieldaten.";
 const SAMPLE_FLAG = "mmi-sample-family-v1";
 const SAMPLE_IDS = "mmi-sample-family-ids";
 const SAMPLE_SOURCE = "Beispieldaten – frei erfunden";
+const SAMPLE_MEMORY_TEXTS = ["Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderrad gefahren – einmal um den ganzen Pustelblumenweg!", "Die Waschmaschine pumpt das Wasser nicht mehr ab. Am Display blinkt ein Lämpchen. Garantieanfrage an den Reparaturdienst Schraubenglück geschickt.", "Erster Abend in der neuen Wohnung in Wolkenhain. Die Kisten stehen noch überall, aber Ella hat ihr Zimmer schon eingerichtet.", "Ella freut sich sehr auf den Schulausflug zum Wolkensee. Elternbrief ist angekommen, Einverständniserklärung noch unterschreiben.", "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung. Wasser ist teurer als im Vorjahr – nachrechnen."];
+const SAMPLE_LETTER_SUBJECTS = ["Garantiefall Waschmaschine Schleuderling Waschwunder 7", "Nebenkostenabrechnung 2025 – Bitte um Belegeinsicht", "Antrag auf Teilzeit"];
 
 export const SAMPLE_ADDRESS = "Pustelblumenweg 7 · 00917 Wolkenhain an der Fabel";
 
@@ -42,13 +45,13 @@ function german(iso: string) {
 }
 
 export function sampleDataLoaded() {
-  try { return localStorage.getItem(SAMPLE_FLAG) === "geladen"; } catch { return false; }
+  try { return workspaceStorage.getItem(SAMPLE_FLAG) === "geladen"; } catch { return false; }
 }
 export function sampleDataDeclined() {
-  try { return localStorage.getItem(SAMPLE_FLAG) === "entfernt"; } catch { return false; }
+  try { return workspaceStorage.getItem(SAMPLE_FLAG) === "entfernt"; } catch { return false; }
 }
 export function markSampleDataRemoved() {
-  try { localStorage.setItem(SAMPLE_FLAG, "entfernt"); } catch { /* optional */ }
+  try { workspaceStorage.setItem(SAMPLE_FLAG, "entfernt"); } catch { /* optional */ }
 }
 
 type DocSpec = {
@@ -241,15 +244,16 @@ async function seedOnce(handle: FileSystemDirectoryHandle, options: { force?: bo
   // ── Tagebuch & Erinnerungen ──────────────────────────────────────────────
   const latest = await readLocalVaultData(handle);
   const memories: Array<{ text: string; offset: number; refs: string[] }> = [
-    { text: "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderrad gefahren – einmal um den ganzen Pustelblumenweg!", offset: -60, refs: ["fiete", "kinderrad", "fall-fahrrad"] },
-    { text: "Die Waschmaschine pumpt das Wasser nicht mehr ab. Am Display blinkt ein Lämpchen. Garantieanfrage an den Reparaturdienst Schraubenglück geschickt.", offset: -9, refs: ["waschmaschine", "fall-waschmaschine"] },
-    { text: "Erster Abend in der neuen Wohnung in Wolkenhain. Die Kisten stehen noch überall, aber Ella hat ihr Zimmer schon eingerichtet.", offset: -401, refs: ["fall-umzug", "ella"] },
-    { text: "Ella freut sich sehr auf den Schulausflug zum Wolkensee. Elternbrief ist angekommen, Einverständniserklärung noch unterschreiben.", offset: -6, refs: ["ella", "fall-ausflug"] },
-    { text: "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung. Wasser ist teurer als im Vorjahr – nachrechnen.", offset: -12, refs: ["fall-nebenkosten", "wohnung"] },
+    { text: SAMPLE_MEMORY_TEXTS[0], offset: -60, refs: ["fiete", "kinderrad", "fall-fahrrad"] },
+    { text: SAMPLE_MEMORY_TEXTS[1], offset: -9, refs: ["waschmaschine", "fall-waschmaschine"] },
+    { text: SAMPLE_MEMORY_TEXTS[2], offset: -401, refs: ["fall-umzug", "ella"] },
+    { text: SAMPLE_MEMORY_TEXTS[3], offset: -6, refs: ["ella", "fall-ausflug"] },
+    { text: SAMPLE_MEMORY_TEXTS[4], offset: -12, refs: ["fall-nebenkosten", "wohnung"] },
   ];
   for (const memory of memories) {
     const analysis = buildMemoryAnalysis({ originalText: memory.text, captureType: "text", records: latest.records, relations: latest.relations, now: at(memory.offset, 19) });
     await createLocalMemoryBundle(handle, {
+      source: SAMPLE_SOURCE,
       originalText: memory.text, captureType: "text", analysis: { ...analysis, sensitive: false }, mediaFiles: [],
       selectedReferences: memory.refs.map((key) => ({ recordType: typeOf.get(key) as "person" | "organisation" | "object" | "case" | "document", id: ids.get(key)! })),
     });
@@ -257,13 +261,14 @@ async function seedOnce(handle: FileSystemDirectoryHandle, options: { force?: bo
 
   // ── Korrespondenz (Entwürfe und versendete Schreiben) ────────────────────
   const letters: Array<{ status: "Entwurf" | "Versendet" | "Antwort ausstehend" | "Erledigt"; kind: string; recipient: string; subject: string; body: string; offset: number; caseKey: string; docs: string[] }> = [
-    { status: "Antwort ausstehend", kind: "Reklamation", recipient: "Reparaturdienst Schraubenglück (erfunden)", subject: "Garantiefall Waschmaschine Schleuderling Waschwunder 7", body: "Sehr geehrte Damen und Herren,\n\nunsere Waschmaschine pumpt das Wasser nicht mehr ab. Das Gerät ist noch in der Garantiezeit, die Rechnung hängt an.\n\nMit freundlichen Grüßen\nJonna Lindqvist-Arenberg", offset: -9, caseKey: "fall-waschmaschine", docs: ["doc-wm-anfrage", "doc-wm-rechnung"] },
-    { status: "Entwurf", kind: "Anfrage", recipient: "Hausverwaltung Pustelblume (erfunden)", subject: "Nebenkostenabrechnung 2025 – Bitte um Belegeinsicht", body: "Sehr geehrte Damen und Herren,\n\nvielen Dank für die Nebenkostenabrechnung 2025. Die Wasserkosten sind deutlich gestiegen. Bitte teilen Sie mir mit, wann ich die Belege einsehen kann.\n\nMit freundlichen Grüßen\nMattis Lindqvist-Arenberg", offset: -1, caseKey: "fall-nebenkosten", docs: ["doc-nebenkosten"] },
-    { status: "Antwort ausstehend", kind: "Brief", recipient: "Arbeitgeber Wolkenwerk (erfunden)", subject: "Antrag auf Teilzeit", body: "Sehr geehrte Damen und Herren,\n\nhiermit beantrage ich, meine Arbeitszeit auf vier Arbeitstage pro Woche zu verringern.\n\nMit freundlichen Grüßen\nJonna Lindqvist-Arenberg", offset: -20, caseKey: "fall-teilzeit", docs: ["doc-teilzeit"] },
+    { status: "Antwort ausstehend", kind: "Reklamation", recipient: "Reparaturdienst Schraubenglück (erfunden)", subject: SAMPLE_LETTER_SUBJECTS[0], body: "Sehr geehrte Damen und Herren,\n\nunsere Waschmaschine pumpt das Wasser nicht mehr ab. Das Gerät ist noch in der Garantiezeit, die Rechnung hängt an.\n\nMit freundlichen Grüßen\nJonna Lindqvist-Arenberg", offset: -9, caseKey: "fall-waschmaschine", docs: ["doc-wm-anfrage", "doc-wm-rechnung"] },
+    { status: "Entwurf", kind: "Anfrage", recipient: "Hausverwaltung Pustelblume (erfunden)", subject: SAMPLE_LETTER_SUBJECTS[1], body: "Sehr geehrte Damen und Herren,\n\nvielen Dank für die Nebenkostenabrechnung 2025. Die Wasserkosten sind deutlich gestiegen. Bitte teilen Sie mir mit, wann ich die Belege einsehen kann.\n\nMit freundlichen Grüßen\nMattis Lindqvist-Arenberg", offset: -1, caseKey: "fall-nebenkosten", docs: ["doc-nebenkosten"] },
+    { status: "Antwort ausstehend", kind: "Brief", recipient: "Arbeitgeber Wolkenwerk (erfunden)", subject: SAMPLE_LETTER_SUBJECTS[2], body: "Sehr geehrte Damen und Herren,\n\nhiermit beantrage ich, meine Arbeitszeit auf vier Arbeitstage pro Woche zu verringern.\n\nMit freundlichen Grüßen\nJonna Lindqvist-Arenberg", offset: -20, caseKey: "fall-teilzeit", docs: ["doc-teilzeit"] },
   ];
   for (const letter of letters) {
     const sentAt = letter.status === "Entwurf" ? undefined : at(letter.offset).toISOString();
     await createLocalCorrespondenceBundle(handle, {
+      source: SAMPLE_SOURCE,
       status: letter.status, caseId: ids.get(letter.caseKey), documentIds: letter.docs.map((key) => ids.get(key)!),
       data: {
         title: letter.subject, eventAt: sentAt || at(letter.offset).toISOString(), entryKind: "correspondence",
@@ -275,29 +280,36 @@ async function seedOnce(handle: FileSystemDirectoryHandle, options: { force?: bo
     });
   }
 
-  // Alle Kennungen merken, damit die Beispieldaten später mit einem Klick entfernt werden können.
-  const seeded = await readLocalVaultData(handle);
-  const sampleIds = [
-    ...seeded.documents.map((item) => item.id), ...seeded.records.map((item) => item.id),
-    ...seeded.relations.map((item) => item.id), ...seeded.memoryDrafts.map((item) => item.id),
-  ];
-  try { localStorage.setItem(SAMPLE_IDS, JSON.stringify(sampleIds)); localStorage.setItem(SAMPLE_FLAG, "geladen"); } catch { /* optional */ }
+  // Keine Bestandsaufnahme als Löschliste speichern: Herkunft steht an jedem Beispiel.
+  try { workspaceStorage.setItem(SAMPLE_FLAG, "geladen"); } catch { /* optional */ }
   void records; void relations;
   return true;
 }
 
 /** Entfernt nur die Beispieldaten – eigene Unterlagen und Einträge bleiben erhalten. */
 export async function removeSampleFamily(handle: FileSystemDirectoryHandle) {
-  let stored: string[] = [];
-  try { stored = JSON.parse(localStorage.getItem(SAMPLE_IDS) || "[]") as string[]; } catch { stored = []; }
-  const ids = new Set(stored);
-  // Zusätzlich alles, was eindeutig als Beispiel gekennzeichnet ist (z. B. nach einer Wiederherstellung).
+  // Alte SAMPLE_IDS können eigene Kennungen enthalten (erneutes Laden vor 2.28.18).
+  // Deshalb sind sie kein Löschbeleg. Nur eindeutige Herkunft im Register zählt.
+  const ids = new Set<string>();
   const data = await readLocalVaultData(handle);
   for (const item of data.documents) if (item.notes?.startsWith(SAMPLE_SOURCE)) ids.add(item.id);
   for (const item of data.records) if (item.source === SAMPLE_SOURCE) ids.add(item.id);
+  // Vor 2.28.18 hatten erzeugte Erinnerungen/Briefe noch allgemeine Quellen.
+  // Nur exakte Vorführinhalte UND ausschließlich zugehörige Beispielbezüge übernehmen.
+  for (const item of data.records) {
+    if (item.recordType !== "event") continue;
+    const value = item.data as Record<string, unknown>;
+    const targets = data.relations.filter((relation) => relation.fromId === item.id).map((relation) => relation.toId);
+    const onlySampleTargets = targets.length > 0 && targets.every((id) => ids.has(id));
+    const memory = item.source === "Tagebuch & Erinnerungsprotokoll" && SAMPLE_MEMORY_TEXTS.includes(String(value.originalText)) && Array.isArray(value.media) && value.media.length === 0;
+    const correspondence = item.source === "Assistenz- und Korrespondenzzentrale" && value.entryKind === "correspondence" && SAMPLE_LETTER_SUBJECTS.includes(String(value.subject)) && Array.isArray(value.sourceDocumentIds) && value.sourceDocumentIds.length > 0 && value.sourceDocumentIds.every((id) => typeof id === "string" && ids.has(id));
+    if (onlySampleTargets && (memory || correspondence)) ids.add(item.id);
+  }
+  for (const item of data.records) if (item.source && ids.has(item.source)) ids.add(item.id);
+  for (const item of data.relations) if (item.source === SAMPLE_SOURCE) ids.add(item.id);
   const result = await removeVaultEntries(handle, ids);
   markSampleDataRemoved();
-  try { localStorage.removeItem(SAMPLE_IDS); } catch { /* optional */ }
+  try { workspaceStorage.removeItem(SAMPLE_IDS); } catch { /* optional */ }
   return result;
 }
 
