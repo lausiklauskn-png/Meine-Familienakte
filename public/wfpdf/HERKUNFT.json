@@ -1,7 +1,7 @@
 {
   "repo": "lausiklauskn-png/Workflow-PDF",
-  "commit": "fb85507c6c5e1ecf72776c59a74e92f58439b931",
-  "stand": "2026-11-01",
+  "commit": "0ed15e53d9735c32e9b3c7a3b40871c2e4f7b922",
+  "stand": "2026-11-03",
   "dateien": {
     "public/wfpdf/scanner.js": {
       "quelle": "assets/scanner.js",
@@ -21,11 +21,11 @@
     },
     "public/wfpdf/erkennung.js": {
       "quelle": "assets/erkennung.js",
-      "sha256": "89863116242d3d832487d1f525a2f471a19d8b20ec7da21a51ce0bbe5ae84f0c"
+      "sha256": "d9e794ec71501caee5a6da944a0721b38a5509859ac07a3d0b2cc5aad947d3e7"
     },
     "public/wfpdf/export.js": {
       "quelle": "assets/export.js",
-      "sha256": "7bfa6b7ea32aca38f29556ad7ab086b3dbad5431adec280114174365981c3d8d"
+      "sha256": "cc712d87f4b36ecbf43c86e22b42ecd77c642ffff0116ce24612f0fa8f6dcd5f"
     },
     "public/wfpdf/reinigung.js": {
       "quelle": "assets/reinigung.js",
