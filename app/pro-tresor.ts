@@ -27,6 +27,32 @@ async function aufrufen<K extends "zustand" | "verbinden" | "entsperren" | "sper
   if (!plugin) throw new Error("Pro-Tresor ist auf diesem Gerät nicht verfügbar.");
   return await plugin[name]() as Awaited<ReturnType<ProTresorPlugin[K]>>;
 }
+/** Code aus einer Capacitor-Ablehnung ({ code }), einer Tauri-Ablehnung (Zeichenkette) oder einem Zustand. */
+export function proTresorCode(fehler: unknown): string {
+  const wert = typeof fehler === "string" ? fehler
+    : fehler && typeof fehler === "object" ? String((fehler as { code?: unknown }).code || (fehler as { message?: unknown }).message || "") : "";
+  return /^[A-Z0-9_]+$/.test(wert) ? wert : (wert.match(/\b(?:FA_)?TRESOR_[A-Z0-9_]+/)?.[0] || "");
+}
+const ORDNER_HINWEIS = "Bitte den Ordner wählen, in dem tresorordner.json liegt (z. B. SD-Karte › Privat Brain Pro Hauptablageordner).";
+/** Verständliche Meldung je Grund. Leere Zeichenkette = kein besonderer Grund bekannt. */
+export function proTresorMeldung(code: string): string {
+  switch (code) {
+    case "FA_TRESOR_FREMDE_KENNUNG": return "Anderer Tresor verbunden – bitte den Ordner wählen, in dem tresorordner.json liegt.";
+    case "FA_TRESOR_NICHT_VORHANDEN": return `In diesem Ordner liegt keine tresorordner.json. ${ORDNER_HINWEIS} Es wurde kein neuer Tresor angelegt.`;
+    case "FA_TRESOR_UNTERORDNER": return `Du hast einen Unterordner des Tresors gewählt (z. B. „Tresorordner“, „Familienakte“ oder „Eingang-…“). Bitte eine Ebene höher den Ordner wählen, in dem tresorordner.json liegt. Es wurde nichts verändert.`;
+    case "FA_TRESOR_ABGEBROCHEN": return "Ordnerwahl oder Passwort abgebrochen. Es wurde nichts geändert; die bisherige Verbindung bleibt.";
+    case "FA_TRESOR_FREIGABE_FEHLT": return "Das Gerät hat keine dauerhafte Lese- und Schreibfreigabe für diesen Ordner erteilt. Bitte den Ordner erneut wählen und den Zugriff erlauben.";
+    case "TRESOR_PASSWORT_FALSCH": return "Das Passwort passt nicht zu diesem Tresor. Es wurde nichts verändert.";
+    case "FA_TRESOR_UMGEZOGEN": return "Dieser Tresor wurde an einen neuen Ort umgezogen. Bitte den neuen Ort wählen.";
+    case "FA_TRESOR_ORT_NICHT_GESPEICHERT": return "Der gewählte Ort konnte nicht dauerhaft gemerkt werden. Bitte erneut versuchen.";
+    case "FA_TRESOR_ZUSTAND_BESCHAEDIGT": return "Die gemerkte Verbindung ist beschädigt. Bitte den vorhandenen Pro-Tresor neu wählen. Die Tresordateien wurden nicht verändert.";
+    case "TRESOR_BESCHAEDIGT": return "Die Datei tresorordner.json in diesem Ordner ist nicht lesbar oder beschädigt. Es wurde nichts verändert.";
+    case "FA_TRESOR_NICHT_ERREICHBAR": case "TRESOR_ORDNER_NICHT_ERREICHBAR": case "TRESOR_DATEI_FEHLT":
+      return "Der gemerkte Speicher ist gerade nicht erreichbar (z. B. SD-Karte entnommen oder Freigabe entzogen). Der Ort bleibt gemerkt; es wird kein anderer Speicher verwendet.";
+    default: return "";
+  }
+}
+
 export const proTresor = {
   zustand: () => aufrufen("zustand"), verbinden: () => aufrufen("verbinden"),
   entsperren: () => aufrufen("entsperren"), sperren: () => aufrufen("sperren"),

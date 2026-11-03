@@ -192,5 +192,14 @@ await probe("Selbstanalyse-Schutz bleibt, produktive Meldung verordnet keinen �
   assert.doesNotMatch(fehler.message, /SOFTWARE TESTORDNER/);
   assert.equal((await readIndex(f.root)).inventoryItems.length, 0, "keine Selbstanalyse");
 });
+await probe("Pro-Tresor-Meldungen: fremder Tresor, falscher Ordner, Unterordner verständlich", async () => {
+  const pt = await import("../app/pro-tresor.ts");
+  assert.equal(pt.proTresorMeldung("FA_TRESOR_FREMDE_KENNUNG"), "Anderer Tresor verbunden – bitte den Ordner wählen, in dem tresorordner.json liegt.");
+  assert.match(pt.proTresorMeldung("FA_TRESOR_NICHT_VORHANDEN"), /keine tresorordner\.json.*kein neuer Tresor angelegt/);
+  assert.match(pt.proTresorMeldung("FA_TRESOR_UNTERORDNER"), /Unterordner.*Ebene höher/);
+  assert.equal(pt.proTresorCode({ code: "FA_TRESOR_UNTERORDNER", message: "x" }), "FA_TRESOR_UNTERORDNER");
+  assert.equal(pt.proTresorCode("FA_TRESOR_NICHT_VORHANDEN"), "FA_TRESOR_NICHT_VORHANDEN");
+  assert.equal(pt.proTresorCode(new Error("Abbruch")), "");
+});
 console.log(`Pro-Tresor Dokumente: ${gruen} grün · ${rot} rot`);
 process.exitCode = rot ? 1 : 0;
