@@ -1,6 +1,8 @@
 package de.familyprojekt.familienakte;
 
 import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.os.SystemClock;
 import androidx.lifecycle.Lifecycle;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -21,12 +23,24 @@ public final class FamilyNavigationProductTest {
     }
     private void until(ActivityScenario<MainActivity> app,String js)throws Exception{
         long end=System.nanoTime()+TimeUnit.SECONDS.toNanos(90);
-        while(!"true".equals(eval(app,js))){assertTrue(js,System.nanoTime()<end);Thread.sleep(100);}
+        while(!"true".equals(eval(app,js))){
+            if(System.nanoTime()>=end)fail(js+" / "+eval(app,"JSON.stringify({url:location.href,activation:navigator.userActivation?.hasBeenActive,dialog:document.querySelector('[role=dialog],.modal')?.className})"));
+            Thread.sleep(100);
+        }
     }
     private void back(){InstrumentationRegistry.getInstrumentation().sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);}
     @Test public void backReturnsThroughViewsAndStaysOpenAtBeginning()throws Exception{
         try(ActivityScenario<MainActivity> app=ActivityScenario.launch(MainActivity.class)){
             until(app,"typeof window.familienakteZurueck==='function'&&!!document.querySelector('.footer-directory')");
+            // Android/WebView guards history traversal before the first trusted
+            // input. A real tap must precede a programmatically prepared route.
+            int[] point=new int[2];app.onActivity(a->{a.getBridge().getWebView().getLocationOnScreen(point);point[0]+=4;point[1]+=a.getBridge().getWebView().getHeight()/2;});
+            long tap=SystemClock.uptimeMillis();
+            for(int action:new int[]{MotionEvent.ACTION_DOWN,MotionEvent.ACTION_UP}){
+                MotionEvent event=MotionEvent.obtain(tap,SystemClock.uptimeMillis(),action,point[0],point[1],0);
+                InstrumentationRegistry.getInstrumentation().sendPointerSync(event);event.recycle();
+            }
+            until(app,"navigator.userActivation.hasBeenActive");
             String initial=eval(app,"location.href");
             eval(app,"window.__backMemory='ERFUNDENE-PROBE-017';[...document.querySelectorAll('.footer-directory button')].find(b=>b.textContent.trim()==='Dokumentenbibliothek').click();true");
             until(app,"location.hash==='#documents'");

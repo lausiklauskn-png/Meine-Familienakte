@@ -3,6 +3,11 @@ on:
   push:
     branches: [codex/appwechsel-und-zurueck]
   workflow_dispatch:
+    inputs:
+      counterprobe:
+        description: Bisherigen Android-Host als Gegenprobe einsetzen
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
@@ -19,6 +24,11 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+      - name: Nur für die ausdrückliche Gegenprobe den bisherigen Host einsetzen
+        if: inputs.counterprobe == true
+        run: |
+          git fetch --depth=1 origin 8a1e12c936b5acc255f0dcde6d78b9c841dafcb4
+          git show FETCH_HEAD:android/app/src/main/java/de/familyprojekt/familienakte/MainActivity.java > android/app/src/main/java/de/familyprojekt/familienakte/MainActivity.java
       - run: npm ci
       - run: npm run sync:android
       - name: KVM
