@@ -47,6 +47,7 @@ export function usePortalNavigation(sections: Record<SectionId, string>) {
         // A reload intentionally loses private in-memory context. Older browser
         // entries still open their public section instead of leaving stale UI.
         const next = initial();
+        session.current = crypto.randomUUID();
         visits.current = [{ view: next, x: 0, y: 0, ui: {} }];
         index.current = 0;
         window.history.replaceState({ ...window.history.state, [STATE_KEY]: { session: session.current, index: 0 } }, "");

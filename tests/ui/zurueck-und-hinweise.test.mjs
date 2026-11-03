@@ -90,6 +90,9 @@ try {
     await page.goBack();
     await page.locator(".breadcrumb > span", { hasText: "Sicherheit & lokaler Tresor" }).waitFor();
     assert.ok(page.url().endsWith("#security"));
+    await page.goForward();
+    await page.locator(".breadcrumb > span", { hasText: "Hilfe" }).waitFor();
+    assert.ok(page.url().endsWith("#help"));
   });
   await step("Keine Seitenfehler", () => assert.deepEqual(errors, []));
 } finally { await browser.close(); await app.stop(); }

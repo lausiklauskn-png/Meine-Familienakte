@@ -16,9 +16,15 @@ Technische Updatefassung: **2.28.16**, angezeigte Versionszeile auf Klaus' Wunsc
 - Verlauf und Hinweise: 12 grün, 0 rot; darunter echte Browser-History, per CDP ausgelöste Maus-Zurücktaste, zehn Rückschritte, Text-Undo, Objektposition, Bibliotheksfilter, Neuladen und Entfernen der erfundenen Beispiele.
 - Bestehendes Kopieren 11/0, Pro-Anschluss mit Android-/Windows-Ersatzschnittstellen 11/0, Cockpit/Fristen/Tagebuch 27/0. Insgesamt **92/0 gezählte Browserprüfungen** in diesen fünf Skripten; keine Aussage über physisch bediente Nutzergeräte.
 - Vollständiger npm-Bau einschließlich Fachprüfungen/TypeScript grün; Aktivitätskern/React-Ausgabe 29/0. Lint ohne Fehler (10 bereits vorhandene Warnungen), Herkunft der geschützten Bausteine unverändert, Android-Hüllenprüfung 21/0 und Windows-Versionsabgleich grün.
-- Nach diesen gezielten Proben folgt einmal die vorhandene PR-Pipeline einschließlich Android-/Windows-Bau. Keine zusätzliche allgemeine Geräte-Testmatrix. Veröffentlichungsnachweise werden nach Abschluss ergänzt; dieser Baustand behauptet noch keine neue Veröffentlichung.
+- Nach diesen gezielten Proben folgt die vorhandene PR-Pipeline einschließlich Android-/Windows-Bau. Keine zusätzliche allgemeine Geräte-Testmatrix. Veröffentlichungsnachweise werden nach Abschluss ergänzt; dieser Baustand behauptet noch keine neue Veröffentlichung.
 
 Die getrennte Pro-Verbund-Gesamtabnahme bleibt bei vier von sechs vollständigen App-Paaren; PR #59 bleibt Entwurf. Die beiden früher abgebrochenen Android-Paarproben werden durch diese Bedienkorrektur nicht nachträglich als bestanden gewertet. PR #34 ist ein älterer Aufgabenbrief für 2.28.4/2.28.5, keine aktuelle Baukorrektur; nicht ungeprüft übernehmen.
+
+## Gezielte Korrektur vor Veröffentlichung
+
+Die zusätzliche Folge Neuladen → Zurück → Vorwärts zeigte noch einen echten Randfehler im ersten PR-Stand: Adresse und Bereich konnten auseinanderlaufen. Die erweiterte vorhandene Browserprobe wird dafür rot (11/1). Ältere Historieneinträge beginnen jetzt bei Bedarf einen eigenen Sitzungstoken, statt denselben Index für unterschiedliche Bereiche wiederzuverwenden. Dieselbe Probe ist danach 12/0, einschließlich Vorwärts nach Neuladen. Vollständiger npm-Bau und Lint erneut grün. Diese tatsächliche Codekorrektur begründet die erneute vorhandene PR-Pipeline; keine zusätzliche allgemeine Testserie.
+
+Weiterbearbeitung dieses konkreten Falls bis **2026-11-03 09:35:11 UTC** (10:35:11 MEZ). Das gesamte bisher belegte Zweigfenster ab 08:22:14 UTC umfasst **1,22 Stunden**, einschließlich CI und Wartezeit, keine Aktivstundenmessung.
 
 ## Zeit und Übergabe
 
