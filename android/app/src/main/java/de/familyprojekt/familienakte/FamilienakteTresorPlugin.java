@@ -56,10 +56,12 @@ public class FamilienakteTresorPlugin extends Plugin {
         if (!erlaubt) throw new IOException("FA_TRESOR_FREIGABE_FEHLT");
         return new SafAblage(getContext().getContentResolver(), baum);
     }
-    private void fehler(PluginCall call, Exception e) {
+    private static String code(Exception e) {
         String code = e.getMessage();
-        call.reject("Der gewählte Pro-Tresor ist nicht verfügbar. Quelle bleibt erhalten.",
-            code != null && code.matches("[A-Z0-9_]+") ? code : "FA_TRESOR_NICHT_ERREICHBAR");
+        return code != null && code.matches("[A-Z0-9_]+") ? code : "FA_TRESOR_NICHT_ERREICHBAR";
+    }
+    private void fehler(PluginCall call, Exception e) {
+        call.reject("Der gewählte Pro-Tresor ist nicht verfügbar. Quelle bleibt erhalten.", code(e));
     }
     @PluginMethod public void zustand(PluginCall call) {
         worker.execute(() -> {
@@ -72,7 +74,8 @@ public class FamilienakteTresorPlugin extends Plugin {
                 call.resolve(new JSObject().put("status", adapter == null ? "gesperrt" : "offen").put("uebergaben",true).put("id", id).put("ort", prefs().getString("name", ortName(uri))));
             } catch (Exception e) {
                 if (adapter != null) { adapter.close(); adapter = null; }
-                call.resolve(new JSObject().put("status", "nicht_erreichbar").put("id", id).put("ort", prefs().getString("name", ortName(uri))));
+                // Grund mitgeben (z. B. anderer Tresor am gemerkten Ort); der gemerkte Ort bleibt, kein Ersatzspeicher.
+                call.resolve(new JSObject().put("status", "nicht_erreichbar").put("code", code(e)).put("id", id).put("ort", prefs().getString("name", ortName(uri))));
             }
         });
     }
@@ -93,8 +96,14 @@ public class FamilienakteTresorPlugin extends Plugin {
             if ((data.getFlags() & benoetigt) != benoetigt) throw new IOException("FA_TRESOR_FREIGABE_FEHLT");
             getContext().getContentResolver().takePersistableUriPermission(data.getData(),
                 Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        } catch (Exception e) { ungenutztFreigeben(uri); fehler(call, e); return; }
+        // Erst prüfen, ob dort tresorordner.json liegt – sonst gar nicht nach dem Passwort fragen
+        // und nie einen neuen, leeren Tresor anlegen.
+        worker.execute(() -> {
+            try { ProTresorAdapter.tresorOrdnerPruefen(ablage(uri), ortName(uri), false); }
+            catch (Exception e) { ungenutztFreigeben(uri); fehler(call, e); return; }
             dialog(call, uri, null);
-        } catch (Exception e) { ungenutztFreigeben(uri); fehler(call, e); }
+        });
     }
     @PluginMethod public void entsperren(PluginCall call) {
         dialog(call, prefs().getString("uri", ""), prefs().getString("id", ""));

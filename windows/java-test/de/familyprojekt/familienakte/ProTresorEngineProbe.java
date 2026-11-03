@@ -107,8 +107,14 @@ public final class ProTresorEngineProbe {
                 fehler("FA_TRESOR_AKTION_UNGUELTIG", () -> aufruf(e, "shell"));
                 Path falsch = root.resolve("falsch"); Files.createDirectories(falsch); dialog.ordner = falsch;
                 byte[] vorher = Files.readAllBytes(config);
-                fehler("TRESOR", () -> aufruf(e, "verbinden"));
+                fehler("FA_TRESOR_NICHT_VORHANDEN", () -> aufruf(e, "verbinden"));
                 pruefe(Arrays.equals(vorher, Files.readAllBytes(config)), "Fehlwechsel überschreibt Ort");
+                pruefe(!Files.exists(falsch.resolve(TresorOrdner.KOPF)), "Falscher Ordner wird zum neuen Tresor");
+                for (String unter : List.of(TresorOrdner.VERWALTUNG, Fach.FAMILIENAKTE.ordner)) {
+                    dialog.ordner = tresor.resolve(unter);
+                    fehler("FA_TRESOR_UNTERORDNER", () -> aufruf(e, "verbinden"));
+                    pruefe(Arrays.equals(vorher, Files.readAllBytes(config)), "Unterordner überschreibt Ort");
+                }
                 pruefe("offen".equals(aufruf(e, "zustand").get("status")), "Fehlwechsel sperrt alten Tresor");
                 dialog.ordner = null;
                 fehler("FA_TRESOR_ABGEBROCHEN", () -> aufruf(e, "verbinden"));
@@ -121,7 +127,12 @@ public final class ProTresorEngineProbe {
                 Path entfernt = root.resolve("entfernt"); Files.move(tresor, entfernt);
                 Map<String, Object> fehlt = aufruf(e, "zustand");
                 pruefe("nicht_erreichbar".equals(fehlt.get("status")) && id.equals(fehlt.get("id")), "Windows vergisst entfernten Tresor");
+                pruefe("FA_TRESOR_NICHT_ERREICHBAR".equals(fehlt.get("code")), "Entfernter Tresor ohne Grund");
                 pruefe(!Files.exists(tresor), "Windows erzeugt stillen Ersatzordner");
+                try (TresorOrdner anderer = TresorOrdner.anlegen(new DateiAblage(tresor.toFile()), Fach.WORKFLOW_PDF_APP, dialog.zugang)) { }
+                Map<String, Object> fremd = aufruf(e, "zustand");
+                pruefe("nicht_erreichbar".equals(fremd.get("status")) && "FA_TRESOR_FREMDE_KENNUNG".equals(fremd.get("code")) && id.equals(fremd.get("id")), "Anderer Tresor am gemerkten Ort nicht benannt");
+                try (var files = Files.walk(tresor)) { for (Path p : files.sorted(Comparator.reverseOrder()).toList()) Files.delete(p); }
                 Files.move(entfernt, tresor);
                 pruefe("gesperrt".equals(aufruf(e, "zustand").get("status")), "Rückkehr entsperrt ohne Kennwort");
             }

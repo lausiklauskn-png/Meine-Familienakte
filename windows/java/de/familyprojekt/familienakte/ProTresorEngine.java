@@ -48,7 +48,12 @@ public final class ProTresorEngine implements Closeable {
     private DateiAblage ablage(Path p, String erwartet) throws IOException {
         if (p == null || !Files.isDirectory(p)) throw new IOException("FA_TRESOR_NICHT_ERREICHBAR");
         DateiAblage a = new DateiAblage(p.toFile());
-        if (!TresorOrdner.vorhanden(a)) throw new IOException("FA_TRESOR_NICHT_VORHANDEN");
+        if (!TresorOrdner.vorhanden(a)) {
+            // Unterordner eines Tresors (z. B. „Tresorordner“ oder „Familienakte“) eigens benennen; nichts anlegen.
+            Path eltern = p.getParent();
+            boolean elternIstTresor = eltern != null && Files.isRegularFile(eltern.resolve(TresorOrdner.KOPF));
+            ProTresorAdapter.tresorOrdnerPruefen(a, p.getFileName() == null ? "" : p.getFileName().toString(), elternIstTresor);
+        }
         if (erwartet != null && !erwartet.equals(TresorOrdner.kennung(a))) throw new IOException("FA_TRESOR_FREMDE_KENNUNG");
         if (a.gibtEs(Umzug.VERMERK)) throw new IOException("FA_TRESOR_UMGEZOGEN");
         return a;
@@ -60,7 +65,13 @@ public final class ProTresorEngine implements Closeable {
         }
         if (ort == null) return antwort("getrennt", null, null);
         try { ablage(ort, id); return antwort(adapter == null ? "gesperrt" : "offen", id, ort); }
-        catch (IOException e) { close(); return antwort("nicht_erreichbar", id, ort); }
+        catch (IOException e) {
+            close();
+            Map<String, Object> m = antwort("nicht_erreichbar", id, ort);
+            String code = e.getMessage();
+            m.put("code", code != null && code.matches("[A-Z0-9_]+") ? code : "FA_TRESOR_NICHT_ERREICHBAR");
+            return m;
+        }
     }
     private Map<String, Object> verbinden(boolean waehlen) throws IOException {
         if (!waehlen && konfigurationBeschaedigt) throw new IOException("FA_TRESOR_ZUSTAND_BESCHAEDIGT");

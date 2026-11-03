@@ -38,6 +38,27 @@ public final class ProTresorAdapter implements Closeable {
         return new ProTresorAdapter(ablage, TresorOrdner.oeffnen(ablage, Fach.FAMILIENAKTE_APP, passwort));
     }
 
+    /** Gewählter Ordner VOR der Passwortfrage: nur der Ordner mit tresorordner.json ist ein Tresor.
+     * Ein Unterordner (Verwaltung „Tresorordner“, ein Fach wie „Familienakte“ oder „Eingang-…“) wird
+     * eigens benannt. Es wird nichts angelegt und nichts geschrieben. */
+    public static void tresorOrdnerPruefen(Ablage ablage, String ordnerName, boolean elternIstTresor) throws IOException {
+        if (TresorOrdner.vorhanden(ablage)) return;
+        if (elternIstTresor || istTresorUnterordner(ordnerName)) throw new IOException("FA_TRESOR_UNTERORDNER");
+        throw new IOException("FA_TRESOR_NICHT_VORHANDEN");
+    }
+
+    /** Letzter Pfadteil eines Anzeigenamens wie „SD/USB (1234-5678)/Hauptablage/Familienakte“. */
+    public static boolean istTresorUnterordner(String ordnerName) {
+        if (ordnerName == null) return false;
+        String n = ordnerName.replace('\\', '/');
+        while (n.endsWith("/")) n = n.substring(0, n.length() - 1);
+        n = n.substring(n.lastIndexOf('/') + 1).trim();
+        if (n.isEmpty()) return false;
+        if (n.equalsIgnoreCase(TresorOrdner.VERWALTUNG) || n.equalsIgnoreCase("verzeichnis") || n.equalsIgnoreCase("Uebergaben")) return true;
+        for (Fach f : Fach.ALLE) if (n.equalsIgnoreCase(f.ordner)) return true;
+        return n.regionMatches(true, 0, "Eingang-", 0, 8);
+    }
+
     private static void pruefeOrt(Ablage ablage, String erwartet) throws IOException {
         if (erwartet == null || erwartet.isEmpty() || !erwartet.equals(TresorOrdner.kennung(ablage)))
             throw new IOException("FA_TRESOR_FREMDE_KENNUNG");
