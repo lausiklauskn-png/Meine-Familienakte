@@ -1,0 +1,86 @@
+{
+  "version": "2.28.16",
+  "visibleVersion": "2.28.1",
+  "source": "7db47ed4e2a082b78d3f9e5d94906c104cb8297b",
+  "pr": 65,
+  "testedHead": "3bc39e07062ff24a1a19257a4b462154fb3b3368",
+  "appCodeHead": "05b6627cf13a31ea4ba7c399ba9e5be80b54683e",
+  "sourceTreeEqualsTestedHead": true,
+  "verifiedCI": {
+    "source": "3bc39e07062ff24a1a19257a4b462154fb3b3368",
+    "mergedSource": "7db47ed4e2a082b78d3f9e5d94906c104cb8297b",
+    "browserScripts": "41/41",
+    "jobs": [
+      {
+        "run": 41614769502,
+        "job": 125845344971,
+        "name": "pruefung",
+        "conclusion": "success"
+      },
+      {
+        "run": 41614769456,
+        "job": 125845344308,
+        "name": "windows",
+        "conclusion": "success"
+      },
+      {
+        "run": 41614769389,
+        "job": 125845343601,
+        "name": "android",
+        "conclusion": "success"
+      },
+      {
+        "run": 41614769390,
+        "job": 125845344152,
+        "name": "webview",
+        "conclusion": "success"
+      },
+      {
+        "run": 41614769390,
+        "job": 125846263602,
+        "name": "product (35, pixel_2)",
+        "conclusion": "success"
+      },
+      {
+        "run": 41614769390,
+        "job": 125846263674,
+        "name": "product (31, pixel_c)",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "releaseRuns": {
+    "android": 41617153030,
+    "windows": 41617158394
+  },
+  "initialPwaRun": 41617071360,
+  "downloads": [
+    {
+      "platform": "android",
+      "tag": "android-v2.28.16",
+      "run": 41617153030,
+      "runUrl": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41617153030",
+      "file": "Familienakte-android-v2.28.16.apk",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.16/Familienakte-android-v2.28.16.apk",
+      "checksums": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.16/SHA256SUMS",
+      "singleHtml": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.16/Familienakte-Einzeldatei-2.28.16.html"
+    },
+    {
+      "platform": "windows",
+      "tag": "windows-v2.28.16",
+      "run": 41617158394,
+      "runUrl": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41617158394",
+      "file": "Familienakte-Windows-2.28.16-x64-setup.exe",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/windows-v2.28.16/Familienakte-Windows-2.28.16-x64-setup.exe",
+      "checksums": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/windows-v2.28.16/SHA256SUMS",
+      "singleHtml": null
+    }
+  ],
+  "overallAppPairAcceptanceComplete": false,
+  "completeHistoricalPairs": 4,
+  "incompleteHistoricalPairs": [
+    "Android / Workflow PDF Pro",
+    "Android / BookLedgerPro"
+  ],
+  "proofNote": "Quellgebundene Freigabeläufe und unveränderte SHA256SUMS-Dateien sind die dauerhaften Nachweise. Die datierte Sitzungsübergabe enthält zusätzlich erneut öffentlich geladene Größen und Hashwerte. Dieser Nachtrag wird erst nach beiden erfolgreichen Freigaben und geprüften Downloads auf main übernommen."
+}
