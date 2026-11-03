@@ -154,5 +154,52 @@ await probe("Pro-Herkunft: Register und Vollsicherung erhalten Bezug; falsche Or
   const neu = await vault.saveLocalDocument(f.root, new File(["Bearbeitete Fassung"], "Bearbeitet.txt"), { ...eingabe, proBezug: m.id });
   assert.equal(neu.proBezug, m.id); assert.equal(neu.proUebergabe, undefined);
 });
+// ---- Abgleich des Datentresors selbst (Sicherheitscenter „Jetzt Abgleich durchführen“, 2026-11-03) ----
+await probe("Tresor-Abgleich: Datentresor prüft sich selbst – vorhanden, verändert, fehlend, nichts geschrieben", async () => {
+  const f = fs("Browser-Datentresor");
+  const a = await vault.saveLocalDocument(f.root, new File(["Erfundener Brief A"], "Brief-A.txt"), eingabe);
+  const b = await vault.saveLocalDocument(f.root, new File(["Erfundener Brief B"], "Brief-B.txt"), eingabe);
+  const c = await vault.saveLocalDocument(f.root, new File(["Erfundener Brief C"], "Brief-C.txt"), eingabe);
+  let r = await vault.checkVaultHoldings(f.root);
+  assert.equal(r.registerState, "valid"); assert.equal(r.documentCount, 3); assert.equal(r.confirmed, 3);
+  assert.deepEqual([r.missing, r.changed, r.proNotCheckable], [[], [], 0]);
+  f.root.find(b.storedPath).bytes = Buffer.from("Erfundener Brief X"); // gleiche Größe, anderer Inhalt
+  const parts = c.storedPath.split("/"); const name = parts.pop(); await f.root.find(parts.join("/")).removeEntry(name);
+  const registerVorher = Buffer.from((f.root.find("Me_Myself_and_I_Familienakte/00_Register/Familienakte_Register.json") ?? assert.fail("Register fehlt")).bytes).toString("hex");
+  r = await vault.checkVaultHoldings(f.root);
+  assert.equal(r.confirmed, 1); assert.deepEqual(r.changed, ["Brief-B.txt"]); assert.deepEqual(r.missing, ["Brief-C.txt"]);
+  assert.equal(Buffer.from((f.root.find("Me_Myself_and_I_Familienakte/00_Register/Familienakte_Register.json") ?? assert.fail("Register fehlt")).bytes).toString("hex"), registerVorher, "Abgleich schreibt nichts");
+  assert.ok(f.root.find(a.storedPath), "Original A bleibt");
+});
+await probe("Tresor-Abgleich: Pro-Originale nur bei entsperrtem passendem Tresor lesen, sonst ehrlich „nicht prüfbar“", async () => {
+  const f = await vorbereitet(); await vault.saveLocalDocument(f.root, datei(), eingabe);
+  let r = await vault.checkVaultHoldings(f.root);
+  assert.equal(r.confirmed, 1); assert.equal(r.proNotCheckable, 0);
+  nativ.status = "gesperrt"; let gelesen = 0; const lesen = globalThis.Capacitor.Plugins.FamilienakteTresor.lesen;
+  globalThis.Capacitor.Plugins.FamilienakteTresor.lesen = async (x) => { gelesen++; return lesen(x); };
+  try { r = await vault.checkVaultHoldings(f.root); } finally { globalThis.Capacitor.Plugins.FamilienakteTresor.lesen = lesen; }
+  assert.equal(r.confirmed, 0); assert.equal(r.proNotCheckable, 1); assert.deepEqual([r.missing, r.changed], [[], []]); assert.equal(gelesen, 0);
+  nativ.status = "offen"; nativ.kaputt = true;
+  r = await vault.checkVaultHoldings(f.root);
+  assert.equal(r.changed.length, 1, "veränderte Pro-Bytes werden gemeldet");
+});
+await probe("Selbstanalyse-Schutz bleibt, produktive Meldung verordnet keinen „SOFTWARE TESTORDNER“", async () => {
+  const f = fs("Browser-Datentresor"); await writeIndex(f.root, await readIndex(f.root));
+  f.root.queryPermission = async () => "granted"; f.root.isSameEntry = async (o) => o === f.root;
+  const fehler = await vault.scanInventoryFolder({ source: f.root, register: f.root }).then(() => null, (e) => e);
+  assert.ok(fehler, "dieselbe Quelle wie Register wird weiterhin abgewiesen");
+  assert.match(fehler.message, /derselbe Ordner/);
+  assert.doesNotMatch(fehler.message, /SOFTWARE TESTORDNER/);
+  assert.equal((await readIndex(f.root)).inventoryItems.length, 0, "keine Selbstanalyse");
+});
+await probe("Pro-Tresor-Meldungen: fremder Tresor, falscher Ordner, Unterordner verständlich", async () => {
+  const pt = await import("../app/pro-tresor.ts");
+  assert.equal(pt.proTresorMeldung("FA_TRESOR_FREMDE_KENNUNG"), "Anderer Tresor verbunden – bitte den Ordner wählen, in dem tresorordner.json liegt.");
+  assert.match(pt.proTresorMeldung("FA_TRESOR_NICHT_VORHANDEN"), /keine tresorordner\.json.*kein neuer Tresor angelegt/);
+  assert.match(pt.proTresorMeldung("FA_TRESOR_UNTERORDNER"), /Unterordner.*Ebene höher/);
+  assert.equal(pt.proTresorCode({ code: "FA_TRESOR_UNTERORDNER", message: "x" }), "FA_TRESOR_UNTERORDNER");
+  assert.equal(pt.proTresorCode("FA_TRESOR_NICHT_VORHANDEN"), "FA_TRESOR_NICHT_VORHANDEN");
+  assert.equal(pt.proTresorCode(new Error("Abbruch")), "");
+});
 console.log(`Pro-Tresor Dokumente: ${gruen} grün · ${rot} rot`);
 process.exitCode = rot ? 1 : 0;

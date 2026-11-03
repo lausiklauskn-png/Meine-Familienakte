@@ -1,7 +1,7 @@
 // Sicherheitscenter, Export, Sicherung/Wiederherstellung, Bestand prüfen, Systemprüfung, Praktische Abnahme, Hilfe-Knöpfe.
 // Ordnerauswahl ist mit echten OPFS-Ordnern gestellt (window.showDirectoryPicker).
 import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, collectErrors, footer } from "./_harness.mjs";
-import { windowStub, directoryPickerStub, schliesseDialoge, bekannt } from "./_stubs.mjs";
+import { windowStub, directoryPickerStub, schliesseDialoge } from "./_stubs.mjs";
 
 const app = await startApp();
 const browser = await launchBrowser();
@@ -21,14 +21,19 @@ try {
   // ---------- Sicherheitscenter ----------
   await footer(page, "Sicherheitscenter");
   await step("Sicherheitscenter: Zustand zeigt den Browser-Datentresor als verbunden", async () => (await page.locator("main").innerText()).includes("Browser-Datentresor"));
-  await step("„Jetzt Abgleich durchführen“ (Datentresor und Abgleich) – Verhalten mit Browser-Datentresor", async () => {
-    await page.locator("button", { hasText: "Jetzt Abgleich durchführen" }).click(); await page.waitForTimeout(800);
+  // Früher gab der Knopf den Tresor zugleich als Analysequelle und Register an die Bestandsanalyse – deren
+  // Selbstanalyse-Schutz lehnte das jedes Mal ab („derselbe Ordner … SOFTWARE TESTORDNER“). Jetzt prüft er den Tresor selbst.
+  await step("„Jetzt Abgleich durchführen“ prüft den Browser-Datentresor selbst: Register und Originale, ohne Selbstanalyse-Fehler", async () => {
+    await page.locator("button", { hasText: "Jetzt Abgleich durchführen" }).click();
+    await page.waitForFunction(() => /Abgleich (abgeschlossen|des Datentresors)|derselbe Ordner|nicht geprüft werden/.test([...document.querySelectorAll("[aria-live], .notice")].map((e) => e.innerText).join(" ")), null, { timeout: 20000 }).catch(() => {});
     const crumb = (await page.locator(".breadcrumb").innerText()).replace(/\n/g, " › ");
     const m = await meldung(page);
-    if (/derselbe Ordner|SOFTWARE TESTORDNER/.test(m)) bekannt("„Jetzt Abgleich durchführen“ scheitert mit dem Browser-Datentresor", m.slice(0, 160));
+    check(!/derselbe Ordner|SOFTWARE TESTORDNER/.test(m), "Abgleich: kein Selbstanalyse-Fehler, kein Testordner-Hinweis", m.slice(0, 160));
+    check(/Abgleich abgeschlossen: Datentresor „Browser-Datentresor“ – Register lesbar, \d+ von \d+ Originalen? vorhanden und unverändert/.test(m), "Abgleich: tatsächlicher Prüfstand mit Zahlen", m.slice(0, 220));
+    check(!/Bestand prüfen$/.test(crumb), "Abgleich: bleibt im Sicherheitscenter statt nach „Bestand prüfen“ zu springen", crumb);
     await schliesseDialoge(page);
     await footer(page, "Sicherheitscenter");
-    return `führt nach „${crumb.split(" › ").pop()}“; Meldung: ${m.slice(0, 120)}`;
+    return `Meldung: ${m.slice(0, 160)}`;
   });
   await step("„Export vorbereiten“ öffnet den Export-Dialog; Start ist bis Zielordner + Umfang gesperrt", async () => {
     await page.locator("button", { hasText: "Export vorbereiten" }).click();

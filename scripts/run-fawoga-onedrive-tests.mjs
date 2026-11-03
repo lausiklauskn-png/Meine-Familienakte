@@ -47,12 +47,17 @@ assert.ok(portal.includes("Wichtige Stichworte") && portal.includes("Vorhandenen
 assert.ok(portal.includes('label: "Person"') && portal.includes('label: "Organisation"') && portal.includes('label: "Objekt"') && portal.includes('label: "Vorgang"'), "Mindestens einer der vier bestätigungspflichtigen Bezüge fehlt.");
 assert.ok(vault.includes("normalizedRecordLabel") && vault.includes("createFamilyRecord") && vault.includes("referenceChoices"), "Dublettenschutz oder bestätigungspflichtige Neuanlage fehlt.");
 assert.ok(vault.indexOf("if (!record && label) record = index.records.find") < vault.indexOf("if (!record && label) {"), "Vor einer Neuanlage wird nicht zuerst nach einem vorhandenen Eintrag gesucht.");
-assert.ok(portal.includes("const startVaultInventoryComparison = async ()") && portal.includes("onCompare={startVaultInventoryComparison}") && portal.includes("await scanInventorySource(vaultHandle)"), "Der Sicherheitscenter-Abgleich verwendet nicht direkt die rekursive FaWoGa-Bestandsanalyse des verbundenen Tresors.");
+// Seit 2026-11-03: Der Sicherheitscenter-Abgleich prüft den verbundenen Tresor selbst. Den Tresor zugleich als Analysequelle
+// und Register an die Bestandsanalyse zu geben, lehnte deren Selbstanalyse-Schutz jedes Mal ab (Klaus' Bildschirmfoto).
+const vergleich = portal.slice(portal.indexOf("const startVaultInventoryComparison = async ()"), portal.indexOf("const pauseInventoryScan"));
+assert.ok(vergleich.length > 0 && portal.includes("onCompare={startVaultInventoryComparison}") && vergleich.includes("await checkVaultHoldings(vaultHandle)")
+  && !vergleich.includes("scanInventorySource(vaultHandle)") && !vergleich.includes("setInventorySourceHandle(vaultHandle)"), "Der Sicherheitscenter-Abgleich gibt den Tresor als eigene Analysequelle weiter, statt ihn selbst zu prüfen.");
+assert.ok(vault.includes("if (relationship.same) throw new Error(\"Analysequelle und Familienakten-Datentresor sind derselbe Ordner."), "Der Selbstanalyse-Schutz der Bestandsanalyse fehlt.");
 assert.ok(!portal.includes("api.openai.com") && !portal.includes("OPENAI_API_KEY"), "Eine kostenpflichtige externe API wurde eingebaut.");
 
 console.log("🟢 30 technische FaWoGa-OneDrive-Prüfungen bestanden.");
 console.log("🟢 Rekursive Hauptordnerprüfung: Unterordner beliebiger Verschachtelung werden mit vollständigem Herkunftspfad erfasst.");
-console.log("🟢 Sicherheitscenter-Abgleich: Der verbundene Tresor wird direkt als rekursive FaWoGa-Quelle verwendet; die Einzeldatei-Funktion bleibt getrennt.");
+console.log("🟢 Sicherheitscenter-Abgleich: Der verbundene Tresor prüft sich selbst (Register, Originale); getrennte Ordner laufen über „Bestand prüfen“ mit Selbstanalyse-Schutz.");
 console.log("🟢 5 Lernfunktions-Tests bestanden; nur bestätigte Zuordnungen werden im bestehenden Register als Vorschlagshilfe wiederverwendet.");
 console.log("🟢 6 Vorschau-Tests bestanden; PDF, Bild, Word/Text, E-Mail und Gesundheitsunterlagen verwenden den vorgesehenen Weg.");
 console.log("🟢 5 Decodierungs- und Binärschutztests bestanden; unlesbare Zeichen und Rohdaten werden nicht als normaler Text angezeigt.");

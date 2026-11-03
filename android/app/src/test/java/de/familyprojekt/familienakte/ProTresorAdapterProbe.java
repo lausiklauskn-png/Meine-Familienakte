@@ -51,6 +51,14 @@ public final class ProTresorAdapterProbe {
                 id = t.id();
                 t.ablegen(Fach.WORKFLOW_PDF.slug, "", "Erfunden.txt", "text/plain", 1, quelle(original), "");
             }
+            // Ordnerwahl vor der Passwortfrage: nur der Ordner mit tresorordner.json, Unterordner eigens benannt, nichts angelegt.
+            ProTresorAdapter.tresorOrdnerPruefen(a, "SD/USB (1234-5678)/Privat Brain Pro Hauptablageordner", false);
+            Path leer = Files.createDirectory(root.resolve("leer"));
+            fehler("FA_TRESOR_NICHT_VORHANDEN", () -> ProTresorAdapter.tresorOrdnerPruefen(new DateiAblage(leer.toFile()), "SD/USB (1234-5678)/Alter Ablageordner", false));
+            for (String unter : List.of("SD/USB (1234-5678)/Hauptablage/Tresorordner", "Gerät/Hauptablage/Familienakte", "Eingang-Familienakte", "Hauptablage/Workflow PDF Pro/"))
+                fehler("FA_TRESOR_UNTERORDNER", () -> ProTresorAdapter.tresorOrdnerPruefen(new DateiAblage(leer.toFile()), unter, false));
+            fehler("FA_TRESOR_UNTERORDNER", () -> ProTresorAdapter.tresorOrdnerPruefen(new DateiAblage(leer.toFile()), "Irgendwas", true));
+            pruefe(bestand(leer).isEmpty() && !Files.exists(leer.resolve(TresorOrdner.KOPF)), "Falsche Ordnerwahl legt Dateien oder einen Tresor an");
             Map<String, String> unveraendert = bestand(alt);
             Umzug.kopieren(a, new DateiAblage(kopie.toFile()), null);
             DateiAblage k = new DateiAblage(kopie.toFile());

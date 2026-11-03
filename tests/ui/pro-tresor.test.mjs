@@ -9,7 +9,7 @@ try {
     window.__proStand = { status: 'getrennt' }; window.__proCalls = [];
     window.Capacitor.Plugins.FamilienakteTresor = {
       zustand: async () => ({ ...window.__proStand }),
-      verbinden: async () => { window.__proCalls.push('verbinden'); if (window.__proFehler) throw new Error('Abbruch'); return window.__proStand = { status: 'offen', id: 'erfundener-tresor-1', ort: 'content://erfundene-sdkarte/Pro-Tresor' }; },
+      verbinden: async () => { window.__proCalls.push('verbinden'); if (window.__proFehlerCode) throw Object.assign(new Error('Der gewählte Pro-Tresor ist nicht verfügbar.'), { code: window.__proFehlerCode }); if (window.__proFehler) throw new Error('Abbruch'); return window.__proStand = { status: 'offen', id: 'erfundener-tresor-1', ort: 'content://erfundene-sdkarte/Pro-Tresor' }; },
       entsperren: async () => { window.__proCalls.push('entsperren'); return window.__proStand = { ...window.__proStand, status: 'offen' }; },
       sperren: async () => { window.__proCalls.push('sperren'); window.__proStand.status = 'gesperrt'; },
     };`);
@@ -29,6 +29,29 @@ try {
     await page.locator('.global-activity-text', { hasText: "Bitte zuerst den gewünschten Pro-Tresor" }).waitFor({ state: "detached" });
     return (await panel.innerText()).includes("erfundener-tresor-1") && (await panel.innerText()).includes("content://erfundene-sdkarte");
   });
+  await step("Pro-Tresor: sofortige Bestätigung nach der Ordnerwahl (gewählt, gespeichert, erreichbar, entsperrt, Ort)", async () => {
+    const t = await panel.locator("[data-pro-tresor-bestaetigung]").innerText();
+    return /Gewählt und gespeichert: content:\/\/erfundene-sdkarte\/Pro-Tresor · erreichbar · entsperrt · Tresorkennung erfundener-tresor-1/.test(t) ? t.slice(0, 120) : (console.log("   ↳", t), false);
+  });
+  await step("Pro-Tresor: nach dem Verbinden ist „Neue Originale in diesem Pro-Tresor ablegen“ als Empfehlung (Ordner „Familienakte“) sichtbar", async () => {
+    const t = await panel.locator("[data-pro-ablage-empfehlung]").innerText();
+    return t.includes("Empfohlen") && t.includes("„Familienakte“") && await panel.getByRole("button", { name: "Neue Originale in diesem Pro-Tresor ablegen", exact: true }).isVisible()
+      && /bisherigen Aktenordner/.test(await panel.locator("[data-pro-ablage]").innerText());
+  });
+  await step("Pro-Tresor: „Wo liegt was?“ steht in der Karte (tresorordner.json, Fach, Eingang, Menüweg)", async () => {
+    const hilfe = panel.locator("[data-pro-tresor-hilfe]"); await hilfe.locator("summary", { hasText: "Wo liegt was?" }).click();
+    const t = await hilfe.innerText();
+    return ["tresorordner.json", "Nie den Unterordner „Tresorordner“", "Diese App: Familienakte", "Eingang: Eingang-Familienakte", "Sicherheit & lokaler Tresor"].every((w) => t.includes(w));
+  });
+  for (const [code, erwartet] of [["FA_TRESOR_NICHT_VORHANDEN", /keine tresorordner\.json.*kein neuer Tresor angelegt/], ["FA_TRESOR_UNTERORDNER", /Unterordner des Tresors.*Ebene höher.*tresorordner\.json/]]) {
+    await step(`Pro-Tresor: falscher Ordner (${code}) wird verständlich gemeldet, bisheriger Tresor bleibt`, async () => {
+      await page.evaluate((c) => { window.__proFehlerCode = c; }, code);
+      await panel.getByRole("button", { name: "Anderen Pro-Tresor wählen …", exact: true }).click();
+      const alert = panel.getByRole("alert"); await alert.waitFor();
+      const t = await alert.innerText(); await page.evaluate(() => { window.__proFehlerCode = null; });
+      return erwartet.test(t) && (await panel.innerText()).includes("erfundener-tresor-1") && !(await panel.locator("[data-pro-tresor-bestaetigung]").count()) ? t.slice(0, 100) : (console.log("   ↳", t), false);
+    });
+  }
   await step("Pro-Tresor: Sperren und bewusstes Entsperren", async () => {
     await panel.getByRole("button", { name: "Pro-Tresor sperren", exact: true }).click();
     await panel.getByText("Gesperrt", { exact: true }).waitFor();
@@ -44,7 +67,14 @@ try {
   await step("Pro-Tresor: entfernte SD-Karte bleibt sichtbar, kein Ersatz", async () => {
     await page.evaluate(() => { window.__proStand.status = 'nicht_erreichbar'; document.dispatchEvent(new Event('visibilitychange')); });
     await panel.getByText(/Nicht erreichbar/).waitFor();
-    return (await panel.innerText()).includes("erfundener-tresor-1");
+    return (await panel.innerText()).includes("erfundener-tresor-1") && (await panel.innerText()).includes("Der gemerkte Ort bleibt gespeichert");
+  });
+  await step("Pro-Tresor: fremde Kennung am gemerkten Ort heißt „Anderer Tresor verbunden …“ statt „Nicht erreichbar“", async () => {
+    await page.evaluate(() => { window.__proStand = { ...window.__proStand, status: 'nicht_erreichbar', code: 'FA_TRESOR_FREMDE_KENNUNG' }; document.dispatchEvent(new Event('visibilitychange')); });
+    const status = panel.locator("[data-pro-tresor-status]");
+    await status.filter({ hasText: "Anderer Tresor verbunden" }).waitFor();
+    const t = await status.innerText();
+    return t === "Anderer Tresor verbunden – bitte den Ordner wählen, in dem tresorordner.json liegt." && (await panel.innerText()).includes("erfundener-tresor-1");
   });
   check(errors.length === 0, "Pro-Tresor: keine Seitenfehler", errors.join(" | "));
   const winContext = await browser.newContext(DESKTOP);
@@ -68,5 +98,11 @@ try {
   const web = await (await browser.newContext(DESKTOP)).newPage();
   await web.goto(app.base, { waitUntil: "networkidle" }); await ready(web); await footer(web, "Sicherheitscenter");
   check(await web.locator("[data-pro-tresor]").count() === 0, "PWA: kein vorgetäuschter nativer Tresor");
+  await step("Hilfe: „Wo liegt was?“ auch ohne nativen Tresor in der Hilfe erreichbar", async () => {
+    await footer(web, "Hilfe");
+    const hilfe = web.locator("[data-pro-tresor-hilfe]"); await hilfe.locator("summary").click();
+    const t = await hilfe.innerText();
+    return t.includes("tresorordner.json") && t.includes("Eingang-Familienakte") && t.includes("Ein Passwort gilt für alle Pro-Apps.");
+  });
 } finally { await browser.close(); await app.stop(); }
 process.exit(summary("Pro-Tresor Anschluss"));
