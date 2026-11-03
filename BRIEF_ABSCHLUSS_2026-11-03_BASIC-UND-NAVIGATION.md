@@ -35,3 +35,7 @@ Die von Klaus erfolgreich heruntergeladene manuelle HTML-Anleitung bleibt unver�
 ```text
 Lies CLAUDE.md und BRIEF_ABSCHLUSS_2026-11-03_BASIC-UND-NAVIGATION.md sowie den Veröffentlichungsnachtrag, falls vorhanden. Gleiche main und offene PRs ab. Für 2.28.16 müssen die vorhandenen PR-Prüfungen grün sein; erst danach zusammenführen und Android/Windows mit vorhandener Signieridentität und server=ja veröffentlichen. PWA-Veröffentlichung und tatsächliche Download-Prüfsummen kontrollieren. Keine Geräte-Gesamtabnahme erfinden; PR #59 bleibt Entwurf. Abgeschlossene Fassungen nicht erneut veröffentlichen. Gift und datierte Sicherung erst nach dem Bau erstellen.
 ```
+
+## Vorhandene Startseitenprobe nachziehen
+
+Der vollständige CI-Lauf 41612327922 (Quelle 05b6627, 40/41 Skripte grün) fand noch einen alten Textvergleich: Der Markenknopf führte korrekt zur Startseite, aber der Test erwartete den gesamten Breadcrumb-Inhalt ausschließlich als „Startseite“ und zählte die neuen Verlaufsschalter mit. Die bestehende Prüfung kontrolliert jetzt zusätzlich die Zieladresse #startseite und den eigentlichen Pfadknopf, wie bereits die entsprechende Tagebuchprobe. Gezielte komplette Startseitenprobe danach **35/0**; keine Anwendung geändert, keine Prüfung entfernt. Diese 35 Schritte werden separat von den oben abgegrenzten 92 gezählt. Windows und Android (einschließlich API31/35) auf unverändertem Anwendungscode bestanden; der endgültige PR-Stand durchläuft weiter die vorhandenen Pflichtprüfungen.
