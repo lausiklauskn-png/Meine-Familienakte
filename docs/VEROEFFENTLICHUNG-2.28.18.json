@@ -1,0 +1,45 @@
+{
+  "version": "2.28.18",
+  "source": "0c2df1306e5f4caf7b6d818605c542ac807e606c",
+  "recordedUtc": "2026-11-04T00:10:00+00:00",
+  "note": "Android-Testfassung für Klaus' Tablet (Tresor-Plan, PR #71; Version PR #72). Kein Windows-Release dieser Fassung. Sichtbare Zeile bleibt 2.28.1.",
+  "releases": [
+    {
+      "repo": "Meine-Familienakte",
+      "tag": "android-v2.28.18",
+      "source": "0c2df1306e5f4caf7b6d818605c542ac807e606c",
+      "run": 41742673788,
+      "publishedAt": "2026-11-03T23:58:13Z",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.18",
+      "publicHashCheck": "Anonymous curl download from GitHub; local size and SHA256 equal public GitHub asset digest. family-projekt.de not reachable from the checking session (proxy 403); the release workflow checks the server feed itself.",
+      "assets": [
+        {
+          "name": "Familienakte-android-v2.28.18.apk",
+          "size": 19800021,
+          "digest": "sha256:d62138c53fefccd5abb19b4204a78225c3e531637b18f794444f5924e3b762e3",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.18/Familienakte-android-v2.28.18.apk"
+        },
+        {
+          "name": "Familienakte-Einzeldatei-2.28.18.html",
+          "size": 3315041,
+          "digest": "sha256:8e0f1ab0c284eb6686d5e0f6a068f9a3cc1efa594c94d7a0cbeccafea9e1e3ca",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.18/Familienakte-Einzeldatei-2.28.18.html"
+        },
+        {
+          "name": "SHA256SUMS",
+          "size": 204,
+          "digest": "sha256:fc884da5cde4d0b17e93aaed5136a9ecb0bf739efdda32c717006f83736ef813",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.18/SHA256SUMS"
+        }
+      ],
+      "downloadProof": [
+        {
+          "name": "Familienakte-android-v2.28.18.apk",
+          "bytes": 19800021,
+          "sha256": "d62138c53fefccd5abb19b4204a78225c3e531637b18f794444f5924e3b762e3",
+          "anonymousDownload": true
+        }
+      ]
+    }
+  ]
+}
