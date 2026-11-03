@@ -1,0 +1,103 @@
+{
+  "version": "2.28.17",
+  "source": "be07bbfd913cfbd271e037d009604c2b2aa17924",
+  "recordedUtc": "2026-11-03T19:45:10+00:00",
+  "releases": [
+    {
+      "repo": "Meine-Familienakte",
+      "tag": "android-v2.28.17",
+      "source": "be07bbfd913cfbd271e037d009604c2b2aa17924",
+      "run": 41701561146,
+      "publishedAt": "2026-11-03T19:19:10Z",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.17",
+      "publicHashCheck": "Anonymous curl download; local size and SHA256 equal public GitHub asset digests. See release workflow for native install/update/feed checks.",
+      "assets": [
+        {
+          "name": "Familienakte-android-v2.28.17.apk",
+          "size": 19795925,
+          "digest": "sha256:41c9b149887a1750b965e1d268d1c583b4d5211ecee77508d7abaef439901b83",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.17/Familienakte-android-v2.28.17.apk"
+        },
+        {
+          "name": "Familienakte-Einzeldatei-2.28.17.html",
+          "size": 3307325,
+          "digest": "sha256:64e693a93a8cf9d7b6e5e0af89f4f5a64a46e71857e5a7cc446094cfee241212",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.17/Familienakte-Einzeldatei-2.28.17.html"
+        },
+        {
+          "name": "SHA256SUMS",
+          "size": 204,
+          "digest": "sha256:086be3d876cf4af8e73f45282aa6fbc3db4dacb3371c4e6e18eeef7215741c03",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.17/SHA256SUMS"
+        }
+      ],
+      "downloadProof": [
+        {
+          "name": "Familienakte-android-v2.28.17.apk",
+          "bytes": 19795925,
+          "sha256": "41c9b149887a1750b965e1d268d1c583b4d5211ecee77508d7abaef439901b83",
+          "anonymousDownload": true
+        },
+        {
+          "name": "Familienakte-Einzeldatei-2.28.17.html",
+          "bytes": 3307325,
+          "sha256": "64e693a93a8cf9d7b6e5e0af89f4f5a64a46e71857e5a7cc446094cfee241212",
+          "anonymousDownload": true
+        }
+      ]
+    },
+    {
+      "repo": "Meine-Familienakte",
+      "tag": "windows-v2.28.17",
+      "source": "be07bbfd913cfbd271e037d009604c2b2aa17924",
+      "run": 41701571209,
+      "publishedAt": "2026-11-03T19:31:01Z",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.17",
+      "publicHashCheck": "Anonymous curl download; local size and SHA256 equal public GitHub asset digests. See release workflow for native install/update/feed checks.",
+      "assets": [
+        {
+          "name": "Familienakte-Windows-2.28.17-x64-setup.exe",
+          "size": 33950766,
+          "digest": "sha256:97e3a2dec9cc36b7cce9ee93b02d8ff8122157503af4abbd792da2711e65b1b5",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/windows-v2.28.17/Familienakte-Windows-2.28.17-x64-setup.exe"
+        },
+        {
+          "name": "latest.json",
+          "size": 561,
+          "digest": "sha256:f278e252cebb53fb2d9e159c0aef0419e87f147f76c79536e8f7378ea2f43ffe",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/windows-v2.28.17/latest.json"
+        },
+        {
+          "name": "SHA256SUMS",
+          "size": 109,
+          "digest": "sha256:1c77dcb2007885dc32441a8de5b927022cb73c7ec499f8eb06ca9ee64ed4a5ab",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/windows-v2.28.17/SHA256SUMS"
+        }
+      ],
+      "downloadProof": [
+        {
+          "name": "Familienakte-Windows-2.28.17-x64-setup.exe",
+          "bytes": 33950766,
+          "sha256": "97e3a2dec9cc36b7cce9ee93b02d8ff8122157503af4abbd792da2711e65b1b5",
+          "anonymousDownload": true
+        }
+      ]
+    }
+  ],
+  "publicDownloadsVerified": true,
+  "identitiesPreserved": true,
+  "visibleVersion": "2.28.1",
+  "canonicalOutputSource": "1ea49db1eb9b23969f051030247a56472e528d3b",
+  "preservedEmbeddedCore": "Workflow-PDF main0ed15e53d9735c32e9b3c7a3b40871c2e4f7b922 /1.1.9",
+  "server": "Both existing release workflows completed with server=ja; signed update feeds remotely verified there",
+  "pwa": {
+    "run": 41704899961,
+    "source": "be07bbfd913cfbd271e037d009604c2b2aa17924",
+    "version": "2.28.17",
+    "conclusion": "success",
+    "verifiedWindows17": true,
+    "windowsSha256": "97e3a2dec9cc36b7cce9ee93b02d8ff8122157503af4abbd792da2711e65b1b5",
+    "kind": "existing build and deployment jobs; log confirms Windows17 installer copied and its hash",
+    "directHttpProbe": "not performed: managed cloud blocks github.io; deployment success is reported separately"
+  }
+}
