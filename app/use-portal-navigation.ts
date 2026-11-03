@@ -9,6 +9,7 @@ export type PortalView = {
 };
 type Visit = { view: PortalView; x: number; y: number; ui: Record<string, unknown> };
 type Marker = { session: string; index: number };
+declare global { interface Window { familienakteZurueck?: () => boolean } }
 const STATE_KEY = "familienakteNavigation";
 
 // Only an opaque marker enters browser history. Searches, object IDs and view
@@ -119,6 +120,29 @@ export function usePortalNavigation(sections: Record<SectionId, string>) {
   }, []);
   const back = useCallback(() => { if (index.current > 0) window.history.back(); }, []);
   const forward = useCallback(() => { if (index.current < visits.current.length - 1) window.history.forward(); }, []);
+  useEffect(() => {
+    const goBack = () => {
+      // A preview can consume Back without losing the underlying view/position.
+      if (!window.dispatchEvent(new Event("familienakte:zurueck", { cancelable: true }))) return true;
+      // Never abandon a form or a confirmation by navigating behind its dialog.
+      if (document.querySelector('[role="dialog"],.modal')) return true;
+      back();
+      return true; // The beginning is a stop, never an instruction to quit.
+    };
+    window.familienakteZurueck = goBack;
+    const mouse = (event: MouseEvent) => {
+      if (event.button !== 3) return;
+      event.preventDefault();
+      if (event.type === "mouseup") goBack();
+    };
+    window.addEventListener("mousedown", mouse, true);
+    window.addEventListener("mouseup", mouse, true);
+    return () => {
+      if (window.familienakteZurueck === goBack) delete window.familienakteZurueck;
+      window.removeEventListener("mousedown", mouse, true);
+      window.removeEventListener("mouseup", mouse, true);
+    };
+  }, [back]);
   useEffect(() => {
     const key = (event: KeyboardEvent) => {
       if (event.defaultPrevented || !event.ctrlKey || event.altKey || event.metaKey || event.key.toLowerCase() !== "z") return;

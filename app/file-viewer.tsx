@@ -135,8 +135,13 @@ export function FileViewerHost() {
   const [, setVersion] = useState(0);
   useEffect(() => {
     const listener = () => setVersion((value) => value + 1);
+    const back = (event: Event) => {
+      if (!current) return;
+      event.preventDefault(); current = null; notify();
+    };
     listeners.add(listener);
-    return () => { listeners.delete(listener); };
+    window.addEventListener("familienakte:zurueck", back);
+    return () => { listeners.delete(listener); window.removeEventListener("familienakte:zurueck", back); };
   }, []);
   if (!current) return null;
   const view = current;
