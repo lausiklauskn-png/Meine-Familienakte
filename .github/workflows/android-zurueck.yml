@@ -1,0 +1,62 @@
+name: Android-Zurück bis zum Anfang
+on:
+  push:
+    branches: [codex/appwechsel-und-zurueck]
+    paths: ['android/**', 'app/use-portal-navigation.ts', 'app/file-viewer.tsx', '.github/workflows/android-zurueck.yml']
+  workflow_dispatch:
+    inputs:
+      counterprobe:
+        description: Bisherigen Android-Host als Gegenprobe einsetzen
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  zurueck:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Nur für die ausdrückliche Gegenprobe den bisherigen Host einsetzen
+        if: inputs.counterprobe == true
+        run: |
+          git fetch --depth=1 origin 8a1e12c936b5acc255f0dcde6d78b9c841dafcb4
+          git show FETCH_HEAD:android/app/src/main/java/de/familyprojekt/familienakte/MainActivity.java > android/app/src/main/java/de/familyprojekt/familienakte/MainActivity.java
+      - run: npm ci
+      - run: npm run sync:android
+      - name: KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Wirkliche Android-Zurück-Ereignisse im installierten Programm
+        uses: reactivecircus/android-emulator-runner@4c44018e59b437e86cdfc41da381398f93ed8808
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_c
+          ram-size: 4096M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
+          script: |
+            python3 tools/native/webview-runtime.py collect work/webview-runtime
+            python3 tools/native/webview-runtime.py install work/webview-runtime
+            cd android && ./gradlew --no-daemon --max-workers=2 :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=de.familyprojekt.familienakte.FamilyNavigationProductTest
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: android-zurueck-${{ github.sha }}
+          path: |
+            android/app/build/outputs/androidTest-results/
+            android/app/build/reports/androidTests/
+          if-no-files-found: error
+          retention-days: 14

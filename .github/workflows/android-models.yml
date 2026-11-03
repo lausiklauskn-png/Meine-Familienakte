@@ -90,6 +90,9 @@ jobs:
           transport = [c for p in Path('android/app/build/outputs/androidTest-results').rglob('*.xml') for c in ET.parse(p).iter('testcase') if c.get('classname') == 'de.familyprojekt.familienakte.FamilyTransportProductTest']
           assert len(transport) == 1
           assert not any(c.find(tag) is not None for c in transport for tag in ('failure', 'error', 'skipped'))
+          navigation = [c for p in Path('android/app/build/outputs/androidTest-results').rglob('*.xml') for c in ET.parse(p).iter('testcase') if c.get('classname') == 'de.familyprojekt.familienakte.FamilyNavigationProductTest']
+          assert len(navigation) == 1
+          assert not any(c.find(tag) is not None for c in navigation for tag in ('failure', 'error', 'skipped'))
           print('Actual model and native transport product tests executed and passed')
           PY
       - uses: actions/upload-artifact@v4

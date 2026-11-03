@@ -2,7 +2,23 @@
 
 Diese Datei liest jede Sitzung zuerst. Was hier steht, gilt für jede Arbeit in diesem Repo.
 
-## Aktueller Stand: Bedienkorrekturen, 3. November 2026 – 2.28.16
+## Aktuelle Arbeit: Appwechsel und Zurück, 3. November 2026 – 2.28.17
+
+Klaus' konkrete Android-Rückmeldung: Die eigenständige Workflow-PDF-App und Familienakte
+müssen beim Teilen getrennte App-Aufgaben behalten. Zurück soll Familienakte am Anfang
+des Ansichtsverlaufs geöffnet lassen. Workflow-PDF-Pro PR #59 ist nach vollständig grüner
+Prüfung auf main 1ea49db. Dessen Dateiausgabe wurde hier mit
+`tools/pro-ausgabe-nachziehen.mjs` bytegleich samt Herkunftspin nachgezogen; nicht von Hand ändern.
+PR #67 enthält außerdem den parallelen Main-Stand d7f9703 aus PR #68: PDF-Kern 1.1.9 mit
+eigener Familienakte-Brücke und umgeleiteten wfpdf-Schlüsseln. Diesen Stand erhalten.
+
+Technische Fassung 2.28.17, sichtbare Zeile weiter 2.28.1. Veröffentlichung folgt erst nach
+der endgültigen PR-Prüfung; Android/Windows dann mit bestehenden Identitäten und server=ja.
+Auftrag und abgegrenzte Nachweise: `BRIEF_SITZUNG_2026-11-03_APPWECHSEL.md`.
+Ein späterer Appwechsel-Abschluss und Veröffentlichungsnachtrag haben Vorrang vor diesem Baustand.
+Ältere zusätzliche Android-Tresor-Paarproben bleiben offen; PR #59 bleibt Entwurf.
+
+## Vorangegangener Stand: Bedienkorrekturen, 3. November 2026 – 2.28.16
 
 Auf Klaus' direkten Auftrag gebaut: Basic-Kopfzeichen dunkel, Menüs unter sämtlichen
 Navigationszeilen, Ansichtsverlauf mit Rückkehr zur Position und platzsparende Hinweise.
