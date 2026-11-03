@@ -156,7 +156,7 @@ try {
   await step("Tagebuch: „Ergänzen“ führt zur Startseite und holt den Entwurf ins Eingabefeld", async () => {
     await klick(page.locator("#memory-draft-queue button", { hasText: "Ergänzen" }).first(), "Ergänzen");
     await page.waitForTimeout(400);
-    const start = (await page.locator(".breadcrumb").innerText()).trim() === "Startseite";
+    const start = page.url().endsWith("#startseite") && (await page.locator(".breadcrumb > button").allTextContents()).join("") === "Startseite";
     return start && (await page.locator(".memory-text textarea").inputValue()).includes("Probe-Entwurf");
   });
   await step("Startseite: ergänzter Entwurf geht mit „Nächste Eingabe“ zurück in die Warteschlange (kein Doppel)", async () => {

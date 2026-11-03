@@ -9,6 +9,7 @@ import { proUebergabeAnnehmen } from "./pro-uebergabe";
 import { uebergabeVorschlaege, type UebergabeVorschlag } from "../lib/uebergabe-vorschlaege";
 import { askConfirm, askPrompt } from "./page-dialogs";
 import { useEingang } from "./use-eingang";
+import { usePortalNavigation, type PortalNavigation } from "./use-portal-navigation";
 import { ProTresorAnschluss } from "./pro-tresor-anschluss";
 import { ProDokumentKnopf } from "./pro-dokument-knopf";
 import { istProOriginal, proTresor, proTresorVerfuegbar } from "./pro-tresor";
@@ -22,7 +23,7 @@ import { UI_HELP } from "../lib/ui-help";
 
 import {
   Archive, BookOpen, BriefcaseMedical, Building2, Car, CheckCircle2,
-  ChevronDown, ChevronRight, ClipboardCheck, Download, FileClock,
+  ArrowLeft, ArrowRight, ChevronDown, ChevronRight, ClipboardCheck, Download, FileClock,
   FileText, Folder, FolderHeart, HeartPulse, Home, Landmark, Menu, PackageCheck,
   Network, Plus, Printer, RefreshCw, Search, ShieldCheck, ShoppingBag, Upload, UserRound,
   Users, X, HardDrive, LockKeyhole, Usb, LogOut, HelpCircle, History, Cloud, LifeBuoy, Mic,
@@ -83,7 +84,7 @@ import { removeSampleFamily, SAMPLE_FAMILY_NAME, SAMPLE_NOTICE, sampleDataPresen
 // in der Android- und der Windows-App „Pro“, im Browser (PWA) „Basic“ — wie BookLedgerPro / BookLedger Basic.
 const APP_VARIANTE: "Pro" | "Basic" = typeof window !== "undefined" && ((window as unknown as { Capacitor?: { isNativePlatform?: () => boolean } }).Capacitor?.isNativePlatform?.() || "__TAURI__" in window) ? "Pro" : "Basic";
 
-type Notice = { kind: "success" | "error" | "info"; text: string } | null;
+type Notice = { kind: "success" | "error" | "info"; text: string; issue?: string } | null;
 type ActionKey = "vault" | "upload" | "compare" | "update" | "chatgpt";
 type ActionState = "pending" | "success" | "failed";
 type DocumentLibraryRequest = { key: number; focusId: string | null; area: string; query: string };
@@ -411,8 +412,14 @@ export default function HealthPortal() {
 
 function HealthPortalContent() {
   const reportActivity = useActivity();
-  const [active, setActive] = useState<SectionId>("overview");
-  const [query, setQuery] = useState("");
+  const navigation = usePortalNavigation(sectionLabels);
+  const { section: active, query } = navigation.view;
+  const setQuery = navigation.setQuery;
+  const cockpitFocusId = active === "cockpit" ? navigation.view.targetId : null;
+  const memoryFocusId = active === "memory" ? navigation.view.targetId : null;
+  const assistantCaseId = active === "assistant" ? navigation.view.targetId : null;
+  const documentLibraryFocusId = active === "documents" ? navigation.view.targetId : null;
+  const documentLibraryRequest = navigation.view.library;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState<string | null>(null);
   const [uploadOpen, setUploadOpen] = useState(false);
@@ -427,19 +434,14 @@ function HealthPortalContent() {
   const [memoryDraft, setMemoryDraft] = useState<MemoryDraft | null>(null);
   const [memoryReviewOpen, setMemoryReviewOpen] = useState(false);
   const [lastMemoryReceipt, setLastMemoryReceipt] = useState<MemoryReceipt | null>(null);
-  const [memoryFocusId, setMemoryFocusId] = useState<string | null>(null);
   const [editOpen, setEditOpen] = useState(false);
   const [editInitialRequest, setEditInitialRequest] = useState("");
   const [exportOpen, setExportOpen] = useState(false);
-  const [cockpitFocusId, setCockpitFocusId] = useState<string | null>(null);
   const [fillDocId, setFillDocId] = useState<string | null>(null);
   const [wfpdfOeffnen, setWfpdfOeffnen] = useState<File[] | null>(null);
   const [wfpdfScan, setWfpdfScan] = useState(false);
   const [wfpdfStart, setWfpdfStart] = useState(0);
   const [stapelNeu, setStapelNeu] = useState<File[] | null>(null);
-  const [assistantCaseId, setAssistantCaseId] = useState<string | null>(null);
-  const [documentLibraryFocusId, setDocumentLibraryFocusId] = useState<string | null>(null);
-  const [documentLibraryRequest, setDocumentLibraryRequest] = useState<DocumentLibraryRequest>({ key: 0, focusId: null, area: "", query: "" });
   const [, setCheckRecommended] = useState(() => {
     if (typeof window === "undefined") return false;
     try {
@@ -678,9 +680,9 @@ function HealthPortalContent() {
     if (!vaultHandle) return;
     try {
       const stand = await proTresor.zustand();
-      if (stand.status !== "offen" || !stand.id) { go("security"); setNotice({ kind: "info", text: "Bitte zuerst den gewünschten Pro-Tresor verbinden und entsperren. Danach die einzelne Unterlage erneut wählen." }); return; }
+      if (stand.status !== "offen" || !stand.id) { go("security"); setNotice({ kind: "info", issue: "pro-tresor-anschluss", text: "Bitte zuerst den gewünschten Pro-Tresor verbinden und entsperren. Danach die einzelne Unterlage erneut wählen." }); return; }
       await copyLocalDocumentToPro(vaultHandle, id, stand.id); await refreshLocal(vaultHandle);
-      setNotice({ kind: "success", text: "Das ausgewählte Original liegt geprüft im Pro-Tresor. Der bisherige Bestand wurde beibehalten." });
+      setNotice({ kind: "success", issue: "pro-tresor-anschluss", text: "Das ausgewählte Original liegt geprüft im Pro-Tresor. Der bisherige Bestand wurde beibehalten." });
     } catch (e) { setNotice({ kind: "error", text: e instanceof Error ? e.message : "Das Original wurde nicht übernommen; die Quelle bleibt erhalten." }); }
   };
   const anProApp = async (id: string, ziel: ProZiel) => {
@@ -905,7 +907,7 @@ function HealthPortalContent() {
     const pending = documents.filter((item) => item.status === "hochgeladen");
     if (!pending.length) {
       setActionState("compare", "failed");
-      setActive("inbox");
+      go("inbox");
       setNotice({ kind: "info", text: documents.length ? "Es gibt derzeit keine neu hochgeladene Unterlage. Offene Abgleiche findest du im Dokumenteneingang." : "Bitte lade zuerst eine neue Unterlage hoch." });
       if (!documents.length) setUploadOpen(true);
       return;
@@ -913,7 +915,7 @@ function HealthPortalContent() {
     setBusy(true);
     try {
       await Promise.all(pending.map((item) => changeStatus(item.id, "abgleich_offen")));
-      await loadDocuments(); setActive("inbox");
+      await loadDocuments(); go("inbox");
       setActionState("compare", "success");
       setNotice({ kind: "success", text: `${pending.length} Unterlage${pending.length === 1 ? " wurde" : "n wurden"} für den gemeinsamen Abgleich vorgemerkt. Medizinische Inhalte sind dadurch noch nicht bewertet.` });
     } catch (error) { setActionState("compare", "failed"); setNotice({ kind: "error", text: error instanceof Error ? error.message : "Abgleich konnte nicht vorgemerkt werden." }); }
@@ -921,7 +923,7 @@ function HealthPortalContent() {
   };
   const finalizeUpdate = async () => {
     const reviewed = documents.filter((item) => item.status === "geprüft");
-    setActive("inbox");
+    go("inbox");
     if (!reviewed.length) {
       setActionState("update", "failed");
       setNotice({ kind: "info", text: "Eine Unterlage kann erst übernommen werden, nachdem der inhaltliche Abgleich abgeschlossen und als geprüft bestätigt wurde." });
@@ -940,11 +942,8 @@ function HealthPortalContent() {
   const kiNamen = useMemo(() => familyRecords.flatMap((r) => { const d = (r as unknown as { data?: Record<string, unknown> }).data || {}; return ["displayName", "name", "contractNumber", "recipient", "recipientEmail"].map((k) => d[k]).filter((v): v is string => typeof v === "string" && v.trim().length >= 3); }), [familyRecords]);
   const openChatGPTEdit = (initialRequest = "") => { setActionState("chatgpt", "pending"); setEditInitialRequest(initialRequest); setEditOpen(true); };
   const openDocumentLibrary = (request: Partial<Omit<DocumentLibraryRequest, "key">> = {}) => {
-    const next = { key: Date.now(), focusId: request.focusId || null, area: request.area || "", query: request.query || "" };
-    setCockpitFocusId(null); setDocumentLibraryFocusId(next.focusId); setDocumentLibraryRequest(next);
-    setActive("documents"); setMobileOpen(false); setMegaOpen(null); setQuery("");
-    window.history.replaceState(null, "", "#documents");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    navigation.navigate("documents", request.focusId || null, { area: request.area || "", query: request.query || "" });
+    setMobileOpen(false); setMegaOpen(null);
   };
   const ensureMemoryVault = () => {
     if (vaultHandle) return true;
@@ -1008,15 +1007,10 @@ function HealthPortalContent() {
     catch (reason) { setNotice({ kind: "error", text: reason instanceof Error ? reason.message : "Der Entwurf konnte nicht gelöscht werden." }); }
   };
   const go = (id: SectionId, targetId?: string) => {
-    setCockpitFocusId(id === "cockpit" ? targetId || null : null);
-    setAssistantCaseId(id === "assistant" ? targetId || null : null);
-    setMemoryFocusId(id === "memory" ? targetId || null : null);
-    setDocumentLibraryFocusId(id === "documents" ? targetId || null : null);
-    if (id === "documents") setDocumentLibraryRequest({ key: Date.now(), focusId: targetId || null, area: "", query: "" });
-    setActive(id); setMobileOpen(false); setMegaOpen(null); setQuery("");
-    window.history.replaceState(null, "", id === "overview" ? "#startseite" : `#${id}`);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    navigation.navigate(id, targetId || null);
+    setMobileOpen(false); setMegaOpen(null);
   };
+  useEffect(() => { setMobileOpen(false); setMegaOpen(null); }, [navigation.visitKey]);
   const saveAssistantCorrespondence = async (input: {
     status: "Entwurf" | "Versandbereit" | "Versendet" | "Antwort ausstehend" | "Antwort eingegangen" | "Erledigt";
     kind: CorrespondenceKind;
@@ -1167,7 +1161,13 @@ function HealthPortalContent() {
         <ActivityLines/>
         {sampleBusy && !samplePresent && <section className="info-notice sample-data-notice" aria-live="polite"><span>Info</span><div><strong>Beispieldaten werden vorbereitet …</strong><div>Beim ersten Start legt die App eine frei erfundene Beispielfamilie im Browser-Datentresor an. Das dauert nur wenige Sekunden.</div></div></section>}
         {samplePresent && <section className="info-notice sample-data-notice" aria-label="Hinweis zu Beispieldaten"><span>Info</span><div><strong>{SAMPLE_NOTICE}</strong><div>Die {SAMPLE_FAMILY_NAME}, alle Orte, Firmen, Fahrzeuge und Nummern sind frei erfunden. Wenn du deine eigenen Unterlagen einpflegen möchtest, entferne die Beispieldaten mit einem Klick – eigene Einträge bleiben erhalten.</div></div><button type="button" className="button secondary" disabled={sampleBusy} onClick={() => void removeSampleData()}><Trash2 size={16}/> Beispieldaten entfernen</button></section>}
-        <div className="breadcrumb"><button onClick={() => go("overview")}>Startseite</button>{active !== "overview" && <><ChevronRight size={14}/>{parentArea && parentArea.label !== sectionLabels[active] && <><button onClick={() => go(parentArea.landing)}>{parentArea.label}</button><ChevronRight size={14}/></>}<span>{sectionLabels[active]}</span></>}</div>
+        <div className="breadcrumb">
+          {(navigation.canBack || navigation.canForward) && <span className="navigation-history" aria-label="Ansichtsverlauf">
+            <button type="button" onClick={navigation.back} disabled={!navigation.canBack} aria-label="Zur vorherigen Ansicht" title="Zurück (Strg+Z)"><ArrowLeft size={15}/><span>Zurück</span></button>
+            <button type="button" onClick={navigation.forward} disabled={!navigation.canForward} aria-label="Zur nächsten Ansicht" title="Vorwärts (Strg+Umschalt+Z)"><ArrowRight size={15}/></button>
+          </span>}
+          <button onClick={() => go("overview")}>Startseite</button>{active !== "overview" && <><ChevronRight size={14}/>{parentArea && parentArea.label !== sectionLabels[active] && <><button onClick={() => go(parentArea.landing)}>{parentArea.label}</button><ChevronRight size={14}/></>}<span>{sectionLabels[active]}</span></>}
+        </div>
         {query && <><SearchPanel query={query} results={searchResults} interpretation={searchInterpretation} onOpen={go}/><PrivateMeaningPanel handle={vaultHandle} query={query} onOpen={go}/></>}
         {!query && active === "overview" && <Overview
           documents={documents} localDocuments={localDocuments} oneDriveSummary={oneDriveSummary}
@@ -1185,7 +1185,7 @@ function HealthPortalContent() {
           onQueueMemory={queueMemoryDraft} onReviewMemory={reviewMemoryDraft} onOpenMemoryQueue={() => go("memory")} lastMemoryReceipt={lastMemoryReceipt}
         />}
         {!query && active === "health" && <HealthHub onGo={go} onDocuments={openDocumentLibrary}/>}
-        {!query && active === "documents" && <DocumentLibrary key={`${documentLibraryRequest.key}-${documentLibraryFocusId || "document-library"}`}
+        {!query && active === "documents" && <DocumentLibrary key={`library-${navigation.visitKey}`} navigation={navigation}
           documents={cockpitDocuments(documents, localDocuments)} records={familyRecords} relations={familyRelations}
           initialFocusId={documentLibraryFocusId} initialArea={documentLibraryRequest.area} initialQuery={documentLibraryRequest.query}
           onUebergabe={proTresorVerfuegbar() ? anProApp : undefined} onPro={proTresorVerfuegbar() ? inProTresor : undefined} proKandidaten={new Set(localDocuments.filter((d) => !istProOriginal(d.storedPath)).map((d) => d.id))}
@@ -1273,7 +1273,7 @@ function HealthPortalContent() {
           vaultHandle={vaultHandle} records={familyRecords} relations={familyRelations}
           onRefresh={async () => { if (vaultHandle) await refreshLocal(vaultHandle); }} onGo={go} onNotice={setNotice}
         />}
-        {!query && active === "cockpit" && <InteractiveCockpit key={cockpitFocusId || "cockpit"}
+        {!query && active === "cockpit" && <InteractiveCockpit key={`cockpit-${navigation.visitKey}`} navigation={navigation}
           documents={documents} localDocuments={localDocuments} records={familyRecords} relations={familyRelations} decisions={linkDecisions}
           initialFocusId={cockpitFocusId} onGo={go} onOpenDocument={openDocument} onFill={setFillDocId}
           onTaskStatus={updateCockpitTask} onAddNote={appendCockpitNote} onSaveContact={savePersonContact} onAssistant={(caseId) => go("assistant", caseId)}
@@ -3158,7 +3158,8 @@ function DocumentLibraryCard({ item, fill, onFill, onWfpdf, onPro, onUebergabe, 
   </article>;
 }
 
-function DocumentLibrary({ documents, records, relations, initialFocusId, initialArea, initialQuery, fillStates, onFill, onWfpdf, onPro, onUebergabe, proKandidaten, onOpenDocument, onGo, onUpload, onUnlink, onChange }: {
+function DocumentLibrary({ documents, records, relations, initialFocusId, initialArea, initialQuery, navigation, fillStates, onFill, onWfpdf, onPro, onUebergabe, proKandidaten, onOpenDocument, onGo, onUpload, onUnlink, onChange }: {
+  navigation: PortalNavigation;
   documents: FamilyCockpitDocument[];
   fillStates: Record<string, FillState>;
   onFill: (id: string) => void;
@@ -3177,13 +3178,16 @@ function DocumentLibrary({ documents, records, relations, initialFocusId, initia
   onUnlink: (relationId: string) => void | Promise<void>;
   onChange: (sourceType: ContextSourceType, sourceId: string, previousRelationId: string | null, caseId: string) => void | Promise<void>;
 }) {
-  const [view, setView] = useState<"overview" | "all">(initialFocusId || initialArea || initialQuery ? "all" : "overview");
-  const [query, setQuery] = useState(initialQuery);
-  const [area, setArea] = useState(initialArea);
-  const [documentType, setDocumentType] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [sort, setSort] = useState<DocumentLibrarySort>("newest");
+  const saved = navigation.readUi("library", { view: (initialFocusId || initialArea || initialQuery ? "all" : "overview") as "all" | "overview", query: initialQuery, area: initialArea, documentType: "", startDate: "", endDate: "", sort: "newest" as DocumentLibrarySort });
+  const [view, setView] = useState(saved.view);
+  const [query, setQuery] = useState(saved.query);
+  const [area, setArea] = useState(saved.area);
+  const [documentType, setDocumentType] = useState(saved.documentType);
+  const [startDate, setStartDate] = useState(saved.startDate);
+  const [endDate, setEndDate] = useState(saved.endDate);
+  const [sort, setSort] = useState(saved.sort);
+  const saveUi = navigation.saveUi;
+  useEffect(() => { saveUi("library", { view, query, area, documentType, startDate, endDate, sort }); }, [saveUi, view, query, area, documentType, startDate, endDate, sort]);
   const items = useMemo(() => buildDocumentLibraryItems(documents, records, relations), [documents, records, relations]);
   const areas = useMemo(() => [...new Set(items.map((item) => item.area))].sort((a, b) => a.localeCompare(b, "de")), [items]);
   const documentTypes = useMemo(() => [...new Set(items.map((item) => item.documentType))].sort((a, b) => a.localeCompare(b, "de")), [items]);
@@ -3293,7 +3297,8 @@ function isDateToday(value: string) {
   return !Number.isNaN(date.getTime()) && date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth() && date.getDate() === now.getDate();
 }
 
-function InteractiveCockpit({ documents, localDocuments, records, relations, decisions, initialFocusId, onGo, onOpenDocument, onFill, onTaskStatus, onAddNote, onSaveContact, onAssistant, onConfirmContext, onRejectContext, onAddMemoryToCase, onAddDocumentToCase }: {
+function InteractiveCockpit({ documents, localDocuments, records, relations, decisions, initialFocusId, navigation, onGo, onOpenDocument, onFill, onTaskStatus, onAddNote, onSaveContact, onAssistant, onConfirmContext, onRejectContext, onAddMemoryToCase, onAddDocumentToCase }: {
+  navigation: PortalNavigation;
   documents: UploadedDocument[];
   localDocuments: LocalDocument[];
   records: FamilyRecordUnion[];
@@ -3317,8 +3322,15 @@ function InteractiveCockpit({ documents, localDocuments, records, relations, dec
   const snapshot = useMemo(() => buildFamilyCockpit(input), [input]);
   const contextInput = useMemo(() => ({ documents: contextDocuments(documents, localDocuments), records, relations, decisions }), [documents, localDocuments, records, relations, decisions]);
   const contextSuggestions = useMemo(() => buildContextLinkSuggestions(contextInput).filter((item) => !item.sensitive), [contextInput]);
-  const [selectedId, setSelectedId] = useState<string | null>(initialFocusId);
-  const [note, setNote] = useState("");
+  const selectedId = initialFocusId;
+  const [note, setNote] = useState(() => navigation.readUi("cockpit-note", ""));
+  const saveUi = navigation.saveUi;
+  useEffect(() => { saveUi("cockpit-note", note); }, [saveUi, note]);
+  useEffect(() => {
+    if (!initialFocusId || navigation.traversal) return;
+    const timer = window.setTimeout(() => document.getElementById("cockpit-dossier")?.scrollIntoView({ block: "start" }), 80);
+    return () => window.clearTimeout(timer);
+  }, [initialFocusId, navigation.traversal]);
   const [savingNote, setSavingNote] = useState(false);
   const dossier = useMemo(() => selectedId ? buildCockpitDossier(input, selectedId) : null, [input, selectedId]);
   const caseTimeline = useMemo(() => dossier?.type === "case" ? buildCaseTimeline(dossier.id, contextInput) : [], [dossier, contextInput]);
@@ -3326,7 +3338,7 @@ function InteractiveCockpit({ documents, localDocuments, records, relations, dec
   const dossierGroups = useMemo(() => dossier ? dossierTypeOrder(dossier.type)
     .map((type) => ({ type, items: dossier.groups[type] || [] }))
     .filter((group) => group.items.length) : [], [dossier]);
-  const focus = (id: string) => { setSelectedId(id); window.setTimeout(() => document.getElementById("cockpit-dossier")?.scrollIntoView({ behavior: "smooth", block: "start" }), 80); };
+  const focus = (id: string) => onGo("cockpit", id);
   const openReference = (reference: CockpitReference) => {
     if (reference.type === "document") { void onOpenDocument(reference.id); return; }
     if (reference.sensitive) { onGo("health"); return; }
@@ -3368,7 +3380,7 @@ function InteractiveCockpit({ documents, localDocuments, records, relations, dec
       <article className="card cockpit-panel protected-health-card"><div><ShieldCheck size={34}/><span><span className="eyebrow dark">Geschützter Fachbereich</span><h2>Gesundheit und Leistung</h2><p>{snapshot.healthNotices.length ? `${snapshot.healthNotices.length} datensparsame Hinweise benötigen möglicherweise Aufmerksamkeit.` : "Derzeit kein datensparsamer Gesundheitshinweis aus dem gemeinsamen Modell."}</p></span></div><ul>{snapshot.healthNotices.slice(0, 3).map((item) => <li key={item.id}><span className={`priority-dot urgency-${item.urgency}`}/><span><strong>{item.title}</strong><small>{cockpitUrgencyLabel[item.urgency]}</small></span></li>)}</ul><button className="button secondary" onClick={() => onGo("health")}>Geschützten Gesundheitsbereich öffnen</button><small>Diagnosen und medizinische Einzelheiten werden im allgemeinen Cockpit nicht angezeigt.</small></article>
     </section>
 
-    {dossier && <section className={`card cockpit-dossier ${dossier.sensitive ? "sensitive" : ""}`} id="cockpit-dossier"><div className="card-heading"><div><span className="eyebrow dark">{cockpitRecordTypeLabel[dossier.type]} · {dossier.id}</span><h2>{dossier.title}</h2><p>Status: {dossier.status}{dossier.updatedAt ? ` · zuletzt geändert ${new Intl.DateTimeFormat("de-DE").format(new Date(dossier.updatedAt))}` : ""}</p></div><button className="icon-button" onClick={() => setSelectedId(null)} aria-label="Detailansicht schließen"><X/></button></div>{dossier.sensitive ? <div className="protected-dossier"><ShieldCheck/><div><strong>Vertrauliche Einzelheiten bleiben geschützt</strong><p>Im Cockpit werden nur Kennung, Status und die Anzahl vorhandener Verknüpfungen gezeigt.</p><button className="button secondary" onClick={() => onGo("health")}>Gesundheitsakte öffnen</button></div></div> : <><div className="dossier-meta"><div><small>Quelle</small><strong>{dossier.source || "nicht angegeben"}</strong></div><div><small>Speicherverweis</small><strong>{dossier.storageReference || "kein Dateipfad hinterlegt"}</strong></div><div><small>Verknüpfungen</small><strong>{dossier.related.length}</strong></div></div>{dossier.type === "case" && <><section className="case-open-summary"><div><strong>Noch offen</strong><button onClick={() => document.getElementById("case-open-details")?.scrollIntoView({ behavior: "smooth" })}>{caseOpen?.memoryQuestions || 0} Memory-Fragen</button><button onClick={() => document.getElementById("case-open-details")?.scrollIntoView({ behavior: "smooth" })}>{caseOpen?.tasks || 0} Aufgaben</button><button onClick={() => document.getElementById("case-open-details")?.scrollIntoView({ behavior: "smooth" })}>{caseOpen?.deadlines || 0} Fristen</button></div><div className="button-row"><button className="button secondary" onClick={() => onAssistant(dossier.id)}><Bot size={17}/> Assistenz fragen</button><button className="button secondary" onClick={() => onAddMemoryToCase(dossier.id)}><BookHeart size={17}/> Ereignis ergänzen</button><button className="button secondary" onClick={() => onAddDocumentToCase(dossier.id)}><Upload size={17}/> Dokument hinzufügen</button><button className="button primary" onClick={() => document.getElementById("case-open-details")?.scrollIntoView({ behavior: "smooth" })}>Was ist noch offen?</button></div></section><section className="case-timeline"><span className="ui-heading-help"><h3>Gemeinsame Vorgangschronologie</h3><InfoPopover label="Gemeinsame Vorgangschronologie erklären" text={UI_HELP["Gemeinsame Vorgangschronologie"]}/></span>{caseTimeline.length ? caseTimeline.map((item) => <button key={item.id} onClick={() => item.sensitive ? onGo("health") : item.type === "Dokument" ? void onOpenDocument(item.sourceId) : item.recordType === "event" ? onGo("memory", item.sourceId) : focus(item.sourceId)}><span className="badge neutral">{item.type}</span><span><strong>{item.title}</strong><small>{item.at ? new Intl.DateTimeFormat("de-DE", { dateStyle: "medium", timeStyle: "short" }).format(new Date(item.at)) : "Ohne Datum"}</small></span><ChevronRight size={16}/></button>) : <p>Noch keine chronologisch verknüpften Inhalte.</p>}</section><section className="case-open-details" id="case-open-details"><span className="ui-heading-help"><h3>Was ist noch offen?</h3><InfoPopover label="Was ist noch offen? erklären" text={UI_HELP["Was ist noch offen?"]}/></span><p>{caseOpen?.total ? `${caseOpen.memoryQuestions} offene Memory-Fragen, ${caseOpen.tasks} Aufgaben und ${caseOpen.deadlines} Fristen.` : "Aus den vorhandenen Verknüpfungen ergibt sich zurzeit kein offener Punkt."}</p></section></>}<div className="dossier-links" id="dossier-relations"><h3>{dossier.type === "case" ? "Aktueller Vorgang und seine Verknüpfungen" : dossier.type === "object" ? "Objektakte und ihre Verknüpfungen" : dossier.type === "person" ? "Personenakte und ihre Verknüpfungen" : "Zugehörige Informationen"}</h3>{dossierGroups.length ? dossierGroups.map((group) => <section className="dossier-link-group" key={group.type}><h4>{cockpitRecordTypeLabel[group.type]}</h4><div>{group.items.map((reference) => <button key={`${reference.type}-${reference.id}`} onClick={() => openReference(reference)}><span className="badge neutral">{cockpitRecordTypeLabel[reference.type]}</span><span><strong>{reference.label}</strong><small>{reference.id}</small></span><ChevronRight/></button>)}</div></section>) : <p>Für diesen Datensatz sind noch keine weiteren Verknüpfungen gespeichert.</p>}</div>{dossier.notes && <div className="dossier-notes"><span className="ui-heading-help"><h3>Vorhandene Notizen</h3><InfoPopover label="Vorhandene Notizen erklären" text={UI_HELP["Vorhandene Notizen"]}/></span><p>{dossier.notes}</p></div>}<div className="dossier-actions"><h3>Direkte Aktionen</h3><div className="button-row">{dossier.type === "case" && <button className="button secondary" onClick={() => onAssistant(dossier.id)}><Bot size={17}/> Assistenz &amp; Schreiben</button>}{dossier.type === "document" && <button className="button secondary" onClick={() => void onOpenDocument(dossier.id)}><FileText size={17}/> Dokument öffnen</button>}<button className="button secondary" onClick={() => document.getElementById("dossier-relations")?.scrollIntoView({ behavior: "smooth" })}><ClipboardCheck size={17}/> Zuordnung prüfen</button></div>{dossier.type === "person" && onSaveContact && <PersonKontaktKasten daten={((records.find((r) => r.id === dossier.id)?.data) || {}) as Record<string, unknown>} onSpeichern={(k) => onSaveContact(dossier.id, k)}/>}<label><span>Notiz ergänzen</span><VoiceTextarea rows={3} value={note} onValueChange={(spokenValue) => setNote(spokenValue)} placeholder="Nur bestätigte eigene Notiz eintragen" speechLabel="Vorgangsnotiz"/></label><button className="button primary" disabled={savingNote || !note.trim()} onClick={saveNote}>{savingNote ? "Wird gespeichert …" : "Notiz nach Bestätigung ergänzen"}</button></div></>}
+    {dossier && <section className={`card cockpit-dossier ${dossier.sensitive ? "sensitive" : ""}`} id="cockpit-dossier"><div className="card-heading"><div><span className="eyebrow dark">{cockpitRecordTypeLabel[dossier.type]} · {dossier.id}</span><h2>{dossier.title}</h2><p>Status: {dossier.status}{dossier.updatedAt ? ` · zuletzt geändert ${new Intl.DateTimeFormat("de-DE").format(new Date(dossier.updatedAt))}` : ""}</p></div><button className="button secondary" onClick={() => navigation.canBack ? navigation.back() : onGo("cockpit")} aria-label="Detailansicht schließen"><ArrowLeft size={17}/> Zurück</button></div>{dossier.sensitive ? <div className="protected-dossier"><ShieldCheck/><div><strong>Vertrauliche Einzelheiten bleiben geschützt</strong><p>Im Cockpit werden nur Kennung, Status und die Anzahl vorhandener Verknüpfungen gezeigt.</p><button className="button secondary" onClick={() => onGo("health")}>Gesundheitsakte öffnen</button></div></div> : <><div className="dossier-meta"><div><small>Quelle</small><strong>{dossier.source || "nicht angegeben"}</strong></div><div><small>Speicherverweis</small><strong>{dossier.storageReference || "kein Dateipfad hinterlegt"}</strong></div><div><small>Verknüpfungen</small><strong>{dossier.related.length}</strong></div></div>{dossier.type === "case" && <><section className="case-open-summary"><div><strong>Noch offen</strong><button onClick={() => document.getElementById("case-open-details")?.scrollIntoView({ behavior: "smooth" })}>{caseOpen?.memoryQuestions || 0} Memory-Fragen</button><button onClick={() => document.getElementById("case-open-details")?.scrollIntoView({ behavior: "smooth" })}>{caseOpen?.tasks || 0} Aufgaben</button><button onClick={() => document.getElementById("case-open-details")?.scrollIntoView({ behavior: "smooth" })}>{caseOpen?.deadlines || 0} Fristen</button></div><div className="button-row"><button className="button secondary" onClick={() => onAssistant(dossier.id)}><Bot size={17}/> Assistenz fragen</button><button className="button secondary" onClick={() => onAddMemoryToCase(dossier.id)}><BookHeart size={17}/> Ereignis ergänzen</button><button className="button secondary" onClick={() => onAddDocumentToCase(dossier.id)}><Upload size={17}/> Dokument hinzufügen</button><button className="button primary" onClick={() => document.getElementById("case-open-details")?.scrollIntoView({ behavior: "smooth" })}>Was ist noch offen?</button></div></section><section className="case-timeline"><span className="ui-heading-help"><h3>Gemeinsame Vorgangschronologie</h3><InfoPopover label="Gemeinsame Vorgangschronologie erklären" text={UI_HELP["Gemeinsame Vorgangschronologie"]}/></span>{caseTimeline.length ? caseTimeline.map((item) => <button key={item.id} onClick={() => item.sensitive ? onGo("health") : item.type === "Dokument" ? void onOpenDocument(item.sourceId) : item.recordType === "event" ? onGo("memory", item.sourceId) : focus(item.sourceId)}><span className="badge neutral">{item.type}</span><span><strong>{item.title}</strong><small>{item.at ? new Intl.DateTimeFormat("de-DE", { dateStyle: "medium", timeStyle: "short" }).format(new Date(item.at)) : "Ohne Datum"}</small></span><ChevronRight size={16}/></button>) : <p>Noch keine chronologisch verknüpften Inhalte.</p>}</section><section className="case-open-details" id="case-open-details"><span className="ui-heading-help"><h3>Was ist noch offen?</h3><InfoPopover label="Was ist noch offen? erklären" text={UI_HELP["Was ist noch offen?"]}/></span><p>{caseOpen?.total ? `${caseOpen.memoryQuestions} offene Memory-Fragen, ${caseOpen.tasks} Aufgaben und ${caseOpen.deadlines} Fristen.` : "Aus den vorhandenen Verknüpfungen ergibt sich zurzeit kein offener Punkt."}</p></section></>}<div className="dossier-links" id="dossier-relations"><h3>{dossier.type === "case" ? "Aktueller Vorgang und seine Verknüpfungen" : dossier.type === "object" ? "Objektakte und ihre Verknüpfungen" : dossier.type === "person" ? "Personenakte und ihre Verknüpfungen" : "Zugehörige Informationen"}</h3>{dossierGroups.length ? dossierGroups.map((group) => <section className="dossier-link-group" key={group.type}><h4>{cockpitRecordTypeLabel[group.type]}</h4><div>{group.items.map((reference) => <button key={`${reference.type}-${reference.id}`} onClick={() => openReference(reference)}><span className="badge neutral">{cockpitRecordTypeLabel[reference.type]}</span><span><strong>{reference.label}</strong><small>{reference.id}</small></span><ChevronRight/></button>)}</div></section>) : <p>Für diesen Datensatz sind noch keine weiteren Verknüpfungen gespeichert.</p>}</div>{dossier.notes && <div className="dossier-notes"><span className="ui-heading-help"><h3>Vorhandene Notizen</h3><InfoPopover label="Vorhandene Notizen erklären" text={UI_HELP["Vorhandene Notizen"]}/></span><p>{dossier.notes}</p></div>}<div className="dossier-actions"><h3>Direkte Aktionen</h3><div className="button-row">{dossier.type === "case" && <button className="button secondary" onClick={() => onAssistant(dossier.id)}><Bot size={17}/> Assistenz &amp; Schreiben</button>}{dossier.type === "document" && <button className="button secondary" onClick={() => void onOpenDocument(dossier.id)}><FileText size={17}/> Dokument öffnen</button>}<button className="button secondary" onClick={() => document.getElementById("dossier-relations")?.scrollIntoView({ behavior: "smooth" })}><ClipboardCheck size={17}/> Zuordnung prüfen</button></div>{dossier.type === "person" && onSaveContact && <PersonKontaktKasten daten={((records.find((r) => r.id === dossier.id)?.data) || {}) as Record<string, unknown>} onSpeichern={(k) => onSaveContact(dossier.id, k)}/>}<label><span>Notiz ergänzen</span><VoiceTextarea rows={3} value={note} onValueChange={(spokenValue) => setNote(spokenValue)} placeholder="Nur bestätigte eigene Notiz eintragen" speechLabel="Vorgangsnotiz"/></label><button className="button primary" disabled={savingNote || !note.trim()} onClick={saveNote}>{savingNote ? "Wird gespeichert …" : "Notiz nach Bestätigung ergänzen"}</button></div></>}
     </section>}
   </>;
 }

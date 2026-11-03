@@ -15,12 +15,18 @@ try {
     };`);
   const page = await context.newPage(); const errors = collectErrors(page);
   await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page);
-  await footer(page, "Sicherheitscenter");
+  await step("Pro-Tresor: unerfüllter Anschluss-Hinweis bleibt sichtbar", async () => {
+    await footer(page, "Dokumentenbibliothek");
+    await page.getByRole("button", { name: "In Pro-Tresor übernehmen", exact: true }).first().click();
+    await page.locator('.global-activity-text', { hasText: "Bitte zuerst den gewünschten Pro-Tresor" }).waitFor();
+    return await page.locator('.global-activity-row').count() === 1;
+  });
   const panel = page.locator("[data-pro-tresor]"); await panel.waitFor();
   check(await page.evaluate(() => window.__proCalls.length === 0), "Pro-Tresor: kein selbstständiger Anschluss");
   await step("Pro-Tresor: gewählter Ort und Kennung erscheinen nach Entsperren", async () => {
     await panel.getByRole("button", { name: "Vorhandenen Pro-Tresor verbinden …", exact: true }).click();
     await panel.getByText("Entsperrt", { exact: true }).waitFor();
+    await page.locator('.global-activity-text', { hasText: "Bitte zuerst den gewünschten Pro-Tresor" }).waitFor({ state: "detached" });
     return (await panel.innerText()).includes("erfundener-tresor-1") && (await panel.innerText()).includes("content://erfundene-sdkarte");
   });
   await step("Pro-Tresor: Sperren und bewusstes Entsperren", async () => {

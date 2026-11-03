@@ -12,7 +12,7 @@ try {
   await page.addInitScript(windowStub);
   const errors = collectErrors(page);
   await step("Start", async () => { await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page); });
-  await step("Aktivitätszeilen: Copy ist ohne Aktion gesperrt", async () => page.locator('button[aria-label="Aktivitätszeile 1 kopieren"]').isDisabled());
+  await step("Ohne Aktion gibt es keine leere Aktivitätszeile", async () => await page.locator('.global-activity-lines').count() === 0);
   await step("Nach einer Aktion: „Aktivitätszeile 1 kopieren“ legt genau den Zeilentext in die Zwischenablage", async () => {
     await footer(page, "Sicherheitscenter");
     await page.locator("button", { hasText: "Export vorbereiten" }).click(); await page.waitForTimeout(300); await schliesseDialoge(page);

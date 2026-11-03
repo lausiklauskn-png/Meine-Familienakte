@@ -4,7 +4,7 @@ import { resolve } from "node:path";
 import ts from "typescript";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { activityEntry, appendActivity, copyActivityText, inventoryScanFeedback, inventoryAssignmentFeedback, inventoryArchiveFeedback, inventoryReleaseFeedback } from "../lib/ui-activity.ts";
+import { activityEntry, appendActivity, resolveActivity, copyActivityText, inventoryScanFeedback, inventoryAssignmentFeedback, inventoryArchiveFeedback, inventoryReleaseFeedback } from "../lib/ui-activity.ts";
 import { scanInventoryFolder, readLocalVaultData, confirmInventoryAssignment, archiveInventoryItems, releaseInventoryItemsForAssistant } from "../app/local-vault.ts";
 
 let count = 0;
@@ -41,7 +41,15 @@ const markup = renderToStaticMarkup(React.createElement(ActivityLinesView, { ent
 check("React-Ausgabe enthält genau zwei Aktivitätszeilen und zwei Copy-Buttons", () => { assert.equal((markup.match(/class="global-activity-row /g) || []).length, 2); assert.equal((markup.match(/>Copy<\/button>/g) || []).length, 2); });
 check("React-Ausgabe verwendet tatsächliche Statusklassen und vollständige Texte", () => { assert.match(markup, /activity-warning/); assert.match(markup, /activity-error/); assert.match(markup, /Dritte echte Rückmeldung/); });
 const emptyMarkup = renderToStaticMarkup(React.createElement(ActivityLinesView, { entries: [] }));
-check("Ohne Aktion zeigen beide Zeilen ehrliche Platzhalter und inaktive Copy-Buttons", () => { assert.equal((emptyMarkup.match(/disabled=""/g) || []).length, 2); assert.match(emptyMarkup, /Noch keine Aktion ausgeführt/); });
+check("Ohne Aktion wird kein Platz für leere Aktivitätszeilen belegt", () => assert.equal(emptyMarkup, ""));
+check("Eine Aktion erzeugt genau eine Zeile ohne leeren Vorgänger", () => { const single = renderToStaticMarkup(React.createElement(ActivityLinesView, { entries: entries.slice(0, 1) })); assert.equal((single.match(/class="global-activity-row /g) || []).length, 1); assert.doesNotMatch(single, /Noch keine/); });
+check("Erledigter Anschluss entfernt nur den zugehörigen Hinweis, keinen fremden Fehler", () => {
+  const warning = activityEntry({ kind: "warning", issue: "pro-tresor-anschluss", text: "Bitte verbinden" }, 31);
+  const unrelated = activityEntry({ kind: "error", issue: "archiv", text: "Archiv nicht lesbar" }, 32);
+  assert.deepEqual(resolveActivity([warning, unrelated], "pro-tresor-anschluss"), [unrelated]);
+  const success = activityEntry({ kind: "success", issue: "pro-tresor-anschluss", text: "Verbunden" }, 33);
+  assert.deepEqual(appendActivity([warning, unrelated], success), [success, unrelated]);
+});
 check("Copy-Rückmeldung ist unabhängig, kurz und fehlertolerant", () => { assert.ok(component.includes('setCopyState("copied")') && component.includes('setCopyState("error")')); assert.ok(component.includes("2200") && component.includes('"Kopiert"')); });
 check("Zentrale Anzeige steht genau einmal unter der Suche und vor Seiteninhalten", () => { assert.equal((portal.match(/<ActivityLines\/>/g) || []).length, 1); assert.ok(portal.indexOf("<ActivityLines/>") > portal.indexOf('className="search-command-bar"')); assert.ok(portal.indexOf("<ActivityLines/>") < portal.indexOf('className="breadcrumb"')); assert.ok(!portal.includes("{notice &&")); });
 check("Meldungsspeicher bleibt über Menüwechsel erhalten und enthält keine fachliche Persistenz", () => { assert.match(portal, /<ActivityProvider><HealthPortalContent\/><\/ActivityProvider>/); assert.ok(!/localStorage|indexedDB|fetch\(/.test(component)); });
