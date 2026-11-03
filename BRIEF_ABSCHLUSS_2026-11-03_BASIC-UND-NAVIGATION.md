@@ -39,3 +39,22 @@ Lies CLAUDE.md und BRIEF_ABSCHLUSS_2026-11-03_BASIC-UND-NAVIGATION.md sowie den 
 ## Vorhandene Startseitenprobe nachziehen
 
 Der vollständige CI-Lauf 41612327922 (Quelle 05b6627, 40/41 Skripte grün) fand noch einen alten Textvergleich: Der Markenknopf führte korrekt zur Startseite, aber der Test erwartete den gesamten Breadcrumb-Inhalt ausschließlich als „Startseite“ und zählte die neuen Verlaufsschalter mit. Die bestehende Prüfung kontrolliert jetzt zusätzlich die Zieladresse #startseite und den eigentlichen Pfadknopf, wie bereits die entsprechende Tagebuchprobe. Gezielte komplette Startseitenprobe danach **35/0**; keine Anwendung geändert, keine Prüfung entfernt. Diese 35 Schritte werden separat von den oben abgegrenzten 92 gezählt. Windows und Android (einschließlich API31/35) auf unverändertem Anwendungscode bestanden; der endgültige PR-Stand durchläuft weiter die vorhandenen Pflichtprüfungen.
+
+
+## Quellengebundene Freigaben und Übergabe
+
+Der endgültige Bau ist mit PR #65 auf main: **7db47ed4e2a082b78d3f9e5d94906c104cb8297b**. Der geprüfte PR-Kopf **3bc39e07062ff24a1a19257a4b462154fb3b3368** und dieser Merge enthalten denselben Anwendungscode. Alle Pflichtprüfungen bestanden: vollständige CI mit **41/41 Browser-Skripten**, regulärer Android-Bau, WebView und installierte API31-/API35-Proben sowie die installierte Windows-App.
+
+Die regulären Freigaben verwenden dieselbe Mainquelle und die bestehenden Identitäten:
+
+- Android: Lauf [41617153030](https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41617153030), Tag `android-v2.28.16`, `server=ja`.
+- Windows: Lauf [41617158394](https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41617158394), Tag `windows-v2.28.16`, `server=ja`.
+- Erste PWA-Veröffentlichung: Lauf [41617071360](https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41617071360). Nach dem Zusammenführen dieses Nachtrags wird Pages mit dem dann aktuellen Windows-Installer erneut erzeugt.
+
+Downloadadressen und unveränderte SHA256SUMS-Dateien: `docs/VEROEFFENTLICHUNG-2.28.16.json`. Dieser Nachtrag wird erst nach beiden erfolgreichen Freigaben einschließlich Serverprüfung und erneut geladenen, gehashten öffentlichen Installationsdateien auf main übernommen. Damit bezeichnet sein Mainstand den abgeschlossenen Freigabeschritt. Die datierte Übergabesicherung enthält die konkreten Dateigrößen und SHA-256-Werte.
+
+Das Geschenk wird nach diesem Bau erstellt und ergänzt die bisherigen Erklärungen/Bilder um Basic-Erkennung, die freien Menüzeilen, Rückwege und Hinweise. Frühere Geschenke und Sicherungen bleiben unverändert. Die bestätigte Anleitung ohne Links bleibt bytegleich. Zeitfenster bis zur abschließenden Aufzeichnung und CI-Wartezeiten stehen in der datierten Sicherung; keine persönlichen Aktivstunden daraus ableiten.
+
+```text
+Aktuellen main-Stand laden, CLAUDE.md und diesen Abschluss samt docs/VEROEFFENTLICHUNG-2.28.16.json lesen. Vor jedem Release prüfen, ob android-v2.28.16 und windows-v2.28.16 bereits existieren; dieselbe Fassung nicht erneut veröffentlichen. Die datierte Übergabesicherung mit STATUS.json und Prüfsummen ist der Einstieg. Nur eine konkrete Nutzer-Rückmeldung nachstellen, keine neue allgemeine Testmatrix. PR59 bleibt Entwurf; zwei historische Android-Paarproben weiterhin unvollständig. Eigene Akten und Signieridentitäten bewahren, fremde Inventaränderungen nicht übernehmen.
+```

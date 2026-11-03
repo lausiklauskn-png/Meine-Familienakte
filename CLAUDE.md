@@ -2,17 +2,23 @@
 
 Diese Datei liest jede Sitzung zuerst. Was hier steht, gilt für jede Arbeit in diesem Repo.
 
-## Bedienkorrekturen, 3. November 2026 – 2.28.16
+## Aktueller Stand: Bedienkorrekturen, 3. November 2026 – 2.28.16
 
-Auf Klaus' direkten Auftrag: Basic-Kopfzeichen dunkel, Menüs unter sämtlichen Navigationszeilen,
-Ansichtsverlauf mit Rückkehr zur Position sowie platzsparende, anlassbezogene Hinweise.
-Baustand und abgegrenzte Proben: `BRIEF_ABSCHLUSS_2026-11-03_BASIC-UND-NAVIGATION.md`.
-Technische Fassung 2.28.16; sichtbare Zeile weiterhin 2.28.1. Derselbe Bau gilt für PWA,
-Android und Windows. Nach vorhandener grüner PR-Pipeline auf Klaus' bestehendem Freibrief
-zusammenführen und über die vorhandenen Release-Wege veröffentlichen. Veröffentlichungsnachtrag
-nach Abschluss lesen; keine bereits veröffentlichte Fassung erneut ausgeben.
+Auf Klaus' direkten Auftrag gebaut: Basic-Kopfzeichen dunkel, Menüs unter sämtlichen
+Navigationszeilen, Ansichtsverlauf mit Rückkehr zur Position und platzsparende Hinweise.
+Familienakte PR #65 ist auf main. Die vollständige vorhandene PR-Pipeline ist grün,
+einschließlich 41/41 Browser-Skripten und installierten Android-/Windows-Prüfungen.
+Technische Fassung 2.28.16, sichtbare Zeile weiterhin 2.28.1; bestehende Kennungen und
+Signieridentitäten bleiben. Bau und Übergabe: `BRIEF_ABSCHLUSS_2026-11-03_BASIC-UND-NAVIGATION.md`.
+Dauerhafte Download-Wege und quellengebundene Freigabeläufe stehen in
+`docs/VEROEFFENTLICHUNG-2.28.16.json`. Vor einer erneuten Freigabe die tatsächlichen
+Releases prüfen; eine bereits veröffentlichte Version niemals erneut ausgeben.
+Der Veröffentlichungsnachtrag wird erst nach erfolgreichem Android-/Windows-Release
+und nachgeprüften Downloads zusammengeführt. Geschenk und datierte Übergabesicherung
+entstehen anschließend. Persönliche Geräteprobe bleibt bei Klaus; die bestätigte
+reine HTML-Testanleitung bleibt unverändert.
 
-## Aktueller Bau: Pro-Verbund, 2. November 2026
+## Vorangegangener Verbund-Bau: 2. November 2026
 
 Die Funktionen aus `BRIEF_SITZUNG_2026-11-01_PRO-VERBUND.md` stehen auf main:
 nativer gemeinsamer Tresor, freiwillige ausgewählte Übergaben und Rückbestätigung,
