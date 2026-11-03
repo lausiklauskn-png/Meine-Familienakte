@@ -2,7 +2,18 @@
 
 Diese Datei liest jede Sitzung zuerst. Was hier steht, gilt für jede Arbeit in diesem Repo.
 
-## Aktuelle Arbeit: Appwechsel und Zurück, 3. November 2026 – 2.28.17
+## Aktueller Abschluss: Appwechsel 2.28.17 veröffentlicht
+
+Android/Windows 2.28.17 sind mit server=ja veröffentlicht und öffentlich per SHA-256
+nachgeprüft. PWA 2.28.17 enthält den aktuellen Windows-Installer. Sichtbar bleibt 2.28.1.
+Aktuell: BRIEF_ABSCHLUSS_2026-11-03_APPWECHSEL-UND-ZURUECK.md und
+docs/VEROEFFENTLICHUNG-2.28.17.json. Nicht erneut dieselben Fassungen veröffentlichen.
+Der eingebettete Kern 1.1.9 und der kanonische Ausgabepin 1ea49db bleiben erhalten.
+Workflow PDF Pro 1.0.13 ist ebenfalls auf Android/Windows veröffentlicht.
+Die zusätzliche alte Android-Tresor-Paar-Abnahme bleibt separat offen; PR #59 bleibt Entwurf.
+Geschenk und datierte Sicherung entstehen nach diesem abgeschlossenen Bau.
+
+## Abgeschlossener Baustand: Appwechsel und Zurück, 3. November 2026 – 2.28.17
 
 Klaus' konkrete Android-Rückmeldung: Die eigenständige Workflow-PDF-App und Familienakte
 müssen beim Teilen getrennte App-Aufgaben behalten. Zurück soll Familienakte am Anfang
