@@ -2,6 +2,7 @@ name: Android-Zurück bis zum Anfang
 on:
   push:
     branches: [codex/appwechsel-und-zurueck]
+    paths: ['android/**', 'app/use-portal-navigation.ts', 'app/file-viewer.tsx', '.github/workflows/android-zurueck.yml']
   workflow_dispatch:
     inputs:
       counterprobe:
