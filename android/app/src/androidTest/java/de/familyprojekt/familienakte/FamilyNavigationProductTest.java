@@ -7,6 +7,9 @@ import androidx.lifecycle.Lifecycle;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.uiautomator.*;
+import java.io.File;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
 import org.junit.Test;
@@ -29,9 +32,29 @@ public final class FamilyNavigationProductTest {
         }
     }
     private void back(){InstrumentationRegistry.getInstrumentation().sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);}
+    private void focus(ActivityScenario<MainActivity> app)throws Exception{
+        UiDevice device=UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        AtomicBoolean focused=new AtomicBoolean();long end=System.nanoTime()+TimeUnit.SECONDS.toNanos(15);
+        while(System.nanoTime()<end){
+            // Only the known SDK launcher's ANR may be closed. An ANR of the
+            // app under test remains visible and makes this probe fail.
+            UiObject2 launcher=device.findObject(By.res("android:id/alertTitle").text("Pixel Launcher isn't responding"));
+            if(launcher!=null){
+                android.util.Log.w("FamilyNavigation","Close pre-existing SDK Pixel Launcher ANR");
+                UiObject2 close=device.findObject(By.res("android:id/aerr_close"));assertNotNull(close);close.click();
+                device.wait(Until.gone(By.res("android:id/alertTitle").text("Pixel Launcher isn't responding")),5000);
+            }
+            app.onActivity(a->focused.set(a.hasWindowFocus()&&a.getBridge().getWebView().isShown()&&a.getBridge().getWebView().getHeight()>100));
+            if(focused.get())return;Thread.sleep(100);
+        }
+        File cache=InstrumentationRegistry.getInstrumentation().getTargetContext().getFilesDir();
+        device.dumpWindowHierarchy(new File(cache,"navigation-focus.xml"));device.takeScreenshot(new File(cache,"navigation-focus.png"));
+        fail("Family window must own focus before real input; foreground="+device.getCurrentPackageName());
+    }
     @Test public void backReturnsThroughViewsAndStaysOpenAtBeginning()throws Exception{
         try(ActivityScenario<MainActivity> app=ActivityScenario.launch(MainActivity.class)){
             until(app,"typeof window.familienakteZurueck==='function'&&!!document.querySelector('.footer-directory')");
+            focus(app);
             // Android/WebView guards history traversal before the first trusted
             // input. A real tap must precede a programmatically prepared route.
             int[] point=new int[2];app.onActivity(a->{a.getBridge().getWebView().getLocationOnScreen(point);point[0]+=4;point[1]+=a.getBridge().getWebView().getHeight()/2;});
