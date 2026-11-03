@@ -2,6 +2,17 @@
 
 Diese Datei liest jede Sitzung zuerst. Was hier steht, gilt für jede Arbeit in diesem Repo.
 
+## Neueste Übergabe an Claude Code: Tresor-Pfad und Abgleich, 03.11.2026
+
+Klaus hat die weitere Tresorprüfung an seine bereits begonnene Claude-Code-Sitzung übergeben.
+Zuerst `BRIEF_ABSCHLUSS_2026-11-03_TRESOR-UEBERGABE-AN-CLAUDE.md` und
+`BRIEF_SITZUNG_2026-11-03_TRESOR-PFAD-UND-ABGLEICH.md` lesen.
+Das Bildschirmfoto meldet gleiche Analysequelle/Register, Browser-Datentresor und Testordner-Hinweise.
+Der entsprechende Quellcodepfad ist beschrieben; keine SD-Pfad-Reparatur oder Geräteprüfung behaupten.
+Fehlende Speicherbestätigung, tatsächlichen SD-Verweis/Freigabe und Neustart gezielt klären.
+Selbstanalyse-Schutz, Originale und Claudes parallele Arbeit bewahren. Vorhandene Fassungen nicht erneut ausgeben.
+Geschenk und datierte Sicherung sind erstellt; ZIP-Download auf Klaus' Gerät noch nicht bestätigt.
+
 ## Aktueller Abschluss: Appwechsel 2.28.17 veröffentlicht
 
 Android/Windows 2.28.17 sind mit server=ja veröffentlicht und öffentlich per SHA-256
@@ -11,7 +22,7 @@ docs/VEROEFFENTLICHUNG-2.28.17.json. Nicht erneut dieselben Fassungen veröffent
 Der eingebettete Kern 1.1.9 und der kanonische Ausgabepin 1ea49db bleiben erhalten.
 Workflow PDF Pro 1.0.13 ist ebenfalls auf Android/Windows veröffentlicht.
 Die zusätzliche alte Android-Tresor-Paar-Abnahme bleibt separat offen; PR #59 bleibt Entwurf.
-Geschenk und datierte Sicherung entstehen nach diesem abgeschlossenen Bau.
+Geschenk und datierte Sicherung vom 03.11.2026 sind nach dem Bau erstellt; nicht neu bauen.
 
 ## Abgeschlossener Baustand: Appwechsel und Zurück, 3. November 2026 – 2.28.17
 
