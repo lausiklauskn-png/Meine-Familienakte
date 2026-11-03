@@ -50,7 +50,7 @@ jobs:
           script: |
             python3 tools/native/webview-runtime.py collect work/webview-runtime
             python3 tools/native/webview-runtime.py install work/webview-runtime
-            cd android && ./gradlew --no-daemon --max-workers=2 connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=de.familyprojekt.familienakte.FamilyNavigationProductTest
+            cd android && ./gradlew --no-daemon --max-workers=2 :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=de.familyprojekt.familienakte.FamilyNavigationProductTest
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
