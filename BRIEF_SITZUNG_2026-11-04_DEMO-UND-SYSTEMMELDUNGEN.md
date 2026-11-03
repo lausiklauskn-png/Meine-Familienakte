@@ -1,6 +1,6 @@
 # Bauauftrag: getrennte Demo, Dateierhalt und Systemmeldungen
 
-Klaus hat den Kimhub-Brief `docs/sessions/BRIEF_2026-11-04_codex-familienakte-systemmeldungen.md` ausdrücklich zur selbstständigen Umsetzung einschließlich geprüfter Zusammenführung und neuer Veröffentlichung freigegeben. Eigene Dateien sollen bevorzugt erhalten bleiben. Technische Zielfassung 2.28.18; sichtbare Zeile 2.28.1. Hauptstand zu Beginn: eed690a einschließlich der inzwischen zusammengeführten Tresor-PR #71. Bestehende Identitäten, Pfade und Herkunftspins bleiben maßgeblich.
+Klaus hat den Kimhub-Brief `docs/sessions/BRIEF_2026-11-04_codex-familienakte-systemmeldungen.md` ausdrücklich zur selbstständigen Umsetzung einschließlich geprüfter Zusammenführung und neuer Veröffentlichung freigegeben. Eigene Dateien sollen bevorzugt erhalten bleiben. Technische Zielfassung 2.28.19; sichtbare Zeile 2.28.1. Hauptstand zu Beginn: eed690a einschließlich der inzwischen zusammengeführten Tresor-PR #71. Während des Baus wurde PR #72 mit der technischen 2.28.18 für Claudes Tresor-Test-APK zusammengeführt. Dieser parallele Stand ist integriert; die getrennte Demo erhält deshalb die nächste freie technische Fassung 2.28.19. Bestehende Identitäten, Pfade und Herkunftspins bleiben maßgeblich.
 
 ## Bau und begrenzte Abnahme
 

@@ -1,6 +1,6 @@
 # Demo und eigene Familienakte
 
-Ab technischer Fassung 2.28.18 öffnet **Demo öffnen** einen getrennten lokalen Testbestand mit der erfundenen Familie Lindqvist-Arenberg und wirklichen, selbst erzeugten PDF-Dateien. Die sichtbare Versionszeile bleibt 2.28.1.
+Ab technischer Fassung 2.28.19 öffnet **Demo öffnen** einen getrennten lokalen Testbestand mit der erfundenen Familie Lindqvist-Arenberg und wirklichen, selbst erzeugten PDF-Dateien. Die sichtbare Versionszeile bleibt 2.28.1.
 
 - **Demo verlassen** kehrt zur eigenen Akte zurück. Die Demo bleibt für den nächsten Besuch gespeichert.
 - **Demo zurücksetzen** löscht nach Bestätigung den ganzen benannten Demobestand, auch dort importierte Testdateien, und legt die Vorführung neu an.

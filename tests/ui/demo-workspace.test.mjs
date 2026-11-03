@@ -62,7 +62,7 @@ try {
       const f = window.__vaultFixture, h = await f.browserVault();
       await f.seedSampleFamily(h, { force: true });
       const index = await f.vaultInternalsForTests.readIndex(h);
-      // Persistiertes Format vor 2.28.18: allgemeine Quellen bei generierten Ereignissen.
+      // Persistiertes Format vor 2.28.19: allgemeine Quellen bei generierten Ereignissen.
       for (const record of index.records) if (record.recordType === "event" && record.source === "Beispieldaten – frei erfunden") record.source = record.data.entryKind === "correspondence" ? "Assistenz- und Korrespondenzzentrale" : "Tagebuch & Erinnerungsprotokoll";
       await f.vaultInternalsForTests.writeIndex(h, index);
     });

@@ -288,13 +288,13 @@ async function seedOnce(handle: FileSystemDirectoryHandle, options: { force?: bo
 
 /** Entfernt nur die Beispieldaten – eigene Unterlagen und Einträge bleiben erhalten. */
 export async function removeSampleFamily(handle: FileSystemDirectoryHandle) {
-  // Alte SAMPLE_IDS können eigene Kennungen enthalten (erneutes Laden vor 2.28.18).
+  // Alte SAMPLE_IDS können eigene Kennungen enthalten (erneutes Laden vor 2.28.19).
   // Deshalb sind sie kein Löschbeleg. Nur eindeutige Herkunft im Register zählt.
   const ids = new Set<string>();
   const data = await readLocalVaultData(handle);
   for (const item of data.documents) if (item.notes?.startsWith(SAMPLE_SOURCE)) ids.add(item.id);
   for (const item of data.records) if (item.source === SAMPLE_SOURCE) ids.add(item.id);
-  // Vor 2.28.18 hatten erzeugte Erinnerungen/Briefe noch allgemeine Quellen.
+  // Vor 2.28.19 hatten erzeugte Erinnerungen/Briefe noch allgemeine Quellen.
   // Nur exakte Vorführinhalte UND ausschließlich zugehörige Beispielbezüge übernehmen.
   for (const item of data.records) {
     if (item.recordType !== "event") continue;
