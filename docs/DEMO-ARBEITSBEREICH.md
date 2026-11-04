@@ -14,3 +14,9 @@ Vor dem Demo-Einstieg werden eindeutig zugeordnete alte Beispiele ausschließlic
 Der gemeinsame native Pro-Tresor und die eigene eingebettete Workflow-PDF-Bibliothek werden in der Demo nicht angeschlossen. Externe Teilen-Eingänge werden während der Demo nicht übernommen: Android behält sie im nativen Eingang, die PWA in ihrem Teilen-Vorrat. Erst außerhalb der Demo werden sie abgeholt. Externe Ordner werden in der Demo nicht als aktive Ablage verbunden. Die Vorführung bietet den normalen lokalen Dokumentimport, Zuordnung, Termine, Vorgänge und die erfundenen Beispiele; sie ist keine Abnahme von SD-Karte, Scanner oder Cloudverbindung.
 
 Gelöscht wird nur der benannte lokale Demobereich. Separat ausgegebene Sicherungen, Scannerdateien, fremde Ordner und Originale im gemeinsamen Pro-Tresor bleiben außerhalb dieser Bereinigung. Gespeicherte echte Prüfberichte werden weder entfernt noch grün gesetzt. Basic-Browser/PWA, Android-Pro und Windows haben jeweils ihren tatsächlichen lokalen Bestand; zwischen Geräten wird keine gemeinsame Historie vorausgesetzt.
+
+## Kennzeichnung und eigene Tresorwahl ab 2.28.21
+
+Ein roter Rahmen im oberen Kopf-/Navigationsbereich und das Wort **DEMO** kennzeichnen den Demo-Modus auch bei geschlossenem Mobilmenü. „Demo-Ablage bereit“ bezieht sich nur auf den getrennten lokalen Testbestand; ein eigener Datentresor muss dort nicht angelegt werden.
+
+Nach „Demo verlassen“ zeigt die Startseite „Eigenen Datentresor wählen“, solange kein eigener Ablageort bewusst gewählt wurde. Der automatisch verfügbare lokale Browserspeicher wird dafür nicht grün als eigener PC-/USB-Tresor ausgegeben. Bisher dort gespeicherte Unterlagen bleiben erhalten. Ein zuvor gewählter eigener Ordner oder Pro-Tresor bleibt zugeordnet. Für ein grünes Pro-Originalziel müssen die gespeicherte Zuordnung und die tatsächlich offene native Tresorkennung übereinstimmen.

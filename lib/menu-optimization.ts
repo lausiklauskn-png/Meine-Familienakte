@@ -1,7 +1,8 @@
 import type { FamilyRecordType } from "./family-data-model";
 
 export const MENU_OPTIMIZATION_VERSION = 1 as const;
-export const START_PAGE_REFERENCE_SHA256 = "4dd17a09342dbcf60f3595841fda607b529c922f07ffbabb9df27be87d64bd75";
+// Klaus 04.11.2026: Demo-Ablage und bewusst gewählten eigenen Tresor auf der Startseite unterscheiden.
+export const START_PAGE_REFERENCE_SHA256 = "50004c3d63981d492035dbf179b9ddd30e43283886492130fcb8987784a78b70";
 
 export type MenuSection =
   | "documents" | "inbox" | "medical" | "benefits" | "work" | "assessment"

@@ -1,5 +1,14 @@
 # CLAUDE.md — Meine Familienakte
 
+## Aktueller Bau: Demo-Rahmen und Tresorstatus 2.28.21 (04.11.2026)
+
+Klaus beauftragt die direkte Umsetzung in dieser Sitzung. Zuerst `BRIEF_SITZUNG_2026-11-04_DEMO-RAHMEN-UND-TRESORSTATUS.md` lesen.
+Automatischer Browserspeicher ist kein gewählter eigener Tresor; Demo-Ablage, eigener Ordner und zugeordnetes offenes Pro-Ziel unterscheiden.
+Roter Demo-Rahmen und DEMO-Wortmarke oben, auch mobil. Eigene Dateien, reale Auswahl und Berichte erhalten.
+Technisch 2.28.21, sichtbar weiter 2.28.1. Neuer Stand erst nach vollständigen Prüfketten veröffentlichen; 2.28.20 nicht erneut ausgeben.
+Claudes PWA-Basic-Klarstellung #78 bleibt enthalten. Die bestätigten ersten fünf Nutzerpunkte und zehn offenen Punkte nicht umschreiben.
+
+
 
 ## Aktueller Abschluss: getrennte Demo 2.28.20 veröffentlicht (04.11.2026)
 

@@ -1844,3 +1844,8 @@ input.af-feld, textarea.af-feld { width: auto; min-height: 0; resize: none; }
 .demo-workspace > div { flex: 1 1 22rem; min-width: 0; }
 .demo-workspace > div > div { font-size: .86rem; }
 .demo-workspace .button { max-width: 100%; white-space: normal; }
+
+/* Der Demo-Rahmen bleibt auch bei geschlossenem Mobilmenü sichtbar. */
+.site-header.demo-mode { border: 3px solid #b42318; }
+.demo-mode .main-navigation { border-top: 3px solid #b42318; }
+.site-brand strong .demo-header-badge { display: inline-flex; margin-left: .5rem; padding: 3px 6px; border-radius: 4px; background: #b42318; color: #fff; font-size: .7rem; font-weight: 850; letter-spacing: .08em; vertical-align: middle; }
