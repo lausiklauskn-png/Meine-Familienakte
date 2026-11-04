@@ -1,10 +1,10 @@
 // Storage/protocol checks with synthetic vectors; this does not measure e5 quality.
 import assert from 'node:assert/strict';
 import {createServer} from 'node:http';
-import {readFile} from 'node:fs/promises';
 import {chromium} from 'playwright';
-import {transpileModule,ModuleKind,ScriptTarget} from 'typescript';
-const server=createServer(async(req,res)=>{res.setHeader('Content-Type',req.url==='/index.js'?'text/javascript':'text/html');res.end(req.url==='/index.js'?transpileModule(await readFile(new URL('../../app/private-meaning-index.ts',import.meta.url),'utf8'),{compilerOptions:{target:ScriptTarget.ES2022,module:ModuleKind.ESNext}}).outputText:'<!doctype html><title>Private Indexprobe</title>');});
+import {build} from 'esbuild';
+const indexSource=(await build({entryPoints:[new URL('../../app/private-meaning-index.ts',import.meta.url).pathname],bundle:true,write:false,format:'esm',platform:'browser'})).outputFiles[0].text;
+const server=createServer(async(req,res)=>{res.setHeader('Content-Type',req.url==='/index.js'?'text/javascript':'text/html');res.end(req.url==='/index.js'?indexSource:'<!doctype html><title>Private Indexprobe</title>');});
 await new Promise(r=>server.listen(0,'127.0.0.1',r));
 const browser=await chromium.launch(process.env.CHROMIUM_PATH?{executablePath:process.env.CHROMIUM_PATH}:{});
 try {
