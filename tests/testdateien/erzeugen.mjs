@@ -1,6 +1,6 @@
 // Erzeugt den Satz erfundener Testdateien für den Dateieingang reproduzierbar neu.
 // Aufruf: node tests/testdateien/erzeugen.mjs
-// Alle Inhalte sind frei erfunden (Regeln aus NEUSTART_AUFTRAG.md): keine echten Personen,
+// Alle Inhalte sind frei erfunden (Regeln aus docs/briefe-archiv/NEUSTART_AUFTRAG.md): keine echten Personen,
 // Orte, Firmen, Ärzte oder gültigen Nummern. Es werden keine fremden Pakete benötigt;
 // nur das JPEG entsteht über das vorinstallierte Chromium (Playwright), weil Node keinen
 // JPEG-Encoder mitbringt.

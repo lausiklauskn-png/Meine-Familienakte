@@ -135,7 +135,7 @@ Die Skripte importieren `.ts` direkt und brauchen Node 22.18 oder neuer. `engine
 Vite 6 (aktuell 8), TypeScript 5.9 (aktuell 7), `@vitejs/plugin-react` 5 (aktuell 6), lucide 1.31 (aktuell 1.63). Nicht dringend, aber vor dem PWA-Umbau sinnvoll.
 
 ### D5. Dokumentation
-README sagt „Oberfläche unverändert aus der bisherigen App“, `NEUSTART_AUFTRAG.md` sagt „keine Vorlage, kein alter Code“. Drei Auftrags- und Briefdateien liegen im Wurzelverzeichnis, besser unter `docs/`. `lib/system-check-manifest.json` und `release-system-check-report.json` sind Artefakte, kein Quellcode. Es fehlt eine kurze `CONTRIBUTING.md` (wie testen, wie bauen, Branch-Regeln) und eine `CHANGELOG.md` statt der Versionshistorie im Komponentencode.
+README sagt „Oberfläche unverändert aus der bisherigen App“, `docs/briefe-archiv/NEUSTART_AUFTRAG.md` sagt „keine Vorlage, kein alter Code“. Drei Auftrags- und Briefdateien liegen im Wurzelverzeichnis, besser unter `docs/`. `lib/system-check-manifest.json` und `release-system-check-report.json` sind Artefakte, kein Quellcode. Es fehlt eine kurze `CONTRIBUTING.md` (wie testen, wie bauen, Branch-Regeln) und eine `CHANGELOG.md` statt der Versionshistorie im Komponentencode.
 
 ---
 

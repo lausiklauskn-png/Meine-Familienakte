@@ -1,6 +1,6 @@
 # Auftrag für eine neue Sitzung: „Meine Familienakte“ analysieren und Funktionen prüfen
 
-> Einstieg für die Sitzung: zuerst `BRIEF_SITZUNG_ANALYSE-UND-ERSTBAU.md` lesen. Dieser Auftrag ist dessen Teil 1.
+> Einstieg für die Sitzung: zuerst `docs/briefe-archiv/BRIEF_SITZUNG_ANALYSE-UND-ERSTBAU.md` lesen. Dieser Auftrag ist dessen Teil 1.
 
 **Sprache:** Bitte durchgehend auf Deutsch antworten und alle Ergebnisse auf Deutsch schreiben.
 
@@ -204,7 +204,7 @@ beim Bedienen der App auswählen kann. Ich selbst teste zunächst auf dem **Andr
    Ergebnis von Paket F: `docs/analyse/PLATTFORMEN.md` mit Ist-Stand, Vorschlag und
    Schritt-für-Schritt-Plan. Den **ersten Bau** von PWA, APK und Windows-App (offline-fähig,
    mit Internetschalter) hat Klaus freigegeben. Er steht in Teil 2 von
-   `BRIEF_SITZUNG_ANALYSE-UND-ERSTBAU.md`, jeweils als eigener PR nach der Analyse.
+   `docs/briefe-archiv/BRIEF_SITZUNG_ANALYSE-UND-ERSTBAU.md`, jeweils als eigener PR nach der Analyse.
 
 ### G · Dateien von anderen Geräten: Handy-Foto, Scanner, andere Apps
 
@@ -262,7 +262,7 @@ Dateien liefern können, damit sich die Familienakte füllen und verwalten läss
   Ersatzobjekte im Test verwenden oder eine Handprüf-Liste schreiben, die ich auf PC und Handy
   abhaken kann.
 - Keine echten Daten verwenden. Für Beispiele und Testdateien gelten die Regeln aus
-  `NEUSTART_AUFTRAG.md`: erfundene Namen, Orte und Nummern, keine Ärzte und keine echten Firmen.
+  `docs/briefe-archiv/NEUSTART_AUFTRAG.md`: erfundene Namen, Orte und Nummern, keine Ärzte und keine echten Firmen.
 - Andere Repos nur lesen, dort nichts ändern.
 
 ## Abgabe
@@ -288,7 +288,7 @@ im Chat eine kurze Zusammenfassung mit den fünf wichtigsten Ergebnissen.
 
 ## Offene Entscheidungen (vorher kurz nachfragen)
 
-- **APK, PWA und Windows bauen:** freigegeben, siehe `BRIEF_SITZUNG_ANALYSE-UND-ERSTBAU.md`.
+- **APK, PWA und Windows bauen:** freigegeben, siehe `docs/briefe-archiv/BRIEF_SITZUNG_ANALYSE-UND-ERSTBAU.md`.
 - **https-Adresse:** Für das Mikrofon auf dem Handy braucht die App eine echte https-Adresse. Vorschlag: ein
 separates öffentliches Repo (z. B. `familienakte-app`) nur mit der gebauten App und GitHub
 Pages. Den Schalter in den Pages-Einstellungen muss ich einmal selbst umlegen. Das ist erst

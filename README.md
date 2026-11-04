@@ -84,12 +84,12 @@ Ein Offline-Cache (Service Worker) oder eine Desktop-App kann später ergänzt w
 | **Fristen und Aufgaben** | **Tagebuch** | **Handy** |
 | ![Fristen](docs/screenshots/04-fristen-und-aufgaben.png) | ![Tagebuch](docs/screenshots/05-tagebuch.png) | ![Handy](docs/screenshots/11-handy-startseite.png) |
 
-Der ursprüngliche Arbeitsauftrag steht in [NEUSTART_AUFTRAG.md](NEUSTART_AUFTRAG.md).
+Der ursprüngliche Arbeitsauftrag steht in [docs/briefe-archiv/NEUSTART_AUFTRAG.md](docs/briefe-archiv/NEUSTART_AUFTRAG.md).
 Weiterarbeit:
 
 - [docs/analyse/BERICHT.md](docs/analyse/BERICHT.md): **Analyse der App (2026-10-28)** – was funktioniert, was nicht, KI-Stand, Empfehlungen; dazu [Funktionsmatrix](docs/analyse/FUNKTIONSMATRIX.md), [technischer Baum](docs/analyse/TECHNISCHER-BAUM.md), [KI und Anonymisierung](docs/analyse/KI-UND-ANONYMISIERUNG.md), [Dateieingang](docs/analyse/DATEIEINGANG.md), [Geräte-Eingang](docs/analyse/DATEI-EINGANG-GERAETE.md), [Plattformen](docs/analyse/PLATTFORMEN.md), [Handprüfung](docs/analyse/HANDPRUEFUNG.md), [Fragen an den Freund](docs/analyse/FRAGEN-AN-DEN-FREUND.md)
 - `npm run test:ui`: Oberflächenproben (Playwright, Chromium) unter `tests/ui/`, einzeln mit Filter: `node tests/run-ui.mjs knoepfe-start`
-- [BRIEF_SITZUNG_ANALYSE-UND-ERSTBAU.md](BRIEF_SITZUNG_ANALYSE-UND-ERSTBAU.md): Brief für die nächste Sitzung (Analyse, dann PWA, APK und Windows mit Internetschalter)
+- [docs/briefe-archiv/BRIEF_SITZUNG_ANALYSE-UND-ERSTBAU.md](docs/briefe-archiv/BRIEF_SITZUNG_ANALYSE-UND-ERSTBAU.md): Brief für die nächste Sitzung (Analyse, dann PWA, APK und Windows mit Internetschalter)
 - [docs/ANALYSE_AUFTRAG.md](docs/ANALYSE_AUFTRAG.md): Analyse in den Paketen A bis G
-- [BRIEF_ABSCHLUSS_2026-10-28_NEUAUFBAU.md](BRIEF_ABSCHLUSS_2026-10-28_NEUAUFBAU.md): Abschluss der Neuaufbau-Sitzung
+- [docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-10-28_NEUAUFBAU.md](docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-10-28_NEUAUFBAU.md): Abschluss der Neuaufbau-Sitzung
 - **Forschung nur in Kimhub (Klaus 2026-10-31):** jeder Forschungseintrag (Sitzungs-Befunde, Messungen, Stunden-Auswertungen, Forschungsnotizen) kommt nach Kimhub `forschung/messungen/`; in diesem Repo werden keine Forschungseinträge geführt und keine Forschungsdateien angelegt. Öffentliche Forschungsaufgaben stehen in Sage-Protokol.
