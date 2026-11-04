@@ -84,8 +84,9 @@ Als Nächstes (Reihenfolge)
 3. Familienakte: „Durchsuchbar“ im Scanner ab Werk an (nur über die Brücke); Vollsicherung auf Android.
 4. Familienakte: Sprünge im Ordnerbaum verdrahten; weitere Ablaufbilder nur nach HTML-Vorschau und Klaus' Ja.
 5. Demo auch am großen Bildschirm nur noch als Knopf oben (Klaus 04.11.): Demo-Kasten ganz weg. Tipp auf „Demo“ (aus)
-   öffnet die Demo; Tipp auf „DEMO“ (an) öffnet ein kleines Auswahlfenster am Knopf: Demo verlassen · Demo zurücksetzen ·
-   Demo löschen und verlassen. Proben, die `.demo-workspace` nutzen, darauf umstellen. Am Handy ist „FAMILIENAKTE“ neben
+   schaltet die Demo ein (App lädt in den Demo-Bestand). Ist sie an, heißt der Knopf „DEMO ▾“ (rot, Pfeil = Menü wie in
+   der Navi-Leiste); ein Tipp klappt direkt am Knopf ein Menü auf: Demo verlassen · Demo zurücksetzen · Demo löschen und
+   verlassen. Kein „zweimal tippen“ (nicht erkennbar). Proben, die `.demo-workspace` nutzen, darauf umstellen. Am Handy ist „FAMILIENAKTE“ neben
    dem DEMO-Knopf leicht abgeschnitten (Bild 16:37) – mitbeheben. Vorher als Vorschau zeigen.
 6. Klaus' Tablet-Rückmeldung zu 2.28.23 abholen (Kopfleiste, Fragezeichen, Drucken, Aus-/Einloggen, Demo-Schalter).
 7. Zeit dieser und der neuen Sitzung in Kimhub nachtragen.
