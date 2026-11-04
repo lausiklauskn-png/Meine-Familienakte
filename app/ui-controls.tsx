@@ -1,14 +1,30 @@
-import { useEffect, useId, useRef, useState, type ComponentPropsWithoutRef } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState, type ComponentPropsWithoutRef, type CSSProperties } from "react";
+import { createPortal } from "react-dom";
 import { CircleHelp, Mic, MicOff, X } from "lucide-react";
 import { createDictationSession, microphoneBlockedReason, speechConstructor, type SpeechBrowser } from "../lib/browser-dictation";
 import { useActivity } from "./ui-activity";
 
+/** Abstand des Hinweisfensters zum Bildschirmrand und zum Fragezeichen (px). */
+const INFO_RAND = 12, INFO_ABSTAND = 8;
+
+/**
+ * Fragezeichen mit Hinweisfenster. Das Fenster hängt am Fragezeichen (Nutzerwunsch 2026-11-04: am Handy stand es
+ * unten am Bildschirm, getrennt vom Fragezeichen, und wurde von anderen Fragezeichen überdeckt). Es liegt über allem
+ * (Portal am <body>), folgt dem Fragezeichen beim Rollen und öffnet unterhalb oder, wenn dort kein Platz ist, oberhalb.
+ * Ein zweiter Tipp auf dasselbe Fragezeichen schließt es.
+ */
 export function InfoPopover({ text, label = "Weitere Informationen" }: { text: string; label?: string }) {
   const id = useId();
   const rootRef = useRef<HTMLSpanElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLSpanElement>(null);
   const [open, setOpen] = useState(false);
+  const [lage, setLage] = useState<CSSProperties>({ visibility: "hidden" });
   useEffect(() => {
-    const outside = (event: PointerEvent) => { if (open && !rootRef.current?.contains(event.target as Node)) setOpen(false); };
+    const outside = (event: PointerEvent) => {
+      const ziel = event.target as Node;
+      if (open && !rootRef.current?.contains(ziel) && !panelRef.current?.contains(ziel)) setOpen(false);
+    };
     const escape = (event: KeyboardEvent) => { if (event.key === "Escape") setOpen(false); };
     const another = (event: Event) => { if ((event as CustomEvent<string>).detail !== id) setOpen(false); };
     document.addEventListener("pointerdown", outside);
@@ -16,9 +32,32 @@ export function InfoPopover({ text, label = "Weitere Informationen" }: { text: s
     window.addEventListener("family-info-open", another);
     return () => { document.removeEventListener("pointerdown", outside); document.removeEventListener("keydown", escape); window.removeEventListener("family-info-open", another); };
   }, [open, id]);
+  useLayoutEffect(() => {
+    if (!open) { setLage({ visibility: "hidden" }); return; }
+    let rahmen = 0;
+    const setzen = () => {
+      rahmen = 0;
+      const knopf = triggerRef.current?.getBoundingClientRect?.(), fenster = panelRef.current;
+      if (!knopf || !fenster) return;
+      const breite = Math.min(320, window.innerWidth - 2 * INFO_RAND);
+      const hoehe = Math.min(fenster.scrollHeight, window.innerHeight * 0.6);
+      const links = Math.max(INFO_RAND, Math.min(knopf.right - breite, window.innerWidth - INFO_RAND - breite));
+      const unten = window.innerHeight - knopf.bottom, oben = knopf.top;
+      const top = unten >= hoehe + INFO_ABSTAND + INFO_RAND || unten >= oben
+        ? knopf.bottom + INFO_ABSTAND
+        : Math.max(INFO_RAND, knopf.top - INFO_ABSTAND - hoehe);
+      setLage({ position: "fixed", top, left: links, width: breite, maxHeight: "60vh", visibility: "visible" });
+    };
+    const spaeter = () => { if (!rahmen) rahmen = requestAnimationFrame(setzen); };
+    setzen();
+    window.addEventListener("scroll", spaeter, true);
+    window.addEventListener("resize", spaeter);
+    return () => { if (rahmen) cancelAnimationFrame(rahmen); window.removeEventListener("scroll", spaeter, true); window.removeEventListener("resize", spaeter); };
+  }, [open, text]);
+  const fenster = open ? <span ref={panelRef} id={`${id}-panel`} className="start-info-panel info-angeheftet" role="note" style={lage}><strong>Hinweis</strong><span>{text}</span><button type="button" className="info-close" aria-label="Hinweis schließen" onClick={(event) => { event.stopPropagation(); setOpen(false); triggerRef.current?.focus(); }}><X size={16}/></button></span> : null;
   return <span ref={rootRef} className={`start-info-popover ${open ? "open" : ""}`}>
-    <button type="button" className="start-info-trigger" aria-label={label} title={label} aria-expanded={open} aria-controls={`${id}-panel`} onClick={(event) => { event.stopPropagation(); if (!open) window.dispatchEvent(new CustomEvent("family-info-open", { detail: id })); setOpen(!open); }}><CircleHelp size={18}/></button>
-    {open && <span id={`${id}-panel`} className="start-info-panel" role="note"><strong>Hinweis</strong><span>{text}</span><button type="button" className="info-close" aria-label="Hinweis schließen" onClick={(event) => { event.stopPropagation(); setOpen(false); }}><X size={16}/></button></span>}
+    <button ref={triggerRef} type="button" className="start-info-trigger" aria-label={label} title={label} aria-expanded={open} aria-controls={`${id}-panel`} onClick={(event) => { event.stopPropagation(); if (!open) window.dispatchEvent(new CustomEvent("family-info-open", { detail: id })); setOpen(!open); }}><CircleHelp size={18}/></button>
+    {fenster && (typeof document !== "undefined" ? createPortal(fenster, document.body) : fenster)}
   </span>;
 }
 
@@ -60,7 +99,7 @@ export function DictationButton({ value, onChange, label, append = true, onDicta
     <button type="button" className={`dictation-button ${listening ? "listening" : ""}`} disabled={!available} onClick={toggle} aria-pressed={listening} aria-label={`${label}: ${listening ? "Diktat beenden" : "Diktat starten"}`} title={blocked || hint || (listening ? "Aufnahme läuft bis zum Ausschalten – hier beenden" : "Diktat starten")}>
       {available ? <Mic size={19}/> : <MicOff size={19}/>}
     </button>
-    {(listening || hint) && <span className="dictation-status" role="status">{listening ? "Aufnahme läuft" : hint}</span>}
+    {listening && <span className="dictation-status" role="status">Aufnahme läuft</span>}
   </span>;
 }
 

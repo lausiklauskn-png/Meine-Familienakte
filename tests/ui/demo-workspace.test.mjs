@@ -177,7 +177,8 @@ try {
   });
   const mobile = await nativeContext.newPage();
   await mobile.goto(app.base + "?demo=1", { waitUntil: "networkidle" });
-  await mobile.locator('.sample-data-notice strong:has-text("Alle Daten")').waitFor({ timeout: 120000 });
+  // Am Handy steht die Demo als roter Schalter oben (2026-11-04), der Demo-Kasten ist dort ausgeblendet.
+  await mobile.locator('.demo-schalter.aktiv[aria-pressed="true"]').waitFor({ timeout: 120000 });
   await footer(mobile, "Sicherheitscenter");
   await step("Gestellte Android-Brücke: Demo liest weder echten Tresor noch Teilen-Eingang", async () => {
     await mobile.waitForTimeout(1800);
