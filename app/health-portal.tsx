@@ -642,7 +642,7 @@ function HealthPortalContent() {
     const handler = (event: Event) => {
       const detail = (event as CustomEvent<{ files?: File[]; bestaetigen?: (ok: boolean) => void }>).detail;
       const files = detail?.files || [];
-      if (!files.length) { detail?.bestaetigen?.(false); return; }
+      if (demoActive() || !files.length) { detail?.bestaetigen?.(false); return; }
       go("inbox");
       void queueFromShell.current(files, "file-picker").then(
         (ok) => detail?.bestaetigen?.(ok),
@@ -1189,7 +1189,7 @@ function HealthPortalContent() {
           {demoActive() && <button type="button" className="button secondary" disabled={sampleBusy || vaultBusy || intakeBusy || inventoryBusy} onClick={async () => { if (await askConfirm("Den gesamten getrennten Demobestand einschließlich Testimporten löschen und zur eigenen Akte zurückkehren? Externe Sicherungen bleiben erhalten.")) { const url = new URL(location.href); url.searchParams.set("demo", "delete"); location.assign(url.href); } }}>Demo löschen und verlassen</button>}
         </section>
         {sampleBusy && !samplePresent && <section className="info-notice sample-data-notice" aria-live="polite"><span>Info</span><div><strong>Beispieldaten werden vorbereitet …</strong><div>Die Demo legt eine frei erfundene Beispielfamilie im getrennten Demobestand an. Das dauert nur wenige Sekunden.</div></div></section>}
-        {samplePresent && <section className="info-notice sample-data-notice" aria-label="Hinweis zu Beispieldaten"><span>Info</span><div><strong>{SAMPLE_NOTICE}</strong><div>Die {SAMPLE_FAMILY_NAME}, alle Orte, Firmen, Fahrzeuge und Nummern sind frei erfunden. Wenn du deine eigenen Unterlagen einpflegen möchtest, entferne die Beispieldaten mit einem Klick – eigene Einträge bleiben erhalten.</div></div><button type="button" className="button secondary" disabled={sampleBusy} onClick={() => void removeSampleData()}><Trash2 size={16}/> Beispieldaten entfernen</button></section>}
+        {samplePresent && <section className="info-notice sample-data-notice" aria-label="Hinweis zu Beispieldaten"><span>Info</span><div><strong>{demoActive() ? SAMPLE_NOTICE : "Alte Beispieldaten im eigenen Bestand"}</strong><div>Die {SAMPLE_FAMILY_NAME}, alle Orte, Firmen, Fahrzeuge und Nummern sind frei erfunden. Wenn du deine eigenen Unterlagen einpflegen möchtest, entferne die Beispieldaten mit einem Klick – eigene Einträge bleiben erhalten.</div></div><button type="button" className="button secondary" disabled={sampleBusy} onClick={() => void removeSampleData()}><Trash2 size={16}/> Beispieldaten entfernen</button></section>}
         <div className="breadcrumb">
           {(navigation.canBack || navigation.canForward) && <span className="navigation-history" aria-label="Ansichtsverlauf">
             <button type="button" onClick={navigation.back} disabled={!navigation.canBack} aria-label="Zur vorherigen Ansicht" title="Zurück (Strg+Z)"><ArrowLeft size={15}/><span>Zurück</span></button>

@@ -6,7 +6,9 @@ import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
 const { chromium } = require("playwright");
-const base = process.argv[2] || "http://127.0.0.1:5173/";
+const demoUrl = new URL(process.argv[2] || "http://127.0.0.1:5173/");
+demoUrl.searchParams.set("demo", "1");
+const base = demoUrl.href;
 const out = new URL("../docs/screenshots/", import.meta.url).pathname;
 mkdirSync(out, { recursive: true });
 

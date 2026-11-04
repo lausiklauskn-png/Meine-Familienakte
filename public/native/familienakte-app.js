@@ -81,7 +81,8 @@
   };
   window.addEventListener('familienakte:bereit', () => { bereit = true; for (const auftrag of wartend.splice(0)) zustellen(auftrag); });
   async function dateienUebergeben(files) {
-    if (!files?.length) return false;
+    // Externe echte Eingänge gehören zur eigenen Akte, nie automatisch zur Demo.
+    if (new URLSearchParams(location.search).has('demo') || !files?.length) return false;
     return new Promise((resolve) => {
       const auftrag = { files, resolve };
       if (!bereit) wartend.push(auftrag);

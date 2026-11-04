@@ -138,6 +138,8 @@ try {
   await step("Gestellte Android-Brücke: Demo liest weder echten Tresor noch Teilen-Eingang", async () => {
     await mobile.waitForTimeout(1800);
     assert.equal(await mobile.evaluate(() => window.__demoNativeCalls), 0);
+    const accepted = await mobile.evaluate(() => window.FamilienakteApp.dateienUebergeben([new File(["Erfundener externer Eingang"], "Externer_Eingang.txt", { type: "text/plain" })]));
+    assert.equal(accepted, false);
   });
   await step("Demo-Schalter auf schmalem Bildschirm ohne seitliches Überlaufen", async () => {
     assert.ok(await mobile.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));

@@ -83,7 +83,8 @@ export const ready = async (page) => {
     });
     if (seeded) await page.reload({ waitUntil: "networkidle" });
   }
-  await page.waitForSelector('.sample-data-notice strong:has-text("Alle Daten")', { timeout: 120000 });
+  const notice = new URL(page.url()).searchParams.get("demo") === "1" ? "Alle Daten" : "Alte Beispieldaten";
+  await page.waitForSelector(`.sample-data-notice strong:has-text("${notice}")`, { timeout: 120000 });
 };
 /** Hauptmenü (Index 0 = Assistenz … 7 = Hilfe) und Eintrag im Mega-Menü. */
 export async function openMenu(page, navIndex, itemText) {
