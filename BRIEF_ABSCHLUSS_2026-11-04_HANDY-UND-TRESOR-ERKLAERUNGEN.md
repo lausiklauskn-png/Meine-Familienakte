@@ -1,4 +1,4 @@
-# Abschluss: Handy-Oberfläche, Tresor-Erklärungen, Aus-/Einloggen – 2.28.23 (04.11.2026)
+# Abschluss: Handy-Oberfläche, Tresor-Erklärungen, Aus-/Einloggen – 2.28.23 und 2.28.24 (04.11.2026)
 
 Claude Code, Sitzung „Tresor-Ordnerstruktur organisation“. Auftrag kam schrittweise im Chat von Klaus, mit Bildern vom Tablet.
 Grundlage: Codex' 2.28.22 (#81, #83) und dessen Übergabe (`BRIEF_ABSCHLUSS_2026-11-04_DEMO-RAHMEN-UND-TRESORSTATUS.md`).
@@ -31,6 +31,19 @@ Inhalt (`tresorordner.json`) erkannt, Name frei (Vorschlag „Family-Projekt“)
 mehrere Tresore → nicht raten; nie in einen Ordner mit Inhalt. JVM `HauptordnerTest` 9 + `TresorOrdnerTest` 15 grün,
 Gegenprobe 6/6. **In keiner App verdrahtet** – nächster Schritt.
 
+## Nachbesserung 2.28.24 (Familienakte #85, auf main `15ad1a0`, enthält Codex' #86)
+
+- **„Wo liegt was?“:** Tresor-Hauptordner grün (entsperrt) bzw. rot (gesperrt/nicht verbunden), dazu der gewählte Speicher;
+  bei Familienakte „N von M Unterlagen im Tresor“.
+- **Private Bedeutungssuche:** Erklärsätze hinter Fragezeichen, „Wonach suchst du?“, Knopf „Nach Bedeutung suchen“.
+- **„Bestand prüfen“ wieder sichtbar:** Quelle · Analyse · Archiv lagen seit #11 (28.10.) versehentlich im Expertenbereich.
+- **Kurzhinweise:** langer Druck (0,5 s) zeigt am Tablet den Hinweis eines Knopfs, ohne ihn auszulösen; Haken in der Hilfe.
+- **Geräteübergabe:** frühere Empfänger als Vorschlag (kein echtes Geräteverzeichnis).
+- Codex' #86 (gemeinsame PDF-Updates, Designschutz) wurde ohne Konflikt hineingeführt. Abstimmung:
+  `BRIEF_CODEX_2026-11-04_NACH-2.28.24.md`.
+- CI am Merge-Stand alle grün (Oberflächenproben, Android-Bau, Android-Produktproben API 31/35, Windows, Transport).
+  Veröffentlicht auf Klaus' Wort („Veröffentliche 2.28.24, sobald alles grün ist“): `docs/VEROEFFENTLICHUNG-2.28.24.json`.
+
 ## Proben
 
 - `npm run build`, `npm run check`, `npm run check:herkunft` grün.
@@ -62,17 +75,18 @@ Die PWA kommt über Pages. Diese Fassung nicht erneut ausgeben.
 
 ## Stundennachweis
 
-Erste Spur dieser Sitzung etwa 11:20 UTC (Antwort auf die Tresor-Frage), letzte Spur nach der Veröffentlichung etwa 15:45 UTC;
-Obergrenze rund 4 h 25 min einschließlich CI-Wartezeiten. Die genaue Zeit gehört nach Kimhub (Regel); Kimhub war in dieser
-Sitzung nicht angehängt – in der nächsten Sitzung dort nachtragen. Klaus' eigene Angabe geht vor.
+Gemessen am Sitzungsprotokoll: erste Spur 11:24 UTC, Ende nach der Veröffentlichung von 2.28.24 (Zeit im Kimhub-Eintrag).
+Einschließlich CI-Wartezeiten, Pausen nicht abgezogen; Obergrenze. Die genaue Zeit und die Forschung stehen in Kimhub
+(`forschung/sitzungen.json`, Eintrag `2026-11-04-claude-handy-tresor-erklaerungen-2-28-24`). Klaus' eigene Angabe geht vor.
 
 ## Startauftrag zum Einfügen
 
 ```text
-Familienakte & Pro-Tresor – Fortsetzung nach 2.28.23 (Claude Code, 04.11.2026)
+Familienakte & Pro-Tresor – Fortsetzung nach 2.28.24 (Claude Code, 04.11.2026)
 
 Repos: lausiklauskn-png/Meine-Familienakte, Workflow-PDF-Pro, BookLedgerPro, Privat-Brain-Pro.
-Zuerst lesen: Meine-Familienakte CLAUDE.md und BRIEF_ABSCHLUSS_2026-11-04_HANDY-UND-TRESOR-ERKLAERUNGEN.md,
+Zuerst lesen: Meine-Familienakte CLAUDE.md, BRIEF_ABSCHLUSS_2026-11-04_HANDY-UND-TRESOR-ERKLAERUNGEN.md,
+BRIEF_CODEX_2026-11-04_NACH-2.28.24.md,
 Workflow-PDF-Pro PR #65 und docs/TRESORORDNER.md (letzter Abschnitt). Frisch von origin/main abzweigen;
 tatsächliche Releases prüfen, veröffentlichte Fassungen nie erneut ausgeben. Offene Codex-PRs/Zweige zuerst prüfen.
 
@@ -91,10 +105,9 @@ Als Nächstes (Reihenfolge)
 6. Geräteübergabe: Klaus wünscht eine Liste seiner Geräte zum Antippen statt freier Eingabe. Heute gibt es kein
    Geräteverzeichnis; seit #85 erscheinen frühere Empfänger als Vorschlag. Prüfen, ob Kim-sync die Geräte des Raums
    liefern kann. „Senden über Kim-sync (Büroklammer)“ funktioniert laut Klaus noch nicht – im Kim-sync-Repo prüfen.
-   Nachbesserung aus #85 (Wo liegt was mit Zahlen/Farben, Bedeutungssuche, „Bestand prüfen“ wieder sichtbar,
-   Kurzhinweise mit Haken in der Hilfe) als 2.28.24 nur mit Klaus' Wort ausgeben.
-7. Klaus' Tablet-Rückmeldung zu 2.28.23 abholen (Kopfleiste, Fragezeichen, Drucken, Aus-/Einloggen, Demo-Schalter).
-8. Zeit dieser und der neuen Sitzung in Kimhub nachtragen.
+7. Klaus' Tablet-Rückmeldung zu 2.28.23/2.28.24 abholen (Kopfleiste, Fragezeichen, Drucken, Aus-/Einloggen,
+   Demo-Schalter, Kurzhinweise per langem Druck, Wo liegt was mit Zahlen, Bestand prüfen).
+8. Zeit der neuen Sitzung in Kimhub eintragen (diese Sitzung ist dort eingetragen; nächste freie Fassung 2.28.25).
 
 Danach (Klaus): alle Pro-Apps deinstallieren, alten Hauptablageordner löschen, mit den neuen Fassungen frische
 Tresorräume anlegen. Vorher wichtige PDFs außerhalb des Tresors sichern lassen.
