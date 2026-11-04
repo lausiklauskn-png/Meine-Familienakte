@@ -4,6 +4,7 @@ import { readMeaningCorpus, type MeaningTarget } from "./private-meaning-corpus"
 import { getVaultSummary } from "./local-vault";
 import { MeaningRuntime, MEANING_MODELS, MODEL_STAGES, deviceModelName, modelDevice, modelPlugin, type DeviceMeasurement, type ModelStage, type NativeModelsState } from "./private-meaning-runtime";
 import type { SectionId } from "./portal-types";
+import { InfoPopover } from "./ui-controls";
 
 const mb = (bytes: number) => (bytes / 1048576).toLocaleString("de-DE", { maximumFractionDigits: 1 }) + " MiB";
 function errorText(error: unknown) {
@@ -80,11 +81,9 @@ export function PrivateMeaningPanel({ handle, query = "", onOpen }: { handle: Fi
   });
   const selected = state?.models[stage], downloading = state && MODEL_STAGES.some(s => state.models[s].running);
   return <section className="card private-meaning" aria-label="Private Bedeutungssuche">
-    <h2>Private Bedeutungssuche</h2>
-    <p>Finde ähnliche Inhalte in der geöffneten Akte. Modelle, Suchvektoren und Fragen bleiben auf diesem Gerät; die Verbindung zum Mycel wird dafür nicht benutzt.</p>
+    <span className="ui-heading-help"><h2>Private Bedeutungssuche</h2><InfoPopover label="Private Bedeutungssuche erklären" text="Findet ähnliche Inhalte in deiner Familienakte (alle Unterlagen, die du hier gespeichert hast), auch wenn die genauen Wörter fehlen. Modelle, Suchvektoren und Fragen bleiben auf diesem Gerät; das Mycel wird dafür nicht benutzt. Jede Modellstufe ist freiwillig; ein größeres Modell findet nicht automatisch besser. Die normale Wortsuche bleibt."/></span>
     <button className="button secondary" aria-expanded={expanded} onClick={() => setExpanded(!expanded)}>{expanded ? "Einstellungen zuklappen" : "Gerät, Modelle und Suchindex"}</button>
     {expanded && <>
-      <p>Jede Stufe ist freiwillig. Ein größeres Modell garantiert keine besseren Treffer. Die bisherige Wortsuche bleibt verfügbar.</p>
       <div className="button-row"><button className="button secondary" disabled={busy} onClick={measure}>Dieses Gerät prüfen</button></div>
       {measurement && <p role="status">{modelDevice()?.werteText(measurement)} · Rechenprobe {measurement.probeMs} ms · Quelle: {measurement.quelle}.</p>}
       {!modelPlugin() ? <p>Die Geräteprüfung funktioniert auch im Browser. Die dauerhafte Modellablage dieses Bausteins ist derzeit in den Android- und Windows-Apps angeschlossen.</p> : <>
@@ -99,10 +98,10 @@ export function PrivateMeaningPanel({ handle, query = "", onOpen }: { handle: Fi
           <button className="button secondary" disabled={!selected?.running} onClick={() => action(async () => { await modelPlugin()!.cancel({ stage }); await refresh(); })}>Download anhalten</button>
           <button className="button secondary" disabled={busy || Boolean(downloading) || !selected?.present} onClick={() => action(async () => { runtime.current.stop(); await modelPlugin()!.remove({ stage }); await refresh(); })}>Gewähltes Modell entfernen</button>
         </div>
-        <p>Der Index gehört zur geöffneten Akte und zum genauen Modellstand. Ein abgebrochener Wechsel lässt den bisherigen Index nutzbar. Gescannte Bilder ohne Textebene werden nur über ihre Angaben gefunden; es startet keine automatische Texterkennung.</p>
+        <span className="ui-heading-help"><strong>Suchindex</strong><InfoPopover label="Suchindex erklären" text="Der Suchindex wird aus deinen Unterlagen und dem gewählten Modell gebaut. Wechselst du das Modell, wird er neu gebaut; ein abgebrochener Wechsel lässt den bisherigen nutzbar. Gescannte Bilder ohne Textebene werden nur über ihre Angaben gefunden; es startet keine automatische Texterkennung."/></span>
         <div className="button-row"><button className="button primary" disabled={busy || !handle || !selected?.installed || Boolean(downloading)} onClick={build}>Index aufbauen / fortsetzen</button><button className="button secondary" disabled={busy || !handle} onClick={clear}>Privaten Index löschen</button></div>
-        <label>Frage an diese Akte <input value={question} maxLength={500} onChange={e => setQuestion(e.target.value)}/></label>
-        <div className="button-row"><button className="button primary" disabled={busy || !handle || !question.trim()} onClick={search}>In dieser Akte nach Bedeutung suchen</button></div>
+        <span className="ui-heading-help"><label>Wonach suchst du? <input value={question} maxLength={500} onChange={e => setQuestion(e.target.value)} placeholder="z. B. Garantie Waschmaschine"/></label><InfoPopover label="Bedeutungssuche: wo wird gesucht?" text="Gesucht wird in deiner Familienakte, also in allen Unterlagen, die du hier gespeichert hast (in der Demo im Demo-Bestand). Du kannst in eigenen Worten fragen; die Treffer sind Vorschläge, das Original bitte selbst prüfen."/></span>
+        <div className="button-row"><button className="button primary" disabled={busy || !handle || !question.trim()} onClick={search}>Nach Bedeutung suchen</button></div>
       </>}
       {busy && <button className="button secondary" onClick={() => { operation.current?.abort(); runtime.current.stop(); }}>Suche / Index anhalten</button>}
       {message && <p role="status">{message}</p>}

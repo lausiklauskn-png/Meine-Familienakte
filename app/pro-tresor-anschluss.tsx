@@ -2,7 +2,8 @@ import { ProVerbundAnschluss } from "./pro-verbund-anschluss";
 import { useEffect, useState } from "react";
 import { proTresor, proTresorCode, proTresorMeldung, proTresorVerfuegbar, type ProTresorZustand } from "./pro-tresor";
 import { ProTresorWoLiegtWas, PRO_TRESOR_FACH } from "./pro-tresor-hilfe";
-import { readProDocumentVault, setProDocumentVault } from "./local-vault";
+import { readLocalVaultData, readProDocumentVault, setProDocumentVault } from "./local-vault";
+import { istProOriginal } from "./pro-tresor";
 import { useResolveActivity } from "./ui-activity";
 import { InfoPopover } from "./ui-controls";
 
@@ -17,6 +18,16 @@ export function ProTresorAnschluss({ aktenHandle = null, onChange }: { aktenHand
   const [bestaetigung, setBestaetigung] = useState("");
   const [zuordnung, setZuordnung] = useState<{ handle: FileSystemDirectoryHandle | null; id: string | null }>({ handle: null, id: null });
   const ziel = zuordnung.handle === aktenHandle ? zuordnung.id : null;
+  // Zahlen für „Wo liegt was?“: Unterlagen der geöffneten Akte und davon im Pro-Tresor; neu gelesen bei jeder Änderung.
+  const [zahlen, setZahlen] = useState<{ gesamt: number; imTresor: number } | undefined>(undefined);
+  useEffect(() => {
+    if (!aktenHandle) { setZahlen(undefined); return; }
+    let lebt = true;
+    const lesen = () => { void readLocalVaultData(aktenHandle).then((d) => { if (lebt) setZahlen({ gesamt: d.documents.length, imTresor: d.documents.filter((x) => istProOriginal(x.storedPath)).length }); }).catch(() => { if (lebt) setZahlen(undefined); }); };
+    lesen();
+    for (const n of ["familienakte:pro-tresor", "familienakte:dateien", "familienakte:pro-eingang"]) window.addEventListener(n, lesen);
+    return () => { lebt = false; for (const n of ["familienakte:pro-tresor", "familienakte:dateien", "familienakte:pro-eingang"]) window.removeEventListener(n, lesen); };
+  }, [aktenHandle]);
   const verfuegbar = proTresorVerfuegbar();
   useEffect(() => {
     if (stand.status === "offen" && stand.id) resolveActivity("pro-tresor-anschluss");
@@ -85,7 +96,7 @@ export function ProTresorAnschluss({ aktenHandle = null, onChange }: { aktenHand
     {empfehlen && <p data-pro-ablage-empfehlung><strong>Empfohlen:</strong> Neue Originale verschlüsselt im Ordner „{PRO_TRESOR_FACH}“ dieses Pro-Tresors ablegen. Vorhandene Akten bleiben, wo sie sind; du kannst jederzeit zurückwechseln.</p>}
     {aktenHandle && ziel && <button className="button secondary" type="button" disabled={busy} onClick={() => void zielAendern(null)}>Neue Originale wieder im bisherigen Aktenordner ablegen</button>}
     <ProVerbundAnschluss stand={stand}/>
-    <ProTresorWoLiegtWas/>
+    <ProTresorWoLiegtWas stand={verfuegbar ? stand : undefined} zahlen={zahlen}/>
     {meldung && <p role="alert">{meldung}</p>}
   </section>;
 }
