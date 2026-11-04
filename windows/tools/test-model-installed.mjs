@@ -64,7 +64,7 @@ try {
  report.checks.push('Production Worker, actual pinned model and private IndexedDB activate the sample index');
  await page.reload();await openDemoFixture(page);
  await page.locator('.footer-directory button',{hasText:'Sicherheitscenter'}).click();await panel.getByRole('button',{name:'Gerät, Modelle und Suchindex',exact:true}).click();
- await panel.getByLabel('Frage an diese Akte').fill('Waschautomat');await panel.getByRole('button',{name:'In dieser Akte nach Bedeutung suchen',exact:true}).click();await panel.locator('.search-results button').first().waitFor({timeout:120000});
+ await panel.getByLabel('Wonach suchst du?').fill('Waschautomat');await panel.getByRole('button',{name:'Nach Bedeutung suchen',exact:true}).click();await panel.locator('.search-results button').first().waitFor({timeout:120000});
  assert.equal(await page.getAttribute('.netz-schalter','data-netz'),'aus');
  assert.equal((await asset('model/not-pinned.json')).status,404);
  report.checks.push('Offline search after reload, local missing asset fails closed');

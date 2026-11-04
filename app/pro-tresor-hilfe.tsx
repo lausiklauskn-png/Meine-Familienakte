@@ -1,4 +1,5 @@
 import { OrdnerBaum, Pfad } from "./ablaufbild";
+import type { ProTresorZustand } from "./pro-tresor";
 
 /** „Wo liegt was?“ – gleicher Inhalt in jeder Pro-App (gemeinsamer Plan vom 2026-11-03), darunter app-spezifisch.
  *  Seit 2026-11-04 als Ordnerbaum, drei Merkpunkte und Pfadangabe (auf einen Blick statt Fließtext). */
@@ -7,17 +8,27 @@ export const PRO_TRESOR_EINGANG = "Eingang-Familienakte";
 export const PRO_TRESOR_MENUEWEG = "Dokumente → Sicherheit & lokaler Tresor → Karte „Gemeinsamer Pro-Tresor“ → „Vorhandenen Pro-Tresor verbinden …“";
 const VERBINDEN = "[data-pro-tresor-verbinden]";
 
-/** @param onVerbinden Weg zum Verbinden-Knopf, wenn er nicht auf derselben Seite liegt (Hilfe → Sicherheit). */
-export function ProTresorWoLiegtWas({ open = false, onVerbinden }: { open?: boolean; onVerbinden?: () => void }) {
+/** Lage des Tresors für die Anzeige: grün = entsperrt, rot = gesperrt / nicht verbunden / nicht erreichbar. */
+const LAGE: Record<ProTresorZustand["status"], string> = { offen: "entsperrt", gesperrt: "gesperrt", getrennt: "noch nicht verbunden", nicht_erreichbar: "nicht erreichbar" };
+
+/**
+ * @param onVerbinden Weg zum Verbinden-Knopf, wenn er nicht auf derselben Seite liegt (Hilfe → Sicherheit).
+ * @param stand       Zustand des Pro-Tresors (nur in der App); ohne ihn bleibt der Baum neutral.
+ * @param zahlen      Unterlagen der geöffneten Akte: gesamt und davon im Pro-Tresor.
+ */
+export function ProTresorWoLiegtWas({ open = false, onVerbinden, stand, zahlen }: { open?: boolean; onVerbinden?: () => void; stand?: ProTresorZustand; zahlen?: { gesamt: number; imTresor: number } }) {
   const verbinden = onVerbinden || VERBINDEN;
+  const lage = stand ? LAGE[stand.status] : null;
+  const hauptArt = !stand ? "hervor" : stand.status === "offen" ? "gut" : "warnung";
+  const unterlagen = zahlen ? `${zahlen.imTresor} von ${zahlen.gesamt} Unterlage${zahlen.gesamt === 1 ? "" : "n"} im Tresor` : "Diese App: Familienakte · entsteht beim ersten Original";
   return <details data-pro-tresor-hilfe open={open} className="wo-liegt-was">
     <summary>Wo liegt was?</summary>
     <OrdnerBaum label="Aufbau des gemeinsamen Tresors" wurzel={{
-      titel: "Speicher", unter: "SD-Karte, Gerät, USB-Stick oder Laufwerk",
+      titel: "Speicher", unter: stand?.ort ? `Gewählt: ${stand.ort.replace(/^content:\/\/[^/]+\/(tree\/)?/, "")}` : "SD-Karte, Gerät, USB-Stick oder Laufwerk",
       kinder: [{
-        titel: "Tresor-Hauptordner", unter: "Name frei, z. B. „Family-Projekt“ · erkennbar an tresorordner.json · diesen Ordner wählen", art: "hervor", ziel: verbinden,
+        titel: lage ? `Tresor-Hauptordner · ${lage}` : "Tresor-Hauptordner", unter: "Name frei, z. B. „Family-Projekt“ · erkennbar an tresorordner.json · diesen Ordner wählen", art: hauptArt, ziel: verbinden,
         kinder: [
-          { titel: PRO_TRESOR_FACH, unter: "Diese App: Familienakte · entsteht beim ersten Original", art: "hervor" },
+          { titel: PRO_TRESOR_FACH, unter: zahlen ? `Diese App: Familienakte · ${unterlagen}` : unterlagen, art: "hervor" },
           { titel: "Workflow PDF Pro · Private Brain · BookLedgerPro", unter: "Ordner der anderen Pro-Apps" },
           { titel: "Eingang-…", unter: `Briefkästen · Eingang: ${PRO_TRESOR_EINGANG}` },
           { titel: "Tresorordner", unter: "Verwaltung · Nie den Unterordner „Tresorordner“ wählen", art: "warnung" },

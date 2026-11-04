@@ -35,8 +35,8 @@ public final class FamilyModelProductTest {
     }
     private void panel(ActivityScenario<MainActivity> app) throws Exception {
         eval(app, "[...document.querySelectorAll('.footer-directory button')].find(b=>b.textContent.includes('Sicherheitscenter')).click();true");
-        until(app, "Boolean(document.querySelector('.private-meaning button[aria-expanded]'))", 15);
-        eval(app, "document.querySelector('.private-meaning button[aria-expanded]').click();true");
+        until(app, "Boolean(document.querySelector('.private-meaning button.button[aria-expanded]'))", 15);
+        eval(app, "document.querySelector('.private-meaning button.button[aria-expanded]').click();true");
     }
     private void click(ActivityScenario<MainActivity> app, String text) throws Exception {
         eval(app, "[...document.querySelectorAll('.private-meaning button')].find(b=>b.textContent===" + JSONObject.quote(text) + ").click();true");
@@ -61,8 +61,8 @@ public final class FamilyModelProductTest {
             until(app, "document.querySelector('.private-meaning')?.textContent.includes('Suchindex bereit:')", 240);
             app.recreate(); ready(app); panel(app);
             eval(app, "const q=document.querySelector('.private-meaning input');Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(q,'Waschautomat');q.dispatchEvent(new Event('input',{bubbles:true}));true");
-            until(app, "[...document.querySelectorAll('.private-meaning button')].some(b=>b.textContent==='In dieser Akte nach Bedeutung suchen'&&!b.disabled)", 15);
-            click(app, "In dieser Akte nach Bedeutung suchen");
+            until(app, "[...document.querySelectorAll('.private-meaning button')].some(b=>b.textContent==='Nach Bedeutung suchen'&&!b.disabled)", 15);
+            click(app, "Nach Bedeutung suchen");
             until(app, "Boolean(document.querySelector('.private-meaning .search-results button'))", 120);
             assertEquals("true", eval(app, "PBNetwork.offline===true"));
             eval(app, "window.__missingModel=null;fetch('/_fa_models/klein/model/not-pinned.json').then(r=>window.__missingModel=r.status);true");

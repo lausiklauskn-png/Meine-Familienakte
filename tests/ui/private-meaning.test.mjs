@@ -59,8 +59,8 @@ try {
   });
   await step('Bedeutungssuche funktioniert mit Internet aus und zeigt echte Aktenziele',async()=>{
     await page.click('.netz-schalter');await page.waitForSelector('.netz-schalter[data-netz="aus"]');
-    await panel.getByLabel('Frage an diese Akte').fill('Waschautomat');
-    await panel.getByRole('button',{name:'In dieser Akte nach Bedeutung suchen',exact:true}).click();
+    await panel.getByLabel('Wonach suchst du?').fill('Waschautomat');
+    await panel.getByRole('button',{name:'Nach Bedeutung suchen',exact:true}).click();
     await panel.locator('.search-results button').first().waitFor();
     return await page.evaluate(()=>window.__meaningProbe.embeds.includes('query: Waschautomat'))&&await panel.locator('.search-results button').count()>0;
   });
@@ -72,8 +72,8 @@ try {
   await page.reload();await ready(page);await footer(page,'Sicherheitscenter');
   await panel.getByRole('button',{name:'Gerät, Modelle und Suchindex',exact:true}).click();
   await step('Kaltstart verwendet den vorhandenen Index mit dessen Modell',async()=>{
-    await panel.getByLabel('Frage an diese Akte').fill('Nebenkosten');
-    await panel.getByRole('button',{name:'In dieser Akte nach Bedeutung suchen',exact:true}).click();
+    await panel.getByLabel('Wonach suchst du?').fill('Nebenkosten');
+    await panel.getByRole('button',{name:'Nach Bedeutung suchen',exact:true}).click();
     await panel.locator('.search-results button').first().waitFor();
     return page.evaluate(()=>window.__meaningProbe.installs.length===0&&window.__meaningProbe.embeds.every(t=>t.startsWith('query: ')));
   });
@@ -83,7 +83,7 @@ try {
     await page.evaluate(()=>window.__meaningProbe.badDimension=true);await panel.getByRole('button',{name:'Index aufbauen / fortsetzen',exact:true}).click();
     await panel.getByRole('status').filter({hasText:'Der private Suchindex konnte nicht'}).waitFor();
     await page.evaluate(()=>window.__meaningProbe.badDimension=false);
-    await panel.getByRole('button',{name:'In dieser Akte nach Bedeutung suchen',exact:true}).click();await panel.locator('.search-results button').first().waitFor();return true;
+    await panel.getByRole('button',{name:'Nach Bedeutung suchen',exact:true}).click();await panel.locator('.search-results button').first().waitFor();return true;
   });
   await step('Modellwahl und Ergebnisliste passen in ein schmales Fenster',async()=>{await page.setViewportSize({width:390,height:844});return page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth);});
   check(outside.length===0,'Keine externe Anfrage bei privatem Aufbau oder Suche',outside.join(',').slice(0,200));
