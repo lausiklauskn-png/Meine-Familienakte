@@ -76,15 +76,18 @@ try {
     await fixture(); await page.evaluate(async () => { const f = window.__vaultFixture; await f.removeSampleFamily(await f.browserVault()); });
     assert.deepEqual(await documents(), before);
   });
-  await step("Alte gemischte Beispiele werden vor dem Demo-Einstieg bereinigt", async () => {
+  await step("Alte Beispiele bereinigen, eigenen Brief trotz gleichem Betreff erhalten", async () => {
     await fixture();
-    await page.evaluate(async () => {
+    const ownLetter = await page.evaluate(async () => {
       const f = window.__vaultFixture, h = await f.browserVault();
       await f.seedSampleFamily(h, { force: true });
       const index = await f.vaultInternalsForTests.readIndex(h);
       // Persistiertes Format vor 2.28.19: allgemeine Quellen bei generierten Ereignissen.
       for (const record of index.records) if (record.recordType === "event" && record.source === "Beispieldaten – frei erfunden") record.source = record.data.entryKind === "correspondence" ? "Assistenz- und Korrespondenzzentrale" : "Tagebuch & Erinnerungsprotokoll";
       await f.vaultInternalsForTests.writeIndex(h, index);
+      const sampleLetter = index.records.find(record => record.recordType === "event" && record.data.entryKind === "correspondence");
+      const own = await f.createLocalCorrespondenceBundle(h, { status: "Entwurf", caseId: sampleLetter.data.caseReference, documentIds: sampleLetter.data.sourceDocumentIds, data: { ...sampleLetter.data, body: "Mein eigener erfundener Brieftext bleibt trotz gleichem Betreff und Beispielbezügen erhalten." } });
+      return own.event;
     });
     await page.reload({ waitUntil: "networkidle" });
     await switchWorkspace(page, true);
@@ -93,7 +96,9 @@ try {
     await page.getByRole("button", { name: "Demo öffnen", exact: true }).waitFor();
     assert.deepEqual(await documents(), before);
     const records = await page.evaluate(async () => { const f = window.__vaultFixture; return (await f.readLocalVaultData(await f.browserVault())).records; });
-    assert.equal(records.length, 0);
+    assert.equal(records.length, 1);
+    assert.equal(records[0].id, ownLetter.id);
+    assert.deepEqual(records[0].data, ownLetter.data);
   });
   await switchWorkspace(page, true);
   await page.locator('.sample-data-notice strong:has-text("Alle Daten")').waitFor({ timeout: 120000 });

@@ -25,3 +25,7 @@ B: Der dokumentierte Bestand hat keinen vollständig nachgewiesenen Pilotlauf. C
 C: Verpflichtende praktische Abschlussbedingungen im verbundenen Testbestand fehlen: wiederholter unveränderter Abgleich, Pause/Fortsetzung, bestätigte Zuordnungen und Lernsignale, bewusste Archivierung und Assistenzfreigabe. Der Titel allein beweist keinen defekten OneDrive-Dienst. Ohne freigegebenen Dienstzugang keine echte OneDrive-Probe behaupten. Vorhandene 15er-Praxisabnahme und historische Berichte erhalten.
 
 Nach den konkreten Proben wird ein Abschlussbrief mit tatsächlichem Prüfstand und Veröffentlichungsbelegen ergänzt. Die ältere zusätzliche Android-Tresor-Paar-Abnahme bleibt ein eigener offener Auftrag.
+
+## Nachtrag: endgültige Fassung 2.28.20
+
+Nach #73 wurde ein eigener alter Brief mit gleichem Beispielbetreff und eigenen Texten als zusätzlicher Erhaltungsfall reproduziert. #76 verlangt auch unveränderten vollständigen Demo-Text und Empfänger. Die ersten 19er APK-/Windows-Release-Läufe wurden vor Taganlage abgebrochen. Weil die PWA den 19er Baustand bereits automatisch ausgeliefert hatte, erhält die geprüfte Gesamtausgabe die nächste technische Fassung 2.28.20. Die sichtbare Zeile bleibt 2.28.1.
