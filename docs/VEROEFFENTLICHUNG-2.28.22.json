@@ -1,0 +1,1630 @@
+{
+  "version": "2.28.22",
+  "source": "70f87f5a33325ee78801ef821de365cf8c5b40db",
+  "recordedUtc": "2026-11-04T12:31:01.427939+00:00",
+  "releases": [
+    {
+      "repo": "lausiklauskn-png/Meine-Familienakte",
+      "tag": "android-v2.28.22",
+      "source": "70f87f5a33325ee78801ef821de365cf8c5b40db",
+      "publishedAt": "2026-11-04T12:17:24Z",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.22",
+      "assets": [
+        {
+          "name": "Familienakte-android-v2.28.22.apk",
+          "size": 19804117,
+          "digest": "sha256:413930c4c4a87f8446a4281e0aa8d96fdf836a585990502a14198a83472691bc",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.22/Familienakte-android-v2.28.22.apk"
+        },
+        {
+          "name": "Familienakte-Einzeldatei-2.28.22.html",
+          "size": 3322339,
+          "digest": "sha256:aed7e3f9bf52b5636dd1af0a2fba4f857339c5d3b904dc6a3efdd9cb1bebc973",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.22/Familienakte-Einzeldatei-2.28.22.html"
+        },
+        {
+          "name": "SHA256SUMS",
+          "size": 204,
+          "digest": "sha256:463ab87bd7ca18c8fbea904ae6cfe93071585ad886c26b449971826d97c526b7",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.22/SHA256SUMS"
+        }
+      ],
+      "downloadProof": [
+        {
+          "name": "Familienakte-android-v2.28.22.apk",
+          "bytes": 19804117,
+          "sha256": "413930c4c4a87f8446a4281e0aa8d96fdf836a585990502a14198a83472691bc",
+          "anonymousDownload": true
+        },
+        {
+          "name": "Familienakte-Einzeldatei-2.28.22.html",
+          "bytes": 3322339,
+          "sha256": "aed7e3f9bf52b5636dd1af0a2fba4f857339c5d3b904dc6a3efdd9cb1bebc973",
+          "anonymousDownload": true
+        },
+        {
+          "name": "SHA256SUMS",
+          "bytes": 204,
+          "sha256": "463ab87bd7ca18c8fbea904ae6cfe93071585ad886c26b449971826d97c526b7",
+          "anonymousDownload": true
+        }
+      ],
+      "run": 41827428260,
+      "workflow": {
+        "conclusion": "success",
+        "databaseId": 41827428260,
+        "headSha": "70f87f5a33325ee78801ef821de365cf8c5b40db",
+        "jobs": [
+          {
+            "completedAt": "2026-11-04T12:17:36Z",
+            "conclusion": "success",
+            "databaseId": 126565645097,
+            "name": "release",
+            "startedAt": "2026-11-04T12:13:40Z",
+            "status": "completed",
+            "steps": [
+              {
+                "conclusion": "success",
+                "name": "Set up job",
+                "number": 1,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Run actions/checkout@v4",
+                "number": 2,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Run actions/setup-node@v4",
+                "number": 3,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Run actions/setup-java@v4",
+                "number": 4,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Tag prüfen",
+                "number": 5,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Run npm ci",
+                "number": 6,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Run npm run typecheck",
+                "number": 7,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Run npm run check",
+                "number": 8,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Run npm run check:android",
+                "number": 9,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Web-Paket bauen und in die Hülle legen",
+                "number": 10,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Release-APK bauen (unsigniert) und ausrichten",
+                "number": 11,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Signieren (dauerhafte Identität oder Wegwerf-Schlüssel)",
+                "number": 12,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Einzeldatei für die Platte (App als eine HTML-Datei, läuft per Doppelklick in Chrome/Edge)",
+                "number": 13,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Prüfsummen und Hinweise",
+                "number": 14,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Release anlegen",
+                "number": 15,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Update-Datei bauen, unterschreiben, gegen den Schlüssel der App prüfen",
+                "number": 16,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Auf family-projekt.de hochladen und von außen prüfen",
+                "number": 17,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Post Run actions/setup-java@v4",
+                "number": 32,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Post Run actions/setup-node@v4",
+                "number": 33,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Post Run actions/checkout@v4",
+                "number": 34,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Complete job",
+                "number": 35,
+                "status": "completed"
+              }
+            ],
+            "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41827428260/job/126565645097"
+          }
+        ],
+        "name": "Android-APK veröffentlichen",
+        "status": "completed",
+        "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41827428260"
+      },
+      "publicHashCheck": "Anonymous download: bytes/size/SHA256SUMS agree with public GitHub asset digests."
+    },
+    {
+      "repo": "lausiklauskn-png/Meine-Familienakte",
+      "tag": "windows-v2.28.22",
+      "source": "70f87f5a33325ee78801ef821de365cf8c5b40db",
+      "publishedAt": "2026-11-04T12:28:15Z",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.22",
+      "assets": [
+        {
+          "name": "Familienakte-Windows-2.28.22-x64-setup.exe",
+          "size": 33940401,
+          "digest": "sha256:9a7a15e3dadd0b6b39be4d3ff0263665bae45e1203a62237745b838dc2437bc0",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/windows-v2.28.22/Familienakte-Windows-2.28.22-x64-setup.exe"
+        },
+        {
+          "name": "latest.json",
+          "size": 561,
+          "digest": "sha256:1747e8d0ddaddd9d72863cbd6db9c968442eadeefc922e7fc1d503a037a09105",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/windows-v2.28.22/latest.json"
+        },
+        {
+          "name": "SHA256SUMS",
+          "size": 109,
+          "digest": "sha256:943e988d3cbac2e7b025b3ffeb3cc26b8b9e3eb50628a50a9c822ccbdcd45bd7",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/windows-v2.28.22/SHA256SUMS"
+        }
+      ],
+      "downloadProof": [
+        {
+          "name": "Familienakte-Windows-2.28.22-x64-setup.exe",
+          "bytes": 33940401,
+          "sha256": "9a7a15e3dadd0b6b39be4d3ff0263665bae45e1203a62237745b838dc2437bc0",
+          "anonymousDownload": true
+        },
+        {
+          "name": "latest.json",
+          "bytes": 561,
+          "sha256": "1747e8d0ddaddd9d72863cbd6db9c968442eadeefc922e7fc1d503a037a09105",
+          "anonymousDownload": true
+        },
+        {
+          "name": "SHA256SUMS",
+          "bytes": 109,
+          "sha256": "943e988d3cbac2e7b025b3ffeb3cc26b8b9e3eb50628a50a9c822ccbdcd45bd7",
+          "anonymousDownload": true
+        }
+      ],
+      "run": 41827432174,
+      "workflow": {
+        "conclusion": "success",
+        "databaseId": 41827432174,
+        "headSha": "70f87f5a33325ee78801ef821de365cf8c5b40db",
+        "jobs": [
+          {
+            "completedAt": "2026-11-04T12:28:20Z",
+            "conclusion": "success",
+            "databaseId": 126565658383,
+            "name": "release",
+            "startedAt": "2026-11-04T12:13:41Z",
+            "status": "completed",
+            "steps": [
+              {
+                "conclusion": "success",
+                "name": "Set up job",
+                "number": 1,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Run git config --global core.autocrlf false",
+                "number": 2,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Run actions/checkout@v4",
+                "number": 3,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Run actions/setup-node@v4",
+                "number": 4,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Run dtolnay/rust-toolchain@stable",
+                "number": 5,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Run actions/setup-java@v4",
+                "number": 6,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Run Swatinem/rust-cache@v2",
+                "number": 7,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Tag prüfen",
+                "number": 8,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Run npm ci",
+                "number": 9,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Run npm ci --prefix windows",
+                "number": 10,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Gemeinsamen Pro-Tresor und lokale Engine prüfen",
+                "number": 11,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Run npm run typecheck",
+                "number": 12,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Run npm run check",
+                "number": 13,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Run node windows/tools/version.mjs && node tools/native/test-windows.mjs",
+                "number": 14,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Web-App bauen (dist/ muss vor den Rust-Proben da sein, generate_context! liest frontendDist)",
+                "number": 15,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Rust-Proben",
+                "number": 16,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Installer bauen (NSIS)",
+                "number": 17,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Auslieferungsinstaller vor dem getrennten Prüfbau sichern",
+                "number": 18,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Getrennten Prüfinstaller für die Modell- und Ausgabeoberfläche bauen",
+                "number": 19,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Installierte Oberfläche und gebündelte Pro-Tresor-Laufzeit prüfen",
+                "number": 20,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Installer, Prüfsummen, latest.json",
+                "number": 21,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Release anlegen",
+                "number": 22,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Post Run Swatinem/rust-cache@v2",
+                "number": 41,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Post Run actions/setup-java@v4",
+                "number": 42,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Post Run actions/setup-node@v4",
+                "number": 43,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Post Run actions/checkout@v4",
+                "number": 44,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Complete job",
+                "number": 45,
+                "status": "completed"
+              }
+            ],
+            "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41827432174/job/126565658383"
+          },
+          {
+            "completedAt": "2026-11-04T12:28:39Z",
+            "conclusion": "success",
+            "databaseId": 126572888947,
+            "name": "server",
+            "startedAt": "2026-11-04T12:28:23Z",
+            "status": "completed",
+            "steps": [
+              {
+                "conclusion": "success",
+                "name": "Set up job",
+                "number": 1,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Run actions/checkout@v4",
+                "number": 2,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Run actions/setup-node@v4",
+                "number": 3,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Setup aus dem Release holen und prüfen",
+                "number": 4,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "aktuell-windows.json bauen, unterschreiben, gegen den Schlüssel der App prüfen",
+                "number": 5,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Auf family-projekt.de hochladen und von außen prüfen",
+                "number": 6,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Post Run actions/setup-node@v4",
+                "number": 11,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Post Run actions/checkout@v4",
+                "number": 12,
+                "status": "completed"
+              },
+              {
+                "conclusion": "success",
+                "name": "Complete job",
+                "number": 13,
+                "status": "completed"
+              }
+            ],
+            "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41827432174/job/126572888947"
+          }
+        ],
+        "name": "Windows-Installer veröffentlichen",
+        "status": "completed",
+        "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41827432174"
+      },
+      "publicHashCheck": "Anonymous download: bytes/size/SHA256SUMS agree with public GitHub asset digests."
+    }
+  ],
+  "visibleVersion": "2.28.22",
+  "identitiesPreserved": true,
+  "canonicalOutputSource": "1ea49db1eb9b23969f051030247a56472e528d3b",
+  "preservedEmbeddedCore": "Workflow-PDF main0ed15e53d9735c32e9b3c7a3b40871c2e4f7b922 /1.1.9",
+  "publicDownloadsVerified": true,
+  "checks": [
+    {
+      "conclusion": "success",
+      "databaseId": 41824571185,
+      "headSha": "c89726e3d9d056121f3848a52722152dfdc330fd",
+      "jobs": [
+        {
+          "completedAt": "2026-11-04T12:09:50Z",
+          "conclusion": "success",
+          "databaseId": 126556139493,
+          "name": "pruefung",
+          "startedAt": "2026-11-04T11:53:50Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v4",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run npm ci",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-java@v4",
+              "number": 5,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Vorhandenen Modell-Download mit Abbruch und Wiederaufnahme prüfen",
+              "number": 6,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Typprüfung",
+              "number": 7,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Lint",
+              "number": 8,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Herkunft der byte-gleichen Bausteine",
+              "number": 9,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Fachprüfungen und Systemprüfung",
+              "number": 10,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Signierwerkzeug (Wegwerf-Schlüssel, kein echter)",
+              "number": 11,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Build und Einzeldatei",
+              "number": 12,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Browser für die Oberflächenproben",
+              "number": 13,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Privaten Index mit wirklicher IndexedDB prüfen",
+              "number": 14,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Diagnose der Pro-Ablage nach Neustart",
+              "number": 15,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Oberflächenproben (Playwright)",
+              "number": 16,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 17,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-java@v4",
+              "number": 32,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v4",
+              "number": 33,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 34,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 35,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41824571185/job/126556139493"
+        }
+      ],
+      "name": "Prüfung bei jedem PR",
+      "startedAt": "2026-11-04T11:53:17Z",
+      "status": "completed",
+      "updatedAt": "2026-11-04T12:09:50Z",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41824571185",
+      "comparisonToFinalTestCommit": {
+        "source": "c89726e3d9d056121f3848a52722152dfdc330fd",
+        "productCodeIdentical": true,
+        "changedFiles": []
+      }
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 41824571243,
+      "headSha": "c89726e3d9d056121f3848a52722152dfdc330fd",
+      "jobs": [
+        {
+          "completedAt": "2026-11-04T11:57:03Z",
+          "conclusion": "success",
+          "databaseId": 126555969472,
+          "name": "android",
+          "startedAt": "2026-11-04T11:53:28Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v4",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-java@v4",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run npm ci",
+              "number": 5,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Pro-Tresor mit erfundener Kopie prüfen",
+              "number": 6,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Gemeinsamen Modelladapter mit erfundenen Dateien prüfen",
+              "number": 7,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Hülle ohne Android prüfen (Manifest, Plugins, Klebstoff, Version)",
+              "number": 8,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Signierweg mit echten Android-Werkzeugen (Wegwerf-Identität, build-tools 36.0.0)",
+              "number": 9,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Web-Paket bauen und in die Hülle legen",
+              "number": 10,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Bauen und Lint",
+              "number": 11,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 12,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-java@v4",
+              "number": 22,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v4",
+              "number": 23,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 24,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 25,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41824571243/job/126555969472"
+        }
+      ],
+      "name": "Android-Hülle (Prüf-Bau)",
+      "startedAt": "2026-11-04T11:53:17Z",
+      "status": "completed",
+      "updatedAt": "2026-11-04T11:57:03Z",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41824571243",
+      "comparisonToFinalTestCommit": {
+        "source": "c89726e3d9d056121f3848a52722152dfdc330fd",
+        "productCodeIdentical": true,
+        "changedFiles": []
+      }
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 41820715697,
+      "headSha": "104a0d9c2a887819d77d7fab7e3421d422975a14",
+      "jobs": [
+        {
+          "completedAt": "2026-11-04T11:27:09Z",
+          "conclusion": "success",
+          "databaseId": 126542845085,
+          "name": "models",
+          "startedAt": "2026-11-04T11:25:22Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v4",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-java@v4",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run npm ci",
+              "number": 5,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run npx playwright install --with-deps chromium",
+              "number": 6,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/cache@v4",
+              "number": 7,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Gepinnte Modelle mit Original-Downloader, Worker und privatem Index vergleichen",
+              "number": 8,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 9,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/cache@v4",
+              "number": 15,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-java@v4",
+              "number": 16,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v4",
+              "number": 17,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 18,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 19,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41820715697/job/126542845085"
+        }
+      ],
+      "name": "Private Bedeutungssuche – wirkliche Modelle",
+      "startedAt": "2026-11-04T11:25:18Z",
+      "status": "completed",
+      "updatedAt": "2026-11-04T11:27:10Z",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41820715697",
+      "comparisonToFinalTestCommit": {
+        "source": "c89726e3d9d056121f3848a52722152dfdc330fd",
+        "productCodeIdentical": true,
+        "changedFiles": [
+          "tests/ui/demo-tresor-status.test.mjs",
+          "tests/ui/knoepfe-sicherheit.test.mjs"
+        ]
+      }
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 41820720999,
+      "headSha": "104a0d9c2a887819d77d7fab7e3421d422975a14",
+      "jobs": [
+        {
+          "completedAt": "2026-11-04T11:29:17Z",
+          "conclusion": "success",
+          "databaseId": 126542863589,
+          "name": "transport",
+          "startedAt": "2026-11-04T11:25:24Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v4",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-java@v4",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run npm ci",
+              "number": 5,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run npx playwright install --with-deps chromium",
+              "number": 6,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run npm run build",
+              "number": 7,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Zwei getrennte Browserprofile mit echten Dateien und Neustart",
+              "number": 8,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Absichtliche Verletzungen der Empfangsgrenze erkennen",
+              "number": 9,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-java@v4",
+              "number": 16,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v4",
+              "number": 17,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 18,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 19,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41820720999/job/126542863589"
+        }
+      ],
+      "name": "Geräteübergabe – Gegenproben",
+      "startedAt": "2026-11-04T11:25:20Z",
+      "status": "completed",
+      "updatedAt": "2026-11-04T11:29:18Z",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41820720999",
+      "comparisonToFinalTestCommit": {
+        "source": "c89726e3d9d056121f3848a52722152dfdc330fd",
+        "productCodeIdentical": true,
+        "changedFiles": [
+          "tests/ui/demo-tresor-status.test.mjs",
+          "tests/ui/knoepfe-sicherheit.test.mjs"
+        ]
+      }
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 41824571210,
+      "headSha": "c89726e3d9d056121f3848a52722152dfdc330fd",
+      "jobs": [
+        {
+          "completedAt": "2026-11-04T11:56:19Z",
+          "conclusion": "success",
+          "databaseId": 126556403715,
+          "name": "webview",
+          "startedAt": "2026-11-04T11:54:24Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "KVM",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Unveränderte WebView aus dem offiziellen SDK-Abbild",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 5,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 10,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 11,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41824571210/job/126556403715"
+        },
+        {
+          "completedAt": "2026-11-04T12:01:52Z",
+          "conclusion": "success",
+          "databaseId": 126557315236,
+          "name": "product (35, pixel_2)",
+          "startedAt": "2026-11-04T11:56:22Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v4",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-java@v4",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run npm ci",
+              "number": 5,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run npm run sync:android",
+              "number": 6,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/download-artifact@v4",
+              "number": 7,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "KVM",
+              "number": 8,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Installierte APK, echtes Modell, Offline-Index und Neustart",
+              "number": 9,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Tatsächlich ausgeführte Produktprobe verlangen",
+              "number": 10,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 11,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-java@v4",
+              "number": 20,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v4",
+              "number": 21,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 22,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 23,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41824571210/job/126557315236"
+        },
+        {
+          "completedAt": "2026-11-04T12:02:19Z",
+          "conclusion": "success",
+          "databaseId": 126557315325,
+          "name": "product (31, pixel_c)",
+          "startedAt": "2026-11-04T11:56:22Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v4",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-java@v4",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run npm ci",
+              "number": 5,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run npm run sync:android",
+              "number": 6,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/download-artifact@v4",
+              "number": 7,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "KVM",
+              "number": 8,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Installierte APK, echtes Modell, Offline-Index und Neustart",
+              "number": 9,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Tatsächlich ausgeführte Produktprobe verlangen",
+              "number": 10,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 11,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-java@v4",
+              "number": 20,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v4",
+              "number": 21,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 22,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 23,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41824571210/job/126557315325"
+        }
+      ],
+      "name": "Android – installierte private Aktensuche",
+      "startedAt": "2026-11-04T11:53:17Z",
+      "status": "completed",
+      "updatedAt": "2026-11-04T12:02:20Z",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41824571210",
+      "comparisonToFinalTestCommit": {
+        "source": "c89726e3d9d056121f3848a52722152dfdc330fd",
+        "productCodeIdentical": true,
+        "changedFiles": []
+      }
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 41824571253,
+      "headSha": "c89726e3d9d056121f3848a52722152dfdc330fd",
+      "jobs": [
+        {
+          "completedAt": "2026-11-04T12:07:29Z",
+          "conclusion": "success",
+          "databaseId": 126556050686,
+          "name": "windows",
+          "startedAt": "2026-11-04T11:53:38Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Quellen ohne Zeilenumwandlung",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v4",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run dtolnay/rust-toolchain@stable",
+              "number": 5,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-java@v4",
+              "number": 6,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run Swatinem/rust-cache@v2",
+              "number": 7,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run npm ci",
+              "number": 8,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run npm ci --prefix windows",
+              "number": 9,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Gemeinsamen Pro-Tresor und lokale Engine prüfen",
+              "number": 10,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Gemeinsamen Modelladapter mit erfundenen Dateien prüfen",
+              "number": 11,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Fassungen und Hülle prüfen",
+              "number": 12,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Web-App bauen (dist/ muss vor den Rust-Proben da sein, generate_context! liest frontendDist)",
+              "number": 13,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Rust-Proben",
+              "number": 14,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Installer bauen (NSIS)",
+              "number": 15,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Installer benennen und Prüfsumme",
+              "number": 16,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Getrennten Prüfinstaller mit lokalem WebView2-Prüfzugang bauen",
+              "number": 17,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Echten Prüfinstaller, gebündelte Laufzeit und Modelloberfläche prüfen",
+              "number": 18,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 19,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 20,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run Swatinem/rust-cache@v2",
+              "number": 37,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-java@v4",
+              "number": 38,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v4",
+              "number": 39,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 40,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 41,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41824571253/job/126556050686"
+        }
+      ],
+      "name": "Windows-App (Prüf-Bau)",
+      "startedAt": "2026-11-04T11:53:17Z",
+      "status": "completed",
+      "updatedAt": "2026-11-04T12:07:30Z",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41824571253",
+      "comparisonToFinalTestCommit": {
+        "source": "c89726e3d9d056121f3848a52722152dfdc330fd",
+        "productCodeIdentical": true,
+        "changedFiles": []
+      }
+    }
+  ],
+  "sourceComparison": {
+    "verifiedSource": "c89726e3d9d056121f3848a52722152dfdc330fd",
+    "releaseSource": "70f87f5a33325ee78801ef821de365cf8c5b40db",
+    "changedFiles": [
+      "BRIEF_ABSCHLUSS_2026-11-04_BASIC-NAME-UND-VERSIONSZEILE.md",
+      "CLAUDE.md",
+      "docs/VEROEFFENTLICHUNG-2.28.21.json"
+    ],
+    "productCodeIdentical": true
+  },
+  "apkMetadata": {
+    "version": "2.28.22",
+    "build": "1.233b66f6",
+    "commit": "70f87f5a33325ee78801ef821de365cf8c5b40db",
+    "date": "2026-11-04",
+    "files": 139,
+    "vorrat": 121
+  },
+  "androidCertificateSha256": "1f06819ff85a4a48c0bfc2c24409094141b5f86e9ac5e0bf715aa87a5fbf8f19",
+  "server": "Both existing release workflows completed with server=ja. Signed feeds checked against app keys; public feed/package bytes read back by release runners.",
+  "pwa": {
+    "run": 41829604720,
+    "source": "70f87f5a33325ee78801ef821de365cf8c5b40db",
+    "version": "2.28.22",
+    "conclusion": "success",
+    "verifiedWindows22": true,
+    "windowsSha256": "9a7a15e3dadd0b6b39be4d3ff0263665bae45e1203a62237745b838dc2437bc0",
+    "url": "https://lausiklauskn-png.github.io/Meine-Familienakte/",
+    "publicVersionReadback": "Existing deployment runner fetched live version.json and confirmed version 22 and exact source.",
+    "directHttpProbe": "Managed local network does not allow github.io; public readback from deployment runner.",
+    "workflow": {
+      "conclusion": "success",
+      "databaseId": 41829604720,
+      "headSha": "70f87f5a33325ee78801ef821de365cf8c5b40db",
+      "jobs": [
+        {
+          "completedAt": "2026-11-04T12:30:06Z",
+          "conclusion": "success",
+          "databaseId": 126573069932,
+          "name": "bauen",
+          "startedAt": "2026-11-04T12:28:45Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/setup-node@v4",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run npm ci",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run npm run typecheck",
+              "number": 5,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run npm run check",
+              "number": 6,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "PWA bauen (dist mit Service Worker und version.json)",
+              "number": 7,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Neueste Windows-Fassung beilegen (windows/latest.json und Installer aus dem Release)",
+              "number": 8,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Vorrat und Bau-Kennung prüfen",
+              "number": 9,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/upload-pages-artifact@v3",
+              "number": 10,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@v4",
+              "number": 19,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 20,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 21,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41829604720/job/126573069932"
+        },
+        {
+          "completedAt": "2026-11-04T12:30:25Z",
+          "conclusion": "success",
+          "databaseId": 126573750229,
+          "name": "veroeffentlichen",
+          "startedAt": "2026-11-04T12:30:11Z",
+          "status": "completed",
+          "steps": [
+            {
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/configure-pages@v5",
+              "number": 2,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Run actions/deploy-pages@v4",
+              "number": 3,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Öffentlich ausgelieferte Fassung gegen den Bau prüfen",
+              "number": 4,
+              "status": "completed"
+            },
+            {
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 5,
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41829604720/job/126573750229"
+        }
+      ],
+      "name": "Familienakte als installierbare PWA (GitHub Pages)",
+      "status": "completed",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/actions/runs/41829604720"
+    }
+  }
+}
