@@ -88,8 +88,12 @@ Als Nächstes (Reihenfolge)
    der Navi-Leiste); ein Tipp klappt direkt am Knopf ein Menü auf: Demo verlassen · Demo zurücksetzen · Demo löschen und
    verlassen. Kein „zweimal tippen“ (nicht erkennbar). Proben, die `.demo-workspace` nutzen, darauf umstellen. Am Handy ist „FAMILIENAKTE“ neben
    dem DEMO-Knopf leicht abgeschnitten (Bild 16:37) – mitbeheben. Vorher als Vorschau zeigen.
-6. Klaus' Tablet-Rückmeldung zu 2.28.23 abholen (Kopfleiste, Fragezeichen, Drucken, Aus-/Einloggen, Demo-Schalter).
-7. Zeit dieser und der neuen Sitzung in Kimhub nachtragen.
+6. Geräteübergabe: Klaus wünscht eine Liste seiner Geräte zum Antippen statt freier Eingabe. Heute gibt es kein
+   Geräteverzeichnis; seit #85 erscheinen frühere Empfänger als Vorschlag. Prüfen, ob Kim-sync die Geräte des Raums
+   liefern kann. „Senden über Kim-sync (Büroklammer)“ funktioniert laut Klaus noch nicht – im Kim-sync-Repo prüfen.
+   Nachbesserung aus #85 (Wo liegt was mit Zahlen/Farben, Bedeutungssuche) als 2.28.24 nur mit Klaus' Wort ausgeben.
+7. Klaus' Tablet-Rückmeldung zu 2.28.23 abholen (Kopfleiste, Fragezeichen, Drucken, Aus-/Einloggen, Demo-Schalter).
+8. Zeit dieser und der neuen Sitzung in Kimhub nachtragen.
 
 Danach (Klaus): alle Pro-Apps deinstallieren, alten Hauptablageordner löschen, mit den neuen Fassungen frische
 Tresorräume anlegen. Vorher wichtige PDFs außerhalb des Tresors sichern lassen.
