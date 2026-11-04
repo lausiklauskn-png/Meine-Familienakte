@@ -1,6 +1,13 @@
 # CLAUDE.md — Meine Familienakte
 
 
+## Neuester Stand: Basic-Name und Versionszeile 2.28.21 (04.11.2026)
+
+Web-App heißt „Familienakte Basic“ (#78, live), native Apps bleiben „Familienakte Pro“. Kopf-/Fußzeile zeigen
+jetzt die technische Fassung aus package.json (2.28.21); `APP_VERSION` 2.28.1 bleibt interner Prüfstand.
+Klaus hat die Ausgabe von Android/Windows 2.28.21 (server=ja) freigegeben. Einzelheiten und Stand der Ausgabe:
+`BRIEF_ABSCHLUSS_2026-11-04_BASIC-NAME-UND-VERSIONSZEILE.md`.
+
 ## Aktueller Abschluss: getrennte Demo 2.28.20 veröffentlicht (04.11.2026)
 
 Klaus' Freibrief aus Kimhub ist mit #73/#76 umgesetzt. Eigene Dateien und eigene Altbriefe bevorzugt erhalten;
