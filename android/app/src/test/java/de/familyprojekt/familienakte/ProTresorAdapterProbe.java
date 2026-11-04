@@ -141,8 +141,8 @@ public final class ProTresorAdapterProbe {
             try (ProTresorAdapter p = ProTresorAdapter.oeffnen(sdA, idNeu, zugang)) { pruefe(p.dokumente().size() == 1, "Neuer Tresor nach Neustart"); }
 
             Path voll = Files.createDirectory(root.resolve("sd-voll"));
-            Files.writeString(Files.createDirectory(voll.resolve("DCIM")).resolve("Bild.txt"), "erfunden");
-            Files.writeString(voll.resolve("Urlaub.txt"), "erfunden");
+            Files.write(Files.createDirectory(voll.resolve("DCIM")).resolve("Bild.txt"), "erfunden".getBytes(StandardCharsets.UTF_8));
+            Files.write(voll.resolve("Urlaub.txt"), "erfunden".getBytes(StandardCharsets.UTF_8));
             DateiAblage vollA = new DateiAblage(voll.toFile());
             Hauptordner.Ergebnis darin = ProTresorAdapter.einrichtenPruefen(vollA, "Gerät");
             pruefe(Hauptordner.ANLEGEN_DARIN.equals(darin.art), "Speicher mit Inhalt: neuer Hauptordner darin");
@@ -161,10 +161,10 @@ public final class ProTresorAdapterProbe {
             // Vorhandener Tresor einer anderen Pro-App in einem Ordner mit altem Namen: gefunden am Inhalt, nicht am Namen.
             Path karte = Files.createDirectory(root.resolve("sd-alt"));
             Path altHaupt = Files.createDirectory(karte.resolve("Privat Brain Pro Hauptablageordner"));
-            Files.writeString(karte.resolve("Notiz.txt"), "erfunden");
+            Files.write(karte.resolve("Notiz.txt"), "erfunden".getBytes(StandardCharsets.UTF_8));
             String idAlt;
             try (TresorOrdner t = TresorOrdner.anlegen(new DateiAblage(altHaupt.toFile()), Fach.PRIVATE_BRAIN_APP, zugang)) { idAlt = t.id(); }
-            Files.writeString(altHaupt.resolve(Hauptordner.LIES_MICH), "selbst bearbeitet");
+            Files.write(altHaupt.resolve(Hauptordner.LIES_MICH), "selbst bearbeitet".getBytes(StandardCharsets.UTF_8));
             DateiAblage karteA = new DateiAblage(karte.toFile());
             Hauptordner.Ergebnis gef = ProTresorAdapter.einrichtenPruefen(karteA, "SD/USB (1234-5678)");
             pruefe(gef.gefunden() && "Privat Brain Pro Hauptablageordner".equals(gef.pfad), "Vorhandener Tresor am Inhalt gefunden");
@@ -174,7 +174,7 @@ public final class ProTresorAdapterProbe {
             ProTresorAdapter.Einrichtung offenAlt = ProTresorAdapter.einrichten(karteA, gef, null, zugang);
             try (ProTresorAdapter p = offenAlt.adapter) {
                 pruefe(!offenAlt.angelegt && idAlt.equals(p.kennung()) && "Privat Brain Pro Hauptablageordner".equals(offenAlt.pfad), "Vorhandenen Tresor geöffnet, keinen neuen");
-                pruefe("selbst bearbeitet".equals(Files.readString(altHaupt.resolve(Hauptordner.LIES_MICH))), "Bearbeitete Lies-mich überschrieben");
+                pruefe("selbst bearbeitet".equals(new String(Files.readAllBytes(altHaupt.resolve(Hauptordner.LIES_MICH)), StandardCharsets.UTF_8)), "Bearbeitete Lies-mich überschrieben");
                 Eintrag n = p.ablegen("alt-1", "Brief.txt", "text/plain", 6, quelle(original));
                 try (TresorOrdner fremd = TresorOrdner.oeffnen(new DateiAblage(altHaupt.toFile()), Fach.WORKFLOW_PDF_APP, zugang);
                      InputStream in = fremd.oeffnen(Fach.FAMILIENAKTE.slug, n)) {
