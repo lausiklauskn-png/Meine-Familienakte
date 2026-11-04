@@ -15,6 +15,7 @@ try {
   check(!!meta.build && !!meta.version, "Bau-Kennung und Fassung stehen in der Seite", JSON.stringify(meta));
   await step("version.json passt zur Seite", async () => { const v = await (await fetch(app.base + "version.json")).json(); return v.build === meta.build && v.version === meta.version ? `Bau ${v.build}, ${v.files} Dateien` : JSON.stringify(v); });
   await step("Manifest hat PNG-Symbole (192, 512, maskable) und eine feste id", async () => { const m = await (await fetch(app.base + "manifest.webmanifest")).json(); const sizes = m.icons.map((i) => i.sizes + (i.purpose ? ":" + i.purpose : "")); return sizes.includes("192x192") && sizes.includes("512x512") && sizes.includes("512x512:maskable") && m.id === "./index.html" ? sizes.join(" ") : false; });
+  await step("Web-App heißt „Familienakte Basic“ (Android/Windows bleiben „Familienakte Pro“)", async () => { const m = await (await fetch(app.base + "manifest.webmanifest")).json(); return m.name === "Familienakte Basic" && m.short_name === "Familienakte Basic" ? m.name : false; });
   await step("Service Worker ist angemeldet und hat den Vorrat gefüllt", async () => {
     await page.waitForFunction(async () => { const r = await navigator.serviceWorker.getRegistration(); return !!(r && r.active); }, null, { timeout: 30000 });
     await page.waitForFunction(async () => (await caches.keys()).some((k) => k.startsWith("familienakte-")), null, { timeout: 30000 });
