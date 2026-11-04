@@ -55,7 +55,7 @@ try {
     const feld = dlg.locator("input[data-af-feld]").first();
     await feld.fill("Tabea");
     await dlg.locator("[data-af-ausfuellbar]").click();
-    await dlg.locator("[data-af-hinweis]", { hasText: "neben dem Original" }).waitFor({ timeout: 30000 });
+    await dlg.locator("[data-af-hinweis]", { hasText: "am selben Dokument" }).waitFor({ timeout: 30000 });
     const [dl] = await Promise.all([page.waitForEvent("download"), dlg.locator("[data-af-teilen]").click()]);
     const b = Buffer.concat(await (await dl.createReadStream()).toArray());
     const roh = b.toString("latin1");
@@ -65,13 +65,15 @@ try {
     if (!acro || !tx || !wert) throw new Error(`AcroForm ${acro} · Textfeld ${tx} · Wert ${wert} · ${dl.suggestedFilename()}`);
     return `${dl.suggestedFilename()} · Formularfelder mit Wert`;
   });
-  await step("Die neue Fassung heißt „…ausfuellbar…“ und trägt die Marke", async () => {
+  await step("Das Foto wird unter derselben Unterlage zum ausfüllbaren PDF, kein zweiter Eintrag", async () => {
     await dlg.locator("button[aria-label='Ausfüllen schließen']").click();
-    await page.locator(".document-item", { hasText: "ausfuellbar" }).first().waitFor({ timeout: 15000 });
-    return /Ausgefüllte Fassung/.test(await page.locator(".document-item", { hasText: "ausfuellbar" }).first().innerText());
+    const name = NAME.replace(/\.[^.]+$/, ".pdf");
+    await page.locator(".document-item", { hasText: name }).first().waitFor({ timeout: 15000 });
+    if (await page.locator(".document-item", { hasText: name }).count() !== 1) return false;
+    return /Ausgefüllt/.test(await page.locator(".document-item", { hasText: name }).first().innerText());
   });
   await step("„Neu scannen“ öffnet den Scanner von Workflow PDF (Stil geladen), Schließen geht", async () => {
-    await page.locator(".document-item", { hasText: NAME }).filter({ hasNotText: "ausfuellbar" }).first().locator("[data-af-oeffnen]").click();
+    await page.locator(".document-item", { hasText: NAME.replace(/\.[^.]+$/, ".pdf") }).first().locator("[data-af-oeffnen]").click();
     await dlg.locator(".af-seite").first().waitFor({ timeout: 30000 });
     await dlg.locator("[role=tab]", { hasText: "Felder setzen" }).click();
     await dlg.locator("button", { hasText: "Neu scannen" }).click();

@@ -23,7 +23,7 @@ export type AusfuellDok = { name: string; pages: AusfuellSeite[]; fields: Ausfue
 
 /** Was an einer Unterlage der Akte zum Ausfüllen gemerkt wird (Feld `ausfuellen` am Dokument im Register). */
 export type AusfuellInfo =
-  | { stand: "offen" | "ausgefuellt"; felder: AusfuellFeld[]; seiten: AusfuellSeite[]; geaendertAm: string; ergebnisIds?: string[] }
+  | { stand: "offen" | "ausgefuellt"; felder: AusfuellFeld[]; seiten: AusfuellSeite[]; geaendertAm: string; ergebnisIds?: string[]; pdfFelder?: boolean }
   | { stand: "ergebnis"; ausId: string; modus: "fest" | "ausfuellbar"; geaendertAm: string };
 
 export const STAND_MARKE: Record<AusfuellInfo["stand"], string> = { offen: "Muss noch ausgefüllt werden", ausgefuellt: "Ausgefüllt", ergebnis: "Ausgefüllte Fassung" };

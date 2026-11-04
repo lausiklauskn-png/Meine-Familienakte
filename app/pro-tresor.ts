@@ -88,14 +88,15 @@ async function alsBase64(file: File): Promise<string> {
     reader.readAsDataURL(file);
   });
 }
-export async function proOriginalSpeichern(vaultId: string, file: File, checksum: string, datum = 0): Promise<string> {
+export async function proOriginalSpeichern(vaultId: string, file: File, checksum: string, datum = 0, dokumentId?: string): Promise<string> {
   if (file.size > MAX_BYTES) throw new Error("Die Datei ist größer als 20 MB.");
   if (!file.name || file.name.length > 255 || file.type.length > 200 || !/^[a-f0-9]{64}$/.test(checksum)) throw new Error("Name, Dateityp oder Prüfsumme der Quelldatei sind unzulässig.");
   const stand = await proTresor.zustand();
   if (stand.id !== vaultId || stand.status !== "offen") throw new Error("Bitte den zu diesem Akten-Arbeitsstand gehörenden Pro-Tresor verbinden und entsperren. Die Quelle bleibt erhalten.");
   // Stabile Kennung auch dann, wenn das Aktenregister nach nativer Ablage nicht geschrieben werden konnte.
   const date = Number.isFinite(datum) ? Math.max(0, Math.trunc(datum)) : 0;
-  const r = await plugin().speichern({ vaultId, documentId: `d-${checksum}`, name: file.name,
+  if (dokumentId && !/^[a-z0-9-]{1,80}$/.test(dokumentId)) throw new Error("Die Dokumentkennung ist unzulässig.");
+  const r = await plugin().speichern({ vaultId, documentId: dokumentId || `d-${checksum}`, name: file.name,
     mime: file.type || "application/octet-stream", date, data: await alsBase64(file) });
   if (r.vaultId !== vaultId || r.size !== file.size || r.sha256 !== checksum || !/^[a-z0-9-]{1,80}$/.test(r.entryId))
     throw new Error("Der Pro-Tresor hat die Originaldatei nicht passend bestätigt. Die Quelle bleibt erhalten.");
