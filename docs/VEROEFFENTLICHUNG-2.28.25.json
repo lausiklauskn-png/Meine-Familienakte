@@ -1,0 +1,38 @@
+{
+  "version": "2.28.25",
+  "source": "869842dbf7fb8a04871fbae3991634525653d147",
+  "pullRequest": 90,
+  "enthaelt": [89, 90],
+  "recordedUtc": "2026-11-04T21:55:00Z",
+  "freigabe": "Klaus 2026-11-04: „Veröffentliche 2.28.25, sobald alles grün ist“ (Android, Windows mit Update-Server, PWA)",
+  "ciAmPrStand": "ef65a3c26dcf99b1382942a4c73de255e5be5043: pruefung, webview, product (31, pixel_c), product (35, pixel_2), android, windows, transport, abgleich – alle success",
+  "releases": [
+    {
+      "tag": "android-v2.28.25",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.25",
+      "run": 41915802005,
+      "conclusion": "success",
+      "updateServer": "server=ja; Lauf grün",
+      "downloadProof": [
+        { "name": "Familienakte-android-v2.28.25.apk", "bytes": 19816405, "sha256": "e81c0d545fc0fffd4acb4373c5520d2bee5c791e999c93b7849461bf28583e02", "anonymousDownload": true, "matchesSHA256SUMS": true, "versionInside": "2.28.25" },
+        { "name": "Familienakte-Einzeldatei-2.28.25.html", "bytes": 3343052, "sha256": "ca20fbb21a5fb611c79fe228f363a9974877aea75ab23f21c7a85173c78c75ec", "anonymousDownload": true, "matchesSHA256SUMS": true }
+      ]
+    },
+    {
+      "tag": "windows-v2.28.25",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.25",
+      "run": 41915807700,
+      "conclusion": "success",
+      "updateServer": "Job „server“ grün; latest.json nennt 2.28.25",
+      "downloadProof": [
+        { "name": "Familienakte-Windows-2.28.25-x64-setup.exe", "bytes": 33959347, "sha256": "c7a68e0247d8215e65b0d587240ea07f03ca78fa245287ecc637641b7b32401b", "anonymousDownload": true, "matchesSHA256SUMS": true }
+      ]
+    }
+  ],
+  "pwa": "Pages-Lauf 41915777848 nach dem Merge auf main erfolgreich (ausgeliefert aus dem gebauten Paket, Codex #89)",
+  "notChecked": [
+    "Kein physisches Tablet und kein eigener Windows-Rechner",
+    "family-projekt.de aus dem Behälter nicht direkt geprüft; die Freigabeläufe prüfen den Server von außen",
+    "Demo-Knopf, Scanner „Durchsuchbar“ und Geräteübergabe nur im Browser und Emulator geprüft"
+  ]
+}

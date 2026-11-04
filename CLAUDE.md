@@ -7,11 +7,10 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Aktueller Stand (04.11.2026, abends)
 
-- **Fassung 2.28.24** (Android, Windows, PWA; #85, enthält Codex' PDF-Updateweg #86): „Wo liegt was?“ mit Zahlen und
-  grün/rot, Bedeutungssuche-Texte hinter Fragezeichen, „Bestand prüfen“ wieder sichtbar, Kurzhinweise (langer Druck,
-  Haken in der Hilfe), frühere Empfänger als Vorschlag. Nachweis `docs/VEROEFFENTLICHUNG-2.28.24.json`. Darunter 2.28.23
-  (Handy-Kopfleiste, Fragezeichen, Demo-Schalter, Drucken, Aus-/Einloggen) und 2.28.22 (Codex). Keine davon erneut
-  ausgeben; nächste freie Fassung 2.28.25. Die Versionszeile zeigt die technische Fassung aus `package.json`;
+- **Fassung 2.28.25** (Android, Windows, PWA; #90, enthält Codex' #89 PWA aus dem gebauten Paket): Demo-Knopf „DEMO ▾“ hinter
+  dem Namen (Start in der Hilfe), Scanner „Durchsuchbar“ ab Werk, Ordnerbaum-Sprung zur Bibliothek, Geräteübergabe ohne Kim-sync,
+  Tresor-Paket nachgezogen. Nachweis `docs/VEROEFFENTLICHUNG-2.28.25.json`. Darunter 2.28.24, 2.28.23, 2.28.22. Keine davon
+  erneut ausgeben; nächste freie Fassung 2.28.26. Die Versionszeile zeigt die technische Fassung aus `package.json`;
   `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
 - **Namen:** Web-App (PWA, Browser) = „Familienakte Basic“ (`public/manifest.webmanifest`), native Apps
   (Android `strings.xml`, Windows `tauri.conf.json`) = „Familienakte Pro“. Nicht wieder angleichen. Die Anzeige
