@@ -7,7 +7,8 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Aktueller Stand (04.11.2026)
 
-- **Fassung 2.28.21** (Android, Windows, PWA). Die Versionszeile oben/unten zeigt die technische Fassung aus
+- **Fassung 2.28.21** (Android, Windows, PWA) ist veröffentlicht, Nachweis `docs/VEROEFFENTLICHUNG-2.28.21.json`;
+  nicht erneut ausgeben. Die Versionszeile oben/unten zeigt die technische Fassung aus
   `package.json`; `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
 - **Namen:** Web-App (PWA, Browser) = „Familienakte Basic“ (`public/manifest.webmanifest`), native Apps
   (Android `strings.xml`, Windows `tauri.conf.json`) = „Familienakte Pro“. Nicht wieder angleichen – Klaus muss
