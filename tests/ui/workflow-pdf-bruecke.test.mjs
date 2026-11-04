@@ -64,6 +64,9 @@ try {
     await page.locator('[data-wfpdf-seite]').waitFor();
     await page.frameLocator("[data-wfpdf-rahmen]").locator("#inDatei").waitFor({state:"attached",timeout:30000});
     klon = page.frames().find(f=>f.url().includes('/apps/workflow-pdf/'));
+    // „Durchsuchbar“ ab Werk an (Klaus 2026-11-04), einmal je Gerät; die eigene Wahl danach bleibt (Marke im eigenen Schlüssel).
+    const merk = await klon.evaluate(() => ({ wert: JSON.parse(localStorage.getItem("wfpdf_scan_v1") || "{}").durchsuchbar, marke: localStorage.getItem("fa_scan_durchsuchbar_ab_werk_v1"), eigen: localStorage.getItem("fa_wfpdf_scan_v1") !== null }));
+    check(merk.wert === true && merk.marke === "1" && merk.eigen, "Scanner: „Durchsuchbar“ ab Werk an, im eigenen Speicher der Akte", JSON.stringify(merk));
     await klon.locator('#inDatei').setInputFiles({name:'Garantiebeleg.pdf',mimeType:'application/pdf',buffer:readFileSync(FORM)});
     await klon.locator('#sc-ed.on').waitFor({timeout:30000});
     await klon.locator('#edZurueck').click();

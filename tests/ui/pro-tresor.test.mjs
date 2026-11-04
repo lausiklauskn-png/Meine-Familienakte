@@ -118,5 +118,11 @@ try {
     const t = await hilfe.innerText();
     return t.includes("tresorordner.json") && t.includes("Eingang-Familienakte") && t.includes("Ein Passwort gilt für alle Pro-Apps.");
   });
+  await step("Ordnerbaum: Tipp auf „Familienakte“ springt zur Dokumentenbibliothek", async () => {
+    const knoten = web.locator("[data-pro-tresor-hilfe] .ablauf-link", { hasText: "Diese App: Familienakte" });
+    if (await knoten.count() !== 1) return false;
+    await knoten.click(); await web.waitForTimeout(500);
+    return await web.locator(".breadcrumb").innerText().then(t => /Dokumentenbibliothek|Dokumente/.test(t)).catch(() => false) ? "zur Bibliothek" : false;
+  });
 } finally { await browser.close(); await app.stop(); }
 process.exit(summary("Pro-Tresor Anschluss"));

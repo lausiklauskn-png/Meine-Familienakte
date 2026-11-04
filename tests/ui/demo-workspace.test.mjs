@@ -8,6 +8,7 @@ import path from "node:path";
 import { createSamplePdf } from "../../lib/sample-pdf.ts";
 import { startApp, launchBrowser, chromium, DESKTOP, HANDY, check, step, summary, footer } from "./_harness.mjs";
 import { vaultFixture } from "./_vault-fixture.mjs";
+import { demoBereit, demoMenue, demoUmschalten } from "./_demo.mjs";
 const app = await startApp(), browser = await launchBrowser();
 const profile = mkdtempSync(path.join(tmpdir(), "familienakte-demo-"));
 let context, page;
@@ -25,15 +26,11 @@ async function openProfile() {
 try {
   await openProfile();
   await page.goto(app.base, { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: "Demo öffnen", exact: true }).waitFor();
+  await demoBereit(page);
   const pdf = createSamplePdf({ sender: "Erfundene eigene Ablage", place: "Wolkenhain, 04.11.2026", title: "Eigene Unterlage behalten", body: "Eindeutiger eigener Testbeleg. Keine Beispieldaten-Herkunft." });
   const bytes = Buffer.from(pdf), hash = createHash("sha256").update(bytes).digest("hex");
   async function switchWorkspace(target, active) {
-    await Promise.all([
-      target.waitForURL(url => active ? url.searchParams.get("demo") === "1" : !url.searchParams.has("demo")),
-      target.getByRole("button", { name: active ? "Demo öffnen" : "Demo verlassen", exact: true }).click(),
-    ]);
-    await target.waitForLoadState("networkidle");
+    await demoUmschalten(target, active);
   }
   async function fixture() { await vaultFixture(page); }
   async function documents() {
@@ -91,9 +88,9 @@ try {
     });
     await page.reload({ waitUntil: "networkidle" });
     await switchWorkspace(page, true);
-    await page.getByRole("button", { name: "Demo verlassen", exact: true }).waitFor();
+    await page.locator(".demo-knopf-schalter").waitFor();
     await switchWorkspace(page, false);
-    await page.getByRole("button", { name: "Demo öffnen", exact: true }).waitFor();
+    await demoBereit(page);
     assert.deepEqual(await documents(), before);
     const records = await page.evaluate(async () => { const f = window.__vaultFixture; return (await f.readLocalVaultData(await f.browserVault())).records; });
     assert.equal(records.length, 1);
@@ -101,7 +98,7 @@ try {
     assert.deepEqual(records[0].data, ownLetter.data);
   });
   await switchWorkspace(page, true);
-  await page.locator('.sample-data-notice strong:has-text("Alle Daten")').waitFor({ timeout: 120000 });
+  await page.locator('.site-header[data-demo-beispiele="ja"]').waitFor({ state: "attached", timeout: 120000 });
   await step("Demo enthält wirkliche erfundene PDF-Dateien, keine eigene Unterlage", async () => {
     const demo = await documents(); assert.equal(await page.evaluate(() => window.__vaultFixture.browserStorageKind()), process.env.DEMO_BACKEND === "indexeddb" ? "indexeddb" : "opfs"); assert.ok(demo.length >= 15); assert.ok(demo.every(d => d.hash.length === 64)); assert.ok(!demo.some(d => d.name === before[0].name));
   });
@@ -125,7 +122,7 @@ try {
     assert.deepEqual(result.b, result.a); assert.deepEqual(result.recordsB, result.recordsA); assert.deepEqual(result.relationsB, result.relationsA);
   });
   await switchWorkspace(page, false);
-  await page.getByRole("button", { name: "Demo öffnen", exact: true }).waitFor();
+  await demoBereit(page);
   await step("Rückkehr zur eigenen Akte bewahrt Kennung und PDF-Bytes", async () => { assert.deepEqual(await documents(), before); });
   await step("Vollständiger Browser-Neustart erhält eigene PDF und getrennten Demo-Import", async () => {
     await context.close();
@@ -138,24 +135,24 @@ try {
     assert.deepEqual(await documents(), before);
   });
   await switchWorkspace(page, true);
-  await page.getByRole("button", { name: "Demo zurücksetzen", exact: true }).click();
+  await demoMenue(page, "Demo zurücksetzen");
   await Promise.all([page.waitForURL(url => url.searchParams.get("demo") === "reset", { waitUntil: "commit" }), page.getByRole("button", { name: "Ja, fortfahren", exact: true }).click()]);
   await page.waitForURL(url => url.searchParams.get("demo") === "1");
   await page.waitForLoadState("networkidle");
-  await page.locator('.sample-data-notice strong:has-text("Alle Daten")').waitFor({ timeout: 120000 });
+  await page.locator('.site-header[data-demo-beispiele="ja"]').waitFor({ state: "attached", timeout: 120000 });
   await step("Zurücksetzen entfernt auch Testimporte, erneuert nur die Demo", async () => { assert.ok(!(await documents()).some(d => d.name === "Nur_Demo_Import.txt")); });
   await switchWorkspace(page, false);
-  await page.getByRole("button", { name: "Demo öffnen", exact: true }).waitFor();
+  await demoBereit(page);
   await step("Eigene Akte bleibt auch nach Demo-Reset und Neustart unverändert", async () => { await page.reload({ waitUntil: "networkidle" }); assert.deepEqual(await documents(), before); });
   await switchWorkspace(page, true);
   await page.evaluate(() => {
     sessionStorage.setItem("familienakte_ki_map", "eigene Zuordnung erhalten");
     sessionStorage.setItem("Familienakte-Demo-v1:familienakte_ki_map", "erfundene Demo-Zuordnung");
   });
-  await page.getByRole("button", { name: "Demo löschen und verlassen", exact: true }).click();
+  await demoMenue(page, "Demo löschen und verlassen");
   await Promise.all([page.waitForURL(url => !url.searchParams.has("demo")), page.getByRole("button", { name: "Ja, fortfahren", exact: true }).click()]);
   await page.waitForLoadState("networkidle");
-  await page.getByRole("button", { name: "Demo öffnen", exact: true }).waitFor();
+  await demoBereit(page);
   await step("Demo vollständig löschen: nur der benannte Testbereich verschwindet", async () => {
     assert.deepEqual(await documents(), before);
     const remains = await page.evaluate(async () => {
@@ -177,8 +174,8 @@ try {
   });
   const mobile = await nativeContext.newPage();
   await mobile.goto(app.base + "?demo=1", { waitUntil: "networkidle" });
-  // Am Handy steht die Demo als roter Schalter oben (2026-11-04), der Demo-Kasten ist dort ausgeblendet.
-  await mobile.locator('.demo-schalter.aktiv[aria-pressed="true"]').waitFor({ timeout: 120000 });
+  // Die laufende Demo steht als roter Knopf „DEMO ▾“ hinter dem Namen (2026-11-04), auch am Handy.
+  await mobile.locator('.demo-knopf-schalter').waitFor({ timeout: 120000 });
   await footer(mobile, "Sicherheitscenter");
   await step("Gestellte Android-Brücke: Demo liest weder echten Tresor noch Teilen-Eingang", async () => {
     await mobile.waitForTimeout(1800);
@@ -186,10 +183,10 @@ try {
     const accepted = await mobile.evaluate(() => window.FamilienakteApp.dateienUebergeben([new File(["Erfundener externer Eingang"], "Externer_Eingang.txt", { type: "text/plain" })]));
     assert.equal(accepted, false);
   });
-  await step("Demo-Schalter auf schmalem Bildschirm ohne seitliches Überlaufen", async () => {
+  await step("Demo-Knopf auf schmalem Bildschirm ohne seitliches Überlaufen", async () => {
     assert.ok(await mobile.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
     await switchWorkspace(mobile, false);
-    await mobile.getByRole("button", { name: "Demo öffnen", exact: true }).waitFor();
+    await demoBereit(mobile); assert.equal(await mobile.locator(".demo-knopf-schalter").count(), 0);
   });
   check(errors.length === 0, "Keine Browserfehler im Demo-/Echtwechsel", errors.join(" | "));
 } catch (error) {

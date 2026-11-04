@@ -1,6 +1,7 @@
 // Startseite, Kopf- und Fußzeile: Suche, Diktat, Drucken, Ausloggen, Objekt-Cockpit, Erinnerung erfassen,
 // Dokumenteneingang-Kacheln, Beispieldaten entfernen/laden.
 import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, collectErrors, footer } from "./_harness.mjs";
+import { demoUmschalten } from "./_demo.mjs";
 import { speechStub, windowStub, directoryPickerStub, schliesseDialoge, bekannt, verdecktVon } from "./_stubs.mjs";
 
 const app = await startApp();
@@ -233,16 +234,15 @@ try {
     await page.locator(".page-dialog button", { hasText: "Ja, fortfahren" }).click();
     await page.waitForSelector(".sample-data-notice", { state: "detached", timeout: 30000 });
     await page.waitForTimeout(500);
-    return (await page.locator("text=Beispieldaten entfernt").count()) > 0 || (await page.locator(".footer-sample-link").count()) === 1;
+    return (await page.locator("text=Beispieldaten entfernt").count()) > 0 || (await page.locator(".sample-data-notice").count()) === 0;
   });
   await step("Eigene Erinnerung bleibt nach dem Entfernen erhalten", async () => {
     await footer(page, "Tagebuch & Erinnerungen");
     return (await page.locator("text=Elektriker war heute da").count()) > 0 || (await page.locator("text=Hausaufgaben allein").count()) > 0;
   });
-  await step("„Beispieldaten laden“ (Fußzeile) legt die Beispielfamilie wieder an", async () => {
-    await page.locator(".footer-sample-link").scrollIntoViewIfNeeded();
-    await Promise.all([page.waitForURL(url => url.searchParams.get("demo") === "1", { waitUntil: "domcontentloaded", timeout: 60000 }), page.locator(".footer-sample-link").click()]);
-    await page.waitForSelector('.demo-workspace.sample-data-notice strong:has-text("Alle Daten")', { timeout: 60000 });
+  await step("„Demo ansehen“ (hinten in der Hilfe) legt die Beispielfamilie wieder an", async () => {
+    await demoUmschalten(page, true);
+    await page.locator('.site-header[data-demo-beispiele="ja"]').waitFor({ state: "attached", timeout: 60000 });
     return true;
   });
   check(errors.length === 0, "Keine Seitenfehler", errors.join(" | "));

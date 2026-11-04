@@ -52,6 +52,17 @@
     }; });
     var set = SP.setItem; SP.setItem = function (k, v) { if (nurImRaum(k)) { raumSpeicher.set(String(k), String(v)); return; } return set.call(this, um(k), v); };
   } catch { if (arbeitsraum) raumSicher = false; }
+  // 1c. „Durchsuchbar“ im Scanner ab Werk an (Klaus 2026-11-04): einmal je Gerät gesetzt (Marke), danach gilt die eigene Wahl.
+  //     Nicht im Arbeitsraum (der bekommt keine bleibenden Einstellungen). scanner.js bleibt byte-1:1 und liest wfpdf_scan_v1.
+  try {
+    var LS = W.localStorage;
+    if (!arbeitsraum && LS && !LS.getItem("fa_scan_durchsuchbar_ab_werk_v1")) {
+      var merk = {}; try { merk = JSON.parse(LS.getItem("wfpdf_scan_v1") || "{}") || {}; } catch { merk = {}; }
+      merk.durchsuchbar = true;
+      LS.setItem("wfpdf_scan_v1", JSON.stringify(merk));
+      LS.setItem("fa_scan_durchsuchbar_ab_werk_v1", "1");
+    }
+  } catch { /* ohne Speicher: Scanner-Vorgabe wie bisher */ }
   // 1b. Datenbank
   try {
     var IF = W.IDBFactory && W.IDBFactory.prototype;

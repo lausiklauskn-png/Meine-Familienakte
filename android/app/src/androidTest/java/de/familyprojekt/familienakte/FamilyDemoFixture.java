@@ -24,11 +24,14 @@ final class FamilyDemoFixture {
         }
         fail("Demo fixture not ready: " + condition + " / " + eval(app, "location.href"));
     }
+    // Since 04.11.2026 the demo starts at the end of the help page ("Demo ansehen"); the header carries the readiness marks.
     static void open(ActivityScenario<MainActivity> app) throws Exception {
-        until(app, "Boolean(document.querySelector('.demo-workspace button')&&!document.querySelector('.demo-workspace button').disabled)");
+        until(app, "Boolean(document.querySelector('.site-header[data-demo-bereit=\\'ja\\']'))");
         if (!"true".equals(eval(app, "new URLSearchParams(location.search).get('demo')==='1'"))) {
-            eval(app, "[...document.querySelectorAll('.demo-workspace button')].find(b=>b.textContent==='Demo öffnen').click();true");
+            eval(app, "[...document.querySelectorAll('.footer-directory button')].find(b=>b.textContent.trim()==='Hilfe').click();true");
+            until(app, "Boolean(document.querySelector('.demo-starten button')&&!document.querySelector('.demo-starten button').disabled)");
+            eval(app, "document.querySelector('.demo-starten button').click();true");
         }
-        until(app, "Boolean(new URLSearchParams(location.search).get('demo')==='1'&&document.querySelector('.demo-workspace.sample-data-notice strong')&&!document.querySelector('.demo-workspace button').disabled)");
+        until(app, "Boolean(new URLSearchParams(location.search).get('demo')==='1'&&document.querySelector('.site-header[data-demo-beispiele=\\'ja\\'][data-demo-bereit=\\'ja\\']'))");
     }
 }
