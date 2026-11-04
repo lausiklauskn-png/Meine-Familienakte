@@ -1,0 +1,141 @@
+{
+  "version": "2.28.21",
+  "source": "3869c773e217785bf220036fccbe4555d3994947",
+  "recordedUtc": "2026-11-04T11:32:44.506602+00:00",
+  "auftrag": "Klaus 2026-11-04: Versionszeile oben zeigt aktuelle Fassung; Android/Windows ausgeben (\"Ja, bitte mache das\").",
+  "releases": [
+    {
+      "repo": "lausiklauskn-png/Meine-Familienakte",
+      "tag": "android-v2.28.21",
+      "source": "3869c773e217785bf220036fccbe4555d3994947",
+      "publishedAt": "2026-11-04T11:26:17Z",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.21",
+      "assets": [
+        {
+          "name": "Familienakte-android-v2.28.21.apk",
+          "size": 19800021,
+          "digest": "sha256:ed400bb2311adb2ffceb6e0a6004cac33ac761f1e91ce6f51d6cd3057b3642fb",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.21/Familienakte-android-v2.28.21.apk"
+        },
+        {
+          "name": "Familienakte-Einzeldatei-2.28.21.html",
+          "size": 3319416,
+          "digest": "sha256:8d8011ee2d7dcc7914880dd163b70cfbbd200b9ebdcfc836495ea27c564520e3",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.21/Familienakte-Einzeldatei-2.28.21.html"
+        },
+        {
+          "name": "SHA256SUMS",
+          "size": 204,
+          "digest": "sha256:ec49c680005efd5fe9faec78dd18ac2ce76257541db2e1a5dfeea335344fe1e8",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.21/SHA256SUMS"
+        }
+      ],
+      "downloadProof": [
+        {
+          "name": "Familienakte-android-v2.28.21.apk",
+          "bytes": 19800021,
+          "sha256": "ed400bb2311adb2ffceb6e0a6004cac33ac761f1e91ce6f51d6cd3057b3642fb",
+          "anonymousDownload": true,
+          "matchesDigest": true
+        },
+        {
+          "name": "Familienakte-Einzeldatei-2.28.21.html",
+          "bytes": 3319416,
+          "sha256": "8d8011ee2d7dcc7914880dd163b70cfbbd200b9ebdcfc836495ea27c564520e3",
+          "anonymousDownload": true,
+          "matchesDigest": true
+        },
+        {
+          "name": "SHA256SUMS",
+          "bytes": 204,
+          "sha256": "ec49c680005efd5fe9faec78dd18ac2ce76257541db2e1a5dfeea335344fe1e8",
+          "anonymousDownload": true,
+          "matchesDigest": true
+        }
+      ],
+      "run": 41820269181,
+      "workflowConclusion": "success",
+      "server": "ja"
+    },
+    {
+      "repo": "lausiklauskn-png/Meine-Familienakte",
+      "tag": "windows-v2.28.21",
+      "source": "3869c773e217785bf220036fccbe4555d3994947",
+      "publishedAt": "2026-11-04T11:31:30Z",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.21",
+      "assets": [
+        {
+          "name": "Familienakte-Windows-2.28.21-x64-setup.exe",
+          "size": 33945197,
+          "digest": "sha256:ec95f1af6e731e73cfe1499099b08e2a5f4056bbf14bbcbfd2c486e7739b4e5d",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/windows-v2.28.21/Familienakte-Windows-2.28.21-x64-setup.exe"
+        },
+        {
+          "name": "latest.json",
+          "size": 561,
+          "digest": "sha256:3c5590be666faf04257e24b9638dd41cc4a09c43e630643d62c6d3a0a9cd2ecf",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/windows-v2.28.21/latest.json"
+        },
+        {
+          "name": "SHA256SUMS",
+          "size": 109,
+          "digest": "sha256:a9686065b90d1cc23cb96b54b1384627c1f17d757bd1d348fd28567a173a8d93",
+          "browser_download_url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/windows-v2.28.21/SHA256SUMS"
+        }
+      ],
+      "downloadProof": [
+        {
+          "name": "Familienakte-Windows-2.28.21-x64-setup.exe",
+          "bytes": 33945197,
+          "sha256": "ec95f1af6e731e73cfe1499099b08e2a5f4056bbf14bbcbfd2c486e7739b4e5d",
+          "anonymousDownload": true,
+          "matchesDigest": true
+        },
+        {
+          "name": "latest.json",
+          "bytes": 561,
+          "sha256": "3c5590be666faf04257e24b9638dd41cc4a09c43e630643d62c6d3a0a9cd2ecf",
+          "anonymousDownload": true,
+          "matchesDigest": true
+        },
+        {
+          "name": "SHA256SUMS",
+          "bytes": 109,
+          "sha256": "a9686065b90d1cc23cb96b54b1384627c1f17d757bd1d348fd28567a173a8d93",
+          "anonymousDownload": true,
+          "matchesDigest": true
+        }
+      ],
+      "run": 41820274052,
+      "workflowConclusion": "success",
+      "server": "ja"
+    }
+  ],
+  "visibleVersion": "2.28.21 (Kopf-/Fusszeile aus package.json); APP_VERSION intern 2.28.1",
+  "names": {
+    "pwa": "Familienakte Basic",
+    "android": "Familienakte Pro",
+    "windows": "Familienakte Pro"
+  },
+  "identitiesPreserved": "applicationId de.familyprojekt.familienakte und Signieridentitaeten unveraendert (Ablauf mit dauerhafter Signatur)",
+  "pwa": {
+    "pagesRun": 41818330431,
+    "conclusion": "success",
+    "source": "3869c773e217785bf220036fccbe4555d3994947"
+  },
+  "server": {
+    "basis": "https://family-projekt.de/updates/familienakte/",
+    "nachweis": "Ablauf liest aktuell-android.json/.sig und aktuell-windows.json/.sig nach dem Hochladen zurueck (cmp) – erfolgreich",
+    "sandboxDirekt": "nicht erreichbar (Proxy), daher nur ueber den Ablauf belegt"
+  },
+  "checksMain": {
+    "ci": 41818330240,
+    "androidPruefbau": 41818330298,
+    "windowsPruefbau": 41818330238,
+    "alle": "success"
+  },
+  "grenzen": [
+    "PR-Pruefung von #79 startete wegen GitHub-Stoerung nicht; auf Klaus' Wort auf main zusammengefuehrt, Pruefung auf main gruen vor der Ausgabe",
+    "Auf Klaus' Geraeten nicht geprueft"
+  ]
+}
