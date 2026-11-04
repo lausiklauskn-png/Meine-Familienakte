@@ -90,8 +90,13 @@ jobs:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
         run: |
           set -euo pipefail
-          for i in 1 2 3 4 5 6; do
-            if curl -fsS "${PAGE_URL}version.json" -o live.json; then break; fi
+          for versuch in 1 2 3 4 5 6 7 8 9 10 11 12; do
+            if curl -fsS -H 'Cache-Control: no-cache' "${PAGE_URL}version.json?quelle=${GITHUB_SHA}" -o live.json &&
+              node -e 'const v=require("./live.json"); if(v.commit!==process.env.GITHUB_SHA) process.exit(1); console.log("Öffentlich bestätigt:",v.commit,v.build)'; then
+              exit 0
+            fi
             sleep 10
           done
-          cat live.json
+          echo "Die öffentliche Fassung entspricht noch nicht dem erwarteten Commit $GITHUB_SHA."
+          if [ -f live.json ]; then cat live.json; fi
+          exit 1
