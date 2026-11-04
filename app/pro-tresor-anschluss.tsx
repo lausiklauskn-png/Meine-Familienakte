@@ -1,6 +1,6 @@
 import { ProVerbundAnschluss } from "./pro-verbund-anschluss";
 import { useEffect, useState } from "react";
-import { proTresor, proTresorCode, proTresorMeldung, proTresorVerfuegbar, type ProTresorZustand } from "./pro-tresor";
+import { proTresor, proTresorCode, proTresorEinrichtenVerfuegbar, proTresorMeldung, proTresorVerfuegbar, type ProTresorZustand } from "./pro-tresor";
 import { ProTresorWoLiegtWas, PRO_TRESOR_FACH } from "./pro-tresor-hilfe";
 import { readLocalVaultData, readProDocumentVault, setProDocumentVault } from "./local-vault";
 import { istProOriginal } from "./pro-tresor";
@@ -29,6 +29,7 @@ export function ProTresorAnschluss({ aktenHandle = null, onChange, onDokumente }
     return () => { lebt = false; for (const n of ["familienakte:pro-tresor", "familienakte:dateien", "familienakte:pro-eingang"]) window.removeEventListener(n, lesen); };
   }, [aktenHandle]);
   const verfuegbar = proTresorVerfuegbar();
+  const einrichtenMoeglich = proTresorEinrichtenVerfuegbar();
   useEffect(() => {
     if (stand.status === "offen" && stand.id) resolveActivity("pro-tresor-anschluss");
   }, [stand.status, stand.id, resolveActivity]);
@@ -54,16 +55,17 @@ export function ProTresorAnschluss({ aktenHandle = null, onChange, onDokumente }
     catch (e) { setMeldung(e instanceof Error ? e.message : "Die neue Dokumentablage wurde nicht gespeichert."); }
     finally { setBusy(false); onChange?.(); }
   }
-  async function ausfuehren(aktion: "verbinden" | "entsperren" | "sperren") {
+  async function ausfuehren(aktion: "verbinden" | "einrichten" | "entsperren" | "sperren") {
     setBusy(true); setMeldung(""); setBestaetigung("");
     try {
       const antwort = await proTresor[aktion]() as ProTresorZustand | void;
       // Bestätigung erst nach erneutem Lesen des GEMERKTEN Zustands: gewählt, gespeichert, erreichbar, offen/gesperrt.
       const neu = await proTresor.zustand(); setStand(neu);
-      if (aktion === "verbinden") {
+      if (aktion === "verbinden" || aktion === "einrichten") {
         const erwartet = antwort && typeof antwort === "object" ? antwort.id : undefined;
+        const neuAngelegt = Boolean(antwort && typeof antwort === "object" && antwort.angelegt);
         if (neu.id && (!erwartet || neu.id === erwartet) && (neu.status === "offen" || neu.status === "gesperrt"))
-          setBestaetigung(`Gewählt und gespeichert: ${neu.ort || "gewählter Ordner"} · erreichbar · ${neu.status === "offen" ? "entsperrt" : "gesperrt"} · Tresorkennung ${neu.id}. Die App merkt sich diesen Ort; nach einem Neustart wird höchstens das Passwort erneut gefragt.`);
+          setBestaetigung(`${neuAngelegt ? "Neuer Tresor angelegt" : "Gewählt"} und gespeichert: ${neu.ort || "gewählter Ordner"} · erreichbar · ${neu.status === "offen" ? "entsperrt" : "gesperrt"} · Tresorkennung ${neu.id}. Die App merkt sich diesen Ort; nach einem Neustart wird höchstens das Passwort erneut gefragt.${neuAngelegt ? " Im Hauptordner liegt jetzt LIES-MICH.txt." : ""}`);
         else setMeldung(`Die Auswahl wurde nicht bestätigt: ${proTresorMeldung(neu.code || "") || "Der gemerkte Zustand passt nicht zur Auswahl."} Bitte den Ordner erneut wählen.`);
       }
     }
@@ -88,7 +90,9 @@ export function ProTresorAnschluss({ aktenHandle = null, onChange, onDokumente }
     <p data-pro-ablage>{ziel ? `Neue Originale: verschlüsselt im Pro-Tresor ${ziel}.` : "Neue Originale: im bisherigen Aktenordner."}</p>
     {ziel && (!verfuegbar || stand.id !== ziel || stand.status !== "offen") && <p>Für neue Originale und vorhandene Pro-Dateien bitte den zugeordneten Pro-Tresor in der Android- oder Windows-App verbinden und entsperren. Ohne ihn wird kein Ersatzbestand angelegt.</p>}
     {verfuegbar && <div className="button-row">
-      <button className="button secondary" type="button" data-pro-tresor-verbinden disabled={busy} onClick={() => void ausfuehren("verbinden")}>{stand.id ? "Anderen Pro-Tresor wählen …" : "Vorhandenen Pro-Tresor verbinden …"}</button>
+      {einrichtenMoeglich
+        ? <button className={stand.id ? "button secondary" : "button primary"} type="button" data-pro-tresor-einrichten disabled={busy} onClick={() => void ausfuehren("einrichten")}>{stand.id ? "Anderen Speicher wählen …" : "Tresor einrichten – nur Speicher wählen …"}</button>
+        : <button className="button secondary" type="button" data-pro-tresor-verbinden disabled={busy} onClick={() => void ausfuehren("verbinden")}>{stand.id ? "Anderen Pro-Tresor wählen …" : "Vorhandenen Pro-Tresor verbinden …"}</button>}
       {stand.status === "gesperrt" && <button className="button primary" type="button" disabled={busy} onClick={() => void ausfuehren("entsperren")}>Pro-Tresor entsperren …</button>}
       {stand.status === "offen" && <button className="button secondary" type="button" disabled={busy} onClick={() => void ausfuehren("sperren")}>Pro-Tresor sperren</button>}
       {empfehlen && <button className="button primary" type="button" disabled={busy} onClick={() => void zielAendern(stand.id!)}>Neue Originale in diesem Pro-Tresor ablegen</button>}
@@ -97,6 +101,7 @@ export function ProTresorAnschluss({ aktenHandle = null, onChange, onDokumente }
     {aktenHandle && ziel && <button className="button secondary" type="button" disabled={busy} onClick={() => void zielAendern(null)}>Neue Originale wieder im bisherigen Aktenordner ablegen</button>}
     <ProVerbundAnschluss stand={stand}/>
     <ProTresorWoLiegtWas stand={verfuegbar ? stand : undefined} zahlen={zahlen} onDokumente={onDokumente}/>
+    {einrichtenMoeglich && !stand.id && <p data-pro-tresor-einrichten-hinweis>Nur SD-Karte oder Gerätespeicher antippen. Die App findet einen vorhandenen Tresor selbst oder legt den Ordner „Family-Projekt“ an.</p>}
     {meldung && <p role="alert">{meldung}</p>}
   </section>;
 }
