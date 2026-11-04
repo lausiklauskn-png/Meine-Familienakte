@@ -1,15 +1,23 @@
 import assert from 'node:assert/strict';
-import { mkdirSync } from 'node:fs';
-import { startApp, launchBrowser, DESKTOP, HANDY, step, summary, footer, collectErrors } from './_harness.mjs';
+import { mkdirSync, mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
+// Diagnose eines echten Browserabbruchs, keine Änderung an den Zusicherungen.
+process.env.DEBUG ||= 'pw:browser';
+const { startApp, launchBrowser, chromium, DESKTOP, HANDY, step, summary, footer, collectErrors } = await import('./_harness.mjs');
 import { capacitorStub } from './_capacitor-stub.mjs';
 const app=await startApp(),browser=await launchBrowser();mkdirSync('work',{recursive:true});
 const errors=[];
+const profile=mkdtempSync(path.join(tmpdir(),'familienakte-eigene-ordner-'));
+let context;
 async function ready(page){await page.waitForFunction(()=>{const b=document.querySelector('.demo-workspace button');return b&&!b.disabled;},null,{timeout:120000});}
 async function ownHome(page){await page.locator('.main-navigation > button').first().click();await page.locator('.vault-action').waitFor();}
 async function switchDemo(page,active){await Promise.all([page.waitForURL(u=>active?u.searchParams.get('demo')==='1':!u.searchParams.has('demo')),page.getByRole('button',{name:active?'Demo öffnen':'Demo verlassen',exact:true}).click()]);await ready(page);}
 async function neutral(page){await page.locator('.vault-action.state-pending').waitFor();assert.match(await page.locator('.vault-action').innerText(),/Eigenen Datentresor wählen/);}
 try{
- const context=await browser.newContext(DESKTOP),page=await context.newPage();const pageErrors=collectErrors(page);
+ // Reales dauerhaftes Profil: OPFS-Ordnerhandles im Register über Seitenwechsel erhalten.
+ context=await chromium.launchPersistentContext(profile,{...DESKTOP,...(process.env.CHROMIUM_PATH?{executablePath:process.env.CHROMIUM_PATH}:{})});
+ const page=context.pages()[0];const pageErrors=collectErrors(page);
  await page.goto(app.base,{waitUntil:'networkidle'});await ready(page);
  await step('Eigener Start: automatischer Browserspeicher ist kein grün verbundener Tresor',async()=>{
   await neutral(page);assert.equal(await page.locator('.demo-header-badge').count(),0);assert.equal(await page.locator('.site-header.demo-mode').count(),0);
@@ -74,5 +82,5 @@ try{
   await switchDemo(pro,false);await pro.locator('.vault-action.state-failed').waitFor();assert.match(await pro.locator('.vault-action').innerText(),/Gewählten Pro-Tresor verbinden und entsperren/);
  });
  errors.push(...pageErrors,...mobileErrors,...proErrors);await step('Keine Seiten- oder Konsolenfehler im Statuswechsel',()=>assert.deepEqual(errors,[]));
-}finally{await browser.close();await app.stop();}
+}finally{await context?.close();await browser.close();await app.stop();rmSync(profile,{recursive:true,force:true});}
 process.exit(summary('Demo-Kennzeichnung und bewusste Tresorwahl'));

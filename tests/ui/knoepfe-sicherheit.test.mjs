@@ -1,15 +1,19 @@
 // Sicherheitscenter, Export, Sicherung/Wiederherstellung, Bestand prüfen, Systemprüfung, Praktische Abnahme, Hilfe-Knöpfe.
 // Ordnerauswahl ist mit echten OPFS-Ordnern gestellt (window.showDirectoryPicker).
-import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, collectErrors, footer } from "./_harness.mjs";
+import { mkdtempSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import path from "node:path";
+import { vaultFixture } from "./_vault-fixture.mjs";
+import { startApp, chromium, DESKTOP, ready, check, step, summary, collectErrors, footer } from "./_harness.mjs";
 import { windowStub, directoryPickerStub, schliesseDialoge } from "./_stubs.mjs";
 
 const app = await startApp();
-const browser = await launchBrowser();
+const profile = mkdtempSync(path.join(tmpdir(), "familienakte-sicherheit-"));
+const context = await chromium.launchPersistentContext(profile, { ...DESKTOP, ...(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {}) });
 const meldung = async (page) => (await page.locator("[aria-live], .notice").allInnerTexts()).join(" ").replace(/\s+/g, " ").trim();
 try {
-  const context = await browser.newContext(DESKTOP);
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
-  const page = await context.newPage();
+  const page = context.pages()[0];
   page.setDefaultTimeout(8000);
   // „Bestand prüfen“ ist seit B2 nur im Expertenmodus (?experte=1 / familienakte-experte) im Produkt sichtbar.
   await page.addInitScript(() => { try { localStorage.setItem("familienakte-experte", "1"); } catch { /* ohne Speicher */ } });
@@ -20,16 +24,29 @@ try {
 
   // ---------- Sicherheitscenter ----------
   await footer(page, "Sicherheitscenter");
-  await step("Sicherheitscenter: Zustand zeigt den Browser-Datentresor als verbunden", async () => (await page.locator("main").innerText()).includes("Browser-Datentresor"));
+  await step("Sicherheitscenter: Browserspeicher ist ohne eigene Auswahl kein verbundener eigener Tresor", async () => {
+    const card = page.locator(".security-compare-card");
+    return (await card.innerText()).includes("Noch kein eigener Datentresor gewählt") && await card.locator(".badge.success").count() === 0;
+  });
+  await step("Eigener Ordner wird bewusst gewählt; erfundene Fachprobe dort ausdrücklich vorbereiten", async () => {
+    await page.evaluate(() => { window.__naechsterOrdner = "Eigener-Tresor-Probe"; });
+    await page.getByRole("button", { name: "PC-/USB-Ordner verbinden", exact: true }).click();
+    await vaultFixture(page);
+    await page.evaluate(async () => { const f = window.__vaultFixture; await f.seedSampleFamily(await f.rememberedVault(), { force: true }); });
+    await footer(page, "Dokumentenbibliothek");
+    await page.getByRole("button", { name: "Neu laden", exact: true }).click();
+    await footer(page, "Sicherheitscenter");
+    return (await page.locator(".security-compare-card").innerText()).includes("Eigener-Tresor-Probe");
+  });
   // Früher gab der Knopf den Tresor zugleich als Analysequelle und Register an die Bestandsanalyse – deren
   // Selbstanalyse-Schutz lehnte das jedes Mal ab („derselbe Ordner … SOFTWARE TESTORDNER“). Jetzt prüft er den Tresor selbst.
-  await step("„Jetzt Abgleich durchführen“ prüft den Browser-Datentresor selbst: Register und Originale, ohne Selbstanalyse-Fehler", async () => {
+  await step("„Jetzt Abgleich durchführen“ prüft den bewusst gewählten eigenen Tresor selbst: Register und Originale, ohne Selbstanalyse-Fehler", async () => {
     await page.locator("button", { hasText: "Jetzt Abgleich durchführen" }).click();
     await page.waitForFunction(() => /Abgleich (abgeschlossen|des Datentresors)|derselbe Ordner|nicht geprüft werden/.test([...document.querySelectorAll("[aria-live], .notice")].map((e) => e.innerText).join(" ")), null, { timeout: 20000 }).catch(() => {});
     const crumb = (await page.locator(".breadcrumb").innerText()).replace(/\n/g, " › ");
     const m = await meldung(page);
     check(!/derselbe Ordner|SOFTWARE TESTORDNER/.test(m), "Abgleich: kein Selbstanalyse-Fehler, kein Testordner-Hinweis", m.slice(0, 160));
-    check(/Abgleich abgeschlossen: Datentresor „Browser-Datentresor“ – Register lesbar, \d+ von \d+ Originalen? vorhanden und unverändert/.test(m), "Abgleich: tatsächlicher Prüfstand mit Zahlen", m.slice(0, 220));
+    check(/Abgleich abgeschlossen: Datentresor „Eigener-Tresor-Probe“ – Register lesbar, \d+ von \d+ Originalen? vorhanden und unverändert/.test(m), "Abgleich: tatsächlicher Prüfstand mit Zahlen", m.slice(0, 220));
     check(!/Bestand prüfen$/.test(crumb), "Abgleich: bleibt im Sicherheitscenter statt nach „Bestand prüfen“ zu springen", crumb);
     await schliesseDialoge(page);
     await footer(page, "Sicherheitscenter");
@@ -112,7 +129,7 @@ try {
   await step("„Hilfe“ im Sicherheitscenter führt zur Hilfe", async () => { await footer(page, "Sicherheitscenter"); await page.locator("main button", { hasText: "Hilfe" }).first().click(); return (await page.locator(".breadcrumb").innerText()).includes("Hilfe"); });
 
   // ---------- Neu laden: Browser-Datentresor wieder da? ----------
-  await step("Nach Neuladen ist der Browser-Datentresor wieder verbunden (Beispieldaten erhalten)", async () => {
+  await step("Nach Neuladen ist der lokale Browserspeicher wieder verfügbar (Beispieldaten erhalten)", async () => {
     await page.reload({ waitUntil: "networkidle" });
     await ready(page);
     return true;
@@ -215,5 +232,5 @@ try {
   });
 
   check(errors.length === 0, "Keine Seitenfehler", errors.join(" | "));
-} finally { await browser.close(); await app.stop(); }
+} finally { await context.close(); await app.stop(); rmSync(profile, { recursive: true, force: true }); }
 process.exit(summary("Knöpfe Sicherheit/Bestand/Systemprüfung"));
