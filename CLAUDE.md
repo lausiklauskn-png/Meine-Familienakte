@@ -5,6 +5,15 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 `docs/briefe-archiv/` (Klaus 2026-11-04: archivieren statt löschen); die Veröffentlichungsnachweise in
 `docs/VEROEFFENTLICHUNG-<fassung>.json`.
 
+## Laufender Bau: Demo-Kennzeichnung und Tresorstatus 2.28.22
+
+Klaus beauftragt die direkte Umsetzung in dieser Sitzung: `BRIEF_SITZUNG_2026-11-04_DEMO-RAHMEN-UND-TRESORSTATUS.md`.
+Automatischen Browserspeicher nicht als gewählten eigenen Tresor grün anzeigen. Demo-Ablage und eigene Auswahl trennen;
+oben roter Rahmen und DEMO-Wort, auch mobil. Dateien, bestehende eigene Auswahl und Berichte erhalten.
+Die parallelen #79/#80 bleiben enthalten: sichtbare technische Versionszeile und archivierte ältere Briefe.
+Deshalb neue Zielfassung 2.28.22; erst nach vollständigen Prüfketten veröffentlichen.
+Klaus bestätigt erste fünf Praxispunkte, zehn weitere bleiben ungeprüft. Forschungs-/Zeitblock nur in Kimhub.
+
 ## Aktueller Stand (04.11.2026)
 
 - **Fassung 2.28.21** (Android, Windows, PWA) ist veröffentlicht, Nachweis `docs/VEROEFFENTLICHUNG-2.28.21.json`;

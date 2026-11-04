@@ -6,7 +6,7 @@ import { readProDocumentVault, setProDocumentVault } from "./local-vault";
 import { useResolveActivity } from "./ui-activity";
 
 /** Kleines eigenes Modul: bestehender Aktenbestand und nativer Pro-Anschluss bleiben unterscheidbar. */
-export function ProTresorAnschluss({ aktenHandle = null }: { aktenHandle?: FileSystemDirectoryHandle | null }) {
+export function ProTresorAnschluss({ aktenHandle = null, onChange }: { aktenHandle?: FileSystemDirectoryHandle | null; onChange?: () => void }) {
   const resolveActivity = useResolveActivity();
   const [stand, setStand] = useState<ProTresorZustand>({ status: "getrennt" });
   const [busy, setBusy] = useState(false);
@@ -38,7 +38,7 @@ export function ProTresorAnschluss({ aktenHandle = null }: { aktenHandle?: FileS
     setBusy(true); setMeldung("");
     try { await setProDocumentVault(aktenHandle, id); setZuordnung({ handle: aktenHandle, id: await readProDocumentVault(aktenHandle) }); }
     catch (e) { setMeldung(e instanceof Error ? e.message : "Die neue Dokumentablage wurde nicht gespeichert."); }
-    finally { setBusy(false); }
+    finally { setBusy(false); onChange?.(); }
   }
   async function ausfuehren(aktion: "verbinden" | "entsperren" | "sperren") {
     setBusy(true); setMeldung(""); setBestaetigung("");
@@ -57,7 +57,7 @@ export function ProTresorAnschluss({ aktenHandle = null }: { aktenHandle?: FileS
       const grund = proTresorMeldung(proTresorCode(e));
       setMeldung(grund || "Der Pro-Tresor wurde nicht verbunden. Vorhandene Dateien bleiben erhalten. Bitte Ordnerfreigabe und Passwort prüfen.");
     }
-    finally { setBusy(false); }
+    finally { setBusy(false); onChange?.(); }
   }
   const text = { getrennt: "Noch nicht verbunden", offen: "Entsperrt", gesperrt: "Gesperrt", nicht_erreichbar: "Nicht erreichbar – gewählten Speicher und Ordnerfreigabe prüfen" };
   const statusText = stand.status === "nicht_erreichbar" && stand.code === "FA_TRESOR_FREMDE_KENNUNG" ? proTresorMeldung(stand.code)
