@@ -33,7 +33,7 @@ public final class FamilyTransportProductTest {
         fail(js+" / "+eval(app,"document.querySelector('.pro-geraetetransport')?.textContent"));
     }
     private void panel(ActivityScenario<MainActivity> app) throws Exception {
-        until(app,"Boolean(document.querySelector('.sample-data-notice strong'))");
+        FamilyDemoFixture.open(app);
         eval(app,"[...document.querySelectorAll('.footer-directory button')].find(b=>b.textContent.includes('Sicherheitscenter')).click();true");
         until(app,"document.querySelectorAll('.pro-geraetetransport select option').length>1");
     }

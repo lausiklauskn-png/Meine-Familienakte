@@ -2,18 +2,28 @@ import { capacitorStub } from "./_capacitor-stub.mjs";
 // Gegen den belegten Löschfehler und die Trennung von echten Browserdateien.
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
+import { mkdtempSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import { createSamplePdf } from "../../lib/sample-pdf.ts";
-import { startApp, launchBrowser, DESKTOP, HANDY, check, step, summary, footer, collectErrors } from "./_harness.mjs";
+import { startApp, launchBrowser, chromium, DESKTOP, HANDY, check, step, summary, footer } from "./_harness.mjs";
 import { vaultFixture } from "./_vault-fixture.mjs";
 const app = await startApp(), browser = await launchBrowser();
-try {
-  const context = await browser.newContext(DESKTOP);
+const profile = mkdtempSync(path.join(tmpdir(), "familienakte-demo-"));
+let context, page;
+const errors = [];
+async function openProfile() {
+  context = await chromium.launchPersistentContext(profile, { ...DESKTOP, serviceWorkers: "block", ...(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {}) });
   if (process.env.DEMO_BACKEND === "indexeddb") await context.addInitScript(() => {
     localStorage.setItem("mmi-browser-speicher", "indexeddb");
-    localStorage.setItem("Familienakte-Demo-v1:mmi-browser-speicher", "indexeddb");
+    if (new URLSearchParams(location.search).get("demo") === "1") localStorage.setItem("Familienakte-Demo-v1:mmi-browser-speicher", "indexeddb");
   });
-  const page = await context.newPage();
-  const errors = collectErrors(page); page.setDefaultTimeout(20000);
+  page = context.pages()[0]; page.setDefaultTimeout(20000);
+  page.on("pageerror", error => errors.push(`pageerror: ${error.message}`));
+  page.on("console", message => { if (message.type() === "error") errors.push(`console: ${message.text()}`); });
+}
+try {
+  await openProfile();
   await page.goto(app.base, { waitUntil: "networkidle" });
   await page.getByRole("button", { name: "Demo öffnen", exact: true }).waitFor();
   const pdf = createSamplePdf({ sender: "Erfundene eigene Ablage", place: "Wolkenhain, 04.11.2026", title: "Eigene Unterlage behalten", body: "Eindeutiger eigener Testbeleg. Keine Beispieldaten-Herkunft." });
@@ -45,7 +55,10 @@ try {
     await modal.getByRole("button", { name: "Geprüft lokal speichern", exact: true }).click();
     await page.locator('.modal input[type="file"]').waitFor({ state: "detached" });
   }
-  await step("Eigene Akte startet ohne automatisch erzeugte Beispiele", async () => { assert.equal((await documents()).length, 0); });
+  await step("Eigene Akte startet ohne automatisch erzeugte Beispiele", async () => {
+    assert.equal((await documents()).length, 0);
+    assert.equal(await page.evaluate(() => window.__vaultFixture.browserStorageKind()), process.env.DEMO_BACKEND === "indexeddb" ? "indexeddb" : "opfs");
+  });
   await importFile("Eigene_Pruefunterlage.pdf");
   const before = await documents(); assert.equal(before.length, 1); assert.equal(before[0].hash, hash);
   await step("Gegenprobe wiederholtes Laden/Entfernen: eigene Datei und Kennung bleiben", async () => {
@@ -85,7 +98,7 @@ try {
   await switchWorkspace(page, true);
   await page.locator('.sample-data-notice strong:has-text("Alle Daten")').waitFor();
   await step("Demo enthält wirkliche erfundene PDF-Dateien, keine eigene Unterlage", async () => {
-    const demo = await documents(); assert.ok(demo.length >= 15); assert.ok(demo.every(d => d.hash.length === 64)); assert.ok(!demo.some(d => d.name === before[0].name));
+    const demo = await documents(); assert.equal(await page.evaluate(() => window.__vaultFixture.browserStorageKind()), process.env.DEMO_BACKEND === "indexeddb" ? "indexeddb" : "opfs"); assert.ok(demo.length >= 15); assert.ok(demo.every(d => d.hash.length === 64)); assert.ok(!demo.some(d => d.name === before[0].name));
   });
   await importFile("Nur_Demo_Import.txt", Buffer.from("Frei erfundener Testeingang für die getrennte Demo. Wolkenhain, 4. November 2026."), "text/plain");
   await step("Demo-Import über die echte Oberfläche überlebt Neuladen", async () => {
@@ -109,6 +122,16 @@ try {
   await switchWorkspace(page, false);
   await page.getByRole("button", { name: "Demo öffnen", exact: true }).waitFor();
   await step("Rückkehr zur eigenen Akte bewahrt Kennung und PDF-Bytes", async () => { assert.deepEqual(await documents(), before); });
+  await step("Vollständiger Browser-Neustart erhält eigene PDF und getrennten Demo-Import", async () => {
+    await context.close();
+    await openProfile();
+    await page.goto(app.base, { waitUntil: "networkidle" });
+    assert.deepEqual(await documents(), before);
+    await switchWorkspace(page, true);
+    assert.ok((await documents()).some(document => document.name === "Nur_Demo_Import.txt"));
+    await switchWorkspace(page, false);
+    assert.deepEqual(await documents(), before);
+  });
   await switchWorkspace(page, true);
   await page.getByRole("button", { name: "Demo zurücksetzen", exact: true }).click();
   await Promise.all([page.waitForURL(url => url.searchParams.get("demo") === "reset", { waitUntil: "commit" }), page.getByRole("button", { name: "Ja, fortfahren", exact: true }).click()]);
@@ -128,10 +151,11 @@ try {
     assert.deepEqual(await documents(), before);
     const remains = await page.evaluate(async () => {
       const root = await navigator.storage.getDirectory();
-      return { folders: await Array.fromAsync(root.keys()), databases: (await indexedDB.databases()).map(db => db.name) };
+      return { folders: await Array.fromAsync(root.keys()), databases: (await indexedDB.databases()).map(db => db.name), keys: Object.keys(localStorage) };
     });
     assert.ok(!remains.folders.some(name => name.startsWith("Familienakte-Demo-v1:")));
     assert.ok(!remains.databases.some(name => name.startsWith("Familienakte-Demo-v1:")));
+    assert.ok(!remains.keys.some(name => name.startsWith("Familienakte-Demo-v1:")));
   });
   const nativeContext = await browser.newContext(HANDY);
   await nativeContext.addInitScript(capacitorStub);
@@ -156,5 +180,5 @@ try {
     await mobile.getByRole("button", { name: "Demo öffnen", exact: true }).waitFor();
   });
   check(errors.length === 0, "Keine Browserfehler im Demo-/Echtwechsel", errors.join(" | "));
-} finally { await browser.close(); await app.stop(); }
+} finally { await context?.close(); await browser.close(); await app.stop(); rmSync(profile, { recursive: true, force: true }); }
 process.exit(summary("Demo-Arbeitsbereich"));
