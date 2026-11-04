@@ -2,11 +2,11 @@
  {
   "ort": "Startseite",
   "umgebung": "desktop",
-  "anzahl": 90,
+  "anzahl": 89,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -20,7 +20,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -101,15 +101,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
@@ -161,9 +155,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Datentresor verbunden. Status: erfolgreich erledigt",
+    "text": "Eigenen Datentresor wählen. Status: noch offen",
     "disabled": false,
-    "cls": "vault-action state-success"
+    "cls": "vault-action state-pending"
    },
    {
     "art": "Knopf",
@@ -209,7 +203,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 12.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -227,7 +221,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 30",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 2.",
     "disabled": false,
     "cls": ""
    },
@@ -548,11 +542,11 @@
  {
   "ort": "ASSISTENZ › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 56,
+  "anzahl": 57,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -566,7 +560,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -647,21 +641,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -890,11 +890,11 @@
  {
   "ort": "ASSISTENZ › Assistenzzentrale",
   "umgebung": "desktop",
-  "anzahl": 56,
+  "anzahl": 57,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -908,7 +908,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -989,21 +989,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -1232,11 +1238,11 @@
  {
   "ort": "ASSISTENZ › Korrespondenz",
   "umgebung": "desktop",
-  "anzahl": 49,
+  "anzahl": 50,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -1250,7 +1256,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -1331,21 +1337,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -1532,11 +1544,11 @@
  {
   "ort": "ASSISTENZ › Vorgänge weiterbearbeiten",
   "umgebung": "desktop",
-  "anzahl": 117,
+  "anzahl": 118,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -1550,7 +1562,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -1631,21 +1643,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -1697,7 +1715,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 12.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -1715,7 +1733,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 30",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 2.",
     "disabled": false,
     "cls": ""
    },
@@ -1769,7 +1787,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 30.10.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 02.11.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -1787,7 +1805,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 04.11.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 07.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -1805,7 +1823,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 06.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 09.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -1823,7 +1841,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 07.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 10.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -1841,7 +1859,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 12.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 15.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -1859,7 +1877,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 15.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 18.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -2003,25 +2021,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: Beim Arb",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 4.11.2026 Nächste Aufgabe: Beim Arb",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 1.11.2026 Nächste Au",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 4.11.2026 Nächste Au",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: Zä",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 4.11.2026 Nächste Aufgabe: Zä",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: ",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 4.11.2026 Nächste Aufgabe: ",
     "disabled": false,
     "cls": ""
    },
@@ -2093,19 +2111,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 01.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 04.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 01.11.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 04.11.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 01.11.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 04.11.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -2117,7 +2135,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 01.11.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 04.11.",
     "disabled": false,
     "cls": ""
    },
@@ -2240,11 +2258,11 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 47,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -2258,7 +2276,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -2339,21 +2357,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -2528,11 +2552,11 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Diagnosen, AU & ICD-Codes",
   "umgebung": "desktop",
-  "anzahl": 58,
+  "anzahl": 59,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -2546,7 +2570,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -2627,21 +2651,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -2882,11 +2912,11 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Krankenkasse & Leistungen",
   "umgebung": "desktop",
-  "anzahl": 48,
+  "anzahl": 49,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -2900,7 +2930,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -2981,21 +3011,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -3176,11 +3212,11 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Arbeit & Arbeitgeber",
   "umgebung": "desktop",
-  "anzahl": 49,
+  "anzahl": 50,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -3194,7 +3230,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -3275,21 +3311,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -3476,11 +3518,11 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Anträge & Bescheide",
   "umgebung": "desktop",
-  "anzahl": 52,
+  "anzahl": 53,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -3494,7 +3536,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -3575,21 +3617,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -3794,11 +3842,11 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Anfragen & Antworten",
   "umgebung": "desktop",
-  "anzahl": 49,
+  "anzahl": 50,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -3812,7 +3860,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -3893,21 +3941,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -4094,11 +4148,11 @@
  {
   "ort": "FAMILIE & PERSONEN › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -4112,7 +4166,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -4193,21 +4247,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -4376,11 +4436,11 @@
  {
   "ort": "FAMILIE & PERSONEN › Interaktives Cockpit",
   "umgebung": "desktop",
-  "anzahl": 117,
+  "anzahl": 118,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -4394,7 +4454,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -4475,21 +4535,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -4541,7 +4607,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 12.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -4559,7 +4625,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 30",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 2.",
     "disabled": false,
     "cls": ""
    },
@@ -4613,7 +4679,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 30.10.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 02.11.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4631,7 +4697,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 04.11.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 07.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4649,7 +4715,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 06.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 09.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4667,7 +4733,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 07.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 10.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4685,7 +4751,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 12.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 15.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4703,7 +4769,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 15.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 18.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -4847,25 +4913,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: Beim Arb",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 4.11.2026 Nächste Aufgabe: Beim Arb",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 1.11.2026 Nächste Au",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 4.11.2026 Nächste Au",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: Zä",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 4.11.2026 Nächste Aufgabe: Zä",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: ",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 4.11.2026 Nächste Aufgabe: ",
     "disabled": false,
     "cls": ""
    },
@@ -4937,19 +5003,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 01.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 04.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 01.11.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 04.11.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 01.11.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 04.11.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -4961,7 +5027,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 01.11.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 04.11.",
     "disabled": false,
     "cls": ""
    },
@@ -5084,11 +5150,11 @@
  {
   "ort": "FAMILIE & PERSONEN › Familienübersicht",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -5102,7 +5168,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -5183,21 +5249,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -5366,11 +5438,11 @@
  {
   "ort": "FAMILIE & PERSONEN › Fristen und Aufgaben",
   "umgebung": "desktop",
-  "anzahl": 129,
+  "anzahl": 130,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -5384,7 +5456,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -5465,21 +5537,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -5621,7 +5699,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: bbe3798f-2b4c-4db0-9c74-3da5ab4713b1",
+    "text": "Dokument: f566d9a9-67fa-4d7d-b51f-f24eba55f11c",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5693,7 +5771,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: edbae79f-25b1-4aff-849c-0ba2dd2e6916",
+    "text": "Dokument: e5ffecb6-3158-4a43-a3c0-c6df8529f545",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5723,7 +5801,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: c0442684-af62-4c8b-832c-28a82d41315b",
+    "text": "Dokument: c713e41e-a134-43e7-bdd2-9c992eaf4f51",
     "disabled": false,
     "cls": "text-link"
    },
@@ -5831,7 +5909,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: c0442684-af62-4c8b-832c-28a82d41315b",
+    "text": "Dokument: c713e41e-a134-43e7-bdd2-9c992eaf4f51",
     "disabled": false,
     "cls": "text-link"
    },
@@ -6146,11 +6224,11 @@
  {
   "ort": "FAMILIE & PERSONEN › Tagebuch & Erinnerungen",
   "umgebung": "desktop",
-  "anzahl": 72,
+  "anzahl": 73,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -6164,7 +6242,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -6245,21 +6323,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -6407,31 +6491,31 @@
    },
    {
     "art": "Knopf",
-    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 26.10.2026, 19:00 · Reis",
+    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 29.10.2026, 19:00 · Reis",
     "disabled": false,
     "cls": "active"
    },
    {
     "art": "Knopf",
-    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 23.10.2026, 19:00 · Technik, Ge",
+    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 26.10.2026, 19:00 · Technik, Ge",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 20.10.2026, 19:00 ·",
+    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 23.10.2026, 19:00 ·",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 02.09.202",
+    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 05.09.202",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 26.09.2025, 19:00 · Haus & Wohnu",
+    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 29.09.2025, 19:00 · Haus & Wohnu",
     "disabled": false,
     "cls": ""
    },
@@ -6584,11 +6668,11 @@
  {
   "ort": "FAMILIE & PERSONEN › Gesamtes Verzeichnis",
   "umgebung": "desktop",
-  "anzahl": 86,
+  "anzahl": 87,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -6602,7 +6686,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -6683,21 +6767,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -7106,11 +7196,11 @@
  {
   "ort": "FAMILIE & PERSONEN › Vollmachten & Vorsorge",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -7124,7 +7214,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -7205,21 +7295,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -7388,11 +7484,11 @@
  {
   "ort": "FAMILIE & PERSONEN › Versicherungen & Verträge",
   "umgebung": "desktop",
-  "anzahl": 46,
+  "anzahl": 47,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -7406,7 +7502,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -7487,21 +7583,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -7670,11 +7772,11 @@
  {
   "ort": "WOHNEN › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 48,
+  "anzahl": 49,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -7688,7 +7790,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -7769,21 +7871,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -7964,11 +8072,11 @@
  {
   "ort": "WOHNEN › Miet- & Vermieterunterlagen",
   "umgebung": "desktop",
-  "anzahl": 48,
+  "anzahl": 49,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -7982,7 +8090,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -8063,21 +8171,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -8258,11 +8372,11 @@
  {
   "ort": "WOHNEN › Nebenkosten & Zahlungen",
   "umgebung": "desktop",
-  "anzahl": 48,
+  "anzahl": 49,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -8276,7 +8390,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -8357,21 +8471,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -8552,11 +8672,11 @@
  {
   "ort": "WOHNEN › Mängel & Reparaturen",
   "umgebung": "desktop",
-  "anzahl": 48,
+  "anzahl": 49,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -8570,7 +8690,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -8651,21 +8771,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -8846,11 +8972,11 @@
  {
   "ort": "FAHRZEUGE › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 48,
+  "anzahl": 49,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -8864,7 +8990,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -8945,21 +9071,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -9140,11 +9272,11 @@
  {
   "ort": "FAHRZEUGE › Fahrzeugpapiere",
   "umgebung": "desktop",
-  "anzahl": 48,
+  "anzahl": 49,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -9158,7 +9290,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -9239,21 +9371,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -9434,11 +9572,11 @@
  {
   "ort": "FAHRZEUGE › Werkstatt & Wartung",
   "umgebung": "desktop",
-  "anzahl": 48,
+  "anzahl": 49,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -9452,7 +9590,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -9533,21 +9671,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -9728,11 +9872,11 @@
  {
   "ort": "FAHRZEUGE › TÜV & Versicherung",
   "umgebung": "desktop",
-  "anzahl": 48,
+  "anzahl": 49,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -9746,7 +9890,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -9827,21 +9971,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -10022,11 +10172,11 @@
  {
   "ort": "KÄUFE & GARANTIEN › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 48,
+  "anzahl": 49,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -10040,7 +10190,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -10121,21 +10271,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -10316,11 +10472,11 @@
  {
   "ort": "KÄUFE & GARANTIEN › Käufe & Rechnungen",
   "umgebung": "desktop",
-  "anzahl": 48,
+  "anzahl": 49,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -10334,7 +10490,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -10415,21 +10571,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -10610,11 +10772,11 @@
  {
   "ort": "KÄUFE & GARANTIEN › Garantie & Reparatur",
   "umgebung": "desktop",
-  "anzahl": 48,
+  "anzahl": 49,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -10628,7 +10790,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -10709,21 +10871,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -10904,11 +11072,11 @@
  {
   "ort": "KÄUFE & GARANTIEN › Geräte & Technik",
   "umgebung": "desktop",
-  "anzahl": 48,
+  "anzahl": 49,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -10922,7 +11090,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -11003,21 +11171,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -11198,11 +11372,11 @@
  {
   "ort": "DOKUMENTE › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 330,
+  "anzahl": 331,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -11216,7 +11390,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -11297,21 +11471,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -11381,7 +11561,7 @@
    },
    {
     "art": "Knopf",
-    "text": "30.10.2026",
+    "text": "02.11.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11447,7 +11627,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "29.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11525,7 +11705,7 @@
    },
    {
     "art": "Knopf",
-    "text": "23.10.2026",
+    "text": "26.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11597,7 +11777,7 @@
    },
    {
     "art": "Knopf",
-    "text": "20.10.2026",
+    "text": "23.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11669,7 +11849,7 @@
    },
    {
     "art": "Knopf",
-    "text": "17.10.2026",
+    "text": "20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11729,7 +11909,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12.10.2026",
+    "text": "15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11801,7 +11981,7 @@
    },
    {
     "art": "Knopf",
-    "text": "05.10.2026",
+    "text": "08.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11861,7 +12041,7 @@
    },
    {
     "art": "Knopf",
-    "text": "18.08.2026",
+    "text": "21.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -11993,7 +12173,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.12.2024",
+    "text": "04.12.2024",
     "disabled": false,
     "cls": ""
    },
@@ -12065,7 +12245,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12.10.2026",
+    "text": "15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12143,7 +12323,7 @@
    },
    {
     "art": "Knopf",
-    "text": "18.08.2026",
+    "text": "21.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12209,7 +12389,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.03.2025",
+    "text": "04.03.2025",
     "disabled": false,
     "cls": ""
    },
@@ -12287,7 +12467,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "29.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12371,7 +12551,7 @@
    },
    {
     "art": "Knopf",
-    "text": "17.10.2026",
+    "text": "20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12437,7 +12617,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.06.2026",
+    "text": "17.06.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12497,7 +12677,7 @@
    },
    {
     "art": "Knopf",
-    "text": "15.04.2026",
+    "text": "18.04.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12557,7 +12737,7 @@
    },
    {
     "art": "Knopf",
-    "text": "20.10.2026",
+    "text": "23.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12629,7 +12809,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.09.2025",
+    "text": "28.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -12695,7 +12875,7 @@
    },
    {
     "art": "Knopf",
-    "text": "28.08.2025",
+    "text": "31.08.2025",
     "disabled": false,
     "cls": ""
    },
@@ -12773,7 +12953,7 @@
    },
    {
     "art": "Knopf",
-    "text": "02.10.2025",
+    "text": "05.10.2025",
     "disabled": false,
     "cls": ""
    },
@@ -12833,7 +13013,7 @@
    },
    {
     "art": "Knopf",
-    "text": "30.10.2026",
+    "text": "02.11.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12899,7 +13079,7 @@
    },
    {
     "art": "Knopf",
-    "text": "23.10.2026",
+    "text": "26.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -12977,7 +13157,7 @@
    },
    {
     "art": "Knopf",
-    "text": "05.10.2026",
+    "text": "08.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13037,7 +13217,7 @@
    },
    {
     "art": "Knopf",
-    "text": "27.09.2025",
+    "text": "30.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -13184,11 +13364,11 @@
  {
   "ort": "DOKUMENTE › Dokumentenbibliothek",
   "umgebung": "desktop",
-  "anzahl": 330,
+  "anzahl": 331,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -13202,7 +13382,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -13283,21 +13463,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -13367,7 +13553,7 @@
    },
    {
     "art": "Knopf",
-    "text": "30.10.2026",
+    "text": "02.11.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13433,7 +13619,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "29.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13511,7 +13697,7 @@
    },
    {
     "art": "Knopf",
-    "text": "23.10.2026",
+    "text": "26.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13583,7 +13769,7 @@
    },
    {
     "art": "Knopf",
-    "text": "20.10.2026",
+    "text": "23.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13655,7 +13841,7 @@
    },
    {
     "art": "Knopf",
-    "text": "17.10.2026",
+    "text": "20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13715,7 +13901,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12.10.2026",
+    "text": "15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13787,7 +13973,7 @@
    },
    {
     "art": "Knopf",
-    "text": "05.10.2026",
+    "text": "08.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13847,7 +14033,7 @@
    },
    {
     "art": "Knopf",
-    "text": "18.08.2026",
+    "text": "21.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -13979,7 +14165,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.12.2024",
+    "text": "04.12.2024",
     "disabled": false,
     "cls": ""
    },
@@ -14051,7 +14237,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12.10.2026",
+    "text": "15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14129,7 +14315,7 @@
    },
    {
     "art": "Knopf",
-    "text": "18.08.2026",
+    "text": "21.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14195,7 +14381,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.03.2025",
+    "text": "04.03.2025",
     "disabled": false,
     "cls": ""
    },
@@ -14273,7 +14459,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "29.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14357,7 +14543,7 @@
    },
    {
     "art": "Knopf",
-    "text": "17.10.2026",
+    "text": "20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14423,7 +14609,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.06.2026",
+    "text": "17.06.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14483,7 +14669,7 @@
    },
    {
     "art": "Knopf",
-    "text": "15.04.2026",
+    "text": "18.04.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14543,7 +14729,7 @@
    },
    {
     "art": "Knopf",
-    "text": "20.10.2026",
+    "text": "23.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14615,7 +14801,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.09.2025",
+    "text": "28.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -14681,7 +14867,7 @@
    },
    {
     "art": "Knopf",
-    "text": "28.08.2025",
+    "text": "31.08.2025",
     "disabled": false,
     "cls": ""
    },
@@ -14759,7 +14945,7 @@
    },
    {
     "art": "Knopf",
-    "text": "02.10.2025",
+    "text": "05.10.2025",
     "disabled": false,
     "cls": ""
    },
@@ -14819,7 +15005,7 @@
    },
    {
     "art": "Knopf",
-    "text": "30.10.2026",
+    "text": "02.11.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14885,7 +15071,7 @@
    },
    {
     "art": "Knopf",
-    "text": "23.10.2026",
+    "text": "26.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -14963,7 +15149,7 @@
    },
    {
     "art": "Knopf",
-    "text": "05.10.2026",
+    "text": "08.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -15023,7 +15209,7 @@
    },
    {
     "art": "Knopf",
-    "text": "27.09.2025",
+    "text": "30.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -15170,11 +15356,11 @@
  {
   "ort": "DOKUMENTE › Bestand prüfen",
   "umgebung": "desktop",
-  "anzahl": 40,
+  "anzahl": 41,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -15188,7 +15374,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -15269,21 +15455,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -15416,11 +15608,11 @@
  {
   "ort": "DOKUMENTE › Eingangszentrale",
   "umgebung": "desktop",
-  "anzahl": 111,
+  "anzahl": 112,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -15434,7 +15626,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -15515,21 +15707,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -15581,19 +15779,19 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument fotografieren Vorhandene Mehrseiten- und PDF-Funktion",
+    "text": "Dokument fotografieren Import: einen Brief fotografieren, gleich prüfen",
     "disabled": false,
     "cls": "intake-source"
    },
    {
     "art": "Knopf",
-    "text": "Stapel direkt übernehmen Viele Fotos oder Scans: Blatt finden, gerade ziehen, sp",
+    "text": "Stapel direkt übernehmen Import: viele Blätter auf einmal, später einordnen",
     "disabled": false,
     "cls": "intake-source"
    },
    {
     "art": "Knopf",
-    "text": "Formular scannen und ausfüllen Papierformular scannen, dann gleich ausfüllen",
+    "text": "Formular scannen und ausfüllen Ausfüllen: Formular scannen und am Bildschirm aus",
     "disabled": false,
     "cls": "intake-source"
    },
@@ -16088,11 +16286,11 @@
  {
   "ort": "DOKUMENTE › Workflow PDF",
   "umgebung": "desktop",
-  "anzahl": 40,
+  "anzahl": 41,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -16106,7 +16304,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -16187,21 +16385,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -16334,11 +16538,11 @@
  {
   "ort": "DOKUMENTE › Stapel (noch einordnen)",
   "umgebung": "desktop",
-  "anzahl": 43,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -16352,7 +16556,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -16433,21 +16637,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -16484,6 +16694,18 @@
     "text": "Einordnen (0)",
     "disabled": true,
     "cls": "button primary fa-stapel-einordnen"
+   },
+   {
+    "art": "Auswahlliste",
+    "text": "Original Farbe verbessern Graustufen Dokument (Schatten weg, Papier weiß) Schwar",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Schalter",
+    "text": "",
+    "disabled": false,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -16598,11 +16820,11 @@
  {
   "ort": "DOKUMENTE › Sicherheit & lokaler Tresor",
   "umgebung": "desktop",
-  "anzahl": 56,
+  "anzahl": 63,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -16616,7 +16838,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -16697,21 +16919,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -16728,6 +16956,48 @@
    {
     "art": "Knopf",
     "text": "Sicherheit und lokaler Tresor erklären",
+    "disabled": false,
+    "cls": "start-info-trigger"
+   },
+   {
+    "art": "Knopf",
+    "text": "Gerät, Modelle und Suchindex",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Unterlage an ein anderes Gerät geben erklären",
+    "disabled": false,
+    "cls": "start-info-trigger"
+   },
+   {
+    "art": "Auswahlliste",
+    "text": "Unterlage wählen … Kontoauszug_Familienkonto.pdf Fahrzeugschein_Brummwerk_Kombi_",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Übergabepaket speichern",
+    "disabled": true,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Datei-Eingang",
+    "text": ".familienakte-paket",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Datei-Eingang",
+    "text": ".familienakte-quittung",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Lokaler Browserspeicher erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
@@ -16751,15 +17021,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Anderen PC-/USB-Ordner wählen",
+    "text": "PC-/USB-Ordner verbinden",
     "disabled": false,
     "cls": "button primary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Sperren",
-    "disabled": false,
-    "cls": "button secondary"
    },
    {
     "art": "Knopf",
@@ -16769,7 +17033,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Jetzt Abgleich durchführen",
+    "text": "Eigenen Datentresor wählen",
     "disabled": false,
     "cls": "button primary"
    },
@@ -16940,11 +17204,11 @@
  {
   "ort": "DOKUMENTE › Netz (Mycel)",
   "umgebung": "desktop",
-  "anzahl": 41,
+  "anzahl": 42,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -16958,7 +17222,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -17039,21 +17303,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -17192,11 +17462,11 @@
  {
   "ort": "DOKUMENTE › Unterlagen & Quellen",
   "umgebung": "desktop",
-  "anzahl": 55,
+  "anzahl": 56,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -17210,7 +17480,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -17291,21 +17561,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -17528,11 +17804,11 @@
  {
   "ort": "DOKUMENTE › Alle Bereiche",
   "umgebung": "desktop",
-  "anzahl": 86,
+  "anzahl": 87,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -17546,7 +17822,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -17627,21 +17903,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -18050,11 +18332,11 @@
  {
   "ort": "HILFE › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 69,
+  "anzahl": 72,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -18068,7 +18350,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -18149,21 +18431,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -18252,6 +18540,18 @@
    {
     "art": "Knopf",
     "text": "Impfpass und Vorsorge",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Tresor-Hauptordner – hierhin springen",
+    "disabled": false,
+    "cls": "ablauf-knoten art-hervor ablauf-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "",
     "disabled": false,
     "cls": ""
    },
@@ -18470,11 +18770,11 @@
  {
   "ort": "HILFE › Hilfe & erste Schritte",
   "umgebung": "desktop",
-  "anzahl": 69,
+  "anzahl": 72,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -18488,7 +18788,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -18569,21 +18869,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -18672,6 +18978,18 @@
    {
     "art": "Knopf",
     "text": "Impfpass und Vorsorge",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Tresor-Hauptordner – hierhin springen",
+    "disabled": false,
+    "cls": "ablauf-knoten art-hervor ablauf-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "",
     "disabled": false,
     "cls": ""
    },
@@ -18890,11 +19208,11 @@
  {
   "ort": "HILFE › Systemprüfung",
   "umgebung": "desktop",
-  "anzahl": 99,
+  "anzahl": 100,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -18908,7 +19226,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -18989,21 +19307,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -19490,11 +19814,11 @@
  {
   "ort": "HILFE › Was gibt’s Neues?",
   "umgebung": "desktop",
-  "anzahl": 397,
+  "anzahl": 398,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -19508,7 +19832,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -19589,21 +19913,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -21878,11 +22208,11 @@
  {
   "ort": "HILFE › Versionshistorie",
   "umgebung": "desktop",
-  "anzahl": 40,
+  "anzahl": 41,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -21896,7 +22226,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -21977,21 +22307,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -22124,11 +22460,11 @@
  {
   "ort": "HILFE › Datentresor-Hilfe",
   "umgebung": "desktop",
-  "anzahl": 56,
+  "anzahl": 63,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -22142,7 +22478,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -22223,21 +22559,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -22254,6 +22596,48 @@
    {
     "art": "Knopf",
     "text": "Sicherheit und lokaler Tresor erklären",
+    "disabled": false,
+    "cls": "start-info-trigger"
+   },
+   {
+    "art": "Knopf",
+    "text": "Gerät, Modelle und Suchindex",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Unterlage an ein anderes Gerät geben erklären",
+    "disabled": false,
+    "cls": "start-info-trigger"
+   },
+   {
+    "art": "Auswahlliste",
+    "text": "Unterlage wählen … Kontoauszug_Familienkonto.pdf Fahrzeugschein_Brummwerk_Kombi_",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Übergabepaket speichern",
+    "disabled": true,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Datei-Eingang",
+    "text": ".familienakte-paket",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Datei-Eingang",
+    "text": ".familienakte-quittung",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Lokaler Browserspeicher erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
@@ -22277,15 +22661,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Anderen PC-/USB-Ordner wählen",
+    "text": "PC-/USB-Ordner verbinden",
     "disabled": false,
     "cls": "button primary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Sperren",
-    "disabled": false,
-    "cls": "button secondary"
    },
    {
     "art": "Knopf",
@@ -22295,7 +22673,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Jetzt Abgleich durchführen",
+    "text": "Eigenen Datentresor wählen",
     "disabled": false,
     "cls": "button primary"
    },
@@ -22466,11 +22844,11 @@
  {
   "ort": "Fußzeile › Interaktives Cockpit",
   "umgebung": "desktop",
-  "anzahl": 117,
+  "anzahl": 118,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -22484,7 +22862,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -22565,21 +22943,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -22631,7 +23015,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 12.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -22649,7 +23033,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 30",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 2.",
     "disabled": false,
     "cls": ""
    },
@@ -22703,7 +23087,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 30.10.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 02.11.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -22721,7 +23105,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 04.11.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 07.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -22739,7 +23123,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 06.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 09.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -22757,7 +23141,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 07.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 10.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -22775,7 +23159,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 12.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 15.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -22793,7 +23177,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 15.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 18.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -22937,25 +23321,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: Beim Arb",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 4.11.2026 Nächste Aufgabe: Beim Arb",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 1.11.2026 Nächste Au",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 4.11.2026 Nächste Au",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: Zä",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 4.11.2026 Nächste Aufgabe: Zä",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: ",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 4.11.2026 Nächste Aufgabe: ",
     "disabled": false,
     "cls": ""
    },
@@ -23027,19 +23411,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 01.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 04.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 01.11.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 04.11.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 01.11.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 04.11.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -23051,7 +23435,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 01.11.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 04.11.",
     "disabled": false,
     "cls": ""
    },
@@ -23174,11 +23558,11 @@
  {
   "ort": "Fußzeile › Tagebuch & Erinnerungen",
   "umgebung": "desktop",
-  "anzahl": 72,
+  "anzahl": 73,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -23192,7 +23576,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -23273,21 +23657,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -23435,31 +23825,31 @@
    },
    {
     "art": "Knopf",
-    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 26.10.2026, 19:00 · Reis",
+    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 29.10.2026, 19:00 · Reis",
     "disabled": false,
     "cls": "active"
    },
    {
     "art": "Knopf",
-    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 23.10.2026, 19:00 · Technik, Ge",
+    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 26.10.2026, 19:00 · Technik, Ge",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 20.10.2026, 19:00 ·",
+    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 23.10.2026, 19:00 ·",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 02.09.202",
+    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 05.09.202",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 26.09.2025, 19:00 · Haus & Wohnu",
+    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 29.09.2025, 19:00 · Haus & Wohnu",
     "disabled": false,
     "cls": ""
    },
@@ -23612,11 +24002,11 @@
  {
   "ort": "Fußzeile › Fristen und Aufgaben",
   "umgebung": "desktop",
-  "anzahl": 129,
+  "anzahl": 130,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -23630,7 +24020,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -23711,21 +24101,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -23867,7 +24263,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: bbe3798f-2b4c-4db0-9c74-3da5ab4713b1",
+    "text": "Dokument: f566d9a9-67fa-4d7d-b51f-f24eba55f11c",
     "disabled": false,
     "cls": "text-link"
    },
@@ -23939,7 +24335,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: edbae79f-25b1-4aff-849c-0ba2dd2e6916",
+    "text": "Dokument: e5ffecb6-3158-4a43-a3c0-c6df8529f545",
     "disabled": false,
     "cls": "text-link"
    },
@@ -23969,7 +24365,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: c0442684-af62-4c8b-832c-28a82d41315b",
+    "text": "Dokument: c713e41e-a134-43e7-bdd2-9c992eaf4f51",
     "disabled": false,
     "cls": "text-link"
    },
@@ -24077,7 +24473,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: c0442684-af62-4c8b-832c-28a82d41315b",
+    "text": "Dokument: c713e41e-a134-43e7-bdd2-9c992eaf4f51",
     "disabled": false,
     "cls": "text-link"
    },
@@ -24392,11 +24788,11 @@
  {
   "ort": "Fußzeile › Gesamtes Verzeichnis",
   "umgebung": "desktop",
-  "anzahl": 86,
+  "anzahl": 87,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -24410,7 +24806,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -24491,21 +24887,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -24914,11 +25316,11 @@
  {
   "ort": "Fußzeile › Lebensbereiche",
   "umgebung": "desktop",
-  "anzahl": 90,
+  "anzahl": 91,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -24932,7 +25334,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -25013,21 +25415,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -25073,9 +25481,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Datentresor verbunden. Status: erfolgreich erledigt",
+    "text": "Eigenen Datentresor wählen. Status: noch offen",
     "disabled": false,
-    "cls": "vault-action state-success"
+    "cls": "vault-action state-pending"
    },
    {
     "art": "Knopf",
@@ -25121,7 +25529,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 12.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -25139,7 +25547,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 30",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 2.",
     "disabled": false,
     "cls": ""
    },
@@ -25460,11 +25868,11 @@
  {
   "ort": "Fußzeile › Dokumentenbibliothek",
   "umgebung": "desktop",
-  "anzahl": 330,
+  "anzahl": 331,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -25478,7 +25886,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -25559,21 +25967,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -25643,7 +26057,7 @@
    },
    {
     "art": "Knopf",
-    "text": "30.10.2026",
+    "text": "02.11.2026",
     "disabled": false,
     "cls": ""
    },
@@ -25709,7 +26123,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "29.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -25787,7 +26201,7 @@
    },
    {
     "art": "Knopf",
-    "text": "23.10.2026",
+    "text": "26.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -25859,7 +26273,7 @@
    },
    {
     "art": "Knopf",
-    "text": "20.10.2026",
+    "text": "23.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -25931,7 +26345,7 @@
    },
    {
     "art": "Knopf",
-    "text": "17.10.2026",
+    "text": "20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -25991,7 +26405,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12.10.2026",
+    "text": "15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -26063,7 +26477,7 @@
    },
    {
     "art": "Knopf",
-    "text": "05.10.2026",
+    "text": "08.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -26123,7 +26537,7 @@
    },
    {
     "art": "Knopf",
-    "text": "18.08.2026",
+    "text": "21.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -26255,7 +26669,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.12.2024",
+    "text": "04.12.2024",
     "disabled": false,
     "cls": ""
    },
@@ -26327,7 +26741,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12.10.2026",
+    "text": "15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -26405,7 +26819,7 @@
    },
    {
     "art": "Knopf",
-    "text": "18.08.2026",
+    "text": "21.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -26471,7 +26885,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.03.2025",
+    "text": "04.03.2025",
     "disabled": false,
     "cls": ""
    },
@@ -26549,7 +26963,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "29.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -26633,7 +27047,7 @@
    },
    {
     "art": "Knopf",
-    "text": "17.10.2026",
+    "text": "20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -26699,7 +27113,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.06.2026",
+    "text": "17.06.2026",
     "disabled": false,
     "cls": ""
    },
@@ -26759,7 +27173,7 @@
    },
    {
     "art": "Knopf",
-    "text": "15.04.2026",
+    "text": "18.04.2026",
     "disabled": false,
     "cls": ""
    },
@@ -26819,7 +27233,7 @@
    },
    {
     "art": "Knopf",
-    "text": "20.10.2026",
+    "text": "23.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -26891,7 +27305,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.09.2025",
+    "text": "28.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -26957,7 +27371,7 @@
    },
    {
     "art": "Knopf",
-    "text": "28.08.2025",
+    "text": "31.08.2025",
     "disabled": false,
     "cls": ""
    },
@@ -27035,7 +27449,7 @@
    },
    {
     "art": "Knopf",
-    "text": "02.10.2025",
+    "text": "05.10.2025",
     "disabled": false,
     "cls": ""
    },
@@ -27095,7 +27509,7 @@
    },
    {
     "art": "Knopf",
-    "text": "30.10.2026",
+    "text": "02.11.2026",
     "disabled": false,
     "cls": ""
    },
@@ -27161,7 +27575,7 @@
    },
    {
     "art": "Knopf",
-    "text": "23.10.2026",
+    "text": "26.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -27239,7 +27653,7 @@
    },
    {
     "art": "Knopf",
-    "text": "05.10.2026",
+    "text": "08.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -27299,7 +27713,7 @@
    },
    {
     "art": "Knopf",
-    "text": "27.09.2025",
+    "text": "30.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -27446,11 +27860,11 @@
  {
   "ort": "Fußzeile › Eingangszentrale",
   "umgebung": "desktop",
-  "anzahl": 111,
+  "anzahl": 112,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -27464,7 +27878,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -27545,21 +27959,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -27611,19 +28031,19 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument fotografieren Vorhandene Mehrseiten- und PDF-Funktion",
+    "text": "Dokument fotografieren Import: einen Brief fotografieren, gleich prüfen",
     "disabled": false,
     "cls": "intake-source"
    },
    {
     "art": "Knopf",
-    "text": "Stapel direkt übernehmen Viele Fotos oder Scans: Blatt finden, gerade ziehen, sp",
+    "text": "Stapel direkt übernehmen Import: viele Blätter auf einmal, später einordnen",
     "disabled": false,
     "cls": "intake-source"
    },
    {
     "art": "Knopf",
-    "text": "Formular scannen und ausfüllen Papierformular scannen, dann gleich ausfüllen",
+    "text": "Formular scannen und ausfüllen Ausfüllen: Formular scannen und am Bildschirm aus",
     "disabled": false,
     "cls": "intake-source"
    },
@@ -28118,11 +28538,11 @@
  {
   "ort": "Fußzeile › Bestand prüfen",
   "umgebung": "desktop",
-  "anzahl": 40,
+  "anzahl": 41,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -28136,7 +28556,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -28217,21 +28637,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -28364,11 +28790,11 @@
  {
   "ort": "Fußzeile › Was gibt’s Neues?",
   "umgebung": "desktop",
-  "anzahl": 397,
+  "anzahl": 398,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -28382,7 +28808,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -28463,21 +28889,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -30752,11 +31184,11 @@
  {
   "ort": "Fußzeile › Hilfe",
   "umgebung": "desktop",
-  "anzahl": 69,
+  "anzahl": 72,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -30770,7 +31202,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -30851,21 +31283,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -30954,6 +31392,18 @@
    {
     "art": "Knopf",
     "text": "Impfpass und Vorsorge",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Tresor-Hauptordner – hierhin springen",
+    "disabled": false,
+    "cls": "ablauf-knoten art-hervor ablauf-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "",
     "disabled": false,
     "cls": ""
    },
@@ -31172,11 +31622,11 @@
  {
   "ort": "Fußzeile › Systemprüfung",
   "umgebung": "desktop",
-  "anzahl": 99,
+  "anzahl": 100,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -31190,7 +31640,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -31271,21 +31721,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -31772,11 +32228,11 @@
  {
   "ort": "Fußzeile › Prüfberichte",
   "umgebung": "desktop",
-  "anzahl": 99,
+  "anzahl": 100,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -31790,7 +32246,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -31871,21 +32327,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -32372,11 +32834,11 @@
  {
   "ort": "Fußzeile › Sicherheitscenter",
   "umgebung": "desktop",
-  "anzahl": 56,
+  "anzahl": 63,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -32390,7 +32852,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -32471,21 +32933,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -32502,6 +32970,48 @@
    {
     "art": "Knopf",
     "text": "Sicherheit und lokaler Tresor erklären",
+    "disabled": false,
+    "cls": "start-info-trigger"
+   },
+   {
+    "art": "Knopf",
+    "text": "Gerät, Modelle und Suchindex",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Unterlage an ein anderes Gerät geben erklären",
+    "disabled": false,
+    "cls": "start-info-trigger"
+   },
+   {
+    "art": "Auswahlliste",
+    "text": "Unterlage wählen … Kontoauszug_Familienkonto.pdf Fahrzeugschein_Brummwerk_Kombi_",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Übergabepaket speichern",
+    "disabled": true,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Datei-Eingang",
+    "text": ".familienakte-paket",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Datei-Eingang",
+    "text": ".familienakte-quittung",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Lokaler Browserspeicher erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
@@ -32525,15 +33035,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Anderen PC-/USB-Ordner wählen",
+    "text": "PC-/USB-Ordner verbinden",
     "disabled": false,
     "cls": "button primary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Sperren",
-    "disabled": false,
-    "cls": "button secondary"
    },
    {
     "art": "Knopf",
@@ -32543,7 +33047,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Jetzt Abgleich durchführen",
+    "text": "Eigenen Datentresor wählen",
     "disabled": false,
     "cls": "button primary"
    },
@@ -32714,11 +33218,11 @@
  {
   "ort": "Fußzeile › Versionshistorie",
   "umgebung": "desktop",
-  "anzahl": 40,
+  "anzahl": 41,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -32732,7 +33236,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -32813,21 +33317,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -32960,11 +33470,11 @@
  {
   "ort": "Dialog › Mit KI arbeiten",
   "umgebung": "desktop",
-  "anzahl": 51,
+  "anzahl": 52,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -32978,7 +33488,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -33059,21 +33569,27 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -33272,11 +33788,11 @@
  {
   "ort": "Dialog › Familienakte exportieren",
   "umgebung": "desktop",
-  "anzahl": 54,
+  "anzahl": 57,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -33290,7 +33806,7 @@
     "art": "Knopf",
     "text": "Aktuelle Seite drucken",
     "disabled": false,
-    "cls": "icon-button"
+    "cls": "icon-button drucken-knopf"
    },
    {
     "art": "Knopf",
@@ -33377,15 +33893,33 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
+    "text": "Aktivitätszeile 1 ausblenden",
+    "disabled": false,
+    "cls": "activity-dismiss"
+   },
+   {
+    "art": "Knopf",
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -33602,7 +34136,7 @@
  {
   "ort": "Startseite",
   "umgebung": "handy",
-  "anzahl": 82,
+  "anzahl": 78,
   "elemente": [
    {
     "art": "Knopf",
@@ -33612,9 +34146,15 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "icon-button demo-schalter"
    },
    {
     "art": "Knopf",
@@ -33624,44 +34164,15 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktuelle Seite drucken",
-    "disabled": false,
-    "cls": "icon-button"
-   },
-   {
-    "art": "Knopf",
     "text": "Auf eine neue Fassung prüfen",
     "disabled": false,
     "cls": "icon-button aktualisieren-knopf"
-   },
-   {
-    "art": "Link",
-    "text": "Ausloggen",
-    "cls": "icon-button logout-button"
-   },
-   {
-    "art": "Knopf",
-    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
-    "disabled": false,
-    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
     "text": "Suche: Diktat starten",
     "disabled": true,
     "cls": "dictation-button "
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
    },
    {
     "art": "Knopf",
@@ -33713,9 +34224,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Datentresor verbunden. Status: erfolgreich erledigt",
+    "text": "Eigenen Datentresor wählen. Status: noch offen",
     "disabled": false,
-    "cls": "vault-action state-success"
+    "cls": "vault-action state-pending"
    },
    {
     "art": "Knopf",
@@ -33761,7 +34272,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 12.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -33779,7 +34290,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 30",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 2.",
     "disabled": false,
     "cls": ""
    },
@@ -34100,7 +34611,7 @@
  {
   "ort": "ASSISTENZ › Assistenzzentrale",
   "umgebung": "handy",
-  "anzahl": 48,
+  "anzahl": 46,
   "elemente": [
    {
     "art": "Knopf",
@@ -34110,9 +34621,15 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "icon-button demo-schalter"
    },
    {
     "art": "Knopf",
@@ -34122,26 +34639,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktuelle Seite drucken",
-    "disabled": false,
-    "cls": "icon-button"
-   },
-   {
-    "art": "Knopf",
     "text": "Auf eine neue Fassung prüfen",
     "disabled": false,
     "cls": "icon-button aktualisieren-knopf"
-   },
-   {
-    "art": "Link",
-    "text": "Ausloggen",
-    "cls": "icon-button logout-button"
-   },
-   {
-    "art": "Knopf",
-    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
-    "disabled": false,
-    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -34151,21 +34651,21 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -34394,7 +34894,7 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Diagnosen, AU & ICD-Codes",
   "umgebung": "handy",
-  "anzahl": 50,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
@@ -34404,9 +34904,15 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "icon-button demo-schalter"
    },
    {
     "art": "Knopf",
@@ -34416,26 +34922,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktuelle Seite drucken",
-    "disabled": false,
-    "cls": "icon-button"
-   },
-   {
-    "art": "Knopf",
     "text": "Auf eine neue Fassung prüfen",
     "disabled": false,
     "cls": "icon-button aktualisieren-knopf"
-   },
-   {
-    "art": "Link",
-    "text": "Ausloggen",
-    "cls": "icon-button logout-button"
-   },
-   {
-    "art": "Knopf",
-    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
-    "disabled": false,
-    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -34445,21 +34934,21 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -34700,7 +35189,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Interaktives Cockpit",
   "umgebung": "handy",
-  "anzahl": 109,
+  "anzahl": 107,
   "elemente": [
    {
     "art": "Knopf",
@@ -34710,9 +35199,15 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "icon-button demo-schalter"
    },
    {
     "art": "Knopf",
@@ -34722,26 +35217,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktuelle Seite drucken",
-    "disabled": false,
-    "cls": "icon-button"
-   },
-   {
-    "art": "Knopf",
     "text": "Auf eine neue Fassung prüfen",
     "disabled": false,
     "cls": "icon-button aktualisieren-knopf"
-   },
-   {
-    "art": "Link",
-    "text": "Ausloggen",
-    "cls": "icon-button logout-button"
-   },
-   {
-    "art": "Knopf",
-    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
-    "disabled": false,
-    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -34751,21 +35229,21 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -34817,7 +35295,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 12.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -34835,7 +35313,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 30",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 2.",
     "disabled": false,
     "cls": ""
    },
@@ -34889,7 +35367,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 30.10.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 02.11.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -34907,7 +35385,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 04.11.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 07.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -34925,7 +35403,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 06.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 09.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -34943,7 +35421,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 07.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 10.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -34961,7 +35439,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 12.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 15.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -34979,7 +35457,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 15.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 18.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -35123,25 +35601,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: Beim Arb",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 4.11.2026 Nächste Aufgabe: Beim Arb",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 1.11.2026 Nächste Au",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 4.11.2026 Nächste Au",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: Zä",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 4.11.2026 Nächste Aufgabe: Zä",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: ",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 4.11.2026 Nächste Aufgabe: ",
     "disabled": false,
     "cls": ""
    },
@@ -35213,19 +35691,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 01.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 04.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 01.11.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 04.11.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 01.11.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 04.11.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -35237,7 +35715,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 01.11.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 04.11.",
     "disabled": false,
     "cls": ""
    },
@@ -35360,7 +35838,7 @@
  {
   "ort": "WOHNEN › Miet- & Vermieterunterlagen",
   "umgebung": "handy",
-  "anzahl": 40,
+  "anzahl": 38,
   "elemente": [
    {
     "art": "Knopf",
@@ -35370,9 +35848,15 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "icon-button demo-schalter"
    },
    {
     "art": "Knopf",
@@ -35382,26 +35866,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktuelle Seite drucken",
-    "disabled": false,
-    "cls": "icon-button"
-   },
-   {
-    "art": "Knopf",
     "text": "Auf eine neue Fassung prüfen",
     "disabled": false,
     "cls": "icon-button aktualisieren-knopf"
-   },
-   {
-    "art": "Link",
-    "text": "Ausloggen",
-    "cls": "icon-button logout-button"
-   },
-   {
-    "art": "Knopf",
-    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
-    "disabled": false,
-    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -35411,21 +35878,21 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -35606,7 +36073,7 @@
  {
   "ort": "FAHRZEUGE › Fahrzeugpapiere",
   "umgebung": "handy",
-  "anzahl": 40,
+  "anzahl": 38,
   "elemente": [
    {
     "art": "Knopf",
@@ -35616,9 +36083,15 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "icon-button demo-schalter"
    },
    {
     "art": "Knopf",
@@ -35628,26 +36101,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktuelle Seite drucken",
-    "disabled": false,
-    "cls": "icon-button"
-   },
-   {
-    "art": "Knopf",
     "text": "Auf eine neue Fassung prüfen",
     "disabled": false,
     "cls": "icon-button aktualisieren-knopf"
-   },
-   {
-    "art": "Link",
-    "text": "Ausloggen",
-    "cls": "icon-button logout-button"
-   },
-   {
-    "art": "Knopf",
-    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
-    "disabled": false,
-    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -35657,21 +36113,21 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -35852,7 +36308,7 @@
  {
   "ort": "KÄUFE & GARANTIEN › Käufe & Rechnungen",
   "umgebung": "handy",
-  "anzahl": 40,
+  "anzahl": 38,
   "elemente": [
    {
     "art": "Knopf",
@@ -35862,9 +36318,15 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "icon-button demo-schalter"
    },
    {
     "art": "Knopf",
@@ -35874,26 +36336,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktuelle Seite drucken",
-    "disabled": false,
-    "cls": "icon-button"
-   },
-   {
-    "art": "Knopf",
     "text": "Auf eine neue Fassung prüfen",
     "disabled": false,
     "cls": "icon-button aktualisieren-knopf"
-   },
-   {
-    "art": "Link",
-    "text": "Ausloggen",
-    "cls": "icon-button logout-button"
-   },
-   {
-    "art": "Knopf",
-    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
-    "disabled": false,
-    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -35903,21 +36348,21 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -36098,7 +36543,7 @@
  {
   "ort": "DOKUMENTE › Dokumentenbibliothek",
   "umgebung": "handy",
-  "anzahl": 298,
+  "anzahl": 296,
   "elemente": [
    {
     "art": "Knopf",
@@ -36108,9 +36553,15 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "icon-button demo-schalter"
    },
    {
     "art": "Knopf",
@@ -36120,26 +36571,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktuelle Seite drucken",
-    "disabled": false,
-    "cls": "icon-button"
-   },
-   {
-    "art": "Knopf",
     "text": "Auf eine neue Fassung prüfen",
     "disabled": false,
     "cls": "icon-button aktualisieren-knopf"
-   },
-   {
-    "art": "Link",
-    "text": "Ausloggen",
-    "cls": "icon-button logout-button"
-   },
-   {
-    "art": "Knopf",
-    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
-    "disabled": false,
-    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -36149,21 +36583,21 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -36233,7 +36667,7 @@
    },
    {
     "art": "Knopf",
-    "text": "30.10.2026",
+    "text": "02.11.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36293,7 +36727,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "29.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36365,7 +36799,7 @@
    },
    {
     "art": "Knopf",
-    "text": "23.10.2026",
+    "text": "26.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36431,7 +36865,7 @@
    },
    {
     "art": "Knopf",
-    "text": "20.10.2026",
+    "text": "23.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36497,7 +36931,7 @@
    },
    {
     "art": "Knopf",
-    "text": "17.10.2026",
+    "text": "20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36551,7 +36985,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12.10.2026",
+    "text": "15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36617,7 +37051,7 @@
    },
    {
     "art": "Knopf",
-    "text": "05.10.2026",
+    "text": "08.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36671,7 +37105,7 @@
    },
    {
     "art": "Knopf",
-    "text": "18.08.2026",
+    "text": "21.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36797,7 +37231,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.12.2024",
+    "text": "04.12.2024",
     "disabled": false,
     "cls": ""
    },
@@ -36863,7 +37297,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12.10.2026",
+    "text": "15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36935,7 +37369,7 @@
    },
    {
     "art": "Knopf",
-    "text": "18.08.2026",
+    "text": "21.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -36995,7 +37429,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.03.2025",
+    "text": "04.03.2025",
     "disabled": false,
     "cls": ""
    },
@@ -37067,7 +37501,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "29.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -37145,7 +37579,7 @@
    },
    {
     "art": "Knopf",
-    "text": "17.10.2026",
+    "text": "20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -37205,7 +37639,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.06.2026",
+    "text": "17.06.2026",
     "disabled": false,
     "cls": ""
    },
@@ -37259,7 +37693,7 @@
    },
    {
     "art": "Knopf",
-    "text": "15.04.2026",
+    "text": "18.04.2026",
     "disabled": false,
     "cls": ""
    },
@@ -37313,7 +37747,7 @@
    },
    {
     "art": "Knopf",
-    "text": "20.10.2026",
+    "text": "23.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -37379,7 +37813,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.09.2025",
+    "text": "28.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -37439,7 +37873,7 @@
    },
    {
     "art": "Knopf",
-    "text": "28.08.2025",
+    "text": "31.08.2025",
     "disabled": false,
     "cls": ""
    },
@@ -37511,7 +37945,7 @@
    },
    {
     "art": "Knopf",
-    "text": "02.10.2025",
+    "text": "05.10.2025",
     "disabled": false,
     "cls": ""
    },
@@ -37565,7 +37999,7 @@
    },
    {
     "art": "Knopf",
-    "text": "30.10.2026",
+    "text": "02.11.2026",
     "disabled": false,
     "cls": ""
    },
@@ -37625,7 +38059,7 @@
    },
    {
     "art": "Knopf",
-    "text": "23.10.2026",
+    "text": "26.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -37697,7 +38131,7 @@
    },
    {
     "art": "Knopf",
-    "text": "05.10.2026",
+    "text": "08.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -37751,7 +38185,7 @@
    },
    {
     "art": "Knopf",
-    "text": "27.09.2025",
+    "text": "30.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -37902,9 +38336,15 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "icon-button demo-schalter"
    },
    {
     "art": "Knopf",
@@ -37914,26 +38354,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktuelle Seite drucken",
-    "disabled": false,
-    "cls": "icon-button"
-   },
-   {
-    "art": "Knopf",
     "text": "Auf eine neue Fassung prüfen",
     "disabled": false,
     "cls": "icon-button aktualisieren-knopf"
-   },
-   {
-    "art": "Link",
-    "text": "Ausloggen",
-    "cls": "icon-button logout-button"
-   },
-   {
-    "art": "Knopf",
-    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
-    "disabled": false,
-    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -37943,21 +38366,21 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -38046,6 +38469,18 @@
    {
     "art": "Knopf",
     "text": "Impfpass und Vorsorge",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Tresor-Hauptordner – hierhin springen",
+    "disabled": false,
+    "cls": "ablauf-knoten art-hervor ablauf-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "",
     "disabled": false,
     "cls": ""
    },
@@ -38264,7 +38699,7 @@
  {
   "ort": "Fußzeile › Interaktives Cockpit",
   "umgebung": "handy",
-  "anzahl": 109,
+  "anzahl": 107,
   "elemente": [
    {
     "art": "Knopf",
@@ -38274,9 +38709,15 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "icon-button demo-schalter"
    },
    {
     "art": "Knopf",
@@ -38286,26 +38727,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktuelle Seite drucken",
-    "disabled": false,
-    "cls": "icon-button"
-   },
-   {
-    "art": "Knopf",
     "text": "Auf eine neue Fassung prüfen",
     "disabled": false,
     "cls": "icon-button aktualisieren-knopf"
-   },
-   {
-    "art": "Link",
-    "text": "Ausloggen",
-    "cls": "icon-button logout-button"
-   },
-   {
-    "art": "Knopf",
-    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
-    "disabled": false,
-    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -38315,21 +38739,21 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -38381,7 +38805,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 12.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -38399,7 +38823,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 30",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 2.",
     "disabled": false,
     "cls": ""
    },
@@ -38453,7 +38877,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 30.10.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 02.11.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -38471,7 +38895,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 04.11.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 07.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -38489,7 +38913,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 06.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 09.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -38507,7 +38931,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 07.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 10.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -38525,7 +38949,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 12.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 15.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -38543,7 +38967,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 15.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 18.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -38687,25 +39111,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: Beim Arb",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 4.11.2026 Nächste Aufgabe: Beim Arb",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 1.11.2026 Nächste Au",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 4.11.2026 Nächste Au",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: Zä",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 4.11.2026 Nächste Aufgabe: Zä",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 1.11.2026 Nächste Aufgabe: ",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 4.11.2026 Nächste Aufgabe: ",
     "disabled": false,
     "cls": ""
    },
@@ -38777,19 +39201,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 01.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 04.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 01.11.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 04.11.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 01.11.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 04.11.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -38801,7 +39225,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 01.11.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 04.11.",
     "disabled": false,
     "cls": ""
    },
@@ -38924,7 +39348,7 @@
  {
   "ort": "Fußzeile › Dokumentenbibliothek",
   "umgebung": "handy",
-  "anzahl": 298,
+  "anzahl": 296,
   "elemente": [
    {
     "art": "Knopf",
@@ -38934,9 +39358,15 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "icon-button demo-schalter"
    },
    {
     "art": "Knopf",
@@ -38946,26 +39376,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktuelle Seite drucken",
-    "disabled": false,
-    "cls": "icon-button"
-   },
-   {
-    "art": "Knopf",
     "text": "Auf eine neue Fassung prüfen",
     "disabled": false,
     "cls": "icon-button aktualisieren-knopf"
-   },
-   {
-    "art": "Link",
-    "text": "Ausloggen",
-    "cls": "icon-button logout-button"
-   },
-   {
-    "art": "Knopf",
-    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
-    "disabled": false,
-    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -38975,21 +39388,21 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -39059,7 +39472,7 @@
    },
    {
     "art": "Knopf",
-    "text": "30.10.2026",
+    "text": "02.11.2026",
     "disabled": false,
     "cls": ""
    },
@@ -39119,7 +39532,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "29.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -39191,7 +39604,7 @@
    },
    {
     "art": "Knopf",
-    "text": "23.10.2026",
+    "text": "26.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -39257,7 +39670,7 @@
    },
    {
     "art": "Knopf",
-    "text": "20.10.2026",
+    "text": "23.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -39323,7 +39736,7 @@
    },
    {
     "art": "Knopf",
-    "text": "17.10.2026",
+    "text": "20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -39377,7 +39790,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12.10.2026",
+    "text": "15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -39443,7 +39856,7 @@
    },
    {
     "art": "Knopf",
-    "text": "05.10.2026",
+    "text": "08.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -39497,7 +39910,7 @@
    },
    {
     "art": "Knopf",
-    "text": "18.08.2026",
+    "text": "21.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -39623,7 +40036,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.12.2024",
+    "text": "04.12.2024",
     "disabled": false,
     "cls": ""
    },
@@ -39689,7 +40102,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12.10.2026",
+    "text": "15.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -39761,7 +40174,7 @@
    },
    {
     "art": "Knopf",
-    "text": "18.08.2026",
+    "text": "21.08.2026",
     "disabled": false,
     "cls": ""
    },
@@ -39821,7 +40234,7 @@
    },
    {
     "art": "Knopf",
-    "text": "01.03.2025",
+    "text": "04.03.2025",
     "disabled": false,
     "cls": ""
    },
@@ -39893,7 +40306,7 @@
    },
    {
     "art": "Knopf",
-    "text": "26.10.2026",
+    "text": "29.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -39971,7 +40384,7 @@
    },
    {
     "art": "Knopf",
-    "text": "17.10.2026",
+    "text": "20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -40031,7 +40444,7 @@
    },
    {
     "art": "Knopf",
-    "text": "14.06.2026",
+    "text": "17.06.2026",
     "disabled": false,
     "cls": ""
    },
@@ -40085,7 +40498,7 @@
    },
    {
     "art": "Knopf",
-    "text": "15.04.2026",
+    "text": "18.04.2026",
     "disabled": false,
     "cls": ""
    },
@@ -40139,7 +40552,7 @@
    },
    {
     "art": "Knopf",
-    "text": "20.10.2026",
+    "text": "23.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -40205,7 +40618,7 @@
    },
    {
     "art": "Knopf",
-    "text": "25.09.2025",
+    "text": "28.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -40265,7 +40678,7 @@
    },
    {
     "art": "Knopf",
-    "text": "28.08.2025",
+    "text": "31.08.2025",
     "disabled": false,
     "cls": ""
    },
@@ -40337,7 +40750,7 @@
    },
    {
     "art": "Knopf",
-    "text": "02.10.2025",
+    "text": "05.10.2025",
     "disabled": false,
     "cls": ""
    },
@@ -40391,7 +40804,7 @@
    },
    {
     "art": "Knopf",
-    "text": "30.10.2026",
+    "text": "02.11.2026",
     "disabled": false,
     "cls": ""
    },
@@ -40451,7 +40864,7 @@
    },
    {
     "art": "Knopf",
-    "text": "23.10.2026",
+    "text": "26.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -40523,7 +40936,7 @@
    },
    {
     "art": "Knopf",
-    "text": "05.10.2026",
+    "text": "08.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -40577,7 +40990,7 @@
    },
    {
     "art": "Knopf",
-    "text": "27.09.2025",
+    "text": "30.09.2025",
     "disabled": false,
     "cls": ""
    },
@@ -40718,7 +41131,7 @@
  {
   "ort": "Fußzeile › Eingangszentrale",
   "umgebung": "handy",
-  "anzahl": 103,
+  "anzahl": 101,
   "elemente": [
    {
     "art": "Knopf",
@@ -40728,9 +41141,15 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "icon-button demo-schalter"
    },
    {
     "art": "Knopf",
@@ -40740,26 +41159,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktuelle Seite drucken",
-    "disabled": false,
-    "cls": "icon-button"
-   },
-   {
-    "art": "Knopf",
     "text": "Auf eine neue Fassung prüfen",
     "disabled": false,
     "cls": "icon-button aktualisieren-knopf"
-   },
-   {
-    "art": "Link",
-    "text": "Ausloggen",
-    "cls": "icon-button logout-button"
-   },
-   {
-    "art": "Knopf",
-    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
-    "disabled": false,
-    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -40769,21 +41171,21 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -40835,19 +41237,19 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument fotografieren Vorhandene Mehrseiten- und PDF-Funktion",
+    "text": "Dokument fotografieren Import: einen Brief fotografieren, gleich prüfen",
     "disabled": false,
     "cls": "intake-source"
    },
    {
     "art": "Knopf",
-    "text": "Stapel direkt übernehmen Viele Fotos oder Scans: Blatt finden, gerade ziehen, sp",
+    "text": "Stapel direkt übernehmen Import: viele Blätter auf einmal, später einordnen",
     "disabled": false,
     "cls": "intake-source"
    },
    {
     "art": "Knopf",
-    "text": "Formular scannen und ausfüllen Papierformular scannen, dann gleich ausfüllen",
+    "text": "Formular scannen und ausfüllen Ausfüllen: Formular scannen und am Bildschirm aus",
     "disabled": false,
     "cls": "intake-source"
    },
@@ -41342,7 +41744,7 @@
  {
   "ort": "Fußzeile › Sicherheitscenter",
   "umgebung": "handy",
-  "anzahl": 48,
+  "anzahl": 52,
   "elemente": [
    {
     "art": "Knopf",
@@ -41352,9 +41754,15 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "icon-button demo-schalter"
    },
    {
     "art": "Knopf",
@@ -41364,26 +41772,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktuelle Seite drucken",
-    "disabled": false,
-    "cls": "icon-button"
-   },
-   {
-    "art": "Knopf",
     "text": "Auf eine neue Fassung prüfen",
     "disabled": false,
     "cls": "icon-button aktualisieren-knopf"
-   },
-   {
-    "art": "Link",
-    "text": "Ausloggen",
-    "cls": "icon-button logout-button"
-   },
-   {
-    "art": "Knopf",
-    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
-    "disabled": false,
-    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -41393,21 +41784,21 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -41424,6 +41815,48 @@
    {
     "art": "Knopf",
     "text": "Sicherheit und lokaler Tresor erklären",
+    "disabled": false,
+    "cls": "start-info-trigger"
+   },
+   {
+    "art": "Knopf",
+    "text": "Gerät, Modelle und Suchindex",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Unterlage an ein anderes Gerät geben erklären",
+    "disabled": false,
+    "cls": "start-info-trigger"
+   },
+   {
+    "art": "Auswahlliste",
+    "text": "Unterlage wählen … Kontoauszug_Familienkonto.pdf Fahrzeugschein_Brummwerk_Kombi_",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Übergabepaket speichern",
+    "disabled": true,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Datei-Eingang",
+    "text": ".familienakte-paket",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Datei-Eingang",
+    "text": ".familienakte-quittung",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Lokaler Browserspeicher erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
@@ -41447,15 +41880,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Anderen PC-/USB-Ordner wählen",
+    "text": "PC-/USB-Ordner verbinden",
     "disabled": false,
     "cls": "button primary"
-   },
-   {
-    "art": "Knopf",
-    "text": "Sperren",
-    "disabled": false,
-    "cls": "button secondary"
    },
    {
     "art": "Knopf",
@@ -41465,7 +41892,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Jetzt Abgleich durchführen",
+    "text": "Eigenen Datentresor wählen",
     "disabled": false,
     "cls": "button primary"
    },
@@ -41636,7 +42063,7 @@
  {
   "ort": "Fußzeile › Fristen und Aufgaben",
   "umgebung": "handy",
-  "anzahl": 121,
+  "anzahl": 119,
   "elemente": [
    {
     "art": "Knopf",
@@ -41646,9 +42073,15 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "icon-button demo-schalter"
    },
    {
     "art": "Knopf",
@@ -41658,26 +42091,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktuelle Seite drucken",
-    "disabled": false,
-    "cls": "icon-button"
-   },
-   {
-    "art": "Knopf",
     "text": "Auf eine neue Fassung prüfen",
     "disabled": false,
     "cls": "icon-button aktualisieren-knopf"
-   },
-   {
-    "art": "Link",
-    "text": "Ausloggen",
-    "cls": "icon-button logout-button"
-   },
-   {
-    "art": "Knopf",
-    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
-    "disabled": false,
-    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -41687,21 +42103,21 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -41843,7 +42259,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 635c4357-af9c-483d-af30-1bd8fdac1e19",
+    "text": "Dokument: 36abb49e-7015-4887-b0e6-a579d14e198d",
     "disabled": false,
     "cls": "text-link"
    },
@@ -41915,7 +42331,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: f5c3b4c4-e0b3-44c9-a442-0a2ff14194a8",
+    "text": "Dokument: 326eedd3-605f-411d-8667-c0f9d8f7a044",
     "disabled": false,
     "cls": "text-link"
    },
@@ -41945,7 +42361,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 5831fc20-5c9b-428c-a57e-61852756576e",
+    "text": "Dokument: 998fcb3a-4683-4551-8e0f-26051addd76f",
     "disabled": false,
     "cls": "text-link"
    },
@@ -42053,7 +42469,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokument: 5831fc20-5c9b-428c-a57e-61852756576e",
+    "text": "Dokument: 998fcb3a-4683-4551-8e0f-26051addd76f",
     "disabled": false,
     "cls": "text-link"
    },
@@ -42368,7 +42784,7 @@
  {
   "ort": "Fußzeile › Tagebuch & Erinnerungen",
   "umgebung": "handy",
-  "anzahl": 64,
+  "anzahl": 62,
   "elemente": [
    {
     "art": "Knopf",
@@ -42378,9 +42794,15 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "icon-button demo-schalter"
    },
    {
     "art": "Knopf",
@@ -42390,26 +42812,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktuelle Seite drucken",
-    "disabled": false,
-    "cls": "icon-button"
-   },
-   {
-    "art": "Knopf",
     "text": "Auf eine neue Fassung prüfen",
     "disabled": false,
     "cls": "icon-button aktualisieren-knopf"
-   },
-   {
-    "art": "Link",
-    "text": "Ausloggen",
-    "cls": "icon-button logout-button"
-   },
-   {
-    "art": "Knopf",
-    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
-    "disabled": false,
-    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -42419,21 +42824,21 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -42581,31 +42986,31 @@
    },
    {
     "art": "Knopf",
-    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 26.10.2026, 19:00 · Reis",
+    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 29.10.2026, 19:00 · Reis",
     "disabled": false,
     "cls": "active"
    },
    {
     "art": "Knopf",
-    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 23.10.2026, 19:00 · Technik, Ge",
+    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 26.10.2026, 19:00 · Technik, Ge",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 20.10.2026, 19:00 ·",
+    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 23.10.2026, 19:00 ·",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 02.09.202",
+    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 05.09.202",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 26.09.2025, 19:00 · Haus & Wohnu",
+    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 29.09.2025, 19:00 · Haus & Wohnu",
     "disabled": false,
     "cls": ""
    },
@@ -42768,9 +43173,15 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "icon-button demo-schalter"
    },
    {
     "art": "Knopf",
@@ -42780,26 +43191,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktuelle Seite drucken",
-    "disabled": false,
-    "cls": "icon-button"
-   },
-   {
-    "art": "Knopf",
     "text": "Auf eine neue Fassung prüfen",
     "disabled": false,
     "cls": "icon-button aktualisieren-knopf"
-   },
-   {
-    "art": "Link",
-    "text": "Ausloggen",
-    "cls": "icon-button logout-button"
-   },
-   {
-    "art": "Knopf",
-    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
-    "disabled": false,
-    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -42809,21 +43203,21 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -42912,6 +43306,18 @@
    {
     "art": "Knopf",
     "text": "Impfpass und Vorsorge",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Tresor-Hauptordner – hierhin springen",
+    "disabled": false,
+    "cls": "ablauf-knoten art-hervor ablauf-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "",
     "disabled": false,
     "cls": ""
    },
@@ -43130,7 +43536,7 @@
  {
   "ort": "Fußzeile › Systemprüfung",
   "umgebung": "handy",
-  "anzahl": 91,
+  "anzahl": 89,
   "elemente": [
    {
     "art": "Knopf",
@@ -43140,9 +43546,15 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.1",
+    "text": "FAMILIENAKTE Basic Version 2.28.23",
     "disabled": false,
     "cls": "site-brand"
+   },
+   {
+    "art": "Knopf",
+    "text": "Demo öffnen",
+    "disabled": false,
+    "cls": "icon-button demo-schalter"
    },
    {
     "art": "Knopf",
@@ -43152,26 +43564,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktuelle Seite drucken",
-    "disabled": false,
-    "cls": "icon-button"
-   },
-   {
-    "art": "Knopf",
     "text": "Auf eine neue Fassung prüfen",
     "disabled": false,
     "cls": "icon-button aktualisieren-knopf"
-   },
-   {
-    "art": "Link",
-    "text": "Ausloggen",
-    "cls": "icon-button logout-button"
-   },
-   {
-    "art": "Knopf",
-    "text": "Installieren — der Browser bietet es gerade nicht an, ein Tipp sagt warum",
-    "disabled": false,
-    "cls": "familienakte-install"
    },
    {
     "art": "Knopf",
@@ -43181,21 +43576,21 @@
    },
    {
     "art": "Knopf",
-    "text": "Aktivitätszeile 1 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Aktivitätszeile 2 kopieren",
-    "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
     "text": "Beispieldaten entfernen",
     "disabled": false,
     "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur vorherigen Ansicht",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Zur nächsten Ansicht",
+    "disabled": true,
+    "cls": ""
    },
    {
     "art": "Knopf",
