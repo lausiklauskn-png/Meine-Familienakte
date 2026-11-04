@@ -70,8 +70,12 @@ try {
   await step("Eigene Kategorie: Feld mit Inhalt als ★ Feldart merken und wiederverwenden", async () => {
     await klon.locator(".dok", { hasText: "Garantiebeleg" }).first().locator(".dok-akt button[data-auf]").click();
     await klon.locator("#mBearbeiten").click();
+    await klon.waitForFunction(() => document.querySelector('#seiten canvas')?.width > 100);
     await klon.locator('[data-t="text"]').click();
     await klon.locator("#seiten .lage").first().click({ position: { x: 100, y: 150 } });
+    // The source focuses the new label after 30 ms. Wait for that actual focus
+    // before filling, so its deferred focus cannot interrupt the next input.
+    await klon.waitForFunction(() => document.activeElement?.id === 'eigLabel');
     await klon.locator("#eigLabel").fill("Aktenzeichen Probe");
     await klon.locator("#eigWert").fill("AZ-ERFUNDEN-42");
     await klon.locator("#eigVorlage").click();

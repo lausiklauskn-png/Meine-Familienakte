@@ -78,6 +78,10 @@ können ebenfalls sichtbare Inhalte erzeugen: deshalb bleiben visuelle/fachliche
 Prüfung und Entwurfs-PR erforderlich. Solche Änderungen werden nicht als automatisch
 passend ausgegeben.
 
+Der zusätzliche Bytevergleich der gemeinsamen Schutzdateien ist Teil jedes Updatewegs
+(`pdf-schutz.mjs`); Details und unterschiedliche KI-Wege: `PDF-SCHUTZABGLEICH.md`.
+Bibliotheken und lokale Übergaben: `PDF-BIBLIOTHEK-DATENWEG.md`.
+
 Neue Kern-APIs müssen zusätzlich im React-Ausfülldialog angebunden werden. Das
 aktuelle Beispiel ist `schonBelegt`: Der Kern enthielt den Schutz bereits, der eigene
 Dialog rief ihn noch nicht auf. Er filtert jetzt bedruckte Flächen und Bilder anhand

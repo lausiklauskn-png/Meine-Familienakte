@@ -9,6 +9,7 @@ import { createHash } from 'node:crypto';
 import { runInNewContext } from 'node:vm';
 import { nachziehen as appKopieren } from './wfpdf-app-nachziehen.mjs';
 import { nachziehen as kernKopieren } from './wfpdf-nachziehen.mjs';
+import { schutzVergleichen } from './pdf-schutz.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const git = (cwd, ...args) => execFileSync('git', args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
@@ -59,11 +60,13 @@ export function updateVorbereiten(quelle, pro, wurzel = ROOT, anwenden = false) 
   }
   const bericht = { quelle: commit, pro: proCommit, bisher: alt.commit, updateVorhanden: commit !== alt.commit,
     angewendet: false, sichtpruefungErforderlich: false, designAenderungen: [] };
-  if (!bericht.updateVorhanden) return bericht;
+  if (!bericht.updateVorhanden) { schutzVergleichen(quelle, pro, wurzel); return { ...bericht, schutzKerneIdentisch: true }; }
   const temp = mkdtempSync(join(tmpdir(), 'fa-pdf-update-'));
   try {
     const appNeu = appKopieren(quelle, temp);
     const kernNeu = kernKopieren(quelle, temp);
+    schutzVergleichen(quelle, pro, temp);
+    bericht.schutzKerneIdentisch = true;
     const fenster = {};
     runInNewContext(readFileSync(join(temp, 'public/wfpdf/erkennung.js'), 'utf8'), { window: fenster }, { timeout: 1000 });
     if (typeof fenster.WFP?.Erkennung?.schonBelegt !== 'function') throw new Error('Der benötigte PDF-Funktionsvertrag fehlt: schonBelegt');

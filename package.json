@@ -52,7 +52,7 @@
     "check:signing": "node --test tools/signing/test-identity.mjs",
     "check:pro-tresor": "node scripts/run-pro-tresor-dokumente-tests.mjs",
     "update:pdf": "node tools/pdf-update.mjs",
-    "check:pdf-update": "node scripts/run-pdf-abgleich-tests.mjs && node scripts/run-pdf-update-tests.mjs && node scripts/run-pdf-pr-tests.mjs && node scripts/run-pdf-funktions-tests.mjs"
+    "check:pdf-update": "node scripts/run-pdf-abgleich-tests.mjs && node scripts/run-pdf-update-tests.mjs && node scripts/run-pdf-pr-tests.mjs && node scripts/run-pdf-funktions-tests.mjs && node scripts/run-pdf-schutz-tests.mjs"
   },
   "dependencies": {
     "lucide-react": "1.31.0",

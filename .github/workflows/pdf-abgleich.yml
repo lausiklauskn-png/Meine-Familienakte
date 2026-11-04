@@ -54,6 +54,7 @@ jobs:
           mkdir -p work/pdf-abgleich
           node tools/pdf-update.mjs --quelle ../Workflow-PDF --pro ../Workflow-PDF-Pro --anwenden > work/pdf-abgleich/stand.json
           node -e "const fs=require('fs'); const s=JSON.parse(fs.readFileSync('work/pdf-abgleich/stand.json')); fs.appendFileSync(process.env.GITHUB_OUTPUT, 'update='+s.updateVorhanden+'\n');"
+          node tools/pdf-schutz.mjs ../Workflow-PDF ../Workflow-PDF-Pro > work/pdf-abgleich/schutz.json
           git add -N -- public/apps/workflow-pdf public/apps/HERKUNFT.json public/wfpdf
           git diff --binary -- public/apps/workflow-pdf public/apps/HERKUNFT.json public/wfpdf > work/pdf-abgleich/update.patch
       - name: Funktionsvertrag, Updateweg, Herkunft und Build prüfen

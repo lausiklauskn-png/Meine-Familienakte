@@ -35,3 +35,9 @@ nach Neuladen. Update-/PR-Gegenproben bestehen; GitHub-CLI dort ausdrücklich si
 Lokale Quellklone unter work/ werden als Arbeitsmaterial vom App-Lint ausgenommen.
 Nächster Auftrag: neue PDF-Funktionen jeweils mit
 Vertrag und Geräteprüfung anbinden. Gestaltung und Wortlaut unverändert erhalten.
+
+Ergänzter Schutzvergleich: neun gemeinsame Dateien bytegleich, drei davon zusätzlich
+im eigenen Dialog. Anonymisierung bleibt fachlich getrennt von Bildreinigung.
+Unveränderte Original-Browserprüfungen: Reinigung 62/0, Eingang 87/0, KI gestellt.
+Details: `docs/PDF-SCHUTZABGLEICH.md`; Bibliothek unverändert, Datenweg in
+`docs/PDF-BIBLIOTHEK-DATENWEG.md`.

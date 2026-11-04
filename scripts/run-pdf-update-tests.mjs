@@ -16,6 +16,7 @@ const proSync = () => { rmSync(join(pro, 'upstream/workflow-pdf'), { recursive: 
 try {
   init(quelle); init(pro);
   for (const [, p] of DATEIEN) put(join(quelle, p), '// erfundener Baustein');
+  for (const name of ['pruefer-formate.js', 'pruefer-mail.js', 'pruefer-anhang.js', 'eingang.js', 'uebersetzung.js', 'bildbeschreibung.js']) put(join(quelle, 'assets', name), '// erfundener Schutzbaustein');
   put(join(quelle, 'assets/erkennung.js'), 'window.WFP={Erkennung:{schonBelegt(){return ""}}};');
   put(join(quelle, 'assets/app.js'), '// erfundene Bedienung');
   put(join(quelle, 'assets/style.css'), 'body{color:teal}');
