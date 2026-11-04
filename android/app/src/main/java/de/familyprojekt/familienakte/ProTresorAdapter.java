@@ -3,6 +3,7 @@ package de.familyprojekt.familienakte;
 import de.familyprojekt.tresor.Ablage;
 import de.familyprojekt.tresor.Eintrag;
 import de.familyprojekt.tresor.Fach;
+import de.familyprojekt.tresor.Hauptordner;
 import de.familyprojekt.tresor.TresorOrdner;
 import de.familyprojekt.tresor.Umzug;
 import de.familyprojekt.tresor.Uebergaben;
@@ -18,7 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Familienakte-Anschluss an den unveränderten Pro-Kanon. Keine Ordnerwahl, kein Ersatzspeicher,
- * keine Hintergrundmigration. Ein Adapter gehört genau zu einem freigegebenen Ort und einer Kennung.
+ * keine Hintergrundmigration. Einen neuen Tresor legt nur der ausdrücklich gewählte Ein-Schritt-Weg
+ * {@link #einrichten} an (Klaus 2026-11-04: Familienakte darf einen neuen Tresor anlegen). Ein Adapter gehört genau zu einem freigegebenen Ort und einer Kennung.
  * Aufruf auf dem nativen Arbeits-Thread; Schlüssel bleiben nativ und werden beim Sperren verworfen. */
 public final class ProTresorAdapter implements Closeable {
     public static final int MAX_BYTES = 20 * 1024 * 1024;
@@ -45,6 +47,61 @@ public final class ProTresorAdapter implements Closeable {
         if (TresorOrdner.vorhanden(ablage)) return;
         if (elternIstTresor || istTresorUnterordner(ordnerName)) throw new IOException("FA_TRESOR_UNTERORDNER");
         throw new IOException("FA_TRESOR_NICHT_VORHANDEN");
+    }
+
+    /** Ergebnis des Ein-Schritt-Wegs „Tresor einrichten – nur Speicher wählen“. */
+    public static final class Einrichtung {
+        public final ProTresorAdapter adapter;
+        /** Hauptordner relativ zum gewählten Speicher ("" = der gewählte Ordner selbst). */
+        public final String pfad;
+        public final boolean angelegt;
+        Einrichtung(ProTresorAdapter adapter, String pfad, boolean angelegt) { this.adapter = adapter; this.pfad = pfad; this.angelegt = angelegt; }
+    }
+
+    /** Vor jeder Passwortfrage, nur lesend: was liegt im gewählten Speicher? Ein Ordner IM Tresor (Fach, Eingang,
+     * Verwaltung) und mehrere Tresore nebeneinander werden abgewiesen, bevor irgendetwas entsteht. */
+    public static Hauptordner.Ergebnis einrichtenPruefen(Ablage gewaehlt, String ordnerName) throws IOException {
+        Hauptordner.Ergebnis e = Hauptordner.suchen(gewaehlt, letzterTeil(ordnerName));
+        if (e.gefunden()) return e;
+        if (Hauptordner.UNTERORDNER.equals(e.art) || istTresorUnterordner(ordnerName)) throw new IOException("FA_TRESOR_UNTERORDNER");
+        if (Hauptordner.MEHRERE.equals(e.art)) throw new IOException("FA_TRESOR_MEHRERE");
+        if (!e.anlegen()) throw new IOException("FA_TRESOR_ORDNER_" + e.art);
+        return e;
+    }
+
+    /**
+     * Gefundener Tresor: nur mit dem Passwort öffnen (falsch → TRESOR_PASSWORT_FALSCH, nichts geschrieben).
+     * Kein Tresor: Name und Passwortlänge zuerst prüfen, dann Hauptordner und Tresor anlegen (Fach „Familienakte“
+     * entsteht beim ersten Ablegen). In beiden Fällen die Lies-mich-Datei, wenn sie fehlt.
+     */
+    public static Einrichtung einrichten(Ablage gewaehlt, Hauptordner.Ergebnis e, String neuerName, CharSequence passwort) throws IOException {
+        if (e.gefunden()) {
+            Ablage haupt = Hauptordner.ablage(gewaehlt, e, null);
+            ProTresorAdapter p = oeffnen(haupt, TresorOrdner.kennung(haupt), passwort);
+            liesMich(haupt);
+            return new Einrichtung(p, e.pfad, false);
+        }
+        if (!e.anlegen()) throw new IOException("FA_TRESOR_ORDNER_" + e.art);
+        if (passwort == null || Character.codePointCount(passwort, 0, passwort.length()) < TresorOrdner.MIN_PASSWORT)
+            throw new IOException("TRESOR_PASSWORT_KURZ");
+        String name = Hauptordner.ANLEGEN_DARIN.equals(e.art) ? Hauptordner.name(neuerName) : "";
+        Ablage haupt = Hauptordner.ablage(gewaehlt, e, name);
+        String id;
+        try (TresorOrdner t = TresorOrdner.anlegen(haupt, Fach.FAMILIENAKTE_APP, passwort)) { id = t.id(); }
+        ProTresorAdapter p = oeffnen(haupt, id, passwort);
+        liesMich(haupt);
+        return new Einrichtung(p, name, true);
+    }
+
+    private static void liesMich(Ablage haupt) {
+        try { Hauptordner.liesMichAnlegen(haupt); } catch (IOException zusatz) { /* Lies-mich ist ein Zusatz, kein Grund zum Abbruch */ }
+    }
+
+    static String letzterTeil(String ordnerName) {
+        if (ordnerName == null) return "";
+        String n = ordnerName.replace('\\', '/');
+        while (n.endsWith("/")) n = n.substring(0, n.length() - 1);
+        return n.substring(n.lastIndexOf('/') + 1).trim();
     }
 
     /** Letzter Pfadteil eines Anzeigenamens wie „SD/USB (1234-5678)/Hauptablage/Familienakte“. */

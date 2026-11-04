@@ -37,6 +37,9 @@ public final class ProTresorAdapterProbe {
         }
         return out;
     }
+    static Map<String, String> bestandOhne(Path p, String ordner) throws Exception {
+        Map<String, String> out = bestand(p); out.keySet().removeIf(k -> k.startsWith(ordner + "/")); return out;
+    }
     static ByteArrayInputStream quelle(byte[] b) { return new ByteArrayInputStream(b); }
     public static void main(String[] args) throws Exception {
         Path root = Files.createTempDirectory("fa-pro-probe-");
@@ -119,6 +122,80 @@ public final class ProTresorAdapterProbe {
                 Umzug.vermerken(k, id, "Erfundener neuer Ort", 1);
                 fehler("FA_TRESOR_UMGEZOGEN", () -> p.dokumente());
             }
+            // Ein-Schritt-Weg „Tresor einrichten – nur Speicher wählen“ (Klaus 2026-11-04).
+            Path sd = Files.createDirectory(root.resolve("sd-leer"));
+            DateiAblage sdA = new DateiAblage(sd.toFile());
+            Hauptordner.Ergebnis hier = ProTresorAdapter.einrichtenPruefen(sdA, "SD/USB (1234-5678)");
+            pruefe(Hauptordner.ANLEGEN_HIER.equals(hier.art), "Leerer Speicher: Tresor entsteht hier");
+            fehler("TRESOR_PASSWORT_KURZ", () -> ProTresorAdapter.einrichten(sdA, hier, null, "kurz"));
+            pruefe(bestand(sd).isEmpty() && Files.list(sd).count() == 0, "Zu kurzes Passwort legt etwas an");
+            String idNeu;
+            ProTresorAdapter.Einrichtung neuHier = ProTresorAdapter.einrichten(sdA, hier, null, zugang);
+            try (ProTresorAdapter p = neuHier.adapter) {
+                idNeu = p.kennung();
+                pruefe(neuHier.angelegt && neuHier.pfad.isEmpty() && Files.exists(sd.resolve(TresorOrdner.KOPF)), "Neuer Tresor im leeren Speicher");
+                pruefe(Files.exists(sd.resolve(Hauptordner.LIES_MICH)), "Lies-mich fehlt");
+                Eintrag n = p.ablegen("neu-1", "Neu.txt", "text/plain", 5, quelle(original));
+                pruefe(Arrays.equals(original, p.lesen(n.id)), "Neuer Tresor liest Original");
+            }
+            try (ProTresorAdapter p = ProTresorAdapter.oeffnen(sdA, idNeu, zugang)) { pruefe(p.dokumente().size() == 1, "Neuer Tresor nach Neustart"); }
+
+            Path voll = Files.createDirectory(root.resolve("sd-voll"));
+            Files.writeString(Files.createDirectory(voll.resolve("DCIM")).resolve("Bild.txt"), "erfunden");
+            Files.writeString(voll.resolve("Urlaub.txt"), "erfunden");
+            DateiAblage vollA = new DateiAblage(voll.toFile());
+            Hauptordner.Ergebnis darin = ProTresorAdapter.einrichtenPruefen(vollA, "Gerät");
+            pruefe(Hauptordner.ANLEGEN_DARIN.equals(darin.art), "Speicher mit Inhalt: neuer Hauptordner darin");
+            Map<String, String> vorName = bestand(voll);
+            fehler("TRESOR_NAME_UNGUELTIG", () -> ProTresorAdapter.einrichten(vollA, darin, "Tresorordner", zugang));
+            fehler("TRESOR_NAME_UNGUELTIG", () -> ProTresorAdapter.einrichten(vollA, darin, "a/b", zugang));
+            fehler("TRESOR_NAME_BELEGT", () -> ProTresorAdapter.einrichten(vollA, darin, "DCIM", zugang));
+            fehler("TRESOR_PASSWORT_KURZ", () -> ProTresorAdapter.einrichten(vollA, darin, "Family-Projekt", "kurz"));
+            pruefe(vorName.equals(bestand(voll)) && !Files.exists(voll.resolve("Family-Projekt")), "Abgelehnter Name oder Passwort legt etwas an");
+            ProTresorAdapter.Einrichtung neuDarin = ProTresorAdapter.einrichten(vollA, darin, "", zugang);
+            neuDarin.adapter.close();
+            pruefe("Family-Projekt".equals(neuDarin.pfad) && Files.exists(voll.resolve("Family-Projekt").resolve(TresorOrdner.KOPF))
+                && Files.exists(voll.resolve("Family-Projekt").resolve(Hauptordner.LIES_MICH)) && vorName.equals(bestandOhne(voll, "Family-Projekt")), "Neuer Hauptordner „Family-Projekt“, Rest unberührt");
+            pruefe(Hauptordner.GEFUNDEN.equals(ProTresorAdapter.einrichtenPruefen(vollA, "Gerät").art), "Zweiter Lauf findet den eben angelegten Tresor");
+
+            // Vorhandener Tresor einer anderen Pro-App in einem Ordner mit altem Namen: gefunden am Inhalt, nicht am Namen.
+            Path karte = Files.createDirectory(root.resolve("sd-alt"));
+            Path altHaupt = Files.createDirectory(karte.resolve("Privat Brain Pro Hauptablageordner"));
+            Files.writeString(karte.resolve("Notiz.txt"), "erfunden");
+            String idAlt;
+            try (TresorOrdner t = TresorOrdner.anlegen(new DateiAblage(altHaupt.toFile()), Fach.PRIVATE_BRAIN_APP, zugang)) { idAlt = t.id(); }
+            Files.writeString(altHaupt.resolve(Hauptordner.LIES_MICH), "selbst bearbeitet");
+            DateiAblage karteA = new DateiAblage(karte.toFile());
+            Hauptordner.Ergebnis gef = ProTresorAdapter.einrichtenPruefen(karteA, "SD/USB (1234-5678)");
+            pruefe(gef.gefunden() && "Privat Brain Pro Hauptablageordner".equals(gef.pfad), "Vorhandener Tresor am Inhalt gefunden");
+            Map<String, String> vorFalsch = bestand(karte);
+            fehler("TRESOR_PASSWORT_FALSCH", () -> ProTresorAdapter.einrichten(karteA, gef, null, UUID.randomUUID().toString()));
+            pruefe(vorFalsch.equals(bestand(karte)), "Falsches Passwort verändert etwas");
+            ProTresorAdapter.Einrichtung offenAlt = ProTresorAdapter.einrichten(karteA, gef, null, zugang);
+            try (ProTresorAdapter p = offenAlt.adapter) {
+                pruefe(!offenAlt.angelegt && idAlt.equals(p.kennung()) && "Privat Brain Pro Hauptablageordner".equals(offenAlt.pfad), "Vorhandenen Tresor geöffnet, keinen neuen");
+                pruefe("selbst bearbeitet".equals(Files.readString(altHaupt.resolve(Hauptordner.LIES_MICH))), "Bearbeitete Lies-mich überschrieben");
+                Eintrag n = p.ablegen("alt-1", "Brief.txt", "text/plain", 6, quelle(original));
+                try (TresorOrdner fremd = TresorOrdner.oeffnen(new DateiAblage(altHaupt.toFile()), Fach.WORKFLOW_PDF_APP, zugang);
+                     InputStream in = fremd.oeffnen(Fach.FAMILIENAKTE.slug, n)) {
+                    pruefe(Arrays.equals(original, in.readAllBytes()), "Andere Pro-App liest das Original im gemeinsamen Tresor");
+                }
+            }
+            pruefe(Files.list(karte).count() == 2, "Kein zweiter Tresor neben dem vorhandenen");
+
+            // Falsche Wahl: ein Ordner im Tresor oder mehrere Tresore – abgewiesen, bevor etwas entsteht.
+            Path fach = Files.createDirectories(altHaupt.resolve(Fach.FAMILIENAKTE.ordner));
+            fehler("FA_TRESOR_UNTERORDNER", () -> ProTresorAdapter.einrichtenPruefen(new DateiAblage(fach.toFile()), "SD/Privat Brain Pro Hauptablageordner/" + Fach.FAMILIENAKTE.ordner));
+            fehler("FA_TRESOR_UNTERORDNER", () -> ProTresorAdapter.einrichtenPruefen(new DateiAblage(altHaupt.resolve(TresorOrdner.VERWALTUNG).toFile()), "Irgendwie umbenannt"));
+            Path leerEingang = Files.createDirectory(root.resolve("Eingang-Familienakte"));
+            fehler("FA_TRESOR_UNTERORDNER", () -> ProTresorAdapter.einrichtenPruefen(new DateiAblage(leerEingang.toFile()), "Gerät/Eingang-Familienakte"));
+            pruefe(Files.list(leerEingang).count() == 0, "Eingang-Wahl legt etwas an");
+            Path zwei = Files.createDirectory(root.resolve("sd-zwei"));
+            for (String n : List.of("Tresor A", "Tresor B"))
+                try (TresorOrdner t = TresorOrdner.anlegen(new DateiAblage(Files.createDirectory(zwei.resolve(n)).toFile()), Fach.WORKFLOW_PDF_APP, zugang)) { }
+            fehler("FA_TRESOR_MEHRERE", () -> ProTresorAdapter.einrichtenPruefen(new DateiAblage(zwei.toFile()), "SD"));
+            System.out.println("Ein-Schritt-Tresor: leer, mit Inhalt, Name, Passwortlänge, vorhandener Tresor, falsches Passwort, Lies-mich, Unterordner, mehrere grün");
+
             pruefe(unveraendert.equals(bestand(alt)), "Quelle am Ende verändert");
             System.out.println("Pro-Tresor: Originale, Kopie, Wiederaufnahme, Duplikate, Grenze, Abbruch, Beschädigung, Sperre, Ort und Rückweg grün");
         } finally {

@@ -1,9 +1,11 @@
 import { demoActive } from "../lib/demo-workspace.ts";
 import type { ProApp, ProUebergabe } from "./pro-uebergabe";
-export type ProTresorZustand = { status: "getrennt" | "offen" | "gesperrt" | "nicht_erreichbar"; id?: string; ort?: string; code?: string; uebergaben?: boolean };
+export type ProTresorZustand = { status: "getrennt" | "offen" | "gesperrt" | "nicht_erreichbar"; id?: string; ort?: string; code?: string; uebergaben?: boolean; angelegt?: boolean };
 interface ProTresorPlugin {
   zustand(): Promise<ProTresorZustand>;
   verbinden(): Promise<ProTresorZustand>;
+  /** Nur Android: Speicher wählen, Hauptordner finden oder anlegen, ein Passwort (Klaus 2026-11-04). */
+  einrichten?(): Promise<ProTresorZustand>;
   entsperren(): Promise<ProTresorZustand>;
   sperren(): Promise<void>;
   speichern(args: { vaultId: string; documentId: string; name: string; mime: string; date: number; data: string }): Promise<{ vaultId: string; entryId: string; sha256: string; size: number }>;
@@ -24,12 +26,15 @@ function plugin() {
   if (!p) throw new Error("Für diesen Pro-Tresor bitte die zugehörige Android- oder Windows-App öffnen.");
   return p;
 }
-async function aufrufen<K extends "zustand" | "verbinden" | "entsperren" | "sperren">(name: K): Promise<Awaited<ReturnType<ProTresorPlugin[K]>>> {
+async function aufrufen<K extends "zustand" | "verbinden" | "entsperren" | "sperren" | "einrichten">(name: K): Promise<Awaited<ReturnType<NonNullable<ProTresorPlugin[K]>>>> {
   if (demoActive()) throw new Error("Der gemeinsame Pro-Tresor bleibt in der Demo getrennt.");
   const plugin = cap()?.Plugins?.FamilienakteTresor;
-  if (!plugin) throw new Error("Pro-Tresor ist auf diesem Gerät nicht verfügbar.");
-  return await plugin[name]() as Awaited<ReturnType<ProTresorPlugin[K]>>;
+  const fn = plugin?.[name] as (() => Promise<unknown>) | undefined;
+  if (!plugin || typeof fn !== "function") throw new Error("Pro-Tresor ist auf diesem Gerät nicht verfügbar.");
+  return await fn.call(plugin) as Awaited<ReturnType<NonNullable<ProTresorPlugin[K]>>>;
 }
+/** Ein-Schritt-Weg nur dort, wo die App ihn kann (Android). Windows behält „Vorhandenen Pro-Tresor verbinden“. */
+export const proTresorEinrichtenVerfuegbar = () => proTresorVerfuegbar() && typeof cap()?.Plugins?.FamilienakteTresor?.einrichten === "function";
 /** Code aus einer Capacitor-Ablehnung ({ code }), einer Tauri-Ablehnung (Zeichenkette) oder einem Zustand. */
 export function proTresorCode(fehler: unknown): string {
   const wert = typeof fehler === "string" ? fehler
@@ -43,6 +48,10 @@ export function proTresorMeldung(code: string): string {
     case "FA_TRESOR_FREMDE_KENNUNG": return "Anderer Tresor verbunden – bitte den Ordner wählen, in dem tresorordner.json liegt.";
     case "FA_TRESOR_NICHT_VORHANDEN": return `In diesem Ordner liegt keine tresorordner.json. ${ORDNER_HINWEIS} Es wurde kein neuer Tresor angelegt.`;
     case "FA_TRESOR_UNTERORDNER": return `Du hast einen Unterordner des Tresors gewählt (z. B. „Tresorordner“, „Familienakte“ oder „Eingang-…“). Bitte eine Ebene höher den Ordner wählen, in dem tresorordner.json liegt. Es wurde nichts verändert.`;
+    case "FA_TRESOR_MEHRERE": return "In diesem Speicher liegen mehrere Tresore. Bitte direkt den gewünschten Tresor-Ordner wählen. Es wurde nichts verändert.";
+    case "TRESOR_NAME_UNGUELTIG": return "Dieser Ordnername geht nicht (keine Zeichen wie / \\ : * ? \" < > |, nicht der Name eines Fachs). Es wurde nichts angelegt.";
+    case "TRESOR_NAME_BELEGT": return "Ein Ordner mit diesem Namen liegt dort schon und hat Inhalt. Bitte einen anderen Namen wählen. Es wurde nichts angelegt.";
+    case "TRESOR_PASSWORT_KURZ": return "Das Passwort ist zu kurz (mindestens 10 Zeichen). Es wurde nichts angelegt.";
     case "FA_TRESOR_ABGEBROCHEN": return "Ordnerwahl oder Passwort abgebrochen. Es wurde nichts geändert; die bisherige Verbindung bleibt.";
     case "FA_TRESOR_FREIGABE_FEHLT": return "Das Gerät hat keine dauerhafte Lese- und Schreibfreigabe für diesen Ordner erteilt. Bitte den Ordner erneut wählen und den Zugriff erlauben.";
     case "TRESOR_PASSWORT_FALSCH": return "Das Passwort passt nicht zu diesem Tresor. Es wurde nichts verändert.";
@@ -57,7 +66,7 @@ export function proTresorMeldung(code: string): string {
 }
 
 export const proTresor = {
-  zustand: () => aufrufen("zustand"), verbinden: () => aufrufen("verbinden"),
+  zustand: () => aufrufen("zustand"), verbinden: () => aufrufen("verbinden"), einrichten: () => aufrufen("einrichten"),
   entsperren: () => aufrufen("entsperren"), sperren: () => aufrufen("sperren"),
 };
 
