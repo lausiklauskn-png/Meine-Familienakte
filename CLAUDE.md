@@ -2,6 +2,13 @@
 
 Diese Datei liest jede Sitzung zuerst. Was hier steht, gilt für jede Arbeit in diesem Repo.
 
+## Testfassung 2.28.18 veröffentlicht (Android, 03./04.11.2026)
+
+Klaus' Wort: „Veröffentliche die Test-APKs von Familienakte 2.28.18 …“. Enthält den Tresor-Plan (#71: Abgleich prüft
+den Datentresor selbst, „Anderer Tresor verbunden“, Bestätigung nach Ordnerwahl, „Wo liegt was?“). Nur Android,
+server=ja, Lauf 41742673788, APK SHA-256 `d62138c5…62e3`, 19.800.021 B, Download von GitHub unabhängig geprüft.
+Nachweis `docs/VEROEFFENTLICHUNG-2.28.18.json`. Nicht erneut ausgeben. Am Tablet noch nicht geprüft.
+
 ## Neueste Übergabe an Claude Code: Tresor-Pfad und Abgleich, 03.11.2026
 
 Klaus hat die weitere Tresorprüfung an seine bereits begonnene Claude-Code-Sitzung übergeben.
