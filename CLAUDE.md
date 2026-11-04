@@ -5,29 +5,26 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 `docs/briefe-archiv/` (Klaus 2026-11-04: archivieren statt löschen); die Veröffentlichungsnachweise in
 `docs/VEROEFFENTLICHUNG-<fassung>.json`.
 
-## Laufender Bau: Demo-Kennzeichnung und Tresorstatus 2.28.22
+## Aktueller Stand (04.11.2026, abends)
 
-Klaus beauftragt die direkte Umsetzung in dieser Sitzung: `BRIEF_SITZUNG_2026-11-04_DEMO-RAHMEN-UND-TRESORSTATUS.md`.
-Automatischen Browserspeicher nicht als gewählten eigenen Tresor grün anzeigen. Demo-Ablage und eigene Auswahl trennen;
-oben roter Rahmen und DEMO-Wort, auch mobil. Dateien, bestehende eigene Auswahl und Berichte erhalten.
-Die parallelen #79/#80 bleiben enthalten: sichtbare technische Versionszeile und archivierte ältere Briefe.
-Deshalb neue Zielfassung 2.28.22; erst nach vollständigen Prüfketten veröffentlichen.
-Klaus bestätigt erste fünf Praxispunkte, zehn weitere bleiben ungeprüft. Forschungs-/Zeitblock nur in Kimhub.
-
-## Aktueller Stand (04.11.2026)
-
-- **Fassung 2.28.21** (Android, Windows, PWA) ist veröffentlicht, Nachweis `docs/VEROEFFENTLICHUNG-2.28.21.json`;
-  nicht erneut ausgeben. Die Versionszeile oben/unten zeigt die technische Fassung aus
-  `package.json`; `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
+- **Fassung 2.28.23** (Android, Windows, PWA): Handy-Kopfleiste, Hinweisfenster am Fragezeichen, Tresor-Erklärungen als
+  Ordnerbaum/Ablauf, Demo-Schalter am Handy, Drucken über Androids Druckdienst, Aus-/Einloggen sperrt/entsperrt den
+  Pro-Tresor. Nachweis `docs/VEROEFFENTLICHUNG-2.28.23.json`; nicht erneut ausgeben. 2.28.22 (Codex: Demo-Rahmen,
+  ehrlicher Tresorstatus) liegt darunter. Die Versionszeile zeigt die technische Fassung aus `package.json`;
+  `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
 - **Namen:** Web-App (PWA, Browser) = „Familienakte Basic“ (`public/manifest.webmanifest`), native Apps
-  (Android `strings.xml`, Windows `tauri.conf.json`) = „Familienakte Pro“. Nicht wieder angleichen – Klaus muss
-  beide auf dem Startbildschirm unterscheiden können. Die Anzeige Basic/Pro im Kopf folgt `APP_VARIANTE`.
+  (Android `strings.xml`, Windows `tauri.conf.json`) = „Familienakte Pro“. Nicht wieder angleichen. Die Anzeige
+  Basic/Pro im Kopf folgt `APP_VARIANTE` (seit 2.28.23 in der Zeile der Versionsnummer).
 - **Updates:** Tipp auf die Versionszeile prüft in Android und Windows den Update-Server family-projekt.de
   (Ausgabe mit `server=ja`); die PWA aktualisiert sich über Pages.
+- **Oberfläche:** Kein Personenname in sichtbaren Texten (Klaus 2026-11-04: „Nutzer“). Erklärungen kurz, in Punkten, hinter
+  Fragezeichen; Ablaufbilder/Ordnerbäume über `app/ablaufbild.tsx`. Neue Entwürfe erst als HTML-Vorschau zeigen.
+- **Gemeinsamer Tresor:** Workflow-PDF-Pro #65 (Hauptordner finden/anlegen, Name frei, Vorschlag „Family-Projekt“) ist
+  gebaut, aber in keiner App verdrahtet. Klaus will danach alle Pro-Apps neu installieren und frische Tresorräume anlegen.
 - Aktuelle Briefe im Hauptordner:
-  - `BRIEF_ABSCHLUSS_2026-11-04_BASIC-NAME-UND-VERSIONSZEILE.md` (jüngster Abschluss, Stand der Ausgabe 2.28.21)
+  - `BRIEF_ABSCHLUSS_2026-11-04_HANDY-UND-TRESOR-ERKLAERUNGEN.md` (jüngster Abschluss, Startauftrag)
+  - `BRIEF_ABSCHLUSS_2026-11-04_DEMO-RAHMEN-UND-TRESORSTATUS.md` (Codex, 2.28.22, Übergabe an Claude)
   - `BRIEF_ABSCHLUSS_2026-11-04_DEMO-UND-DATEIERHALT.md` mit `docs/DEMO-ARBEITSBEREICH.md` (getrennte Demo, Dateierhalt)
-  - `BRIEF_SITZUNG_2026-11-04_DEMO-UND-SYSTEMMELDUNGEN.md`
   - `BRIEF_ABSCHLUSS_2026-11-04_TRESOR-PLAN.md`, `BRIEF_ABSCHLUSS_2026-11-03_TRESOR-UEBERGABE-AN-CLAUDE.md`,
     `BRIEF_SITZUNG_2026-11-03_TRESOR-PFAD-UND-ABGLEICH.md` (Tresor-Pfad, Abgleich)
   - `BRIEF_SITZUNG_2026-11-01_PRO-VERBUND.md`, `BRIEF_ABSCHLUSS_2026-11-02_PRO-VERBUND.md` (Grundlage Pro-Verbund)
@@ -39,7 +36,8 @@ Klaus bestätigt erste fünf Praxispunkte, zehn weitere bleiben ungeprüft. Fors
 - Ältere zusätzliche Android-Tresor-Paar-Abnahme (Workflow PDF Pro, BookLedgerPro) nicht vollständig geprüft;
   Maßstab `docs/PRO-VERBUND-PRUEFSTAND.md`, Berichte `docs/pro-verbund-nachweise.json`. Keine vollständige
   Gesamtabnahme behaupten, keine fehlgeschlagenen Prüfungen abschalten. Workflow-PDF-Pro PR #59 bleibt Entwurf.
-- Eigene Berichte und ungeprüfte Nutzergeräte; Rückmeldung zum Basic-Namen und zur Versionszeile am Tablet.
+- Eigene Berichte und ungeprüfte Nutzergeräte; Tablet-Rückmeldung zu 2.28.23 (Kopfleiste, Fragezeichen, Drucken,
+  Aus-/Einloggen, Demo-Schalter). Drucken über den Android-Druckdienst ist am Gerät ungeprüft.
 
 ## Veröffentlichen
 
