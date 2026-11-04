@@ -23,3 +23,7 @@ Keine Einsicht in Klaus' gespeicherte Berichte, kein automatisches Bestätigen s
 ## Parallelstand integriert
 
 #79 erhöht main auf 2.28.21 und zeigt die technische Fassung in Kopf/Fuß. #80 archiviert ältere Briefe und kürzt CLAUDE.md. Beide sind unverändert enthalten; die eigene Zielfassung ist deshalb 2.28.22. Der Header enthält sowohl die technische Versionszeile als auch das neue DEMO-Wort. Die Archivstruktur und der gekürzte Sitzungsanker bleiben erhalten.
+
+## Geprüft abgeschlossen
+
+#81 zuerst zusammengeführt; 2.28.22 veröffentlicht. [Abschluss und Abstimmung mit Claude](BRIEF_ABSCHLUSS_2026-11-04_DEMO-RAHMEN-UND-TRESORSTATUS.md) · [Veröffentlichungsnachweise](docs/VEROEFFENTLICHUNG-2.28.22.json). Weitere native Arbeit und2.28.23 bleiben bei Claude; keine weiteren parallelen UI-Änderungen durch Codex.
