@@ -70,6 +70,7 @@ try {
     if (!(n === 0)) throw new Error(`${n} sichtbar`);
     return "kein sichtbarer Knopf";
   });
+  await step("Versionszeile oben zeigt die technische Fassung", async () => { const t = (await page.textContent(".site-brand-version")) || ""; return t.trim() === "Version " + meta.version ? t.trim() : false; });
   await step("Versionszeile trägt die Bau-Kennung als Tipp", async () => { const t = await page.getAttribute(".site-brand-version", "title"); return t && t.includes(meta.build) ? t : false; });
 } finally { await browser.close(); await app.stop(); }
 process.exit(summary("PWA"));
