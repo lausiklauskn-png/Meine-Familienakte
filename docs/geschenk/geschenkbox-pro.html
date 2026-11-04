@@ -1,0 +1,94 @@
+<title>Geschenkbox Pro-Apps</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: eine Spalte; Familienakte groß vorn (sie wird getestet), die drei Begleiter darunter als Reihe; Tipps am Ende. */
+:root{
+ --bg:#f2eee7; --paper:#fffcf7; --fg:#1e2328; --muted:#5d656f; --line:#dcd3c6; --accent:#2f6f73; --accent-fg:#fff; --ribbon:#b5523b;
+ --display:"Fraunces", Georgia, serif; --body:"Source Sans 3", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#12161c;--paper:#19202a;--fg:#e7e3db;--muted:#a3abb5;--line:#2d3642;--accent:#72b5b8;--accent-fg:#0c1819;--ribbon:#e08a72;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#12161c;--paper:#19202a;--fg:#e7e3db;--muted:#a3abb5;--line:#2d3642;--accent:#72b5b8;--accent-fg:#0c1819;--ribbon:#e08a72;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font:16px/1.5 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+main{max-width:760px;margin:0 auto;display:grid;gap:22px}
+h1{font-family:var(--display);font-size:2rem;line-height:1.15;margin:0;text-wrap:balance}
+h2{font-family:var(--display);font-size:1.35rem;margin:0}
+h3{font-size:1.05rem;margin:0}
+p{margin:0}.muted{color:var(--muted)}
+.band{height:6px;border-radius:3px;background:linear-gradient(90deg,var(--ribbon),var(--accent))}
+.karte{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:10px}
+.gross{border-width:2px;border-color:var(--accent)}
+.ver{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.knoepfe{display:flex;flex-wrap:wrap;gap:8px}
+a.k{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-weight:600;font-size:.95rem;border-radius:9px;padding:8px 14px;border:1px solid var(--line);color:var(--fg);min-height:40px}
+a.k.haupt{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+a.k:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mb{font-weight:400;opacity:.8;font-variant-numeric:tabular-nums}
+.reihe{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.reihe .karte{min-width:0}
+ol{margin:0;padding-left:1.3em;display:grid;gap:6px}
+.fuss{font-size:.85rem;color:var(--muted)}
+</style>
+<main>
+ <div class="band" aria-hidden="true"></div>
+ <header style="display:grid;gap:8px">
+  <h1>Geschenkbox: die Pro-Apps</h1>
+  <p class="muted">Zum Ausprobieren im echten Alltag. Alles bleibt auf dem eigenen Gerät; kein Konto, kein Abo.</p>
+ </header>
+
+ <section class="karte gross">
+  <h2>Familienakte Pro</h2>
+  <p>Alle Unterlagen der Familie an einem Ort – Ausweise, Verträge, Arztbriefe, Versicherungen – geordnet, durchsuchbar und verschlüsselt.</p>
+  <p class="ver">Fassung 2.28.25</p>
+  <div class="knoepfe">
+   <a class="k haupt" href="https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.25/Familienakte-android-v2.28.25.apk">Android <span class="mb">19,8 MB</span></a>
+   <a class="k" href="https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/windows-v2.28.25/Familienakte-Windows-2.28.25-x64-setup.exe">Windows <span class="mb">34,0 MB</span></a>
+   <a class="k" href="https://lausiklauskn-png.github.io/Meine-Familienakte/">Im Browser (Basic)</a>
+  </div>
+ </section>
+
+ <section style="display:grid;gap:10px">
+  <h3 class="muted" style="font-weight:600">Passt dazu</h3>
+  <div class="reihe">
+   <div class="karte">
+    <h3>Workflow PDF Pro</h3>
+    <p>Scannen, Formulare ausfüllen, PDFs zusammenfügen.</p>
+    <p class="ver">Android 1.0.14 · Windows 1.0.13</p>
+    <div class="knoepfe">
+     <a class="k" href="https://github.com/lausiklauskn-png/Workflow-PDF-Pro/releases/download/v1.0.14/Workflow-PDF-Pro-1.0.14.apk">Android <span class="mb">83 MB</span></a>
+     <a class="k" href="https://github.com/lausiklauskn-png/Workflow-PDF-Pro/releases/download/windows-v1.0.13/Workflow-PDF-Pro-Windows-1.0.13-Setup.exe">Windows <span class="mb">26 MB</span></a>
+    </div>
+   </div>
+   <div class="karte">
+    <h3>Private Brain Pro</h3>
+    <p>Mails, Dokumente und Fotos durchsuchen – auch nach Bedeutung.</p>
+    <p class="ver">Android 1.0.45 · Windows 1.0.44</p>
+    <div class="knoepfe">
+     <a class="k" href="https://github.com/lausiklauskn-png/Privat-Brain-Pro/releases/download/v1.0.45/Private-Brain-Pro-1.0.45.apk">Android <span class="mb">61 MB</span></a>
+     <a class="k" href="https://github.com/lausiklauskn-png/Privat-Brain-Pro/releases/download/windows-v1.0.44/Private-Brain-Pro-Windows-1.0.44-x64-setup.exe">Windows <span class="mb">101 MB</span></a>
+    </div>
+   </div>
+   <div class="karte">
+    <h3>BookLedgerPro</h3>
+    <p>Belege und Buchhaltung für Haushalt und Kleinbetrieb.</p>
+    <p class="ver">Android 0.1.9 · Windows 0.1.8</p>
+    <div class="knoepfe">
+     <a class="k" href="https://github.com/lausiklauskn-png/BookLedgerPro/releases/download/v0.1.9/BookLedgerPro-0.1.9.apk">Android <span class="mb">28 MB</span></a>
+     <a class="k" href="https://family-projekt.de/updates/bookledgerpro/BookLedgerPro-Windows-0.1.8-x64-setup.exe">Windows</a>
+    </div>
+   </div>
+  </div>
+ </section>
+
+ <section class="karte">
+  <h3>So geht's</h3>
+  <ol>
+   <li><b>Android:</b> Datei antippen und installieren. Beim ersten Mal fragt Android, ob der Browser Apps installieren darf – erlauben.</li>
+   <li><b>Windows:</b> Setup starten. Zeigt Windows „Der Computer wurde geschützt“: <i>Weitere Informationen</i> → <i>Trotzdem ausführen</i> (die Setups sind noch nicht signiert).</li>
+   <li><b>Gemeinsamer Tresor (freiwillig):</b> einmal in einer App anlegen, zum Beispiel in Private Brain Pro: <i>Einstellungen › Zusammenarbeit mit Pro-Apps › Pro-Tresor verbinden</i>, einen leeren Ordner wählen, „hier neu anlegen“, Passwort merken. In der Familienakte dann <i>Sicherheitscenter › Gemeinsamer Pro-Tresor</i> → denselben Ordner verbinden, dasselbe Passwort. Ein einfacherer Weg („nur Speicher wählen“) kommt mit den nächsten Fassungen.</li>
+   <li>Was nicht klappt oder auffällt: kurz notieren, mit Foto vom Bildschirm. Genau das brauchen wir.</li>
+  </ol>
+ </section>
+
+ <p class="fuss">Stand 4. November 2026. Testfassungen – bitte wichtige Unterlagen zusätzlich wie gewohnt aufbewahren.</p>
+</main>
