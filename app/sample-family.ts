@@ -24,6 +24,11 @@ const SAMPLE_IDS = "mmi-sample-family-ids";
 const SAMPLE_SOURCE = "Beispieldaten – frei erfunden";
 const SAMPLE_MEMORY_TEXTS = ["Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderrad gefahren – einmal um den ganzen Pustelblumenweg!", "Die Waschmaschine pumpt das Wasser nicht mehr ab. Am Display blinkt ein Lämpchen. Garantieanfrage an den Reparaturdienst Schraubenglück geschickt.", "Erster Abend in der neuen Wohnung in Wolkenhain. Die Kisten stehen noch überall, aber Ella hat ihr Zimmer schon eingerichtet.", "Ella freut sich sehr auf den Schulausflug zum Wolkensee. Elternbrief ist angekommen, Einverständniserklärung noch unterschreiben.", "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung. Wasser ist teurer als im Vorjahr – nachrechnen."];
 const SAMPLE_LETTER_SUBJECTS = ["Garantiefall Waschmaschine Schleuderling Waschwunder 7", "Nebenkostenabrechnung 2025 – Bitte um Belegeinsicht", "Antrag auf Teilzeit"];
+const SAMPLE_LETTER_CONTENTS = [
+  { subject: SAMPLE_LETTER_SUBJECTS[0], recipient: "Reparaturdienst Schraubenglück (erfunden)", body: "Sehr geehrte Damen und Herren,\n\nunsere Waschmaschine pumpt das Wasser nicht mehr ab. Das Gerät ist noch in der Garantiezeit, die Rechnung hängt an.\n\nMit freundlichen Grüßen\nJonna Lindqvist-Arenberg" },
+  { subject: SAMPLE_LETTER_SUBJECTS[1], recipient: "Hausverwaltung Pustelblume (erfunden)", body: "Sehr geehrte Damen und Herren,\n\nvielen Dank für die Nebenkostenabrechnung 2025. Die Wasserkosten sind deutlich gestiegen. Bitte teilen Sie mir mit, wann ich die Belege einsehen kann.\n\nMit freundlichen Grüßen\nMattis Lindqvist-Arenberg" },
+  { subject: SAMPLE_LETTER_SUBJECTS[2], recipient: "Arbeitgeber Wolkenwerk (erfunden)", body: "Sehr geehrte Damen und Herren,\n\nhiermit beantrage ich, meine Arbeitszeit auf vier Arbeitstage pro Woche zu verringern.\n\nMit freundlichen Grüßen\nJonna Lindqvist-Arenberg" },
+];
 
 export const SAMPLE_ADDRESS = "Pustelblumenweg 7 · 00917 Wolkenhain an der Fabel";
 
@@ -261,9 +266,9 @@ async function seedOnce(handle: FileSystemDirectoryHandle, options: { force?: bo
 
   // ── Korrespondenz (Entwürfe und versendete Schreiben) ────────────────────
   const letters: Array<{ status: "Entwurf" | "Versendet" | "Antwort ausstehend" | "Erledigt"; kind: string; recipient: string; subject: string; body: string; offset: number; caseKey: string; docs: string[] }> = [
-    { status: "Antwort ausstehend", kind: "Reklamation", recipient: "Reparaturdienst Schraubenglück (erfunden)", subject: SAMPLE_LETTER_SUBJECTS[0], body: "Sehr geehrte Damen und Herren,\n\nunsere Waschmaschine pumpt das Wasser nicht mehr ab. Das Gerät ist noch in der Garantiezeit, die Rechnung hängt an.\n\nMit freundlichen Grüßen\nJonna Lindqvist-Arenberg", offset: -9, caseKey: "fall-waschmaschine", docs: ["doc-wm-anfrage", "doc-wm-rechnung"] },
-    { status: "Entwurf", kind: "Anfrage", recipient: "Hausverwaltung Pustelblume (erfunden)", subject: SAMPLE_LETTER_SUBJECTS[1], body: "Sehr geehrte Damen und Herren,\n\nvielen Dank für die Nebenkostenabrechnung 2025. Die Wasserkosten sind deutlich gestiegen. Bitte teilen Sie mir mit, wann ich die Belege einsehen kann.\n\nMit freundlichen Grüßen\nMattis Lindqvist-Arenberg", offset: -1, caseKey: "fall-nebenkosten", docs: ["doc-nebenkosten"] },
-    { status: "Antwort ausstehend", kind: "Brief", recipient: "Arbeitgeber Wolkenwerk (erfunden)", subject: SAMPLE_LETTER_SUBJECTS[2], body: "Sehr geehrte Damen und Herren,\n\nhiermit beantrage ich, meine Arbeitszeit auf vier Arbeitstage pro Woche zu verringern.\n\nMit freundlichen Grüßen\nJonna Lindqvist-Arenberg", offset: -20, caseKey: "fall-teilzeit", docs: ["doc-teilzeit"] },
+    { status: "Antwort ausstehend", kind: "Reklamation", ...SAMPLE_LETTER_CONTENTS[0], offset: -9, caseKey: "fall-waschmaschine", docs: ["doc-wm-anfrage", "doc-wm-rechnung"] },
+    { status: "Entwurf", kind: "Anfrage", ...SAMPLE_LETTER_CONTENTS[1], offset: -1, caseKey: "fall-nebenkosten", docs: ["doc-nebenkosten"] },
+    { status: "Antwort ausstehend", kind: "Brief", ...SAMPLE_LETTER_CONTENTS[2], offset: -20, caseKey: "fall-teilzeit", docs: ["doc-teilzeit"] },
   ];
   for (const letter of letters) {
     const sentAt = letter.status === "Entwurf" ? undefined : at(letter.offset).toISOString();
@@ -302,7 +307,7 @@ export async function removeSampleFamily(handle: FileSystemDirectoryHandle) {
     const targets = data.relations.filter((relation) => relation.fromId === item.id).map((relation) => relation.toId);
     const onlySampleTargets = targets.length > 0 && targets.every((id) => ids.has(id));
     const memory = item.source === "Tagebuch & Erinnerungsprotokoll" && SAMPLE_MEMORY_TEXTS.includes(String(value.originalText)) && Array.isArray(value.media) && value.media.length === 0;
-    const correspondence = item.source === "Assistenz- und Korrespondenzzentrale" && value.entryKind === "correspondence" && SAMPLE_LETTER_SUBJECTS.includes(String(value.subject)) && Array.isArray(value.sourceDocumentIds) && value.sourceDocumentIds.length > 0 && value.sourceDocumentIds.every((id) => typeof id === "string" && ids.has(id));
+    const correspondence = item.source === "Assistenz- und Korrespondenzzentrale" && value.entryKind === "correspondence" && SAMPLE_LETTER_CONTENTS.some((letter) => value.subject === letter.subject && value.recipient === letter.recipient && value.body === letter.body) && Array.isArray(value.sourceDocumentIds) && value.sourceDocumentIds.length > 0 && value.sourceDocumentIds.every((id) => typeof id === "string" && ids.has(id));
     if (onlySampleTargets && (memory || correspondence)) ids.add(item.id);
   }
   for (const item of data.records) if (item.source && ids.has(item.source)) ids.add(item.id);
