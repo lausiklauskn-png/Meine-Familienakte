@@ -29,13 +29,15 @@ try {
     return (await card.innerText()).includes("Noch kein eigener Datentresor gewählt") && await card.locator(".badge.success").count() === 0;
   });
   await step("Eigener Ordner wird bewusst gewählt; erfundene Fachprobe dort ausdrücklich vorbereiten", async () => {
-    await page.evaluate(() => { window.__naechsterOrdner = "Eigener-Tresor-Probe"; });
-    await page.getByRole("button", { name: "PC-/USB-Ordner verbinden", exact: true }).click();
     await vaultFixture(page);
-    await page.evaluate(async () => { const f = window.__vaultFixture; await f.seedSampleFamily(await f.rememberedVault(), { force: true }); });
-    await footer(page, "Dokumentenbibliothek");
-    await page.getByRole("button", { name: "Neu laden", exact: true }).click();
-    await footer(page, "Sicherheitscenter");
+    await page.evaluate(async () => {
+      const f = window.__vaultFixture;
+      const handle = await (await navigator.storage.getDirectory()).getDirectoryHandle("Eigener-Tresor-Probe", { create: true });
+      await f.seedSampleFamily(handle, { force: true });
+      window.__naechsterOrdner = "Eigener-Tresor-Probe";
+    });
+    await page.getByRole("button", { name: "PC-/USB-Ordner verbinden", exact: true }).click();
+    await page.locator(".security-compare-card .badge.success").waitFor();
     return (await page.locator(".security-compare-card").innerText()).includes("Eigener-Tresor-Probe");
   });
   // Früher gab der Knopf den Tresor zugleich als Analysequelle und Register an die Bestandsanalyse – deren
