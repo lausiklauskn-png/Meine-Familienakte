@@ -15,6 +15,20 @@ Claude Code, Fortsetzung nach 2.28.25. Vorgänger: `docs/briefe-archiv/BRIEF_ABS
   Speicherwahl und Fenster. Gemerkt wird zusätzlich der Hauptordner-Pfad (`pfad`, über `UnterAblage`); alte Verbindungen
   (Pfad leer) unverändert. Windows behält „Vorhandenen Pro-Tresor verbinden“.
 
+## Nachtrag (Klaus' Ja, 04.11. spät)
+
+- **#92 übernommen** (alle sechs CI-Prüfungen grün; der erste `webview`-Lauf scheiterte am Emulator-Abbild, nicht am PR).
+- **BookLedgerPro #454 übernommen:** derselbe Weg (`BlpTresorPlugin.tresorEinrichten`, Logik in `TresorEinrichtung` mit
+  JUnit), zusätzlich „Auf diesem Gerät merken“; Hauptknopf in Einstellungen › Tresor & Ablage und Ansicht „Tresorordner“.
+  Proben: JUnit 29, `run.mjs` 2655/0, `test-native` 62, `smoke_tresorordner` 35, CI android + smoke-test grün.
+  `smoke_ohne_web` 26/2 rot – auf main genauso, nicht von #454. `sw.js` v290.
+- **Private Brain Pro: nicht gebaut.** Dort muss zuerst die eigene Ablage (`Vault`) lernen, in einem Unterordner des
+  gewählten Speichers zu arbeiten (Workflow PDF Pro: `DocumentVault.inspectIn`, `ProTresorordner.baumSetzen(baum, wurzel)`).
+  Eingriff in Mail- und Originalspeicher, deshalb in einer frischen Sitzung.
+- **Tresor-Leser (Klaus' Wunsch):** eine HTML-Datei, die neben dem Tresor auf SD-Karte/USB liegt und ihn in jedem Browser
+  ohne Installation öffnet (Passwort, Dokumente ansehen und einzeln herunterladen, nur lesend). Bauen nach Private Brain Pro,
+  vor der Neuinstallation, am Testtresor prüfen; gepflegt in Workflow PDF Pro (dort liegt das Paket). Erst Vorschau.
+
 ## Proben
 
 JVM `tools/native/test-pro-tresor.mjs` grün (neuer Block Ein-Schritt-Tresor) · Gegenprobe von Hand 4/4 gefangen (ein
@@ -42,16 +56,19 @@ Familienakte & Pro-Tresor – Fortsetzung nach dem Ein-Schritt-Tresor (Claude Co
 
 Repos: lausiklauskn-png/Meine-Familienakte, Workflow-PDF-Pro, BookLedgerPro, Privat-Brain-Pro, Kimhub.
 Zuerst lesen: Meine-Familienakte CLAUDE.md, BRIEF_ABSCHLUSS_2026-11-04_TRESOR-EIN-SCHRITT-FAMILIENAKTE.md,
-BRIEF_CODEX_2026-11-04_NACH-2.28.24.md. Frisch von origin/main; Releases prüfen; 2.28.22–2.28.25 nie erneut ausgeben,
+BRIEF_CODEX_2026-11-04_NACH-2.28.24.md. Familienakte #92 und BookLedgerPro #454 sind auf main. Frisch von origin/main; Releases prüfen; 2.28.22–2.28.25 nie erneut ausgeben,
 nächste Fassung 2.28.26. Offene Codex-PRs zuerst prüfen.
 
 Als Nächstes:
-1. Familienakte #92 (Entwurf): Android-CI prüfen; Klaus' Antwort zur Vorschau https://claude.ai/artifact/M6FxJcNQF5GugVvwrqgPv9
-   abholen; bei Ja übernehmen.
-2. Danach denselben Ein-Schritt-Weg in BookLedgerPro und Private Brain Pro (Vorbild Workflow PDF Pro tresorEinrichten).
+1. Private Brain Pro: Ein-Schritt-Weg „Tresor einrichten – nur Speicher wählen“ (Vorbild Workflow PDF Pro tresorEinrichten,
+   Familienakte #92, BookLedgerPro #454). Zuerst Vault auf einen Hauptordner unter dem gewählten Speicher umstellen
+   (wie DocumentVault.inspectIn), ProTresorordner.baumSetzen mit Wurzel. Oberfläche erst als HTML-Vorschau.
+2. Tresor-Leser: eine HTML-Datei für SD-Karte/USB, öffnet den Tresor im Browser ohne Installation, nur lesend. Gepflegt in
+   Workflow PDF Pro, am Testtresor prüfen, erst Vorschau.
 3. PWA: Updateweg per Tipp auf die Versionszeile prüfen; Seitentitel „Familienakte Pro“ in der PWA mit Klaus klären.
 4. Vollsicherung auf Android stückweise in einen gewählten Ordner.
-5. Tablet-Rückmeldung zu 2.28.25 abholen. Veröffentlichung 2.28.26 nur auf Klaus' Wort. Sitzung in Kimhub eintragen.
+5. Tablet-Rückmeldung zu 2.28.25 abholen. Veröffentlichung 2.28.26 (Familienakte) und BookLedgerPro nur auf Klaus' Wort.
+   Danach: Klaus installiert alle Pro-Apps neu und legt den Tresor frisch an. Sitzung in Kimhub eintragen.
 
 Nicht tun: Kim-sync nicht einbauen; keine Forschung in App-Repos; Byte-1:1-Bausteine nie von Hand; Tresor-Paket nur in
 Workflow PDF Pro ändern; nichts veröffentlichen ohne Klaus' Wort; keine Geräteprüfung behaupten, die nicht stattfand.

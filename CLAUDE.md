@@ -24,8 +24,9 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Kim-sync** gehört nicht in die Familienakte (Klaus 2026-11-04); die Geräteübergabe nennt nur einen frei wählbaren Weg.
 - **Gemeinsamer Tresor:** Workflow-PDF-Pro #67 (main 066498d) verdrahtet „Tresor einrichten – nur Speicher wählen“ (Hauptordner
   finden/anlegen, ein Passwort, Lies-mich, Speichern in den Tresor gesperrt). Das Paket liegt byte-gleich in Familienakte,
-  BookLedgerPro, Private Brain Pro. In der Familienakte (Android) verdrahtet in **#92 (Entwurf, wartet auf Klaus' Ja zur
-  Vorschau)**: `ProTresorAdapter.einrichten`, `FamilienakteTresorPlugin.einrichten`; BookLedgerPro/Private Brain Pro noch nicht. Klaus will danach alle Pro-Apps neu installieren
+  BookLedgerPro, Private Brain Pro. Ein-Schritt-Weg verdrahtet in Familienakte #92 (`ProTresorAdapter.einrichten`,
+  `FamilienakteTresorPlugin.einrichten`) und BookLedgerPro #454, beide auf main, nicht veröffentlicht; Private Brain Pro offen.
+  Danach Tresor-Leser (HTML auf der Karte, ohne Installation, nur lesend). Klaus will danach alle Pro-Apps neu installieren
   und frische Tresorräume anlegen.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
   - `BRIEF_ABSCHLUSS_2026-11-04_TRESOR-EIN-SCHRITT-FAMILIENAKTE.md` (jüngster Abschluss, Startauftrag)
@@ -41,8 +42,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Gesamtabnahme behaupten, keine fehlgeschlagenen Prüfungen abschalten. Workflow-PDF-Pro PR #59 bleibt Entwurf.
 - Eigene Berichte und ungeprüfte Nutzergeräte; Tablet-Rückmeldung zu 2.28.23/2.28.24 und zum Demo-Knopf. Drucken über den
   Android-Druckdienst ist am Gerät ungeprüft.
-- Vollsicherung auf Android (Dateiausgabe nimmt nur 20 MB je Datei), PWA-Updates nach Codex #89, Ein-Schritt-Tresor in der
-  Familienakte verdrahten.
+- Vollsicherung auf Android (Dateiausgabe nimmt nur 20 MB je Datei), PWA-Updates nach Codex #89, Ein-Schritt-Tresor in Private Brain Pro, Tresor-Leser.
 
 ## Veröffentlichen
 
