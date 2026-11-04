@@ -347,7 +347,7 @@ try {
   await step("Suche auf der Startseite findet die neue Unterlage", async () => {
     await page.locator(".main-navigation .nav-cluster > button").first().waitFor();
     await page.evaluate(() => window.scrollTo(0, 0));
-    const search = page.locator("input[placeholder*='Zeige mir']");
+    const search = page.getByLabel("Gesamte Akte in natürlichen Worten durchsuchen");
     await search.fill("Lavorix");
     await search.press("Enter");
     await page.locator("text=Garantiebeleg_Waschautomat_Lavorix").first().waitFor({ timeout: 10000 });
