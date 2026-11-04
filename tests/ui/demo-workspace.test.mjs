@@ -143,6 +143,10 @@ try {
   await page.getByRole("button", { name: "Demo öffnen", exact: true }).waitFor();
   await step("Eigene Akte bleibt auch nach Demo-Reset und Neustart unverändert", async () => { await page.reload({ waitUntil: "networkidle" }); assert.deepEqual(await documents(), before); });
   await switchWorkspace(page, true);
+  await page.evaluate(() => {
+    sessionStorage.setItem("familienakte_ki_map", "eigene Zuordnung erhalten");
+    sessionStorage.setItem("Familienakte-Demo-v1:familienakte_ki_map", "erfundene Demo-Zuordnung");
+  });
   await page.getByRole("button", { name: "Demo löschen und verlassen", exact: true }).click();
   await Promise.all([page.waitForURL(url => !url.searchParams.has("demo")), page.getByRole("button", { name: "Ja, fortfahren", exact: true }).click()]);
   await page.waitForLoadState("networkidle");
@@ -151,11 +155,13 @@ try {
     assert.deepEqual(await documents(), before);
     const remains = await page.evaluate(async () => {
       const root = await navigator.storage.getDirectory();
-      return { folders: await Array.fromAsync(root.keys()), databases: (await indexedDB.databases()).map(db => db.name), keys: Object.keys(localStorage) };
+      return { folders: await Array.fromAsync(root.keys()), databases: (await indexedDB.databases()).map(db => db.name), keys: Object.keys(localStorage), sessionKeys: Object.keys(sessionStorage), ownMap: sessionStorage.getItem("familienakte_ki_map") };
     });
     assert.ok(!remains.folders.some(name => name.startsWith("Familienakte-Demo-v1:")));
     assert.ok(!remains.databases.some(name => name.startsWith("Familienakte-Demo-v1:")));
     assert.ok(!remains.keys.some(name => name.startsWith("Familienakte-Demo-v1:")));
+    assert.ok(!remains.sessionKeys.some(name => name.startsWith("Familienakte-Demo-v1:")));
+    assert.equal(remains.ownMap, "eigene Zuordnung erhalten");
   });
   const nativeContext = await browser.newContext(HANDY);
   await nativeContext.addInitScript(capacitorStub);

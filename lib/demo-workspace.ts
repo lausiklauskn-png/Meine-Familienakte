@@ -30,4 +30,5 @@ export async function resetDemoStorage() {
     });
   }
   for (const key of Object.keys(localStorage)) if (key.startsWith(prefix)) localStorage.removeItem(key);
+  for (const key of Object.keys(sessionStorage)) if (key.startsWith(prefix)) sessionStorage.removeItem(key);
 }
