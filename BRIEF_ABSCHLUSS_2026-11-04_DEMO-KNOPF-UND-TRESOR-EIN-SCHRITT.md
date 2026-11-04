@@ -53,10 +53,22 @@ können). Codex arbeitete parallel an #89 (PWA aus dem gebauten Paket) – nicht
   Kompilierfehler `JSONException`, behoben).
 - BookLedgerPro `test-native` 62 grün. Private Brain Pro: Pin-Prüfung grün, Browser-Probe im Behälter nicht lauffähig.
 
+## Veröffentlicht: 2.28.25 (Klaus' Wort: „Veröffentliche 2.28.25, sobald alles grün ist“)
+
+Von main `869842d` (#90 mit Codex' #89), je mit Update-Server. Downloads anonym geladen, SHA-256 gleich `SHA256SUMS`:
+
+| Ausgabe | Lauf | Größe | SHA-256 |
+|---|---|---|---|
+| [Android-APK](https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.25/Familienakte-android-v2.28.25.apk) | 41915802005 | 19.816.405 B | `e81c0d54…3e02` |
+| Einzeldatei (HTML) | 41915802005 | 3.343.052 B | `ca20fbb2…75ec` |
+| [Windows-Setup](https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/windows-v2.28.25/Familienakte-Windows-2.28.25-x64-setup.exe) | 41915807700 | 33.959.347 B | `c7a68e02…401b` |
+
+PWA über Pages (Lauf 41915777848). Nachweis `docs/VEROEFFENTLICHUNG-2.28.25.json`. Nicht erneut ausgeben; nächste freie Fassung 2.28.26.
+
 ## Grenzen
 
 Nichts am Tablet oder Windows-Rechner geprüft. Der Ein-Schritt-Weg ist nur in Workflow PDF Pro (Android) verdrahtet; in
-Familienakte, BookLedgerPro und Private Brain Pro liegt nur das Paket. Nichts veröffentlicht; nächste freie Fassung 2.28.25.
+Familienakte, BookLedgerPro und Private Brain Pro liegt nur das Paket. 2.28.25 veröffentlicht (siehe oben).
 
 ## Stundennachweis
 
@@ -72,18 +84,18 @@ Familienakte & Pro-Tresor – Fortsetzung nach dem Demo-Knopf (Claude Code)
 Repos: lausiklauskn-png/Meine-Familienakte, Workflow-PDF-Pro, BookLedgerPro, Privat-Brain-Pro, Kimhub.
 Zuerst lesen: Meine-Familienakte CLAUDE.md, BRIEF_ABSCHLUSS_2026-11-04_DEMO-KNOPF-UND-TRESOR-EIN-SCHRITT.md,
 BRIEF_CODEX_2026-11-04_NACH-2.28.24.md, Workflow-PDF-Pro docs/TRESORORDNER.md (letzter Abschnitt).
-Frisch von origin/main abzweigen; Releases prüfen; 2.28.22–2.28.24 nie erneut ausgeben, nächste Fassung 2.28.25.
+Frisch von origin/main abzweigen; Releases prüfen; 2.28.22–2.28.25 nie erneut ausgeben, nächste Fassung 2.28.26.
 Offene Codex-PRs zuerst prüfen (#89 PWA-Paket).
 
 Als Nächstes:
-1. Status von Familienakte #90, BookLedgerPro #453, Private Brain Pro #129 prüfen (CI grün → übernehmen, falls noch offen).
+1. Tablet-Rückmeldung zu 2.28.25 (Demo-Knopf, Scanner, Geräteübergabe) abholen.
 2. Ein-Schritt-Weg „Tresor einrichten – nur Speicher wählen“ in der Familienakte (Android) verdrahten, Vorbild
    Workflow-PDF-Pro ProVaultPlugin.tresorEinrichten; Familienakte darf einen neuen Tresor anlegen (Klaus' Ja vom 04.11.).
    Danach BookLedgerPro und Private Brain Pro. Oberfläche erst als HTML-Vorschau.
 3. PWA (nach Codex #89): Aktualisieren-Knopf oben und Workflow PDF in der PWA prüfen, Updates wie bei APK/Windows.
 4. Vollsicherung auf Android: stückweise in einen gewählten Ordner (20-MB-Grenze der Dateiausgabe umgehen).
 5. Tablet-Rückmeldung zu 2.28.23/2.28.24 und zum Demo-Knopf abholen.
-6. Veröffentlichung 2.28.25 nur auf Klaus' Wort. Sitzung am Ende in Kimhub eintragen.
+6. Veröffentlichung 2.28.26 nur auf Klaus' Wort. Sitzung am Ende in Kimhub eintragen.
 
 Nicht tun: Kim-sync nicht in die Familienakte einbauen (Klaus 04.11.); keine Forschung in App-Repos;
 Byte-1:1-Bausteine nie von Hand; Tresor-Paket nur in Workflow PDF Pro ändern; nichts veröffentlichen ohne Klaus' Wort;
