@@ -1838,3 +1838,9 @@ input.af-feld, textarea.af-feld { width: auto; min-height: 0; resize: none; }
 .private-meaning label { display: block; margin-block: .8rem; }
 .private-meaning select, .private-meaning input { display: block; width: 100%; max-width: 36rem; box-sizing: border-box; margin-top: .35rem; padding: .6rem; }
 .private-meaning .search-results { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+
+/* Der Arbeitsbereich bleibt auch auf dem Handy vollständig bedienbar. */
+.demo-workspace { display: flex; flex-wrap: wrap; align-items: center; }
+.demo-workspace > div { flex: 1 1 22rem; min-width: 0; }
+.demo-workspace > div > div { font-size: .86rem; }
+.demo-workspace .button { max-width: 100%; white-space: normal; }

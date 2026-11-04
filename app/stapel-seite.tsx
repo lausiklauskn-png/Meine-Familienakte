@@ -1,3 +1,4 @@
+import { workspaceStorage } from "../lib/demo-workspace.ts";
 // Seite „Stapel“ (Klaus 2026-11-01): „erstmal sauber der Scan“ — viele Fotos/Scans auf einmal übernehmen, Blatt automatisch finden
 // und gerade ziehen (Workflow PDF), als schlanke Liste ablegen. Große Vorschau erst beim Antippen einer Zeile; dort anpassen/zuschneiden/
 // prüfen in Workflow PDF. „Einordnen“ (rechts oben) gibt die gewählten oder alle an die Eingangszentrale (Text lesen, Einordnen, Zusammenhang).
@@ -18,10 +19,10 @@ export async function stapelAblegen(e: StapelErgebnis) {
 // Einstellungen des Stapels (Klaus 2026-11-01: Filter wie Workflow PDF, Schärfe, „ein Brief“) — je Gerät gemerkt.
 const EINST_SCHLUESSEL = "fa_stapel_einst_v1";
 export function stapelEinst(): StapelEinst {
-  try { const e = JSON.parse(localStorage.getItem(EINST_SCHLUESSEL) || "null"); if (e && e.filter in FILTER_NAMEN) return { ...STAPEL_VORGABE, ...e, schaerfe: Math.max(0, Math.min(100, Number(e.schaerfe) || 0)), zusammen: !!e.zusammen }; } catch { /* Vorgabe */ }
+  try { const e = JSON.parse(workspaceStorage.getItem(EINST_SCHLUESSEL) || "null"); if (e && e.filter in FILTER_NAMEN) return { ...STAPEL_VORGABE, ...e, schaerfe: Math.max(0, Math.min(100, Number(e.schaerfe) || 0)), zusammen: !!e.zusammen }; } catch { /* Vorgabe */ }
   return { ...STAPEL_VORGABE };
 }
-function einstMerken(e: StapelEinst) { try { localStorage.setItem(EINST_SCHLUESSEL, JSON.stringify(e)); } catch { /* nur für diese Sitzung */ } }
+function einstMerken(e: StapelEinst) { try { workspaceStorage.setItem(EINST_SCHLUESSEL, JSON.stringify(e)); } catch { /* nur für diese Sitzung */ } }
 /** Einträge in der gegebenen Reihenfolge zu EINEM zusammenfügen; die Quellen verschwinden aus dem Stapel. */
 export async function eintraegeZusammenfuegen(eintraege: StapelEintrag[]) {
   if (eintraege.length < 2) return null;

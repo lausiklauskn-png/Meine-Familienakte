@@ -1,3 +1,4 @@
+import { workspaceName } from "../lib/demo-workspace.ts";
 // Stapel-Ablage (Klaus 2026-11-01: „erstmal ungeprüft einpflegen und dann später, wenn ich Zeit habe, alle Dokumente einordnen“).
 // Eigene kleine Datenbank im Browser des Geräts: die gescannten PDFs bleiben hier, bis „Einordnen“ sie an die Eingangszentrale gibt.
 // Kein Klartext verlässt das Gerät; Einordnen (Text lesen, Embedding, Zusammenhang) geschieht erst auf Knopfdruck.
@@ -6,7 +7,7 @@ export type StapelEintrag = { id: string; name: string; sicher: boolean; grund: 
 const DB = "FamilienakteStapel1", FACH = "stapel";
 export function stapelDatenbank() {
   return new Promise<IDBDatabase>((ok, nein) => {
-    const r = indexedDB.open(DB, 3);
+    const r = indexedDB.open(workspaceName(DB), 3);
     r.onupgradeneeded = () => {
       for (const fach of [FACH, "eingang", "eingang-dateien", "uebergaben"]) {
         if (!r.result.objectStoreNames.contains(fach)) r.result.createObjectStore(fach, { keyPath: "id" });

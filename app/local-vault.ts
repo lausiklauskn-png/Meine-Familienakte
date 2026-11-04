@@ -1,3 +1,5 @@
+import { workspaceName, demoActive } from "../lib/demo-workspace.ts";
+import { workspaceStorage } from "../lib/demo-workspace.ts";
 import type { ProUebergabe } from "../lib/pro-verbund-vertrag";
 import { kontaktPruefen, kontaktUebernehmen, type PersonKontakt } from "../lib/person-kontakt.ts";
 import { istProOriginal, proOriginalLesen, proOriginalName, proOriginalSpeichern, proOriginalVaultId, proOriginalMerkmale, proTresor, proTresorVerfuegbar } from "./pro-tresor.ts";
@@ -180,7 +182,7 @@ function automatedWindowsPathInfo(relativePath: string) {
 
 function db(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open(DB_NAME, 1);
+    const request = indexedDB.open(workspaceName(DB_NAME), 1);
     request.onupgradeneeded = () => request.result.createObjectStore(STORE);
     request.onsuccess = () => resolve(request.result);
     request.onerror = () => reject(request.error);
@@ -190,7 +192,7 @@ function db(): Promise<IDBDatabase> {
 export const folderPickerSupported = () => typeof window !== "undefined" && !!(window as PickerWindow).showDirectoryPicker;
 const browserStorageSupported = () => (typeof navigator !== "undefined" && typeof navigator.storage?.getDirectory === "function") || idbStorageSupported();
 export const vaultSupported = () => folderPickerSupported() || browserStorageSupported();
-export const BROWSER_VAULT_NAME = "Browser-Datentresor";
+export const BROWSER_VAULT_NAME = workspaceName("Browser-Datentresor");
 
 /** Datentresor im geschützten Speicher dieses Browsers (Origin Private File System).
  *  Funktioniert ohne Ordnerauswahl in allen aktuellen Browsern; die Daten verlassen das Gerät nicht. */
@@ -206,7 +208,7 @@ async function openBrowserVault(): Promise<FileSystemDirectoryHandle> {
   // A2: Die einmal getroffene Wahl (Dateispeicher OPFS oder IndexedDB) bleibt gespeichert. Schlägt der gemerkte
   // Dateispeicher später fehl, meldet sich das als Fehler, statt still auf einen leeren zweiten Speicher zu wechseln.
   let remembered: string | null = null;
-  try { remembered = localStorage.getItem(BROWSER_STORAGE_CHOICE_KEY); } catch { /* optional */ }
+  try { remembered = workspaceStorage.getItem(BROWSER_STORAGE_CHOICE_KEY); } catch { /* optional */ }
   const forceIdb = remembered === "indexeddb";
   if (!forceIdb && typeof navigator.storage?.getDirectory === "function") {
     try {
@@ -229,15 +231,16 @@ async function openBrowserVault(): Promise<FileSystemDirectoryHandle> {
 }
 const BROWSER_STORAGE_CHOICE_KEY = "mmi-browser-speicher";
 function rememberBrowserStorage(kind: "opfs" | "indexeddb") {
-  try { if (localStorage.getItem(BROWSER_STORAGE_CHOICE_KEY) !== kind) { localStorage.setItem(BROWSER_STORAGE_CHOICE_KEY, kind); localStorage.setItem(`${BROWSER_STORAGE_CHOICE_KEY}-seit`, new Date().toISOString()); } } catch { /* optional */ }
+  try { if (workspaceStorage.getItem(BROWSER_STORAGE_CHOICE_KEY) !== kind) { workspaceStorage.setItem(BROWSER_STORAGE_CHOICE_KEY, kind); workspaceStorage.setItem(`${BROWSER_STORAGE_CHOICE_KEY}-seit`, new Date().toISOString()); } } catch { /* optional */ }
 }
 /** Welcher Browser-Speicher den Datentresor trägt (A2), oder null vor der ersten Entscheidung. */
 export function browserStorageKind(): "opfs" | "indexeddb" | null {
-  try { const value = localStorage.getItem(BROWSER_STORAGE_CHOICE_KEY); return value === "opfs" || value === "indexeddb" ? value : null; } catch { return null; }
+  try { const value = workspaceStorage.getItem(BROWSER_STORAGE_CHOICE_KEY); return value === "opfs" || value === "indexeddb" ? value : null; } catch { return null; }
 }
 export const isBrowserVault = (handle: FileSystemDirectoryHandle | null | undefined) => handle?.name === BROWSER_VAULT_NAME;
 
 async function chooseVaultFor(key: string, storageKind: "local" | "onedrive"): Promise<FileSystemDirectoryHandle> {
+  if (demoActive()) throw new Error("In der Demo bleibt die Ablage im getrennten lokalen Demobestand. Bitte für eigene Ordner die Demo verlassen.");
   const picker = (window as PickerWindow).showDirectoryPicker;
   if (!picker && storageKind === "local" && browserStorageSupported()) {
     const handle = await browserVault();
@@ -256,7 +259,7 @@ async function chooseVaultFor(key: string, storageKind: "local" | "onedrive"): P
 }
 
 async function rememberedVaultFor(key: string): Promise<FileSystemDirectoryHandle | null> {
-  if (!folderPickerSupported()) return null;
+  if (demoActive() || !folderPickerSupported()) return null;
   const database = await db();
   return new Promise((resolve, reject) => {
     const request = database.transaction(STORE).objectStore(STORE).get(key);
@@ -300,6 +303,7 @@ type DirectoryWithResolve = FileSystemDirectoryHandle & {
 };
 
 export async function chooseInboxFolder(): Promise<FileSystemDirectoryHandle> {
+  if (demoActive()) throw new Error("In der Demo bleibt die Ablage im getrennten lokalen Demobestand. Bitte für eigene Ordner die Demo verlassen.");
   const picker = (window as PickerWindow).showDirectoryPicker;
   if (!picker) throw new Error("Diese Funktion benötigt Chrome oder Edge auf einem PC.");
   const handle = await picker({ mode: "read" });
@@ -315,6 +319,7 @@ export const rememberedInboxFolder = () => rememberedVaultFor(INBOX_KEY);
 export const forgetInboxFolder = () => forgetVaultFor(INBOX_KEY);
 
 async function chooseRememberedDirectory(key: string, mode: "read" | "readwrite") {
+  if (demoActive()) throw new Error("In der Demo bleibt die Ablage im getrennten lokalen Demobestand. Bitte für eigene Ordner die Demo verlassen.");
   const picker = (window as PickerWindow).showDirectoryPicker;
   if (!picker) throw new Error("Diese Funktion benötigt Chrome oder Edge auf einem PC.");
   const handle = await picker({ mode });
@@ -363,6 +368,7 @@ export async function scanOneDriveInbox(handle: FileSystemDirectoryHandle, known
 }
 
 export async function chooseExportDestination(): Promise<FileSystemDirectoryHandle> {
+  if (demoActive()) throw new Error("In der Demo bleibt die Ablage im getrennten lokalen Demobestand. Bitte für eigene Ordner die Demo verlassen.");
   const picker = (window as PickerWindow).showDirectoryPicker;
   if (!picker) throw new Error("Diese Funktion benötigt Chrome oder Edge auf einem PC.");
   return picker({ mode: "readwrite" });
@@ -441,10 +447,10 @@ async function existingVaultRoot(handle: FileSystemDirectoryHandle) {
 const ROOT_DEPTH_KEY = "mmi-vault-root-depth";
 function rootDepthKey(handle: FileSystemDirectoryHandle) { return `${ROOT_DEPTH_KEY}:${handle.name}`; }
 function rememberedRootDepth(handle: FileSystemDirectoryHandle): number | null {
-  try { const value = localStorage.getItem(rootDepthKey(handle)); return value === null ? null : Number(value); } catch { return null; }
+  try { const value = workspaceStorage.getItem(rootDepthKey(handle)); return value === null ? null : Number(value); } catch { return null; }
 }
 function rememberRootDepth(handle: FileSystemDirectoryHandle, depth: number) {
-  try { localStorage.setItem(rootDepthKey(handle), String(depth)); } catch { /* optional */ }
+  try { workspaceStorage.setItem(rootDepthKey(handle), String(depth)); } catch { /* optional */ }
 }
 async function root(handle: FileSystemDirectoryHandle) {
   const existing = await existingVaultRoot(handle);
@@ -3148,6 +3154,7 @@ export async function createLocalCorrespondenceBundle(handle: FileSystemDirector
   data: FamilyRecordPayloadMap["event"];
   caseId?: string | null;
   documentIds?: string[];
+  source?: string;
 }) {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   const index = await readIndex(handle);
@@ -3156,7 +3163,7 @@ export async function createLocalCorrespondenceBundle(handle: FileSystemDirector
     id: allocation.id,
     recordType: "event",
     status: input.status === "Erledigt" ? "erledigt" : "aktiv",
-    source: "Assistenz- und Korrespondenzzentrale",
+    source: input.source || "Assistenz- und Korrespondenzzentrale",
     notes: "Vom Benutzer geprüfter Korrespondenzeintrag. Kein automatischer Versand.",
     data: input.data,
   });
@@ -3475,6 +3482,7 @@ export async function deleteLocalMemoryDraft(handle: FileSystemDirectoryHandle, 
 }
 
 export type CreateLocalMemoryInput = {
+  source?: string;
   draftId?: string;
   originalText: string;
   originalTranscript?: string;
@@ -3535,7 +3543,7 @@ export async function createLocalMemoryBundle(handle: FileSystemDirectoryHandle,
     media,
     assistantSummary,
   };
-  const event = createFamilyRecord({ id: allocation.id, recordType: "event", status: data.openPoint ? "offen" : "aktiv", source: "Tagebuch & Erinnerungsprotokoll", notes: null, data, now }) as FamilyRecordUnion;
+  const event = createFamilyRecord({ id: allocation.id, recordType: "event", status: data.openPoint ? "offen" : "aktiv", source: input.source || "Tagebuch & Erinnerungsprotokoll", notes: null, data, now }) as FamilyRecordUnion;
   index.records.push(event);
   for (const reference of input.selectedReferences) {
     const exists = reference.recordType === "document" ? index.documents.some((item) => item.id === reference.id) : index.records.some((item) => item.recordType === reference.recordType && item.id === reference.id);

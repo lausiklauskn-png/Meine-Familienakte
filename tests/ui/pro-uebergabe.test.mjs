@@ -5,6 +5,10 @@ import { startApp, launchBrowser, DESKTOP, ready, step, summary, ROOT } from './
 const app = await startApp(); const browser = await launchBrowser();
 try {
   const page = await (await browser.newContext({ ...DESKTOP, serviceWorkers: 'block' })).newPage();
+  await page.route('**/lib/demo-workspace.ts', async route => {
+    const {outputText}=ts.transpileModule(readFileSync(`${ROOT}/lib/demo-workspace.ts`,'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}});
+    await route.fulfill({contentType:'text/javascript',body:outputText});
+  });
   await page.route(/\/__pro_probe\//, async route => {
     const name = new URL(route.request().url()).pathname.split('/').pop();
     if (!['pro-uebergabe', 'stapel-ablage', 'eingang-ablage'].includes(name)) return route.abort();

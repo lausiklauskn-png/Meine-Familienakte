@@ -51,7 +51,8 @@
   }
   let holt = false;
   async function abholen() {
-    if (!share?.pending || holt) return; holt = true;
+    // Geteilte echte Unterlagen bleiben im nativen Eingang, bis die Demo verlassen ist.
+    if (new URLSearchParams(location.search).has('demo') || !share?.pending || holt) return; holt = true;
     try {
       const { items = [], refused = 0 } = await share.pending();
       const files = []; const gelesen = [];

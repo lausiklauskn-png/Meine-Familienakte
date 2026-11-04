@@ -30,7 +30,8 @@ public final class FamilyModelProductTest {
         return (String) new JSONTokener(eval(app, "JSON.stringify(" + expression + ")")).nextValue();
     }
     private void ready(ActivityScenario<MainActivity> app) throws Exception {
-        until(app, "Boolean(document.querySelector('.sample-data-notice strong')&&window.PBNetwork?.ready&&window.Capacitor?.Plugins?.FamilyModels)", 120);
+        FamilyDemoFixture.open(app);
+        until(app, "Boolean(window.PBNetwork?.ready&&window.Capacitor?.Plugins?.FamilyModels)", 120);
     }
     private void panel(ActivityScenario<MainActivity> app) throws Exception {
         eval(app, "[...document.querySelectorAll('.footer-directory button')].find(b=>b.textContent.includes('Sicherheitscenter')).click();true");

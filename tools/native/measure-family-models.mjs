@@ -10,7 +10,7 @@ import {resolve,join,extname,delimiter} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {setTimeout as pause} from 'node:timers/promises';
 import {chromium} from 'playwright';
-import {transpileModule,ModuleKind,ScriptTarget} from 'typescript';
+import {build} from 'esbuild';
 
 const root=resolve(fileURLToPath(new URL('../../',import.meta.url)));
 const data=resolve(process.argv[2]||join(root,'work/meaning-model-probe'));
@@ -25,11 +25,12 @@ engine.on('exit',code=>{for(const p of pending.splice(0))p.reject(Error('Model e
 const call=message=>new Promise((resolve,reject)=>{pending.push({resolve,reject});engine.stdin.write(JSON.stringify(message)+'\n');});
 const types={'.js':'text/javascript','.json':'application/json','.wasm':'application/wasm','.onnx':'application/octet-stream'};
 const missing=[];
+const indexSource=(await build({entryPoints:[join(root,'app/private-meaning-index.ts')],bundle:true,write:false,format:'esm',platform:'browser'})).outputFiles[0].text;
 const server=createServer(async(req,res)=>{
  try {
   const path=new URL(req.url,'http://local').pathname;
   if(path==='/'){res.setHeader('Content-Type','text/html');res.end('<!doctype html><title>Private Aktensuche – Modellprobe</title>');return;}
-  if(path==='/index.js'){res.setHeader('Content-Type','text/javascript');res.end(transpileModule(await readFile(join(root,'app/private-meaning-index.ts'),'utf8'),{compilerOptions:{target:ScriptTarget.ES2022,module:ModuleKind.ESNext}}).outputText);return;}
+  if(path==='/index.js'){res.setHeader('Content-Type','text/javascript');res.end(indexSource);return;}
   let file;
   if(path==='/worker.js')file=join(root,'public/native/familienakte-meaning-worker.js');
   else {

@@ -10,6 +10,10 @@ const app=await startApp(),profiles=[0,1].map(()=>mkdtempSync(path.join(tmpdir()
 async function start(i){
  const c=contexts[i]=await chromium.launchPersistentContext(profiles[i],{...DESKTOP,downloadsPath:path.join(profiles[i],'downloads'),serviceWorkers:'block',acceptDownloads:true,...(process.env.CHROMIUM_PATH?{executablePath:process.env.CHROMIUM_PATH}:{})});
  const page=pages[i]=c.pages()[0];page.setDefaultTimeout(20000);page.on('pageerror',e=>errors.push(e.message));
+ await c.route('**/lib/demo-workspace.ts', async route => {
+  const {outputText}=ts.transpileModule(readFileSync(path.join(ROOT,'lib/demo-workspace.ts'),'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}});
+  await route.fulfill({contentType:'text/javascript',body:outputText});
+ });
  await c.route('**/__transport_probe/*',async route=>{
   const name=new URL(route.request().url()).pathname.split('/').pop();
   if(!['pro-geraetetransport','pro-uebergabe','stapel-ablage','dateiausgabe'].includes(name))return route.abort();

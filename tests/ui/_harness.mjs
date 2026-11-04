@@ -1,3 +1,4 @@
+import { vaultFixture } from "./_vault-fixture.mjs";
 // Gemeinsamer Rahmen für die Oberflächenproben (Playwright, vorinstalliertes Chromium).
 // Jede Probe ist ein eigenes Skript `tests/ui/*.test.mjs`; `node tests/run-ui.mjs` fährt alle.
 // Der Rahmen baut bei Bedarf `dist/`, startet `vite preview` auf einem freien Port,
@@ -70,7 +71,21 @@ export const DESKTOP = { viewport: { width: 1440, height: 1000 }, deviceScaleFac
 export const HANDY = { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: "de-DE" };
 
 /** Wartet, bis die Beispielfamilie angelegt ist (beim ersten Start dauert das einige Sekunden). */
-export const ready = (page) => page.waitForSelector('.sample-data-notice strong:has-text("Alle Daten")', { timeout: 120000 });
+export const ready = async (page) => {
+  await page.waitForSelector(".site-brand-version", { timeout: 120000 });
+  // Die echte Akte startet jetzt leer. Bestehende Fachproben brauchen ausdrücklich
+  // angelegte erfundene Fixtures, statt ungefragt erzeugter Nutzerdaten.
+  if (!new URL(page.url()).searchParams.has("demo")) {
+    await vaultFixture(page);
+    const seeded = await page.evaluate(async () => {
+      const f = window.__vaultFixture;
+      return f.seedSampleFamily(await f.browserVault());
+    });
+    if (seeded) await page.reload({ waitUntil: "networkidle" });
+  }
+  const notice = new URL(page.url()).searchParams.get("demo") === "1" ? "Alle Daten" : "Alte Beispieldaten";
+  await page.waitForSelector(`.sample-data-notice strong:has-text("${notice}")`, { timeout: 120000 });
+};
 /** Hauptmenü (Index 0 = Assistenz … 7 = Hilfe) und Eintrag im Mega-Menü. */
 export async function openMenu(page, navIndex, itemText) {
   await page.evaluate(() => window.scrollTo(0, 0));

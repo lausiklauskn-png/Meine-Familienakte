@@ -1,3 +1,4 @@
+import { workspaceStorage } from "../lib/demo-workspace.ts";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import ts from "typescript";
@@ -58,7 +59,8 @@ check("Vorhandene Praxistests dürfen ohne erneute Ausführung bestätigt werden
 const portalAst=ts.createSourceFile("portal.tsx",source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
 const declaration=(name)=>{let found;function visit(node){if(ts.isFunctionDeclaration(node)&&node.name?.text===name)found=node.getText(portalAst);if(ts.isVariableDeclaration(node)&&node.name.getText(portalAst)===name)found=`const ${node.getText(portalAst)};`;ts.forEachChild(node,visit);}visit(portalAst);if(!found)throw Error(name);return found;};
 const technical=JSON.parse(read("lib/release-system-check-report.json"));
-const storageModule=`const SYSTEM_CHECK_REPORTS_KEY="mmi-family-system-check-reports",SYSTEM_CHECK_STORAGE_KEY="mmi-family-system-check"; const releaseSystemCheckReport=${JSON.stringify(technical)}; const buildSystemProblems=()=>[];let updated=[];const setReports=(value)=>{updated=value;};\n${["normalizeSystemReport","readSystemCheckReports","saveSystemCheckReport","saveUserAcceptance"].map(declaration).join("\n")}\nexport {readSystemCheckReports,saveSystemCheckReport,saveUserAcceptance};`;
+globalThis.__workspaceStorage=workspaceStorage;
+const storageModule=`const workspaceStorage=globalThis.__workspaceStorage;const SYSTEM_CHECK_REPORTS_KEY="mmi-family-system-check-reports",SYSTEM_CHECK_STORAGE_KEY="mmi-family-system-check"; const releaseSystemCheckReport=${JSON.stringify(technical)}; const buildSystemProblems=()=>[];let updated=[];const setReports=(value)=>{updated=value;};\n${["normalizeSystemReport","readSystemCheckReports","saveSystemCheckReport","saveUserAcceptance"].map(declaration).join("\n")}\nexport {readSystemCheckReports,saveSystemCheckReport,saveUserAcceptance};`;
 const store=await import(data(compile(storageModule)));
 class MemoryStorage { values=new Map(); fail=false; mismatch=false; getItem(key){return this.mismatch&&key==="mmi-family-system-check-reports"?"[]":this.values.get(key)??null;} setItem(key,value){if(this.fail)throw new DOMException("Quota","QuotaExceededError");this.values.set(key,value);} }
 const memory=new MemoryStorage();globalThis.localStorage=memory;globalThis.window={};
@@ -82,7 +84,7 @@ const mount=()=>{cursor=0;const view=controlled.PracticalAcceptance({reports:sav
 check("Echte UI-Handler: fünf Klicks, Nein-Feld und gemeinsame Übermittlung", () => { for(const test of USER_TEST_BLOCKS[0].tests)mount().props.onChoice(test.id,test.id===test0?"Nein":"Ja");mount().props.onNote(test0,"UI-Testfehler");assert.equal(canSubmitUserBlock(mount().props.run),true);mount().props.onSubmit(true);assert.equal(mount().props.run.paused,true);assert.match(savedReports[0].userAcceptance.answers[test0].history[0].observation,/UI-Testfehler/); });
 check("Echter Fortsetzen-Handler wechselt nach gespeichertem Block zum nächsten offenen Block", () => { mount().props.onResume();assert.equal(mount().props.run.currentBlock,1);assert.equal(mount().props.run.paused,false); });
 check("Echter UI-Speicherfehler lässt den Block unbestätigt und zum Wiederholen bereit", () => { for(const test of USER_TEST_BLOCKS[1].tests)mount().props.onChoice(test.id,"Ja");saveFailure=true;mount().props.onSubmit(false);const props=mount().props;assert.match(props.error,/Speicherfehler/);assert.equal(props.run.currentBlock,1);assert.equal(userAcceptanceProgress(props.run).passed,4);assert.equal(canSubmitUserBlock(props.run),true);saveFailure=false; });
-delete globalThis.localStorage;delete globalThis.window;delete globalThis.__acceptanceHooks;
+delete globalThis.localStorage;delete globalThis.window;delete globalThis.__acceptanceHooks;delete globalThis.__workspaceStorage;
 
 check("Mobilregeln stapeln Blöcke; Radios besitzen mindestens 44px Bedienhöhe", () => { assert.match(css,/\.user-result-option \{[^}]*min-height: 44px/);assert.match(css,/@media \(max-width: 720px\) \{ \.user-block-tabs \{ grid-template-columns: minmax\(0,1fr\)/);assert.match(css,/\.user-test-content \{ min-width: 0/); });
 console.log(`Praktische Benutzerabnahme: ${passed}/${passed} technische Tests bestanden. Reale Browser-/Windows-/Mobilgerät-Abnahme steht noch aus.`);

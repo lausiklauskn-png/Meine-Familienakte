@@ -1,3 +1,4 @@
+import {openDemoFixture} from './test-demo-fixture.mjs';
 // Actual installed Windows app, WebView2 and bundled 256 MiB Java process.
 // Uses only the invented sample family. No fake native plugin or model vectors.
 import assert from 'node:assert/strict';
@@ -45,7 +46,7 @@ try {
  page.on('console',m=>{if(['error','warning'].includes(m.type()))report.console.push(m.text().slice(0,1000));});
  page.on('response',r=>{if(r.url().includes('/_fa_models/'))report.assets.push({url:r.url(),status:r.status(),type:r.headers()['content-type']});});
  page.on('requestfailed',r=>{if(r.url().includes('/_fa_models/'))report.assets.push({url:r.url(),failure:r.failure()});});
- await page.waitForSelector('.sample-data-notice strong',{timeout:120000});
+ await openDemoFixture(page);
  await page.waitForFunction(()=>window.PBNetwork?.ready&&window.Capacitor?.Plugins?.FamilyModels);
  const initial=await page.evaluate(async()=>{await window.PBNetwork.setOffline(true);return {state:await window.Capacitor.Plugins.FamilyModels.getState(),device:await window.Capacitor.Plugins.ProDevice.measure(),blocked:await window.Capacitor.Plugins.FamilyModels.install({stage:'klein'}).then(()=>false,()=>true)};});
  assert.equal(initial.state.localAssets,true);assert.equal(initial.device.platform,'windows');assert.equal(initial.blocked,true);assert.equal(initial.state.models.klein.installed,false);report.checks.push('Actual native device, route and offline download gate');
@@ -61,7 +62,7 @@ try {
  report.localConfig=config;assert.equal(config.status,200,'Local verified config');assert.match(config.type||'',/json/,'Local route must return a model asset');
  await panel.getByRole('button',{name:'Index aufbauen / fortsetzen',exact:true}).click();await panel.getByRole('status').filter({hasText:'Suchindex bereit:'}).waitFor({timeout:240000});
  report.checks.push('Production Worker, actual pinned model and private IndexedDB activate the sample index');
- await page.reload();await page.waitForSelector('.sample-data-notice strong',{timeout:120000});
+ await page.reload();await openDemoFixture(page);
  await page.locator('.footer-directory button',{hasText:'Sicherheitscenter'}).click();await panel.getByRole('button',{name:'Gerät, Modelle und Suchindex',exact:true}).click();
  await panel.getByLabel('Frage an diese Akte').fill('Waschautomat');await panel.getByRole('button',{name:'In dieser Akte nach Bedeutung suchen',exact:true}).click();await panel.locator('.search-results button').first().waitFor({timeout:120000});
  assert.equal(await page.getAttribute('.netz-schalter','data-netz'),'aus');

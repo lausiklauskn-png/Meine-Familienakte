@@ -1,3 +1,4 @@
+import { workspaceName } from "../lib/demo-workspace.ts";
 // Datentresor-Ordner auf Basis von IndexedDB.
 // Wird verwendet, wenn der Browser keinen beschreibbaren Dateispeicher (OPFS mit createWritable)
 // anbietet – etwa ältere Safari-Versionen auf iPhone/iPad oder eingebettete Seiten.
@@ -20,7 +21,7 @@ let databasePromise: Promise<IDBDatabase> | null = null;
 function database(): Promise<IDBDatabase> {
   if (!databasePromise) {
     databasePromise = new Promise((resolve, reject) => {
-      const request = indexedDB.open(DB_NAME, 1);
+      const request = indexedDB.open(workspaceName(DB_NAME), 1);
       request.onupgradeneeded = () => {
         const store = request.result.createObjectStore(STORE, { keyPath: "path" });
         store.createIndex("parent", "parent", { unique: false });
