@@ -1,13 +1,14 @@
 # Familienakte zwischen Geräten
 
-Die zusätzliche Übergabe im Sicherheitscenter verwendet vorhandene Kim-sync-Räume
-oder Datei-Post-Codes. Jede Familienakte bleibt unabhängig. Es entsteht kein
-weiteres Raumsystem und keine automatische Synchronisierung.
+Die zusätzliche Übergabe im Sicherheitscenter ist an keinen Übertragungsweg gebunden: Das Paket geht auf einem Weg
+nach Wahl zum anderen Gerät (Datei-Post, Mail, USB-Stick …). Jede Familienakte bleibt unabhängig; es gibt keine
+automatische Synchronisierung. Seit 04.11.2026 (Klaus: „Text allgemeiner machen, Kim-sync raus“) nennt die Oberfläche
+Kim-sync nicht mehr; der Weg über Kim-sync funktioniert weiter wie jeder andere Dateiweg.
 
 1. Eine gespeicherte Unterlage und genau einen Empfänger oder ein Zielgerät wählen.
-2. Das Übergabepaket speichern. Es enthält die lesbare Originaldatei. Erst Kim-sync
-   beziehungsweise Datei-Post verschlüsselt seine Übertragung. In Kim-sync über
-   die Büroklammer als Originaldatei senden; keine Bildbearbeitung verwenden.
+2. Das Übergabepaket speichern und auf einem Weg nach Wahl schicken. Es enthält die lesbare Originaldatei und ist
+   selbst nicht verschlüsselt: Datei-Post verschlüsselt beim Senden, Mail und USB-Stick nicht. Immer als Datei
+   senden, keine Bildbearbeitung verwenden.
 3. Auf dem Zielgerät in der Familienakte das Paket öffnen, Vorschau prüfen und
    ausdrücklich in den Eingang übernehmen. Erst nach Datei, Eingangsdatensatz und
    Quittung in einer abgeschlossenen Transaktion gibt es eine Empfangsdatei.
