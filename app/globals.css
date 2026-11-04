@@ -1926,7 +1926,7 @@ fieldset:disabled .datei-knopf { opacity: .55; cursor: not-allowed; }
   .site-brand strong { flex-wrap: nowrap; }
   .site-brand strong .site-brand-variante { order: 0; flex-basis: auto; font-size: .7rem; }
   .site-brand .site-brand-version .version-wort { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  .header-actions > .drucken-knopf, .header-actions > .logout-button, .header-actions > .familienakte-install { display: none !important; }
+  .header-actions > .drucken-knopf, .header-actions > .logout-button, .header-actions > .login-button, .header-actions > .familienakte-install { display: none !important; }
   .mobile-menu-button { width: 30px; height: 30px; padding: 0; display: grid; place-items: center; border-radius: 8px; }
   .mobile-menu-button svg { width: 18px; height: 18px; }
   .main-navigation.mobile-open .mobile-menu-extra { display: flex; flex-direction: column; gap: 4px; border-top: 1px solid var(--line); margin-top: 6px; padding-top: 6px; }

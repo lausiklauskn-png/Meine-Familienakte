@@ -60,7 +60,7 @@ export function ProTresorAnschluss({ aktenHandle = null, onChange }: { aktenHand
       const grund = proTresorMeldung(proTresorCode(e));
       setMeldung(grund || "Der Pro-Tresor wurde nicht verbunden. Vorhandene Dateien bleiben erhalten. Bitte Ordnerfreigabe und Passwort prüfen.");
     }
-    finally { setBusy(false); onChange?.(); }
+    finally { setBusy(false); onChange?.(); window.dispatchEvent(new Event("familienakte:pro-tresor")); }
   }
   const text = { getrennt: "Noch nicht verbunden", offen: "Entsperrt", gesperrt: "Gesperrt", nicht_erreichbar: "Nicht erreichbar – gewählten Speicher und Ordnerfreigabe prüfen" };
   const statusText = stand.status === "nicht_erreichbar" && stand.code === "FA_TRESOR_FREMDE_KENNUNG" ? proTresorMeldung(stand.code)

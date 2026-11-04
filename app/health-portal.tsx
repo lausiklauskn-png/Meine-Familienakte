@@ -30,7 +30,7 @@ import {
   ArrowLeft, ArrowRight, ChevronDown, ChevronRight, ClipboardCheck, Download, FileClock,
   FileText, Folder, FolderHeart, HeartPulse, Home, Landmark, Menu, PackageCheck,
   Network, Plus, Printer, RefreshCw, Search, ShieldCheck, ShoppingBag, Upload, UserRound,
-  Users, X, HardDrive, LockKeyhole, Usb, LogOut, HelpCircle, History, Cloud, LifeBuoy, Mic,
+  Users, X, HardDrive, LockKeyhole, Usb, HelpCircle, History, Cloud, LifeBuoy, Mic,
   Copy, ExternalLink, BookHeart, Camera, Video, NotebookPen, Trash2, CircleHelp, Tags, FolderSearch, Eye, ListChecks, Save, Bot, Sparkles,
   PenLine,
 } from "lucide-react";
@@ -38,6 +38,7 @@ import { DictationButton, InfoPopover, VoiceInput, VoiceTextarea } from "./ui-co
 import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ActivityLines, ActivityProvider, useActivity, useActivityMessage } from "./ui-activity";
 import { NetzSchalter } from "./netz-schalter";
+import { AnmeldeKnopf } from "./anmelde-knopf";
 import { KiAuftragDialog } from "./ki-auftrag-dialog";
 import { inventoryScanFeedback, inventoryAssignmentFeedback, inventoryArchiveFeedback, inventoryReleaseFeedback } from "../lib/ui-activity";
 import healthData from "./health-data.json";
@@ -1172,7 +1173,7 @@ function HealthPortalContent() {
         <div className="masthead">
           <button className="mobile-menu-button" onClick={() => setMobileOpen((value) => !value)} aria-label="Hauptmenü öffnen"><Menu size={22}/></button>
           <button className="site-brand" onClick={() => go("overview")}><span className="brand-symbol brand-symbol-icon" data-variante={APP_VARIANTE.toLowerCase()}><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 19.2727C22 20.779 20.779 22 19.2727 22H14.7273C13.221 22 12 20.779 12 19.2727V12H19.2727C20.779 12 22 13.221 22 14.7273V19.2727Z" fill="#68C4FF"/><path d="M20 2C21.1046 2 22 2.89543 22 4V7C22 8.10457 21.1046 9 20 9H17C15.8954 9 15 8.10457 15 7V4C15 2.89543 15.8954 2 17 2H20Z" fill="#0C79D8"/><path d="M7 15C8.10457 15 9 15.8954 9 17V20C9 21.1046 8.10457 22 7 22H4C2.89543 22 2 21.1046 2 20V17C2 15.8954 2.89543 15 4 15H7Z" fill="#0C79D8"/><path d="M12 12H4.72727C3.22104 12 2 10.779 2 9.27273V4.72727C2 3.22104 3.22104 2 4.72727 2H9.27273C10.779 2 12 3.22104 12 4.72727V12Z" fill="#2E9EFF"/></svg></span><span><strong>FAMILIENAKTE{demoActive() && <span className="demo-header-badge">DEMO</span>}</strong><span className="site-brand-zeile"><span className="site-brand-variante" data-variante={APP_VARIANTE.toLowerCase()}>{APP_VARIANTE}</span><small className="site-brand-version"><span className="version-wort">Version </span>{APP_FASSUNG}</small></span></span></button>
-          <div className="header-actions"><button type="button" className={`icon-button demo-schalter${demoActive() ? " aktiv" : ""}`} aria-pressed={demoActive()} aria-label={demoActive() ? "Demo verlassen" : "Demo öffnen"} title={demoActive() ? "Demo ist an – tippen zum Verlassen" : "Demo mit erfundener Beispielfamilie öffnen"} disabled={demoGesperrt} onClick={demoUmschalten}>{demoActive() ? "DEMO" : "Demo"}</button><NetzSchalter/><button className="icon-button drucken-knopf" onClick={seiteDrucken} title="Aktuelle Seite drucken"><Printer size={18}/></button><button type="button" className="icon-button aktualisieren-knopf" onClick={() => (window as unknown as { FamilienakteApp?: { aktualisieren?: () => void } }).FamilienakteApp?.aktualisieren?.()} title="Auf eine neue Fassung prüfen" aria-label="Auf eine neue Fassung prüfen"><RefreshCw size={18}/></button><a className="icon-button logout-button" href="./" onClick={(event) => { event.preventDefault(); window.location.reload(); }} title="Sicher aus der Familienakte ausloggen" aria-label="Ausloggen"><LogOut size={18}/></a></div>
+          <div className="header-actions"><button type="button" className={`icon-button demo-schalter${demoActive() ? " aktiv" : ""}`} aria-pressed={demoActive()} aria-label={demoActive() ? "Demo verlassen" : "Demo öffnen"} title={demoActive() ? "Demo ist an – tippen zum Verlassen" : "Demo mit erfundener Beispielfamilie öffnen"} disabled={demoGesperrt} onClick={demoUmschalten}>{demoActive() ? "DEMO" : "Demo"}</button><NetzSchalter/><button className="icon-button drucken-knopf" onClick={seiteDrucken} title="Aktuelle Seite drucken"><Printer size={18}/></button><button type="button" className="icon-button aktualisieren-knopf" onClick={() => (window as unknown as { FamilienakteApp?: { aktualisieren?: () => void } }).FamilienakteApp?.aktualisieren?.()} title="Auf eine neue Fassung prüfen" aria-label="Auf eine neue Fassung prüfen"><RefreshCw size={18}/></button><AnmeldeKnopf art="kopf"/></div>
         </div>
         <nav className={`main-navigation ${mobileOpen ? "mobile-open" : ""}`} aria-label="Hauptnavigation">
           <button className={active === "overview" ? "active" : ""} onClick={() => go("overview")}><Home size={17}/> Startseite</button>
@@ -1188,7 +1189,7 @@ function HealthPortalContent() {
             {demoActive() && <button type="button" disabled={demoGesperrt} onClick={() => { setMobileOpen(false); void demoZuruecksetzen(); }}><RefreshCw size={17}/> Demo zurücksetzen</button>}
             {demoActive() && <button type="button" disabled={demoGesperrt} onClick={() => { setMobileOpen(false); void demoLoeschen(); }}><Trash2 size={17}/> Demo löschen und verlassen</button>}
             <button type="button" onClick={() => { setMobileOpen(false); seiteDrucken(); }}><Printer size={17}/> Seite drucken</button>
-            <button type="button" onClick={() => window.location.reload()} title="Lädt die App neu; offene Tresore werden dabei gesperrt."><LogOut size={17}/> Neu starten (ausloggen)</button>
+            <AnmeldeKnopf art="menue"/>
           </div>
         </nav>
       </header>

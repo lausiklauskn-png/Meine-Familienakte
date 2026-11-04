@@ -76,6 +76,20 @@ try {
     const t = await status.innerText();
     return t === "Anderer Tresor verbunden – bitte den Ordner wählen, in dem tresorordner.json liegt." && (await panel.innerText()).includes("erfundener-tresor-1");
   });
+  await step("Ausloggen sperrt den Pro-Tresor und lädt neu (vorher blieb er in der App offen)", async () => {
+    await page.evaluate(() => { window.__proStand = { status: 'offen', id: 'erfundener-tresor-1', ort: 'content://erfundene-sdkarte/Pro-Tresor' }; const alt = window.Capacitor.Plugins.FamilienakteTresor.sperren; window.Capacitor.Plugins.FamilienakteTresor.sperren = async () => { sessionStorage.setItem('probe-gesperrt', '1'); return alt(); }; });
+    await page.locator(".logout-button").click();
+    await page.waitForLoadState("load"); await ready(page);
+    return (await page.evaluate(() => sessionStorage.getItem('probe-gesperrt'))) === '1';
+  });
+  await step("Nach dem Ausloggen zeigt der Knopf „Einloggen“ und entsperrt den Tresor", async () => {
+    await page.evaluate(() => { window.__proStand = { status: 'gesperrt', id: 'erfundener-tresor-1', ort: 'content://erfundene-sdkarte/Pro-Tresor' }; window.dispatchEvent(new Event('familienakte:pro-tresor')); });
+    const knopf = page.locator(".login-button"); await knopf.waitFor();
+    if (await knopf.getAttribute("aria-label") !== "Einloggen") return false;
+    await knopf.click();
+    await page.locator(".logout-button").waitFor();
+    return (await page.evaluate(() => window.__proCalls.includes('entsperren'))) && (await page.locator(".logout-button").getAttribute("aria-label")) === "Ausloggen";
+  });
   check(errors.length === 0, "Pro-Tresor: keine Seitenfehler", errors.join(" | "));
   const winContext = await browser.newContext(DESKTOP);
   await winContext.addInitScript(tauriStub);
