@@ -93,8 +93,9 @@ React-Ausfülldialogs. Dessen Eingabe-Speicher und die Klon-Feldarten bleiben ge
 
 ## Auslieferung
 
-Erst nach Übernahme und Prüfung wird bei einer gesondert freigegebenen Veröffentlichung
-eine neue PWA/APK/Windows-Fassung gebaut. Nutzer erhalten sie über die vorhandenen
+Nach dem geprüften Merge baut und veröffentlicht die vorhandene Pages-Automatik
+die PWA. APK und Windows-Installer benötigen weiterhin ihre gesondert freigegebenen
+Release-Läufe. Nutzer erhalten neue installierbare Fassungen über die vorhandenen
 Updatewege der jeweiligen App. Quellabgleich, PR, Zusammenführung und installierbares
 Update sind vier verschiedene Schritte. Dieser Auftrag richtet den gemeinsamen
-Quellupdateweg ein; er ersetzt keine Geräteabnahme und veröffentlicht keine neue App.
+Quellupdateweg ein; er ersetzt keine Geräteabnahme und löst keinen APK-/Windows-Release aus.
