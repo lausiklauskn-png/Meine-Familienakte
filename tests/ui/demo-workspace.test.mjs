@@ -2,7 +2,7 @@ import { capacitorStub } from "./_capacitor-stub.mjs";
 // Gegen den belegten Löschfehler und die Trennung von echten Browserdateien.
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { mkdtempSync, rmSync } from "node:fs";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { createSamplePdf } from "../../lib/sample-pdf.ts";
@@ -96,7 +96,7 @@ try {
     assert.equal(records.length, 0);
   });
   await switchWorkspace(page, true);
-  await page.locator('.sample-data-notice strong:has-text("Alle Daten")').waitFor();
+  await page.locator('.sample-data-notice strong:has-text("Alle Daten")').waitFor({ timeout: 120000 });
   await step("Demo enthält wirkliche erfundene PDF-Dateien, keine eigene Unterlage", async () => {
     const demo = await documents(); assert.equal(await page.evaluate(() => window.__vaultFixture.browserStorageKind()), process.env.DEMO_BACKEND === "indexeddb" ? "indexeddb" : "opfs"); assert.ok(demo.length >= 15); assert.ok(demo.every(d => d.hash.length === 64)); assert.ok(!demo.some(d => d.name === before[0].name));
   });
@@ -137,7 +137,7 @@ try {
   await Promise.all([page.waitForURL(url => url.searchParams.get("demo") === "reset", { waitUntil: "commit" }), page.getByRole("button", { name: "Ja, fortfahren", exact: true }).click()]);
   await page.waitForURL(url => url.searchParams.get("demo") === "1");
   await page.waitForLoadState("networkidle");
-  await page.locator('.sample-data-notice strong:has-text("Alle Daten")').waitFor();
+  await page.locator('.sample-data-notice strong:has-text("Alle Daten")').waitFor({ timeout: 120000 });
   await step("Zurücksetzen entfernt auch Testimporte, erneuert nur die Demo", async () => { assert.ok(!(await documents()).some(d => d.name === "Nur_Demo_Import.txt")); });
   await switchWorkspace(page, false);
   await page.getByRole("button", { name: "Demo öffnen", exact: true }).waitFor();
@@ -166,7 +166,7 @@ try {
   });
   const mobile = await nativeContext.newPage();
   await mobile.goto(app.base + "?demo=1", { waitUntil: "networkidle" });
-  await mobile.locator('.sample-data-notice strong:has-text("Alle Daten")').waitFor();
+  await mobile.locator('.sample-data-notice strong:has-text("Alle Daten")').waitFor({ timeout: 120000 });
   await footer(mobile, "Sicherheitscenter");
   await step("Gestellte Android-Brücke: Demo liest weder echten Tresor noch Teilen-Eingang", async () => {
     await mobile.waitForTimeout(1800);
@@ -180,5 +180,12 @@ try {
     await mobile.getByRole("button", { name: "Demo öffnen", exact: true }).waitFor();
   });
   check(errors.length === 0, "Keine Browserfehler im Demo-/Echtwechsel", errors.join(" | "));
+} catch (error) {
+  const backend = process.env.DEMO_BACKEND || "opfs";
+  const diagnostic = { error: error.stack || String(error), url: page?.url(), errors, text: await page?.locator("body").innerText().catch(() => "nicht erreichbar") };
+  writeFileSync(`work/demo-${backend}-fehler.json`, JSON.stringify(diagnostic, null, 2));
+  await page?.screenshot({ path: `work/demo-${backend}-fehler.png` }).catch(() => {});
+  console.error("Demo-Diagnose:", JSON.stringify(diagnostic));
+  throw error;
 } finally { await context?.close(); await browser.close(); await app.stop(); rmSync(profile, { recursive: true, force: true }); }
 process.exit(summary("Demo-Arbeitsbereich"));

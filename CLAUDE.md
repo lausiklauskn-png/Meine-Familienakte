@@ -1,5 +1,20 @@
 # CLAUDE.md — Meine Familienakte
 
+
+## Aktueller Bau: getrennte Demo 2.28.19 (04.11.2026)
+
+Klaus' autonomer Bauauftrag aus Kimhub `docs/sessions/BRIEF_2026-11-04_codex-familienakte-systemmeldungen.md`
+wird in PR #73 umgesetzt. Technische Fassung 2.28.19, sichtbare Zeile weiter 2.28.1.
+Tresor-PR #71 und die parallel veröffentlichte Android-Testfassung 2.28.18 aus #72 sind enthalten.
+Die getrennte Demo ist gebaut; Zusammenführung und neue Veröffentlichung folgen erst nach den vollständigen Prüfketten.
+Eigene Dateien bevorzugt erhalten. Alte Gesamt-Kennungsliste nicht als Löschbeleg verwenden.
+`Demo öffnen` / `Demo verlassen` / Reset / vollständiges Demo-Löschen verwenden; keine neue Beispielsammlung im Echtbestand anlegen.
+Anleitung: `docs/DEMO-ARBEITSBEREICH.md`; Befunde und nächste Nutzerprüfungen:
+`BRIEF_SITZUNG_2026-11-04_DEMO-UND-SYSTEMMELDUNGEN.md`.
+Prüfungen mit Beispielen müssen die Demo ausdrücklich öffnen bzw. ihre erfundenen Fixtures vorbereiten;
+die eigene Akte startet jetzt ohne automatisch angelegte Beispieldaten. Native Modell-/Ausgabeprüfungen bleiben erhalten.
+Klaus' lokale Systemberichte und die ungeprüften Nutzergeräte bleiben von eigenen technischen Proben getrennt.
+
 Diese Datei liest jede Sitzung zuerst. Was hier steht, gilt für jede Arbeit in diesem Repo.
 
 ## Neueste Übergabe an Claude Code: Tresor-Pfad und Abgleich, 03.11.2026

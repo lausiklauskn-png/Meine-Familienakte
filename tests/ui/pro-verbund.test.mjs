@@ -30,6 +30,10 @@ try {
    };
  });
  const page=await context.newPage();
+ await page.route('**/lib/demo-workspace.ts', async route => {
+   const {outputText}=ts.transpileModule(readFileSync(`${ROOT}/lib/demo-workspace.ts`,'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}});
+   await route.fulfill({contentType:'text/javascript',body:outputText});
+ });
  await page.route(/\/__pro_probe\//,async route=>{
    const name=new URL(route.request().url()).pathname.split('/').pop();
    if(!['pro-verbund','pro-uebergabe','stapel-ablage','pro-tresor'].includes(name))return route.abort();
