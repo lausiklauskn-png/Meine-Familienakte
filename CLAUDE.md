@@ -20,16 +20,17 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   (Ausgabe mit `server=ja`); die PWA aktualisiert sich über Pages.
 - **Oberfläche:** Kein Personenname in sichtbaren Texten (Klaus 2026-11-04: „Nutzer“). Erklärungen kurz, in Punkten, hinter
   Fragezeichen; Ablaufbilder/Ordnerbäume über `app/ablaufbild.tsx`. Neue Entwürfe erst als HTML-Vorschau zeigen.
-- **Gemeinsamer Tresor:** Workflow-PDF-Pro #65 (Hauptordner finden/anlegen, Name frei, Vorschlag „Family-Projekt“) ist
-  gebaut, aber in keiner App verdrahtet. Klaus will danach alle Pro-Apps neu installieren und frische Tresorräume anlegen.
-- Aktuelle Briefe im Hauptordner:
-  - `BRIEF_ABSCHLUSS_2026-11-04_HANDY-UND-TRESOR-ERKLAERUNGEN.md` (jüngster Abschluss 2.28.23/2.28.24, Startauftrag)
+- **Demo (Klaus 2026-11-04):** aus = oben nichts von „Demo“, Start hinten in der Hilfe; an = roter Knopf „DEMO ▾“ hinter
+  dem Namen mit Menü (verlassen · zurücksetzen · löschen). Kein Demo-Kasten. Proben über `tests/ui/_demo.mjs`.
+- **Kim-sync** gehört nicht in die Familienakte (Klaus 2026-11-04); die Geräteübergabe nennt nur einen frei wählbaren Weg.
+- **Gemeinsamer Tresor:** Workflow-PDF-Pro #67 (main 066498d) verdrahtet „Tresor einrichten – nur Speicher wählen“ (Hauptordner
+  finden/anlegen, ein Passwort, Lies-mich, Speichern in den Tresor gesperrt). Das Paket liegt byte-gleich in Familienakte,
+  BookLedgerPro, Private Brain Pro, ist dort aber **noch nicht verdrahtet**. Klaus will danach alle Pro-Apps neu installieren
+  und frische Tresorräume anlegen.
+- Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
+  - `BRIEF_ABSCHLUSS_2026-11-04_DEMO-KNOPF-UND-TRESOR-EIN-SCHRITT.md` (jüngster Abschluss, Startauftrag)
   - `BRIEF_CODEX_2026-11-04_NACH-2.28.24.md` (Abstimmung mit Codex: welche Dateien Claude gehören)
-  - `BRIEF_ABSCHLUSS_2026-11-04_DEMO-RAHMEN-UND-TRESORSTATUS.md` (Codex, 2.28.22, Übergabe an Claude)
-  - `BRIEF_ABSCHLUSS_2026-11-04_DEMO-UND-DATEIERHALT.md` mit `docs/DEMO-ARBEITSBEREICH.md` (getrennte Demo, Dateierhalt)
-  - `BRIEF_ABSCHLUSS_2026-11-04_TRESOR-PLAN.md`, `BRIEF_ABSCHLUSS_2026-11-03_TRESOR-UEBERGABE-AN-CLAUDE.md`,
-    `BRIEF_SITZUNG_2026-11-03_TRESOR-PFAD-UND-ABGLEICH.md` (Tresor-Pfad, Abgleich)
-  - `BRIEF_SITZUNG_2026-11-01_PRO-VERBUND.md`, `BRIEF_ABSCHLUSS_2026-11-02_PRO-VERBUND.md` (Grundlage Pro-Verbund)
+  - `BRIEF_ABSCHLUSS_2026-11-04_PDF-ARBEITSRAUM.md`, `BRIEF_ABSCHLUSS_2026-11-04_PDF-FUNKTIONSABGLEICH.md` (Codex)
 
 ## Offen
 
@@ -38,8 +39,10 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - Ältere zusätzliche Android-Tresor-Paar-Abnahme (Workflow PDF Pro, BookLedgerPro) nicht vollständig geprüft;
   Maßstab `docs/PRO-VERBUND-PRUEFSTAND.md`, Berichte `docs/pro-verbund-nachweise.json`. Keine vollständige
   Gesamtabnahme behaupten, keine fehlgeschlagenen Prüfungen abschalten. Workflow-PDF-Pro PR #59 bleibt Entwurf.
-- Eigene Berichte und ungeprüfte Nutzergeräte; Tablet-Rückmeldung zu 2.28.23/2.28.24 (Kopfleiste, Fragezeichen, Drucken,
-  Aus-/Einloggen, Demo-Schalter, Kurzhinweise, Wo liegt was). Drucken über den Android-Druckdienst ist am Gerät ungeprüft.
+- Eigene Berichte und ungeprüfte Nutzergeräte; Tablet-Rückmeldung zu 2.28.23/2.28.24 und zum Demo-Knopf. Drucken über den
+  Android-Druckdienst ist am Gerät ungeprüft.
+- Vollsicherung auf Android (Dateiausgabe nimmt nur 20 MB je Datei), PWA-Updates nach Codex #89, Ein-Schritt-Tresor in der
+  Familienakte verdrahten.
 
 ## Veröffentlichen
 
