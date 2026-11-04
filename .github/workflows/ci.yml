@@ -2,6 +2,7 @@ name: Prüfung bei jedem PR
 
 # D1: Typprüfung, Fachprüfungen, Lint, Build, Herkunft der byte-gleichen Bausteine und die Oberflächenproben (Playwright).
 on:
+  workflow_dispatch:
   pull_request:
   push:
     branches: [main]
@@ -36,6 +37,8 @@ jobs:
         run: npm run lint
       - name: Herkunft der byte-gleichen Bausteine
         run: npm run check:herkunft
+      - name: Gemeinsamen PDF-Updateweg prüfen
+        run: npm run check:pdf-update
       - name: Fachprüfungen und Systemprüfung
         run: npm run check
       - name: Signierwerkzeug (Wegwerf-Schlüssel, kein echter)

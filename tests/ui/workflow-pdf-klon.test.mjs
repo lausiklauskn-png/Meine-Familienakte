@@ -67,6 +67,30 @@ try {
     return true;
   });
 
+  await step("Eigene Kategorie: Feld mit Inhalt als ★ Feldart merken und wiederverwenden", async () => {
+    await klon.locator(".dok", { hasText: "Garantiebeleg" }).first().locator(".dok-akt button[data-auf]").click();
+    await klon.locator("#mBearbeiten").click();
+    await klon.locator('[data-t="text"]').click();
+    await klon.locator("#seiten .lage").first().click({ position: { x: 100, y: 150 } });
+    await klon.locator("#eigLabel").fill("Aktenzeichen Probe");
+    await klon.locator("#eigWert").fill("AZ-ERFUNDEN-42");
+    await klon.locator("#eigVorlage").click();
+    await klon.locator("#vlName").fill("Mein Aktenzeichen");
+    await klon.locator(".dlg-grund [data-ok]").click();
+    await klon.locator("[data-v]", { hasText: "Mein Aktenzeichen" }).click();
+    await klon.locator("#seiten .lage").first().click({ position: { x: 100, y: 240 } });
+    await klon.locator("#mAusfuellen").click();
+    const werte = await klon.locator("#seiten .feld input, #seiten .feld textarea").evaluateAll(es => es.map(e => e.value));
+    if (werte.filter(v => v === "AZ-ERFUNDEN-42").length !== 2) return false;
+    await klon.locator("#edZurueck").click();
+    await page.reload({ waitUntil: "networkidle" }); await ready(page);
+    klon = await zumKlon(page);
+    await klon.locator(".dok", { hasText: "Garantiebeleg" }).first().locator(".dok-akt button[data-auf]").click();
+    await klon.locator("#mBearbeiten").click();
+    await klon.locator("[data-v]", { hasText: "Mein Aktenzeichen" }).waitFor();
+    return "Name, Inhalt und erneute Verwendung; nach Neuladen noch vorhanden";
+  });
+
   const handy = await (await browser.newContext(HANDY)).newPage();
   await handy.goto(app.base, { waitUntil: "networkidle" }); await ready(handy);
   await step("Handy 390 px: Klon ohne Querrollen", async () => {

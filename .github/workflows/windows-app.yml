@@ -4,7 +4,7 @@ name: Windows-App (Prüf-Bau)
 # Muster: Privat-Brain-Pro windows-app.yml, stark verkleinert (kein Java-Kern).
 on:
   pull_request:
-    paths: ['windows/**', 'public/native/**', '.github/workflows/windows-app.yml', 'app/**', 'lib/**', 'src/**', 'index.html', 'package.json']
+    paths: ['public/apps/workflow-pdf/**', 'public/wfpdf/**', 'windows/**', 'public/native/**', '.github/workflows/windows-app.yml', 'app/**', 'lib/**', 'src/**', 'index.html', 'package.json']
   push:
     branches: [main]
   workflow_dispatch:

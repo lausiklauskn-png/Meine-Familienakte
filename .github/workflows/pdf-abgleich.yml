@@ -6,21 +6,28 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
-      - 'tools/wfpdf-*.mjs'
-      - 'scripts/run-pdf-funktions-tests.mjs'
-      - 'scripts/run-pdf-abgleich-tests.mjs'
-      - 'tools/pdf-abgleich.mjs'
+      - 'tools/*pdf*.mjs'
+      - 'scripts/run-pdf-*.mjs'
+      - 'tests/ui/workflow-pdf-*.test.mjs'
       - 'app/ausfuellen-dialog.tsx'
       - 'app/wfpdf-kern.ts'
+      - 'public/apps/workflow-pdf/**'
+      - 'public/wfpdf/**'
       - '.github/workflows/pdf-abgleich.yml'
 
 permissions:
   contents: read
 
+concurrency:
+  group: pdf-abgleich-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   abgleich:
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 25
+    outputs:
+      update: ${{ steps.stand.outputs.update }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -40,28 +47,56 @@ jobs:
           cache-dependency-path: familienakte/package-lock.json
       - run: npm ci
         working-directory: familienakte
-      - name: Gemeinsamen Quellstand prüfen und Update vorbereiten
+      - name: Beide Kopien gemeinsam mit Designschutz vorbereiten
+        id: stand
         working-directory: familienakte
         run: |
           mkdir -p work/pdf-abgleich
-          node tools/pdf-abgleich.mjs ../Workflow-PDF ../Workflow-PDF-Pro > work/pdf-abgleich/stand.json
-          if node -e "process.exit(JSON.parse(require('fs').readFileSync('work/pdf-abgleich/stand.json')).updateVorhanden ? 0 : 1)"; then
-            node tools/wfpdf-app-nachziehen.mjs
-            node tools/wfpdf-nachziehen.mjs
-          fi
+          node tools/pdf-update.mjs --quelle ../Workflow-PDF --pro ../Workflow-PDF-Pro --anwenden > work/pdf-abgleich/stand.json
+          node -e "const fs=require('fs'); const s=JSON.parse(fs.readFileSync('work/pdf-abgleich/stand.json')); fs.appendFileSync(process.env.GITHUB_OUTPUT, 'update='+s.updateVorhanden+'\n');"
           git add -N -- public/apps/workflow-pdf public/apps/HERKUNFT.json public/wfpdf
           git diff --binary -- public/apps/workflow-pdf public/apps/HERKUNFT.json public/wfpdf > work/pdf-abgleich/update.patch
-      - name: Funktionsvertrag und Herkunft prüfen
+      - name: Funktionsvertrag, Updateweg, Herkunft und Build prüfen
         working-directory: familienakte
         run: |
-          node scripts/run-pdf-abgleich-tests.mjs
-          node scripts/run-pdf-funktions-tests.mjs
-          node scripts/run-wfpdf-kopie-tests.mjs
+          npm run check:pdf-update
           npm run check:ausfuellen
-          npm run typecheck
+          npm run check:herkunft
+          npm run build
+      - run: npx playwright install --with-deps chromium
+        working-directory: familienakte
+      - name: Beide Ausfülloberflächen prüfen
+        working-directory: familienakte
+        run: |
+          node tests/run-ui.mjs ausfuellen
+          node tests/run-ui.mjs workflow-pdf
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: pdf-update-zur-pruefung
           path: familienakte/work/pdf-abgleich/
           retention-days: 30
+
+  update-pr:
+    # PR code never receives write access. Only the trusted schedule/manual run
+    # can publish its own successfully checked artifact.
+    if: needs.abgleich.outputs.update == 'true' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
+    needs: abgleich
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/download-artifact@v4
+        with:
+          name: pdf-update-zur-pruefung
+          path: work/pdf-abgleich
+      - name: Geprüften Updatevorschlag als Entwurf öffnen
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node tools/pdf-update-pr.mjs
