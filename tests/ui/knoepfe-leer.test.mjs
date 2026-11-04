@@ -71,11 +71,15 @@ try {
     const erg = (await page.locator("[aria-live]").allInnerTexts()).join(" ").match(/Systemprüfung abgeschlossen[^.]*\./);
     return erg ? erg[0].slice(0, 100) : false;
   });
-  await step("Leere Akte: „Beispieldaten laden“ stellt die Beispielfamilie wieder her; eigene Einträge bleiben", async () => {
+  await step("Leere Akte: getrennte Demo; eigene Frist bleibt nach Rückkehr erhalten", async () => {
     await page.locator(".footer-sample-link").scrollIntoViewIfNeeded(); await page.locator(".footer-sample-link").click();
     await page.waitForSelector(".sample-data-notice strong", { timeout: 60000 });
     await footer(page, "Fristen und Aufgaben"); await page.locator("button.schedule-filter", { hasText: "Offen" }).click();
-    return (await page.locator("main").innerText()).includes("Erste eigene Frist");
+    const eigeneFristInDemo = (await page.locator("main").innerText()).includes("Erste eigene Frist");
+    await page.getByRole("button", { name: "Demo verlassen", exact: true }).click();
+    await page.getByRole("button", { name: "Demo öffnen", exact: true }).waitFor();
+    await footer(page, "Fristen und Aufgaben"); await page.locator("button.schedule-filter", { hasText: "Offen" }).click();
+    return !eigeneFristInDemo && (await page.locator("main").innerText()).includes("Erste eigene Frist");
   });
   check(errors.length === 0, "Keine Seitenfehler", errors.join(" | "));
 } finally { await browser.close(); await app.stop(); }
