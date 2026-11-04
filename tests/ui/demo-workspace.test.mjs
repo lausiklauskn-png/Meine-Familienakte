@@ -18,6 +18,13 @@ try {
   await page.getByRole("button", { name: "Demo öffnen", exact: true }).waitFor();
   const pdf = createSamplePdf({ sender: "Erfundene eigene Ablage", place: "Wolkenhain, 04.11.2026", title: "Eigene Unterlage behalten", body: "Eindeutiger eigener Testbeleg. Keine Beispieldaten-Herkunft." });
   const bytes = Buffer.from(pdf), hash = createHash("sha256").update(bytes).digest("hex");
+  async function switchWorkspace(target, active) {
+    await Promise.all([
+      target.waitForURL(url => active ? url.searchParams.get("demo") === "1" : !url.searchParams.has("demo")),
+      target.getByRole("button", { name: active ? "Demo öffnen" : "Demo verlassen", exact: true }).click(),
+    ]);
+    await target.waitForLoadState("networkidle");
+  }
   async function fixture() { await vaultFixture(page); }
   async function documents() {
     await fixture();
@@ -67,15 +74,15 @@ try {
       await f.vaultInternalsForTests.writeIndex(h, index);
     });
     await page.reload({ waitUntil: "networkidle" });
-    await page.getByRole("button", { name: "Demo öffnen", exact: true }).click();
+    await switchWorkspace(page, true);
     await page.getByRole("button", { name: "Demo verlassen", exact: true }).waitFor();
-    await page.getByRole("button", { name: "Demo verlassen", exact: true }).click();
+    await switchWorkspace(page, false);
     await page.getByRole("button", { name: "Demo öffnen", exact: true }).waitFor();
     assert.deepEqual(await documents(), before);
     const records = await page.evaluate(async () => { const f = window.__vaultFixture; return (await f.readLocalVaultData(await f.browserVault())).records; });
     assert.equal(records.length, 0);
   });
-  await page.getByRole("button", { name: "Demo öffnen", exact: true }).click();
+  await switchWorkspace(page, true);
   await page.locator('.sample-data-notice strong:has-text("Alle Daten")').waitFor();
   await step("Demo enthält wirkliche erfundene PDF-Dateien, keine eigene Unterlage", async () => {
     const demo = await documents(); assert.ok(demo.length >= 15); assert.ok(demo.every(d => d.hash.length === 64)); assert.ok(!demo.some(d => d.name === before[0].name));
@@ -99,21 +106,23 @@ try {
     });
     assert.deepEqual(result.b, result.a); assert.deepEqual(result.recordsB, result.recordsA); assert.deepEqual(result.relationsB, result.relationsA);
   });
-  await page.getByRole("button", { name: "Demo verlassen", exact: true }).click();
+  await switchWorkspace(page, false);
   await page.getByRole("button", { name: "Demo öffnen", exact: true }).waitFor();
   await step("Rückkehr zur eigenen Akte bewahrt Kennung und PDF-Bytes", async () => { assert.deepEqual(await documents(), before); });
-  await page.getByRole("button", { name: "Demo öffnen", exact: true }).click();
+  await switchWorkspace(page, true);
   await page.getByRole("button", { name: "Demo zurücksetzen", exact: true }).click();
-  await page.getByRole("button", { name: "Ja, fortfahren", exact: true }).click();
+  await Promise.all([page.waitForURL(url => url.searchParams.get("demo") === "reset", { waitUntil: "commit" }), page.getByRole("button", { name: "Ja, fortfahren", exact: true }).click()]);
   await page.waitForURL(url => url.searchParams.get("demo") === "1");
+  await page.waitForLoadState("networkidle");
   await page.locator('.sample-data-notice strong:has-text("Alle Daten")').waitFor();
   await step("Zurücksetzen entfernt auch Testimporte, erneuert nur die Demo", async () => { assert.ok(!(await documents()).some(d => d.name === "Nur_Demo_Import.txt")); });
-  await page.getByRole("button", { name: "Demo verlassen", exact: true }).click();
+  await switchWorkspace(page, false);
   await page.getByRole("button", { name: "Demo öffnen", exact: true }).waitFor();
   await step("Eigene Akte bleibt auch nach Demo-Reset und Neustart unverändert", async () => { await page.reload({ waitUntil: "networkidle" }); assert.deepEqual(await documents(), before); });
-  await page.getByRole("button", { name: "Demo öffnen", exact: true }).click();
+  await switchWorkspace(page, true);
   await page.getByRole("button", { name: "Demo löschen und verlassen", exact: true }).click();
-  await page.getByRole("button", { name: "Ja, fortfahren", exact: true }).click();
+  await Promise.all([page.waitForURL(url => !url.searchParams.has("demo")), page.getByRole("button", { name: "Ja, fortfahren", exact: true }).click()]);
+  await page.waitForLoadState("networkidle");
   await page.getByRole("button", { name: "Demo öffnen", exact: true }).waitFor();
   await step("Demo vollständig löschen: nur der benannte Testbereich verschwindet", async () => {
     assert.deepEqual(await documents(), before);
@@ -143,7 +152,7 @@ try {
   });
   await step("Demo-Schalter auf schmalem Bildschirm ohne seitliches Überlaufen", async () => {
     assert.ok(await mobile.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
-    await mobile.getByRole("button", { name: "Demo verlassen", exact: true }).click();
+    await switchWorkspace(mobile, false);
     await mobile.getByRole("button", { name: "Demo öffnen", exact: true }).waitFor();
   });
   check(errors.length === 0, "Keine Browserfehler im Demo-/Echtwechsel", errors.join(" | "));

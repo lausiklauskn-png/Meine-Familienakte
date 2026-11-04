@@ -72,11 +72,14 @@ try {
     return erg ? erg[0].slice(0, 100) : false;
   });
   await step("Leere Akte: getrennte Demo; eigene Frist bleibt nach Rückkehr erhalten", async () => {
-    await page.locator(".footer-sample-link").scrollIntoViewIfNeeded(); await page.locator(".footer-sample-link").click();
+    await page.locator(".footer-sample-link").scrollIntoViewIfNeeded();
+    await Promise.all([page.waitForURL(url => url.searchParams.get("demo") === "1"), page.locator(".footer-sample-link").click()]);
+    await page.waitForLoadState("networkidle");
     await page.waitForSelector(".sample-data-notice strong", { timeout: 60000 });
     await footer(page, "Fristen und Aufgaben"); await page.locator("button.schedule-filter", { hasText: "Offen" }).click();
     const eigeneFristInDemo = (await page.locator("main").innerText()).includes("Erste eigene Frist");
-    await page.getByRole("button", { name: "Demo verlassen", exact: true }).click();
+    await Promise.all([page.waitForURL(url => !url.searchParams.has("demo")), page.getByRole("button", { name: "Demo verlassen", exact: true }).click()]);
+    await page.waitForLoadState("networkidle");
     await page.getByRole("button", { name: "Demo öffnen", exact: true }).waitFor();
     await footer(page, "Fristen und Aufgaben"); await page.locator("button.schedule-filter", { hasText: "Offen" }).click();
     return !eigeneFristInDemo && (await page.locator("main").innerText()).includes("Erste eigene Frist");
