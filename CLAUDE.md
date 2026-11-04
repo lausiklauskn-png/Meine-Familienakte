@@ -1,20 +1,21 @@
 # CLAUDE.md — Meine Familienakte
 
 
-## Aktueller Bau: getrennte Demo 2.28.20 (04.11.2026)
+## Aktueller Abschluss: getrennte Demo 2.28.20 veröffentlicht (04.11.2026)
 
-Klaus' autonomer Bauauftrag aus Kimhub `docs/sessions/BRIEF_2026-11-04_codex-familienakte-systemmeldungen.md`
-ist mit PR #73 gebaut; PR #76 erhält zusätzlich eigene Altbriefe mit gleichem Betreff.
-Die PWA hatte den ersten Baustand bereits als 2.28.19 ausgeliefert; die korrigierte Gesamtausgabe erhält deshalb 2.28.20. Sichtbare Zeile weiter 2.28.1.
-Tresor-PR #71 und die parallel veröffentlichte Android-Testfassung 2.28.18 aus #72 sind enthalten.
-Die getrennte Demo ist gebaut; Zusammenführung und neue Veröffentlichung folgen erst nach den vollständigen Prüfketten.
-Eigene Dateien bevorzugt erhalten. Alte Gesamt-Kennungsliste nicht als Löschbeleg verwenden.
-`Demo öffnen` / `Demo verlassen` / Reset / vollständiges Demo-Löschen verwenden; keine neue Beispielsammlung im Echtbestand anlegen.
-Anleitung: `docs/DEMO-ARBEITSBEREICH.md`; Befunde und nächste Nutzerprüfungen:
-`BRIEF_SITZUNG_2026-11-04_DEMO-UND-SYSTEMMELDUNGEN.md`.
-Prüfungen mit Beispielen müssen die Demo ausdrücklich öffnen bzw. ihre erfundenen Fixtures vorbereiten;
-die eigene Akte startet jetzt ohne automatisch angelegte Beispieldaten. Native Modell-/Ausgabeprüfungen bleiben erhalten.
-Klaus' lokale Systemberichte und die ungeprüften Nutzergeräte bleiben von eigenen technischen Proben getrennt.
+Klaus' Freibrief aus Kimhub ist mit #73/#76 umgesetzt. Eigene Dateien und eigene Altbriefe bevorzugt erhalten;
+Beispiele nur nach belegter Herkunft bereinigen. Die Demo hat einen eigenen lokalen Bestand mit PDFs,
+Einstieg/Rückweg, Reset und vollständigem Löschweg. Keine automatischen Beispiele im eigenen Bestand.
+Technisch 2.28.20, sichtbar weiter 2.28.1. Die automatisch ausgelieferte 19er-PWA war ein Zwischenstand;
+19er APK-/Windows-Bauten wurden vor Taganlage abgebrochen. Die endgültige 20er Ausgabe nicht erneut ausgeben.
+Alle sechs endgültigen Produktketten grün: 43/43 Browser-Skripte, installierte Android-APK API 31/35,
+Windows-Installer und installierte Oberfläche, Modellvergleich, Android-Hülle und Transport-Gegenproben.
+Android/Windows mit server=ja veröffentlicht; öffentliche Downloads anonym gehasht, PWA samt Windows20 geprüft.
+Aktuell lesen: `BRIEF_ABSCHLUSS_2026-11-04_DEMO-UND-DATEIERHALT.md`,
+`docs/DEMO-ARBEITSBEREICH.md` und `docs/VEROEFFENTLICHUNG-2.28.20.json`.
+Eigene Berichte und ungeprüfte Nutzergeräte bleiben offen; die sechs Tablet-Fälle aus Claudes erhaltenem #75
+und die ältere zusätzliche Android-Tresor-Paar-Abnahme sind getrennte offene Praxisaufträge.
+Forschung und Sitzungszeiten ausschließlich in Kimhub. Paket-/Signieridentitäten und Herkunftspins erhalten.
 
 Diese Datei liest jede Sitzung zuerst. Was hier steht, gilt für jede Arbeit in diesem Repo.
 
