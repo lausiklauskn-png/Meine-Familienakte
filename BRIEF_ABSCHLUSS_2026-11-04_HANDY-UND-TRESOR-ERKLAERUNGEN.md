@@ -83,8 +83,12 @@ Als Nächstes (Reihenfolge)
    Familienakte darf einen neuen Tresor anlegen (Klaus' Ja vom 04.11.).
 3. Familienakte: „Durchsuchbar“ im Scanner ab Werk an (nur über die Brücke); Vollsicherung auf Android.
 4. Familienakte: Sprünge im Ordnerbaum verdrahten; weitere Ablaufbilder nur nach HTML-Vorschau und Klaus' Ja.
-5. Klaus' Tablet-Rückmeldung zu 2.28.23 abholen (Kopfleiste, Fragezeichen, Drucken, Aus-/Einloggen, Demo-Schalter).
-6. Zeit dieser und der neuen Sitzung in Kimhub nachtragen.
+5. Demo auch am großen Bildschirm nur noch als Knopf oben (Klaus 04.11.): Demo-Kasten ganz weg. Tipp auf „Demo“ (aus)
+   öffnet die Demo; Tipp auf „DEMO“ (an) öffnet ein kleines Auswahlfenster am Knopf: Demo verlassen · Demo zurücksetzen ·
+   Demo löschen und verlassen. Proben, die `.demo-workspace` nutzen, darauf umstellen. Am Handy ist „FAMILIENAKTE“ neben
+   dem DEMO-Knopf leicht abgeschnitten (Bild 16:37) – mitbeheben. Vorher als Vorschau zeigen.
+6. Klaus' Tablet-Rückmeldung zu 2.28.23 abholen (Kopfleiste, Fragezeichen, Drucken, Aus-/Einloggen, Demo-Schalter).
+7. Zeit dieser und der neuen Sitzung in Kimhub nachtragen.
 
 Danach (Klaus): alle Pro-Apps deinstallieren, alten Hauptablageordner löschen, mit den neuen Fassungen frische
 Tresorräume anlegen. Vorher wichtige PDFs außerhalb des Tresors sichern lassen.
