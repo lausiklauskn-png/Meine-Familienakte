@@ -1947,3 +1947,5 @@ fieldset:disabled .datei-knopf { opacity: .55; cursor: not-allowed; }
   .site-brand strong .demo-header-badge { display: none; }
   .app-shell .demo-workspace { display: none; }
 }
+.ablauf-knoten.art-gut { border-color: #2f8a4f; background: #e9f6ee; }
+.ablauf-knoten.art-warnung strong, .ablauf-knoten.art-gut strong { font-weight: 800; }
