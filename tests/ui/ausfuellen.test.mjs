@@ -93,11 +93,11 @@ try {
     if (vor !== "Gerlinde" || gelb < 2) throw new Error(`Vorname „${vor}“, gelb ${gelb}`);
     return `Vorname „${vor}“, ${gelb} gelb`;
   });
-  await step("E-Mail tippen und festes PDF speichern → neue Unterlage neben dem Original", async () => {
+  await step("E-Mail tippen und festes PDF am selben Dokument speichern", async () => {
     const mail = dlg.locator("input[data-af-feld][type=email]").first();
     await mail.fill("tommy.flinkfuss@beispiel.invalid");
     await dlg.locator("[data-af-fest]").click();
-    await dlg.locator("[data-af-hinweis]", { hasText: "neben dem Original" }).waitFor({ timeout: 30000 }).catch(async () => { throw new Error(`${await dlg.locator("[data-af-hinweis]").innerText().catch(() => "kein Hinweis")} · ${errors.join(" | ").slice(0, 300)}`); });
+    await dlg.locator("[data-af-hinweis]", { hasText: "am selben Dokument" }).waitFor({ timeout: 30000 }).catch(async () => { throw new Error(`${await dlg.locator("[data-af-hinweis]").innerText().catch(() => "kein Hinweis")} · ${errors.join(" | ").slice(0, 300)}`); });
     return (await dlg.locator("[data-af-teilen]").count()) === 1;
   });
   await step("Teilen (ohne Teilen-Funktion im Testbrowser: Herunterladen) liefert ein PDF mit den Einträgen", async () => {
@@ -110,15 +110,19 @@ try {
     if (!s.startsWith("%PDF") || !drin("Gerlinde") || !drin("tommy.flinkfuss@beispiel.invalid")) throw new Error(`${dl.suggestedFilename()} ${b.length} Byte, Gerlinde: ${drin("Gerlinde")}`);
     return `${dl.suggestedFilename()} · ${b.length} Byte`;
   });
-  await step("Fenster zu: Original trägt „Ausgefüllt“, die neue Fassung „Ausgefüllte Fassung“", async () => {
+  await step("Ausfüllbare Fassung am selben Dokument speichern, kein zweiter Eintrag", async () => {
+    // Flat PDF is a final output. Use the editable format before continuing to edit later.
+    await dlg.locator("[data-af-ausfuellbar]").click();
+    await dlg.locator("[data-af-hinweis]", { hasText: "am selben Dokument" }).waitFor({ timeout: 30000 });
     await dlg.locator("button[aria-label='Ausfüllen schließen']").click();
-    await page.locator(".document-item [data-af-marke]", { hasText: "Ausgefüllte Fassung" }).first().waitFor({ timeout: 15000 });
-    const orig = await page.locator(".document-item", { hasText: "Antrag_Bewohnerparkausweis_Musterstadt.pdf" }).filter({ hasNotText: "ausgefuellt 20" }).first().innerText();
-    return /Ausgefüllt/.test(orig) ? "Marken stehen" : false;
+    const orig = page.locator(".document-item", { hasText: "Antrag_Bewohnerparkausweis_Musterstadt.pdf" });
+    if (await orig.count() !== 1) return false;
+    return /Ausgefüllt/.test(await orig.first().innerText()) && await page.locator('.document-item', { hasText: 'Antrag_Bewohnerparkausweis_Musterstadt (ausgefuellt' }).count() === 0;
   });
   await step("Wieder öffnen: Felder gemerkt, Eingabe-Speicher schlägt nach „to“ die E-Mail vor", async () => {
     await oeffneAusfuellen();
     const mail = dlg.locator("input[data-af-feld][type=email]").first();
+    if (await mail.inputValue() !== "tommy.flinkfuss@beispiel.invalid") throw new Error("Gespeicherter PDF-Wert fehlt beim Wiederöffnen");
     await mail.click(); await mail.fill("to");
     await dlg.locator("[data-af-vorschlaege] button", { hasText: "tommy.flinkfuss@beispiel.invalid" }).click();
     return (await mail.inputValue()) === "tommy.flinkfuss@beispiel.invalid";

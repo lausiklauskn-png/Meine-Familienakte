@@ -3,6 +3,7 @@ import { workspaceStorage } from "../lib/demo-workspace.ts";
 import type { ProUebergabe } from "../lib/pro-verbund-vertrag";
 import { kontaktPruefen, kontaktUebernehmen, type PersonKontakt } from "../lib/person-kontakt.ts";
 import { istProOriginal, proOriginalLesen, proOriginalName, proOriginalSpeichern, proOriginalVaultId, proOriginalMerkmale, proTresor, proTresorVerfuegbar } from "./pro-tresor.ts";
+import { pruefePdfQuelle, type PdfQuelle, type PdfRueckgabe } from "../lib/pdf-bearbeitung.ts";
 import type { AusfuellInfo } from "../lib/ausfuellen";
 import {
   createFamilyRecord,
@@ -54,6 +55,7 @@ export type LocalDocument = {
   checksum?: string | null; storageLocations?: DocumentStorageLocation[];
   /** Ausfüllen (Sitzung F): Felder/Stand am Original, Verweis an der ausgefüllten Fassung. */
   ausfuellen?: AusfuellInfo | null;
+  pdfRueckgabe?: PdfRueckgabe;
 };
 
 export type VaultAuditEntry = {
@@ -3876,4 +3878,134 @@ export async function writeAusfuellAblage(handle: FileSystemDirectoryHandle, tei
   if ("speicher" in teil) index.ausfuellSpeicher = teil.speicher;
   if ("unterschriften" in teil) index.ausfuellUnterschriften = teil.unterschriften;
   await writeIndex(handle, index);
+}
+
+// ---------- Origin-bound PDF workspace: one logical document, no duplicate register entry ----------
+type PdfAltdatei = { dokumentId: string; pfad: string; checksum: string };
+function pdfAltdateien(index: VaultIndex): PdfAltdatei[] {
+  const liste = index.pdfAltdateien;
+  if (liste === undefined) return [];
+  if (!Array.isArray(liste) || liste.some(e => !e || typeof e.dokumentId !== "string" || typeof e.pfad !== "string" || !/^[a-f0-9]{64}$/.test(e.checksum))) throw new Error("Die PDF-Aufräumliste ist beschädigt; es wurde nichts entfernt.");
+  return liste as PdfAltdatei[];
+}
+async function pdfOrdner(handle: FileSystemDirectoryHandle, pfad: string) {
+  const teile = pfad.split("/");
+  if (teile.shift() !== ROOT || !["01_Dokumente", "02_Online-Bestand_gesichert"].includes(teile[0]) || teile.some(t => !t || t === "." || t === ".." || t.includes("\\"))) throw new Error("Der PDF-Speicherpfad ist unzulässig.");
+  const name = teile.pop()!;
+  let ordner = await root(handle);
+  for (const teil of teile) ordner = await ordner.getDirectoryHandle(teil);
+  return { ordner, name };
+}
+async function pdfRegisterSchreiben(handle: FileSystemDirectoryHandle, index: VaultIndex) {
+  const basis = await root(handle);
+  await writeIndexToRegisterDirectoryUnlocked(() => basis.getDirectoryHandle("00_Register", { create: true }), index);
+}
+async function pdfAufraeumen(handle: FileSystemDirectoryHandle, index: VaultIndex) {
+  if (!pdfAltdateien(index).length) return 0;
+  // Seal a register backup that already points at the verified new PDF before
+  // deleting the obsolete bytes. A crash must not leave the backup pointing at a removed file.
+  await pdfRegisterSchreiben(handle, index);
+  const offen: PdfAltdatei[] = [];
+  for (const alt of pdfAltdateien(index)) {
+    // Only a verified, unreferenced former PDF is eligible. Other documents/locations remain untouched.
+    if (index.documents.some(d => d.storedPath === alt.pfad || d.storageLocations?.some(l => l.path === alt.pfad))) continue;
+    try {
+      const { ordner, name } = await pdfOrdner(handle, alt.pfad);
+      const file = await (await ordner.getFileHandle(name)).getFile();
+      if (await fileChecksum(file) !== alt.checksum) { offen.push(alt); continue; }
+      await ordner.removeEntry(name);
+    } catch (e) { if (!isNotFoundError(e)) offen.push(alt); }
+  }
+  const geaendert = offen.length !== pdfAltdateien(index).length;
+  if (geaendert) { index.pdfAltdateien = offen; await pdfRegisterSchreiben(handle, index); }
+  return offen.length;
+}
+export async function beginLocalPdfEdit(handle: FileSystemDirectoryHandle, dokumentId: string): Promise<{ quelle: PdfQuelle; file: File }> {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  return withRegisterWriteLock(async () => {
+    const index = await readIndex(handle);
+    await pdfAufraeumen(handle, index);
+    const dokument = index.documents.find(d => d.id === dokumentId);
+    if (!dokument) throw new Error("Die gewählte Unterlage fehlt im geöffneten Bestand.");
+    const file = await documentFile(handle, dokument);
+    const checksum = await fileChecksum(file);
+    if (dokument.checksum && dokument.checksum !== checksum) throw new Error("Die Unterlage wurde außerhalb der Akte geändert. Bitte zuerst den Bestand abgleichen.");
+    return { quelle: { sitzung: crypto.randomUUID(), vaultId: (await vaultIdentity(handle)).vaultId, dokumentId, checksum, storedPath: dokument.storedPath },
+      file: new File([file], dokument.originalName, { type: dokument.mimeType || file.type, lastModified: file.lastModified }) };
+  });
+}
+export async function saveLocalPdfEdit(handle: FileSystemDirectoryHandle, quelle: PdfQuelle, file: File, ausfuellen?: AusfuellInfo): Promise<{ dokument: LocalDocument; quelle: PdfQuelle; aufraeumenOffen: number }> {
+  pruefePdfQuelle(quelle);
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  if (file.size > LIMITS.documentBytes || file.size < 5 || new TextDecoder().decode(await file.slice(0, 5).arrayBuffer()) !== "%PDF-") throw new Error("Die Rückgabe muss eine gültige PDF-Datei bis 20 MB sein.");
+  const checksum = await fileChecksum(file);
+  return withRegisterWriteLock(async () => {
+    if ((await vaultIdentity(handle)).vaultId !== quelle.vaultId) throw new Error("Die PDF-Bearbeitung gehört zu einer anderen Akte. Es wurde nichts zurückgeschrieben.");
+    let index = await readIndex(handle);
+    let dokument = index.documents.find(d => d.id === quelle.dokumentId);
+    if (!dokument) throw new Error("Das ursprüngliche Dokument ist nicht mehr vorhanden. Es wurde kein Ersatz angelegt.");
+    const aktuell = await documentFile(handle, dokument), aktuellSha = await fileChecksum(aktuell);
+    if (dokument.pdfRueckgabe?.sitzung === quelle.sitzung && dokument.pdfRueckgabe.ergebnis === checksum && aktuellSha === checksum) {
+      return { dokument, quelle: { ...quelle, checksum, storedPath: dokument.storedPath }, aufraeumenOffen: await pdfAufraeumen(handle, index) };
+    }
+    if (dokument.storedPath !== quelle.storedPath || aktuellSha !== quelle.checksum || (dokument.checksum && dokument.checksum !== aktuellSha)) throw new Error("Das Dokument wurde inzwischen geändert oder verschoben. Die neuere Fassung wurde nicht überschrieben.");
+    if (checksum === aktuellSha) {
+      dokument.pdfRueckgabe = { sitzung: quelle.sitzung, quelle: quelle.checksum, ergebnis: checksum };
+      if (ausfuellen) dokument.ausfuellen = ausfuellen;
+      await pdfRegisterSchreiben(handle, index);
+      return { dokument, quelle, aufraeumenOffen: pdfAltdateien(index).length };
+    }
+    const name = /\.pdf$/i.test(dokument.originalName) ? dokument.originalName : dokument.originalName.replace(/\.[^.]+$/, "") + ".pdf";
+    const rueckgabe = new File([file], name, { type: "application/pdf", lastModified: file.lastModified });
+    const altPfad = dokument.storedPath;
+    let neuPfad: string, neuOrdner: FileSystemDirectoryHandle | null = null, neuName = "", selbstAngelegt = false;
+    if (istProOriginal(altPfad)) {
+      // The canonical Pro store is immutable; this is a revision of the same logical document.
+      neuPfad = await proOriginalSpeichern(proOriginalVaultId(altPfad), rueckgabe, checksum, dokument.documentDate ? Date.parse(dokument.documentDate) : 0, `fa-${await fileChecksum(new File([dokument.id], "kennung"))}`);
+    } else {
+      const { ordner } = await pdfOrdner(handle, altPfad);
+      neuOrdner = ordner; neuName = `PDF_${clean(dokument.id).slice(0, 8)}_${checksum.slice(0, 24)}.pdf`;
+      neuPfad = altPfad.slice(0, altPfad.lastIndexOf("/") + 1) + neuName;
+      if (neuPfad === altPfad || index.documents.some(d => d.id !== quelle.dokumentId && d.storedPath === neuPfad)) throw new Error("Die Rückgabe kollidiert mit einer vorhandenen Ablage.");
+      try {
+        const vorhanden = await (await ordner.getFileHandle(neuName)).getFile();
+        if (await fileChecksum(vorhanden) !== checksum) throw new Error("Der vorbereitete PDF-Dateiname ist bereits anders belegt.");
+      } catch (e) {
+        if (!isNotFoundError(e)) throw e;
+        const ziel = await ordner.getFileHandle(neuName, { create: true }); selbstAngelegt = true;
+        try { const w = await ziel.createWritable(); await w.write(rueckgabe); await w.close(); if (await fileChecksum(await ziel.getFile()) !== checksum) throw new Error("Die zurückgeschriebene PDF konnte nicht bestätigt werden."); }
+        catch (error) { try { await ordner.removeEntry(neuName); } catch { /* a failed staging file is never registered */ } throw error; }
+      }
+    }
+    const zeit = new Date().toISOString();
+    const alterOrt = dokument.storageLocations?.find(l => l.path === altPfad);
+    dokument.storedPath = neuPfad; dokument.relativePath = neuPfad; dokument.originalName = name;
+    if (dokument.oneDrivePath === altPfad) dokument.oneDrivePath = neuPfad;
+    dokument.mimeType = "application/pdf"; dokument.sizeBytes = file.size; dokument.checksum = checksum; dokument.updatedAt = zeit;
+    dokument.storageLocations = [...(dokument.storageLocations || []).filter(l => l.path !== altPfad), { id: alterOrt?.id || `LOC-${crypto.randomUUID()}`, storageType: alterOrt?.storageType || dokument.storageType || "local", path: neuPfad, source: alterOrt?.source || dokument.source || "Aktenordner", checksum, fileSize: file.size, verifiedAt: zeit }];
+    dokument.pdfRueckgabe = { sitzung: quelle.sitzung, quelle: quelle.checksum, ergebnis: checksum };
+    if (dokument.proUebergabe) { dokument.proBezug ||= dokument.proUebergabe.id; delete dokument.proUebergabe; }
+    if (ausfuellen) dokument.ausfuellen = ausfuellen;
+    else if (dokument.ausfuellen && "felder" in dokument.ausfuellen) dokument.ausfuellen = { ...dokument.ausfuellen, felder: [] };
+    if (!istProOriginal(altPfad)) index.pdfAltdateien = [...pdfAltdateien(index), { dokumentId: dokument.id, pfad: altPfad, checksum: aktuellSha }];
+    index.auditLog.unshift({ id: crypto.randomUUID(), at: zeit, action: "PDF-Bearbeitung zurückgespeichert", recordId: dokument.id, details: "Gleiche Dokumentkennung, vorhandene Zuordnung und derselbe Akten-/Pro-Tresor. Kein zweiter Registereintrag." });
+    try { await pdfRegisterSchreiben(handle, index); }
+    catch (error) {
+      // A close/read-back failure may occur after the register was committed.
+      // Never remove bytes whose registration is uncertain or already confirmed.
+      let beobachtet: VaultIndex;
+      try { beobachtet = await readIndex(handle); } catch { throw error; }
+      const gelesen = beobachtet.documents.find(d => d.id === quelle.dokumentId);
+      if (gelesen?.storedPath === neuPfad && gelesen.checksum === checksum && gelesen.pdfRueckgabe?.sitzung === quelle.sitzung) {
+        index = beobachtet; dokument = gelesen;
+      } else {
+        if (gelesen?.storedPath === altPfad && selbstAngelegt && neuOrdner) { try { await neuOrdner.removeEntry(neuName); } catch { /* source remains registered */ } }
+        throw error;
+      }
+    }
+    // Metadata is committed. Cleanup failure cannot revoke the successful save; its journal enables retry.
+    let aufraeumenOffen = pdfAltdateien(index).length;
+    try { aufraeumenOffen = await pdfAufraeumen(handle, index); } catch { /* committed document remains valid; journal is retained */ }
+    return { dokument, quelle: { ...quelle, checksum, storedPath: neuPfad }, aufraeumenOffen };
+  });
 }

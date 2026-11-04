@@ -3,6 +3,7 @@
 // Eingangszentrale der Akte (kein Teilen-Fenster des Geräts) · „Fotofunktion öffnen“ öffnet den Klon mit dem Scanner, „PDF erstellen“
 // gibt den Scan gleich an die Prüfung der Akte · geschützte Gesundheitsunterlagen haben den Knopf nicht.
 import path from "node:path";
+import { readFileSync } from "node:fs";
 import { startApp, launchBrowser, DESKTOP, ready, footer, check, step, summary, collectErrors, ROOT } from "./_harness.mjs";
 import { windowStub } from "./_stubs.mjs";
 import { probePdf } from "./_dateien.mjs";
@@ -56,25 +57,17 @@ try {
   const geschuetzt = page.locator(".document-item", { hasText: "Geschützte Gesundheitsunterlage" });
   check(await geschuetzt.count() > 0 && await geschuetzt.locator("[data-wfpdf-oeffnen]").count() === 0, "Geschützte Gesundheitsunterlage: kein „In Workflow PDF öffnen“", `${await geschuetzt.count()} geschützte`);
   let klon;
-  await step("„In Workflow PDF öffnen“: die Unterlage liegt in der Bibliothek des Klons", async () => {
-    await page.evaluate(() => { window.__halteWfpdfImport = true; });
-    await page.locator(".document-item", { hasText: "Garantiebeleg_Waschautomat_Lavorix" }).first().locator("[data-wfpdf-oeffnen]").click();
-    const offen = page.locator('[data-wfpdf-seite]');
-    await offen.waitFor();
-    await page.waitForFunction(() => [...document.querySelectorAll('iframe')].some(f => f.contentWindow?.__importWartet));
-    if (await offen.getAttribute('data-wfpdf-oeffnen-offen') !== '1') throw new Error('Quelle vor dauerhafter Ablage freigegeben');
-    await page.evaluate(() => { window.__halteWfpdfImport = false; });
-    await page.waitForFunction(() => document.querySelector('[data-wfpdf-oeffnen-offen="0"]'));
-
-    // Eine einzelne Datei öffnet sich automatisch im Editor. Die Bibliothek ist dann
-    // bereits wieder unsichtbar: auf ihren sichtbaren Zwischenzustand zu warten war ein Wettlauf.
-    const rahmen = page.frameLocator("[data-wfpdf-rahmen]");
-    await rahmen.locator("#sc-ed.on").waitFor({ timeout: 30000 });
-    await rahmen.locator("#sc-bib").waitFor({ state: "attached", timeout: 30000 });
-    klon = page.frames().find((x) => x.url().includes("/apps/workflow-pdf/"));
-    await klon.waitForFunction(() => document.querySelectorAll(".dok").length > 0 || document.querySelector("#sc-ed.on"), null, { timeout: 30000 });
-    if (await klon.locator("#sc-ed.on").count()) await klon.locator("#edZurueck").click();
-    await klon.locator(".dok", { hasText: "Garantiebeleg" }).first().waitFor({ timeout: 20000 });
+  await step("Manueller PDF-Import ohne Aktenquelle behält den normalen Eingangsweg", async () => {
+    await page.evaluate(() => { window.__halteWfpdfImport = false; window.scrollTo(0,0); });
+    await page.locator(".main-navigation .nav-cluster > button", { hasText: "Dokumente" }).first().click({force:true});
+    await page.locator(".mega-menu button", { hasText: "Workflow PDF" }).first().click();
+    await page.locator('[data-wfpdf-seite]').waitFor();
+    await page.frameLocator("[data-wfpdf-rahmen]").locator("#inDatei").waitFor({state:"attached",timeout:30000});
+    klon = page.frames().find(f=>f.url().includes('/apps/workflow-pdf/'));
+    await klon.locator('#inDatei').setInputFiles({name:'Garantiebeleg.pdf',mimeType:'application/pdf',buffer:readFileSync(FORM)});
+    await klon.locator('#sc-ed.on').waitFor({timeout:30000});
+    await klon.locator('#edZurueck').click();
+    await klon.locator('.dok', {hasText:'Garantiebeleg'}).first().waitFor();
     return true;
   });
   await step("„📤 Teilen“ im Klon legt das PDF in die Eingangszentrale der Akte", async () => {

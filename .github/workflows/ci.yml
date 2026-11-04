@@ -39,6 +39,11 @@ jobs:
         run: npm run check:herkunft
       - name: Gemeinsamen PDF-Updateweg prüfen
         run: npm run check:pdf-update
+      - name: PDF-Rückgabe ohne Kopie und temporären Arbeitsraum prüfen
+        run: |
+          node scripts/run-pdf-rueckgabe-tests.mjs
+          node scripts/run-pdf-rueckgabe-gegenprobe.mjs
+          node scripts/run-pdf-arbeitsraum-tests.mjs
       - name: Fachprüfungen und Systemprüfung
         run: npm run check
       - name: Signierwerkzeug (Wegwerf-Schlüssel, kein echter)

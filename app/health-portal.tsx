@@ -1,5 +1,7 @@
 import { demoActive, switchDemo } from "../lib/demo-workspace.ts";
 import { workspaceStorage } from "../lib/demo-workspace.ts";
+import { beginLocalPdfEdit, saveLocalPdfEdit } from "./local-vault";
+import type { PdfQuelle } from "../lib/pdf-bearbeitung";
 import type { SectionId, UploadedDocument } from "./portal-types";
 import { PrivateMeaningPanel } from "./private-meaning-panel";
 import { ProGeraetetransportPanel } from "./pro-geraetetransport-panel";
@@ -449,6 +451,8 @@ function HealthPortalContent() {
   const [wfpdfOeffnen, setWfpdfOeffnen] = useState<File[] | null>(null);
   const [wfpdfScan, setWfpdfScan] = useState(false);
   const [wfpdfStart, setWfpdfStart] = useState(0);
+  const [wfpdfSitzung, setWfpdfSitzung] = useState<{ quelle: PdfQuelle; zurueck: SectionId } | null>(null);
+  const wfpdfAnfrage = useRef(0);
   const [stapelNeu, setStapelNeu] = useState<File[] | null>(null);
   const [, setCheckRecommended] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -684,13 +688,20 @@ function HealthPortalContent() {
     reportActivity({ kind: "info", text: `${ids.length} Eingang${ids.length === 1 ? " wurde" : "sfälle wurden"} als „${status}“ vorgemerkt. Es wurde keine Datei gespeichert oder gelöscht.` });
   };
   const toggleCentralIntake = (id: string) => setCentralIntakeQueue((current) => current.map((item) => item.id === id ? { ...item, selected: !item.selected } : item));
-  // Workflow PDF als Klon (Stück 2): Unterlage hinein, Ergebnis zurück in den Eingang.
+  // PDF-Raum: Bestandsdokumente kehren zum selben Eintrag zurück; neue/ungebundene Dateien gehen in den Eingang.
   const inWorkflowPdf = async (id: string) => {
     if (!vaultHandle) { go("security"); return; }
-    try { setWfpdfOeffnen([await readLocalDocumentFile(vaultHandle, id)]); setWfpdfScan(false); setWfpdfStart((n) => n + 1); go("workflowpdf"); }
+    const anfrage = ++wfpdfAnfrage.current;
+    try {
+      const original = localDocuments.find(d => d.id === id);
+      if (!original || isSensitiveHealthText(original.originalName, original.category, original.notes)) throw new Error("Diese Unterlage wird im geschützten Ausfülldialog bearbeitet.");
+      const arbeit = await beginLocalPdfEdit(vaultHandle, id);
+      if (anfrage !== wfpdfAnfrage.current) return;
+      setWfpdfSitzung({ quelle: arbeit.quelle, zurueck: active }); setWfpdfOeffnen([arbeit.file]); setWfpdfScan(false); setWfpdfStart((n) => n + 1); go("workflowpdf");
+    }
     catch (reason) { setNotice({ kind: "error", text: reason instanceof Error ? reason.message : "Die Unterlage konnte nicht geöffnet werden." }); }
   };
-  const dateiInWorkflowPdf = (datei: File) => { setWfpdfOeffnen([datei]); setWfpdfScan(false); setWfpdfStart((n) => n + 1); go("workflowpdf"); };
+  const dateiInWorkflowPdf = (datei: File) => { wfpdfAnfrage.current++; setWfpdfSitzung(null); setWfpdfOeffnen([datei]); setWfpdfScan(false); setWfpdfStart((n) => n + 1); go("workflowpdf"); };
   const inProTresor = async (id: string) => {
     if (!vaultHandle) return;
     try {
@@ -711,7 +722,17 @@ function HealthPortalContent() {
       setNotice({ kind: "success", text: r.stand === "im-eingang" ? `${PRO_ZIELE[ziel]} hat diese Fassung bereits im Eingang bestätigt. Die Quelle bleibt erhalten.` : `An ${PRO_ZIELE[ziel]} weitergegeben. Die Zielbestätigung ist noch offen; die Quelle bleibt erhalten. Im Sicherheitscenter kannst du die Bestätigung prüfen.` });
     } catch (e) { setNotice({ kind: "error", text: proVerbundFehler(e) }); }
   };
-  const ausWorkflowPdf = async ({ quelle, dateien, vertraege }: WfpdfAblage) => {
+  const ausWorkflowPdf = async ({ quelle, dateien, vertraege, bearbeitung }: WfpdfAblage) => {
+    if (bearbeitung) {
+      const sitzung = wfpdfSitzung;
+      if (!vaultHandle || !sitzung || sitzung.quelle.sitzung !== bearbeitung || dateien.length !== 1) throw new Error("Die Rückgabe ist nicht an das geöffnete Dokument gebunden.");
+      const r = await saveLocalPdfEdit(vaultHandle, sitzung.quelle, dateien[0]);
+      await refreshLocal(vaultHandle);
+      setWfpdfSitzung(aktuell => aktuell?.quelle.sitzung === bearbeitung ? { ...aktuell, quelle: r.quelle } : aktuell);
+      setNotice({ kind: "success", text: `Die PDF wurde im selben Dokument in der Akte gespeichert.${r.aufraeumenOffen ? " Eine alte Arbeitsdatei wird beim nächsten Öffnen erneut bereinigt." : ""}` });
+      return r;
+    }
+    if (wfpdfSitzung) throw new Error("Der Bearbeitungsraum darf keinen neuen Eingang statt einer Rückgabe erzeugen.");
     const quittungen = [];
     for (const [i, file] of dateien.entries()) quittungen.push(await proUebergabeAnnehmen(vertraege[i], file));
     if (!await setCentralIntakeQueue(current => current)) throw new Error("Eingang gespeichert, Anzeige konnte nicht neu geladen werden. Erneutes Senden bleibt möglich.");
@@ -720,6 +741,7 @@ function HealthPortalContent() {
     return quittungen;
   };
   const openDocumentScan = (files: File[]) => {
+    wfpdfAnfrage.current++; setWfpdfSitzung(null);
     if (!vaultHandle) { setActionState("upload", "failed"); go("security"); setNotice({ kind: "error", text: "Bitte zuerst den lokalen OneDrive-Ordner oder einen PC-/USB-Tresor verbinden. Erst danach wird die Kamera geöffnet." }); return; }
     // Klaus 2026-10-31: „überall der volle Scanner“ — ohne mitgebrachte Fotos öffnet „Dokument fotografieren“ den Scanner von
     // Workflow PDF (Ecken ziehen, gerade richten, Filter, Texterkennung); das fertige PDF geht in den Dokumenteneingang.
@@ -1041,6 +1063,7 @@ function HealthPortalContent() {
     setMobileOpen(false); setMegaOpen(null);
   };
   useEffect(() => { setMobileOpen(false); setMegaOpen(null); }, [navigation.visitKey]);
+  useEffect(() => { if (active !== "workflowpdf") { setWfpdfSitzung(null); setWfpdfOeffnen(null); } }, [active]);
   const saveAssistantCorrespondence = async (input: {
     status: "Entwurf" | "Versandbereit" | "Versendet" | "Antwort ausstehend" | "Antwort eingegangen" | "Erledigt";
     kind: CorrespondenceKind;
@@ -1101,14 +1124,11 @@ function HealthPortalContent() {
       } });
     } catch (reason) { setNotice({ kind: "error", text: reason instanceof Error ? reason.message : "Der Scanner konnte nicht geöffnet werden." }); }
   };
-  const saveFillResult = async (original: LocalDocument, file: File, modus: "fest" | "ausfuellbar", info: AusfuellInfo) => {
-    if (!vaultHandle) throw new Error("Bitte zuerst den Datentresor verbinden.");
-    const links = familyRelations.filter((relation) => relation.fromType === "document" && relation.fromId === original.id).map((relation) => ({ toType: relation.toType, toId: relation.toId, relationType: relation.relationType }));
-    const neu = await saveLocalDocument(vaultHandle, file, { category: original.category, documentDate: new Date().toISOString().slice(0, 10), notes: `Ausgefüllte Fassung (${modus === "fest" ? "fest" : "ausfüllbar"}) von „${original.originalName}“. Das Original bleibt unverändert.${isSensitiveHealthText(original.originalName, original.category, original.notes) && original.notes ? ` · ${original.notes}` : ""}`, allowDuplicate: true, assignmentLinks: links, proBezug: original.proUebergabe?.id || original.proBezug });
-    await setLocalDocumentAusfuellen(vaultHandle, neu.id, { stand: "ergebnis", ausId: original.id, modus, geaendertAm: new Date().toISOString() });
-    const alt = original.ausfuellen && "ergebnisIds" in original.ausfuellen ? original.ausfuellen.ergebnisIds || [] : [];
-    if (info.stand !== "ergebnis") await setLocalDocumentAusfuellen(vaultHandle, original.id, { ...info, ergebnisIds: [...alt, neu.id] });
+  const saveFillResult = async (original: LocalDocument, file: File, _modus: "fest" | "ausfuellbar", info: AusfuellInfo, quelle: PdfQuelle) => {
+    if (!vaultHandle || quelle.dokumentId !== original.id) throw new Error("Die Bearbeitung gehört nicht zum geöffneten Dokument.");
+    const r = await saveLocalPdfEdit(vaultHandle, quelle, file, info);
     await refreshLocal(vaultHandle);
+    return r.quelle;
   };
   const updateCockpitTask = async (id: string, status: LocalScheduleStatus) => {
     if (!vaultHandle) { go("security"); setNotice({ kind: "error", text: "Bitte zuerst den lokalen OneDrive-, PC- oder USB-Datentresor verbinden." }); return; }
@@ -1281,7 +1301,7 @@ function HealthPortalContent() {
         }} busy={busy}/></>} 
         {!query && active === "stapel" && <Suspense fallback={null}><StapelSeite neu={stapelNeu} onNeuGenommen={() => setStapelNeu(null)} onWorkflowPdf={dateiInWorkflowPdf} onEinordnen={(dateien, ids) => queueCentralIntakeFiles(dateien, "camera-scan", null, ids)} kopf={<PageTitle icon={<Upload/>} title="Stapel (noch einordnen)" text="Viele Fotos oder Scans auf einmal: Workflow PDF findet je Bild das Blatt und zieht es gerade. Wo sich die Verfahren nicht einig sind, bleibt das ganze Foto stehen („Ecken prüfen“). Erst „Einordnen“ gibt die Unterlagen an die Eingangszentrale."/>}/></Suspense>}
         {!query && active === "workflowpdf" && demoActive() && <p>Workflow PDF hat eine eigene Bibliothek. Bitte die Demo verlassen, um sie zu verwenden.</p>}
-        {!query && active === "workflowpdf" && !demoActive() && <Suspense fallback={null}><WorkflowPdfSeite key={wfpdfStart} scan={wfpdfScan} oeffnen={wfpdfOeffnen} onAblegen={ausWorkflowPdf} onGeoeffnet={() => { setWfpdfOeffnen(null); setWfpdfScan(false); }} kopf={<PageTitle icon={<FileText/>} title="Workflow PDF" text="Das ganze Werkzeug von Workflow PDF in der Familienakte: scannen, zuschneiden, Felder erkennen und setzen, ausfüllen, Prüfbericht, PDF ausgeben. Eigene Bibliothek, getrennt von der Workflow-PDF-App; nichts geht ins Netz, bis du es selbst wählst."/>}/></Suspense>}
+        {!query && active === "workflowpdf" && !demoActive() && <Suspense fallback={null}><WorkflowPdfSeite key={wfpdfStart} scan={wfpdfScan} oeffnen={wfpdfOeffnen} bindung={wfpdfSitzung?.quelle} onZurueck={() => { const sitzung = wfpdfSitzung; setWfpdfSitzung(null); setWfpdfOeffnen(null); if (sitzung) go(sitzung.zurueck, sitzung.quelle.dokumentId); }} onAblegen={ausWorkflowPdf} onGeoeffnet={() => { setWfpdfOeffnen(null); setWfpdfScan(false); }} kopf={<PageTitle icon={<FileText/>} title="Workflow PDF" text={wfpdfSitzung ? "PDF bearbeiten und an dieselbe Stelle in der Akte zurückspeichern. Keine dauerhafte Zweitablage im PDF-Raum." : "Das ganze Werkzeug von Workflow PDF in der Familienakte: scannen, zuschneiden, Felder erkennen und setzen, ausfüllen, Prüfbericht, PDF ausgeben. Eigene Bibliothek, getrennt von der Workflow-PDF-App; nichts geht ins Netz, bis du es selbst wählst."}/>}/></Suspense>}
         {!query && active === "netz" && <Suspense fallback={null}><NetzSeite kopf={<PageTitle icon={<Network/>} title="Netz (Mycel)" text="Verbindet die Familienakte auf Wunsch mit anderen Geräten im SBKIM-Netz. Beim Öffnen der Akte geht nichts ins Netz; hinaus geht nur die Visitenkarte, keine Unterlagen."/>}/></Suspense>}
         {!query && active === "security" && <SecurityCenter
           aktenHandle={vaultHandle} onMeaningOpen={go} onProChange={refreshProDestination} proDestination={proDestination} browserStorage={browserStorage} folderSelectionSupported={folderPickerSupported()}
@@ -1427,11 +1447,11 @@ function HealthPortalContent() {
           throw error;
         }
       }}/>} 
-      {fillDocument && vaultHandle && <Suspense fallback={null}><AusfuellenDialog dokument={fillDocument} geschuetzt={isSensitiveHealthText(fillDocument.originalName, fillDocument.category, fillDocument.notes)} personen={fillPersons} namen={kiNamen}
-        leseDatei={() => readLocalDocumentFile(vaultHandle, fillDocument.id)}
+      {fillDocument && vaultHandle && <Suspense fallback={null}><AusfuellenDialog key={fillDocument.id} dokument={fillDocument} geschuetzt={isSensitiveHealthText(fillDocument.originalName, fillDocument.category, fillDocument.notes)} personen={fillPersons} namen={kiNamen}
+        leseDatei={() => beginLocalPdfEdit(vaultHandle, fillDocument.id)}
         ablage={{ lesen: () => readAusfuellAblage(vaultHandle), schreiben: (teil) => writeAusfuellAblage(vaultHandle, teil) }}
         onVormerken={async (info) => { await setLocalDocumentAusfuellen(vaultHandle, fillDocument.id, info); await refreshLocal(vaultHandle); }}
-        onErgebnis={(file, modus, info) => saveFillResult(fillDocument, file, modus, info)}
+        onErgebnis={(file, modus, info, quelle) => saveFillResult(fillDocument, file, modus, info, quelle)}
         onClose={() => setFillDocId(null)} onNotice={setNotice}/></Suspense>}
       {editOpen && <KiAuftragDialog seiteId={active} seite={sectionLabels[active] || "Startseite"} initialRequest={editInitialRequest} documents={localDocuments} namen={kiNamen} readDocument={(id) => vaultHandle ? readLocalDocumentFile(vaultHandle, id) : Promise.reject(new Error("Kein Tresor geöffnet."))} onSaveAnswer={(file) => window.dispatchEvent(new CustomEvent("familienakte:dateien", { detail: { files: [file] } }))} onClose={() => setEditOpen(false)} onNotice={setNotice} onStateChange={(state) => setActionState("chatgpt", state)}/>}
       <button type="button" className="ki-fab" onClick={() => openChatGPTEdit()} aria-label="Mit KI arbeiten" title={`Mit KI arbeiten – Seite „${sectionLabels[active] || "Startseite"}“`}><Sparkles size={20}/></button>

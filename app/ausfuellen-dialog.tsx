@@ -1,11 +1,12 @@
 // „Ausfüllen“ (Klaus 2026-10-31, Sitzung F): Unterlage aus der Akte → Felder erkennen (offline, auf Wunsch mit KI über den
 // Text-Weg von „Mit KI arbeiten“, unkenntlich) oder selbst setzen → ausfüllen (Vorschläge aus der Akte und aus dem
-// Eingabe-Speicher) → unterschreiben → festes oder ausfüllbares PDF als NEUE Unterlage neben dem Original → teilen.
+// Eingabe-Speicher) → unterschreiben → festes oder ausfüllbares PDF im selben Akteneintrag speichern → teilen.
 // Die Maschine ist Workflow PDF (public/wfpdf/, byte-1:1): Linien-Erkennung, Beschriftung, Export mit pdf-lib, Reinigung,
 // Schloss, Scanner, Texterkennung. Dieser Klebstoff ist Familienakte-eigen (React), Vorbild der Editor in Workflow PDF.
 import { useEffect, useMemo, useRef, useState, type PointerEvent as RPointerEvent } from "react";
 import { Check, Copy, Download, ExternalLink, LoaderCircle, PenLine, ScanLine, Share2, Sparkles, Trash2, Wand2, X } from "lucide-react";
 import { loadPdfJs } from "./file-viewer";
+import type { PdfQuelle } from "../lib/pdf-bearbeitung";
 import type { LocalDocument, AusfuellAblage } from "./local-vault";
 import { brauchtUnicode, kernErkennung, kernExport, kernReinigung, kernSchloss, ocrZeilen, scannen, unicodeSchrift } from "./wfpdf-kern";
 import {
@@ -74,7 +75,7 @@ async function seitenLesen(bytes: Uint8Array, melde: (t: string) => void) {
         const fx = Math.min(r[0], r[2]) / v1.width * 100, fy = Math.min(r[1], r[3]) / v1.height * 100, fw = Math.abs(r[2] - r[0]) / v1.width * 100, fh = Math.abs(r[3] - r[1]) / v1.height * 100;
         const label = String(a.alternativeText || a.fieldName || "").slice(0, 80);
         const type: AusfuellTyp = a.fieldType === "Btn" ? "check" : typAusLabel(label);
-        felder.push({ id: uid(), page: i, type, label, x: fx, y: fy, w: fw, h: fh, value: type === "check" ? false : typeof a.fieldValue === "string" ? a.fieldValue : "", mehrzeilig: !!a.multiLine, herkunft: "pdf", geprueft: true });
+        felder.push({ id: uid(), page: i, type, label, x: fx, y: fy, w: fw, h: fh, value: type === "check" ? !!a.fieldValue && a.fieldValue !== "Off" : typeof a.fieldValue === "string" ? a.fieldValue : "", mehrzeilig: !!a.multiLine, herkunft: "pdf", geprueft: true });
       }
     } catch { /* ohne Formularfelder weiter */ }
     seiten.push({ t: v1.transform, w: v1.width, h: v1.height, bild: c.toDataURL("image/jpeg", 0.85), px: [c.width, c.height], items, ocr: false });
@@ -111,12 +112,12 @@ export function AusfuellenDialog({ dokument, geschuetzt = false, leseDatei, pers
   dokument: LocalDocument;
   /** Geschützte Gesundheitsunterlage (Klaus 2026-10-31: ausfüllen erlaubt): kein Weg zur KI, auch nicht unkenntlich. */
   geschuetzt?: boolean;
-  leseDatei: () => Promise<File>;
+  leseDatei: () => Promise<{ quelle: PdfQuelle; file: File }>;
   personen: AusfuellPerson[];
   namen: string[];
   ablage: { lesen: () => Promise<AusfuellAblage>; schreiben: (teil: Partial<AusfuellAblage>) => Promise<void> };
   onVormerken: (info: AusfuellInfo | null) => Promise<void>;
-  onErgebnis: (file: File, modus: "fest" | "ausfuellbar", info: AusfuellInfo) => Promise<void>;
+  onErgebnis: (file: File, modus: "fest" | "ausfuellbar", info: AusfuellInfo, quelle: PdfQuelle) => Promise<PdfQuelle>;
   onClose: () => void;
   onNotice: (n: Notice) => void;
 }) {
@@ -145,6 +146,7 @@ export function AusfuellenDialog({ dokument, geschuetzt = false, leseDatei, pers
   const [kiAntwort, setKiAntwort] = useState("");
   const [kiZiel, setKiZiel] = useState<KiZiel>("chatgpt");
   const [ergebnis, setErgebnis] = useState<File | null>(null);
+  const quelle = useRef<PdfQuelle | null>(null);
   const [quelleName, setQuelleName] = useState(dokument.originalName);
   const ziehen = useRef<{ id: string; art: "schieben" | "groesse"; sx: number; sy: number; f: AusfuellFeld; rect: DOMRect } | null>(null);
 
@@ -155,7 +157,12 @@ export function AusfuellenDialog({ dokument, geschuetzt = false, leseDatei, pers
       if (!b) throw new Error("Ausfüllen geht mit PDF-Dateien und Fotos.");
       const r = await seitenLesen(b, setMeldung);
       setBytes(b); setSeiten(r.seiten); setGesamt(r.gesamt);
-      const maske = gemerkt && "felder" in gemerkt && gemerkt.felder.length ? gemerkt.felder.map((f) => ({ ...f })) : r.felder;
+      // Labels/types live in the blank mask; current values come from actual PDF widgets.
+      const maske = gemerkt && "felder" in gemerkt && gemerkt.felder.length ? gemerkt.felder.map((f) => {
+        if (!gemerkt.pdfFelder) return { ...f };
+        const widget = r.felder.find(a => a.page === f.page && iou(a, f) > 0.8);
+        return { ...f, value: widget?.value ?? (f.type === "check" ? false : "") };
+      }) : r.felder;
       setFelder(maske);
       setModus(maske.length ? "ausfuellen" : "setzen");
       setZustand("bereit");
@@ -165,7 +172,7 @@ export function AusfuellenDialog({ dokument, geschuetzt = false, leseDatei, pers
   useEffect(() => {
     void (async () => {
       try { const a = await ablage.lesen(); setSpeicher(speicherLesen(a.speicher)); setUnterschriften(a.unterschriften); } catch { /* ohne Ablage weiter */ }
-      try { await oeffnen(await leseDatei(), dokument.ausfuellen); } catch (e) { setMeldung((e as Error).message); setZustand("fehler"); }
+      try { const arbeit = await leseDatei(); quelle.current = arbeit.quelle; await oeffnen(arbeit.file, dokument.ausfuellen); } catch (e) { setMeldung((e as Error).message); setZustand("fehler"); }
     })();
   }, []);
 
@@ -313,6 +320,7 @@ export function AusfuellenDialog({ dokument, geschuetzt = false, leseDatei, pers
   const exportDok = () => ({ name: quelleName.replace(/\.[a-z0-9]{2,5}$/i, ""), pages: seiten.map((s) => ({ t: s.t, w: s.w, h: s.h })), fields: felder.map((f) => ({ ...f, value: f.type === "check" ? Boolean(f.value) : f.value })) });
   const speichern = async (art: "fest" | "ausfuellbar") => {
     if (!bytes) return;
+    setHinweis(null);
     setArbeit(art === "fest" ? "Festes PDF wird gebaut …" : "Ausfüllbares PDF wird gebaut …");
     try {
       const ex = await kernExport();
@@ -320,11 +328,12 @@ export function AusfuellenDialog({ dokument, geschuetzt = false, leseDatei, pers
       const opt = brauchtUnicode(texte) ? { schrift: await unicodeSchrift() } : {};
       const r = await ex.exportieren(exportDok(), bytes, art, opt);
       const file = new File([r.bytes as BlobPart], ergebnisName(dokument.originalName, art), { type: "application/pdf" });
-      const info: AusfuellInfo = { stand: "ausgefuellt", felder: felder.map((f) => ({ ...f, value: f.type === "check" ? false : "", vorschlag: undefined })), seiten: seiten.map((s) => ({ t: s.t, w: s.w, h: s.h })), geaendertAm: new Date().toISOString() };
-      await onErgebnis(file, art, info);
+      const info: AusfuellInfo = { stand: "ausgefuellt", pdfFelder: art === "ausfuellbar", felder: (art === "ausfuellbar" ? felder : []).map((f) => ({ ...f, value: f.type === "check" ? false : "", vorschlag: undefined })), seiten: seiten.map((s) => ({ t: s.t, w: s.w, h: s.h })), geaendertAm: new Date().toISOString() };
+      if (!quelle.current) throw new Error("Die Herkunft der Bearbeitung fehlt.");
+      quelle.current = await onErgebnis(file, art, info, quelle.current);
       await speicherSchreiben(merken(speicher, felder));
       setErgebnis(file);
-      onNotice({ kind: "success", text: `„${file.name}“ liegt jetzt neben dem Original in der Akte. Das Original ist unverändert.${r.hinweise.length ? ` Hinweis: ${r.hinweise.join(" ")}` : ""}` });
+      onNotice({ kind: "success", text: `Die Änderungen wurden am selben Dokument in der Akte gespeichert.${r.hinweise.length ? ` Hinweis: ${r.hinweise.join(" ")}` : ""}` });
     } catch (e) { onNotice({ kind: "error", text: `Das PDF konnte nicht gebaut werden: ${(e as Error).message}` }); }
     finally { setArbeit(""); }
   };
@@ -356,7 +365,7 @@ export function AusfuellenDialog({ dokument, geschuetzt = false, leseDatei, pers
 
   return <div className="modal-backdrop af-backdrop" role="presentation">
     <div className="modal af-dialog" role="dialog" aria-modal="true" aria-labelledby="af-titel" data-af>
-      <div className="modal-head"><div><span className="badge neutral">Ausfüllen</span><h2 id="af-titel">{dokument.originalName}</h2><p>{seiten.length ? `${seiten.length}${gesamt > seiten.length ? ` von ${gesamt}` : ""} Seite${seiten.length === 1 ? "" : "n"} · ${felder.length} Feld${felder.length === 1 ? "" : "er"}` : "…"} · Das Original bleibt unverändert.</p></div><button className="icon-button" onClick={onClose} aria-label="Ausfüllen schließen"><X/></button></div>
+      <div className="modal-head"><div><span className="badge neutral">Ausfüllen</span><h2 id="af-titel">{dokument.originalName}</h2><p>{seiten.length ? `${seiten.length}${gesamt > seiten.length ? ` von ${gesamt}` : ""} Seite${seiten.length === 1 ? "" : "n"} · ${felder.length} Feld${felder.length === 1 ? "" : "er"}` : "…"} · Speichern aktualisiert diese Unterlage an derselben Stelle.</p></div><button className="icon-button" onClick={onClose} aria-label="Ausfüllen schließen"><X/></button></div>
 
       {zustand === "laden" && <div className="empty-state"><LoaderCircle className="file-viewer-spin" size={28}/><strong>{meldung}</strong></div>}
       {zustand === "fehler" && <div className="empty-state"><strong>{meldung}</strong><button className="button secondary" onClick={() => void neuScannen()}><ScanLine size={16}/> Papier-Unterlage scannen</button></div>}

@@ -1,32 +1,47 @@
 # Bibliothek und Datenweg
 
-Die Ansicht bleibt in diesem Auftrag unverändert. Große Dokumentkacheln sind keine
-Voraussetzung für Dateiübernahmen; eine spätere kompakte Liste wäre davon unabhängig.
+Eine bestehende Aktenunterlage benutzt Workflow PDF als vorübergehenden Arbeitsraum.
+Design, PDF-Kern und Dokumentinhalt werden durch diesen Adapter nicht umgestaltet.
 
-| Bedienweg | Was mit der Datei passiert |
+| Bedienweg | Speicherung |
 |---|---|
-| Familienakte → „Ausfüllen“ | Der eigene Dialog liest die Unterlage aus der Familienakte. Es erfolgt kein Import in die Klon-Bibliothek. Speichern erzeugt eine neue ausgefüllte Fassung neben dem Original. |
-| „In Workflow PDF öffnen“ | Die ausdrücklich gewählte Unterlage wird lokal in die eigene Klon-Bibliothek `FamilienakteWFPDF1` importiert. Die Familienakte wartet auf die Bestätigung der dauerhaften Ablage. Die Quelle bleibt erhalten. |
-| Klon → „Teilen“ | Die ausgegebene Fassung geht über die lokale Brücke in die Eingangszentrale der Familienakte. Erst nach dauerhafter Speicherung und Quittung wird Erfolg bestätigt. Erneutes Teilen derselben Fassung erzeugt keinen zweiten Eingang. |
-| Aus der Familienakte gestarteter Scan → „PDF erstellen“ | Die fertige Fassung wird über dieselbe lokale Brücke in die Eingangsprüfung gegeben. |
-| Eigenständige Pro-App | Eigene Bibliothek und bestehender freiwilliger Pro-Tresor-/Teilen-Weg. Keine automatische Gleichsetzung mit der eingebetteten Klon-Bibliothek. |
+| Familienakte → Ausfüllen | Liest die vorhandene Datei. Speichern aktualisiert denselben Akteneintrag. Die ausfüllbare Fassung enthält echte Formularwerte; die zusätzliche Feldmaske enthält keine Eingaben oder Unterschriftsbilder. |
+| Familienakte → In Workflow PDF öffnen | Ein einzelnes gebundenes Dokument wird ausschließlich im Arbeitsspeicher des eingebetteten Frames geöffnet. Keine zusätzliche dauerhafte PDF-Bibliothek und keine gespeicherten Notstandskopien. |
+| Gebundener Raum → In Akte zurückspeichern / Teilen | Der unveränderte PDF-Exporter liefert das Ergebnis. Die Brücke prüft die Herkunft. Erst nach bestätigter dauerhafter Speicherung im ursprünglichen Akteneintrag schließt sich der Raum und kehrt zur Herkunftsansicht zurück. |
+| Workflow PDF direkt aus dem Menü / Scan | Der bisherige unabhängige Bibliotheks- und Eingangspfad bleibt verfügbar. Neue, dort erzeugte Unterlagen gehen über die Eingangsprüfung. |
+| Eigenständige Pro-App | Eigene Bibliothek und Pro-Tresor. Kein allgemeiner Abgleich der Dokumentbestände mit der Familienakte. |
 
-Die beiden Bibliotheken sind getrennte Ablagen. Es gibt keine allgemeine automatische
-Synchronisierung aller Dokumente. Explizites Öffnen im Klon erzeugt dort eine weitere
-Arbeitskopie; das kann zusätzliche dauerhafte Ablage bedeuten. Ein Update der PDF-
-Funktionsdateien synchronisiert keine Dokumentbestände.
+Kennung, Kategorie, Dokumentdatum, Notizen und Verknüpfungen bleiben bei der Rückgabe
+bestehen. Der Speicher prüft Aktenkennung, Ausgangspfad und tatsächliche Prüfsumme.
+Eine zwischenzeitlich verschobene, geänderte oder gelöschte Quelle wird nicht durch
+eine alte Bearbeitung ersetzt. Wiederholte Empfangsbestätigungen sind idempotent.
 
-Die eingebettete Brücke benutzt `postMessage` innerhalb desselben Ursprungs und
-prüft Ursprung, Absenderfenster, Dateianzahl, Kennung und Empfangsbestätigung. Die
-Dokumentübernahme selbst benötigt keinen GitHub-Login und keinen Datei-Upload ins
-Internet. Optionale externe KI-Funktionen haben ihre eigenen Übertragungswege und
-Schutzgrenzen; siehe `PDF-SCHUTZABGLEICH.md`.
+Im lokalen Ordner wird zunächst eine geprüfte PDF im selben Ordner vorbereitet.
+Anschließend wechselt das Register auf diese Datei; erst danach wird die frühere,
+anderweitig nicht mehr verwendete Datei entfernt. Der technische Dateiname kann
+sich ändern. Es bleibt derselbe sichtbare Akteneintrag. Ein Aufräumjournal wiederholt
+unterbrochene Bereinigung; Register und Sicherungsregister verweisen vorher bereits
+auf die neue PDF. Ein Speicherfehler vor dem Registerwechsel erhält die Quelle.
 
-Nachweise: vorhandene Browserprobe `workflow-pdf-bruecke.test.mjs` prüft den noch
-offenen Import, das Warten auf die Eingangsquittung, Wiederholung ohne Doppeleingang,
-Scan-Rückgabe und Ausschluss geschützter Gesundheitsunterlagen vom Klon. Die
-Klon-Probe prüft getrennte Datenbank und Einstellungen sowie Erhalt nach Neuladen.
+Der native Pro-Tresor speichert unveränderliche Revisionen. Die Rückgabe benutzt
+denselben Tresor und dieselbe logische Dokumentkennung; interne Revisionen können
+bestehen bleiben. Es entsteht kein zweiter Familienakteneintrag und kein stiller
+Ersatz im lokalen Ordner, wenn der Pro-Tresor gesperrt ist.
 
-Eine kompakte Liste oder eine reine, nach bestätigter Rückgabe entfernbarere
-Arbeitskopie wären gesonderte Änderungen. In diesem Auftrag wird keine Bibliothek
-umgebaut und keine vorhandene Datei entfernt.
+Die vorübergehende Bibliothek gilt nur beim gebundenen Öffnen einer Aktenunterlage.
+Früher ausdrücklich in die separate Bibliothek importierte Dokumente werden nicht
+gelöscht. Favoriten und Einstellungen dürfen erhalten bleiben. Beim Verlassen des
+Raums ohne Rückgabe werden ungespeicherte Änderungen verworfen; die Quelle bleibt.
+
+Die Brücke prüft Ursprung, Absenderfenster, Sitzungsbindung, Dateianzahl und
+Exportherkunft. Die Dokumentrückgabe benötigt weder GitHub noch einen Upload.
+Optionale KI-Funktionen haben eigene Übertragungswege und Schutzgrenzen; siehe
+[PDF-SCHUTZABGLEICH.md](PDF-SCHUTZABGLEICH.md). Insbesondere bedeutet gereinigtes
+Seitenbild nicht automatisch anonymisierte sichtbare Personendaten.
+
+Nachweise: `run-pdf-rueckgabe-tests.mjs` prüft den echten Speicherweg mit gestelltem
+Dateisystem und nativer Brücke einschließlich Fehlern, Parallelbearbeitung und
+Wiederholungen. Die Gegenprobe entfernt den Konfliktschutz und muss scheitern.
+`run-pdf-arbeitsraum-tests.mjs` prüft die echte Brücke zusammen mit dem unveränderten
+Datenbankmodul einschließlich verbotener dauerhafter Speicherung. Browserproben
+prüfen echte PDF-Ausgabe, OPFS-Register, unveränderte Anzahl und Rückkehr zur Akte.

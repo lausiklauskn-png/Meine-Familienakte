@@ -64,6 +64,12 @@ jobs:
           npm run check:ausfuellen
           npm run check:herkunft
           npm run build
+      - name: PDF-Rückgabe ohne Kopie und temporären Arbeitsraum prüfen
+        working-directory: familienakte
+        run: |
+          node scripts/run-pdf-rueckgabe-tests.mjs
+          node scripts/run-pdf-rueckgabe-gegenprobe.mjs
+          node scripts/run-pdf-arbeitsraum-tests.mjs
       - run: npx playwright install --with-deps chromium
         working-directory: familienakte
       - name: Beide Ausfülloberflächen prüfen
