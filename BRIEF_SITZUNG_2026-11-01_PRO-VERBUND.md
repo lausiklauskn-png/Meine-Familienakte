@@ -10,7 +10,7 @@ von Familienakte Pro, Workflow PDF Pro, Private Brain Pro und BookLedgerPro. Der
 entspricht ein Verbund eigenständiger Apps, keine neue Pflichtzentrale. Bisherige Prüf- und Herkunftsregeln gelten weiter.
 
 Auftrag von Klaus, 1. November 2026. Dieser Brief beschreibt den nächsten Bau; die Anschlüsse sind damit noch nicht umgesetzt.
-Er ergänzt [den Abschluss zum gesicherten Eingang](BRIEF_ABSCHLUSS_2026-11-01_CODEX-EINGANG-UND-TRESOR.md).
+Er ergänzt [den Abschluss zum gesicherten Eingang](docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-01_CODEX-EINGANG-UND-TRESOR.md).
 Die Speicherreparatur und der Plan wurden während dieser Übergabe mit [PR #48](https://github.com/lausiklauskn-png/Meine-Familienakte/pull/48)
 bereits nach `main` übernommen (Merge `1c7ac24`, 2026-11-01, 12:59:09 UTC).
 **Aktualisierung auf Klaus' Auftrag:** Diesen Plan getrennt davon auf `main` übernehmen, damit die bereits laufende andere Sitzung

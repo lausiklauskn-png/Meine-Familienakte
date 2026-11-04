@@ -16,6 +16,11 @@
 - Veröffentlichung 2.28.21 (Android/Windows, server=ja) folgt nach grüner PR-Prüfung und Merge; Nachweis
   dann in `docs/VEROEFFENTLICHUNG-2.28.21.json`.
 
+## Aufräumen der Briefe (Klaus: „Ja, Briefe archivieren und CLAUDE.md kürzen“)
+- 25 ältere Briefe/Aufträge (bis 03.11., inkl. Codex-Briefe und `NEUSTART_AUFTRAG.md`) mit `git mv` nach
+  `docs/briefe-archiv/`; Verweise in README, `docs/`, `tests/testdateien/` und Briefen angepasst. Nichts gelöscht.
+- `CLAUDE.md` auf aktuellen Stand, Offenes, Veröffentlichungs- und feste Regeln gekürzt; Einzelheiten im Archiv.
+
 ## Prüfungen und Grenzen
 - Lokal: typecheck, check, build grün; PWA-Probe 13/13; UI 42/43 – `pro-dokumente` scheitert in der Sandbox
   auch auf unverändertem main gleich („Target page … closed“ beim Neuladen).
