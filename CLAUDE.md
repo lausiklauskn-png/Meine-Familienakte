@@ -7,10 +7,11 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Aktueller Stand (04.11.2026, abends)
 
-- **Fassung 2.28.23** (Android, Windows, PWA): Handy-Kopfleiste, Hinweisfenster am Fragezeichen, Tresor-Erklärungen als
-  Ordnerbaum/Ablauf, Demo-Schalter am Handy, Drucken über Androids Druckdienst, Aus-/Einloggen sperrt/entsperrt den
-  Pro-Tresor. Nachweis `docs/VEROEFFENTLICHUNG-2.28.23.json`; nicht erneut ausgeben. 2.28.22 (Codex: Demo-Rahmen,
-  ehrlicher Tresorstatus) liegt darunter. Die Versionszeile zeigt die technische Fassung aus `package.json`;
+- **Fassung 2.28.24** (Android, Windows, PWA; #85, enthält Codex' PDF-Updateweg #86): „Wo liegt was?“ mit Zahlen und
+  grün/rot, Bedeutungssuche-Texte hinter Fragezeichen, „Bestand prüfen“ wieder sichtbar, Kurzhinweise (langer Druck,
+  Haken in der Hilfe), frühere Empfänger als Vorschlag. Nachweis `docs/VEROEFFENTLICHUNG-2.28.24.json`. Darunter 2.28.23
+  (Handy-Kopfleiste, Fragezeichen, Demo-Schalter, Drucken, Aus-/Einloggen) und 2.28.22 (Codex). Keine davon erneut
+  ausgeben; nächste freie Fassung 2.28.25. Die Versionszeile zeigt die technische Fassung aus `package.json`;
   `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
 - **Namen:** Web-App (PWA, Browser) = „Familienakte Basic“ (`public/manifest.webmanifest`), native Apps
   (Android `strings.xml`, Windows `tauri.conf.json`) = „Familienakte Pro“. Nicht wieder angleichen. Die Anzeige
@@ -22,7 +23,8 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Gemeinsamer Tresor:** Workflow-PDF-Pro #65 (Hauptordner finden/anlegen, Name frei, Vorschlag „Family-Projekt“) ist
   gebaut, aber in keiner App verdrahtet. Klaus will danach alle Pro-Apps neu installieren und frische Tresorräume anlegen.
 - Aktuelle Briefe im Hauptordner:
-  - `BRIEF_ABSCHLUSS_2026-11-04_HANDY-UND-TRESOR-ERKLAERUNGEN.md` (jüngster Abschluss, Startauftrag)
+  - `BRIEF_ABSCHLUSS_2026-11-04_HANDY-UND-TRESOR-ERKLAERUNGEN.md` (jüngster Abschluss 2.28.23/2.28.24, Startauftrag)
+  - `BRIEF_CODEX_2026-11-04_NACH-2.28.24.md` (Abstimmung mit Codex: welche Dateien Claude gehören)
   - `BRIEF_ABSCHLUSS_2026-11-04_DEMO-RAHMEN-UND-TRESORSTATUS.md` (Codex, 2.28.22, Übergabe an Claude)
   - `BRIEF_ABSCHLUSS_2026-11-04_DEMO-UND-DATEIERHALT.md` mit `docs/DEMO-ARBEITSBEREICH.md` (getrennte Demo, Dateierhalt)
   - `BRIEF_ABSCHLUSS_2026-11-04_TRESOR-PLAN.md`, `BRIEF_ABSCHLUSS_2026-11-03_TRESOR-UEBERGABE-AN-CLAUDE.md`,
@@ -36,8 +38,8 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - Ältere zusätzliche Android-Tresor-Paar-Abnahme (Workflow PDF Pro, BookLedgerPro) nicht vollständig geprüft;
   Maßstab `docs/PRO-VERBUND-PRUEFSTAND.md`, Berichte `docs/pro-verbund-nachweise.json`. Keine vollständige
   Gesamtabnahme behaupten, keine fehlgeschlagenen Prüfungen abschalten. Workflow-PDF-Pro PR #59 bleibt Entwurf.
-- Eigene Berichte und ungeprüfte Nutzergeräte; Tablet-Rückmeldung zu 2.28.23 (Kopfleiste, Fragezeichen, Drucken,
-  Aus-/Einloggen, Demo-Schalter). Drucken über den Android-Druckdienst ist am Gerät ungeprüft.
+- Eigene Berichte und ungeprüfte Nutzergeräte; Tablet-Rückmeldung zu 2.28.23/2.28.24 (Kopfleiste, Fragezeichen, Drucken,
+  Aus-/Einloggen, Demo-Schalter, Kurzhinweise, Wo liegt was). Drucken über den Android-Druckdienst ist am Gerät ungeprüft.
 
 ## Veröffentlichen
 

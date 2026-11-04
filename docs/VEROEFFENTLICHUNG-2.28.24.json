@@ -1,0 +1,39 @@
+{
+  "version": "2.28.24",
+  "source": "15ad1a0953eb1c8ced1e3769373697efdfdf3991",
+  "pullRequest": 85,
+  "enthaelt": [85, 86],
+  "recordedUtc": "2026-11-04T18:05:00Z",
+  "freigabe": "Klaus 2026-11-04: „Veröffentliche 2.28.24, sobald alles grün ist“ (Android, Windows mit Update-Server, PWA)",
+  "ciAmPrStand": "d1e1d8955b6e48a13ca28f1ffcda0aba168843e4: pruefung, webview, product (31, pixel_c), product (35, pixel_2), android, windows, transport – alle success",
+  "releases": [
+    {
+      "tag": "android-v2.28.24",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.24",
+      "run": 41880851831,
+      "conclusion": "success",
+      "updateServer": "Schritt „Auf family-projekt.de hochladen und von außen prüfen“ grün",
+      "downloadProof": [
+        { "name": "Familienakte-android-v2.28.24.apk", "bytes": 19808213, "sha256": "f3147e50af0c0a6d4247ca36d3e00ed17e703fbabd1f2dd5560d9c612d9293f8", "anonymousDownload": true, "matchesSHA256SUMS": true, "versionInside": "2.28.24" },
+        { "name": "Familienakte-Einzeldatei-2.28.24.html", "bytes": 3334271, "sha256": "7e52bcfa1c2cbd4b0cdbbd7ee82ab7867e42a7d06eac156257a46a06e0db9385", "anonymousDownload": true, "matchesSHA256SUMS": true }
+      ]
+    },
+    {
+      "tag": "windows-v2.28.24",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.24",
+      "run": 41880857396,
+      "conclusion": "success",
+      "updateServer": "Job „server“: „Auf family-projekt.de hochladen und von außen prüfen“ grün; latest.json nennt 2.28.24",
+      "installedCheck": "Schritt „Installierte Oberfläche und gebündelte Pro-Tresor-Laufzeit prüfen“ grün",
+      "downloadProof": [
+        { "name": "Familienakte-Windows-2.28.24-x64-setup.exe", "bytes": 33952255, "sha256": "44060331924303d318b7c0f5dbf0f011825b17531e28d348716a497a31fe333b", "anonymousDownload": true, "matchesSHA256SUMS": true }
+      ]
+    }
+  ],
+  "pwa": "Pages-Lauf 41881103506 nach dem Merge auf main erfolgreich",
+  "notChecked": [
+    "Kein physisches Tablet und kein eigener Windows-Rechner",
+    "family-projekt.de aus dem Behälter nicht direkt geprüft; die Freigabeläufe prüfen den Server von außen",
+    "Kurzhinweise per langem Druck nur mit nachgestellten Touch-Ereignissen geprüft"
+  ]
+}
