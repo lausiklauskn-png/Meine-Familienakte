@@ -20,7 +20,9 @@ Ein weiteres Repo ist dafür derzeit nicht erforderlich. Einzelheiten:
 Nachweise: Funktionsprüfung samt Gegenprobe, Abgleichprüfung mit temporären
 Git-Repositories, bestehende Kopier- und Ausfüllprüfungen, Herkunft, Typprüfung,
 Lint ohne Fehler (bestehende Warnungen), vollständiger Build erfolgreich.
-Browserprüfstand siehe Pull Request; keine echte Geräteabnahme und kein Release.
+Alle drei bestehenden Browserproben zum Ausfüllen mit installiertem Chromium grün
+(Foto/Scanner, Gesundheitsunterlagen und kompletter Ausfüllweg einschließlich Handybreite).
+Keine echte Geräteabnahme und kein Release.
 Favoritenkategorien und native Pro-Funktionen sind nicht neu eingebaut.
 
 Nächster Auftrag: Den Workflow auf GitHub prüfen, neue PDF-Funktionen jeweils mit
