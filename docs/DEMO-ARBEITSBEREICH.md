@@ -15,7 +15,7 @@ Der gemeinsame native Pro-Tresor und die eigene eingebettete Workflow-PDF-Biblio
 
 Gelöscht wird nur der benannte lokale Demobereich. Separat ausgegebene Sicherungen, Scannerdateien, fremde Ordner und Originale im gemeinsamen Pro-Tresor bleiben außerhalb dieser Bereinigung. Gespeicherte echte Prüfberichte werden weder entfernt noch grün gesetzt. Basic-Browser/PWA, Android-Pro und Windows haben jeweils ihren tatsächlichen lokalen Bestand; zwischen Geräten wird keine gemeinsame Historie vorausgesetzt.
 
-## Kennzeichnung und eigene Tresorwahl ab 2.28.21
+## Kennzeichnung und eigene Tresorwahl ab 2.28.22
 
 Ein roter Rahmen im oberen Kopf-/Navigationsbereich und das Wort **DEMO** kennzeichnen den Demo-Modus auch bei geschlossenem Mobilmenü. „Demo-Ablage bereit“ bezieht sich nur auf den getrennten lokalen Testbestand; ein eigener Datentresor muss dort nicht angelegt werden.
 

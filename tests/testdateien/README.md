@@ -2,7 +2,7 @@
 
 Alle Dateien hier sind **frei erfunden** und dienen nur der Prüfung des Dateieingangs der
 Familienakte. Es gibt keine echten Personen, Orte, Firmen, Ärzte oder gültigen Nummern
-(Regeln aus `NEUSTART_AUFTRAG.md`). Erzeugt werden sie reproduzierbar mit
+(Regeln aus `docs/briefe-archiv/NEUSTART_AUFTRAG.md`). Erzeugt werden sie reproduzierbar mit
 
 ```
 node tests/testdateien/erzeugen.mjs
