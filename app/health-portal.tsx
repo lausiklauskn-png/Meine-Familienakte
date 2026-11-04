@@ -1184,13 +1184,13 @@ function HealthPortalContent() {
               {area.groups.map((group) => <div className="mega-group" key={group.title}><h3>{group.title}</h3>{group.items.map((item) => <button key={`${group.title}-${item.label}`} onClick={() => go(item.id)}><strong>{item.label}</strong><small>{item.detail}</small></button>)}</div>)}
             </div>}
           </div>)}
-          <div className="mobile-menu-extra" aria-label="Weitere Aktionen">
+          {mobileOpen && <div className="mobile-menu-extra" aria-label="Weitere Aktionen">
             {mobileOpen && typeof document !== "undefined" && document.querySelector<HTMLElement>(".header-actions .familienakte-install:not([hidden])") && <button type="button" onClick={() => { setMobileOpen(false); document.querySelector<HTMLElement>(".header-actions .familienakte-install")?.click(); }}><Download size={17}/> App installieren</button>}
             {demoActive() && <button type="button" disabled={demoGesperrt} onClick={() => { setMobileOpen(false); void demoZuruecksetzen(); }}><RefreshCw size={17}/> Demo zurücksetzen</button>}
             {demoActive() && <button type="button" disabled={demoGesperrt} onClick={() => { setMobileOpen(false); void demoLoeschen(); }}><Trash2 size={17}/> Demo löschen und verlassen</button>}
             <button type="button" onClick={() => { setMobileOpen(false); seiteDrucken(); }}><Printer size={17}/> Seite drucken</button>
             <AnmeldeKnopf art="menue"/>
-          </div>
+          </div>}
         </nav>
       </header>
       <main className="site-main">

@@ -38,6 +38,6 @@ export function AnmeldeKnopf({ art }: { art: "kopf" | "menue" }) {
   const text = einloggen ? "Einloggen" : "Ausloggen";
   const titel = einloggen ? "Einloggen: Pro-Tresor mit dem Passwort entsperren" : stand === "offen" ? "Ausloggen: Pro-Tresor sperren und die App neu laden" : "Ausloggen: die App neu laden";
   const Symbol = einloggen ? LogIn : LogOut;
-  if (art === "menue") return <button type="button" disabled={busy} onClick={() => void tippen()} title={titel}><Symbol size={17}/> {einloggen ? "Einloggen (Tresor entsperren)" : "Ausloggen (sperren und neu starten)"}</button>;
+  if (art === "menue") return <button type="button" disabled={busy} onClick={() => void tippen()} title={titel}><Symbol size={17}/> {einloggen ? "Einloggen (Tresor öffnen)" : "Ausloggen und neu starten"}</button>;
   return <a className={`icon-button ${einloggen ? "login-button" : "logout-button"}`} href="./" aria-disabled={busy} onClick={(event) => { event.preventDefault(); void tippen(); }} title={titel} aria-label={text}><Symbol size={18}/></a>;
 }
