@@ -17,6 +17,12 @@ Klaus' lokale Systemberichte und die ungeprüften Nutzergeräte bleiben von eige
 
 Diese Datei liest jede Sitzung zuerst. Was hier steht, gilt für jede Arbeit in diesem Repo.
 
+## Neuester Abschluss: Tresor-Plan, 04.11.2026
+
+`BRIEF_ABSCHLUSS_2026-11-04_TRESOR-PLAN.md` (gleicher Brief wie in BookLedgerPro): Tresor-Plan in allen vier Pro-Apps
+auf main, Android-Testfassung 2.28.18 veröffentlicht, Abgleich prüft den Datentresor selbst. Die sechs Gerätefälle aus
+der Übergabe #70 bleiben am Tablet offen.
+
 ## Testfassung 2.28.18 veröffentlicht (Android, 03./04.11.2026)
 
 Klaus' Wort: „Veröffentliche die Test-APKs von Familienakte 2.28.18 …“. Enthält den Tresor-Plan (#71: Abgleich prüft
