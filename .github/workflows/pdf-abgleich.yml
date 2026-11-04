@@ -1,0 +1,67 @@
+name: PDF-Funktionen abgleichen
+
+on:
+  schedule:
+    - cron: '23 6 * * *'
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'tools/wfpdf-*.mjs'
+      - 'scripts/run-pdf-funktions-tests.mjs'
+      - 'scripts/run-pdf-abgleich-tests.mjs'
+      - 'tools/pdf-abgleich.mjs'
+      - 'app/ausfuellen-dialog.tsx'
+      - 'app/wfpdf-kern.ts'
+      - '.github/workflows/pdf-abgleich.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  abgleich:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: familienakte
+      - uses: actions/checkout@v4
+        with:
+          repository: lausiklauskn-png/Workflow-PDF
+          path: Workflow-PDF
+      - uses: actions/checkout@v4
+        with:
+          repository: lausiklauskn-png/Workflow-PDF-Pro
+          path: Workflow-PDF-Pro
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: familienakte/package-lock.json
+      - run: npm ci
+        working-directory: familienakte
+      - name: Gemeinsamen Quellstand prüfen und Update vorbereiten
+        working-directory: familienakte
+        run: |
+          mkdir -p work/pdf-abgleich
+          node tools/pdf-abgleich.mjs ../Workflow-PDF ../Workflow-PDF-Pro > work/pdf-abgleich/stand.json
+          if node -e "process.exit(JSON.parse(require('fs').readFileSync('work/pdf-abgleich/stand.json')).updateVorhanden ? 0 : 1)"; then
+            node tools/wfpdf-app-nachziehen.mjs
+            node tools/wfpdf-nachziehen.mjs
+          fi
+          git add -N -- public/apps/workflow-pdf public/apps/HERKUNFT.json public/wfpdf
+          git diff --binary -- public/apps/workflow-pdf public/apps/HERKUNFT.json public/wfpdf > work/pdf-abgleich/update.patch
+      - name: Funktionsvertrag und Herkunft prüfen
+        working-directory: familienakte
+        run: |
+          node scripts/run-pdf-abgleich-tests.mjs
+          node scripts/run-pdf-funktions-tests.mjs
+          node scripts/run-wfpdf-kopie-tests.mjs
+          npm run check:ausfuellen
+          npm run typecheck
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pdf-update-zur-pruefung
+          path: familienakte/work/pdf-abgleich/
+          retention-days: 30

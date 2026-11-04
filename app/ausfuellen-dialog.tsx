@@ -189,10 +189,12 @@ export function AusfuellenDialog({ dokument, geschuetzt = false, leseDatei, pers
           setArbeit(`Seite ${i + 1}: Texterkennung auf dem Gerät …`);
           try { items = (await ocrZeilen(c)).map((z) => ({ str: z.text, x: z.x, y: z.y, w: z.w, h: z.h })); naechste[i] = { ...seiten[i], items, ocr: true }; } catch { /* ohne Text weiter */ }
         }
-        const kand = ER.linienErkennung(x.getImageData(0, 0, c.width, c.height));
+        const bildDaten = x.getImageData(0, 0, c.width, c.height);
+        const kand = ER.linienErkennung(bildDaten);
         ER.beschrifte(kand, items);
         let nr = 0;
         for (const k of kand) {
+          if (ER.schonBelegt(k, items, bildDaten)) continue;
           if (neu.some((v) => v.page === i && iou(v, k) > 0.25)) continue;
           nr++;
           const type = k.type === "check" ? "check" : typAusLabel(k.label || "");
