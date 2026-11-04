@@ -3986,6 +3986,7 @@ export async function saveLocalPdfEdit(handle: FileSystemDirectoryHandle, quelle
     dokument.pdfRueckgabe = { sitzung: quelle.sitzung, quelle: quelle.checksum, ergebnis: checksum };
     if (dokument.proUebergabe) { dokument.proBezug ||= dokument.proUebergabe.id; delete dokument.proUebergabe; }
     if (ausfuellen) dokument.ausfuellen = ausfuellen;
+    else if (dokument.ausfuellen && "felder" in dokument.ausfuellen) dokument.ausfuellen = { ...dokument.ausfuellen, felder: [] };
     if (!istProOriginal(altPfad)) index.pdfAltdateien = [...pdfAltdateien(index), { dokumentId: dokument.id, pfad: altPfad, checksum: aktuellSha }];
     index.auditLog.unshift({ id: crypto.randomUUID(), at: zeit, action: "PDF-Bearbeitung zurückgespeichert", recordId: dokument.id, details: "Gleiche Dokumentkennung, vorhandene Zuordnung und derselbe Akten-/Pro-Tresor. Kein zweiter Registereintrag." });
     try { await pdfRegisterSchreiben(handle, index); }

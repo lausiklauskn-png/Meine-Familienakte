@@ -51,6 +51,7 @@ async function test(name, fn) { nativ.id = 'tresor-a'; nativ.status = 'offen'; n
 await test('Eine Rückgabe ersetzt denselben Eintrag: Kennung, Datum, Kategorie, Notizen und Beziehungen bleiben', async () => {
   const { f, d, quelle } = await basis();
   const index = await readIndex(f.root);
+  index.documents[0].ausfuellen = { stand: 'offen', felder: [{ id: 'alte-maske', value: '' }], seiten: [], geaendertAm: '2026-01-01' };
   index.relations.push({ id: 'bezug-probe', fromType: 'document', fromId: d.id, toType: 'person', toId: 'probe', relationType: 'gehört zu', createdAt: '2026-01-01', source: 'Probe', notes: null });
   await writeIndex(f.root, index);
   const r = await vault.saveLocalPdfEdit(f.root, quelle, pdf('Ausgefüllt'));
@@ -58,6 +59,8 @@ await test('Eine Rückgabe ersetzt denselben Eintrag: Kennung, Datum, Kategorie,
   assert.equal(nach.documents.length, 1); assert.equal(r.dokument.id, d.id);
   for (const k of ['category', 'documentDate', 'notes', 'addedAt', 'status', 'originalName']) assert.equal(r.dokument[k], d[k]);
   assert.deepEqual(nach.relations, index.relations);
+  assert.deepEqual(r.dokument.ausfuellen.felder, [], 'PDF-Raum darf eine alte Maske des einfachen Dialogs nicht über neue PDF-Bytes legen');
+  assert.equal(r.dokument.ausfuellen.stand, 'offen', 'vorhandene Vormerkung bleibt erhalten');
   assert.equal(r.dokument.storedPath.slice(0, r.dokument.storedPath.lastIndexOf('/')), d.storedPath.slice(0, d.storedPath.lastIndexOf('/')));
   assert.equal(f.root.find(d.storedPath), null, 'bisherige Datei erst nach bestätigtem Registerwechsel entfernt');
   assert.equal(await (await vault.readLocalDocumentFile(f.root, d.id)).text(), await pdf('Ausgefüllt').text());
