@@ -1,10 +1,11 @@
 # CLAUDE.md — Meine Familienakte
 
 
-## Aktueller Bau: getrennte Demo 2.28.19 (04.11.2026)
+## Aktueller Bau: getrennte Demo 2.28.20 (04.11.2026)
 
 Klaus' autonomer Bauauftrag aus Kimhub `docs/sessions/BRIEF_2026-11-04_codex-familienakte-systemmeldungen.md`
-wird in PR #73 umgesetzt. Technische Fassung 2.28.19, sichtbare Zeile weiter 2.28.1.
+ist mit PR #73 gebaut; PR #76 erhält zusätzlich eigene Altbriefe mit gleichem Betreff.
+Die PWA hatte den ersten Baustand bereits als 2.28.19 ausgeliefert; die korrigierte Gesamtausgabe erhält deshalb 2.28.20. Sichtbare Zeile weiter 2.28.1.
 Tresor-PR #71 und die parallel veröffentlichte Android-Testfassung 2.28.18 aus #72 sind enthalten.
 Die getrennte Demo ist gebaut; Zusammenführung und neue Veröffentlichung folgen erst nach den vollständigen Prüfketten.
 Eigene Dateien bevorzugt erhalten. Alte Gesamt-Kennungsliste nicht als Löschbeleg verwenden.
