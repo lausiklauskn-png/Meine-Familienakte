@@ -6,6 +6,7 @@ type PdfLibNs = { PDFDocument: { load: (b: Uint8Array, o?: unknown) => Promise<u
 export type WfpExport = { exportieren: (doc: unknown, bytes: Uint8Array, modus: "fest" | "ausfuellbar" | "vorlage", opt?: { schrift?: Uint8Array; unicodeFelder?: boolean }) => Promise<{ bytes: Uint8Array; hinweise: string[] }> };
 export type WfpKandidat = { type: "text" | "check"; x: number; y: number; w: number; h: number; label?: string; quelle?: string };
 export type WfpErkennung = {
+  schonBelegt: (feld: WfpKandidat, items: Array<{ str: string; x: number; y: number; w: number; h: number }>, img: ImageData, inhalt?: string) => string;
   linienErkennung: (img: ImageData) => WfpKandidat[];
   beschrifte: (felder: WfpKandidat[], items: Array<{ str: string; x: number; y: number; w: number; h: number }>) => void;
 };

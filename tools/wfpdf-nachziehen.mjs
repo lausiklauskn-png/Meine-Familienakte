@@ -34,14 +34,14 @@ export const ORDNER = [];
 export const HINWEIS = "Byte-1:1 aus Workflow-PDF (tools/wfpdf-nachziehen.mjs). Nie von Hand ändern. Der Klebstoff (app/ausfuellen-*.tsx, app/wfpdf-kern.ts, public/wfpdf-fa/scanner.css) ist Familienakte-eigen.";
 const sha = (b) => createHash("sha256").update(b).digest("hex");
 
-export function nachziehen(klon) {
+export function nachziehen(klon, wurzel = WURZEL) {
   if (!existsSync(join(klon, "assets", "scanner.js"))) throw new Error("kein Workflow-PDF-Klon: " + klon);
   let commit = ""; try { commit = execSync("git rev-parse HEAD", { cwd: klon, encoding: "utf8" }).trim(); } catch { commit = ""; }
   const dateien = {};
   const kopiere = (ziel, quelle) => {
     const b = readFileSync(join(klon, quelle));
-    mkdirSync(join(WURZEL, dirname(ziel)), { recursive: true });
-    writeFileSync(join(WURZEL, ziel), b);
+    mkdirSync(join(wurzel, dirname(ziel)), { recursive: true });
+    writeFileSync(join(wurzel, ziel), b);
     dateien[ziel] = { quelle, sha256: sha(b) };
   };
   for (const [z, q] of DATEIEN) kopiere(z, q);
