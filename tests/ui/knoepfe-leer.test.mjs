@@ -72,17 +72,25 @@ try {
     return erg ? erg[0].slice(0, 100) : false;
   });
   await step("Leere Akte: getrennte Demo; eigene Frist bleibt nach Rückkehr erhalten", async () => {
+    try {
     await page.locator(".footer-sample-link").scrollIntoViewIfNeeded();
-    await Promise.all([page.waitForURL(url => url.searchParams.get("demo") === "1"), page.locator(".footer-sample-link").click()]);
-    await page.waitForLoadState("networkidle");
-    await page.waitForSelector(".sample-data-notice strong", { timeout: 60000 });
+    await Promise.all([page.waitForURL(url => url.searchParams.get("demo") === "1", { waitUntil: "domcontentloaded", timeout: 60000 }), page.locator(".footer-sample-link").click()]);
+    await page.waitForLoadState("networkidle", { timeout: 60000 });
+    await page.waitForSelector('.demo-workspace.sample-data-notice strong:has-text("Alle Daten")', { timeout: 60000 });
     await footer(page, "Fristen und Aufgaben"); await page.locator("button.schedule-filter", { hasText: "Offen" }).click();
     const eigeneFristInDemo = (await page.locator("main").innerText()).includes("Erste eigene Frist");
-    await Promise.all([page.waitForURL(url => !url.searchParams.has("demo")), page.getByRole("button", { name: "Demo verlassen", exact: true }).click()]);
-    await page.waitForLoadState("networkidle");
+    await Promise.all([page.waitForURL(url => !url.searchParams.has("demo"), { waitUntil: "domcontentloaded", timeout: 60000 }), page.getByRole("button", { name: "Demo verlassen", exact: true }).click()]);
+    await page.waitForLoadState("networkidle", { timeout: 60000 });
     await page.getByRole("button", { name: "Demo öffnen", exact: true }).waitFor();
     await footer(page, "Fristen und Aufgaben"); await page.locator("button.schedule-filter", { hasText: "Offen" }).click();
     return !eigeneFristInDemo && (await page.locator("main").innerText()).includes("Erste eigene Frist");
+    } catch (error) {
+      console.error("Demo-Rückweg-Diagnose:", error.stack || String(error));
+      console.error("Adresse:", page.url());
+      console.error("Seiteninhalt:", (await page.locator("body").innerText().catch(() => "nicht erreichbar")).slice(0, 6000));
+      await page.screenshot({ path: "work/leerakte-fehler.png" }).catch(() => {});
+      throw error;
+    }
   });
   check(errors.length === 0, "Keine Seitenfehler", errors.join(" | "));
 } finally { await browser.close(); await app.stop(); }

@@ -241,8 +241,8 @@ try {
   });
   await step("„Beispieldaten laden“ (Fußzeile) legt die Beispielfamilie wieder an", async () => {
     await page.locator(".footer-sample-link").scrollIntoViewIfNeeded();
-    await page.locator(".footer-sample-link").click();
-    await page.waitForSelector(".sample-data-notice strong", { timeout: 60000 });
+    await Promise.all([page.waitForURL(url => url.searchParams.get("demo") === "1", { waitUntil: "domcontentloaded", timeout: 60000 }), page.locator(".footer-sample-link").click()]);
+    await page.waitForSelector('.demo-workspace.sample-data-notice strong:has-text("Alle Daten")', { timeout: 60000 });
     return true;
   });
   check(errors.length === 0, "Keine Seitenfehler", errors.join(" | "));
