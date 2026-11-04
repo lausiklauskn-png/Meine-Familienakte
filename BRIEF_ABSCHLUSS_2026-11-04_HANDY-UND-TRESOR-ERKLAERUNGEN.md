@@ -43,7 +43,16 @@ Gegenprobe 6/6. **In keiner App verdrahtet** – nächster Schritt.
 
 ## Veröffentlicht (Klaus' Wort vom 04.11.: Android und Windows, mit Update-Server)
 
-Siehe `docs/VEROEFFENTLICHUNG-2.28.23.json` (wird nach den Läufen ergänzt). Die PWA kommt über Pages.
+Nachweis `docs/VEROEFFENTLICHUNG-2.28.23.json`. Beide Läufe von main `95586e8`, je mit Update-Server (family-projekt.de,
+unterschrieben, von außen geprüft). Downloads anonym geladen, SHA-256 gleich `SHA256SUMS`:
+
+| Ausgabe | Lauf | Größe | SHA-256 |
+|---|---|---|---|
+| [Android-APK](https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/android-v2.28.23/Familienakte-android-v2.28.23.apk) | 41856008597 | 19.808.213 B | `7c1e9362…2e3f` |
+| Einzeldatei (HTML) | 41856008597 | 3.329.511 B | `5a9d122c…c16e` |
+| [Windows-Setup](https://github.com/lausiklauskn-png/Meine-Familienakte/releases/download/windows-v2.28.23/Familienakte-Windows-2.28.23-x64-setup.exe) | 41856014812 | 33.954.692 B | `021de56b…4196` |
+
+Die PWA kommt über Pages. Diese Fassung nicht erneut ausgeben.
 
 ## Grenzen
 
