@@ -92,6 +92,10 @@ sondern nur KimHub.“
 
 ## Technische Wegweiser
 
+- **PDF-Updates:** `npm run update:pdf` lädt die Quellen und prüft; `-- --anwenden` übernimmt mit Designschutz beide Kopien.
+  Gemeinsamer Quellstand mit Pro zwingend. Automatische Entwurfs-PRs: `.github/workflows/pdf-abgleich.yml`.
+  Ablauf und Grenzen: `docs/PDF-FUNKTIONSABGLEICH.md`. Nie die installierte App oder Nutzerdokumente als Quellordner verwenden.
+
 - **Workflow PDF (Klon):** `public/apps/workflow-pdf/` byte-1:1; Brücke `public/apps/fa-wfpdf-bruecke.js` **nie umgehen**
   (eigene DB `FamilienakteWFPDF1`, kein Worker, ⟳ ohne fremde Vorräte); Seite `app/workflow-pdf-seite.tsx`.
   Tesseract/Scanic liegen nur im Klon (`vendorBasis()`).

@@ -4,7 +4,7 @@ name: Android-Hülle (Prüf-Bau)
 # Artefakt; die veröffentlichte APK kommt aus android-release.yml. Muster: BookLedgerPro android.yml.
 on:
   pull_request:
-    paths: ['android/**', 'public/native/**', 'capacitor.config.json', 'tools/native/**', 'tools/signing/**', '.github/workflows/android.yml', '.github/workflows/android-release.yml', 'app/**', 'lib/**', 'src/**', 'index.html', 'package.json']
+    paths: ['public/apps/workflow-pdf/**', 'public/wfpdf/**', 'android/**', 'public/native/**', 'capacitor.config.json', 'tools/native/**', 'tools/signing/**', '.github/workflows/android.yml', '.github/workflows/android-release.yml', 'app/**', 'lib/**', 'src/**', 'index.html', 'package.json']
   push:
     branches: [main]
   workflow_dispatch:

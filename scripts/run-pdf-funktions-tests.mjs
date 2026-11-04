@@ -1,0 +1,20 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { runInNewContext } from 'node:vm';
+const window = {};
+runInNewContext(readFileSync('public/wfpdf/erkennung.js', 'utf8'), { window });
+const er = window.WFP.Erkennung;
+const feld = { type: 'text', x: 10, y: 10, w: 70, h: 40 };
+const bild = (farbe) => ({ width: 100, height: 100, data: new Uint8ClampedArray(40000).fill(farbe) });
+assert.equal(er.schonBelegt(feld, [], bild(255)), '');
+assert.equal(er.schonBelegt(feld, [], bild(0)), 'bild');
+assert.equal(er.schonBelegt(feld, [], bild(255), 'Bereits ausgefüllt'), 'text');
+assert.equal(er.schonBelegt({ ...feld, type: 'check' }, [], bild(0)), '');
+assert.equal(er.schonBelegt({ ...feld, quelle: 'ki' }, [], bild(0)), '');
+// Integration guard: the React path must use the same source function before adding a field.
+const dialog = readFileSync('app/ausfuellen-dialog.tsx', 'utf8');
+const guard = 'if (ER.schonBelegt(k, items, bildDaten)) continue;';
+const angebunden = s => s.includes(guard) && s.indexOf(guard) < s.indexOf('neu.push({ id: uid()');
+assert.ok(angebunden(dialog));
+assert.equal(angebunden(dialog.replace(guard, '')), false, 'Gegenprobe: entfernter Aufruf muss auffallen');
+console.log('PDF-Funktionen: leeres Feld, Bild, vorhandener Wert, Kästchen, KI und Anbindung samt Gegenprobe geprüft.');
