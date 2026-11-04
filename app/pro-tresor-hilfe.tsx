@@ -16,7 +16,7 @@ const LAGE: Record<ProTresorZustand["status"], string> = { offen: "entsperrt", g
  * @param stand       Zustand des Pro-Tresors (nur in der App); ohne ihn bleibt der Baum neutral.
  * @param zahlen      Unterlagen der geöffneten Akte: gesamt und davon im Pro-Tresor.
  */
-export function ProTresorWoLiegtWas({ open = false, onVerbinden, stand, zahlen }: { open?: boolean; onVerbinden?: () => void; stand?: ProTresorZustand; zahlen?: { gesamt: number; imTresor: number } }) {
+export function ProTresorWoLiegtWas({ open = false, onVerbinden, onDokumente, stand, zahlen }: { open?: boolean; onVerbinden?: () => void; onDokumente?: () => void; stand?: ProTresorZustand; zahlen?: { gesamt: number; imTresor: number } }) {
   const verbinden = onVerbinden || VERBINDEN;
   const lage = stand ? LAGE[stand.status] : null;
   const hauptArt = !stand ? "hervor" : stand.status === "offen" ? "gut" : "warnung";
@@ -28,7 +28,7 @@ export function ProTresorWoLiegtWas({ open = false, onVerbinden, stand, zahlen }
       kinder: [{
         titel: lage ? `Tresor-Hauptordner · ${lage}` : "Tresor-Hauptordner", unter: "Name frei, z. B. „Family-Projekt“ · erkennbar an tresorordner.json · diesen Ordner wählen", art: hauptArt, ziel: verbinden,
         kinder: [
-          { titel: PRO_TRESOR_FACH, unter: zahlen ? `Diese App: Familienakte · ${unterlagen}` : unterlagen, art: "hervor" },
+          { titel: PRO_TRESOR_FACH, unter: zahlen ? `Diese App: Familienakte · ${unterlagen}` : unterlagen, art: "hervor", ...(onDokumente ? { ziel: onDokumente } : {}) },
           { titel: "Workflow PDF Pro · Private Brain · BookLedgerPro", unter: "Ordner der anderen Pro-Apps" },
           { titel: "Eingang-…", unter: `Briefkästen · Eingang: ${PRO_TRESOR_EINGANG}` },
           { titel: "Tresorordner", unter: "Verwaltung · Nie den Unterordner „Tresorordner“ wählen", art: "warnung" },

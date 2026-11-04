@@ -10,7 +10,7 @@ import { InfoPopover } from "./ui-controls";
 const ERKLAERUNG = "Verbindet einen vorhandenen Tresor von Workflow PDF Pro, Private Brain Pro oder BookLedgerPro. Der Ordner kann im Gerät, auf SD-Karte, USB oder in einem freigegebenen Laufwerk liegen, soweit das Betriebssystem ihn freigibt. Aktenregister und kleine Arbeitsstände bleiben im bisherigen Aktenordner. Vorhandene Dateien werden nicht automatisch verschoben. Vollsicherung und Export enthalten lesbare Originale im ausdrücklich gewählten Sicherungsordner.";
 
 /** Kleines eigenes Modul: bestehender Aktenbestand und nativer Pro-Anschluss bleiben unterscheidbar. */
-export function ProTresorAnschluss({ aktenHandle = null, onChange }: { aktenHandle?: FileSystemDirectoryHandle | null; onChange?: () => void }) {
+export function ProTresorAnschluss({ aktenHandle = null, onChange, onDokumente }: { aktenHandle?: FileSystemDirectoryHandle | null; onChange?: () => void; onDokumente?: () => void }) {
   const resolveActivity = useResolveActivity();
   const [stand, setStand] = useState<ProTresorZustand>({ status: "getrennt" });
   const [busy, setBusy] = useState(false);
@@ -96,7 +96,7 @@ export function ProTresorAnschluss({ aktenHandle = null, onChange }: { aktenHand
     {empfehlen && <p data-pro-ablage-empfehlung><strong>Empfohlen:</strong> Neue Originale verschlüsselt im Ordner „{PRO_TRESOR_FACH}“ dieses Pro-Tresors ablegen. Vorhandene Akten bleiben, wo sie sind; du kannst jederzeit zurückwechseln.</p>}
     {aktenHandle && ziel && <button className="button secondary" type="button" disabled={busy} onClick={() => void zielAendern(null)}>Neue Originale wieder im bisherigen Aktenordner ablegen</button>}
     <ProVerbundAnschluss stand={stand}/>
-    <ProTresorWoLiegtWas stand={verfuegbar ? stand : undefined} zahlen={zahlen}/>
+    <ProTresorWoLiegtWas stand={verfuegbar ? stand : undefined} zahlen={zahlen} onDokumente={onDokumente}/>
     {meldung && <p role="alert">{meldung}</p>}
   </section>;
 }
