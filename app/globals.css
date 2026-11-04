@@ -1905,3 +1905,45 @@ input.af-feld, textarea.af-feld { width: auto; min-height: 0; resize: none; }
 .datei-knopf { position: relative; cursor: pointer; }
 .datei-knopf input[type=file] { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer; }
 fieldset:disabled .datei-knopf { opacity: .55; cursor: not-allowed; }
+/* Hinweisfenster am Fragezeichen angeheftet (über allem, auch am Handy; Lage setzt InfoPopover) */
+.start-info-panel.info-angeheftet, .app-shell .start-info-panel.info-angeheftet { position: fixed; right: auto; bottom: auto; z-index: 1000; overflow-y: auto; }
+/* Kopfleiste am Handy (Nutzerwunsch 2026-11-04): Logo ganz links, Menü ganz rechts, „Pro“ über FAMILIENAKTE,
+   Textblock so hoch wie das Logo, keine Zeilenumbrüche im Namen. */
+@media (max-width: 620px) {
+  .masthead { flex-wrap: nowrap; gap: 8px; padding: 8px 12px; min-height: 0; }
+  .site-brand { order: 1; gap: 8px; flex: 1 1 auto; min-width: 0; }
+  .header-actions { order: 2; }
+  .mobile-menu-button { order: 3; padding: 6px; }
+  .site-brand > span:last-child { display: flex; flex-direction: column; justify-content: center; min-height: 34px; }
+  .site-brand strong { display: flex; flex-wrap: wrap; align-items: center; column-gap: 5px; row-gap: 0; font-size: .86rem; line-height: 1.1; white-space: nowrap; }
+  .site-brand strong .site-brand-variante { order: -1; flex-basis: 100%; font-size: .66rem; line-height: 1.05; }
+  .site-brand strong .demo-header-badge { margin-left: 0; padding: 1px 5px; font-size: .62rem; }
+  .site-brand .site-brand-version { margin-top: 1px; font-size: .68rem; line-height: 1.1; white-space: nowrap; }
+}
+/* Kopfleiste am Handy, Fassung 2: Name und Variante in einer Zeile, darunter nur die Nummer; Drucken und Neustart im Menü. */
+.mobile-menu-extra { display: none; }
+@media (max-width: 620px) {
+  .site-brand strong { flex-wrap: nowrap; }
+  .site-brand strong .site-brand-variante { order: 0; flex-basis: auto; font-size: .7rem; }
+  .site-brand .site-brand-version .version-wort { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .header-actions > .drucken-knopf, .header-actions > .logout-button, .header-actions > .familienakte-install { display: none !important; }
+  .mobile-menu-button { width: 30px; height: 30px; padding: 0; display: grid; place-items: center; border-radius: 8px; }
+  .mobile-menu-button svg { width: 18px; height: 18px; }
+  .main-navigation.mobile-open .mobile-menu-extra { display: flex; flex-direction: column; gap: 4px; border-top: 1px solid var(--line); margin-top: 6px; padding-top: 6px; }
+  .mobile-menu-extra button { display: flex; align-items: center; gap: 8px; }
+  .search-command-bar { padding: 9px 11px; gap: 6px; }
+  .search-command-bar .global-search input { min-height: 40px; }
+}
+/* Variante (Basic/Pro) in der Zeile der Versionsnummer */
+.site-brand .site-brand-zeile { display: flex; align-items: baseline; gap: 6px; margin-top: 2px; white-space: nowrap; }
+.site-brand .site-brand-zeile .site-brand-version { margin-top: 0; }
+.site-brand .site-brand-zeile .site-brand-variante { font-size: .72rem; }
+@media (max-width: 620px) { .site-brand .site-brand-zeile { gap: 5px; } .site-brand .site-brand-zeile .site-brand-variante { font-size: .68rem; } }
+/* Demo-Schalter oben (nur Handy); der Demo-Kasten bleibt am großen Bildschirm */
+.header-actions .demo-schalter { display: none; }
+@media (max-width: 620px) {
+  .header-actions .demo-schalter { display: inline-flex; align-items: center; justify-content: center; width: auto; min-width: 44px; padding: 0 7px; font-size: .7rem; font-weight: 850; letter-spacing: .06em; color: var(--navy); }
+  .header-actions .demo-schalter.aktiv { background: #b42318; border-color: #b42318; color: #fff; }
+  .site-brand strong .demo-header-badge { display: none; }
+  .app-shell .demo-workspace { display: none; }
+}

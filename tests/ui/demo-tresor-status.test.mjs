@@ -52,9 +52,9 @@ try{
  });
  const mobile=await(await browser.newContext(HANDY)).newPage();const mobileErrors=collectErrors(mobile);await mobile.goto(app.base+'?demo=1',{waitUntil:'networkidle'});await ready(mobile);
  await step('Mobil: Demo-Rahmen und Kennzeichnung auch bei geschlossenem Menü sichtbar',async()=>{
-  assert.equal(await mobile.locator('.main-navigation').isVisible(),false);assert.equal(await mobile.locator('.demo-header-badge').isVisible(),true);
+  assert.equal(await mobile.locator('.main-navigation').isVisible(),false);/* Am Handy kennzeichnet der rote Schalter oben die Demo (2026-11-04). */assert.equal(await mobile.locator('.demo-schalter.aktiv').isVisible(),true);assert.equal(await mobile.locator('.demo-schalter.aktiv').innerText(),'DEMO');
   assert.ok(await mobile.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));await mobile.screenshot({path:'work/demo-status-21-mobil.png'});
-  await switchDemo(mobile,false);assert.equal(await mobile.locator('.demo-header-badge').count(),0);await neutral(mobile);
+  await switchDemo(mobile,false);assert.equal(await mobile.locator('.demo-header-badge').count(),0);assert.equal(await mobile.locator('.demo-schalter.aktiv').count(),0);await neutral(mobile);
  });
  const native=await browser.newContext(DESKTOP);await native.addInitScript(capacitorStub+`
   window.__statusPro=JSON.parse(localStorage.getItem('erfundener-nativer-pro-zustand')||'{"status":"getrennt"}');

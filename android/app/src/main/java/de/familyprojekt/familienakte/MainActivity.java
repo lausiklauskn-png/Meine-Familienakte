@@ -27,6 +27,7 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(FamilienakteTresorPlugin.class);
         registerPlugin(FamilienakteDevicePlugin.class);
         registerPlugin(FamilienakteModelsPlugin.class);
+        registerPlugin(FamilienakteDruckPlugin.class);
         super.onCreate(state);
         if (bridge == null) return;
         // Internetschalter (Standard aus): auch Bilder, Schriften und der Service Worker bleiben im Gerät.
