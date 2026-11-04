@@ -1,6 +1,10 @@
+import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import { getVaultSummary, readLocalDocumentFile, readLocalVaultData, type LocalDocument } from "./local-vault";
 import { dateiAusgeben } from "./dateiausgabe";
+import { InfoPopover } from "./ui-controls";
+
+const ERKLAERUNG = "Speichere ein Paket und sende es in deinem vorhandenen Kim-sync-Raum über die Büroklammer als Datei oder über Datei-Post. Die empfangende Familienakte öffnet das Paket hier und gibt eine Empfangsdatei zurück. Es entsteht kein neuer Raum. Das Paket enthält die lesbare Originaldatei. Kim-sync und Datei-Post verschlüsseln erst beim Senden. Wähle für jedes Paket genau einen Empfänger; für weitere Empfänger ein eigenes Paket. Die Empfangsdatei bestätigt dieses Paket, keine geprüfte Identität.";
 import { geraeteAusgaenge, geraeteAusgangVorbereiten, geraeteEingaenge, geraetePaket, geraetePaketAnnehmen, geraetePaketLesen, geraeteQuittung, geraeteQuittungAnnehmen, type GeraeteAusgang, type GeraeteEingang } from "./pro-geraetetransport";
 
 type State = { handle: FileSystemDirectoryHandle | null; vaultId: string; documents: LocalDocument[]; outgoing: GeraeteAusgang[]; incoming: GeraeteEingang[] };
@@ -45,37 +49,36 @@ export function ProGeraetetransportPanel({ handle }: { handle: FileSystemDirecto
     const outgoing = existing || await geraeteAusgangVorbereiten(visible.vaultId, file, id, recipient, document.proUebergabe?.id || document.proBezug);
     return await output(await geraetePaket(outgoing, file)) + " Empfang noch offen: Paket als Originaldatei an genau das gewählte Gerät weitergeben.";
   }
+  const schritt = (nr: number, titel: string, wo: "hier" | "dort", inhalt: React.ReactNode, aus = false) =>
+    <li className={`uebergabe-schritt ort-${wo}`}><fieldset disabled={aus}>
+      <legend><span className="ablauf-nr" aria-hidden="true">{nr}</span><strong>{titel}</strong><span className="uebergabe-ort">{wo === "hier" ? "Dieses Gerät" : "Anderes Gerät"}</span></legend>
+      <div className="uebergabe-inhalt">{inhalt}</div>
+    </fieldset></li>;
   return <section className="card pro-geraetetransport" aria-label="Übergabe zwischen Geräten">
-    <h2>Eine Unterlage an ein anderes Gerät geben</h2>
-    <p>Speichere ein Paket und sende es in deinem vorhandenen Kim-sync-Raum über 📎 als Datei oder über Datei-Post. Die empfangende Familienakte öffnet das Paket hier und gibt eine Empfangsdatei zurück. Es entsteht kein neuer Raum.</p>
-    <p>Das Paket enthält die lesbare Originaldatei. Kim-sync und Datei-Post verschlüsseln erst beim Senden. Wähle für jedes Paket genau einen Empfänger; für weitere Empfänger ein eigenes Paket. Die Empfangsdatei bestätigt dieses Paket, keine geprüfte Identität.</p>
-    <fieldset disabled={busy || !visible?.vaultId}>
-      <legend>Aus deiner geöffneten Akte</legend>
-      <label>Unterlage für das andere Gerät<select value={selected} onChange={e => setSelected(e.target.value)}><option value="">Bitte wählen …</option>{visible?.documents.map(d => <option key={d.id} value={d.id}>{d.originalName}</option>)}</select></label>
-      <label>Empfänger oder Zielgerät<input maxLength={80} value={recipient} onChange={e => setRecipient(e.target.value)} placeholder="z. B. mein Windows-PC"/></label>
-      <button className="button secondary" disabled={!selected || !recipient.trim()} onClick={() => void run(() => send())}>Übergabepaket speichern</button>
-    </fieldset>
+    <span className="ui-heading-help"><h2>Eine Unterlage an ein anderes Gerät geben</h2><InfoPopover label="Unterlage an ein anderes Gerät geben erklären" text={ERKLAERUNG}/></span>
     {!handle && <p>Zum Senden und zum Prüfen einer Rückbestätigung bitte die zugehörige Akte öffnen.</p>}
-    <fieldset disabled={busy}>
-      <legend>Auf dem empfangenden Gerät</legend>
-      <label>Übergabepaket öffnen<input type="file" accept=".familienakte-paket" onChange={e => {
+    <ol className="uebergabe-ablauf" aria-label="So geht die Übergabe">
+      {schritt(1, "Unterlage wählen", "hier", <label className="uebergabe-feld"><span className="sr-only">Unterlage für das andere Gerät</span><select value={selected} onChange={e => setSelected(e.target.value)}><option value="">Unterlage wählen …</option>{visible?.documents.map(d => <option key={d.id} value={d.id}>{d.originalName}</option>)}</select></label>, busy || !visible?.vaultId)}
+      {schritt(2, "Paket speichern", "hier", <><label className="uebergabe-feld"><span className="sr-only">Empfänger oder Zielgerät</span><input maxLength={80} value={recipient} onChange={e => setRecipient(e.target.value)} placeholder="Für welches Gerät?"/></label>
+        <button className="button secondary" disabled={!selected || !recipient.trim()} onClick={() => void run(() => send())}>Übergabepaket speichern</button></>, busy || !visible?.vaultId)}
+      {schritt(3, "Senden", "hier", <span className="uebergabe-hinweis">Paket über Kim-sync (Büroklammer) oder Datei-Post schicken</span>)}
+      {schritt(4, "Paket öffnen", "dort", <><label className="datei-knopf button secondary">Übergabepaket öffnen<input type="file" accept=".familienakte-paket" onChange={e => {
         const file = e.target.files?.[0]; e.target.value = ""; setPacket(null);
         if (file) void run(async () => { const data = await geraetePaketLesen(file); if (mounted.current && current.current === handle) setPacket({ file, name: data.file.name, recipient: data.rueckkanal.empfaenger, size: data.file.size }); return "Paket geprüft. Bitte die Aufnahme in den Eingang bestätigen."; });
       }}/></label>
-      {packet && <div><p>{packet.name} · {packet.size.toLocaleString("de-DE")} Bytes · vorgesehen für: {packet.recipient}</p><button className="button primary" onClick={() => void run(async () => {
-        await geraetePaketAnnehmen(packet.file); setPacket(null); window.dispatchEvent(new Event("familienakte:pro-eingang"));
-        return "Dauerhaft im Eingang abgelegt. Bitte die Empfangsdatei speichern und über denselben Weg zurückgeben. Die Einordnung in die Akte folgt getrennt.";
-      })}>Dauerhaft in den Eingang übernehmen</button></div>}
-    </fieldset>
-    {visible?.incoming.map(entry => <div key={entry.id} className="card"><p>{entry.vertrag.name}: im Eingang bestätigt · {entry.rueckkanal.empfaenger}</p><button className="button secondary" disabled={busy} onClick={() => void run(async () => await output(geraeteQuittung(entry)) + " Bitte an die sendende Familienakte zurückgeben.")}>Empfangsdatei speichern</button></div>)}
-    <fieldset disabled={busy || !visible?.vaultId}>
-      <legend>Zurück auf dem sendenden Gerät</legend>
-      <label>Empfangsdatei prüfen<input type="file" accept=".familienakte-quittung" onChange={e => {
+        {packet && <div className="uebergabe-vorschau"><p>{packet.name} · {packet.size.toLocaleString("de-DE")} Bytes · für: {packet.recipient}</p><button className="button primary" onClick={() => void run(async () => {
+          await geraetePaketAnnehmen(packet.file); setPacket(null); window.dispatchEvent(new Event("familienakte:pro-eingang"));
+          return "Dauerhaft im Eingang abgelegt. Bitte die Empfangsdatei speichern und über denselben Weg zurückgeben. Die Einordnung in die Akte folgt getrennt.";
+        })}>Dauerhaft in den Eingang übernehmen</button></div>}</>, busy)}
+      {schritt(5, "Empfangsdatei zurückschicken", "dort", visible?.incoming.length
+        ? <>{visible.incoming.map(entry => <div key={entry.id} className="uebergabe-zeile"><span>{entry.vertrag.name} · {entry.rueckkanal.empfaenger}</span><button className="button secondary" disabled={busy} onClick={() => void run(async () => await output(geraeteQuittung(entry)) + " Bitte an die sendende Familienakte zurückgeben.")}>Empfangsdatei speichern</button></div>)}</>
+        : <span className="uebergabe-hinweis">Erscheint nach Schritt 4</span>)}
+      {schritt(6, "Empfang prüfen", "hier", <><label className="datei-knopf button secondary">Empfangsdatei prüfen<input type="file" accept=".familienakte-quittung" onChange={e => {
         const file = e.target.files?.[0]; e.target.value = "";
         if (file && visible) void run(async () => { await geraeteQuittungAnnehmen(file, visible.vaultId); return "Passende Rückbestätigung: Die empfangende Familienakte hat die Unterlage dauerhaft im Eingang abgelegt."; });
       }}/></label>
-    </fieldset>
-    {visible?.outgoing.map(entry => <div key={entry.id} className="card"><p>{entry.vertrag.name} → {entry.rueckkanal.empfaenger}: {entry.stand === "im-eingang" ? "im Eingang bestätigt" : "Empfang offen"}</p>{entry.stand === "offen" && <button className="button secondary" disabled={busy} onClick={() => void run(() => send(entry))}>Dasselbe Paket erneut speichern</button>}</div>)}
+        {visible?.outgoing.map(entry => <div key={entry.id} className="uebergabe-zeile"><span>{entry.vertrag.name} → {entry.rueckkanal.empfaenger}: {entry.stand === "im-eingang" ? "im Eingang bestätigt" : "Empfang offen"}</span>{entry.stand === "offen" && <button className="button secondary" disabled={busy} onClick={() => void run(() => send(entry))}>Dasselbe Paket erneut speichern</button>}</div>)}</>, busy || !visible?.vaultId)}
+    </ol>
     {message && <p role="status">{message}</p>}
   </section>;
 }

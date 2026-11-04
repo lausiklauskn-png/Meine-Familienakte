@@ -4,6 +4,9 @@ import { proTresor, proTresorCode, proTresorMeldung, proTresorVerfuegbar, type P
 import { ProTresorWoLiegtWas, PRO_TRESOR_FACH } from "./pro-tresor-hilfe";
 import { readProDocumentVault, setProDocumentVault } from "./local-vault";
 import { useResolveActivity } from "./ui-activity";
+import { InfoPopover } from "./ui-controls";
+
+const ERKLAERUNG = "Verbindet einen vorhandenen Tresor von Workflow PDF Pro, Private Brain Pro oder BookLedgerPro. Der Ordner kann im Gerät, auf SD-Karte, USB oder in einem freigegebenen Laufwerk liegen, soweit das Betriebssystem ihn freigibt. Aktenregister und kleine Arbeitsstände bleiben im bisherigen Aktenordner. Vorhandene Dateien werden nicht automatisch verschoben. Vollsicherung und Export enthalten lesbare Originale im ausdrücklich gewählten Sicherungsordner.";
 
 /** Kleines eigenes Modul: bestehender Aktenbestand und nativer Pro-Anschluss bleiben unterscheidbar. */
 export function ProTresorAnschluss({ aktenHandle = null, onChange }: { aktenHandle?: FileSystemDirectoryHandle | null; onChange?: () => void }) {
@@ -64,19 +67,17 @@ export function ProTresorAnschluss({ aktenHandle = null, onChange }: { aktenHand
     : stand.status === "nicht_erreichbar" && stand.code === "FA_TRESOR_UMGEZOGEN" ? proTresorMeldung(stand.code) : text[stand.status];
   const empfehlen = Boolean(aktenHandle && stand.status === "offen" && stand.id && ziel !== stand.id);
   return <section className="card" data-pro-tresor>
-    <h3>Gemeinsamer Pro-Tresor</h3>
-    <p>Vorhandenen Tresor von Workflow PDF Pro, Private Brain Pro oder BookLedgerPro verbinden. Der Ordner kann im Gerät, auf SD-Karte, USB oder in einem freigegebenen Laufwerk liegen, soweit das Betriebssystem ihn freigibt.</p>
+    <span className="ui-heading-help"><h3>Gemeinsamer Pro-Tresor</h3><InfoPopover label="Gemeinsamer Pro-Tresor erklären" text={ERKLAERUNG}/></span>
     <p role="status" data-pro-tresor-status>{statusText}</p>
     {stand.status === "nicht_erreichbar" && stand.ort && <p>Der gemerkte Ort bleibt gespeichert. Es wird kein anderer Speicher verwendet, bis du selbst einen anderen Tresor wählst.</p>}
     {bestaetigung && <p role="status" data-pro-tresor-bestaetigung>{bestaetigung}</p>}
     {stand.code === "FA_TRESOR_ZUSTAND_BESCHAEDIGT" && <p>Die gemerkte Verbindung ist beschädigt. Bitte den vorhandenen Pro-Tresor neu wählen. Die Tresordateien wurden nicht verändert.</p>}
     {stand.ort && <p style={{ overflowWrap: "anywhere" }}>Gewählter Ort: {stand.ort}</p>}
     {stand.id && <p>Tresorkennung: {stand.id}</p>}
-    <p data-pro-ablage>{ziel ? `Neue Originale dieses Akten-Arbeitsstands liegen verschlüsselt im Pro-Tresor ${ziel}.` : "Neue Originale werden weiterhin im bisherigen Aktenordner abgelegt."}</p>
-    <p>Aktenregister und kleine Arbeitsstände bleiben im bisherigen Aktenordner. Vorhandene Dateien werden nicht automatisch verschoben. Vollsicherung und Export enthalten lesbare Originale im ausdrücklich gewählten Sicherungsordner.</p>
+    <p data-pro-ablage>{ziel ? `Neue Originale: verschlüsselt im Pro-Tresor ${ziel}.` : "Neue Originale: im bisherigen Aktenordner."}</p>
     {ziel && (!verfuegbar || stand.id !== ziel || stand.status !== "offen") && <p>Für neue Originale und vorhandene Pro-Dateien bitte den zugeordneten Pro-Tresor in der Android- oder Windows-App verbinden und entsperren. Ohne ihn wird kein Ersatzbestand angelegt.</p>}
     {verfuegbar && <div className="button-row">
-      <button className="button secondary" type="button" disabled={busy} onClick={() => void ausfuehren("verbinden")}>{stand.id ? "Anderen Pro-Tresor wählen …" : "Vorhandenen Pro-Tresor verbinden …"}</button>
+      <button className="button secondary" type="button" data-pro-tresor-verbinden disabled={busy} onClick={() => void ausfuehren("verbinden")}>{stand.id ? "Anderen Pro-Tresor wählen …" : "Vorhandenen Pro-Tresor verbinden …"}</button>
       {stand.status === "gesperrt" && <button className="button primary" type="button" disabled={busy} onClick={() => void ausfuehren("entsperren")}>Pro-Tresor entsperren …</button>}
       {stand.status === "offen" && <button className="button secondary" type="button" disabled={busy} onClick={() => void ausfuehren("sperren")}>Pro-Tresor sperren</button>}
       {empfehlen && <button className="button primary" type="button" disabled={busy} onClick={() => void zielAendern(stand.id!)}>Neue Originale in diesem Pro-Tresor ablegen</button>}

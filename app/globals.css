@@ -1849,3 +1849,59 @@ input.af-feld, textarea.af-feld { width: auto; min-height: 0; resize: none; }
 .site-header.demo-mode { border: 3px solid #b42318; }
 .demo-mode .main-navigation { border-top: 3px solid #b42318; }
 .site-brand strong .demo-header-badge { display: inline-flex; margin-left: .5rem; padding: 3px 6px; border-radius: 4px; background: #b42318; color: #fff; font-size: .7rem; font-weight: 850; letter-spacing: .08em; vertical-align: middle; }
+
+/* Erklärungen auf einen Blick: Ablaufbild, Pfadangabe, Ordnerbaum (2026-11-04) */
+.ablaufbild { list-style: none; margin: 8px 0 14px; padding: 0; display: flex; flex-wrap: nowrap; gap: 22px; overflow-x: auto; padding-bottom: 4px; }
+.ablaufbild > li { position: relative; flex: 1 1 0; min-width: 118px; display: flex; }
+.ablaufbild > li + li::before { content: ""; position: absolute; left: -22px; top: 50%; width: 22px; border-top: 2px solid #8fb3c4; }
+.ablaufbild > li + li::after { content: ""; position: absolute; left: -8px; top: calc(50% - 5px); border: 5px solid transparent; border-left-color: #8fb3c4; }
+.ablauf-knoten { flex: 1 1 auto; display: flex; align-items: flex-start; gap: 8px; text-align: left; padding: 9px 10px; border: 1px solid #c8d9e2; border-radius: 10px; background: #f7fafc; color: inherit; font: inherit; line-height: 1.25; min-height: 0; }
+.ablauf-knoten.art-hervor { border-color: #2a7f86; background: #edf7f7; }
+.ablauf-knoten.art-warnung { border-color: #d9a3a3; background: #fdf3f3; }
+.ablauf-link { cursor: pointer; }
+.ablauf-link:hover, .ablauf-link:focus-visible { border-color: #1f4e79; box-shadow: 0 0 0 2px rgba(31,78,121,.15); }
+.ablauf-nr { flex: 0 0 auto; width: 22px; height: 22px; border-radius: 50%; background: #1f4e79; color: #fff; font-size: .78rem; display: inline-flex; align-items: center; justify-content: center; }
+.ablauf-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ablauf-text strong { font-size: .92rem; }
+.ablauf-text small { font-size: .78rem; color: #4f6472; overflow-wrap: anywhere; }
+.ablauf-pfeil { margin-left: auto; color: #1f4e79; font-weight: 700; }
+.ablauf-ziel { outline: 3px solid #2a7f86 !important; outline-offset: 3px; transition: outline-color .3s; }
+@media (max-width: 760px) {
+  .ablaufbild { flex-direction: column; gap: 14px; overflow: visible; }
+  .ablaufbild > li { min-width: 0; }
+  .ablaufbild > li + li::before { left: 20px; top: -14px; width: 0; height: 14px; border-top: 0; border-left: 2px solid #8fb3c4; }
+  .ablaufbild > li + li::after { left: 16px; top: -6px; border: 5px solid transparent; border-top-color: #8fb3c4; border-left-color: transparent; }
+}
+.pfadangabe ol { list-style: none; margin: 4px 0 10px; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.pfadangabe li { display: inline-flex; align-items: center; gap: 4px; }
+.pfadangabe li + li::before { content: "›"; color: #6b7f8c; font-weight: 700; }
+.pfadangabe span, .pfadangabe button { display: inline-block; padding: 3px 9px; border-radius: 999px; border: 1px solid #c8d9e2; background: #f7fafc; font: inherit; font-size: .86rem; color: inherit; min-height: 0; }
+.pfadangabe button { border-color: #1f4e79; color: #1f4e79; cursor: pointer; font-weight: 600; }
+.ordnerbaum, .ordnerbaum ul { list-style: none; margin: 6px 0; padding: 0; }
+.ordnerbaum ul { margin-left: 14px; padding-left: 16px; border-left: 2px solid #8fb3c4; }
+.ordnerbaum ul > li { position: relative; margin: 6px 0; }
+.ordnerbaum ul > li::before { content: ""; position: absolute; left: -16px; top: 18px; width: 14px; border-top: 2px solid #8fb3c4; }
+.ordnerbaum ul > li:last-child::after { content: ""; position: absolute; left: -18px; top: 20px; bottom: -8px; width: 4px; background: var(--surface, #fff); }
+.ordnerbaum .ablauf-knoten { display: inline-flex; max-width: 100%; }
+.wo-liegt-was .merkpunkte { margin: 8px 0; padding-left: 18px; }
+.wo-liegt-was .merkpunkte li { margin: 3px 0; }
+.wo-liegt-was .pfad-titel { margin: 6px 0 0; }
+/* Geräteübergabe als Ablauf mit Feldern in den Kästchen */
+.uebergabe-ablauf { list-style: none; margin: 8px 0 12px; padding: 0 0 0 4px; position: relative; }
+.uebergabe-schritt { position: relative; padding-left: 0; margin: 0 0 14px; }
+.uebergabe-schritt + .uebergabe-schritt::before { content: ""; position: absolute; left: 21px; top: -14px; height: 14px; border-left: 2px solid #8fb3c4; }
+.uebergabe-schritt fieldset { margin: 0; padding: 9px 12px 11px; border: 1px solid #c8d9e2; border-radius: 10px; background: #f7fafc; min-width: 0; }
+.uebergabe-schritt.ort-dort fieldset { border-color: #2a7f86; background: #edf7f7; }
+.uebergabe-schritt legend { float: left; width: 100%; display: flex; align-items: center; gap: 8px; padding: 0; margin: 0 0 8px; }
+.uebergabe-schritt legend + * { clear: both; }
+.uebergabe-ort { margin-left: auto; font-size: .74rem; padding: 2px 8px; border-radius: 999px; background: #e3edf3; color: #36505f; white-space: nowrap; }
+.uebergabe-schritt.ort-dort .uebergabe-ort { background: #cfe9e8; color: #1d5c61; }
+.uebergabe-inhalt { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.uebergabe-feld { flex: 1 1 220px; margin: 0; }
+.uebergabe-feld select, .uebergabe-feld input { width: 100%; margin: 0; }
+.uebergabe-hinweis { font-size: .86rem; color: #4f6472; }
+.uebergabe-vorschau, .uebergabe-zeile { flex: 1 1 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.uebergabe-vorschau p, .uebergabe-zeile span { margin: 0; font-size: .86rem; overflow-wrap: anywhere; }
+.datei-knopf { position: relative; cursor: pointer; }
+.datei-knopf input[type=file] { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer; }
+fieldset:disabled .datei-knopf { opacity: .55; cursor: not-allowed; }
