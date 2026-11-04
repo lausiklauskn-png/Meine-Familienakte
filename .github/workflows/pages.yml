@@ -73,6 +73,16 @@ jobs:
       - uses: actions/configure-pages@v5
         with:
           enablement: true
+      - name: Gebautes Actions-Paket als Veröffentlichungsquelle festlegen
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          quelle=$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.build_type')
+          if [ "$quelle" != "workflow" ]; then
+            gh api --method PUT "repos/$GITHUB_REPOSITORY/pages" -f build_type=workflow > /dev/null
+          fi
+          test "$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.build_type')" = "workflow"
       - id: deployment
         uses: actions/deploy-pages@v4
       - name: Öffentlich ausgelieferte Fassung gegen den Bau prüfen
