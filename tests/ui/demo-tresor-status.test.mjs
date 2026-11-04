@@ -6,13 +6,14 @@ import path from 'node:path';
 process.env.DEBUG ||= 'pw:browser';
 const { startApp, launchBrowser, chromium, DESKTOP, HANDY, step, summary, footer, collectErrors } = await import('./_harness.mjs');
 import { capacitorStub } from './_capacitor-stub.mjs';
+import { demoBereit, demoUmschalten } from './_demo.mjs';
 const app=await startApp(),browser=await launchBrowser();mkdirSync('work',{recursive:true});
 const errors=[];
 const profile=mkdtempSync(path.join(tmpdir(),'familienakte-eigene-ordner-'));
 let context;
-async function ready(page){await page.waitForFunction(()=>{const b=document.querySelector('.demo-workspace button');return b&&!b.disabled;},null,{timeout:120000});}
+async function ready(page){await demoBereit(page);}
 async function ownHome(page){await page.locator('.main-navigation > button').first().click();await page.locator('.vault-action').waitFor();}
-async function switchDemo(page,active){await Promise.all([page.waitForURL(u=>active?u.searchParams.get('demo')==='1':!u.searchParams.has('demo')),page.getByRole('button',{name:active?'Demo öffnen':'Demo verlassen',exact:true}).click()]);await ready(page);}
+async function switchDemo(page,active){await demoUmschalten(page,active);}
 async function neutral(page){await page.locator('.vault-action.state-pending').waitFor();assert.match(await page.locator('.vault-action').innerText(),/Eigenen Datentresor wählen/);}
 try{
  // Reales dauerhaftes Profil: OPFS-Ordnerhandles im Register über Seitenwechsel erhalten.
@@ -20,14 +21,14 @@ try{
  const page=context.pages()[0];const pageErrors=collectErrors(page);
  await page.goto(app.base,{waitUntil:'networkidle'});await ready(page);
  await step('Eigener Start: automatischer Browserspeicher ist kein grün verbundener Tresor',async()=>{
-  await neutral(page);assert.equal(await page.locator('.demo-header-badge').count(),0);assert.equal(await page.locator('.site-header.demo-mode').count(),0);
+  await neutral(page);assert.equal(await page.locator('.demo-knopf-schalter').count(),0);assert.equal(await page.locator('.site-header.demo-mode').count(),0);
   await page.locator('.vault-action').click();await page.getByRole('heading',{name:'Lokaler Browserspeicher',exact:true}).waitFor();
   const card=page.locator('.security-compare-card');assert.match(await card.innerText(),/Noch kein eigener Datentresor gewählt/);assert.equal(await card.locator('.badge.success').count(),0);
  });
  await switchDemo(page,true);
  await step('Demo: roter Rahmen und Wort DEMO bleiben oben sichtbar',async()=>{
   await page.locator('.vault-action.state-success').waitFor();assert.match(await page.locator('.vault-action').innerText(),/Demo-Ablage bereit/);
-  const header=page.locator('.site-header.demo-mode');assert.equal(await header.locator('.demo-header-badge').innerText(),'DEMO');
+  const header=page.locator('.site-header.demo-mode');assert.equal((await header.locator('.demo-knopf-schalter').innerText()).trim(),'DEMO');
   const frame=await header.evaluate(e=>{const s=getComputedStyle(e);return {color:s.borderTopColor,width:s.borderTopWidth};});assert.equal(frame.color,'rgb(180, 35, 24)');assert.equal(frame.width,'3px');
   await page.screenshot({path:'work/demo-status-21-desktop.png'});
  });
@@ -52,9 +53,9 @@ try{
  });
  const mobile=await(await browser.newContext(HANDY)).newPage();const mobileErrors=collectErrors(mobile);await mobile.goto(app.base+'?demo=1',{waitUntil:'networkidle'});await ready(mobile);
  await step('Mobil: Demo-Rahmen und Kennzeichnung auch bei geschlossenem Menü sichtbar',async()=>{
-  assert.equal(await mobile.locator('.main-navigation').isVisible(),false);/* Am Handy kennzeichnet der rote Schalter oben die Demo (2026-11-04). */assert.equal(await mobile.locator('.demo-schalter.aktiv').isVisible(),true);assert.equal(await mobile.locator('.demo-schalter.aktiv').innerText(),'DEMO');
+  assert.equal(await mobile.locator('.main-navigation').isVisible(),false);/* Der rote Knopf hinter dem Namen kennzeichnet die Demo (2026-11-04), auch am Handy; der Name bleibt ganz lesbar. */assert.equal(await mobile.locator('.demo-knopf-schalter').isVisible(),true);assert.equal((await mobile.locator('.demo-knopf-schalter').innerText()).trim(),'DEMO');assert.ok(await mobile.locator('.site-brand strong').evaluate(e=>e.scrollWidth<=e.clientWidth+1),'FAMILIENAKTE nicht abgeschnitten');
   assert.ok(await mobile.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));await mobile.screenshot({path:'work/demo-status-21-mobil.png'});
-  await switchDemo(mobile,false);assert.equal(await mobile.locator('.demo-header-badge').count(),0);assert.equal(await mobile.locator('.demo-schalter.aktiv').count(),0);await neutral(mobile);
+  await switchDemo(mobile,false);assert.equal(await mobile.locator('.demo-knopf-schalter').count(),0);await neutral(mobile);
  });
  const native=await browser.newContext(DESKTOP);await native.addInitScript(capacitorStub+`
   window.__statusPro=JSON.parse(localStorage.getItem('erfundener-nativer-pro-zustand')||'{"status":"getrennt"}');

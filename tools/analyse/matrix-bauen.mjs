@@ -37,7 +37,7 @@ const ORDNER = /chooseVault|chooseOneDriveVault|chooseInboxFolder|chooseInventor
 // Messergebnisse (Regeltabelle, Reihenfolge wichtig): Muster auf Beschriftung/aria/Handler → [Desktop, Handy, Bemerkung, Probe]
 const MESSUNG = [
   [/Beispieldaten entfernen/, "❌ Maus · ✅ Tastatur", "✅", "Zierkreis des Startbanners (.family-hero:after) liegt über dem Knopf und fängt den Mausklick ab (Desktop 1440 px); Dialog und Entfernen selbst funktionieren", "knoepfe-start"],
-  [/Beispieldaten laden/, "✅", "✅", "öffnet getrennte Demo; eigene Akte bleibt nach Rückkehr erhalten", "knoepfe-start, knoepfe-leer"],
+  [/Demo ansehen/, "✅", "✅", "Hilfe: öffnet getrennte Demo; eigene Akte bleibt nach Rückkehr erhalten", "knoepfe-start, knoepfe-leer"],
   [/Aktuelle Seite drucken/, "✅ (window.print)", "✅", "ruft den Druckdialog des Browsers; auf claude.ai ohne Wirkung", "knoepfe-start"],
   [/Ausloggen/, "⚠️", "⚠️", "kein Konto: der Link lädt nur die Seite neu (location.reload); Daten bleiben", "knoepfe-start"],
   [/Hauptmenü öffnen/, "–", "✅", "nur in der Handy-Ansicht sichtbar", "rundgang"],

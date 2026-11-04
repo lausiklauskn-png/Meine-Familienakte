@@ -42,6 +42,7 @@ import { ActivityLines, ActivityProvider, useActivity, useActivityMessage } from
 import { NetzSchalter } from "./netz-schalter";
 import { AnmeldeKnopf } from "./anmelde-knopf";
 import { KurzhinweiseSchalter } from "./kurzhinweise-schalter";
+import { DemoKnopf, DemoStarten } from "./demo-knopf";
 import { KiAuftragDialog } from "./ki-auftrag-dialog";
 import { inventoryScanFeedback, inventoryAssignmentFeedback, inventoryArchiveFeedback, inventoryReleaseFeedback } from "../lib/ui-activity";
 import healthData from "./health-data.json";
@@ -1185,16 +1186,16 @@ function HealthPortalContent() {
   );
 
   const demoGesperrt = sampleBusy || vaultBusy || intakeBusy || inventoryBusy || !vaultHandle;
-  const demoUmschalten = () => demoActive() ? switchDemo(false) : void loadSampleData();
   const demoZuruecksetzen = async () => { if (await askConfirm("Den gesamten getrennten Demobestand einschließlich deiner dort importierten Testdateien löschen und neu anlegen? Deine echte Akte bleibt erhalten. Externe Sicherungen bleiben erhalten.")) { const url = new URL(location.href); url.searchParams.set("demo", "reset"); location.assign(url.href); } };
   const demoLoeschen = async () => { if (await askConfirm("Den gesamten getrennten Demobestand einschließlich Testimporten löschen und zur eigenen Akte zurückkehren? Externe Sicherungen bleiben erhalten.")) { const url = new URL(location.href); url.searchParams.set("demo", "delete"); location.assign(url.href); } };
   return (
     <div className="app-shell" onInputCapture={() => window.dispatchEvent(new Event("family-dictation-typed"))} onClick={() => megaOpen && setMegaOpen(null)}>
-      <header className={`site-header${demoActive() ? " demo-mode" : ""}`} onClick={(event) => event.stopPropagation()}>
+      <header className={`site-header${demoActive() ? " demo-mode" : ""}`} data-demo-bereit={demoGesperrt ? "nein" : "ja"} data-demo-beispiele={demoActive() && samplePresent ? "ja" : undefined} onClick={(event) => event.stopPropagation()}>
         <div className="masthead">
           <button className="mobile-menu-button" onClick={() => setMobileOpen((value) => !value)} aria-label="Hauptmenü öffnen"><Menu size={22}/></button>
-          <button className="site-brand" onClick={() => go("overview")}><span className="brand-symbol brand-symbol-icon" data-variante={APP_VARIANTE.toLowerCase()}><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 19.2727C22 20.779 20.779 22 19.2727 22H14.7273C13.221 22 12 20.779 12 19.2727V12H19.2727C20.779 12 22 13.221 22 14.7273V19.2727Z" fill="#68C4FF"/><path d="M20 2C21.1046 2 22 2.89543 22 4V7C22 8.10457 21.1046 9 20 9H17C15.8954 9 15 8.10457 15 7V4C15 2.89543 15.8954 2 17 2H20Z" fill="#0C79D8"/><path d="M7 15C8.10457 15 9 15.8954 9 17V20C9 21.1046 8.10457 22 7 22H4C2.89543 22 2 21.1046 2 20V17C2 15.8954 2.89543 15 4 15H7Z" fill="#0C79D8"/><path d="M12 12H4.72727C3.22104 12 2 10.779 2 9.27273V4.72727C2 3.22104 3.22104 2 4.72727 2H9.27273C10.779 2 12 3.22104 12 4.72727V12Z" fill="#2E9EFF"/></svg></span><span><strong>FAMILIENAKTE{demoActive() && <span className="demo-header-badge">DEMO</span>}</strong><span className="site-brand-zeile"><span className="site-brand-variante" data-variante={APP_VARIANTE.toLowerCase()}>{APP_VARIANTE}</span><small className="site-brand-version"><span className="version-wort">Version </span>{APP_FASSUNG}</small></span></span></button>
-          <div className="header-actions"><button type="button" className={`icon-button demo-schalter${demoActive() ? " aktiv" : ""}`} aria-pressed={demoActive()} aria-label={demoActive() ? "Demo verlassen" : "Demo öffnen"} title={demoActive() ? "Demo ist an – tippen zum Verlassen" : "Demo mit erfundener Beispielfamilie öffnen"} disabled={demoGesperrt} onClick={demoUmschalten}>{demoActive() ? "DEMO" : "Demo"}</button><NetzSchalter/><button className="icon-button drucken-knopf" onClick={seiteDrucken} title="Aktuelle Seite drucken"><Printer size={18}/></button><button type="button" className="icon-button aktualisieren-knopf" onClick={() => (window as unknown as { FamilienakteApp?: { aktualisieren?: () => void } }).FamilienakteApp?.aktualisieren?.()} title="Auf eine neue Fassung prüfen" aria-label="Auf eine neue Fassung prüfen"><RefreshCw size={18}/></button><AnmeldeKnopf art="kopf"/></div>
+          <button className="site-brand" onClick={() => go("overview")}><span className="brand-symbol brand-symbol-icon" data-variante={APP_VARIANTE.toLowerCase()}><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 19.2727C22 20.779 20.779 22 19.2727 22H14.7273C13.221 22 12 20.779 12 19.2727V12H19.2727C20.779 12 22 13.221 22 14.7273V19.2727Z" fill="#68C4FF"/><path d="M20 2C21.1046 2 22 2.89543 22 4V7C22 8.10457 21.1046 9 20 9H17C15.8954 9 15 8.10457 15 7V4C15 2.89543 15.8954 2 17 2H20Z" fill="#0C79D8"/><path d="M7 15C8.10457 15 9 15.8954 9 17V20C9 21.1046 8.10457 22 7 22H4C2.89543 22 2 21.1046 2 20V17C2 15.8954 2.89543 15 4 15H7Z" fill="#0C79D8"/><path d="M12 12H4.72727C3.22104 12 2 10.779 2 9.27273V4.72727C2 3.22104 3.22104 2 4.72727 2H9.27273C10.779 2 12 3.22104 12 4.72727V12Z" fill="#2E9EFF"/></svg></span><span><strong>FAMILIENAKTE</strong><span className="site-brand-zeile"><span className="site-brand-variante" data-variante={APP_VARIANTE.toLowerCase()}>{APP_VARIANTE}</span><small className="site-brand-version"><span className="version-wort">Version </span>{APP_FASSUNG}</small></span></span></button>
+          {demoActive() && <DemoKnopf gesperrt={demoGesperrt} verlassen={() => switchDemo(false)} zuruecksetzen={() => void demoZuruecksetzen()} loeschen={() => void demoLoeschen()}/>}
+          <div className="header-actions"><NetzSchalter/><button className="icon-button drucken-knopf" onClick={seiteDrucken} title="Aktuelle Seite drucken"><Printer size={18}/></button><button type="button" className="icon-button aktualisieren-knopf" onClick={() => (window as unknown as { FamilienakteApp?: { aktualisieren?: () => void } }).FamilienakteApp?.aktualisieren?.()} title="Auf eine neue Fassung prüfen" aria-label="Auf eine neue Fassung prüfen"><RefreshCw size={18}/></button><AnmeldeKnopf art="kopf"/></div>
         </div>
         <nav className={`main-navigation ${mobileOpen ? "mobile-open" : ""}`} aria-label="Hauptnavigation">
           <button className={active === "overview" ? "active" : ""} onClick={() => go("overview")}><Home size={17}/> Startseite</button>
@@ -1207,8 +1208,6 @@ function HealthPortalContent() {
           </div>)}
           {mobileOpen && <div className="mobile-menu-extra" aria-label="Weitere Aktionen">
             {mobileOpen && typeof document !== "undefined" && document.querySelector<HTMLElement>(".header-actions .familienakte-install:not([hidden])") && <button type="button" onClick={() => { setMobileOpen(false); document.querySelector<HTMLElement>(".header-actions .familienakte-install")?.click(); }}><Download size={17}/> App installieren</button>}
-            {demoActive() && <button type="button" disabled={demoGesperrt} onClick={() => { setMobileOpen(false); void demoZuruecksetzen(); }}><RefreshCw size={17}/> Demo zurücksetzen</button>}
-            {demoActive() && <button type="button" disabled={demoGesperrt} onClick={() => { setMobileOpen(false); void demoLoeschen(); }}><Trash2 size={17}/> Demo löschen und verlassen</button>}
             <button type="button" onClick={() => { setMobileOpen(false); seiteDrucken(); }}><Printer size={17}/> Seite drucken</button>
             <AnmeldeKnopf art="menue"/>
           </div>}
@@ -1220,12 +1219,6 @@ function HealthPortalContent() {
           <label className="global-search"><Search size={19}/><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Schreiben, Personen, Termine, Unterlagen …" aria-label="Gesamte Akte in natürlichen Worten durchsuchen"/><DictationButton value={query} onChange={setQuery} label="Suche" append={false}/>{query && <button type="button" className="search-clear" onClick={() => setQuery("")} aria-label="Suche löschen"><X size={16}/></button>}</label>
         </section>
         <ActivityLines/>
-        <section className={`info-notice demo-workspace${demoActive() && samplePresent ? " sample-data-notice" : ""}`} aria-label="Arbeitsbereich">
-          <div><strong>{demoActive() ? "Demo · Alle Daten sind Beispieldaten" : "Deine eigene Familienakte"}</strong><div>{demoActive() ? "Vorführung mit erfundener Familie Lindqvist-Arenberg. Importe hier sind Testdateien. Deine echte Akte bleibt getrennt." : "Eigene Unterlagen bleiben hier. Die Vorführung öffnet einen getrennten lokalen Testbestand."}</div></div>
-          <button type="button" className="button secondary" disabled={sampleBusy || vaultBusy || intakeBusy || inventoryBusy || !vaultHandle} onClick={() => demoActive() ? switchDemo(false) : void loadSampleData()}>{demoActive() ? "Demo verlassen" : "Demo öffnen"}</button>
-          {demoActive() && <button type="button" className="button secondary" disabled={sampleBusy || vaultBusy || intakeBusy || inventoryBusy || !vaultHandle} onClick={() => void demoZuruecksetzen()}>Demo zurücksetzen</button>}
-          {demoActive() && <button type="button" className="button secondary" disabled={sampleBusy || vaultBusy || intakeBusy || inventoryBusy || !vaultHandle} onClick={() => void demoLoeschen()}>Demo löschen und verlassen</button>}
-        </section>
         {sampleBusy && !samplePresent && <section className="info-notice sample-data-notice" aria-live="polite"><span>Info</span><div><strong>Beispieldaten werden vorbereitet …</strong><div>Die Demo legt eine frei erfundene Beispielfamilie im getrennten Demobestand an. Das dauert nur wenige Sekunden.</div></div></section>}
         {samplePresent && !demoActive() && <section className="info-notice sample-data-notice" aria-label="Hinweis zu Beispieldaten"><span>Info</span><div><strong>{demoActive() ? SAMPLE_NOTICE : "Alte Beispieldaten im eigenen Bestand"}</strong><div>Die {SAMPLE_FAMILY_NAME}, alle Orte, Firmen, Fahrzeuge und Nummern sind frei erfunden. Wenn du deine eigenen Unterlagen einpflegen möchtest, entferne die Beispieldaten mit einem Klick – eigene Einträge bleiben erhalten.</div></div><button type="button" className="button secondary" disabled={sampleBusy} onClick={() => void removeSampleData()}><Trash2 size={16}/> Beispieldaten entfernen</button></section>}
         <div className="breadcrumb">
@@ -1356,7 +1349,7 @@ function HealthPortalContent() {
         {!query && active === "vehicles" && <PreparedArea kind="vehicles" onUpload={openLocalUpload} onGo={go} onDocuments={openDocumentLibrary}/>}
         {!query && active === "purchases" && <PreparedArea kind="purchases" onUpload={openLocalUpload} onGo={go} onDocuments={openDocumentLibrary}/>}
         {!query && active === "directory" && <Directory onGo={go}/>} 
-        {!query && active === "help" && <HelpCenter onGo={go} onSearch={(value) => { setQuery(value); window.scrollTo({ top: 0, behavior: "smooth" }); }}/>} 
+        {!query && active === "help" && <HelpCenter onGo={go} onSearch={(value) => { setQuery(value); window.scrollTo({ top: 0, behavior: "smooth" }); }} demo={<DemoStarten aktiv={demoActive()} gesperrt={demoGesperrt} starten={() => void loadSampleData()}/>}/>} 
         {!query && active === "systemcheck" && <SystemCheck
           documents={documents}
           localDocuments={localDocuments}
@@ -1375,7 +1368,7 @@ function HealthPortalContent() {
             <section><h2>Unterstützung</h2><ul><li><button onClick={() => go("help")}>Hilfe</button></li><li><button onClick={() => openChatGPTEdit()}>Mit KI arbeiten</button></li><li><button onClick={() => go("systemcheck")}>Systemprüfung</button></li><li><button onClick={openFooterSystemReports}>Prüfberichte</button></li></ul></section>
             <section><h2>Sicherheit und Verwaltung</h2><ul><li><button onClick={() => go("security")}>Sicherheitscenter</button></li><li><button onClick={() => { setExportOpen(true); reportActivity({ kind: "info", text: "Exportvorbereitung geöffnet. Umfang und Zielordner müssen vor dem Start ausdrücklich bestätigt werden; noch keine Datei geschrieben." }); }}>Familienakte exportieren</button></li><li><button onClick={() => go("versions")}>Versionshistorie</button></li></ul></section>
           </nav>
-          <div className="footer-meta"><span>Me, Myself and I – Meine Familienakte{samplePresent ? ` · ${SAMPLE_NOTICE}` : ""}{!samplePresent && vaultHandle && <> · <button type="button" className="footer-sample-link" disabled={sampleBusy} onClick={() => void loadSampleData()}>Beispieldaten laden</button></>}</span><button onClick={() => go("security")}><LockKeyhole size={14}/> Datenschutz & Sicherheit</button></div>
+          <div className="footer-meta"><span>Me, Myself and I – Meine Familienakte{samplePresent ? ` · ${SAMPLE_NOTICE}` : ""}</span><button onClick={() => go("security")}><LockKeyhole size={14}/> Datenschutz & Sicherheit</button></div>
         </div>
       </footer>
       {scanOpen && (<Suspense fallback={null}>
@@ -2307,7 +2300,7 @@ function seiteDrucken() {
   window.print();
 }
 
-function HelpCenter({ onGo, onSearch }: { onGo: (id: SectionId) => void; onSearch: (value: string) => void }) {
+function HelpCenter({ onGo, onSearch, demo }: { onGo: (id: SectionId) => void; onSearch: (value: string) => void; demo?: React.ReactNode }) {
   const examples = ["Schreiben der Krankenkasse zum Zuschuss", "Rechnung der Waschmaschine", "Mietvertrag Pustelblumenweg", "Impfpass und Vorsorge"];
   return <><PageTitle icon={<LifeBuoy/>} title="Hilfe" text="Kurze und verständliche Erklärungen zur Familienakte – ohne technische Fachsprache."/>
     <section className="help-start card"><div><span className="badge success">Erste Schritte</span><span className="ui-heading-help"><h2>Was möchtest du tun?</h2><InfoPopover label="Was möchtest du tun? erklären" text={UI_HELP["Was möchtest du tun?"]}/></span></div><div className="help-actions"><button onClick={() => onGo("documents")}><Archive/><span><strong>Dokumente finden</strong><small>Bibliothek durchsuchen und filtern</small></span></button><button onClick={() => onGo("inventory")}><FolderSearch/><span><strong>Bestand prüfen</strong><small>Testordner analysieren und bewerten</small></span></button><button onClick={() => onGo("inbox")}><Upload/><span><strong>Dokument ablegen</strong><small>lokal auf PC oder USB-Stick</small></span></button><button onClick={() => onGo("memory")}><BookHeart/><span><strong>Erinnerung festhalten</strong><small>diktieren, prüfen und lokal speichern</small></span></button><button onClick={() => onGo("security")}><HardDrive/><span><strong>Datentresor öffnen</strong><small>verbinden, prüfen oder sperren</small></span></button><button onClick={() => onGo("systemcheck")}><ShieldCheck/><span><strong>Systemprüfung</strong><small>prüfen, Bericht öffnen oder sicher reparieren</small></span></button><button onClick={() => onGo("changelog")}><History/><span><strong>Was gibt’s Neues?</strong><small>Neue Inhalte und wichtige Veränderungen</small></span></button></div></section>
@@ -2359,6 +2352,7 @@ function HelpCenter({ onGo, onSearch }: { onGo: (id: SectionId) => void; onSearc
       <details><summary><Mic/> Wie benutze ich die Diktierfunktion?</summary><div><p>Tippe neben einem Eingabefeld auf das Mikrofon und erlaube beim ersten Mal den Mikrofonzugriff. Sprich anschließend auf Deutsch. Nach einer kurzen Pause wird der erkannte Text in das gewählte Feld übernommen. Ein leuchtendes Mikrofon zeigt an, dass die Spracheingabe läuft.</p><p>Die Familienakte speichert keine Tonaufnahme. Je nach Browser kann die Spracherkennung jedoch über den Dienst des Browseranbieters verarbeitet werden. Besonders vertrauliche Angaben kannst du deshalb weiterhin über die Tastatur eingeben.</p></div></details>
       <details><summary><HelpCircle/> Ich finde ein Dokument nicht</summary><div><ol><li>Gib oben einen Namen, ein Thema, einen ICD-Code oder ein Jahr ein.</li><li>Versuche einen allgemeineren Begriff, zum Beispiel „Rente“ statt eines vollständigen Dateinamens.</li><li>Öffne den Dokumenteneingang und prüfe lokale Unterlagen und Online-Altbestand getrennt.</li></ol></div></details>
     </section>
+    {demo}
   </>;
 }
 

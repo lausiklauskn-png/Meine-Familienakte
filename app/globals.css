@@ -1672,7 +1672,6 @@ button.object-card:hover { transform: translateY(-2px); border-color: #8fb2c9; b
 .sample-data-notice { grid-template-columns: auto minmax(0,1fr) auto; align-items: center; margin: 6px 0 4px; }
 .sample-data-notice > div > div { color: var(--navy); font-size: .86rem; }
 .sample-data-notice .button { white-space: nowrap; }
-.footer-meta .footer-sample-link { display: inline; padding: 0; text-decoration: underline; font-weight: 700; }
 @media (max-width: 720px) {
   .sample-data-notice { grid-template-columns: auto minmax(0,1fr); }
   .sample-data-notice .button { grid-column: 1 / -1; justify-self: start; }
@@ -1839,16 +1838,10 @@ input.af-feld, textarea.af-feld { width: auto; min-height: 0; resize: none; }
 .private-meaning select, .private-meaning input { display: block; width: 100%; max-width: 36rem; box-sizing: border-box; margin-top: .35rem; padding: .6rem; }
 .private-meaning .search-results { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
 
-/* Der Arbeitsbereich bleibt auch auf dem Handy vollständig bedienbar. */
-.demo-workspace { display: flex; flex-wrap: wrap; align-items: center; }
-.demo-workspace > div { flex: 1 1 22rem; min-width: 0; }
-.demo-workspace > div > div { font-size: .86rem; }
-.demo-workspace .button { max-width: 100%; white-space: normal; }
 
 /* Der Demo-Rahmen bleibt auch bei geschlossenem Mobilmenü sichtbar. */
 .site-header.demo-mode { border: 3px solid #b42318; }
 .demo-mode .main-navigation { border-top: 3px solid #b42318; }
-.site-brand strong .demo-header-badge { display: inline-flex; margin-left: .5rem; padding: 3px 6px; border-radius: 4px; background: #b42318; color: #fff; font-size: .7rem; font-weight: 850; letter-spacing: .08em; vertical-align: middle; }
 
 /* Erklärungen auf einen Blick: Ablaufbild, Pfadangabe, Ordnerbaum (2026-11-04) */
 .ablaufbild { list-style: none; margin: 8px 0 14px; padding: 0; display: flex; flex-wrap: nowrap; gap: 22px; overflow-x: auto; padding-bottom: 4px; }
@@ -1917,7 +1910,6 @@ fieldset:disabled .datei-knopf { opacity: .55; cursor: not-allowed; }
   .site-brand > span:last-child { display: flex; flex-direction: column; justify-content: center; min-height: 34px; }
   .site-brand strong { display: flex; flex-wrap: wrap; align-items: center; column-gap: 5px; row-gap: 0; font-size: .86rem; line-height: 1.1; white-space: nowrap; }
   .site-brand strong .site-brand-variante { order: -1; flex-basis: 100%; font-size: .66rem; line-height: 1.05; }
-  .site-brand strong .demo-header-badge { margin-left: 0; padding: 1px 5px; font-size: .62rem; }
   .site-brand .site-brand-version { margin-top: 1px; font-size: .68rem; line-height: 1.1; white-space: nowrap; }
 }
 /* Kopfleiste am Handy, Fassung 2: Name und Variante in einer Zeile, darunter nur die Nummer; Drucken und Neustart im Menü. */
@@ -1939,13 +1931,21 @@ fieldset:disabled .datei-knopf { opacity: .55; cursor: not-allowed; }
 .site-brand .site-brand-zeile .site-brand-version { margin-top: 0; }
 .site-brand .site-brand-zeile .site-brand-variante { font-size: .72rem; }
 @media (max-width: 620px) { .site-brand .site-brand-zeile { gap: 5px; } .site-brand .site-brand-zeile .site-brand-variante { font-size: .68rem; } }
-/* Demo-Schalter oben (nur Handy); der Demo-Kasten bleibt am großen Bildschirm */
-.header-actions .demo-schalter { display: none; }
+/* Demo nur als Knopf hinter dem Namen, nur solange sie läuft (2026-11-04); gestartet wird sie in der Hilfe. */
+.demo-mode .site-brand { min-width: 0; }
+.demo-knopf { position: relative; flex: 0 0 auto; display: inline-flex; }
+.demo-knopf-schalter { display: inline-flex; align-items: center; gap: 3px; height: 34px; padding: 0 9px; border: 1px solid #b42318; border-radius: 8px; background: #b42318; color: #fff; font: inherit; font-size: .74rem; font-weight: 850; letter-spacing: .07em; cursor: pointer; }
+.demo-knopf-schalter:focus-visible { outline: 3px solid #f4b4ad; outline-offset: 2px; }
+.demo-knopf-menue { position: absolute; top: calc(100% + 6px); left: 0; z-index: 80; min-width: 236px; display: grid; gap: 2px; padding: 6px; border: 1px solid var(--line); border-radius: 10px; background: #fff; box-shadow: 0 10px 26px rgba(9,38,63,.2); }
+.demo-knopf-menue button { display: flex; align-items: center; gap: 8px; width: 100%; white-space: nowrap; padding: 9px 10px; border: 0; border-radius: 7px; background: transparent; color: var(--ink); font: inherit; font-size: .9rem; text-align: left; cursor: pointer; }
+.demo-knopf-menue button:hover, .demo-knopf-menue button:focus-visible { background: #eef3f7; }
+.demo-knopf-menue button.gefahr { color: #b42318; }
+.demo-knopf-menue button:disabled { opacity: .55; cursor: not-allowed; }
+.demo-starten p { max-width: 65ch; }
 @media (max-width: 620px) {
-  .header-actions .demo-schalter { display: inline-flex; align-items: center; justify-content: center; width: auto; min-width: 44px; padding: 0 7px; font-size: .7rem; font-weight: 850; letter-spacing: .06em; color: var(--navy); }
-  .header-actions .demo-schalter.aktiv { background: #b42318; border-color: #b42318; color: #fff; }
-  .site-brand strong .demo-header-badge { display: none; }
-  .app-shell .demo-workspace { display: none; }
+  .demo-knopf { order: 1; }
+  .demo-knopf-schalter { height: 30px; padding: 0 6px; font-size: .68rem; }
+  .demo-knopf-menue { left: auto; right: -70px; }
 }
 .ablauf-knoten.art-gut { border-color: #2f8a4f; background: #e9f6ee; }
 .ablauf-knoten.art-warnung strong, .ablauf-knoten.art-gut strong { font-weight: 800; }
