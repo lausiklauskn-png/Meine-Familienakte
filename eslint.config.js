@@ -20,7 +20,7 @@ export default tseslint.config(
       "no-control-regex": "off",
       "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_", varsIgnorePattern: "^_", destructuredArrayIgnorePattern: "^_", ignoreRestSiblings: true }],
       // Die eigenen Diktatfelder sind Formularelemente; das Muster <label><span>…</span><VoiceInput/></label> ist korrekt.
-      "jsx-a11y/label-has-associated-control": ["error", { assert: "either", controlComponents: ["VoiceInput", "VoiceTextarea", "DictationButton"], depth: 3 }],
+      "jsx-a11y/label-has-associated-control": ["error", { assert: "either", controlComponents: ["VoiceInput", "VoiceTextarea", "DictationButton", "DatumFeld"], depth: 3 }],
       // Berühren das Aussehen bzw. die Bedienung der Oberfläche des Freundes (Abschnitt F): nur Warnung, Änderung erst nach Klaus’ Ja.
       "jsx-a11y/click-events-have-key-events": "warn",
       "jsx-a11y/no-static-element-interactions": "warn",

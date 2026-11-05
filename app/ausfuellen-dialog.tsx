@@ -6,6 +6,7 @@
 import { useEffect, useMemo, useRef, useState, type PointerEvent as RPointerEvent } from "react";
 import { Check, Copy, Download, ExternalLink, LoaderCircle, PenLine, ScanLine, Share2, Sparkles, Trash2, Wand2, X } from "lucide-react";
 import { loadPdfJs } from "./file-viewer";
+import { oeffneDatumsfenster } from "./datum-feld";
 import type { PdfQuelle } from "../lib/pdf-bearbeitung";
 import type { LocalDocument, AusfuellAblage } from "./local-vault";
 import { brauchtUnicode, kernErkennung, kernExport, kernReinigung, kernSchloss, ocrZeilen, scannen, unicodeSchrift } from "./wfpdf-kern";
@@ -423,7 +424,7 @@ export function AusfuellenDialog({ dokument, geschuetzt = false, leseDatei, pers
               const props = { className: klasse, style: pos, "aria-label": f.label, title: f.label, value: String(f.value || ""), "data-af-feld": f.id, "data-kein-mikro": true,
                 onFocus: () => setAktiv(f.id), onBlur: () => window.setTimeout(() => setAktiv((a) => a === f.id ? null : a), 180),
                 onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => aendern(f.id, { value: e.target.value, vorschlag: false }) };
-              return f.mehrzeilig ? <textarea key={f.id} {...props}/> : <input key={f.id} type={f.type === "datum" ? "date" : f.type === "email" ? "email" : f.type === "tel" ? "tel" : "text"} autoComplete="off" {...props}/>;
+              return f.mehrzeilig ? <textarea key={f.id} {...props}/> : <input key={f.id} type={f.type === "datum" ? "date" : f.type === "email" ? "email" : f.type === "tel" ? "tel" : "text"} autoComplete="off" {...props} {...(f.type === "datum" ? { "data-datumsfenster": "", onClick: (e: React.MouseEvent<HTMLInputElement>) => { oeffneDatumsfenster(e.currentTarget); } } : {})}/>;
             })}
             {aktivFeld && aktivFeld.page === i && vorschlagListe.length > 0 && <div className="af-vorschlaege" style={{ left: `${aktivFeld.x}%`, top: `${aktivFeld.y + aktivFeld.h}%`, minWidth: `${aktivFeld.w}%` }} role="listbox" aria-label="Gemerkte Eingaben" data-af-vorschlaege>
               {vorschlagListe.map((v) => <button key={v} type="button" role="option" aria-selected="false" onMouseDown={(e) => e.preventDefault()} onClick={() => { aendern(aktivFeld.id, { value: v, vorschlag: false }); setAktiv(null); }}>{v}</button>)}
