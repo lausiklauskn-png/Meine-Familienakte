@@ -1,6 +1,6 @@
 [package]
 name = "familienakte"
-version = "2.28.26"
+version = "2.28.27"
 description = "Familienakte Pro für Windows"
 edition = "2021"
 publish = false

@@ -3667,6 +3667,44 @@ export async function updateLocalMemoryRecord(handle: FileSystemDirectoryHandle,
   return structuredClone(event);
 }
 
+/** Termin einer Aufgabe/Frist ändern (Klaus 2026-11-05: Zeitpunkt jederzeit änderbar); der Kalender-Abgleich zieht nach. */
+export async function updateLocalScheduleTermin(handle: FileSystemDirectoryHandle, id: string, changes: { title?: string; dueAt?: string; dueTime?: string | null; erinnerungen?: ErinnerungsWahl[]; kalenderWahl?: KalenderFelder["kalenderWahl"] | null; kalenderEintragen?: boolean }) {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  const index = await readIndex(handle);
+  const record = index.records.find((item) => item.id === id && (item.recordType === "deadline" || item.recordType === "task"));
+  if (!record || (record.recordType !== "deadline" && record.recordType !== "task")) throw new Error("Die Aufgabe oder Frist wurde nicht gefunden.");
+  const data = record.data as { title: string; dueAt?: string } & KalenderFelder;
+  if (changes.title !== undefined) { if (!changes.title.trim()) throw new Error("Der Titel darf nicht leer sein."); data.title = changes.title.trim(); }
+  if (changes.dueAt !== undefined) { if (!/^\d{4}-\d{2}-\d{2}$/.test(changes.dueAt)) throw new Error("Bitte einen gültigen Tag wählen."); data.dueAt = changes.dueAt; }
+  if (changes.dueTime !== undefined) { const zeit = gueltigeUhrzeit(changes.dueTime); if (zeit) data.dueTime = zeit; else delete data.dueTime; }
+  if (changes.erinnerungen !== undefined) data.erinnerungen = erinnerungenOrdnen(changes.erinnerungen);
+  if (typeof changes.kalenderEintragen === "boolean") data.kalenderEintragen = changes.kalenderEintragen;
+  if (changes.kalenderWahl !== undefined) { const w = kalenderEingabe({ kalenderWahl: changes.kalenderWahl }).kalenderWahl; if (w) data.kalenderWahl = w; else delete data.kalenderWahl; }
+  const now = new Date().toISOString();
+  record.updatedAt = now;
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Termin geändert", recordId: record.id, details: `${record.id}: Termin nach ausdrücklicher Benutzeraktion geändert.` });
+  await writeIndex(handle, index);
+  return structuredClone(record);
+}
+
+/** Erinnerung (Aufgabe mit Termin) nachträglich an einen gespeicherten Memory-Eintrag hängen. */
+export async function addLocalMemoryErinnerung(handle: FileSystemDirectoryHandle, eventId: string, e: NonNullable<CreateLocalMemoryInput["erinnerung"]>) {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  if (!e.titel.trim() || !/^\d{4}-\d{2}-\d{2}$/.test(e.dueAt)) throw new Error("Bitte Titel und Tag der Erinnerung angeben.");
+  const index = await readIndex(handle);
+  const event = index.records.find((record) => record.id === eventId && isMemoryRecord(record));
+  if (!event) throw new Error("Der Memory-Eintrag wurde nicht gefunden.");
+  const now = new Date().toISOString();
+  const allocation = nextFamilyRecordId("task", index.sequences);
+  index.sequences = allocation.sequences;
+  const task = createFamilyRecord({ id: allocation.id, recordType: "task", status: "offen", source: event.id, notes: "Erinnerung aus einem Memory-Ereignis, vom Benutzer bestätigt.", data: { title: e.titel.trim(), dueAt: e.dueAt, ...kalenderEingabe({ dueTime: e.dueTime, erinnerungen: e.erinnerungen as ErinnerungsWahl[], kalenderEintragen: e.kalenderEintragen, kalenderWahl: e.kalenderWahl }) }, now }) as FamilyRecordUnion;
+  index.records.push(task);
+  index.relations.push({ id: crypto.randomUUID(), fromType: "task", fromId: task.id, toType: "event", toId: event.id, relationType: "entstand aus", createdAt: now, source: "Bestätigter Memory-Eintrag", notes: null });
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Erinnerung angelegt", recordId: task.id, details: `${task.id} zu ${event.id} nach ausdrücklicher Benutzeraktion angelegt.` });
+  await writeIndex(handle, index);
+  return structuredClone(task);
+}
+
 export async function getLocalMemoryDeleteImpact(handle: FileSystemDirectoryHandle, eventId: string) {
   const index = await readIndex(handle);
   const event = index.records.find((record) => record.id === eventId && isMemoryRecord(record));

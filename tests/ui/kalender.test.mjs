@@ -9,7 +9,7 @@ const anmeldung = `
   window.FamilienakteKalenderKonten = { googleWeb: "probe-web.apps.googleusercontent.com", microsoft: "" }; // Fall „noch nicht eingerichtet“ bleibt geprüft
   window.__anmeldungen = [];
   window.open = (url) => {
-    const u = new URL(url); window.__anmeldungen.push(u.origin + u.pathname + "|" + u.searchParams.get("scope") + "|" + u.searchParams.get("redirect_uri"));
+    const u = new URL(url); (window.__anmeldeUrls = window.__anmeldeUrls || []).push(url); window.__anmeldungen.push(u.origin + u.pathname + "|" + u.searchParams.get("scope") + "|" + u.searchParams.get("redirect_uri"));
     const state = u.searchParams.get("state");
     setTimeout(() => { const k = new BroadcastChannel("familienakte-kalender-anmeldung"); k.postMessage({ state, accessToken: "probe-zugang", expiresIn: "3600", code: null, error: null }); k.close(); }, 50);
     return { close() {} };
@@ -191,6 +191,22 @@ try {
     const nachher = await page.locator("[data-kalender-formteil] [data-kalender-auswahl] select").inputValue().catch(() => "-");
     const ok = vorher === "primary" && optionen.join() === "Familie (Einstellung),Arbeit" && decodeURIComponent(n?.kalender || "") === "arbeit@group" && r?.data.kalenderWahl?.kalenderId === "arbeit@group" && nachher === "primary";
     return ok ? true : (console.log("   ↳", vorher, optionen, n?.kalender, JSON.stringify(r?.data.kalenderWahl), nachher), false);
+  });
+  await step("Nach Neuladen ist die Anmeldung weg: Hinweis „Neu anmelden“ oben, ein Tipp (ohne Kontoauswahl) trägt den wartenden Termin ein", async () => {
+    await page.reload({ waitUntil: "networkidle" }); await ready(page);
+    await footer(page, "Fristen und Aufgaben");
+    const vorher = google.neu.length;
+    await neueFrist(page, "Nach dem Neuladen (erfunden)", "2026-11-28");
+    const hinweis = page.locator("[data-kalender-anmelde-hinweis]");
+    await hinweis.waitFor({ timeout: 5000 });
+    const text = await hinweis.innerText();
+    await hinweis.locator("[data-kalender-neu-anmelden]").click();
+    for (let i = 0; i < 40 && !google.neu.some((x) => x.body.summary === "Nach dem Neuladen (erfunden)"); i++) await page.waitForTimeout(150);
+    const url = (await page.evaluate(() => window.__anmeldeUrls || [])).pop() || "";
+    const weg = await hinweis.count() === 0;
+    await aufklappen(karte); // nach dem Neuladen ist die Karte wieder eingeklappt
+    const ok = /wartet auf den Google Kalender/.test(text) && google.neu.length > vorher && !/prompt=select_account/.test(url) && weg;
+    return ok ? true : (console.log("   ↳", text, google.neu.length, vorher, url.slice(0, 120), weg), false);
   });
   await step("Trennen ohne Mitlöschen: Einträge bleiben, Anmeldung vergessen, Karte wieder offen", async () => {
     const vorher = google.geloescht.length;

@@ -199,18 +199,15 @@ try {
       await page.waitForTimeout(300);
     }
   };
-  await step("Tagebuch: „Memory bearbeiten“ fragt Titel und Text ab (Eingabe-Dialoge) und bestätigt", async () => {
+  await step("Tagebuch: „Memory bearbeiten“ öffnet das Bearbeiten-Fenster (Titel, Text, Bereich, Aufnahmezeit, Erinnerung) und speichert", async () => {
     await eintragWaehlen();
     const b = page.locator("button", { hasText: "Memory bearbeiten" }).first();
     if (!(await b.count())) return "kein gespeicherter Eintrag ausgewählt";
-    await b.click(); await page.waitForSelector(".page-dialog");
-    const d1 = await page.locator(".page-dialog").innerText();
-    await page.locator(".page-dialog button", { hasText: "Übernehmen" }).click(); await page.waitForTimeout(200);
-    const d2 = await page.locator(".page-dialog").innerText();
-    await page.locator(".page-dialog textarea").fill((await page.locator(".page-dialog textarea").inputValue()) + " (Probe-Ergänzung)");
-    await page.locator(".page-dialog button", { hasText: "Übernehmen" }).click(); await page.waitForTimeout(200);
-    await page.locator(".page-dialog button", { hasText: "Ja, fortfahren" }).click(); await page.waitForTimeout(600);
-    return d1.includes("Titel") && d2.includes("Text") && (await page.locator("body").innerText()).includes("Probe-Ergänzung");
+    await b.click(); const d = page.locator("[data-memory-bearbeiten]"); await d.waitFor();
+    const felder = (await d.locator("[data-mb-titel]").count()) + (await d.locator("[data-mb-text]").count()) + (await d.locator("[data-mb-bereich]").count()) + (await d.locator("[data-mb-tag]").count());
+    await d.locator("[data-mb-text]").fill((await d.locator("[data-mb-text]").inputValue()) + " (Probe-Ergänzung)");
+    await d.locator("[data-mb-speichern]").click(); await d.waitFor({ state: "detached" }); await page.waitForTimeout(400);
+    return felder === 4 && (await page.locator("body").innerText()).includes("Probe-Ergänzung");
   });
   await step("Tagebuch: „Memory löschen“ fragt nach; „Abbrechen“ behält den Eintrag", async () => {
     await eintragWaehlen();
