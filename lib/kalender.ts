@@ -1,8 +1,9 @@
 // Kalender-Kern (Klaus 2026-11-05): Fristen und Aufgaben mit eingeschalteter Erinnerung in einen Kalender eigener Wahl.
 // Rein und ohne Netz: aus einem Datensatz wird ein Kalendereintrag (stabile Kennung, Erinnerungen in Minuten), daraus eine
 // .ics-Datei oder die Nutzlast für Google, Microsoft oder den Android-Gerätekalender. Die Zuordnung (welcher Eintrag in
-// welchem Kalender) steht am Datensatz im Register und reist mit der Vollsicherung. Fristen aus dem Gesundheitsbereich gehen
-// nur neutral hinaus („Frist“), nie mit Inhalt. Notizen gehen nie hinaus.
+// welchem Kalender) steht am Datensatz im Register und reist mit der Vollsicherung. Hinaus gehen Titel, Zeit und Erinnerung;
+// Notizen nie. Gesundheitsfristen gehen mit ihrem echten Titel (Klaus 2026-11-05: „ich muss ja irgendwo eintragen“);
+// ein neutraler Titel („Frist“) bleibt als ausdrückliche Wahl (opt.geschuetzt) möglich, wird aber nicht mehr selbst gesetzt.
 import type { FamilyRecordUnion, FamilyRelation } from "./family-data-model";
 import { isSensitiveHealthText } from "./family-privacy.ts";
 
@@ -99,7 +100,7 @@ export function erinnerungsMinuten(wahl: ErinnerungsWahl[], uhrzeit: string, zus
     .sort((a, b) => b - a).slice(0, MAX_ERINNERUNGEN);
 }
 
-/** Gesundheitsschutz: Titel, Quelle oder verknüpfte Bereiche mit Gesundheitsbezug → neutral. */
+/** Erkennt Gesundheitsbezug (Titel, Quelle, verknüpfte Bereiche). Nur noch Auskunft; der Kalender neutralisiert nicht mehr selbst. */
 export function terminGeschuetzt(record: FamilyRecordUnion, verknuepfteBereiche: Array<string | null | undefined> = []) {
   const titel = istTermin(record) ? record.data.title : "";
   return isSensitiveHealthText(titel, record.notes, record.source, ...verknuepfteBereiche);
@@ -127,7 +128,7 @@ export function kalenderEintrag(record: FamilyRecordUnion, opt: EintragOptionen 
   const beginn = ortszeit(record.data.dueAt, uhrzeit);
   if (Number.isNaN(beginn.getTime())) return null;
   const ende = new Date(beginn.getTime() + DAUER_MINUTEN * 60000);
-  const geschuetzt = opt.geschuetzt ?? terminGeschuetzt(record);
+  const geschuetzt = opt.geschuetzt === true;
   const art = record.recordType === "deadline" ? "Frist" : "Aufgabe";
   const titel = geschuetzt ? art : (record.data.title || art).trim().slice(0, 200);
   const beschreibung = geschuetzt ? "Aus der Familienakte. Einzelheiten nur in der App." : `Aus der Familienakte (${record.id}).`;

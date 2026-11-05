@@ -1,4 +1,4 @@
-// Kalender (Klaus 2026-11-05): Verbinden, Eintragen mit Erinnerung, Gesundheit neutral, Erledigt entfernt, Fehler sichtbar,
+// Kalender (Klaus 2026-11-05): Verbinden, Eintragen mit Erinnerung, Gesundheit mit echtem Titel, Erledigt entfernt, Fehler sichtbar,
 // Trennen, Kalenderdatei, Android-Gerätekalender. Google, Microsoft und das Android-Plugin sind gestellt (keine echte
 // Anmeldung, kein echter Kalender); geprüft wird, was die App schickt und was sie im Register festhält.
 import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, footer, collectErrors, internetAn } from "./_harness.mjs";
@@ -108,11 +108,12 @@ try {
     for (let i = 0; i < 20; i++) { const r = (await register(page)).find((x) => x.data?.title === "Rechnung Stadtwerke bezahlen (erfunden)"); if (r?.data?.kalender?.[0]?.eintragId === "ev1") return r.data.kalenderEintragen === true && r.data.kalender[0].anbieter === "google" && r.data.kalender[0].kalenderId === "primary"; await page.waitForTimeout(150); }
     return false;
   });
-  await step("Gesundheit: Frist „Rezept Physiotherapie“ geht nur als „Frist“ hinaus", async () => {
+  await step("Gesundheit (Klaus 2026-11-05): Arzttermin geht mit echtem Titel hinaus, Notizen nie", async () => {
+    await page.locator(".schedule-create textarea").first().fill("Befund geheim 0815");
     await neueFrist(page, "Rezept Physiotherapie abholen (erfunden)", "2026-11-24");
     for (let i = 0; i < 40 && google.neu.length < 2; i++) await page.waitForTimeout(150);
     const e = google.neu[1]?.body;
-    return Boolean(e) && e.summary === "Frist" && !/physio|rezept/i.test(JSON.stringify(e));
+    return Boolean(e) && e.summary === "Rezept Physiotherapie abholen (erfunden)" && !/Befund|0815/.test(JSON.stringify(e));
   });
   await step("Erledigt: Termin wird aus dem Kalender entfernt, Zuordnung gelöscht", async () => {
     await page.locator("button.schedule-filter", { hasText: "Offen" }).click();
@@ -168,7 +169,7 @@ try {
     const [download] = await Promise.all([page.waitForEvent("download"), karte.locator("[data-kalender-abgleichen]").click()]);
     const pfad = await download.path(); const { readFileSync } = await import("node:fs");
     const ics = readFileSync(pfad, "utf8");
-    return download.suggestedFilename().endsWith(".ics") && ics.startsWith("BEGIN:VCALENDAR") && /BEGIN:VEVENT[\s\S]*BEGIN:VALARM[\s\S]*TRIGGER:-PT10080M/.test(ics) && /SUMMARY:Kfz-Versicherung kündigen \(erfunden\)/.test(ics) && /SUMMARY:Frist\r\n/.test(ics) ? `${(ics.match(/BEGIN:VEVENT/g) || []).length} Termine` : false;
+    return download.suggestedFilename().endsWith(".ics") && ics.startsWith("BEGIN:VCALENDAR") && /BEGIN:VEVENT[\s\S]*BEGIN:VALARM[\s\S]*TRIGGER:-PT10080M/.test(ics) && /SUMMARY:Kfz-Versicherung kündigen \(erfunden\)/.test(ics) && /SUMMARY:Rezept Physiotherapie abholen \(erfunden\)/.test(ics) ? `${(ics.match(/BEGIN:VEVENT/g) || []).length} Termine` : false;
   });
   check(errors.filter((e) => !/Failed to load resource/.test(e)).length === 0, "Browser: keine Seitenfehler", errors.join(" | "));
   await context.close();

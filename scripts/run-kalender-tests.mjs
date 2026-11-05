@@ -1,4 +1,4 @@
-// Kalender-Kern (Klaus 2026-11-05): ICS mit Erinnerung, stabile UID, Abgleich (anlegen/ändern/entfernen), Gesundheit neutral.
+// Kalender-Kern (Klaus 2026-11-05): ICS mit Erinnerung, stabile UID, Abgleich (anlegen/ändern/entfernen), Gesundheit mit echtem Titel.
 // Läuft in fester Zeitzone Europe/Berlin, damit „9 Uhr“ prüfbar ist.
 process.env.TZ = "Europe/Berlin";
 const assert = (await import("node:assert/strict")).default;
@@ -44,15 +44,17 @@ assert.notEqual(k.kalenderUid(frist()), k.kalenderUid(frist({ createdAt: "2027-0
 assert.match(k.kalenderUid(frist()), /^fa-frist-000007-[0-9a-f]{8}@familienakte$/);
 gruen("UID stabil je Frist, verschieden bei gleicher Nummer in neuer Akte");
 
-// Gesundheit: neutral, ohne Inhalt.
-const g = frist({ source: "Hausarzt" }, { title: "Rezept Physiotherapie abholen" });
-assert.equal(k.terminGeschuetzt(g), true);
+// Gesundheit (Klaus 2026-11-05): echter Titel; Notizen nie; neutral nur auf ausdrücklichen Wunsch.
+const g = frist({ source: "Hausarzt", notes: "Diagnose geheim 4711" }, { title: "Rezept Physiotherapie abholen" });
+assert.equal(k.terminGeschuetzt(g), true, "Gesundheitsbezug wird weiter erkannt (nur Auskunft)");
 const ge = k.kalenderEintrag(g);
-assert.equal(ge.titel, "Frist");
-assert.ok(!/physio|rezept|arzt/i.test(JSON.stringify([ge, k.googleEreignis(ge), k.graphEreignis(ge), k.icsDatei([ge])])));
-assert.equal(k.kalenderEintrag(frist({ recordType: "task" }, { title: "Zahnarzt anrufen" })).titel, "Aufgabe");
-assert.equal(k.terminGeschuetzt(frist(), ["Gesundheit"]), true, "verknüpfter Gesundheitsbereich zählt");
-gruen("Gesundheit: Titel neutral („Frist“/„Aufgabe“), kein Inhalt in ICS, Google oder Microsoft");
+assert.equal(ge.titel, "Rezept Physiotherapie abholen", "echter Titel geht hinaus");
+assert.equal(ge.geschuetzt, false);
+assert.ok(!/Diagnose|4711/.test(JSON.stringify([ge, k.googleEreignis(ge), k.graphEreignis(ge), k.icsDatei([ge])])), "Notizen nie");
+const neutral = k.kalenderEintrag(g, { geschuetzt: true });
+assert.equal(neutral.titel, "Frist");
+assert.equal(k.kalenderEintrag(frist({ recordType: "task" }, { title: "Zahnarzt anrufen" }), { geschuetzt: true }).titel, "Aufgabe");
+gruen("Gesundheit: echter Titel (Klaus 2026-11-05), Notizen nie in ICS/Google/Microsoft, neutral nur auf ausdrücklichen Wunsch");
 
 // Abgleich.
 const ziel = { anbieter: "google", kalenderId: "primary" };

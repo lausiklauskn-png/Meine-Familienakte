@@ -146,7 +146,7 @@ export function KalenderVerbinden({ vaultHandle, records, relations, onRefresh, 
   const vorhandeneUebernehmen = () => tun("uebernehmen", async () => {
     if (!vaultHandle) throw new Error("Bitte zuerst einen Datentresor verbinden.");
     if (!ohneHaken.length) return;
-    if (!(await askConfirm(`${ohneHaken.length} offene Frist${ohneHaken.length === 1 ? "" : "en"} und Aufgaben in den Kalender eintragen? Gesundheitsfristen erscheinen dort nur als „Frist“.`))) return;
+    if (!(await askConfirm(`${ohneHaken.length} offene Frist${ohneHaken.length === 1 ? "" : "en"} und Aufgaben in den Kalender eintragen?`))) return;
     await updateLocalScheduleKalender(vaultHandle, ohneHaken.map((r) => ({ id: r.id, kalenderEintragen: true })));
     await onRefresh();
     onNotice({ kind: "success", text: `${ohneHaken.length} offene Einträge sind zum Eintragen markiert.` });
@@ -212,7 +212,7 @@ export function KalenderVerbinden({ vaultHandle, records, relations, onRefresh, 
 
     <div id="kalender-schritt-uebernehmen" className="kalender-schritt" tabIndex={-1}>
       <h3>3 · Vorhandene offene Fristen übernehmen</h3>
-      <p className="fine-print">{ohneHaken.length ? `${ohneHaken.length} offene Frist${ohneHaken.length === 1 ? "" : "en"} und Aufgaben sind noch nicht für den Kalender gewählt.` : "Alle offenen Fristen sind gewählt oder ausdrücklich abgewählt."} Gesundheitsfristen erscheinen im Kalender nur als „Frist“, ohne Inhalt.</p>
+      <p className="fine-print">{ohneHaken.length ? `${ohneHaken.length} offene Frist${ohneHaken.length === 1 ? "" : "en"} und Aufgaben sind noch nicht für den Kalender gewählt.` : "Alle offenen Fristen sind gewählt oder ausdrücklich abgewählt."} Notizen gehen nie in den Kalender.</p>
       <button type="button" className="button secondary" disabled={!ohneHaken.length || !vaultHandle || Boolean(busy)} onClick={() => void vorhandeneUebernehmen()} data-kalender-uebernehmen>Einmal alle offenen eintragen</button>
     </div>
 
