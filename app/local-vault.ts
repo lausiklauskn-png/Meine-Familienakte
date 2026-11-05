@@ -1,5 +1,5 @@
 import { workspaceName, demoActive } from "../lib/demo-workspace.ts";
-import { ALLE_ERINNERUNGEN, gueltigeUhrzeit, zuordnungSetzen, type ErinnerungsWahl, type KalenderAnbieter, type KalenderFelder, type KalenderZuordnung } from "../lib/kalender.ts";
+import { erinnerungenOrdnen, gueltigeUhrzeit, zuordnungSetzen, type ErinnerungsWahl, type KalenderAnbieter, type KalenderFelder, type KalenderZuordnung } from "../lib/kalender.ts";
 import { workspaceStorage } from "../lib/demo-workspace.ts";
 import type { ProUebergabe } from "../lib/pro-verbund-vertrag";
 import { kontaktPruefen, kontaktUebernehmen, type PersonKontakt } from "../lib/person-kontakt.ts";
@@ -3325,7 +3325,7 @@ function kalenderEingabe(input: Pick<CreateScheduleInput, "dueTime" | "erinnerun
   const felder: KalenderFelder = {};
   const zeit = gueltigeUhrzeit(input.dueTime);
   if (zeit) felder.dueTime = zeit;
-  if (Array.isArray(input.erinnerungen)) felder.erinnerungen = input.erinnerungen.filter((w) => ALLE_ERINNERUNGEN.includes(w));
+  if (Array.isArray(input.erinnerungen)) felder.erinnerungen = erinnerungenOrdnen(input.erinnerungen);
   if (typeof input.kalenderEintragen === "boolean") felder.kalenderEintragen = input.kalenderEintragen;
   return felder;
 }

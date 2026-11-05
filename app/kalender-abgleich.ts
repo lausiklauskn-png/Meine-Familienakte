@@ -1,7 +1,7 @@
 // Kalender-Abgleich (Klaus 2026-11-05): Einstellung je Gerät (Demo getrennt), Plan aus dem Kern, Ausführung beim Anbieter,
 // Zuordnung zurück ins Register. Läuft nur, wenn der Nutzer einen Kalender verbunden hat; nichts geschieht still.
 import { workspaceStorage } from "../lib/demo-workspace.ts";
-import { abgleichPlan, ALLE_ERINNERUNGEN, ERINNERUNG_VORGABE, icsDatei, kalenderEintrag, kalenderFelder, kalenderUid, soll, terminGeschuetzt, type ErinnerungsWahl, type KalenderAnbieter, type KalenderEintrag } from "../lib/kalender";
+import { abgleichPlan, ERINNERUNG_VORGABE, erinnerungenOrdnen, icsDatei, kalenderEintrag, kalenderFelder, kalenderUid, soll, type ErinnerungsWahl, type KalenderAnbieter, type KalenderEintrag } from "../lib/kalender";
 import type { FamilyRecordUnion, FamilyRelation } from "../lib/family-data-model";
 import { ANBIETER, KalenderFehler } from "./kalender-anbieter";
 import { dateiAusgeben } from "./dateiausgabe";
@@ -22,21 +22,12 @@ export function kalenderEinstLesen(): KalenderEinst | null {
   try {
     const e = JSON.parse(workspaceStorage.getItem(KALENDER_EINST_SCHLUESSEL) || "null") as KalenderEinst | null;
     if (!e || !(e.anbieter in ANBIETER) || typeof e.kalenderId !== "string") return null;
-    return { ...e, erinnerungen: Array.isArray(e.erinnerungen) ? e.erinnerungen.filter((w) => ALLE_ERINNERUNGEN.includes(w)) : ERINNERUNG_VORGABE };
+    return { ...e, erinnerungen: Array.isArray(e.erinnerungen) ? erinnerungenOrdnen(e.erinnerungen) : ERINNERUNG_VORGABE };
   } catch { return null; }
 }
 export function kalenderEinstSchreiben(e: KalenderEinst | null) {
   try { if (e) workspaceStorage.setItem(KALENDER_EINST_SCHLUESSEL, JSON.stringify(e)); else workspaceStorage.removeItem(KALENDER_EINST_SCHLUESSEL); } catch { /* nur für diese Sitzung */ }
   window.dispatchEvent(new Event("familienakte-kalender"));
-}
-
-/** Verknüpfte Bereiche (Dokumente, Vorgänge) für den Gesundheitsschutz. */
-function geschuetztFuer(records: FamilyRecordUnion[], relations: FamilyRelation[], bereiche: Map<string, string>) {
-  return (record: FamilyRecordUnion) => {
-    const ids = relations.filter((r) => r.fromId === record.id || r.toId === record.id).map((r) => (r.fromId === record.id ? r.toId : r.fromId));
-    const namen = ids.map((id) => bereiche.get(id) || (records.find((x) => x.id === id) as { data?: { title?: string; name?: string } } | undefined)?.data?.title || null);
-    return terminGeschuetzt(record, namen);
-  };
 }
 
 export type AbgleichErgebnis = { angelegt: number; geaendert: number; entfernt: number; gleich: number; fehler: string[] };
@@ -45,10 +36,10 @@ export type AbgleichErgebnis = { angelegt: number; geaendert: number; entfernt: 
  * Führt den Plan aus. Jeder Schritt einzeln: ein Fehler bei einer Frist hält die anderen nicht auf und wird mit Grund
  * gemeldet. Die Zuordnung wird danach in einem Schreibvorgang ins Register übernommen.
  */
-export async function kalenderAbgleichen(handle: FileSystemDirectoryHandle, records: FamilyRecordUnion[], relations: FamilyRelation[], einst: KalenderEinst, bereiche = new Map<string, string>()): Promise<AbgleichErgebnis> {
+export async function kalenderAbgleichen(handle: FileSystemDirectoryHandle, records: FamilyRecordUnion[], relations: FamilyRelation[], einst: KalenderEinst): Promise<AbgleichErgebnis> {
   const anbieter = ANBIETER[einst.anbieter];
   const ziel = { anbieter: einst.anbieter, kalenderId: einst.kalenderId };
-  const plan = abgleichPlan(records, ziel, { vorgabe: einst.erinnerungen, relations, geschuetzt: geschuetztFuer(records, relations, bereiche) });
+  const plan = abgleichPlan(records, ziel, { vorgabe: einst.erinnerungen, relations });
   const ergebnis: AbgleichErgebnis = { angelegt: 0, geaendert: 0, entfernt: 0, gleich: 0, fehler: [] };
   const aenderungen: Parameters<typeof updateLocalScheduleKalender>[1] = [];
   const am = new Date().toISOString();
@@ -73,8 +64,7 @@ export async function kalenderAbgleichen(handle: FileSystemDirectoryHandle, reco
 }
 
 /** Kalenderdatei mit allen angehakten offenen Fristen; früher übergebene, inzwischen erledigte gehen als abgesagt mit. */
-export async function kalenderDateiAusgeben(handle: FileSystemDirectoryHandle | null, records: FamilyRecordUnion[], relations: FamilyRelation[], einst: KalenderEinst, bereiche = new Map<string, string>()) {
-  const geschuetzt = geschuetztFuer(records, relations, bereiche);
+export async function kalenderDateiAusgeben(handle: FileSystemDirectoryHandle | null, records: FamilyRecordUnion[], relations: FamilyRelation[], einst: KalenderEinst) {
   const eintraege: KalenderEintrag[] = [];
   const abgesagt: Array<{ uid: string; sequenz: number }> = [];
   const aenderungen: Parameters<typeof updateLocalScheduleKalender>[1] = [];
@@ -82,7 +72,7 @@ export async function kalenderDateiAusgeben(handle: FileSystemDirectoryHandle | 
   const am = new Date().toISOString();
   for (const record of records) {
     const vorher = (kalenderFelder(record).kalender || []).find((z) => z.anbieter === "ics");
-    const e = soll(record) ? kalenderEintrag(record, { vorgabe: einst.erinnerungen, relations, records, geschuetzt: geschuetzt(record) }) : null;
+    const e = soll(record) ? kalenderEintrag(record, { vorgabe: einst.erinnerungen, relations, records }) : null;
     if (e) { eintraege.push(e); aenderungen.push({ id: record.id, ziel, zuordnung: { ...ziel, eintragId: e.uid, stand: e.stand, am } }); }
     else if (vorher) { abgesagt.push({ uid: kalenderUid(record), sequenz: Math.floor(Date.now() / 1000) % 2147483647 }); aenderungen.push({ id: record.id, ziel, zuordnung: null }); }
   }

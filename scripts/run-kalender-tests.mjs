@@ -1,4 +1,4 @@
-// Kalender-Kern (Klaus 2026-11-05): ICS mit Erinnerung, stabile UID, Abgleich (anlegen/ändern/entfernen), Gesundheit neutral.
+// Kalender-Kern (Klaus 2026-11-05): ICS mit Erinnerung, stabile UID, Abgleich (anlegen/ändern/entfernen), Gesundheit mit echtem Titel.
 // Läuft in fester Zeitzone Europe/Berlin, damit „9 Uhr“ prüfbar ist.
 process.env.TZ = "Europe/Berlin";
 const assert = (await import("node:assert/strict")).default;
@@ -26,6 +26,16 @@ assert.deepEqual(frueh.erinnerungen, [0], "vor 9 Uhr: Erinnerung zum Beginn");
 const falscheZeit = k.kalenderEintrag(frist({}, { dueTime: "25:99" }));
 assert.equal(falscheZeit.beginn, "2026-11-20T08:00:00.000Z");
 gruen("Uhrzeit frei: „am Tag, 9 Uhr“ richtig umgerechnet, ungültige Zeit fällt auf 9 Uhr zurück");
+const zwei = k.kalenderEintrag(frist({}, { erinnerungen: ["2d"] }));
+assert.deepEqual(zwei.erinnerungen, [2880], "2 Tage vorher = 2880 Minuten (9 Uhr zwei Tage vorher)");
+assert.deepEqual(k.kalenderEintrag(frist({}, { erinnerungen: ["1d", "2d", "7d"] })).erinnerungen, [10080, 2880, 1440]);
+assert.deepEqual(k.ALLE_ERINNERUNGEN, ["7d", "2d", "1d", "tag9"]);
+assert.equal(k.erinnerungsName("7d"), "1 Woche vorher");
+assert.equal(k.erinnerungsName("5d"), "5 Tage vorher");
+assert.deepEqual(k.kalenderEintrag(frist({}, { erinnerungen: ["5d", "9d", "tag9"] })).erinnerungen, [9 * 1440, 5 * 1440, 0], "frei gewählte Tage");
+assert.deepEqual(k.erinnerungenOrdnen(["1d", "28d", "29d", "0d", "x", "1d", "tag9", "05d"]), ["28d", "1d", "tag9"], "1–28, keine doppelten, keine Unsinnswerte");
+assert.ok(k.icsDatei([zwei]).includes("TRIGGER:-PT2880M"));
+gruen("Erinnerung wählbar (Klaus 2026-11-05): Schnellwahl 1 Woche/2 Tage/1 Tag, frei 1–28 Tage vorher, kombiniert; ungültige verworfen; ICS-Alarm");
 
 // Sommerzeit: 9 Uhr bleibt 9 Uhr Ortszeit.
 assert.equal(k.kalenderEintrag(frist({}, { dueAt: "2026-07-01" })).beginn, "2026-07-01T07:00:00.000Z");
@@ -44,15 +54,17 @@ assert.notEqual(k.kalenderUid(frist()), k.kalenderUid(frist({ createdAt: "2027-0
 assert.match(k.kalenderUid(frist()), /^fa-frist-000007-[0-9a-f]{8}@familienakte$/);
 gruen("UID stabil je Frist, verschieden bei gleicher Nummer in neuer Akte");
 
-// Gesundheit: neutral, ohne Inhalt.
-const g = frist({ source: "Hausarzt" }, { title: "Rezept Physiotherapie abholen" });
-assert.equal(k.terminGeschuetzt(g), true);
+// Gesundheit (Klaus 2026-11-05): echter Titel; Notizen nie; neutral nur auf ausdrücklichen Wunsch.
+const g = frist({ source: "Hausarzt", notes: "Diagnose geheim 4711" }, { title: "Rezept Physiotherapie abholen" });
+assert.equal(k.terminGeschuetzt(g), true, "Gesundheitsbezug wird weiter erkannt (nur Auskunft)");
 const ge = k.kalenderEintrag(g);
-assert.equal(ge.titel, "Frist");
-assert.ok(!/physio|rezept|arzt/i.test(JSON.stringify([ge, k.googleEreignis(ge), k.graphEreignis(ge), k.icsDatei([ge])])));
-assert.equal(k.kalenderEintrag(frist({ recordType: "task" }, { title: "Zahnarzt anrufen" })).titel, "Aufgabe");
-assert.equal(k.terminGeschuetzt(frist(), ["Gesundheit"]), true, "verknüpfter Gesundheitsbereich zählt");
-gruen("Gesundheit: Titel neutral („Frist“/„Aufgabe“), kein Inhalt in ICS, Google oder Microsoft");
+assert.equal(ge.titel, "Rezept Physiotherapie abholen", "echter Titel geht hinaus");
+assert.equal(ge.geschuetzt, false);
+assert.ok(!/Diagnose|4711/.test(JSON.stringify([ge, k.googleEreignis(ge), k.graphEreignis(ge), k.icsDatei([ge])])), "Notizen nie");
+const neutral = k.kalenderEintrag(g, { geschuetzt: true });
+assert.equal(neutral.titel, "Frist");
+assert.equal(k.kalenderEintrag(frist({ recordType: "task" }, { title: "Zahnarzt anrufen" }), { geschuetzt: true }).titel, "Aufgabe");
+gruen("Gesundheit: echter Titel (Klaus 2026-11-05), Notizen nie in ICS/Google/Microsoft, neutral nur auf ausdrücklichen Wunsch");
 
 // Abgleich.
 const ziel = { anbieter: "google", kalenderId: "primary" };
@@ -104,6 +116,7 @@ gruen("Nutzlast: Google (Erinnerungen popup), Microsoft (eine, früheste), Gerä
 assert.equal(k.kalenderEintrag(frist({}, { dueAt: "" })), null);
 assert.equal(k.kalenderEintrag(rem), null);
 assert.deepEqual(k.erinnerungsMinuten(["7d", "7d", "1d"], "09:00", [99999, -5]), [40320, 10080, 1440]);
+assert.deepEqual(k.erinnerungsMinuten(["9d", "7d", "5d", "3d", "2d", "1d"], "09:00"), [10080, 7200, 4320, 2880, 1440], "bei mehr als 5 bleiben die nächsten am Termin (1 Tag vorher fällt nie weg)");
 gruen("Grenzen: ohne Datum kein Eintrag, Erinnerungen doppelt/negativ/über 28 Tage bereinigt");
 
 console.log(`Kalender-Kern: ${n} grün · 0 rot`);
