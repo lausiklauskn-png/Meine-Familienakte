@@ -1,9 +1,10 @@
-import { Check, NotebookPen, StickyNote, Trash2, X } from "lucide-react";
+import { CalendarDays, Check, NotebookPen, StickyNote, Trash2, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { FamilyRecordUnion, FamilyRelation } from "../lib/family-data-model";
 import { buildMemoryAnalysis, erinnerungAusText, erinnerungsTitel } from "../lib/family-memory";
 import { ErinnernTeil, KALENDER_OEFFNEN, type ErinnernWert } from "./erinnern-teil";
 import { createLocalMemoryBundle, deleteLocalMemoryRecord } from "./local-vault";
+import { kalenderZiel, useKalenderEinst } from "./kalender-karte";
 import { VoiceTextarea } from "./ui-controls";
 
 /**
@@ -12,24 +13,25 @@ import { VoiceTextarea } from "./ui-controls";
  * lassen“ entsteht dazu eine Aufgabe mit Termin, auf Wunsch im Kalender. Gespeichert wird als Erinnerungseintrag (Memory)
  * – erst nach dem Tipp auf „Speichern“.
  */
-export function NotizKnopf({ vaultHandle, records, relations, onGespeichert, onFehler }: {
+export function NotizKnopf({ vaultHandle, records, relations, onGespeichert, onFehler, onKalender }: {
   vaultHandle: FileSystemDirectoryHandle | null; records: FamilyRecordUnion[]; relations: FamilyRelation[];
-  onGespeichert: (text: string) => Promise<void> | void; onFehler: (text: string) => void;
+  onGespeichert: (text: string) => Promise<void> | void; onFehler: (text: string) => void; onKalender?: (tag: string) => void;
 }) {
   const [offen, setOffen] = useState(false);
   return <>
     <button type="button" className="icon-button notiz-knopf-schalter" onClick={() => setOffen(true)} title="Notiz oder Erinnerung einsprechen" aria-label="Notiz" aria-haspopup="dialog" data-notiz-knopf><StickyNote size={18}/></button>
-    {offen && <NotizFenster vaultHandle={vaultHandle} records={records} relations={relations} onZu={() => setOffen(false)} onGespeichert={onGespeichert} onFehler={onFehler}/>}
+    {offen && <NotizFenster vaultHandle={vaultHandle} records={records} relations={relations} onZu={() => setOffen(false)} onGespeichert={onGespeichert} onFehler={onFehler} onKalender={onKalender}/>}
   </>;
 }
 
 /** Entwurf über das Schließen hinaus (z. B. nach dem Sprung zu „Kalender verbinden“), nur im Speicher. */
 let entwurf = "";
 
-function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, onFehler }: {
+function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, onFehler, onKalender }: {
   vaultHandle: FileSystemDirectoryHandle | null; records: FamilyRecordUnion[]; relations: FamilyRelation[];
-  onZu: () => void; onGespeichert: (text: string) => Promise<void> | void; onFehler: (text: string) => void;
+  onZu: () => void; onGespeichert: (text: string) => Promise<void> | void; onFehler: (text: string) => void; onKalender?: (tag: string) => void;
 }) {
+  const kalender = useKalenderEinst();
   const [text, setTextRoh] = useState(entwurf);
   const setText = (t: string) => { entwurf = t; setTextRoh(t); };
   const [erinnerung, setErinnerung] = useState<ErinnernWert | null>(null);
@@ -38,7 +40,7 @@ function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, on
   const [fehler, setFehler] = useState("");
   // Klaus 2026-11-05: der Haken speichert bewusst; gespeicherte Notizen klappen zu einer Liste zusammen, jede mit Mülleimer,
   // darüber gleich das Feld für die nächste.
-  const [liste, setListe] = useState<Array<{ id: string; titel: string; wann: string }>>([]);
+  const [liste, setListe] = useState<Array<{ id: string; titel: string; wann: string; tag?: string }>>([]);
   const geaendert = useRef(false);
   const feld = useRef<HTMLDivElement>(null);
   const erkannt = useMemo(() => erinnerungAusText(text), [text]);
@@ -67,9 +69,10 @@ function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, on
     setBusy(true); setFehler("");
     try {
       const r = await createLocalMemoryBundle(vaultHandle, { originalText: text.trim(), captureType: "text", analysis: analyse, mediaFiles: [], selectedReferences: [], erinnerung: erinnerung || undefined });
-      const wann = erinnerung ? `${new Date(`${erinnerung.dueAt}T00:00`).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" })}${erinnerung.dueTime ? `, ${erinnerung.dueTime} Uhr` : ""}` : "ohne Erinnerung";
+      // Wo es gelandet ist (Klaus 2026-11-05): die Notiz im Tagebuch, die Erinnerung in „Mein Kalender“ (und im verbundenen).
+      const wann = erinnerung ? `🔔 ${new Date(`${erinnerung.dueAt}T00:00`).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" })}${erinnerung.dueTime ? `, ${erinnerung.dueTime} Uhr` : ""} · in Mein Kalender${erinnerung.kalenderEintragen && kalender ? ` und ${kalenderZiel(kalender)}` : ""}` : "im Tagebuch, ohne Erinnerung";
       geaendert.current = true;
-      setListe((l) => [{ id: r.event.id, titel: erinnerung?.titel || analyse.title, wann }, ...l]);
+      setListe((l) => [{ id: r.event.id, titel: erinnerung?.titel || analyse.title, wann, tag: erinnerung?.dueAt }, ...l]);
       setText(""); setErinnerung(null); setRunde((x) => x + 1);
       feld.current?.querySelector("textarea")?.focus();
     } catch (g) { const t = g instanceof Error ? g.message : String(g); setFehler(t); onFehler(t); }
@@ -96,7 +99,7 @@ function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, on
       {text.trim() && <ErinnernTeil key={runde} erkannt={erkannt} titelVorschlag={erkannt?.wunsch ? erinnerungsTitel(text) : analyse?.taskProposal || analyse?.title || text.trim().slice(0, 80)} onChange={setErinnerung} onKalender={zumKalender}/>}
       {fehler && <p className="form-error" role="alert">{fehler}</p>}
       {liste.length > 0 && <ul className="notiz-liste" aria-label="Gespeicherte Notizen" data-notiz-liste>
-        {liste.map((n) => <li key={n.id} data-notiz-eintrag={n.id}><Check size={16}/><span><strong>{n.titel}</strong><small>{n.wann}</small></span><button type="button" className="notiz-weg" onClick={() => void loeschen(n.id)} disabled={busy} aria-label={`„${n.titel}“ wieder löschen`} title="Wieder löschen" data-notiz-loeschen><Trash2 size={18}/></button></li>)}
+        {liste.map((n) => <li key={n.id} data-notiz-eintrag={n.id}><Check size={16}/><span><strong>{n.titel}</strong><small>{n.wann}</small></span>{n.tag && onKalender && <button type="button" className="notiz-weg" onClick={() => { const t = n.tag!; void schliessen().then(() => onKalender(t)); }} disabled={busy} aria-label="Im Kalender ansehen" title="Im Kalender ansehen" data-notiz-im-kalender><CalendarDays size={18}/></button>}<button type="button" className="notiz-weg" onClick={() => void loeschen(n.id)} disabled={busy} aria-label={`„${n.titel}“ wieder löschen`} title="Wieder löschen" data-notiz-loeschen><Trash2 size={18}/></button></li>)}
       </ul>}
       <div className="modal-actions"><button type="button" className="button secondary" onClick={() => void schliessen()} disabled={busy} data-notiz-fertig>{liste.length ? "Fertig" : "Abbrechen"}</button></div>
     </section>

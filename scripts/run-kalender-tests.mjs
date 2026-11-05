@@ -179,4 +179,8 @@ assert.equal(m.erinnerungsTitel("Erinnere mich heute um 20 Uhr, Jens anzurufen")
 assert.equal(m.erinnerungsTitel("Heute war ein ruhiger Tag."), "Heute war ein ruhiger Tag.");
 gruen("Erinnerungswunsch aus dem Text: heute, morgen, in 5 Stunden, halbe Stunde, Wochentag, Datum; Vergangenes bleibt ohne");
 
+const glocke = (await import("../lib/glocke.ts")).runGlockeSelfTest();
+for (const e of glocke.ergebnisse) assert.ok(e.ok, `Glocke: ${e.name}`);
+gruen(`App-Glocke: ${glocke.ergebnisse.map((e) => e.name).join(" · ")}`);
+
 console.log(`Kalender-Kern: ${n} grün · 0 rot`);

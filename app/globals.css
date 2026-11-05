@@ -2071,8 +2071,8 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 
 /* Knopf „Notiz“ im Kopf (Klaus 2026-11-05) */
 /* Notiz wie die übrigen Kopf-Symbole (Klaus 2026-11-05): gleiche Größe, nur das Symbol */
-.notiz-knopf-schalter { flex: 0 0 auto; cursor: pointer; transition: background-color .15s, box-shadow .15s, transform .08s; }
-.notiz-knopf-schalter:hover { border-color: #9fb3c1; background: var(--blue-soft); box-shadow: 0 2px 8px rgba(16,52,83,.12); }
+.notiz-knopf-schalter, .kalender-knopf-schalter { flex: 0 0 auto; cursor: pointer; transition: background-color .15s, box-shadow .15s, transform .08s; }
+.notiz-knopf-schalter:hover, .kalender-knopf-schalter:hover { border-color: #9fb3c1; background: var(--blue-soft); box-shadow: 0 2px 8px rgba(16,52,83,.12); }
 .notiz-knopf-schalter:active { transform: scale(.97); }
 .notiz-knopf-schalter:focus-visible { outline: 3px solid #9fd8d4; outline-offset: 2px; }
 .notiz-fenster { width: min(560px, calc(100vw - 24px)); display: grid; gap: 12px; }
@@ -2087,7 +2087,7 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .notiz-aktion.loeschen:hover:not(:disabled) { background: #f9dcda; }
 .notiz-gespeichert { display: flex; align-items: center; gap: 6px; margin: 0; color: var(--green); font-weight: 700; }
 @media (max-width: 620px) {
-  .site-header.demo-mode .notiz-knopf-schalter { display: none; } /* Demo am Handy: Platz für DEMO ▾ und den Namen */
+  .site-header.demo-mode .notiz-knopf-schalter, .site-header.demo-mode .kalender-knopf-schalter { display: none; } /* Demo am Handy: Platz für DEMO ▾ und den Namen */
 }
 .notiz-leeren { position: absolute; top: 6px; right: 58px; width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line); background: #fff; color: var(--muted); cursor: pointer; }
 .notiz-leeren:hover { border-color: #b42318; color: #b42318; background: #fdf0ef; }
@@ -2130,3 +2130,41 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .kalender-anmelde-hinweis small { color: var(--muted); }
 .kalender-eigen { display: inline-flex; gap: 6px; align-items: center; flex-wrap: wrap; }
 .kalender-eigen input { padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; font: inherit; }
+
+/* Mein Kalender und App-Glocke (2026-11-05) */
+.mein-kalender .card-heading h2 { display: flex; align-items: center; gap: 8px; }
+.mein-kalender .card-heading { flex-wrap: wrap; gap: 10px; }
+.glocken-schalter { display: inline-flex; align-items: center; gap: 6px; }
+.glocken-schalter small { font-weight: 400; }
+.mk-kopf { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.mk-kopf strong { text-transform: capitalize; }
+.mk-raster { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.mk-wt { text-align: center; font-size: .78rem; color: var(--muted, #5b6b78); }
+.mk-tag { position: relative; min-height: 40px; border: 1px solid var(--line, #d6dee5); border-radius: 8px; background: #fff; cursor: pointer; font: inherit; padding: 4px 0; }
+.mk-tag:hover { background: var(--blue-soft, #e8f3fb); }
+.mk-tag.heute { border-color: #0c79d8; font-weight: 700; }
+.mk-tag.gewaehlt { background: #0c79d8; color: #fff; border-color: #0c79d8; }
+.mk-punkt { position: absolute; right: 3px; bottom: 2px; min-width: 16px; height: 16px; border-radius: 8px; background: #e2564f; color: #fff; font-size: .68rem; font-style: normal; line-height: 16px; text-align: center; padding: 0 3px; }
+.mk-tagesliste { margin-top: 12px; display: grid; gap: 8px; }
+.mk-tag-kopf { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.mk-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.mk-liste li { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: 1px solid var(--line, #d6dee5); border-radius: 10px; background: #fff; }
+.mk-zeit { min-width: 52px; font-weight: 700; display: grid; }
+.mk-zeit small { font-weight: 400; font-size: .75rem; }
+.mk-text { flex: 1; display: grid; min-width: 0; }
+.mk-text small { color: var(--muted, #5b6b78); }
+.mk-neu { display: grid; gap: 8px; padding: 10px; border: 1px dashed #9fb3c1; border-radius: 10px; }
+.mk-neu label { display: grid; gap: 4px; }
+.termin-erinnerung { margin: 2px 0; color: var(--muted, #5b6b78); font-size: .9rem; }
+.schedule-item.hervorgehoben { outline: 3px solid #f5b400; outline-offset: 2px; transition: outline-color .4s; }
+.app-glocke { position: fixed; left: 50%; top: 12px; transform: translateX(-50%); z-index: 1000; display: flex; align-items: center; gap: 10px; max-width: min(560px, calc(100vw - 24px)); padding: 12px 14px; border-radius: 14px; background: #fff7d6; border: 2px solid #f5b400; box-shadow: 0 8px 28px rgba(0,0,0,.2); }
+.app-glocke > span { display: grid; flex: 1; min-width: 0; }
+@media (max-width: 520px) { .app-glocke { flex-wrap: wrap; } .mk-tag { min-height: 36px; } }
+/* Kopf am schmalen Handy mit Kalender-Knopf: etwas enger, damit FAMILIENAKTE ganz lesbar bleibt (2026-11-05) */
+@media (max-width: 430px) {
+  .header-actions { gap: 1px; }
+  .header-actions .icon-button { width: 28px; }
+  .neu-knopf-schalter { padding: 0 6px; gap: 4px; }
+  .masthead { gap: 6px; }
+}
+.mk-punkt { top: 2px; bottom: auto; min-width: 14px; height: 14px; line-height: 14px; font-size: .62rem; }
