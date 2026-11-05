@@ -27,7 +27,8 @@ try {
     const an = await t.locator("[data-memory-erinnern-haken]").isChecked();
     const datum = await t.locator("[data-memory-erinnern-datum]").inputValue();
     const zeit = await t.locator("[data-memory-erinnern-zeit]").inputValue();
-    await t.locator("[data-memory-erinnern-kalender]").check(); // kein Kalender verbunden: Haken von Hand
+    const ampel = await t.locator("[data-memory-erinnern-kalender]").getAttribute("data-memory-erinnern-kalender");
+    if (ampel !== "keiner" || !/Kein Kalender verbunden/.test(await t.locator("[data-memory-erinnern-kalender]").innerText())) { console.log("   ↳ Ampel", ampel); return false; }
     const chips = await t.locator(".kalender-chip.an").allInnerTexts();
     return an && datum === morgen && zeit === "09:00" && chips.join() === "15 Min. vorher,zur Uhrzeit" ? true : (console.log("   ↳", an, datum, zeit, chips), false);
   });
@@ -39,13 +40,12 @@ try {
     return (await t.locator("[data-memory-erinnern-zeit]").inputValue()) === "10:30" && (await t.locator(".kalender-chip.an").allInnerTexts()).join() === "1 Std. vorher,15 Min. vorher,zur Uhrzeit";
   });
   await step("Speichern legt einen Erinnerungseintrag und eine Aufgabe mit Termin, Uhrzeit, Erinnerung und Kalender-Haken an", async () => {
-    await fenster.locator("[data-memory-erinnern-kalender]").check();
     await fenster.locator("[data-notiz-speichern]").click();
-    await fenster.locator("[data-notiz-gespeichert]").waitFor({ timeout: 10000 });
-    const muell = await fenster.locator("[data-notiz-loeschen]").isVisible() && (await fenster.locator("[data-notiz-speichern]").count()) === 0;
+    await fenster.locator("[data-notiz-liste] li").first().waitFor({ timeout: 10000 });
+    const muell = await fenster.locator("[data-notiz-liste] [data-notiz-loeschen]").isVisible() && (await fenster.locator("[data-notiz-eingabe]").inputValue()) === "" && /Jens anzurufen/.test(await fenster.locator("[data-notiz-liste]").innerText());
     await fenster.locator("[data-notiz-fertig]").click();
     await fenster.waitFor({ state: "detached", timeout: 10000 });
-    if (!muell) { console.log("   ↳ nach dem Haken kein Mülleimer"); return false; }
+    if (!muell) { console.log("   ↳ nach dem Haken keine Liste mit Mülleimer"); return false; }
     await vaultFixture(page);
     const records = await page.evaluate(async () => { const f = window.__vaultFixture; return (await f.readLocalVaultData(await f.browserVault())).records; });
     const ev = records.find((r) => r.recordType === "event" && /Jens anzurufen/.test(JSON.stringify(r.data)));
@@ -67,13 +67,13 @@ try {
     if (await fenster.locator("[data-memory-erinnern-haken]").isChecked()) { console.log("   ↳ Text:", await fenster.locator("[data-notiz-eingabe]").inputValue()); return false; }
     const vorher = await page.evaluate(async () => { const f = window.__vaultFixture; return (await f.readLocalVaultData(await f.browserVault())).records.filter((r) => r.recordType === "task").length; });
     await fenster.locator("[data-notiz-speichern]").click();
-    await fenster.locator("[data-notiz-gespeichert]").waitFor({ timeout: 10000 });
+    await fenster.locator("[data-notiz-liste] li").first().waitFor({ timeout: 10000 });
     await fenster.locator("[data-notiz-fertig]").click();
     await fenster.waitFor({ state: "detached", timeout: 10000 });
     const nachher = await page.evaluate(async () => { const f = window.__vaultFixture; return (await f.readLocalVaultData(await f.browserVault())).records.filter((r) => r.recordType === "task").length; });
     return aus && felder && nachher === vorher ? true : (console.log("   ↳", aus, felder, vorher, nachher, await fenster.locator("[data-notiz-eingabe]").inputValue().catch(() => "-")), false);
   });
-  await step("Haken speichert, Mülleimer löscht den Eintrag samt Aufgabe wieder; dann ist der Haken zurück", async () => {
+  await step("Mehrere Notizen hintereinander: jede klappt in die Liste, der Mülleimer löscht genau sie samt Aufgabe", async () => {
     const zahl = () => page.evaluate(async () => { const f = window.__vaultFixture; const r = (await f.readLocalVaultData(await f.browserVault())).records; return r.filter((x) => /Müll rausbringen/.test(JSON.stringify(x.data))).length; });
     await page.locator("[data-notiz-knopf]").click(); await fenster.waitFor();
     await page.waitForFunction(() => (document.querySelector("[data-notiz-eingabe]") || {}).value?.includes("morgen um 9 Uhr"), null, { timeout: 5000 });
@@ -81,13 +81,33 @@ try {
     await page.waitForFunction(() => !document.querySelector("[data-notiz-fenster] .dictation-button.listening"), null, { timeout: 5000 });
     await fenster.locator("[data-notiz-eingabe]").fill("Erinnere mich morgen um 7 Uhr, Müll rausbringen");
     await fenster.locator("[data-notiz-speichern]").click();
-    await fenster.locator("[data-notiz-gespeichert]").waitFor();
+    await fenster.locator("[data-notiz-liste] li").nth(0).waitFor();
+    await fenster.locator("[data-notiz-eingabe]").fill("Erinnere mich übermorgen um 18 Uhr, Blumen gießen");
+    await fenster.locator("[data-notiz-speichern]").click();
+    await page.waitForFunction(() => document.querySelectorAll("[data-notiz-liste] li").length === 2);
     const nachSpeichern = await zahl();
-    await fenster.locator("[data-notiz-loeschen]").click();
-    await fenster.locator("[data-notiz-speichern]").waitFor();
+    await fenster.locator("[data-notiz-liste] li", { hasText: "Müll rausbringen" }).locator("[data-notiz-loeschen]").click();
+    await page.waitForFunction(() => document.querySelectorAll("[data-notiz-liste] li").length === 1);
     const nachLoeschen = await zahl();
+    const bleibt = /Blumen gießen/.test(await fenster.locator("[data-notiz-liste]").innerText());
+    await fenster.locator("[data-notiz-fertig]").click();
+    return nachSpeichern === 2 && nachLoeschen === 0 && bleibt ? true : (console.log("   ↳", nachSpeichern, nachLoeschen, bleibt), false);
+  });
+  await step("Roter Kalender-Knopf springt zu „Kalender verbinden“ (Karte offen); der Notiz-Text bleibt erhalten", async () => {
+    await page.locator("[data-notiz-knopf]").click(); await fenster.waitFor();
+    await page.waitForFunction(() => (document.querySelector("[data-notiz-eingabe]") || {}).value?.includes("morgen um 9 Uhr"), null, { timeout: 5000 });
+    await fenster.locator(".dictation-button.listening").click().catch(() => {});
+    await page.waitForFunction(() => !document.querySelector("[data-notiz-fenster] .dictation-button.listening"), null, { timeout: 5000 });
+    await fenster.locator("[data-notiz-eingabe]").fill("Erinnere mich morgen um 10 Uhr, Zahnarzt");
+    await fenster.locator("[data-memory-erinnern-kalender]").click();
+    await fenster.waitFor({ state: "detached" });
+    await page.locator("#kalender-verbinden").waitFor(); await page.waitForTimeout(700);
+    const offen = await page.locator("#kalender-verbinden").evaluate((d) => d.open);
+    await page.locator("[data-notiz-knopf]").click(); await fenster.waitFor();
+    const text = await fenster.locator("[data-notiz-eingabe]").inputValue();
+    await fenster.locator("[data-notiz-leeren]").click();
     await fenster.locator("[data-notiz-schliessen]").click();
-    return nachSpeichern === 2 && nachLoeschen === 0 ? true : (console.log("   ↳", nachSpeichern, nachLoeschen), false);
+    return offen && text === "Erinnere mich morgen um 10 Uhr, Zahnarzt" ? true : (console.log("   ↳", offen, text), false);
   });
   await step("Kleines × im Textfeld löscht Text und Erinnerung; ohne Text keine Erinnerung", async () => {
     await page.locator("[data-notiz-knopf]").click(); await fenster.waitFor();

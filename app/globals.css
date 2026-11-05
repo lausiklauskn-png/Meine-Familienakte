@@ -2092,3 +2092,20 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 }
 .notiz-leeren { position: absolute; top: 6px; right: 58px; width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line); background: #fff; color: var(--muted); cursor: pointer; }
 .notiz-leeren:hover { border-color: #b42318; color: #b42318; background: #fdf0ef; }
+/* Kalender-Ampel in „Erinnern lassen“ (Klaus 2026-11-05) */
+.kalender-ampel { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; padding: 8px 12px; border-radius: 10px; border: 2px solid; font: inherit; cursor: pointer; transition: background-color .15s, transform .08s; }
+.kalender-ampel span { display: grid; gap: 1px; flex: 1; min-width: 0; }
+.kalender-ampel small { font-size: .78rem; overflow-wrap: anywhere; }
+.kalender-ampel.gruen { border-color: var(--green); background: var(--green-soft); color: var(--green); }
+.kalender-ampel.gruen:hover { background: #d4ecdd; }
+.kalender-ampel.rot { border-color: #b42318; background: #fdf0ef; color: #9f2a2a; }
+.kalender-ampel.rot:hover { background: #f9dcda; }
+.kalender-ampel:active { transform: scale(.98); }
+.kalender-ampel-pfeil { flex: none !important; font-size: 1.3rem; }
+.notiz-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.notiz-liste li { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--green-soft); color: var(--green); }
+.notiz-liste li > span { flex: 1; min-width: 0; display: grid; gap: 1px; color: var(--ink); }
+.notiz-liste strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.notiz-liste small { color: var(--muted); }
+.notiz-weg { flex: none; width: 36px; height: 36px; display: grid; place-items: center; border-radius: 8px; border: 1px solid #e3b7b3; background: #fff; color: #b42318; cursor: pointer; }
+.notiz-weg:hover:not(:disabled) { background: #fdf0ef; border-color: #b42318; }

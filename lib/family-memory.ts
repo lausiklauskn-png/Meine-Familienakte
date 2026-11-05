@@ -200,8 +200,8 @@ export function erinnerungAusText(text: string, now: Date = new Date()): Erinner
     if (!dt[3] && d < tag) d = new Date(jahr + 1, Number(dt[2]) - 1, Number(dt[1]));
     if (d.getMonth() === Number(dt[2]) - 1) datum = ortsDatum(d);
   }
-  if (!datum && /\bübermorgen\b/i.test(text)) datum = ortsDatum(new Date(tag.getFullYear(), tag.getMonth(), tag.getDate() + 2));
-  else if (!datum && /\bmorgen\b/i.test(text)) datum = ortsDatum(new Date(tag.getFullYear(), tag.getMonth(), tag.getDate() + 1));
+  if (!datum && /(?<![a-zäöüß])übermorgen\b/i.test(text)) datum = ortsDatum(new Date(tag.getFullYear(), tag.getMonth(), tag.getDate() + 2));
+  else if (!datum && /(?<![a-zäöüß])morgen\b/i.test(text)) datum = ortsDatum(new Date(tag.getFullYear(), tag.getMonth(), tag.getDate() + 1));
   else if (!datum && /\bheute\b/i.test(text)) datum = ortsDatum(tag);
   if (!datum) {
     const w = WOCHENTAGE.findIndex((n) => new RegExp(`\\b(?:am|nächsten|kommenden)\\s+${n}\\b`, "i").test(text));

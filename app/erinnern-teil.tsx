@@ -1,4 +1,4 @@
-import { BellRing } from "lucide-react";
+import { BellRing, CalendarCheck, CalendarX } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { ErinnerungsVorschlag } from "../lib/family-memory";
 import { KURZ_ERINNERUNGEN, type ErinnerungsWahl } from "../lib/kalender";
@@ -16,13 +16,15 @@ const wahlFuer = (zeit: string | null | undefined): ErinnerungsWahl[] => zeit ? 
  * aus dem Text („heute um 20 Uhr“, „morgen“, „in 5 Stunden“), solange man sie nicht selbst ändert; von Hand geht immer.
  * Gibt den Wert nach oben oder null, wenn nicht erinnert werden soll.
  */
-export function ErinnernTeil({ erkannt, titelVorschlag, onChange }: { erkannt: ErinnerungsVorschlag | null; titelVorschlag: string; onChange: (w: ErinnernWert | null) => void }) {
+/** Öffnet „Kalender verbinden“ auf der Seite Fristen und Aufgaben (HealthPortal hört darauf). */
+export const KALENDER_OEFFNEN = "familienakte:kalender-oeffnen";
+
+export function ErinnernTeil({ erkannt, titelVorschlag, onChange, onKalender }: { erkannt: ErinnerungsVorschlag | null; titelVorschlag: string; onChange: (w: ErinnernWert | null) => void; onKalender?: () => void }) {
   const kalender = useKalenderEinst();
   const [an, setAn] = useState(Boolean(erkannt?.wunsch));
   const [titel, setTitel] = useState("");
   const [datum, setDatum] = useState(erkannt?.dueAt || heuteIso());
   const [zeit, setZeit] = useState(erkannt?.dueTime || "");
-  const [inKalender, setInKalender] = useState(Boolean(kalender));
   const [wahl, setWahl] = useState<ErinnerungsWahl[]>(wahlFuer(erkannt?.dueTime));
   const vonHand = useRef({ an: false, datum: false, zeit: false, wahl: false });
 
@@ -36,9 +38,8 @@ export function ErinnernTeil({ erkannt, titelVorschlag, onChange }: { erkannt: E
     if (!vonHand.current.wahl) setWahl(wahlFuer(erkannt.dueTime));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [schluessel]);
-  useEffect(() => { if (kalender) setInKalender(true); }, [Boolean(kalender)]);
 
-  const wert: ErinnernWert | null = an && datum ? { titel: titel.trim() || titelVorschlag, dueAt: datum, dueTime: zeit || undefined, erinnerungen: wahl, kalenderEintragen: inKalender } : null;
+  const wert: ErinnernWert | null = an && datum ? { titel: titel.trim() || titelVorschlag, dueAt: datum, dueTime: zeit || undefined, erinnerungen: wahl, kalenderEintragen: true } : null; // Klaus 2026-11-05: wohin sonst? Ohne Kalender bleibt es eine Aufgabe und geht später hinein
   const wertSchluessel = JSON.stringify(wert);
   useEffect(() => { onChange(wert); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [wertSchluessel]);
 
@@ -48,8 +49,11 @@ export function ErinnernTeil({ erkannt, titelVorschlag, onChange }: { erkannt: E
       <label className="memory-erinnern-titel"><span>Woran erinnern</span><input value={titel} placeholder={titelVorschlag} onChange={(e) => setTitel(e.target.value)} data-memory-erinnern-titel/></label>
       <label><span>Tag</span><DatumFeld value={datum} required onChange={(e) => { vonHand.current.datum = true; setDatum(e.target.value); }} data-memory-erinnern-datum/></label>
       <label><span>Uhrzeit</span><DatumFeld art="time" value={zeit} onChange={(e) => { vonHand.current.zeit = true; setZeit(e.target.value); }} data-memory-erinnern-zeit/></label>
-      <label className="check-row memory-erinnern-kalender"><input type="checkbox" checked={inKalender} onChange={(e) => setInKalender(e.target.checked)} data-memory-erinnern-kalender/><span><strong>In den Kalender eintragen</strong><small>{kalender ? kalenderZiel(kalender) : "Kein Kalender verbunden – unter Fristen und Aufgaben verbinden"}</small></span></label>
-      {inKalender && <ErinnerungsChips wert={wahl} onChange={(w) => { vonHand.current.wahl = true; setWahl(w); }} schnell={[...KURZ_ERINNERUNGEN, "1d"]} name="Erinnern"/>}
+      {/* Ein Knopf statt Haken (Klaus 2026-11-05): grün = verbunden, rot = keiner; Tipp öffnet die Kalender-Einstellung. */}
+      <button type="button" className={`memory-erinnern-kalender kalender-ampel ${kalender ? "gruen" : "rot"}`} onClick={() => { if (onKalender) onKalender(); else window.dispatchEvent(new Event(KALENDER_OEFFNEN)); }} title="Kalender einstellen" data-memory-erinnern-kalender={kalender ? "verbunden" : "keiner"}>
+        {kalender ? <CalendarCheck size={18}/> : <CalendarX size={18}/>}<span><strong>{kalender ? "In den Kalender" : "Kein Kalender verbunden"}</strong><small>{kalender ? kalenderZiel(kalender) : "tippen zum Verbinden"}</small></span><span className="kalender-ampel-pfeil" aria-hidden="true">›</span>
+      </button>
+      {<ErinnerungsChips wert={wahl} onChange={(w) => { vonHand.current.wahl = true; setWahl(w); }} schnell={[...KURZ_ERINNERUNGEN, "1d"]} name="Erinnern"/>}
     </div>}
   </section>;
 }

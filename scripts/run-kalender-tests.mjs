@@ -146,6 +146,8 @@ const jetzt = new Date(2026, 10, 5, 18, 42);
 const ea = (t) => JSON.stringify(m.erinnerungAusText(t, jetzt));
 assert.equal(ea("erinnere mich heute um 20 Uhr daran dass ich noch Jens anrufen muss"), JSON.stringify({ wunsch: true, dueAt: "2026-11-05", dueTime: "20:00" }));
 assert.equal(ea("Erinnere mich morgen noch einmal"), JSON.stringify({ wunsch: true, dueAt: "2026-11-06", dueTime: null }));
+assert.equal(ea("Erinnere mich übermorgen um 18 Uhr, Blumen gießen"), JSON.stringify({ wunsch: true, dueAt: "2026-11-07", dueTime: "18:00" }));
+assert.equal(ea("Erinnere mich Übermorgen"), JSON.stringify({ wunsch: true, dueAt: "2026-11-07", dueTime: null }));
 assert.equal(ea("erinnere mich in 5 Stunden noch einmal"), JSON.stringify({ wunsch: true, dueAt: "2026-11-05", dueTime: "23:42" }));
 assert.equal(ea("in einer halben Stunde erinnern"), JSON.stringify({ wunsch: true, dueAt: "2026-11-05", dueTime: "19:12" }));
 assert.equal(ea("am Montag um 9:30 Zahnarzt nicht vergessen"), JSON.stringify({ wunsch: true, dueAt: "2026-11-09", dueTime: "09:30" }));
