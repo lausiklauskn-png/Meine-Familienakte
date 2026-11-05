@@ -1,6 +1,8 @@
 # Kalender-Konten einrichten (Google, Microsoft)
 
-Stand 05.11.2026. Ohne diese Einrichtung funktionieren **Android-Gerätekalender** (Samsung, Google- und Outlook-Konten des
+Stand 05.11.2026, abends: **Google eingerichtet** (Projekt „Familienakte“, beide Client-IDs in `lib/kalender-konten.ts`,
+Geheimnis als GitHub-Secret, App „In Produktion“, noch nicht von Google überprüft). **Microsoft nicht eingerichtet** (siehe
+unten, Abschnitt Microsoft). Ohne Einrichtung funktionieren **Android-Gerätekalender** (Samsung, Google- und Outlook-Konten des
 Geräts) und die **Kalenderdatei (.ics)** schon. Google und Microsoft zeigen bis dahin „Noch nicht eingerichtet.“
 
 Ergebnis der Einrichtung sind **Client-IDs**. Sie sind öffentlich und kommen in `lib/kalender-konten.ts`. Geheim bleibt nur
@@ -23,11 +25,14 @@ Feste Adressen:
 2. **APIs & Dienste → Bibliothek** → „Google Calendar API“ → **Aktivieren**.
 3. **Google Auth Platform** (früher „OAuth-Zustimmungsbildschirm“) → **Branding**: App-Name „Familienakte“,
    Support-E-Mail wählen, Speichern.
-4. **Zielgruppe**: Nutzertyp **Extern**, Veröffentlichungsstatus **Test** lassen. Unter **Testnutzer** die eigenen
-   Google-Konten und die der Familie eintragen (höchstens 100).
+4. **Zielgruppe**: Nutzertyp **Extern**. Gewählt (Klaus 2026-11-05): **In Produktion veröffentlichen**, damit jedes
+   Google-Konto sich anmelden kann, nicht nur eingetragene Testnutzer. Ohne Überprüfung durch Google zeigt die Anmeldung
+   „Google hat diese App nicht überprüft“ (→ „Erweitert“ → „Weiter zu Familienakte“), und es gilt eine Grenze von 100
+   Nutzern. Für die Überprüfung braucht Google später ein kurzes Video der Anmeldung und Begründungen je Bereich.
+   Branding: Startseite `https://lausiklauskn-png.github.io/Meine-Familienakte/`, Datenschutz
+   `https://lausiklauskn-png.github.io/Meine-Familienakte/datenschutz.html`, autorisierte Domain `lausiklauskn-png.github.io`.
 5. **Datenzugriff** → **Bereiche hinzufügen**: `.../auth/calendar.events` und `.../auth/calendar.calendarlist.readonly`.
-   Beide sind „sensibel“: ohne Prüfung durch Google warnt die Anmeldung („Google hat diese App nicht überprüft“) – für
-   Testnutzer ist das in Ordnung („Weiter“).
+   Beide sind „sensibel“: bis zur Prüfung durch Google warnt die Anmeldung (siehe Schritt 4).
 6. **Clients → Client erstellen**, Typ **Webanwendung**, Name „Familienakte Browser“.
    - Autorisierte JavaScript-Quellen: `https://lausiklauskn-png.github.io`
    - Autorisierte Weiterleitungs-URIs: `https://lausiklauskn-png.github.io/Meine-Familienakte/`
@@ -40,8 +45,17 @@ Feste Adressen:
 
 ## Microsoft (Entra-Portal)
 
+**Stand 05.11.2026: nicht eingerichtet (Klaus' Entscheidung).** Das private Microsoft-Konto hat kein eigenes Verzeichnis;
+Portal und Entra melden `AADSTS16000 … does not exist in tenant 'Microsoft Services'`. Die Kennung `f8cdef31-…` oben rechts
+im Portal ist Microsofts gemeinsamer Bereich für private Konten, **kein** eigenes Verzeichnis. Apps ohne Verzeichnis anzulegen
+ist laut Portal veraltet. Ein Verzeichnis entsteht mit einem kostenlosen Azure-Konto (Telefon und Kreditkarte zur Prüfung,
+vorübergehende Vormerkung 1 USD, keine Abbuchung ohne eigenes Umstellen auf Vorausbezahlung). Ein Versuch, ein neues Konto
+für info@family-projekt.de anzulegen, wurde im Inkognito-Fenster blockiert. Bis dahin: Outlook-Kalender über den
+Android-Gerätekalender, sonst .ics. Nachtragen = eine Client-ID in `lib/kalender-konten.ts`, kein Umbau.
+
 1. https://entra.microsoft.com öffnen und mit dem Microsoft-Konto anmelden. Meldet das Portal, dass kein Verzeichnis
-   (Mandant) da ist: zuerst ein kostenloses Azure-Konto anlegen (https://azure.microsoft.com/free), das legt eins an.
+   (Mandant) da ist: zuerst ein kostenloses Azure-Konto anlegen
+   (https://azure.microsoft.com/de-de/pricing/purchase-options/azure-account), das legt eins an.
    Die App gilt danach trotzdem für alle privaten Outlook.com-Konten der Familie.
 2. **App-Registrierungen → Neue Registrierung**:
    - Name „Familienakte“
@@ -57,7 +71,7 @@ Feste Adressen:
 
 ## Danach
 
-- Die drei Client-IDs (Google Web, Google Desktop, Microsoft) an Claude geben – sie sind öffentlich – oder selbst in
+- Die Client-IDs (Google Web und Google Desktop: erledigt; Microsoft: offen) an Claude geben – sie sind öffentlich – oder selbst in
   `lib/kalender-konten.ts` eintragen. Das Google-Geheimnis nur als GitHub-Secret.
 - Ein neuer Bau (PWA über Pages, Windows über `windows-release.yml`) nimmt sie auf. Veröffentlichen nur mit Klaus' Wort.
 - Probe am Gerät: Fristen und Aufgaben → Kalender verbinden → Google bzw. Microsoft → Konto wählen → Kalender wählen →
