@@ -12,10 +12,13 @@ In der Familienakte selbst wurde **nichts gebaut** und nichts veröffentlicht (n
 - **Workflow-PDF-Pro #68 (Entwurf):** Tresor-Leser `tools/tresor-leser/tresor-leser.html` – Tresor-Ordner wählen, Passwort, Dokumente je Fach
   ansehen/herunterladen, ohne Netz (CSP), nur lesend. Probe mit echtem Testtresor aus dem Paket (`Testtresor.java`). Noch in keiner App verdrahtet.
 - **Geschenkbox** (Klaus' Wunsch, Familienakte im Alltag testen): https://claude.ai/artifact/XeUMGuSZ49FzsJYjwQznM7, Quelle
-  `docs/geschenk/geschenkbox-pro.html`. Nur bereits veröffentlichte Fassungen: Familienakte 2.28.25 (Android/Windows/PWA), Workflow PDF Pro
-  1.0.14/1.0.13, Private Brain Pro 1.0.45/1.0.44, BookLedgerPro 0.1.9/0.1.8. GitHub-Assets per öffentlicher API geprüft (Name, Größe);
-  der BookLedgerPro-Windows-Link liegt auf family-projekt.de und war von hier aus nicht erreichbar (nicht geprüft). Privat; zum Weitergeben
-  über „Teilen“ freigeben.
+  `docs/geschenk/geschenkbox-pro.html`. Nach Klaus' Liste (05.11.): Familienakte Pro 2.28.25, Workflow PDF Pro 1.0.14/1.0.13, Private Brain
+  Pro 1.0.45/1.0.44, je Android, Windows und Browser (Basic: Meine-Familienakte-, Workflow-PDF- und Privat-Brain-Pro-Pages). Nur bereits
+  veröffentlichte Fassungen; GitHub-Assets per öffentlicher API geprüft (Name, Größe). Das ältere Repo Privat-Brain ist privat, daher
+  Privat-Brain-Pro-Pages als Browser-Fassung. Privat; zum Weitergeben über „Teilen“ freigeben.
+- **Hilfe der Familienakte (Klaus 05.11.):** alle Fragen und „Wie suche ich etwas?“ starten zugeklappt; „Demo ansehen“ ganz oben (stand ganz
+  unten hinter rund zwanzig offenen Fragen), gesperrt mit Grund („Zuerst im Sicherheitscenter einen Datentresor wählen …“). Probe
+  `tests/ui/hilfe-zu` 7 grün, Gegenprobe gefangen; `knoepfe-start` klappt die Suchbeispiele zuerst auf. Erst mit 2.28.26 in der App.
 - **Kimhub #439** (auf main): Eintrag `2026-11-04-claude-pb-tresor-ein-schritt-und-tresor-leser`.
 
 ## Proben
