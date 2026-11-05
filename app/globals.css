@@ -1942,6 +1942,9 @@ fieldset:disabled .datei-knopf { opacity: .55; cursor: not-allowed; }
 .demo-knopf-menue button.gefahr { color: #b42318; }
 .demo-knopf-menue button:disabled { opacity: .55; cursor: not-allowed; }
 .demo-starten p { max-width: 65ch; }
+.help-suche > summary { display: flex; align-items: center; gap: 9px; color: var(--navy); font-weight: 900; cursor: pointer; }
+.help-suche > summary svg { color: var(--teal); }
+.help-suche[open] > summary { margin-bottom: 10px; }
 @media (max-width: 620px) {
   .demo-knopf { order: 1; }
   .demo-knopf-schalter { height: 30px; padding: 0 6px; font-size: .68rem; }

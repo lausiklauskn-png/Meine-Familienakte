@@ -29,12 +29,13 @@ export function DemoKnopf({ gesperrt, verlassen, zuruecksetzen, loeschen }: { ge
 }
 
 /** Hinten in der Hilfe: die Demo starten (oder sagen, dass sie läuft und wo man sie verlässt). */
-export function DemoStarten({ aktiv, gesperrt, starten }: { aktiv: boolean; gesperrt: boolean; starten: () => void }) {
+export function DemoStarten({ aktiv, gesperrt, starten, grund }: { aktiv: boolean; gesperrt: boolean; starten: () => void; grund?: string }) {
   return <section className="card demo-starten" aria-label="Demo">
     <h2>Demo ansehen</h2>
     {aktiv
       ? <p>Die Demo läuft. Verlassen, zurücksetzen oder löschen über den roten Knopf „DEMO“ oben neben dem Namen.</p>
       : <><p>Eine Vorführung mit einer frei erfundenen Beispielfamilie, in einem eigenen Bestand. Deine eigene Akte bleibt unberührt. Während die Demo läuft, steht oben ein roter Knopf „DEMO“.</p>
-        <button type="button" className="button secondary" disabled={gesperrt} onClick={starten}><Play size={16}/> Demo ansehen</button></>}
+        <button type="button" className="button secondary" disabled={gesperrt} onClick={starten}><Play size={16}/> Demo ansehen</button>
+        {gesperrt && grund && <p className="fine-print" data-demo-grund>{grund}</p>}</>}
   </section>;
 }

@@ -75,6 +75,8 @@ try {
   // --- Hilfe: Beispielfragen setzen die Suche ---
   await step("Hilfe: Beispielfrage „Rechnung der Waschmaschine“ startet die Suche", async () => {
     await footer(page, "Hilfe");
+    // Seit 05.11.2026 startet „Wie suche ich etwas?“ zugeklappt (Klaus): erst aufklappen, dann tippen.
+    const zu = page.locator("details.help-suche"); if (!(await zu.evaluate((d) => d.open))) await zu.locator("summary").click();
     await page.locator("button", { hasText: "Rechnung der Waschmaschine" }).first().click();
     return (await suche.inputValue()).includes("Waschmaschine") && (await page.locator(".search-results").count()) === 1;
   });
