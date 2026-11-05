@@ -25,8 +25,8 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Gemeinsamer Tresor:** Workflow-PDF-Pro #67 (main 066498d) verdrahtet „Tresor einrichten – nur Speicher wählen“ (Hauptordner
   finden/anlegen, ein Passwort, Lies-mich, Speichern in den Tresor gesperrt). Das Paket liegt byte-gleich in Familienakte,
   BookLedgerPro, Private Brain Pro. Ein-Schritt-Weg verdrahtet in Familienakte #92 (`ProTresorAdapter.einrichten`,
-  `FamilienakteTresorPlugin.einrichten`) und BookLedgerPro #454, beide auf main, nicht veröffentlicht; Private Brain Pro als Entwurf #130 (wartet auf Klaus' Ja zur Vorschau).
-  Tresor-Leser (HTML auf der Karte, ohne Installation, nur lesend) als Entwurf Workflow-PDF-Pro #68.
+  `FamilienakteTresorPlugin.einrichten`) und BookLedgerPro #454, beide auf main, nicht veröffentlicht; Private Brain Pro #130 auf main (Klaus' Freibrief 05.11.), nicht veröffentlicht.
+  Tresor-Leser (HTML auf der Karte, ohne Installation, nur lesend) Workflow-PDF-Pro #68 auf main, in keiner App verdrahtet.
   Geschenkbox mit den veröffentlichten Downloads: `docs/geschenk/geschenkbox-pro.html` (https://claude.ai/artifact/XeUMGuSZ49FzsJYjwQznM7). Klaus will danach alle Pro-Apps neu installieren
   und frische Tresorräume anlegen.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):

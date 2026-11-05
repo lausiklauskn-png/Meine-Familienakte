@@ -5,11 +5,11 @@ In der Familienakte selbst wurde **nichts gebaut** und nichts veröffentlicht (n
 
 ## Gebaut
 
-- **Private Brain Pro #130 (Entwurf, Vorschau https://claude.ai/artifact/48xevPAVyfJXaZJ9BN9BPr):** „Tresor einrichten – nur Speicher wählen …“
+- **Private Brain Pro #130 (auf main nach Klaus' Freibrief 05.11.: „entscheide selbstständig“; Windows-Lauf zuerst rot an einer fremden Lizenz-Probe, Neustart grün; Vorschau https://claude.ai/artifact/48xevPAVyfJXaZJ9BN9BPr):** „Tresor einrichten – nur Speicher wählen …“
   in Zusammenarbeit mit Pro-Apps (nur Android-Brücke). `Vault.find/create/open(tree, base, …)` ab einem Ordner innerhalb der Freigabe,
   `ProTresorordner.baumSetzen(baum, wurzel)`, Entscheidung gerätefrei in `TresorEinrichtung` (JUnit 10). Ein Passwort für Tresor und Ablage
   „Private Brain“ darin; erst prüfen, dann schreiben; eine schon eingerichtete Ablage an anderem Ort zieht nie still um (`VAULT_ANDERER_ORT`).
-- **Workflow-PDF-Pro #68 (Entwurf):** Tresor-Leser `tools/tresor-leser/tresor-leser.html` – Tresor-Ordner wählen, Passwort, Dokumente je Fach
+- **Workflow-PDF-Pro #68 (auf main):** Tresor-Leser `tools/tresor-leser/tresor-leser.html` – Tresor-Ordner wählen, Passwort, Dokumente je Fach
   ansehen/herunterladen, ohne Netz (CSP), nur lesend. Probe mit echtem Testtresor aus dem Paket (`Testtresor.java`). Noch in keiner App verdrahtet.
 - **Geschenkbox** (Klaus' Wunsch, Familienakte im Alltag testen): https://claude.ai/artifact/XeUMGuSZ49FzsJYjwQznM7, Quelle
   `docs/geschenk/geschenkbox-pro.html`. Nach Klaus' Liste (05.11.): Familienakte Pro 2.28.25, Workflow PDF Pro 1.0.14/1.0.13, Private Brain
@@ -30,7 +30,7 @@ hier gesperrt). Tresor-Leser: 12 grün · Gegenprobe 3/3 (Prüfwert-Fall war bli
 
 ## Offen
 
-- Klaus' Ja zu den Vorschauen (#130, #68); danach übernehmen und – nur auf sein Wort – veröffentlichen (Familienakte nächste Fassung 2.28.26).
+- #130 und #68 sind übernommen; veröffentlichen nur auf Klaus' Wort (Familienakte nächste Fassung 2.28.26).
 - Geschenkbox-Tipp zum Tresor nennt den heute veröffentlichten Weg (anlegen in Private Brain Pro, verbinden in der Familienakte); nach den
   nächsten Fassungen auf „nur Speicher wählen“ umstellen.
 - PWA-Updateweg per Versionszeile, Seitentitel „Familienakte Pro“ in der PWA, Vollsicherung Android: unverändert offen.
@@ -50,8 +50,8 @@ Zuerst lesen: Meine-Familienakte CLAUDE.md, BRIEF_ABSCHLUSS_2026-11-05_PB-TRESOR
 Releases prüfen; 2.28.22–2.28.25 nie erneut ausgeben, nächste Fassung 2.28.26.
 
 Als Nächstes:
-1. Klaus' Antwort zu den Vorschauen holen: Private Brain Pro #130 (Tresor in einem Schritt), Workflow-PDF-Pro #68 (Tresor-Leser).
-   Bei Ja: CI prüfen, übernehmen; Tresor-Leser in CI eintragen und erst danach entscheiden, wie die Apps ihn neben den Tresor legen.
+1. Private Brain Pro #130 und Workflow-PDF-Pro #68 sind auf main. Tresor-Leser in die CI eintragen, dann entscheiden, wie die Apps
+   ihn neben den Tresor legen. Familienakte #94 (Hilfe zugeklappt, Demo oben) prüfen/übernehmen, falls noch offen.
 2. Tablet-Rückmeldung aus der Geschenkbox (https://claude.ai/artifact/XeUMGuSZ49FzsJYjwQznM7) auswerten; Befunde je App.
 3. PWA-Updateweg per Versionszeile prüfen; Seitentitel „Familienakte Pro“ in der PWA mit Klaus klären; Vollsicherung Android stückweise.
 4. Veröffentlichungen (Familienakte 2.28.26, BookLedgerPro, Private Brain Pro, Workflow PDF Pro) nur auf Klaus' Wort;
