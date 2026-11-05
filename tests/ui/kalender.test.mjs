@@ -94,7 +94,7 @@ try {
   await step("Formular: Haken „In den Kalender eintragen“ vorbelegt, Chips 7 Tage + 1 Tag an, Uhrzeit frei", async () => {
     const f = page.locator("[data-kalender-formteil]");
     const an = await f.locator(".kalender-chip.an").allInnerTexts();
-    return (await f.locator("[data-kalender-haken]").isChecked()) && an.join() === "7 Tage vorher,1 Tag vorher" && (await page.locator("[data-frist-uhrzeit]").count()) === 1 && /Google Kalender · Familie/.test(await f.innerText());
+    return (await f.locator("[data-kalender-haken]").isChecked()) && an.join() === "1 Woche vorher,1 Tag vorher" && (await f.locator(".kalender-chip").allInnerTexts()).join() === "1 Woche vorher,2 Tage vorher,1 Tag vorher,am Tag, 9 Uhr" && (await page.locator("[data-frist-uhrzeit]").count()) === 1 && /Google Kalender · Familie/.test(await f.innerText());
   });
   await step("Frist speichern → Termin mit Erinnerungen 7 Tage/1 Tag, 9 Uhr Ortszeit, ohne Notizen", async () => {
     await page.locator(".schedule-create textarea").first().fill("Kundennummer 4711");
@@ -188,15 +188,17 @@ try {
     const o = await ka.locator("[data-kalender-liste] option").allInnerTexts();
     return (await pa.evaluate(() => window.__geraet.erlaubt)) && o.some((x) => x.startsWith("Samsung Kalender")) && (await ka.locator("[data-kalender-liste]").inputValue()) === "7";
   });
-  await step("Android: Frist mit Uhrzeit 14:30 und „am Tag, 9 Uhr“ → Plugin bekommt Beginn, Zeitzone, Erinnerungen", async () => {
+  await step("Android: Frist mit Uhrzeit 14:30, „2 Tage“, frei gewählt „5 Tage vorher“ und „am Tag, 9 Uhr“ → Plugin bekommt Beginn, Zeitzone, Erinnerungen", async () => {
     await ka.locator("button", { hasText: "Diesen Kalender verwenden" }).click();
     await ka.locator("[data-kalender-status]").waitFor();
     await pa.locator("[data-frist-uhrzeit]").fill("14:30");
     await pa.locator('[data-kalender-formteil] [data-erinnerung="tag9"]').click();
+    await pa.locator('[data-kalender-formteil] [data-erinnerung="2d"]').click();
+    await pa.locator('[data-kalender-formteil] [data-erinnerung-tage]').selectOption("5");
     await neueFrist(pa, "Elternabend Schule (erfunden)", "2026-11-26");
     for (let i = 0; i < 40; i++) { if (await pa.evaluate(() => window.__geraet.geschrieben.length)) break; await pa.waitForTimeout(150); }
     const g = (await pa.evaluate(() => window.__geraet.geschrieben))[0];
-    return Boolean(g) && g.kalenderId === "7" && g.titel === "Elternabend Schule (erfunden)" && g.beginn === Date.parse("2026-11-26T13:30:00Z") && g.zeitzone === "Europe/Berlin" && JSON.stringify(g.erinnerungen) === "[10080,1440,330]";
+    return Boolean(g) && g.kalenderId === "7" && g.titel === "Elternabend Schule (erfunden)" && g.beginn === Date.parse("2026-11-26T13:30:00Z") && g.zeitzone === "Europe/Berlin" && JSON.stringify(g.erinnerungen) === "[10080,7200,2880,1440,330]";
   });
   check(errA.filter((e) => !/Failed to load resource/.test(e)).length === 0, "Android: keine Seitenfehler", errA.join(" | "));
   await ctxA.close();

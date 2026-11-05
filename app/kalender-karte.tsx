@@ -3,7 +3,7 @@
 // übernehmen → fertig) und der automatische Abgleich, solange ein Kalender verbunden ist.
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CalendarCheck, CalendarPlus, Download, Link2Off, LogIn, RefreshCw } from "lucide-react";
-import { abgleichPlan, ALLE_ERINNERUNGEN, ERINNERUNG_VORGABE, erinnerungsNamen, istTermin, kalenderAnbieterNamen, kalenderFelder, type ErinnerungsWahl, type KalenderAnbieter } from "../lib/kalender";
+import { abgleichPlan, ALLE_ERINNERUNGEN, ERINNERUNG_VORGABE, erinnerungenOrdnen, erinnerungsName, MAX_ERINNERUNGEN, MAX_TAGE_VORHER, istTermin, kalenderAnbieterNamen, kalenderFelder, type ErinnerungsWahl, type KalenderAnbieter } from "../lib/kalender";
 import type { FamilyRecordUnion, FamilyRelation } from "../lib/family-data-model";
 import { ANBIETER, plattform, type KalenderInfo } from "./kalender-anbieter";
 import { kalenderAbgleichen, kalenderDateiAusgeben, kalenderEinstLesen, kalenderEinstSchreiben, type KalenderEinst } from "./kalender-abgleich";
@@ -39,8 +39,16 @@ export function fristAusHinweis(hinweis: string) { return hinweis.match(/\b(20\d
 // ---------- Erinnerungs-Chips ----------
 
 export function ErinnerungsChips({ wert, onChange, name = "Erinnern" }: { wert: ErinnerungsWahl[]; onChange: (w: ErinnerungsWahl[]) => void; name?: string }) {
+  // Schnellwahl als Chips; dazu jede gewählte eigene Zahl als eigener Chip und die Auswahl „weitere Tage vorher“ (1–28).
+  const chips = erinnerungenOrdnen([...ALLE_ERINNERUNGEN, ...wert]);
+  const umschalten = (w: ErinnerungsWahl) => onChange(wert.includes(w) ? wert.filter((x) => x !== w) : erinnerungenOrdnen([...wert, w]));
   return <div className="kalender-chips" role="group" aria-label={name}>
-    {ALLE_ERINNERUNGEN.map((w) => { const an = wert.includes(w); return <button key={w} type="button" className={`kalender-chip${an ? " an" : ""}`} aria-pressed={an} data-erinnerung={w} onClick={() => onChange(an ? wert.filter((x) => x !== w) : ALLE_ERINNERUNGEN.filter((x) => x === w || wert.includes(x)))}>{erinnerungsNamen[w]}</button>; })}
+    {chips.map((w) => { const an = wert.includes(w); return <button key={w} type="button" className={`kalender-chip${an ? " an" : ""}`} aria-pressed={an} data-erinnerung={w} onClick={() => umschalten(w)}>{erinnerungsName(w)}</button>; })}
+    <select className="kalender-tage" aria-label="Weitere Tage vorher" data-erinnerung-tage value="" onChange={(e) => { const n = Number(e.target.value); if (n) onChange(erinnerungenOrdnen([...wert, `${n}d`])); }}>
+      <option value="">weitere …</option>
+      {Array.from({ length: MAX_TAGE_VORHER }, (_, i) => i + 1).filter((n) => !wert.includes(`${n}d`)).map((n) => <option key={n} value={n}>{n === 1 ? "1 Tag vorher" : `${n} Tage vorher`}</option>)}
+    </select>
+    {wert.length > MAX_ERINNERUNGEN && <small className="fine-print" data-erinnerung-grenze>Kalender nehmen höchstens {MAX_ERINNERUNGEN} Erinnerungen; es gelten die {MAX_ERINNERUNGEN} nächsten am Termin.</small>}
   </div>;
 }
 
@@ -184,7 +192,7 @@ export function KalenderVerbinden({ vaultHandle, records, relations, onRefresh, 
 
   const knoten = [
     { titel: "Kalender wählen", unter: verbunden ? kalenderZiel(einst) : "Gerät, Google, Microsoft oder Datei", ziel: "#kalender-schritt-wahl", art: verbunden ? "gut" as const : "normal" as const },
-    { titel: "Erinnerung festlegen", unter: (einst?.erinnerungen || erinnerungen).map((w) => erinnerungsNamen[w]).join(", ") || "keine", ziel: "#kalender-schritt-erinnerung", art: verbunden ? "gut" as const : "normal" as const },
+    { titel: "Erinnerung festlegen", unter: (einst?.erinnerungen || erinnerungen).map((w) => erinnerungsName(w)).join(", ") || "keine", ziel: "#kalender-schritt-erinnerung", art: verbunden ? "gut" as const : "normal" as const },
     { titel: "Vorhandene Fristen übernehmen", unter: ohneHaken.length ? `${ohneHaken.length} offen, noch nicht gewählt` : "alle offenen sind gewählt", ziel: "#kalender-schritt-uebernehmen", art: verbunden && !ohneHaken.length ? "gut" as const : "normal" as const },
     { titel: "Fertig", unter: einst?.anbieter === "ics" ? "Datei bei Änderungen neu ausgeben" : "neue Fristen gehen von selbst hinein, erledigte werden entfernt", art: verbunden && !ohneHaken.length && !warten ? "gut" as const : "normal" as const },
   ];

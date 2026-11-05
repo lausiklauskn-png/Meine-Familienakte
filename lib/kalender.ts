@@ -18,10 +18,31 @@ export const kalenderAnbieterNamen: Record<KalenderAnbieter, string> = {
 };
 
 /** Erinnerungs-Chips wie in der Vorschau. */
-export type ErinnerungsWahl = "7d" | "1d" | "tag9";
-export const erinnerungsNamen: Record<ErinnerungsWahl, string> = { "7d": "7 Tage vorher", "1d": "1 Tag vorher", tag9: "am Tag, 9 Uhr" };
+/**
+ * Erinnerung (Klaus 2026-11-05: „die Erinnerung ist das Wichtige“): beliebig viele Tage vorher, 1 bis 28 (Googles Grenze),
+ * je um die Uhrzeit des Termins (ohne Uhrzeit 9 Uhr), dazu „am Tag, 9 Uhr“. Mehrere zugleich möglich, wie im Kalender üblich.
+ * Gespeichert als „<n>d“ bzw. „tag9“; ältere Einträge („7d“, „1d“) bleiben damit gültig.
+ */
+export type ErinnerungsWahl = "tag9" | `${number}d`;
+export const MAX_TAGE_VORHER = 28;
+/** Schnellwahl als Chips; jede andere Zahl über „weitere Tage vorher“. */
+export const ALLE_ERINNERUNGEN: ErinnerungsWahl[] = ["7d", "2d", "1d", "tag9"];
 export const ERINNERUNG_VORGABE: ErinnerungsWahl[] = ["7d", "1d"];
-export const ALLE_ERINNERUNGEN: ErinnerungsWahl[] = ["7d", "1d", "tag9"];
+export function erinnerungsTage(w: string): number | null {
+  const m = /^([1-9]\d?)d$/.exec(w);
+  const n = m ? Number(m[1]) : NaN;
+  return Number.isInteger(n) && n >= 1 && n <= MAX_TAGE_VORHER ? n : null;
+}
+export function istErinnerung(w: unknown): w is ErinnerungsWahl { return w === "tag9" || (typeof w === "string" && erinnerungsTage(w) !== null); }
+export function erinnerungsName(w: ErinnerungsWahl) {
+  if (w === "tag9") return "am Tag, 9 Uhr";
+  const n = erinnerungsTage(w) || 0;
+  return n === 7 ? "1 Woche vorher" : n === 14 ? "2 Wochen vorher" : n === 1 ? "1 Tag vorher" : `${n} Tage vorher`;
+}
+/** Sortiert: früheste zuerst, „am Tag“ zuletzt; doppelte und ungültige fallen weg. */
+export function erinnerungenOrdnen(liste: unknown[]): ErinnerungsWahl[] {
+  return [...new Set(liste.filter(istErinnerung))].sort((a, b) => (erinnerungsTage(b) ?? 0) - (erinnerungsTage(a) ?? 0));
+}
 
 /** Ohne Uhrzeit steht eine Frist um 9 Uhr im Kalender, 30 Minuten lang. So gilt jede Erinnerung überall gleich (Google und
  * der Gerätekalender kennen bei ganztägigen Terminen keine Erinnerung „am Tag um 9 Uhr“). */
@@ -95,9 +116,9 @@ function ortszeit(datum: string, uhrzeit: string) {
 export function erinnerungsMinuten(wahl: ErinnerungsWahl[], uhrzeit: string, zusaetzlich: number[] = []) {
   const [h, m] = uhrzeit.split(":").map(Number);
   const ab9 = h * 60 + m - 9 * 60;
-  const roh = wahl.map((w) => (w === "7d" ? 7 * 1440 : w === "1d" ? 1440 : Math.max(0, ab9))).concat(zusaetzlich);
+  const roh = wahl.map((w) => (w === "tag9" ? Math.max(0, ab9) : (erinnerungsTage(w) ?? NaN) * 1440)).concat(zusaetzlich);
   return [...new Set(roh.filter((x) => Number.isFinite(x) && x >= 0).map((x) => Math.min(Math.round(x), MAX_ERINNERUNG_MINUTEN)))]
-    .sort((a, b) => b - a).slice(0, MAX_ERINNERUNGEN);
+    .sort((a, b) => a - b).slice(0, MAX_ERINNERUNGEN).sort((a, b) => b - a); // bei mehr als 5: die nächsten am Termin bleiben
 }
 
 /** Erkennt Gesundheitsbezug (Titel, Quelle, verknüpfte Bereiche). Nur noch Auskunft; der Kalender neutralisiert nicht mehr selbst. */
@@ -132,7 +153,7 @@ export function kalenderEintrag(record: FamilyRecordUnion, opt: EintragOptionen 
   const art = record.recordType === "deadline" ? "Frist" : "Aufgabe";
   const titel = geschuetzt ? art : (record.data.title || art).trim().slice(0, 200);
   const beschreibung = geschuetzt ? "Aus der Familienakte. Einzelheiten nur in der App." : `Aus der Familienakte (${record.id}).`;
-  const wahl = Array.isArray(felder.erinnerungen) ? felder.erinnerungen.filter((w): w is ErinnerungsWahl => w in erinnerungsNamen) : (opt.vorgabe || ERINNERUNG_VORGABE);
+  const wahl = Array.isArray(felder.erinnerungen) ? erinnerungenOrdnen(felder.erinnerungen) : (opt.vorgabe || ERINNERUNG_VORGABE);
   const erinnerungen = erinnerungsMinuten(wahl, uhrzeit, verknuepfteErinnerungen(record, beginn, opt.records, opt.relations));
   const inhalt = { titel, beschreibung, beginn: beginn.toISOString(), ende: ende.toISOString(), erinnerungen };
   const updated = Date.parse(record.updatedAt);

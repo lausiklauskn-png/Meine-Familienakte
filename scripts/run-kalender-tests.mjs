@@ -26,6 +26,16 @@ assert.deepEqual(frueh.erinnerungen, [0], "vor 9 Uhr: Erinnerung zum Beginn");
 const falscheZeit = k.kalenderEintrag(frist({}, { dueTime: "25:99" }));
 assert.equal(falscheZeit.beginn, "2026-11-20T08:00:00.000Z");
 gruen("Uhrzeit frei: „am Tag, 9 Uhr“ richtig umgerechnet, ungültige Zeit fällt auf 9 Uhr zurück");
+const zwei = k.kalenderEintrag(frist({}, { erinnerungen: ["2d"] }));
+assert.deepEqual(zwei.erinnerungen, [2880], "2 Tage vorher = 2880 Minuten (9 Uhr zwei Tage vorher)");
+assert.deepEqual(k.kalenderEintrag(frist({}, { erinnerungen: ["1d", "2d", "7d"] })).erinnerungen, [10080, 2880, 1440]);
+assert.deepEqual(k.ALLE_ERINNERUNGEN, ["7d", "2d", "1d", "tag9"]);
+assert.equal(k.erinnerungsName("7d"), "1 Woche vorher");
+assert.equal(k.erinnerungsName("5d"), "5 Tage vorher");
+assert.deepEqual(k.kalenderEintrag(frist({}, { erinnerungen: ["5d", "9d", "tag9"] })).erinnerungen, [9 * 1440, 5 * 1440, 0], "frei gewählte Tage");
+assert.deepEqual(k.erinnerungenOrdnen(["1d", "28d", "29d", "0d", "x", "1d", "tag9", "05d"]), ["28d", "1d", "tag9"], "1–28, keine doppelten, keine Unsinnswerte");
+assert.ok(k.icsDatei([zwei]).includes("TRIGGER:-PT2880M"));
+gruen("Erinnerung wählbar (Klaus 2026-11-05): Schnellwahl 1 Woche/2 Tage/1 Tag, frei 1–28 Tage vorher, kombiniert; ungültige verworfen; ICS-Alarm");
 
 // Sommerzeit: 9 Uhr bleibt 9 Uhr Ortszeit.
 assert.equal(k.kalenderEintrag(frist({}, { dueAt: "2026-07-01" })).beginn, "2026-07-01T07:00:00.000Z");
@@ -106,6 +116,7 @@ gruen("Nutzlast: Google (Erinnerungen popup), Microsoft (eine, früheste), Gerä
 assert.equal(k.kalenderEintrag(frist({}, { dueAt: "" })), null);
 assert.equal(k.kalenderEintrag(rem), null);
 assert.deepEqual(k.erinnerungsMinuten(["7d", "7d", "1d"], "09:00", [99999, -5]), [40320, 10080, 1440]);
+assert.deepEqual(k.erinnerungsMinuten(["9d", "7d", "5d", "3d", "2d", "1d"], "09:00"), [10080, 7200, 4320, 2880, 1440], "bei mehr als 5 bleiben die nächsten am Termin (1 Tag vorher fällt nie weg)");
 gruen("Grenzen: ohne Datum kein Eintrag, Erinnerungen doppelt/negativ/über 28 Tage bereinigt");
 
 console.log(`Kalender-Kern: ${n} grün · 0 rot`);

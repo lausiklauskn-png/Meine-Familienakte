@@ -1,7 +1,7 @@
 // Kalender-Abgleich (Klaus 2026-11-05): Einstellung je Gerät (Demo getrennt), Plan aus dem Kern, Ausführung beim Anbieter,
 // Zuordnung zurück ins Register. Läuft nur, wenn der Nutzer einen Kalender verbunden hat; nichts geschieht still.
 import { workspaceStorage } from "../lib/demo-workspace.ts";
-import { abgleichPlan, ALLE_ERINNERUNGEN, ERINNERUNG_VORGABE, icsDatei, kalenderEintrag, kalenderFelder, kalenderUid, soll, type ErinnerungsWahl, type KalenderAnbieter, type KalenderEintrag } from "../lib/kalender";
+import { abgleichPlan, ERINNERUNG_VORGABE, erinnerungenOrdnen, icsDatei, kalenderEintrag, kalenderFelder, kalenderUid, soll, type ErinnerungsWahl, type KalenderAnbieter, type KalenderEintrag } from "../lib/kalender";
 import type { FamilyRecordUnion, FamilyRelation } from "../lib/family-data-model";
 import { ANBIETER, KalenderFehler } from "./kalender-anbieter";
 import { dateiAusgeben } from "./dateiausgabe";
@@ -22,7 +22,7 @@ export function kalenderEinstLesen(): KalenderEinst | null {
   try {
     const e = JSON.parse(workspaceStorage.getItem(KALENDER_EINST_SCHLUESSEL) || "null") as KalenderEinst | null;
     if (!e || !(e.anbieter in ANBIETER) || typeof e.kalenderId !== "string") return null;
-    return { ...e, erinnerungen: Array.isArray(e.erinnerungen) ? e.erinnerungen.filter((w) => ALLE_ERINNERUNGEN.includes(w)) : ERINNERUNG_VORGABE };
+    return { ...e, erinnerungen: Array.isArray(e.erinnerungen) ? erinnerungenOrdnen(e.erinnerungen) : ERINNERUNG_VORGABE };
   } catch { return null; }
 }
 export function kalenderEinstSchreiben(e: KalenderEinst | null) {

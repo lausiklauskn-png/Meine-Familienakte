@@ -1986,6 +1986,7 @@ fieldset:disabled .datei-knopf { opacity: .55; cursor: not-allowed; }
 .kalender-chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .kalender-chip { border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 999px; padding: 5px 11px; font-size: .86rem; }
 .kalender-chip.an { border-color: var(--green); background: var(--green-soft); color: var(--green); font-weight: 700; }
+.kalender-tage { border: 1px dashed var(--line); background: var(--paper); color: var(--ink); border-radius: 999px; padding: 5px 10px; font-size: .86rem; max-width: 100%; }
 .kalender-vorschlag { margin: 0 0 12px; padding: 8px 10px; border-left: 3px solid #f6c34a; background: var(--amber-soft); font-size: .9rem; overflow-wrap: anywhere; }
 .kalender-karte .ablaufbild { margin: 6px 0 4px; }
 .kalender-schritt { display: grid; gap: 8px; padding-top: 12px; margin-top: 12px; border-top: 1px solid var(--line); }
