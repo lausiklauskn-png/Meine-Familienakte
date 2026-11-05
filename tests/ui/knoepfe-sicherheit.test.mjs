@@ -140,10 +140,13 @@ try {
   // ---------- Hilfe ----------
   await footer(page, "Hilfe");
   await step("Hilfe: alle „… öffnen“-Verweise führen zu einer Seite", async () => {
+    await page.evaluate(() => document.querySelectorAll("main details").forEach((d) => { d.open = true; }));
     const texte = await page.locator("main button.text-link").allInnerTexts();
     let ok = 0;
     for (const t of texte.slice(0, 8)) {
       await footer(page, "Hilfe");
+      // Seit 05.11.2026 starten die Fragen zugeklappt (Klaus): vor dem Tipp aufklappen.
+      await page.evaluate(() => document.querySelectorAll("main details").forEach((d) => { d.open = true; }));
       await page.locator("main button.text-link", { hasText: t }).first().click();
       await page.waitForTimeout(200);
       if ((await page.locator(".breadcrumb").innerText()).trim() !== "Startseite\nHilfe" ) ok++;
