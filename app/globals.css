@@ -509,8 +509,11 @@ code { display: inline-block; color: var(--navy); background: var(--blue-soft); 
 .footer-directory h2 { margin: 0 0 9px; color: #fff; font-size: .83rem; letter-spacing: .04em; }
 .footer-directory ul { margin: 0; padding: 0; list-style: none; }
 .footer-directory li { margin: 0; }
+.footer-directory button, .footer-directory a { display: block; text-decoration: none;
+  }
 .footer-directory button { width: 100%; border: 0; padding: 5px 0; color: #bfd1dd; background: transparent; font-size: .81rem; font-weight: 600; line-height: 1.35; text-align: left; }
-.footer-directory button:hover, .footer-directory button:focus-visible { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.footer-directory a { width: 100%; padding: 5px 0; color: #bfd1dd; font-size: .81rem; font-weight: 600; line-height: 1.35; }
+.footer-directory button:hover, .footer-directory button:focus-visible, .footer-directory a:hover, .footer-directory a:focus-visible { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
 .footer-meta { display: flex; align-items: center; justify-content: space-between; gap: 20px; border-top: 1px solid rgba(220,231,239,.2); padding-top: 15px; color: #9fb3c1; font-size: .75rem; }
 .footer-meta button { display: inline-flex; align-items: center; gap: 6px; border: 0; color: #bfd1dd; background: transparent; font-weight: 700; }
 .version-badge { display: inline-flex; align-items: center; border-radius: 999px; padding: 7px 10px; color: #0c5e54; background: #e4f5ef; font-size: .8rem; font-weight: 900; }

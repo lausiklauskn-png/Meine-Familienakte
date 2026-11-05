@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Impressum &amp; Datenschutz — Familienakte</title>
+<meta name="description" content="Impressum und Datenschutzerklärung der Familienakte (Basic und Pro).">
+<style>
+:root{color-scheme:light dark;--bg:#f2f7fa;--karte:#fff;--fg:#15283a;--leise:#56697a;--linie:#d8e2ea;--navy:#0b3154;--akzent:#087f7a}
+@media (prefers-color-scheme: dark){:root{--bg:#0e161d;--karte:#16222c;--fg:#e2eaf0;--leise:#9db0be;--linie:#2f4352;--navy:#cfe3f2;--akzent:#5cc3cc}}
+body{margin:0;padding:16px;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+main{max-width:760px;margin:0 auto;background:var(--karte);border:1px solid var(--linie);border-top:5px solid var(--navy);border-radius:14px;padding:6px 22px 20px}
+h1{font-size:1.4rem;color:var(--navy)}h2{font-size:1.12rem;margin-top:1.6em;color:var(--navy)}h3{font-size:1rem;margin:1.2em 0 .2em}
+a{color:var(--akzent)}p,li{overflow-wrap:anywhere}small{color:var(--leise)}
+</style>
+</head>
+<body>
+<main>
+<p><a href="./">← zur Familienakte</a></p>
+<h1>Impressum</h1>
+<p>Angaben gemäß § 5 DDG</p>
+<p>Klaus Nitzsche<br>Märchenweg 14<br>21077 Hamburg<br>Deutschland</p>
+<p>E-Mail: <a href="mailto:info@family-projekt.de">info@family-projekt.de</a></p>
+<p>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV: Klaus Nitzsche (Adresse wie oben)</p>
+
+<h1 id="datenschutz">Datenschutz</h1>
+<p>Diese Erklärung gilt für die Familienakte als Web-App („Familienakte Basic“) und als App für Android und Windows („Familienakte Pro“).</p>
+
+<h2>1. Verantwortlicher</h2>
+<p>Klaus Nitzsche, Anschrift wie oben, E-Mail <a href="mailto:info@family-projekt.de">info@family-projekt.de</a>.</p>
+
+<h2>2. Bereitstellung der App</h2>
+<p>Die Web-App wird über GitHub Pages ausgeliefert. Beim Aufruf werden technische Daten (z. B. IP-Adresse, Browserangaben) an GitHub übertragen, damit die Dateien der App ausgeliefert werden können. Die Apps für Android und Windows prüfen nur auf Tipp auf die Versionszeile, ob es eine neue Fassung gibt; dabei wird der Update-Server family-projekt.de abgerufen.</p>
+
+<h2>3. Lokale Verarbeitung</h2>
+<p>Unterlagen, Fristen, Aufgaben, Notizen und alle übrigen Einträge werden auf dem Gerät des Nutzers gespeichert: im Browser (IndexedDB) bzw. in einem vom Nutzer gewählten Ordner oder Datentresor. Eine Speicherung auf Servern des Betreibers findet nicht statt. Der Betreiber erhält keine Inhalte der Akte.</p>
+
+<h2>4. Kalender (freiwillig)</h2>
+<p>Nur wenn der Nutzer unter „Fristen und Aufgaben → Kalender verbinden“ einen Kalender wählt und eine Frist ausdrücklich zum Eintragen anhakt, wird sie als Termin in diesen Kalender geschrieben:</p>
+<ul>
+<li><strong>Kalender auf dem Gerät (Android):</strong> Die App schreibt nach Erlaubnis „Kalender“ in einen Kalender des Geräts (z. B. Samsung-, Google- oder Outlook-Kalender). Einen Abgleich mit dem Konto des Kalenders übernimmt das Gerät nach den Bedingungen des jeweiligen Anbieters. Die App liest dabei nur die Liste der Kalender und ihre eigenen Einträge, keine fremden Termine.</li>
+<li><strong>Google Kalender:</strong> Nach Anmeldung mit dem Google-Konto des Nutzers schreibt die App über die Google Calendar API in den gewählten Kalender. Angefragt werden nur die Berechtigungen, Termine zu schreiben (<code>calendar.events</code>) und die Liste der Kalender zu lesen (<code>calendar.calendarlist.readonly</code>). Die App liest keine bestehenden Termine.</li>
+<li><strong>Microsoft Outlook:</strong> Nach Anmeldung mit dem Microsoft-Konto schreibt die App über Microsoft Graph (<code>Calendars.ReadWrite</code>) in den gewählten Kalender.</li>
+<li><strong>Kalenderdatei (.ics):</strong> Die App erzeugt eine Datei auf dem Gerät; wohin sie geht, bestimmt der Nutzer.</li>
+</ul>
+<p><strong>Übertragen werden nur:</strong> Titel der Frist oder Aufgabe, Datum, Uhrzeit, die gewählten Erinnerungen und der Hinweis „Aus der Familienakte“ mit der internen Kennung. <strong>Notizen und Dokumente werden nie übertragen.</strong> Der Titel kann persönliche Angaben enthalten, auch zu Arztterminen; er liegt danach beim jeweiligen Kalender-Anbieter (Google LLC, USA; Microsoft Corp., USA; bzw. dem Anbieter des Gerätekalenders), und es gelten dessen Bedingungen. Bei Anbietern in den USA handelt es sich um eine Übermittlung in ein Drittland.</p>
+<p><strong>Zugang:</strong> Die Anmeldedaten (Zugangs-Token) werden nur im Arbeitsspeicher der laufenden App gehalten, nicht gespeichert und nie an den Betreiber übertragen. Nach Neuladen bzw. Programmende ist eine neue Anmeldung nötig. Der Nutzer kann die Verbindung in der App jederzeit trennen und den Zugriff zusätzlich in seinem Konto widerrufen (Google: <a href="https://myaccount.google.com/permissions" rel="noopener" target="_blank">myaccount.google.com/permissions</a>; Microsoft: <a href="https://account.live.com/consent/Manage" rel="noopener" target="_blank">account.live.com/consent/Manage</a>).</p>
+<p>Die Nutzung von Daten aus Google-APIs hält sich an die <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener" target="_blank">Google API Services User Data Policy</a> einschließlich der Anforderungen zur eingeschränkten Nutzung (Limited Use). Daten aus Google-Konten werden nur zum Eintragen, Ändern und Entfernen der vom Nutzer gewählten Termine verwendet, nicht an Dritte weitergegeben und nicht für Werbung genutzt.</p>
+
+<h2>5. Internet für die App</h2>
+<p>Die App hat einen eigenen Internetschalter, ab Werk aus. Abrufe nach draußen (Kalender-Konten, Sprachmodelle, Spracheingabe im Browser) finden nur statt, wenn der Nutzer das Internet für die App einschaltet und die jeweilige Funktion selbst auslöst.</p>
+
+<h2>6. Spracheingabe (freiwillig)</h2>
+<p>Tippt der Nutzer auf ein Mikrofon, erkennt der Browser bzw. das Gerät die Sprache. In Chrome wird die Aufnahme dazu an Google geschickt; unter Android erledigt das Sprachfenster des Geräts, unter Windows die Spracherkennung von Windows. Ohne diesen Tipp wird nichts aufgenommen.</p>
+
+<h2>7. Eingebaute PDF-Werkzeuge</h2>
+<p>Für die eingebauten PDF-Werkzeuge (Workflow PDF) gelten ergänzend deren Hinweise: <a href="./apps/workflow-pdf/impressum.html">Impressum &amp; Datenschutz von Workflow PDF</a>. Alle Abrufe dort (z. B. KI mit eigenem Schlüssel) finden ebenfalls nur auf ausdrückliche Wahl des Nutzers statt.</p>
+
+<h2>8. Speicherdauer und Rechte</h2>
+<p>Die Daten liegen auf dem Gerät bzw. im gewählten Ordner des Nutzers; er bestimmt selbst, wie lange sie bleiben, und kann sie jederzeit in der App oder über die Browserdaten löschen. In einen Kalender eingetragene Termine löscht die App, wenn die Frist erledigt wird oder der Nutzer beim Trennen das Löschen wählt; im Übrigen über den Kalender selbst. Es bestehen die gesetzlichen Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung, Widerspruch und Datenübertragbarkeit sowie ein Beschwerderecht bei einer Aufsichtsbehörde, zum Beispiel beim Hamburgischen Beauftragten für Datenschutz und Informationsfreiheit.</p>
+
+<h2>9. Rechtsgrundlagen</h2>
+<p>Die App setzt keine Cookies zu Werbe- oder Analysezwecken und verfolgt niemanden. Die Auslieferung der App beruht auf Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse, die App technisch bereitzustellen). Das Speichern auf dem Gerät ist für die Funktion unbedingt erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Alle Übertragungen nach draußen, auch an Kalender, finden nur statt, wenn der Nutzer sie selbst auslöst; Rechtsgrundlage ist dann Art. 6 Abs. 1 lit. b DSGVO.</p>
+
+<h2>10. Änderungen</h2>
+<p>Diese Erklärung wird angepasst, wenn sich die App technisch ändert. <small>Stand: 05.11.2026.</small></p>
+</main>
+</body>
+</html>

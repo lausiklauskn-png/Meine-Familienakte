@@ -76,7 +76,7 @@ self.addEventListener("fetch", (event) => {
   event.respondWith((async () => {
     const cache = await caches.open(VORRAT);
     // Eingebettete Apps (apps/…, z. B. der Klon von Workflow PDF) sind eigene Seiten: dort NICHT die Akte ausliefern.
-    const eigeneSeite = url.pathname.startsWith(new URL("./apps/", self.registration.scope).pathname);
+    const eigeneSeite = url.pathname.startsWith(new URL("./apps/", self.registration.scope).pathname) || url.pathname.endsWith("/datenschutz.html");
     const key = event.request.mode === "navigate" && !eigeneSeite ? new Request(new URL("./index.html", self.registration.scope).href) : event.request;
     const hit = await cache.match(key, { ignoreSearch: true, ignoreVary: true });
     if (hit) return hit;
