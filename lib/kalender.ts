@@ -23,7 +23,9 @@ export const kalenderAnbieterNamen: Record<KalenderAnbieter, string> = {
  * je um die Uhrzeit des Termins (ohne Uhrzeit 9 Uhr), dazu „am Tag, 9 Uhr“. Mehrere zugleich möglich, wie im Kalender üblich.
  * Gespeichert als „<n>d“ bzw. „tag9“; ältere Einträge („7d“, „1d“) bleiben damit gültig.
  */
-export type ErinnerungsWahl = "tag9" | `${number}d`;
+export type ErinnerungsWahl = "tag9" | `${number}d` | `${number}m`;
+/** Kurzfristige Erinnerungen (Klaus 2026-11-05, „erinnere mich heute um 20 Uhr“): zur Uhrzeit oder Minuten vorher. */
+export const KURZ_ERINNERUNGEN: ErinnerungsWahl[] = ["60m", "15m", "0m"];
 export const MAX_TAGE_VORHER = 28;
 /** Schnellwahl als Chips; jede andere Zahl über „weitere Tage vorher“. */
 export const ALLE_ERINNERUNGEN: ErinnerungsWahl[] = ["7d", "2d", "1d", "tag9"];
@@ -33,15 +35,25 @@ export function erinnerungsTage(w: string): number | null {
   const n = m ? Number(m[1]) : NaN;
   return Number.isInteger(n) && n >= 1 && n <= MAX_TAGE_VORHER ? n : null;
 }
-export function istErinnerung(w: unknown): w is ErinnerungsWahl { return w === "tag9" || (typeof w === "string" && erinnerungsTage(w) !== null); }
+/** „<n>m“: 0 bis 1439 Minuten vor dem Termin. */
+export function erinnerungsMinutenVorher(w: string): number | null {
+  const m = /^(0|[1-9]\d{0,3})m$/.exec(w);
+  const n = m ? Number(m[1]) : NaN;
+  return Number.isInteger(n) && n >= 0 && n < 1440 ? n : null;
+}
+/** Abstand zum Termin in Minuten; „am Tag, 9 Uhr“ hängt von der Uhrzeit ab und gibt null. */
+function vorherMinuten(w: string) { const t = erinnerungsTage(w); return t !== null ? t * 1440 : erinnerungsMinutenVorher(w); }
+export function istErinnerung(w: unknown): w is ErinnerungsWahl { return w === "tag9" || (typeof w === "string" && vorherMinuten(w) !== null); }
 export function erinnerungsName(w: ErinnerungsWahl) {
   if (w === "tag9") return "am Tag, 9 Uhr";
+  const min = erinnerungsMinutenVorher(w);
+  if (min !== null) return min === 0 ? "zur Uhrzeit" : min % 60 === 0 ? `${min / 60} Std. vorher` : `${min} Min. vorher`;
   const n = erinnerungsTage(w) || 0;
   return n === 7 ? "1 Woche vorher" : n === 14 ? "2 Wochen vorher" : n === 1 ? "1 Tag vorher" : `${n} Tage vorher`;
 }
 /** Sortiert: früheste zuerst, „am Tag“ zuletzt; doppelte und ungültige fallen weg. */
 export function erinnerungenOrdnen(liste: unknown[]): ErinnerungsWahl[] {
-  return [...new Set(liste.filter(istErinnerung))].sort((a, b) => (erinnerungsTage(b) ?? 0) - (erinnerungsTage(a) ?? 0));
+  return [...new Set(liste.filter(istErinnerung))].sort((a, b) => (vorherMinuten(b) ?? -1) - (vorherMinuten(a) ?? -1));
 }
 
 /** Ohne Uhrzeit steht eine Frist um 9 Uhr im Kalender, 30 Minuten lang. So gilt jede Erinnerung überall gleich (Google und
@@ -116,7 +128,7 @@ function ortszeit(datum: string, uhrzeit: string) {
 export function erinnerungsMinuten(wahl: ErinnerungsWahl[], uhrzeit: string, zusaetzlich: number[] = []) {
   const [h, m] = uhrzeit.split(":").map(Number);
   const ab9 = h * 60 + m - 9 * 60;
-  const roh = wahl.map((w) => (w === "tag9" ? Math.max(0, ab9) : (erinnerungsTage(w) ?? NaN) * 1440)).concat(zusaetzlich);
+  const roh = wahl.map((w) => (w === "tag9" ? Math.max(0, ab9) : vorherMinuten(w) ?? NaN)).concat(zusaetzlich);
   return [...new Set(roh.filter((x) => Number.isFinite(x) && x >= 0).map((x) => Math.min(Math.round(x), MAX_ERINNERUNG_MINUTEN)))]
     .sort((a, b) => a - b).slice(0, MAX_ERINNERUNGEN).sort((a, b) => b - a); // bei mehr als 5: die nächsten am Termin bleiben
 }

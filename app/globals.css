@@ -2059,3 +2059,26 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .kalender-wahl-zeile { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .kalender-wahl select { min-width: min(100%, 280px); max-width: 100%; padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); color: var(--ink); font: inherit; font-weight: 700; cursor: pointer; }
 .kalender-wahl select:hover:not(:disabled) { border-color: var(--teal); background: #edf7f7; }
+
+/* „Erinnern lassen“ im Memory-Dialog (Klaus 2026-11-05): gut sichtbar, damit nichts nur in der Akte liegt */
+.memory-erinnern { display: grid; gap: 10px; margin: 12px 0; padding: 12px; border: 2px solid #f6c34a; border-radius: 12px; background: var(--amber-soft); }
+.memory-erinnern.an { border-color: var(--teal); background: var(--teal-soft); }
+.memory-erinnern strong { display: inline-flex; align-items: center; gap: 6px; }
+.memory-erinnern-felder { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap: 10px; }
+.memory-erinnern-felder > label { display: grid; gap: 4px; }
+.memory-erinnern-felder input:not([type="checkbox"]) { padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); font: inherit; min-width: 0; }
+.memory-erinnern-titel, .memory-erinnern-kalender, .memory-erinnern-felder .kalender-chips { grid-column: 1 / -1; }
+
+/* Knopf „Notiz“ im Kopf (Klaus 2026-11-05) */
+.notiz-knopf-schalter { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 10px; border: 1px solid var(--navy); border-radius: 8px; background: var(--navy); color: #fff; font: inherit; font-size: .84rem; font-weight: 700; cursor: pointer; flex: 0 0 auto; transition: background-color .15s, box-shadow .15s, transform .08s; }
+.notiz-knopf-schalter:hover { background: #1d5585; box-shadow: 0 2px 8px rgba(16,52,83,.2); }
+.notiz-knopf-schalter:active { transform: scale(.97); }
+.notiz-knopf-schalter:focus-visible { outline: 3px solid #9fd8d4; outline-offset: 2px; }
+.notiz-fenster { width: min(560px, calc(100vw - 24px)); display: grid; gap: 12px; }
+.notiz-fenster h2 { display: inline-flex; align-items: center; gap: 8px; margin: 0; }
+.notiz-text textarea { width: 100%; min-height: 84px; font-size: 1rem; }
+@media (max-width: 620px) {
+  .notiz-knopf-schalter { height: 30px; padding: 0 8px; font-size: .78rem; }
+  .notiz-knopf-schalter span { display: none; }
+  .site-header.demo-mode .notiz-knopf-schalter { display: none; } /* Demo am Handy: Platz für DEMO ▾ und den Namen */
+}

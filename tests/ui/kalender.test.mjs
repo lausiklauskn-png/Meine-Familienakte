@@ -225,7 +225,7 @@ try {
     await aufklappen(pa.locator("[data-kalender-formteil] [data-kalender-erinnerung]"));
     await pa.locator('[data-kalender-formteil] [data-erinnerung="tag9"]').click();
     await pa.locator('[data-kalender-formteil] [data-erinnerung="2d"]').click();
-    await pa.locator('[data-kalender-formteil] [data-erinnerung-tage]').selectOption("5");
+    await pa.locator('[data-kalender-formteil] [data-erinnerung-tage]').selectOption("5d");
     await neueFrist(pa, "Elternabend Schule (erfunden)", "2026-11-26");
     for (let i = 0; i < 40; i++) { if (await pa.evaluate(() => window.__geraet.geschrieben.length)) break; await pa.waitForTimeout(150); }
     const g = (await pa.evaluate(() => window.__geraet.geschrieben))[0];

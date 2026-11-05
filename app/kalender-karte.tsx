@@ -3,7 +3,7 @@
 // übernehmen → fertig) und der automatische Abgleich, solange ein Kalender verbunden ist.
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CalendarCheck, CalendarCog, CalendarPlus, Download, Link2Off, LogIn, RefreshCw } from "lucide-react";
-import { abgleichPlan, ALLE_ERINNERUNGEN, ERINNERUNG_VORGABE, erinnerungenOrdnen, erinnerungsName, MAX_ERINNERUNGEN, MAX_TAGE_VORHER, istTermin, kalenderAnbieterNamen, kalenderFelder, type ErinnerungsWahl, type KalenderAnbieter } from "../lib/kalender";
+import { abgleichPlan, ALLE_ERINNERUNGEN, KURZ_ERINNERUNGEN, ERINNERUNG_VORGABE, erinnerungenOrdnen, erinnerungsName, MAX_ERINNERUNGEN, MAX_TAGE_VORHER, istTermin, kalenderAnbieterNamen, kalenderFelder, type ErinnerungsWahl, type KalenderAnbieter } from "../lib/kalender";
 import type { FamilyRecordUnion, FamilyRelation } from "../lib/family-data-model";
 import { ANBIETER, plattform, type KalenderInfo } from "./kalender-anbieter";
 import { kalenderAbgleichen, kalenderDateiAusgeben, kalenderEinstLesen, kalenderEinstSchreiben, type KalenderEinst } from "./kalender-abgleich";
@@ -39,15 +39,16 @@ export function fristAusHinweis(hinweis: string) { return hinweis.match(/\b(20\d
 
 // ---------- Erinnerungs-Chips ----------
 
-export function ErinnerungsChips({ wert, onChange, name = "Erinnern" }: { wert: ErinnerungsWahl[]; onChange: (w: ErinnerungsWahl[]) => void; name?: string }) {
+export function ErinnerungsChips({ wert, onChange, name = "Erinnern", schnell = ALLE_ERINNERUNGEN }: { wert: ErinnerungsWahl[]; onChange: (w: ErinnerungsWahl[]) => void; name?: string; schnell?: ErinnerungsWahl[] }) {
   // Schnellwahl als Chips; dazu jede gewählte eigene Zahl als eigener Chip und die Auswahl „weitere Tage vorher“ (1–28).
-  const chips = erinnerungenOrdnen([...ALLE_ERINNERUNGEN, ...wert]);
+  const chips = erinnerungenOrdnen([...schnell, ...wert]);
+  const weitere: ErinnerungsWahl[] = [...KURZ_ERINNERUNGEN.slice().reverse(), ...Array.from({ length: MAX_TAGE_VORHER }, (_, i) => `${i + 1}d` as ErinnerungsWahl)].filter((w) => !wert.includes(w) && !schnell.includes(w));
   const umschalten = (w: ErinnerungsWahl) => onChange(wert.includes(w) ? wert.filter((x) => x !== w) : erinnerungenOrdnen([...wert, w]));
   return <div className="kalender-chips" role="group" aria-label={name}>
     {chips.map((w) => { const an = wert.includes(w); return <button key={w} type="button" className={`kalender-chip${an ? " an" : ""}`} aria-pressed={an} data-erinnerung={w} onClick={() => umschalten(w)}>{erinnerungsName(w)}</button>; })}
-    <select className="kalender-tage" aria-label="Weitere Tage vorher" data-erinnerung-tage value="" onChange={(e) => { const n = Number(e.target.value); if (n) onChange(erinnerungenOrdnen([...wert, `${n}d`])); }}>
+    <select className="kalender-tage" aria-label="Weitere Erinnerungen" data-erinnerung-tage value="" onChange={(e) => { const w = /^\d+$/.test(e.target.value) ? `${e.target.value}d` : e.target.value; if (w) onChange(erinnerungenOrdnen([...wert, w])); }}>
       <option value="">weitere …</option>
-      {Array.from({ length: MAX_TAGE_VORHER }, (_, i) => i + 1).filter((n) => !wert.includes(`${n}d`)).map((n) => <option key={n} value={n}>{n === 1 ? "1 Tag vorher" : `${n} Tage vorher`}</option>)}
+      {weitere.map((w) => <option key={w} value={w}>{erinnerungsName(w)}</option>)}
     </select>
     {wert.length > MAX_ERINNERUNGEN && <small className="fine-print" data-erinnerung-grenze>Kalender nehmen höchstens {MAX_ERINNERUNGEN} Erinnerungen; es gelten die {MAX_ERINNERUNGEN} nächsten am Termin.</small>}
   </div>;

@@ -3535,6 +3535,8 @@ export type CreateLocalMemoryInput = {
   selectedReferences: Array<{ recordType: Extract<FamilyRecordType, "person" | "organisation" | "object" | "case" | "document">; id: string }>;
   createTask?: boolean;
   createDeadline?: boolean;
+  /** „Erinnern lassen“: eine Aufgabe mit Termin, auf Wunsch im Kalender (Klaus 2026-11-05). */
+  erinnerung?: { titel: string; dueAt: string; dueTime?: string; erinnerungen: unknown[]; kalenderEintragen: boolean };
 };
 
 function memoryMediaKind(file: File): MemoryMediaReference["kind"] {
@@ -3598,6 +3600,14 @@ export async function createLocalMemoryBundle(handle: FileSystemDirectoryHandle,
     const taskAllocation = nextFamilyRecordId("task", index.sequences);
     index.sequences = taskAllocation.sequences;
     task = createFamilyRecord({ id: taskAllocation.id, recordType: "task", status: "offen", source: event.id, notes: "Vom Benutzer aus einem Memory-Ereignis bestätigt.", data: { title: input.analysis.taskProposal, dueAt: input.analysis.deadlineProposal || undefined }, now }) as FamilyRecordUnion;
+    index.records.push(task);
+    index.relations.push({ id: crypto.randomUUID(), fromType: "task", fromId: task.id, toType: "event", toId: event.id, relationType: "entstand aus", createdAt: now, source: "Bestätigter Memory-Eintrag", notes: null });
+  }
+  if (input.erinnerung && input.erinnerung.titel.trim() && /^\d{4}-\d{2}-\d{2}$/.test(input.erinnerung.dueAt)) {
+    const e = input.erinnerung;
+    const taskAllocation = nextFamilyRecordId("task", index.sequences);
+    index.sequences = taskAllocation.sequences;
+    task = createFamilyRecord({ id: taskAllocation.id, recordType: "task", status: "offen", source: event.id, notes: "Erinnerung aus einem Memory-Ereignis, vom Benutzer bestätigt.", data: { title: e.titel.trim(), dueAt: e.dueAt, ...kalenderEingabe({ dueTime: e.dueTime, erinnerungen: e.erinnerungen as ErinnerungsWahl[], kalenderEintragen: e.kalenderEintragen }) }, now }) as FamilyRecordUnion;
     index.records.push(task);
     index.relations.push({ id: crypto.randomUUID(), fromType: "task", fromId: task.id, toType: "event", toId: event.id, relationType: "entstand aus", createdAt: now, source: "Bestätigter Memory-Eintrag", notes: null });
   }
