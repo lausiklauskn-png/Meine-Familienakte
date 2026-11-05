@@ -1,7 +1,7 @@
 // „Mein Kalender“ und App-Glocke (Klaus 2026-11-05): Monat und Tagesliste in der App, Eintrag an einem Tag anlegen und ändern,
 // Notiz mit Erinnerung springt in den Kalender, Fristenliste zeigt Uhrzeit und „Ändern“ ohne Seitenwechsel, die Glocke läutet
 // (abschaltbar, ab Werk aus). Die Uhr ist gestellt.
-import { startApp, launchBrowser, DESKTOP, HANDY, ready, check, step, summary, collectErrors, internetAn } from "./_harness.mjs";
+import { startApp, launchBrowser, DESKTOP, HANDY, ready, check, step, summary, collectErrors, internetAn, footer } from "./_harness.mjs";
 import { speechStub } from "./_stubs.mjs";
 import { vaultFixture } from "./_vault-fixture.mjs";
 
@@ -74,6 +74,16 @@ try {
     await page.waitForFunction(() => document.querySelector('[data-mk-tag="2026-11-11"]')?.getAttribute("aria-pressed") === "true", null, { timeout: 5000 });
     const liste = await kal.locator(".mk-tagesliste").innerText();
     return /in Mein Kalender/.test(zeile) && /09:00/.test(liste) && /Jens anzurufen/i.test(liste) ? true : (console.log("   ↳", zeile, "|", liste), false);
+  });
+  await step("Tagebuch: „Gehört dazu“ öffnet die Aufgabe im selben Fenster, die Seite bleibt das Tagebuch", async () => {
+    await footer(page, "Tagebuch & Erinnerungen");
+    await page.locator("button", { hasText: "Jens anzurufen" }).first().click();
+    await page.locator(".related-context-list button", { hasText: "Jens" }).first().click();
+    const d = page.locator("[data-termin-bearbeiten]"); await d.waitFor({ timeout: 5000 });
+    const zeit = await d.locator("[data-tb-uhr]").inputValue();
+    await d.locator("button", { hasText: "Abbrechen" }).click();
+    const nochDa = await page.locator(".memory-detail").count();
+    return zeit === "09:00" && nochDa === 1 ? true : (console.log("   ↳", zeit, nochDa), false);
   });
   check(errors.length === 0, "keine Seitenfehler", errors.join(" | "));
   await context.close();
