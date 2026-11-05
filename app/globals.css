@@ -2168,3 +2168,4 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
   .masthead { gap: 6px; }
 }
 .mk-punkt { top: 2px; bottom: auto; min-width: 14px; height: 14px; line-height: 14px; font-size: .62rem; }
+.start-info-panel > span { white-space: pre-line; }

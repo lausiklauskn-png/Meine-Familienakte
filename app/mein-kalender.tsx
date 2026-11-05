@@ -8,12 +8,13 @@ import { DatumFeld } from "./datum-feld";
 import { ErinnerungsChips, kalenderZiel, useKalenderEinst } from "./kalender-karte";
 import { createLocalScheduleBundle } from "./local-vault";
 import { TerminBearbeiten } from "./termin-bearbeiten";
-import { VoiceInput } from "./ui-controls";
+import { InfoPopover, VoiceInput } from "./ui-controls";
 
 /** Öffnet „Mein Kalender“ an einem Tag (z. B. nach dem Speichern einer Notiz mit Erinnerung). */
 export const MEIN_KALENDER_OEFFNEN = "familienakte:mein-kalender";
 export function meinKalenderOeffnen(tag?: string) { window.dispatchEvent(new CustomEvent(MEIN_KALENDER_OEFFNEN, { detail: { tag } })); }
 
+const HILFE = "• Alle offenen Fristen und Aufgaben nach Tag, mit Uhrzeit und Erinnerung.\n• Tag antippen, „+ Eintrag“: Titel einsprechen oder tippen, Uhrzeit, Erinnerung.\n• Stift: Tag, Uhrzeit, Erinnerung oder Kalender ändern.\n• Ist ein Kalender verbunden, stehen die Einträge auch dort und erinnern über das Handy.\n• App-Glocke: läutet zusätzlich in der App, solange sie offen ist. Ab Werk aus, damit es nicht doppelt klingelt.";
 const WOCHENTAGE = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
 const tagSchluessel = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 const offen = (r: FamilyRecordUnion) => !["erledigt", "zurückgestellt", "archiviert"].includes(r.status);
@@ -64,7 +65,7 @@ export function MeinKalender({ vaultHandle, records, relations, onRefresh, onNot
     <button type="button" className="icon-button" onClick={() => setBearbeiten(e.record.id)} aria-label={`„${e.titel}“ ändern`} title="Ändern" data-mk-aendern><Pencil size={16}/></button>
   </li>;
   return <section ref={box} className="card mein-kalender" id="mein-kalender" data-mein-kalender>
-    <div className="card-heading"><div><h2><CalendarDays size={20}/> Mein Kalender</h2></div><GlockenSchalter records={records} relations={relations}/></div>
+    <div className="card-heading"><div><span className="ui-heading-help"><h2><CalendarDays size={20}/> Mein Kalender</h2><InfoPopover label="Mein Kalender erklären" text={HILFE}/></span></div><GlockenSchalter records={records} relations={relations}/></div>
     <div className="mk-monat">
       <div className="mk-kopf"><button type="button" className="icon-button" onClick={() => setMonat(new Date(monat.getFullYear(), monat.getMonth() - 1, 1))} aria-label="Voriger Monat"><ChevronLeft size={18}/></button><strong data-mk-monat>{monat.toLocaleDateString("de-DE", { month: "long", year: "numeric" })}</strong><button type="button" className="icon-button" onClick={() => setMonat(new Date(monat.getFullYear(), monat.getMonth() + 1, 1))} aria-label="Nächster Monat"><ChevronRight size={18}/></button></div>
       <div className="mk-raster" role="grid">{WOCHENTAGE.map((w) => <span key={w} className="mk-wt">{w}</span>)}
