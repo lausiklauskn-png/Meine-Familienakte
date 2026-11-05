@@ -32,7 +32,8 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
-  - `BRIEF_ABSCHLUSS_2026-11-05_PB-TRESOR-LESER-GESCHENKBOX.md` (jüngster Abschluss, Startauftrag)
+  - `BRIEF_ABSCHLUSS_2026-11-05_AKTENSICHERUNG-UND-SICHERUNGSPLAN.md` (jüngster Abschluss)
+  - `BRIEF_SITZUNG_2026-11-05_KALENDER.md` (nächste Sitzung: Kalender-Erinnerung mit Google/Microsoft/Gerätekalender, Datumsfenster, „Was ist neu“; Startauftrag)
   - `BRIEF_CODEX_2026-11-04_NACH-2.28.24.md` (Abstimmung mit Codex: welche Dateien Claude gehören)
   - `BRIEF_ABSCHLUSS_2026-11-04_PDF-ARBEITSRAUM.md`, `BRIEF_ABSCHLUSS_2026-11-04_PDF-FUNKTIONSABGLEICH.md` (Codex)
 
