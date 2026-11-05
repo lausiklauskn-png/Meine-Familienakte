@@ -146,7 +146,10 @@ async function windowsAufruf(anfrage: Record<string, unknown>) {
   try { return await invoke("fa_kalender", { anfrage }) as { zugang?: string; gueltigSek?: number }; } catch (g) { throw alsFehler(g); }
 }
 
-async function anmelden(art: "google" | "microsoft"): Promise<Zugang> {
+/** Erneut anmelden (Klaus 2026-11-05: „1 Tipp“): ohne Kontoauswahl; Google/Microsoft nehmen das angemeldete Konto. */
+export async function kalenderNeuAnmelden(art: "google" | "microsoft") { zugaenge[art] = await anmelden(art, true); }
+
+async function anmelden(art: "google" | "microsoft", erneut = false): Promise<Zugang> {
   const k = konten();
   const scope = art === "google" ? KALENDER_KONTEN.google.scope : KALENDER_KONTEN.microsoft.scope;
   const state = `fa-kal-${zufall(16)}`;
@@ -158,7 +161,7 @@ async function anmelden(art: "google" | "microsoft"): Promise<Zugang> {
   }
   const ziel = rueckkehrAdresse();
   if (art === "google") {
-    const url = `https://accounts.google.com/o/oauth2/v2/auth?${new URLSearchParams({ client_id: k.googleWeb, redirect_uri: ziel, response_type: "token", scope, state, include_granted_scopes: "true", prompt: "select_account" })}`;
+    const url = `https://accounts.google.com/o/oauth2/v2/auth?${new URLSearchParams({ client_id: k.googleWeb, redirect_uri: ziel, response_type: "token", scope, state, include_granted_scopes: "true", ...(erneut ? {} : { prompt: "select_account" }) })}`;
     const fenster = fensterOeffnen(url);
     if (!fenster) throw new KalenderFehler("popup", "Das Anmeldefenster wurde blockiert. Bitte Pop-ups für die Familienakte erlauben.");
     const n = await warteAufRueckkehr(state, fenster);
@@ -166,7 +169,7 @@ async function anmelden(art: "google" | "microsoft"): Promise<Zugang> {
     return { token: n.accessToken, bis: Date.now() + (Number(n.expiresIn) || 3600) * 1000 - 60000 };
   }
   const { verifier, challenge } = await pkce();
-  const url = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?${new URLSearchParams({ client_id: k.microsoft, redirect_uri: ziel, response_type: "code", response_mode: "query", scope, state, code_challenge: challenge, code_challenge_method: "S256", prompt: "select_account" })}`;
+  const url = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?${new URLSearchParams({ client_id: k.microsoft, redirect_uri: ziel, response_type: "code", response_mode: "query", scope, state, code_challenge: challenge, code_challenge_method: "S256", ...(erneut ? {} : { prompt: "select_account" }) })}`;
   const fenster = fensterOeffnen(url);
   if (!fenster) throw new KalenderFehler("popup", "Das Anmeldefenster wurde blockiert. Bitte Pop-ups für die Familienakte erlauben.");
   const n = await warteAufRueckkehr(state, fenster);

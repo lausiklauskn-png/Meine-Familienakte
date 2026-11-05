@@ -51,7 +51,7 @@ import { zurStelle } from "./ablaufbild";
 import { ErinnernTeil, KALENDER_OEFFNEN, type ErinnernWert } from "./erinnern-teil";
 import { NotizKnopf } from "./notiz-knopf";
 import { ErinnerungKasten, MemoryBearbeiten } from "./memory-bearbeiten";
-import { fristVorschlagNehmen, KalenderFormTeil, KalenderVerbinden, type KalenderWahl, useKalenderAutoAbgleich, useKalenderEinst } from "./kalender-karte";
+import { fristVorschlagNehmen, KalenderAnmeldeHinweis, KalenderFormTeil, KalenderVerbinden, type KalenderWahl, useKalenderAutoAbgleich, useKalenderEinst } from "./kalender-karte";
 import { ERINNERUNG_VORGABE, type ErinnerungsWahl } from "../lib/kalender";
 import { KiAuftragDialog } from "./ki-auftrag-dialog";
 import { inventoryScanFeedback, inventoryAssignmentFeedback, inventoryArchiveFeedback, inventoryReleaseFeedback } from "../lib/ui-activity";
@@ -1232,6 +1232,7 @@ function HealthPortalContent() {
         </nav>
       </header>
       <main className="site-main">
+        <KalenderAnmeldeHinweis vaultHandle={vaultHandle} records={familyRecords} relations={familyRelations} onRefresh={async () => { if (vaultHandle) await refreshLocal(vaultHandle); }} onNotice={setNotice}/>
         <section className="search-command-bar" aria-label="Familienakte durchsuchen und diktieren">
           <div className="search-command-label"><span><strong>In der Familienakte suchen</strong></span></div>
           <label className="global-search"><Search size={19}/><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Schreiben, Personen, Termine, Unterlagen …" aria-label="Gesamte Akte in natürlichen Worten durchsuchen"/><DictationButton value={query} onChange={setQuery} label="Suche" append={false}/>{query && <button type="button" className="search-clear" onClick={() => setQuery("")} aria-label="Suche löschen"><X size={16}/></button>}</label>

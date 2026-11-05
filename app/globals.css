@@ -2124,3 +2124,7 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .memory-erinnerung-kasten p { margin: 4px 0 0; display: grid; gap: 2px; }
 .memory-erinnerung-kasten small { color: var(--muted); }
 .memory-glocke { display: block; color: var(--teal) !important; font-weight: 700; }
+/* Hinweis „Kalender: neu anmelden“ (Klaus 2026-11-05) */
+.kalender-anmelde-hinweis { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 10px auto; max-width: 1180px; padding: 10px 14px; border: 2px solid #f6c34a; border-radius: 12px; background: var(--amber-soft); color: var(--ink); }
+.kalender-anmelde-hinweis > span { display: grid; flex: 1; min-width: 180px; }
+.kalender-anmelde-hinweis small { color: var(--muted); }
