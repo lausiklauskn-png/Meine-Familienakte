@@ -1,3 +1,5 @@
+import type { KalenderFelder } from "./kalender";
+
 export const FAMILY_DATA_MODEL_VERSION = 1 as const;
 
 export const recordTypeDefinitions = {
@@ -43,8 +45,8 @@ export type FamilyRecordPayloadMap = {
     checksum?: string;
     storageLocations?: DocumentStorageLocation[];
   };
-  deadline: { title?: string; dueAt?: string };
-  task: { title?: string; dueAt?: string; completedAt?: string };
+  deadline: { title?: string; dueAt?: string } & KalenderFelder;
+  task: { title?: string; dueAt?: string; completedAt?: string } & KalenderFelder;
   reminder: { title?: string; remindAt?: string };
   event: {
     title?: string;
