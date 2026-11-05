@@ -9,6 +9,7 @@ import {
   type CentralIntakeStatus,
 } from "@/lib/central-intake";
 import type { DocumentIntakeSource } from "@/lib/document-intake";
+import { fristAusHinweis, fristVorschlagSetzen } from "./kalender-karte";
 
 const statusClass: Record<CentralIntakeStatus, string> = {
   "Neu": "neutral",
@@ -65,7 +66,7 @@ export function CentralIntakeCenter({
   onExtractAttachments: (id: string) => void;
   onToggle: (id: string) => void;
   onSetStatus: (ids: string[], status: CentralIntakeStatus) => void;
-  onGo: (id: "help" | "documents" | "security") => void;
+  onGo: (id: "help" | "documents" | "security" | "reminders") => void;
 }) {
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -126,7 +127,7 @@ export function CentralIntakeCenter({
             <div className="queue-icon">{analysis?.email ? <Mail/> : <FileText/>}</div>
             <div className="queue-copy"><div className="queue-title-row"><strong>{analysis ? centralIntakeDisplayTitle(analysis) : item.file.name}</strong><span className={`badge ${statusClass[item.status]}`}>{item.status}</span></div>
               <small>{analysis ? `${analysis.fileKind} · ${analysis.plan.lifeArea} · ${fmtBytes(item.file.size)}` : `${fmtBytes(item.file.size)} · Analyse läuft`}</small>
-              {analysis && <><p>{analysis.contentMessage}</p>{analysis.groupHint && <p><b>Zusammenhang:</b> {analysis.groupHint}</p>}{analysis.email && <p><b>E-Mail:</b> {analysis.plan.privacyClass === "besonders geschützt" ? "geschützte Absender- und Betreffdaten" : `${analysis.email.sender || "Absender unbekannt"} · ${analysis.email.attachmentNames.length} Anlage${analysis.email.attachmentNames.length === 1 ? "" : "n"}`}</p>}{analysis.possibleTask && <p><b>Aufgabe:</b> {analysis.possibleTask}</p>}{analysis.possibleDeadline && <p><b>Frist:</b> {analysis.possibleDeadline}</p>}{analysis.plan.duplicateIds.length > 0 && <p className="queue-warning"><b>Mögliche Dublette:</b> vorhandenes Dokument zuerst vergleichen.</p>}</>}
+              {analysis && <><p>{analysis.contentMessage}</p>{analysis.groupHint && <p><b>Zusammenhang:</b> {analysis.groupHint}</p>}{analysis.email && <p><b>E-Mail:</b> {analysis.plan.privacyClass === "besonders geschützt" ? "geschützte Absender- und Betreffdaten" : `${analysis.email.sender || "Absender unbekannt"} · ${analysis.email.attachmentNames.length} Anlage${analysis.email.attachmentNames.length === 1 ? "" : "n"}`}</p>}{analysis.possibleTask && <p><b>Aufgabe:</b> {analysis.possibleTask}</p>}{analysis.possibleDeadline && <p><b>Frist:</b> {analysis.possibleDeadline} <button type="button" className="text-link" data-frist-uebernehmen onClick={() => { fristVorschlagSetzen({ titel: centralIntakeDisplayTitle(analysis), datum: fristAusHinweis(analysis.possibleDeadline!), hinweis: `Aus dem Eingang erkannt: ${analysis.possibleDeadline}`, quelle: analysis.plan.privacyClass === "besonders geschützt" ? `Gesundheitsunterlage aus dem Eingang` : item.file.name }); onGo("reminders"); }}>Als Frist übernehmen</button></p>}{analysis.plan.duplicateIds.length > 0 && <p className="queue-warning"><b>Mögliche Dublette:</b> vorhandenes Dokument zuerst vergleichen.</p>}</>}
               {item.error && <p className="form-error">{item.error}</p>}
               {item.uebergabeVorschlag && <p>Fremde Einordnungsvorschläge aus „{item.uebergabeVorschlag.quelle}“ sind in „Zuordnung prüfen“ verfügbar.</p>}
               {item.uebergabeHinweis && <p>{item.uebergabeHinweis}</p>}

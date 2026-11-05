@@ -48,7 +48,7 @@ try {
     await form.locator('input[placeholder="Zum Beispiel: Antwort an Krankenkasse"]').fill("Erste eigene Frist (erfunden)");
     await form.locator('input[type="date"]').first().fill("2026-12-24");
     await form.locator('input[placeholder="Zum Beispiel: Schreiben vom 07.10.2026"]').fill("Probe");
-    await form.locator('input[type="checkbox"]').check();
+    await form.locator('.schedule-confirm input[type="checkbox"]').check(); // seit dem Kalender zwei Haken im Formular
     await form.locator("button", { hasText: "Frist oder Aufgabe bestätigt anlegen" }).click(); await page.waitForTimeout(800);
     await page.locator("button.schedule-filter", { hasText: "Offen" }).click();
     return (await page.locator("main").innerText()).includes("Erste eigene Frist");

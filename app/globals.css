@@ -1976,3 +1976,26 @@ fieldset:disabled .datei-knopf { opacity: .55; cursor: not-allowed; }
 /* Lange Wörter (Ordnernamen) brechen im Kasten um, statt über den Rand zu laufen (2026-11-05). */
 .ablauf-text strong { overflow-wrap: anywhere; }
 .ablauf-knoten { min-width: 0; }
+
+/* Kalender (Klaus 2026-11-05, Vorschau freigegeben): Chips, Formularteil, Karte „Kalender verbinden“. */
+.kalender-formteil { display: grid; gap: 8px; margin: 12px 0; }
+.kalender-formteil .check-row span { display: grid !important; }
+.kalender-formteil .check-row small { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.kalender-sprung { display: inline-grid; place-items: center; width: 30px; height: 30px; padding: 0; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); color: var(--navy); font-size: 1rem; line-height: 1; }
+.kalender-etikett { font-size: .86rem; color: var(--muted); }
+.kalender-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.kalender-chip { border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 999px; padding: 5px 11px; font-size: .86rem; }
+.kalender-chip.an { border-color: var(--green); background: var(--green-soft); color: var(--green); font-weight: 700; }
+.kalender-vorschlag { margin: 0 0 12px; padding: 8px 10px; border-left: 3px solid #f6c34a; background: var(--amber-soft); font-size: .9rem; overflow-wrap: anywhere; }
+.kalender-karte .ablaufbild { margin: 6px 0 4px; }
+.kalender-schritt { display: grid; gap: 8px; padding-top: 12px; margin-top: 12px; border-top: 1px solid var(--line); }
+.kalender-schritt h3 { margin: 0; font-size: 1rem; color: var(--navy); }
+.kalender-schritt p { margin: 0; overflow-wrap: anywhere; }
+.kalender-anbieter-liste { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); gap: 8px; }
+.kalender-anbieter { display: grid; gap: 3px; text-align: left; border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 10px; padding: 10px 12px; min-width: 0; }
+.kalender-anbieter strong { color: var(--navy); }
+.kalender-anbieter small { color: var(--muted); overflow-wrap: anywhere; }
+.kalender-anbieter.gewaehlt { border-color: var(--teal); background: var(--teal-soft); }
+.kalender-liste { display: grid; gap: 8px; }
+.kalender-liste label { display: grid; gap: 4px; }
+.kalender-liste select { max-width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); }

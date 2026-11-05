@@ -105,7 +105,7 @@ try {
     await form.locator('input[placeholder="Zum Beispiel: Schreiben vom 07.10.2026"]').fill("Probe");
     const knopf = form.locator("button", { hasText: "Frist oder Aufgabe bestätigt anlegen" });
     const vorher = await knopf.isDisabled();
-    await form.locator('input[type="checkbox"]').check();
+    await form.locator('.schedule-confirm input[type="checkbox"]').check(); // seit dem Kalender zwei Haken im Formular
     await knopf.click();
     await page.waitForTimeout(800);
     const meldung = (await page.locator("[aria-live]").allInnerTexts()).join(" ").slice(0, 160);
