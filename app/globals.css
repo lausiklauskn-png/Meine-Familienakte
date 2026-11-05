@@ -1973,4 +1973,6 @@ fieldset:disabled .datei-knopf { opacity: .55; cursor: not-allowed; }
 .aktensicherung-legende .chip-gruen { border-color: #2f8a4f; background: #e9f6ee; color: #23683b; }
 .aktensicherung-legende .chip-grau { border-color: #d3d9dd; background: #f1f3f4; color: #66737c; }
 .aktensicherung-legende [data-sicherung-stand] { margin-left: 4px; color: #4f6472; font-variant-numeric: tabular-nums; }
-.aktensicherung .ablauf-text strong { overflow-wrap: anywhere; }
+/* Lange Wörter (Ordnernamen) brechen im Kasten um, statt über den Rand zu laufen (2026-11-05). */
+.ablauf-text strong { overflow-wrap: anywhere; }
+.ablauf-knoten { min-width: 0; }
