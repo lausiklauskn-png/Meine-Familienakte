@@ -1,8 +1,8 @@
 # Kalender-Konten einrichten (Google, Microsoft)
 
 Stand 05.11.2026, abends: **Google eingerichtet** (Projekt „Familienakte“, beide Client-IDs in `lib/kalender-konten.ts`,
-Geheimnis als GitHub-Secret, App „In Produktion“, noch nicht von Google überprüft). **Microsoft nicht eingerichtet** (siehe
-unten, Abschnitt Microsoft). Ohne Einrichtung funktionieren **Android-Gerätekalender** (Samsung, Google- und Outlook-Konten des
+Geheimnis als GitHub-Secret, App „In Produktion“, noch nicht von Google überprüft). **Microsoft eingerichtet** (App „Familienakte“ im eigenen
+Standardverzeichnis, alle Microsoft-Konten, Client-ID in `lib/kalender-konten.ts`). Ohne Einrichtung funktionieren **Android-Gerätekalender** (Samsung, Google- und Outlook-Konten des
 Geräts) und die **Kalenderdatei (.ics)** schon. Google und Microsoft zeigen bis dahin „Noch nicht eingerichtet.“
 
 Ergebnis der Einrichtung sind **Client-IDs**. Sie sind öffentlich und kommen in `lib/kalender-konten.ts`. Geheim bleibt nur
@@ -45,13 +45,14 @@ Feste Adressen:
 
 ## Microsoft (Entra-Portal)
 
-**Stand 05.11.2026: nicht eingerichtet (Klaus' Entscheidung).** Das private Microsoft-Konto hat kein eigenes Verzeichnis;
-Portal und Entra melden `AADSTS16000 … does not exist in tenant 'Microsoft Services'`. Die Kennung `f8cdef31-…` oben rechts
-im Portal ist Microsofts gemeinsamer Bereich für private Konten, **kein** eigenes Verzeichnis. Apps ohne Verzeichnis anzulegen
-ist laut Portal veraltet. Ein Verzeichnis entsteht mit einem kostenlosen Azure-Konto (Telefon und Kreditkarte zur Prüfung,
-vorübergehende Vormerkung 1 USD, keine Abbuchung ohne eigenes Umstellen auf Vorausbezahlung). Ein Versuch, ein neues Konto
-für info@family-projekt.de anzulegen, wurde im Inkognito-Fenster blockiert. Bis dahin: Outlook-Kalender über den
-Android-Gerätekalender, sonst .ics. Nachtragen = eine Client-ID in `lib/kalender-konten.ts`, kein Umbau.
+**Stand 05.11.2026, abends: eingerichtet.** Das private Microsoft-Konto hatte zuerst kein eigenes Verzeichnis (Portal und
+Entra melden dann `AADSTS16000 … does not exist in tenant 'Microsoft Services'`; die Kennung `f8cdef31-…` oben rechts ist
+Microsofts gemeinsamer Bereich für private Konten, **kein** eigenes Verzeichnis). Klaus hat dafür ein kostenloses Azure-Konto
+angelegt; das legt ein „Standardverzeichnis“ an. Ein erster Versuch, ein neues Konto im Inkognito-Fenster anzulegen, wurde
+blockiert.
+
+Grenze: ohne **verifizierten Herausgeber** (braucht eine MPN-ID) dürfen Nutzer mit Firmen- oder Schulkonten der App oft
+nicht selbst zustimmen; das muss ihr Administrator. Private Konten (Outlook.com, Hotmail) betrifft das nicht.
 
 1. https://entra.microsoft.com öffnen und mit dem Microsoft-Konto anmelden. Meldet das Portal, dass kein Verzeichnis
    (Mandant) da ist: zuerst ein kostenloses Azure-Konto anlegen

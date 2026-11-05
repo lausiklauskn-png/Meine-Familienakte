@@ -11,7 +11,7 @@ export const KALENDER_KONTEN = {
   },
   microsoft: {
     /** Entra → App-Registrierungen → Anwendungs-ID (Client-ID); gilt für Browser (SPA) und Windows (localhost). */
-    clientId: "",
+    clientId: "7a36668e-4325-4533-9649-054c1fbc749c", // App „Familienakte“, Standardverzeichnis, alle Microsoft-Konten, eingerichtet 05.11.2026
     scope: "openid profile offline_access https://graph.microsoft.com/Calendars.ReadWrite",
   },
 } as const;

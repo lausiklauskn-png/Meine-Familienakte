@@ -6,7 +6,7 @@ import { capacitorStub } from "./_capacitor-stub.mjs";
 import { vaultFixture } from "./_vault-fixture.mjs";
 
 const anmeldung = `
-  window.FamilienakteKalenderKonten = { googleWeb: "probe-web.apps.googleusercontent.com" };
+  window.FamilienakteKalenderKonten = { googleWeb: "probe-web.apps.googleusercontent.com", microsoft: "" }; // Fall „noch nicht eingerichtet“ bleibt geprüft
   window.__anmeldungen = [];
   window.open = (url) => {
     const u = new URL(url); window.__anmeldungen.push(u.origin + u.pathname + "|" + u.searchParams.get("scope") + "|" + u.searchParams.get("redirect_uri"));
