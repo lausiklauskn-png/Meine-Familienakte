@@ -25,6 +25,9 @@ check("Plugin-Namen passen zum Klebstoff (ProNetwork, ProSpeech, FamilienakteSha
 check("Klebstoff liegt im Paket und ist in index.html eingebunden", existsSync(path.join(root, "public/native/familienakte-android.js")) && read("index.html").includes("native/familienakte-android.js") && read("index.html").includes("native/native-network.js"));
 check("Klebstoff läuft nur in der App (isNativePlatform)", read("public/native/familienakte-android.js").includes("isNativePlatform"));
 check("Startsymbole in allen Dichten", ["mdpi", "hdpi", "xhdpi", "xxhdpi", "xxxhdpi"].every((d) => existsSync(path.join(root, `android/app/src/main/res/mipmap-${d}/ic_launcher.png`))));
+const kalJava = read("android/app/src/main/java/de/familyprojekt/familienakte/FamilienakteKalenderPlugin.java");
+check("Kalender: Plugin FamilienakteKalender registriert, Rechte READ/WRITE_CALENDAR im Manifest und erst beim Verbinden erfragt", main.includes("registerPlugin(FamilienakteKalenderPlugin.class)") && kalJava.includes('name = "FamilienakteKalender"') && manifest.includes("android.permission.READ_CALENDAR") && manifest.includes("android.permission.WRITE_CALENDAR") && kalJava.includes('requestPermissionForAlias("kalender"'));
+check("Kalender: nur eigene Einträge über ihre Nummer, Erinnerungen über Reminders, keine Abfrage fremder Termine", kalJava.includes("CalendarContract.Reminders.CONTENT_URI") && kalJava.includes("withAppendedId(CalendarContract.Events.CONTENT_URI") && !/query\(CalendarContract\.Events\.CONTENT_URI/.test(kalJava));
 const keyfiles = [];
 const walk = (dir) => { for (const e of readdirSync(dir, { withFileTypes: true })) { if (e.name === "node_modules" || e.name === ".git" || e.name === "dist") continue; const p = path.join(dir, e.name); if (e.isDirectory()) walk(p); else if (/\.(jks|keystore|p12|pem|key)$/i.test(e.name)) keyfiles.push(path.relative(root, p)); } };
 walk(root);

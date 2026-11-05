@@ -64,6 +64,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Kamera nur für „Dokument fotografieren“ (Dateiwahl mit Aufnahme); kein Mikrofon: das Diktat nutzt Androids Sprachfenster. -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <!-- Fristen in den Gerätekalender (Klaus 2026-11-05); erfragt erst beim Verbinden. -->
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <!-- Updates vom eigenen Server: Androids Installieren-Fenster für die geprüfte APK (gleiches Paket, gleiches Zertifikat). -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-feature android:name="android.hardware.camera" android:required="false" />

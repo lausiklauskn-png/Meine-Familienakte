@@ -6,3 +6,6 @@ dist-single
 dist-einzel
 work/
 windows/src-tauri/pro-tresor/
+
+# Rust-Bauprodukte der Windows-Hülle (lokale cargo-Läufe)
+windows/src-tauri/target/
