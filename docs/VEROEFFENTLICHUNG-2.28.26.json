@@ -1,0 +1,38 @@
+{
+  "version": "2.28.26",
+  "source": "d1b44aa3e7174721c8aeec2354cb58b9eb8ebab0",
+  "pullRequest": 103,
+  "enthaelt": [97, 98, 99, 100, 101, 102, 103],
+  "recordedUtc": "2026-11-05T20:45:00Z",
+  "freigabe": "Klaus 2026-11-05: „zieh das bitte in der PWA-App und in der Windows-App nach, damit die Aktualisierung … das alles mit reinzieht“ und „Android ist doch mindestens genauso wichtig“ (Android, Windows mit Update-Server, PWA)",
+  "ciAmPrStand": "e03901c1bdabbaf2ada97e3df548eeef2b32d28c: pruefung, webview, product (31, pixel_c), product (35, pixel_2), android, windows – alle success",
+  "releases": [
+    {
+      "tag": "android-v2.28.26",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.26",
+      "run": 42100919987,
+      "conclusion": "success",
+      "updateServer": "server=ja; Lauf grün",
+      "downloadProof": [
+        { "name": "Familienakte-android-v2.28.26.apk", "bytes": 19849249, "sha256": "0eccc1842ce757bb465b8c123eb8e05e27dcb3f6d9af7390ff80a2d0e5305efc", "anonymousDownload": true, "matchesSHA256SUMS": true, "versionInside": "2.28.26" },
+        { "name": "Familienakte-Einzeldatei-2.28.26.html", "bytes": 3409836, "sha256": "db3dd0e4934316b135b14c0f941d9d46d3629398a27dbf8cb8cbded9ce351d44", "anonymousDownload": true, "matchesSHA256SUMS": true }
+      ]
+    },
+    {
+      "tag": "windows-v2.28.26",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.26",
+      "run": 42100924833,
+      "conclusion": "success",
+      "updateServer": "Job „server“ grün; latest.json nennt 2.28.26",
+      "downloadProof": [
+        { "name": "Familienakte-Windows-2.28.26-x64-setup.exe", "bytes": 34008263, "sha256": "7527bf91008a0b59f50ffd24b0f241fba4023998e9f5b7e5e253e02b1612999a", "anonymousDownload": true, "matchesSHA256SUMS": true }
+      ]
+    }
+  ],
+  "pwa": "Pages-Lauf 42100909619 nach dem Merge auf main erfolgreich",
+  "notChecked": [
+    "Kein physisches Tablet und kein eigener Windows-Rechner",
+    "family-projekt.de aus dem Behälter nicht direkt geprüft; die Freigabeläufe prüfen den Server von außen",
+    "Echte Google-/Microsoft-Anmeldung nur von Klaus im Browser begonnen; Kalendereintrag am Gerät noch nicht bestätigt"
+  ]
+}
