@@ -2117,3 +2117,10 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .notiz-text .voice-field { align-items: start; }
 .notiz-text .dictation-control { position: static; }
 .notiz-text .dictation-status { position: absolute; left: 2px; bottom: 0; margin: 0; white-space: nowrap; }
+.memory-bearbeiten { width: min(720px, calc(100vw - 24px)); display: grid; gap: 12px; max-height: calc(100vh - 40px); overflow: auto; }
+.memory-bearbeiten-text { display: grid; gap: 4px; }
+.memory-erinnerung-kasten { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 10px 0; padding: 10px 14px; border: 2px solid #f6c34a; border-radius: 12px; background: var(--amber-soft); }
+.memory-erinnerung-kasten.an { border-color: var(--teal); background: var(--teal-soft); }
+.memory-erinnerung-kasten p { margin: 4px 0 0; display: grid; gap: 2px; }
+.memory-erinnerung-kasten small { color: var(--muted); }
+.memory-glocke { display: block; color: var(--teal) !important; font-weight: 700; }
