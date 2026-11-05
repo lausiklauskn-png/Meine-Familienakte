@@ -2028,3 +2028,88 @@ fieldset:disabled .datei-knopf { opacity: .55; cursor: not-allowed; }
 }
 .kalender-hilfe-punkte { margin: 10px 0 0; padding-left: 1.2em; display: grid; gap: 6px; }
 .kalender-hilfe-punkte li { overflow-wrap: anywhere; }
+
+/* Rückmeldung beim Darüberfahren und Drücken für die Kalender- und Neu-Knöpfe (Klaus 2026-11-05: „zeigen an, dass ich mit der Maus drauf bin“) */
+.kalender-anbieter, .kalender-chip, .kalender-tage, .kalender-sprung, .neu-knopf-schalter, .neu-x, .kalender-karte .button { cursor: pointer; transition: border-color .15s, background-color .15s, box-shadow .15s, transform .08s; }
+.kalender-anbieter:not(:disabled):hover { border-color: var(--teal); background: #f2f8fa; box-shadow: 0 4px 12px rgba(16,52,83,.10); }
+.kalender-anbieter.gewaehlt:not(:disabled):hover { background: var(--teal-soft); }
+.kalender-chip:hover, .kalender-tage:hover, .kalender-sprung:hover { border-color: var(--teal); background: #edf7f7; }
+.kalender-chip.an:hover { border-color: var(--green); background: #dcefe3; }
+.neu-knopf-schalter:hover { background: #d9efed; box-shadow: 0 2px 8px rgba(16,52,83,.12); }
+.neu-x:hover { border-color: var(--teal); color: var(--teal); background: #edf7f7; }
+.app-shell .kalender-karte .button.primary:not(:disabled):hover { background: #1d5585; border-color: #1d5585; box-shadow: 0 4px 12px rgba(16,52,83,.18); }
+.app-shell .kalender-karte .button.primary.step-complete, .app-shell .kalender-karte .button.primary.step-complete:hover { background: var(--green); border-color: var(--green); }
+.kalender-anbieter:not(:disabled):active, .kalender-chip:active, .kalender-sprung:active, .neu-knopf-schalter:active, .neu-x:active, .kalender-karte .button:not(:disabled):active { transform: scale(.97); }
+
+/* Eingeklappt (Klaus 2026-11-05): Karte „Kalender verbinden“ und Erinnerung je Frist */
+details.kalender-karte > summary { list-style: none; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; cursor: pointer; padding: 4px 2px; border-radius: 10px; }
+details.kalender-karte > summary::-webkit-details-marker, details.kalender-erinnerung > summary::-webkit-details-marker { display: none; }
+details.kalender-karte > summary:hover { background: #f2f8fa; }
+.kalender-karte-titel { display: inline-flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.05rem; color: var(--navy); }
+.kalender-karte-pfeil { margin-left: auto; color: var(--teal); transition: transform .15s; }
+details.kalender-karte[open] > summary { margin-bottom: 8px; }
+details.kalender-karte[open] .kalender-karte-pfeil { transform: rotate(180deg); }
+details.kalender-erinnerung > summary { list-style: none; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; cursor: pointer; padding: 6px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); font-size: .9rem; }
+details.kalender-erinnerung > summary:hover { border-color: var(--teal); background: #edf7f7; }
+details.kalender-erinnerung[open] > summary { margin-bottom: 8px; }
+.kalender-aendern { margin-left: auto; color: var(--teal); font-weight: 700; }
+details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
+
+/* Kalender wählen als eine schmale Auswahl (Klaus 2026-11-05) */
+.kalender-wahl-zeile { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.kalender-wahl select { min-width: min(100%, 280px); max-width: 100%; padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); color: var(--ink); font: inherit; font-weight: 700; cursor: pointer; }
+.kalender-wahl select:hover:not(:disabled) { border-color: var(--teal); background: #edf7f7; }
+
+/* „Erinnern lassen“ im Memory-Dialog (Klaus 2026-11-05): gut sichtbar, damit nichts nur in der Akte liegt */
+.memory-erinnern { display: grid; gap: 10px; margin: 12px 0; padding: 12px; border: 2px solid #f6c34a; border-radius: 12px; background: var(--amber-soft); }
+.memory-erinnern.an { border-color: var(--teal); background: var(--teal-soft); }
+.memory-erinnern strong { display: inline-flex; align-items: center; gap: 6px; }
+.memory-erinnern-felder { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap: 10px; }
+.memory-erinnern-felder > label { display: grid; gap: 4px; }
+.memory-erinnern-felder input:not([type="checkbox"]) { padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); font: inherit; min-width: 0; }
+.memory-erinnern-titel, .memory-erinnern-kalender, .memory-erinnern-felder .kalender-chips { grid-column: 1 / -1; }
+
+/* Knopf „Notiz“ im Kopf (Klaus 2026-11-05) */
+.notiz-knopf-schalter { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 10px; border: 1px solid var(--line); border-radius: 8px; background: #fff; color: var(--navy); font: inherit; font-size: .84rem; font-weight: 700; cursor: pointer; flex: 0 0 auto; transition: background-color .15s, box-shadow .15s, transform .08s; }
+.notiz-knopf-schalter:hover { border-color: #9fb3c1; background: var(--blue-soft); box-shadow: 0 2px 8px rgba(16,52,83,.12); }
+.notiz-knopf-schalter:active { transform: scale(.97); }
+.notiz-knopf-schalter:focus-visible { outline: 3px solid #9fd8d4; outline-offset: 2px; }
+.notiz-fenster { width: min(560px, calc(100vw - 24px)); display: grid; gap: 12px; }
+.notiz-fenster h2 { display: inline-flex; align-items: center; gap: 8px; margin: 0; }
+.notiz-text textarea { width: 100%; min-height: 84px; font-size: 1rem; }
+.notiz-text { position: relative; }
+.notiz-aktion { position: absolute; right: 0; top: 52px; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 10px; border: 2px solid var(--green); background: var(--green-soft); color: var(--green); cursor: pointer; transition: background-color .15s, transform .08s; }
+.notiz-aktion:hover:not(:disabled) { background: #d4ecdd; }
+.notiz-aktion:active:not(:disabled) { transform: scale(.95); }
+.notiz-aktion:disabled { opacity: .45; cursor: default; }
+.notiz-aktion.loeschen { border-color: #b42318; background: #fdf0ef; color: #b42318; }
+.notiz-aktion.loeschen:hover:not(:disabled) { background: #f9dcda; }
+.notiz-gespeichert { display: flex; align-items: center; gap: 6px; margin: 0; color: var(--green); font-weight: 700; }
+@media (max-width: 620px) {
+  .notiz-knopf-schalter { height: 30px; padding: 0 8px; font-size: .78rem; }
+  .notiz-knopf-schalter span { display: none; }
+  .site-header.demo-mode .notiz-knopf-schalter { display: none; } /* Demo am Handy: Platz für DEMO ▾ und den Namen */
+}
+.notiz-leeren { position: absolute; top: 6px; right: 58px; width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line); background: #fff; color: var(--muted); cursor: pointer; }
+.notiz-leeren:hover { border-color: #b42318; color: #b42318; background: #fdf0ef; }
+/* Kalender-Ampel in „Erinnern lassen“ (Klaus 2026-11-05) */
+.kalender-ampel { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; padding: 8px 12px; border-radius: 10px; border: 2px solid; font: inherit; cursor: pointer; transition: background-color .15s, transform .08s; }
+.kalender-ampel span { display: grid; gap: 1px; flex: 1; min-width: 0; }
+.kalender-ampel small { font-size: .78rem; overflow-wrap: anywhere; }
+.kalender-ampel.gruen { border-color: var(--green); background: var(--green-soft); color: var(--green); }
+.kalender-ampel.gruen:hover { background: #d4ecdd; }
+.kalender-ampel.rot { border-color: #b42318; background: #fdf0ef; color: #9f2a2a; }
+.kalender-ampel.rot:hover { background: #f9dcda; }
+.kalender-ampel:active { transform: scale(.98); }
+.kalender-ampel-pfeil { flex: none !important; font-size: 1.3rem; }
+.notiz-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.notiz-liste li { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--green-soft); color: var(--green); }
+.notiz-liste li > span { flex: 1; min-width: 0; display: grid; gap: 1px; color: var(--ink); }
+.notiz-liste strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.notiz-liste small { color: var(--muted); }
+.notiz-weg { flex: none; width: 36px; height: 36px; display: grid; place-items: center; border-radius: 8px; border: 1px solid #e3b7b3; background: #fff; color: #b42318; cursor: pointer; }
+.notiz-weg:hover:not(:disabled) { background: #fdf0ef; border-color: #b42318; }
+.kalender-auswahl { display: grid; gap: 4px; font-size: .9rem; }
+.kalender-auswahl select { max-width: 100%; padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); font: inherit; cursor: pointer; }
+.kalender-auswahl select:hover { border-color: var(--teal); }
+.memory-erinnern-felder .kalender-auswahl { grid-column: 1 / -1; }

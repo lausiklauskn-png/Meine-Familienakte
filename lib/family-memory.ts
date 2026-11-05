@@ -63,6 +63,8 @@ export type MemoryAnalysis = {
   openPoint: { question: string; reason: string; status: MemoryOpenStatus } | null;
   taskProposal: string | null;
   deadlineProposal: string | null;
+  /** „Erinnere mich heute um 20 Uhr …“ (Klaus 2026-11-05): Wunsch und Zeitpunkt für Aufgabe und Kalender, nur ein Vorschlag. */
+  erinnerungsVorschlag: ErinnerungsVorschlag | null;
   tags: string[];
   assistantQuestion: string | null;
   assignmentVersion: number;
@@ -165,6 +167,63 @@ function parseEventAt(text: string, now: Date) {
   const hours = time ? time[1].padStart(2, "0") : now.toISOString().slice(11, 13);
   const minutes = time ? time[2] : now.toISOString().slice(14, 16);
   return `${date}T${hours}:${minutes}:00`;
+}
+
+export type ErinnerungsVorschlag = { wunsch: boolean; dueAt: string; dueTime: string | null };
+const WOCHENTAGE = ["sonntag", "montag", "dienstag", "mittwoch", "donnerstag", "freitag", "samstag"];
+const ortsDatum = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+/**
+ * Erkennt einen Erinnerungswunsch („erinnere mich“, „nicht vergessen“, „denk dran“) und einen Zeitpunkt in der Zukunft
+ * (heute/morgen/übermorgen, Wochentag, Datum, „um 20 Uhr“). Ortszeit des Geräts. Nichts wird ohne Bestätigung angelegt.
+ */
+export function erinnerungAusText(text: string, now: Date = new Date()): ErinnerungsVorschlag | null {
+  const wunsch = /(erinner|nicht vergessen|denk\w*\s+(?:mich\s+)?(?:da|d)?ran|wecke? mich)/i.test(text);
+  const zeit = text.match(/\bum\s*(\d{1,2})(?:[:.](\d{2}))?\s*(?:uhr)?\b/i) || text.match(/\b(\d{1,2})(?:[:.](\d{2}))?\s*uhr\b/i);
+  const h = zeit ? Number(zeit[1]) : NaN, m = zeit && zeit[2] ? Number(zeit[2]) : 0;
+  const dueTime = zeit && h >= 0 && h <= 23 && m <= 59 ? `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}` : null;
+  const tag = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  // „in 5 Stunden“, „in 30 Minuten“, „in 3 Tagen“, „in einer Woche“ (Klaus 2026-11-05)
+  const zahl = (w: string) => /^\d+$/.test(w) ? Number(w) : ({ einer: 1, einem: 1, eine: 1, ein: 1, zwei: 2, drei: 3, vier: 4, fünf: 5, sechs: 6, sieben: 7, acht: 8, neun: 9, zehn: 10, halben: 0.5, halbe: 0.5 } as Record<string, number>)[w.toLowerCase()] ?? NaN;
+  const halb = /\bin\s+(?:einer\s+)?halben\s+stunde\b/i.test(text);
+  const rel = halb ? ["", "30", "minuten"] : text.match(/\bin\s+(\d+|einer|einem|eine|ein|zwei|drei|vier|fünf|sechs|sieben|acht|neun|zehn|halben|halbe)\s+(minuten?|min|stunden?|std|tag(?:en)?|wochen?)\b/i);
+  if (rel && Number.isFinite(zahl(rel[1]))) {
+    const n = zahl(rel[1]), e = rel[2].toLowerCase();
+    const ab = new Date(now.getTime() + (e.startsWith("min") ? n * 60000 : e.startsWith("st") ? n * 3600000 : e.startsWith("tag") ? n * 86400000 : n * 7 * 86400000));
+    const genau = e.startsWith("min") || e.startsWith("st");
+    return { wunsch, dueAt: ortsDatum(ab), dueTime: genau ? `${String(ab.getHours()).padStart(2, "0")}:${String(ab.getMinutes()).padStart(2, "0")}` : dueTime };
+  }
+  let datum: string | null = null;
+  const dt = text.match(/\b(\d{1,2})\.(\d{1,2})\.(?:(20\d{2}|\d{2})\b)?/);
+  if (dt) {
+    const jahr = dt[3] ? (dt[3].length === 2 ? 2000 + Number(dt[3]) : Number(dt[3])) : tag.getFullYear();
+    let d = new Date(jahr, Number(dt[2]) - 1, Number(dt[1]));
+    if (!dt[3] && d < tag) d = new Date(jahr + 1, Number(dt[2]) - 1, Number(dt[1]));
+    if (d.getMonth() === Number(dt[2]) - 1) datum = ortsDatum(d);
+  }
+  if (!datum && /(?<![a-zäöüß])übermorgen\b/i.test(text)) datum = ortsDatum(new Date(tag.getFullYear(), tag.getMonth(), tag.getDate() + 2));
+  else if (!datum && /(?<![a-zäöüß])morgen\b/i.test(text)) datum = ortsDatum(new Date(tag.getFullYear(), tag.getMonth(), tag.getDate() + 1));
+  else if (!datum && /\bheute\b/i.test(text)) datum = ortsDatum(tag);
+  if (!datum) {
+    const w = WOCHENTAGE.findIndex((n) => new RegExp(`\\b(?:am|nächsten|kommenden)\\s+${n}\\b`, "i").test(text));
+    if (w >= 0) { const plus = ((w - tag.getDay() + 7) % 7) || 7; datum = ortsDatum(new Date(tag.getFullYear(), tag.getMonth(), tag.getDate() + plus)); }
+  }
+  if (!wunsch && (!datum || datum <= ortsDatum(tag))) return null; // ohne Wunsch nur ein Datum in der Zukunft
+  if (!datum) { // nur Uhrzeit oder gar nichts: heute, wenn die Uhrzeit noch kommt, sonst morgen
+    const spaeter = dueTime && (h * 60 + m) > now.getHours() * 60 + now.getMinutes();
+    datum = ortsDatum(dueTime && !spaeter ? new Date(tag.getFullYear(), tag.getMonth(), tag.getDate() + 1) : tag);
+  }
+  return { wunsch, dueAt: datum, dueTime };
+}
+
+/** Kurzer Titel für die Erinnerung: „Erinnere mich heute um 20 Uhr, Jens anzurufen“ → „Jens anzurufen“. */
+export function erinnerungsTitel(text: string) {
+  const roh = text.trim();
+  const ohne = roh.replace(/^(?:bitte\s+)?(?:erinnere?|erinner)\s+mich\s*/i, "");
+  if (ohne === roh) return roh.slice(0, 120); // kein „erinnere mich“: Text bleibt
+  const t = ohne
+    .replace(/^(?:(?:heute|morgen|übermorgen|am\s+\S+|in\s+(?:einer\s+)?\S+\s+\S+|um\s*\d{1,2}(?:[:.]\d{2})?\s*(?:uhr)?|noch\s+(?:ein)?mal|nochmal)[\s,]*)+/i, "")
+    .replace(/^(?:daran,?\s*|an\s+)?(?:dass\s+)?(?:ich\s+)?(?:noch\s+)?/i, "").replace(/[.!]+$/, "").trim();
+  return (t || "Erinnerung").slice(0, 120);
 }
 
 function exactDeadline(text: string) {
@@ -316,6 +375,7 @@ export function buildMemoryAnalysis(input: {
     openPoint,
     taskProposal: taskFromText(combined),
     deadlineProposal: exactDeadline(combined),
+    erinnerungsVorschlag: erinnerungAusText(original, now),
     tags: tagsFromText(combined),
     assistantQuestion,
     assignmentVersion: assignment.version,

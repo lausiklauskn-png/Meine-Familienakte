@@ -17,6 +17,8 @@ export function zurStelle(ziel: string | (() => void)) {
   if (typeof ziel === "function") { ziel(); return; }
   const el = document.querySelector<HTMLElement>(ziel);
   if (!el) return;
+  // Liegt die Stelle in einem eingeklappten Bereich (oder ist selbst einer), wird er geöffnet.
+  for (let d: HTMLElement | null = el; d; d = d.parentElement) if (d instanceof HTMLDetailsElement) d.open = true;
   el.scrollIntoView({ behavior: "smooth", block: "center" });
   el.focus?.({ preventScroll: true });
   el.classList.add("ablauf-ziel");

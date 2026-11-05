@@ -79,6 +79,16 @@ assert.deepEqual(k.abgleichPlan([frist({}, { kalender: [z], kalenderEintragen: f
 assert.deepEqual(k.abgleichPlan([frist({}, { kalender: [z] })], { anbieter: "geraet", kalenderId: "3" }).map((s) => s.art), ["anlegen"], "anderer Kalender: eigener Eintrag, alter bleibt");
 gruen("Abgleich: anlegen, gleich, ändern, entfernen bei erledigt/zurückgestellt/abgehakt; andere Kalender unberührt");
 
+// Eigener Kalender je Eintrag (Klaus 2026-11-05): Vorauswahl ist der aus den Einstellungen; eigene Wahl beim selben Anbieter.
+const wahl = { anbieter: "google", kalenderId: "arbeit@group", name: "Arbeit" };
+const pw = k.abgleichPlan([frist({}, { kalenderWahl: wahl })], ziel);
+assert.deepEqual(pw.map((s) => [s.art, s.kalenderId]), [["anlegen", "arbeit@group"]]);
+assert.deepEqual(k.abgleichPlan([frist()], ziel).map((s) => s.kalenderId), ["primary"], "ohne eigene Wahl: Kalender aus den Einstellungen");
+const umzug = k.abgleichPlan([frist({}, { kalender: [z], kalenderWahl: wahl })], ziel).map((s) => [s.art, s.kalenderId]);
+assert.deepEqual(umzug, [["entfernen", "primary"], ["anlegen", "arbeit@group"]], "Kalender gewechselt: im alten weg, im neuen an");
+assert.deepEqual(k.abgleichPlan([frist({}, { kalenderWahl: { ...wahl, anbieter: "microsoft" } })], ziel).map((s) => s.kalenderId), ["primary"], "Wahl eines anderen Anbieters gilt nicht");
+gruen("Eigener Kalender je Eintrag: Vorauswahl aus den Einstellungen, Wechsel räumt den alten Termin weg, fremder Anbieter fällt zurück");
+
 const liste = k.zuordnungSetzen([z, { ...z, anbieter: "ics", kalenderId: "datei" }], { ...z, eintragId: "neu" }, ziel);
 assert.equal(liste.length, 2); assert.equal(liste.find((x) => x.anbieter === "google").eintragId, "neu");
 assert.equal(k.zuordnungSetzen(liste, null, ziel).length, 1);
@@ -132,5 +142,31 @@ assert.ok(suche.status === 0 || suche.status === 1, "git grep lief nicht: " + (s
 const geheim = suche.status === 0 ? suche.stdout.trim() : "";
 assert.equal(geheim, "", "Google-Client-Geheimnis im Repo: " + geheim);
 gruen(`Kalender-Konten: Client-IDs in richtiger Form (Google Web ${KALENDER_KONTEN.google.webClientId ? "eingetragen" : "leer"}), kein Client-Geheimnis im Repo`);
+
+// Kurzfristige Erinnerungen (Klaus 2026-11-05): zur Uhrzeit, 15 Min., 1 Std. vorher; Reihenfolge und Minuten.
+assert.deepEqual(k.erinnerungenOrdnen(["0m", "tag9", "1d", "60m", "15m", "99x"]), ["1d", "60m", "15m", "0m", "tag9"]);
+assert.deepEqual(k.erinnerungsMinuten(["0m", "15m", "1d"], "20:00"), [1440, 15, 0]);
+assert.equal(k.erinnerungsName("0m"), "zur Uhrzeit"); assert.equal(k.erinnerungsName("60m"), "1 Std. vorher"); assert.equal(k.erinnerungsName("15m"), "15 Min. vorher");
+assert.ok(!k.istErinnerung("1440m") && !k.istErinnerung("-5m"), "Minuten nur unter einem Tag");
+gruen("Erinnerung zur Uhrzeit und Minuten vorher: richtig sortiert und in Minuten umgerechnet");
+
+// Erinnerungswunsch aus dem Text (Notiz und Memory): heute/morgen/in 5 Stunden/Wochentag/Datum; vergangene Ereignisse nicht.
+const m = await import("../lib/family-memory.ts");
+const jetzt = new Date(2026, 10, 5, 18, 42);
+const ea = (t) => JSON.stringify(m.erinnerungAusText(t, jetzt));
+assert.equal(ea("erinnere mich heute um 20 Uhr daran dass ich noch Jens anrufen muss"), JSON.stringify({ wunsch: true, dueAt: "2026-11-05", dueTime: "20:00" }));
+assert.equal(ea("Erinnere mich morgen noch einmal"), JSON.stringify({ wunsch: true, dueAt: "2026-11-06", dueTime: null }));
+assert.equal(ea("Erinnere mich übermorgen um 18 Uhr, Blumen gießen"), JSON.stringify({ wunsch: true, dueAt: "2026-11-07", dueTime: "18:00" }));
+assert.equal(ea("Erinnere mich Übermorgen"), JSON.stringify({ wunsch: true, dueAt: "2026-11-07", dueTime: null }));
+assert.equal(ea("erinnere mich in 5 Stunden noch einmal"), JSON.stringify({ wunsch: true, dueAt: "2026-11-05", dueTime: "23:42" }));
+assert.equal(ea("in einer halben Stunde erinnern"), JSON.stringify({ wunsch: true, dueAt: "2026-11-05", dueTime: "19:12" }));
+assert.equal(ea("am Montag um 9:30 Zahnarzt nicht vergessen"), JSON.stringify({ wunsch: true, dueAt: "2026-11-09", dueTime: "09:30" }));
+assert.equal(ea("erinnere mich um 8 Uhr"), JSON.stringify({ wunsch: true, dueAt: "2026-11-06", dueTime: "08:00" }));
+assert.equal(ea("denk dran am 12.11. Rechnung"), JSON.stringify({ wunsch: true, dueAt: "2026-11-12", dueTime: null }));
+assert.equal(m.erinnerungAusText("Wir waren heute beim Arzt", jetzt), null);
+assert.equal(m.erinnerungAusText("nur ein Satz", jetzt), null);
+assert.equal(m.erinnerungsTitel("Erinnere mich heute um 20 Uhr, Jens anzurufen"), "Jens anzurufen");
+assert.equal(m.erinnerungsTitel("Heute war ein ruhiger Tag."), "Heute war ein ruhiger Tag.");
+gruen("Erinnerungswunsch aus dem Text: heute, morgen, in 5 Stunden, halbe Stunde, Wochentag, Datum; Vergangenes bleibt ohne");
 
 console.log(`Kalender-Kern: ${n} grün · 0 rot`);

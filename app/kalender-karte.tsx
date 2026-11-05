@@ -2,13 +2,14 @@
 // Kalender eintragen“, Erinnerungs-Chips), Karte „Kalender verbinden“ (Anbieter → Kalender → Erinnerung → vorhandene
 // übernehmen → fertig) und der automatische Abgleich, solange ein Kalender verbunden ist.
 import { useCallback, useEffect, useRef, useState } from "react";
-import { CalendarCheck, CalendarPlus, Download, Link2Off, LogIn, RefreshCw } from "lucide-react";
-import { abgleichPlan, ALLE_ERINNERUNGEN, ERINNERUNG_VORGABE, erinnerungenOrdnen, erinnerungsName, MAX_ERINNERUNGEN, MAX_TAGE_VORHER, istTermin, kalenderAnbieterNamen, kalenderFelder, type ErinnerungsWahl, type KalenderAnbieter } from "../lib/kalender";
+import { CalendarCheck, CalendarCog, CalendarPlus, Download, Link2Off, LogIn, RefreshCw } from "lucide-react";
+import { abgleichPlan, ALLE_ERINNERUNGEN, KURZ_ERINNERUNGEN, ERINNERUNG_VORGABE, erinnerungenOrdnen, erinnerungsName, MAX_ERINNERUNGEN, MAX_TAGE_VORHER, istTermin, kalenderAnbieterNamen, kalenderFelder, type ErinnerungsWahl, type KalenderAnbieter } from "../lib/kalender";
 import type { FamilyRecordUnion, FamilyRelation } from "../lib/family-data-model";
 import { ANBIETER, plattform, type KalenderInfo } from "./kalender-anbieter";
 import { kalenderAbgleichen, kalenderDateiAusgeben, kalenderEinstLesen, kalenderEinstSchreiben, type KalenderEinst } from "./kalender-abgleich";
 import { updateLocalScheduleKalender } from "./local-vault";
 import { Ablaufbild, zurStelle } from "./ablaufbild";
+import { InfoPopover } from "./ui-controls";
 import { askConfirm } from "./page-dialogs";
 
 type Notice = { kind: "success" | "error" | "info"; text: string };
@@ -38,25 +39,57 @@ export function fristAusHinweis(hinweis: string) { return hinweis.match(/\b(20\d
 
 // ---------- Erinnerungs-Chips ----------
 
-export function ErinnerungsChips({ wert, onChange, name = "Erinnern" }: { wert: ErinnerungsWahl[]; onChange: (w: ErinnerungsWahl[]) => void; name?: string }) {
+export function ErinnerungsChips({ wert, onChange, name = "Erinnern", schnell = ALLE_ERINNERUNGEN }: { wert: ErinnerungsWahl[]; onChange: (w: ErinnerungsWahl[]) => void; name?: string; schnell?: ErinnerungsWahl[] }) {
   // Schnellwahl als Chips; dazu jede gewählte eigene Zahl als eigener Chip und die Auswahl „weitere Tage vorher“ (1–28).
-  const chips = erinnerungenOrdnen([...ALLE_ERINNERUNGEN, ...wert]);
+  const chips = erinnerungenOrdnen([...schnell, ...wert]);
+  const weitere: ErinnerungsWahl[] = [...KURZ_ERINNERUNGEN.slice().reverse(), ...Array.from({ length: MAX_TAGE_VORHER }, (_, i) => `${i + 1}d` as ErinnerungsWahl)].filter((w) => !wert.includes(w) && !schnell.includes(w));
   const umschalten = (w: ErinnerungsWahl) => onChange(wert.includes(w) ? wert.filter((x) => x !== w) : erinnerungenOrdnen([...wert, w]));
   return <div className="kalender-chips" role="group" aria-label={name}>
     {chips.map((w) => { const an = wert.includes(w); return <button key={w} type="button" className={`kalender-chip${an ? " an" : ""}`} aria-pressed={an} data-erinnerung={w} onClick={() => umschalten(w)}>{erinnerungsName(w)}</button>; })}
-    <select className="kalender-tage" aria-label="Weitere Tage vorher" data-erinnerung-tage value="" onChange={(e) => { const n = Number(e.target.value); if (n) onChange(erinnerungenOrdnen([...wert, `${n}d`])); }}>
+    <select className="kalender-tage" aria-label="Weitere Erinnerungen" data-erinnerung-tage value="" onChange={(e) => { const w = /^\d+$/.test(e.target.value) ? `${e.target.value}d` : e.target.value; if (w) onChange(erinnerungenOrdnen([...wert, w])); }}>
       <option value="">weitere …</option>
-      {Array.from({ length: MAX_TAGE_VORHER }, (_, i) => i + 1).filter((n) => !wert.includes(`${n}d`)).map((n) => <option key={n} value={n}>{n === 1 ? "1 Tag vorher" : `${n} Tage vorher`}</option>)}
+      {weitere.map((w) => <option key={w} value={w}>{erinnerungsName(w)}</option>)}
     </select>
     {wert.length > MAX_ERINNERUNGEN && <small className="fine-print" data-erinnerung-grenze>Kalender nehmen höchstens {MAX_ERINNERUNGEN} Erinnerungen; es gelten die {MAX_ERINNERUNGEN} nächsten am Termin.</small>}
   </div>;
 }
 
+// ---------- Eigener Kalender je Eintrag ----------
+
+export type KalenderWahl = { anbieter: KalenderAnbieter; kalenderId: string; name?: string };
+let kalenderListeVorrat: { anbieter: KalenderAnbieter; liste: KalenderInfo[] } | null = null;
+
+/**
+ * Kalender nur für diesen Eintrag (Klaus 2026-11-05): Vorauswahl ist immer der aus „Kalender verbinden“; wählbar sind die
+ * Kalender desselben Kontos. Ohne Anmeldung (Browser nach Neuladen) bleibt es beim eingestellten – keine leere Auswahl.
+ */
+export function KalenderAuswahl({ einst, wert, onChange }: { einst: KalenderEinst | null; wert: KalenderWahl | null; onChange: (w: KalenderWahl | null) => void }) {
+  const [liste, setListe] = useState<KalenderInfo[] | null>(kalenderListeVorrat && einst && kalenderListeVorrat.anbieter === einst.anbieter ? kalenderListeVorrat.liste : null);
+  useEffect(() => {
+    if (!einst || einst.anbieter === "ics" || liste) return;
+    const a = ANBIETER[einst.anbieter];
+    if (!a.verbunden()) return;
+    let aus = false;
+    void a.kalender().then((l) => { if (aus) return; kalenderListeVorrat = { anbieter: einst.anbieter, liste: l }; setListe(l); }).catch(() => undefined);
+    return () => { aus = true; };
+  }, [einst?.anbieter, liste]);
+  if (!einst || einst.anbieter === "ics" || !liste || liste.length < 2) return null;
+  const aktuell = wert && wert.anbieter === einst.anbieter ? wert.kalenderId : einst.kalenderId;
+  return <label className="kalender-auswahl" data-kalender-auswahl><span>Kalender für diesen Eintrag</span>
+    <select value={aktuell} onChange={(e) => { const k = liste.find((x) => x.id === e.target.value); onChange(!k || k.id === einst.kalenderId ? null : { anbieter: einst.anbieter, kalenderId: k.id, name: k.name }); }}>
+      {liste.map((k) => <option key={k.id} value={k.id}>{k.name}{k.id === einst.kalenderId ? " (Einstellung)" : ""}</option>)}
+    </select></label>;
+}
+
 /** Teil im Formular „Frist oder Aufgabe anlegen“. */
-export function KalenderFormTeil({ einst, eintragen, setEintragen, erinnerungen, setErinnerungen }: { einst: KalenderEinst | null; eintragen: boolean; setEintragen: (v: boolean) => void; erinnerungen: ErinnerungsWahl[]; setErinnerungen: (w: ErinnerungsWahl[]) => void }) {
+export function KalenderFormTeil({ einst, eintragen, setEintragen, erinnerungen, setErinnerungen, kalenderWahl = null, setKalenderWahl }: { einst: KalenderEinst | null; eintragen: boolean; setEintragen: (v: boolean) => void; erinnerungen: ErinnerungsWahl[]; setErinnerungen: (w: ErinnerungsWahl[]) => void; kalenderWahl?: KalenderWahl | null; setKalenderWahl?: (w: KalenderWahl | null) => void }) {
   return <div className="kalender-formteil" data-kalender-formteil>
     <label className="check-row"><input type="checkbox" checked={eintragen} onChange={(e) => setEintragen(e.target.checked)} data-kalender-haken/><span><strong>In den Kalender eintragen</strong><small>{einst ? `Kalender: ${kalenderZiel(einst)} (gewählt unter „Kalender verbinden“)` : <>Kein Kalender verbunden <button type="button" className="kalender-sprung" aria-label="Zu „Kalender verbinden“" title="Zu „Kalender verbinden“" data-kalender-sprung onClick={(e) => { e.preventDefault(); zurStelle("#kalender-verbinden"); }}>▽</button></>}</small></span></label>
-    {eintragen && <><span className="kalender-etikett">Erinnern</span><ErinnerungsChips wert={erinnerungen} onChange={setErinnerungen}/>{einst?.anbieter === "microsoft" && erinnerungen.length > 1 && <small className="fine-print">Microsoft kennt eine Erinnerung je Termin: es gilt die früheste.</small>}</>}
+    {eintragen && setKalenderWahl && <KalenderAuswahl einst={einst} wert={kalenderWahl} onChange={setKalenderWahl}/>}
+    {eintragen && <details className="kalender-erinnerung" data-kalender-erinnerung>
+      <summary><span className="kalender-etikett">Erinnern:</span> <strong>{erinnerungen.map((w) => erinnerungsName(w)).join(", ") || "keine"}</strong> <span className="kalender-aendern">ändern ▾</span></summary>
+      <ErinnerungsChips wert={erinnerungen} onChange={setErinnerungen}/>{einst?.anbieter === "microsoft" && erinnerungen.length > 1 && <small className="fine-print">Microsoft kennt eine Erinnerung je Termin: es gilt die früheste.</small>}
+    </details>}
   </div>;
 }
 
@@ -93,13 +126,9 @@ export function useKalenderAutoAbgleich(vaultHandle: FileSystemDirectoryHandle |
 
 // ---------- Karte „Kalender verbinden“ ----------
 
-const ANBIETER_REIHE: KalenderAnbieter[] = ["geraet", "google", "microsoft", "ics"];
-const anbieterUnter: Record<KalenderAnbieter, string> = {
-  geraet: "Samsung-, Google- und Outlook-Kalender, die das Gerät führt",
-  google: "Google-Konto anmelden",
-  microsoft: "Outlook.com- oder Microsoft-365-Konto",
-  ics: "Datei mit allen Fristen; öffnet Outlook, Kalender-App oder Google zum Übernehmen",
-};
+const anbieterKurz: Record<KalenderAnbieter, string> = { geraet: "Kalender auf diesem Gerät", google: "Google Kalender", microsoft: "Microsoft Kalender", ics: "Kalenderdatei (.ics)" };
+/** Android schreibt über den Gerätekalender; Windows und Browser über die Konten. Die Datei geht überall. */
+const anbieterFuer = (pl: string): KalenderAnbieter[] => pl === "android" ? ["geraet", "ics"] : ["google", "microsoft", "ics"];
 
 export function KalenderVerbinden({ vaultHandle, records, relations, onRefresh, onNotice }: { vaultHandle: FileSystemDirectoryHandle | null; records: FamilyRecordUnion[]; relations: FamilyRelation[]; onRefresh: () => Promise<void>; onNotice: (n: Notice) => void }) {
   const einst = useKalenderEinst();
@@ -197,30 +226,30 @@ export function KalenderVerbinden({ vaultHandle, records, relations, onRefresh, 
     { titel: "Fertig", unter: einst?.anbieter === "ics" ? "Datei bei Änderungen neu ausgeben" : "neue Fristen gehen von selbst hinein, erledigte werden entfernt", art: verbunden && !ohneHaken.length && !warten ? "gut" as const : "normal" as const },
   ];
 
-  return <section className="card kalender-karte" id="kalender-verbinden" aria-label="Kalender verbinden" data-kalender-karte data-verbunden={verbunden ? einst!.anbieter : "nein"}>
-    <div className="card-heading"><div><span className="badge neutral">Einstellungen</span><h2>Kalender verbinden</h2></div>{verbunden && <span className="badge success" data-kalender-status><CalendarCheck size={14}/> {kalenderZiel(einst)}</span>}</div>
+  // Klaus 2026-11-05: eingeklappt, ein Knopf geht auf – das Verbinden macht man einmal.
+  return <details className="card kalender-karte" id="kalender-verbinden" aria-label="Kalender verbinden" data-kalender-karte data-verbunden={verbunden ? einst!.anbieter : "nein"}>
+    <summary className="kalender-karte-kopf" data-kalender-aufklapper><span className="kalender-karte-titel"><CalendarCog size={18}/> Kalender verbinden</span>{verbunden ? <span className="badge success" data-kalender-status><CalendarCheck size={14}/> {kalenderZiel(einst)}</span> : <span className="badge neutral">nicht verbunden</span>}<span className="kalender-karte-pfeil" aria-hidden="true">▾</span></summary>
     <Ablaufbild label="Kalender verbinden in vier Schritten" knoten={knoten}/>
 
     <div id="kalender-schritt-wahl" className="kalender-schritt" tabIndex={-1}>
       <h3>1 · Kalender wählen</h3>
-      <div className="kalender-anbieter-liste">
-        {ANBIETER_REIHE.map((art) => { const z = ANBIETER[art].zustand(); return <button key={art} type="button" className={`kalender-anbieter${wahl === art ? " gewaehlt" : ""}`} disabled={!z.bereit || Boolean(busy)} data-anbieter={art} aria-pressed={wahl === art} onClick={() => void anbieterWaehlen(art)}>
-          <strong>{kalenderAnbieterNamen[art]}</strong><small>{z.bereit ? anbieterUnter[art] : z.grund}</small>
-        </button>; })}
-      </div>
-      {pl !== "android" && <p className="fine-print">Samsung-Kalender gibt es nur in der Android-App (über „Kalender auf diesem Gerät“). Samsung hat dafür keine öffentliche Schnittstelle für Windows oder den Browser.</p>}
-      {liste && wahl && wahl !== "ics" && <div className="kalender-liste"><label><span>Kalender bei {kalenderAnbieterNamen[wahl]}</span><select value={kalenderId} onChange={(e) => setKalenderId(e.target.value)} data-kalender-liste>{liste.map((k) => <option key={k.id} value={k.id}>{k.name}{k.konto ? ` (${k.konto})` : ""}</option>)}</select></label>{!liste.length && <p className="form-error">Kein beschreibbarer Kalender gefunden.</p>}<button type="button" className="button primary" disabled={!kalenderId || Boolean(busy)} onClick={() => void kalenderUebernehmen()}><CalendarPlus size={16}/> Diesen Kalender verwenden</button></div>}
+      {/* Klaus 2026-11-05: eine schmale Auswahl statt Kacheln, ohne Erklärtext; Erklärung hinter dem „?“. */}
+      <div className="kalender-wahl-zeile"><label className="kalender-wahl"><span className="sr-only">Kalender wählen</span><select value={wahl || ""} disabled={Boolean(busy)} onChange={(e) => { const art = e.target.value as KalenderAnbieter; if (art) void anbieterWaehlen(art); }} data-kalender-anbieter-wahl>
+        <option value="" disabled>Kalender wählen ▽</option>
+        {anbieterFuer(pl).map((art) => { const z = ANBIETER[art].zustand(); return <option key={art} value={art} disabled={!z.bereit} data-anbieter={art}>{anbieterKurz[art]}{z.bereit ? "" : ` – ${z.grund.replace(/\.$/, "")}`}</option>; })}
+      </select></label><InfoPopover label="Welche Kalender?" text={pl === "android" ? "Kalender auf diesem Gerät: alle Kalender, die das Handy führt (Samsung, Google, Outlook). Kalenderdatei (.ics): eine Datei mit allen Fristen zum Öffnen in einer Kalender-App. Ohne Uhrzeit steht eine Frist um 9 Uhr im Kalender." : "Google und Microsoft: mit dem eigenen Konto anmelden, die Anmeldung gilt bis zum Schließen. Kalenderdatei (.ics): eine Datei mit allen Fristen zum Öffnen in Outlook, der Kalender-App oder Google. Ohne Uhrzeit steht eine Frist um 9 Uhr im Kalender."}/></div>
+      {liste && wahl && wahl !== "ics" && <div className="kalender-liste"><label><span>Kalender bei {kalenderAnbieterNamen[wahl]}</span><select value={kalenderId} onChange={(e) => setKalenderId(e.target.value)} data-kalender-liste>{liste.map((k) => <option key={k.id} value={k.id}>{k.name}{k.konto ? ` (${k.konto})` : ""}</option>)}</select></label>{!liste.length && <p className="form-error">Kein beschreibbarer Kalender gefunden.</p>}{(() => { const inGebrauch = Boolean(einst && einst.anbieter === wahl && einst.kalenderId === kalenderId); return <><button type="button" className={`button primary kalender-verwenden${inGebrauch ? " step-complete" : ""}`} disabled={!kalenderId || Boolean(busy)} aria-pressed={inGebrauch} data-kalender-verwenden={inGebrauch ? "ja" : "nein"} onClick={() => void kalenderUebernehmen()}>{inGebrauch ? <><CalendarCheck size={16}/> ✓ Wird verwendet</> : <><CalendarPlus size={16}/> Diesen Kalender verwenden</>}</button>{inGebrauch && <p className="fine-print" data-kalender-verwendet>Neue Fristen mit Haken gehen in diesen Kalender.</p>}</>; })()}</div>}
     </div>
 
     <div id="kalender-schritt-erinnerung" className="kalender-schritt" tabIndex={-1}>
       <h3>2 · Erinnerung festlegen</h3>
-      <p className="fine-print">Vorgabe für neue Fristen; im Formular je Frist änderbar. Ohne Uhrzeit steht die Frist um 9 Uhr im Kalender.{einst?.anbieter === "microsoft" ? " Microsoft kennt eine Erinnerung je Termin: es gilt die früheste." : ""}</p>
+      {einst?.anbieter === "microsoft" && <p className="fine-print">Microsoft kennt eine Erinnerung je Termin: es gilt die früheste.</p>}
       <ErinnerungsChips wert={erinnerungen} onChange={erinnerungSetzen} name="Erinnerung als Vorgabe"/>
     </div>
 
     <div id="kalender-schritt-uebernehmen" className="kalender-schritt" tabIndex={-1}>
       <h3>3 · Vorhandene offene Fristen übernehmen</h3>
-      <p className="fine-print">{ohneHaken.length ? `${ohneHaken.length} offene Frist${ohneHaken.length === 1 ? "" : "en"} und Aufgaben sind noch nicht für den Kalender gewählt.` : "Alle offenen Fristen sind gewählt oder ausdrücklich abgewählt."} Notizen gehen nie in den Kalender.</p>
+      {ohneHaken.length > 0 && <p className="fine-print">{`${ohneHaken.length} offene Frist${ohneHaken.length === 1 ? "" : "en"} und Aufgaben sind noch nicht für den Kalender gewählt.`}</p>}
       <button type="button" className="button secondary" disabled={!ohneHaken.length || !vaultHandle || Boolean(busy)} onClick={() => void vorhandeneUebernehmen()} data-kalender-uebernehmen>Einmal alle offenen eintragen</button>
     </div>
 
@@ -236,5 +265,5 @@ export function KalenderVerbinden({ vaultHandle, records, relations, onRefresh, 
       </div>}
       {busy && <p className="fine-print" aria-live="polite">Bitte warten …</p>}
     </div>
-  </section>;
+  </details>;
 }

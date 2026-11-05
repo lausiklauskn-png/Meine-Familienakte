@@ -35,6 +35,8 @@ const neueFrist = async (page, titel, datum = "2026-11-20") => {
   await form.locator(".schedule-confirm input").check();
   await form.locator("button", { hasText: "Frist oder Aufgabe bestätigt anlegen" }).click();
 };
+// Karte und Erinnerung sind eingeklappt (Klaus 2026-11-05): wie ein Nutzer auf den Kopf tippen.
+const aufklappen = async (d) => { if (!(await d.evaluate((e) => e.open))) await d.locator("summary").first().click(); };
 const register = async (page) => { if (!(await page.evaluate(() => Boolean(window.__vaultFixture)))) await vaultFixture(page); return page.evaluate(async () => { const f = window.__vaultFixture; return (await f.readLocalVaultData(await f.browserVault())).records; }); };
 
 try {
@@ -58,29 +60,41 @@ try {
   await footer(page, "Fristen und Aufgaben");
   const karte = page.locator("[data-kalender-karte]");
 
-  await step("Karte „Kalender verbinden“ mit vier Schritten; Microsoft ohne Client-ID: „Noch nicht eingerichtet.“", async () => {
+  await step("Karte „Kalender verbinden“ ist eingeklappt: ein Knopf mit „nicht verbunden“, geht beim Tippen auf", async () => {
     await karte.waitFor();
+    const zu = !(await karte.evaluate((d) => d.open)) && !(await karte.locator("[data-kalender-anbieter-wahl]").isVisible()) && /Kalender verbinden/.test(await karte.locator("summary").innerText()) && /nicht verbunden/.test(await karte.locator("summary").innerText());
+    await karte.locator("summary").click();
+    return zu && (await karte.evaluate((d) => d.open)) && (await karte.locator("[data-kalender-anbieter-wahl]").isVisible());
+  });
+  await step("Karte „Kalender verbinden“ mit vier Schritten; Microsoft ohne Client-ID: „Noch nicht eingerichtet.“", async () => {
     const knoten = await karte.locator(".ablaufbild li").count();
     const ms = karte.locator('[data-anbieter="microsoft"]');
-    return knoten === 4 && (await ms.isDisabled()) && /Noch nicht eingerichtet/.test(await ms.innerText());
+    return knoten === 4 && (await ms.evaluate((o) => o.disabled)) && /Noch nicht eingerichtet/.test(await ms.textContent());
   });
   await step("Ohne Kalender: „Kein Kalender verbunden“ mit ▽, ein Tipp springt zur Karte, der Haken bleibt", async () => {
     const f = page.locator("[data-kalender-formteil]");
     const text = await f.locator("small").first().innerText();
     const haken = await f.locator("[data-kalender-haken]").isChecked();
+    await karte.evaluate((d) => { d.open = false; });
     await page.evaluate(() => window.scrollTo(0, 0));
     await f.locator("[data-kalender-sprung]").click();
     await page.waitForTimeout(900);
     const r = await page.locator("#kalender-verbinden").boundingBox();
-    return /^Kein Kalender verbunden/.test(text) && !/unten unter/.test(text) && (await f.locator("[data-kalender-sprung]").innerText()) === "▽" && r && r.y < 1000 && r.y + 40 > 0 && (await f.locator("[data-kalender-haken]").isChecked()) === haken;
+    return (await karte.evaluate((d) => d.open)) && /^Kein Kalender verbunden/.test(text) && !/unten unter/.test(text) && (await f.locator("[data-kalender-sprung]").innerText()) === "▽" && r && r.y < 1000 && r.y + 40 > 0 && (await f.locator("[data-kalender-haken]").isChecked()) === haken;
   });
-  await step("Google bei Internet „aus“: gesperrt mit Grund", async () => /Internet für die App ist aus/.test(await karte.locator('[data-anbieter="google"]').innerText()) && (await karte.locator('[data-anbieter="google"]').isDisabled()));
-  await step("Gerätekalender im Browser: gesperrt, „Nur in der Android-App“; Samsung-Hinweis steht da", async () => /Nur in der Android-App/.test(await karte.locator('[data-anbieter="geraet"]').innerText()) && /Samsung-Kalender gibt es nur in der Android-App/.test(await karte.innerText()));
+  await step("Google bei Internet „aus“: in der Auswahl gesperrt mit Grund", async () => /Internet für die App ist aus/.test(await karte.locator('[data-anbieter="google"]').textContent()) && (await karte.locator('[data-anbieter="google"]').evaluate((o) => o.disabled)));
+  await step("Kalender wählen: eine schmale Auswahl Google · Microsoft · Kalenderdatei, im Browser kein Gerätekalender, kein Erklärtext", async () => {
+    const o = await karte.locator("[data-kalender-anbieter-wahl] option[data-anbieter]").evaluateAll((l) => l.map((x) => x.dataset.anbieter));
+    const h = await karte.locator("[data-kalender-anbieter-wahl]").evaluate((x) => x.getBoundingClientRect().height);
+    const t = await karte.innerText();
+    return o.join() === "google,microsoft,ics" && h < 50 && (await karte.locator(".kalender-anbieter").count()) === 0 && !/Samsung-Kalender gibt es nur/.test(t) && !/Vorgabe für neue Fristen/.test(t) && !/Notizen gehen nie/.test(t) && (await karte.locator(".kalender-wahl-zeile .start-info-trigger").count()) === 1;
+  });
 
   await internetAn(page);
   await footer(page, "Fristen und Aufgaben");
+  await aufklappen(karte);
   await step("Google verbinden: Anmeldefenster mit Bereich calendar.events, Rücksprung in die App, Kalenderliste", async () => {
-    await karte.locator('[data-anbieter="google"]').click();
+    await karte.locator("[data-kalender-anbieter-wahl]").selectOption("google");
     await karte.locator("[data-kalender-liste]").waitFor({ timeout: 5000 });
     const a = (await page.evaluate(() => window.__anmeldungen))[0] || "";
     const optionen = await karte.locator("[data-kalender-liste] option").allInnerTexts();
@@ -91,8 +105,23 @@ try {
     await karte.locator("[data-kalender-status]").waitFor();
     return /Google Kalender · Familie/.test(await karte.locator("[data-kalender-status]").innerText()) && /Verbunden\./.test(await karte.locator("[data-kalender-stand]").innerText());
   });
+  await step("Knopf antwortet am Ort: wird grün „✓ Wird verwendet“ mit Hinweis; die Auswahl reagiert beim Darüberfahren", async () => {
+    const k = karte.locator("[data-kalender-verwenden]");
+    await page.waitForTimeout(300); // Farbübergang abwarten
+    const gruen = await k.evaluate((b) => getComputedStyle(b).backgroundColor);
+    const kachel = karte.locator("[data-kalender-anbieter-wahl]");
+    const vorher = await kachel.evaluate((b) => getComputedStyle(b).borderColor);
+    await kachel.hover(); await page.waitForTimeout(250);
+    const nachher = await kachel.evaluate((b) => getComputedStyle(b).borderColor);
+    await page.mouse.move(0, 0);
+    return (await k.getAttribute("data-kalender-verwenden")) === "ja" && /Wird verwendet/.test(await k.innerText()) && gruen === "rgb(22, 114, 73)" && (await karte.locator("[data-kalender-verwendet]").count()) === 1 && vorher !== nachher;
+  });
   await step("Formular: Haken „In den Kalender eintragen“ vorbelegt, Chips 7 Tage + 1 Tag an, Uhrzeit frei", async () => {
     const f = page.locator("[data-kalender-formteil]");
+    const zusammen = await f.locator("[data-kalender-erinnerung] summary").innerText();
+    const zuVorher = !(await f.locator("[data-kalender-erinnerung]").evaluate((d) => d.open)) && !(await f.locator(".kalender-chip").first().isVisible());
+    await f.locator("[data-kalender-erinnerung] summary").click();
+    if (!zuVorher || !/1 Woche vorher, 1 Tag vorher/.test(zusammen) || !/ändern/.test(zusammen)) return false;
     const an = await f.locator(".kalender-chip.an").allInnerTexts();
     return (await f.locator("[data-kalender-haken]").isChecked()) && an.join() === "1 Woche vorher,1 Tag vorher" && (await f.locator(".kalender-chip").allInnerTexts()).join() === "1 Woche vorher,2 Tage vorher,1 Tag vorher,am Tag, 9 Uhr" && (await page.locator("[data-frist-uhrzeit]").count()) === 1 && /Google Kalender · Familie/.test(await f.innerText());
   });
@@ -150,6 +179,19 @@ try {
     for (let i = 0; i < 60 && google.neu.length === vorher; i++) await page.waitForTimeout(150);
     return google.neu.length > vorher ? `${google.neu.length - vorher} eingetragen` : false;
   });
+  await step("Eigener Kalender je Eintrag: Vorauswahl „Familie (Einstellung)“, „Arbeit“ gewählt → Termin landet in Arbeit", async () => {
+    const auswahl = page.locator("[data-kalender-formteil] [data-kalender-auswahl] select");
+    await auswahl.waitFor({ timeout: 5000 });
+    const vorher = await auswahl.inputValue();
+    const optionen = await auswahl.locator("option").allInnerTexts();
+    await auswahl.selectOption("arbeit@group");
+    await neueFrist(page, "Teamtreffen vorbereiten (erfunden)", "2026-11-27");
+    let n; for (let i = 0; i < 40; i++) { n = google.neu.find((x) => x.body.summary === "Teamtreffen vorbereiten (erfunden)"); if (n) break; await page.waitForTimeout(150); }
+    const r = (await register(page)).find((x) => x.data?.title === "Teamtreffen vorbereiten (erfunden)");
+    const nachher = await page.locator("[data-kalender-formteil] [data-kalender-auswahl] select").inputValue().catch(() => "-");
+    const ok = vorher === "primary" && optionen.join() === "Familie (Einstellung),Arbeit" && decodeURIComponent(n?.kalender || "") === "arbeit@group" && r?.data.kalenderWahl?.kalenderId === "arbeit@group" && nachher === "primary";
+    return ok ? true : (console.log("   ↳", vorher, optionen, n?.kalender, JSON.stringify(r?.data.kalenderWahl), nachher), false);
+  });
   await step("Trennen ohne Mitlöschen: Einträge bleiben, Anmeldung vergessen, Karte wieder offen", async () => {
     const vorher = google.geloescht.length;
     await karte.locator("[data-kalender-trennen]").click();
@@ -164,7 +206,7 @@ try {
     return !reg.includes("probe-zugang") && !lokal.includes("probe-zugang");
   });
   await step("Kalenderdatei: .ics mit VEVENT und VALARM je Erinnerung", async () => {
-    await karte.locator('[data-anbieter="ics"]').click();
+    await karte.locator("[data-kalender-anbieter-wahl]").selectOption("ics");
     await page.waitForSelector('[data-kalender-karte][data-verbunden="ics"]');
     const [download] = await Promise.all([page.waitForEvent("download"), karte.locator("[data-kalender-abgleichen]").click()]);
     const pfad = await download.path(); const { readFileSync } = await import("node:fs");
@@ -181,9 +223,10 @@ try {
   await pa.goto(app.base, { waitUntil: "networkidle" }); await ready(pa);
   await footer(pa, "Fristen und Aufgaben");
   const ka = pa.locator("[data-kalender-karte]");
-  await step("Android: Google/Microsoft verweisen auf den Gerätekalender, kein Samsung-Hinweis", async () => /Kalender auf diesem Gerät/.test(await ka.locator('[data-anbieter="google"]').innerText()) && (await ka.locator('[data-anbieter="google"]').isDisabled()) && !/Samsung-Kalender gibt es nur/.test(await ka.innerText()));
+  await ka.waitFor(); await aufklappen(ka);
+  await step("Android: Auswahl nur Gerätekalender und Kalenderdatei, kein Samsung-Hinweis", async () => (await ka.locator("[data-kalender-anbieter-wahl] option[data-anbieter]").evaluateAll((l) => l.map((x) => x.dataset.anbieter))).join() === "geraet,ics" && !/Samsung-Kalender gibt es nur/.test(await ka.innerText()));
   await step("Android: Gerätekalender fragt das Recht, listet Samsung- und Google-Kalender", async () => {
-    await ka.locator('[data-anbieter="geraet"]').click();
+    await ka.locator("[data-kalender-anbieter-wahl]").selectOption("geraet");
     await ka.locator("[data-kalender-liste]").waitFor({ timeout: 5000 });
     const o = await ka.locator("[data-kalender-liste] option").allInnerTexts();
     return (await pa.evaluate(() => window.__geraet.erlaubt)) && o.some((x) => x.startsWith("Samsung Kalender")) && (await ka.locator("[data-kalender-liste]").inputValue()) === "7";
@@ -192,9 +235,10 @@ try {
     await ka.locator("button", { hasText: "Diesen Kalender verwenden" }).click();
     await ka.locator("[data-kalender-status]").waitFor();
     await pa.locator("[data-frist-uhrzeit]").fill("14:30");
+    await aufklappen(pa.locator("[data-kalender-formteil] [data-kalender-erinnerung]"));
     await pa.locator('[data-kalender-formteil] [data-erinnerung="tag9"]').click();
     await pa.locator('[data-kalender-formteil] [data-erinnerung="2d"]').click();
-    await pa.locator('[data-kalender-formteil] [data-erinnerung-tage]').selectOption("5");
+    await pa.locator('[data-kalender-formteil] [data-erinnerung-tage]').selectOption("5d");
     await neueFrist(pa, "Elternabend Schule (erfunden)", "2026-11-26");
     for (let i = 0; i < 40; i++) { if (await pa.evaluate(() => window.__geraet.geschrieben.length)) break; await pa.waitForTimeout(150); }
     const g = (await pa.evaluate(() => window.__geraet.geschrieben))[0];

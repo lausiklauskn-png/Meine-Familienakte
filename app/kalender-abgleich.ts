@@ -46,12 +46,13 @@ export async function kalenderAbgleichen(handle: FileSystemDirectoryHandle, reco
   for (const schritt of plan) {
     try {
       if (schritt.art === "gleich") { ergebnis.gleich++; continue; }
+      const hier = { anbieter: einst.anbieter, kalenderId: schritt.kalenderId }; // je Eintrag eigener Kalender möglich
       if (schritt.art === "entfernen") {
-        await anbieter.entfernen(einst.kalenderId, schritt.zuordnung.eintragId);
-        aenderungen.push({ id: schritt.recordId, ziel, zuordnung: null }); ergebnis.entfernt++; continue;
+        await anbieter.entfernen(schritt.kalenderId, schritt.zuordnung.eintragId);
+        aenderungen.push({ id: schritt.recordId, ziel: hier, zuordnung: null }); ergebnis.entfernt++; continue;
       }
-      const eintragId = await anbieter.schreiben(einst.kalenderId, schritt.eintrag, schritt.art === "aendern" ? schritt.zuordnung.eintragId : undefined);
-      aenderungen.push({ id: schritt.recordId, ziel, zuordnung: { ...ziel, eintragId, stand: schritt.eintrag.stand, am } });
+      const eintragId = await anbieter.schreiben(schritt.kalenderId, schritt.eintrag, schritt.art === "aendern" ? schritt.zuordnung.eintragId : undefined);
+      aenderungen.push({ id: schritt.recordId, ziel: hier, zuordnung: { ...hier, eintragId, stand: schritt.eintrag.stand, am } });
       if (schritt.art === "anlegen") ergebnis.angelegt++; else ergebnis.geaendert++;
     } catch (grund) {
       ergebnis.fehler.push(`${schritt.recordId}: ${grund instanceof Error ? grund.message : String(grund)}`);

@@ -23,7 +23,9 @@ export const kalenderAnbieterNamen: Record<KalenderAnbieter, string> = {
  * je um die Uhrzeit des Termins (ohne Uhrzeit 9 Uhr), dazu „am Tag, 9 Uhr“. Mehrere zugleich möglich, wie im Kalender üblich.
  * Gespeichert als „<n>d“ bzw. „tag9“; ältere Einträge („7d“, „1d“) bleiben damit gültig.
  */
-export type ErinnerungsWahl = "tag9" | `${number}d`;
+export type ErinnerungsWahl = "tag9" | `${number}d` | `${number}m`;
+/** Kurzfristige Erinnerungen (Klaus 2026-11-05, „erinnere mich heute um 20 Uhr“): zur Uhrzeit oder Minuten vorher. */
+export const KURZ_ERINNERUNGEN: ErinnerungsWahl[] = ["60m", "15m", "0m"];
 export const MAX_TAGE_VORHER = 28;
 /** Schnellwahl als Chips; jede andere Zahl über „weitere Tage vorher“. */
 export const ALLE_ERINNERUNGEN: ErinnerungsWahl[] = ["7d", "2d", "1d", "tag9"];
@@ -33,15 +35,25 @@ export function erinnerungsTage(w: string): number | null {
   const n = m ? Number(m[1]) : NaN;
   return Number.isInteger(n) && n >= 1 && n <= MAX_TAGE_VORHER ? n : null;
 }
-export function istErinnerung(w: unknown): w is ErinnerungsWahl { return w === "tag9" || (typeof w === "string" && erinnerungsTage(w) !== null); }
+/** „<n>m“: 0 bis 1439 Minuten vor dem Termin. */
+export function erinnerungsMinutenVorher(w: string): number | null {
+  const m = /^(0|[1-9]\d{0,3})m$/.exec(w);
+  const n = m ? Number(m[1]) : NaN;
+  return Number.isInteger(n) && n >= 0 && n < 1440 ? n : null;
+}
+/** Abstand zum Termin in Minuten; „am Tag, 9 Uhr“ hängt von der Uhrzeit ab und gibt null. */
+function vorherMinuten(w: string) { const t = erinnerungsTage(w); return t !== null ? t * 1440 : erinnerungsMinutenVorher(w); }
+export function istErinnerung(w: unknown): w is ErinnerungsWahl { return w === "tag9" || (typeof w === "string" && vorherMinuten(w) !== null); }
 export function erinnerungsName(w: ErinnerungsWahl) {
   if (w === "tag9") return "am Tag, 9 Uhr";
+  const min = erinnerungsMinutenVorher(w);
+  if (min !== null) return min === 0 ? "zur Uhrzeit" : min % 60 === 0 ? `${min / 60} Std. vorher` : `${min} Min. vorher`;
   const n = erinnerungsTage(w) || 0;
   return n === 7 ? "1 Woche vorher" : n === 14 ? "2 Wochen vorher" : n === 1 ? "1 Tag vorher" : `${n} Tage vorher`;
 }
 /** Sortiert: früheste zuerst, „am Tag“ zuletzt; doppelte und ungültige fallen weg. */
 export function erinnerungenOrdnen(liste: unknown[]): ErinnerungsWahl[] {
-  return [...new Set(liste.filter(istErinnerung))].sort((a, b) => (erinnerungsTage(b) ?? 0) - (erinnerungsTage(a) ?? 0));
+  return [...new Set(liste.filter(istErinnerung))].sort((a, b) => (vorherMinuten(b) ?? -1) - (vorherMinuten(a) ?? -1));
 }
 
 /** Ohne Uhrzeit steht eine Frist um 9 Uhr im Kalender, 30 Minuten lang. So gilt jede Erinnerung überall gleich (Google und
@@ -69,6 +81,8 @@ export type KalenderFelder = {
   /** true = in den Kalender eintragen (Haken im Formular oder „Vorhandene übernehmen“); fehlt = nie still eintragen. */
   kalenderEintragen?: boolean;
   kalender?: KalenderZuordnung[];
+  /** Eigener Kalender für diesen Eintrag (Klaus 2026-11-05); fehlt = der aus „Kalender verbinden“. Gilt nur beim selben Anbieter. */
+  kalenderWahl?: { anbieter: KalenderAnbieter; kalenderId: string; name?: string };
 };
 
 export type KalenderEintrag = {
@@ -116,7 +130,7 @@ function ortszeit(datum: string, uhrzeit: string) {
 export function erinnerungsMinuten(wahl: ErinnerungsWahl[], uhrzeit: string, zusaetzlich: number[] = []) {
   const [h, m] = uhrzeit.split(":").map(Number);
   const ab9 = h * 60 + m - 9 * 60;
-  const roh = wahl.map((w) => (w === "tag9" ? Math.max(0, ab9) : (erinnerungsTage(w) ?? NaN) * 1440)).concat(zusaetzlich);
+  const roh = wahl.map((w) => (w === "tag9" ? Math.max(0, ab9) : vorherMinuten(w) ?? NaN)).concat(zusaetzlich);
   return [...new Set(roh.filter((x) => Number.isFinite(x) && x >= 0).map((x) => Math.min(Math.round(x), MAX_ERINNERUNG_MINUTEN)))]
     .sort((a, b) => a - b).slice(0, MAX_ERINNERUNGEN).sort((a, b) => b - a); // bei mehr als 5: die nächsten am Termin bleiben
 }
@@ -164,11 +178,18 @@ export function soll(record: FamilyRecordUnion) {
   return istTermin(record) && kalenderFelder(record).kalenderEintragen === true && !["erledigt", "zurückgestellt", "archiviert"].includes(record.status) && Boolean(record.data.dueAt);
 }
 
+/** kalenderId: der Kalender, in dem der Schritt geschieht (beim Entfernen der der alten Zuordnung). */
 export type AbgleichSchritt =
-  | { art: "anlegen"; recordId: string; eintrag: KalenderEintrag }
-  | { art: "aendern"; recordId: string; eintrag: KalenderEintrag; zuordnung: KalenderZuordnung }
-  | { art: "entfernen"; recordId: string; zuordnung: KalenderZuordnung }
-  | { art: "gleich"; recordId: string };
+  | { art: "anlegen"; recordId: string; kalenderId: string; eintrag: KalenderEintrag }
+  | { art: "aendern"; recordId: string; kalenderId: string; eintrag: KalenderEintrag; zuordnung: KalenderZuordnung }
+  | { art: "entfernen"; recordId: string; kalenderId: string; zuordnung: KalenderZuordnung }
+  | { art: "gleich"; recordId: string; kalenderId: string };
+
+/** Kalender eines Eintrags: eigene Wahl beim verbundenen Anbieter, sonst der aus den Einstellungen. */
+export function zielKalenderId(record: FamilyRecordUnion, ziel: { anbieter: KalenderAnbieter; kalenderId: string }) {
+  const w = kalenderFelder(record).kalenderWahl;
+  return w && w.anbieter === ziel.anbieter && typeof w.kalenderId === "string" && w.kalenderId ? w.kalenderId : ziel.kalenderId;
+}
 
 /**
  * Was für einen Zielkalender zu tun ist: offene, angehakte Fristen anlegen oder aktualisieren; erledigte, zurückgestellte
@@ -178,12 +199,16 @@ export function abgleichPlan(records: FamilyRecordUnion[], ziel: { anbieter: Kal
   const plan: AbgleichSchritt[] = [];
   for (const record of records) {
     if (!istTermin(record)) continue;
-    const zuordnung = (kalenderFelder(record).kalender || []).find((z) => z.anbieter === ziel.anbieter && z.kalenderId === ziel.kalenderId);
+    const kalenderId = zielKalenderId(record, ziel);
+    const beimAnbieter = (kalenderFelder(record).kalender || []).filter((z) => z.anbieter === ziel.anbieter);
+    const zuordnung = beimAnbieter.find((z) => z.kalenderId === kalenderId);
     const eintrag = soll(record) ? kalenderEintrag(record, { vorgabe: opt.vorgabe, relations: opt.relations, records, geschuetzt: opt.geschuetzt?.(record) }) : null;
-    if (eintrag && !zuordnung) plan.push({ art: "anlegen", recordId: record.id, eintrag });
-    else if (eintrag && zuordnung && zuordnung.stand !== eintrag.stand) plan.push({ art: "aendern", recordId: record.id, eintrag, zuordnung });
-    else if (!eintrag && zuordnung) plan.push({ art: "entfernen", recordId: record.id, zuordnung });
-    else if (eintrag) plan.push({ art: "gleich", recordId: record.id });
+    // Gewechselter Kalender beim selben Anbieter: im alten entfernen, im neuen anlegen (nicht doppelt stehen lassen).
+    for (const alt of beimAnbieter) if (alt.kalenderId !== kalenderId) plan.push({ art: "entfernen", recordId: record.id, kalenderId: alt.kalenderId, zuordnung: alt });
+    if (eintrag && !zuordnung) plan.push({ art: "anlegen", recordId: record.id, kalenderId, eintrag });
+    else if (eintrag && zuordnung && zuordnung.stand !== eintrag.stand) plan.push({ art: "aendern", recordId: record.id, kalenderId, eintrag, zuordnung });
+    else if (!eintrag && zuordnung) plan.push({ art: "entfernen", recordId: record.id, kalenderId, zuordnung });
+    else if (eintrag) plan.push({ art: "gleich", recordId: record.id, kalenderId });
   }
   return plan;
 }
