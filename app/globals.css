@@ -2026,3 +2026,5 @@ fieldset:disabled .datei-knopf { opacity: .55; cursor: not-allowed; }
      Die Demo ist eine Vorführung – „Neu“ entfällt dort am Handy, außerhalb der Demo bleibt er. */
   .site-header.demo-mode .neu-knopf { display: none; }
 }
+.kalender-hilfe-punkte { margin: 10px 0 0; padding-left: 1.2em; display: grid; gap: 6px; }
+.kalender-hilfe-punkte li { overflow-wrap: anywhere; }
