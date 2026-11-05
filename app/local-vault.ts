@@ -164,6 +164,8 @@ export type CreateScheduleInput = {
   dueTime?: string | null;
   erinnerungen?: ErinnerungsWahl[];
   kalenderEintragen?: boolean;
+  /** Eigener Kalender nur für diesen Eintrag; fehlt = der aus „Kalender verbinden“. */
+  kalenderWahl?: KalenderFelder["kalenderWahl"] | null;
 };
 
 const DB_NAME = "mmi-local-vault";
@@ -3321,12 +3323,14 @@ export async function createLocalScheduleBundle(handle: FileSystemDirectoryHandl
   return { schedule, reminder };
 }
 
-function kalenderEingabe(input: Pick<CreateScheduleInput, "dueTime" | "erinnerungen" | "kalenderEintragen">): KalenderFelder {
+function kalenderEingabe(input: Pick<CreateScheduleInput, "dueTime" | "erinnerungen" | "kalenderEintragen" | "kalenderWahl">): KalenderFelder {
   const felder: KalenderFelder = {};
   const zeit = gueltigeUhrzeit(input.dueTime);
   if (zeit) felder.dueTime = zeit;
   if (Array.isArray(input.erinnerungen)) felder.erinnerungen = erinnerungenOrdnen(input.erinnerungen);
   if (typeof input.kalenderEintragen === "boolean") felder.kalenderEintragen = input.kalenderEintragen;
+  const w = input.kalenderWahl;
+  if (w && typeof w.anbieter === "string" && typeof w.kalenderId === "string" && w.kalenderId) felder.kalenderWahl = { anbieter: w.anbieter, kalenderId: w.kalenderId, ...(w.name ? { name: String(w.name).slice(0, 120) } : {}) };
   return felder;
 }
 
@@ -3536,7 +3540,7 @@ export type CreateLocalMemoryInput = {
   createTask?: boolean;
   createDeadline?: boolean;
   /** „Erinnern lassen“: eine Aufgabe mit Termin, auf Wunsch im Kalender (Klaus 2026-11-05). */
-  erinnerung?: { titel: string; dueAt: string; dueTime?: string; erinnerungen: unknown[]; kalenderEintragen: boolean };
+  erinnerung?: { titel: string; dueAt: string; dueTime?: string; erinnerungen: unknown[]; kalenderEintragen: boolean; kalenderWahl?: KalenderFelder["kalenderWahl"] | null };
 };
 
 function memoryMediaKind(file: File): MemoryMediaReference["kind"] {
@@ -3607,7 +3611,7 @@ export async function createLocalMemoryBundle(handle: FileSystemDirectoryHandle,
     const e = input.erinnerung;
     const taskAllocation = nextFamilyRecordId("task", index.sequences);
     index.sequences = taskAllocation.sequences;
-    task = createFamilyRecord({ id: taskAllocation.id, recordType: "task", status: "offen", source: event.id, notes: "Erinnerung aus einem Memory-Ereignis, vom Benutzer bestätigt.", data: { title: e.titel.trim(), dueAt: e.dueAt, ...kalenderEingabe({ dueTime: e.dueTime, erinnerungen: e.erinnerungen as ErinnerungsWahl[], kalenderEintragen: e.kalenderEintragen }) }, now }) as FamilyRecordUnion;
+    task = createFamilyRecord({ id: taskAllocation.id, recordType: "task", status: "offen", source: event.id, notes: "Erinnerung aus einem Memory-Ereignis, vom Benutzer bestätigt.", data: { title: e.titel.trim(), dueAt: e.dueAt, ...kalenderEingabe({ dueTime: e.dueTime, erinnerungen: e.erinnerungen as ErinnerungsWahl[], kalenderEintragen: e.kalenderEintragen, kalenderWahl: e.kalenderWahl }) }, now }) as FamilyRecordUnion;
     index.records.push(task);
     index.relations.push({ id: crypto.randomUUID(), fromType: "task", fromId: task.id, toType: "event", toId: event.id, relationType: "entstand aus", createdAt: now, source: "Bestätigter Memory-Eintrag", notes: null });
   }

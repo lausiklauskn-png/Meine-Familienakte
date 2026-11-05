@@ -54,10 +54,38 @@ export function ErinnerungsChips({ wert, onChange, name = "Erinnern", schnell = 
   </div>;
 }
 
+// ---------- Eigener Kalender je Eintrag ----------
+
+export type KalenderWahl = { anbieter: KalenderAnbieter; kalenderId: string; name?: string };
+let kalenderListeVorrat: { anbieter: KalenderAnbieter; liste: KalenderInfo[] } | null = null;
+
+/**
+ * Kalender nur für diesen Eintrag (Klaus 2026-11-05): Vorauswahl ist immer der aus „Kalender verbinden“; wählbar sind die
+ * Kalender desselben Kontos. Ohne Anmeldung (Browser nach Neuladen) bleibt es beim eingestellten – keine leere Auswahl.
+ */
+export function KalenderAuswahl({ einst, wert, onChange }: { einst: KalenderEinst | null; wert: KalenderWahl | null; onChange: (w: KalenderWahl | null) => void }) {
+  const [liste, setListe] = useState<KalenderInfo[] | null>(kalenderListeVorrat && einst && kalenderListeVorrat.anbieter === einst.anbieter ? kalenderListeVorrat.liste : null);
+  useEffect(() => {
+    if (!einst || einst.anbieter === "ics" || liste) return;
+    const a = ANBIETER[einst.anbieter];
+    if (!a.verbunden()) return;
+    let aus = false;
+    void a.kalender().then((l) => { if (aus) return; kalenderListeVorrat = { anbieter: einst.anbieter, liste: l }; setListe(l); }).catch(() => undefined);
+    return () => { aus = true; };
+  }, [einst?.anbieter, liste]);
+  if (!einst || einst.anbieter === "ics" || !liste || liste.length < 2) return null;
+  const aktuell = wert && wert.anbieter === einst.anbieter ? wert.kalenderId : einst.kalenderId;
+  return <label className="kalender-auswahl" data-kalender-auswahl><span>Kalender für diesen Eintrag</span>
+    <select value={aktuell} onChange={(e) => { const k = liste.find((x) => x.id === e.target.value); onChange(!k || k.id === einst.kalenderId ? null : { anbieter: einst.anbieter, kalenderId: k.id, name: k.name }); }}>
+      {liste.map((k) => <option key={k.id} value={k.id}>{k.name}{k.id === einst.kalenderId ? " (Einstellung)" : ""}</option>)}
+    </select></label>;
+}
+
 /** Teil im Formular „Frist oder Aufgabe anlegen“. */
-export function KalenderFormTeil({ einst, eintragen, setEintragen, erinnerungen, setErinnerungen }: { einst: KalenderEinst | null; eintragen: boolean; setEintragen: (v: boolean) => void; erinnerungen: ErinnerungsWahl[]; setErinnerungen: (w: ErinnerungsWahl[]) => void }) {
+export function KalenderFormTeil({ einst, eintragen, setEintragen, erinnerungen, setErinnerungen, kalenderWahl = null, setKalenderWahl }: { einst: KalenderEinst | null; eintragen: boolean; setEintragen: (v: boolean) => void; erinnerungen: ErinnerungsWahl[]; setErinnerungen: (w: ErinnerungsWahl[]) => void; kalenderWahl?: KalenderWahl | null; setKalenderWahl?: (w: KalenderWahl | null) => void }) {
   return <div className="kalender-formteil" data-kalender-formteil>
     <label className="check-row"><input type="checkbox" checked={eintragen} onChange={(e) => setEintragen(e.target.checked)} data-kalender-haken/><span><strong>In den Kalender eintragen</strong><small>{einst ? `Kalender: ${kalenderZiel(einst)} (gewählt unter „Kalender verbinden“)` : <>Kein Kalender verbunden <button type="button" className="kalender-sprung" aria-label="Zu „Kalender verbinden“" title="Zu „Kalender verbinden“" data-kalender-sprung onClick={(e) => { e.preventDefault(); zurStelle("#kalender-verbinden"); }}>▽</button></>}</small></span></label>
+    {eintragen && setKalenderWahl && <KalenderAuswahl einst={einst} wert={kalenderWahl} onChange={setKalenderWahl}/>}
     {eintragen && <details className="kalender-erinnerung" data-kalender-erinnerung>
       <summary><span className="kalender-etikett">Erinnern:</span> <strong>{erinnerungen.map((w) => erinnerungsName(w)).join(", ") || "keine"}</strong> <span className="kalender-aendern">ändern ▾</span></summary>
       <ErinnerungsChips wert={erinnerungen} onChange={setErinnerungen}/>{einst?.anbieter === "microsoft" && erinnerungen.length > 1 && <small className="fine-print">Microsoft kennt eine Erinnerung je Termin: es gilt die früheste.</small>}

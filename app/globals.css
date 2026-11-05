@@ -2109,3 +2109,7 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .notiz-liste small { color: var(--muted); }
 .notiz-weg { flex: none; width: 36px; height: 36px; display: grid; place-items: center; border-radius: 8px; border: 1px solid #e3b7b3; background: #fff; color: #b42318; cursor: pointer; }
 .notiz-weg:hover:not(:disabled) { background: #fdf0ef; border-color: #b42318; }
+.kalender-auswahl { display: grid; gap: 4px; font-size: .9rem; }
+.kalender-auswahl select { max-width: 100%; padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); font: inherit; cursor: pointer; }
+.kalender-auswahl select:hover { border-color: var(--teal); }
+.memory-erinnern-felder .kalender-auswahl { grid-column: 1 / -1; }

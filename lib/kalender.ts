@@ -81,6 +81,8 @@ export type KalenderFelder = {
   /** true = in den Kalender eintragen (Haken im Formular oder „Vorhandene übernehmen“); fehlt = nie still eintragen. */
   kalenderEintragen?: boolean;
   kalender?: KalenderZuordnung[];
+  /** Eigener Kalender für diesen Eintrag (Klaus 2026-11-05); fehlt = der aus „Kalender verbinden“. Gilt nur beim selben Anbieter. */
+  kalenderWahl?: { anbieter: KalenderAnbieter; kalenderId: string; name?: string };
 };
 
 export type KalenderEintrag = {
@@ -176,11 +178,18 @@ export function soll(record: FamilyRecordUnion) {
   return istTermin(record) && kalenderFelder(record).kalenderEintragen === true && !["erledigt", "zurückgestellt", "archiviert"].includes(record.status) && Boolean(record.data.dueAt);
 }
 
+/** kalenderId: der Kalender, in dem der Schritt geschieht (beim Entfernen der der alten Zuordnung). */
 export type AbgleichSchritt =
-  | { art: "anlegen"; recordId: string; eintrag: KalenderEintrag }
-  | { art: "aendern"; recordId: string; eintrag: KalenderEintrag; zuordnung: KalenderZuordnung }
-  | { art: "entfernen"; recordId: string; zuordnung: KalenderZuordnung }
-  | { art: "gleich"; recordId: string };
+  | { art: "anlegen"; recordId: string; kalenderId: string; eintrag: KalenderEintrag }
+  | { art: "aendern"; recordId: string; kalenderId: string; eintrag: KalenderEintrag; zuordnung: KalenderZuordnung }
+  | { art: "entfernen"; recordId: string; kalenderId: string; zuordnung: KalenderZuordnung }
+  | { art: "gleich"; recordId: string; kalenderId: string };
+
+/** Kalender eines Eintrags: eigene Wahl beim verbundenen Anbieter, sonst der aus den Einstellungen. */
+export function zielKalenderId(record: FamilyRecordUnion, ziel: { anbieter: KalenderAnbieter; kalenderId: string }) {
+  const w = kalenderFelder(record).kalenderWahl;
+  return w && w.anbieter === ziel.anbieter && typeof w.kalenderId === "string" && w.kalenderId ? w.kalenderId : ziel.kalenderId;
+}
 
 /**
  * Was für einen Zielkalender zu tun ist: offene, angehakte Fristen anlegen oder aktualisieren; erledigte, zurückgestellte
@@ -190,12 +199,16 @@ export function abgleichPlan(records: FamilyRecordUnion[], ziel: { anbieter: Kal
   const plan: AbgleichSchritt[] = [];
   for (const record of records) {
     if (!istTermin(record)) continue;
-    const zuordnung = (kalenderFelder(record).kalender || []).find((z) => z.anbieter === ziel.anbieter && z.kalenderId === ziel.kalenderId);
+    const kalenderId = zielKalenderId(record, ziel);
+    const beimAnbieter = (kalenderFelder(record).kalender || []).filter((z) => z.anbieter === ziel.anbieter);
+    const zuordnung = beimAnbieter.find((z) => z.kalenderId === kalenderId);
     const eintrag = soll(record) ? kalenderEintrag(record, { vorgabe: opt.vorgabe, relations: opt.relations, records, geschuetzt: opt.geschuetzt?.(record) }) : null;
-    if (eintrag && !zuordnung) plan.push({ art: "anlegen", recordId: record.id, eintrag });
-    else if (eintrag && zuordnung && zuordnung.stand !== eintrag.stand) plan.push({ art: "aendern", recordId: record.id, eintrag, zuordnung });
-    else if (!eintrag && zuordnung) plan.push({ art: "entfernen", recordId: record.id, zuordnung });
-    else if (eintrag) plan.push({ art: "gleich", recordId: record.id });
+    // Gewechselter Kalender beim selben Anbieter: im alten entfernen, im neuen anlegen (nicht doppelt stehen lassen).
+    for (const alt of beimAnbieter) if (alt.kalenderId !== kalenderId) plan.push({ art: "entfernen", recordId: record.id, kalenderId: alt.kalenderId, zuordnung: alt });
+    if (eintrag && !zuordnung) plan.push({ art: "anlegen", recordId: record.id, kalenderId, eintrag });
+    else if (eintrag && zuordnung && zuordnung.stand !== eintrag.stand) plan.push({ art: "aendern", recordId: record.id, kalenderId, eintrag, zuordnung });
+    else if (!eintrag && zuordnung) plan.push({ art: "entfernen", recordId: record.id, kalenderId, zuordnung });
+    else if (eintrag) plan.push({ art: "gleich", recordId: record.id, kalenderId });
   }
   return plan;
 }

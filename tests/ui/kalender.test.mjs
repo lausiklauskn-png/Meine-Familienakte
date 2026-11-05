@@ -179,6 +179,19 @@ try {
     for (let i = 0; i < 60 && google.neu.length === vorher; i++) await page.waitForTimeout(150);
     return google.neu.length > vorher ? `${google.neu.length - vorher} eingetragen` : false;
   });
+  await step("Eigener Kalender je Eintrag: Vorauswahl „Familie (Einstellung)“, „Arbeit“ gewählt → Termin landet in Arbeit", async () => {
+    const auswahl = page.locator("[data-kalender-formteil] [data-kalender-auswahl] select");
+    await auswahl.waitFor({ timeout: 5000 });
+    const vorher = await auswahl.inputValue();
+    const optionen = await auswahl.locator("option").allInnerTexts();
+    await auswahl.selectOption("arbeit@group");
+    await neueFrist(page, "Teamtreffen vorbereiten (erfunden)", "2026-11-27");
+    let n; for (let i = 0; i < 40; i++) { n = google.neu.find((x) => x.body.summary === "Teamtreffen vorbereiten (erfunden)"); if (n) break; await page.waitForTimeout(150); }
+    const r = (await register(page)).find((x) => x.data?.title === "Teamtreffen vorbereiten (erfunden)");
+    const nachher = await page.locator("[data-kalender-formteil] [data-kalender-auswahl] select").inputValue().catch(() => "-");
+    const ok = vorher === "primary" && optionen.join() === "Familie (Einstellung),Arbeit" && decodeURIComponent(n?.kalender || "") === "arbeit@group" && r?.data.kalenderWahl?.kalenderId === "arbeit@group" && nachher === "primary";
+    return ok ? true : (console.log("   ↳", vorher, optionen, n?.kalender, JSON.stringify(r?.data.kalenderWahl), nachher), false);
+  });
   await step("Trennen ohne Mitlöschen: Einträge bleiben, Anmeldung vergessen, Karte wieder offen", async () => {
     const vorher = google.geloescht.length;
     await karte.locator("[data-kalender-trennen]").click();

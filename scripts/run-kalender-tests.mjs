@@ -79,6 +79,16 @@ assert.deepEqual(k.abgleichPlan([frist({}, { kalender: [z], kalenderEintragen: f
 assert.deepEqual(k.abgleichPlan([frist({}, { kalender: [z] })], { anbieter: "geraet", kalenderId: "3" }).map((s) => s.art), ["anlegen"], "anderer Kalender: eigener Eintrag, alter bleibt");
 gruen("Abgleich: anlegen, gleich, ändern, entfernen bei erledigt/zurückgestellt/abgehakt; andere Kalender unberührt");
 
+// Eigener Kalender je Eintrag (Klaus 2026-11-05): Vorauswahl ist der aus den Einstellungen; eigene Wahl beim selben Anbieter.
+const wahl = { anbieter: "google", kalenderId: "arbeit@group", name: "Arbeit" };
+const pw = k.abgleichPlan([frist({}, { kalenderWahl: wahl })], ziel);
+assert.deepEqual(pw.map((s) => [s.art, s.kalenderId]), [["anlegen", "arbeit@group"]]);
+assert.deepEqual(k.abgleichPlan([frist()], ziel).map((s) => s.kalenderId), ["primary"], "ohne eigene Wahl: Kalender aus den Einstellungen");
+const umzug = k.abgleichPlan([frist({}, { kalender: [z], kalenderWahl: wahl })], ziel).map((s) => [s.art, s.kalenderId]);
+assert.deepEqual(umzug, [["entfernen", "primary"], ["anlegen", "arbeit@group"]], "Kalender gewechselt: im alten weg, im neuen an");
+assert.deepEqual(k.abgleichPlan([frist({}, { kalenderWahl: { ...wahl, anbieter: "microsoft" } })], ziel).map((s) => s.kalenderId), ["primary"], "Wahl eines anderen Anbieters gilt nicht");
+gruen("Eigener Kalender je Eintrag: Vorauswahl aus den Einstellungen, Wechsel räumt den alten Termin weg, fremder Anbieter fällt zurück");
+
 const liste = k.zuordnungSetzen([z, { ...z, anbieter: "ics", kalenderId: "datei" }], { ...z, eintragId: "neu" }, ziel);
 assert.equal(liste.length, 2); assert.equal(liste.find((x) => x.anbieter === "google").eintragId, "neu");
 assert.equal(k.zuordnungSetzen(liste, null, ziel).length, 1);
