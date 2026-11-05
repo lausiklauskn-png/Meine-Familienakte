@@ -23,7 +23,12 @@ export const kalenderAnbieterNamen: Record<KalenderAnbieter, string> = {
  * je um die Uhrzeit des Termins (ohne Uhrzeit 9 Uhr), dazu „am Tag, 9 Uhr“. Mehrere zugleich möglich, wie im Kalender üblich.
  * Gespeichert als „<n>d“ bzw. „tag9“; ältere Einträge („7d“, „1d“) bleiben damit gültig.
  */
-export type ErinnerungsWahl = "tag9" | `${number}d` | `${number}m`;
+export type ErinnerungsWahl = "tag9" | `${number}d` | `${number}m` | `@${string}`;
+/** Eigene Erinnerungszeit (Klaus 2026-11-05: „eine halbe Stunde später, Mittag“): „@JJJJ-MM-TTTHH:MM“ Ortszeit. */
+export function erinnerungsZeitpunkt(w: string): { datum: string; uhrzeit: string } | null {
+  const m = /^@(\d{4}-\d{2}-\d{2})T([01]\d|2[0-3]):([0-5]\d)$/.exec(w);
+  return m ? { datum: m[1], uhrzeit: `${m[2]}:${m[3]}` } : null;
+}
 /** Kurzfristige Erinnerungen (Klaus 2026-11-05, „erinnere mich heute um 20 Uhr“): zur Uhrzeit oder Minuten vorher. */
 export const KURZ_ERINNERUNGEN: ErinnerungsWahl[] = ["60m", "15m", "0m"];
 export const MAX_TAGE_VORHER = 28;
@@ -43,9 +48,11 @@ export function erinnerungsMinutenVorher(w: string): number | null {
 }
 /** Abstand zum Termin in Minuten; „am Tag, 9 Uhr“ hängt von der Uhrzeit ab und gibt null. */
 function vorherMinuten(w: string) { const t = erinnerungsTage(w); return t !== null ? t * 1440 : erinnerungsMinutenVorher(w); }
-export function istErinnerung(w: unknown): w is ErinnerungsWahl { return w === "tag9" || (typeof w === "string" && vorherMinuten(w) !== null); }
+export function istErinnerung(w: unknown): w is ErinnerungsWahl { return w === "tag9" || (typeof w === "string" && (vorherMinuten(w) !== null || erinnerungsZeitpunkt(w) !== null)); }
 export function erinnerungsName(w: ErinnerungsWahl) {
   if (w === "tag9") return "am Tag, 9 Uhr";
+  const z = erinnerungsZeitpunkt(w);
+  if (z) { const [j, mo, t] = z.datum.split("-").map(Number); return `${new Date(j, mo - 1, t).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" })}, ${z.uhrzeit} Uhr`; }
   const min = erinnerungsMinutenVorher(w);
   if (min !== null) return min === 0 ? "zur Uhrzeit" : min % 60 === 0 ? `${min / 60} Std. vorher` : `${min} Min. vorher`;
   const n = erinnerungsTage(w) || 0;
@@ -127,10 +134,11 @@ function ortszeit(datum: string, uhrzeit: string) {
   return new Date(j, m - 1, t, h, min, 0, 0);
 }
 
-export function erinnerungsMinuten(wahl: ErinnerungsWahl[], uhrzeit: string, zusaetzlich: number[] = []) {
+export function erinnerungsMinuten(wahl: ErinnerungsWahl[], uhrzeit: string, zusaetzlich: number[] = [], beginn?: Date) {
   const [h, m] = uhrzeit.split(":").map(Number);
   const ab9 = h * 60 + m - 9 * 60;
-  const roh = wahl.map((w) => (w === "tag9" ? Math.max(0, ab9) : vorherMinuten(w) ?? NaN)).concat(zusaetzlich);
+  const absolut = (w: string) => { const z = erinnerungsZeitpunkt(w); return z && beginn ? (beginn.getTime() - ortszeit(z.datum, z.uhrzeit).getTime()) / 60000 : NaN; };
+  const roh = wahl.map((w) => (w === "tag9" ? Math.max(0, ab9) : vorherMinuten(w) ?? absolut(w))).concat(zusaetzlich);
   return [...new Set(roh.filter((x) => Number.isFinite(x) && x >= 0).map((x) => Math.min(Math.round(x), MAX_ERINNERUNG_MINUTEN)))]
     .sort((a, b) => a - b).slice(0, MAX_ERINNERUNGEN).sort((a, b) => b - a); // bei mehr als 5: die nächsten am Termin bleiben
 }
@@ -152,7 +160,7 @@ export type EintragOptionen = {
 function verknuepfteErinnerungen(record: Termin, beginn: Date, records: FamilyRecordUnion[] = [], relations: FamilyRelation[] = []) {
   const ids = new Set(relations.filter((r) => r.toId === record.id && r.fromType === "reminder" && r.relationType === "erinnert an").map((r) => r.fromId));
   return records.filter((r) => r.recordType === "reminder" && ids.has(r.id) && r.status !== "erledigt" && r.data.remindAt)
-    .map((r) => (beginn.getTime() - ortszeit(String((r.data as { remindAt?: string }).remindAt), STANDARD_UHRZEIT).getTime()) / 60000)
+    .map((r) => { const at = String((r.data as { remindAt?: string }).remindAt); return (beginn.getTime() - ortszeit(at, gueltigeUhrzeit(at.slice(11, 16)) || STANDARD_UHRZEIT).getTime()) / 60000; })
     .filter((min) => min > 0);
 }
 
@@ -168,7 +176,7 @@ export function kalenderEintrag(record: FamilyRecordUnion, opt: EintragOptionen 
   const titel = geschuetzt ? art : (record.data.title || art).trim().slice(0, 200);
   const beschreibung = geschuetzt ? "Aus der Familienakte. Einzelheiten nur in der App." : `Aus der Familienakte (${record.id}).`;
   const wahl = Array.isArray(felder.erinnerungen) ? erinnerungenOrdnen(felder.erinnerungen) : (opt.vorgabe || ERINNERUNG_VORGABE);
-  const erinnerungen = erinnerungsMinuten(wahl, uhrzeit, verknuepfteErinnerungen(record, beginn, opt.records, opt.relations));
+  const erinnerungen = erinnerungsMinuten(wahl, uhrzeit, verknuepfteErinnerungen(record, beginn, opt.records, opt.relations), beginn);
   const inhalt = { titel, beschreibung, beginn: beginn.toISOString(), ende: ende.toISOString(), erinnerungen };
   const updated = Date.parse(record.updatedAt);
   return { recordId: record.id, uid: kalenderUid(record), ...inhalt, geschuetzt, sequenz: Number.isFinite(updated) ? Math.floor(updated / 1000) % 2147483647 : 0, stand: kurzHash(JSON.stringify(inhalt)) };

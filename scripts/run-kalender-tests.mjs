@@ -150,6 +150,16 @@ assert.equal(k.erinnerungsName("0m"), "zur Uhrzeit"); assert.equal(k.erinnerungs
 assert.ok(!k.istErinnerung("1440m") && !k.istErinnerung("-5m"), "Minuten nur unter einem Tag");
 gruen("Erinnerung zur Uhrzeit und Minuten vorher: richtig sortiert und in Minuten umgerechnet");
 
+// Eigene Erinnerungszeit (Klaus 2026-11-05): Tag und Uhrzeit frei, z. B. 12:30 am Vortag eines 15-Uhr-Termins.
+assert.equal(k.erinnerungsName("@2026-11-11T12:30"), "Mi., 11.11., 12:30 Uhr");
+const eig = k.kalenderEintrag(frist({}, { dueAt: "2026-11-12", dueTime: "15:00", erinnerungen: ["@2026-11-11T12:30", "0m"] }));
+assert.deepEqual(eig.erinnerungen, [1590, 0], "eigene Zeit = 26 h 30 min vorher, dazu zur Uhrzeit");
+assert.ok(!k.istErinnerung("@2026-11-11T25:00"), "ungültige Uhrzeit fällt weg");
+const remZ = { id: "REM-000009", recordType: "reminder", createdAt: "2026-11-05", updatedAt: "2026-11-05", status: "offen", source: "FRIST-000007", notes: null, data: { remindAt: "2026-11-19T12:30" } };
+const relZ = [{ id: "r9", fromType: "reminder", fromId: "REM-000009", toType: "deadline", toId: "FRIST-000007", relationType: "erinnert an", createdAt: "2026-11-05", source: "x", notes: null }];
+assert.ok(k.kalenderEintrag(frist({}, { erinnerungen: [] }), { records: [remZ], relations: relZ }).erinnerungen.includes(20 * 60 + 30), "Erinnerungsdatum mit Uhrzeit 12:30 statt fest 9 Uhr");
+gruen("Eigene Erinnerungszeit (Tag + Uhrzeit) und Erinnerungsdatum mit Uhrzeit statt fest 9 Uhr");
+
 // Erinnerungswunsch aus dem Text (Notiz und Memory): heute/morgen/in 5 Stunden/Wochentag/Datum; vergangene Ereignisse nicht.
 const m = await import("../lib/family-memory.ts");
 const jetzt = new Date(2026, 10, 5, 18, 42);

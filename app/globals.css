@@ -2128,3 +2128,5 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .kalender-anmelde-hinweis { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 10px auto; max-width: 1180px; padding: 10px 14px; border: 2px solid #f6c34a; border-radius: 12px; background: var(--amber-soft); color: var(--ink); }
 .kalender-anmelde-hinweis > span { display: grid; flex: 1; min-width: 180px; }
 .kalender-anmelde-hinweis small { color: var(--muted); }
+.kalender-eigen { display: inline-flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.kalender-eigen input { padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; font: inherit; }

@@ -119,6 +119,23 @@ try {
     await fenster.locator("[data-notiz-schliessen]").click();
     return mitText && leer;
   });
+  await step("Eigene Erinnerungszeit: „weitere … → eigene Zeit“, Tag und 12:30 → Chip und im Register gespeichert", async () => {
+    await page.locator("[data-notiz-knopf]").click(); await fenster.waitFor();
+    await page.waitForFunction(() => (document.querySelector("[data-notiz-eingabe]") || {}).value?.includes("morgen um 9 Uhr"), null, { timeout: 5000 });
+    await fenster.locator(".dictation-button.listening").click().catch(() => {});
+    await page.waitForFunction(() => !document.querySelector("[data-notiz-fenster] .dictation-button.listening"), null, { timeout: 5000 });
+    await fenster.locator("[data-notiz-eingabe]").fill("Erinnere mich morgen um 15 Uhr, Paket abholen");
+    await fenster.locator("[data-erinnerung-tage]").selectOption("eigen");
+    await fenster.locator("[data-erinnerung-eigen-tag]").fill(morgen);
+    await fenster.locator("[data-erinnerung-eigen-zeit]").fill("12:30");
+    await fenster.locator("[data-erinnerung-eigen-ok]").click();
+    const chip = await fenster.locator(`[data-erinnerung="@${morgen}T12:30"]`).innerText();
+    await fenster.locator("[data-notiz-speichern]").click(); await fenster.locator("[data-notiz-liste] li").first().waitFor();
+    await fenster.locator("[data-notiz-fertig]").click(); await fenster.waitFor({ state: "detached" });
+    const r = await page.evaluate(async () => { const f = window.__vaultFixture; return (await f.readLocalVaultData(await f.browserVault())).records; });
+    const t = r.find((x) => x.recordType === "task" && x.data.title === "Paket abholen");
+    return /12:30 Uhr/.test(chip) && t?.data.erinnerungen?.includes(`@${morgen}T12:30`) ? true : (console.log("   ↳", chip, JSON.stringify(t?.data)), false);
+  });
   check(errors.length === 0, "Desktop: keine Seitenfehler", errors.join(" | "));
   await context.close();
 

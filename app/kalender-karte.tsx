@@ -10,6 +10,7 @@ import { kalenderAbgleichen, kalenderDateiAusgeben, kalenderEinstLesen, kalender
 import { updateLocalScheduleKalender } from "./local-vault";
 import { Ablaufbild, zurStelle } from "./ablaufbild";
 import { InfoPopover } from "./ui-controls";
+import { DatumFeld } from "./datum-feld";
 import { askConfirm } from "./page-dialogs";
 
 type Notice = { kind: "success" | "error" | "info"; text: string };
@@ -40,16 +41,26 @@ export function fristAusHinweis(hinweis: string) { return hinweis.match(/\b(20\d
 // ---------- Erinnerungs-Chips ----------
 
 export function ErinnerungsChips({ wert, onChange, name = "Erinnern", schnell = ALLE_ERINNERUNGEN }: { wert: ErinnerungsWahl[]; onChange: (w: ErinnerungsWahl[]) => void; name?: string; schnell?: ErinnerungsWahl[] }) {
-  // Schnellwahl als Chips; dazu jede gewählte eigene Zahl als eigener Chip und die Auswahl „weitere Tage vorher“ (1–28).
+  // Schnellwahl als Chips; dazu jede gewählte eigene Wahl als eigener Chip und die Auswahl „weitere …“ (Minuten, Tage, eigene Zeit).
   const chips = erinnerungenOrdnen([...schnell, ...wert]);
   const weitere: ErinnerungsWahl[] = [...KURZ_ERINNERUNGEN.slice().reverse(), ...Array.from({ length: MAX_TAGE_VORHER }, (_, i) => `${i + 1}d` as ErinnerungsWahl)].filter((w) => !wert.includes(w) && !schnell.includes(w));
   const umschalten = (w: ErinnerungsWahl) => onChange(wert.includes(w) ? wert.filter((x) => x !== w) : erinnerungenOrdnen([...wert, w]));
+  // Eigene Zeit (Klaus 2026-11-05): Tag und Uhrzeit frei, z. B. mittags statt während der Arbeit.
+  const [eigen, setEigen] = useState(false);
+  const [eDatum, setEDatum] = useState(() => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; });
+  const [eZeit, setEZeit] = useState("12:30");
   return <div className="kalender-chips" role="group" aria-label={name}>
     {chips.map((w) => { const an = wert.includes(w); return <button key={w} type="button" className={`kalender-chip${an ? " an" : ""}`} aria-pressed={an} data-erinnerung={w} onClick={() => umschalten(w)}>{erinnerungsName(w)}</button>; })}
-    <select className="kalender-tage" aria-label="Weitere Erinnerungen" data-erinnerung-tage value="" onChange={(e) => { const w = /^\d+$/.test(e.target.value) ? `${e.target.value}d` : e.target.value; if (w) onChange(erinnerungenOrdnen([...wert, w])); }}>
+    <select className="kalender-tage" aria-label="Weitere Erinnerungen" data-erinnerung-tage value="" onChange={(e) => { if (e.target.value === "eigen") { setEigen(true); return; } const w = /^\d+$/.test(e.target.value) ? `${e.target.value}d` : e.target.value; if (w) onChange(erinnerungenOrdnen([...wert, w])); }}>
       <option value="">weitere …</option>
+      <option value="eigen">eigene Zeit …</option>
       {weitere.map((w) => <option key={w} value={w}>{erinnerungsName(w)}</option>)}
     </select>
+    {eigen && <span className="kalender-eigen" data-erinnerung-eigen>
+      <DatumFeld value={eDatum} onChange={(e) => setEDatum(e.target.value)} aria-label="Tag der Erinnerung" data-erinnerung-eigen-tag/>
+      <DatumFeld art="time" value={eZeit} onChange={(e) => setEZeit(e.target.value)} aria-label="Uhrzeit der Erinnerung" data-erinnerung-eigen-zeit/>
+      <button type="button" className="button secondary" disabled={!eDatum || !eZeit} onClick={() => { onChange(erinnerungenOrdnen([...wert, `@${eDatum}T${eZeit}`])); setEigen(false); }} data-erinnerung-eigen-ok>Übernehmen</button>
+    </span>}
     {wert.length > MAX_ERINNERUNGEN && <small className="fine-print" data-erinnerung-grenze>Kalender nehmen höchstens {MAX_ERINNERUNGEN} Erinnerungen; es gelten die {MAX_ERINNERUNGEN} nächsten am Termin.</small>}
   </div>;
 }
