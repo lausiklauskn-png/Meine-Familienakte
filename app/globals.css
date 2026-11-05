@@ -2003,3 +2003,26 @@ fieldset:disabled .datei-knopf { opacity: .55; cursor: not-allowed; }
 .kalender-liste { display: grid; gap: 8px; }
 .kalender-liste label { display: grid; gap: 4px; }
 .kalender-liste select { max-width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); }
+
+/* Knopf „Neu“ mit Fenster „Was ist neu“ (Klaus 2026-11-05). */
+.neu-knopf { position: relative; flex: 0 0 auto; display: inline-flex; }
+.neu-knopf-schalter { position: relative; display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 10px; border: 1px solid var(--teal); border-radius: 8px; background: var(--teal-soft); color: var(--teal); font: inherit; font-size: .84rem; font-weight: 700; }
+.neu-knopf-schalter:focus-visible { outline: 3px solid #9fd8d4; outline-offset: 2px; }
+.neu-punkt { width: 9px; height: 9px; border-radius: 50%; background: #b42318; }
+.neu-fenster { position: absolute; top: calc(100% + 6px); right: 0; z-index: 80; width: min(340px, calc(100vw - 24px)); display: grid; gap: 8px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: #fff; box-shadow: 0 10px 26px rgba(9,38,63,.2); color: var(--ink); text-align: left; }
+.neu-fenster h2 { margin: 0; font-size: 1rem; color: var(--navy); }
+.neu-fenster ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.neu-eintrag { display: flex; gap: 10px; align-items: flex-start; border: 1px solid var(--line); border-radius: 10px; padding: 10px; background: var(--teal-soft); }
+.neu-eintrag > div { flex: 1; min-width: 0; display: grid; gap: 4px; }
+.neu-eintrag strong { overflow-wrap: anywhere; }
+.neu-eintrag span { color: var(--muted); font-size: .88rem; overflow-wrap: anywhere; }
+.neu-eintrag .button, .header-actions .neu-eintrag .button { display: inline-flex; justify-self: start; margin-top: 4px; }
+.neu-x { flex: none; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line); background: #fff; color: var(--muted); }
+.neu-leer { margin: 0; color: var(--muted); font-size: .9rem; }
+@media (max-width: 620px) {
+  .neu-knopf-schalter { height: 30px; padding: 0 8px; font-size: .78rem; }
+  .neu-fenster { position: fixed; top: calc(env(safe-area-inset-top, 0px) + 56px); left: 12px; right: 12px; width: auto; max-height: calc(100vh - 80px); overflow: auto; }
+  /* In der Demo steht am Handy schon der rote DEMO-Knopf hinter dem Namen; beide zusammen schneiden FAMILIENAKTE ab.
+     Die Demo ist eine Vorführung – „Neu“ entfällt dort am Handy, außerhalb der Demo bleibt er. */
+  .site-header.demo-mode .neu-knopf { display: none; }
+}

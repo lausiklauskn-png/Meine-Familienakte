@@ -119,4 +119,18 @@ assert.deepEqual(k.erinnerungsMinuten(["7d", "7d", "1d"], "09:00", [99999, -5]),
 assert.deepEqual(k.erinnerungsMinuten(["9d", "7d", "5d", "3d", "2d", "1d"], "09:00"), [10080, 7200, 4320, 2880, 1440], "bei mehr als 5 bleiben die nächsten am Termin (1 Tag vorher fällt nie weg)");
 gruen("Grenzen: ohne Datum kein Eintrag, Erinnerungen doppelt/negativ/über 28 Tage bereinigt");
 
+// Kalender-Konten: öffentliche Client-IDs in der richtigen Form; nirgends im Repo ein Google-Client-Geheimnis.
+const { KALENDER_KONTEN } = await import("../lib/kalender-konten.ts");
+for (const [name, id] of [["Google Web", KALENDER_KONTEN.google.webClientId], ["Google Desktop", KALENDER_KONTEN.google.desktopClientId]]) {
+  assert.ok(id === "" || /^\d+-[a-z0-9]+\.apps\.googleusercontent\.com$/.test(id), `${name}: Client-ID hat nicht die Form …apps.googleusercontent.com`);
+}
+assert.ok(KALENDER_KONTEN.microsoft.clientId === "" || /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(KALENDER_KONTEN.microsoft.clientId), "Microsoft: Client-ID ist keine GUID");
+const { spawnSync } = await import("node:child_process");
+// git grep: 0 = Treffer, 1 = keiner, sonst Fehler (dann nicht still grün).
+const suche = spawnSync("git", ["grep", "-lI", "-e", "GOCSPX-[A-Za-z0-9_-]\\{10,\\}", "--", ".", ":!node_modules"], { encoding: "utf8" });
+assert.ok(suche.status === 0 || suche.status === 1, "git grep lief nicht: " + (suche.stderr || suche.error));
+const geheim = suche.status === 0 ? suche.stdout.trim() : "";
+assert.equal(geheim, "", "Google-Client-Geheimnis im Repo: " + geheim);
+gruen(`Kalender-Konten: Client-IDs in richtiger Form (Google Web ${KALENDER_KONTEN.google.webClientId ? "eingetragen" : "leer"}), kein Client-Geheimnis im Repo`);
+
 console.log(`Kalender-Kern: ${n} grün · 0 rot`);

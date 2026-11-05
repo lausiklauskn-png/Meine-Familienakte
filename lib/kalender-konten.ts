@@ -4,9 +4,9 @@
 export const KALENDER_KONTEN = {
   google: {
     /** Google Cloud → APIs & Dienste → Anmeldedaten → OAuth-Client „Webanwendung“ (Browser/PWA). */
-    webClientId: "",
+    webClientId: "950014505144-jko3lv45o1fk3b5rqk0rrn8ss5vudjrd.apps.googleusercontent.com", // Projekt „Familienakte“, eingerichtet 05.11.2026
     /** OAuth-Client „Desktop-App“ (Windows); sein Client-Geheimnis nur als GitHub-Secret FA_GOOGLE_DESKTOP_SECRET. */
-    desktopClientId: "",
+    desktopClientId: "950014505144-dvp3k2139vs60cgo1nspi197sund7k68.apps.googleusercontent.com", // Client „Familienakte Windows“ (Desktop-App)
     scope: "https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/calendar.calendarlist.readonly",
   },
   microsoft: {
