@@ -1,4 +1,5 @@
 import { workspaceName, demoActive } from "../lib/demo-workspace.ts";
+import { ALLE_ERINNERUNGEN, gueltigeUhrzeit, zuordnungSetzen, type ErinnerungsWahl, type KalenderAnbieter, type KalenderFelder, type KalenderZuordnung } from "../lib/kalender.ts";
 import { workspaceStorage } from "../lib/demo-workspace.ts";
 import type { ProUebergabe } from "../lib/pro-verbund-vertrag";
 import { kontaktPruefen, kontaktUebernehmen, type PersonKontakt } from "../lib/person-kontakt.ts";
@@ -159,6 +160,10 @@ export type CreateScheduleInput = {
   source?: string | null;
   notes?: string | null;
   references: ScheduleReference[];
+  /** Kalender (Klaus 2026-11-05): Uhrzeit frei, Erinnerungs-Chips, Haken „In den Kalender eintragen“. */
+  dueTime?: string | null;
+  erinnerungen?: ErinnerungsWahl[];
+  kalenderEintragen?: boolean;
 };
 
 const DB_NAME = "mmi-local-vault";
@@ -3293,9 +3298,7 @@ export async function createLocalScheduleBundle(handle: FileSystemDirectoryHandl
     status: "offen",
     source: input.source || "Manuelle Eingabe",
     notes: input.notes || null,
-    data: input.recordType === "deadline"
-      ? { title: input.title.trim(), dueAt: input.dueAt }
-      : { title: input.title.trim(), dueAt: input.dueAt },
+    data: { title: input.title.trim(), dueAt: input.dueAt, ...kalenderEingabe(input) },
     now,
   }) as FamilyRecordUnion;
   index.records.push(schedule);
@@ -3316,6 +3319,43 @@ export async function createLocalScheduleBundle(handle: FileSystemDirectoryHandl
   index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Frist oder Aufgabe angelegt", recordId: schedule.id, details: `${schedule.id} wurde nach ausdrücklicher Benutzerbestätigung angelegt.${reminder ? ` ${reminder.id} wurde verknüpft.` : ""}` });
   await writeIndex(handle, index);
   return { schedule, reminder };
+}
+
+function kalenderEingabe(input: Pick<CreateScheduleInput, "dueTime" | "erinnerungen" | "kalenderEintragen">): KalenderFelder {
+  const felder: KalenderFelder = {};
+  const zeit = gueltigeUhrzeit(input.dueTime);
+  if (zeit) felder.dueTime = zeit;
+  if (Array.isArray(input.erinnerungen)) felder.erinnerungen = input.erinnerungen.filter((w) => ALLE_ERINNERUNGEN.includes(w));
+  if (typeof input.kalenderEintragen === "boolean") felder.kalenderEintragen = input.kalenderEintragen;
+  return felder;
+}
+
+/**
+ * Kalender am Datensatz (Klaus 2026-11-05): Haken setzen/abnehmen und die Zuordnung (Anbieter, Kalender, Eintrag, Stand)
+ * nach einem Abgleich festhalten. Im Protokoll stehen nur Kennung und Anbieter, kein Inhalt.
+ */
+export async function updateLocalScheduleKalender(handle: FileSystemDirectoryHandle, aenderungen: Array<{ id: string; kalenderEintragen?: boolean; ziel?: { anbieter: KalenderAnbieter; kalenderId: string }; zuordnung?: KalenderZuordnung | null }>) {
+  if (!aenderungen.length) return [];
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  const index = await readIndex(handle);
+  const now = new Date().toISOString();
+  const geaendert: string[] = [];
+  {
+    for (const aenderung of aenderungen) {
+      const record = index.records.find((item) => item.id === aenderung.id && (item.recordType === "deadline" || item.recordType === "task"));
+      if (!record || (record.recordType !== "deadline" && record.recordType !== "task")) continue;
+      const data = record.data as KalenderFelder;
+      if (typeof aenderung.kalenderEintragen === "boolean" && data.kalenderEintragen !== aenderung.kalenderEintragen) {
+        data.kalenderEintragen = aenderung.kalenderEintragen;
+        record.updatedAt = now;
+        index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Kalender", recordId: record.id, details: `${record.id}: ${aenderung.kalenderEintragen ? "in den Kalender eintragen" : "nicht mehr in den Kalender"}; Änderung durch Benutzerbefehl.` });
+      }
+      if (aenderung.ziel && aenderung.zuordnung !== undefined) data.kalender = zuordnungSetzen(data.kalender, aenderung.zuordnung, aenderung.ziel);
+      geaendert.push(record.id);
+    }
+  }
+  await writeIndex(handle, index);
+  return geaendert;
 }
 
 export type LocalScheduleStatus = "offen" | "in_bearbeitung" | "wartet_auf_antwort" | "erledigt" | "zurückgestellt";
