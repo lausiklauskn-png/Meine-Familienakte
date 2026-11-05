@@ -41,7 +41,11 @@ try {
   await step("Speichern legt einen Erinnerungseintrag und eine Aufgabe mit Termin, Uhrzeit, Erinnerung und Kalender-Haken an", async () => {
     await fenster.locator("[data-memory-erinnern-kalender]").check();
     await fenster.locator("[data-notiz-speichern]").click();
+    await fenster.locator("[data-notiz-gespeichert]").waitFor({ timeout: 10000 });
+    const muell = await fenster.locator("[data-notiz-loeschen]").isVisible() && (await fenster.locator("[data-notiz-speichern]").count()) === 0;
+    await fenster.locator("[data-notiz-fertig]").click();
     await fenster.waitFor({ state: "detached", timeout: 10000 });
+    if (!muell) { console.log("   ↳ nach dem Haken kein Mülleimer"); return false; }
     await vaultFixture(page);
     const records = await page.evaluate(async () => { const f = window.__vaultFixture; return (await f.readLocalVaultData(await f.browserVault())).records; });
     const ev = records.find((r) => r.recordType === "event" && /Jens anzurufen/.test(JSON.stringify(r.data)));
@@ -63,9 +67,37 @@ try {
     if (await fenster.locator("[data-memory-erinnern-haken]").isChecked()) { console.log("   ↳ Text:", await fenster.locator("[data-notiz-eingabe]").inputValue()); return false; }
     const vorher = await page.evaluate(async () => { const f = window.__vaultFixture; return (await f.readLocalVaultData(await f.browserVault())).records.filter((r) => r.recordType === "task").length; });
     await fenster.locator("[data-notiz-speichern]").click();
+    await fenster.locator("[data-notiz-gespeichert]").waitFor({ timeout: 10000 });
+    await fenster.locator("[data-notiz-fertig]").click();
     await fenster.waitFor({ state: "detached", timeout: 10000 });
     const nachher = await page.evaluate(async () => { const f = window.__vaultFixture; return (await f.readLocalVaultData(await f.browserVault())).records.filter((r) => r.recordType === "task").length; });
     return aus && felder && nachher === vorher ? true : (console.log("   ↳", aus, felder, vorher, nachher, await fenster.locator("[data-notiz-eingabe]").inputValue().catch(() => "-")), false);
+  });
+  await step("Haken speichert, Mülleimer löscht den Eintrag samt Aufgabe wieder; dann ist der Haken zurück", async () => {
+    const zahl = () => page.evaluate(async () => { const f = window.__vaultFixture; const r = (await f.readLocalVaultData(await f.browserVault())).records; return r.filter((x) => /Müll rausbringen/.test(JSON.stringify(x.data))).length; });
+    await page.locator("[data-notiz-knopf]").click(); await fenster.waitFor();
+    await page.waitForFunction(() => (document.querySelector("[data-notiz-eingabe]") || {}).value?.includes("morgen um 9 Uhr"), null, { timeout: 5000 });
+    await fenster.locator(".dictation-button.listening").click().catch(() => {});
+    await page.waitForFunction(() => !document.querySelector("[data-notiz-fenster] .dictation-button.listening"), null, { timeout: 5000 });
+    await fenster.locator("[data-notiz-eingabe]").fill("Erinnere mich morgen um 7 Uhr, Müll rausbringen");
+    await fenster.locator("[data-notiz-speichern]").click();
+    await fenster.locator("[data-notiz-gespeichert]").waitFor();
+    const nachSpeichern = await zahl();
+    await fenster.locator("[data-notiz-loeschen]").click();
+    await fenster.locator("[data-notiz-speichern]").waitFor();
+    const nachLoeschen = await zahl();
+    await fenster.locator("[data-notiz-schliessen]").click();
+    return nachSpeichern === 2 && nachLoeschen === 0 ? true : (console.log("   ↳", nachSpeichern, nachLoeschen), false);
+  });
+  await step("Kleines × im Textfeld löscht Text und Erinnerung; ohne Text keine Erinnerung", async () => {
+    await page.locator("[data-notiz-knopf]").click(); await fenster.waitFor();
+    await page.waitForFunction(() => (document.querySelector("[data-notiz-eingabe]") || {}).value?.includes("morgen um 9 Uhr"), null, { timeout: 5000 });
+    await fenster.locator(".dictation-button.listening").click().catch(() => {});
+    const mitText = await fenster.locator("[data-memory-erinnern-haken]").isChecked();
+    await fenster.locator("[data-notiz-leeren]").click();
+    const leer = (await fenster.locator("[data-notiz-eingabe]").inputValue()) === "" && (await fenster.locator("[data-memory-erinnern]").count()) === 0 && (await fenster.locator("[data-notiz-speichern]").isDisabled());
+    await fenster.locator("[data-notiz-schliessen]").click();
+    return mitText && leer;
   });
   check(errors.length === 0, "Desktop: keine Seitenfehler", errors.join(" | "));
   await context.close();

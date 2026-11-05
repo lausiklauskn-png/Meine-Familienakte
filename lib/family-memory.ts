@@ -215,6 +215,17 @@ export function erinnerungAusText(text: string, now: Date = new Date()): Erinner
   return { wunsch, dueAt: datum, dueTime };
 }
 
+/** Kurzer Titel für die Erinnerung: „Erinnere mich heute um 20 Uhr, Jens anzurufen“ → „Jens anzurufen“. */
+export function erinnerungsTitel(text: string) {
+  const roh = text.trim();
+  const ohne = roh.replace(/^(?:bitte\s+)?(?:erinnere?|erinner)\s+mich\s*/i, "");
+  if (ohne === roh) return roh.slice(0, 120); // kein „erinnere mich“: Text bleibt
+  const t = ohne
+    .replace(/^(?:(?:heute|morgen|übermorgen|am\s+\S+|in\s+(?:einer\s+)?\S+\s+\S+|um\s*\d{1,2}(?:[:.]\d{2})?\s*(?:uhr)?|noch\s+(?:ein)?mal|nochmal)[\s,]*)+/i, "")
+    .replace(/^(?:daran,?\s*|an\s+)?(?:dass\s+)?(?:ich\s+)?(?:noch\s+)?/i, "").replace(/[.!]+$/, "").trim();
+  return (t || "Erinnerung").slice(0, 120);
+}
+
 function exactDeadline(text: string) {
   const match = text.match(/(?:bis|frist|termin)\s+(?:zum|am)?\s*(\d{1,2})[.\-/](\d{1,2})[.\-/](20\d{2}|\d{2})/i);
   if (!match) return null;

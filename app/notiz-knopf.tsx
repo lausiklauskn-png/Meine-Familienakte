@@ -1,9 +1,9 @@
-import { NotebookPen, StickyNote, X } from "lucide-react";
+import { Check, NotebookPen, StickyNote, Trash2, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { FamilyRecordUnion, FamilyRelation } from "../lib/family-data-model";
-import { buildMemoryAnalysis, erinnerungAusText } from "../lib/family-memory";
+import { buildMemoryAnalysis, erinnerungAusText, erinnerungsTitel } from "../lib/family-memory";
 import { ErinnernTeil, type ErinnernWert } from "./erinnern-teil";
-import { createLocalMemoryBundle } from "./local-vault";
+import { createLocalMemoryBundle, deleteLocalMemoryRecord } from "./local-vault";
 import { VoiceTextarea } from "./ui-controls";
 
 /**
@@ -29,8 +29,11 @@ function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, on
 }) {
   const [text, setText] = useState("");
   const [erinnerung, setErinnerung] = useState<ErinnernWert | null>(null);
+  const [runde, setRunde] = useState(0); // neu beginnen: „Erinnern lassen“ vergisst Eingaben von Hand
   const [busy, setBusy] = useState(false);
   const [fehler, setFehler] = useState("");
+  // Klaus 2026-11-05: Haken setzen speichert bewusst; danach wird er zum Mülleimer, der den Eintrag wieder löscht.
+  const [gespeichert, setGespeichert] = useState<{ id: string; meldung: string } | null>(null);
   const feld = useRef<HTMLDivElement>(null);
   const erkannt = useMemo(() => erinnerungAusText(text), [text]);
   const analyse = useMemo(() => text.trim() ? buildMemoryAnalysis({ originalText: text, captureType: "text", records, relations }) : null, [text, records, relations]);
@@ -41,7 +44,10 @@ function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, on
     const t = window.setInterval(() => { const mic = feld.current?.querySelector<HTMLButtonElement>(".dictation-button"); if (mic && !mic.disabled) { window.clearInterval(t); if (!mic.classList.contains("listening")) mic.click(); } else if (++n > 20) window.clearInterval(t); }, 100);
     return () => window.clearInterval(t);
   }, []);
-  useEffect(() => { const esc = (e: KeyboardEvent) => { if (e.key === "Escape") onZu(); }; window.addEventListener("keydown", esc); return () => window.removeEventListener("keydown", esc); }, [onZu]);
+  // Schließen: erst jetzt neu laden, damit der Kalender-Abgleich nicht vor einem Löschen einträgt.
+  const schliessen = async () => { if (busy) return; if (gespeichert) await onGespeichert(gespeichert.meldung); onZu(); };
+  const zuRef = useRef(schliessen); zuRef.current = schliessen;
+  useEffect(() => { const esc = (e: KeyboardEvent) => { if (e.key === "Escape") void zuRef.current(); }; window.addEventListener("keydown", esc); return () => window.removeEventListener("keydown", esc); }, []);
 
   const speichern = async () => {
     if (!text.trim() || !analyse) return setFehler("Bitte eine Notiz eingeben oder einsprechen.");
@@ -50,19 +56,32 @@ function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, on
     try {
       const r = await createLocalMemoryBundle(vaultHandle, { originalText: text.trim(), captureType: "text", analysis: analyse, mediaFiles: [], selectedReferences: [], erinnerung: erinnerung || undefined });
       const wann = erinnerung ? ` Erinnerung am ${new Date(`${erinnerung.dueAt}T00:00`).toLocaleDateString("de-DE")}${erinnerung.dueTime ? ` um ${erinnerung.dueTime} Uhr` : ""}${erinnerung.kalenderEintragen ? ", für den Kalender vorgemerkt" : ""}.` : "";
-      await onGespeichert(`Notiz gespeichert (${r.event.id}).${wann}`);
-      onZu();
+      setGespeichert({ id: r.event.id, meldung: `Notiz gespeichert (${r.event.id}).${wann}` });
     } catch (g) { const t = g instanceof Error ? g.message : String(g); setFehler(t); onFehler(t); }
     finally { setBusy(false); }
   };
+  const loeschen = async () => {
+    if (!gespeichert || !vaultHandle) return;
+    setBusy(true); setFehler("");
+    try { await deleteLocalMemoryRecord(vaultHandle, gespeichert.id, { keepLinkedSchedules: false }); setGespeichert(null); await onGespeichert(`Notiz ${gespeichert.id} wieder gelöscht.`); }
+    catch (g) { const t = g instanceof Error ? g.message : String(g); setFehler(t); onFehler(t); }
+    finally { setBusy(false); }
+  };
 
-  return <div className="modal-backdrop" role="presentation" onMouseDown={(e) => { if (e.target === e.currentTarget && !busy) onZu(); }}>
+  return <div className="modal-backdrop" role="presentation" onMouseDown={(e) => { if (e.target === e.currentTarget) void schliessen(); }}>
     <section className="modal notiz-fenster" role="dialog" aria-modal="true" aria-labelledby="notiz-titel" data-notiz-fenster>
-      <div className="modal-head"><div><h2 id="notiz-titel"><NotebookPen size={18}/> Notiz</h2></div><button type="button" className="icon-button" onClick={onZu} aria-label="Schließen" disabled={busy}><X size={18}/></button></div>
-      <div ref={feld} className="notiz-text"><VoiceTextarea rows={3} value={text} onValueChange={setText} placeholder="Zum Beispiel: Erinnere mich morgen um 9 Uhr, Jens anzurufen" speechLabel="Notiz" data-notiz-eingabe/></div>
-      <ErinnernTeil erkannt={erkannt} titelVorschlag={analyse?.taskProposal || analyse?.title || text.trim().slice(0, 80)} onChange={setErinnerung}/>
+      <div className="modal-head"><div><h2 id="notiz-titel"><NotebookPen size={18}/> Notiz</h2></div><button type="button" className="icon-button" onClick={() => void schliessen()} aria-label="Schließen" disabled={busy} data-notiz-schliessen><X size={18}/></button></div>
+      <div ref={feld} className="notiz-text"><VoiceTextarea rows={3} value={text} onValueChange={setText} placeholder="Zum Beispiel: Erinnere mich morgen um 9 Uhr, Jens anzurufen" speechLabel="Notiz" readOnly={Boolean(gespeichert)} data-notiz-eingabe/>
+        {text && !gespeichert && <button type="button" className="notiz-leeren" onClick={() => { setText(""); setErinnerung(null); setRunde((x) => x + 1); feld.current?.querySelector("textarea")?.focus(); }} aria-label="Text und Erinnerung löschen" title="Text und Erinnerung löschen" data-notiz-leeren><X size={14}/></button>}
+        {gespeichert
+          ? <button type="button" className="notiz-aktion loeschen" onClick={() => void loeschen()} disabled={busy} aria-label="Gespeicherte Notiz wieder löschen" title="Wieder löschen" data-notiz-loeschen><Trash2 size={20}/></button>
+          : <button type="button" className="notiz-aktion speichern" onClick={() => void speichern()} disabled={busy || !text.trim()} aria-label="Notiz speichern" title="Speichern" data-notiz-speichern><Check size={22}/></button>}
+      </div>
+      {gespeichert && <p className="notiz-gespeichert" role="status" data-notiz-gespeichert><Check size={16}/> Gespeichert. Mülleimer löscht den Eintrag wieder.</p>}
+      {/* Ohne Text keine Erinnerung – woran sollte sie erinnern? (Klaus 2026-11-05) */}
+      {text.trim() && <ErinnernTeil key={runde} erkannt={erkannt} titelVorschlag={erkannt?.wunsch ? erinnerungsTitel(text) : analyse?.taskProposal || analyse?.title || text.trim().slice(0, 80)} onChange={setErinnerung}/>}
       {fehler && <p className="form-error" role="alert">{fehler}</p>}
-      <div className="modal-actions"><button type="button" className="button secondary" onClick={onZu} disabled={busy}>Abbrechen</button><button type="button" className="button primary" onClick={() => void speichern()} disabled={busy || !text.trim()} data-notiz-speichern>{busy ? "Wird gespeichert …" : "Speichern"}</button></div>
+      <div className="modal-actions"><button type="button" className="button secondary" onClick={() => void schliessen()} disabled={busy} data-notiz-fertig>{gespeichert ? "Fertig" : "Abbrechen"}</button></div>
     </section>
   </div>;
 }

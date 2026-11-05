@@ -153,6 +153,8 @@ assert.equal(ea("erinnere mich um 8 Uhr"), JSON.stringify({ wunsch: true, dueAt:
 assert.equal(ea("denk dran am 12.11. Rechnung"), JSON.stringify({ wunsch: true, dueAt: "2026-11-12", dueTime: null }));
 assert.equal(m.erinnerungAusText("Wir waren heute beim Arzt", jetzt), null);
 assert.equal(m.erinnerungAusText("nur ein Satz", jetzt), null);
+assert.equal(m.erinnerungsTitel("Erinnere mich heute um 20 Uhr, Jens anzurufen"), "Jens anzurufen");
+assert.equal(m.erinnerungsTitel("Heute war ein ruhiger Tag."), "Heute war ein ruhiger Tag.");
 gruen("Erinnerungswunsch aus dem Text: heute, morgen, in 5 Stunden, halbe Stunde, Wochentag, Datum; Vergangenes bleibt ohne");
 
 console.log(`Kalender-Kern: ${n} grün · 0 rot`);
