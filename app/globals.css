@@ -1958,3 +1958,21 @@ fieldset:disabled .datei-knopf { opacity: .55; cursor: not-allowed; }
 .kurzhinweise-schalter label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
 .kurzhinweise-schalter input { width: 20px; height: 20px; }
 .kurzhinweise-schalter small { color: var(--muted); }
+/* Hilfe „Akten sichern“ (2026-11-05): Orte als Bäume nebeneinander, rot zu tun · grün erledigt · grau nicht nötig */
+.ablauf-knoten.art-aus { border-color: #d3d9dd; background: #f1f3f4; color: #75828b; }
+.ablauf-knoten.art-aus small { color: #85919a; }
+.aktensicherung-orte { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; margin: 10px 0 14px; align-items: start; }
+.aktensicherung-ort { min-width: 0; padding: 10px; border: 1px solid var(--line, #d8e3ea); border-radius: 12px; background: var(--surface, #fff); }
+.aktensicherung-ort > .ablauf-knoten { display: flex; }
+.aktensicherung-baum { margin: 4px 0 0; }
+.aktensicherung-baum > .baum-wurzel-leer > ul { margin-top: 0; }
+.aktensicherung-baum .ablauf-knoten { width: 100%; }
+.aktensicherung-legende { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: .84rem; }
+.aktensicherung-legende span[class^="chip-"] { padding: 2px 9px; border-radius: 999px; border: 1px solid; }
+.aktensicherung-legende .chip-rot { border-color: #d9a3a3; background: #fdf3f3; color: #9f2a2a; }
+.aktensicherung-legende .chip-gruen { border-color: #2f8a4f; background: #e9f6ee; color: #23683b; }
+.aktensicherung-legende .chip-grau { border-color: #d3d9dd; background: #f1f3f4; color: #66737c; }
+.aktensicherung-legende [data-sicherung-stand] { margin-left: 4px; color: #4f6472; font-variant-numeric: tabular-nums; }
+/* Lange Wörter (Ordnernamen) brechen im Kasten um, statt über den Rand zu laufen (2026-11-05). */
+.ablauf-text strong { overflow-wrap: anywhere; }
+.ablauf-knoten { min-width: 0; }
