@@ -7,6 +7,7 @@ mod update;
 mod pro_tresor;
 mod modelle;
 mod model_assets;
+mod kalender;
 use serde_json::{json, Value};
 use std::sync::{atomic::{AtomicBool, Ordering}, Arc, Mutex};
 use tauri::{Emitter, Manager};
@@ -111,8 +112,9 @@ fn main() {
         .manage(Geprueft(Mutex::new(None)))
         .manage(pro_tresor::EngineState::default())
         .manage(modelle::ModelState::default())
+        .manage(kalender::KalenderState::default())
         .manage(Startdateien(Mutex::new(dateiargumente(&std::env::args().collect::<Vec<_>>()))))
-        .invoke_handler(tauri::generate_handler![fa_diktat, fa_diktat_abbrechen, fa_plattform, fa_startdateien, fa_adresse_oeffnen, fa_update_pruefen, fa_update_installieren, pro_tresor::fa_pro_tresor, modelle::fa_modelle])
+        .invoke_handler(tauri::generate_handler![fa_diktat, fa_diktat_abbrechen, fa_plattform, fa_startdateien, fa_adresse_oeffnen, fa_update_pruefen, fa_update_installieren, pro_tresor::fa_pro_tresor, modelle::fa_modelle, kalender::fa_kalender])
         .setup(|app| {
             // An unavailable optional model route does not disable the family app.
             // ModelState reports this and refuses downloads until it is available.

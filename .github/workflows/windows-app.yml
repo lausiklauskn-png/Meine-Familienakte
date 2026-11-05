@@ -54,8 +54,10 @@ jobs:
         working-directory: windows/src-tauri
         run: cargo test --release
       - name: Installer bauen (NSIS)
+        # Google verlangt beim Desktop-Client sein Client-Geheimnis; nur als GitHub-Secret, leer = Google „noch nicht eingerichtet“.
         run: npm run tauri --prefix windows -- build --bundles nsis
         env:
+          FA_GOOGLE_DESKTOP_SECRET: ${{ secrets.FA_GOOGLE_DESKTOP_SECRET }}
           FAMILIENAKTE_COMMIT: ${{ github.sha }}
       - name: Installer benennen und Prüfsumme
         shell: bash
