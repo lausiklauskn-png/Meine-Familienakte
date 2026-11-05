@@ -5,13 +5,16 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 `docs/briefe-archiv/` (Klaus 2026-11-04: archivieren statt löschen); die Veröffentlichungsnachweise in
 `docs/VEROEFFENTLICHUNG-<fassung>.json`.
 
-## Aktueller Stand (04.11.2026, abends)
+## Aktueller Stand (05.11.2026, nachts)
 
-- **Fassung 2.28.25** (Android, Windows, PWA; #90, enthält Codex' #89 PWA aus dem gebauten Paket): Demo-Knopf „DEMO ▾“ hinter
-  dem Namen (Start in der Hilfe), Scanner „Durchsuchbar“ ab Werk, Ordnerbaum-Sprung zur Bibliothek, Geräteübergabe ohne Kim-sync,
-  Tresor-Paket nachgezogen. Nachweis `docs/VEROEFFENTLICHUNG-2.28.25.json`. Darunter 2.28.24, 2.28.23, 2.28.22. Keine davon
-  erneut ausgeben; nächste freie Fassung 2.28.26. Die Versionszeile zeigt die technische Fassung aus `package.json`;
-  `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
+- **Fassung 2.28.27** (Android, Windows, PWA; #104): Kalender-Erinnerung (Google, Microsoft, Android-Gerätekalender, .ics),
+  Knopf „Notiz“ mit erkannter Erinnerung, Memory bearbeiten, „Mein Kalender“ (Kalender-Knopf im Kopf), App-Glocke (ab Werk aus,
+  läutet nur bei offener App), Termin an Ort und Stelle ändern. Nachweis `docs/VEROEFFENTLICHUNG-2.28.27.json`, darunter 2.28.26
+  und 2.28.25 … 2.28.22. Keine davon erneut ausgeben; nächste freie Fassung 2.28.28. Die Versionszeile zeigt die technische
+  Fassung aus `package.json`; `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
+- **Kalender:** Kern `lib/kalender.ts`, Glocke `lib/glocke.ts`, Oberfläche `app/kalender-karte.tsx`, `app/mein-kalender.tsx`,
+  `app/termin-bearbeiten.tsx`, Notiz `app/notiz-knopf.tsx`; Einrichtung `docs/KALENDER-EINRICHTUNG.md` (Google veröffentlicht,
+  Microsoft-App eingerichtet, Herausgeber nicht verifiziert). Gesundheitsfristen gehen mit echtem Titel hinaus, Notizen nie.
 - **Namen:** Web-App (PWA, Browser) = „Familienakte Basic“ (`public/manifest.webmanifest`), native Apps
   (Android `strings.xml`, Windows `tauri.conf.json`) = „Familienakte Pro“. Nicht wieder angleichen. Die Anzeige
   Basic/Pro im Kopf folgt `APP_VARIANTE` (seit 2.28.23 in der Zeile der Versionsnummer).
@@ -32,8 +35,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
-  - `BRIEF_ABSCHLUSS_2026-11-05_AKTENSICHERUNG-UND-SICHERUNGSPLAN.md` (jüngster Abschluss)
-  - `BRIEF_SITZUNG_2026-11-05_KALENDER.md` (nächste Sitzung: Kalender-Erinnerung mit Google/Microsoft/Gerätekalender, Datumsfenster, „Was ist neu“; Startauftrag)
+  - `BRIEF_ABSCHLUSS_2026-11-05_KALENDER.md` (jüngster Abschluss mit Startauftrag: Rückmeldung zu 2.28.27, Glocke bei geschlossener App)
   - `BRIEF_CODEX_2026-11-04_NACH-2.28.24.md` (Abstimmung mit Codex: welche Dateien Claude gehören)
   - `BRIEF_ABSCHLUSS_2026-11-04_PDF-ARBEITSRAUM.md`, `BRIEF_ABSCHLUSS_2026-11-04_PDF-FUNKTIONSABGLEICH.md` (Codex)
 
@@ -46,6 +48,8 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Gesamtabnahme behaupten, keine fehlgeschlagenen Prüfungen abschalten. Workflow-PDF-Pro PR #59 bleibt Entwurf.
 - Eigene Berichte und ungeprüfte Nutzergeräte; Tablet-Rückmeldung zu 2.28.23/2.28.24 und zum Demo-Knopf. Drucken über den
   Android-Druckdienst ist am Gerät ungeprüft.
+- Kalender am Gerät: Mein Kalender, App-Glocke, 2.28.27 am Tablet ungeprüft; Glocke bei geschlossener Android-App bräuchte ein
+  natives Modul (nur nach Klaus' Ja); Google-Prüfvideo und Microsoft-Herausgeberprüfung (MPN-ID) offen.
 - Vollsicherung auf Android (Dateiausgabe nimmt nur 20 MB je Datei), PWA-Updates nach Codex #89, Ein-Schritt-Tresor in Private Brain Pro, Tresor-Leser.
 
 ## Veröffentlichen
