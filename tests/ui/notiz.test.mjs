@@ -43,6 +43,7 @@ try {
   await step("Speichern legt einen Erinnerungseintrag und eine Aufgabe mit Termin, Uhrzeit, Erinnerung und Kalender-Haken an", async () => {
     await fenster.locator("[data-notiz-speichern]").click();
     await fenster.locator("[data-notiz-liste] li").first().waitFor({ timeout: 10000 });
+    await fenster.locator("[data-notiz-liste] [data-notiz-auge]").first().click(); // 2.28.30: hinter dem Auge
     const muell = await fenster.locator("[data-notiz-liste] [data-notiz-loeschen]").isVisible() && (await fenster.locator("[data-notiz-eingabe]").inputValue()) === "" && /Jens anzurufen/.test(await fenster.locator("[data-notiz-liste]").innerText());
     await fenster.locator("[data-notiz-fertig]").click();
     await fenster.waitFor({ state: "detached", timeout: 10000 });
@@ -87,6 +88,7 @@ try {
     await fenster.locator("[data-notiz-speichern]").click();
     await page.waitForFunction(() => document.querySelectorAll("[data-notiz-liste] li").length === 2);
     const nachSpeichern = await zahl();
+    await fenster.locator("[data-notiz-liste] li", { hasText: "Müll rausbringen" }).locator("[data-notiz-auge]").click();
     await fenster.locator("[data-notiz-liste] li", { hasText: "Müll rausbringen" }).locator("[data-notiz-loeschen]").click();
     await page.waitForFunction(() => document.querySelectorAll("[data-notiz-liste] li").length === 1);
     const nachLoeschen = await zahl();

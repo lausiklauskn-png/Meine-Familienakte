@@ -1,10 +1,11 @@
-import { Bell, BellOff } from "lucide-react";
+import { Bell, BellOff, Eye } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { workspaceStorage } from "../lib/demo-workspace.ts";
 import type { FamilyRecordUnion, FamilyRelation } from "../lib/family-data-model";
 import { faelligeGlocken, glockenZeiten, naechsteGlocke, type GlockenZeit } from "../lib/glocke";
 import { ERINNERUNG_VORGABE, erinnerungsName, type ErinnerungsWahl } from "../lib/kalender";
 import { useKalenderEinst } from "./kalender-karte";
+import { FlachText } from "./flach-zeile";
 
 /* ---------- App-Glocke ---------- */
 const GLOCKE_KEY = "familienakte.glocke.v1";
@@ -98,8 +99,8 @@ export function AppGlocke({ records, relations, onOeffnen }: { records: FamilyRe
   if (!klingelt.length) return null;
   const z = klingelt[0];
   return <div className="app-glocke" role="alertdialog" aria-live="assertive" aria-label="Erinnerung" data-app-glocke={z.recordId}>
-    <Bell size={22}/><span><strong>{z.titel}</strong><small>{wannText(z)}</small></span>
-    <button type="button" className="button secondary" onClick={() => { setKlingelt((k) => k.slice(1)); onOeffnen(z); }} data-app-glocke-ansehen>Ansehen</button>
+    <Bell size={22}/><span><strong><FlachText text={z.titel}/></strong><small>{wannText(z)}</small></span>
+    <button type="button" className="icon-button" onClick={() => { setKlingelt((k) => k.slice(1)); onOeffnen(z); }} aria-label={`„${z.titel}“ ansehen`} title="Ansehen" data-app-glocke-ansehen><Eye size={20}/></button>
     <button type="button" className="button primary" onClick={() => setKlingelt((k) => k.slice(1))} data-app-glocke-ok>OK{klingelt.length > 1 ? ` (${klingelt.length})` : ""}</button>
   </div>;
 }

@@ -147,7 +147,7 @@ try {
   await step("Erledigt: Termin wird aus dem Kalender entfernt, Zuordnung gelöscht", async () => {
     await page.locator("button.schedule-filter", { hasText: "Offen" }).click();
     const eintrag = page.locator("article", { hasText: "Rechnung Stadtwerke bezahlen (erfunden)" }).first();
-    await eintrag.locator("button", { hasText: "Als erledigt markieren" }).click();
+    await eintrag.locator("[data-termin-erledigt]").click(); // 2.28.30: Haken in der flachen Zeile
     if (await page.locator(".page-dialog").waitFor({ timeout: 3000 }).then(() => true, () => false)) await page.locator(".page-dialog button", { hasText: "Ja, fortfahren" }).click();
     for (let i = 0; i < 40 && !google.geloescht.length; i++) await page.waitForTimeout(150);
     let r;

@@ -115,7 +115,7 @@ try {
   await step("Fristen: „Als erledigt markieren“ fragt nach und setzt den Status", async () => {
     await page.locator("button.schedule-filter", { hasText: "Offen" }).click();
     const eintrag = page.locator("article, li", { hasText: "Probe-Aufgabe: Fahrradlicht" }).first();
-    await eintrag.locator("button", { hasText: "Als erledigt markieren" }).click();
+    await eintrag.locator("[data-termin-erledigt]").click(); // 2.28.30: Haken in der flachen Zeile
     const dialog = (await page.locator(".page-dialog").count()) === 1;
     if (dialog) await page.locator(".page-dialog button", { hasText: "Ja, fortfahren" }).click();
     await page.waitForTimeout(600);
@@ -123,8 +123,10 @@ try {
   });
   await step("Fristen: „Zurückstellen“ bei einem offenen Eintrag", async () => {
     await page.locator("button.schedule-filter", { hasText: "Offen" }).click();
+    const auge = page.locator("#offene-fristen [data-termin-auge]").first(); // 2.28.30: hinter dem Auge
+    if (!(await auge.count())) return "kein offener Eintrag";
+    await auge.click();
     const knopf = page.locator("button", { hasText: "Zurückstellen" }).first();
-    if (!(await knopf.count())) return "kein offener Eintrag";
     await knopf.click();
     if (await page.locator(".page-dialog").count()) await page.locator(".page-dialog button", { hasText: "Ja, fortfahren" }).click();
     await page.waitForTimeout(600);

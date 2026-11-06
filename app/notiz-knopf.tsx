@@ -7,6 +7,7 @@ import { createLocalMemoryBundle, deleteLocalMemoryRecord } from "./local-vault"
 import { glockeEinschalten } from "./app-glocke";
 import { kalenderZiel, useKalenderEinst } from "./kalender-karte";
 import { VoiceTextarea } from "./ui-controls";
+import { AugeKnopf, FlachText } from "./flach-zeile";
 
 /**
  * Knopf „Notiz“ im Kopf (Klaus 2026-11-05): eine Notiz einsprechen oder tippen, direkt vom Handy, ohne erst ins Tagebuch zu
@@ -44,6 +45,7 @@ function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, on
   // Klaus 2026-11-06: Foto zur Notiz (Kamera zwischen Mikrofon und Haken); gespeichert wie Fotos im Tagebuch.
   const [fotos, setFotos] = useState<File[]>([]);
   const kamera = useRef<HTMLInputElement>(null);
+  const [listeAuf, setListeAuf] = useState<string | null>(null); // Auge (Klaus 2026-11-06)
   const [liste, setListe] = useState<Array<{ id: string; titel: string; wann: string; tag?: string }>>([]);
   const geaendert = useRef(false);
   const feld = useRef<HTMLDivElement>(null);
@@ -108,7 +110,8 @@ function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, on
       {text.trim() && <ErinnernTeil key={runde} erkannt={erkannt} titelVorschlag={erkannt?.wunsch ? erinnerungsTitel(text) : analyse?.taskProposal || analyse?.title || text.trim().slice(0, 80)} onChange={setErinnerung} onKalender={zumKalender}/>}
       {fehler && <p className="form-error" role="alert">{fehler}</p>}
       {liste.length > 0 && <ul className="notiz-liste" aria-label="Gespeicherte Notizen" data-notiz-liste>
-        {liste.map((n) => <li key={n.id} data-notiz-eintrag={n.id}><Check size={16}/><span><strong>{n.titel}</strong><small>{n.wann}</small></span>{n.tag && onKalender && <button type="button" className="notiz-weg" onClick={() => { const t = n.tag!; void schliessen().then(() => onKalender(t)); }} disabled={busy} aria-label="Im Kalender ansehen" title="Im Kalender ansehen" data-notiz-im-kalender><CalendarDays size={18}/></button>}<button type="button" className="notiz-weg" onClick={() => void loeschen(n.id)} disabled={busy} aria-label={`„${n.titel}“ wieder löschen`} title="Wieder löschen" data-notiz-loeschen><Trash2 size={18}/></button></li>)}
+        {liste.map((n) => { const auf = listeAuf === n.id; return <li key={n.id} data-notiz-eintrag={n.id} className={auf ? "offen" : undefined}><div className="fz-kopf"><Check size={16}/><span className="mk-text"><strong><FlachText text={n.titel}/></strong><small>{n.wann}</small></span><AugeKnopf offen={auf} titel={n.titel} onClick={() => setListeAuf(auf ? null : n.id)} data-notiz-auge/></div>
+          {auf && <div className="fz-offen"><p><strong>{n.titel}</strong></p><small>{n.wann}</small><div className="button-row">{n.tag && onKalender && <button type="button" className="button secondary" onClick={() => { const t = n.tag!; void schliessen().then(() => onKalender(t)); }} disabled={busy} title="Im Kalender ansehen" data-notiz-im-kalender><CalendarDays size={16}/> Im Kalender</button>}<button type="button" className="loesch-knopf mit-text" onClick={() => void loeschen(n.id)} disabled={busy} aria-label={`„${n.titel}“ wieder löschen`} title="Wieder löschen" data-notiz-loeschen><Trash2 size={16}/><span>Löschen</span></button></div></div>}</li>; })}
       </ul>}
       <div className="modal-actions"><button type="button" className="button secondary" onClick={() => void schliessen()} disabled={busy} data-notiz-fertig>{liste.length ? "Fertig" : "Abbrechen"}</button></div>
     </section>

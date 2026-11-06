@@ -61,6 +61,7 @@ try {
   });
   await step("Tagebuch-Mülleimer (Klaus 2026-11-06): erster Tipp „Löschen?“, zweiter löscht Notiz samt Erinnerung", async () => {
     const zeile = page.locator(".memory-event-zeile", { hasText: "ich erwarte einen Anruf" }).first();
+    await zeile.locator("[data-memory-auge]").click(); // 2.28.30: Mülleimer hinter dem Auge
     const knopf = zeile.locator("[data-notiz-tagebuch-loeschen]");
     await knopf.click();
     const sicher = await knopf.getAttribute("data-notiz-tagebuch-loeschen");

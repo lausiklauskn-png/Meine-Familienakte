@@ -61,6 +61,20 @@ button { font: inherit; }
 .flach .e { flex: 0 0 auto; }
 .flach .e::before { content: " "; white-space: pre; }
 
+.kopf-neu2 { display: flex; gap: 10px; align-items: center; }
+.kopf-neu2 .kachel { width: 38px; height: 38px; border-radius: 11px; }
+.kopf-neu2 h3 { margin: 0; font-size: 1.3rem; color: var(--navy); line-height: 1.1; flex: 1; min-width: 0; }
+.kopf-neu2 .rechts { display: grid; justify-items: center; gap: 3px; flex: 0 0 auto; }
+.kopf-neu2 .frage { width: 22px; height: 22px; font-size: .75rem; }
+.alle-knopf { display: grid; justify-items: center; gap: 0; width: 40px; padding: 2px 0 3px; border: 1px solid var(--line); border-radius: 9px; background: var(--paper); color: var(--navy); cursor: pointer; line-height: 1; }
+.alle-knopf small { font-size: .62rem; font-weight: 800; letter-spacing: .04em; color: var(--muted); }
+.alle-knopf svg { width: 20px; height: 20px; }
+.alle-knopf:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+.mini { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.mini > button { width: 100%; text-align: left; border: 0; background: none; padding: 9px 10px; font-weight: 800; color: var(--navy); cursor: pointer; display: flex; justify-content: space-between; }
+.mini > button::after { content: "▾"; color: var(--muted); }
+.mini > button[aria-expanded="false"]::after { content: "▸"; }
+.mini .inhalt { padding: 0 10px 10px; color: var(--muted); }
 /* 2 Klapp */
 .klapp-alt { display: flex; gap: 8px; flex-wrap: wrap; }
 .klapp-neu { display: flex; gap: 6px; justify-content: flex-end; }
@@ -153,28 +167,28 @@ button { font: inherit; }
   </section>
 
   <section class="wunsch" aria-labelledby="w2">
-    <h2 id="w2">2 · „Alle zu“ und „Alle auf“</h2>
-    <p>Nur die beiden Pfeil-Symbole, rechts in einer Zeile. Beim Antippen und Gedrückthalten sagt der Hinweis, was sie tun.</p>
+    <h2 id="w2">2 · „Alle zu“ und „Alle auf“ als ein Knopf</h2>
+    <p>Ein einziger Knopf rechts, direkt unter dem „?“, bündig mit den Kästen. Oben steht „alle“, darunter die Pfeile für das, was beim Tippen passiert: Ist etwas zu, zeigt er „alle auf“; ist alles offen, zeigt er „alle zu“. Hier zum Ausprobieren, auch die Überschriften lassen sich einzeln antippen.</p>
     <div class="paar">
       <div class="handy"><span class="etikett">Bisher</span>
         <div class="rahmen"><div class="klapp-alt"><span class="knopf"><svg width="16" height="16" aria-hidden="true"><use href="#zu"/></svg> Alle zu</span><span class="knopf"><svg width="16" height="16" aria-hidden="true"><use href="#auf"/></svg> Alle auf</span></div></div>
       </div>
       <div class="handy"><span class="etikett neu">Neu</span>
-        <div class="rahmen"><div class="klapp-neu"><button class="ib" type="button" aria-label="Alle zu" title="Alle zu"><svg aria-hidden="true"><use href="#zu"/></svg></button><button class="ib" type="button" aria-label="Alle auf" title="Alle auf"><svg aria-hidden="true"><use href="#auf"/></svg></button></div></div>
+        <div class="rahmen"><div class="kopf-neu2"><span class="kachel"><svg aria-hidden="true"><use href="#uhr"/></svg></span><h3>Fristen und Aufgaben</h3><span class="rechts"><span class="frage" aria-label="Erklären">?</span><button class="alle-knopf" type="button" data-alle aria-label="Alle aufklappen" title="Alle aufklappen"><small>alle</small><svg aria-hidden="true"><use href="#auf"/></svg></button></span></div><div class="mini" data-mini><button type="button" aria-expanded="true">Mein Kalender</button><div class="inhalt">Monat, Tagesliste …</div></div><div class="mini" data-mini><button type="button" aria-expanded="false">Offene Fristen und Aufgaben</button><div class="inhalt" hidden>Zeilen …</div></div><div class="mini" data-mini><button type="button" aria-expanded="false">Erledigte Punkte</button><div class="inhalt" hidden>Zeilen …</div></div></div>
       </div>
     </div>
   </section>
 
   <section class="wunsch" aria-labelledby="w3">
     <h2 id="w3">3 · Seitenkopf</h2>
-    <p>Titel neben dem Symbol in derselben Zeile, „?“ klein und schräg darüber, alles enger. Gilt für alle Seiten.</p>
+    <p>Titel neben dem Symbol in derselben Zeile, rechts das kleine „?“ und direkt darunter der Alle-Knopf (nur auf Seiten mit Klapp-Abschnitten). Alles enger. Gilt für alle Seiten.</p>
     <div class="paar">
       <div class="handy"><span class="etikett">Bisher</span>
         <div class="rahmen"><div class="kopf-alt"><span class="kachel"><svg aria-hidden="true"><use href="#uhr"/></svg></span><span class="titel"><h3>Fristen und Aufgaben</h3><span class="frage">?</span></span></div></div>
       </div>
       <div class="handy"><span class="etikett neu">Neu</span>
-        <div class="rahmen"><div class="kopf-neu"><span class="kachel"><svg aria-hidden="true"><use href="#uhr"/></svg></span><h3>Fristen und Aufgaben<span class="frage" aria-label="Erklären">?</span></h3></div>
-          <div class="klapp-neu"><button class="ib" type="button" aria-label="Alle zu" title="Alle zu"><svg aria-hidden="true"><use href="#zu"/></svg></button><button class="ib" type="button" aria-label="Alle auf" title="Alle auf"><svg aria-hidden="true"><use href="#auf"/></svg></button></div>
+        <div class="rahmen"><div class="kopf-neu2"><span class="kachel"><svg aria-hidden="true"><use href="#uhr"/></svg></span><h3>Fristen und Aufgaben</h3><span class="rechts"><span class="frage" aria-label="Erklären">?</span><button class="alle-knopf" type="button" data-alle aria-label="Alle aufklappen" title="Alle aufklappen"><small>alle</small><svg aria-hidden="true"><use href="#auf"/></svg></button></span></div>
+        </div>
         </div>
       </div>
     </div>
@@ -251,6 +265,24 @@ button { font: inherit; }
 </main>
 
 <script>
+function alleStand(r) {
+  var minis = r.querySelectorAll('[data-mini] > button'); var k = r.querySelector('[data-alle]'); if (!k) return;
+  var etwasZu = Array.prototype.some.call(minis, function (b) { return b.getAttribute('aria-expanded') !== 'true'; });
+  k.querySelector('use').setAttribute('href', etwasZu ? '#auf' : '#zu');
+  k.setAttribute('aria-label', etwasZu ? 'Alle aufklappen' : 'Alle zuklappen'); k.title = k.getAttribute('aria-label');
+}
+document.querySelectorAll('[data-mini]').forEach(function (m) {
+  var b = m.querySelector('button'), r = m.closest('.rahmen');
+  b.addEventListener('click', function () { var auf = b.getAttribute('aria-expanded') !== 'true'; b.setAttribute('aria-expanded', String(auf)); m.querySelector('.inhalt').hidden = !auf; alleStand(r); });
+});
+document.querySelectorAll('[data-alle]').forEach(function (k) {
+  var r = k.closest('.rahmen'); alleStand(r);
+  k.addEventListener('click', function () {
+    var auf = k.querySelector('use').getAttribute('href') === '#auf';
+    r.querySelectorAll('[data-mini]').forEach(function (m) { m.querySelector('button').setAttribute('aria-expanded', String(auf)); m.querySelector('.inhalt').hidden = !auf; });
+    alleStand(r);
+  });
+});
 document.querySelectorAll('[data-liste] .ib[aria-expanded]').forEach(function (b) {
   b.addEventListener('click', function () {
     var offen = b.closest('.zeile').querySelector('.offen');
