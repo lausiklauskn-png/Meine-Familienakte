@@ -1,0 +1,37 @@
+{
+  "version": "2.28.28",
+  "source": "6e4f2a10084bf65281f71a783abc4f0d42e64ec9",
+  "pullRequest": 106,
+  "recordedUtc": "2026-11-06T08:45:00Z",
+  "freigabe": "Klaus 2026-11-06: „Und das bitte immer gleich in beide Versionen, die APK, PBA und in die Windows-Version übertragen.“ und „Gib Bescheid, wenn 2.28.28 draußen ist“",
+  "inhalt": "Kamera in der Notiz; Glocke im Erinnern-Teil einschaltbar und nach dem Speichern von selbst an; Android-Benachrichtigung der App-Glocke auch bei geschlossener App",
+  "ciAmPrStand": "028bb37ed447adc36b7a3b7979042fe65d970a86: pruefung, webview, product (31, pixel_c), product (35, pixel_2), android, windows – alle success",
+  "releases": [
+    {
+      "tag": "android-v2.28.28",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.28",
+      "run": 42187359087,
+      "conclusion": "success",
+      "updateServer": "server=ja; Lauf grün",
+      "downloadProof": [
+        { "name": "Familienakte-android-v2.28.28.apk", "bytes": 19861537, "sha256": "a51a7db75c0ec0a31baea6b17accc544472c3ed43415aa21249b2484925f631f", "anonymousDownload": true, "matchesSHA256SUMS": true, "versionInside": "2.28.28 (assets/public/version.json, commit 6e4f2a1)" },
+        { "name": "Familienakte-Einzeldatei-2.28.28.html", "bytes": 3442647, "sha256": "533feecd0f6182bc9240ec8091fd0e3bd7aefb8133f8a3fe16e9a5fc672336da", "anonymousDownload": true, "matchesSHA256SUMS": true }
+      ]
+    },
+    {
+      "tag": "windows-v2.28.28",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.28",
+      "run": 42187362609,
+      "conclusion": "success",
+      "updateServer": "server=ja; Lauf grün; latest.json nennt 2.28.28",
+      "downloadProof": [
+        { "name": "Familienakte-Windows-2.28.28-x64-setup.exe", "bytes": 34021313, "sha256": "c8a45866952dfc6d84688ad1a7e860a2b487aa45bdfafe5087ed85db463e86ff", "anonymousDownload": true, "matchesSHA256SUMS": true }
+      ]
+    }
+  ],
+  "pwa": "Pages-Lauf 42187347204 nach dem Merge auf main erfolgreich (Seite selbst aus dem Behälter nicht erreichbar)",
+  "notChecked": [
+    "Kein physisches Gerät: Kamera, App-Glocke und Android-Benachrichtigung (FamilienakteGlockePlugin) am Handy ungeprüft",
+    "family-projekt.de und die Pages-Seite aus dem Behälter nicht direkt geprüft; die Freigabeläufe prüfen den Server von außen"
+  ]
+}
