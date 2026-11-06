@@ -45,6 +45,7 @@ try {
     return /Zahnarzt anrufen/.test(text) && /15 Min\. vorher/.test(text) && (await page.locator("[data-app-glocke]").count()) === 0 ? true : (console.log("   ↳", text), false);
   });
   await step("Ändern im Kalender: Uhrzeit 18:45 im Termin-Fenster – Register und Liste zeigen sie", async () => {
+    await kal.locator("[data-mk-eintrag]", { hasText: "Zahnarzt anrufen" }).first().locator("[data-mk-auge]").click(); // 2.28.30: Stift hinter dem Auge
     await kal.locator("[data-mk-eintrag]", { hasText: "Zahnarzt anrufen" }).first().locator("[data-mk-aendern]").click();
     const d = page.locator("[data-termin-bearbeiten]"); await d.waitFor();
     await d.locator("[data-tb-uhr]").fill("18:45");
@@ -56,15 +57,18 @@ try {
   await step("Fristenliste: Uhrzeit, Erinnerung und „Ändern“ am Eintrag, ohne Seitenwechsel", async () => {
     const id = (await register(page)).find((r) => r.recordType === "task" && r.data.title === "Zahnarzt anrufen").id;
     const art = page.locator(`#termin-${id}`);
+    const flach = await art.locator(".fz-kopf").innerText(); // 2.28.30: flache Zeile, Rest hinter dem Auge
+    await art.locator("[data-termin-auge]").click();
     const text = await art.innerText();
     await art.locator("[data-termin-aendern]").click();
     const d = page.locator("[data-termin-bearbeiten]"); await d.waitFor();
     await d.locator("button", { hasText: "Abbrechen" }).click();
-    return /18:45 Uhr/.test(text) && /15 Min\. vorher/.test(text) ? true : (console.log("   ↳", text), false);
+    return /18:45 Uhr/.test(text) && /15 Min\. vorher/.test(text) && /18:45/.test(flach) && !/Kennung/.test(flach) ? true : (console.log("   ↳", flach, "|", text), false);
   });
   await step("Löschen (Klaus 2026-11-06): Mülleimer – erster Tipp „Löschen?“, zweiter löscht; weg aus Kalender und Fristenliste", async () => {
     const zeile = kal.locator("[data-mk-eintrag]", { hasText: "Zahnarzt anrufen" }).first();
     const id = await zeile.getAttribute("data-mk-eintrag");
+    if ((await zeile.locator("[data-mk-offen]").count()) === 0) await zeile.locator("[data-mk-auge]").click();
     const knopf = zeile.locator("[data-erinnerung-loeschen]");
     await knopf.click();
     const sicher = await knopf.getAttribute("data-erinnerung-loeschen");
@@ -81,6 +85,7 @@ try {
     await f.locator(".dictation-button.listening").click().catch(() => {});
     await f.locator("[data-notiz-speichern]").click(); await f.locator("[data-notiz-liste] li").first().waitFor();
     const zeile = await f.locator("[data-notiz-liste] li").first().innerText();
+    await f.locator("[data-notiz-liste] [data-notiz-auge]").first().click(); // 2.28.30: hinter dem Auge
     await f.locator("[data-notiz-im-kalender]").first().click();
     await page.waitForFunction(() => document.querySelector('[data-mk-tag="2026-11-11"]')?.getAttribute("aria-pressed") === "true", null, { timeout: 5000 });
     const liste = await kal.locator(".mk-tagesliste").innerText();
@@ -103,15 +108,23 @@ try {
     const zu1 = await kal.evaluate((el) => el.classList.contains("klapp-zu") && getComputedStyle(el.querySelector(".mk-monat")).display === "none");
     await titel.click();
     const auf1 = await kal.evaluate((el) => !el.classList.contains("klapp-zu"));
-    await page.locator("[data-klapp-alle-zu]").click();
+    // Ein Knopf (Klaus 2026-11-06): ist etwas zu („Erledigte“ ab Werk), zeigt er „auf“ und öffnet alle; dann zeigt er „zu“.
+    const anfang = await page.locator("[data-klapp-alle]").getAttribute("data-klapp-alle");
+    await page.locator("[data-klapp-alle]").click();
+    const erstAuf = await page.evaluate(() => Array.from(document.querySelectorAll("[data-klapp]")).every((el) => el instanceof HTMLDetailsElement ? el.open : !el.classList.contains("klapp-zu")));
+    const vorher = await page.locator("[data-klapp-alle]").getAttribute("data-klapp-alle"); // alles offen → zeigt „zu“
+    const imKopf = await page.locator(".page-title [data-klapp-alle]").count();
+    await page.locator("[data-klapp-alle]").click();
     const alleZu = await page.evaluate(() => Array.from(document.querySelectorAll("[data-klapp]")).every((el) => el instanceof HTMLDetailsElement ? !el.open : el.classList.contains("klapp-zu")));
     const anzahl = await page.locator("[data-klapp]").count();
     await page.locator("[data-mein-kalender-knopf]").click();
     await page.waitForFunction(() => !document.querySelector("[data-klapp='kalender']").classList.contains("klapp-zu"), null, { timeout: 3000 });
     const offenZu = await page.evaluate(() => document.querySelector("[data-klapp='offen']").classList.contains("klapp-zu"));
-    await page.locator("[data-klapp-alle-auf]").click();
+    const dannAuf = await page.locator("[data-klapp-alle]").getAttribute("data-klapp-alle"); // etwas zu → zeigt „auf“
+    await page.locator("[data-klapp-alle]").click();
+    const zuletzt = await page.locator("[data-klapp-alle]").getAttribute("data-klapp-alle");
     const alleAuf = await page.evaluate(() => Array.from(document.querySelectorAll("[data-klapp]")).every((el) => el instanceof HTMLDetailsElement ? el.open : !el.classList.contains("klapp-zu")));
-    return zu1 && auf1 && alleZu && anzahl >= 5 && offenZu && alleAuf ? true : (console.log("   ↳", zu1, auf1, alleZu, anzahl, offenZu, alleAuf), false);
+    return zu1 && auf1 && alleZu && anzahl >= 5 && offenZu && alleAuf && anfang === "auf" && erstAuf && vorher === "zu" && dannAuf === "auf" && zuletzt === "zu" && imKopf === 1 ? true : (console.log("   ↳", zu1, auf1, alleZu, anzahl, offenZu, alleAuf, anfang, erstAuf, vorher, dannAuf, zuletzt, imKopf), false);
   });
   await step("Ton und Dauer: Läuten „30 Sekunden“ wird gemerkt", async () => {
     await kal.locator("[data-glocken-einstellung] summary").click();
