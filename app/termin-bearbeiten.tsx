@@ -6,6 +6,7 @@ import { DatumFeld } from "./datum-feld";
 import { KALENDER_OEFFNEN } from "./erinnern-teil";
 import { ErinnerungsChips, KalenderAuswahl, kalenderZiel, useKalenderEinst, type KalenderWahl } from "./kalender-karte";
 import { updateLocalScheduleTermin } from "./local-vault";
+import { ErinnerungLoeschen } from "./loesch-knopf";
 import { VoiceInput } from "./ui-controls";
 
 /**
@@ -48,7 +49,7 @@ export function TerminBearbeiten({ record, vaultHandle, onZu, onGespeichert }: {
         <ErinnerungsChips wert={wahl} onChange={setWahl} schnell={[...KURZ_ERINNERUNGEN, "1d", "7d"]} name="Erinnern"/>
       </div>
       {fehler && <p className="form-error" role="alert">{fehler}</p>}
-      <div className="modal-actions"><button type="button" className="button secondary" onClick={onZu} disabled={busy}>Abbrechen</button><button type="button" className="button primary" onClick={() => void speichern()} disabled={busy || !titel.trim() || !datum} data-tb-speichern>{busy ? "Wird gespeichert …" : "Speichern"}</button></div>
+      <div className="modal-actions"><ErinnerungLoeschen id={record.id} titel={titel || d.title} vaultHandle={vaultHandle} mitText onGeloescht={async (t) => { await onGespeichert(t); onZu(); }}/><button type="button" className="button secondary" onClick={onZu} disabled={busy}>Abbrechen</button><button type="button" className="button primary" onClick={() => void speichern()} disabled={busy || !titel.trim() || !datum} data-tb-speichern>{busy ? "Wird gespeichert …" : "Speichern"}</button></div>
     </section>
   </div>;
 }

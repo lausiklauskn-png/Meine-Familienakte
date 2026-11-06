@@ -1,12 +1,14 @@
 import { CalendarCheck, CalendarDays, ChevronLeft, ChevronRight, Pencil, Plus, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { FamilyRecordUnion, FamilyRelation } from "../lib/family-data-model";
-import { GlockenSchalter, glockeEinschalten } from "./app-glocke";
+import { GlockenEinstellung, GlockenSchalter, glockeEinschalten } from "./app-glocke";
 export { AppGlocke } from "./app-glocke";
 import { KURZ_ERINNERUNGEN, erinnerungsName, istTermin, kalenderFelder, type ErinnerungsWahl } from "../lib/kalender";
 import { DatumFeld } from "./datum-feld";
 import { ErinnerungsChips, kalenderZiel, useKalenderEinst } from "./kalender-karte";
 import { createLocalScheduleBundle } from "./local-vault";
+import { klappOeffnen } from "./klapp";
+import { ErinnerungLoeschen } from "./loesch-knopf";
 import { TerminBearbeiten } from "./termin-bearbeiten";
 import { InfoPopover, VoiceInput } from "./ui-controls";
 
@@ -48,14 +50,14 @@ export function MeinKalender({ vaultHandle, records, relations, onRefresh, onNot
   const alle = useMemo(() => eintraege(records), [records]);
   const proTag = useMemo(() => { const m = new Map<string, Eintrag[]>(); for (const e of alle) m.set(e.tag, [...(m.get(e.tag) || []), e]); return m; }, [alle]);
   useEffect(() => {
-    const auf = (ev: Event) => { const t = (ev as CustomEvent<{ tag?: string }>).detail?.tag; if (t && /^\d{4}-\d{2}-\d{2}$/.test(t)) { setTag(t); setMonat(new Date(Number(t.slice(0, 4)), Number(t.slice(5, 7)) - 1, 1)); } window.setTimeout(() => box.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 80); };
+    const auf = (ev: Event) => { klappOeffnen("kalender"); const t = (ev as CustomEvent<{ tag?: string }>).detail?.tag; if (t && /^\d{4}-\d{2}-\d{2}$/.test(t)) { setTag(t); setMonat(new Date(Number(t.slice(0, 4)), Number(t.slice(5, 7)) - 1, 1)); } window.setTimeout(() => box.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 80); };
     window.addEventListener(MEIN_KALENDER_OEFFNEN, auf); return () => window.removeEventListener(MEIN_KALENDER_OEFFNEN, auf);
   }, []);
   const ersterTag = (monat.getDay() + 6) % 7;
   const tageImMonat = new Date(monat.getFullYear(), monat.getMonth() + 1, 0).getDate();
   const zellen: Array<string | null> = [...Array(ersterTag).fill(null), ...Array.from({ length: tageImMonat }, (_, i) => tagSchluessel(new Date(monat.getFullYear(), monat.getMonth(), i + 1)))];
   const amTag = proTag.get(tag) || [];
-  const kommend = alle.filter((e) => e.tag >= heute).slice(0, 5);
+  const kommend = alle.filter((e) => e.tag >= heute && e.tag !== tag).slice(0, 5); // Klaus 2026-11-06: nicht doppelt zur Tagesliste
   const tagName = new Date(`${tag}T00:00`).toLocaleDateString("de-DE", { weekday: "long", day: "2-digit", month: "long" });
   const bearbeitet = bearbeiten ? records.find((r) => r.id === bearbeiten) || null : null;
   const zeile = (e: Eintrag, mitTag = false) => <li key={e.record.id} data-mk-eintrag={e.record.id}>
@@ -63,9 +65,11 @@ export function MeinKalender({ vaultHandle, records, relations, onRefresh, onNot
     <span className="mk-text"><strong>{e.titel}</strong><small>{e.record.recordType === "deadline" ? "Frist" : "Aufgabe"}{e.erinnerungen?.length ? ` · 🔔 ${e.erinnerungen.map(erinnerungsName).join(", ")}` : ""}{e.imKalender ? (e.eingetragen ? " · im Kalender" : " · geht in den Kalender") : ""}</small></span>
     {e.imKalender && <CalendarCheck size={16} aria-label="Kalender"/>}
     <button type="button" className="icon-button" onClick={() => setBearbeiten(e.record.id)} aria-label={`„${e.titel}“ ändern`} title="Ändern" data-mk-aendern><Pencil size={16}/></button>
+    {vaultHandle && <ErinnerungLoeschen id={e.record.id} titel={e.titel} vaultHandle={vaultHandle} onGeloescht={async (t) => { await onRefresh(); onNotice({ kind: "success", text: t }); }}/>}
   </li>;
-  return <section ref={box} className="card mein-kalender" id="mein-kalender" data-mein-kalender>
+  return <section ref={box} className="card mein-kalender" id="mein-kalender" data-mein-kalender data-klapp="kalender">
     <div className="card-heading"><div><span className="ui-heading-help"><h2><CalendarDays size={20}/> Mein Kalender</h2><InfoPopover label="Mein Kalender erklären" text={HILFE}/></span></div><GlockenSchalter records={records} relations={relations}/></div>
+    <GlockenEinstellung/>
     <div className="mk-monat">
       <div className="mk-kopf"><button type="button" className="icon-button" onClick={() => setMonat(new Date(monat.getFullYear(), monat.getMonth() - 1, 1))} aria-label="Voriger Monat"><ChevronLeft size={18}/></button><strong data-mk-monat>{monat.toLocaleDateString("de-DE", { month: "long", year: "numeric" })}</strong><button type="button" className="icon-button" onClick={() => setMonat(new Date(monat.getFullYear(), monat.getMonth() + 1, 1))} aria-label="Nächster Monat"><ChevronRight size={18}/></button></div>
       <div className="mk-raster" role="grid">{WOCHENTAGE.map((w) => <span key={w} className="mk-wt">{w}</span>)}

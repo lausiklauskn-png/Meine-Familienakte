@@ -3379,6 +3379,25 @@ export async function updateLocalScheduleStatus(handle: FileSystemDirectoryHandl
   return record;
 }
 
+/**
+ * Erinnerung löschen (Klaus 2026-11-06: Mülleimer an jeder Erinnerung). Der Datensatz wird als „archiviert“ ausgeblendet und
+ * von seinen Verknüpfungen gelöst, damit der Kalender-Abgleich den Eintrag auch aus Google/Microsoft/Gerätekalender entfernt;
+ * danach erscheint er in keiner Liste, keinem Kalender und keiner Glocke mehr. Die Notiz im Tagebuch bleibt.
+ */
+export async function deleteLocalScheduleRecord(handle: FileSystemDirectoryHandle, id: string) {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  const index = await readIndex(handle);
+  const record = index.records.find((item) => item.id === id && ["deadline", "task", "reminder"].includes(item.recordType));
+  if (!record) throw new Error("Die Frist, Aufgabe oder Erinnerung wurde nicht gefunden.");
+  const now = new Date().toISOString();
+  const weg = new Set([id, ...index.relations.filter((r) => r.toId === id && r.fromType === "reminder").map((r) => r.fromId)]);
+  for (const r of index.records) if (weg.has(r.id)) { r.status = "archiviert"; r.updatedAt = now; (r.data as Record<string, unknown>).geloeschtAm = now; }
+  index.relations = index.relations.filter((r) => !weg.has(r.fromId) && !weg.has(r.toId));
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Erinnerung gelöscht", recordId: id, details: `${id} auf Befehl gelöscht (ausgeblendet; Kalendereintrag wird beim nächsten Abgleich entfernt).` });
+  await writeIndex(handle, index);
+  return record;
+}
+
 /** Anschrift und Kontakt an einer Person (Klaus 2026-10-31): nur nach ausdrücklichem Speichern, mit Protokollzeile ohne Inhalte. */
 export async function updateLocalPersonContact(handle: FileSystemDirectoryHandle, id: string, kontakt: PersonKontakt) {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");

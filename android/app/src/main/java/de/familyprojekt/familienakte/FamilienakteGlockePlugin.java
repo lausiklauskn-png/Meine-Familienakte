@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.provider.Settings;
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
 import com.getcapacitor.PermissionState;
@@ -42,6 +43,22 @@ public class FamilienakteGlockePlugin extends Plugin {
     }
 
     @PermissionCallback private void erlaubenZurueck(PluginCall call) { call.resolve(new JSObject().put("erlaubt", erlaubt())); }
+
+    /** Öffnet Androids Einstellung für den Kanal „Erinnerungen (App-Glocke)“: Ton, Vibration, Lautstärke (Klaus 2026-11-06). */
+    @PluginMethod public void einstellungen(PluginCall call) {
+        Context ctx = getContext();
+        GlockeEmpfaenger.kanalAnlegen(ctx);
+        Intent i;
+        if (Build.VERSION.SDK_INT >= 26) {
+            i = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
+                .putExtra(Settings.EXTRA_APP_PACKAGE, ctx.getPackageName())
+                .putExtra(Settings.EXTRA_CHANNEL_ID, GlockeEmpfaenger.KANAL);
+        } else {
+            i = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, android.net.Uri.parse("package:" + ctx.getPackageName()));
+        }
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        try { ctx.startActivity(i); call.resolve(); } catch (Exception fehler) { call.reject("FA_GLOCKE_EINSTELLUNG"); }
+    }
 
     /** Ersetzt alle geplanten Glocken durch die übergebene Liste [{ nr, titel, text, um }]; leere Liste = alle aus. */
     @PluginMethod public void planen(PluginCall call) {

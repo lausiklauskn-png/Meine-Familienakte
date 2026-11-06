@@ -61,7 +61,7 @@ export function classifyScheduleRecord(record: FamilyRecordUnion, now = new Date
 export function buildScheduleItems(records: FamilyRecordUnion[], relations: FamilyRelation[], now = new Date()): ScheduleItem[] {
   const weights: Record<ScheduleDisplayStatus, number> = { overdue: 0, dueSoon: 1, open: 2, postponed: 3, done: 4 };
   return records
-    .filter((record): record is Extract<FamilyRecordUnion, { recordType: "deadline" | "task" | "reminder" }> => ["deadline", "task", "reminder"].includes(record.recordType))
+    .filter((record): record is Extract<FamilyRecordUnion, { recordType: "deadline" | "task" | "reminder" }> => ["deadline", "task", "reminder"].includes(record.recordType) && record.status !== "archiviert") // gelöscht
     .map((record) => ({
       id: record.id,
       recordType: record.recordType,

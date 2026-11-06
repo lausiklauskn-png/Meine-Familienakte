@@ -62,6 +62,18 @@ try {
     await d.locator("button", { hasText: "Abbrechen" }).click();
     return /18:45 Uhr/.test(text) && /15 Min\. vorher/.test(text) ? true : (console.log("   ↳", text), false);
   });
+  await step("Löschen (Klaus 2026-11-06): Mülleimer – erster Tipp „Löschen?“, zweiter löscht; weg aus Kalender und Fristenliste", async () => {
+    const zeile = kal.locator("[data-mk-eintrag]", { hasText: "Zahnarzt anrufen" }).first();
+    const id = await zeile.getAttribute("data-mk-eintrag");
+    const knopf = zeile.locator("[data-erinnerung-loeschen]");
+    await knopf.click();
+    const sicher = await knopf.getAttribute("data-erinnerung-loeschen");
+    await knopf.click();
+    await page.waitForFunction(() => !Array.from(document.querySelectorAll("[data-mk-eintrag]")).some((e) => /Zahnarzt anrufen/.test(e.textContent || "")), null, { timeout: 8000 });
+    const t = (await register(page)).find((r) => r.id === id);
+    const inListe = await page.locator(`#termin-${id}`).count();
+    return sicher === "sicher" && t?.status === "archiviert" && inListe === 0 ? true : (console.log("   ↳", sicher, t?.status, inListe), false);
+  });
   await step("Notiz mit Erinnerung: in der Liste steht, wohin sie ging; Kalender-Knopf springt zu „Mein Kalender“ am Tag", async () => {
     await page.locator("[data-notiz-knopf]").click();
     const f = page.locator("[data-notiz-fenster]"); await f.waitFor();
@@ -83,6 +95,31 @@ try {
     await d.locator("button", { hasText: "Abbrechen" }).click();
     const nochDa = await page.locator(".memory-detail").count();
     return zeit === "09:00" && nochDa === 1 ? true : (console.log("   ↳", zeit, nochDa), false);
+  });
+  await step("Abschnitte einklappen (Klaus 2026-11-06): Tipp auf „Mein Kalender“ schließt/öffnet; „Alle zu“/„Alle auf“; Kalender-Knopf öffnet wieder", async () => {
+    await page.locator("[data-mein-kalender-knopf]").click(); await kal.waitFor(); // vorher war das Tagebuch offen
+    const titel = kal.locator(".card-heading h2").first();
+    await titel.click();
+    const zu1 = await kal.evaluate((el) => el.classList.contains("klapp-zu") && getComputedStyle(el.querySelector(".mk-monat")).display === "none");
+    await titel.click();
+    const auf1 = await kal.evaluate((el) => !el.classList.contains("klapp-zu"));
+    await page.locator("[data-klapp-alle-zu]").click();
+    const alleZu = await page.evaluate(() => Array.from(document.querySelectorAll("[data-klapp]")).every((el) => el instanceof HTMLDetailsElement ? !el.open : el.classList.contains("klapp-zu")));
+    const anzahl = await page.locator("[data-klapp]").count();
+    await page.locator("[data-mein-kalender-knopf]").click();
+    await page.waitForFunction(() => !document.querySelector("[data-klapp='kalender']").classList.contains("klapp-zu"), null, { timeout: 3000 });
+    const offenZu = await page.evaluate(() => document.querySelector("[data-klapp='offen']").classList.contains("klapp-zu"));
+    await page.locator("[data-klapp-alle-auf]").click();
+    const alleAuf = await page.evaluate(() => Array.from(document.querySelectorAll("[data-klapp]")).every((el) => el instanceof HTMLDetailsElement ? el.open : !el.classList.contains("klapp-zu")));
+    return zu1 && auf1 && alleZu && anzahl >= 5 && offenZu && alleAuf ? true : (console.log("   ↳", zu1, auf1, alleZu, anzahl, offenZu, alleAuf), false);
+  });
+  await step("Ton und Dauer: Läuten „30 Sekunden“ wird gemerkt", async () => {
+    await kal.locator("[data-glocken-einstellung] summary").click();
+    await kal.locator("[data-glocke-dauer]").selectOption("30s");
+    await page.reload({ waitUntil: "networkidle" }); await ready(page);
+    await page.locator("[data-mein-kalender-knopf]").click(); await kal.waitFor();
+    await kal.locator("[data-glocken-einstellung] summary").click();
+    return (await kal.locator("[data-glocke-dauer]").inputValue()) === "30s";
   });
   check(errors.length === 0, "keine Seitenfehler", errors.join(" | "));
   await context.close();

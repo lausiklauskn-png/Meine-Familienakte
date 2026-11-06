@@ -1,5 +1,5 @@
 import { Bell, BellOff } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { workspaceStorage } from "../lib/demo-workspace.ts";
 import type { FamilyRecordUnion, FamilyRelation } from "../lib/family-data-model";
 import { faelligeGlocken, glockenZeiten, naechsteGlocke, type GlockenZeit } from "../lib/glocke";
@@ -8,11 +8,14 @@ import { useKalenderEinst } from "./kalender-karte";
 
 /* ---------- App-Glocke ---------- */
 const GLOCKE_KEY = "familienakte.glocke.v1";
-type GlockeStand = { an: boolean; seit: number; geläutet: string[] };
-function glockeLesen(): GlockeStand { try { const s = JSON.parse(workspaceStorage.getItem(GLOCKE_KEY) || "null"); if (s && typeof s.an === "boolean") return { an: s.an, seit: Number(s.seit) || 0, geläutet: Array.isArray(s.geläutet) ? s.geläutet.slice(-200) : [] }; } catch { /* leer */ } return { an: false, seit: 0, geläutet: [] }; }
+type GlockeStand = { an: boolean; seit: number; geläutet: string[]; dauer?: Dauer };
+/** Wie lange die Glocke in der App läutet (Klaus 2026-11-06): einmal, 30 s oder bis „OK“ (höchstens 2 min). */
+export type Dauer = "einmal" | "30s" | "bisOk";
+const DAUER_MS: Record<Dauer, number> = { einmal: 0, "30s": 30000, bisOk: 120000 };
+function glockeLesen(): GlockeStand { try { const s = JSON.parse(workspaceStorage.getItem(GLOCKE_KEY) || "null"); if (s && typeof s.an === "boolean") return { an: s.an, seit: Number(s.seit) || 0, geläutet: Array.isArray(s.geläutet) ? s.geläutet.slice(-200) : [], dauer: ["einmal", "30s", "bisOk"].includes(s.dauer) ? s.dauer : "einmal" }; } catch { /* leer */ } return { an: false, seit: 0, geläutet: [] }; }
 function glockeSchreiben(s: GlockeStand) { try { workspaceStorage.setItem(GLOCKE_KEY, JSON.stringify(s)); } catch { /* ohne Speicher geht es weiter */ } window.dispatchEvent(new Event(GLOCKE_KEY)); }
 /** Android: eigener Baustein plant die Glocken als Benachrichtigung, auch bei geschlossener App (Klaus 2026-11-06). */
-type GlockePlugin = { erlauben: () => Promise<{ erlaubt: boolean }>; planen: (o: { glocken: Array<{ titel: string; text: string; um: number }> }) => Promise<{ geplant: number; erlaubt: boolean }> };
+type GlockePlugin = { einstellungen?: () => Promise<void>; erlauben: () => Promise<{ erlaubt: boolean }>; planen: (o: { glocken: Array<{ titel: string; text: string; um: number }> }) => Promise<{ geplant: number; erlaubt: boolean }> };
 function glockePlugin(): GlockePlugin | null {
   // Nur die Android-Hülle registriert den Baustein; im Browser und unter Windows fehlt er.
   return (window as unknown as { Capacitor?: { Plugins?: { FamilienakteGlocke?: GlockePlugin } } }).Capacitor?.Plugins?.FamilienakteGlocke || null;
@@ -22,7 +25,7 @@ function glockePlugin(): GlockePlugin | null {
 export function glockeEinschalten() {
   const s = glockeLesen();
   if (s.an) return;
-  glockeSchreiben({ an: true, seit: Date.now(), geläutet: s.geläutet });
+  glockeSchreiben({ ...s, an: true, seit: Date.now() });
   void glockePlugin()?.erlauben().catch(() => undefined);
   try { if ("Notification" in window && Notification.permission === "default") void Notification.requestPermission(); } catch { /* nicht überall */ }
 }
@@ -46,7 +49,7 @@ export function GlockenSchalter({ records = [], relations = [], kurz = false }: 
   const naechste = useMemo(() => s.an ? naechsteGlocke(glockenZeiten(records, relations, kalender?.erinnerungen || ERINNERUNG_VORGABE), new Date()) : null, [s.an, records, relations, kalender?.erinnerungen?.join()]);
   const schalten = () => {
     const an = !s.an;
-    glockeSchreiben({ an, seit: Date.now(), geläutet: s.geläutet });
+    glockeSchreiben({ ...s, an, seit: Date.now() });
     if (an) { ton(); void glockePlugin()?.erlauben().catch(() => undefined); try { if ("Notification" in window && Notification.permission === "default") void Notification.requestPermission(); } catch { /* nicht überall */ } }
   };
   return <button type="button" className={`button ${s.an ? "primary" : "secondary"} glocken-schalter`} onClick={schalten} aria-pressed={s.an} data-glocke={s.an ? "an" : "aus"} title={s.an ? "App-Glocke ausschalten" : "App-Glocke einschalten: läutet in der App zu den Erinnerungszeiten"}>
@@ -62,6 +65,7 @@ export function AppGlocke({ records, relations, onOeffnen }: { records: FamilyRe
   const s = useGlocke();
   const kalender = useKalenderEinst();
   const [klingelt, setKlingelt] = useState<GlockenZeit[]>([]);
+  const klingelnBis = useRef(0);
   const zeiten = useMemo(() => glockenZeiten(records, relations, kalender?.erinnerungen || ERINNERUNG_VORGABE), [records, relations, kalender?.erinnerungen?.join()]);
   // Android: alle kommenden Glocken (höchstens 50, 60 Tage) als Benachrichtigung einplanen; aus = alle löschen.
   useEffect(() => {
@@ -77,7 +81,7 @@ export function AppGlocke({ records, relations, onOeffnen }: { records: FamilyRe
       const f = faelligeGlocken(zeiten, new Date(), new Set(stand.geläutet), stand.seit);
       if (!f.length) return;
       glockeSchreiben({ ...stand, geläutet: [...stand.geläutet, ...f.map((z) => z.schluessel)].slice(-200) });
-      setKlingelt((k) => [...k, ...f]); ton();
+      setKlingelt((k) => [...k, ...f]); ton(); klingelnBis.current = Date.now() + DAUER_MS[stand.dauer || "einmal"];
       try { if ("Notification" in window && Notification.permission === "granted") for (const z of f) new Notification(`🔔 ${z.titel}`, { body: wannText(z), tag: z.schluessel }); } catch { /* nicht überall */ }
     };
     pruefen(); const t = window.setInterval(pruefen, 15000);
@@ -85,6 +89,12 @@ export function AppGlocke({ records, relations, onOeffnen }: { records: FamilyRe
     document.addEventListener("visibilitychange", sicht);
     return () => { window.clearInterval(t); document.removeEventListener("visibilitychange", sicht); };
   }, [s.an, zeiten]);
+  // Wiederholt läuten, bis „OK“ oder die gewählte Dauer vorbei ist.
+  useEffect(() => {
+    if (!klingelt.length) { klingelnBis.current = 0; return; }
+    const t = window.setInterval(() => { if (Date.now() < klingelnBis.current) ton(); else window.clearInterval(t); }, 3000);
+    return () => window.clearInterval(t);
+  }, [klingelt.length]);
   if (!klingelt.length) return null;
   const z = klingelt[0];
   return <div className="app-glocke" role="alertdialog" aria-live="assertive" aria-label="Erinnerung" data-app-glocke={z.recordId}>
@@ -104,4 +114,20 @@ function vorherText(min: number) {
   if (min < 1440) return erinnerungsName(`${min}m` as ErinnerungsWahl);
   if (min % 1440 === 0) return erinnerungsName(`${min / 1440}d` as ErinnerungsWahl);
   return `${Math.round(min / 60)} Std. vorher`;
+}
+
+/** Ton und Dauer (Klaus 2026-11-06): Dauer in der App wählbar; Ton und Vibration der Handy-Benachrichtigung legt Android fest. */
+export function GlockenEinstellung() {
+  const s = useGlocke();
+  const plugin = glockePlugin();
+  const setDauer = (dauer: Dauer) => glockeSchreiben({ ...glockeLesen(), dauer });
+  return <details className="glocken-einstellung" data-glocken-einstellung>
+    <summary>Ton und Dauer</summary>
+    <label><span>Läuten in der App</span><select value={s.dauer || "einmal"} onChange={(e) => setDauer(e.target.value as Dauer)} data-glocke-dauer>
+      <option value="einmal">einmal</option><option value="30s">30 Sekunden</option><option value="bisOk">bis „OK“ (höchstens 2 Minuten)</option>
+    </select></label>
+    <button type="button" className="button secondary" onClick={() => ton()} data-glocke-probe>Probe hören</button>
+    {plugin?.einstellungen && <button type="button" className="button secondary" onClick={() => void plugin.einstellungen?.().catch(() => undefined)} data-glocke-handy>Ton am Handy einstellen</button>}
+    <small className="muted">{plugin ? "Ton, Vibration und Lautstärke der Benachrichtigung stellt Android ein (Kanal „Erinnerungen“)." : "Die Lautstärke folgt dem Gerät."}</small>
+  </details>;
 }
