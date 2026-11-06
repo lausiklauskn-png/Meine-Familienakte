@@ -59,6 +59,17 @@ try {
     const glocke = await page.locator("button", { hasText: "ich erwarte einen Anruf" }).first().locator("[data-memory-glocke]").innerText();
     return /Erinnerung aktiv/.test(text) && /12\.11\.2026, 16:30 Uhr/.test(text) && /Erinnerung ändern/.test(text) && /12\.11\., 16:30 Uhr/.test(glocke) ? true : (console.log("   ↳", text, "|", glocke), false);
   });
+  await step("Tagebuch-Mülleimer (Klaus 2026-11-06): erster Tipp „Löschen?“, zweiter löscht Notiz samt Erinnerung", async () => {
+    const zeile = page.locator(".memory-event-zeile", { hasText: "ich erwarte einen Anruf" }).first();
+    const knopf = zeile.locator("[data-notiz-tagebuch-loeschen]");
+    await knopf.click();
+    const sicher = await knopf.getAttribute("data-notiz-tagebuch-loeschen");
+    await knopf.click();
+    await page.waitForFunction(() => !Array.from(document.querySelectorAll(".memory-event-zeile")).some((e) => /ich erwarte einen Anruf/.test(e.textContent || "")), null, { timeout: 8000 });
+    const r = await register(page);
+    const rest = r.filter((x) => /Anruf um 15 Uhr|erwarte einen Anruf/i.test(JSON.stringify(x.data)) && x.status !== "archiviert");
+    return sicher === "sicher" && rest.length === 0 ? true : (console.log("   ↳", sicher, JSON.stringify(rest.map((x) => [x.recordType, x.status]))), false);
+  });
   check(errors.length === 0, "keine Seitenfehler", errors.join(" | "));
   await context.close();
 } finally { await browser.close(); await app.stop(); }

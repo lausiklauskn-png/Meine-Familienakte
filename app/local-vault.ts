@@ -3739,13 +3739,19 @@ export async function deleteLocalMemoryRecord(handle: FileSystemDirectoryHandle,
   if (!event) throw new Error("Der Memory-Eintrag wurde nicht gefunden.");
   const linkedScheduleIds = new Set(index.relations.filter((relation) => relation.toId === eventId && (relation.fromType === "task" || relation.fromType === "deadline")).map((relation) => relation.fromId));
   const removedRecordIds = new Set([eventId]);
+  const archiviert = new Set<string>();
   if (!options.keepLinkedSchedules) {
-    linkedScheduleIds.forEach((id) => removedRecordIds.add(id));
     const linkedReminderIds = index.relations.filter((relation) => linkedScheduleIds.has(relation.toId) && relation.fromType === "reminder").map((relation) => relation.fromId);
-    linkedReminderIds.forEach((id) => removedRecordIds.add(id));
+    // Klaus 2026-11-06: Steht eine Aufgabe schon in einem Kalender, bleibt sie als „archiviert“ (ausgeblendet), damit der
+    // Abgleich den Eintrag auch aus Google/Microsoft/Gerätekalender entfernt; sonst wird sie ganz gelöscht.
+    for (const id of [...linkedScheduleIds, ...linkedReminderIds]) {
+      const r = index.records.find((x) => x.id === id);
+      const imKalender = Array.isArray((r?.data as { kalender?: unknown[] } | undefined)?.kalender) && ((r!.data as { kalender: unknown[] }).kalender.length > 0);
+      if (r && imKalender) { r.status = "archiviert"; r.updatedAt = new Date().toISOString(); archiviert.add(id); } else removedRecordIds.add(id);
+    }
   }
   index.records = index.records.filter((record) => !removedRecordIds.has(record.id));
-  index.relations = index.relations.filter((relation) => !removedRecordIds.has(relation.fromId) && !removedRecordIds.has(relation.toId));
+  index.relations = index.relations.filter((relation) => !removedRecordIds.has(relation.fromId) && !removedRecordIds.has(relation.toId) && !archiviert.has(relation.fromId) && !archiviert.has(relation.toId));
   index.linkDecisions = index.linkDecisions.filter((decision) => decision.sourceId !== eventId);
   const now = new Date().toISOString();
   index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Memory-Eintrag gelöscht", recordId: eventId, details: `${eventId} wurde nach ausdrücklicher Bestätigung gelöscht. ${options.keepLinkedSchedules ? "Verknüpfte Aufgaben und Fristen blieben als eigenständige Datensätze erhalten." : `${linkedScheduleIds.size} verbundene Aufgaben/Fristen wurden nach gesonderter Auswahl mit entfernt.`} Gemeinsam verwendete Personen, Organisationen, Objekte, Vorgänge und Dokumente blieben erhalten.` });

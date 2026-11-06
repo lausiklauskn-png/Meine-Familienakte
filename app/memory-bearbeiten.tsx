@@ -60,7 +60,7 @@ export function MemoryBearbeiten({ event, data, aufgaben, vaultHandle, onZu, onG
       {termine.map((t) => <section key={t.id} className="memory-erinnern an" data-mb-termin={t.id}>
         <strong>🔔 Erinnerung</strong>
         <div className="memory-erinnern-felder">
-          <label className="memory-erinnern-titel"><span>Woran erinnern</span><input value={t.titel} onChange={(e) => aendern(t.id, { titel: e.target.value })}/></label>
+          <label className="memory-erinnern-titel"><span>Woran erinnern</span><VoiceInput value={t.titel} onValueChange={(v) => aendern(t.id, { titel: v })} speechLabel="Woran erinnern" data-mb-termin-titel/></label>
           <label><span>Tag</span><DatumFeld value={t.datum} required onChange={(e) => aendern(t.id, { datum: e.target.value })} data-mb-termin-tag/></label>
           <label><span>Uhrzeit</span><DatumFeld art="time" value={t.zeit} onChange={(e) => aendern(t.id, { zeit: e.target.value })} data-mb-termin-uhr/></label>
           <KalenderAuswahl einst={kalender} wert={t.kal} onChange={(w) => aendern(t.id, { kal: w })}/>
