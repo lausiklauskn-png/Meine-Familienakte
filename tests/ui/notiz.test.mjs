@@ -136,6 +136,36 @@ try {
     const t = r.find((x) => x.recordType === "task" && x.data.title === "Paket abholen");
     return /12:30 Uhr/.test(chip) && t?.data.erinnerungen?.includes(`@${morgen}T12:30`) ? true : (console.log("   ↳", chip, JSON.stringify(t?.data)), false);
   });
+  await step("Notiz mit Erinnerung gespeichert: App-Glocke ist danach von selbst an (Mein Kalender zeigt „an“)", async () => {
+    await page.locator("[data-mein-kalender-knopf]").click();
+    const k = page.locator("[data-mein-kalender] [data-glocke]"); await k.waitFor();
+    return (await k.getAttribute("data-glocke")) === "an";
+  });
+  await step("Kamera in der Notiz (Klaus 2026-11-06): Mikrofon, Kamera, Haken untereinander; Foto allein und mit Text gespeichert", async () => {
+    await page.locator("[data-notiz-knopf]").click(); await fenster.waitFor();
+    await page.waitForFunction(() => (document.querySelector("[data-notiz-eingabe]") || {}).value?.length > 0, null, { timeout: 5000 });
+    await fenster.locator(".dictation-button.listening").click().catch(() => {});
+    await fenster.locator("[data-notiz-leeren]").click();
+    const png = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==", "base64");
+    const lage = await page.evaluate(() => ["[data-notiz-fenster] .dictation-button", "[data-notiz-kamera]", "[data-notiz-speichern]"].map((s) => { const b = document.querySelector(s).getBoundingClientRect(); return [Math.round(b.left), Math.round(b.top)]; }));
+    await fenster.locator("[data-notiz-kamera-eingabe]").setInputFiles({ name: "zaehler.png", mimeType: "image/png", buffer: png });
+    await fenster.locator("[data-notiz-fotos] img").first().waitFor();
+    if (!(await fenster.locator("[data-notiz-speichern]").isEnabled())) { console.log("   ↳ Haken ohne Text gesperrt"); return false; }
+    await fenster.locator("[data-notiz-speichern]").click();
+    await fenster.locator("[data-notiz-liste] li", { hasText: "📷 1" }).waitFor({ timeout: 8000 });
+    const leer = await fenster.locator("[data-notiz-fotos]").count();
+    await fenster.locator("[data-notiz-eingabe]").fill("Zählerstand Wasser notiert");
+    await fenster.locator("[data-notiz-kamera-eingabe]").setInputFiles([{ name: "a.png", mimeType: "image/png", buffer: png }, { name: "b.png", mimeType: "image/png", buffer: png }]);
+    await fenster.locator("[data-notiz-speichern]").click();
+    await fenster.locator("[data-notiz-liste] li", { hasText: "Zählerstand" }).waitFor({ timeout: 8000 });
+    await fenster.locator("[data-notiz-fertig]").click(); await fenster.waitFor({ state: "detached" });
+    const r = await page.evaluate(async () => { const f = window.__vaultFixture; return (await f.readLocalVaultData(await f.browserVault())).records; });
+    const ev = r.filter((x) => x.recordType === "event" && Array.isArray(x.data.media) && x.data.media.length);
+    const nurFoto = ev.find((x) => x.data.captureType === "foto" && x.data.media.length === 1);
+    const mitText = ev.find((x) => x.data.captureType === "kombination" && x.data.media.length === 2 && /Zählerstand/.test(x.data.originalText || ""));
+    const untereinander = lage[0][1] < lage[1][1] && lage[1][1] < lage[2][1] && Math.abs(lage[0][0] - lage[2][0]) <= 8;
+    return nurFoto && mitText && leer === 0 && untereinander ? true : (console.log("   ↳", JSON.stringify(lage), leer, JSON.stringify(ev.map((x) => [x.data.captureType, x.data.media.length]))), false);
+  });
   check(errors.length === 0, "Desktop: keine Seitenfehler", errors.join(" | "));
   await context.close();
 
