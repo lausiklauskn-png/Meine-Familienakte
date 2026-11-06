@@ -1,4 +1,4 @@
-import { CalendarDays, Check, NotebookPen, StickyNote, Trash2, X } from "lucide-react";
+import { CalendarDays, Camera, Check, NotebookPen, StickyNote, Trash2, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { FamilyRecordUnion, FamilyRelation } from "../lib/family-data-model";
 import { buildMemoryAnalysis, erinnerungAusText, erinnerungsTitel } from "../lib/family-memory";
@@ -40,6 +40,9 @@ function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, on
   const [fehler, setFehler] = useState("");
   // Klaus 2026-11-05: der Haken speichert bewusst; gespeicherte Notizen klappen zu einer Liste zusammen, jede mit Mülleimer,
   // darüber gleich das Feld für die nächste.
+  // Klaus 2026-11-06: Foto zur Notiz (Kamera zwischen Mikrofon und Haken); gespeichert wie Fotos im Tagebuch.
+  const [fotos, setFotos] = useState<File[]>([]);
+  const kamera = useRef<HTMLInputElement>(null);
   const [liste, setListe] = useState<Array<{ id: string; titel: string; wann: string; tag?: string }>>([]);
   const geaendert = useRef(false);
   const feld = useRef<HTMLDivElement>(null);
@@ -64,16 +67,17 @@ function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, on
   useEffect(() => { const esc = (e: KeyboardEvent) => { if (e.key === "Escape") void zuRef.current(); }; window.addEventListener("keydown", esc); return () => window.removeEventListener("keydown", esc); }, []);
 
   const speichern = async () => {
-    if (!text.trim() || !analyse) return setFehler("Bitte eine Notiz eingeben oder einsprechen.");
+    if (!text.trim() && !fotos.length) return setFehler("Bitte eine Notiz eingeben, einsprechen oder ein Foto machen.");
+    const analyseJetzt = analyse || buildMemoryAnalysis({ originalText: "Foto-Notiz", captureType: "foto", records, relations });
     if (!vaultHandle) return setFehler("Bitte zuerst im Sicherheitscenter einen Datentresor verbinden.");
     setBusy(true); setFehler("");
     try {
-      const r = await createLocalMemoryBundle(vaultHandle, { originalText: text.trim(), captureType: "text", analysis: analyse, mediaFiles: [], selectedReferences: [], erinnerung: erinnerung || undefined });
+      const r = await createLocalMemoryBundle(vaultHandle, { originalText: text.trim(), captureType: fotos.length ? (text.trim() ? "kombination" : "foto") : "text", analysis: analyseJetzt, mediaFiles: fotos, selectedReferences: [], erinnerung: erinnerung || undefined });
       // Wo es gelandet ist (Klaus 2026-11-05): die Notiz im Tagebuch, die Erinnerung in „Mein Kalender“ (und im verbundenen).
       const wann = erinnerung ? `🔔 ${new Date(`${erinnerung.dueAt}T00:00`).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" })}${erinnerung.dueTime ? `, ${erinnerung.dueTime} Uhr` : ""} · in Mein Kalender${erinnerung.kalenderEintragen && kalender ? ` und ${kalenderZiel(kalender)}` : ""}` : "im Tagebuch, ohne Erinnerung";
       geaendert.current = true;
-      setListe((l) => [{ id: r.event.id, titel: erinnerung?.titel || analyse.title, wann, tag: erinnerung?.dueAt }, ...l]);
-      setText(""); setErinnerung(null); setRunde((x) => x + 1);
+      setListe((l) => [{ id: r.event.id, titel: erinnerung?.titel || (text.trim() ? analyseJetzt.title : `Foto-Notiz (${fotos.length})`), wann: fotos.length ? `📷 ${fotos.length} · ${wann}` : wann, tag: erinnerung?.dueAt }, ...l]);
+      setText(""); setFotos([]); setErinnerung(null); setRunde((x) => x + 1);
       feld.current?.querySelector("textarea")?.focus();
     } catch (g) { const t = g instanceof Error ? g.message : String(g); setFehler(t); onFehler(t); }
     finally { setBusy(false); }
@@ -92,9 +96,12 @@ function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, on
     <section className="modal notiz-fenster" role="dialog" aria-modal="true" aria-labelledby="notiz-titel" data-notiz-fenster>
       <div className="modal-head"><div><h2 id="notiz-titel"><NotebookPen size={18}/> Notiz</h2></div><button type="button" className="icon-button" onClick={() => void schliessen()} aria-label="Schließen" disabled={busy} data-notiz-schliessen><X size={18}/></button></div>
       <div ref={feld} className="notiz-text"><VoiceTextarea rows={3} value={text} onValueChange={setText} placeholder={liste.length ? "Nächste Notiz …" : "Zum Beispiel: Erinnere mich morgen um 9 Uhr, Jens anzurufen"} speechLabel="Notiz" data-notiz-eingabe/>
-        {text && <button type="button" className="notiz-leeren" onClick={() => { setText(""); setErinnerung(null); setRunde((x) => x + 1); feld.current?.querySelector("textarea")?.focus(); }} aria-label="Text und Erinnerung löschen" title="Text und Erinnerung löschen" data-notiz-leeren><X size={14}/></button>}
-        <button type="button" className="notiz-aktion speichern" onClick={() => void speichern()} disabled={busy || !text.trim()} aria-label="Notiz speichern" title="Speichern" data-notiz-speichern><Check size={22}/></button>
+        {(text || fotos.length > 0) && <button type="button" className="notiz-leeren" onClick={() => { setText(""); setFotos([]); setErinnerung(null); setRunde((x) => x + 1); feld.current?.querySelector("textarea")?.focus(); }} aria-label="Text und Erinnerung löschen" title="Text und Erinnerung löschen" data-notiz-leeren><X size={14}/></button>}
+        <input ref={kamera} className="sr-only" type="file" accept="image/*" capture="environment" multiple onChange={(e) => { const neu = Array.from(e.target.files || []).filter((f) => f.type.startsWith("image/")); setFotos((f) => [...f, ...neu].slice(0, 12)); e.currentTarget.value = ""; }} data-notiz-kamera-eingabe/>
+        <button type="button" className="notiz-aktion kamera" onClick={() => kamera.current?.click()} disabled={busy || fotos.length >= 12} aria-label="Foto zur Notiz aufnehmen" title="Foto aufnehmen" data-notiz-kamera><Camera size={20}/>{fotos.length > 0 && <i className="notiz-foto-zahl">{fotos.length}</i>}</button>
+        <button type="button" className="notiz-aktion speichern" onClick={() => void speichern()} disabled={busy || (!text.trim() && !fotos.length)} aria-label="Notiz speichern" title="Speichern" data-notiz-speichern><Check size={22}/></button>
       </div>
+      {fotos.length > 0 && <ul className="notiz-fotos" aria-label="Fotos zur Notiz" data-notiz-fotos>{fotos.map((f, i) => <li key={`${f.name}-${i}`}><FotoVorschau datei={f}/><button type="button" onClick={() => setFotos((l) => l.filter((_, j) => j !== i))} aria-label={`Foto ${i + 1} entfernen`} title="Foto entfernen" data-notiz-foto-weg><X size={14}/></button></li>)}</ul>}
       {/* Ohne Text keine Erinnerung – woran sollte sie erinnern? (Klaus 2026-11-05) */}
       {text.trim() && <ErinnernTeil key={runde} erkannt={erkannt} titelVorschlag={erkannt?.wunsch ? erinnerungsTitel(text) : analyse?.taskProposal || analyse?.title || text.trim().slice(0, 80)} onChange={setErinnerung} onKalender={zumKalender}/>}
       {fehler && <p className="form-error" role="alert">{fehler}</p>}
@@ -104,4 +111,10 @@ function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, on
       <div className="modal-actions"><button type="button" className="button secondary" onClick={() => void schliessen()} disabled={busy} data-notiz-fertig>{liste.length ? "Fertig" : "Abbrechen"}</button></div>
     </section>
   </div>;
+}
+
+function FotoVorschau({ datei }: { datei: File }) {
+  const [url, setUrl] = useState("");
+  useEffect(() => { const u = URL.createObjectURL(datei); setUrl(u); return () => URL.revokeObjectURL(u); }, [datei]);
+  return url ? <img src={url} alt=""/> : null;
 }
