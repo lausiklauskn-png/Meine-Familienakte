@@ -1,0 +1,37 @@
+{
+  "version": "2.28.29",
+  "source": "a431b305f70fd8ad91768fc0870ebc6a403cd29b",
+  "pullRequest": 108,
+  "recordedUtc": "2026-11-06T13:05:00Z",
+  "freigabe": "Klaus 2026-11-06: „Und das bitte immer gleich in beide Versionen, die APK, PBA und in die Windows-Version übertragen.“",
+  "inhalt": "Abschnitte auf Fristen und Aufgaben einklappbar (Alle zu/auf); Mülleimer an Erinnerungen (Kalender, Fristenliste, Termin-Fenster) und an Notizen im Tagebuch; Mikrofon bei „Woran erinnern“; Glocke: Dauer wählbar, Android-Kanal-Einstellung",
+  "ciAmPrStand": "df81465c837ca7996c7ba8194bbaa50dceaf4ab7: pruefung, webview, product (31, pixel_c), product (35, pixel_2), android, windows – alle success",
+  "releases": [
+    {
+      "tag": "android-v2.28.29",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.29",
+      "run": 42219669940,
+      "conclusion": "success",
+      "updateServer": "server=ja; Lauf grün",
+      "downloadProof": [
+        { "name": "Familienakte-android-v2.28.29.apk", "bytes": 19865633, "sha256": "dfb14f60e4aba4e68e0dbc1b2cad8e18dd78068181459ded6def8cf9cc79c02e", "anonymousDownload": true, "matchesSHA256SUMS": true, "versionInside": "2.28.29 (assets/public/version.json, commit a431b30)" },
+        { "name": "Familienakte-Einzeldatei-2.28.29.html", "bytes": 3450621, "sha256": "f610f834b289fcf3ab289471c8009b5c99da08e2765fcac27484c3c6f6833c10", "anonymousDownload": true, "matchesSHA256SUMS": true }
+      ]
+    },
+    {
+      "tag": "windows-v2.28.29",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.29",
+      "run": 42219674282,
+      "conclusion": "success",
+      "updateServer": "server=ja; Lauf grün; latest.json nennt 2.28.29",
+      "downloadProof": [
+        { "name": "Familienakte-Windows-2.28.29-x64-setup.exe", "bytes": 34025242, "sha256": "46d850e62f4a318256701f7d8f5b61ea83a356cfc1e0c09eaa2ed24ad3d2d290", "anonymousDownload": true, "matchesSHA256SUMS": true }
+      ]
+    }
+  ],
+  "pwa": "Pages-Lauf 42219661852 nach dem Merge auf main erfolgreich (Seite selbst aus dem Behälter nicht erreichbar)",
+  "notChecked": [
+    "Kein physisches Gerät: Einklappen, Löschen, Ton-Einstellung am Handy ungeprüft",
+    "family-projekt.de und die Pages-Seite aus dem Behälter nicht direkt geprüft; die Freigabeläufe prüfen den Server von außen"
+  ]
+}
