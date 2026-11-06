@@ -78,7 +78,10 @@ Grundsatz: am Handy lieber flach und breit als hoch und schmal; wenig Höhe vers
    - Eine flache Zeile: Anfangsworte … Endworte, statt schmaler hoher Spalte; die Zusatzzeile ebenfalls kurz.
    - Ganz ansehen über ein Auge-Symbol.
    - Die Titelspalte in „Mein Kalender“ ist am Handy zu schmal, weil Zeit, Kalender-Symbol, Stift und Mülleimer daneben Platz nehmen.
-5. Vorher eine HTML-Vorschau zeigen (CLAUDE.md: „Neue Entwürfe erst als HTML-Vorschau zeigen“).
+5. **Zähler-Kästen „Überfällig“, „Bald fällig“, „Offen“** (`.schedule-summary`, Klaus 16:38 mit Screenshot): Sie stehen am
+   Handy untereinander, je eine ganze Breite für eine Zahl. Neu: drei quadratische Kästchen nebeneinander, damit weniger
+   gescrollt werden muss.
+6. Vorher eine HTML-Vorschau zeigen (CLAUDE.md: „Neue Entwürfe erst als HTML-Vorschau zeigen“).
 
 ## Stundennachweis
 
@@ -104,7 +107,8 @@ Zuerst lesen: CLAUDE.md, BRIEF_ABSCHLUSS_2026-11-06_VERBESSERUNGEN.md, docs/VERO
 Zuerst Klaus' Anordnungswünsche vom 06.11. (Abschnitt „Nächste Wünsche“ im Abschlussbrief, Screenshots 2.28.29): flach und
 breit statt hoch und schmal; Glocken-Hinweis breit, „Ansehen“ als Auge (überdeckt bisher den Text); „Alle zu/auf“ nur Pfeile;
 Seitentitel neben das Symbol, „?“ schräg darüber, enger; Erinnerungen und Notizen als eine flache Zeile „Anfang … Ende“ mit
-Auge zum Ansehen (Mein Kalender, Fristenliste, Tagebuch, Notiz-Liste). Erst HTML-Vorschau zeigen, nach Klaus' Ja bauen,
+Auge zum Ansehen (Mein Kalender, Fristenliste, Tagebuch, Notiz-Liste); Zähler „Überfällig/Bald fällig/Offen“ als drei
+Kästchen nebeneinander. Erst HTML-Vorschau zeigen, nach Klaus' Ja bauen,
 dann als 2.28.30 ausgeben. Danach seine Rückmeldung zu 2.28.29 (Einklappen, Mülleimer, Mikrofon, Ton und Dauer).
 Wünsche für später (Klaus): Wischen zum Löschen, Gedrückthalten mit Auswahl. Weiter offen: Grenze der CI-Prüfung (30 min)
 anheben?, KimHub #441 zusammenführen (vorher Lücken-Anzeige prüfen), Google-Prüfvideo, Microsoft-Herausgeberprüfung.
