@@ -269,7 +269,7 @@ export function KalenderVerbinden({ vaultHandle, records, relations, onRefresh, 
   ];
 
   // Klaus 2026-11-05: eingeklappt, ein Knopf geht auf – das Verbinden macht man einmal.
-  return <details className="card kalender-karte" id="kalender-verbinden" aria-label="Kalender verbinden" data-kalender-karte data-verbunden={verbunden ? einst!.anbieter : "nein"}>
+  return <details className="card kalender-karte" id="kalender-verbinden" aria-label="Kalender verbinden" data-klapp="kalender-verbinden" data-kalender-karte data-verbunden={verbunden ? einst!.anbieter : "nein"}>
     <summary className="kalender-karte-kopf" data-kalender-aufklapper><span className="kalender-karte-titel"><CalendarCog size={18}/> Kalender verbinden</span>{verbunden ? <span className="badge success" data-kalender-status><CalendarCheck size={14}/> {kalenderZiel(einst)}</span> : <span className="badge neutral">nicht verbunden</span>}<span className="kalender-karte-pfeil" aria-hidden="true">▾</span></summary>
     <Ablaufbild label="Kalender verbinden in vier Schritten" knoten={knoten}/>
 

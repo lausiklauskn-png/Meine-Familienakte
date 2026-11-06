@@ -3379,6 +3379,25 @@ export async function updateLocalScheduleStatus(handle: FileSystemDirectoryHandl
   return record;
 }
 
+/**
+ * Erinnerung löschen (Klaus 2026-11-06: Mülleimer an jeder Erinnerung). Der Datensatz wird als „archiviert“ ausgeblendet und
+ * von seinen Verknüpfungen gelöst, damit der Kalender-Abgleich den Eintrag auch aus Google/Microsoft/Gerätekalender entfernt;
+ * danach erscheint er in keiner Liste, keinem Kalender und keiner Glocke mehr. Die Notiz im Tagebuch bleibt.
+ */
+export async function deleteLocalScheduleRecord(handle: FileSystemDirectoryHandle, id: string) {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  const index = await readIndex(handle);
+  const record = index.records.find((item) => item.id === id && ["deadline", "task", "reminder"].includes(item.recordType));
+  if (!record) throw new Error("Die Frist, Aufgabe oder Erinnerung wurde nicht gefunden.");
+  const now = new Date().toISOString();
+  const weg = new Set([id, ...index.relations.filter((r) => r.toId === id && r.fromType === "reminder").map((r) => r.fromId)]);
+  for (const r of index.records) if (weg.has(r.id)) { r.status = "archiviert"; r.updatedAt = now; (r.data as Record<string, unknown>).geloeschtAm = now; }
+  index.relations = index.relations.filter((r) => !weg.has(r.fromId) && !weg.has(r.toId));
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Erinnerung gelöscht", recordId: id, details: `${id} auf Befehl gelöscht (ausgeblendet; Kalendereintrag wird beim nächsten Abgleich entfernt).` });
+  await writeIndex(handle, index);
+  return record;
+}
+
 /** Anschrift und Kontakt an einer Person (Klaus 2026-10-31): nur nach ausdrücklichem Speichern, mit Protokollzeile ohne Inhalte. */
 export async function updateLocalPersonContact(handle: FileSystemDirectoryHandle, id: string, kontakt: PersonKontakt) {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
@@ -3720,13 +3739,19 @@ export async function deleteLocalMemoryRecord(handle: FileSystemDirectoryHandle,
   if (!event) throw new Error("Der Memory-Eintrag wurde nicht gefunden.");
   const linkedScheduleIds = new Set(index.relations.filter((relation) => relation.toId === eventId && (relation.fromType === "task" || relation.fromType === "deadline")).map((relation) => relation.fromId));
   const removedRecordIds = new Set([eventId]);
+  const archiviert = new Set<string>();
   if (!options.keepLinkedSchedules) {
-    linkedScheduleIds.forEach((id) => removedRecordIds.add(id));
     const linkedReminderIds = index.relations.filter((relation) => linkedScheduleIds.has(relation.toId) && relation.fromType === "reminder").map((relation) => relation.fromId);
-    linkedReminderIds.forEach((id) => removedRecordIds.add(id));
+    // Klaus 2026-11-06: Steht eine Aufgabe schon in einem Kalender, bleibt sie als „archiviert“ (ausgeblendet), damit der
+    // Abgleich den Eintrag auch aus Google/Microsoft/Gerätekalender entfernt; sonst wird sie ganz gelöscht.
+    for (const id of [...linkedScheduleIds, ...linkedReminderIds]) {
+      const r = index.records.find((x) => x.id === id);
+      const imKalender = Array.isArray((r?.data as { kalender?: unknown[] } | undefined)?.kalender) && ((r!.data as { kalender: unknown[] }).kalender.length > 0);
+      if (r && imKalender) { r.status = "archiviert"; r.updatedAt = new Date().toISOString(); archiviert.add(id); } else removedRecordIds.add(id);
+    }
   }
   index.records = index.records.filter((record) => !removedRecordIds.has(record.id));
-  index.relations = index.relations.filter((relation) => !removedRecordIds.has(relation.fromId) && !removedRecordIds.has(relation.toId));
+  index.relations = index.relations.filter((relation) => !removedRecordIds.has(relation.fromId) && !removedRecordIds.has(relation.toId) && !archiviert.has(relation.fromId) && !archiviert.has(relation.toId));
   index.linkDecisions = index.linkDecisions.filter((decision) => decision.sourceId !== eventId);
   const now = new Date().toISOString();
   index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Memory-Eintrag gelöscht", recordId: eventId, details: `${eventId} wurde nach ausdrücklicher Bestätigung gelöscht. ${options.keepLinkedSchedules ? "Verknüpfte Aufgaben und Fristen blieben als eigenständige Datensätze erhalten." : `${linkedScheduleIds.size} verbundene Aufgaben/Fristen wurden nach gesonderter Auswahl mit entfernt.`} Gemeinsam verwendete Personen, Organisationen, Objekte, Vorgänge und Dokumente blieben erhalten.` });

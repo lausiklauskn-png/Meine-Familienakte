@@ -17,16 +17,19 @@ import androidx.core.content.ContextCompat;
 public class GlockeEmpfaenger extends BroadcastReceiver {
     static final String KANAL = "familienakte_glocke";
 
+    static void kanalAnlegen(Context ctx) {
+        if (Build.VERSION.SDK_INT < 26) return;
+        NotificationManager nm = ctx.getSystemService(NotificationManager.class);
+        if (nm != null && nm.getNotificationChannel(KANAL) == null) {
+            NotificationChannel k = new NotificationChannel(KANAL, "Erinnerungen (App-Glocke)", NotificationManager.IMPORTANCE_HIGH);
+            k.setDescription("Erinnerungen aus der Familienakte");
+            nm.createNotificationChannel(k);
+        }
+    }
+
     @Override public void onReceive(Context ctx, Intent intent) {
         if (Build.VERSION.SDK_INT >= 33 && ContextCompat.checkSelfPermission(ctx, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) return;
-        if (Build.VERSION.SDK_INT >= 26) {
-            NotificationManager nm = ctx.getSystemService(NotificationManager.class);
-            if (nm != null && nm.getNotificationChannel(KANAL) == null) {
-                NotificationChannel k = new NotificationChannel(KANAL, "Erinnerungen (App-Glocke)", NotificationManager.IMPORTANCE_HIGH);
-                k.setDescription("Erinnerungen aus der Familienakte");
-                nm.createNotificationChannel(k);
-            }
-        }
+        kanalAnlegen(ctx);
         Intent oeffnen = new Intent(ctx, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pi = PendingIntent.getActivity(ctx, 0, oeffnen, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         String titel = intent.getStringExtra("titel");

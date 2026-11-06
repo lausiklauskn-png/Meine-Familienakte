@@ -714,9 +714,9 @@ button.object-card:hover { transform: translateY(-2px); border-color: #8fb2c9; b
 .memory-quick textarea { padding-right: 13px; }
 .memory-quick .card-heading { align-items: flex-start; }
 .memory-day-summary, .memory-event-list, .memory-media-list { display: grid; gap: 7px; }
-.memory-day-summary button, .memory-event-list > button, .memory-media-list > button { width: 100%; display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 10px; align-items: center; border: 1px solid var(--line); border-radius: 10px; padding: 10px 11px; color: var(--ink); background: white; text-align: left; }
+.memory-day-summary button, .memory-event-list > button, .memory-event-zeile > button:not(.loesch-knopf), .memory-media-list > button { width: 100%; display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 10px; align-items: center; border: 1px solid var(--line); border-radius: 10px; padding: 10px 11px; color: var(--ink); background: white; text-align: left; }
 .memory-day-summary button { grid-template-columns: minmax(0,1fr) auto; }
-.memory-event-list > button:hover, .memory-event-list > button.active, .memory-media-list > button:hover, .memory-day-summary button:hover { border-color: var(--teal); background: #f0f7f8; }
+.memory-event-list > button:hover, .memory-event-list > button.active, .memory-event-zeile > button:not(.loesch-knopf):hover, .memory-event-zeile > button.active, .memory-media-list > button:hover, .memory-day-summary button:hover { border-color: var(--teal); background: #f0f7f8; }
 .memory-event-list strong, .memory-event-list small, .memory-media-list strong, .memory-media-list small, .memory-day-summary strong, .memory-day-summary small { display: block; }
 .memory-event-list small, .memory-media-list small, .memory-day-summary small { margin-top: 2px; color: var(--muted); }
 .memory-event-icon { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 9px; color: white; background: var(--navy-2); }
@@ -2178,3 +2178,30 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .notiz-fotos li { position: relative; width: 64px; height: 64px; border-radius: 8px; overflow: hidden; border: 1px solid var(--line); }
 .notiz-fotos img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .notiz-fotos button { position: absolute; top: 2px; right: 2px; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; border: 0; background: rgba(0,0,0,.6); color: #fff; cursor: pointer; }
+/* Einklappbare Abschnitte (2026-11-06) */
+.klapp-leiste { display: flex; justify-content: flex-end; gap: 8px; margin: 0 0 8px; }
+.klapp-leiste .button { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 6px 12px; }
+[data-klapp] > .card-heading h2[role="button"] { cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+[data-klapp] > .card-heading h2[role="button"]::after { content: "▾"; font-size: .8em; color: var(--muted); transition: transform .15s; }
+[data-klapp].klapp-zu > .card-heading h2[role="button"]::after { transform: rotate(-90deg); }
+[data-klapp] > .card-heading h2[role="button"]:hover { color: var(--teal, #087f7a); }
+[data-klapp].klapp-zu > :not(.card-heading) { display: none !important; }
+[data-klapp].klapp-zu > .card-heading { margin-bottom: 0; }
+/* Mülleimer an Erinnerungen (2026-11-06) */
+.loesch-knopf { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 36px; min-height: 36px; padding: 6px 10px; border-radius: 8px; border: 1px solid #e3b7b3; background: #fff; color: #b42318; cursor: pointer; font: inherit; font-weight: 700; transition: background-color .15s, border-color .15s; }
+.loesch-knopf:hover:not(:disabled) { background: #fdf0ef; border-color: #b42318; }
+.loesch-knopf.sicher { background: #b42318; border-color: #b42318; color: #fff; }
+.loesch-knopf:disabled { opacity: .5; cursor: default; }
+.termin-bearbeiten .modal-actions .loesch-knopf { margin-right: auto; }
+.glocken-einstellung { margin: 0 0 10px; }
+.glocken-einstellung summary { cursor: pointer; color: var(--muted); }
+.glocken-einstellung[open] { display: grid; gap: 8px; }
+.glocken-einstellung label { display: grid; gap: 4px; }
+.mk-liste .loesch-knopf span { display: none; }
+.mk-liste .loesch-knopf, .mk-liste .icon-button { flex: 0 0 auto; }
+.mk-liste li { min-width: 0; }
+.loesch-knopf.sicher, .loesch-knopf.sicher:hover:not(:disabled) { background: #b42318; border-color: #b42318; color: #fff; }
+.memory-event-zeile { display: flex; align-items: center; gap: 6px; }
+.memory-event-zeile > button:not(.loesch-knopf) { flex: 1; min-width: 0; }
+.memory-event-zeile > .loesch-knopf { flex: 0 0 auto; align-self: stretch; }
+.memory-event-zeile > .loesch-knopf span { display: none; }

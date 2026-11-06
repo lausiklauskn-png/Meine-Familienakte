@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import type { ErinnerungsVorschlag } from "../lib/family-memory";
 import { KURZ_ERINNERUNGEN, type ErinnerungsWahl } from "../lib/kalender";
 import { DatumFeld } from "./datum-feld";
+import { VoiceInput } from "./ui-controls";
 import { GlockenSchalter } from "./app-glocke";
 import { ErinnerungsChips, KalenderAuswahl, kalenderZiel, useKalenderEinst, type KalenderWahl } from "./kalender-karte";
 
@@ -48,7 +49,7 @@ export function ErinnernTeil({ erkannt, titelVorschlag, onChange, onKalender }: 
   return <section className={`memory-erinnern${an ? " an" : ""}`} data-memory-erinnern>
     <label className="check-row"><input type="checkbox" checked={an} onChange={(e) => { vonHand.current.an = true; setAn(e.target.checked); }} data-memory-erinnern-haken/><span><strong><BellRing size={16}/> Erinnern lassen</strong><small>{erkannt?.wunsch ? "Aus dem Text erkannt – bitte prüfen." : "Als Aufgabe mit Termin, auf Wunsch im Kalender."}</small></span></label>
     {an && <div className="memory-erinnern-felder">
-      <label className="memory-erinnern-titel"><span>Woran erinnern</span><input value={titel} placeholder={titelVorschlag} onChange={(e) => setTitel(e.target.value)} data-memory-erinnern-titel/></label>
+      <label className="memory-erinnern-titel"><span>Woran erinnern</span><VoiceInput value={titel} placeholder={titelVorschlag} onValueChange={setTitel} speechLabel="Woran erinnern" data-memory-erinnern-titel/></label>
       <label><span>Tag</span><DatumFeld value={datum} required onChange={(e) => { vonHand.current.datum = true; setDatum(e.target.value); }} data-memory-erinnern-datum/></label>
       <label><span>Uhrzeit</span><DatumFeld art="time" value={zeit} onChange={(e) => { vonHand.current.zeit = true; setZeit(e.target.value); }} data-memory-erinnern-zeit/></label>
       {/* Ein Knopf statt Haken (Klaus 2026-11-05): grün = verbunden, rot = keiner; Tipp öffnet die Kalender-Einstellung. */}

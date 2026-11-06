@@ -32,6 +32,7 @@ try {
     const chips = await t.locator(".kalender-chip.an").allInnerTexts();
     return an && datum === morgen && zeit === "09:00" && chips.join() === "15 Min. vorher,zur Uhrzeit" ? true : (console.log("   ↳", an, datum, zeit, chips), false);
   });
+  await step("„Woran erinnern“ hat ein Mikrofon (Klaus 2026-11-06)", async () => (await fenster.locator(".memory-erinnern-titel .dictation-button").count()) === 1);
   await step("Von Hand änderbar: Uhrzeit 10:30, „1 Std. vorher“ dazu; ein weiterer Text überschreibt das nicht", async () => {
     const t = fenster.locator("[data-memory-erinnern]");
     await t.locator("[data-memory-erinnern-zeit]").fill("10:30");
