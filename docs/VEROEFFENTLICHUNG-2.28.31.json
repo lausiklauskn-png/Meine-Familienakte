@@ -1,0 +1,56 @@
+{
+  "version": "2.28.31",
+  "source": "091752a85f0e97de9b7650f9b3bcad8db60e6979",
+  "pullRequest": 112,
+  "recordedUtc": "2026-11-06T20:30:00Z",
+  "freigabe": "Klaus 2026-11-06: neue Funktionen immer gleich als APK, PWA und Windows ausgeben; Wünsche im Chat (Titel einzeilig, Zähler springen zur Liste).",
+  "inhalt": "Seitentitel immer einzeilig (Schrift wird kleiner, wenn nötig); Zähler-Kästchen filtern, klappen „Offene Fristen und Aufgaben“ auf und springen dorthin",
+  "ciAmPrStand": "698af8bb10c8d02696e9d1f585d64c2654cd086b: pruefung, webview, product (31, pixel_c), product (35, pixel_2), android, windows – alle success",
+  "releases": [
+    {
+      "tag": "android-v2.28.31",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.31",
+      "run": 42285585838,
+      "conclusion": "success",
+      "updateServer": "server=ja; Lauf grün",
+      "downloadProof": [
+        {
+          "name": "Familienakte-android-v2.28.31.apk",
+          "bytes": 19865633,
+          "sha256": "b77ef3a7ceb29c2f5980154f236a0b5e8cd199664e4de0efac31fe163d169a8c",
+          "anonymousDownload": true,
+          "matchesSHA256SUMS": true,
+          "versionInside": "2.28.31 (assets/public/version.json, commit 091752a)"
+        },
+        {
+          "name": "Familienakte-Einzeldatei-2.28.31.html",
+          "bytes": 3455812,
+          "sha256": "46a5b0196c8cb90fb85bc0e9c7f79da9467e8406f0879f8546856a4b98f9992c",
+          "anonymousDownload": true,
+          "matchesSHA256SUMS": true
+        }
+      ]
+    },
+    {
+      "tag": "windows-v2.28.31",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.31",
+      "run": 42285590534,
+      "conclusion": "success",
+      "updateServer": "server=ja; Lauf grün; latest.json nennt 2.28.31",
+      "downloadProof": [
+        {
+          "name": "Familienakte-Windows-2.28.31-x64-setup.exe",
+          "bytes": 34023860,
+          "sha256": "2d0cb3d3455b9c2d4425789fdfd86c379a83ad225e78878ba6d244a38a991329",
+          "anonymousDownload": true,
+          "matchesSHA256SUMS": true
+        }
+      ]
+    }
+  ],
+  "pwa": "Pages-Läufe 42285577967 (push) und 42287940528 auf 091752a erfolgreich (Seite selbst aus dem Behälter nicht erreichbar)",
+  "notChecked": [
+    "Kein physisches Gerät: Titel einzeilig und Sprung der Zähler-Kästchen am Handy ungeprüft",
+    "family-projekt.de und die Pages-Seite aus dem Behälter nicht direkt geprüft; die Freigabeläufe prüfen den Server von außen"
+  ]
+}
