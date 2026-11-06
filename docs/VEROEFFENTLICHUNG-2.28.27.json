@@ -1,0 +1,37 @@
+{
+  "version": "2.28.27",
+  "source": "64f4f5f81a6b3e943eae822f95d68960f74365cb",
+  "pullRequest": 104,
+  "recordedUtc": "2026-11-05T22:45:00Z",
+  "freigabe": "Klaus 2026-11-05: „Ja, bau den Hinweis und gib 2.28.27 aus“ und nachts „du bringst all meine PWA-Version heraus, APK und eine Windows-Version. Das kannst du alles schon starten und veröffentlichen, wenn du damit durch bist.“",
+  "ciAmPrStand": "47cb529ebc39a24f91dca444b2fd26e44186701d: pruefung, webview, product (31, pixel_c), product (35, pixel_2), android, windows – alle success",
+  "releases": [
+    {
+      "tag": "android-v2.28.27",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.27",
+      "run": 42121455283,
+      "conclusion": "success",
+      "updateServer": "server=ja; Lauf grün",
+      "downloadProof": [
+        { "name": "Familienakte-android-v2.28.27.apk", "bytes": 19857441, "sha256": "a5e6ddadb87d248aaf8f1a83880e2e207e7a5d96e05294c3f6bb58c23542e166", "anonymousDownload": true, "matchesSHA256SUMS": true, "versionInside": "2.28.27 (assets/public/version.json, commit 64f4f5f)" },
+        { "name": "Familienakte-Einzeldatei-2.28.27.html", "bytes": 3440239, "sha256": "ea8ae4c8b21d686812e10ba98eecdd38a9f16d5e801d3bc40577dadd2bd49420", "anonymousDownload": true, "matchesSHA256SUMS": true }
+      ]
+    },
+    {
+      "tag": "windows-v2.28.27",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.27",
+      "run": 42121486141,
+      "conclusion": "success",
+      "updateServer": "server=ja; Lauf grün; latest.json nennt 2.28.27",
+      "downloadProof": [
+        { "name": "Familienakte-Windows-2.28.27-x64-setup.exe", "bytes": 34020193, "sha256": "73750a0ccc5c660f4e53712a1346132124ab42c860b0cfcd2bd39948743383f6", "anonymousDownload": true, "matchesSHA256SUMS": true }
+      ]
+    }
+  ],
+  "pwa": "Pages-Lauf 42121447125 nach dem Merge auf main erfolgreich (Seite selbst aus dem Behälter nicht erreichbar)",
+  "notChecked": [
+    "Kein physisches Tablet und kein eigener Windows-Rechner",
+    "family-projekt.de und die Pages-Seite aus dem Behälter nicht direkt geprüft; die Freigabeläufe prüfen den Server von außen",
+    "App-Glocke und Mein Kalender nur in Browser-Proben, nicht am Gerät"
+  ]
+}
