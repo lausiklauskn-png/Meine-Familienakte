@@ -2272,3 +2272,7 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .flach-a { min-width: min(3.5em, 40%); }
 .flach-l { flex: 0 0 auto; white-space: pre; font-size: 0; padding-left: .3em; }
 .fz-kopf > button.icon-button { flex: 0 0 auto; }
+/* Seitentitel immer einzeilig (Klaus 2026-11-06): Schrift wird per useEinzeilig kleiner; als letzter Ausweg „…“ */
+.page-title.kopf-flach > h1 { display: flex; align-items: flex-start; white-space: nowrap; text-wrap: nowrap; }
+.page-title.kopf-flach > h1 > .kopf-text { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.page-title.kopf-flach > h1 > .kopf-frage { flex: 0 0 auto; vertical-align: baseline; margin-top: -6px; }
