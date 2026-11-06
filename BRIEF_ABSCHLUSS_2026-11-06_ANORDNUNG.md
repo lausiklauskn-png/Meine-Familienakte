@@ -58,7 +58,7 @@ Auftrag aus dem Abschluss vom 06.11. (`docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-1
 - Kein Gerät: die neue Anordnung, der Knopf „alle“, das Auge und das kleine „?“ sind am Handy ungeprüft.
 - Klaus' Rückmeldung zu 2.28.29 (Einklappen, Mülleimer, Mikrofon, Ton und Dauer) steht noch aus.
 - Später (Klaus): Wischen zum Löschen, Gedrückthalten mit Auswahl.
-- CI-Prüfung `pruefung` diesmal 22 min (Grenze 30 min). KimHub #441 noch Entwurf. Google-Prüfvideo, Microsoft-Herausgeberprüfung offen.
+- CI-Prüfung `pruefung`: bei #113 an der 30-min-Grenze abgebrochen, Wiederholung grün (22 min). Anheben auf 45 min vorgeschlagen (Klaus' Entscheidung). KimHub #441 noch Entwurf. Google-Prüfvideo, Microsoft-Herausgeberprüfung offen.
 - Die automatische Codex-Prüfung lief nicht (Nutzungsgrenze); Klaus: Codex muss nicht weiter prüfen.
 - Ein erzwungenes Überschreiben des Sitzungszweigs wurde abgelehnt; der alte Zweigstand ist per Zusammenführung aufgenommen.
 

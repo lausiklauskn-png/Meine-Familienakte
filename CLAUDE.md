@@ -35,7 +35,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
-  - `BRIEF_ABSCHLUSS_2026-11-06_ANORDNUNG.md` (jüngster Abschluss mit Startauftrag: Rückmeldung zu 2.28.30 und 2.28.29 am Handy)
+  - `BRIEF_ABSCHLUSS_2026-11-06_ANORDNUNG.md` (jüngster Abschluss mit Startauftrag: Rückmeldung zu 2.28.29–2.28.32 am Handy)
   - `BRIEF_CODEX_2026-11-04_NACH-2.28.24.md` (Abstimmung mit Codex: welche Dateien Claude gehören)
   - `BRIEF_ABSCHLUSS_2026-11-04_PDF-ARBEITSRAUM.md`, `BRIEF_ABSCHLUSS_2026-11-04_PDF-FUNKTIONSABGLEICH.md` (Codex)
 
@@ -51,7 +51,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - Kalender am Gerät: Mein Kalender, App-Glocke, Kamera in der Notiz und die Android-Benachrichtigung (2.28.28) am Handy
   von Klaus bestätigt (06.11.); Einklappen, Löschen und Ton-Einstellung (2.28.29) sowie die neue Anordnung (2.28.30–2.28.32) ungeprüft (Android kann im Ruhemodus um Minuten verschieben; nach Neustart erst beim Öffnen neu geplant); Google-Prüfvideo und
   Microsoft-Herausgeberprüfung (MPN-ID) offen.
-- CI-Prüfung `pruefung` 19–30 min, Grenze 30 min (#105 einmal abgebrochen); KimHub #441 (Einträge 405–408) noch Entwurf.
+- CI-Prüfung `pruefung` 19–30 min, Grenze 30 min (#105 und #113 je einmal an der Grenze abgebrochen, Wiederholung grün; Anheben auf 45 min vorgeschlagen); KimHub #441 (Einträge 405–408) noch Entwurf.
 - Vollsicherung auf Android (Dateiausgabe nimmt nur 20 MB je Datei), PWA-Updates nach Codex #89, Ein-Schritt-Tresor in Private Brain Pro, Tresor-Leser.
 
 ## Veröffentlichen
