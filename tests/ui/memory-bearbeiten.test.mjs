@@ -15,6 +15,7 @@ try {
   const fenster = page.locator("[data-notiz-fenster]");
   // Notiz ohne „erinnere mich“: gespeichert ohne Erinnerung.
   await page.locator("[data-notiz-knopf]").click(); await fenster.waitFor();
+  await page.locator("[data-notiz-fenster] .dictation-button").click(); // 2.28.32: Mikrofon nur auf Tipp
   await page.waitForFunction(() => (document.querySelector("[data-notiz-eingabe]") || {}).value?.includes("15 Uhr"), null, { timeout: 5000 });
   await fenster.locator(".dictation-button.listening").click().catch(() => {});
   await fenster.locator("[data-notiz-speichern]").click(); await fenster.locator("[data-notiz-liste] li").first().waitFor();

@@ -51,14 +51,9 @@ function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, on
   const feld = useRef<HTMLDivElement>(null);
   const erkannt = useMemo(() => erinnerungAusText(text), [text]);
   const analyse = useMemo(() => text.trim() ? buildMemoryAnalysis({ originalText: text, captureType: "text", records, relations }) : null, [text, records, relations]);
-  // Klaus 2026-11-05: Tipp auf „Notiz“ und gleich sprechen – das Mikrofon startet von selbst (wo der Browser es zulässt).
-  // Der Mikrofonknopf prüft beim Einhängen erst die Freigabe; bis zu 2 s warten, sonst ins Textfeld. Mit Entwurf nicht.
-  useEffect(() => {
-    let n = 0; feld.current?.querySelector("textarea")?.focus();
-    if (entwurf) return;
-    const t = window.setInterval(() => { const mic = feld.current?.querySelector<HTMLButtonElement>(".dictation-button"); if (mic && !mic.disabled) { window.clearInterval(t); if (!mic.classList.contains("listening")) mic.click(); } else if (++n > 20) window.clearInterval(t); }, 100);
-    return () => window.clearInterval(t);
-  }, []);
+  // Klaus 2026-11-06: das Mikrofon startet NICHT mehr von selbst (fremde Nutzer erschraken). Erst der Tipp auf das Mikrofon
+  // nimmt Sprache auf; beim Öffnen steht nur der Cursor im Textfeld.
+  useEffect(() => { feld.current?.querySelector("textarea")?.focus(); }, []);
   // Schließen: erst jetzt neu laden, damit der Kalender-Abgleich nicht vor einem Löschen einträgt.
   const schliessen = async (behalten = false) => {
     if (busy) return;
