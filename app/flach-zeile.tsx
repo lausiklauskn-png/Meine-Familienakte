@@ -1,4 +1,5 @@
 import { Eye, EyeOff } from "lucide-react";
+import { useLayoutEffect, type RefObject } from "react";
 
 /**
  * Flache Zeile (Klaus 2026-11-06): am Handy lieber flach und breit als hoch und schmal. Ein langer Text steht in einer
@@ -29,4 +30,24 @@ export function AugeKnopf({ offen, titel, onClick, ...rest }: { offen: boolean; 
     aria-label={offen ? `„${titel}“ zuklappen` : `„${titel}“ ganz ansehen`} title={offen ? "Zuklappen" : "Ganz ansehen"} {...rest}>
     {offen ? <EyeOff size={18}/> : <Eye size={18}/>}
   </button>;
+}
+
+/**
+ * Überschrift immer in EINER Zeile (Klaus 2026-11-06): passt sie nicht, wird die Schrift kleiner, bis sie passt
+ * (nicht kleiner als `minPx`; darunter kürzt CSS mit „…“). Neu gemessen, wenn sich die Breite ändert.
+ */
+export function useEinzeilig(ref: RefObject<HTMLElement | null>, minPx = 14) {
+  useLayoutEffect(() => {
+    const el = ref.current; if (!el) return;
+    const passen = () => {
+      el.style.fontSize = "";
+      let px = parseFloat(getComputedStyle(el).fontSize) || 24;
+      while (el.scrollWidth > el.clientWidth + 1 && px > minPx) { px -= 1; el.style.fontSize = `${px}px`; }
+    };
+    passen();
+    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(passen) : null;
+    ro?.observe(el); window.addEventListener("resize", passen);
+    void document.fonts?.ready.then(passen).catch(() => undefined);
+    return () => { ro?.disconnect(); window.removeEventListener("resize", passen); };
+  }, [ref, minPx]);
 }

@@ -88,6 +88,13 @@ try {
     const aktiv = await page.locator("button.schedule-filter.active").innerText();
     return aktiv.includes("Bald fällig");
   });
+  await step("Zähler-Kästchen (2.28.31): Tipp klappt „Offene Fristen und Aufgaben“ auf und springt dorthin; Seitentitel einzeilig", async () => {
+    await page.evaluate(() => { const el = document.querySelector("[data-klapp='offen']"); el?.classList.add("klapp-zu"); window.scrollTo(0, 0); });
+    await page.locator("button.schedule-filter", { hasText: "Offen" }).click();
+    await page.waitForTimeout(900);
+    const r = await page.evaluate(() => { const el = document.getElementById("offene-fristen"); const b = el.getBoundingClientRect(); const h = document.querySelector(".page-title.kopf-flach h1 .kopf-text"); return { zu: el.classList.contains("klapp-zu"), oben: b.top, hoch: innerHeight, zeilen: h ? Math.round(h.getBoundingClientRect().height / parseFloat(getComputedStyle(h).lineHeight || "30")) : -1 }; });
+    return !r.zu && r.oben >= -5 && r.oben < r.hoch / 2 && r.zeilen <= 1 ? true : (console.log("   ↳", JSON.stringify(r)), false);
+  });
   await internetAn(page);
   await step("Fristen: Diktat in „Bezeichnung“ setzt Text ein", async () => {
     const mic = page.locator('.dictation-button[aria-label^="Titel"]');
