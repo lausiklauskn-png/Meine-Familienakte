@@ -4,6 +4,7 @@ import type { FamilyRecordUnion, FamilyRelation } from "../lib/family-data-model
 import { buildMemoryAnalysis, erinnerungAusText, erinnerungsTitel } from "../lib/family-memory";
 import { ErinnernTeil, KALENDER_OEFFNEN, type ErinnernWert } from "./erinnern-teil";
 import { createLocalMemoryBundle, deleteLocalMemoryRecord } from "./local-vault";
+import { glockeEinschalten } from "./app-glocke";
 import { kalenderZiel, useKalenderEinst } from "./kalender-karte";
 import { VoiceTextarea } from "./ui-controls";
 
@@ -76,6 +77,7 @@ function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, on
       // Wo es gelandet ist (Klaus 2026-11-05): die Notiz im Tagebuch, die Erinnerung in „Mein Kalender“ (und im verbundenen).
       const wann = erinnerung ? `🔔 ${new Date(`${erinnerung.dueAt}T00:00`).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" })}${erinnerung.dueTime ? `, ${erinnerung.dueTime} Uhr` : ""} · in Mein Kalender${erinnerung.kalenderEintragen && kalender ? ` und ${kalenderZiel(kalender)}` : ""}` : "im Tagebuch, ohne Erinnerung";
       geaendert.current = true;
+      if (erinnerung) glockeEinschalten(); // Klaus 2026-11-06: Erinnerung gespeichert = Glocke an, ohne extra Tipp
       setListe((l) => [{ id: r.event.id, titel: erinnerung?.titel || (text.trim() ? analyseJetzt.title : `Foto-Notiz (${fotos.length})`), wann: fotos.length ? `📷 ${fotos.length} · ${wann}` : wann, tag: erinnerung?.dueAt }, ...l]);
       setText(""); setFotos([]); setErinnerung(null); setRunde((x) => x + 1);
       feld.current?.querySelector("textarea")?.focus();

@@ -33,8 +33,7 @@ try {
     const zeile = await kal.locator("[data-mk-eintrag]", { hasText: "Zahnarzt anrufen" }).first().innerText();
     return t?.data.dueAt === "2026-11-10" && t?.data.dueTime === "14:30" && JSON.stringify(t?.data.erinnerungen) === '["15m"]' && /14:30/.test(zeile) && /15 Min\. vorher/.test(zeile) ? true : (console.log("   ↳", JSON.stringify(t?.data), zeile), false);
   });
-  await step("App-Glocke an: 15 Minuten vorher läutet sie mit Hinweis oben; „OK“ schließt, kein zweites Läuten", async () => {
-    await kal.locator("[data-glocke]").click();
+  await step("App-Glocke an: nach dem Eintrag von selbst an; 15 Minuten vorher läutet sie mit Hinweis oben; „OK“ schließt, kein zweites Läuten", async () => {
     if ((await kal.locator("[data-glocke]").getAttribute("data-glocke")) !== "an") return false;
     await page.clock.fastForward("16:00");
     const hinweis = page.locator("[data-app-glocke]");
@@ -87,6 +86,40 @@ try {
   });
   check(errors.length === 0, "keine Seitenfehler", errors.join(" | "));
   await context.close();
+
+  // Klaus 2026-11-06: in der Notiz die Uhrzeit eingeben und gleich die App-Glocke einschalten – ohne Google.
+  const ctx3 = await browser.newContext(DESKTOP);
+  const p3 = await ctx3.newPage(); const err3 = collectErrors(p3);
+  await p3.clock.install({ time: new Date(2026, 10, 10, 14, 0) });
+  await p3.addInitScript(speechStub("Erinnere mich heute um 14:30 Uhr den Zahnarzt anzurufen"));
+  // Gestellter Android-Baustein: nur die Glocke (Klaus 2026-11-06: Benachrichtigung auch bei geschlossener App).
+  await p3.addInitScript(() => { window.__glocke = { erlauben: 0, plaene: [] }; window.Capacitor = { isNativePlatform: () => false, Plugins: { FamilienakteGlocke: {
+    erlauben: async () => { window.__glocke.erlauben++; return { erlaubt: true }; },
+    planen: async ({ glocken }) => { window.__glocke.plaene.push(glocken); return { geplant: glocken.length, erlaubt: true }; } } } }; });
+  await p3.goto(app.base, { waitUntil: "networkidle" }); await ready(p3); await internetAn(p3);
+  await step("Notiz: Uhrzeit aus dem Text, „Auch in der App läuten“ schaltet die Glocke ein; sie läutet ohne verbundenen Kalender", async () => {
+    await p3.locator("[data-notiz-knopf]").click();
+    const f = p3.locator("[data-notiz-fenster]"); await f.waitFor();
+    await p3.waitForFunction(() => (document.querySelector("[data-notiz-eingabe]") || {}).value?.includes("14:30"), null, { timeout: 5000 });
+    await f.locator(".dictation-button.listening").click().catch(() => {});
+    const schalter = f.locator("[data-memory-erinnern] [data-glocke]");
+    const vorher = await schalter.getAttribute("data-glocke");
+    await schalter.click();
+    const nachher = await schalter.getAttribute("data-glocke");
+    const zeit = await f.locator("[data-memory-erinnern-zeit]").inputValue();
+    await f.locator("[data-notiz-speichern]").click(); await f.locator("[data-notiz-liste] li").first().waitFor();
+    await f.locator("[data-notiz-fertig]").click(); await f.waitFor({ state: "detached" });
+    await p3.clock.fastForward("16:00");
+    const h = p3.locator("[data-app-glocke]"); await h.waitFor({ timeout: 5000 });
+    const text = await h.innerText();
+    const g = await p3.evaluate(() => window.__glocke);
+    const plan = g.plaene.find((l) => l.some((x) => /Zahnarzt/i.test(x.titel)));
+    const zeitpunkt = plan && plan.find((x) => /Zahnarzt/i.test(x.titel)).um;
+    const androidOk = g.erlauben >= 1 && zeitpunkt === new Date(2026, 10, 10, 14, 15).getTime();
+    return vorher === "aus" && nachher === "an" && zeit === "14:30" && /Zahnarzt/i.test(text) && androidOk ? true : (console.log("   ↳", vorher, nachher, zeit, text, JSON.stringify(g)), false);
+  });
+  check(err3.length === 0, "Notiz mit Glocke: keine Seitenfehler", err3.join(" | "));
+  await ctx3.close();
 
   const handy = await browser.newContext(HANDY);
   const p2 = await handy.newPage();

@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import type { ErinnerungsVorschlag } from "../lib/family-memory";
 import { KURZ_ERINNERUNGEN, type ErinnerungsWahl } from "../lib/kalender";
 import { DatumFeld } from "./datum-feld";
+import { GlockenSchalter } from "./app-glocke";
 import { ErinnerungsChips, KalenderAuswahl, kalenderZiel, useKalenderEinst, type KalenderWahl } from "./kalender-karte";
 
 /** Was „Erinnern lassen“ beim Speichern übergibt: eine Aufgabe mit Termin, auf Wunsch im Kalender. */
@@ -56,6 +57,8 @@ export function ErinnernTeil({ erkannt, titelVorschlag, onChange, onKalender }: 
       </button>
       <KalenderAuswahl einst={kalender} wert={kalWahl} onChange={setKalWahl}/>
       {<ErinnerungsChips wert={wahl} onChange={(w) => { vonHand.current.wahl = true; setWahl(w); }} schnell={[...KURZ_ERINNERUNGEN, "1d"]} name="Erinnern"/>}
+      {/* Klaus 2026-11-06: ohne Google über die App erinnern – die Glocke gleich hier einschalten. */}
+      <GlockenSchalter kurz/>
     </div>}
   </section>;
 }

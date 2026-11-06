@@ -1,0 +1,79 @@
+package de.familyprojekt.familienakte;
+
+import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
+import com.getcapacitor.JSArray;
+import com.getcapacitor.JSObject;
+import com.getcapacitor.PermissionState;
+import com.getcapacitor.Plugin;
+import com.getcapacitor.PluginCall;
+import com.getcapacitor.PluginMethod;
+import com.getcapacitor.annotation.CapacitorPlugin;
+import com.getcapacitor.annotation.Permission;
+import com.getcapacitor.annotation.PermissionCallback;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+/**
+ * App-Glocke auch bei geschlossener App (Klaus 2026-11-06): die Erinnerungszeiten aus der Familienakte werden als
+ * Android-Wecker eingeplant; zur Zeit zeigt GlockeEmpfaenger eine Benachrichtigung. Nur Titel und Uhrzeit, keine Notizen.
+ * Geplant wird mit setAndAllowWhileIdle (kein Sonderrecht „genaue Wecker“); Android kann im Ruhemodus um einige Minuten
+ * verschieben. Nach einem Neustart des Geräts plant die App beim nächsten Öffnen neu.
+ */
+@CapacitorPlugin(name = "FamilienakteGlocke", permissions = {
+    @Permission(alias = "melden", strings = { Manifest.permission.POST_NOTIFICATIONS })
+})
+public class FamilienakteGlockePlugin extends Plugin {
+    private static final String VORRAT = "familienakte_glocke";
+    private static final int MAX = 50;
+
+    private boolean erlaubt() {
+        return Build.VERSION.SDK_INT < 33 || getPermissionState("melden") == PermissionState.GRANTED;
+    }
+
+    @PluginMethod public void erlauben(PluginCall call) {
+        if (erlaubt()) { call.resolve(new JSObject().put("erlaubt", true)); return; }
+        requestPermissionForAlias("melden", call, "erlaubenZurueck");
+    }
+
+    @PermissionCallback private void erlaubenZurueck(PluginCall call) { call.resolve(new JSObject().put("erlaubt", erlaubt())); }
+
+    /** Ersetzt alle geplanten Glocken durch die übergebene Liste [{ nr, titel, text, um }]; leere Liste = alle aus. */
+    @PluginMethod public void planen(PluginCall call) {
+        Context ctx = getContext();
+        AlarmManager am = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
+        SharedPreferences vorrat = ctx.getSharedPreferences(VORRAT, Context.MODE_PRIVATE);
+        int alt = vorrat.getInt("anzahl", 0);
+        for (int i = 0; i < alt; i++) am.cancel(absicht(ctx, i, "", ""));
+        JSONArray liste = call.getArray("glocken", new JSArray());
+        long jetzt = System.currentTimeMillis();
+        int n = 0;
+        for (int i = 0; i < liste.length() && n < MAX; i++) {
+            JSONObject g = liste.optJSONObject(i);
+            if (g == null) continue;
+            long um = g.optLong("um", 0);
+            String titel = g.optString("titel", "");
+            if (um <= jetzt || titel.isEmpty()) continue;
+            String text = g.optString("text", "");
+            PendingIntent pi = absicht(ctx, n, titel.length() > 120 ? titel.substring(0, 120) : titel, text.length() > 160 ? text.substring(0, 160) : text);
+            am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, um, pi);
+            n++;
+        }
+        vorrat.edit().putInt("anzahl", n).apply();
+        call.resolve(new JSObject().put("geplant", n).put("erlaubt", erlaubt()));
+    }
+
+    private static PendingIntent absicht(Context ctx, int nr, String titel, String text) {
+        Intent i = new Intent(ctx, GlockeEmpfaenger.class);
+        i.setAction("de.familyprojekt.familienakte.GLOCKE_" + nr);
+        i.putExtra("nr", nr);
+        i.putExtra("titel", titel);
+        i.putExtra("text", text);
+        return PendingIntent.getBroadcast(ctx, 4200 + nr, i, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+    }
+}

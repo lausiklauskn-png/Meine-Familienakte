@@ -136,6 +136,11 @@ try {
     const t = r.find((x) => x.recordType === "task" && x.data.title === "Paket abholen");
     return /12:30 Uhr/.test(chip) && t?.data.erinnerungen?.includes(`@${morgen}T12:30`) ? true : (console.log("   ↳", chip, JSON.stringify(t?.data)), false);
   });
+  await step("Notiz mit Erinnerung gespeichert: App-Glocke ist danach von selbst an (Mein Kalender zeigt „an“)", async () => {
+    await page.locator("[data-mein-kalender-knopf]").click();
+    const k = page.locator("[data-mein-kalender] [data-glocke]"); await k.waitFor();
+    return (await k.getAttribute("data-glocke")) === "an";
+  });
   await step("Kamera in der Notiz (Klaus 2026-11-06): Mikrofon, Kamera, Haken untereinander; Foto allein und mit Text gespeichert", async () => {
     await page.locator("[data-notiz-knopf]").click(); await fenster.waitFor();
     await page.waitForFunction(() => (document.querySelector("[data-notiz-eingabe]") || {}).value?.length > 0, null, { timeout: 5000 });
