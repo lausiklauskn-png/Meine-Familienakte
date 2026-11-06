@@ -1,0 +1,37 @@
+{
+  "version": "2.28.30",
+  "source": "46b95d5392c2cb43fad30133ec41a9441196c1a7",
+  "pullRequest": 111,
+  "recordedUtc": "2026-11-06T19:20:00Z",
+  "freigabe": "Klaus 2026-11-06: „Danach kannst du alles merken und die App öffentlich stellen, die APK, die PWA und die Windows-App zum Download anbieten.“ sowie „Du kannst, wenn die PRs gemerkt wurden, hier die Veröffentlichung machen von den Apps und sie hochladen.“",
+  "inhalt": "Flach und breit: Seitenkopf mit Symbol, Titel und Knopf auf einer Linie, „?“ klein rechts oben an der Schrift (alle Überschriften); ein Knopf „alle“ zeigt auf/zu; Glocken-Hinweis breit mit Auge; Mein Kalender, Fristenliste, Tagebuch, Notiz-Liste als Zeile „Anfang … Ende“ mit Auge; Zähler als drei Kästchen",
+  "ciAmPrStand": "b1c34d242ebd9e2aec5b86b4483d86b86c54a7a0: pruefung, webview, product (31, pixel_c), product (35, pixel_2), android, windows – alle success",
+  "releases": [
+    {
+      "tag": "android-v2.28.30",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.30",
+      "run": 42275179380,
+      "conclusion": "success",
+      "updateServer": "server=ja; Schritt „Auf family-projekt.de hochladen und von außen prüfen“ grün",
+      "downloadProof": [
+        { "name": "Familienakte-android-v2.28.30.apk", "bytes": 19865633, "sha256": "a6511067d824322f1240f8142bd3dad84fbff9d4c7c3f2db4e079c67decdc492", "anonymousDownload": true, "matchesSHA256SUMS": true, "versionInside": "2.28.30 (assets/public/version.json, commit 46b95d5)" },
+        { "name": "Familienakte-Einzeldatei-2.28.30.html", "bytes": 3454935, "sha256": "5b1ca2d6806d86eaa4222707dc7f6ef2f176e270d41a883fc8234a9453ebc2eb", "anonymousDownload": true, "matchesSHA256SUMS": true }
+      ]
+    },
+    {
+      "tag": "windows-v2.28.30",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.30",
+      "run": 42275184049,
+      "conclusion": "success",
+      "updateServer": "server=ja; Lauf grün; latest.json nennt 2.28.30",
+      "downloadProof": [
+        { "name": "Familienakte-Windows-2.28.30-x64-setup.exe", "bytes": 34027761, "sha256": "7415cbcc448d2d3d23358aa0dc842c727c5787d455080f8e03e4ec45f86f0e27", "anonymousDownload": true, "matchesSHA256SUMS": true }
+      ]
+    }
+  ],
+  "pwa": "Pages-Läufe 42275162577 (push) und 42277182255 (nach den Freigaben) auf 46b95d5 erfolgreich (Seite selbst aus dem Behälter nicht erreichbar)",
+  "notChecked": [
+    "Kein physisches Gerät: neue Anordnung, Knopf „alle“, Auge und kleines „?“ am Handy ungeprüft",
+    "family-projekt.de und die Pages-Seite aus dem Behälter nicht direkt geprüft; die Freigabeläufe prüfen den Server von außen"
+  ]
+}

@@ -7,10 +7,10 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Aktueller Stand (06.11.2026)
 
-- **Fassung 2.28.29** (Android, Windows, PWA; #108): Abschnitte auf „Fristen und Aufgaben“ einklappbar (`app/klapp.tsx`), Mülleimer an Erinnerungen und Notizen (`app/loesch-knopf.tsx`; Löschen = archiviert, Kalender-Abgleich entfernt den Eintrag), Mikrofon bei „Woran erinnern“, Glocke mit Dauer und Android-Kanal-Einstellung. Davor **2.28.28** (#106): Kamera in der Notiz, App-Glocke nach dem Speichern von selbst an, Android-Benachrichtigung der Glocke auch bei geschlossener App (`FamilienakteGlockePlugin`, `GlockeEmpfaenger`). Davor **2.28.27** (#104): Kalender-Erinnerung (Google, Microsoft, Android-Gerätekalender, .ics),
+- **Fassung 2.28.30** (Android, Windows, PWA; #111): flach und breit – Seitenkopf mit Symbol, Titel und Knopf auf einer Linie, „?“ klein rechts oben an der Schrift (`PageTitle`, `.ui-heading-help` auf allen Seiten); ein Knopf „alle“ (`app/klapp.tsx`) zeigt die Pfeile dessen, was ein Tipp bewirkt; Glocken-Hinweis breit mit Auge; Listen (Mein Kalender, Fristenliste, Tagebuch, Notiz-Liste) als Zeile „Anfang … Ende“ mit Auge (`app/flach-zeile.tsx`), Ändern/Löschen hinter dem Auge, Fristenliste mit Haken in der Zeile; Zähler als drei Kästchen. Davor **2.28.29** (#108): Abschnitte auf „Fristen und Aufgaben“ einklappbar (`app/klapp.tsx`), Mülleimer an Erinnerungen und Notizen (`app/loesch-knopf.tsx`; Löschen = archiviert, Kalender-Abgleich entfernt den Eintrag), Mikrofon bei „Woran erinnern“, Glocke mit Dauer und Android-Kanal-Einstellung. Davor **2.28.28** (#106): Kamera in der Notiz, App-Glocke nach dem Speichern von selbst an, Android-Benachrichtigung der Glocke auch bei geschlossener App (`FamilienakteGlockePlugin`, `GlockeEmpfaenger`). Davor **2.28.27** (#104): Kalender-Erinnerung (Google, Microsoft, Android-Gerätekalender, .ics),
   Knopf „Notiz“ mit erkannter Erinnerung, Memory bearbeiten, „Mein Kalender“ (Kalender-Knopf im Kopf), App-Glocke (ab Werk aus,
-  läutet nur bei offener App), Termin an Ort und Stelle ändern. Nachweise `docs/VEROEFFENTLICHUNG-2.28.29.json`, `-2.28.28.json` und `-2.28.27.json`, darunter 2.28.26
-  und 2.28.25 … 2.28.22. Keine davon erneut ausgeben; nächste freie Fassung 2.28.30. Klaus 2026-11-06: neue Funktionen immer gleich als APK, PWA und Windows ausgeben. Die Versionszeile zeigt die technische
+  läutet nur bei offener App), Termin an Ort und Stelle ändern. Nachweise `docs/VEROEFFENTLICHUNG-2.28.30.json`, `-2.28.29.json`, `-2.28.28.json` und `-2.28.27.json`, darunter 2.28.26
+  und 2.28.25 … 2.28.22. Keine davon erneut ausgeben; nächste freie Fassung 2.28.31. Klaus 2026-11-06: neue Funktionen immer gleich als APK, PWA und Windows ausgeben. Die Versionszeile zeigt die technische
   Fassung aus `package.json`; `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
 - **Kalender:** Kern `lib/kalender.ts`, Glocke `lib/glocke.ts`, Oberfläche `app/kalender-karte.tsx`, `app/mein-kalender.tsx`,
   `app/termin-bearbeiten.tsx`, Notiz `app/notiz-knopf.tsx`; Einrichtung `docs/KALENDER-EINRICHTUNG.md` (Google veröffentlicht,
@@ -35,7 +35,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
-  - `BRIEF_ABSCHLUSS_2026-11-06_VERBESSERUNGEN.md` (jüngster Abschluss mit Startauftrag: Anordnung flach und breit, Auge statt Text, dann Rückmeldung zu 2.28.29)
+  - `BRIEF_ABSCHLUSS_2026-11-06_ANORDNUNG.md` (jüngster Abschluss mit Startauftrag: Rückmeldung zu 2.28.30 und 2.28.29 am Handy)
   - `BRIEF_CODEX_2026-11-04_NACH-2.28.24.md` (Abstimmung mit Codex: welche Dateien Claude gehören)
   - `BRIEF_ABSCHLUSS_2026-11-04_PDF-ARBEITSRAUM.md`, `BRIEF_ABSCHLUSS_2026-11-04_PDF-FUNKTIONSABGLEICH.md` (Codex)
 
@@ -49,7 +49,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - Eigene Berichte und ungeprüfte Nutzergeräte; Tablet-Rückmeldung zu 2.28.23/2.28.24 und zum Demo-Knopf. Drucken über den
   Android-Druckdienst ist am Gerät ungeprüft.
 - Kalender am Gerät: Mein Kalender, App-Glocke, Kamera in der Notiz und die Android-Benachrichtigung (2.28.28) am Handy
-  von Klaus bestätigt (06.11.); Einklappen, Löschen und Ton-Einstellung (2.28.29) ungeprüft (Android kann im Ruhemodus um Minuten verschieben; nach Neustart erst beim Öffnen neu geplant); Google-Prüfvideo und
+  von Klaus bestätigt (06.11.); Einklappen, Löschen und Ton-Einstellung (2.28.29) sowie die neue Anordnung (2.28.30) ungeprüft (Android kann im Ruhemodus um Minuten verschieben; nach Neustart erst beim Öffnen neu geplant); Google-Prüfvideo und
   Microsoft-Herausgeberprüfung (MPN-ID) offen.
 - CI-Prüfung `pruefung` 19–30 min, Grenze 30 min (#105 einmal abgebrochen); KimHub #441 (Einträge 405–408) noch Entwurf.
 - Vollsicherung auf Android (Dateiausgabe nimmt nur 20 MB je Datei), PWA-Updates nach Codex #89, Ein-Schritt-Tresor in Private Brain Pro, Tresor-Leser.
