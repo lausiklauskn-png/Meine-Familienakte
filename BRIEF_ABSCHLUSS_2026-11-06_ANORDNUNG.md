@@ -23,6 +23,9 @@ Auftrag aus dem Abschluss vom 06.11. (`docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-1
   - Seitentitel immer einzeilig: `useEinzeilig` verkleinert die Schrift, bis der Titel passt (mind. 14 px, danach „…“).
     Gemessen „Fristen und Aufgaben“: 17,8 px bei 360 px, 20,8 px bei 390 px.
   - Zähler-Kästchen filtern, klappen „Offene Fristen und Aufgaben“ auf und springen dorthin (vorher blieb der Abschnitt zu).
+- **Nachtrag 2.28.32** (Klaus 06.11., letzter Wunsch der Sitzung): Tipp auf „Notiz“ startet das Mikrofon **nicht** mehr von selbst
+  (fremde Nutzer könnten erschrecken); erst der Tipp auf das Mikrofon nimmt Sprache auf. Probe notiz misst: nach 2,5 s kein
+  Mikrofon aktiv, Feld leer; danach auf Tipp Diktat wie bisher (notiz 17/0, mein-kalender 14/0, memory-bearbeiten 6/0).
 
 ## Geprüft
 
@@ -71,21 +74,22 @@ Zeiten in MEZ.
 | 3 | 19:31 | 19:56 | 25 min | CI, Zusammenführen |
 | 4 | 19:56 | 20:25 | 29 min | Ausgabe 2.28.30, Downloads prüfen, Nachweis, Abschluss, KimHub |
 | 5 | 20:25 | 21:35 | 1 h 10 min | 2.28.31: Titel einzeilig, Zähler springen; CI, Ausgabe, Nachweis |
+| 6 | 21:35 | 22:15 | 40 min | 2.28.32: Mikrofon nur auf Tipp; CI, Ausgabe, Nachweis |
 
-Zusammen: 4 h 53 min.
+Zusammen: 5 h 33 min.
 
 ## Startauftrag zum Einfügen
 
 ```
-Familienakte – nach 2.28.31 (Brief vom 06.11.2026, Anordnung).
+Familienakte – nach 2.28.32 (Brief vom 06.11.2026, Anordnung).
 Repo lausiklauskn-png/Meine-Familienakte, frisch von origin/main, Zweig wie für die Sitzung vorgegeben.
-Zuerst lesen: CLAUDE.md, BRIEF_ABSCHLUSS_2026-11-06_ANORDNUNG.md, docs/VEROEFFENTLICHUNG-2.28.31.json.
-Zuerst Klaus' Rückmeldung am Handy zu 2.28.31/2.28.30 (Titel einzeilig, Zähler springen zur Liste, Seitenkopf in einer Linie, Knopf „alle“, Auge in den Listen, kleines „?“,
+Zuerst lesen: CLAUDE.md, BRIEF_ABSCHLUSS_2026-11-06_ANORDNUNG.md, docs/VEROEFFENTLICHUNG-2.28.32.json.
+Zuerst Klaus' Rückmeldung am Handy zu 2.28.32/2.28.31/2.28.30 (Mikrofon nur auf Tipp, Titel einzeilig, Zähler springen zur Liste, Seitenkopf in einer Linie, Knopf „alle“, Auge in den Listen, kleines „?“,
 Zähler-Kästchen) und zu 2.28.29 (Einklappen, Mülleimer, Mikrofon, Ton und Dauer) aufnehmen und umsetzen; Entwürfe erst als
 HTML-Vorschau zeigen. Wünsche für später: Wischen zum Löschen, Gedrückthalten mit Auswahl.
 Weiter offen: CI-Grenze `pruefung` (30 min) anheben?, KimHub #441 zusammenführen (vorher Lücken-Anzeige prüfen),
 Google-Prüfvideo, Microsoft-Herausgeberprüfung.
-Neue Funktionen immer gleich als APK, PWA und Windows ausgeben (Klaus 06.11.), nächste freie Fassung 2.28.32.
+Neue Funktionen immer gleich als APK, PWA und Windows ausgeben (Klaus 06.11.), nächste freie Fassung 2.28.33.
 Nicht: Schlüssel/Tokens in Dateien oder Chat, Forschung im Repo (nur KimHub).
 Am Ende Abschlussbrief mit Stundennachweis und KimHub-Eintrag.
 ```

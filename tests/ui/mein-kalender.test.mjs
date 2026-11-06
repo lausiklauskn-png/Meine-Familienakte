@@ -81,6 +81,7 @@ try {
   await step("Notiz mit Erinnerung: in der Liste steht, wohin sie ging; Kalender-Knopf springt zu „Mein Kalender“ am Tag", async () => {
     await page.locator("[data-notiz-knopf]").click();
     const f = page.locator("[data-notiz-fenster]"); await f.waitFor();
+    await page.locator("[data-notiz-fenster] .dictation-button").click(); // 2.28.32: Mikrofon nur auf Tipp
     await page.waitForFunction(() => (document.querySelector("[data-notiz-eingabe]") || {}).value?.includes("morgen um 9 Uhr"), null, { timeout: 5000 });
     await f.locator(".dictation-button.listening").click().catch(() => {});
     await f.locator("[data-notiz-speichern]").click(); await f.locator("[data-notiz-liste] li").first().waitFor();
@@ -150,6 +151,7 @@ try {
   await step("Notiz: Uhrzeit aus dem Text, „Auch in der App läuten“ schaltet die Glocke ein; sie läutet ohne verbundenen Kalender", async () => {
     await p3.locator("[data-notiz-knopf]").click();
     const f = p3.locator("[data-notiz-fenster]"); await f.waitFor();
+    await p3.locator("[data-notiz-fenster] .dictation-button").click(); // 2.28.32: Mikrofon nur auf Tipp
     await p3.waitForFunction(() => (document.querySelector("[data-notiz-eingabe]") || {}).value?.includes("14:30"), null, { timeout: 5000 });
     await f.locator(".dictation-button.listening").click().catch(() => {});
     const schalter = f.locator("[data-memory-erinnern] [data-glocke]");

@@ -15,9 +15,14 @@ try {
   await internetAn(page); // Spracheingabe braucht das Internet der App
   const fenster = page.locator("[data-notiz-fenster]");
 
-  await step("Kopf: Knopf „Notiz“ öffnet ein kleines Fenster, das Mikrofon startet von selbst und schreibt mit", async () => {
+  await step("Kopf: Knopf „Notiz“ öffnet ein kleines Fenster; das Mikrofon startet NICHT von selbst (Klaus 06.11.), erst auf Tipp, und schreibt mit", async () => {
     await page.locator("[data-notiz-knopf]").click();
     await fenster.waitFor();
+    await page.waitForTimeout(2500);
+    const vonSelbst = await fenster.locator(".dictation-button.listening").count();
+    const leer = (await fenster.locator("[data-notiz-eingabe]").inputValue()) === "";
+    if (vonSelbst || !leer) { console.log("   ↳ Mikrofon lief von selbst:", vonSelbst, leer); return false; }
+    await page.locator("[data-notiz-fenster] .dictation-button").click(); // 2.28.32: Mikrofon nur auf Tipp
     await page.waitForFunction(() => (document.querySelector("[data-notiz-eingabe]") || {}).value?.includes("morgen um 9 Uhr"), null, { timeout: 5000 });
     await fenster.locator(".dictation-button.listening").click().catch(() => {});
     return true;
@@ -57,6 +62,7 @@ try {
   });
   await step("Ohne „Erinnern lassen“: nur die Notiz, keine Aufgabe; Erinnern bleibt von Hand einschaltbar", async () => {
     await page.locator("[data-notiz-knopf]").click(); await fenster.waitFor();
+    await page.locator("[data-notiz-fenster] .dictation-button").click(); // 2.28.32: Mikrofon nur auf Tipp
     await page.waitForFunction(() => (document.querySelector("[data-notiz-eingabe]") || {}).value?.includes("morgen um 9 Uhr"), null, { timeout: 5000 });
     await fenster.locator(".dictation-button.listening").click().catch(() => {});
     await page.waitForFunction(() => !document.querySelector("[data-notiz-fenster] .dictation-button.listening"), null, { timeout: 5000 });
@@ -78,6 +84,7 @@ try {
   await step("Mehrere Notizen hintereinander: jede klappt in die Liste, der Mülleimer löscht genau sie samt Aufgabe", async () => {
     const zahl = () => page.evaluate(async () => { const f = window.__vaultFixture; const r = (await f.readLocalVaultData(await f.browserVault())).records; return r.filter((x) => /Müll rausbringen/.test(JSON.stringify(x.data))).length; });
     await page.locator("[data-notiz-knopf]").click(); await fenster.waitFor();
+    await page.locator("[data-notiz-fenster] .dictation-button").click(); // 2.28.32: Mikrofon nur auf Tipp
     await page.waitForFunction(() => (document.querySelector("[data-notiz-eingabe]") || {}).value?.includes("morgen um 9 Uhr"), null, { timeout: 5000 });
     await fenster.locator(".dictation-button.listening").click().catch(() => {});
     await page.waitForFunction(() => !document.querySelector("[data-notiz-fenster] .dictation-button.listening"), null, { timeout: 5000 });
@@ -98,6 +105,7 @@ try {
   });
   await step("Roter Kalender-Knopf springt zu „Kalender verbinden“ (Karte offen); der Notiz-Text bleibt erhalten", async () => {
     await page.locator("[data-notiz-knopf]").click(); await fenster.waitFor();
+    await page.locator("[data-notiz-fenster] .dictation-button").click(); // 2.28.32: Mikrofon nur auf Tipp
     await page.waitForFunction(() => (document.querySelector("[data-notiz-eingabe]") || {}).value?.includes("morgen um 9 Uhr"), null, { timeout: 5000 });
     await fenster.locator(".dictation-button.listening").click().catch(() => {});
     await page.waitForFunction(() => !document.querySelector("[data-notiz-fenster] .dictation-button.listening"), null, { timeout: 5000 });
@@ -114,6 +122,7 @@ try {
   });
   await step("Kleines × im Textfeld löscht Text und Erinnerung; ohne Text keine Erinnerung", async () => {
     await page.locator("[data-notiz-knopf]").click(); await fenster.waitFor();
+    await page.locator("[data-notiz-fenster] .dictation-button").click(); // 2.28.32: Mikrofon nur auf Tipp
     await page.waitForFunction(() => (document.querySelector("[data-notiz-eingabe]") || {}).value?.includes("morgen um 9 Uhr"), null, { timeout: 5000 });
     await fenster.locator(".dictation-button.listening").click().catch(() => {});
     const mitText = await fenster.locator("[data-memory-erinnern-haken]").isChecked();
@@ -124,6 +133,7 @@ try {
   });
   await step("Eigene Erinnerungszeit: „weitere … → eigene Zeit“, Tag und 12:30 → Chip und im Register gespeichert", async () => {
     await page.locator("[data-notiz-knopf]").click(); await fenster.waitFor();
+    await page.locator("[data-notiz-fenster] .dictation-button").click(); // 2.28.32: Mikrofon nur auf Tipp
     await page.waitForFunction(() => (document.querySelector("[data-notiz-eingabe]") || {}).value?.includes("morgen um 9 Uhr"), null, { timeout: 5000 });
     await fenster.locator(".dictation-button.listening").click().catch(() => {});
     await page.waitForFunction(() => !document.querySelector("[data-notiz-fenster] .dictation-button.listening"), null, { timeout: 5000 });
@@ -146,9 +156,7 @@ try {
   });
   await step("Kamera in der Notiz (Klaus 2026-11-06): Mikrofon, Kamera, Haken untereinander; Foto allein und mit Text gespeichert", async () => {
     await page.locator("[data-notiz-knopf]").click(); await fenster.waitFor();
-    await page.waitForFunction(() => (document.querySelector("[data-notiz-eingabe]") || {}).value?.length > 0, null, { timeout: 5000 });
-    await fenster.locator(".dictation-button.listening").click().catch(() => {});
-    await fenster.locator("[data-notiz-leeren]").click();
+    // 2.28.32: das Mikrofon startet nicht mehr von selbst, das Feld bleibt leer – nichts zu leeren.
     const png = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==", "base64");
     const lage = await page.evaluate(() => ["[data-notiz-fenster] .dictation-button", "[data-notiz-kamera]", "[data-notiz-speichern]"].map((s) => { const b = document.querySelector(s).getBoundingClientRect(); return [Math.round(b.left), Math.round(b.top)]; }));
     await fenster.locator("[data-notiz-kamera-eingabe]").setInputFiles({ name: "zaehler.png", mimeType: "image/png", buffer: png });
