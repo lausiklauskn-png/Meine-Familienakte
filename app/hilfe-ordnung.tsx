@@ -57,7 +57,7 @@ export function hilfeGruppen(themen: HilfeThemaEl[], herkunft: SectionId | undef
   return gruppen.filter((g) => g.themen.length);
 }
 
-export function HilfeOrdnungAnsicht({ themen, herkunft, eingerichtet, zwischen }: { themen: HilfeThemaEl[]; herkunft?: SectionId; eingerichtet: Set<string>; zwischen?: ReactNode }) {
+export function HilfeOrdnungAnsicht({ themen, herkunft, eingerichtet, oben, zwischen }: { themen: HilfeThemaEl[]; herkunft?: SectionId; eingerichtet: Set<string>; oben?: ReactNode; zwischen?: ReactNode }) {
   const [sortierung, setSortierung] = useState(sortLesen);
   const [frage, setFrage] = useState("");
   const [treffer, setTreffer] = useState<Array<{ id: string; titel: string }>>([]);
@@ -75,6 +75,7 @@ export function HilfeOrdnungAnsicht({ themen, herkunft, eingerichtet, zwischen }
   const umschalten = () => { const neu = sortierung === "az" ? "ordnung" : "az"; setSortierung(neu); try { workspaceStorage.setItem(SORT_KEY, neu); } catch { /* nur für jetzt */ } };
   const hin = (id: string) => zurStelle(`[data-hilfe-id="${id}"] details, [data-hilfe-id="${id}"] > *`);
   return <>
+    {oben}
     <section className="card hilfe-frage" data-hilfe-frage>
       <label htmlFor="hilfe-frage-feld"><Search size={18}/> <strong>Wie kann ich dir helfen?</strong></label>
       <VoiceInput id="hilfe-frage-feld" value={frage} onValueChange={setFrage} speechLabel="Frage an die Hilfe" placeholder="z. B. „Glocke klingelt nicht“ oder „Foto zu groß“" maxLength={200}/>
