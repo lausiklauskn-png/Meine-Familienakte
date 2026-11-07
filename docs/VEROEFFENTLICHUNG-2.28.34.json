@@ -1,0 +1,56 @@
+{
+  "version": "2.28.34",
+  "source": "fbd632532837e149749aa0320131a8b58d8f9174",
+  "pullRequest": 119,
+  "recordedUtc": "2026-11-07T15:50:00Z",
+  "freigabe": "Klaus 2026-11-07: Bau freigegeben, am Ende der Sitzung ausgeben; in der Sitzung: „Weiter, nach grüner CI zusammenführen und ausgeben.“",
+  "inhalt": "Daten: sichere Dateigröße je Gerät, Fotos verkleinern (≥ 300 dpi, Texterkennungs-Gegenprobe), Ausgabe 100 MB, Vollsicherung in der Android- und Windows-App in frei gewählten Ordner mit APK bzw. Lies-mich (SHA-256), Sicherung einlesen (Probe ohne Schreiben, nur leere Akte), Demo als Kopie der eigenen Daten mit „Was ändert sich?“",
+  "ciAmPrStand": "5841f18: pruefung, webview, product (31, pixel_c), product (35, pixel_2), android, windows, transport success",
+  "releases": [
+    {
+      "tag": "android-v2.28.34",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.34",
+      "run": 42386844395,
+      "conclusion": "success",
+      "updateServer": "server=ja; Lauf grün",
+      "downloadProof": [
+        {
+          "name": "Familienakte-android-v2.28.34.apk",
+          "bytes": 19898401,
+          "sha256": "74af13001bc5395416c6d8cbd78fc3931c78122d1eb68b70b8be58ea2e88cdde",
+          "anonymousDownload": true,
+          "matchesSHA256SUMS": true,
+          "versionInside": "2.28.34 (assets/public/version.json, commit fbd6325)"
+        },
+        {
+          "name": "Familienakte-Einzeldatei-2.28.34.html",
+          "bytes": 3532400,
+          "sha256": "295d976ce9a152e54df5143fd2c23b8bd3dbf48453d00d58c3c2aa09a343c3b5",
+          "anonymousDownload": true,
+          "matchesSHA256SUMS": true
+        }
+      ]
+    },
+    {
+      "tag": "windows-v2.28.34",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.34",
+      "run": 42386846901,
+      "conclusion": "success",
+      "updateServer": "server=ja; Lauf grün; latest.json nennt 2.28.34",
+      "downloadProof": [
+        {
+          "name": "Familienakte-Windows-2.28.34-x64-setup.exe",
+          "bytes": 34063733,
+          "sha256": "ca01ffedb1b7d3bd41a5b79ce6b4b27659c273eb74d4ceb49c046b95ae50bd8a",
+          "anonymousDownload": true,
+          "matchesSHA256SUMS": true
+        }
+      ]
+    }
+  ],
+  "pwa": "Pages auf fbd6325: Lauf 137 (42386832170) success; Seite selbst aus dem Behälter nicht geprüft",
+  "notChecked": [
+    "Kein physisches Gerät: Ordnerdialoge Android/Windows, APK beilegen, Lies-mich, Verkleinern an echten Kamerafotos, Einlesen nach Neuinstallation, Demo-Kopie",
+    "family-projekt.de aus dem Behälter nicht erreichbar (Proxy weist ab); die Freigabeläufe prüfen den Server selbst"
+  ]
+}
