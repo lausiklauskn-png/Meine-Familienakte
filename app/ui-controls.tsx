@@ -5,7 +5,7 @@ import { createDictationSession, microphoneBlockedReason, speechConstructor, typ
 import { useActivity } from "./ui-activity";
 
 /** Abstand des Hinweisfensters zum Bildschirmrand und zum Fragezeichen (px). */
-const INFO_RAND = 12, INFO_ABSTAND = 8;
+const INFO_RAND = 12, INFO_ABSTAND = 8, INFO_BREITE = 560;
 
 /**
  * Fragezeichen mit Hinweisfenster. Das Fenster hängt am Fragezeichen (Nutzerwunsch 2026-11-04: am Handy stand es
@@ -39,14 +39,15 @@ export function InfoPopover({ text, label = "Weitere Informationen" }: { text: s
       rahmen = 0;
       const knopf = triggerRef.current?.getBoundingClientRect?.(), fenster = panelRef.current;
       if (!knopf || !fenster) return;
-      const breite = Math.min(320, window.innerWidth - 2 * INFO_RAND);
-      const hoehe = Math.min(fenster.scrollHeight, window.innerHeight * 0.6);
+      // Quer und breit (Klaus 07.11.2026: „nicht alles angezeigt … quer machen, breiter“): bis 560 px, am Handy Bildschirmbreite.
+      const breite = Math.min(INFO_BREITE, window.innerWidth - 2 * INFO_RAND);
+      const hoehe = Math.min(fenster.scrollHeight, window.innerHeight * 0.75);
       const links = Math.max(INFO_RAND, Math.min(knopf.right - breite, window.innerWidth - INFO_RAND - breite));
       const unten = window.innerHeight - knopf.bottom, oben = knopf.top;
       const top = unten >= hoehe + INFO_ABSTAND + INFO_RAND || unten >= oben
         ? knopf.bottom + INFO_ABSTAND
         : Math.max(INFO_RAND, knopf.top - INFO_ABSTAND - hoehe);
-      setLage({ position: "fixed", top, left: links, width: breite, maxHeight: "60vh", visibility: "visible" });
+      setLage({ position: "fixed", top, left: links, width: breite, maxHeight: "75vh", visibility: "visible" });
     };
     const spaeter = () => { if (!rahmen) rahmen = requestAnimationFrame(setzen); };
     setzen();

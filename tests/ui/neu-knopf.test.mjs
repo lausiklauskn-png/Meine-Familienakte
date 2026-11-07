@@ -32,8 +32,8 @@ try {
   await step("„Zur Hilfe“ führt in die Hilfe mit den neuen Themen", async () => {
     await page.locator('.neu-eintrag[data-neu="hilfe-2026-11-07"] button', { hasText: "Zur Hilfe" }).click();
     await page.locator('details[data-hilfe-thema="mein-kalender"]').waitFor();
-    // 14 Themen aus hilfe-themen.tsx und 6 als Bild aus hilfe-bilder.tsx (Sitzung 4)
-    return (await page.locator("details[data-hilfe-thema]").count()) === 20 && (await page.locator(".neu-fenster").count()) === 0;
+    // 14 Themen aus hilfe-themen.tsx und 39 als Bild aus hilfe-bilder.tsx (2.28.36: 6, 2.28.37: 33 weitere)
+    return (await page.locator("details[data-hilfe-thema]").count()) === 53 && (await page.locator(".neu-fenster").count()) === 0;
   });
   await step("Zweites × blendet „Hilfe auf neuem Stand“ aus", async () => {
     await knopf.click();

@@ -1,0 +1,212 @@
+<title>Familienakte Hilfe überall Bild</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: Lesespalte; je Beispiel ein nachgebautes Hilfe-Thema (aufgeklappt) – Bild zum Antippen, drei Kernpunkte, „Ausführlich“ zu,
+   dazu das Vorschaufenster Weg A. Farben wie Landkarte und Ablaufbild der App. */
+:root {
+  --bg: #f5f7fa; --fg: #17212b; --muted: #5b6878; --line: #d8dee6; --card: #ffffff; --soft: #eef2f6;
+  --accent: #0c79d8; --teal: #2a7f86; --ast: #8fb3c4; --hervor: #1f4e79;
+  --f-rand: #2f8a4f; --f-bg: #eef8f1; --g-rand: #9aa5ad; --g-bg: #f1f3f4; --w-rand: #c58a00; --w-bg: #fff8e6; --rot: #d32f2f;
+  --display: "Fraunces", Georgia, serif; --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11161c; --fg: #e6ebf1; --muted: #9aa7b6; --line: #2a3440; --card: #18202a; --soft: #1d2731;
+  --accent: #5bb3ff; --teal: #5cc4cc; --ast: #4f7486; --hervor: #7db4e6;
+  --f-rand: #5fc78a; --f-bg: #13281b; --g-rand: #75828c; --g-bg: #1b252c; --w-rand: #e0ad3c; --w-bg: #2c2410; --rot: #ff6b6b; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #11161c; --fg: #e6ebf1; --muted: #9aa7b6; --line: #2a3440; --card: #18202a; --soft: #1d2731;
+  --accent: #5bb3ff; --teal: #5cc4cc; --ast: #4f7486; --hervor: #7db4e6;
+  --f-rand: #5fc78a; --f-bg: #13281b; --g-rand: #75828c; --g-bg: #1b252c; --w-rand: #e0ad3c; --w-bg: #2c2410; --rot: #ff6b6b; color-scheme: dark }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 16px/1.5 var(--body); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 64px; margin: 0; }
+main { max-width: 860px; margin: 0 auto; display: grid; gap: 34px; }
+h1, h2 { font-family: var(--display); font-weight: 600; text-wrap: balance; margin: 0; }
+h1 { font-size: 1.9rem; line-height: 1.15; } h2 { font-size: 1.3rem; }
+p, ul { margin: 0; } ul { padding-left: 1.2em; display: grid; gap: 4px; }
+section { display: grid; gap: 12px; min-width: 0; }
+.eyebrow { font: 600 .75rem/1 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.muted { color: var(--muted); }
+.thema { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.thema > .kopf { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--line); font-weight: 700; }
+.thema > .kopf .bildknopf { margin-left: auto; font: inherit; font-size: .82rem; font-weight: 600; border: 1px solid var(--line); background: var(--card); color: var(--muted); border-radius: 6px; padding: 2px 8px; cursor: pointer; }
+.thema > .inhalt { padding: 12px 16px 16px; display: grid; gap: 12px; }
+.weg { font-size: .85rem; color: var(--teal); font-weight: 600; }
+.ablauf { display: flex; flex-wrap: wrap; align-items: stretch; gap: 6px; list-style: none; padding: 0; margin: 0; counter-reset: s; }
+.ablauf li { display: flex; align-items: center; gap: 6px; }
+.ablauf li + li::before { content: "→"; color: var(--muted); font-weight: 700; }
+.kasten { display: grid; gap: 1px; text-align: left; font: inherit; color: var(--fg); border: 2px solid var(--f-rand); background: var(--f-bg); border-radius: 8px; padding: 6px 10px; cursor: pointer; line-height: 1.2; min-width: 0; }
+.kasten b { font-size: .88rem; } .kasten small { font-size: .74rem; color: var(--muted); }
+.kasten .nr { font-size: .7rem; font-weight: 700; color: var(--hervor); }
+.kasten.warn { border-color: var(--w-rand); background: var(--w-bg); }
+.kasten.grau { border-style: dashed; border-color: var(--g-rand); background: var(--g-bg); }
+.kasten.mitte { border-width: 3px; border-color: var(--hervor); }
+.kasten:hover, .kasten:focus-visible { outline: 3px solid var(--hervor); outline-offset: 1px; }
+.kern { list-style: none; padding: 0; display: grid; gap: 6px; }
+.kern li { padding-left: 22px; position: relative; }
+.kern li::before { content: ""; position: absolute; left: 4px; top: .55em; width: 9px; height: 9px; border-radius: 50%; background: var(--teal); }
+.kern b { color: var(--hervor); }
+details.ausf { border-top: 1px dashed var(--line); padding-top: 6px; }
+details.ausf > summary { cursor: pointer; font-weight: 600; color: var(--hervor); font-size: .9rem; }
+details.ausf p { font-size: .9rem; color: var(--muted); margin-top: 6px; }
+.ziel { justify-self: start; font: inherit; font-weight: 600; font-size: .88rem; padding: 5px 12px; border-radius: 8px; border: 1px solid var(--accent); background: var(--card); color: var(--accent); cursor: pointer; }
+.sprung { font-size: .86rem; border-radius: 8px; padding: 6px 10px; background: var(--soft); color: var(--fg); border-left: 4px solid var(--rot); min-height: 2.2em; }
+/* kleine Karte Datenmodell */
+.karte { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px 18px; align-items: center; }
+.karte .links, .karte .rechts { display: grid; gap: 6px; }
+.karte .mitte-k { align-self: center; }
+.karte .pfeil { color: var(--ast); font-weight: 700; text-align: center; }
+/* Vorschaufenster */
+.fenster { border: 1px solid var(--line); border-radius: 12px; background: var(--soft); padding: 12px; display: grid; gap: 8px; }
+.seite { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px; display: grid; gap: 7px; font-size: .8rem; }
+.seite .leiste { height: 14px; border-radius: 4px; background: var(--line); }
+.seite .titel { font-weight: 700; font-size: .9rem; }
+.seite .k { border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; color: var(--muted); background: var(--soft); }
+.seite .k.ziel-k { border: 3px solid var(--rot); color: var(--fg); font-weight: 600; background: var(--card); }
+.hinweis { border: 1px solid var(--line); border-radius: 10px; background: var(--card); padding: 10px 14px; }
+@media (max-width: 600px) { .karte { grid-template-columns: 1fr; } .karte .pfeil { transform: rotate(90deg); } h1 { font-size: 1.55rem; } }
+</style>
+
+<main>
+  <header style="display:grid;gap:8px">
+    <span class="eyebrow">Familienakte · 2.28.37 · Vorschau</span>
+    <h1>Jedes Hilfe-Thema als Bild zum Antippen</h1>
+    <p class="muted">Drei Beispiele aus dem Bereich mit dem meisten Text. Kästen antippen: In der App springt der Tipp zur Stelle und rahmt sie rot. Hier steht nur, wohin er führen würde.</p>
+  </header>
+
+  <!-- Bestand prüfen -->
+  <section>
+    <span class="eyebrow">Beispiel 1 · heute 7 Absätze, 1 934 Zeichen</span>
+    <div class="thema">
+      <div class="kopf">📂 Was ist „Bestand prüfen“? <button class="bildknopf" type="button" data-fenster="bestand">▣ Bild</button></div>
+      <div class="inhalt">
+        <span class="weg">Dokumente › Bestand prüfen</span>
+        <ol class="ablauf" data-sprung="s1">
+          <li><button class="kasten" data-ziel="Bestand prüfen › Ordner wählen"><span class="nr">1</span><b>Ordner wählen</b><small>Test-, PC- oder OneDrive-Ordner</small></button></li>
+          <li><button class="kasten" data-ziel="Bestand prüfen › Ergebnis"><span class="nr">2</span><b>Lesen und sortieren</b><small>wichtig · prüfen · doppelt · Fotoserie</small></button></li>
+          <li><button class="kasten" data-ziel="Bestand prüfen › Ansehen"><span class="nr">3</span><b>Ansehen</b><small>Vorschau, PDF blättern</small></button></li>
+          <li><button class="kasten mitte" data-ziel="Bestand prüfen › Zuordnung bestätigen"><span class="nr">4</span><b>Zuordnung bestätigen</b><small>erst jetzt wird angelegt</small></button></li>
+          <li><button class="kasten" data-ziel="Bestand prüfen › Archivieren"><span class="nr">5</span><b>Archivieren</b><small>Kopie auf dem Archiv-Laufwerk</small></button></li>
+        </ol>
+        <div class="sprung" id="s1" aria-live="polite">Tipp auf einen Kasten …</div>
+        <ul class="kern">
+          <li><b>Nur lesen:</b> Originale werden nie verschoben, umbenannt oder gelöscht.</li>
+          <li><b>Alles nur Vorschlag</b>, bis du „Zuordnung bestätigen“ tippst.</li>
+          <li><b>„Nicht übernehmen“</b> heißt nie löschen.</li>
+        </ul>
+        <details class="ausf"><summary>▸ Ausführlich</summary>
+          <p>Du wählst selbst einen Test-, PC- oder lokalen OneDrive-Ordner aus. Die Familienakte liest nur diesen Ordner, bildet Prüfsummen und gruppiert wichtige Unterlagen, Prüfbedarf, mögliche Dubletten, geringe Relevanz und Fotoserien. …</p>
+          <p>(der heutige Text, unverändert; die Suche findet ihn weiter)</p>
+        </details>
+        <button class="ziel" type="button">Bestand prüfen öffnen ›</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testakte -->
+  <section>
+    <span class="eyebrow">Beispiel 2 · heute 5 Absätze, 1 666 Zeichen</span>
+    <div class="thema">
+      <div class="kopf">🧪 Was ist die „Testakte für Weiterentwicklung“? <button class="bildknopf" type="button" data-fenster="testakte">▣ Bild</button></div>
+      <div class="inhalt">
+        <span class="weg">Bestand prüfen › Testumgebung automatisch einrichten und prüfen</span>
+        <ol class="ablauf" data-sprung="s2">
+          <li><button class="kasten" data-ziel="Testakte › Ordner „SOFTWARE TESTORDNER“"><span class="nr">1</span><b>Testordner wählen</b><small>einmal, bewusst</small></button></li>
+          <li><button class="kasten" data-ziel="Testakte › Testumgebung"><span class="nr">2</span><b>Testumgebung anlegen</b><small>eigener Unterordner, künstliche Daten</small></button></li>
+          <li><button class="kasten" data-ziel="Testakte › Prüfbericht"><span class="nr">3</span><b>Prüfen</b><small>Sicherung · Wiederherstellung · Bericht</small></button></li>
+          <li><button class="kasten warn" data-ziel="Testakte › rotes Feld"><span class="nr">4</span><b>Rot?</b><small>zeigt Schritt und Ursache</small></button></li>
+        </ol>
+        <div class="sprung" id="s2" aria-live="polite">Tipp auf einen Kasten …</div>
+        <ul class="kern">
+          <li><b>Nur künstliche Daten</b> in einem eigenen Unterordner.</li>
+          <li><b>Deine Akte und die Originale</b> bleiben unverändert.</li>
+          <li><b>Rot sperrt nur das Abhängige</b>; Navigation, Hilfe und Systemprüfung gehen weiter.</li>
+        </ul>
+        <details class="ausf"><summary>▸ Ausführlich</summary>
+          <p>Mit „Testumgebung automatisch einrichten und prüfen“ wählst du einmal den festen Entwicklungsordner „SOFTWARE TESTORDNER“ … (heutiger Text, unverändert)</p>
+        </details>
+        <button class="ziel" type="button">Testakte öffnen ›</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Datenmodell -->
+  <section>
+    <span class="eyebrow">Beispiel 3 · heute 2 Absätze</span>
+    <div class="thema">
+      <div class="kopf">❔ Was ist das gemeinsame Datenmodell?</div>
+      <div class="inhalt">
+        <div class="karte" data-sprung="s3">
+          <div class="links">
+            <button class="kasten" data-ziel="Familie & Personen"><b>Personen</b></button>
+            <button class="kasten" data-ziel="Wohnen · Fahrzeuge · Käufe"><b>Objekte</b><small>Wohnung, Auto, Geräte</small></button>
+            <button class="kasten" data-ziel="Cockpit › Offene Vorgänge"><b>Vorgänge</b></button>
+          </div>
+          <div class="mitte-k"><span class="kasten mitte" style="cursor:default"><b>Gemeinsames Datenmodell</b><small>Grundlage im Hintergrund</small></span></div>
+          <div class="rechts">
+            <button class="kasten" data-ziel="Dokumente"><b>Dokumente</b></button>
+            <button class="kasten" data-ziel="Fristen und Aufgaben"><b>Fristen und Aufgaben</b></button>
+            <span class="kasten grau" style="cursor:default"><b>Noch nicht eingeschaltet</b><small>Dateianalyse · Fristenerkennung · OneDrive-Sortierung</small></span>
+          </div>
+        </div>
+        <div class="sprung" id="s3" aria-live="polite">Tipp auf einen Kasten …</div>
+        <ul class="kern">
+          <li><b>Technische Grundlage</b> für die Verbindungen zwischen allem.</li>
+          <li><b>Deine Unterlagen bleiben, wie sie sind.</b></li>
+          <li><b>Noch nicht eingeschaltet:</b> automatische Analyse, Fristenerkennung, OneDrive-Sortierung.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="muted" style="font-size:.88rem">Kurzes Thema: kein „Ausführlich“ nötig, der ganze Inhalt steckt in Bild und drei Punkten.</p>
+  </section>
+
+  <!-- Vorschaufenster -->
+  <section>
+    <span class="eyebrow">Vorschaufenster (Weg A)</span>
+    <h2>Wo ist das in der App?</h2>
+    <p>Am Rechner Maus kurz auf ein Thema, am Tablet und Handy Tipp auf „▣ Bild“ im Kopf. Das Fenster zeigt eine Skizze der Seite aus den echten Kartentiteln, nie Daten. Die Stelle ist rot.</p>
+    <div class="fenster" id="fenster" aria-live="polite">
+      <strong id="fenster-titel">Bestand prüfen</strong>
+      <div class="seite" id="fenster-seite"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="ziel" type="button">Hingehen ›</button><button class="ziel" type="button" style="border-color:var(--line);color:var(--muted)">✕ Schließen</button></div>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Umfang 2.28.37</span>
+    <ul>
+      <li><b>Alle übrigen rund 30 Themen</b> so, das Fachliche eingeschlossen.</li>
+      <li><b>Kurze Themen</b> (Drucken, Neu, Löschen …): mindestens ein Sprung-Kasten.</li>
+      <li><b>Vorschaufenster</b> für jedes Thema mit Ziel.</li>
+      <li><b>Kernpunkte fett</b> auch in Welle 1 (2.28.36) nachziehen.</li>
+    </ul>
+    <p class="hinweis">Passt so? Ein kurzes „Ja“ genügt, oder sag, was anders sein soll.</p>
+  </section>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  document.querySelectorAll("[data-sprung]").forEach(function (gruppe) {
+    var info = document.getElementById(gruppe.dataset.sprung);
+    gruppe.querySelectorAll("button.kasten").forEach(function (k) {
+      k.addEventListener("click", function () { info.textContent = "In der App: springt zu „" + k.dataset.ziel + "“ und rahmt die Stelle rot. Zurück führt wieder hierher."; });
+    });
+  });
+  var SKIZZEN = {
+    bestand: { titel: "Bestand prüfen", karten: ["Ordner wählen", "Ergebnis: wichtig · prüfen · doppelt", "Zuordnung prüfen und bestätigen", "Testakte für Weiterentwicklung"], ziel: 2 },
+    testakte: { titel: "Bestand prüfen", karten: ["Ordner wählen", "Testumgebung automatisch einrichten und prüfen", "Testregister vorbereiten", "Prüfbericht"], ziel: 1 }
+  };
+  var seite = document.getElementById("fenster-seite"), titel = document.getElementById("fenster-titel");
+  function zeigen(name) {
+    var s = SKIZZEN[name];
+    titel.textContent = s.titel + " – Stelle rot markiert";
+    seite.innerHTML = '<div class="leiste"></div><span class="titel">' + s.titel + "</span>" +
+      s.karten.map(function (k, i) { return '<div class="k' + (i === s.ziel ? " ziel-k" : "") + '">' + k + "</div>"; }).join("");
+  }
+  document.querySelectorAll("[data-fenster]").forEach(function (b) {
+    b.addEventListener("click", function () { zeigen(b.dataset.fenster); document.getElementById("fenster").scrollIntoView({ behavior: "smooth", block: "center" }); });
+  });
+  zeigen("bestand");
+})();
+</script>
