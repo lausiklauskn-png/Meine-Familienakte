@@ -1,4 +1,5 @@
 import { workspaceName, demoActive } from "../lib/demo-workspace.ts";
+import { aktuelleGrenze, mbText } from "../lib/geraete-grenze.ts";
 import { erinnerungenOrdnen, gueltigeUhrzeit, zuordnungSetzen, type ErinnerungsWahl, type KalenderAnbieter, type KalenderFelder, type KalenderZuordnung } from "../lib/kalender.ts";
 import { workspaceStorage } from "../lib/demo-workspace.ts";
 import type { ProUebergabe } from "../lib/pro-verbund-vertrag";
@@ -2687,8 +2688,10 @@ export async function getVaultSummary(handle: FileSystemDirectoryHandle): Promis
 
 export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file: File, data: { category: string; documentDate: string | null; notes: string | null; migration?: boolean; allowDuplicate?: boolean; assignmentLinks?: Array<{ toType: FamilyRecordType; toId: string; relationType: string }>; scanPageCount?: number; scanOriginals?: File[]; proUebergabe?: ProUebergabe; proBezug?: string }) {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
-  if (file.size > LIMITS.documentBytes) throw new Error("Die Datei ist größer als 20 MB.");
   const index = await readIndex(handle);
+  // P4: Grenze aus der Geräteprüfung; der gemeinsame Pro-Tresor bleibt bei höchstens 20 MB.
+  const grenze = aktuelleGrenze(!!proZiel(index));
+  if (file.size > grenze.bytes) throw new Error(`Die Datei hat ${mbText(file.size)}. Dieses Gerät schafft sicher ${mbText(grenze.bytes)}.`);
   const checksum = await fileChecksum(file);
   if (data.proUebergabe && (data.proUebergabe.sha256 !== checksum || data.proUebergabe.groesse !== file.size)) throw new Error("Die Übergabe-Herkunft passt nicht zur Originaldatei.");
   const possibleDuplicate = index.documents.find((document) => document.checksum === checksum || (document.originalName.toLocaleLowerCase("de") === file.name.toLocaleLowerCase("de") && document.sizeBytes === file.size));

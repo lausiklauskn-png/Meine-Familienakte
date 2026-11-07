@@ -1,4 +1,6 @@
 import { demoActive, switchDemo } from "../lib/demo-workspace.ts";
+import { aktuelleGrenze, grenzeMessen, mbText } from "../lib/geraete-grenze";
+import { verkleinerbar } from "./verkleinern";
 import { workspaceStorage } from "../lib/demo-workspace.ts";
 import { beginLocalPdfEdit, saveLocalPdfEdit } from "./local-vault";
 import type { PdfQuelle } from "../lib/pdf-bearbeitung";
@@ -3792,6 +3794,22 @@ function UploadDialog({ initialFile, uebergabeVorschlag, source, knownDocuments,
   const [rejectedContext, setRejectedContext] = useState<ContextLinkSuggestion | undefined>();
   const [resolveOpenPointEventId, setResolveOpenPointEventId] = useState("");
   const [fremdVerwendet, setFremdVerwendet] = useState(false);
+  // P4: sichere Größe aus der Geräteprüfung; darüber nur „Verkleinern“ oder „Abbrechen“ (Klaus 07.11., Frage t).
+  const [grenze, setGrenze] = useState(() => aktuelleGrenze());
+  const [kleinSchritt, setKleinSchritt] = useState(""); const [kleinFehler, setKleinFehler] = useState(""); const [kleinLaeuft, setKleinLaeuft] = useState(false);
+  const [kleinNotiz, setKleinNotiz] = useState("");
+  useEffect(() => { let aus = false; void grenzeMessen().then((g) => { if (!aus) setGrenze(g); }); return () => { aus = true; }; }, []);
+  const zuGross = !!file && file.size > grenze.bytes;
+  const kleinMachen = async () => {
+    if (!file) return; setKleinLaeuft(true); setKleinFehler(""); setKleinSchritt("Verkleinern beginnt …");
+    try {
+      const { verkleinern } = await import("./verkleinern");
+      const r = await verkleinern(file, grenze.bytes, setKleinSchritt);
+      if (r.ok) { setFile(r.file); setKleinNotiz(r.notiz); setKleinSchritt(""); reportActivity({ kind: "info", text: `Datei ${r.notiz}. Noch nicht gespeichert.` }); }
+      else { setKleinFehler(r.text); setKleinSchritt(""); }
+    } catch (reason) { setKleinFehler(reason instanceof Error ? `Verkleinern nicht möglich: ${reason.message}` : "Verkleinern nicht möglich."); setKleinSchritt(""); }
+    finally { setKleinLaeuft(false); }
+  };
   useEffect(() => {
     let cancelled = false;
     if (!file) { setTextHint(""); return () => { cancelled = true; }; }
@@ -3825,7 +3843,7 @@ function UploadDialog({ initialFile, uebergabeVorschlag, source, knownDocuments,
   const waehle = (id: string) => { selbstGewaehlt.current = true; setSelectedCaseId(id); };
   useEffect(() => { if (selbstGewaehlt.current) return; const vorschlag = suggestedCaseId || vorgangAusNummer || contextSuggestions[0]?.caseId || ""; if (vorschlag && vorschlag !== selectedCaseId) setSelectedCaseId(vorschlag); }, [suggestedCaseId, vorgangAusNummer, contextSuggestions, selectedCaseId]);
   const selectFile = (selected: File | null) => {
-    setFile(selected); setTextHint(""); setBriefHand(false); setBrief(null); setBriefNummern(""); setAllowDuplicate(false); setError(""); setChoiceField(null); setCustomChoice("");
+    setFile(selected); setKleinNotiz(""); setKleinFehler(""); setKleinSchritt(""); setTextHint(""); setBriefHand(false); setBrief(null); setBriefNummern(""); setAllowDuplicate(false); setError(""); setChoiceField(null); setCustomChoice("");
     setNotes(""); setDocumentDate(""); setFremdVerwendet(false);
     setSelectedCaseId(suggestedCaseId || ""); setNewCaseTitle(""); setRejectedContext(undefined); setResolveOpenPointEventId(""); selbstGewaehlt.current = false;
     setOverrides({ lifeArea: false, documentType: false, privacyClass: false, category: false });
@@ -3866,12 +3884,14 @@ function UploadDialog({ initialFile, uebergabeVorschlag, source, knownDocuments,
     const stageType: Partial<Record<string, FamilyRecordUnion["recordType"]>> = { person: "person", organisation: "organisation", object: "object", case: "case", deadline: "deadline", task: "task" };
     const assignmentLinks = (plan?.assignment.steps || []).filter((step) => step.selectedId && stageType[step.stage] && step.stage !== "case" && (step.stage !== "area" || step.selectedLabel === lifeArea)).map((step) => ({ toType: stageType[step.stage]!, toId: step.selectedId!, relationType: "betrifft" }));
     if (selectedCaseId) assignmentLinks.push({ toType: "case", toId: selectedCaseId, relationType: "gehört zu" });
-    try { await onSave(file, { category: category || "Sonstiges", documentDate: String(form.get("documentDate") || "") || null, notes: [userNotes, intakeNotes].filter(Boolean).join(" · ") || null, allowDuplicate, assignmentLinks, newCaseTitle: newCaseTitle.trim() || undefined, rejectedContext, resolveOpenPointEventId: resolveOpenPointEventId || undefined }); }
+    try { await onSave(file, { category: category || "Sonstiges", documentDate: String(form.get("documentDate") || "") || null, notes: [userNotes, kleinNotiz, intakeNotes].filter(Boolean).join(" · ") || null, allowDuplicate, assignmentLinks, newCaseTitle: newCaseTitle.trim() || undefined, rejectedContext, resolveOpenPointEventId: resolveOpenPointEventId || undefined }); }
     catch (reason) { setError(reason instanceof Error ? reason.message : "Lokales Speichern nicht möglich."); setSubmitting(false); }
   };
   return <div className="modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}><div className="modal intake-modal" role="dialog" aria-modal="true" aria-labelledby="upload-title"><div className="modal-head"><div><span className="badge success">Gemeinsamer Dokumenteneingang</span><span className="ui-heading-help"><h2 id="upload-title">Neue Unterlage prüfen und lokal ablegen</h2><InfoPopover label="Neue Unterlage prüfen und lokal ablegen erklären" text={UI_HELP["Neue Unterlage prüfen und lokal ablegen"]}/></span></div><button className="icon-button" onClick={onClose} aria-label="Fenster schließen"><X/></button></div><form onSubmit={submit}>
     <input ref={inputRef} className="sr-only" type="file" accept=".pdf,.docx,.xlsx,.jpg,.jpeg,.png,.webp,.txt,.vtt,.msg,.zip" onChange={(event) => selectFile(event.target.files?.[0] || null)} />
-    <button type="button" className={`drop-zone ${dragging ? "dragging" : ""}`} onClick={() => inputRef.current?.click()} onDragOver={(event) => { event.preventDefault(); setDragging(true); }} onDragLeave={() => setDragging(false)} onDrop={(event) => { event.preventDefault(); setDragging(false); selectFile(event.dataTransfer.files?.[0] || null); }}><Upload size={32}/><strong>{file ? file.name : "Datei hier ablegen oder auswählen"}</strong><span>{file ? `${fmtBytes(file.size)}${textLesen ? " · Text wird gelesen …" : textHint.trim() ? " · Text gelesen" : ""}` : "PDF, DOCX, XLSX, MSG, VTT, ZIP oder Bilddatei · höchstens 20 MB"}</span></button>
+    <button type="button" className={`drop-zone ${dragging ? "dragging" : ""}`} onClick={() => inputRef.current?.click()} onDragOver={(event) => { event.preventDefault(); setDragging(true); }} onDragLeave={() => setDragging(false)} onDrop={(event) => { event.preventDefault(); setDragging(false); selectFile(event.dataTransfer.files?.[0] || null); }}><Upload size={32}/><strong>{file ? file.name : "Datei hier ablegen oder auswählen"}</strong><span>{file ? `${fmtBytes(file.size)}${textLesen ? " · Text wird gelesen …" : textHint.trim() ? " · Text gelesen" : ""}` : `PDF, DOCX, XLSX, MSG, VTT, ZIP oder Bilddatei · höchstens ${mbText(grenze.bytes)}`}</span></button>
+    {zuGross && file && <section className="card zu-gross-karte" data-zu-gross role="alert" aria-label="Datei zu groß für dieses Gerät"><strong>Die Datei hat {mbText(file.size)}. Dieses Gerät schafft sicher {mbText(grenze.bytes)}.</strong>{verkleinerbar(file) ? <ul><li>Verkleinern behält mindestens 300 dpi.</li><li>Danach liest die Texterkennung beide Fassungen; leidet der Text, wird die kleine verworfen.</li></ul> : <p>Diese Datei besteht nicht aus Fotos und lässt sich nicht verkleinern. Bitte am Rechner ablegen.</p>}{kleinSchritt && <p aria-live="polite" data-verkleinern-schritt>{kleinSchritt}</p>}{kleinFehler && <p className="form-error" data-verkleinern-fehler>{kleinFehler}</p>}<div className="button-row">{verkleinerbar(file) && !kleinFehler && <button type="button" className="button primary" data-verkleinern disabled={kleinLaeuft} onClick={() => void kleinMachen()}>{kleinLaeuft ? "Verkleinert …" : "Verkleinern"}</button>}<button type="button" className="button secondary" data-zu-gross-abbrechen disabled={kleinLaeuft} onClick={() => selectFile(null)}>Abbrechen</button></div></section>}
+    {kleinNotiz && <p className="badge success" data-verkleinert>{kleinNotiz}</p>}
     {file && file === initialFile && uebergabeVorschlag && <section className="card" data-uebergabe-vorschlag aria-label="Vorschläge der anderen App">
       <strong>Vorschläge aus „{uebergabeVorschlag.quelle}“</strong>
       <p>Diese Angaben kommen aus einer anderen App. Prüfe sie selbst; sie bestätigen weder den Inhalt noch die Ablage.</p>
@@ -3901,6 +3921,6 @@ function UploadDialog({ initialFile, uebergabeVorschlag, source, knownDocuments,
     <div className="form-grid intake-date-row"><label><span>Dokumentdatum, falls bekannt</span><div className="dictation-field"><DatumFeld name="documentDate" value={documentDate} onChange={(event) => setDocumentDate(event.target.value)}/><DictationButton value="" onChange={chooseSpokenDate} label="Dokumentdatum" append={false}/></div></label></div>
     <label><span>Kurzer Hinweis, optional</span><div className="dictation-field"><textarea name="notes" rows={2} value={notes} onChange={(event) => setNotes(event.target.value)} placeholder="Zum Beispiel: Antwort auf meine Anfrage vom 02.10.2026"/><DictationButton value={notes} onChange={setNotes} label="Hinweistext"/></div></label>{dictationHint && <div className="dictation-hint" aria-live="polite"><Mic size={16}/>{dictationHint}</div>}{error && <div className="form-error">{error}</div>}
     <p className="fine-print">Originaldateien werden nicht automatisch verschoben, umbenannt, gelöscht oder überschrieben. Das Dokument wird erst durch deinen Speicherbefehl in den freigegebenen Datentresor übernommen.</p>
-    <div className="modal-actions"><button type="button" className="button secondary" onClick={onClose}>Abbrechen</button><button type="submit" className="button primary" disabled={submitting || !file}>{submitting ? "Wird lokal gespeichert …" : "Geprüft lokal speichern"}</button></div>
+    <div className="modal-actions"><button type="button" className="button secondary" onClick={onClose}>Abbrechen</button><button type="submit" className="button primary" disabled={submitting || !file || zuGross || kleinLaeuft}>{submitting ? "Wird lokal gespeichert …" : "Geprüft lokal speichern"}</button></div>
   </form>{choiceField && choiceConfig && <div className="intake-choice-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && setChoiceField(null)}><section className="intake-choice-dialog" role="dialog" aria-modal="true" aria-labelledby="intake-choice-title"><header><div><span className="eyebrow dark">Auswahl ändern</span><h3 id="intake-choice-title">{choiceConfig.label}</h3><p>Der intelligente Vorschlag ist markiert. Deine Auswahl wird beim lokalen Speichern übernommen.</p></div><button type="button" className="icon-button" onClick={() => setChoiceField(null)} aria-label="Auswahlfenster schließen"><X/></button></header><div className="intake-choice-options">{choiceConfig.options.map((option) => <button type="button" className={option === choiceConfig.value ? "selected" : ""} key={option} onClick={() => applyChoice(choiceField, option)}><span>{option}</span>{option === choiceConfig.value && <CheckCircle2 size={17}/>}</button>)}</div>{choiceConfig.custom && <div className="intake-custom-choice"><label><span>Eigene Bezeichnung hinzufügen</span><div className="dictation-field"><input value={customChoice} onChange={(event) => setCustomChoice(event.target.value)} placeholder={`Eigene ${choiceConfig.label.toLocaleLowerCase("de")} eingeben`}/><DictationButton value={customChoice} onChange={setCustomChoice} label={`Eigene ${choiceConfig.label}`}/></div></label><button type="button" className="button primary" disabled={!customChoice.trim()} onClick={() => applyChoice(choiceField, customChoice)}>Übernehmen</button></div>}<footer><button type="button" className="button secondary" onClick={() => setChoiceField(null)}>Ohne Änderung schließen</button></footer></section></div>}</div></div>;
 }

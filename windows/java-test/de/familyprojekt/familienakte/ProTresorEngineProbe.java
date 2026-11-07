@@ -17,8 +17,9 @@ public final class ProTresorEngineProbe {
         return (Map<String, Object>) e.aufruf(Map.of("aktion", aktion));
     }
     static final class Dialoge implements ProTresorEngine.Dialoge {
-        Path ordner, ausgabe; String zugang; int outputCalls;
+        Path ordner, ausgabe, sicherung; String zugang; int outputCalls;
         public Path ordner() { return ordner; }
+        public Path sicherungsordner(String titel) { return sicherung; }
         public char[] kennwort() { return zugang == null ? null : zugang.toCharArray(); }
         public Path ausgabe(String name) { outputCalls++; return ausgabe; }
     }
@@ -167,6 +168,50 @@ public final class ProTresorEngineProbe {
                 pruefe(rueckweg.length == 20 * 1024 * 1024 && erwarteterHash.equals(HexFormat.of().formatHex(java.security.MessageDigest.getInstance("SHA-256").digest(rueckweg))), "20-MiB-Rückweg verändert Inhalt");
             }
             System.out.println("Windows-Pro-Tresor: Zustand, native Dialoggrenze, Ablage, Rückweg, Fehlwechsel, Sperre, Neustart und entfernter Speicher grün");
+            ordnerProbe(root);
         } finally { try (var files = Files.walk(root)) { for (Path p : files.sorted(Comparator.reverseOrder()).toList()) Files.delete(p); } }
+    }
+
+    @SuppressWarnings("unchecked") static Map<String, Object> ruf(ProTresorEngine e, Object... kv) throws Exception {
+        Map<String, Object> m = new HashMap<>(); for (int i = 0; i < kv.length; i += 2) m.put((String) kv[i], kv[i + 1]);
+        return (Map<String, Object>) e.aufruf(m);
+    }
+    /** P4/P5: frei gewählter Sicherungsordner und stückweise Ausgabe über 20 MB. */
+    static void ordnerProbe(Path root) throws Exception {
+        Dialoge dialog = new Dialoge(); dialog.sicherung = root.resolve("usb-stick"); Files.createDirectories(dialog.sicherung);
+        try (ProTresorEngine e = new ProTresorEngine(root.resolve("ordner-config.json"), dialog)) {
+            String token = (String) ruf(e, "aktion", "ordnerWaehlen", "titel", "Sicherung").get("token");
+            ruf(e, "aktion", "ordnerAnlegen", "token", token, "pfad", "Familienakte_Vollsicherung/Dateien");
+            fehler("FA_PFAD_UNGUELTIG", () -> ruf(e, "aktion", "ordnerAnlegen", "token", token, "pfad", "../draussen"));
+            fehler("FA_PFAD_UNGUELTIG", () -> ruf(e, "aktion", "dateiInfo", "token", token, "pfad", "a//b"));
+            fehler("FA_ORDNER_NICHT_ERREICHBAR", () -> ruf(e, "aktion", "ordnerListe", "token", "fremd"));
+            byte[] daten = new byte[FamilyFolders.STUECK * 2 + 123]; new Random(7).nextBytes(daten);
+            String id = (String) ruf(e, "aktion", "dateiBeginn", "token", token, "pfad", "Familienakte_Vollsicherung/Dateien/erfunden.bin").get("id");
+            for (int o = 0; o < daten.length; o += FamilyFolders.STUECK) {
+                byte[] teil = Arrays.copyOfRange(daten, o, Math.min(daten.length, o + FamilyFolders.STUECK));
+                ruf(e, "aktion", "dateiAnhaengen", "id", id, "offset", (long) o, "data", Base64.getEncoder().encodeToString(teil));
+            }
+            fehler("FA_STUECK_UNGUELTIG", () -> ruf(e, "aktion", "dateiAnhaengen", "id", id, "offset", 0L, "data", "AA=="));
+            ruf(e, "aktion", "dateiFertig", "id", id, "size", (long) daten.length);
+            Path datei = dialog.sicherung.resolve("Familienakte_Vollsicherung/Dateien/erfunden.bin");
+            pruefe(Arrays.equals(daten, Files.readAllBytes(datei)), "Sicherungsdatei verändert");
+            List<?> liste = (List<?>) ruf(e, "aktion", "ordnerListe", "token", token, "pfad", "Familienakte_Vollsicherung/Dateien").get("eintraege");
+            pruefe(liste.size() == 1, "Liste zeigt halbe Dateien: " + liste);
+            String gelesen = (String) ruf(e, "aktion", "dateiLesen", "token", token, "pfad", "Familienakte_Vollsicherung/Dateien/erfunden.bin", "offset", (long) FamilyFolders.STUECK * 2, "laenge", 1000L).get("data");
+            pruefe(Base64.getDecoder().decode(gelesen).length == 123, "Lesen am Ende");
+            fehler("FA_NICHT_LEER", () -> ruf(e, "aktion", "dateiLoeschen", "token", token, "pfad", "Familienakte_Vollsicherung"));
+            // Ausgabe über 20 MB stückweise, Abbruch verändert nichts
+            dialog.ausgabe = null;
+            String aus = (String) ruf(e, "aktion", "ausgabeBeginn", "name", "Gross.pdf").get("id");
+            byte[] gross = new byte[21 * 1024 * 1024];
+            for (int o = 0; o < gross.length; o += FamilyFolders.STUECK) ruf(e, "aktion", "ausgabeAnhaengen", "id", aus, "offset", (long) o, "data", Base64.getEncoder().encodeToString(Arrays.copyOfRange(gross, o, Math.min(gross.length, o + FamilyFolders.STUECK))));
+            ruf(e, "aktion", "ausgabeFertig", "id", aus, "size", (long) gross.length);
+            pruefe(Boolean.TRUE.equals(ruf(e, "aktion", "ausgabeSpeichern", "id", aus).get("cancelled")), "Abbruch");
+            dialog.ausgabe = root.resolve("Gross.pdf");
+            pruefe(Boolean.TRUE.equals(ruf(e, "aktion", "ausgabeSpeichern", "id", aus).get("saved")) && Files.size(dialog.ausgabe) == gross.length, "Große Ausgabe");
+            ruf(e, "aktion", "ausgabeVerwerfen", "id", aus);
+            fehler("FA_STUECK_UNGUELTIG", () -> ruf(e, "aktion", "ausgabeSpeichern", "id", aus));
+        }
+        System.out.println("Windows-Ordner: frei gewählter Sicherungsordner, Pfadschutz, Stücke, Lesen, Ausgabe 21 MB grün");
     }
 }

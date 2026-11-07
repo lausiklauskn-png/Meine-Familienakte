@@ -21,7 +21,11 @@ const MAX_ZEILE: u64 = 30 * 1024 * 1024;
 
 fn aktion_erlaubt(request: &Value) -> bool {
     matches!(request.get("aktion").and_then(Value::as_str),
-        Some("zustand" | "verbinden" | "entsperren" | "sperren" | "speichern" | "lesen" | "uebergabeSenden" | "uebergabeEingang" | "uebergabeLesen" | "uebergabeQuittieren" | "uebergabeStand" | "dateiExportieren"))
+        Some("zustand" | "verbinden" | "entsperren" | "sperren" | "speichern" | "lesen" | "uebergabeSenden" | "uebergabeEingang" | "uebergabeLesen" | "uebergabeQuittieren" | "uebergabeStand" | "dateiExportieren"
+            // P4/P5: frei gewählter Sicherungsordner und stückweise Ausgabe bis 100 MB (FamilyFolders.java)
+            | "ordnerWaehlen" | "ordnerListe" | "ordnerAnlegen" | "dateiInfo" | "dateiLesen" | "dateiLoeschen"
+            | "dateiBeginn" | "dateiAnhaengen" | "dateiFertig" | "dateiVerwerfen"
+            | "ausgabeBeginn" | "ausgabeAnhaengen" | "ausgabeFertig" | "ausgabeSpeichern" | "ausgabeVerwerfen"))
 }
 impl Engine {
     fn starten(resources: &Path, config: &Path) -> Result<Self, String> {

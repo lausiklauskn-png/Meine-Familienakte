@@ -53,7 +53,7 @@ const ORTE: Ort[] = [
     { id: "rhythmus", titel: "Rhythmus festgelegt", unter: "z. B. monatlich und nach großen Ablagen" },
   ] },
   { titel: "Grenzen", unter: "vorher wissen", ziel: "vollsicherung", punkte: [
-    { titel: "Android: 20 MB je Datei", unter: "sehr große Originale prüfen" },
+    { titel: "Größe je Datei nach Gerät", unter: "15–40 MB; Fotos lassen sich verkleinern (≥ 300 dpi)" },
     { titel: "Dokumentensicherung", unter: "nur ausgewählte Dateien, keine Vollsicherung" },
     { titel: "Demo", unter: "eigener Bestand, gehört nicht in die Sicherung" },
   ] },

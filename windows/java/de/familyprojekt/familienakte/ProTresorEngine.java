@@ -16,7 +16,10 @@ public final class ProTresorEngine implements Closeable {
         Path ordner() throws IOException;
         char[] kennwort() throws IOException;
         default Path ausgabe(String name) throws IOException { throw new IOException("FA_AUSGABE_DIALOG"); }
+        /** P5: frei gewählter Ordner für die Vollsicherung (getrennt vom Pro-Tresor). */
+        default Path sicherungsordner(String titel) throws IOException { throw new IOException("FA_ORDNER_DIALOG"); }
     }
+    private final FamilyFolders ordnerWege = new FamilyFolders();
     private final Path einstellungen;
     private final Dialoge dialoge;
     private Path ort;
@@ -117,6 +120,7 @@ public final class ProTresorEngine implements Closeable {
     }
     public synchronized Object aufruf(Map<String, Object> m) throws IOException {
         String aktion = Json.text(m, "aktion");
+        if (FamilyFolders.aktion(aktion)) return ordnerWege.aufruf(m, dialoge);
         switch (aktion) {
             case "dateiExportieren": return FamilyFileOutput.save(m, dialoge);
             case "zustand": return zustand();
@@ -159,6 +163,8 @@ public final class ProTresorEngine implements Closeable {
         }
     }
     @Override public synchronized void close() { if (adapter != null) adapter.close(); adapter = null; }
+    /** Beim Beenden auch halbe Sicherungs- und Ausgabedateien entfernen. */
+    void ende() { close(); ordnerWege.schliessen(); }
 
     private static final class WindowsDialoge implements Dialoge {
         private void fenster(Runnable aktion) throws IOException {
@@ -171,6 +177,15 @@ public final class ProTresorEngine implements Closeable {
             fenster(() -> {
                 JFileChooser chooser = new JFileChooser(); chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 chooser.setDialogTitle("Vorhandenen gemeinsamen Pro-Tresor wählen");
+                if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) gewaehlt[0] = chooser.getSelectedFile().toPath();
+            });
+            return gewaehlt[0];
+        }
+        public Path sicherungsordner(String titel) throws IOException {
+            Path[] gewaehlt = new Path[1];
+            fenster(() -> {
+                JFileChooser chooser = new JFileChooser(); chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                chooser.setDialogTitle(titel == null || titel.isBlank() ? "Ordner wählen" : titel.substring(0, Math.min(120, titel.length())));
                 if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) gewaehlt[0] = chooser.getSelectedFile().toPath();
             });
             return gewaehlt[0];
@@ -229,7 +244,7 @@ public final class ProTresorEngine implements Closeable {
         try (ProTresorEngine engine = new ProTresorEngine(Path.of(args[0]), new WindowsDialoge());
              Reader in = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
              PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out, StandardCharsets.UTF_8), true)) {
-            bedienen(engine, in, out);
+            try { bedienen(engine, in, out); } finally { engine.ende(); }
         }
         // Swing bleibt sonst auch nach dem Schließen der privaten Pipe als eigener Prozess stehen.
         System.exit(0);

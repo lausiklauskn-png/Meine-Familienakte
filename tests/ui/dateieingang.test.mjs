@@ -16,6 +16,8 @@ if (!existsSync(GROSS)) { const big = Buffer.alloc(21 * 1024 * 1024, 0x20); Buff
 const app = await startApp();
 const browser = await launchBrowser();
 const context = await browser.newContext(DESKTOP);
+// P4: feste Gerätegrenze für die Probe – 4 GB Arbeitsspeicher ergibt 20 MB.
+await context.addInitScript(() => { try { Object.defineProperty(Navigator.prototype, "deviceMemory", { get: () => 4, configurable: true }); } catch { /* Probe */ } });
 // Gestellter Ordnerwähler: ein Verzeichnis-Handle im Speicher mit den Testdateien (nur lesen).
 await context.addInitScript(() => {
   class FakeFile { constructor(name, bytes, type) { this.kind = "file"; this.name = name; this._bytes = bytes; this._type = type; } async getFile() { return new File([this._bytes], this.name, { type: this._type, lastModified: 1700000000000 }); } async isSameEntry() { return false; } }
@@ -201,16 +203,25 @@ try {
 
   // ---------- Größengrenze ----------
   await closeModals();
-  await step("Datei über 20 MB: Eingang nimmt sie an, Speichern lehnt ab", async () => {
+  await step("Datei über der Gerätegrenze (4 GB → 20 MB): Ansage, nur Verkleinern oder Abbrechen", async () => {
     await picker.setInputFiles([GROSS]);
     const info = await queueInfo("Zu gross 21MB");
     await queueItem("Zu gross 21MB").locator("button", { hasText: "Zuordnung prüfen" }).click();
     await page.locator(".intake-modal").waitFor();
-    await page.locator(".intake-modal button[type=submit]").click();
-    const err = await page.locator(".intake-modal .form-error").innerText({ timeout: 20000 });
+    const box = page.locator(".intake-modal [data-zu-gross]");
+    const text = await box.innerText({ timeout: 20000 });
+    if (!/Die Datei hat 21 MB\. Dieses Gerät schafft sicher 20 MB\./.test(text)) throw new Error(text);
+    if (!(await page.locator(".intake-modal button[type=submit]").isDisabled())) throw new Error("Speichern trotz Übergröße möglich");
+    const knoepfe = await box.locator("button").allInnerTexts();
+    if (knoepfe.join("|") !== "Verkleinern|Abbrechen") throw new Error(`Knöpfe: ${knoepfe.join("|")}`);
+    // Kein echtes Foto-PDF: Verkleinern meldet sauber, dass es nicht geht, und bietet nur noch Abbrechen.
+    await box.locator("[data-verkleinern]").click();
+    const fehler = await box.locator("[data-verkleinern-fehler]").innerText({ timeout: 30000 });
+    if ((await box.locator("[data-verkleinern]").count()) !== 0) throw new Error("Verkleinern nach Fehler noch angeboten");
+    await box.locator("[data-zu-gross-abbrechen]").click();
+    if (await box.count()) throw new Error("Ansage bleibt nach Abbrechen");
     await page.locator(".intake-modal button[aria-label='Fenster schließen']").click();
-    if (!err.includes("20 MB")) throw new Error(err);
-    return `${info.status} · dann: ${err}`;
+    return `${info.status} · Verkleinern: ${fehler.slice(0, 70)}`;
   });
 
   // ---------- Nicht erlaubter Typ ----------

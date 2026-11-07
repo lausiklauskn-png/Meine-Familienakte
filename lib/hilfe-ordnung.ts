@@ -51,6 +51,7 @@ export const HILFE_ORDNUNG: Record<string, HilfeEintrag> = {
   "neu": { gruppe: "arbeiten", schritt: 4, seiten: ["overview"], worte: ["neu", "roter punkt", "was ist neu"] },
   "drucken": { gruppe: "arbeiten", schritt: 4, seiten: ["overview"], worte: ["drucken", "drucker", "ausdrucken", "papier"] },
   "assistenz": { gruppe: "arbeiten", schritt: 4, seiten: ["assistant", "correspondence"], worte: ["assistenz", "brief schreiben", "e-mail schreiben", "korrespondenz", "antwort", "ki"] },
+  "zu-gross": { gruppe: "arbeiten", schritt: 1, seiten: ["inbox", "documents"], worte: ["zu groß", "foto zu groß", "datei zu groß", "verkleinern", "mb", "grenze", "speicher voll"] },
   // Sichern
   "vollsicherung": { gruppe: "arbeiten", schritt: 5, seiten: ["security"], worte: ["sicherung", "wiederherstellen", "backup", "zurückholen"] },
   "export": { gruppe: "arbeiten", schritt: 5, seiten: ["security"], worte: ["export", "exportieren", "ausgeben", "weitergeben"] },
