@@ -2329,3 +2329,49 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .demo-starten-zeile { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; }
 .demo-starten-zeile h2 { margin: 0; }
 .hilfe-ziel-rahmen.hilfe-ziel-gut { outline-color: #1d8a4f !important; }
+/* Flussbaum (Klaus 2026-11-07): quer, Mitte als Stamm; Pfeile auf den Ästen (→ eine Richtung, ⇄ hin und zurück); Tipp hebt den Weg hervor */
+.flussbaum-rahmen { display: grid; gap: 10px; margin: 10px 0 14px; min-width: 0; }
+.flussbaum-scroll { overflow-x: auto; padding: 6px 2px 10px; }
+.flussbaum { display: flex; align-items: center; gap: 0; width: max-content; min-width: 100%; }
+.fb-seite, .fb-kinder { display: flex; flex-direction: column; gap: 10px; position: relative; }
+.fb-links { align-items: flex-end; padding-right: 18px; }
+.fb-rechts, .fb-kinder { align-items: flex-start; padding-left: 18px; }
+/* kurzes Stück vom Elternkasten (bzw. der Mitte) zur senkrechten Linie */
+.fb-rechts::before, .fb-kinder::before { content: ""; position: absolute; left: 0; top: 50%; width: 18px; border-top: 2px solid #8fb3c4; }
+.fb-links::before { content: ""; position: absolute; right: 0; top: 50%; width: 18px; border-top: 2px solid #8fb3c4; }
+.fb-mitte { position: relative; z-index: 1; min-width: 160px; max-width: 200px; display: flex; }
+.fb-ast { display: flex; align-items: center; position: relative; }
+.fb-links > .fb-ast { flex-direction: row-reverse; }
+/* je Ast sein Stück der senkrechten Linie, über die Lücke hinweg; erster und letzter Ast nur bis zur Mitte */
+.fb-ast::before { content: ""; position: absolute; left: 0; top: -5px; bottom: -5px; border-left: 2px solid #8fb3c4; }
+.fb-links > .fb-ast::before { left: auto; right: 0; border-left: 0; border-right: 2px solid #8fb3c4; }
+.fb-ast:first-child::before { top: 50%; }
+.fb-ast:last-child::before { bottom: 50%; }
+.fb-ast:only-child::before { display: none; }
+.fb-linie { position: relative; flex: 0 0 30px; height: 0; border-top: 2px solid #8fb3c4; }
+/* Pfeilspitze in Flussrichtung: rechts von der Mitte weg, links zur Mitte hin – beides zeigt nach rechts */
+.fb-linie::after { content: ""; position: absolute; right: -1px; top: -6px; border: 5px solid transparent; border-left: 7px solid #8fb3c4; border-right: 0; }
+.fb-linie.fb-beide::before { content: ""; position: absolute; left: -1px; top: -6px; border: 5px solid transparent; border-right: 7px solid #8fb3c4; border-left: 0; }
+.fb-kasten { width: 196px; flex: 0 0 auto; position: relative; flex-wrap: wrap; }
+.fb-mitte .fb-kasten { width: 100%; }
+.fb-kasten.fb-geplant { border-style: dashed; border-color: #1f4e79; background: #f3f7fc; }
+.fb-kasten.fb-spaeter, .fb-kasten.fb-nicht { border-color: #d3d9dd; background: #f1f3f4; color: #5e6b73; }
+.fb-kasten.art-warnung { border-color: #d9a3a3; background: #fdf3f3; }
+.fb-chip { display: inline-block; font-size: .7rem; font-weight: 700; padding: 0 7px; border-radius: 999px; line-height: 1.6; background: #e3ebf2; color: #1f4e79; }
+.fb-chip-heute { background: #e9f6ee; color: #2f6b43; }
+.fb-chip-spaeter, .fb-chip-nicht { background: #e6e9eb; color: #5e6b73; }
+.fb-kasten .fb-chip { margin-top: 4px; }
+.fb-an > .fb-linie, .fb-ast.fb-an > .fb-linie { border-top-color: #c0392b; border-top-width: 3px; }
+.fb-an > .fb-linie::after { border-left-color: #c0392b; } .fb-an > .fb-linie.fb-beide::before { border-right-color: #c0392b; }
+.fb-kasten.fb-an { outline: 3px solid #c0392b; outline-offset: 2px; }
+.fb-info { padding: 10px 12px; border: 1px solid #c8d9e2; border-radius: 10px; background: #f7fafc; display: grid; gap: 4px; justify-items: start; }
+.fb-info p { margin: 0; }
+.fb-info .fb-richtung { font-weight: 700; color: #1f4e79; }
+.fb-tipp { color: #4f6472; }
+.fb-legende { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-size: .84rem; margin: 0; }
+.fb-legende span { display: inline-flex; align-items: center; gap: 6px; }
+.fb-muster { display: inline-block; width: 26px; height: 16px; border: 1px solid #c8d9e2; border-radius: 4px; background: #f7fafc; }
+.fb-muster.fb-geplant { border: 1px dashed #1f4e79; background: #f3f7fc; }
+.fb-muster.fb-spaeter { border-color: #d3d9dd; background: #f1f3f4; }
+.fb-muster.art-warnung { border-color: #d9a3a3; background: #fdf3f3; }
+@media (prefers-reduced-motion: no-preference) { .fb-kasten { transition: outline-color .2s; } }
