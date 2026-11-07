@@ -90,7 +90,7 @@ export function Landkarte({ id, label, gruppen, knoten, kanten, breiten }: { id:
         else { const mx = (a.l + a.w + z.l) / 2; d = `M${a.l + a.w} ${am} C${mx} ${am} ${mx} ${zy} ${z.l - 2} ${zy}`; }
         return [{ k, d }];
       });
-      let hoehe = 0, breite = x - ABSTAND + RAND;
+      let hoehe = 0; const breite = x - ABSTAND + RAND;
       Object.entries(pos).forEach(([pid, p]) => { hoehe = Math.max(hoehe, p.y + groesse[pid].h); });
       setLage({ pos, breite, hoehe: hoehe + RAND + 50, aeste: linien });
     };
