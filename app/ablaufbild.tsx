@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { klappOeffnen } from "./klapp";
 
 /**
  * Erklärungen auf einen Blick (Nutzerwunsch 2026-11-04): Kästchen mit Linien wie in einem Ablaufplan, eine
@@ -13,16 +14,46 @@ export type AblaufKnoten = {
 };
 
 /** Zur Stelle springen, kurz markieren und fokussieren. Fehlt sie, passiert nichts. */
-export function zurStelle(ziel: string | (() => void)) {
-  if (typeof ziel === "function") { ziel(); return; }
+export function zurStelle(ziel: string | (() => void)): boolean {
+  if (typeof ziel === "function") { ziel(); return true; }
   const el = document.querySelector<HTMLElement>(ziel);
-  if (!el) return;
+  if (!el) return false;
+  zumElement(el);
+  return true;
+}
+
+/** Zur Karte springen, deren „?“ den Titel trägt (InfoPopover-Label „‹Titel› erklären“). */
+export function zurKarte(titel: string): boolean {
+  const alle = [...document.querySelectorAll<HTMLElement>("main.site-main [aria-label]")].filter((e) => e.getAttribute("aria-label") === `${titel} erklären`);
+  const knopf = alle.find((e) => e.getClientRects().length) || alle[0];
+  const karte = knopf?.closest<HTMLElement>(".card, article, section, details") || knopf;
+  if (!karte) return false;
+  zumElement(karte);
+  return true;
+}
+
+function zumElement(el: HTMLElement) {
+  // Eingeklappte Abschnitte der Seite (Knopf „alle“) zuerst öffnen.
+  for (let k = el.closest<HTMLElement>(".klapp-zu[data-klapp]"); k; k = k.parentElement?.closest<HTMLElement>(".klapp-zu[data-klapp]") || null) klappOeffnen(k.dataset.klapp!);
   // Liegt die Stelle in einem eingeklappten Bereich (oder ist selbst einer), wird er geöffnet.
   for (let d: HTMLElement | null = el; d; d = d.parentElement) if (d instanceof HTMLDetailsElement) d.open = true;
-  el.scrollIntoView({ behavior: "smooth", block: "center" });
+  rahmen(el);
+  // Große Karten mit dem Anfang ins Bild, sonst wäre der Rahmen außerhalb (2.28.33).
+  const gross = el.getBoundingClientRect().height > window.innerHeight * 0.7;
+  el.scrollIntoView({ behavior: "smooth", block: gross ? "start" : "center" });
   el.focus?.({ preventScroll: true });
-  el.classList.add("ablauf-ziel");
-  window.setTimeout(() => el.classList.remove("ablauf-ziel"), 1800);
+}
+
+let rahmenWeg: (() => void) | null = null;
+/** Roter Rahmen am Ziel eines Hilfe-Sprungs (Klaus 07.11.2026): bleibt, bis man auf der Seite etwas tut (Tipp, Taste, Scrollen). */
+function rahmen(el: HTMLElement) {
+  rahmenWeg?.();
+  el.classList.add("hilfe-ziel-rahmen");
+  const ereignisse = ["pointerdown", "keydown", "wheel", "touchmove"] as const;
+  const weg = () => { el.classList.remove("hilfe-ziel-rahmen"); for (const e of ereignisse) document.removeEventListener(e, weg, true); window.clearTimeout(scharf); rahmenWeg = null; };
+  // Erst nach dem eigenen weichen Scrollen scharf schalten, sonst nähme der auslösende Tipp den Rahmen gleich wieder weg.
+  const scharf = window.setTimeout(() => { for (const e of ereignisse) document.addEventListener(e, weg, { capture: true, passive: true }); }, 600);
+  rahmenWeg = weg;
 }
 
 function Knoten({ k, nummer }: { k: AblaufKnoten; nummer?: number }) {

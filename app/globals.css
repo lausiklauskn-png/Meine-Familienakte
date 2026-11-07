@@ -2286,3 +2286,41 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 @media (max-width: 560px) { .fassungen-liste li { grid-template-columns: auto 1fr; } .fassungen-liste li span { grid-column: 1 / -1; } }
 .fassungen-liste .klein-hinweis { color: var(--muted); font-size: .9rem; margin: 10px 0 0; }
 .hilfe-weg { margin: 8px 0 0; color: var(--teal); font-weight: 700; font-size: .92rem; }
+
+/* Rücksprung: zuletzt angetippte Stelle bleibt markiert bis zum nächsten Tipp (2.28.33) */
+.zurueck-hier { outline: 3px solid var(--teal) !important; outline-offset: 3px; background-color: var(--teal-soft) !important; border-radius: 10px; scroll-margin: 80px; }
+@media (prefers-reduced-motion: no-preference) { .zurueck-hier { transition: outline-color .2s; } }
+
+/* Benutzerabnahme, vier Antworten (Klaus 07.11.2026): grün Klappt · rot Klappt nicht · rot Noch nicht probiert · grau Gilt hier nicht */
+.user-result-option.result-skipped.selected { background: var(--red-soft); border-color: #c0707a; color: var(--red); }
+.user-result-option.result-na.selected { background: #edf0f3; border-color: #8593a0; color: #384958; }
+.user-test.saved-na { opacity: .85; }
+.user-test-result.result-na { background: #edf0f3; color: #384958; }
+
+/* Ziel eines Hilfe-Sprungs: roter Rahmen, bis man dort etwas tut (Klaus 07.11.2026) */
+.hilfe-ziel-rahmen { outline: 3px solid #c62d3a !important; outline-offset: 4px; border-radius: 10px; scroll-margin: 80px; }
+.hilfe-sprung { margin: 0 0 12px; display: inline-flex; gap: 6px; align-items: center; min-height: 40px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--teal-soft); color: var(--teal); font-weight: 700; cursor: pointer; text-align: left; }
+.hilfe-sprung:hover { border-color: var(--teal); }
+
+/* Mitwandernde Seitenleiste rechts (Klaus 07.11.2026, Punkt 9) */
+.seitenleiste { position: fixed; top: 50%; right: 0; transform: translateY(-50%); z-index: 45; padding-right: env(safe-area-inset-right, 0px); }
+.seitenleiste-griff { display: grid; place-items: center; width: 18px; height: 76px; padding: 0; border: 1px solid var(--navy-2); border-right: 0; border-radius: 12px 0 0 12px; background: color-mix(in srgb, var(--navy) 72%, transparent); cursor: pointer; box-shadow: -2px 3px 10px rgba(11, 49, 84, .18); }
+.seitenleiste-griff span { width: 4px; height: 32px; border-radius: 4px; background: rgba(255, 255, 255, .85); }
+.seitenleiste-griff:hover, .seitenleiste-griff:focus-visible { background: var(--navy); }
+.seitenleiste-knoepfe { display: grid; gap: 4px; padding: 8px; background: var(--paper); border: 1px solid var(--line); border-right: 0; border-radius: 14px 0 0 14px; box-shadow: -6px 8px 26px rgba(11, 49, 84, .22); max-height: 86vh; overflow-y: auto; }
+.seitenleiste-knoepfe button { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 6px 12px; border: 1px solid transparent; border-radius: 10px; background: transparent; color: var(--navy); font-weight: 700; text-align: left; cursor: pointer; white-space: nowrap; }
+.seitenleiste-knoepfe button:hover, .seitenleiste-knoepfe button:focus-visible { background: var(--teal-soft); border-color: var(--line); }
+.seitenleiste-knoepfe .seitenleiste-zu { justify-self: end; min-height: 36px; padding: 4px 8px; color: var(--muted); }
+@media print { .seitenleiste { display: none; } }
+
+/* Hilfe geordnet (2.28.33): Frage oben, Gruppen, A–Z */
+.hilfe-frage { display: grid; gap: 8px; }
+.hilfe-frage label { display: flex; align-items: center; gap: 8px; color: var(--navy); }
+.hilfe-treffer { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 6px; }
+.hilfe-treffer button { width: 100%; display: flex; justify-content: space-between; gap: 8px; min-height: 44px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--teal-soft); color: var(--navy); font-weight: 700; text-align: left; cursor: pointer; }
+.hilfe-kein-treffer { margin: 0; color: var(--muted); }
+.hilfe-sortierung { display: flex; justify-content: flex-end; }
+.hilfe-gruppen { display: grid; gap: 18px; }
+.hilfe-gruppe-titel { margin: 6px 0 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; color: var(--navy); font-size: 1.05rem; }
+.hilfe-gruppe-titel small { color: var(--muted); font-weight: 600; font-size: .86rem; }
+.hilfe-eintrag { display: contents; }

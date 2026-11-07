@@ -1,6 +1,8 @@
 import type { SystemCheckReport } from "./system-check";
 
-export const USER_RESULTS = ["Ja", "Nein", "Nicht geprüft"] as const;
+export const USER_RESULTS = ["Ja", "Nein", "Nicht geprüft", "Gilt hier nicht"] as const;
+/** Sichtbare Namen der Antworten (Klaus 07.11.2026); gespeichert bleiben die bisherigen Werte, ältere Berichte bleiben lesbar. */
+export const USER_RESULT_LABEL: Record<(typeof USER_RESULTS)[number], string> = { Ja: "Klappt", Nein: "Klappt nicht", "Nicht geprüft": "Noch nicht probiert", "Gilt hier nicht": "Gilt hier nicht" };
 export type UserResult = typeof USER_RESULTS[number];
 export type UserTest = { id: string; number: number; title: string; question: string; instruction: string; minutes: number };
 export type UserTestBlock = { id: string; title: string; tests: readonly UserTest[] };
@@ -80,7 +82,7 @@ export function canSubmitUserBlock(run: UserAcceptanceRun, blockIndex = run.curr
   return !!block && block.tests.every((test) => validResult(run.answers[test.id]?.result)) && block.tests.some((test) => !run.answers[test.id]?.submittedAt);
 }
 export function submitUserBlock(run: UserAcceptanceRun, pause: boolean, now: string): UserAcceptanceRun {
-  if (!canSubmitUserBlock(run)) throw Error("Bitte für alle fünf Tests Ja, Nein oder Nicht geprüft auswählen.");
+  if (!canSubmitUserBlock(run)) throw Error("Bitte für alle fünf Tests eine Antwort wählen: Klappt, Klappt nicht, Noch nicht probiert oder Gilt hier nicht.");
   const answers = { ...run.answers };
   for (const test of USER_TEST_BLOCKS[run.currentBlock].tests) {
     const answer = answers[test.id]; if (answer.submittedAt) continue;
@@ -93,13 +95,14 @@ export function submitUserBlock(run: UserAcceptanceRun, pause: boolean, now: str
 export function userAcceptanceProgress(run: UserAcceptanceRun) {
   const passed = allTests.filter((test) => latestUserResult(run.answers[test.id])?.result === "Ja").length;
   const failed = allTests.filter((test) => latestUserResult(run.answers[test.id])?.result === "Nein").length;
-  const notChecked = allTests.length - passed - failed;
-  const remainingMinutes = allTests.filter((test) => latestUserResult(run.answers[test.id])?.result !== "Ja").reduce((sum, test) => sum + test.minutes, 0);
-  return { passed, failed, notChecked, remainingMinutes, complete: passed === allTests.length };
+  const notApplicable = allTests.filter((test) => latestUserResult(run.answers[test.id])?.result === "Gilt hier nicht").length;
+  const notChecked = allTests.length - passed - failed - notApplicable;
+  const remainingMinutes = allTests.filter((test) => !["Ja", "Gilt hier nicht"].includes(latestUserResult(run.answers[test.id])?.result || "")).reduce((sum, test) => sum + test.minutes, 0);
+  return { passed, failed, notChecked, notApplicable, remainingMinutes, complete: passed + notApplicable === allTests.length && passed > 0 };
 }
 export function buildUserAcceptanceReport(run: UserAcceptanceRun): SystemCheckReport {
   const progress = userAcceptanceProgress(run);
   const level = progress.failed ? "red" : progress.complete ? "green" : "yellow";
-  const summary = `${progress.passed} bestanden · ${progress.failed} fehlgeschlagen · ${progress.notChecked} nicht geprüft`;
+  const summary = `${progress.passed} bestanden · ${progress.failed} fehlgeschlagen · ${progress.notChecked} nicht geprüft${progress.notApplicable ? ` · ${progress.notApplicable} gilt hier nicht` : ""}`;
   return { id: run.id, version: run.familyVersion, checkedAt: run.updatedAt, mode: "full", kind: "acceptance", overall: level, areas: [{ id: "reports", label: "Praktische Benutzerabnahme", level, summary, details: ["Benutzerantworten; keine automatische technische Prüfung und keine Produktivfreigabe."] }], repairs: [], greenPoints: [], testCases: [], openProblems: [], releaseStatus: "nicht_freigegeben", userAcceptance: run };
 }

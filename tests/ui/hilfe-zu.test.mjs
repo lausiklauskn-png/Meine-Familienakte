@@ -9,7 +9,7 @@ try {
   await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page);
   await footer(page, "Hilfe");
   const lage = await page.evaluate(() => {
-    const fragen = [...document.querySelectorAll(".help-topics > details, details.help-suche")];
+    const fragen = [...document.querySelectorAll(".help-topics > details, .hilfe-eintrag > details, details.help-suche")];
     const demo = document.querySelector(".demo-starten"), erste = document.querySelector(".help-start");
     return { fragen: fragen.length, offen: fragen.filter((d) => d.open).length,
       demoVorne: Boolean(demo && erste && (demo.compareDocumentPosition(erste) & Node.DOCUMENT_POSITION_FOLLOWING)),
@@ -20,7 +20,7 @@ try {
   check(lage.demoVorne, "„Demo ansehen“ steht vor „Was möchtest du tun?“");
   check(lage.demoSichtbar, "„Demo ansehen“ ist ohne langes Rollen zu sehen");
   await step("Eine Frage lässt sich aufklappen und zeigt ihren Text", async () => {
-    const f = page.locator(".help-topics > details", { hasText: "Was ist „Bestand prüfen“?" }).first();
+    const f = page.locator(".hilfe-eintrag > details", { hasText: "Was ist „Bestand prüfen“?" }).first();
     await f.locator("summary").click();
     return await f.evaluate((d) => d.open && d.querySelector("div").innerText.length > 20);
   });

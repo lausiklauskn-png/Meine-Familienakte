@@ -6,7 +6,7 @@
 export type Fassung = { fassung: string; datum: string; inhalt: string };
 
 export const FASSUNGEN: Fassung[] = [
-  { fassung: "2.28.33", datum: "07.11.2026", inhalt: "Hilfe auf neuem Stand: 13 neue Themen (Mein Kalender, App-Glocke, Notiz, Auge, Mülleimer, Teilen, Update …), veraltete Texte berichtigt, Mikrofon-Themen zusammengefasst, echte Fassung in der Versionshistorie" },
+  { fassung: "2.28.33", datum: "07.11.2026", inhalt: "Hilfe neu: 13 neue Themen, veraltete Texte berichtigt, „Wie kann ich dir helfen?“, Ordnung nach Schritten und A–Z, Sprung mit rotem Rahmen, Zurück an die Stelle markiert, Benutzerabnahme als Bild mit vier Antworten, Seitenleiste rechts" },
   { fassung: "2.28.32", datum: "06.11.2026", inhalt: "Mikrofon in der Notiz startet nur auf Tipp" },
   { fassung: "2.28.31", datum: "06.11.2026", inhalt: "Seitentitel immer einzeilig; Zähler-Kästchen springen zur Liste" },
   { fassung: "2.28.30", datum: "06.11.2026", inhalt: "Flach und breit: Seitenkopf in einer Linie, kleines „?“, Knopf „alle“, Listen mit Auge, Zähler als Kästchen" },

@@ -46,7 +46,7 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
     "Ein roter Punkt zeigt: Es gibt etwas Neues zu lesen.",
     "× blendet einen Eintrag aus; das Gerät merkt es sich.",
   ] },
-  { id: "demo", titel: "Demo ausprobieren", symbol: <FlaskConical/>, weg: "Hilfe › Demo starten", punkte: [
+  { id: "demo", titel: "Demo ausprobieren", symbol: <FlaskConical/>, weg: "Hilfe › oben: Demo ansehen", punkte: [
     "Die Demo hat einen eigenen Bestand mit einer erfundenen Familie. Deine Akte bleibt unberührt.",
     "Solange sie läuft, steht hinter dem Namen ein roter Knopf „DEMO ▾“: verlassen · zurücksetzen · löschen.",
     "Die Demo gehört nicht in deine Sicherung.",
@@ -76,12 +76,12 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
   ] },
 ];
 
-export function HilfeThemenListe({ themen = NEUE_HILFE_THEMEN }: { themen?: HilfeThema[] }) {
-  return <>{themen.map((t) => <details key={t.id} className="hilfe-thema" data-hilfe-thema={t.id}>
+export function HilfeThemaEintrag({ thema: t }: { thema: HilfeThema }) {
+  return <details className="hilfe-thema" data-hilfe-thema={t.id}>
     <summary>{t.symbol} {t.titel}</summary>
     <div>
       <p className="hilfe-weg">{t.weg}</p>
       <ul className="kalender-hilfe-punkte">{t.punkte.map((p, i) => <li key={i}>{p}</li>)}</ul>
     </div>
-  </details>)}</>;
+  </details>;
 }
