@@ -43,6 +43,8 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Offen
 
+- Klaus 07.11.: Hilfe als Baum (alle Erklärungen als Kästen/Bäume, später Gesamt-Strukturbaum der App) – eigene Sitzung 4 nach
+  E-Mail, siehe Plan. Hilfe-Thema „Knopf „Neu““ trägt das KI-Funkeln statt „● Neu“ – Vorschlag liegt, Klaus' Ja abwarten.
 - Gerätefälle am Tablet: die sechs Fälle aus #70/#75 (Tresor-Plan), SD-Verweis/Freigabe und Neustart, fehlende
   Speicherbestätigung. Keine SD-Pfad-Reparatur oder Geräteprüfung behaupten, die nicht stattgefunden hat.
 - Ältere zusätzliche Android-Tresor-Paar-Abnahme (Workflow PDF Pro, BookLedgerPro) nicht vollständig geprüft;

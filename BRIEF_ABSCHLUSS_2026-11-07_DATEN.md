@@ -59,6 +59,12 @@ weil nur ein Sitzungszweig), zusammengeführt als fbd6325.
   Handy lange dauern.
 - Nicht gebaut: Einlesen in eine volle Akte (Zusammenführen), Erinnerung „lange nicht gesichert“, Ränder abschneiden beim
   Verkleinern, Punkt 10 (Fragen u–z an Klaus).
+- Klaus 07.11. nach der Ausgabe (am Tablet): (1) Hilfe-Thema „Knopf „Neu““ trägt das Funkeln-Symbol des KI-Knopfs
+  (`app/hilfe-themen.tsx`, `symbol: <Sparkles/>`); der echte Knopf im Kopf ist „● Neu“. Vorschlag: im Hilfe-Thema die kleine
+  Nachbildung „● Neu“ zeigen; Funkeln nur, wo die KI mitarbeitet. Auf Klaus' Ja warten. (2) **Hilfe als Baum:** alle
+  Hilfe-Erklärungen wie „Wo liegt was?“ und „Akten sichern“ als Kästen und Bäume statt Fließtext (Kästen klein, Text kurz oder
+  flach); später ein Gesamt-Strukturbaum der App für große Bildschirme (Eingangszentrale → Prüfung → Einordnen → Workflow PDF,
+  E-Mail usw.). Bisher nur als „6a Stufe 2, später“ im Plan; eigene Sitzung nach E-Mail, erst Bestandsaufnahme und HTML-Vorschau.
 
 ## Stundennachweis
 
@@ -84,6 +90,7 @@ Erst Plansitzung: Private Brain Pro holen (add_repo) und dessen E-Mail-Weg besch
 (nichts geht still hinaus; Entwurf, Prüfung, ausdrücklicher Befehl; Gesundheitsdaten neutral; keine Schlüssel in Dateien;
 Speicherwege wie in CLAUDE.md), Wege bei Google und Microsoft nachprüfen, dann HTML-Vorschau. Erst nach Klaus' Ja bauen:
 A sichtbar (Teilen), B Senden über die Mail-App, dann C Microsoft; D/E nur nach Kostenentscheidung, G nicht.
+Klein vorab (nach Klaus' Ja): Hilfe-Thema „Knopf „Neu““ mit „● Neu“ statt KI-Funkeln (siehe Abschlussbrief, Offen).
 Offen aus Sitzung 2: Punkt 10 (Abgleich zwischen Geräten) – Klaus' Antworten auf u–z in docs/vorschau/daten-2.28.34.html abwarten.
 Sichtbare Änderungen erst als HTML-Vorschau zeigen. Je Paket ein Commit; keine Prüfungen abschalten.
 Codex-Durchsicht am PR auslassen (Klaus 07.11.: läuft nebenbei, unwichtig, kommt später; zurzeit wird nicht parallel in Codex gearbeitet).
