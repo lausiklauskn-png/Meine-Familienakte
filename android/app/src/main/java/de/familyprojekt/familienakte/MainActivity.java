@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import androidx.activity.OnBackPressedCallback;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 import com.getcapacitor.BridgeActivity;
 import com.getcapacitor.BridgeWebViewClient;
 import java.util.Arrays;
@@ -32,6 +35,7 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(FamilienakteGlockePlugin.class);
         registerPlugin(FamilienakteOrdnerPlugin.class);
         super.onCreate(state);
+        vollbild();
         if (bridge == null) return;
         // Internetschalter (Standard aus): auch Bilder, Schriften und der Service Worker bleiben im Gerät.
         // Textzoom fest 100 %: die WebView vergrößert sonst nur den Text nach der System-Schriftgröße (Chrome zoomt die
@@ -69,5 +73,21 @@ public class MainActivity extends BridgeActivity {
                 });
             }
         });
+    }
+
+    /**
+     * Immer Vollbild (Klaus 07.11.2026): Status- und Navigationsleiste ausblenden; ein Wischen vom Rand holt sie kurz zurück.
+     * Drehen: android:screenOrientation="fullUser" im Manifest (alle vier Lagen, die Drehsperre des Geräts gilt).
+     */
+    private void vollbild() {
+        WindowInsetsControllerCompat leisten = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+        leisten.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+        leisten.hide(WindowInsetsCompat.Type.systemBars());
+    }
+
+    @Override public void onWindowFocusChanged(boolean fokus) {
+        super.onWindowFocusChanged(fokus);
+        // Nach Dialogen, Teilen-Fenstern oder dem Wechsel aus einer anderen App wieder ausblenden.
+        if (fokus) vollbild();
     }
 }

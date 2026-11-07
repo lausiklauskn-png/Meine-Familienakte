@@ -7,6 +7,7 @@ import { PageDialogHost } from "../app/page-dialogs";
 import "../app/globals.css";
 import { initKurzhinweise } from "../app/kurzhinweise";
 import { anmeldeRueckkehr } from "../app/kalender-anbieter";
+import { initVollbildTaste } from "../app/vollbild";
 
 // Fehlergrenze (A11): Ein Darstellungsfehler ergibt keine weiße Seite mehr. In der App auf dem Handy oder unter
 // Windows gibt es keine Adressleiste zum Neuladen, deshalb steht der Knopf hier. Daten liegen im Datentresor
@@ -36,7 +37,7 @@ if (demoAction === "reset" || demoAction === "delete") {
   });
 } else if (anmeldeRueckkehr()) {
   // Anmeldefenster für Google/Microsoft: Ergebnis ging an das Hauptfenster, hier wird nichts weiter geladen.
-} else { initKurzhinweise(); createRoot(document.getElementById("root")!).render(
+} else { initKurzhinweise(); initVollbildTaste(); createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Fehlergrenze>
       <HealthPortal />
