@@ -1,3 +1,4 @@
+import { FolderOpen } from "lucide-react";
 import { OrdnerBaum, Pfad } from "./ablaufbild";
 import type { ProTresorZustand } from "./pro-tresor";
 
@@ -22,7 +23,7 @@ export function ProTresorWoLiegtWas({ open = false, onVerbinden, onDokumente, st
   const hauptArt = !stand ? "hervor" : stand.status === "offen" ? "gut" : "warnung";
   const unterlagen = zahlen ? `${zahlen.imTresor} von ${zahlen.gesamt} Unterlage${zahlen.gesamt === 1 ? "" : "n"} im Tresor` : "Diese App: Familienakte · entsteht beim ersten Original";
   return <details data-pro-tresor-hilfe open={open} className="wo-liegt-was">
-    <summary>Wo liegt was?</summary>
+    <summary><FolderOpen/> Wo liegt was?</summary>
     <OrdnerBaum label="Aufbau des gemeinsamen Tresors" wurzel={{
       titel: "Speicher", unter: stand?.ort ? `Gewählt: ${stand.ort.replace(/^content:\/\/[^/]+\/(tree\/)?/, "")}` : "SD-Karte, Gerät, USB-Stick oder Laufwerk",
       kinder: [{

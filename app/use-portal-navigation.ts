@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { SectionId } from "./portal-types";
+import { markeAnwenden, markeErstellen, tippMerken, type Ruecksprung } from "./ruecksprung";
 
 export type PortalView = {
   section: SectionId;
@@ -26,7 +27,7 @@ export function usePortalNavigation(sections: Record<SectionId, string>) {
   const session = useRef("");
   const index = useRef(0);
   const visits = useRef<Visit[]>([]);
-  const restore = useRef<{ x: number; y: number; watch: boolean } | null>(null);
+  const restore = useRef<{ x: number; y: number; watch: boolean; marke?: Ruecksprung | null } | null>(null);
   const [traversal, setTraversal] = useState(false);
   const restoring = useRef(false);
 
@@ -36,6 +37,7 @@ export function usePortalNavigation(sections: Record<SectionId, string>) {
   }, []);
 
   useEffect(() => {
+    tippMerken();
     session.current = crypto.randomUUID();
     visits.current = [{ view: initial(), x: window.scrollX, y: window.scrollY, ui: {} }];
     const previous = window.history.scrollRestoration;
@@ -59,7 +61,7 @@ export function usePortalNavigation(sections: Record<SectionId, string>) {
       }
       index.current = marker.index;
       const visit = visits.current[marker.index];
-      restore.current = { x: visit.x, y: visit.y, watch: true };
+      restore.current = { x: visit.x, y: visit.y, watch: true, marke: visit.ui.__ruecksprung as Ruecksprung | null | undefined };
       restoring.current = true;
       setTraversal(true);
       setView(visit.view);
@@ -85,8 +87,13 @@ export function usePortalNavigation(sections: Record<SectionId, string>) {
     if (!target.watch) return;
     const observer = new ResizeObserver(scroll);
     observer.observe(document.body);
-    const stop = () => { observer.disconnect(); restoring.current = false; };
+    let versuche = 0, markeTimer = 0;
+    const stop = () => { observer.disconnect(); restoring.current = false; window.clearTimeout(markeTimer); };
     const timer = window.setTimeout(stop, 2000);
+    // Rücksprung: zuletzt angetippte Stelle wieder aufklappen, in die Mitte holen und markieren (Punkt 4).
+    const marke = target.marke;
+    const versuch = () => { if (!marke) return; if (markeAnwenden(marke)) { stop(); return; } if (++versuche < 15) markeTimer = window.setTimeout(versuch, 100); };
+    versuch();
     window.addEventListener("wheel", stop, { once: true, passive: true });
     window.addEventListener("touchstart", stop, { once: true, passive: true });
     window.addEventListener("pointerdown", stop, { once: true, passive: true });
@@ -104,6 +111,7 @@ export function usePortalNavigation(sections: Record<SectionId, string>) {
     if (current && JSON.stringify(current.view) === JSON.stringify(next)) return;
     restoring.current = false;
     rememberScroll();
+    if (current) current.ui.__ruecksprung = markeErstellen();
     visits.current.splice(index.current + 1);
     index.current += 1;
     visits.current.push({ view: next, x: 0, y: 0, ui: {} });
@@ -162,7 +170,7 @@ export function usePortalNavigation(sections: Record<SectionId, string>) {
     const visit = visits.current[position.index];
     if (visit) visit.ui[key] = value;
   }, [position.index]);
-  return { view, navigate, setQuery, back, forward, canBack: position.index > 0, canForward: position.index < position.last, visitKey: `${position.index}:${revision}`, traversal, readUi, saveUi };
+  return { view, navigate, setQuery, back, forward, vorher: visits.current[position.index - 1]?.view.section as SectionId | undefined, canBack: position.index > 0, canForward: position.index < position.last, visitKey: `${position.index}:${revision}`, traversal, readUi, saveUi };
 }
 
 export type PortalNavigation = ReturnType<typeof usePortalNavigation>;

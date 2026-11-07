@@ -23,6 +23,8 @@ function glockePlugin(): GlockePlugin | null {
 }
 
 /** Schaltet die Glocke ein, falls sie aus ist (z. B. beim Speichern einer Notiz mit Erinnerung). */
+/** Für die Ordnung der Hilfe: ist die App-Glocke an? */
+export function glockeIstAn() { return glockeLesen().an; }
 export function glockeEinschalten() {
   const s = glockeLesen();
   if (s.an) return;

@@ -164,7 +164,7 @@ assert.ok(manifest.completedCapabilities.includes("Konsolidierung, Datensicherhe
 assert.ok(vault.includes("class VaultRegisterError"), "Beschädigte Register müssen ausdrücklich blockiert werden.");
 assert.ok(vault.includes("writeFullFamilyBackup") && vault.includes("restoreFullFamilyBackup"), "Vollständige Sicherung und Testwiederherstellung fehlen.");
 assert.ok(vault.includes("deleteLocalMemoryRecord") && vault.includes("updateLocalMemoryRecord"), "Der vollständige Memory-Lebenszyklus fehlt.");
-assert.ok(portal.includes("Wie schützt Version 2.27.1 meine Daten?"), "Die Hilfe zum Registerschutz fehlt.");
+assert.ok(portal.includes("Wie schützt die Familienakte meine Daten?"), "Die Hilfe zum Registerschutz fehlt.");
 assert.ok(portal.includes("Vollständige Sicherung und Wiederherstellung"), "Die Hilfe zur vollständigen Sicherung fehlt.");
 assert.ok(portal.includes("Was bedeuten GRÜN, GELB und ROT?"), "Die Hilfe zur Freigabebewertung fehlt.");
 

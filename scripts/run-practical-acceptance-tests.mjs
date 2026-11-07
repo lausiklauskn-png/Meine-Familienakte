@@ -46,13 +46,13 @@ const controls=data(`import React from ${JSON.stringify(import.meta.resolve("rea
 const ui=await import(data(compile(component,{"./ui-activity":activity,"./ui-controls":controls})));
 const noOp=()=>{};
 const render=(state)=>renderToStaticMarkup(React.createElement(ui.PracticalAcceptanceView,{run:state,onChoice:noOp,onNote:noOp,onSubmit:noOp,onResume:noOp,onBlock:noOp,onRetry:noOp}));
-check("Echte React-Ausgabe: fünf Tests, 15 Radios und zwei gemeinsame gesperrte Abschlussbuttons", () => { const html=render(fresh()); assert.equal((html.match(/class="user-test /g)||[]).length,5); assert.equal((html.match(/type="radio"/g)||[]).length,15); assert.match(html,/disabled=""[^>]*>.*Alle 5 Prüfergebnisse übermitteln/); assert.match(html,/Ergebnisse speichern und Testphase unterbrechen/); });
-check("Radios benutzen pro Test einen eigenen gemeinsamen Gruppennamen", () => { const html=render(fresh()); for(const test of USER_TEST_BLOCKS[0].tests) assert.equal((html.match(new RegExp(`name="user-result-${test.id}"`,"g"))||[]).length,3); });
+check("Echte React-Ausgabe: fünf Tests, 20 Radios (vier Antworten je Test) und zwei gemeinsame gesperrte Abschlussbuttons", () => { const html=render(fresh()); assert.equal((html.match(/class="user-test /g)||[]).length,5); assert.equal((html.match(/type="radio"/g)||[]).length,20); for (const wort of ["Klappt","Klappt nicht","Noch nicht probiert","Gilt hier nicht"]) assert.match(html,new RegExp(`<span>${wort}</span>`)); assert.match(html,/disabled=""[^>]*>.*Alle 5 Prüfergebnisse übermitteln/); assert.match(html,/Ergebnisse speichern und Testphase unterbrechen/); });
+check("Radios benutzen pro Test einen eigenen gemeinsamen Gruppennamen", () => { const html=render(fresh()); for(const test of USER_TEST_BLOCKS[0].tests) assert.equal((html.match(new RegExp(`name="user-result-${test.id}"`,"g"))||[]).length,USER_RESULTS.length); });
 check("Fehlerfeld erscheint ausschließlich bei ausgewähltem Nein", () => { assert.doesNotMatch(render(fresh()),/class="user-failure-note"/); assert.match(render(mixed),/class="user-failure-note"/); assert.match(render(mixed),/Fehler \/ Beobachtung/); assert.doesNotMatch(render(fill(fresh())),/class="user-failure-note"/); });
 check("Nach fünf Antworten sind die gemeinsamen Abschlussbuttons aktiv", () => { const html=render(fill(fresh())); const buttons=html.slice(html.indexOf('class="user-acceptance-submit"')); assert.doesNotMatch(buttons,/disabled=""/); });
-check("Gespeicherte Ja-Ergebnisse zeigen Erledigt und deaktivierte Auswahlfelder", () => { const html=render(saved); assert.equal((html.match(/<fieldset[^>]*disabled=""/g)||[]).length,5); assert.equal((html.match(/Erledigt · Ja/g)||[]).length,3); assert.equal((html.match(/Diesen Test (?:erneut|jetzt) prüfen/g)||[]).length,2); });
+check("Gespeicherte Ja-Ergebnisse zeigen Erledigt und deaktivierte Auswahlfelder", () => { const html=render(saved); assert.equal((html.match(/<fieldset[^>]*disabled=""/g)||[]).length,5); assert.equal((html.match(/Erledigt · Klappt/g)||[]).length,3); assert.equal((html.match(/Diesen Test (?:erneut|jetzt) prüfen/g)||[]).length,2); });
 check("Nein-Beobachtung wird als Text ausgegeben, nicht als ausführbares HTML", () => { const bad=noteUserFailure(mixed,test0,'<script>alert("x")</script>',now()); const html=render(bad); assert.doesNotMatch(html,/<script>/); assert.match(html,/&lt;script/); });
-check("Ausgewählte Ergebnisse behalten Text und eindeutige Statusklassen", () => { const html=render(mixed); assert.match(html,/result-no selected/); assert.match(html,/result-skipped selected/); assert.match(html,/result-yes selected/); assert.match(html,/>Nicht geprüft</); });
+check("Ausgewählte Ergebnisse behalten Text und eindeutige Statusklassen", () => { const html=render(mixed); assert.match(html,/result-no selected/); assert.match(html,/result-skipped selected/); assert.match(html,/result-yes selected/); assert.match(html,/>Noch nicht probiert</); });
 check("Vorhandene Praxistests dürfen ohne erneute Ausführung bestätigt werden", () => { assert.match(render(fresh()),/vorhandenen Nachweise bestätigen/); });
 
 // Run the actual existing report reader/writer and the new guarded adapter.
@@ -87,4 +87,22 @@ check("Echter UI-Speicherfehler lässt den Block unbestätigt und zum Wiederhole
 delete globalThis.localStorage;delete globalThis.window;delete globalThis.__acceptanceHooks;delete globalThis.__workspaceStorage;
 
 check("Mobilregeln stapeln Blöcke; Radios besitzen mindestens 44px Bedienhöhe", () => { assert.match(css,/\.user-result-option \{[^}]*min-height: 44px/);assert.match(css,/@media \(max-width: 720px\) \{ \.user-block-tabs \{ grid-template-columns: minmax\(0,1fr\)/);assert.match(css,/\.user-test-content \{ min-width: 0/); });
+check("„Gilt hier nicht“ zählt weder als Fehler noch als offen und verkürzt den Restaufwand", () => {
+  let r = fresh(); const t = USER_TEST_BLOCKS[0].tests;
+  r = chooseUserResult(r, t[0].id, "Gilt hier nicht", "40", now());
+  for (const x of t.slice(1)) r = chooseUserResult(r, x.id, "Ja", "40", now());
+  r = submitUserBlock(r, false, now());
+  const p = userAcceptanceProgress(r);
+  assert.equal(p.passed, 4); assert.equal(p.failed, 0); assert.equal(p.notApplicable, 1); assert.equal(p.notChecked, 10);
+  assert.match(buildUserAcceptanceReport(r).areas[0].summary, /1 gilt hier nicht/);
+  assert.ok(isUserAcceptanceRun(r));
+});
+check("Älterer Bericht ohne „Gilt hier nicht“ bleibt lesbar und unverändert gezählt", () => {
+  let r = fresh(); const t = USER_TEST_BLOCKS[0].tests;
+  for (const x of t) r = chooseUserResult(r, x.id, "Nicht geprüft", "40", now());
+  r = submitUserBlock(r, false, now());
+  const alt = JSON.parse(JSON.stringify(r));
+  assert.ok(isUserAcceptanceRun(alt)); const p = userAcceptanceProgress(alt);
+  assert.equal(p.notApplicable, 0); assert.equal(p.notChecked, 15);
+});
 console.log(`Praktische Benutzerabnahme: ${passed}/${passed} technische Tests bestanden. Reale Browser-/Windows-/Mobilgerät-Abnahme steht noch aus.`);
