@@ -64,6 +64,15 @@ pub fn auswerten(feed: &[u8], sig_text: &[u8], installiert: &str, schluessel: &s
     Ok(Some(Angebot { version: v.into(), datei: datei.into(), sha256: sha.into(), groesse }))
 }
 
+/// P5 (Frage s): Angaben zum Setup genau dieser installierten Fassung für den Lies-mich der Vollsicherung.
+/// None = der Server bietet gerade eine andere Fassung an (dann nennt der Lies-mich nur die Download-Seite).
+pub fn eigenes_setup(feed: &[u8], sig_text: &[u8], installiert: &str, schluessel: &str) -> Result<Option<Angebot>, &'static str> {
+    match auswerten(feed, sig_text, "0.0.0", schluessel)? {
+        Some(a) if a.version == installiert => Ok(Some(a)),
+        _ => Ok(None),
+    }
+}
+
 /// Liest höchstens `grenze` Bytes; mehr = UPDATE_UNGUELTIG.
 pub fn begrenzt(mut quelle: impl Read, grenze: u64) -> Result<Vec<u8>, &'static str> {
     let mut out = Vec::new();
@@ -120,6 +129,14 @@ pub fn pruefen(installiert: &str) -> Result<Option<Angebot>, &'static str> {
     auswerten(&feed, &sig, installiert, SCHLUESSEL)
 }
 
+/// Netzweg zu `eigenes_setup`.
+pub fn eigenes_setup_pruefen(installiert: &str) -> Result<Option<Angebot>, &'static str> {
+    if SCHLUESSEL.is_empty() { return Err("UPDATE_NICHT_EINGERICHTET"); }
+    let feed = holen(&format!("{BASIS}{FEED}"), MAX_FEED)?;
+    let sig = holen(&format!("{BASIS}{FEED}.sig"), MAX_SIG)?;
+    eigenes_setup(&feed, &sig, installiert, SCHLUESSEL)
+}
+
 /// Netzweg: Setup des geprüften Angebots laden (Adresse = feste Basis + geprüfter Name).
 pub fn laden(a: &Angebot, ordner: &Path, stand: impl FnMut(u64)) -> Result<PathBuf, &'static str> {
     let r = agent().get(&format!("{BASIS}{}", a.datei)).timeout(std::time::Duration::from_secs(30 * 60)).call().map_err(|_| "UPDATE_NICHT_ERREICHBAR")?;
@@ -173,6 +190,13 @@ mod tests {
     #[test] fn ohne_schluessel_nicht_eingerichtet() {
         let (k, _) = schluessel(7); let f = feed("2.28.3", "Familienakte-Windows-2.28.3-x64-setup.exe", 1);
         assert_eq!(auswerten(&f, &sig(&k, &f), "2.28.2", ""), Err("UPDATE_NICHT_EINGERICHTET"));
+    }
+    #[test] fn eigenes_setup_nur_fuer_genau_diese_fassung() {
+        let (k, p) = schluessel(7); let f = feed("2.28.34", "Familienakte-Windows-2.28.34-x64-setup.exe", 1000);
+        assert_eq!(eigenes_setup(&f, &sig(&k, &f), "2.28.34", &p).unwrap().unwrap().sha256, "ab".repeat(32));
+        assert_eq!(eigenes_setup(&f, &sig(&k, &f), "2.28.33", &p), Ok(None));
+        let (fremd, _) = schluessel(8);
+        assert_eq!(eigenes_setup(&f, &sig(&fremd, &f), "2.28.34", &p), Err("UPDATE_UNTERSCHRIFT_FALSCH"));
     }
     #[test] fn versionen() {
         assert!(neuer("2.28.10", "2.28.9")); assert!(!neuer("2.28.2", "2.28.2")); assert!(!neuer("2.28.3-test", "2.28.2")); assert!(teile("1.2").is_none());

@@ -34,11 +34,12 @@ const ORTE: Ort[] = [
     { id: "passwort", titel: "Tresor-Passwort auf Papier", unter: "gilt für alle Pro-Apps" },
     { id: "ersatz", titel: "Ersatzschlüssel ausgedruckt", unter: "getrennt aufbewahren, nie in den Tresor" },
   ] },
-  { titel: "Sicherungsordner", unter: "eigener Ordner, getrennt vom Datentresor", ziel: "vollsicherung", punkte: [
+  { titel: "Sicherungsordner", unter: "frei gewählt: Gerät, SD-Karte, USB, Laufwerk – getrennt vom Datentresor", ziel: "vollsicherung", punkte: [
     { id: "vollsicherung", titel: "Vollsicherung erstellt", unter: "„Vollständige Sicherung erstellen“", kinder: [
       { titel: "Familienakte_Vollsicherung_‹Zeit›", unter: "ein neuer Ordner je Sicherung" },
       { titel: "Dateien", unter: "Originale, auch aus dem Pro-Tresor als Kopie" },
       { titel: "Register und Manifest", unter: "mit Prüfsumme jeder Datei" },
+      { titel: "Programm daneben", unter: "Android: APK · Windows: Lies-mich mit Download und SHA-256" },
     ] },
     { titel: "Lesbar, nicht verschlüsselt", unter: "nur auf eigenen Speicher legen" },
   ] },
@@ -47,13 +48,17 @@ const ORTE: Ort[] = [
     { id: "bericht", titel: "Bericht ohne Fehler", unter: "Register und Prüfsummen stimmen" },
     { titel: "Laufende Akte", unter: "wird beim Test nicht verändert", ziel: "akte" },
   ] },
+  { titel: "Zurückholen", unter: "„Sicherung einlesen“ im Sicherheitscenter", ziel: "vollsicherung", punkte: [
+    { titel: "Erst die Probe", unter: "liest jede Datei per Prüfsumme, schreibt nichts" },
+    { titel: "Nur in eine leere Akte", unter: "z. B. nach Neuinstallation; nichts wird zusammengeführt" },
+  ] },
   { titel: "Zweiter Ort", unter: "USB-Stick, Rechner, zweites Laufwerk", ziel: "vollsicherung", punkte: [
     { id: "kopie", titel: "Vollsicherung kopiert", unter: "ganzer Ordner, nichts umbenennen" },
     { id: "app", titel: "App-Installationsdatei dabei", unter: "APK oder Windows-Setup" },
     { id: "rhythmus", titel: "Rhythmus festgelegt", unter: "z. B. monatlich und nach großen Ablagen" },
   ] },
   { titel: "Grenzen", unter: "vorher wissen", ziel: "vollsicherung", punkte: [
-    { titel: "Android: 20 MB je Datei", unter: "sehr große Originale prüfen" },
+    { titel: "Größe je Datei nach Gerät", unter: "15–40 MB; Fotos lassen sich verkleinern (≥ 300 dpi)" },
     { titel: "Dokumentensicherung", unter: "nur ausgewählte Dateien, keine Vollsicherung" },
     { titel: "Demo", unter: "eigener Bestand, gehört nicht in die Sicherung" },
   ] },

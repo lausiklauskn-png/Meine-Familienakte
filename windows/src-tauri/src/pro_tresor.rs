@@ -21,7 +21,11 @@ const MAX_ZEILE: u64 = 30 * 1024 * 1024;
 
 fn aktion_erlaubt(request: &Value) -> bool {
     matches!(request.get("aktion").and_then(Value::as_str),
-        Some("zustand" | "verbinden" | "entsperren" | "sperren" | "speichern" | "lesen" | "uebergabeSenden" | "uebergabeEingang" | "uebergabeLesen" | "uebergabeQuittieren" | "uebergabeStand" | "dateiExportieren"))
+        Some("zustand" | "verbinden" | "entsperren" | "sperren" | "speichern" | "lesen" | "uebergabeSenden" | "uebergabeEingang" | "uebergabeLesen" | "uebergabeQuittieren" | "uebergabeStand" | "dateiExportieren"
+            // P4/P5: frei gewählter Sicherungsordner und stückweise Ausgabe bis 100 MB (FamilyFolders.java)
+            | "ordnerWaehlen" | "ordnerListe" | "ordnerAnlegen" | "dateiInfo" | "dateiLesen" | "eigeneDateiEntfernen"
+            | "dateiBeginn" | "dateiAnhaengen" | "dateiFertig" | "dateiVerwerfen"
+            | "ausgabeBeginn" | "ausgabeAnhaengen" | "ausgabeFertig" | "ausgabeSpeichern" | "ausgabeVerwerfen"))
 }
 impl Engine {
     fn starten(resources: &Path, config: &Path) -> Result<Self, String> {
@@ -96,6 +100,10 @@ mod tests {
     use serde_json::json;
     #[test] fn nur_tresoraktionen() {
         for aktion in ["zustand", "verbinden", "entsperren", "sperren", "speichern", "lesen", "uebergabeSenden", "uebergabeEingang", "uebergabeLesen", "uebergabeQuittieren", "uebergabeStand"] {
+            assert!(aktion_erlaubt(&json!({"aktion": aktion})));
+        }
+        // P5: Sicherungsordner-Aktionen; ein allgemeines Löschen gibt es weiterhin nicht.
+        for aktion in ["ordnerWaehlen", "dateiBeginn", "dateiAnhaengen", "dateiFertig", "eigeneDateiEntfernen", "ausgabeBeginn", "ausgabeSpeichern"] {
             assert!(aktion_erlaubt(&json!({"aktion": aktion})));
         }
         for bad in [json!({}), json!({"aktion": "shell"}), json!({"aktion": "dateiLoeschen"})] {

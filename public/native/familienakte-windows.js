@@ -29,6 +29,14 @@
   );
   window.Capacitor.Plugins.ProDevice = { measure: () => invoke('fa_modelle', { anfrage: { method: 'measure' } }) };
   window.Capacitor.Plugins.FamilyOutput = { save: options => invoke('fa_pro_tresor', { anfrage: { ...options, aktion: 'dateiExportieren' } }) };
+  // P4/P5 (Plan 07.11.): frei gewählter Ordner für die Vollsicherung und stückweise Ausgabe bis 100 MB, dieselben Aktionen wie Android.
+  window.Capacitor.Plugins.FamilyFolders = Object.fromEntries(
+    ['ordnerWaehlen', 'ordnerListe', 'ordnerAnlegen', 'dateiInfo', 'dateiLesen', 'eigeneDateiEntfernen', 'dateiBeginn', 'dateiAnhaengen', 'dateiFertig', 'dateiVerwerfen',
+      'ausgabeBeginn', 'ausgabeAnhaengen', 'ausgabeFertig', 'ausgabeSpeichern', 'ausgabeVerwerfen'].map((aktion) =>
+      [aktion, (daten = {}) => invoke('fa_pro_tresor', { anfrage: { ...daten, aktion } })])
+  );
+  // Lies-mich der Vollsicherung: Download-Adresse und SHA-256 genau dieser Fassung aus dem unterschriebenen Update-Feed.
+  window.Capacitor.Plugins.FamilyFolders.setupAngaben = () => invoke('fa_setup_angaben');
   window.Capacitor.Plugins.FamilyModels = Object.fromEntries(['getState', 'install', 'cancel', 'remove'].map(method =>
     [method, (options = {}) => invoke('fa_modelle', { anfrage: { ...options, method } })]));
 

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Bell, CalendarDays, ChevronsDownUp, Eye, FileStack, FlaskConical, Printer, RefreshCw, Share2, Smartphone, Sparkles, StickyNote, Trash2 } from "lucide-react";
+import { Bell, CalendarDays, ChevronsDownUp, Eye, FileStack, FlaskConical, Minimize2, Printer, RefreshCw, Share2, Smartphone, Sparkles, StickyNote, Trash2 } from "lucide-react";
 
 /**
  * Hilfe zu den Funktionen seit 2.28.20 (Plan 07.11.2026, Paket P1: erst der Inhalt).
@@ -47,7 +47,9 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
     "× blendet einen Eintrag aus; das Gerät merkt es sich.",
   ] },
   { id: "demo", titel: "Demo ausprobieren", symbol: <FlaskConical/>, weg: "Hilfe › oben: Demo starten", punkte: [
-    "Die Demo hat einen eigenen Bestand mit einer erfundenen Familie. Deine Akte bleibt unberührt.",
+    "Hast du eigene Daten, arbeitet die Demo an einer Kopie davon; das Original bleibt unverändert. Ohne eigene Daten zeigt sie eine erfundene Familie.",
+    "In der Demo geht nichts nach außen: kein Kalender-Abgleich, keine Glocke, kein Pro-Tresor.",
+    "Bei der Kopie gibt es im Menü „Übernehmen …“: erst die Liste „Was ändert sich?“, dann ersetzt die Demo deine Akte; das bisherige Register wird vorher gesichert.",
     "Solange sie läuft, steht hinter dem Namen ein roter Knopf „DEMO ▾“: verlassen · zurücksetzen · löschen.",
     "Die Demo gehört nicht in deine Sicherung.",
   ] },
@@ -69,6 +71,14 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
   { id: "drucken", titel: "Drucken", symbol: <Printer/>, weg: "Kopf › Drucker · am Handy: Menü › Seite drucken", punkte: [
     "Druckt die Seite, die gerade offen ist.",
     "Android druckt über den Druckdienst des Geräts.",
+  ] },
+  { id: "zu-gross", titel: "Datei zu groß für dieses Gerät", symbol: <Minimize2/>, weg: "Eingangszentrale › Zuordnung prüfen", punkte: [
+    "Jedes Gerät hat eine sichere Größe je Datei, aus der Geräteprüfung: unter 3 GB Arbeitsspeicher 15 MB, 3–6 GB 20 MB, ab 6 GB 40 MB. Im Pro-Tresor höchstens 20 MB.",
+    "Ist eine Datei größer, erscheint „Die Datei hat X MB. Dieses Gerät schafft sicher Y MB.“ mit zwei Knöpfen: Verkleinern · Abbrechen.",
+    "Verkleinern geht bei Fotos und bei PDF, die nur aus Fotos bestehen: erst Qualität, dann Auflösung, nie unter 300 dpi.",
+    "Danach liest die Texterkennung beide Fassungen. Erkennt die kleine weniger als 98 % der Wörter, wird sie verworfen.",
+    "Am Eintrag steht „verkleinert von X MB, Text geprüft“. Das große Original wird nicht aufbewahrt.",
+    "Ein PDF mit eigener Textebene lässt sich nicht verkleinern: bitte am Rechner ablegen.",
   ] },
   { id: "umzug", titel: "Auf ein neues Gerät umziehen", symbol: <Smartphone/>, weg: "Sicherheit › Geräteübergabe", punkte: [
     "Die Akte von einem Gerät auf ein anderes bringen, über einen frei gewählten Weg (USB-Stick, Ordner).",

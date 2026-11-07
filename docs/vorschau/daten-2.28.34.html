@@ -1,0 +1,188 @@
+<title>Familienakte Daten 2.28.34</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* Layout: schmale Lesespalte, je Paket ein Abschnitt mit „so sieht es aus“ (nachgebaute App-Kästen) und kurzen Punkten. */
+:root {
+  --bg: #f5f7fa; --fg: #17212b; --muted: #5b6878; --line: #d8dee6; --card: #ffffff;
+  --accent: #0c79d8; --ok: #1d7f4c; --ok-bg: #e4f4ea; --warn: #9a5b00; --warn-bg: #fdf1dc; --bad: #b3261e; --bad-bg: #fbe5e3; --demo: #c62828;
+  --display: "Fraunces", Georgia, serif; --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif; --mono: "JetBrains Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11161c; --fg: #e6ebf1; --muted: #9aa7b6; --line: #2a3440; --card: #18202a;
+  --accent: #5bb3ff; --ok: #6fd39b; --ok-bg: #173323; --warn: #f0b45a; --warn-bg: #362812; --bad: #ff8a80; --bad-bg: #3a1a18; --demo: #ff6b6b; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #11161c; --fg: #e6ebf1; --muted: #9aa7b6; --line: #2a3440; --card: #18202a;
+  --accent: #5bb3ff; --ok: #6fd39b; --ok-bg: #173323; --warn: #f0b45a; --warn-bg: #362812; --bad: #ff8a80; --bad-bg: #3a1a18; --demo: #ff6b6b; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font: 16px/1.55 var(--body); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 48px; }
+main { max-width: 760px; margin: 0 auto; display: grid; gap: 36px; }
+h1, h2 { font-family: var(--display); font-weight: 600; text-wrap: balance; margin: 0; }
+h1 { font-size: 2rem; line-height: 1.15; }
+h2 { font-size: 1.4rem; }
+h3 { font-size: 1rem; margin: 0; }
+p, ul { margin: 0; }
+ul { padding-left: 1.2em; display: grid; gap: 4px; }
+section { display: grid; gap: 14px; min-width: 0; }
+.kopf { display: grid; gap: 8px; }
+.eyebrow { font: 600 .75rem/1 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.muted { color: var(--muted); }
+.app { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: grid; gap: 10px; min-width: 0; }
+.app .titel { font-weight: 700; }
+.knoepfe { display: flex; flex-wrap: wrap; gap: 8px; }
+.k { border: 1px solid var(--accent); color: var(--accent); background: transparent; border-radius: 8px; padding: 6px 12px; font: 600 .9rem var(--body); }
+.k.p { background: var(--accent); color: var(--card); }
+.k.aus { opacity: .45; }
+.alarm { border-left: 4px solid var(--warn); background: var(--warn-bg); }
+.gut { border-left: 4px solid var(--ok); background: var(--ok-bg); }
+.schlecht { border-left: 4px solid var(--bad); background: var(--bad-bg); }
+.chip { display: inline-block; font: 600 .75rem/1.6 var(--body); padding: 0 8px; border-radius: 99px; background: var(--line); }
+.chip.neu { background: var(--ok-bg); color: var(--ok); } .chip.geaendert { background: var(--warn-bg); color: var(--warn); } .chip.entfernt { background: var(--bad-bg); color: var(--bad); }
+.baum { font: .85rem/1.7 var(--mono); white-space: pre; overflow-x: auto; background: var(--bg); border-radius: 8px; padding: 10px; }
+.demo { display: inline-flex; align-items: center; gap: 4px; background: var(--demo); color: #fff; font-weight: 700; border-radius: 6px; padding: 2px 8px; font-size: .8rem; }
+.menue { display: grid; gap: 2px; border: 1px solid var(--line); border-radius: 8px; padding: 6px; max-width: 280px; }
+.menue span { padding: 4px 6px; border-radius: 4px; }
+.menue .hell { background: var(--ok-bg); font-weight: 600; }
+.tab { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: .9rem; }
+th, td { text-align: left; vertical-align: top; padding: 8px; border-bottom: 1px solid var(--line); }
+th { font-size: .78rem; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+td.z { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.zwei { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.frage { display: grid; gap: 2px; }
+.frage b { font-family: var(--mono); font-weight: 400; color: var(--accent); }
+.stand { font-size: .85rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; }
+</style>
+
+<main>
+  <header class="kopf">
+    <span class="eyebrow">Vorschau · Fassung 2.28.34 · Sitzung 2 Daten</span>
+    <h1>Was sich bei den Daten ändert</h1>
+    <p class="muted">Gebaut und geprüft auf dem Arbeitszweig (PR #119). Am Gerät noch nicht geprüft. Die Kästen sind nachgebaut, keine Bildschirmfotos. Unten die Vorschlagsrunde zu Punkt 10.</p>
+  </header>
+
+  <section>
+    <span class="eyebrow">P4 · Punkt 1</span>
+    <h2>Datei zu groß für dieses Gerät</h2>
+    <ul>
+      <li>Sichere Größe aus der vorhandenen Geräteprüfung: unter 3 GB Arbeitsspeicher 15 MB, 3–6 GB 20 MB, ab 6 GB 40 MB. Pro-Tresor höchstens 20 MB.</li>
+      <li>Nur zwei Knöpfe. Kein „Trotzdem“.</li>
+    </ul>
+    <div class="app alarm">
+      <span class="titel">Die Datei hat 16 MB. Dieses Gerät schafft sicher 15 MB.</span>
+      <ul><li>Verkleinern behält mindestens 300 dpi.</li><li>Danach liest die Texterkennung beide Fassungen; leidet der Text, wird die kleine verworfen.</li></ul>
+      <div class="knoepfe"><span class="k p">Verkleinern</span><span class="k">Abbrechen</span></div>
+    </div>
+    <div class="app gut"><span><span class="chip neu">verkleinert von 16 MB, Text geprüft</span> steht danach am Eintrag.</span></div>
+    <ul class="muted">
+      <li>Reihenfolge: Qualität 80 %, dann 72 %, dann Kante kleiner, nie unter 3508 px (300 dpi auf A4).</li>
+      <li>Gegenprobe: unter 98 % der Wörter wird verworfen. Ein PDF mit eigener Textebene lässt sich nicht verkleinern: „bitte am Rechner ablegen“.</li>
+      <li>Dateiausgabe bis 100 MB, auf Android und Windows stückweise.</li>
+    </ul>
+  </section>
+
+  <section>
+    <span class="eyebrow">P5 · Punkt 2a</span>
+    <h2>Vollsicherung auf Android und Windows</h2>
+    <div class="app">
+      <span class="titel">Familienakte vollständig sichern und testen</span>
+      <div class="knoepfe"><span class="k p">Vollständige Sicherung erstellen</span><span class="k p">Wiederherstellung testen</span><span class="k">Sicherung einlesen</span></div>
+    </div>
+    <p>Der Ordnerdialog des Geräts öffnet: Gerät, SD-Karte, USB, in Windows jedes Laufwerk oder ein Netzordner. Getrennt vom Pro-Tresor. Gleiches Format wie am PC:</p>
+    <div class="baum">SD-Karte/
+└─ Familienakte_Vollsicherung_2026-11-07T14-14-22Z/
+   ├─ Dateien/              alle Originale, auch aus dem Pro-Tresor als Kopie
+   ├─ Familienakte_Register.json
+   ├─ Vollsicherung_Manifest.json   SHA-256 jeder Datei
+   ├─ Familienakte-Pro-2.28.34.apk  (Android)
+   └─ Programm_Lies-mich.txt        (Windows: Download-Adresse + SHA-256)</div>
+  </section>
+
+  <section>
+    <span class="eyebrow">P6 · Punkt 2b</span>
+    <h2>Sicherung einlesen</h2>
+    <ul>
+      <li>Erst die Probe: liest Register und jede Datei per Prüfsumme, schreibt nichts.</li>
+      <li>Eingelesen wird nur in eine leere Akte, zum Beispiel nach Neuinstallation. Nichts wird zusammengeführt oder überschrieben.</li>
+    </ul>
+    <div class="zwei">
+      <div class="app gut">
+        <span class="chip neu">Probe ohne Schreiben</span>
+        <span class="titel">Familienakte_Vollsicherung_2026-11-07…</span>
+        <span>32 Dokumente · 128 Einträge · 32 Dateien (4,1 MB) per Prüfsumme geprüft</span>
+        <div class="knoepfe"><span class="k">Abbrechen</span><span class="k p">Jetzt einlesen</span></div>
+      </div>
+      <div class="app schlecht">
+        <span class="chip entfernt">Probe ohne Schreiben</span>
+        <span class="titel">Die Sicherung ist beschädigt und wird nicht eingelesen.</span>
+        <span>Prüfsumme stimmt nicht: 01_Dokumente/Versicherung/…pdf</span>
+        <div class="knoepfe"><span class="k">Abbrechen</span></div>
+      </div>
+    </div>
+    <p class="muted">Vergleich (nur gelesen): BookLedgerPro sichert eine verschlüsselte JSON-Datei und führt beim Einlesen zusammen, gleiche Kennung wird überschrieben. Private Brain Pro spiegelt laufend in einen verschlüsselten Tresorordner und führt zusammen, ohne zu ersetzen. Keine der beiden zeigt vorher eine Probe oder legt das Programm bei. Lücken der Familienakte: kein Zusammenführen in eine volle Akte, keine Erinnerung „lange nicht gesichert“.</p>
+  </section>
+
+  <section>
+    <span class="eyebrow">P7 · Punkt 3</span>
+    <h2>Demo als Kopie der eigenen Daten</h2>
+    <ul>
+      <li>Eine Demo. Sind eigene Daten da, arbeitet sie an einer Kopie; das Original bleibt unverändert. Sonst Beispielfamilie.</li>
+      <li>In der Demo geht nichts nach außen: kein Kalender-Abgleich, keine Glocke, kein Pro-Tresor.</li>
+    </ul>
+    <div class="zwei">
+      <div class="app">
+        <span>FAMILIENAKTE <span class="demo">DEMO ▾</span></span>
+        <div class="menue"><span>Demo verlassen</span><span class="hell">Übernehmen …</span><span>Demo zurücksetzen (frische Kopie)</span><span>Demo löschen und verlassen</span></div>
+        <p class="muted">„Übernehmen …“ nur bei der Kopie.</p>
+      </div>
+      <div class="app">
+        <span class="titel">Was ändert sich?</span>
+        <strong>1 neu · 1 geändert · 1 entfernt</strong>
+        <span><span class="chip entfernt">entfernt</span> Person: Erfundene Person</span>
+        <span><span class="chip geaendert">geändert</span> Frist: Rechnung zahlen · Kalender-Eintrag wird angepasst</span>
+        <span><span class="chip neu">neu</span> Dokument: Neu.pdf</span>
+        <div class="knoepfe"><span class="k">Abbrechen</span><span class="k p">Übernehmen</span></div>
+      </div>
+    </div>
+    <ul class="muted">
+      <li>Vorher wird das bisherige Register gesichert; keine Originaldatei wird gelöscht.</li>
+      <li>Wurde die eigene Akte seit dem Demo-Start geändert, ist Übernehmen gesperrt.</li>
+    </ul>
+  </section>
+
+  <section>
+    <span class="eyebrow">Punkt 10 · Vorschlagsrunde, noch nichts gebaut</span>
+    <h2>Abgleich zwischen den eigenen Geräten</h2>
+    <p>Herzstück jedes Wegs: Änderungszeit je Eintrag, nur Neues übertragen, bei Konflikt nachfragen, nie still überschreiben. Das Einlesen aus P6 kann heute nur in eine leere Akte; für den Abgleich braucht es ein neues Zusammenführen.</p>
+    <div class="tab"><table>
+      <thead><tr><th>Weg</th><th>Kann</th><th>Braucht</th><th>Handgriffe</th><th>Aufwand</th></tr></thead>
+      <tbody>
+        <tr><td><b>10b Paket per Teilen</b></td><td>Gerät weit weg; über Signal oder Mail; immer mit Passwort verschlüsselt</td><td>Zusammenführen; Verschlüsselung (AES-GCM, vorhandene Technik der Pro-Apps); vorhandenes „Teilen an die Familienakte“</td><td class="z">Senden 3 · Empfangen 3</td><td>mittel</td></tr>
+        <tr><td><b>10a-1 Gemeinsamer Ordner</b></td><td>SD-Karte, USB, externe Platte oder Netzordner, den beide Geräte sehen</td><td>Ordnerwahl aus P5; Änderungsliste je Gerät im Ordner</td><td class="z">einmal wählen, dann 1 Tipp</td><td>mittel</td></tr>
+        <tr><td><b>10a-2 Eigenes WLAN, mit dem PC</b></td><td>Handy oder Tablet gleicht mit der Windows-App ab, ohne Internet</td><td>kleiner Dienst in der Windows-App; Koppeln per QR-Code; Firewall-Freigabe</td><td class="z">Koppeln 2, dann 1</td><td>groß</td></tr>
+        <tr><td><b>10a-3 Handy ⟷ Tablet in der Nähe</b></td><td>Bluetooth und WLAN direkt, ohne Internet</td><td>Android „Nearby Connections“ (Google-Dienste, neue Berechtigungen)</td><td class="z">Koppeln 2, dann 1</td><td>groß</td></tr>
+        <tr><td>NFC</td><td>nur Koppeln (für Daten zu langsam)</td><td>NFC an beiden Geräten</td><td class="z">1</td><td>klein</td></tr>
+        <tr><td>Netz (Mycel), vorhanden</td><td>über Vermittler im Internet</td><td>Internet; Daten gehen über fremde Server</td><td class="z">–</td><td>prüfen</td></tr>
+        <tr><td>Dienst im Internet</td><td>immer und überall</td><td>Server, Konto; nur mit ausdrücklichem Ja</td><td class="z">–</td><td>groß</td></tr>
+      </tbody>
+    </table></div>
+    <div class="app">
+      <span class="titel">Vorschlag zur Reihenfolge</span>
+      <ul>
+        <li><b>Zuerst Zusammenführen</b> als gemeinsamer Kern (je Eintrag neuer gewinnt nur, wenn der andere unverändert ist; sonst Liste „Beides geändert – welches behalten?“).</li>
+        <li><b>Dann 10b Paket</b>: Format wie die Vollsicherung, aber nur „seit dem letzten Abgleich mit diesem Gerät“, als eine verschlüsselte Datei <code>.familienakte-paket</code>. Passwort nie in derselben Nachricht.</li>
+        <li><b>Dann 10a-1 Gemeinsamer Ordner</b>, gleiches Paket, ohne Teilen.</li>
+        <li><b>Später 10a-2 WLAN mit dem PC</b>, dann 10a-3 Nearby.</li>
+      </ul>
+    </div>
+    <div class="zwei">
+      <div class="frage"><b>u</b> Reihenfolge so: Zusammenführen → Paket → gemeinsamer Ordner → WLAN → Nearby?</div>
+      <div class="frage"><b>v</b> Konflikt: immer fragen, oder „neuere Änderung gewinnt“ mit Liste danach?</div>
+      <div class="frage"><b>w</b> Paket mit Originalen (groß) oder erst nur Einträge und Notizen, Originale auf Wunsch?</div>
+      <div class="frage"><b>x</b> Passwort: mindestens 10 Zeichen wie in Private Brain Pro?</div>
+      <div class="frage"><b>y</b> Gelöschte Einträge mitgeben (Löschen = archiviert) oder nie löschen über Abgleich?</div>
+      <div class="frage"><b>z</b> Erinnerung „lange nicht gesichert“ wie in BookLedgerPro (nach 7 Tagen)?</div>
+    </div>
+  </section>
+
+  <p class="stand">Stand 07.11.2026, Arbeitszweig zu PR #119. Proben: verkleinern, vollsicherung, sicherung-einlesen, demo-kopie, Java- und Rust-Proben grün. Am Gerät ungeprüft: Android-Ordnerdialog, APK beilegen, Windows-Ordnerdialog, Texterkennung auf echten Kamerafotos.</p>
+</main>
