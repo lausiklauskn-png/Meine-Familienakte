@@ -42,7 +42,7 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
     "Die Pfeile im Knopf „alle“ zeigen, was ein Tipp bewirkt: alle auf oder alle zu.",
     "Die drei Kästchen Überfällig, Bald fällig und Offen filtern die Liste und springen dorthin.",
   ] },
-  { id: "neu", titel: "Knopf „Neu“", symbol: <span className="neu-knopf-schalter neu-nachbild" aria-hidden="true" data-neu-nachbild><span className="neu-punkt"/>Neu</span>, weg: "Kopf › Neu", punkte: [
+  { id: "neu", titel: "Knopf „Neu“", symbol: <span className="neu-nachbild" aria-hidden="true" data-neu-nachbild><span className="neu-punkt"/>Neu</span>, weg: "Kopf › Neu", punkte: [
     "Ein roter Punkt zeigt: Es gibt etwas Neues zu lesen.",
     "× blendet einen Eintrag aus; das Gerät merkt es sich.",
   ] },
