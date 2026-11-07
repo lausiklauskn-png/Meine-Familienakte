@@ -284,12 +284,34 @@ export const APP_STAND = {
     <p><b>Vorschlag:</b> erst Weg A für alle Themen (2.28.37). Weg B danach nur, wenn dir die Skizze zu abstrakt ist; dann am Rechner und Tablet B, am Handy weiter A.</p>
   </section>
 
+  <!-- 4 Vollbild und Drehen -->
+  <section>
+    <span class="eyebrow">4 · Vollbild und Drehen (Klaus 07.11.)</span>
+    <h2>Immer Vollbild, dreht mit Handy und Tablet</h2>
+    <div class="tabelle">
+      <table>
+        <thead><tr><th></th><th>Heute</th><th>Neu</th></tr></thead>
+        <tbody>
+          <tr><td><b>Android</b></td><td>Oben Uhr und Akku, unten die Navigationsleiste. Dreht nur, wenn am Gerät „Automatisch drehen“ an ist.</td><td>Vollbild: beide Leisten weg; Wischen vom Rand holt sie kurz zurück. Drehen hoch und quer, auch über Kopf.</td></tr>
+          <tr><td><b>Web-App (PWA)</b></td><td>Eigenes Fenster mit Statusleiste. Dreht mit.</td><td>Vollbild, wo der Browser es erlaubt (Android-Chrome ja, iPhone nur teilweise).</td></tr>
+          <tr><td><b>Windows</b></td><td>Fenster 1280 × 900.</td><td>Startet maximiert; F11 schaltet ganz Vollbild ohne Rahmen um.</td></tr>
+          <tr><td><b>Module</b></td><td colspan="2">Workflow PDF, Stapel, Kalender, Hilfe laufen in derselben App und erben beides von selbst. Die Kamera beim Scannen dreht mit.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul>
+      <li><b>Achtung Drehsperre:</b> Ist am Handy „Automatisch drehen“ aus, dreht Android keine App. Die Familienakte könnte die Sperre übergehen (immer drehen) oder sie achten.</li>
+      <li><b>Achtung Ränder:</b> Ohne Leisten liegen Knöpfe näher am Rand; die Seitenleiste und der KI-Knopf rücken um die Kamera-Aussparung herum.</li>
+      <li><b>Dateien:</b> <code>AndroidManifest.xml</code> (Drehen), <code>MainActivity.java</code> (Vollbild), <code>public/manifest.webmanifest</code>, <code>tauri.conf.json</code> (maximiert). Klein bis mittel.</li>
+    </ul>
+  </section>
+
   <!-- Pakete -->
   <section>
     <span class="eyebrow">Pakete</span>
     <h2>Je ein PR, je eine Fassung</h2>
     <ol>
-      <li><b>2.28.36:</b> Landkarte der App in der Hilfe, Stand-Liste, Gold; Welle 1 (fünf Bäume). APK, PWA, Windows.</li>
+      <li><b>2.28.36:</b> Landkarte der App in der Hilfe, Stand-Liste, Gold; Welle 1 (fünf Bäume); Vollbild und Drehen. APK, PWA, Windows.</li>
       <li><b>2.28.37:</b> Vorschaufenster Weg A; Welle 2.</li>
       <li><b>Später:</b> Welle 3, Weg B falls gewünscht, Landkarte für Rückmeldungen anderer Nutzer.</li>
     </ol>
@@ -309,8 +331,10 @@ export const APP_STAND = {
       <div class="frage"><b>F</b> Vorschaufenster: Weg A, Weg B, oder erst A dann B? <em>(erst A)</em></div>
       <div class="frage"><b>G</b> Fachliches (FaWoGa, Testakte …) als Text lassen? <em>(ja, zuletzt)</em></div>
       <div class="frage"><b>H</b> Stift-Notizen nur in der HTML-Karte, nicht in der App? <em>(ja; Rückmeldungen anderer Nutzer später)</em></div>
+      <div class="frage"><b>I</b> Drehsperre am Handy an: soll die Familienakte trotzdem drehen? <em>(nein, die Sperre achten; sonst dreht sie beim Lesen im Liegen ungewollt)</em></div>
+      <div class="frage"><b>J</b> Vollbild auch in Windows ganz ohne Rahmen, oder maximiert mit Titelleiste und F11 für ganz? <em>(maximiert, F11 für ganz)</em></div>
     </div>
-    <p class="muted">Antwort kurz genügt, z. B. „A ja, B ja, C Liste, D ja, E ja, F erst A, G ja, H ja – bauen“.</p>
+    <p class="muted">Antwort kurz genügt, z. B. „A ja, B ja, C Liste, D ja, E ja, F erst A, G ja, H ja, I achten, J maximiert – bauen“.</p>
   </section>
 </main>
 
