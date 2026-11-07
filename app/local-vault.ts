@@ -3229,7 +3229,8 @@ export async function demoKopieAnlegen(quelle: FileSystemDirectoryHandle): Promi
   const index = await readIndex(quelle);
   const zeit = new Date().toISOString();
   if (!eigeneDatenDa(index)) return { art: "beispiel", zeit };
-  if (typeof navigator.storage?.getDirectory !== "function") throw new Error("Dieser Browser bietet keinen getrennten Speicher für die Demo-Kopie.");
+  // Die Kopie liegt im Dateispeicher (OPFS). Nutzt dieser Browser nur IndexedDB, bleibt es bei der Beispielfamilie.
+  if (typeof navigator.storage?.getDirectory !== "function" || browserStorageKind() === "indexeddb") return { art: "beispiel", zeit };
   const ziel = await demoTresor(true);
   const zielRoot = await ziel.getDirectoryHandle(ROOT, { create: true });
   const dateien: FamilyBackupFile[] = [];
@@ -3243,6 +3244,8 @@ export async function demoKopieAnlegen(quelle: FileSystemDirectoryHandle): Promi
   const kopie = { ...index, proTresorId: null } as VaultIndex;
   const register = await zielRoot.getDirectoryHandle("00_Register", { create: true });
   await writeTextFile(register, "Familienakte_Register.json", JSON.stringify(kopie, null, 2));
+  // Die Demo soll genau diesen Dateispeicher öffnen.
+  try { localStorage.setItem(`${DEMO_PRAEFIX}${BROWSER_STORAGE_CHOICE_KEY}`, "opfs"); } catch { /* ohne Merker wählt die Demo selbst */ }
   return { art: "kopie", zeit, revision: index.revision ?? 0, dokumente: index.documents.length, eintraege: index.records.length, proVerweise };
 }
 

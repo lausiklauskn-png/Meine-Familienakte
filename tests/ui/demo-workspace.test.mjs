@@ -97,9 +97,16 @@ try {
     assert.equal(records[0].id, ownLetter.id);
     assert.deepEqual(records[0].data, ownLetter.data);
   });
+  // P7 (Klaus 07.11.): Mit eigenen Daten arbeitet die Demo an einer Kopie davon (Dateispeicher); nur ohne Dateispeicher
+  // (IndexedDB-Lauf) bleibt es bei der Beispielfamilie.
+  const kopie = process.env.DEMO_BACKEND !== "indexeddb";
   await switchWorkspace(page, true);
-  await page.locator('.site-header[data-demo-beispiele="ja"]').waitFor({ state: "attached", timeout: 120000 });
-  await step("Demo enthält wirkliche erfundene PDF-Dateien, keine eigene Unterlage", async () => {
+  await page.locator(kopie ? '.demo-knopf-schalter[data-demo-kopie="ja"]' : '.site-header[data-demo-beispiele="ja"]').waitFor({ state: "attached", timeout: 120000 });
+  if (kopie) await step("Demo ist eine Kopie der eigenen Akte: gleiche Unterlage, gleiche Prüfsumme, keine Beispiele", async () => {
+    const demo = await documents(); assert.deepEqual(demo, before);
+    assert.equal(await page.evaluate(() => window.__vaultFixture.browserStorageKind()), "opfs");
+  });
+  else await step("Demo enthält wirkliche erfundene PDF-Dateien, keine eigene Unterlage", async () => {
     const demo = await documents(); assert.equal(await page.evaluate(() => window.__vaultFixture.browserStorageKind()), process.env.DEMO_BACKEND === "indexeddb" ? "indexeddb" : "opfs"); assert.ok(demo.length >= 15); assert.ok(demo.every(d => d.hash.length === 64)); assert.ok(!demo.some(d => d.name === before[0].name));
   });
   await importFile("Nur_Demo_Import.txt", Buffer.from("Frei erfundener Testeingang für die getrennte Demo. Wolkenhain, 4. November 2026."), "text/plain");
@@ -136,11 +143,13 @@ try {
   });
   await switchWorkspace(page, true);
   await demoMenue(page, "Demo zurücksetzen");
-  await Promise.all([page.waitForURL(url => url.searchParams.get("demo") === "reset", { waitUntil: "commit" }), page.getByRole("button", { name: "Ja, fortfahren", exact: true }).click()]);
-  await page.waitForURL(url => url.searchParams.get("demo") === "1");
+  // Kopie: Demo löschen und frisch aus der eigenen Akte kopieren; Beispielfamilie: Demo neu anlegen.
+  if (kopie) await Promise.all([page.waitForURL(url => url.searchParams.get("demo") === "delete", { waitUntil: "commit" }), page.getByRole("button", { name: "Ja, fortfahren", exact: true }).click()]);
+  else await Promise.all([page.waitForURL(url => url.searchParams.get("demo") === "reset", { waitUntil: "commit" }), page.getByRole("button", { name: "Ja, fortfahren", exact: true }).click()]);
+  await page.waitForURL(url => url.searchParams.get("demo") === "1", { timeout: 120000 });
   await page.waitForLoadState("networkidle");
-  await page.locator('.site-header[data-demo-beispiele="ja"]').waitFor({ state: "attached", timeout: 120000 });
-  await step("Zurücksetzen entfernt auch Testimporte, erneuert nur die Demo", async () => { assert.ok(!(await documents()).some(d => d.name === "Nur_Demo_Import.txt")); });
+  await page.locator(kopie ? '.demo-knopf-schalter[data-demo-kopie="ja"]' : '.site-header[data-demo-beispiele="ja"]').waitFor({ state: "attached", timeout: 120000 });
+  await step("Zurücksetzen entfernt auch Testimporte, erneuert nur die Demo", async () => { const d = await documents(); assert.ok(!d.some(x => x.name === "Nur_Demo_Import.txt")); if (kopie) assert.deepEqual(d, before); });
   await switchWorkspace(page, false);
   await demoBereit(page);
   await step("Eigene Akte bleibt auch nach Demo-Reset und Neustart unverändert", async () => { await page.reload({ waitUntil: "networkidle" }); assert.deepEqual(await documents(), before); });
