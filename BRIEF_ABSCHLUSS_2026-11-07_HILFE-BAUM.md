@@ -43,7 +43,9 @@ Apps veröffentlichen“.
 
 - **2.28.36**: APK `android-v2.28.36` (Lauf 42412087983), Windows `windows-v2.28.36` (Lauf 42412090280), beide `server=ja`;
   PWA Pages Lauf 144. Downloads anonym, SHA-256 = SHA256SUMS.
-- **2.28.37**: siehe `docs/VEROEFFENTLICHUNG-2.28.37.json`.
+- **2.28.37**: APK `android-v2.28.37` (Lauf 42416890823), Windows `windows-v2.28.37` (Lauf 42416892756), beide `server=ja`;
+  PWA Pages Lauf 146/147. APK `a1fa8b78…0198` (19 918 881 Bytes, innen 2.28.37 / fb48ddd), Einzeldatei `775a7e06…6e49`,
+  Setup `f6f505b6…deb2` (34 096 839 Bytes), `latest.json` nennt 2.28.37. Nachweis `docs/VEROEFFENTLICHUNG-2.28.37.json`.
 
 ## Nicht geprüft / offen
 
@@ -68,9 +70,9 @@ Angabe geht vor. Zeiten in MEZ.
 | 3 | 20:14 | 21:12 | 58 min | Bau 2.28.36, Proben, PR #123, Emulator- und Proben-Korrekturen |
 | 4 | 21:12 | 21:55 | 43 min | Zusammenführen und Ausgabe 2.28.36, Vorschau und Bau 2.28.37 |
 | 5 | 21:55 | 22:40 | 45 min | Nachweis 2.28.36, „?“ und „Neu“ breiter, Prüfungen, Zusammenführen #125 |
-| 6 | 22:40 | ENDE | REST | Ausgabe 2.28.37, Nachweis, Abschluss, KimHub |
+| 6 | 22:40 | 23:15 | 35 min | Ausgabe 2.28.37, Nachweis, Abschluss, KimHub |
 
-Zusammen: 19:33 bis ENDE = **SUMME**.
+Zusammen: 19:33 (Reflog) bis 23:15 = **3 h 42 min**.
 
 ## Startauftrag zum Einfügen
 

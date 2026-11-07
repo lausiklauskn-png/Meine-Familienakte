@@ -1,0 +1,37 @@
+{
+  "version": "2.28.37",
+  "source": "fb48ddd7aa8e3997e686b1f91d20df8edd23b0b7",
+  "pullRequest": [125],
+  "recordedUtc": "2026-11-07T22:12:00Z",
+  "freigabe": "Klaus 2026-11-07: Vorschau 2.28.37 „passt so“; „danach automatisch weiterbauen … und veröffentlichst natürlich die Apps“; „?“- und „Neu“-Fenster „quer machen, breiter“.",
+  "inhalt": "Alle Hilfe-Themen als Bild zum Antippen (Ablaufbild, Karte, Kastenreihe) mit höchstens drei fett hervorgehobenen Kernpunkten, langer Text unter „Ausführlich“; Vorschaufenster „Wo in der App?“ mit Skizze der Seite und roter Stelle; „?“-Erklärfenster bis 560 px, „Neu“ ab Tablet bis 960 px quer.",
+  "ciAmPrStand": "#125 098661a: pruefung, webview, product (31, pixel_c), product (35, pixel_2), android, windows success",
+  "releases": [
+    {
+      "tag": "android-v2.28.37",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.37",
+      "run": 42416890823,
+      "conclusion": "success",
+      "updateServer": "server=ja; Lauf grün",
+      "downloadProof": [
+        { "name": "Familienakte-android-v2.28.37.apk", "bytes": 19918881, "sha256": "a1fa8b78005285c8f8f2109466243761e281f7074bf6c22c23d221bebd7b0198", "anonymousDownload": true, "matchesSHA256SUMS": true, "versionInside": "2.28.37 (assets/public/version.json, commit fb48ddd)" },
+        { "name": "Familienakte-Einzeldatei-2.28.37.html", "bytes": 3596032, "sha256": "775a7e065b0897df130fb86297143cbcaae1afffd1c6b3b5495c5ccf06c96e49", "anonymousDownload": true, "matchesSHA256SUMS": true }
+      ]
+    },
+    {
+      "tag": "windows-v2.28.37",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.37",
+      "run": 42416892756,
+      "conclusion": "success",
+      "updateServer": "server=ja; Lauf grün; latest.json nennt 2.28.37",
+      "downloadProof": [
+        { "name": "Familienakte-Windows-2.28.37-x64-setup.exe", "bytes": 34096839, "sha256": "f6f505b6fad61ecccb8a56b9e101be4b31c15b8bb02d6826feb8bf060f77deb2", "anonymousDownload": true, "matchesSHA256SUMS": true }
+      ]
+    }
+  ],
+  "pwa": "Pages auf fb48ddd: Lauf 146 (42416883588) und 147 (42417684375) success; Seite selbst aus dem Behälter nicht geprüft",
+  "notChecked": [
+    "Kein physisches Gerät: Vorschaufenster (▣ am Tablet), neue Breite von „?“ und „Neu“, Hilfe-Bilder am Handy",
+    "family-projekt.de aus dem Behälter nicht erreichbar; die Freigabeläufe prüfen den Server selbst"
+  ]
+}
