@@ -3,6 +3,9 @@ import { aktuelleGrenze, grenzeMessen, mbText } from "../lib/geraete-grenze";
 import { verkleinerbar } from "./verkleinern";
 import { programmBeilegen } from "./sicherung-programm";
 import { SicherungEinlesenDialog } from "./sicherung-einlesen";
+import { DemoUebernahmeDialog, DEMO_NEU_MERKER, DEMO_UEBERNAHME_MERKER } from "./demo-uebernahme";
+import { DEMO_QUELLE_SCHLUESSEL, demoQuelleLesen } from "../lib/demo-kopie";
+import { resetDemoStorage } from "../lib/demo-workspace.ts";
 import { workspaceStorage } from "../lib/demo-workspace.ts";
 import { beginLocalPdfEdit, saveLocalPdfEdit } from "./local-vault";
 import type { PdfQuelle } from "../lib/pdf-bearbeitung";
@@ -73,7 +76,7 @@ import { KiAuftragDialog } from "./ki-auftrag-dialog";
 import { inventoryScanFeedback, inventoryAssignmentFeedback, inventoryArchiveFeedback, inventoryReleaseFeedback } from "../lib/ui-activity";
 import healthData from "./health-data.json";
 import { assessmentGroups, categories, coreDocuments, portalAreas } from "./portal-data";
-import { appendLocalFamilyRecordNote, archiveInventoryItems, buildAutomatedTestFailureReport, changeLocalContextLink, checkVaultHoldings, chooseDevelopmentBaseFolder, chooseExportDestination, chooseInboxFolder, chooseInventoryArchiveFolder, chooseInventorySourceFolder, chooseOneDriveVault, chooseVault, compareVaults, confirmInventoryAssignment, confirmLocalContextLink, copyMissingDocuments, createLocalFamilyRecord, createLocalMemoryBundle, createLocalScheduleBundle, createOrUpdateLocalMemoryDraft, deleteLocalMemoryDraft, deleteLocalMemoryRecord, forgetOneDriveVault, forgetVault, getLocalMemoryDeleteImpact, getVaultSummary, inspectTestWorkspace, inventorySourcePermission, type AutomatedStorageDiagnosticReport, type AutomatedTestFailureReport, type AutomatedTestEnvironmentReport, type IncomingFolderFile, type InventoryArchiveResult, type InventoryReferenceChoice, type InventoryScanProgress, type InventoryScanResult, linkLocalDocuments, LocalDocument, LocalScheduleStatus, prepareTestRegisterPreview, type PreparedTestRegister, readInventorySourcePreview, readLocalDocumentFile, readLocalMemoryDraftFiles, readLocalMemoryMediaFile, readLocalSystemSnapshot, readLocalVaultData, rejectLocalContextLink, releaseInventoryItemsForAssistant, rememberedDevelopmentBaseFolder, rememberedInboxFolder, rememberedInventoryArchiveFolder, rememberedInventorySourceFolder, rememberedOneDriveVault, rememberedVault, removeLocalContextLink, requestVaultPermission, resetAutomatedTestEnvironment, resetInventoryItemsForRetest, restoreFullFamilyBackup, runAutomatedStorageDiagnostic, runAutomatedTestEnvironmentSelfTests, runInventoryTextDecodingSelfTests, runPreparedTestRegisterSelfTests, runTestWorkspaceSelfTests, saveLocalDocument, savePreparedTestRegister, scanInventoryFolder, scanLocalInbox, scanOneDriveInbox, setupAutomatedTestEnvironment, type TestWorkspaceReport, updateLocalMemoryDraftStatus, updateLocalMemoryOpenPointStatus, updateLocalScheduleStatus, updateLocalStatus, setLocalDocumentAusfuellen, updateLocalPersonContact, readAusfuellAblage, writeAusfuellAblage, VaultSummary, VaultSyncPreview, VaultSyncResult, vaultSupported, writeFamilyArchiveExport, writeFullFamilyBackup, sicherungEinlesen, sicherungProben, type EinleseProbe } from "./local-vault";
+import { appendLocalFamilyRecordNote, archiveInventoryItems, buildAutomatedTestFailureReport, changeLocalContextLink, checkVaultHoldings, chooseDevelopmentBaseFolder, chooseExportDestination, chooseInboxFolder, chooseInventoryArchiveFolder, chooseInventorySourceFolder, chooseOneDriveVault, chooseVault, compareVaults, confirmInventoryAssignment, confirmLocalContextLink, copyMissingDocuments, createLocalFamilyRecord, createLocalMemoryBundle, createLocalScheduleBundle, createOrUpdateLocalMemoryDraft, deleteLocalMemoryDraft, deleteLocalMemoryRecord, forgetOneDriveVault, forgetVault, getLocalMemoryDeleteImpact, getVaultSummary, inspectTestWorkspace, inventorySourcePermission, type AutomatedStorageDiagnosticReport, type AutomatedTestFailureReport, type AutomatedTestEnvironmentReport, type IncomingFolderFile, type InventoryArchiveResult, type InventoryReferenceChoice, type InventoryScanProgress, type InventoryScanResult, linkLocalDocuments, LocalDocument, LocalScheduleStatus, prepareTestRegisterPreview, type PreparedTestRegister, readInventorySourcePreview, readLocalDocumentFile, readLocalMemoryDraftFiles, readLocalMemoryMediaFile, readLocalSystemSnapshot, readLocalVaultData, rejectLocalContextLink, releaseInventoryItemsForAssistant, rememberedDevelopmentBaseFolder, rememberedInboxFolder, rememberedInventoryArchiveFolder, rememberedInventorySourceFolder, rememberedOneDriveVault, rememberedVault, removeLocalContextLink, requestVaultPermission, resetAutomatedTestEnvironment, resetInventoryItemsForRetest, restoreFullFamilyBackup, runAutomatedStorageDiagnostic, runAutomatedTestEnvironmentSelfTests, runInventoryTextDecodingSelfTests, runPreparedTestRegisterSelfTests, runTestWorkspaceSelfTests, saveLocalDocument, savePreparedTestRegister, scanInventoryFolder, scanLocalInbox, scanOneDriveInbox, setupAutomatedTestEnvironment, type TestWorkspaceReport, updateLocalMemoryDraftStatus, updateLocalMemoryOpenPointStatus, updateLocalScheduleStatus, updateLocalStatus, setLocalDocumentAusfuellen, updateLocalPersonContact, readAusfuellAblage, writeAusfuellAblage, VaultSummary, VaultSyncPreview, VaultSyncResult, vaultSupported, writeFamilyArchiveExport, writeFullFamilyBackup, sicherungEinlesen, sicherungProben, type EinleseProbe, demoKopieAnlegen, demoUebernahmePlan, demoUebernehmen } from "./local-vault";
 import { createFamilyRecord, FamilyRecordUnion, FamilyRelation, formatFamilyRecordId, recordTypeDefinitions } from "@/lib/family-data-model";
 import { assignmentProposalHasNoAutomaticWrites, assignmentSequence, FAMILY_ASSIGNMENT_VERSION, proposeFamilyAssignment } from "@/lib/family-assignment";
 import { allFamilyExportScopes, buildFamilyArchiveExport, familyExportScopeLabels, FamilyExportScope, runFamilyExportSelfTest } from "@/lib/family-export";
@@ -475,6 +478,7 @@ function HealthPortalContent() {
   const [editOpen, setEditOpen] = useState(false);
   const [editInitialRequest, setEditInitialRequest] = useState("");
   const [exportOpen, setExportOpen] = useState(false);
+  const [demoPlan, setDemoPlan] = useState<Awaited<ReturnType<typeof demoUebernahmePlan>> | null>(null);
   const [einlesen, setEinlesen] = useState<{ gewaehlt: FileSystemDirectoryHandle; probe: EinleseProbe } | null>(null);
   const [fillDocId, setFillDocId] = useState<string | null>(null);
   const [wfpdfOeffnen, setWfpdfOeffnen] = useState<File[] | null>(null);
@@ -555,6 +559,11 @@ function HealthPortalContent() {
       // Nur den tatsächlich aktiven Bestand bereinigen; keine anderen Speicherorte.
       const data = await readLocalVaultData(vaultHandle);
       if (sampleDataPresent(data)) await removeSampleFamily(vaultHandle);
+      // P7: Sind eigene Daten da, arbeitet die Demo an einer Kopie davon; sonst Beispielfamilie. Der Demo-Bereich wird vorher geleert.
+      setNotice({ kind: "info", text: "Demo wird vorbereitet: eigene Daten werden in den getrennten Demo-Bereich kopiert. Das Original bleibt unverändert." });
+      await resetDemoStorage();
+      const quelle = await demoKopieAnlegen(vaultHandle);
+      try { localStorage.setItem(DEMO_QUELLE_SCHLUESSEL, JSON.stringify(quelle)); } catch { /* ohne Merker startet die Beispielfamilie */ }
       switchDemo(true);
     } catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Der bisherige Beispielbestand konnte nicht sicher bereinigt werden." }); }
     finally { setSampleBusy(false); }
@@ -597,7 +606,7 @@ function HealthPortalContent() {
           // A2: Der Browser konnte beim ersten Start nicht in den Dateispeicher schreiben und nutzt IndexedDB; das wird einmal gesagt.
           try { if (browserStorageKind() === "indexeddb" && !workspaceStorage.getItem("mmi-browser-speicher-hinweis")) { workspaceStorage.setItem("mmi-browser-speicher-hinweis", "1"); setNotice({ kind: "info", text: "Der Browser-Datentresor liegt in diesem Browser in IndexedDB, weil der Dateispeicher (OPFS) nicht beschreibbar war. Diese Wahl bleibt gespeichert; es wird nicht automatisch gewechselt." }); } } catch { /* optional */ }
         }
-        if (demoActive() && isBrowserVault(local)) { setSampleBusy(true); await seedSampleFamily(local).catch((error) => { console.error("Beispieldaten konnten nicht geladen werden", error); return false; }); setSampleBusy(false); }
+        if (demoActive() && isBrowserVault(local) && demoQuelleLesen(localStorage)?.art !== "kopie") { setSampleBusy(true); await seedSampleFamily(local).catch((error) => { console.error("Beispieldaten konnten nicht geladen werden", error); return false; }); setSampleBusy(false); }
         if (await requestVaultPermission(local)) {
           if (!oneDrive) { const data = await readLocalVaultData(local); applyLocalData(data); }
           setLocalVaultSummary(await getVaultSummary(local));
@@ -872,6 +881,19 @@ function HealthPortalContent() {
     const r = await sicherungEinlesen(einlesen.gewaehlt, vaultHandle);
     setEinlesen(null); await refreshLocal();
     setNotice({ kind: "success", text: `Sicherung „${r.ordner}“ eingelesen: ${r.kopiert} Dateien per Prüfsumme bestätigt, ${r.zaehlung.documents} Dokumente und ${r.zaehlung.records} Einträge übernommen.` });
+  };
+  // P7: Übernehmen der Demo-Kopie – in der eigenen Akte, mit der Liste „Was ändert sich?“ vorher (Frage g).
+  useEffect(() => {
+    if (demoActive() || !vaultHandle) return;
+    let merker = null; try { merker = sessionStorage.getItem(DEMO_UEBERNAHME_MERKER); sessionStorage.removeItem(DEMO_UEBERNAHME_MERKER); } catch { /* ohne Merker nichts */ }
+    if (!merker) return;
+    demoUebernahmePlan(vaultHandle, demoQuelleLesen(localStorage)).then(setDemoPlan).catch((error) => setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die Demo lässt sich nicht übernehmen." }));
+  }, [vaultHandle]);
+  const runDemoUebernehmen = async () => {
+    if (!vaultHandle) return;
+    const r = await demoUebernehmen(vaultHandle, demoQuelleLesen(localStorage));
+    setDemoPlan(null); await refreshLocal();
+    setNotice({ kind: "success", text: `Demo übernommen: ${r.neu} neu, ${r.geaendert} geändert, ${r.entfernt} entfernt${r.neueDateien ? `, ${r.neueDateien} neue Dateien` : ""}. Das vorige Register liegt in der Registersicherung; keine Originaldatei wurde gelöscht.${r.kalender ? ` ${r.kalender} Kalender-Einträge werden beim nächsten Abgleich angepasst.` : ""}` });
   };
   const runRestoreTest = async () => {
     setVaultBusy(true);
@@ -1244,7 +1266,15 @@ function HealthPortalContent() {
   );
 
   const demoGesperrt = sampleBusy || vaultBusy || intakeBusy || inventoryBusy || !vaultHandle;
-  const demoZuruecksetzen = async () => { if (await askConfirm("Den gesamten getrennten Demobestand einschließlich deiner dort importierten Testdateien löschen und neu anlegen? Deine echte Akte bleibt erhalten. Externe Sicherungen bleiben erhalten.")) { const url = new URL(location.href); url.searchParams.set("demo", "reset"); location.assign(url.href); } };
+  const demoZuruecksetzen = async () => {
+    // P7: Eine Kopie wird frisch aus der eigenen Akte gezogen (Demo löschen, in der eigenen Akte neu starten).
+    if (demoQuelleLesen(localStorage)?.art === "kopie") { if (await askConfirm("Die Demo-Kopie verwerfen und frisch aus deiner Akte kopieren? Deine Akte bleibt unverändert.")) { try { sessionStorage.setItem(DEMO_NEU_MERKER, "1"); } catch { /* dann nur löschen */ } const url = new URL(location.href); url.searchParams.set("demo", "delete"); location.assign(url.href); } return; }
+    if (await askConfirm("Den gesamten getrennten Demobestand einschließlich deiner dort importierten Testdateien löschen und neu anlegen? Deine echte Akte bleibt erhalten. Externe Sicherungen bleiben erhalten.")) { const url = new URL(location.href); url.searchParams.set("demo", "reset"); location.assign(url.href); } };
+  useEffect(() => {
+    if (demoActive() || !vaultHandle || demoGesperrt) return;
+    let neu = null; try { neu = sessionStorage.getItem(DEMO_NEU_MERKER); sessionStorage.removeItem(DEMO_NEU_MERKER); } catch { /* nichts */ }
+    if (neu) void loadSampleData();
+  }, [vaultHandle, demoGesperrt]);
   const demoLoeschen = async () => { if (await askConfirm("Den gesamten getrennten Demobestand einschließlich Testimporten löschen und zur eigenen Akte zurückkehren? Externe Sicherungen bleiben erhalten.")) { const url = new URL(location.href); url.searchParams.set("demo", "delete"); location.assign(url.href); } };
   return (
     <div className="app-shell" onInputCapture={() => window.dispatchEvent(new Event("family-dictation-typed"))} onClick={() => megaOpen && setMegaOpen(null)}>
@@ -1252,7 +1282,7 @@ function HealthPortalContent() {
         <div className="masthead">
           <button className="mobile-menu-button" onClick={() => setMobileOpen((value) => !value)} aria-label="Hauptmenü öffnen"><Menu size={22}/></button>
           <button className="site-brand" onClick={() => go("overview")}><span className="brand-symbol brand-symbol-icon" data-variante={APP_VARIANTE.toLowerCase()}><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 19.2727C22 20.779 20.779 22 19.2727 22H14.7273C13.221 22 12 20.779 12 19.2727V12H19.2727C20.779 12 22 13.221 22 14.7273V19.2727Z" fill="#68C4FF"/><path d="M20 2C21.1046 2 22 2.89543 22 4V7C22 8.10457 21.1046 9 20 9H17C15.8954 9 15 8.10457 15 7V4C15 2.89543 15.8954 2 17 2H20Z" fill="#0C79D8"/><path d="M7 15C8.10457 15 9 15.8954 9 17V20C9 21.1046 8.10457 22 7 22H4C2.89543 22 2 21.1046 2 20V17C2 15.8954 2.89543 15 4 15H7Z" fill="#0C79D8"/><path d="M12 12H4.72727C3.22104 12 2 10.779 2 9.27273V4.72727C2 3.22104 3.22104 2 4.72727 2H9.27273C10.779 2 12 3.22104 12 4.72727V12Z" fill="#2E9EFF"/></svg></span><span><strong>FAMILIENAKTE</strong><span className="site-brand-zeile"><span className="site-brand-variante" data-variante={APP_VARIANTE.toLowerCase()}>{APP_VARIANTE}</span><small className="site-brand-version"><span className="version-wort">Version </span>{APP_FASSUNG}</small></span></span></button>
-          {demoActive() && <DemoKnopf gesperrt={demoGesperrt} verlassen={() => switchDemo(false)} zuruecksetzen={() => void demoZuruecksetzen()} loeschen={() => void demoLoeschen()}/>}
+          {demoActive() && <DemoKnopf gesperrt={demoGesperrt} verlassen={() => switchDemo(false)} zuruecksetzen={() => void demoZuruecksetzen()} loeschen={() => void demoLoeschen()} kopie={demoQuelleLesen(localStorage)?.art === "kopie"} uebernehmen={() => { try { sessionStorage.setItem(DEMO_UEBERNAHME_MERKER, "1"); } catch { /* ohne Merker kein Übernehmen */ } switchDemo(false); }}/>}
           <div className="header-actions"><NeuKnopf ziel={(z) => { if (z === "kalender") { go("reminders"); window.setTimeout(() => zurStelle("#kalender-verbinden"), 450); } else if (z === "hilfe") { go("help"); } else { go("help"); window.setTimeout(() => { const ziel = document.querySelector<HTMLDetailsElement>("details.aktensicherung"); if (ziel) { ziel.open = true; zurStelle("details.aktensicherung"); } }, 450); } }}/><NetzSchalter/><button className="icon-button drucken-knopf" onClick={seiteDrucken} title="Aktuelle Seite drucken"><Printer size={18}/></button><button type="button" className="icon-button aktualisieren-knopf" onClick={() => (window as unknown as { FamilienakteApp?: { aktualisieren?: () => void } }).FamilienakteApp?.aktualisieren?.()} title="Auf eine neue Fassung prüfen" aria-label="Auf eine neue Fassung prüfen"><RefreshCw size={18}/></button><NotizKnopf vaultHandle={vaultHandle} records={familyRecords} relations={familyRelations} onGespeichert={async (text) => { if (vaultHandle) await refreshLocal(vaultHandle); reportActivity({ kind: "success", text }); }} onFehler={(text) => reportActivity({ kind: "error", text })} onKalender={(tag) => { go("reminders"); window.setTimeout(() => meinKalenderOeffnen(tag), 450); }}/><button type="button" className="icon-button kalender-knopf-schalter" onClick={() => { go("reminders"); window.setTimeout(() => meinKalenderOeffnen(), 450); }} title="Mein Kalender" aria-label="Mein Kalender" data-mein-kalender-knopf><CalendarDays size={18}/></button><AnmeldeKnopf art="kopf"/></div>
         </div>
         <nav className={`main-navigation ${mobileOpen ? "mobile-open" : ""}`} aria-label="Hauptnavigation">
@@ -1536,6 +1566,7 @@ function HealthPortalContent() {
         onGo={(id, targetId) => { setMemoryCompletion(null); go(id, targetId); }}
         onNext={() => { setMemoryCompletion(null); go("memory"); }}
       />}
+      {demoPlan && <DemoUebernahmeDialog plan={demoPlan} onUebernehmen={runDemoUebernehmen} onClose={() => setDemoPlan(null)}/>}
       {einlesen && <SicherungEinlesenDialog probe={einlesen.probe} onEinlesen={runEinlesen} onClose={() => setEinlesen(null)}/>}
       {exportOpen && <ExportDialog
         sourceHandle={vaultHandle}

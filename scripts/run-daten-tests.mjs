@@ -38,4 +38,20 @@ assert.equal(g.verkleinertNotiz(16.4 * g.MB, { original: 120 }), "verkleinert vo
 assert.equal(g.verkleinertNotiz(9.5 * g.MB, { original: 3 }), "verkleinert von 9,5 MB, kein Text im Bild");
 gruen("Gegenprobe: unter 98 % der Wörter verworfen, Notiz „verkleinert von X MB, Text geprüft“");
 
-console.log(`Daten-Proben: ${n} grün`);
+
+// P7 Demo-Kopie: eigene Daten erkennen, Liste „Was ändert sich?“
+const d = await import("../lib/demo-kopie.ts");
+const bsp = { documents: [{ id: "D1", originalName: "a.pdf", notes: "Beispieldaten – frei erfunden" }], records: [{ id: "R1", source: "Beispieldaten – frei erfunden", recordType: "person", data: { name: "Erfunden" } }], relations: [] };
+assert.equal(d.eigeneDatenDa(bsp), false, "nur Beispielfamilie zählt nicht als eigene Daten");
+assert.equal(d.eigeneDatenDa({ ...bsp, records: [...bsp.records, { id: "R2", source: "Manuelle Eingabe", recordType: "task", data: { title: "Eigenes" } }] }), true);
+assert.equal(d.eigeneDatenDa({ documents: [], records: [], relations: [] }), false);
+const alt = { documents: [{ id: "D1", originalName: "Mietvertrag.pdf" }], records: [{ id: "F1", recordType: "deadline", data: { title: "Rechnung zahlen", dueAt: "2026-11-20" } }, { id: "P1", recordType: "person", data: { name: "Erfundene Person" } }], relations: [{ id: "V1" }] };
+const neu = { documents: [{ id: "D1", originalName: "Mietvertrag.pdf" }, { id: "D2", originalName: "Neu.pdf" }], records: [{ id: "F1", recordType: "deadline", data: { title: "Rechnung zahlen", dueAt: "2026-11-27" } }], relations: [{ id: "V1" }] };
+const w = d.wasAendertSich(alt, neu);
+assert.deepEqual(w.zaehlung, { neu: 1, geaendert: 1, entfernt: 1 });
+assert.deepEqual(w.liste.map((x) => `${x.art}:${x.titel}`), ["entfernt:Person: Erfundene Person", "geaendert:Frist: Rechnung zahlen", "neu:Dokument: Neu.pdf"]);
+assert.equal(w.kalender, 1, "geänderte Frist betrifft den Kalender");
+assert.equal(d.demoQuelleLesen({ getItem: () => '{"art":"kopie","zeit":"x","revision":3}' }).revision, 3);
+assert.equal(d.demoQuelleLesen({ getItem: () => "kaputt" }), null);
+gruen("Demo-Kopie: Beispielfamilie zählt nicht als eigene Daten; „Was ändert sich?“ zuerst entfernt, dann geändert, dann neu; Kalender markiert");
+console.log(`Daten-Proben (mit Demo): ${n} grün`);

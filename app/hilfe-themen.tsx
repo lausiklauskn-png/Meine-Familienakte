@@ -47,7 +47,9 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
     "× blendet einen Eintrag aus; das Gerät merkt es sich.",
   ] },
   { id: "demo", titel: "Demo ausprobieren", symbol: <FlaskConical/>, weg: "Hilfe › oben: Demo starten", punkte: [
-    "Die Demo hat einen eigenen Bestand mit einer erfundenen Familie. Deine Akte bleibt unberührt.",
+    "Hast du eigene Daten, arbeitet die Demo an einer Kopie davon; das Original bleibt unverändert. Ohne eigene Daten zeigt sie eine erfundene Familie.",
+    "In der Demo geht nichts nach außen: kein Kalender-Abgleich, keine Glocke, kein Pro-Tresor.",
+    "Bei der Kopie gibt es im Menü „Übernehmen …“: erst die Liste „Was ändert sich?“, dann ersetzt die Demo deine Akte; das bisherige Register wird vorher gesichert.",
     "Solange sie läuft, steht hinter dem Namen ein roter Knopf „DEMO ▾“: verlassen · zurücksetzen · löschen.",
     "Die Demo gehört nicht in deine Sicherung.",
   ] },

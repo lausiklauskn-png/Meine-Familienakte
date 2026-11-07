@@ -1,6 +1,7 @@
 import { workspaceName, demoActive } from "../lib/demo-workspace.ts";
 import { aktuelleGrenze, mbText } from "../lib/geraete-grenze.ts";
 import { istNativerOrdner, nativenOrdnerWaehlen, ordnerPlugin } from "./nativer-ordner.ts";
+import { DEMO_PRAEFIX, eigeneDatenDa, wasAendertSich, type DemoQuelle } from "../lib/demo-kopie.ts";
 import { erinnerungenOrdnen, gueltigeUhrzeit, zuordnungSetzen, type ErinnerungsWahl, type KalenderAnbieter, type KalenderFelder, type KalenderZuordnung } from "../lib/kalender.ts";
 import { workspaceStorage } from "../lib/demo-workspace.ts";
 import type { ProUebergabe } from "../lib/pro-verbund-vertrag";
@@ -3214,6 +3215,74 @@ export async function sicherungEinlesen(gewaehlt: FileSystemDirectoryHandle, akt
   const nachher = await readIndex(aktiv);
   if (nachher.documents.length !== manifest.counts.documents || nachher.records.length !== manifest.counts.records) throw new Error("Nach dem Einlesen stimmen die Zahlen nicht mit der Sicherung überein.");
   return { ...probe, akteLeer: false, kopiert: kopiert.length };
+}
+
+/** P7 (Plan 07.11., Punkt 3): Demo als Kopie der eigenen Daten. Läuft in der echten Akte, bevor die Demo startet:
+ *  Register und Dateien kommen in den getrennten Demo-Bereich; das Original bleibt unverändert. Ohne eigene Daten: Beispielfamilie. */
+const DEMO_TRESOR = `${DEMO_PRAEFIX}Browser-Datentresor`;
+async function demoTresor(anlegen: boolean) {
+  const opfs = await navigator.storage.getDirectory();
+  return opfs.getDirectoryHandle(DEMO_TRESOR, { create: anlegen });
+}
+export async function demoKopieAnlegen(quelle: FileSystemDirectoryHandle): Promise<DemoQuelle> {
+  if (demoActive()) throw new Error("Die Kopie entsteht nur aus der eigenen Akte.");
+  const index = await readIndex(quelle);
+  const zeit = new Date().toISOString();
+  if (!eigeneDatenDa(index)) return { art: "beispiel", zeit };
+  if (typeof navigator.storage?.getDirectory !== "function") throw new Error("Dieser Browser bietet keinen getrennten Speicher für die Demo-Kopie.");
+  const ziel = await demoTresor(true);
+  const zielRoot = await ziel.getDirectoryHandle(ROOT, { create: true });
+  const dateien: FamilyBackupFile[] = [];
+  const quellRoot = await root(quelle);
+  for await (const eintrag of (quellRoot as DirectoryWithEntries).values()) {
+    if (eintrag.kind !== "directory" || eintrag.name === "00_Register") continue;
+    await copyDirectoryWithChecksums(eintrag as FileSystemDirectoryHandle, await zielRoot.getDirectoryHandle(eintrag.name, { create: true }), eintrag.name, dateien);
+  }
+  // In der Demo geht nichts nach außen: kein Pro-Tresor (Verweise bleiben nur lesbar, wo eine Kopie existiert).
+  const proVerweise = index.documents.filter((d) => istProOriginal(d.storedPath)).length;
+  const kopie = { ...index, proTresorId: null } as VaultIndex;
+  const register = await zielRoot.getDirectoryHandle("00_Register", { create: true });
+  await writeTextFile(register, "Familienakte_Register.json", JSON.stringify(kopie, null, 2));
+  return { art: "kopie", zeit, revision: index.revision ?? 0, dokumente: index.documents.length, eintraege: index.records.length, proVerweise };
+}
+
+/** In der echten Akte: was würde sich durch das Übernehmen der Demo ändern? Nichts wird geschrieben. */
+export async function demoUebernahmePlan(aktiv: FileSystemDirectoryHandle, quelle: DemoQuelle | null) {
+  if (demoActive()) throw new Error("Übernehmen geht aus der eigenen Akte heraus.");
+  if (quelle?.art !== "kopie") throw new Error("Die Demo arbeitet nicht an einer Kopie der eigenen Daten; es gibt nichts zu übernehmen.");
+  const demo = await readIndex(await demoTresor(false));
+  const eigen = await readIndex(aktiv);
+  const geaendertSeitStart = (eigen.revision ?? 0) !== (quelle.revision ?? 0);
+  return { ...wasAendertSich(eigen, demo), geaendertSeitStart, demo, eigen };
+}
+
+/** Übernimmt die Demo-Kopie als Ganzes. Vorher sichert writeIndex das bisherige Register (00_Register/Sicherungen);
+ *  Originale werden nie gelöscht oder überschrieben, nur neue Dateien aus der Demo kommen dazu. */
+export async function demoUebernehmen(aktiv: FileSystemDirectoryHandle, quelle: DemoQuelle | null) {
+  const plan = await demoUebernahmePlan(aktiv, quelle);
+  if (plan.geaendertSeitStart) throw new Error("Die eigene Akte wurde seit dem Start der Demo geändert. Übernehmen würde diese Änderungen verlieren; es wurde nichts geschrieben.");
+  const demoRoot = await root(await demoTresor(false));
+  const zielRoot = await root(aktiv);
+  let neueDateien = 0;
+  for (const dokument of plan.demo.documents) {
+    if (istProOriginal(dokument.storedPath)) continue;
+    const pfad = (dokument.storedPath || "").split("/").filter(Boolean); if (pfad[0] === ROOT) pfad.shift();
+    if (!pfad.length) continue;
+    const name = pfad.pop()!;
+    let ziel = zielRoot, vorhanden = true;
+    try { for (const teil of pfad) ziel = await ziel.getDirectoryHandle(teil); await ziel.getFileHandle(name); } catch (error) { if (!isNotFoundError(error)) throw error; vorhanden = false; }
+    if (vorhanden) continue;
+    let q = demoRoot; for (const teil of pfad) q = await q.getDirectoryHandle(teil);
+    const datei = await (await q.getFileHandle(name)).getFile();
+    ziel = zielRoot; for (const teil of pfad) ziel = await ziel.getDirectoryHandle(teil, { create: true });
+    const h = await ziel.getFileHandle(name, { create: true }); const w = await h.createWritable(); await w.write(datei); await w.close();
+    if (await fileChecksum(await h.getFile()) !== await fileChecksum(datei)) throw new Error(`Die Kopie von „${dokument.originalName}“ stimmt nicht.`);
+    neueDateien++;
+  }
+  const neu = { ...plan.demo, proTresorId: plan.eigen.proTresorId ?? null, revision: plan.eigen.revision ?? 0 } as VaultIndex;
+  neu.auditLog = [{ id: crypto.randomUUID(), at: new Date().toISOString(), action: "Demo übernommen", details: `${plan.zaehlung.neu} neu, ${plan.zaehlung.geaendert} geändert, ${plan.zaehlung.entfernt} entfernt; ${neueDateien} neue Dateien. Das vorige Register liegt unter 00_Register/Sicherungen; keine Originaldatei wurde gelöscht.` }, ...neu.auditLog];
+  await writeIndex(aktiv, neu);
+  return { ...plan.zaehlung, neueDateien, kalender: plan.kalender };
 }
 
 export async function previewLocalDocumentAssignment(
