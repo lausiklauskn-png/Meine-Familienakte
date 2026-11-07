@@ -36,7 +36,7 @@ try {
     });
     await step(`${name}: neues Hilfe-Thema bleibt nach Zurück offen`, async () => {
       const t = page.locator('details[data-hilfe-thema="app-glocke"]');
-      await t.locator("summary").click();
+      await t.locator(":scope > summary").click(); // nur die Überschrift des Themas, nicht die von „Ausführlich“ (Sitzung 4)
       await footer(page, "Interaktives Cockpit");
       await page.goBack();
       await page.waitForSelector('details[data-hilfe-thema="app-glocke"]');
