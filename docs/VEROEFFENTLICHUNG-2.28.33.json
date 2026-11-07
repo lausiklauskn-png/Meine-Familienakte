@@ -1,0 +1,56 @@
+{
+  "version": "2.28.33",
+  "source": "72e94478510aaa9f4315bf87ba5bf79e93b00a1c",
+  "pullRequest": 117,
+  "recordedUtc": "2026-11-07T13:00:00Z",
+  "freigabe": "Klaus 2026-11-07: „Ja, dann zusammenführen und 2.28.33 veröffentlichen.“",
+  "inhalt": "Hilfe neu: 13 neue Themen, „Wie kann ich dir helfen?“, Gruppen und A–Z, Sprung mit rotem/grünem Rahmen, Zurück an die Stelle markiert, Kartenhilfe mit Sprung, Benutzerabnahme als Bild mit vier Antworten, mitwandernde Seitenleiste, Versionshistorie mit echter Fassung, Demo-Kasten nur „Demo starten“",
+  "ciAmPrStand": "e3bed4c: pruefung, webview, product (31, pixel_c), product (35, pixel_2), android, windows success",
+  "releases": [
+    {
+      "tag": "android-v2.28.33",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.33",
+      "run": 42373475377,
+      "conclusion": "success",
+      "updateServer": "server=ja; Lauf grün",
+      "downloadProof": [
+        {
+          "name": "Familienakte-android-v2.28.33.apk",
+          "bytes": 19882017,
+          "sha256": "bae36b6e229d84edab9e96a8522c98e840cfb766f2cf115149412f15975c8a09",
+          "anonymousDownload": true,
+          "matchesSHA256SUMS": true,
+          "versionInside": "2.28.33 (assets/public/version.json, commit 72e9447)"
+        },
+        {
+          "name": "Familienakte-Einzeldatei-2.28.33.html",
+          "bytes": 3495103,
+          "sha256": "2e8d1000d2a164d9c4c72bb99751f441523b037c24ff7e432d14c57f59b3c21a",
+          "anonymousDownload": true,
+          "matchesSHA256SUMS": true
+        }
+      ]
+    },
+    {
+      "tag": "windows-v2.28.33",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.33",
+      "run": 42373477656,
+      "conclusion": "success",
+      "updateServer": "server=ja; Lauf grün; latest.json nennt 2.28.33",
+      "downloadProof": [
+        {
+          "name": "Familienakte-Windows-2.28.33-x64-setup.exe",
+          "bytes": 34034697,
+          "sha256": "7a480721098f9dddfe67e206f02367fd5d0605ad2c683586fc723a3a1e21d4b0",
+          "anonymousDownload": true,
+          "matchesSHA256SUMS": true
+        }
+      ]
+    }
+  ],
+  "pwa": "Pages auf 72e9447: Lauf 134 (push) abgebrochen und durch Lauf 135 (42374398327) ersetzt; Seite selbst aus dem Behälter nicht erreichbar",
+  "notChecked": [
+    "Kein physisches Gerät: Seitenleiste neben der Android-Randgeste, Rücksprung, rote/grüne Rahmen, Hilfe-Suche",
+    "family-projekt.de und die Pages-Seite aus dem Behälter nicht direkt geprüft; die Freigabeläufe prüfen den Server von außen"
+  ]
+}

@@ -54,9 +54,9 @@ Spanne aus Reflog-, Commit- und Laufzeiten, Obergrenze; Pausen nicht abgezogen, 
 | 1 | 09:04 | 10:00 | 56 min | Lesen, Klaus' Punkte 1–10 untersuchen, Plan, Fragen |
 | 2 | 10:00 | 13:00 | 3 h 00 min | Plan auf main (#116), P1–P3 bauen, Proben, volle UI-Läufe, Bildschirmfotos, CI |
 | 3 | 13:00 | 13:39 | 39 min | Klaus' Hinweise, CI-Fehler Demo-Knopf, Zusammenführen (#117) |
-| 4 | 13:39 | ENDE | DAUER4 | Ausgabe 2.28.33, Downloads prüfen, Nachweis, Abschluss, KimHub |
+| 4 | 13:39 | 13:54 | 15 min | Ausgabe 2.28.33, Downloads prüfen, Nachweis, Abschluss, KimHub |
 
-Zusammen: 09:04 bis ENDE = **GESAMT**.
+Zusammen: 09:04 bis 13:54 (letzter Commit) = **4 h 50 min**.
 
 ## Startauftrag zum Einfügen
 
