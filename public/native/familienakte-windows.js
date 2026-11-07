@@ -35,6 +35,8 @@
       'ausgabeBeginn', 'ausgabeAnhaengen', 'ausgabeFertig', 'ausgabeSpeichern', 'ausgabeVerwerfen'].map((aktion) =>
       [aktion, (daten = {}) => invoke('fa_pro_tresor', { anfrage: { ...daten, aktion } })])
   );
+  // Lies-mich der Vollsicherung: Download-Adresse und SHA-256 genau dieser Fassung aus dem unterschriebenen Update-Feed.
+  window.Capacitor.Plugins.FamilyFolders.setupAngaben = () => invoke('fa_setup_angaben');
   window.Capacitor.Plugins.FamilyModels = Object.fromEntries(['getState', 'install', 'cancel', 'remove'].map(method =>
     [method, (options = {}) => invoke('fa_modelle', { anfrage: { ...options, method } })]));
 

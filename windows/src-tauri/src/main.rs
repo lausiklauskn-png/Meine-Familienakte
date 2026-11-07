@@ -87,6 +87,18 @@ async fn fa_update_pruefen(state: tauri::State<'_, Geprueft>) -> Result<Value, S
     }
 }
 
+/// P5 (Frage s): Download-Adresse und SHA-256 des Setups genau dieser Fassung für den Lies-mich der Vollsicherung.
+#[tauri::command]
+async fn fa_setup_angaben() -> Result<Value, String> {
+    let ich = env!("CARGO_PKG_VERSION");
+    let r = tauri::async_runtime::spawn_blocking(move || update::eigenes_setup_pruefen(ich)).await.map_err(|_| "UPDATE_NICHT_ERREICHBAR".to_string())?;
+    match r {
+        Ok(Some(a)) => Ok(json!({ "version": ich, "datei": a.datei, "sha256": a.sha256, "groesse": a.groesse, "url": format!("{}{}", update::BASIS, a.datei) })),
+        Ok(None) => Ok(json!({ "version": ich })),
+        Err(code) => Err(code.into()),
+    }
+}
+
 /// Lädt das zuletzt geprüfte Setup (Größe und SHA-256 wie im unterschriebenen Feed), startet es und schließt die App.
 #[tauri::command]
 async fn fa_update_installieren(app: tauri::AppHandle, state: tauri::State<'_, Geprueft>) -> Result<Value, String> {
@@ -114,7 +126,7 @@ fn main() {
         .manage(modelle::ModelState::default())
         .manage(kalender::KalenderState::default())
         .manage(Startdateien(Mutex::new(dateiargumente(&std::env::args().collect::<Vec<_>>()))))
-        .invoke_handler(tauri::generate_handler![fa_diktat, fa_diktat_abbrechen, fa_plattform, fa_startdateien, fa_adresse_oeffnen, fa_update_pruefen, fa_update_installieren, pro_tresor::fa_pro_tresor, modelle::fa_modelle, kalender::fa_kalender])
+        .invoke_handler(tauri::generate_handler![fa_diktat, fa_diktat_abbrechen, fa_plattform, fa_startdateien, fa_adresse_oeffnen, fa_update_pruefen, fa_update_installieren, fa_setup_angaben, pro_tresor::fa_pro_tresor, modelle::fa_modelle, kalender::fa_kalender])
         .setup(|app| {
             // An unavailable optional model route does not disable the family app.
             // ModelState reports this and refuses downloads until it is available.

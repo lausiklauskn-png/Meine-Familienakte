@@ -34,11 +34,12 @@ const ORTE: Ort[] = [
     { id: "passwort", titel: "Tresor-Passwort auf Papier", unter: "gilt für alle Pro-Apps" },
     { id: "ersatz", titel: "Ersatzschlüssel ausgedruckt", unter: "getrennt aufbewahren, nie in den Tresor" },
   ] },
-  { titel: "Sicherungsordner", unter: "eigener Ordner, getrennt vom Datentresor", ziel: "vollsicherung", punkte: [
+  { titel: "Sicherungsordner", unter: "frei gewählt: Gerät, SD-Karte, USB, Laufwerk – getrennt vom Datentresor", ziel: "vollsicherung", punkte: [
     { id: "vollsicherung", titel: "Vollsicherung erstellt", unter: "„Vollständige Sicherung erstellen“", kinder: [
       { titel: "Familienakte_Vollsicherung_‹Zeit›", unter: "ein neuer Ordner je Sicherung" },
       { titel: "Dateien", unter: "Originale, auch aus dem Pro-Tresor als Kopie" },
       { titel: "Register und Manifest", unter: "mit Prüfsumme jeder Datei" },
+      { titel: "Programm daneben", unter: "Android: APK · Windows: Lies-mich mit Download und SHA-256" },
     ] },
     { titel: "Lesbar, nicht verschlüsselt", unter: "nur auf eigenen Speicher legen" },
   ] },

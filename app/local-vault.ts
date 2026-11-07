@@ -1,5 +1,6 @@
 import { workspaceName, demoActive } from "../lib/demo-workspace.ts";
 import { aktuelleGrenze, mbText } from "../lib/geraete-grenze.ts";
+import { istNativerOrdner, nativenOrdnerWaehlen, ordnerPlugin } from "./nativer-ordner.ts";
 import { erinnerungenOrdnen, gueltigeUhrzeit, zuordnungSetzen, type ErinnerungsWahl, type KalenderAnbieter, type KalenderFelder, type KalenderZuordnung } from "../lib/kalender.ts";
 import { workspaceStorage } from "../lib/demo-workspace.ts";
 import type { ProUebergabe } from "../lib/pro-verbund-vertrag";
@@ -377,8 +378,10 @@ export async function scanOneDriveInbox(handle: FileSystemDirectoryHandle, known
   return scanDirectory(directory, "onedrive-inbox", known);
 }
 
-export async function chooseExportDestination(): Promise<FileSystemDirectoryHandle> {
+export async function chooseExportDestination(titel = "Zielordner für Sicherung oder Export wählen"): Promise<FileSystemDirectoryHandle> {
   if (demoActive()) throw new Error("In der Demo bleibt die Ablage im getrennten lokalen Demobestand. Bitte für eigene Ordner die Demo verlassen.");
+  // P5: In der Android- und der Windows-App wählt der native Dialog einen frei gewählten Ordner (Gerät, SD, USB, Netzordner).
+  if (ordnerPlugin()) return nativenOrdnerWaehlen(titel);
   const picker = (window as PickerWindow).showDirectoryPicker;
   if (!picker) throw new Error("Diese Funktion benötigt Chrome oder Edge auf einem PC.");
   return picker({ mode: "readwrite" });
@@ -2966,7 +2969,8 @@ export async function writeFullFamilyBackup(input: {
   createdAt?: string;
 }): Promise<FullBackupResult> {
   if (!(await requestVaultPermission(input.source)) || !(await requestVaultPermission(input.destination))) throw new Error("Quell- und Sicherungsordner müssen ausdrücklich freigegeben sein.");
-  if (await (input.source as ComparableHandle).isSameEntry?.(input.destination)) throw new Error("Die vollständige Sicherung benötigt einen getrennten Zielordner.");
+  // Ein nativer Ordner (Android/Windows, P5) ist nie derselbe wie der Browser-Datentresor; der Browser lehnt den Vergleich dann ab.
+  if (!istNativerOrdner(input.destination) && await (input.source as ComparableHandle).isSameEntry?.(input.destination)) throw new Error("Die vollständige Sicherung benötigt einen getrennten Zielordner.");
   const index = await readIndex(input.source);
   const createdAt = input.createdAt || new Date().toISOString();
   const backup = await uniqueDirectory(input.destination, `Familienakte_Vollsicherung_${createdAt.replace(/[:.]/g, "-")}`);
