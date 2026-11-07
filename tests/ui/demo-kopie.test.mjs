@@ -1,6 +1,6 @@
 // P7 (Plan 07.11., Punkt 3): Demo als Kopie der eigenen Daten; Original bleibt unverändert; vor dem Übernehmen „Was ändert sich?“.
 import { vaultFixture } from "./_vault-fixture.mjs";
-import { demoUmschalten, demoMenue, demoBereit } from "./_demo.mjs";
+import { demoUmschalten, demoMenue } from "./_demo.mjs";
 import { startApp, launchBrowser, DESKTOP, ready, step, fail, summary, collectErrors } from "./_harness.mjs";
 
 const app = await startApp();

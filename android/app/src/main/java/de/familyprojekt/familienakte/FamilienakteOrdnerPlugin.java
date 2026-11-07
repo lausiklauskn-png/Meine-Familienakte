@@ -38,7 +38,8 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
     private final ExecutorService worker = Executors.newSingleThreadExecutor();
     private final Map<String, SafAblage> ordner = new HashMap<>();
     private final Map<String, Schreiben> offen = new HashMap<>();
-    private static final class Schreiben { SafAblage ablage; String pfad; OutputStream out; long groesse; MessageDigest sha; }
+    private final java.util.Set<String> selbstAngelegt = new java.util.HashSet<>();
+    private static final class Schreiben { SafAblage ablage; String token; String pfad; OutputStream out; long groesse; MessageDigest sha; }
     private interface Arbeit { JSObject run() throws Exception; }
 
     private void arbeit(PluginCall call, Arbeit a) {
@@ -116,12 +117,13 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
             } finally { zu(k); }
         });
     }
-    @PluginMethod public void dateiLoeschen(PluginCall call) {
+    /** Nur Dateien, die diese Sitzung selbst angelegt hat (z. B. die Schreibprobe); kein allgemeines Löschen. */
+    @PluginMethod public void eigeneDateiEntfernen(PluginCall call) {
         arbeit(call, () -> {
             SafAblage a = ablage(call); String p = pfad(call);
-            if (p.isEmpty() || !a.gibtEs(p)) throw new IOException("FA_NICHT_GEFUNDEN");
-            if (a.istOrdner(p) && !a.liste(p).isEmpty() && !"ja".equals(call.getString("rekursiv", "nein"))) throw new IOException("FA_NICHT_LEER");
-            a.loeschen(p); return new JSObject().put("ok", true);
+            String schluessel = call.getString("token", "") + "|" + p;
+            if (!selbstAngelegt.contains(schluessel) || !a.gibtEs(p) || a.istOrdner(p)) throw new IOException("FA_NICHT_ERLAUBT");
+            a.loeschen(p); selbstAngelegt.remove(schluessel); return new JSObject().put("ok", true);
         });
     }
     @PluginMethod public void dateiBeginn(PluginCall call) {
@@ -129,7 +131,7 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
             SafAblage a = ablage(call); String p = pfad(call);
             if (p.isEmpty() || a.istOrdner(p)) throw new IOException("FA_ORDNER_UNGUELTIG");
             if (a.gibtEs(p)) a.loeschen(p);
-            Schreiben s = new Schreiben(); s.ablage = a; s.pfad = p; s.out = a.neu(p); s.sha = MessageDigest.getInstance("SHA-256");
+            Schreiben s = new Schreiben(); s.ablage = a; s.token = call.getString("token", ""); s.pfad = p; s.out = a.neu(p); s.sha = MessageDigest.getInstance("SHA-256");
             String id = UUID.randomUUID().toString(); offen.put(id, s);
             return new JSObject().put("id", id);
         });
@@ -152,6 +154,7 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
             s.out.flush(); s.out.close(); offen.remove(id);
             String sha = hex(s.sha.digest());
             if (s.ablage.groesse(s.pfad) != s.groesse || !sha.equals(hash(s.ablage, s.pfad))) { s.ablage.loeschen(s.pfad); throw new IOException("FA_AUSGABE_PRUEFSUMME"); }
+            selbstAngelegt.add(s.token + "|" + s.pfad);
             return new JSObject().put("size", s.groesse).put("sha256", sha);
         });
     }
@@ -196,6 +199,6 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
     private static String hex(byte[] b) { StringBuilder s = new StringBuilder(); for (byte x : b) s.append(String.format("%02x", x)); return s.toString(); }
     @Override protected void handleOnDestroy() {
         for (Schreiben s : offen.values()) { try { s.out.close(); s.ablage.loeschen(s.pfad); } catch (Exception ignoriert) { } }
-        offen.clear(); ordner.clear(); worker.shutdownNow();
+        offen.clear(); ordner.clear(); selbstAngelegt.clear(); worker.shutdownNow();
     }
 }

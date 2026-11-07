@@ -9,7 +9,8 @@ export type OrdnerPlugin = {
   ordnerAnlegen(a: { token: string; pfad: string }): Promise<unknown>;
   dateiInfo(a: { token: string; pfad: string }): Promise<{ art: "datei" | "ordner"; groesse: number }>;
   dateiLesen(a: { token: string; pfad: string; offset: number; laenge: number }): Promise<{ data: string }>;
-  dateiLoeschen(a: { token: string; pfad: string; rekursiv?: "ja" | "nein" }): Promise<unknown>;
+  /** Nur selbst in dieser Sitzung angelegte Dateien (Schreibprobe); ein allgemeines Löschen gibt es nicht. */
+  eigeneDateiEntfernen(a: { token: string; pfad: string }): Promise<unknown>;
   dateiBeginn(a: { token: string; pfad: string }): Promise<{ id: string }>;
   dateiAnhaengen(a: { id: string; offset: number; data: string }): Promise<{ size: number }>;
   dateiFertig(a: { id: string; size: number }): Promise<{ size: number; sha256: string }>;
@@ -32,7 +33,7 @@ function uebersetzt(e: unknown): unknown {
   const code = String((e as { code?: string; message?: string })?.code || (e as Error)?.message || e);
   if (code.includes("FA_NICHT_GEFUNDEN") || code.includes("TRESOR_DATEI_FEHLT")) return fehler("NotFoundError", "Nicht gefunden.");
   if (code.includes("FA_ART_FALSCH")) return fehler("TypeMismatchError", "Falsche Art.");
-  if (code.includes("FA_NICHT_LEER")) return fehler("InvalidModificationError", "Ordner ist nicht leer.");
+  if (code.includes("FA_NICHT_ERLAUBT")) return fehler("NotAllowedError", "Im gewählten Ordner entfernt die App nur Dateien, die sie gerade selbst angelegt hat.");
   if (code.includes("FA_ORDNER_NICHT_ERREICHBAR")) return new Error("Der gewählte Ordner ist nicht mehr erreichbar. Bitte erneut wählen.");
   return e;
 }
@@ -106,8 +107,8 @@ export class NativerOrdner {
     }
     return new NativeDatei(this.p, this.token, pfad, name);
   }
-  async removeEntry(name: string, o?: { recursive?: boolean }) {
-    try { await this.p.dateiLoeschen({ token: this.token, pfad: pfadVon(this.pfad, name), rekursiv: o?.recursive ? "ja" : "nein" }); } catch (e) { throw uebersetzt(e); }
+  async removeEntry(name: string) {
+    try { await this.p.eigeneDateiEntfernen({ token: this.token, pfad: pfadVon(this.pfad, name) }); } catch (e) { throw uebersetzt(e); }
   }
   async *values() {
     let liste: Eintrag[];

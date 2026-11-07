@@ -199,7 +199,13 @@ public final class ProTresorEngineProbe {
             pruefe(liste.size() == 1, "Liste zeigt halbe Dateien: " + liste);
             String gelesen = (String) ruf(e, "aktion", "dateiLesen", "token", token, "pfad", "Familienakte_Vollsicherung/Dateien/erfunden.bin", "offset", (long) FamilyFolders.STUECK * 2, "laenge", 1000L).get("data");
             pruefe(Base64.getDecoder().decode(gelesen).length == 123, "Lesen am Ende");
-            fehler("FA_NICHT_LEER", () -> ruf(e, "aktion", "dateiLoeschen", "token", token, "pfad", "Familienakte_Vollsicherung"));
+            fehler("FA_NICHT_ERLAUBT", () -> ruf(e, "aktion", "eigeneDateiEntfernen", "token", token, "pfad", "Familienakte_Vollsicherung"));
+            Files.writeString(dialog.sicherung.resolve("fremd.txt"), "fremde Datei");
+            fehler("FA_NICHT_ERLAUBT", () -> ruf(e, "aktion", "eigeneDateiEntfernen", "token", token, "pfad", "fremd.txt"));
+            pruefe(Files.exists(dialog.sicherung.resolve("fremd.txt")), "fremde Datei gelöscht");
+            fehler("FA_TRESOR_AKTION_UNGUELTIG", () -> ruf(e, "aktion", "dateiLoeschen", "token", token, "pfad", "fremd.txt"));
+            ruf(e, "aktion", "eigeneDateiEntfernen", "token", token, "pfad", "Familienakte_Vollsicherung/Dateien/erfunden.bin");
+            pruefe(!Files.exists(datei), "eigene Datei nicht entfernt");
             // Ausgabe über 20 MB stückweise, Abbruch verändert nichts
             dialog.ausgabe = null;
             String aus = (String) ruf(e, "aktion", "ausgabeBeginn", "name", "Gross.pdf").get("id");

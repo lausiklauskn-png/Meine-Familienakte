@@ -15,10 +15,11 @@ final class FamilyFolders {
     static final long MAX_DATEI = 100L * 1024 * 1024 + 8192 + 12;
     private final Map<String, Path> ordner = new HashMap<>();
     private final Map<String, Schreiben> offen = new HashMap<>();
+    private final Set<Path> selbstAngelegt = new HashSet<>();
     private static final class Schreiben { Path ziel, teil; long groesse; MessageDigest sha; boolean ausgabe; boolean fertig; String name; }
 
     static boolean aktion(String a) {
-        return a.startsWith("ordner") || a.startsWith("datei") && !a.equals("dateiExportieren") || a.startsWith("ausgabe");
+        return a.startsWith("ordner") || a.startsWith("datei") && !a.equals("dateiExportieren") || a.startsWith("ausgabe") || a.equals("eigeneDateiEntfernen");
     }
 
     Object aufruf(Map<String, Object> m, ProTresorEngine.Dialoge dialoge) throws IOException {
@@ -70,12 +71,11 @@ final class FamilyFolders {
                 }
                 return Map.of("data", Base64.getEncoder().encodeToString(Arrays.copyOf(puffer, n)));
             }
-            case "dateiLoeschen": {
-                Path p = pfad(m, true);
-                if (Files.isDirectory(p, LinkOption.NOFOLLOW_LINKS)) {
-                    if (!Json.textOder(m, "rekursiv", "nein").equals("ja")) { try (var s = Files.list(p)) { if (s.findAny().isPresent()) throw new IOException("FA_NICHT_LEER"); } }
-                    try (var s = Files.walk(p)) { for (Path x : s.sorted(Comparator.reverseOrder()).toList()) Files.delete(x); }
-                } else if (!Files.deleteIfExists(p)) throw new IOException("FA_NICHT_GEFUNDEN");
+            case "eigeneDateiEntfernen": {
+                // Nur Dateien, die diese Sitzung selbst angelegt hat (z. B. die Schreibprobe); kein allgemeines Löschen.
+                Path p = pfad(m, false);
+                if (!selbstAngelegt.contains(p) || !Files.isRegularFile(p, LinkOption.NOFOLLOW_LINKS)) throw new IOException("FA_NICHT_ERLAUBT");
+                Files.delete(p); selbstAngelegt.remove(p);
                 return Map.of("ok", true);
             }
             case "dateiBeginn": {
@@ -107,7 +107,7 @@ final class FamilyFolders {
                 if (!s.ausgabe) {
                     try (var in = Files.newInputStream(s.teil)) { if (!sha.equals(hash(in))) throw new IOException("FA_AUSGABE_PRUEFSUMME"); }
                     Files.move(s.teil, s.ziel, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
-                    offen.remove(Json.text(m, "id"));
+                    offen.remove(Json.text(m, "id")); selbstAngelegt.add(s.ziel);
                 } else s.fertig = true;
                 return Map.of("size", s.groesse, "sha256", sha);
             }
@@ -173,6 +173,6 @@ final class FamilyFolders {
     }
     void schliessen() {
         for (Schreiben s : offen.values()) { try { Files.deleteIfExists(s.teil); } catch (IOException ignoriert) { /* Temp wird beim nächsten Start nicht gebraucht */ } }
-        offen.clear(); ordner.clear();
+        offen.clear(); ordner.clear(); selbstAngelegt.clear();
     }
 }
