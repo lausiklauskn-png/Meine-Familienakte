@@ -53,7 +53,7 @@ export const HILFE_ORDNUNG: Record<string, HilfeEintrag> = {
   "assistenz": { gruppe: "arbeiten", schritt: 4, seiten: ["assistant", "correspondence"], worte: ["assistenz", "brief schreiben", "e-mail schreiben", "korrespondenz", "antwort", "ki"] },
   "zu-gross": { gruppe: "arbeiten", schritt: 1, seiten: ["inbox", "documents"], worte: ["zu groß", "foto zu groß", "datei zu groß", "verkleinern", "mb", "grenze", "speicher voll"] },
   // Sichern
-  "vollsicherung": { gruppe: "arbeiten", schritt: 5, seiten: ["security"], worte: ["sicherung", "wiederherstellen", "backup", "zurückholen"] },
+  "vollsicherung": { gruppe: "arbeiten", schritt: 5, seiten: ["security"], worte: ["sicherung", "wiederherstellen", "backup", "zurückholen", "einlesen", "neu installiert", "sd-karte", "apk"] },
   "export": { gruppe: "arbeiten", schritt: 5, seiten: ["security"], worte: ["export", "exportieren", "ausgeben", "weitergeben"] },
   "umzug": { gruppe: "arbeiten", schritt: 5, seiten: ["security"], worte: ["neues handy", "gerät wechseln", "umziehen", "übertragen", "anderes gerät"] },
   "mehrere-orte": { gruppe: "arbeiten", schritt: 5, seiten: ["security"], worte: ["doppelt", "kopie", "mehrere orte", "usb"] },

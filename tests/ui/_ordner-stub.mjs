@@ -4,14 +4,15 @@ export const ordnerStub = (plattform = "android") => `(() => {
   const S = window.__ordner = { dateien: new Map(), ordner: new Set(), n: 0, gewaehlt: [], naechsterName: 'SD-Karte', abbrechen: false };
   const offen = new Map();
   const fehler = (code) => Object.assign(new Error(code), { code });
-  const k = (t, p) => t + '|' + p;
+  // Wie am Gerät: jede Wahl zeigt auf denselben Speicher (SD-Karte); nur die Kennung ist neu.
+  const k = (t, p) => 'R|' + p;
   const eltern = (p) => p.includes('/') ? p.slice(0, p.lastIndexOf('/')) : '';
   const pruefe = (p) => { if (p && p.split('/').some((x) => !x || x === '.' || x === '..' || /[\\\\:]/.test(x))) throw fehler('FA_PFAD_UNGUELTIG'); };
   const b64 = (u) => { let s = ''; for (let i = 0; i < u.length; i += 8192) s += String.fromCharCode(...u.subarray(i, i + 8192)); return btoa(s); };
   const unb64 = (t) => { const s = atob(t), u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return u; };
   const hex = async (u) => [...new Uint8Array(await crypto.subtle.digest('SHA-256', u))].map((x) => x.toString(16).padStart(2, '0')).join('');
   const P = {
-    async ordnerWaehlen({ titel }) { S.gewaehlt.push(titel); if (S.abbrechen) return { cancelled: true }; const t = 'T' + (++S.n); S.ordner.add(k(t, '')); S.letzter = t; return { token: t, name: S.naechsterName }; },
+    async ordnerWaehlen({ titel }) { S.gewaehlt.push(titel); if (S.abbrechen) return { cancelled: true }; const t = S.festerToken || 'T' + (++S.n); S.ordner.add(k(t, '')); S.letzter = t; return { token: t, name: S.naechsterName }; },
     async ordnerListe({ token, pfad }) {
       pruefe(pfad); if (!S.ordner.has(k(token, pfad))) throw fehler(S.ordner.has(k(token, '')) ? 'FA_NICHT_GEFUNDEN' : 'FA_ORDNER_NICHT_ERREICHBAR');
       const vor = k(token, pfad ? pfad + '/' : ''), out = [];
@@ -34,6 +35,9 @@ export const ordnerStub = (plattform = "android") => `(() => {
   };
   if (${JSON.stringify(plattform)} === 'android') P.programmBeilegen = async ({ token, pfad }) => { const u = new TextEncoder().encode('erfundene APK'); const name = 'Familienakte-Pro-2.28.34.apk'; S.dateien.set(k(token, pfad ? pfad + '/' + name : name), u); return { name, groesse: u.length, sha256: await hex(u), fassung: '2.28.34' }; };
   else P.setupAngaben = async () => ({ version: '2.28.34', datei: 'Familienakte-Windows-2.28.34-x64-setup.exe', sha256: 'ab'.repeat(32), groesse: 1000, url: 'https://family-projekt.de/updates/familienakte/Familienakte-Windows-2.28.34-x64-setup.exe' });
+  // Für Proben über ein Neuladen hinweg: Inhalt sichern und wieder einsetzen (Kennung bleibt fest).
+  window.__ordnerSichern = () => ({ ordner: [...S.ordner], dateien: [...S.dateien].map(([k, u]) => [k, b64(u)]) });
+  window.__ordnerEinsetzen = (d, token) => { S.festerToken = token; for (const o of d.ordner) S.ordner.add(o); for (const [k, t] of d.dateien) S.dateien.set(k, unb64(t)); };
   window.Capacitor.getPlatform = () => ${JSON.stringify(plattform)};
   window.Capacitor.Plugins.FamilyFolders = P;
 })();`;

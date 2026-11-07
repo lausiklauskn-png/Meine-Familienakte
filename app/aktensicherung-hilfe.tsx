@@ -48,6 +48,10 @@ const ORTE: Ort[] = [
     { id: "bericht", titel: "Bericht ohne Fehler", unter: "Register und Prüfsummen stimmen" },
     { titel: "Laufende Akte", unter: "wird beim Test nicht verändert", ziel: "akte" },
   ] },
+  { titel: "Zurückholen", unter: "„Sicherung einlesen“ im Sicherheitscenter", ziel: "vollsicherung", punkte: [
+    { titel: "Erst die Probe", unter: "liest jede Datei per Prüfsumme, schreibt nichts" },
+    { titel: "Nur in eine leere Akte", unter: "z. B. nach Neuinstallation; nichts wird zusammengeführt" },
+  ] },
   { titel: "Zweiter Ort", unter: "USB-Stick, Rechner, zweites Laufwerk", ziel: "vollsicherung", punkte: [
     { id: "kopie", titel: "Vollsicherung kopiert", unter: "ganzer Ordner, nichts umbenennen" },
     { id: "app", titel: "App-Installationsdatei dabei", unter: "APK oder Windows-Setup" },

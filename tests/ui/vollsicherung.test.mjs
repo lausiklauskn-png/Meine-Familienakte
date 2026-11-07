@@ -22,7 +22,7 @@ async function geraet(plattform) {
 }
 /** Liest die gestellte Sicherung und prüft Manifest, Register-Prüfsumme und jede Datei. */
 const pruefeSicherung = (page) => page.evaluate(async () => {
-  const S = window.__ordner, t = S.letzter, hex = async (u) => [...new Uint8Array(await crypto.subtle.digest("SHA-256", u))].map((x) => x.toString(16).padStart(2, "0")).join("");
+  const S = window.__ordner, t = "R", hex = async (u) => [...new Uint8Array(await crypto.subtle.digest("SHA-256", u))].map((x) => x.toString(16).padStart(2, "0")).join("");
   const ordner = [...S.ordner].map((o) => o.split("|")[1]).filter((p) => /^Familienakte_Vollsicherung_[^/]+$/.test(p));
   if (ordner.length !== 1) return { fehler: `Sicherungsordner: ${ordner.join(",")}` };
   const basis = ordner[0], lies = (p) => S.dateien.get(`${t}|${basis}/${p}`);

@@ -2,6 +2,7 @@ import { demoActive, switchDemo } from "../lib/demo-workspace.ts";
 import { aktuelleGrenze, grenzeMessen, mbText } from "../lib/geraete-grenze";
 import { verkleinerbar } from "./verkleinern";
 import { programmBeilegen } from "./sicherung-programm";
+import { SicherungEinlesenDialog } from "./sicherung-einlesen";
 import { workspaceStorage } from "../lib/demo-workspace.ts";
 import { beginLocalPdfEdit, saveLocalPdfEdit } from "./local-vault";
 import type { PdfQuelle } from "../lib/pdf-bearbeitung";
@@ -72,7 +73,7 @@ import { KiAuftragDialog } from "./ki-auftrag-dialog";
 import { inventoryScanFeedback, inventoryAssignmentFeedback, inventoryArchiveFeedback, inventoryReleaseFeedback } from "../lib/ui-activity";
 import healthData from "./health-data.json";
 import { assessmentGroups, categories, coreDocuments, portalAreas } from "./portal-data";
-import { appendLocalFamilyRecordNote, archiveInventoryItems, buildAutomatedTestFailureReport, changeLocalContextLink, checkVaultHoldings, chooseDevelopmentBaseFolder, chooseExportDestination, chooseInboxFolder, chooseInventoryArchiveFolder, chooseInventorySourceFolder, chooseOneDriveVault, chooseVault, compareVaults, confirmInventoryAssignment, confirmLocalContextLink, copyMissingDocuments, createLocalFamilyRecord, createLocalMemoryBundle, createLocalScheduleBundle, createOrUpdateLocalMemoryDraft, deleteLocalMemoryDraft, deleteLocalMemoryRecord, forgetOneDriveVault, forgetVault, getLocalMemoryDeleteImpact, getVaultSummary, inspectTestWorkspace, inventorySourcePermission, type AutomatedStorageDiagnosticReport, type AutomatedTestFailureReport, type AutomatedTestEnvironmentReport, type IncomingFolderFile, type InventoryArchiveResult, type InventoryReferenceChoice, type InventoryScanProgress, type InventoryScanResult, linkLocalDocuments, LocalDocument, LocalScheduleStatus, prepareTestRegisterPreview, type PreparedTestRegister, readInventorySourcePreview, readLocalDocumentFile, readLocalMemoryDraftFiles, readLocalMemoryMediaFile, readLocalSystemSnapshot, readLocalVaultData, rejectLocalContextLink, releaseInventoryItemsForAssistant, rememberedDevelopmentBaseFolder, rememberedInboxFolder, rememberedInventoryArchiveFolder, rememberedInventorySourceFolder, rememberedOneDriveVault, rememberedVault, removeLocalContextLink, requestVaultPermission, resetAutomatedTestEnvironment, resetInventoryItemsForRetest, restoreFullFamilyBackup, runAutomatedStorageDiagnostic, runAutomatedTestEnvironmentSelfTests, runInventoryTextDecodingSelfTests, runPreparedTestRegisterSelfTests, runTestWorkspaceSelfTests, saveLocalDocument, savePreparedTestRegister, scanInventoryFolder, scanLocalInbox, scanOneDriveInbox, setupAutomatedTestEnvironment, type TestWorkspaceReport, updateLocalMemoryDraftStatus, updateLocalMemoryOpenPointStatus, updateLocalScheduleStatus, updateLocalStatus, setLocalDocumentAusfuellen, updateLocalPersonContact, readAusfuellAblage, writeAusfuellAblage, VaultSummary, VaultSyncPreview, VaultSyncResult, vaultSupported, writeFamilyArchiveExport, writeFullFamilyBackup } from "./local-vault";
+import { appendLocalFamilyRecordNote, archiveInventoryItems, buildAutomatedTestFailureReport, changeLocalContextLink, checkVaultHoldings, chooseDevelopmentBaseFolder, chooseExportDestination, chooseInboxFolder, chooseInventoryArchiveFolder, chooseInventorySourceFolder, chooseOneDriveVault, chooseVault, compareVaults, confirmInventoryAssignment, confirmLocalContextLink, copyMissingDocuments, createLocalFamilyRecord, createLocalMemoryBundle, createLocalScheduleBundle, createOrUpdateLocalMemoryDraft, deleteLocalMemoryDraft, deleteLocalMemoryRecord, forgetOneDriveVault, forgetVault, getLocalMemoryDeleteImpact, getVaultSummary, inspectTestWorkspace, inventorySourcePermission, type AutomatedStorageDiagnosticReport, type AutomatedTestFailureReport, type AutomatedTestEnvironmentReport, type IncomingFolderFile, type InventoryArchiveResult, type InventoryReferenceChoice, type InventoryScanProgress, type InventoryScanResult, linkLocalDocuments, LocalDocument, LocalScheduleStatus, prepareTestRegisterPreview, type PreparedTestRegister, readInventorySourcePreview, readLocalDocumentFile, readLocalMemoryDraftFiles, readLocalMemoryMediaFile, readLocalSystemSnapshot, readLocalVaultData, rejectLocalContextLink, releaseInventoryItemsForAssistant, rememberedDevelopmentBaseFolder, rememberedInboxFolder, rememberedInventoryArchiveFolder, rememberedInventorySourceFolder, rememberedOneDriveVault, rememberedVault, removeLocalContextLink, requestVaultPermission, resetAutomatedTestEnvironment, resetInventoryItemsForRetest, restoreFullFamilyBackup, runAutomatedStorageDiagnostic, runAutomatedTestEnvironmentSelfTests, runInventoryTextDecodingSelfTests, runPreparedTestRegisterSelfTests, runTestWorkspaceSelfTests, saveLocalDocument, savePreparedTestRegister, scanInventoryFolder, scanLocalInbox, scanOneDriveInbox, setupAutomatedTestEnvironment, type TestWorkspaceReport, updateLocalMemoryDraftStatus, updateLocalMemoryOpenPointStatus, updateLocalScheduleStatus, updateLocalStatus, setLocalDocumentAusfuellen, updateLocalPersonContact, readAusfuellAblage, writeAusfuellAblage, VaultSummary, VaultSyncPreview, VaultSyncResult, vaultSupported, writeFamilyArchiveExport, writeFullFamilyBackup, sicherungEinlesen, sicherungProben, type EinleseProbe } from "./local-vault";
 import { createFamilyRecord, FamilyRecordUnion, FamilyRelation, formatFamilyRecordId, recordTypeDefinitions } from "@/lib/family-data-model";
 import { assignmentProposalHasNoAutomaticWrites, assignmentSequence, FAMILY_ASSIGNMENT_VERSION, proposeFamilyAssignment } from "@/lib/family-assignment";
 import { allFamilyExportScopes, buildFamilyArchiveExport, familyExportScopeLabels, FamilyExportScope, runFamilyExportSelfTest } from "@/lib/family-export";
@@ -474,6 +475,7 @@ function HealthPortalContent() {
   const [editOpen, setEditOpen] = useState(false);
   const [editInitialRequest, setEditInitialRequest] = useState("");
   const [exportOpen, setExportOpen] = useState(false);
+  const [einlesen, setEinlesen] = useState<{ gewaehlt: FileSystemDirectoryHandle; probe: EinleseProbe } | null>(null);
   const [fillDocId, setFillDocId] = useState<string | null>(null);
   const [wfpdfOeffnen, setWfpdfOeffnen] = useState<File[] | null>(null);
   const [wfpdfScan, setWfpdfScan] = useState(false);
@@ -852,6 +854,24 @@ function HealthPortalContent() {
       setNotice({ kind: "success", text: `Die vollständige Familienakten-Sicherung „${result.folderName}“ wurde mit Register, Verknüpfungen, Memories, Medien und Prüfsummen erstellt.${programm} Für die endgültige Bestätigung folgt die Wiederherstellung in einem leeren Testordner.` });
     } catch (error) { if ((error as DOMException)?.name !== "AbortError") setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die vollständige Sicherung konnte nicht erstellt werden." }); }
     finally { setVaultBusy(false); }
+  };
+  // P6: Sicherung einlesen – Probe ohne Schreiben, dann nur in eine leere Akte.
+  const runEinlesenProbe = async () => {
+    if (!vaultHandle) { go("security"); setNotice({ kind: "error", text: "Bitte zuerst den führenden lokalen Familienakten-Tresor verbinden." }); return; }
+    setVaultBusy(true);
+    try {
+      const gewaehlt = await chooseExportDestination("Vollsicherung zum Einlesen wählen");
+      setNotice({ kind: "info", text: "Probe läuft: Register und jede Datei werden per Prüfsumme gelesen. Es wird nichts geschrieben." });
+      setEinlesen({ gewaehlt, probe: await sicherungProben(gewaehlt, vaultHandle) });
+      setNotice(null);
+    } catch (error) { if ((error as DOMException)?.name !== "AbortError") setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die Sicherung konnte nicht geprüft werden." }); }
+    finally { setVaultBusy(false); }
+  };
+  const runEinlesen = async () => {
+    if (!vaultHandle || !einlesen) return;
+    const r = await sicherungEinlesen(einlesen.gewaehlt, vaultHandle);
+    setEinlesen(null); await refreshLocal();
+    setNotice({ kind: "success", text: `Sicherung „${r.ordner}“ eingelesen: ${r.kopiert} Dateien per Prüfsumme bestätigt, ${r.zaehlung.documents} Dokumente und ${r.zaehlung.records} Einträge übernommen.` });
   };
   const runRestoreTest = async () => {
     setVaultBusy(true);
@@ -1344,7 +1364,7 @@ function HealthPortalContent() {
           syncPreview={syncPreview} syncResult={syncResult}
           onConnectOneDrive={connectOneDrive} onConnectLocal={connectLocalVault}
           onLockOneDrive={lockOneDrive} onLockLocal={lockLocalVault} onMigrate={migrateOnline} onHelp={() => go("help")}
-          onCompare={startVaultInventoryComparison} onCheckSync={checkBackupSync} onRunSync={runBackupSync} onExport={() => { setExportOpen(true); reportActivity({ kind: "info", text: "Exportvorbereitung geöffnet. Noch keine Datei geschrieben; Umfang und Zielordner bitte prüfen." }); }} onFullBackup={runFullBackup} onRestoreTest={runRestoreTest}
+          onCompare={startVaultInventoryComparison} onCheckSync={checkBackupSync} onRunSync={runBackupSync} onExport={() => { setExportOpen(true); reportActivity({ kind: "info", text: "Exportvorbereitung geöffnet. Noch keine Datei geschrieben; Umfang und Zielordner bitte prüfen." }); }} onFullBackup={runFullBackup} onRestoreTest={runRestoreTest} onEinlesen={runEinlesenProbe}
         />}
         {!query && active === "medical" && <Medical diagnoses={filteredDiagnoses} query={query} onGo={go} onDocuments={openDocumentLibrary} onSearch={setQuery}/>}
         {!query && active === "benefits" && <Benefits onGo={go} onDocuments={openDocumentLibrary} onSearch={setQuery}/>}
@@ -1516,6 +1536,7 @@ function HealthPortalContent() {
         onGo={(id, targetId) => { setMemoryCompletion(null); go(id, targetId); }}
         onNext={() => { setMemoryCompletion(null); go("memory"); }}
       />}
+      {einlesen && <SicherungEinlesenDialog probe={einlesen.probe} onEinlesen={runEinlesen} onClose={() => setEinlesen(null)}/>}
       {exportOpen && <ExportDialog
         sourceHandle={vaultHandle}
         documents={documents}
@@ -3371,13 +3392,13 @@ function Inbox({ documents, localDocuments, loading, onUpload, onOpenDocument, o
   </>;
 }
 
-function SecurityCenter({ aktenHandle, onDokumente, onMeaningOpen, onProChange, proDestination = null, browserStorage = false, folderSelectionSupported = true, oneDriveConnected, oneDriveName, oneDriveSummary, localConnected, localVaultName, localVaultSummary, supported, onlineCount, localCount, busy, syncPreview, syncResult, onConnectOneDrive, onConnectLocal, onLockOneDrive, onLockLocal, onMigrate, onHelp, onCompare, onCheckSync, onRunSync, onExport, onFullBackup, onRestoreTest }: {
+function SecurityCenter({ aktenHandle, onDokumente, onMeaningOpen, onProChange, proDestination = null, browserStorage = false, folderSelectionSupported = true, oneDriveConnected, oneDriveName, oneDriveSummary, localConnected, localVaultName, localVaultSummary, supported, onlineCount, localCount, busy, syncPreview, syncResult, onConnectOneDrive, onConnectLocal, onLockOneDrive, onLockLocal, onMigrate, onHelp, onCompare, onCheckSync, onRunSync, onExport, onFullBackup, onRestoreTest, onEinlesen }: {
   aktenHandle: FileSystemDirectoryHandle | null; onDokumente?: () => void;
   onMeaningOpen: (section: SectionId, targetId?: string) => void;
   onProChange?: () => void; proDestination?: ProDestination | null; browserStorage?: boolean; folderSelectionSupported?: boolean;
   oneDriveConnected: boolean; oneDriveName: string; oneDriveSummary: VaultSummary | null; localConnected: boolean; localVaultName: string; localVaultSummary: VaultSummary | null; supported: boolean; onlineCount: number; localCount: number; busy: boolean;
   syncPreview: VaultSyncPreview | null; syncResult: VaultSyncResult | null;
-  onConnectOneDrive: () => void; onConnectLocal: () => void; onLockOneDrive: () => void; onLockLocal: () => void; onMigrate: () => void; onHelp: () => void; onCompare: () => void; onCheckSync: () => void; onRunSync: () => void; onExport: () => void; onFullBackup: () => void; onRestoreTest: () => void;
+  onConnectOneDrive: () => void; onConnectLocal: () => void; onLockOneDrive: () => void; onLockLocal: () => void; onMigrate: () => void; onHelp: () => void; onCompare: () => void; onCheckSync: () => void; onRunSync: () => void; onExport: () => void; onFullBackup: () => void; onRestoreTest: () => void; onEinlesen: () => void;
 }) {
   const activeStorage = demoActive() ? "getrennte lokale Demobestand" : proDestination?.ready ? "gewählte Pro-Tresor" : oneDriveConnected ? "verbundene OneDrive-Ordner" : browserStorage ? "lokale Browserspeicher auf diesem Gerät" : "lokale PC-/USB-Tresor";
   const localFolderConnected = localConnected && !browserStorage;
@@ -3400,7 +3421,7 @@ function SecurityCenter({ aktenHandle, onDokumente, onMeaningOpen, onProChange, 
     </section>
     </>}
     <section className="security-grid security-grid-two security-action-grid">
-      <article className="card security-action-card" data-hilfe-ziel="vollsicherung"><div className="security-card-heading"><h2>Familienakte vollständig sichern und testen</h2><InfoPopover label="Vollständige Sicherung erklären" text="Erstellt nach deinem ausdrücklichen Befehl eine vollständige Sicherung von Register, Datensätzen, Verknüpfungen, Memories, Medien, Aufgaben, Fristen und freigegebenen Originaldateien. Die Wiederherstellung wird getrennt in einer leeren Testumgebung geprüft."/></div><div className="button-row"><button className="button primary" disabled={!supported || busy || (!oneDriveConnected && !localConnected)} onClick={onFullBackup}><Usb size={17}/> Vollständige Sicherung erstellen</button><button className="button primary" disabled={!supported || busy} onClick={onRestoreTest}><ClipboardCheck size={17}/> Wiederherstellung testen</button></div></article>
+      <article className="card security-action-card" data-hilfe-ziel="vollsicherung"><div className="security-card-heading"><h2>Familienakte vollständig sichern und testen</h2><InfoPopover label="Vollständige Sicherung erklären" text="Erstellt nach deinem ausdrücklichen Befehl eine vollständige Sicherung von Register, Datensätzen, Verknüpfungen, Memories, Medien, Aufgaben, Fristen und freigegebenen Originaldateien. Die Wiederherstellung wird getrennt in einer leeren Testumgebung geprüft."/></div><div className="button-row"><button className="button primary" disabled={!supported || busy || (!oneDriveConnected && !localConnected)} onClick={onFullBackup}><Usb size={17}/> Vollständige Sicherung erstellen</button><button className="button primary" disabled={!supported || busy} onClick={onRestoreTest}><ClipboardCheck size={17}/> Wiederherstellung testen</button><button className="button secondary" data-sicherung-einlesen-knopf disabled={!supported || busy} onClick={onEinlesen}><Download size={17}/> Sicherung einlesen</button></div></article>
       <article className="card security-action-card"><div className="security-card-heading"><h2>Familienakte exportieren</h2><InfoPopover label="Export erklären" text="Bereitet die vorhandene Exportfunktion vor. Du wählst Bereiche und Zielordner bewusst aus und siehst vor dem Start Umfang, Originaldateien und Speicherstatus. Es wird kein Export vorgetäuscht oder automatisch gestartet."/></div><button className="button primary" disabled={!supported || busy} onClick={onExport}><Download size={17}/> Export vorbereiten</button></article>
     </section>
     {!demoActive() && <section className="card backup-sync"><div className="backup-sync-head"><div><span className="badge success">Neue Ausbaustufe</span><span className="ui-heading-help"><h2>OneDrive auf PC oder USB sichern</h2><InfoPopover label="OneDrive auf PC oder USB sichern erklären" text={UI_HELP["OneDrive auf PC oder USB sichern"]}/></span></div><ShieldCheck size={36}/></div>
