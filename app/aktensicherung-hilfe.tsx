@@ -59,6 +59,8 @@ const ORTE: Ort[] = [
   ] },
 ];
 
+/** Für die Ordnung der Hilfe: ist die Vollsicherung als erledigt abgehakt? */
+export function vollsicherungAbgehakt() { return lesen().vollsicherung === "erledigt"; }
 function lesen(): Record<string, Stand> { try { return JSON.parse(workspaceStorage.getItem(KEY) || "{}") || {}; } catch { return {}; } }
 function schreiben(wert: Record<string, Stand>) { try { workspaceStorage.setItem(KEY, JSON.stringify(wert)); } catch { /* ohne Speicher geht es weiter */ } }
 const alleIds = ORTE.flatMap((o) => o.punkte.flatMap((p) => [p, ...(p.kinder || [])])).map((p) => p.id).filter(Boolean) as string[];
