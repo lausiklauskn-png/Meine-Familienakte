@@ -45,7 +45,10 @@ weil nur ein Sitzungszweig), zusammengeführt als fbd6325.
 
 ## Ausgabe
 
-AUSGABE_PLATZHALTER
+- **2.28.34** als APK (`android-v2.28.34`, Lauf 42386844395) und Windows (`windows-v2.28.34`, Lauf 42386846901), beide
+  `server=ja`, beide grün; PWA über Pages (Lauf 42386832170) grün. Downloads anonym geladen, SHA-256 gleich SHA256SUMS:
+  APK `74af1300…cdde` (19 898 401 Bytes, innen 2.28.34 / fbd6325), Setup `ca01ffed…bd8a` (34 063 733 Bytes),
+  `latest.json` nennt 2.28.34. Nachweis `docs/VEROEFFENTLICHUNG-2.28.34.json`. family-projekt.de aus dem Behälter nicht erreichbar.
 
 ## Nicht geprüft / offen
 
@@ -61,7 +64,14 @@ AUSGABE_PLATZHALTER
 
 Spanne aus Reflog-, Commit- und Laufzeiten, Obergrenze; Pausen nicht abgezogen, Klaus' eigene Angabe geht vor. Zeiten in MEZ.
 
-STUNDEN_PLATZHALTER
+| Block | von | bis | Dauer | Inhalt |
+|---|---|---|---|---|
+| 1 | 14:50 | 15:04 | 14 min | Lesen, Code untersuchen, P4 bauen und prüfen |
+| 2 | 15:04 | 15:46 | 42 min | P5, P6, P7 bauen, Proben, Vergleich BookLedgerPro/Private Brain Pro |
+| 3 | 15:46 | 16:31 | 45 min | Vorschau, Fassung 2.28.34, CI-Befunde beheben, Demo-Proben, CI 7/7 |
+| 4 | 16:31 | 16:52 | 21 min | Zusammenführen (#119), Ausgabe, Downloads prüfen, Nachweis, Abschluss, KimHub |
+
+Zusammen: 14:50 (Reflog) bis 16:52 = **2 h 02 min**.
 
 ## Startauftrag zum Einfügen
 
