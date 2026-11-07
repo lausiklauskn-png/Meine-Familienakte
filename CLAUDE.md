@@ -7,11 +7,12 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Aktueller Stand (07.11.2026)
 
-- **Plan** `docs/PLAN_2026-11-07.md` (#116, von Klaus bestätigt): drei Bausitzungen – 1 Hilfe (2.28.33, erledigt), 2 Daten (2.28.34: Gerätegrenze/Verkleinern, Vollsicherung Android+Windows, Einlesen, Demo als Kopie der eigenen Daten, Punkt 10 Abgleich zwischen den Geräten mit verschlüsseltem Paket), 3 E-Mail (2.28.35).
+- **Plan** `docs/PLAN_2026-11-07.md` (#116, von Klaus bestätigt): drei Bausitzungen – 1 Hilfe (2.28.33, erledigt), 2 Daten (2.28.34, erledigt bis auf Punkt 10), 3 E-Mail (2.28.35). **Punkt 10** (Abgleich zwischen den Geräten): nur Vorschlagsrunde, `docs/vorschau/daten-2.28.34.html` (https://claude.ai/artifact/2wECZ4S96eYLgL9mKkXhDN), Fragen u–z an Klaus offen, nichts gebaut.
+- **Fassung 2.28.34** (Android, Windows, PWA; #119): sichere Dateigröße je Gerät aus der Geräteprüfung (`lib/geraete-grenze.ts`: unter 3 GB 15 MB, 3–6 GB 20 MB, ab 6 GB 40 MB, Pro-Tresor höchstens 20 MB), Ansage nur „Verkleinern“ · „Abbrechen“, Verkleinern ≥ 300 dpi mit Tesseract-Gegenprobe 98 % (`app/verkleinern.ts`), Dateiausgabe 100 MB; Vollsicherung in der Android- und Windows-App in frei gewählten Ordner (`app/nativer-ordner.ts`, Android `FamilienakteOrdnerPlugin`, Windows `FamilyFolders.java` in der Java-Engine; nur selbst angelegte Dateien entfernbar, kein allgemeines Löschen), APK bzw. Windows-Lies-mich mit SHA-256 (`fa_setup_angaben`) daneben; „Sicherung einlesen“ mit Probe ohne Schreiben, nur in leere Akte (`sicherungProben`/`sicherungEinlesen`, `app/sicherung-einlesen.tsx`); Demo = Kopie der eigenen Daten (nur im Dateispeicher, sonst Beispielfamilie), „Übernehmen …“ mit Liste „Was ändert sich?“ (`lib/demo-kopie.ts`, `app/demo-uebernahme.tsx`). Vergleich mit BookLedgerPro/Private Brain Pro: `docs/SICHERUNG-VERGLEICH.md`.
 - **Fassung 2.28.33** (Android, Windows, PWA; #117): Hilfe neu – 13 neue Themen (`app/hilfe-themen.tsx`), „Wie kann ich dir helfen?“ und Gruppen/A–Z (`app/hilfe-ordnung.tsx`, `lib/hilfe-ordnung.ts`), Sprung mit rotem Rahmen (grün bei erledigt) und Zurück an die Stelle markiert (`app/ruecksprung.ts`), Kartenhilfe mit Sprung (`lib/ui-help-ziele.ts`), Benutzerabnahme als Bild mit vier Antworten, mitwandernde Seitenleiste (`app/seitenleiste.tsx`), Versionshistorie mit echter Fassung (`lib/fassungen.ts`, neue Fassung oben eintragen), Demo-Kasten nur „Demo starten“ (`data-demo-start`). CI-Grenze `pruefung` 45 min. Davor **2.28.32** (#113): Mikrofon in der Notiz startet nicht mehr von selbst, nur auf Tipp. Davor **2.28.31** (#112): Seitentitel immer einzeilig (`useEinzeilig` in `app/flach-zeile.tsx`, Schrift wird kleiner); Zähler-Kästchen klappen „Offene Fristen und Aufgaben“ auf und springen dorthin. Davor **2.28.30** (#111): flach und breit – Seitenkopf mit Symbol, Titel und Knopf auf einer Linie, „?“ klein rechts oben an der Schrift (`PageTitle`, `.ui-heading-help` auf allen Seiten); ein Knopf „alle“ (`app/klapp.tsx`) zeigt die Pfeile dessen, was ein Tipp bewirkt; Glocken-Hinweis breit mit Auge; Listen (Mein Kalender, Fristenliste, Tagebuch, Notiz-Liste) als Zeile „Anfang … Ende“ mit Auge (`app/flach-zeile.tsx`), Ändern/Löschen hinter dem Auge, Fristenliste mit Haken in der Zeile; Zähler als drei Kästchen. Davor **2.28.29** (#108): Abschnitte auf „Fristen und Aufgaben“ einklappbar (`app/klapp.tsx`), Mülleimer an Erinnerungen und Notizen (`app/loesch-knopf.tsx`; Löschen = archiviert, Kalender-Abgleich entfernt den Eintrag), Mikrofon bei „Woran erinnern“, Glocke mit Dauer und Android-Kanal-Einstellung. Davor **2.28.28** (#106): Kamera in der Notiz, App-Glocke nach dem Speichern von selbst an, Android-Benachrichtigung der Glocke auch bei geschlossener App (`FamilienakteGlockePlugin`, `GlockeEmpfaenger`). Davor **2.28.27** (#104): Kalender-Erinnerung (Google, Microsoft, Android-Gerätekalender, .ics),
   Knopf „Notiz“ mit erkannter Erinnerung, Memory bearbeiten, „Mein Kalender“ (Kalender-Knopf im Kopf), App-Glocke (ab Werk aus,
-  läutet nur bei offener App), Termin an Ort und Stelle ändern. Nachweise `docs/VEROEFFENTLICHUNG-2.28.33.json`, `-2.28.32.json`, `-2.28.31.json`, `-2.28.30.json`, `-2.28.29.json`, `-2.28.28.json` und `-2.28.27.json`, darunter 2.28.26
-  und 2.28.25 … 2.28.22. Keine davon erneut ausgeben; nächste freie Fassung 2.28.34. Klaus 2026-11-06: neue Funktionen immer gleich als APK, PWA und Windows ausgeben. Die Versionszeile zeigt die technische
+  läutet nur bei offener App), Termin an Ort und Stelle ändern. Nachweise `docs/VEROEFFENTLICHUNG-2.28.34.json`, `-2.28.33.json`, `-2.28.32.json`, `-2.28.31.json`, `-2.28.30.json`, `-2.28.29.json`, `-2.28.28.json` und `-2.28.27.json`, darunter 2.28.26
+  und 2.28.25 … 2.28.22. Keine davon erneut ausgeben; nächste freie Fassung 2.28.35. Klaus 2026-11-06: neue Funktionen immer gleich als APK, PWA und Windows ausgeben. Die Versionszeile zeigt die technische
   Fassung aus `package.json`; `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
 - **Kalender:** Kern `lib/kalender.ts`, Glocke `lib/glocke.ts`, Oberfläche `app/kalender-karte.tsx`, `app/mein-kalender.tsx`,
   `app/termin-bearbeiten.tsx`, Notiz `app/notiz-knopf.tsx`; Einrichtung `docs/KALENDER-EINRICHTUNG.md` (Google veröffentlicht,
@@ -23,8 +24,8 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   (Ausgabe mit `server=ja`); die PWA aktualisiert sich über Pages.
 - **Oberfläche:** Kein Personenname in sichtbaren Texten (Klaus 2026-11-04: „Nutzer“). Erklärungen kurz, in Punkten, hinter
   Fragezeichen; Ablaufbilder/Ordnerbäume über `app/ablaufbild.tsx`. Neue Entwürfe erst als HTML-Vorschau zeigen.
-- **Demo (Klaus 2026-11-04):** aus = oben nichts von „Demo“, Start hinten in der Hilfe; an = roter Knopf „DEMO ▾“ hinter
-  dem Namen mit Menü (verlassen · zurücksetzen · löschen). Kein Demo-Kasten. Proben über `tests/ui/_demo.mjs`.
+- **Demo (Klaus 2026-11-04, 07.11.):** aus = oben nichts von „Demo“, Start hinten in der Hilfe; an = roter Knopf „DEMO ▾“ hinter
+  dem Namen mit Menü (verlassen · bei Kopie „Übernehmen …“ · zurücksetzen · löschen). Mit eigenen Daten Kopie, sonst Beispielfamilie. Proben über `tests/ui/_demo.mjs`.
 - **Kim-sync** gehört nicht in die Familienakte (Klaus 2026-11-04); die Geräteübergabe nennt nur einen frei wählbaren Weg.
 - **Gemeinsamer Tresor:** Workflow-PDF-Pro #67 (main 066498d) verdrahtet „Tresor einrichten – nur Speicher wählen“ (Hauptordner
   finden/anlegen, ein Passwort, Lies-mich, Speichern in den Tresor gesperrt). Das Paket liegt byte-gleich in Familienakte,
@@ -36,12 +37,15 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
-  - `BRIEF_ABSCHLUSS_2026-11-07_HILFE.md` (jüngster Abschluss: Plan und Sitzung 1, 2.28.33; Startauftrag für Sitzung 2 Daten)
+  - `BRIEF_ABSCHLUSS_2026-11-07_DATEN.md` (jüngster Abschluss: Sitzung 2 Daten, 2.28.34; Startauftrag für Sitzung 3 E-Mail)
   - `BRIEF_CODEX_2026-11-04_NACH-2.28.24.md` (Abstimmung mit Codex: welche Dateien Claude gehören)
   - `BRIEF_ABSCHLUSS_2026-11-04_PDF-ARBEITSRAUM.md`, `BRIEF_ABSCHLUSS_2026-11-04_PDF-FUNKTIONSABGLEICH.md` (Codex)
 
 ## Offen
 
+- Klaus 07.11.: Hilfe als Baum (alle Erklärungen als Kästen/Bäume, später Gesamt-Strukturbaum der App, Vorschaufenster mit
+  markierter Stelle) – eigene Sitzung 4 nach E-Mail, siehe Plan. Hilfe-Thema „Knopf „Neu““ zeigt seit main „● Neu“ statt KI-Funkeln
+  (Probe `tests/ui/hilfe-neu-symbol.test.mjs`), geht mit 2.28.35 hinaus. APK 2.28.34 von Klaus grob geprüft: in Ordnung.
 - Gerätefälle am Tablet: die sechs Fälle aus #70/#75 (Tresor-Plan), SD-Verweis/Freigabe und Neustart, fehlende
   Speicherbestätigung. Keine SD-Pfad-Reparatur oder Geräteprüfung behaupten, die nicht stattgefunden hat.
 - Ältere zusätzliche Android-Tresor-Paar-Abnahme (Workflow PDF Pro, BookLedgerPro) nicht vollständig geprüft;
@@ -54,7 +58,10 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Microsoft-Herausgeberprüfung (MPN-ID) offen.
 - CI-Prüfung `pruefung` 19–30 min, Grenze seit 2.28.33 45 min; KimHub #441 (Einträge 405–408) noch Entwurf. Lokal (Sitzungsbehälter) ist die UI-Probe `pro-dokumente` rot, auch auf unverändertem main (Browser schließt beim Neuladen), in der CI grün.
 - 2.28.33 am Gerät ungeprüft: Seitenleiste neben der Android-Randgeste, Rücksprung, rote/grüne Rahmen, Hilfe-Suche.
-- Vollsicherung auf Android (Dateiausgabe nimmt nur 20 MB je Datei), PWA-Updates nach Codex #89, Ein-Schritt-Tresor in Private Brain Pro, Tresor-Leser.
+- 2.28.34 am Gerät ungeprüft: Android-Ordnerdialog (SAF) und APK beilegen, Windows-Ordnerdialog (Swing) und Lies-mich, Verkleinern
+  an echten Kamerafotos, Einlesen nach Neuinstallation, Demo-Kopie mit großem Bestand. Einlesen in eine volle Akte (Zusammenführen)
+  und Erinnerung „lange nicht gesichert“ gibt es nicht (siehe `docs/SICHERUNG-VERGLEICH.md`).
+- PWA-Updates nach Codex #89, Ein-Schritt-Tresor in Private Brain Pro, Tresor-Leser.
 
 ## Veröffentlichen
 

@@ -61,6 +61,8 @@ try {
     await dialog.waitFor({ state: "detached", timeout: 120000 });
     const nachher = await zaehlen();
     if (nachher.dokumente !== vorher.dokumente || nachher.eintraege !== vorher.eintraege) throw new Error(`${JSON.stringify(vorher)} → ${JSON.stringify(nachher)}`);
+    // Die Erfolgsmeldung kommt kurz nach dem Schließen des Fensters; bis dahin steht noch „Probe läuft“ da.
+    await page.waitForFunction(() => [...document.querySelectorAll("[aria-live], .notice")].some((e) => /eingelesen/.test(e.textContent || "")), null, { timeout: 30000 }).catch(() => {});
     const m = (await page.locator("[aria-live], .notice").allInnerTexts()).join(" ");
     if (!/eingelesen/.test(m)) throw new Error(m.slice(0, 200));
     return m.match(/Sicherung[^.]*eingelesen[^.]*\./)?.[0] || m.slice(0, 120);
