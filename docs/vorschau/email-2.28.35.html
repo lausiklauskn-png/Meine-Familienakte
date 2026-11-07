@@ -1,0 +1,227 @@
+<title>Familienakte E-Mail 2.28.35</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* Layout: schmale Lesespalte, je Paket ein Abschnitt mit „so sieht es aus“ (nachgebaute App-Kästen) und kurzen Punkten. */
+:root {
+  --bg: #f5f7fa; --fg: #17212b; --muted: #5b6878; --line: #d8dee6; --card: #ffffff;
+  --accent: #0c79d8; --ok: #1d7f4c; --ok-bg: #e4f4ea; --warn: #9a5b00; --warn-bg: #fdf1dc; --bad: #b3261e; --bad-bg: #fbe5e3; --demo: #c62828;
+  --display: "Fraunces", Georgia, serif; --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif; --mono: "JetBrains Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11161c; --fg: #e6ebf1; --muted: #9aa7b6; --line: #2a3440; --card: #18202a;
+  --accent: #5bb3ff; --ok: #6fd39b; --ok-bg: #173323; --warn: #f0b45a; --warn-bg: #362812; --bad: #ff8a80; --bad-bg: #3a1a18; --demo: #ff6b6b; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #11161c; --fg: #e6ebf1; --muted: #9aa7b6; --line: #2a3440; --card: #18202a;
+  --accent: #5bb3ff; --ok: #6fd39b; --ok-bg: #173323; --warn: #f0b45a; --warn-bg: #362812; --bad: #ff8a80; --bad-bg: #3a1a18; --demo: #ff6b6b; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font: 16px/1.55 var(--body); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 48px; }
+main { max-width: 760px; margin: 0 auto; display: grid; gap: 36px; }
+h1, h2 { font-family: var(--display); font-weight: 600; text-wrap: balance; margin: 0; }
+h1 { font-size: 2rem; line-height: 1.15; }
+h2 { font-size: 1.4rem; }
+h3 { font-size: 1rem; margin: 0; }
+p, ul { margin: 0; }
+ul { padding-left: 1.2em; display: grid; gap: 4px; }
+section { display: grid; gap: 14px; min-width: 0; }
+.kopf { display: grid; gap: 8px; }
+.eyebrow { font: 600 .75rem/1 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.muted { color: var(--muted); }
+.app { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: grid; gap: 10px; min-width: 0; }
+.app .titel { font-weight: 700; }
+.knoepfe { display: flex; flex-wrap: wrap; gap: 8px; }
+.k { border: 1px solid var(--accent); color: var(--accent); background: transparent; border-radius: 8px; padding: 6px 12px; font: 600 .9rem var(--body); }
+.k.p { background: var(--accent); color: var(--card); }
+.k.aus { opacity: .45; }
+.alarm { border-left: 4px solid var(--warn); background: var(--warn-bg); }
+.gut { border-left: 4px solid var(--ok); background: var(--ok-bg); }
+.schlecht { border-left: 4px solid var(--bad); background: var(--bad-bg); }
+.chip { display: inline-block; font: 600 .75rem/1.6 var(--body); padding: 0 8px; border-radius: 99px; background: var(--line); }
+.chip.neu { background: var(--ok-bg); color: var(--ok); } .chip.geaendert { background: var(--warn-bg); color: var(--warn); } .chip.entfernt { background: var(--bad-bg); color: var(--bad); }
+.baum { font: .85rem/1.7 var(--mono); white-space: pre; overflow-x: auto; background: var(--bg); border-radius: 8px; padding: 10px; }
+.demo { display: inline-flex; align-items: center; gap: 4px; background: var(--demo); color: #fff; font-weight: 700; border-radius: 6px; padding: 2px 8px; font-size: .8rem; }
+.menue { display: grid; gap: 2px; border: 1px solid var(--line); border-radius: 8px; padding: 6px; max-width: 280px; }
+.menue span { padding: 4px 6px; border-radius: 4px; }
+.menue .hell { background: var(--ok-bg); font-weight: 600; }
+.tab { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: .9rem; }
+th, td { text-align: left; vertical-align: top; padding: 8px; border-bottom: 1px solid var(--line); }
+th { font-size: .78rem; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+td.z { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.zwei { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.frage { display: grid; gap: 2px; }
+.frage b { font-family: var(--mono); font-weight: 400; color: var(--accent); }
+.stand { font-size: .85rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; }
+</style>
+<style>
+.feld { display: grid; gap: 2px; font-size: .9rem; } .feld span:first-child { color: var(--muted); font-size: .78rem; }
+.feld .wert { border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; background: var(--bg); overflow-wrap: anywhere; }
+.anl { display: flex; flex-wrap: wrap; gap: 6px; } .anl span { border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; font-size: .85rem; }
+.haken { font-size: .9rem; } .ja { color: var(--ok); font-weight: 700; } .nein { color: var(--bad); font-weight: 700; } .teils { color: var(--warn); font-weight: 700; }
+.zeile { display: flex; justify-content: space-between; gap: 8px; border-bottom: 1px solid var(--line); padding: 6px 0; font-size: .9rem; } .zeile:last-child { border-bottom: 0; }
+.ablauf { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: .85rem; } .ablauf span { border: 1px solid var(--line); border-radius: 6px; padding: 4px 8px; background: var(--card); } .ablauf i { color: var(--muted); font-style: normal; }
+</style>
+<main>
+  <header class="kopf">
+    <span class="eyebrow">Plan und Vorschau · Fassung 2.28.35 · Sitzung 3 E-Mail</span>
+    <h1>E-Mail in der Familienakte</h1>
+    <p class="muted">Plansitzung: nichts gebaut. Private Brain Pro gelesen, gegen die Regeln der Familienakte abgeglichen, Wege bei Google und Microsoft nachgeprüft. Die Kästen sind nachgebaut, keine Bildschirmfotos. Gebaut wird erst nach deinem Ja; unten die Fragen e1–e10.</p>
+  </header>
+
+  <section>
+    <span class="eyebrow">Heute</span>
+    <h2>Was die Familienakte schon kann</h2>
+    <ul>
+      <li><b>Mail in die Akte (Weg A):</b> aus jeder Mail-App „Teilen → Familienakte“, auch .eml und .msg. Landet in der Eingangszentrale. Steht seit 2.28.33 als Hilfe-Thema „Teilen an die Familienakte“.</li>
+      <li><b>Mail schreiben:</b> die Korrespondenzzentrale legt nur Entwürfe an. „Als versendet speichern“ hält nur fest; die App verschickt nie selbst.</li>
+      <li><b>Microsoft-Anmeldung</b> gibt es schon für den Kalender (App „Familienakte“ in Entra, alle Microsoft-Konten). Zugänge liegen nur im Speicher der Sitzung, nie in Akte, Sicherung oder localStorage.</li>
+    </ul>
+    <div class="app alarm"><span><b>Veraltet gefunden:</b> Hilfe-Thema „Was funktioniert noch nicht vollständig?“ nennt Vollsicherung, Einlesen und Probemodus noch als „folgt“ – seit 2.28.34 erledigt. Wird in E1 berichtigt.</span></div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Private Brain Pro · gelesen, nichts geändert</span>
+    <h2>So macht es Private Brain Pro</h2>
+    <ul>
+      <li><b>Postfach lesen und senden</b> über IMAP und SMTP (nur verschlüsselt, Ports 993/465), Java-Bibliothek Jakarta Mail 1.6.8, auf Android und als Windows-Programm dieselben Quellen.</li>
+      <li><b>Anbieter:</b> T-Online, Hetzner, GMX, WEB.DE, Yahoo, IONOS mit Passwort; Gmail mit Google-Anmeldung (Vollzugriff „mail.google.com“). <b>Microsoft fehlt</b> (nur ein Platzhalter „noch nicht freigeschaltet“).</li>
+      <li><b>Passwörter</b> nur im nativen Fenster eingegeben, verschlüsselt mit Geräteschlüssel (Android-Keystore, Windows-DPAPI).</li>
+      <li><b>Senden:</b> Entwurf → Prüfung → „Trotzdem senden?“ bei Befunden → „Jetzt wirklich versenden?“. Die Absicht wird vorher festgehalten; ist unklar, ob es gesendet wurde, wird nie von selbst wiederholt.</li>
+      <li><b>Mails und Anhänge</b> verschlüsselt im Tresor (SD optional), Anhänge gestreamt; ohne Tresor nur kurz im Zwischenspeicher.</li>
+      <li><b>Dazu:</b> Abmelden von Werbung, Papierkorb für alte Werbung, Suche über alle Konten, KI-Antwort über Mistral, eigener Mail-Server für die Web-Fassung.</li>
+      <li><b>An die Familienakte</b> gibt Brain heute keine Mails; nur „An BookLedgerPro“ als .eml ins Fach. Das Fach <code>eingang-familienakte</code> gibt es schon im gemeinsamen Tresor-Paket.</li>
+    </ul>
+    <div class="ablauf"><span>Konto (Passwort / Google)</span><i>›</i><span>Postfach abrufen</span><i>›</i><span>Mail öffnen → Tresor</span><i>›</i><span>Antwort-Entwurf</span><i>›</i><span>Prüfen</span><i>›</i><span>„Jetzt wirklich versenden?“</span></div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Abgleich</span>
+    <h2>Brain gegen die Regeln der Familienakte</h2>
+    <div class="tab"><table>
+      <tr><th>Regel der Familienakte</th><th>Private Brain Pro</th><th>Für die Familienakte</th></tr>
+      <tr><td>Nichts geht still hinaus</td><td class="teils">teils: Abmelden von Werbung und Papierkorb laufen nach einem einmaligen Ja von selbst</td><td>nicht übernehmen; jede Mail einzeln auf Befehl</td></tr>
+      <tr><td>Entwurf, Prüfung, ausdrücklicher Befehl</td><td class="ja">ja (Prüfen, zweimal fragen, keine stille Wiederholung)</td><td>übernehmen: Haken „geprüft“ + Bestätigungsfenster mit Empfänger und Anlagen</td></tr>
+      <tr><td>Gesundheitsdaten neutral</td><td class="teils">Mailtext kann (maskiert, nach Tipp) an Mistral gehen</td><td>keine KI für Mails; Betreff-Hinweis bei Gesundheitswörtern (e2)</td></tr>
+      <tr><td>Keine Schlüssel in Dateien</td><td class="teils">Passwörter verschlüsselt, aber als Kopie im Tresor mitgesichert</td><td>keine Passwörter (Microsoft-Anmeldung statt Passwort); Zugang nur im Sitzungsspeicher wie beim Kalender</td></tr>
+      <tr><td>Keine versteckte Zweitsammlung</td><td class="nein">Suche über alle Konten legt Mailtexte im Browser-Speicher ab</td><td>nichts zwischenspeichern; gewählte Mail geht als .eml in die Eingangszentrale, sonst nichts</td></tr>
+      <tr><td>Speicherwege wie gewählt, SD optional</td><td class="ja">Tresor optional, sonst nur Zwischenspeicher</td><td>übernommene Mail folgt dem gewählten Speicher der Akte</td></tr>
+      <tr><td>Nur was bestätigt wird</td><td class="ja">Lesen nur auf Abruf</td><td>Abholen nur auf Tipp, nie im Hintergrund; im Postfach nichts löschen oder verschieben</td></tr>
+    </table></div>
+    <p class="muted">Wiederverwendbar wäre später der IMAP-Kern (rund 1 500 Zeilen Java) für GMX, WEB.DE, T-Online – siehe Weg H, Frage e8. Für 2.28.35 nicht nötig: Microsoft geht ohne Passwort über die vorhandene Anmeldung.</p>
+  </section>
+
+  <section>
+    <span class="eyebrow">Nachgeprüft 07.11.</span>
+    <h2>Die Wege bei Google und Microsoft</h2>
+    <div class="tab"><table>
+      <tr><th>Weg</th><th>Stand</th><th>Kosten / Prüfung</th><th>Vorschlag</th></tr>
+      <tr><td>A Teilen → Familienakte</td><td>da (Android, PWA, Windows „Öffnen mit“)</td><td>keine</td><td>E1: Hilfe ergänzen</td></tr>
+      <tr><td>B Senden über die Mail-App</td><td>Android: Mail-Auswahl mit Anlagen geht (nur Mail-Apps anzeigen). PWA: Teilen mit Dateien in Chrome/Edge. Windows: siehe e4</td><td>keine</td><td><b>E2, zuerst</b></td></tr>
+      <tr><td>C Microsoft lesen und senden</td><td>Rechte <code>Mail.Send</code>, <code>Mail.Read</code> gelten auch für private Konten (Outlook.com, Hotmail). Anlagen bis 3 MB direkt, größer stückweise (bis 150 MB). Ohne Herausgeberprüfung: Hinweis „nicht verifiziert“</td><td>keine; in Entra zwei Rechte dazu (e10)</td><td><b>E3, danach</b></td></tr>
+      <tr><td>D Gmail lesen</td><td><code>gmail.readonly</code> ist „eingeschränkt“: Sicherheitsprüfung durch eine externe Stelle, jährlich zu erneuern, kostenpflichtig. Ohne sie höchstens 100 eingetragene Testnutzer, Zugang läuft nach 7 Tagen ab</td><td>laufende Kosten</td><td>nicht jetzt (e7)</td></tr>
+      <tr><td>E Gmail senden</td><td><code>gmail.send</code> ist „sensibel“: Begründung und Prüfvideo wie beim Kalender, keine Sicherheitsprüfung</td><td>keine Kosten, Prüfung</td><td>mit dem Kalender-Prüfvideo beantragen? (e7)</td></tr>
+      <tr><td>F Brain übergibt Mails</td><td>Fach <code>eingang-familienakte</code> gibt es; Brain müsste „An Familienakte“ wie „An BookLedgerPro“ bekommen</td><td>keine</td><td>Arbeit in Brain, eigener Auftrag (e9)</td></tr>
+      <tr><td>G Weiterleiten an eigene Adresse</td><td>braucht Mail-Server, Mails lägen fremd</td><td>Server</td><td>nicht</td></tr>
+      <tr><td>H IMAP mit App-Passwort</td><td>Kern in Brain fertig; bei Microsoft-Privatkonten geht Passwort-Anmeldung nicht mehr, bei Gmail nur über die eingeschränkte Google-Anmeldung</td><td>keine; Passwort verschlüsselt am Gerät</td><td>später, eigene Sitzung (e8)</td></tr>
+    </table></div>
+    <p class="muted">Grenze der Prüfung: die Seiten von Google und Microsoft selbst sind aus dem Sitzungsbehälter gesperrt; geprüft über die Websuche (Microsoft-Fragen-und-Antworten, Anbieter-Leitfäden). Vor dem Bau von C an deinem Microsoft-Konto gegenprüfen.</p>
+  </section>
+
+  <section>
+    <span class="eyebrow">E1 · Weg A</span>
+    <h2>Mail in die Akte – sichtbar</h2>
+    <ul>
+      <li>Hilfe „Teilen an die Familienakte“: Ablaufbild <i>Mail-App › Teilen › Familienakte › Eingangszentrale › Prüfen › Einordnen</i>.</li>
+      <li>Korrespondenzzentrale: kleiner Hinweis „Antwort bekommen? In der Mail-App ‚Teilen → Familienakte‘.“</li>
+      <li>„Was funktioniert noch nicht vollständig?“ auf 2.28.35 berichtigen.</li>
+    </ul>
+  </section>
+
+  <section>
+    <span class="eyebrow">E2 · Weg B</span>
+    <h2>Senden über die Mail-App</h2>
+    <ul>
+      <li>Neuer Knopf in der Korrespondenzzentrale, erst nach dem Haken „geprüft“.</li>
+      <li>Die App füllt Empfänger, Betreff, Text und Anlagen; <b>abschicken tust du in deiner Mail-App</b>.</li>
+      <li>Anlagen: Dokumente aus dem Vorgang, einzeln abwählbar; über 20 MB zusammen Ansage mit „Verkleinern“ (aus 2.28.34).</li>
+    </ul>
+    <div class="app">
+      <div class="titel">Schreiben / E-Mail erstellen <span class="chip">Nicht versendet</span></div>
+      <div class="zwei">
+        <div class="feld"><span>Empfänger</span><span class="wert">praxis@beispiel.invalid</span></div>
+        <div class="feld"><span>Betreff</span><span class="wert">Anfrage zu Unterlagen</span></div>
+      </div>
+      <div class="feld"><span>Anlagen aus dem Vorgang · 2,4 MB</span><div class="anl"><span>☑ Befund_2026-10.pdf</span><span>☑ Überweisung.pdf</span><span>☐ Foto_Rezept.jpg</span></div></div>
+      <span class="haken">☑ Ich habe Empfänger, Inhalt, Vorgang und Anlagen geprüft.</span>
+      <div class="knoepfe"><span class="k">Als Entwurf speichern</span><span class="k p">In der Mail-App öffnen ›</span><span class="k">Als versendet speichern</span></div>
+    </div>
+    <div class="app alarm"><span>Im Betreff steht ein Gesundheitswort („Befund“). E-Mails sind unterwegs nicht Ende-zu-Ende verschlüsselt. Betreff neutral halten?</span><div class="knoepfe"><span class="k">Betreff ändern</span><span class="k">So lassen</span></div></div>
+    <p>Zurück aus der Mail-App:</p>
+    <div class="app gut"><span class="titel">Hast du die E-Mail in der Mail-App abgeschickt?</span><div class="knoepfe"><span class="k p">Ja, als versendet speichern</span><span class="k">Nein, Entwurf bleibt</span></div></div>
+    <ul class="muted">
+      <li>Android: eigenes kleines Plugin, Auswahl nur mit Mail-Apps (Gmail, Outlook, Samsung-Mail …), Anlagen über die geschützte Dateifreigabe.</li>
+      <li>PWA (Chrome, Edge): Teilen mit Dateien; geht das nicht, öffnet sich die Mail-App ohne Anlagen und die Anlagen werden gespeichert.</li>
+      <li>Windows: siehe Frage e4.</li>
+      <li>Die App erfährt nicht, ob wirklich gesendet wurde – darum die Frage danach.</li>
+    </ul>
+  </section>
+
+  <section>
+    <span class="eyebrow">E3 · Weg C</span>
+    <h2>Microsoft-Postfach: senden und abholen</h2>
+    <ul>
+      <li>Gleiche Anmeldung wie der Kalender, zwei Rechte dazu. Kein Passwort in der App.</li>
+      <li>Senden nur über ein Bestätigungsfenster; die Mail liegt danach in „Gesendete Elemente“ deines Postfachs.</li>
+      <li>Abholen nur auf Tipp: Liste der letzten 30 Tage, gewählte Mails gehen als .eml in die Eingangszentrale, Rest bleibt im Postfach. Im Postfach wird nichts gelöscht, verschoben oder als gelesen markiert.</li>
+    </ul>
+    <div class="zwei">
+      <div class="app">
+        <span class="titel">Jetzt über Microsoft senden?</span>
+        <div class="zeile"><span>Von</span><span>verbundenes Microsoft-Konto</span></div>
+        <div class="zeile"><span>An</span><span>praxis@beispiel.invalid</span></div>
+        <div class="zeile"><span>Betreff</span><span>Anfrage zu Unterlagen</span></div>
+        <div class="zeile"><span>Anlagen</span><span>2 · 2,4 MB</span></div>
+        <div class="knoepfe"><span class="k p">Jetzt senden</span><span class="k">Zurück</span></div>
+      </div>
+      <div class="app">
+        <span class="titel">E-Mails abholen · Microsoft</span>
+        <div class="zeile"><span>☑ Terminbestätigung · 05.11.</span><span>📎 1</span></div>
+        <div class="zeile"><span>☐ Newsletter · 04.11.</span><span></span></div>
+        <div class="zeile"><span>☑ Rechnung Oktober · 02.11.</span><span>📎 1</span></div>
+        <div class="knoepfe"><span class="k p">2 in die Eingangszentrale</span><span class="k">Abbrechen</span></div>
+      </div>
+    </div>
+    <ul class="muted">
+      <li>Geht in Android, Windows und PWA (die Kalender-Anmeldung läuft dort schon).</li>
+      <li>Senden mit Anlage über 3 MB: erst Entwurf im Postfach, Anlage stückweise, dann senden – derselbe eine Befehl.</li>
+      <li>Ist unklar, ob gesendet wurde (Netz weg), wird nie von selbst wiederholt; Hinweis „In ‚Gesendete Elemente‘ nachsehen“.</li>
+    </ul>
+  </section>
+
+  <section>
+    <span class="eyebrow">Fragen · Vorschlag in Klammern</span>
+    <h2>Bitte entscheiden</h2>
+    <div class="frage"><b>e1</b><span>B: Nach der Mail-App fragen „abgeschickt?“ und bei Ja als versendet speichern? <i>(ja)</i></span></div>
+    <div class="frage"><b>e2</b><span>Gesundheitswort im Betreff: nur Hinweis, du entscheidest; nie selbst ändern? <i>(ja)</i></span></div>
+    <div class="frage"><b>e3</b><span>Anlagen zusammen über 20 MB: Ansage mit „Verkleinern“ oder „Abbrechen“ wie bei 2.28.34? <i>(ja)</i></span></div>
+    <div class="frage"><b>e4</b><span>Windows hat kein sicheres „Mail-App mit Anlage öffnen“ (neues Outlook übernimmt Anlagen nicht zuverlässig). Vorschlag: Windows-Teilen-Fenster; geht das nicht, Text kopieren und Anlagen speichern. Für Microsoft-Konten ist C der bessere Weg. <i>(ja)</i></span></div>
+    <div class="frage"><b>e5</b><span>C: lesen und senden, beides nur auf Tipp; Abholen zeigt 30 Tage, im Postfach wird nichts verändert? <i>(ja)</i></span></div>
+    <div class="frage"><b>e6</b><span>C: Anmeldung wie beim Kalender nur für die laufende Sitzung (nach Neustart neu anmelden)? <i>(ja)</i></span></div>
+    <div class="frage"><b>e7</b><span>Gmail: lesen (D) nicht wegen jährlicher kostenpflichtiger Prüfung; senden (E) zusammen mit dem Kalender-Prüfvideo beantragen und erst nach Googles Zustimmung bauen? Bis dahin Gmail über B. <i>(ja)</i></span></div>
+    <div class="frage"><b>e8</b><span>IMAP (H) für GMX, WEB.DE, T-Online aus Brain übernehmen – später, eigene Sitzung, ohne Passwort-Kopie im Tresor? <i>(ja, nicht in 2.28.35)</i></span></div>
+    <div class="frage"><b>e9</b><span>Brain → Familienakte (F): in Brain „An Familienakte“ nachrüsten, eigener Auftrag im Brain-Repo? <i>(ja, später)</i></span></div>
+    <div class="frage"><b>e10</b><span>Du fügst in Entra (App „Familienakte“) die delegierten Rechte <code>Mail.Send</code> und <code>Mail.Read</code> hinzu; ich schreibe die Schritte in <code>docs/KALENDER-EINRICHTUNG.md</code>. Kein neues Geheimnis. <i>(ja)</i></span></div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Ablauf nach deinem Ja</span>
+    <h2>Reihenfolge</h2>
+    <div class="ablauf"><span>E1 Hilfe</span><i>›</i><span>E2 Mail-App</span><i>›</i><span>E3 Microsoft</span><i>›</i><span>Fassung 2.28.35</span><i>›</i><span>APK · PWA · Windows</span></div>
+    <ul class="muted">
+      <li>Je Paket ein Commit, Proben je Paket; keine Prüfung abgeschaltet.</li>
+      <li>Mit 2.28.35 geht auch das Hilfe-Thema „Knopf ‚Neu‘“ mit „● Neu“ hinaus (liegt im offenen PR #120).</li>
+      <li>Nicht in dieser Sitzung: Hilfe als Baum, Strukturbaum, Vorschaufenster (Sitzung 4); Punkt 10 wartet auf deine Antworten u–z.</li>
+    </ul>
+  </section>
+
+  <p class="stand">Stand 07.11.2026 · main fbd6325 (2.28.34) · Private Brain Pro main 555a954 gelesen · Beispieladressen erfunden.</p>
+</main>
