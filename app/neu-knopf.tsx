@@ -9,6 +9,7 @@ import { workspaceStorage } from "../lib/demo-workspace.ts";
  */
 export type Neuigkeit = { id: string; titel: string; text: string; knopf?: { text: string; ziel: "kalender" | "hilfe-sichern" | "hilfe" } };
 export const NEUIGKEITEN: Neuigkeit[] = [
+  { id: "email-2026-11-07", titel: "E-Mail in der Hilfe", text: "Neues Hilfe-Thema als Karte: wie Mails und ihre Anhänge in die Akte kommen, was schon geht und was geplant ist. Ein Tipp auf einen Kasten zeigt die Verbindungen.", knopf: { text: "Zur Hilfe", ziel: "hilfe" } },
   { id: "daten-2026-11-07", titel: "Sichern auch am Handy", text: "Vollsicherung in einen frei gewählten Ordner (SD-Karte, USB), mit Programm daneben. Sicherung einlesen nach Neuinstallation. Zu große Fotos lassen sich verkleinern. Die Demo arbeitet an einer Kopie deiner Daten.", knopf: { text: "Akten sichern", ziel: "hilfe-sichern" } },
   { id: "hilfe-2026-11-07", titel: "Hilfe auf neuem Stand", text: "Oben „Wie kann ich dir helfen?“, Themen nach Schritten geordnet, Sprünge mit rotem Rahmen. Neu am rechten Rand: Seitenleiste mit alle zu, nach oben, zurück.", knopf: { text: "Zur Hilfe", ziel: "hilfe" } },
   { id: "kalender-2026-11", titel: "Fristen im Kalender", text: "Termine und Fristen landen mit Erinnerung in deinem Kalender.", knopf: { text: "Kalender verbinden", ziel: "kalender" } },

@@ -6,6 +6,7 @@
 export type Fassung = { fassung: string; datum: string; inhalt: string };
 
 export const FASSUNGEN: Fassung[] = [
+  { fassung: "2.28.35", datum: "07.11.2026", inhalt: "Hilfe „E-Mail in die Familienakte“ als Karte mit Verbindungen und Stand (fertig, geplant), Knopf „Neu“ mit „● Neu“ in der Hilfe, Hilfe-Text zu Fehlendem berichtigt" },
   { fassung: "2.28.34", datum: "07.11.2026", inhalt: "Daten: sichere Dateigröße je Gerät, Fotos verkleinern mit Texterkennungs-Gegenprobe, Ausgabe bis 100 MB, Vollsicherung auf Android und Windows mit Programm daneben, Sicherung einlesen, Demo als Kopie der eigenen Daten" },
   { fassung: "2.28.33", datum: "07.11.2026", inhalt: "Hilfe neu: 13 neue Themen, veraltete Texte berichtigt, „Wie kann ich dir helfen?“, Ordnung nach Schritten und A–Z, Sprung mit rotem Rahmen, Zurück an die Stelle markiert, Benutzerabnahme als Bild mit vier Antworten, Seitenleiste rechts" },
   { fassung: "2.28.32", datum: "06.11.2026", inhalt: "Mikrofon in der Notiz startet nur auf Tipp" },
