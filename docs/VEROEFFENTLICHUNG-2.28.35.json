@@ -1,0 +1,56 @@
+{
+  "version": "2.28.35",
+  "source": "ef6e705df889fcc9920a4752d130db605d0ae92a",
+  "pullRequest": [121, 122],
+  "recordedUtc": "2026-11-07T19:12:00Z",
+  "freigabe": "Klaus 2026-11-07: „Nach grüner CI PR 121 zusammenführen“, „Danach 2.28.35 als APK, PWA und Windows ausgeben“; Neu-Eintrag „E-Mail in der Hilfe“ „ruhig mit reinnehmen“.",
+  "inhalt": "Hilfe „E-Mail in die Familienakte“ als Landkarte (Container mit Wege-Knöpfen, Äste direkt am Kasten, → eine Richtung, ⇄ hin und zurück, Stand als Rahmen), Knopf „Neu“ mit „E-Mail in der Hilfe“, „● Neu“ im Hilfe-Thema, Hilfe zu Fehlendem berichtigt. Senden und Abholen von Mails nicht gebaut.",
+  "ciAmPrStand": "#121 4d52b5c: pruefung, android, windows success; #122 170360a: pruefung, webview, product (31, pixel_c), product (35, pixel_2), android, windows success",
+  "releases": [
+    {
+      "tag": "android-v2.28.35",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.35",
+      "run": 42403634795,
+      "conclusion": "success",
+      "updateServer": "server=ja; Lauf grün",
+      "downloadProof": [
+        {
+          "name": "Familienakte-android-v2.28.35.apk",
+          "bytes": 19902497,
+          "sha256": "80952977f226a423089e4bae5ed7a120bb2f5a174dd3cdc8785271600bd6690f",
+          "anonymousDownload": true,
+          "matchesSHA256SUMS": true,
+          "versionInside": "2.28.35 (assets/public/version.json, commit ef6e705)"
+        },
+        {
+          "name": "Familienakte-Einzeldatei-2.28.35.html",
+          "bytes": 3546707,
+          "sha256": "870a9573c2563615873cb9a11999fccc3b8f5fe3a29f06b403a37e95d0f8d96b",
+          "anonymousDownload": true,
+          "matchesSHA256SUMS": true
+        }
+      ]
+    },
+    {
+      "tag": "windows-v2.28.35",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.35",
+      "run": 42403637194,
+      "conclusion": "success",
+      "updateServer": "server=ja; Lauf grün; latest.json nennt 2.28.35",
+      "downloadProof": [
+        {
+          "name": "Familienakte-Windows-2.28.35-x64-setup.exe",
+          "bytes": 34091144,
+          "sha256": "65d179e84eddfa32aaeb1d90d13c9b75c285ec062ca5e35a64aff113c4cd34e6",
+          "anonymousDownload": true,
+          "matchesSHA256SUMS": true
+        }
+      ]
+    }
+  ],
+  "pwa": "Pages auf ef6e705: Lauf 141 (42403625940) success; Seite selbst aus dem Behälter nicht geprüft",
+  "notChecked": [
+    "Kein physisches Gerät: Landkarte in der Hilfe am Handy/Tablet, Knopf „Neu“",
+    "family-projekt.de aus dem Behälter nicht erreichbar (Proxy weist ab); die Freigabeläufe prüfen den Server selbst"
+  ]
+}

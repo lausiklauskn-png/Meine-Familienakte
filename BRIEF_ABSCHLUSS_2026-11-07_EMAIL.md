@@ -42,7 +42,11 @@ Neu-Eintrag „ruhig mit reinnehmen“). PR #121 (Plan, Hilfe, Abstimmungsdateie
 
 ## Ausgabe
 
-AUSGABE_PLATZHALTER
+- **2.28.35** als APK (`android-v2.28.35`, Lauf 42403634795) und Windows (`windows-v2.28.35`, Lauf 42403637194), beide
+  `server=ja`, beide grün; PWA über Pages (Lauf 42403625940) grün. Downloads anonym geladen, SHA-256 gleich SHA256SUMS:
+  APK `80952977…690f` (19 902 497 Bytes, innen 2.28.35 / ef6e705), Einzeldatei `870a9573…d96b`, Setup `65d179e8…34e6`
+  (34 091 144 Bytes), `latest.json` nennt 2.28.35. Nachweis `docs/VEROEFFENTLICHUNG-2.28.35.json`. family-projekt.de aus dem
+  Behälter nicht erreichbar.
 
 ## Nicht geprüft / offen
 
@@ -59,9 +63,9 @@ Spanne aus Reflog- (Beginn), Commit- und Laufzeiten, Obergrenze; Pausen nicht ab
 | 1 | 17:36 | 17:42 | 6 min | Lesen, Brain holen, Wege nachprüfen, Vorschau, PR #121 |
 | 2 | 17:42 | 18:47 | 65 min | Hilfe-Baum, Landkarte im Sage-Stil, Gesamtkarte mit Notizen |
 | 3 | 18:47 | 19:28 | 41 min | Lint-Fix, E-Mail-Plan, E-Mail-Karte, Zusammenführen #121 |
-| 4 | 19:28 | ENDE_PLATZHALTER | DAUER_PLATZHALTER | Fassung 2.28.35 (#122), Ausgabe, Nachweis, Abschluss, KimHub |
+| 4 | 19:28 | 20:15 | 47 min | Fassung 2.28.35 (#122), Ausgabe, Nachweis, Abschluss, KimHub |
 
-Zusammen: 17:36 (Reflog) bis ENDE_PLATZHALTER = **GESAMT_PLATZHALTER**.
+Zusammen: 17:36 (Reflog) bis 20:15 = **2 h 39 min**.
 
 ## Startauftrag zum Einfügen
 
