@@ -38,7 +38,7 @@ export function DemoStarten({ aktiv, gesperrt, starten, grund }: { aktiv: boolea
       <span className="ui-heading-help"><h2>Demo</h2><InfoPopover label="Demo erklären" text={DEMO_HILFE}/></span>
       {aktiv
         ? <span className="fine-print" data-demo-laeuft>läuft – roter Knopf „DEMO“ oben</span>
-        : <button type="button" className="button secondary" disabled={gesperrt} onClick={starten}><Play size={16}/> Demo starten</button>}
+        : <button type="button" className="button secondary" data-demo-start disabled={gesperrt} onClick={starten}><Play size={16}/> Demo starten</button>}
     </div>
     {!aktiv && gesperrt && grund && <p className="fine-print" data-demo-grund>{grund}</p>}
   </section>;
