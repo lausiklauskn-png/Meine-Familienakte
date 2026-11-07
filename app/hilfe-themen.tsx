@@ -46,7 +46,7 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
     "Ein roter Punkt zeigt: Es gibt etwas Neues zu lesen.",
     "× blendet einen Eintrag aus; das Gerät merkt es sich.",
   ] },
-  { id: "demo", titel: "Demo ausprobieren", symbol: <FlaskConical/>, weg: "Hilfe › oben: Demo ansehen", punkte: [
+  { id: "demo", titel: "Demo ausprobieren", symbol: <FlaskConical/>, weg: "Hilfe › oben: Demo starten", punkte: [
     "Die Demo hat einen eigenen Bestand mit einer erfundenen Familie. Deine Akte bleibt unberührt.",
     "Solange sie läuft, steht hinter dem Namen ein roter Knopf „DEMO ▾“: verlassen · zurücksetzen · löschen.",
     "Die Demo gehört nicht in deine Sicherung.",

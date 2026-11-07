@@ -242,7 +242,7 @@ try {
     await footer(page, "Tagebuch & Erinnerungen");
     return (await page.locator("text=Elektriker war heute da").count()) > 0 || (await page.locator("text=Hausaufgaben allein").count()) > 0;
   });
-  await step("„Demo ansehen“ (hinten in der Hilfe) legt die Beispielfamilie wieder an", async () => {
+  await step("„Demo starten“ (oben in der Hilfe) legt die Beispielfamilie wieder an", async () => {
     await demoUmschalten(page, true);
     await page.locator('.site-header[data-demo-beispiele="ja"]').waitFor({ state: "attached", timeout: 60000 });
     return true;

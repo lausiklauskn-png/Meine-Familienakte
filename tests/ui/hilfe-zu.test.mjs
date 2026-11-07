@@ -17,15 +17,15 @@ try {
   });
   check(lage.fragen >= 20, "Hilfe hat ihre Fragen (" + lage.fragen + ")");
   check(lage.offen === 0, "Alle Fragen und „Wie suche ich etwas?“ starten zugeklappt (offen: " + lage.offen + ")");
-  check(lage.demoVorne, "„Demo ansehen“ steht vor „Was möchtest du tun?“");
-  check(lage.demoSichtbar, "„Demo ansehen“ ist ohne langes Rollen zu sehen");
+  check(lage.demoVorne, "„Demo starten“ steht vor „Was möchtest du tun?“");
+  check(lage.demoSichtbar, "„Demo starten“ ist ohne langes Rollen zu sehen");
   await step("Eine Frage lässt sich aufklappen und zeigt ihren Text", async () => {
     const f = page.locator(".hilfe-eintrag > details", { hasText: "Was ist „Bestand prüfen“?" }).first();
     await f.locator("summary").click();
     return await f.evaluate((d) => d.open && d.querySelector("div").innerText.length > 20);
   });
   await step("Gesperrte Demo nennt den Grund (kein Datentresor gewählt)", async () => {
-    const knopf = page.locator(".demo-starten button", { hasText: "Demo ansehen" });
+    const knopf = page.locator(".demo-starten button", { hasText: "Demo starten" });
     if (!(await knopf.isDisabled())) return true; // mit Tresor: kein Grund nötig
     return /Datentresor wählen/.test(await page.locator(".demo-starten [data-demo-grund]").innerText());
   });

@@ -48,9 +48,11 @@ let rahmenWeg: (() => void) | null = null;
 /** Roter Rahmen am Ziel eines Hilfe-Sprungs (Klaus 07.11.2026): bleibt, bis man auf der Seite etwas tut (Tipp, Taste, Scrollen). */
 function rahmen(el: HTMLElement) {
   rahmenWeg?.();
+  // Ist am Ziel alles erledigt (data-ziel-stand="erledigt"), ist der Rahmen grün statt rot (Klaus 2026-11-07).
+  el.classList.toggle("hilfe-ziel-gut", el.dataset.zielStand === "erledigt");
   el.classList.add("hilfe-ziel-rahmen");
   const ereignisse = ["pointerdown", "keydown", "wheel", "touchmove"] as const;
-  const weg = () => { el.classList.remove("hilfe-ziel-rahmen"); for (const e of ereignisse) document.removeEventListener(e, weg, true); window.clearTimeout(scharf); rahmenWeg = null; };
+  const weg = () => { el.classList.remove("hilfe-ziel-rahmen", "hilfe-ziel-gut"); for (const e of ereignisse) document.removeEventListener(e, weg, true); window.clearTimeout(scharf); rahmenWeg = null; };
   // Erst nach dem eigenen weichen Scrollen scharf schalten, sonst nähme der auslösende Tipp den Rahmen gleich wieder weg.
   const scharf = window.setTimeout(() => { for (const e of ereignisse) document.addEventListener(e, weg, { capture: true, passive: true }); }, 600);
   rahmenWeg = weg;

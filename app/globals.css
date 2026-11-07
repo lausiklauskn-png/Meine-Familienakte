@@ -2324,3 +2324,8 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .hilfe-gruppe-titel { margin: 6px 0 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; color: var(--navy); font-size: 1.05rem; }
 .hilfe-gruppe-titel small { color: var(--muted); font-weight: 600; font-size: .86rem; }
 .hilfe-eintrag { display: contents; }
+
+/* Demo-Kasten in der Hilfe: Titel mit „?“ und Knopf in einer Zeile (Klaus 2026-11-07) */
+.demo-starten-zeile { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; }
+.demo-starten-zeile h2 { margin: 0; }
+.hilfe-ziel-rahmen.hilfe-ziel-gut { outline-color: #1d8a4f !important; }

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, LogOut, RefreshCw, Trash2, Play } from "lucide-react";
+import { InfoPopover } from "./ui-controls";
 
 /**
  * Demo nur noch über einen Knopf (Nutzerwunsch 2026-11-04): Ist die Demo aus, steht oben nichts von „Demo“; gestartet wird
@@ -29,13 +30,16 @@ export function DemoKnopf({ gesperrt, verlassen, zuruecksetzen, loeschen }: { ge
 }
 
 /** Hinten in der Hilfe: die Demo starten (oder sagen, dass sie läuft und wo man sie verlässt). */
+/** Demo-Kasten in der Hilfe (Klaus 2026-11-07): nur der Knopf „Demo starten“, die Erklärung hinter dem „?“. */
+const DEMO_HILFE = "• Die Demo zeigt die App mit einer erfundenen Beispielfamilie, in einem eigenen Bestand. Deine Akte bleibt unberührt.\n• Während sie läuft, steht oben der rote Knopf „DEMO ▾“: verlassen · zurücksetzen · löschen.\n• Geplant: Hast du schon eigene Daten, arbeitet die Demo an einer Kopie davon. So probierst du etwas aus, ohne das Original zu ändern, und gehst danach zurück. Ohne eigene Daten nimmt sie die Beispielfamilie.";
 export function DemoStarten({ aktiv, gesperrt, starten, grund }: { aktiv: boolean; gesperrt: boolean; starten: () => void; grund?: string }) {
   return <section className="card demo-starten" aria-label="Demo">
-    <h2>Demo ansehen</h2>
-    {aktiv
-      ? <p>Die Demo läuft. Verlassen, zurücksetzen oder löschen über den roten Knopf „DEMO“ oben neben dem Namen.</p>
-      : <><p>Eine Vorführung mit einer frei erfundenen Beispielfamilie, in einem eigenen Bestand. Deine eigene Akte bleibt unberührt. Während die Demo läuft, steht oben ein roter Knopf „DEMO“.</p>
-        <button type="button" className="button secondary" disabled={gesperrt} onClick={starten}><Play size={16}/> Demo ansehen</button>
-        {gesperrt && grund && <p className="fine-print" data-demo-grund>{grund}</p>}</>}
+    <div className="demo-starten-zeile">
+      <span className="ui-heading-help"><h2>Demo</h2><InfoPopover label="Demo erklären" text={DEMO_HILFE}/></span>
+      {aktiv
+        ? <span className="fine-print" data-demo-laeuft>läuft – roter Knopf „DEMO“ oben</span>
+        : <button type="button" className="button secondary" disabled={gesperrt} onClick={starten}><Play size={16}/> Demo starten</button>}
+    </div>
+    {!aktiv && gesperrt && grund && <p className="fine-print" data-demo-grund>{grund}</p>}
   </section>;
 }

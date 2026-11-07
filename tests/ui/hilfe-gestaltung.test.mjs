@@ -53,6 +53,14 @@ try {
       const markiert = await page.locator(".zurueck-hier").first().innerText().catch(() => "");
       return offen && /Frist oder Aufgabe anlegen/.test(markiert) ? true : `offen=${offen} „${markiert.slice(0, 50)}“`;
     });
+    await step(`${name}: „Offene Fristen und Aufgaben“ mit offenen Punkten: Rahmen rot, nicht grün`, async () => {
+      const e = page.locator('details[data-kartenhilfe-eintrag="Offene Fristen und Aufgaben"]');
+      if (!(await e.evaluate((d) => d.open))) await e.locator("summary").click();
+      await e.locator("button.hilfe-sprung").click(); await page.waitForTimeout(1300);
+      const r = await page.locator("#offene-fristen").evaluate((el) => ({ stand: el.dataset.zielStand, rot: el.classList.contains("hilfe-ziel-rahmen"), gruen: el.classList.contains("hilfe-ziel-gut") }));
+      await page.goBack(); await page.waitForSelector("details[data-kartenhilfe]"); await page.waitForTimeout(500);
+      return r.stand === "offen" && r.rot && !r.gruen ? true : JSON.stringify(r);
+    });
 
     await step(`${name}: Seitenleiste: Griff rechts, öffnet Knöpfe, „Alle zuklappen“ schließt alle Hilfe-Themen`, async () => {
       await page.locator('details[data-hilfe-thema="notiz"] summary').click();

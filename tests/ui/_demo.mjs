@@ -6,11 +6,11 @@ import { footer } from "./_harness.mjs";
 export async function demoBereit(page, timeout = 120000) {
   await page.locator('.site-header[data-demo-bereit="ja"]').waitFor({ state: "attached", timeout });
 }
-/** Hilfe öffnen und „Demo ansehen“ tippen. */
+/** Hilfe öffnen und „Demo starten“ tippen. */
 export async function demoStarten(page) {
   await demoBereit(page);
   await footer(page, "Hilfe");
-  const knopf = page.locator(".demo-starten").getByRole("button", { name: "Demo ansehen", exact: true });
+  const knopf = page.locator(".demo-starten").getByRole("button", { name: "Demo starten", exact: true });
   await knopf.scrollIntoViewIfNeeded();
   await knopf.click();
 }

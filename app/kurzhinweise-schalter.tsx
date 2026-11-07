@@ -7,6 +7,5 @@ export function KurzhinweiseSchalter() {
   useEffect(() => aufKurzhinweise(setAn), []);
   return <section className="card kurzhinweise-schalter">
     <label><input type="checkbox" checked={an} onChange={(e) => setKurzhinweise(e.target.checked)}/> <strong>Kurzhinweise an Knöpfen anzeigen</strong></label>
-    <small>Am PC: Maus kurz über einem Knopf halten. Am Tablet oder Handy: Finger kurz auf dem Knopf halten.</small>
   </section>;
 }
