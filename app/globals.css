@@ -2410,3 +2410,11 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .hv-ziel { outline: 3px solid #d32f2f; outline-offset: 1px; color: #17262f; font-weight: 700; }
 .hv-text { margin: 0; font-size: .86rem; color: #33424d; }
 @media (max-width: 699px) { .hilfe-vorschau { top: auto; bottom: max(16px, env(safe-area-inset-bottom, 0px)); left: 16px; right: 16px; width: auto; max-height: 70vh; } }
+
+/* „Neu“ quer und breit (Klaus 07.11.2026: „nicht alles angezeigt … quer machen, breiter“): ab Tablet fest unter dem Kopf,
+   Einträge nebeneinander, Höhe begrenzt mit eigenem Rollen – nichts wird mehr unten abgeschnitten. */
+@media (min-width: 621px) {
+  .neu-fenster { position: fixed; top: 120px; right: max(16px, env(safe-area-inset-right, 0px)); width: min(960px, calc(100vw - 32px));
+    max-height: calc(100vh - 140px); overflow: auto; }
+  .neu-fenster ul { grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); align-items: start; }
+}
