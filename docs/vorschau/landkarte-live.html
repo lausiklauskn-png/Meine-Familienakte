@@ -1,0 +1,285 @@
+<title>Landkarte der App</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: Querformat-Landkarte; Kästen absolut gesetzt, Äste als SVG-Kurven direkt von Kasten zu Kasten (Vorbild Sage „Modul-Topologie · live“). */
+:root {
+  --bg: #f4f7f9; --fg: #17262f; --muted: #4f6472; --line: #c8d9e2; --card: #ffffff;
+  --ast: #8fb3c4; --blau: #1f4e79; --teal: #2a7f86; --gruen: #2f8a4f; --gruen-bg: #e9f6ee;
+  --rot: #c0392b; --warn: #b5533f; --warn-bg: #fdf3f3; --grau: #85919a; --grau-bg: #eef1f3; --geplant-bg: #f1f6fc; --gold: #b8860b;
+  --font: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f171d; --fg: #e3ecf1; --muted: #9fb2bf; --line: #2b3d49; --card: #16222b;
+  --ast: #4f7486; --blau: #7db4e6; --teal: #5cc4cc; --gruen: #6fd39b; --gruen-bg: #15301f;
+  --rot: #ff7a6b; --warn: #ff9a85; --warn-bg: #351c18; --grau: #8794a0; --grau-bg: #1c262d; --geplant-bg: #142536; --gold: #e2b54a; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0f171d; --fg: #e3ecf1; --muted: #9fb2bf; --line: #2b3d49; --card: #16222b;
+  --ast: #4f7486; --blau: #7db4e6; --teal: #5cc4cc; --gruen: #6fd39b; --gruen-bg: #15301f;
+  --rot: #ff7a6b; --warn: #ff9a85; --warn-bg: #351c18; --grau: #8794a0; --grau-bg: #1c262d; --geplant-bg: #142536; --gold: #e2b54a; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font: 15px/1.45 var(--font); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 40px; }
+main { max-width: 1880px; margin: 0 auto; display: grid; gap: 16px; }
+h1 { font-size: 1.6rem; margin: 0; text-wrap: balance; }
+p { margin: 0; max-width: 75ch; }
+.eyebrow { font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--teal); }
+.kopf { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; }
+.zahlen { display: flex; flex-wrap: wrap; gap: 6px; font-size: .85rem; }
+.zahl { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); }
+.zahl i { width: 9px; height: 9px; border-radius: 50%; background: var(--c); }
+.zahl b { font-variant-numeric: tabular-nums; }
+.knoepfe { display: flex; flex-wrap: wrap; gap: 8px; }
+button.k { font: inherit; font-weight: 600; font-size: .88rem; padding: 6px 12px; border-radius: 8px; border: 1px solid var(--blau); background: var(--card); color: var(--blau); cursor: pointer; }
+button.k:focus-visible, .kasten:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+.buehne-rahmen { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
+.buehne { position: relative; }
+.buehne svg { position: absolute; inset: 0; overflow: visible; }
+.ast { fill: none; stroke: var(--ast); stroke-width: 2; transition: stroke .25s, stroke-width .25s; }
+.ast.an { stroke: var(--rot); stroke-width: 3; }
+.ast.neu { stroke-dasharray: 6 5; }
+.kasten { position: absolute; width: 172px; box-sizing: border-box; padding: 8px 10px 8px 26px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--fg); font: inherit; text-align: left; cursor: pointer; display: grid; gap: 2px; transition: top .45s, left .45s, border-color .3s, background .3s, box-shadow .3s; }
+.kasten strong { font-size: .9rem; }
+.kasten small { font-size: .76rem; color: var(--muted); }
+.kasten .punkt { position: absolute; left: 9px; top: 12px; width: 10px; height: 10px; border-radius: 50%; background: var(--c, var(--gruen)); }
+.kasten.s-heute { --c: var(--gruen); }
+.kasten.s-geplant { --c: var(--blau); border-style: dashed; border-color: var(--blau); background: var(--geplant-bg); }
+.kasten.s-spaeter, .kasten.s-nicht { --c: var(--grau); background: var(--grau-bg); color: var(--muted); }
+.kasten.warn { border-color: var(--warn); background: var(--warn-bg); }
+.kasten.mitte { border: 2px solid var(--teal); }
+.kasten.an { box-shadow: 0 0 0 3px var(--rot); }
+.kasten.frisch { box-shadow: 0 0 0 4px var(--gold); }
+@media (prefers-reduced-motion: no-preference) { .kasten.s-geplant .punkt { animation: atmen 3.2s ease-in-out infinite; } }
+@keyframes atmen { 50% { transform: scale(1.35); opacity: .7; } }
+.gruppe { position: absolute; width: 236px; box-sizing: border-box; border: 2px solid var(--teal); border-radius: 12px; background: var(--card); padding: 8px; display: grid; gap: 6px; }
+.gruppe > strong { font-size: .95rem; padding: 0 2px; }
+.gruppe .chips { display: grid; gap: 5px; }
+.chip { position: relative; box-sizing: border-box; display: grid; gap: 1px; padding: 4px 8px 4px 22px; border: 1px solid var(--line); border-radius: 7px; background: var(--card); color: var(--fg); font: inherit; font-size: .8rem; text-align: left; cursor: pointer; }
+.chip small { font-size: .72rem; color: var(--muted); }
+.chip .punkt { position: absolute; left: 7px; top: 8px; width: 8px; height: 8px; border-radius: 50%; background: var(--c, var(--gruen)); }
+.chip.s-heute { --c: var(--gruen); }
+.chip.s-geplant { --c: var(--blau); border-style: dashed; border-color: var(--blau); background: var(--geplant-bg); }
+.chip.s-spaeter, .chip.s-nicht { --c: var(--grau); background: var(--grau-bg); color: var(--muted); }
+.chip.an { box-shadow: 0 0 0 2px var(--rot); }
+.chip.frisch { box-shadow: 0 0 0 3px var(--gold); }
+.chip:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+.info { border: 1px solid var(--line); border-radius: 10px; background: var(--card); padding: 10px 14px; display: grid; gap: 4px; min-height: 64px; }
+.info .richtung { font-weight: 700; color: var(--blau); }
+.legende { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .84rem; color: var(--muted); align-items: center; }
+.legende svg { vertical-align: middle; }
+.zwei { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.zwei section { border: 1px solid var(--line); border-radius: 10px; background: var(--card); padding: 12px 14px; display: grid; gap: 6px; min-width: 0; }
+.zwei h2 { font-size: 1rem; margin: 0; }
+ul { margin: 0; padding-left: 1.2em; display: grid; gap: 3px; }
+.stand { font-size: .8rem; color: var(--muted); }
+</style>
+<main>
+  <div class="kopf">
+    <div>
+      <span class="eyebrow">Vorschlag · Landkarte der App · Hinein · Sortieren · Akte · Ausgabe</span>
+      <h1>Landkarte der App · live</h1>
+      <p>Vorbild ist die Modul-Anzeige im Sage-Protokoll: Äste verbinden die Kästen direkt, der Punkt zeigt den Stand, die Zahlen oben zählen mit. Ändert sich ein Stand, zeichnet sich die Karte von selbst neu.</p>
+    </div>
+    <div class="zahlen" id="zahlen" aria-live="polite"></div>
+  </div>
+  <div class="legende">
+    <span><svg width="44" height="10" aria-hidden="true"><path d="M2 5 H40" stroke="currentColor" stroke-width="2" marker-end="url(#spitze-l)"/></svg> Daten gehen nur in eine Richtung</span>
+    <span><svg width="44" height="10" aria-hidden="true"><path d="M4 5 H40" stroke="currentColor" stroke-width="2" marker-start="url(#spitze-a-l)" marker-end="url(#spitze-l)"/></svg> hin und zurück</span>
+    <span>● grün geht heute · ● blau gestrichelt geplant · ● grau später · rot umrandet Vorsicht · Goldrahmen gerade freigeschaltet</span>
+  </div>
+  <div class="knoepfe">
+    <button class="k" type="button" id="freischalten">Ausprobieren: „Prüfung“ freischalten</button>
+    <button class="k" type="button" id="dazu">Ausprobieren: neues Modul kommt dazu</button>
+    <button class="k" type="button" id="zurueck">Zurücksetzen</button>
+  </div>
+  <div class="buehne-rahmen"><div class="buehne" id="buehne" role="group" aria-label="Landkarte: wie Mails, Dateien und Scans in die Akte kommen und was danach geschieht"><svg id="aeste" aria-hidden="true"><defs>
+    <marker id="spitze" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--ast)"/></marker>
+    <marker id="spitze-a" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M10 0 L0 5 L10 10 z" fill="var(--ast)"/></marker>
+    <marker id="spitze-rot" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--rot)"/></marker>
+    <marker id="spitze-a-rot" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10 0 L0 5 L10 10 z" fill="var(--rot)"/></marker>
+    <marker id="spitze-l" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker>
+    <marker id="spitze-a-l" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10 0 L0 5 L10 10 z" fill="currentColor"/></marker>
+  </defs><g id="linien"></g></svg></div></div>
+  <div class="info" id="info" aria-live="polite"><span class="stand">Tipp auf einen Kasten zeigt seinen Weg und was dort geschieht.</span></div>
+  <div class="zwei">
+    <section>
+      <h2>So wäre es in der App live</h2>
+      <ul>
+        <li>Eine Liste in der App (wie <code>status.json</code> im Sage-Protokoll) nennt jeden Kasten, seinen Ast und seinen Stand.</li>
+        <li>Kommt mit einer neuen Fassung ein Modul dazu, steht es mit dem nächsten Update in der Karte, gestrichelt oder grün.</li>
+        <li>Der Stand am Gerät kommt dazu: ist zum Beispiel das Microsoft-Konto verbunden, wird der Kasten grün, ohne neue Fassung.</li>
+        <li>Was sich seit dem letzten Öffnen geändert hat, trägt kurz einen Goldrahmen.</li>
+      </ul>
+    </section>
+    <section>
+      <h2>Was die Pfeile sagen</h2>
+      <ul>
+        <li>Links die drei Wege hinein (Mail, Datei, Scan), jeder Weg ein kleiner Knopf mit seiner Stelle in der App.</li>
+        <li>Workflow PDF liefert in die Eingangszentrale und arbeitet mit der Akte hin und zurück (Bogen unten).</li>
+        <li>Rechts die Ausgabe: Antwort, Fristen mit Kalender, Sicherung, Pro-Tresor, Drucken. Doppelpfeil, wo Daten auch zurückkommen.</li>
+      </ul>
+    </section>
+  </div>
+  <p class="stand">Vorschau zum Ansehen, nicht in der App gebaut. Die Knöpfe „Ausprobieren“ spielen nur vor, was live geschehen würde. Stand 07.11.2026.</p>
+</main>
+<script>
+(function () {
+  "use strict";
+  // ---- Daten (in der App wäre das eine Liste wie status.json im Sage-Protokoll) ----
+  var START = {
+    gruppen: [
+      { id: "g-mail", titel: "Mail einfügen", wo: "aus der Mail-App oder dem Postfach", spalte: 0, chips: [
+        { id: "mail-text", titel: "Mail teilen", wo: "Mail-App › Teilen", ziel: "eingang", mehr: "Gmail- und Outlook-App teilen nur den Text; Anhänge gehen so nicht mit." },
+        { id: "mail-anhang", titel: "Anhang teilen", wo: "Anhang antippen › Teilen", ziel: "eingang", mehr: "Der übliche Weg für Briefe als PDF." },
+        { id: "mail-pdf", titel: "Mail als PDF", wo: "Drucken › Als PDF › Teilen", ziel: "eingang" },
+        { id: "mail-eml", titel: "Mail als Datei (.eml)", wo: "am Rechner hineinziehen", ziel: "eingang", mehr: "Die App löst die Anhänge heraus; .msg wird angenommen, Anhänge noch nicht." },
+        { id: "mail-ms", titel: "Microsoft-Postfach", wo: "abholen und senden", ziel: "eingang", stand: "geplant", beide: true, mehr: "Gleiche Anmeldung wie beim Kalender. Abholen nur auf Tipp." },
+        { id: "mail-imap", titel: "GMX · WEB.DE · T-Online", wo: "mit App-Passwort", ziel: "eingang", stand: "spaeter" },
+        { id: "mail-gmail", titel: "Gmail direkt", wo: "Google-Prüfung kostet jährlich", ziel: "eingang", stand: "nicht" } ] },
+      { id: "g-datei", titel: "Datei einfügen", wo: "Dokumente › Eingangszentrale", spalte: 0, chips: [
+        { id: "datei-waehlen", titel: "Datei wählen", wo: "Knopf in der Eingangszentrale", ziel: "eingang" },
+        { id: "datei-ziehen", titel: "Hineinziehen", wo: "am Rechner mit der Maus", ziel: "eingang" },
+        { id: "datei-teilen", titel: "Teilen aus anderer App", wo: "Galerie, Dateien › Teilen", ziel: "eingang" },
+        { id: "datei-oeffnen", titel: "Öffnen mit", wo: "Windows: Rechtsklick › Öffnen mit", ziel: "eingang" } ] },
+      { id: "g-scan", titel: "Dokumente scannen", wo: "Papier zu PDF", spalte: 0, chips: [
+        { id: "scan-kamera", titel: "Einzelblatt mit der Kamera", wo: "Eingangszentrale › Dokument scannen", ziel: "wfpdf" },
+        { id: "scan-wfpdf", titel: "In Workflow PDF scannen", wo: "Dokumente › Workflow PDF", ziel: "wfpdf" },
+        { id: "scan-stapel", titel: "Ganzer Stapel auf einmal", wo: "Eingangszentrale › Stapel direkt übernehmen", ziel: "stapel" },
+        { id: "scan-geraet", titel: "Scanner oder Scanner-App", wo: "PDF in den Stapel", ziel: "stapel" } ] },
+      { id: "g-aus", titel: "Ausgabe", wo: "von der Akte aus", spalte: 6, chips: [
+        { id: "aus-antwort", titel: "Antwort schreiben", wo: "Assistenz › Schreiben / E-Mail" },
+        { id: "aus-fristen", titel: "Fristen und Erinnerungen", wo: "Fristen und Aufgaben" },
+        { id: "aus-sicherung", titel: "Vollsicherung", wo: "Sicherheit › sichern und testen" },
+        { id: "aus-tresor", titel: "Pro-Tresor", wo: "Sicherheit › Pro-Tresor", beide: true, mehr: "Originale verschlüsselt im Tresor, gemeinsam mit den anderen Pro-Apps." },
+        { id: "aus-drucken", titel: "Drucken", wo: "Kopf › Drucker" } ] }
+    ],
+    knoten: [
+      { id: "wfpdf", titel: "Workflow PDF", wo: "Dokumente › Workflow PDF", unter: "Blatt finden, gerade ziehen, durchsuchbar", spalte: 1, mehr: "Liefert in die Eingangszentrale („Weiter zur Prüfung“ oder Teilen). Bearbeitet auch Dokumente aus der Akte; das Ergebnis geht an denselben Eintrag zurück." },
+      { id: "stapel", titel: "Stapel-Liste", wo: "Dokumente › Stapel (noch einordnen)", unter: "gerade gezogen · später einordnen", spalte: 1 },
+      { id: "eingang", titel: "Eingangszentrale", wo: "Dokumente › Eingangszentrale", unter: "alles kommt zuerst hier an · Mail-Anhänge einzeln", spalte: 2, mitte: true, mehr: "Das Original bleibt unverändert. Nichts wird ohne deinen Tipp übernommen." },
+      { id: "pruefung", titel: "Prüfung", wo: "in der Eingangszentrale", unter: "Prüfer aus Workflow PDF · Mail-Anhänge immer, sonst auf Wahl", spalte: 3, stand: "geplant", mehr: "Sucht Skripte und Startaktionen im PDF, eingebettete Dateien, Makros, getarnte Endungen, Programme. Kein Virenscanner." },
+      { id: "vorschlag", titel: "Lesen und Vorschlag", wo: "Eingangszentrale › Zuordnung prüfen", unter: "echtes PDF: Text direkt · Scan: Texterkennung", spalte: 4, mehr: "Person, Vorgang, Dokumentart, mögliche Frist. Ein echtes PDF ohne Befund braucht keinen Umweg über Workflow PDF." },
+      { id: "befund", titel: "Befund", wo: "in der Eingangszentrale", unter: "nicht geöffnet · du entscheidest", spalte: 4, stand: "geplant", warn: true, mehr: "Als Datei ablegen (ohne Vorschau) oder weglassen. Programme werden nicht übernommen." },
+      { id: "akte", titel: "In der Akte", wo: "Gesundheit, Familie, Wohnen …", unter: "übernehmen mit einem Tipp · Speicher wie gewählt", spalte: 5, mitte: true },
+      { id: "mailapp", titel: "Mail-App des Geräts", wo: "öffnet sich vorbereitet", unter: "abschicken tust du dort", spalte: 7, stand: "geplant" },
+      { id: "mssend", titel: "Microsoft-Postfach", wo: "nach „Jetzt senden?“", unter: "liegt dann in „Gesendete Elemente“", spalte: 7, stand: "geplant" },
+      { id: "kalender", titel: "Kalender", wo: "Fristen › Kalender verbinden", unter: "Google, Microsoft, Gerät, .ics", spalte: 7 },
+      { id: "sicherungsordner", titel: "Sicherungsordner", wo: "frei gewählt", unter: "sichern · einlesen in eine leere Akte", spalte: 7 }
+    ],
+    kanten: [
+      { von: "wfpdf", nach: "eingang" }, { von: "stapel", nach: "eingang" }, { von: "stapel", nach: "wfpdf", beide: true },
+      { von: "wfpdf", nach: "akte", beide: true, unten: true },
+      { von: "eingang", nach: "pruefung" }, { von: "pruefung", nach: "vorschlag" }, { von: "pruefung", nach: "befund" }, { von: "vorschlag", nach: "akte" },
+      { von: "akte", nach: "aus-antwort" }, { von: "akte", nach: "aus-fristen" }, { von: "akte", nach: "aus-sicherung" }, { von: "akte", nach: "aus-tresor", beide: true }, { von: "akte", nach: "aus-drucken" },
+      { von: "aus-antwort", nach: "mailapp" }, { von: "aus-antwort", nach: "mssend" }, { von: "aus-fristen", nach: "kalender", beide: true }, { von: "aus-sicherung", nach: "sicherungsordner", beide: true }
+    ]
+  };
+  var WORT = { heute: "geht heute", geplant: "geplant", spaeter: "später", nicht: "nicht ohne Entscheidung" };
+  var FARBE = { heute: "var(--gruen)", geplant: "var(--blau)", spaeter: "var(--grau)" };
+  var SPALTE_B = [236, 172, 172, 172, 172, 172, 236, 168], ABSTAND = 34, RAND = 20, LUECKE = 16;
+  var d, aktiv = null, frisch = {};
+  var buehne = document.getElementById("buehne"), linien = document.getElementById("linien");
+
+  function alleKnoten() { var l = d.knoten.slice(); d.gruppen.forEach(function (g) { g.chips.forEach(function (c) { c._gruppe = g; l.push(c); }); }); return l; }
+  function kanten() { var k = d.kanten.slice(); d.gruppen.forEach(function (g) { g.chips.forEach(function (c) { if (c.ziel) k.push({ von: c.id, nach: c.ziel, beide: c.beide }); }); }); return k; }
+  function finde(id) { return alleKnoten().filter(function (n) { return n.id === id; })[0]; }
+
+  function knopf(n, klasse) {
+    var b = document.createElement("button"); b.type = "button"; b.dataset.id = n.id;
+    b.className = klasse + " s-" + (n.stand || "heute") + (n.warn ? " warn" : "") + (n.mitte ? " mitte" : "") + (frisch[n.id] ? " frisch" : "");
+    b.innerHTML = '<span class="punkt" aria-hidden="true"></span><strong></strong><small></small>';
+    b.querySelector("strong").textContent = n.titel;
+    b.querySelector("small").textContent = klasse === "chip" ? n.wo : [n.wo, n.unter].filter(Boolean).join(" · ");
+    b.setAttribute("aria-label", n.titel + " (" + WORT[n.stand || "heute"] + ") – Verbindungen zeigen");
+    b.addEventListener("click", function (e) { e.stopPropagation(); aktiv = aktiv === n.id ? null : n.id; zeichnen(); });
+    return b;
+  }
+
+  function zeichnen() {
+    [].slice.call(buehne.querySelectorAll(".kasten, .gruppe")).forEach(function (e) { e.remove(); });
+    linien.innerHTML = "";
+    var spalten = {}, el = {};
+    d.gruppen.forEach(function (g) {
+      var box = document.createElement("div"); box.className = "gruppe"; box.dataset.gruppe = g.id;
+      box.innerHTML = "<strong></strong><small class=\"stand\"></small><div class=\"chips\"></div>";
+      box.querySelector("strong").textContent = g.titel; box.querySelector("small").textContent = g.wo;
+      g.chips.forEach(function (c) { var b = knopf(c, "chip"); box.querySelector(".chips").appendChild(b); el[c.id] = b; });
+      buehne.appendChild(box); (spalten[g.spalte] = spalten[g.spalte] || []).push(box);
+    });
+    d.knoten.forEach(function (n) { var b = knopf(n, "kasten"); buehne.appendChild(b); el[n.id] = b; (spalten[n.spalte] = spalten[n.spalte] || []).push(b); });
+    // x je Spalte; y: Spalte 0 von oben, die anderen an ihren Quellen ausgerichtet (wie Sages feste Anordnung, aber gerechnet)
+    var x = RAND, xs = [];
+    for (var s = 0; s < SPALTE_B.length; s++) { xs[s] = x; x += SPALTE_B[s] + ABSTAND; }
+    var breite = x - ABSTAND + RAND;
+    buehne.style.width = breite + "px"; buehne.style.height = "2000px";
+    var basis = buehne.getBoundingClientRect();
+    function r(id) { var b = el[id].getBoundingClientRect(); return { l: b.left - basis.left, r: b.right - basis.left, t: b.top - basis.top, b: b.bottom - basis.top, m: (b.top + b.bottom) / 2 - basis.top, cx: (b.left + b.right) / 2 - basis.left, h: b.height }; }
+    function setze(e, s, y) { e.style.left = xs[s] + "px"; e.style.top = Math.max(RAND, y) + "px"; }
+    var y0 = RAND + 30;
+    (spalten[0] || []).forEach(function (e) { setze(e, 0, y0); y0 += e.offsetHeight + LUECKE; });
+    var alleK = kanten();
+    function quellenMitte(id) { var q = alleK.filter(function (k) { return k.nach === id; }).map(function (k) { return r(k.von).m; }); return q.length ? q.reduce(function (a, b) { return a + b; }, 0) / q.length : null; }
+    function zielMitte(id) { var q = alleK.filter(function (k) { return k.von === id && el[k.nach].style.top; }).map(function (k) { return r(k.nach).m; }); return q.length ? q.reduce(function (a, b) { return a + b; }, 0) / q.length : null; }
+    for (var sp = 1; sp < SPALTE_B.length; sp++) {
+      var liste = spalten[sp] || [], unten = RAND;
+      liste.map(function (e) {
+        var id = e.dataset.id || (e.dataset.gruppe && d.gruppen.filter(function (g) { return g.id === e.dataset.gruppe; })[0].chips[0].id);
+        var m = e.dataset.gruppe ? quellenMitte(d.gruppen.filter(function (g) { return g.id === e.dataset.gruppe; })[0].chips.map(function (c) { return c.id; })[0]) : quellenMitte(id);
+        if (m === null && e.dataset.id) m = zielMitte(e.dataset.id);
+        return { e: e, soll: (m === null ? 300 : m) - e.offsetHeight / 2 };
+      }).sort(function (a, b) { return a.soll - b.soll; }).forEach(function (o) { var y = Math.max(o.soll, unten); setze(o.e, sp, y); unten = y + o.e.offsetHeight + LUECKE; });
+    }
+    var hoehe = 0; buehne.querySelectorAll(".kasten, .gruppe").forEach(function (e) { hoehe = Math.max(hoehe, e.offsetTop + e.offsetHeight); });
+    buehne.style.height = (hoehe + RAND + 40) + "px";
+    var nachbarn = {};
+    var ankunft = {}; alleK.forEach(function (k) { (ankunft[k.nach] = ankunft[k.nach] || []).push(k); });
+    Object.keys(ankunft).forEach(function (id) { ankunft[id].sort(function (p, q) { return r(p.von).m - r(q.von).m; }); });
+    alleK.forEach(function (k) {
+      var a = r(k.von), z = r(k.nach), pfad = document.createElementNS("http://www.w3.org/2000/svg", "path"), dd;
+      var reihe = ankunft[k.nach], i = reihe.indexOf(k), n = reihe.length;
+      var zy = n > 1 ? z.t + 12 + (z.h - 24) * i / (n - 1) : z.m;
+      if (Math.abs(a.l - z.l) < 5) { var bx = a.r + 40; dd = "M" + a.r + " " + a.m + " C" + bx + " " + a.m + " " + bx + " " + z.m + " " + (z.r + 2) + " " + z.m; }
+      else if (k.unten) { var tief = Math.max(a.b, z.b) + 70; dd = "M" + a.cx + " " + a.b + " C" + a.cx + " " + tief + " " + z.cx + " " + tief + " " + z.cx + " " + (z.b + 2); }
+      else { var mx = (a.r + z.l) / 2; dd = "M" + a.r + " " + a.m + " C" + mx + " " + a.m + " " + mx + " " + zy + " " + (z.l - 2) + " " + zy; }
+      var an = aktiv && (k.von === aktiv || k.nach === aktiv);
+      pfad.setAttribute("d", dd);
+      var stand = (finde(k.nach) || {}).stand, standV = (finde(k.von) || {}).stand;
+      pfad.setAttribute("class", "ast" + (an ? " an" : "") + ((stand && stand !== "heute") || (standV && standV !== "heute") ? " neu" : ""));
+      pfad.setAttribute("marker-end", an ? "url(#spitze-rot)" : "url(#spitze)");
+      if (k.beide) pfad.setAttribute("marker-start", an ? "url(#spitze-a-rot)" : "url(#spitze-a)");
+      linien.appendChild(pfad);
+      (nachbarn[k.von] = nachbarn[k.von] || { zu: [], von: [] }).zu.push(k);
+      (nachbarn[k.nach] = nachbarn[k.nach] || { zu: [], von: [] }).von.push(k);
+      if (an) { el[k.von].classList.add("an"); el[k.nach].classList.add("an"); }
+    });
+    zaehlen(); info(nachbarn);
+  }
+
+  function zaehlen() {
+    var z = { heute: 0, geplant: 0, spaeter: 0 };
+    alleKnoten().forEach(function (n) { z[n.stand === "nicht" ? "spaeter" : (n.stand || "heute")]++; });
+    document.getElementById("zahlen").innerHTML = ["heute", "geplant", "spaeter"].map(function (s) {
+      return '<span class="zahl" style="--c:' + FARBE[s] + '"><i></i><b>' + z[s] + "</b> " + WORT[s] + "</span>"; }).join("");
+  }
+  function info(nachbarn) {
+    var box = document.getElementById("info"), n = aktiv && finde(aktiv);
+    if (!n) { box.innerHTML = '<span class="stand">Tipp auf einen Kasten zeigt, woher Daten kommen, wohin sie gehen und wo er in der App liegt.</span>'; return; }
+    var nb = nachbarn[n.id] || { zu: [], von: [] };
+    function namen(l, feld) { return l.map(function (k) { var m = finde(k[feld]); return (k.beide ? "⇄ " : "") + (m ? m.titel : k[feld]); }).join(", "); }
+    box.innerHTML = "<strong></strong><span class=\"stand s\"></span><span class=\"wo\"></span><span class=\"t\"></span><span class=\"richtung a\"></span><span class=\"richtung b\"></span>";
+    box.querySelector("strong").textContent = n.titel;
+    box.querySelector(".s").textContent = WORT[n.stand || "heute"];
+    box.querySelector(".wo").textContent = "Wo: " + (n._gruppe ? n._gruppe.titel + " · " : "") + (n.wo || "");
+    box.querySelector(".t").textContent = [n.unter, n.mehr].filter(Boolean).join(" · ");
+    box.querySelector(".a").textContent = nb.von.length ? "← kommt von: " + namen(nb.von, "von") : "";
+    box.querySelector(".b").textContent = nb.zu.length ? "→ geht zu: " + namen(nb.zu, "nach") : "";
+  }
+
+  function start() { d = JSON.parse(JSON.stringify(START)); aktiv = null; frisch = {}; zeichnen(); }
+  document.getElementById("freischalten").addEventListener("click", function () { finde("pruefung").stand = "heute"; frisch = { pruefung: true }; aktiv = "pruefung"; zeichnen(); });
+  document.getElementById("dazu").addEventListener("click", function () {
+    if (!finde("regeln")) { d.knoten.push({ id: "regeln", titel: "Absender-Regeln", wo: "Eingangszentrale", unter: "Praxis X → Person Y · nur nach Bestätigung", spalte: 4, stand: "geplant" }); d.kanten.push({ von: "regeln", nach: "akte" }); d.kanten.push({ von: "pruefung", nach: "regeln" }); }
+    frisch = { regeln: true }; aktiv = "regeln"; zeichnen();
+  });
+  document.getElementById("zurueck").addEventListener("click", start);
+  start();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(zeichnen);
+})();
+</script>

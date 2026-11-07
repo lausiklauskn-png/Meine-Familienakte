@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Familienakte E-Mail-Karte</title>
+<style>
+/* Layout: Querformat-Landkarte der ganzen App; Spalten Hinein → Werkzeuge → Eingang → Sortieren → Akte → Speicher/Ausgabe → Ziele.
+   Stand als Rahmen: grün fertig · gelb gestrichelt im Bau · rot einschalten · grau gestrichelt geplant/abzusprechen. */
+:root {
+  --bg: #f4f7f9; --fg: #17262f; --muted: #4f6472; --line: #c8d9e2; --card: #ffffff; --ast: #8fb3c4; --hervor: #1f4e79; --teal: #2a7f86;
+  --f-rand: #2f8a4f; --f-flaeche: #eef8f1; --b-rand: #c58a00; --b-flaeche: #fff8e6; --a-rand: #c0392b; --a-flaeche: #fdf3f3;
+  --g-rand: #9aa5ad; --g-flaeche: #f1f3f4; --gold: #b8860b; --notiz: #7a3fb0; --notiz-flaeche: #f6effc;
+  --font: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f171d; --fg: #e3ecf1; --muted: #9fb2bf; --line: #2b3d49; --card: #16222b; --ast: #4f7486; --hervor: #7db4e6; --teal: #5cc4cc;
+  --f-rand: #5fc78a; --f-flaeche: #13281b; --b-rand: #e0ad3c; --b-flaeche: #2c2410; --a-rand: #ff7a6b; --a-flaeche: #331a17;
+  --g-rand: #75828c; --g-flaeche: #1b252c; --gold: #e2b54a; --notiz: #c49be8; --notiz-flaeche: #2a1f35; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0f171d; --fg: #e3ecf1; --muted: #9fb2bf; --line: #2b3d49; --card: #16222b; --ast: #4f7486; --hervor: #7db4e6; --teal: #5cc4cc;
+  --f-rand: #5fc78a; --f-flaeche: #13281b; --b-rand: #e0ad3c; --b-flaeche: #2c2410; --a-rand: #ff7a6b; --a-flaeche: #331a17;
+  --g-rand: #75828c; --g-flaeche: #1b252c; --gold: #e2b54a; --notiz: #c49be8; --notiz-flaeche: #2a1f35; color-scheme: dark }
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--fg); font: 15px/1.45 var(--font); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 60px; }
+main { max-width: 1900px; margin: 0 auto; display: grid; gap: 14px; }
+h1 { font-size: 1.6rem; margin: 0; text-wrap: balance; }
+h2 { font-size: 1.05rem; margin: 0; }
+p { margin: 0; max-width: 80ch; }
+.eyebrow { font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--teal); }
+.kopf { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; }
+.zahlen { display: flex; flex-wrap: wrap; gap: 6px; font-size: .85rem; }
+.zahl { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); }
+.zahl b { font-variant-numeric: tabular-nums; }
+.legende { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .84rem; color: var(--muted); align-items: center; }
+.legende span { display: inline-flex; align-items: center; gap: 6px; }
+.muster { display: inline-block; width: 24px; height: 15px; border-radius: 4px; }
+.so-gehts { border: 1px solid var(--line); border-radius: 10px; background: var(--card); padding: 10px 14px; display: grid; gap: 6px; }
+.so-gehts ol { margin: 0; padding-left: 1.3em; display: grid; gap: 2px; }
+.leiste { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button.k { font: inherit; font-weight: 600; font-size: .88rem; padding: 6px 12px; border-radius: 8px; border: 1px solid var(--hervor); background: var(--card); color: var(--hervor); cursor: pointer; }
+button.k.voll { background: var(--hervor); color: var(--card); }
+button.k.gefahr { border-color: var(--a-rand); color: var(--a-rand); }
+label.name { display: inline-flex; gap: 6px; align-items: center; font-size: .88rem; }
+input, textarea { font: inherit; color: var(--fg); background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; }
+.meldung { font-size: .85rem; color: var(--muted); }
+.rahmen { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
+.buehne { position: relative; }
+.buehne svg { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
+.ast { fill: none; stroke: var(--ast); stroke-width: 2; }
+.ast.gestrichelt { stroke-dasharray: 6 5; }
+.ast.an { stroke: var(--hervor); stroke-width: 3; }
+.spitze { fill: var(--ast); } .spitze-an { fill: var(--hervor); }
+.gruppe { position: absolute; width: 214px; border: 2px solid var(--teal); border-radius: 12px; background: var(--card); padding: 8px; display: grid; gap: 4px; }
+.gruppe > strong { font-size: .95rem; padding: 0 2px; }
+.gruppe > small { font-size: .76rem; color: var(--muted); padding: 0 2px; }
+.chips { display: grid; gap: 5px; position: relative; }
+.platz { position: absolute; }
+.box { position: relative; display: grid; gap: 1px; width: 100%; text-align: left; border-radius: 8px; cursor: pointer; line-height: 1.25; border: 2px solid var(--f-rand); background: var(--f-flaeche); }
+.box.chip { padding: 4px 26px 4px 22px; font-size: .8rem; }
+.box.chip small { font-size: .72rem; color: var(--muted); }
+.box.kasten { padding: 8px 28px 8px 24px; }
+.box.kasten strong { font-size: .9rem; } .box.kasten small { font-size: .76rem; color: var(--muted); }
+.box.mitte { border-width: 3px; }
+.punkt { position: absolute; left: 8px; top: 10px; width: 9px; height: 9px; border-radius: 50%; background: var(--f-rand); }
+.chip .punkt { left: 7px; top: 8px; width: 8px; height: 8px; }
+.s-imbau { border: 2px dashed var(--b-rand); background: var(--b-flaeche); } .s-imbau > .punkt { background: var(--b-rand); }
+.s-aktivieren { border-color: var(--a-rand); background: var(--a-flaeche); } .s-aktivieren > .punkt { background: var(--a-rand); }
+.s-geplant { border: 2px dashed var(--g-rand); background: var(--g-flaeche); } .s-geplant > .punkt { background: var(--g-rand); }
+.muster.s-fertig { border: 2px solid var(--f-rand); background: var(--f-flaeche); }
+.muster.s-imbau { border: 2px dashed var(--b-rand); background: var(--b-flaeche); }
+.muster.s-aktivieren { border: 2px solid var(--a-rand); background: var(--a-flaeche); }
+.muster.s-geplant { border: 2px dashed var(--g-rand); background: var(--g-flaeche); }
+.box.an { box-shadow: 0 0 0 3px var(--hervor); }
+.box:focus-visible, button:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+.stift { position: absolute; right: 3px; top: 3px; width: 22px; height: 22px; border-radius: 6px; border: 1px solid transparent; background: transparent; color: var(--muted); font-size: 13px; line-height: 1; cursor: pointer; padding: 0; }
+.stift:hover { border-color: var(--notiz); color: var(--notiz); }
+.box.hat-notiz .stift { background: var(--notiz); color: var(--card); }
+.box.hat-notiz { box-shadow: inset 0 0 0 1px var(--notiz); }
+.box.hat-notiz.an { box-shadow: 0 0 0 3px var(--hervor), inset 0 0 0 1px var(--notiz); }
+.info { border: 1px solid var(--line); border-radius: 10px; background: var(--card); padding: 10px 14px; display: grid; gap: 4px; min-height: 60px; }
+.info .richtung { font-weight: 700; color: var(--hervor); }
+.marke { justify-self: start; font-size: .72rem; font-weight: 700; padding: 0 8px; border-radius: 999px; border: 1px solid; }
+.notiz-anzeige { border-left: 3px solid var(--notiz); background: var(--notiz-flaeche); padding: 6px 10px; border-radius: 0 6px 6px 0; white-space: pre-wrap; }
+.notizen { border: 1px solid var(--notiz); border-radius: 10px; background: var(--card); padding: 10px 14px; display: grid; gap: 8px; }
+.notizen ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.notizen li { display: grid; gap: 2px; border-left: 3px solid var(--notiz); padding: 2px 10px; }
+.notizen li button { justify-self: start; font: inherit; font-weight: 700; color: var(--notiz); background: none; border: 0; padding: 0; cursor: pointer; text-align: left; }
+.notizen li span { white-space: pre-wrap; }
+.notizen small, .stand { color: var(--muted); font-size: .8rem; }
+.editor { position: fixed; z-index: 20; left: 50%; transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: min(560px, calc(100vw - 32px)); background: var(--card); border: 2px solid var(--notiz); border-radius: 12px; padding: 12px; display: grid; gap: 8px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+.editor textarea { width: 100%; min-height: 110px; resize: vertical; }
+.hinweis { color: var(--muted); font-size: .88rem; }
+.empf { position: absolute; right: 26px; top: 4px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; font-size: 11px; font-weight: 800; line-height: 18px; text-align: center; color: #fff; font-style: normal; }
+.legende .empf { position: static; display: inline-block; }
+.e-zuerst { background: #1d7f4c; } .e-danach { background: #2a7f86; } .e-spaeter { background: #8a6d1d; } .e-auslassen { background: #9b2c22; } .e-besprechen { background: #5b4bb0; }
+.entsch { position: absolute; right: 3px; bottom: 3px; font-size: 11px; font-weight: 800; padding: 0 5px; border-radius: 6px; background: var(--notiz); color: var(--card); }
+.box.chip.mit-empf, .box.kasten.mit-empf { padding-right: 48px; }
+.box.mit-entsch { padding-bottom: 20px; }
+.wahl { display: flex; flex-wrap: wrap; gap: 6px; }
+.wahl button[aria-pressed="true"] { background: var(--notiz); color: var(--card); border-color: var(--notiz); }
+.zwei { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+.zwei section { border: 1px solid var(--line); border-radius: 10px; background: var(--card); padding: 12px 14px; display: grid; gap: 6px; min-width: 0; }
+ul.punkte, ol.punkte { margin: 0; padding-left: 1.2em; display: grid; gap: 3px; }
+@media print { .editor, .leiste, .stift { display: none !important; } }
+</style>
+</head>
+<body>
+<main>
+  <div class="kopf">
+    <div>
+      <span class="eyebrow">Familienakte · E-Mail · zur Abstimmung · 07.11.2026</span>
+      <h1>E-Mail-Karte</h1>
+    </div>
+    <div class="zahlen" id="zahlen" aria-live="polite"></div>
+  </div>
+
+  <div class="legende">
+    <span><i class="muster s-fertig"></i> fertig</span>
+    <span><i class="muster s-imbau"></i> im Bau</span>
+    <span><i class="muster s-aktivieren"></i> einschalten</span>
+    <span><i class="muster s-geplant"></i> geplant</span>
+    <span>→ eine Richtung</span><span>⇄ hin und zurück</span><span>⚠ Vorsicht</span><span>Empfehlung:</span><span><b class="empf e-zuerst">1</b> zuerst</span><span><b class="empf e-danach">2</b> danach</span><span><b class="empf e-spaeter">3</b> später</span><span><b class="empf e-auslassen">✗</b> auslassen</span><span><b class="empf e-besprechen">?</b> besprechen</span>
+  </div>
+
+  <p class="hinweis">Tippen = Verbindungen · ✎ = Entscheidung und Notiz · „Datei mit Notizen speichern“ = zurückschicken</p>
+
+  <div class="leiste">
+    <label class="name">Wer schreibt? <input id="wer" type="text" size="14" placeholder="Name oder Kürzel" autocomplete="off"></label>
+    <button class="k" type="button" id="notiz-allgemein">✎ Allgemeine Notiz</button>
+    <button class="k voll" type="button" id="speichern">Datei mit Notizen speichern</button>
+    <button class="k" type="button" id="kopieren">Notizen als Text kopieren</button>
+    <button class="k gefahr" type="button" id="alle-weg">Alle Notizen löschen</button>
+    <span class="meldung" id="meldung" aria-live="polite"></span>
+  </div>
+
+  <div class="rahmen"><div class="buehne" id="buehne" role="group" aria-label="E-Mail-Karte der Familienakte"><svg id="aeste" aria-hidden="true"><defs>
+    <marker id="sp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="spitze"/></marker>
+    <marker id="sp-a" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M10 0 L0 5 L10 10 z" class="spitze"/></marker>
+    <marker id="sp-an" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="spitze-an"/></marker>
+    <marker id="sp-a-an" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10 0 L0 5 L10 10 z" class="spitze-an"/></marker>
+  </defs><g id="linien"></g></svg></div></div>
+
+  <div class="info" id="info" aria-live="polite"><span class="stand">Auf einen Kasten tippen.</span></div>
+
+  <div class="notizen" id="notizen-box">
+    <h2>Entscheidungen und Notizen <span id="notizen-zahl"></span></h2>
+    <ul id="notizen-liste"></ul>
+  </div>
+
+  <p class="stand">Aus der Familienakte, Fassung 2.28.34. Zahl am Kasten = Empfehlung von Claude; eure Entscheidung mit ✎.</p>
+</main>
+
+<script type="application/json" id="notizen-daten">{}</script>
+<script>
+(function () {
+  "use strict";
+  var KARTE = {
+    gruppen: [
+      { id: "g-heute", titel: "Hereinholen · heute", wo: "aus der Mail-App", spalte: 0, chips: [
+        { id: "teilen-text", titel: "Mail teilen", wo: "Mail-App › Teilen", nach: "eingang", mehr: "Gmail- und Outlook-App teilen nur den Text." },
+        { id: "teilen-anhang", titel: "Anhang teilen", wo: "Anhang › Teilen", nach: "eingang", mehr: "Üblicher Weg für Briefe als PDF." },
+        { id: "als-pdf", titel: "Mail als PDF", wo: "Drucken › PDF › Teilen", nach: "eingang" },
+        { id: "eml", titel: "Mail-Datei .eml", wo: "am Rechner hineinziehen", nach: "eingang", mehr: "Anhänge werden herausgelöst." },
+        { id: "msg", titel: "Outlook-Datei .msg", wo: "wird angenommen", nach: "msg-loesen", mehr: "Anhänge darin werden noch nicht herausgelöst." } ] },
+      { id: "g-abholen", titel: "Postfach abholen · geplant", wo: "die App holt selbst", spalte: 0, chips: [
+        { id: "ms-abholen", titel: "Microsoft", wo: "Outlook, Hotmail", nach: "ms-anmeldung", stand: "geplant", empf: "danach", mehr: "Gleiche Anmeldung wie beim Kalender." },
+        { id: "imap", titel: "GMX · WEB.DE · T-Online", wo: "App-Passwort", nach: "abholliste", stand: "geplant", empf: "spaeter", mehr: "Technik aus Private Brain Pro; eigene Sitzung." },
+        { id: "gmail-lesen", titel: "Gmail", wo: "Google-Prüfung jährlich bezahlt", nach: "abholliste", stand: "geplant", empf: "auslassen", mehr: "Laufende Kosten. Ersatz: Anhang teilen, Mail als PDF." },
+        { id: "brain", titel: "Private Brain Pro", wo: "über das gemeinsame Fach", nach: "eingang", stand: "geplant", empf: "spaeter", mehr: "Arbeit im Brain-Repo: „An Familienakte“ wie „An BookLedgerPro“." } ] },
+      { id: "g-antwort", titel: "Antworten", wo: "Assistenz › Schreiben / E-Mail", spalte: 7, chips: [
+        { id: "entwurf", titel: "Entwurf + Prüf-Haken", wo: "heute", mehr: "„Als versendet speichern“ hält nur fest. Die App verschickt nie still." },
+        { id: "anlagen-wahl", titel: "Anlagen aus dem Vorgang", wo: "über 20 MB: Verkleinern", stand: "geplant", empf: "zuerst" },
+        { id: "betreff-hinweis", titel: "Hinweis Gesundheit im Betreff", wo: "nur Hinweis", stand: "geplant", empf: "zuerst" } ] }
+    ],
+    knoten: [
+      { id: "ms-anmeldung", titel: "Microsoft-Anmeldung", wo: "Rechte Mail.Read, Mail.Send", spalte: 1, stand: "aktivieren", empf: "danach", mehr: "In Entra bei der App „Familienakte“ zwei Rechte dazu. Kein neues Geheimnis." },
+      { id: "abholliste", titel: "Abholen-Liste", wo: "letzte 30 Tage · auswählen", spalte: 1, stand: "geplant", empf: "danach", mehr: "Nur auf Tipp. Im Postfach wird nichts gelöscht, verschoben oder als gelesen markiert." },
+      { id: "msg-loesen", titel: ".msg-Anhänge lösen", wo: "Outlook-Format lesen", spalte: 1, stand: "geplant", empf: "besprechen", mehr: "Nur nötig, wenn Outlook am PC genutzt wird." },
+      { id: "eingang", titel: "Eingangszentrale", wo: "Mail zerlegen", unter: "Text · Absender · Anhänge", spalte: 2, mitte: true, mehr: "Original bleibt unverändert. Mail nur als Text: kein Skript, keine Bilder aus dem Netz, kein Link öffnet sich." },
+      { id: "absender", titel: "Absender bestätigt?", wo: "Hinweis aus dem Mail-Kopf", spalte: 3, stand: "geplant", empf: "besprechen", mehr: "Der Anbieter vermerkt, ob der Absender echt ist. Nur Hinweis „nicht bestätigt“." },
+      { id: "pruefung", titel: "⚠ Prüfung jeder Anlage", wo: "Prüfer aus Workflow PDF", spalte: 3, stand: "geplant", empf: "zuerst", mehr: "Skripte, Startaktionen, eingebettete Dateien, Makros, getarnte Endungen, Programme. Kein Virenscanner." },
+      { id: "echt", titel: "Echtes PDF ohne Befund", wo: "Text direkt · ohne Workflow PDF", spalte: 4, stand: "geplant", empf: "zuerst", mehr: "Amt, Kasse, Praxis: kein Umweg." },
+      { id: "scan", titel: "Scan oder Foto", wo: "Texterkennung", spalte: 4 },
+      { id: "befund", titel: "Befund", wo: "nicht geöffnet", spalte: 4, stand: "geplant", empf: "zuerst", mehr: "Ablegen ohne Vorschau oder weglassen – du entscheidest." },
+      { id: "programm", titel: "Programm .exe .apk", wo: "nicht übernommen", spalte: 4, stand: "geplant", empf: "zuerst" },
+      { id: "regeln", titel: "Absender-Regeln", wo: "Praxis X → Person Y", spalte: 5, stand: "geplant", empf: "besprechen", mehr: "Nur nach Bestätigung angelegt." },
+      { id: "vorschlag", titel: "Vorschlag", wo: "Person · Vorgang · Art · Frist", spalte: 5 },
+      { id: "ein-tipp", titel: "Übernehmen mit 1 Tipp", wo: "je Mail", spalte: 5, stand: "geplant", empf: "zuerst" },
+      { id: "sammel", titel: "Alle übernehmen", wo: "Sammelbestätigung", spalte: 5, stand: "geplant", empf: "besprechen" },
+      { id: "akte", titel: "In der Akte", wo: "Mail + Anhänge verknüpft", spalte: 6, mitte: true, mehr: "Speicher wie gewählt (Gerät, SD-Karte, Laufwerk, Pro-Tresor)." },
+      { id: "erinnerung", titel: "Frist → Erinnerung", wo: "nur nach Ja · Kalender", spalte: 7 },
+      { id: "mailapp", titel: "Mail-App öffnen", wo: "Android · Web-App", spalte: 8, stand: "geplant", empf: "zuerst", mehr: "Vorbereitet mit Empfänger, Betreff, Text, Anlagen. Danach Frage „abgeschickt?“." },
+      { id: "win-teilen", titel: "Windows-Teilen", wo: "neues Outlook unsicher", spalte: 8, stand: "geplant", empf: "besprechen" },
+      { id: "ms-senden", titel: "Über Microsoft senden", wo: "nach „Jetzt senden?“", spalte: 8, stand: "geplant", empf: "danach" },
+      { id: "gmail-senden", titel: "Über Gmail senden", wo: "Google-Prüfvideo", spalte: 8, stand: "geplant", empf: "spaeter" }
+    ],
+    kanten: [
+      { von: "ms-anmeldung", nach: "abholliste" }, { von: "abholliste", nach: "eingang" }, { von: "msg-loesen", nach: "eingang" },
+      { von: "eingang", nach: "absender" }, { von: "eingang", nach: "pruefung" },
+      { von: "pruefung", nach: "echt" }, { von: "pruefung", nach: "scan" }, { von: "pruefung", nach: "befund" }, { von: "pruefung", nach: "programm" },
+      { von: "absender", nach: "vorschlag" }, { von: "echt", nach: "ein-tipp" }, { von: "scan", nach: "vorschlag" }, { von: "regeln", nach: "vorschlag" },
+      { von: "vorschlag", nach: "akte" }, { von: "ein-tipp", nach: "akte" }, { von: "sammel", nach: "akte" }, { von: "vorschlag", nach: "sammel" },
+      { von: "akte", nach: "erinnerung" }, { von: "akte", nach: "entwurf" },
+      { von: "entwurf", nach: "mailapp" }, { von: "entwurf", nach: "win-teilen" }, { von: "entwurf", nach: "ms-senden" }, { von: "entwurf", nach: "gmail-senden" }
+    ]
+  };
+  var WORT = { fertig: "fertig, funktioniert", imbau: "im Bau, bald fertig", aktivieren: "muss eingeschaltet oder eingerichtet werden", geplant: "geplant, abzusprechen" };
+  var KURZ = { fertig: "fertig", imbau: "im Bau", aktivieren: "einschalten", geplant: "geplant" };
+  var FARBE = { fertig: "var(--f-rand)", imbau: "var(--b-rand)", aktivieren: "var(--a-rand)", geplant: "var(--g-rand)" };
+  var BREITEN = [214, 162, 162, 162, 162, 162, 162, 214, 162], ABSTAND = 34, RAND = 16, LUECKE = 12;
+  var SCHLUESSEL = "familienakte-email-karte-notizen-v1", WER = "familienakte-landkarte-wer-v1";
+  var EMPF = { zuerst: ["1", "zuerst bauen"], danach: ["2", "danach bauen"], spaeter: ["3", "später"], auslassen: ["✗", "auslassen"], besprechen: ["?", "besprechen"] };
+  var ENTSCH = { ja: "✓ Ja", spaeter: "⏳ Später", weg: "✗ Weglassen", frage: "? Frage" };
+  var buehne = document.getElementById("buehne"), linien = document.getElementById("linien");
+  var aktiv = null, notizen = {}, el = {};
+
+  function sicher(f, ersatz) { try { return f(); } catch (e) { return ersatz; } }
+  function alle() { var l = KARTE.knoten.slice(); KARTE.gruppen.forEach(function (g) { g.chips.forEach(function (c) { c._gruppe = g; l.push(c); }); }); return l; }
+  function finde(id) { return alle().filter(function (n) { return n.id === id; })[0]; }
+  function kanten() { var k = KARTE.kanten.slice(); KARTE.gruppen.forEach(function (g) { g.chips.forEach(function (c) { if (c.nach) k.push({ von: c.id, nach: c.nach, beide: c.beide }); }); }); return k; }
+  var ALLE_K = kanten();
+
+  // ---- Notizen: aus der Datei, dazu was in diesem Browser steht; je Kasten gewinnt die jüngere ----
+  function notizenLaden() {
+    var ausDatei = sicher(function () { return JSON.parse(document.getElementById("notizen-daten").textContent || "{}"); }, {});
+    var lokal = sicher(function () { return JSON.parse(localStorage.getItem(SCHLUESSEL) || "{}"); }, {});
+    notizen = {};
+    [ausDatei, lokal].forEach(function (q) { Object.keys(q).forEach(function (id) { var n = q[id]; if (!n || !(n.text || n.entscheidung)) return; if (!notizen[id] || (n.wann || "") > (notizen[id].wann || "")) notizen[id] = n; }); });
+  }
+  function notizenMerken() { sicher(function () { localStorage.setItem(SCHLUESSEL, JSON.stringify(notizen)); }); document.getElementById("notizen-daten").textContent = JSON.stringify(notizen).replace(/</g, "\\u003c"); }
+
+  function box(n, art) {
+    var b = document.createElement("div");
+    b.className = "box " + art + " s-" + (n.stand || "fertig") + (n.mitte ? " mitte" : "") + (notizen[n.id] && notizen[n.id].text ? " hat-notiz" : "");
+    b.tabIndex = 0; b.setAttribute("role", "button"); b.dataset.id = n.id;
+    b.setAttribute("aria-label", n.titel + " (" + KURZ[n.stand || "fertig"] + ") – Verbindungen zeigen");
+    b.innerHTML = '<span class="punkt" aria-hidden="true"></span><strong></strong><small></small><button type="button" class="stift" title="Notiz">✎</button>';
+    b.querySelector("strong").textContent = n.titel;
+    b.querySelector("small").textContent = art === "chip" ? n.wo : [n.wo, n.unter].filter(Boolean).join(" · ");
+    if (n.empf) { var em = document.createElement("b"); em.className = "empf e-" + n.empf; em.textContent = EMPF[n.empf][0]; em.title = "Empfehlung: " + EMPF[n.empf][1]; b.appendChild(em); b.classList.add("mit-empf"); }
+    var nz = notizen[n.id]; if (nz && nz.entscheidung) { var en = document.createElement("span"); en.className = "entsch"; en.textContent = ENTSCH[nz.entscheidung]; b.appendChild(en); b.classList.add("mit-entsch"); }
+    var s = b.querySelector(".stift"); s.setAttribute("aria-label", "Notiz zu „" + n.titel + "“");
+    s.addEventListener("click", function (e) { e.stopPropagation(); editor(n.id); });
+    b.addEventListener("click", function () { aktiv = aktiv === n.id ? null : n.id; markieren(); });
+    b.addEventListener("keydown", function (e) { if (e.target === b && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); b.click(); } });
+    el[n.id] = b; return b;
+  }
+
+  function zeichnen() {
+    buehne.querySelectorAll(".gruppe, .platz").forEach(function (e) { e.remove(); });
+    linien.innerHTML = ""; el = {};
+    var spalten = BREITEN.map(function () { return []; });
+    KARTE.gruppen.forEach(function (g) {
+      var c = document.createElement("div"); c.className = "gruppe"; c.dataset.gruppe = g.id;
+      c.innerHTML = "<strong></strong><small></small><div class=\"chips\"></div>";
+      c.querySelector("strong").textContent = g.titel; c.querySelector("small").textContent = g.wo;
+      g.chips.forEach(function (ch) { c.querySelector(".chips").appendChild(box(ch, "chip")); });
+      buehne.appendChild(c); spalten[g.spalte].push({ e: c, ids: g.chips.map(function (x) { return x.id; }) });
+    });
+    KARTE.knoten.forEach(function (n) {
+      var p = document.createElement("div"); p.className = "platz"; p.style.width = BREITEN[n.spalte] + "px";
+      p.appendChild(box(n, "kasten")); buehne.appendChild(p); spalten[n.spalte].push({ e: p, ids: [n.id] });
+    });
+    var xs = [], x = RAND; BREITEN.forEach(function (w, i) { xs[i] = x; x += w + ABSTAND; });
+    var breite = x - ABSTAND + RAND; buehne.style.width = breite + "px"; buehne.style.height = "3000px";
+    var basis = buehne.getBoundingClientRect();
+    function r(id) { var b = el[id].getBoundingClientRect(); return { l: b.left - basis.left, r: b.right - basis.left, t: b.top - basis.top, b: b.bottom - basis.top, m: (b.top + b.bottom) / 2 - basis.top, cx: (b.left + b.right) / 2 - basis.left, h: b.height }; }
+    var y0 = RAND; spalten[0].forEach(function (o) { o.e.style.left = xs[0] + "px"; o.e.style.top = y0 + "px"; y0 += o.e.offsetHeight + LUECKE; });
+    function mitte(ids) { var m = ALLE_K.filter(function (k) { return ids.indexOf(k.nach) >= 0 && el[k.von] && el[k.von].closest(".gruppe, .platz").style.top; }).map(function (k) { return r(k.von).m; }); return m.length ? m.reduce(function (a, v) { return a + v; }, 0) / m.length : 200; }
+    for (var s = 1; s < spalten.length; s++) {
+      var unten = RAND;
+      spalten[s].map(function (o, i) { return { o: o, i: i, m: mitte(o.ids) }; }).sort(function (a, z) { return (a.m - z.m) || (a.i - z.i); })
+        .forEach(function (v) { var y = Math.max(v.m - v.o.e.offsetHeight / 2, unten); v.o.e.style.left = xs[s] + "px"; v.o.e.style.top = y + "px"; unten = y + v.o.e.offsetHeight + LUECKE; });
+    }
+    var hoehe = 0; buehne.querySelectorAll(".gruppe, .platz").forEach(function (e) { hoehe = Math.max(hoehe, e.offsetTop + e.offsetHeight); });
+    buehne.style.height = (hoehe + RAND + 70) + "px";
+    var svg = document.getElementById("aeste"); svg.setAttribute("width", breite); svg.setAttribute("height", hoehe + RAND + 70);
+    var ankunft = {}; ALLE_K.forEach(function (k) { (ankunft[k.nach] = ankunft[k.nach] || []).push(k); });
+    Object.keys(ankunft).forEach(function (id) { ankunft[id].sort(function (p, q) { return r(p.von).m - r(q.von).m; }); });
+    ALLE_K.forEach(function (k) {
+      var a = r(k.von), z = r(k.nach), reihe = ankunft[k.nach], i = reihe.indexOf(k), n = reihe.length, d;
+      var zy = n > 1 ? z.t + 10 + (z.h - 20) * i / (n - 1) : z.m;
+      if (Math.abs(a.l - z.l) < 5) { var bx = a.r + 36; d = "M" + a.r + " " + a.m + " C" + bx + " " + a.m + " " + bx + " " + z.m + " " + (z.r + 2) + " " + z.m; }
+      else if (k.unten) { var tief = Math.max(a.b, z.b) + 50; d = "M" + a.cx + " " + a.b + " C" + a.cx + " " + tief + " " + z.cx + " " + tief + " " + z.cx + " " + (z.b + 2); }
+      else { var mx = (a.r + z.l) / 2; d = "M" + a.r + " " + a.m + " C" + mx + " " + a.m + " " + mx + " " + zy + " " + (z.l - 2) + " " + zy; }
+      var p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      p.setAttribute("d", d); p.dataset.von = k.von; p.dataset.nach = k.nach; p.dataset.beide = k.beide ? "1" : "";
+      var st = [finde(k.von), finde(k.nach)].some(function (q) { return q && q.stand && q.stand !== "fertig"; });
+      p.setAttribute("class", "ast" + (st ? " gestrichelt" : ""));
+      linien.appendChild(p);
+    });
+    markieren(); zaehlen(); liste();
+  }
+
+  function markieren() {
+    Object.keys(el).forEach(function (id) { el[id].classList.remove("an"); el[id].setAttribute("aria-pressed", String(aktiv === id)); });
+    linien.querySelectorAll("path").forEach(function (p) {
+      var an = aktiv && (p.dataset.von === aktiv || p.dataset.nach === aktiv);
+      p.classList.toggle("an", !!an);
+      p.setAttribute("marker-end", an ? "url(#sp-an)" : "url(#sp)");
+      if (p.dataset.beide) p.setAttribute("marker-start", an ? "url(#sp-a-an)" : "url(#sp-a)"); else p.removeAttribute("marker-start");
+      if (an) { el[p.dataset.von].classList.add("an"); el[p.dataset.nach].classList.add("an"); }
+    });
+    info();
+  }
+
+  function info() {
+    var box = document.getElementById("info"), n = aktiv && finde(aktiv);
+    if (!n) { box.innerHTML = '<span class="stand">Auf einen Kasten tippen: woher Daten kommen, wohin sie gehen, wo er in der App liegt. Der Stift ✎ öffnet die Notiz.</span>'; return; }
+    var von = ALLE_K.filter(function (k) { return k.nach === n.id; }), zu = ALLE_K.filter(function (k) { return k.von === n.id; });
+    function namen(l, f) { return l.map(function (k) { return (k.beide ? "⇄ " : "") + finde(k[f]).titel; }).join(", "); }
+    var st = n.stand || "fertig";
+    box.innerHTML = "";
+    function zeile(tag, text, klasse) { if (!text) return; var e = document.createElement(tag); e.textContent = text; if (klasse) e.className = klasse; box.appendChild(e); return e; }
+    zeile("strong", n.titel);
+    var m = zeile("span", WORT[st], "marke"); m.style.color = FARBE[st]; m.style.borderColor = FARBE[st];
+    zeile("p", "Wo: " + [n._gruppe && n._gruppe.titel, n.wo].filter(Boolean).join(" · "));
+    zeile("p", [n.unter, n.mehr].filter(Boolean).join(" · "));
+    zeile("p", von.length ? "← kommt von: " + namen(von, "von") : "", "richtung");
+    zeile("p", zu.length ? "→ geht zu: " + namen(zu, "nach") : "", "richtung");
+    if (n.empf) zeile("p", "Empfehlung: " + EMPF[n.empf][1], "richtung");
+    if (notizen[n.id]) zeile("p", "✎ " + (notizen[n.id].entscheidung ? ENTSCH[notizen[n.id].entscheidung] + " · " : "") + (notizen[n.id].wer ? notizen[n.id].wer + ": " : "") + (notizen[n.id].text || ""), "notiz-anzeige");
+    var b = document.createElement("button"); b.type = "button"; b.className = "k"; b.textContent = notizen[n.id] ? "✎ Entscheidung/Notiz ändern" : "✎ Entscheidung/Notiz";
+    b.addEventListener("click", function () { editor(n.id); }); box.appendChild(b);
+  }
+
+  function zaehlen() {
+    var z = { fertig: 0, imbau: 0, aktivieren: 0, geplant: 0 };
+    alle().forEach(function (n) { z[n.stand || "fertig"]++; });
+    var box = document.getElementById("zahlen"); box.innerHTML = "";
+    Object.keys(z).forEach(function (s) { var e = document.createElement("span"); e.className = "zahl"; e.innerHTML = '<i class="muster s-' + s + '" style="width:12px;height:12px"></i><b></b> '; e.querySelector("b").textContent = z[s]; e.appendChild(document.createTextNode(KURZ[s])); box.appendChild(e); });
+  }
+
+  function titelVon(id) { return id === "allgemein" ? "Allgemein" : (finde(id) || { titel: id }).titel; }
+  function liste() {
+    var ul = document.getElementById("notizen-liste"), ids = Object.keys(notizen);
+    document.getElementById("notizen-zahl").textContent = ids.length ? "(" + ids.length + ")" : "";
+    ul.innerHTML = "";
+    if (!ids.length) { var li = document.createElement("li"); li.innerHTML = "<small>Noch keine Notizen. Stift ✎ an einem Kasten antippen.</small>"; ul.appendChild(li); return; }
+    ids.sort(function (a, b) { return a === "allgemein" ? -1 : b === "allgemein" ? 1 : titelVon(a).localeCompare(titelVon(b), "de"); }).forEach(function (id) {
+      var n = notizen[id], li = document.createElement("li"), b = document.createElement("button"), t = document.createElement("span"), s = document.createElement("small");
+      b.type = "button"; b.textContent = titelVon(id); b.addEventListener("click", function () { if (id === "allgemein") { editor(id); return; } aktiv = id; markieren(); el[id].scrollIntoView({ behavior: "smooth", block: "center", inline: "center" }); });
+      t.textContent = (n.entscheidung ? ENTSCH[n.entscheidung] + (n.text ? " · " : "") : "") + (n.text || ""); s.textContent = [n.wer, n.wann && new Date(n.wann).toLocaleString("de-DE")].filter(Boolean).join(" · ");
+      li.appendChild(b); li.appendChild(t); li.appendChild(s); ul.appendChild(li);
+    });
+  }
+
+  var offen = null;
+  function editor(id) {
+    if (offen) offen.remove();
+    var n = notizen[id], e = document.createElement("div"); e.className = "editor"; e.setAttribute("role", "dialog"); e.setAttribute("aria-label", "Notiz zu " + titelVon(id));
+    e.innerHTML = '<strong></strong><div class="wahl" role="group" aria-label="Entscheidung"><button type="button" class="k" data-e="ja">✓ Ja, bauen</button><button type="button" class="k" data-e="spaeter">⏳ Später</button><button type="button" class="k" data-e="weg">✗ Weglassen</button><button type="button" class="k" data-e="frage">? Frage</button></div><textarea id="notiz-text" placeholder="z. B. anders machen, weglassen, Frage …"></textarea><div class="leiste"><button type="button" class="k voll" data-a="ok">Speichern</button><button type="button" class="k gefahr" data-a="weg">Notiz löschen</button><button type="button" class="k" data-a="zu">Abbrechen</button></div>';
+    e.querySelector("strong").textContent = "Notiz: " + titelVon(id);
+    var ta = e.querySelector("textarea"); ta.value = n ? (n.text || "") : "";
+    var gewaehlt = n ? n.entscheidung || "" : "";
+    function wahlZeigen() { e.querySelectorAll("[data-e]").forEach(function (k) { k.setAttribute("aria-pressed", String(k.dataset.e === gewaehlt)); }); }
+    e.querySelectorAll("[data-e]").forEach(function (k) { k.addEventListener("click", function () { gewaehlt = gewaehlt === k.dataset.e ? "" : k.dataset.e; wahlZeigen(); }); });
+    wahlZeigen(); if (id === "allgemein") e.querySelector(".wahl").hidden = true;
+    e.querySelector('[data-a="weg"]').hidden = !n;
+    e.addEventListener("click", function (ev) {
+      var a = ev.target.dataset && ev.target.dataset.a; if (!a) return;
+      if (a === "ok") { var text = ta.value.trim(); if (text || gewaehlt) notizen[id] = { text: text, entscheidung: gewaehlt, wer: (document.getElementById("wer").value || "").trim(), wann: new Date().toISOString() }; else delete notizen[id]; }
+      if (a === "weg") delete notizen[id];
+      notizenMerken(); e.remove(); offen = null; zeichnen();
+      melden(a === "zu" ? "" : a === "weg" ? "Notiz gelöscht." : "Notiz gespeichert (in diesem Browser). Zum Weitergeben: „Datei mit Notizen speichern“.");
+    });
+    document.body.appendChild(e); offen = e; ta.focus();
+  }
+
+  function melden(t) { document.getElementById("meldung").textContent = t; }
+  function alsText() {
+    return ["Entscheidungen und Notizen zur E-Mail-Karte", ""].concat(Object.keys(notizen).map(function (id) { var n = notizen[id]; return "• " + titelVon(id) + (n.wer ? " (" + n.wer + ")" : "") + ": " + (n.entscheidung ? ENTSCH[n.entscheidung] + " " : "") + (n.text || ""); })).join("\n");
+  }
+  document.getElementById("kopieren").addEventListener("click", function () {
+    var t = alsText();
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(function () { melden("Notizen kopiert."); }, function () { zeigeText(t); }); else zeigeText(t);
+  });
+  function zeigeText(t) { editor("allgemein"); var ta = document.getElementById("notiz-text"); ta.value = t; ta.select(); melden("Kopieren ging nicht automatisch: Text ist markiert, bitte selbst kopieren (und Abbrechen tippen)."); }
+  document.getElementById("speichern").addEventListener("click", function () {
+    if (offen) { offen.remove(); offen = null; }
+    notizenMerken();
+    var html = "<!doctype html>\n" + document.documentElement.outerHTML;
+    var url = URL.createObjectURL(new Blob([html], { type: "text/html" }));
+    var a = document.createElement("a"); a.href = url; a.download = "Familienakte-E-Mail-Karte-mit-Notizen-" + new Date().toISOString().slice(0, 10) + ".html";
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+    melden("Datei gespeichert (Ordner „Downloads“). Diese Datei zurückschicken.");
+  });
+  document.getElementById("notiz-allgemein").addEventListener("click", function () { editor("allgemein"); });
+  var bestaetigen = false;
+  document.getElementById("alle-weg").addEventListener("click", function (ev) {
+    if (!bestaetigen) { bestaetigen = true; ev.target.textContent = "Wirklich alle löschen? Nochmal tippen"; setTimeout(function () { bestaetigen = false; ev.target.textContent = "Alle Notizen löschen"; }, 4000); return; }
+    bestaetigen = false; ev.target.textContent = "Alle Notizen löschen"; notizen = {}; notizenMerken(); zeichnen(); melden("Alle Notizen gelöscht.");
+  });
+  var wer = document.getElementById("wer");
+  wer.value = sicher(function () { return localStorage.getItem(WER) || ""; }, "");
+  wer.addEventListener("change", function () { sicher(function () { localStorage.setItem(WER, wer.value.trim()); }); });
+
+  notizenLaden(); zeichnen();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(zeichnen);
+})();
+</script>
+</body>
+</html>

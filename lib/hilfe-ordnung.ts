@@ -22,6 +22,7 @@ export const HILFE_ORDNUNG: Record<string, HilfeEintrag> = {
   // Arbeiten: Erfassen
   "fotografieren": { gruppe: "arbeiten", schritt: 1, seiten: ["inbox", "overview"], worte: ["foto", "kamera", "scannen", "brief fotografieren", "zu groß", "pdf erstellen"] },
   "eingangszentrale": { gruppe: "arbeiten", schritt: 1, seiten: ["inbox"], worte: ["datei", "hochladen", "einfügen", "pdf", "word", "eingang", "e-mail datei", "eml", "msg"] },
+  "email": { gruppe: "arbeiten", schritt: 1, seiten: ["inbox", "assistant"], worte: ["e-mail", "email", "mail", "postfach", "anhang", "anlage", "outlook", "gmail", "gmx", "web.de", "t-online", "eml", "virus", "schadsoftware", "antworten", "senden"] },
   "teilen": { gruppe: "arbeiten", schritt: 1, seiten: ["inbox"], worte: ["teilen", "e-mail", "mail", "galerie", "aus anderer app", "weiterleiten"] },
   "notiz": { gruppe: "arbeiten", schritt: 1, seiten: ["overview", "reminders", "memory"], worte: ["notiz", "aufschreiben", "schnell merken", "kamera notiz"] },
   "mikrofon": { gruppe: "arbeiten", schritt: 1, seiten: ["overview"], worte: ["mikrofon", "diktieren", "sprechen", "sprache", "spracheingabe", "mikrofon geht nicht"] },

@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Familienakte Landkarte</title>
+<style>
+/* Layout: Querformat-Landkarte der ganzen App; Spalten Hinein → Werkzeuge → Eingang → Sortieren → Akte → Speicher/Ausgabe → Ziele.
+   Stand als Rahmen: grün fertig · gelb gestrichelt im Bau · rot einschalten · grau gestrichelt geplant/abzusprechen. */
+:root {
+  --bg: #f4f7f9; --fg: #17262f; --muted: #4f6472; --line: #c8d9e2; --card: #ffffff; --ast: #8fb3c4; --hervor: #1f4e79; --teal: #2a7f86;
+  --f-rand: #2f8a4f; --f-flaeche: #eef8f1; --b-rand: #c58a00; --b-flaeche: #fff8e6; --a-rand: #c0392b; --a-flaeche: #fdf3f3;
+  --g-rand: #9aa5ad; --g-flaeche: #f1f3f4; --gold: #b8860b; --notiz: #7a3fb0; --notiz-flaeche: #f6effc;
+  --font: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f171d; --fg: #e3ecf1; --muted: #9fb2bf; --line: #2b3d49; --card: #16222b; --ast: #4f7486; --hervor: #7db4e6; --teal: #5cc4cc;
+  --f-rand: #5fc78a; --f-flaeche: #13281b; --b-rand: #e0ad3c; --b-flaeche: #2c2410; --a-rand: #ff7a6b; --a-flaeche: #331a17;
+  --g-rand: #75828c; --g-flaeche: #1b252c; --gold: #e2b54a; --notiz: #c49be8; --notiz-flaeche: #2a1f35; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0f171d; --fg: #e3ecf1; --muted: #9fb2bf; --line: #2b3d49; --card: #16222b; --ast: #4f7486; --hervor: #7db4e6; --teal: #5cc4cc;
+  --f-rand: #5fc78a; --f-flaeche: #13281b; --b-rand: #e0ad3c; --b-flaeche: #2c2410; --a-rand: #ff7a6b; --a-flaeche: #331a17;
+  --g-rand: #75828c; --g-flaeche: #1b252c; --gold: #e2b54a; --notiz: #c49be8; --notiz-flaeche: #2a1f35; color-scheme: dark }
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--fg); font: 15px/1.45 var(--font); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 60px; }
+main { max-width: 1900px; margin: 0 auto; display: grid; gap: 14px; }
+h1 { font-size: 1.6rem; margin: 0; text-wrap: balance; }
+h2 { font-size: 1.05rem; margin: 0; }
+p { margin: 0; max-width: 80ch; }
+.eyebrow { font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--teal); }
+.kopf { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; }
+.zahlen { display: flex; flex-wrap: wrap; gap: 6px; font-size: .85rem; }
+.zahl { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); }
+.zahl b { font-variant-numeric: tabular-nums; }
+.legende { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .84rem; color: var(--muted); align-items: center; }
+.legende span { display: inline-flex; align-items: center; gap: 6px; }
+.muster { display: inline-block; width: 24px; height: 15px; border-radius: 4px; }
+.so-gehts { border: 1px solid var(--line); border-radius: 10px; background: var(--card); padding: 10px 14px; display: grid; gap: 6px; }
+.so-gehts ol { margin: 0; padding-left: 1.3em; display: grid; gap: 2px; }
+.leiste { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button.k { font: inherit; font-weight: 600; font-size: .88rem; padding: 6px 12px; border-radius: 8px; border: 1px solid var(--hervor); background: var(--card); color: var(--hervor); cursor: pointer; }
+button.k.voll { background: var(--hervor); color: var(--card); }
+button.k.gefahr { border-color: var(--a-rand); color: var(--a-rand); }
+label.name { display: inline-flex; gap: 6px; align-items: center; font-size: .88rem; }
+input, textarea { font: inherit; color: var(--fg); background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; }
+.meldung { font-size: .85rem; color: var(--muted); }
+.rahmen { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
+.buehne { position: relative; }
+.buehne svg { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
+.ast { fill: none; stroke: var(--ast); stroke-width: 2; }
+.ast.gestrichelt { stroke-dasharray: 6 5; }
+.ast.an { stroke: var(--hervor); stroke-width: 3; }
+.spitze { fill: var(--ast); } .spitze-an { fill: var(--hervor); }
+.gruppe { position: absolute; width: 236px; border: 2px solid var(--teal); border-radius: 12px; background: var(--card); padding: 8px; display: grid; gap: 4px; }
+.gruppe > strong { font-size: .95rem; padding: 0 2px; }
+.gruppe > small { font-size: .76rem; color: var(--muted); padding: 0 2px; }
+.chips { display: grid; gap: 5px; position: relative; }
+.platz { position: absolute; }
+.box { position: relative; display: grid; gap: 1px; width: 100%; text-align: left; border-radius: 8px; cursor: pointer; line-height: 1.25; border: 2px solid var(--f-rand); background: var(--f-flaeche); }
+.box.chip { padding: 4px 26px 4px 22px; font-size: .8rem; }
+.box.chip small { font-size: .72rem; color: var(--muted); }
+.box.kasten { padding: 8px 28px 8px 24px; }
+.box.kasten strong { font-size: .9rem; } .box.kasten small { font-size: .76rem; color: var(--muted); }
+.box.mitte { border-width: 3px; }
+.punkt { position: absolute; left: 8px; top: 10px; width: 9px; height: 9px; border-radius: 50%; background: var(--f-rand); }
+.chip .punkt { left: 7px; top: 8px; width: 8px; height: 8px; }
+.s-imbau { border: 2px dashed var(--b-rand); background: var(--b-flaeche); } .s-imbau > .punkt { background: var(--b-rand); }
+.s-aktivieren { border-color: var(--a-rand); background: var(--a-flaeche); } .s-aktivieren > .punkt { background: var(--a-rand); }
+.s-geplant { border: 2px dashed var(--g-rand); background: var(--g-flaeche); } .s-geplant > .punkt { background: var(--g-rand); }
+.muster.s-fertig { border: 2px solid var(--f-rand); background: var(--f-flaeche); }
+.muster.s-imbau { border: 2px dashed var(--b-rand); background: var(--b-flaeche); }
+.muster.s-aktivieren { border: 2px solid var(--a-rand); background: var(--a-flaeche); }
+.muster.s-geplant { border: 2px dashed var(--g-rand); background: var(--g-flaeche); }
+.box.an { box-shadow: 0 0 0 3px var(--hervor); }
+.box:focus-visible, button:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+.stift { position: absolute; right: 3px; top: 3px; width: 22px; height: 22px; border-radius: 6px; border: 1px solid transparent; background: transparent; color: var(--muted); font-size: 13px; line-height: 1; cursor: pointer; padding: 0; }
+.stift:hover { border-color: var(--notiz); color: var(--notiz); }
+.box.hat-notiz .stift { background: var(--notiz); color: var(--card); }
+.box.hat-notiz { box-shadow: inset 0 0 0 1px var(--notiz); }
+.box.hat-notiz.an { box-shadow: 0 0 0 3px var(--hervor), inset 0 0 0 1px var(--notiz); }
+.info { border: 1px solid var(--line); border-radius: 10px; background: var(--card); padding: 10px 14px; display: grid; gap: 4px; min-height: 60px; }
+.info .richtung { font-weight: 700; color: var(--hervor); }
+.marke { justify-self: start; font-size: .72rem; font-weight: 700; padding: 0 8px; border-radius: 999px; border: 1px solid; }
+.notiz-anzeige { border-left: 3px solid var(--notiz); background: var(--notiz-flaeche); padding: 6px 10px; border-radius: 0 6px 6px 0; white-space: pre-wrap; }
+.notizen { border: 1px solid var(--notiz); border-radius: 10px; background: var(--card); padding: 10px 14px; display: grid; gap: 8px; }
+.notizen ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.notizen li { display: grid; gap: 2px; border-left: 3px solid var(--notiz); padding: 2px 10px; }
+.notizen li button { justify-self: start; font: inherit; font-weight: 700; color: var(--notiz); background: none; border: 0; padding: 0; cursor: pointer; text-align: left; }
+.notizen li span { white-space: pre-wrap; }
+.notizen small, .stand { color: var(--muted); font-size: .8rem; }
+.editor { position: fixed; z-index: 20; left: 50%; transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: min(560px, calc(100vw - 32px)); background: var(--card); border: 2px solid var(--notiz); border-radius: 12px; padding: 12px; display: grid; gap: 8px; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+.editor textarea { width: 100%; min-height: 110px; resize: vertical; }
+.zwei { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+.zwei section { border: 1px solid var(--line); border-radius: 10px; background: var(--card); padding: 12px 14px; display: grid; gap: 6px; min-width: 0; }
+ul.punkte, ol.punkte { margin: 0; padding-left: 1.2em; display: grid; gap: 3px; }
+@media print { .editor, .leiste, .stift { display: none !important; } }
+</style>
+</head>
+<body>
+<main>
+  <div class="kopf">
+    <div>
+      <span class="eyebrow">Familienakte · zur Abstimmung · Stand 07.11.2026</span>
+      <h1>Landkarte der Familienakte</h1>
+      <p>Wie Mails, Dateien, Scans und eigene Einträge in die App kommen, sortiert und gespeichert werden und wohin sie wieder hinausgehen. Der geplante E-Mail-Teil ist mit drin.</p>
+    </div>
+    <div class="zahlen" id="zahlen" aria-live="polite"></div>
+  </div>
+
+  <div class="legende">
+    <span><i class="muster s-fertig"></i> fertig, funktioniert</span>
+    <span><i class="muster s-imbau"></i> im Bau, bald fertig</span>
+    <span><i class="muster s-aktivieren"></i> gebaut, muss eingeschaltet oder eingerichtet werden</span>
+    <span><i class="muster s-geplant"></i> geplant, abzusprechen</span>
+    <span>→ Daten gehen nur in eine Richtung</span><span>⇄ hin und zurück</span><span>⚠ Vorsicht</span>
+  </div>
+
+  <div class="so-gehts">
+    <h2>So geht's</h2>
+    <ol>
+      <li>Auf einen Kasten tippen: seine Äste werden blau, darunter steht, wo er in der App liegt, woher Daten kommen und wohin sie gehen.</li>
+      <li>Auf den Stift ✎ tippen: eine Notiz schreiben, ändern oder löschen (z. B. „anders machen“, „weglassen“, „Frage: …“).</li>
+      <li>Am Ende „Datei mit Notizen speichern“ und die Datei zurückschicken. Die Notizen stecken dann in der Datei.</li>
+    </ol>
+  </div>
+
+  <div class="leiste">
+    <label class="name">Wer schreibt? <input id="wer" type="text" size="14" placeholder="Name oder Kürzel" autocomplete="off"></label>
+    <button class="k" type="button" id="notiz-allgemein">✎ Allgemeine Notiz</button>
+    <button class="k voll" type="button" id="speichern">Datei mit Notizen speichern</button>
+    <button class="k" type="button" id="kopieren">Notizen als Text kopieren</button>
+    <button class="k gefahr" type="button" id="alle-weg">Alle Notizen löschen</button>
+    <span class="meldung" id="meldung" aria-live="polite"></span>
+  </div>
+
+  <div class="rahmen"><div class="buehne" id="buehne" role="group" aria-label="Landkarte der Familienakte"><svg id="aeste" aria-hidden="true"><defs>
+    <marker id="sp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="spitze"/></marker>
+    <marker id="sp-a" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M10 0 L0 5 L10 10 z" class="spitze"/></marker>
+    <marker id="sp-an" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" class="spitze-an"/></marker>
+    <marker id="sp-a-an" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M10 0 L0 5 L10 10 z" class="spitze-an"/></marker>
+  </defs><g id="linien"></g></svg></div></div>
+
+  <div class="info" id="info" aria-live="polite"><span class="stand">Auf einen Kasten tippen.</span></div>
+
+  <div class="notizen" id="notizen-box">
+    <h2>Notizen <span id="notizen-zahl"></span></h2>
+    <ul id="notizen-liste"></ul>
+  </div>
+
+  <div class="zwei">
+    <section>
+      <h2>Fragen zur E-Mail für die Besprechung</h2>
+      <ol class="punkte">
+        <li>Welche Mail-Programme werden wirklich benutzt (Handy, Rechner)? Davon hängt ab, welcher Weg zuerst kommt.</li>
+        <li>Reicht „Anhang teilen“ und „Mail als PDF“ im Alltag, oder soll die App ein Postfach selbst abholen?</li>
+        <li>Welche Anbieter zum Abholen: Microsoft, GMX/WEB.DE/T-Online, Gmail? Gmail-Abholen verlangt eine jährliche, bezahlte Google-Prüfung.</li>
+        <li>Echte PDFs ohne Befund mit einem Tipp übernehmen, ohne Workflow PDF – passt das?</li>
+        <li>Befund in einem Anhang (Skript, eingebettete Datei, Makro): als Datei ablegen ohne Vorschau, oder weglassen?</li>
+        <li>Programme im Anhang (.exe, .apk): nie übernehmen – oder im Mail-Original lassen?</li>
+        <li>Feste Regeln je Absender (Praxis X → Person Y) gewünscht? Nur nach Bestätigung.</li>
+        <li>Senden: über die Mail-App des Geräts und für Microsoft direkt nach „Jetzt senden?“ – passt das?</li>
+      </ol>
+    </section>
+    <section>
+      <h2>Was fest gilt</h2>
+      <ul class="punkte">
+        <li>Nichts geht still hinaus: senden nur auf ausdrücklichen Befehl, nach Prüfung.</li>
+        <li>Alles kommt zuerst in die Eingangszentrale; übernommen wird nur auf Tipp.</li>
+        <li>Die App öffnet keine Anlage von selbst. Sie ist kein Virenscanner, sie warnt.</li>
+        <li>Gesundheitsdaten neutral; keine Passwörter oder Schlüssel in Dateien.</li>
+        <li>Gespeichert wird dort, wo der Datentresor liegt (Gerät, SD-Karte, Laufwerk); SD ist freiwillig.</li>
+      </ul>
+    </section>
+  </div>
+  <p class="stand">Erstellt aus der Familienakte (Fassung 2.28.34, Arbeitsstand 07.11.2026). Grün heißt: in der App vorhanden; am einzelnen Gerät ist nicht alles geprüft.</p>
+</main>
+
+<script type="application/json" id="notizen-daten">{}</script>
+<script>
+(function () {
+  "use strict";
+  var KARTE = {
+    gruppen: [
+      { id: "g-mail", titel: "Mail einfügen", wo: "aus der Mail-App oder dem Postfach", spalte: 0, chips: [
+        { id: "mail-text", titel: "Mail teilen", wo: "Mail-App › Teilen", nach: "eingang", mehr: "Gmail- und Outlook-App teilen nur den Text; Anhänge gehen so nicht mit." },
+        { id: "mail-anhang", titel: "Anhang teilen", wo: "Anhang antippen › Teilen", nach: "eingang", mehr: "Der übliche Weg für Briefe als PDF." },
+        { id: "mail-pdf", titel: "Mail als PDF", wo: "Drucken › Als PDF › Teilen", nach: "eingang", mehr: "Geht mit jeder Mail-App." },
+        { id: "mail-eml", titel: "Mail als Datei (.eml)", wo: "am Rechner hineinziehen", nach: "eingang", mehr: "Die App löst die Anhänge heraus. Outlook-Dateien (.msg) werden angenommen, ihre Anhänge noch nicht herausgelöst." },
+        { id: "mail-ms", titel: "Microsoft-Postfach", wo: "abholen und senden", nach: "eingang", beide: true, stand: "geplant", mehr: "Gleiche Anmeldung wie beim Kalender. Abholen nur auf Tipp; im Postfach wird nichts gelöscht oder verschoben." },
+        { id: "mail-imap", titel: "GMX · WEB.DE · T-Online", wo: "mit App-Passwort", nach: "eingang", stand: "geplant", mehr: "Technik liegt in Private Brain Pro. Passwort bliebe verschlüsselt auf dem Gerät." },
+        { id: "mail-gmail", titel: "Gmail direkt", wo: "Google-Prüfung kostet jährlich", nach: "eingang", stand: "geplant", mehr: "Bis zu einer Entscheidung: Anhang teilen oder Mail als PDF." } ] },
+      { id: "g-datei", titel: "Datei einfügen", wo: "Dokumente › Eingangszentrale", spalte: 0, chips: [
+        { id: "datei-waehlen", titel: "Datei wählen", wo: "Knopf in der Eingangszentrale", nach: "eingang" },
+        { id: "datei-ziehen", titel: "Hineinziehen", wo: "am Rechner mit der Maus", nach: "eingang" },
+        { id: "datei-teilen", titel: "Teilen aus anderer App", wo: "Galerie, Dateien › Teilen", nach: "eingang" },
+        { id: "datei-oeffnen", titel: "Öffnen mit", wo: "Windows: Rechtsklick › Öffnen mit", nach: "eingang" },
+        { id: "datei-pro", titel: "Aus anderen Pro-Apps", wo: "gemeinsames Fach im Pro-Tresor", nach: "eingang", stand: "aktivieren", mehr: "Braucht einen eingerichteten Pro-Tresor (z. B. mit Private Brain Pro, BookLedgerPro)." } ] },
+      { id: "g-scan", titel: "Dokumente scannen", wo: "Papier wird PDF", spalte: 0, chips: [
+        { id: "scan-kamera", titel: "Einzelblatt mit der Kamera", wo: "Eingangszentrale › Dokument scannen", nach: "wfpdf" },
+        { id: "scan-wfpdf", titel: "In Workflow PDF scannen", wo: "Dokumente › Workflow PDF", nach: "wfpdf" },
+        { id: "scan-stapel", titel: "Ganzer Stapel auf einmal", wo: "Eingangszentrale › Stapel direkt übernehmen", nach: "stapel" },
+        { id: "scan-geraet", titel: "Scanner oder Scanner-App", wo: "PDF in den Stapel", nach: "stapel" },
+        { id: "scan-formular", titel: "Formular scannen", wo: "Formular scannen › Ausfüllen", nach: "ausfuellen" } ] },
+      { id: "g-selbst", titel: "Selbst erfassen", wo: "ohne Datei", spalte: 0, chips: [
+        { id: "notiz", titel: "Notiz", wo: "Kopf › Notiz", nach: "direkt", mehr: "Schreiben, sprechen (Mikrofon nur auf Tipp), Fotos mit der Kamera. Ein erkanntes Datum wird nur nach Ja zur Erinnerung." },
+        { id: "eintrag", titel: "Eintrag anlegen", wo: "in jedem Bereich (Person, Vertrag, Fahrzeug …)", nach: "direkt" },
+        { id: "frist-neu", titel: "Frist oder Aufgabe", wo: "Fristen und Aufgaben · Mein Kalender › + Eintrag", nach: "direkt" } ] },
+      { id: "g-speicher", titel: "Wo es liegt", wo: "Speicher wie gewählt", spalte: 6, chips: [
+        { id: "datentresor", titel: "Datentresor", wo: "Gerät, SD-Karte oder Laufwerk", beide: true, stand: "aktivieren", mehr: "Einmal wählen. Darin: 00_Register (Einträge, Fristen), 01_Dokumente (Originale), 03_Erinnerungsmedien (Fotos, Videos). Nie von Hand ändern." },
+        { id: "browser", titel: "Speicher des Browsers", wo: "Web-App ohne gewählten Ordner", beide: true },
+        { id: "protresor", titel: "Pro-Tresor", wo: "Sicherheit › Pro-Tresor", beide: true, stand: "aktivieren", mehr: "Originale verschlüsselt, gemeinsam mit den anderen Pro-Apps. Ein Passwort." },
+        { id: "tresor-einschritt", titel: "Tresor einrichten in einem Schritt", wo: "nur Speicher wählen", beide: true, stand: "imbau", mehr: "Hauptordner finden oder anlegen, ein Passwort, Lies-mich. Fertig gebaut, noch nicht ausgegeben." } ] },
+      { id: "g-aus", titel: "Ausgabe", wo: "von der Akte aus", spalte: 6, chips: [
+        { id: "aus-antwort", titel: "Antwort schreiben", wo: "Assistenz › Schreiben / E-Mail", mehr: "Entwurf, Prüf-Haken, „Als versendet speichern“. Die App verschickt heute nie selbst." },
+        { id: "aus-fristen", titel: "Fristen und Erinnerungen", wo: "Fristen und Aufgaben · Mein Kalender" },
+        { id: "aus-sicherung", titel: "Vollsicherung", wo: "Sicherheit › sichern und testen", mehr: "Mit Prüfsummen; Android legt die APK bei, Windows einen Lies-mich mit Download." },
+        { id: "aus-demo", titel: "Demo als Kopie", wo: "Hilfe › Demo starten", mehr: "Probieren an einer Kopie der eigenen Daten; das Original bleibt unverändert." },
+        { id: "aus-drucken", titel: "Drucken", wo: "Kopf › Drucker" } ] }
+    ],
+    knoten: [
+      { id: "wfpdf", titel: "Workflow PDF", wo: "Dokumente › Workflow PDF", unter: "Blatt finden, gerade ziehen, durchsuchbar", spalte: 1, mehr: "Liefert in die Eingangszentrale („Weiter zur Prüfung“ oder Teilen). Bearbeitet auch Dokumente aus der Akte; das Ergebnis geht an denselben Eintrag zurück." },
+      { id: "stapel", titel: "Stapel-Liste", wo: "Dokumente › Stapel (noch einordnen)", unter: "gerade gezogen · später einordnen", spalte: 1 },
+      { id: "ausfuellen", titel: "Formular ausfüllen", wo: "nach „Formular scannen“", unter: "wird zur Unterlage in der Akte", spalte: 1 },
+      { id: "direkt", titel: "Direkt in der Akte", wo: "ohne Eingangszentrale", unter: "was du selbst eingibst", spalte: 1 },
+      { id: "eingang", titel: "Eingangszentrale", wo: "Dokumente › Eingangszentrale", unter: "alles kommt zuerst hier an · Mail-Anhänge einzeln", spalte: 2, mitte: true, mehr: "Original bleibt unverändert, Doppeltes wird erkannt. Eine Mail wird nur als Text gezeigt: kein Skript, keine Bilder aus dem Netz, kein Link öffnet sich von selbst." },
+      { id: "pruefung", titel: "Prüfung der Anlagen", wo: "in der Eingangszentrale", unter: "Prüfer aus Workflow PDF", spalte: 3, stand: "geplant", mehr: "Geplant: Mail-Anhänge immer, sonst auf Wahl. Heute läuft die Prüfung nur auf Wahl im Stapel. Sucht Skripte und Startaktionen im PDF, eingebettete Dateien, Makros, getarnte Endungen, Programme. Kein Virenscanner." },
+      { id: "vorschlag", titel: "Lesen und Vorschlag", wo: "Eingangszentrale › Zuordnung prüfen", unter: "echtes PDF: Text direkt · Scan: Texterkennung", spalte: 4, mehr: "Person, Vorgang, Dokumentart, mögliche Frist. Titel aus dem Briefkopf. Geplant: ein echtes PDF ohne Befund mit einem Tipp übernehmen." },
+      { id: "befund", titel: "⚠ Befund", wo: "in der Eingangszentrale", unter: "nicht geöffnet · du entscheidest", spalte: 4, stand: "geplant", mehr: "Als Datei ablegen (ohne Vorschau) oder weglassen. Programme werden nicht übernommen." },
+      { id: "akte", titel: "In der Akte", wo: "Gesundheit, Familie, Wohnen, Fahrzeuge, Käufe …", unter: "nach deinem Tipp · verknüpft", spalte: 5, mitte: true, mehr: "Mail und Anhänge bleiben eigene Dokumente und werden verknüpft." },
+      { id: "mailapp", titel: "Mail-App des Geräts", wo: "öffnet sich vorbereitet", unter: "abschicken tust du dort", spalte: 7, stand: "geplant" },
+      { id: "mssend", titel: "Microsoft-Postfach", wo: "nach „Jetzt senden?“", unter: "liegt dann in „Gesendete Elemente“", spalte: 7, stand: "geplant" },
+      { id: "kalender", titel: "Kalender", wo: "Fristen › Kalender verbinden", unter: "Google, Microsoft, Gerät, .ics", spalte: 7, stand: "aktivieren", mehr: "Einmal verbinden. Gesundheitsfristen gehen mit echtem Titel hinaus, Notizen nie." },
+      { id: "glocke", titel: "App-Glocke", wo: "Mein Kalender › App-Glocke", unter: "ab Werk aus · Android meldet auch bei geschlossener App", spalte: 7, stand: "aktivieren" },
+      { id: "sicherungsordner", titel: "Sicherungsordner", wo: "frei gewählt, getrennt vom Datentresor", unter: "sichern · einlesen in eine leere Akte", spalte: 7 }
+    ],
+    kanten: [
+      { von: "wfpdf", nach: "eingang" }, { von: "stapel", nach: "eingang" }, { von: "stapel", nach: "wfpdf", beide: true },
+      { von: "wfpdf", nach: "akte", beide: true, unten: true }, { von: "ausfuellen", nach: "akte", unten: true }, { von: "direkt", nach: "akte", unten: true },
+      { von: "eingang", nach: "pruefung" }, { von: "pruefung", nach: "vorschlag" }, { von: "pruefung", nach: "befund" }, { von: "vorschlag", nach: "akte" },
+      { von: "akte", nach: "datentresor", beide: true }, { von: "akte", nach: "browser", beide: true }, { von: "akte", nach: "protresor", beide: true }, { von: "akte", nach: "tresor-einschritt", beide: true },
+      { von: "akte", nach: "aus-antwort" }, { von: "akte", nach: "aus-fristen" }, { von: "akte", nach: "aus-sicherung" }, { von: "akte", nach: "aus-demo" }, { von: "akte", nach: "aus-drucken" },
+      { von: "aus-antwort", nach: "mailapp" }, { von: "aus-antwort", nach: "mssend" }, { von: "aus-fristen", nach: "kalender", beide: true }, { von: "aus-fristen", nach: "glocke" },
+      { von: "aus-sicherung", nach: "sicherungsordner", beide: true }
+    ]
+  };
+  var WORT = { fertig: "fertig, funktioniert", imbau: "im Bau, bald fertig", aktivieren: "muss eingeschaltet oder eingerichtet werden", geplant: "geplant, abzusprechen" };
+  var KURZ = { fertig: "fertig", imbau: "im Bau", aktivieren: "einschalten", geplant: "geplant" };
+  var FARBE = { fertig: "var(--f-rand)", imbau: "var(--b-rand)", aktivieren: "var(--a-rand)", geplant: "var(--g-rand)" };
+  var BREITEN = [236, 172, 172, 172, 172, 172, 236, 172], ABSTAND = 34, RAND = 16, LUECKE = 12;
+  var SCHLUESSEL = "familienakte-landkarte-notizen-v1", WER = "familienakte-landkarte-wer-v1";
+  var buehne = document.getElementById("buehne"), linien = document.getElementById("linien");
+  var aktiv = null, notizen = {}, el = {};
+
+  function sicher(f, ersatz) { try { return f(); } catch (e) { return ersatz; } }
+  function alle() { var l = KARTE.knoten.slice(); KARTE.gruppen.forEach(function (g) { g.chips.forEach(function (c) { c._gruppe = g; l.push(c); }); }); return l; }
+  function finde(id) { return alle().filter(function (n) { return n.id === id; })[0]; }
+  function kanten() { var k = KARTE.kanten.slice(); KARTE.gruppen.forEach(function (g) { g.chips.forEach(function (c) { if (c.nach) k.push({ von: c.id, nach: c.nach, beide: c.beide }); }); }); return k; }
+  var ALLE_K = kanten();
+
+  // ---- Notizen: aus der Datei, dazu was in diesem Browser steht; je Kasten gewinnt die jüngere ----
+  function notizenLaden() {
+    var ausDatei = sicher(function () { return JSON.parse(document.getElementById("notizen-daten").textContent || "{}"); }, {});
+    var lokal = sicher(function () { return JSON.parse(localStorage.getItem(SCHLUESSEL) || "{}"); }, {});
+    notizen = {};
+    [ausDatei, lokal].forEach(function (q) { Object.keys(q).forEach(function (id) { var n = q[id]; if (!n || !n.text) return; if (!notizen[id] || (n.wann || "") > (notizen[id].wann || "")) notizen[id] = n; }); });
+  }
+  function notizenMerken() { sicher(function () { localStorage.setItem(SCHLUESSEL, JSON.stringify(notizen)); }); document.getElementById("notizen-daten").textContent = JSON.stringify(notizen).replace(/</g, "\\u003c"); }
+
+  function box(n, art) {
+    var b = document.createElement("div");
+    b.className = "box " + art + " s-" + (n.stand || "fertig") + (n.mitte ? " mitte" : "") + (notizen[n.id] ? " hat-notiz" : "");
+    b.tabIndex = 0; b.setAttribute("role", "button"); b.dataset.id = n.id;
+    b.setAttribute("aria-label", n.titel + " (" + KURZ[n.stand || "fertig"] + ") – Verbindungen zeigen");
+    b.innerHTML = '<span class="punkt" aria-hidden="true"></span><strong></strong><small></small><button type="button" class="stift" title="Notiz">✎</button>';
+    b.querySelector("strong").textContent = n.titel;
+    b.querySelector("small").textContent = art === "chip" ? n.wo : [n.wo, n.unter].filter(Boolean).join(" · ");
+    var s = b.querySelector(".stift"); s.setAttribute("aria-label", "Notiz zu „" + n.titel + "“");
+    s.addEventListener("click", function (e) { e.stopPropagation(); editor(n.id); });
+    b.addEventListener("click", function () { aktiv = aktiv === n.id ? null : n.id; markieren(); });
+    b.addEventListener("keydown", function (e) { if (e.target === b && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); b.click(); } });
+    el[n.id] = b; return b;
+  }
+
+  function zeichnen() {
+    buehne.querySelectorAll(".gruppe, .platz").forEach(function (e) { e.remove(); });
+    linien.innerHTML = ""; el = {};
+    var spalten = BREITEN.map(function () { return []; });
+    KARTE.gruppen.forEach(function (g) {
+      var c = document.createElement("div"); c.className = "gruppe"; c.dataset.gruppe = g.id;
+      c.innerHTML = "<strong></strong><small></small><div class=\"chips\"></div>";
+      c.querySelector("strong").textContent = g.titel; c.querySelector("small").textContent = g.wo;
+      g.chips.forEach(function (ch) { c.querySelector(".chips").appendChild(box(ch, "chip")); });
+      buehne.appendChild(c); spalten[g.spalte].push({ e: c, ids: g.chips.map(function (x) { return x.id; }) });
+    });
+    KARTE.knoten.forEach(function (n) {
+      var p = document.createElement("div"); p.className = "platz"; p.style.width = BREITEN[n.spalte] + "px";
+      p.appendChild(box(n, "kasten")); buehne.appendChild(p); spalten[n.spalte].push({ e: p, ids: [n.id] });
+    });
+    var xs = [], x = RAND; BREITEN.forEach(function (w, i) { xs[i] = x; x += w + ABSTAND; });
+    var breite = x - ABSTAND + RAND; buehne.style.width = breite + "px"; buehne.style.height = "3000px";
+    var basis = buehne.getBoundingClientRect();
+    function r(id) { var b = el[id].getBoundingClientRect(); return { l: b.left - basis.left, r: b.right - basis.left, t: b.top - basis.top, b: b.bottom - basis.top, m: (b.top + b.bottom) / 2 - basis.top, cx: (b.left + b.right) / 2 - basis.left, h: b.height }; }
+    var y0 = RAND; spalten[0].forEach(function (o) { o.e.style.left = xs[0] + "px"; o.e.style.top = y0 + "px"; y0 += o.e.offsetHeight + LUECKE; });
+    function mitte(ids) { var m = ALLE_K.filter(function (k) { return ids.indexOf(k.nach) >= 0 && el[k.von] && el[k.von].closest(".gruppe, .platz").style.top; }).map(function (k) { return r(k.von).m; }); return m.length ? m.reduce(function (a, v) { return a + v; }, 0) / m.length : 200; }
+    for (var s = 1; s < spalten.length; s++) {
+      var unten = RAND;
+      spalten[s].map(function (o, i) { return { o: o, i: i, m: mitte(o.ids) }; }).sort(function (a, z) { return (a.m - z.m) || (a.i - z.i); })
+        .forEach(function (v) { var y = Math.max(v.m - v.o.e.offsetHeight / 2, unten); v.o.e.style.left = xs[s] + "px"; v.o.e.style.top = y + "px"; unten = y + v.o.e.offsetHeight + LUECKE; });
+    }
+    var hoehe = 0; buehne.querySelectorAll(".gruppe, .platz").forEach(function (e) { hoehe = Math.max(hoehe, e.offsetTop + e.offsetHeight); });
+    buehne.style.height = (hoehe + RAND + 70) + "px";
+    var svg = document.getElementById("aeste"); svg.setAttribute("width", breite); svg.setAttribute("height", hoehe + RAND + 70);
+    var ankunft = {}; ALLE_K.forEach(function (k) { (ankunft[k.nach] = ankunft[k.nach] || []).push(k); });
+    Object.keys(ankunft).forEach(function (id) { ankunft[id].sort(function (p, q) { return r(p.von).m - r(q.von).m; }); });
+    ALLE_K.forEach(function (k) {
+      var a = r(k.von), z = r(k.nach), reihe = ankunft[k.nach], i = reihe.indexOf(k), n = reihe.length, d;
+      var zy = n > 1 ? z.t + 10 + (z.h - 20) * i / (n - 1) : z.m;
+      if (Math.abs(a.l - z.l) < 5) { var bx = a.r + 36; d = "M" + a.r + " " + a.m + " C" + bx + " " + a.m + " " + bx + " " + z.m + " " + (z.r + 2) + " " + z.m; }
+      else if (k.unten) { var tief = Math.max(a.b, z.b) + 50; d = "M" + a.cx + " " + a.b + " C" + a.cx + " " + tief + " " + z.cx + " " + tief + " " + z.cx + " " + (z.b + 2); }
+      else { var mx = (a.r + z.l) / 2; d = "M" + a.r + " " + a.m + " C" + mx + " " + a.m + " " + mx + " " + zy + " " + (z.l - 2) + " " + zy; }
+      var p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      p.setAttribute("d", d); p.dataset.von = k.von; p.dataset.nach = k.nach; p.dataset.beide = k.beide ? "1" : "";
+      var st = [finde(k.von), finde(k.nach)].some(function (q) { return q && q.stand && q.stand !== "fertig"; });
+      p.setAttribute("class", "ast" + (st ? " gestrichelt" : ""));
+      linien.appendChild(p);
+    });
+    markieren(); zaehlen(); liste();
+  }
+
+  function markieren() {
+    Object.keys(el).forEach(function (id) { el[id].classList.remove("an"); el[id].setAttribute("aria-pressed", String(aktiv === id)); });
+    linien.querySelectorAll("path").forEach(function (p) {
+      var an = aktiv && (p.dataset.von === aktiv || p.dataset.nach === aktiv);
+      p.classList.toggle("an", !!an);
+      p.setAttribute("marker-end", an ? "url(#sp-an)" : "url(#sp)");
+      if (p.dataset.beide) p.setAttribute("marker-start", an ? "url(#sp-a-an)" : "url(#sp-a)"); else p.removeAttribute("marker-start");
+      if (an) { el[p.dataset.von].classList.add("an"); el[p.dataset.nach].classList.add("an"); }
+    });
+    info();
+  }
+
+  function info() {
+    var box = document.getElementById("info"), n = aktiv && finde(aktiv);
+    if (!n) { box.innerHTML = '<span class="stand">Auf einen Kasten tippen: woher Daten kommen, wohin sie gehen, wo er in der App liegt. Der Stift ✎ öffnet die Notiz.</span>'; return; }
+    var von = ALLE_K.filter(function (k) { return k.nach === n.id; }), zu = ALLE_K.filter(function (k) { return k.von === n.id; });
+    function namen(l, f) { return l.map(function (k) { return (k.beide ? "⇄ " : "") + finde(k[f]).titel; }).join(", "); }
+    var st = n.stand || "fertig";
+    box.innerHTML = "";
+    function zeile(tag, text, klasse) { if (!text) return; var e = document.createElement(tag); e.textContent = text; if (klasse) e.className = klasse; box.appendChild(e); return e; }
+    zeile("strong", n.titel);
+    var m = zeile("span", WORT[st], "marke"); m.style.color = FARBE[st]; m.style.borderColor = FARBE[st];
+    zeile("p", "Wo: " + [n._gruppe && n._gruppe.titel, n.wo].filter(Boolean).join(" · "));
+    zeile("p", [n.unter, n.mehr].filter(Boolean).join(" · "));
+    zeile("p", von.length ? "← kommt von: " + namen(von, "von") : "", "richtung");
+    zeile("p", zu.length ? "→ geht zu: " + namen(zu, "nach") : "", "richtung");
+    if (notizen[n.id]) zeile("p", "✎ " + (notizen[n.id].wer ? notizen[n.id].wer + ": " : "") + notizen[n.id].text, "notiz-anzeige");
+    var b = document.createElement("button"); b.type = "button"; b.className = "k"; b.textContent = notizen[n.id] ? "✎ Notiz ändern" : "✎ Notiz schreiben";
+    b.addEventListener("click", function () { editor(n.id); }); box.appendChild(b);
+  }
+
+  function zaehlen() {
+    var z = { fertig: 0, imbau: 0, aktivieren: 0, geplant: 0 };
+    alle().forEach(function (n) { z[n.stand || "fertig"]++; });
+    var box = document.getElementById("zahlen"); box.innerHTML = "";
+    Object.keys(z).forEach(function (s) { var e = document.createElement("span"); e.className = "zahl"; e.innerHTML = '<i class="muster s-' + s + '" style="width:12px;height:12px"></i><b></b> '; e.querySelector("b").textContent = z[s]; e.appendChild(document.createTextNode(KURZ[s])); box.appendChild(e); });
+  }
+
+  function titelVon(id) { return id === "allgemein" ? "Allgemein" : (finde(id) || { titel: id }).titel; }
+  function liste() {
+    var ul = document.getElementById("notizen-liste"), ids = Object.keys(notizen);
+    document.getElementById("notizen-zahl").textContent = ids.length ? "(" + ids.length + ")" : "";
+    ul.innerHTML = "";
+    if (!ids.length) { var li = document.createElement("li"); li.innerHTML = "<small>Noch keine Notizen. Stift ✎ an einem Kasten antippen.</small>"; ul.appendChild(li); return; }
+    ids.sort(function (a, b) { return a === "allgemein" ? -1 : b === "allgemein" ? 1 : titelVon(a).localeCompare(titelVon(b), "de"); }).forEach(function (id) {
+      var n = notizen[id], li = document.createElement("li"), b = document.createElement("button"), t = document.createElement("span"), s = document.createElement("small");
+      b.type = "button"; b.textContent = titelVon(id); b.addEventListener("click", function () { if (id === "allgemein") { editor(id); return; } aktiv = id; markieren(); el[id].scrollIntoView({ behavior: "smooth", block: "center", inline: "center" }); });
+      t.textContent = n.text; s.textContent = [n.wer, n.wann && new Date(n.wann).toLocaleString("de-DE")].filter(Boolean).join(" · ");
+      li.appendChild(b); li.appendChild(t); li.appendChild(s); ul.appendChild(li);
+    });
+  }
+
+  var offen = null;
+  function editor(id) {
+    if (offen) offen.remove();
+    var n = notizen[id], e = document.createElement("div"); e.className = "editor"; e.setAttribute("role", "dialog"); e.setAttribute("aria-label", "Notiz zu " + titelVon(id));
+    e.innerHTML = '<strong></strong><textarea id="notiz-text" placeholder="z. B. anders machen, weglassen, Frage …"></textarea><div class="leiste"><button type="button" class="k voll" data-a="ok">Speichern</button><button type="button" class="k gefahr" data-a="weg">Notiz löschen</button><button type="button" class="k" data-a="zu">Abbrechen</button></div>';
+    e.querySelector("strong").textContent = "Notiz: " + titelVon(id);
+    var ta = e.querySelector("textarea"); ta.value = n ? n.text : "";
+    e.querySelector('[data-a="weg"]').hidden = !n;
+    e.addEventListener("click", function (ev) {
+      var a = ev.target.dataset && ev.target.dataset.a; if (!a) return;
+      if (a === "ok") { var text = ta.value.trim(); if (text) notizen[id] = { text: text, wer: (document.getElementById("wer").value || "").trim(), wann: new Date().toISOString() }; else delete notizen[id]; }
+      if (a === "weg") delete notizen[id];
+      notizenMerken(); e.remove(); offen = null; if (el[id]) el[id].classList.toggle("hat-notiz", !!notizen[id]); liste(); info();
+      melden(a === "zu" ? "" : a === "weg" ? "Notiz gelöscht." : "Notiz gespeichert (in diesem Browser). Zum Weitergeben: „Datei mit Notizen speichern“.");
+    });
+    document.body.appendChild(e); offen = e; ta.focus();
+  }
+
+  function melden(t) { document.getElementById("meldung").textContent = t; }
+  function alsText() {
+    return ["Notizen zur Landkarte der Familienakte", ""].concat(Object.keys(notizen).map(function (id) { var n = notizen[id]; return "• " + titelVon(id) + (n.wer ? " (" + n.wer + ")" : "") + ": " + n.text; })).join("\n");
+  }
+  document.getElementById("kopieren").addEventListener("click", function () {
+    var t = alsText();
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(function () { melden("Notizen kopiert."); }, function () { zeigeText(t); }); else zeigeText(t);
+  });
+  function zeigeText(t) { editor("allgemein"); var ta = document.getElementById("notiz-text"); ta.value = t; ta.select(); melden("Kopieren ging nicht automatisch: Text ist markiert, bitte selbst kopieren (und Abbrechen tippen)."); }
+  document.getElementById("speichern").addEventListener("click", function () {
+    if (offen) { offen.remove(); offen = null; }
+    notizenMerken();
+    var html = "<!doctype html>\n" + document.documentElement.outerHTML;
+    var url = URL.createObjectURL(new Blob([html], { type: "text/html" }));
+    var a = document.createElement("a"); a.href = url; a.download = "Familienakte-Landkarte-mit-Notizen-" + new Date().toISOString().slice(0, 10) + ".html";
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+    melden("Datei gespeichert (Ordner „Downloads“). Diese Datei zurückschicken.");
+  });
+  document.getElementById("notiz-allgemein").addEventListener("click", function () { editor("allgemein"); });
+  var bestaetigen = false;
+  document.getElementById("alle-weg").addEventListener("click", function (ev) {
+    if (!bestaetigen) { bestaetigen = true; ev.target.textContent = "Wirklich alle löschen? Nochmal tippen"; setTimeout(function () { bestaetigen = false; ev.target.textContent = "Alle Notizen löschen"; }, 4000); return; }
+    bestaetigen = false; ev.target.textContent = "Alle Notizen löschen"; notizen = {}; notizenMerken(); zeichnen(); melden("Alle Notizen gelöscht.");
+  });
+  var wer = document.getElementById("wer");
+  wer.value = sicher(function () { return localStorage.getItem(WER) || ""; }, "");
+  wer.addEventListener("change", function () { sicher(function () { localStorage.setItem(WER, wer.value.trim()); }); });
+
+  notizenLaden(); zeichnen();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(zeichnen);
+})();
+</script>
+</body>
+</html>
