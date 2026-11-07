@@ -1,0 +1,37 @@
+{
+  "version": "2.28.36",
+  "source": "b19c68a87a17005a60df1b9b50d2a64447a06f93",
+  "pullRequest": [123],
+  "recordedUtc": "2026-11-07T20:55:00Z",
+  "freigabe": "Klaus 2026-11-07: Vorschau Sitzung 4 „Alles wie vorgeschlagen, bauen sobald Sitzung 3 fertig ist“; „gebe danach den PA aus und die PPA APK und Windows Version mit der nächsten Nummer“.",
+  "inhalt": "Landkarte der App ganz oben in der Hilfe (Stand je Kasten aus lib/app-stand.ts, Geändertes golden bis zum Antippen, höchstens 14 Tage, am Handy als Liste), zehn Hilfe-Themen als Ablaufbild oder Karte mit höchstens drei Merkpunkten und „Ausführlich“, Android-App immer Vollbild und in allen Lagen drehbar (Drehsperre gilt), Windows startet maximiert (F11), Web-App dreht frei.",
+  "ciAmPrStand": "#123 810fcfa: pruefung, webview, product (31, pixel_c), product (35, pixel_2), android, windows success",
+  "releases": [
+    {
+      "tag": "android-v2.28.36",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.36",
+      "run": 42412087983,
+      "conclusion": "success",
+      "updateServer": "server=ja; Lauf grün",
+      "downloadProof": [
+        { "name": "Familienakte-android-v2.28.36.apk", "bytes": 19910689, "sha256": "d6e1227c657f5852a8e39be4520a8e2eb245c8a3fe21995ae8c2285e8216385e", "anonymousDownload": true, "matchesSHA256SUMS": true, "versionInside": "2.28.36 (assets/public/version.json, commit b19c68a)" },
+        { "name": "Familienakte-Einzeldatei-2.28.36.html", "bytes": 3567154, "sha256": "4cf6821b7d76b1372b105fbb0bdfd81bfed2ac347ca9bb057a2426a1476c052c", "anonymousDownload": true, "matchesSHA256SUMS": true }
+      ]
+    },
+    {
+      "tag": "windows-v2.28.36",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.36",
+      "run": 42412090280,
+      "conclusion": "success",
+      "updateServer": "server=ja; Lauf grün; latest.json nennt 2.28.36",
+      "downloadProof": [
+        { "name": "Familienakte-Windows-2.28.36-x64-setup.exe", "bytes": 34065182, "sha256": "82e618e16bd001eed1e4356f82112843f0917963e4f69e2a5c331924ed04e13a", "anonymousDownload": true, "matchesSHA256SUMS": true }
+      ]
+    }
+  ],
+  "pwa": "Pages auf b19c68a: Lauf 144 (42412080233) success; Seite selbst aus dem Behälter nicht geprüft",
+  "notChecked": [
+    "Kein physisches Gerät: Vollbild und Drehen am Handy/Tablet (einmaliger Android-Hinweis „Vollbild“ nur im Emulator bestätigt), Landkarte als Liste am Handy, Windows maximiert und F11",
+    "family-projekt.de aus dem Behälter nicht erreichbar; die Freigabeläufe prüfen den Server selbst"
+  ]
+}
