@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Bell, CalendarDays, ChevronsDownUp, Eye, FileStack, FlaskConical, Minimize2, Printer, RefreshCw, Share2, Smartphone, Sparkles, StickyNote, Trash2 } from "lucide-react";
+import { Bell, CalendarDays, ChevronsDownUp, Eye, FileStack, FlaskConical, Minimize2, Printer, RefreshCw, Share2, Smartphone, StickyNote, Trash2 } from "lucide-react";
 
 /**
  * Hilfe zu den Funktionen seit 2.28.20 (Plan 07.11.2026, Paket P1: erst der Inhalt).
@@ -42,7 +42,7 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
     "Die Pfeile im Knopf „alle“ zeigen, was ein Tipp bewirkt: alle auf oder alle zu.",
     "Die drei Kästchen Überfällig, Bald fällig und Offen filtern die Liste und springen dorthin.",
   ] },
-  { id: "neu", titel: "Knopf „Neu“", symbol: <Sparkles/>, weg: "Kopf › Neu", punkte: [
+  { id: "neu", titel: "Knopf „Neu“", symbol: <span className="neu-knopf-schalter neu-nachbild" aria-hidden="true" data-neu-nachbild><span className="neu-punkt"/>Neu</span>, weg: "Kopf › Neu", punkte: [
     "Ein roter Punkt zeigt: Es gibt etwas Neues zu lesen.",
     "× blendet einen Eintrag aus; das Gerät merkt es sich.",
   ] },

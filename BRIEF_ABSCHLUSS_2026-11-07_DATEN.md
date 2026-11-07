@@ -64,7 +64,10 @@ weil nur ein Sitzungszweig), zusammengeführt als fbd6325.
   Nachbildung „● Neu“ zeigen; Funkeln nur, wo die KI mitarbeitet. Auf Klaus' Ja warten. (2) **Hilfe als Baum:** alle
   Hilfe-Erklärungen wie „Wo liegt was?“ und „Akten sichern“ als Kästen und Bäume statt Fließtext (Kästen klein, Text kurz oder
   flach); später ein Gesamt-Strukturbaum der App für große Bildschirme (Eingangszentrale → Prüfung → Einordnen → Workflow PDF,
-  E-Mail usw.). Bisher nur als „6a Stufe 2, später“ im Plan; eigene Sitzung nach E-Mail, erst Bestandsaufnahme und HTML-Vorschau.
+  E-Mail usw.). Dazu (3) **Vorschaufenster:** mit der Maus auf ein Hilfe-Thema → großes Fenster mit Bild der Stelle in der App,
+  die Stelle rot markiert. Bisher nur als „6a Stufe 2, später“ im Plan; eigene Sitzung 4 nach E-Mail, erst Bestandsaufnahme und
+  HTML-Vorschau. (1) ist erledigt: Klaus' Ja 07.11., auf main nach diesem Brief, geht mit 2.28.35 hinaus.
+- Klaus 07.11.: die APK 2.28.34 grob geprüft, „ganz in Ordnung, wie das jetzt so läuft“. Die Einzelfälle oben bleiben ungeprüft.
 
 ## Stundennachweis
 
@@ -90,7 +93,8 @@ Erst Plansitzung: Private Brain Pro holen (add_repo) und dessen E-Mail-Weg besch
 (nichts geht still hinaus; Entwurf, Prüfung, ausdrücklicher Befehl; Gesundheitsdaten neutral; keine Schlüssel in Dateien;
 Speicherwege wie in CLAUDE.md), Wege bei Google und Microsoft nachprüfen, dann HTML-Vorschau. Erst nach Klaus' Ja bauen:
 A sichtbar (Teilen), B Senden über die Mail-App, dann C Microsoft; D/E nur nach Kostenentscheidung, G nicht.
-Klein vorab (nach Klaus' Ja): Hilfe-Thema „Knopf „Neu““ mit „● Neu“ statt KI-Funkeln (siehe Abschlussbrief, Offen).
+Schon auf main (geht mit 2.28.35 hinaus): Hilfe-Thema „Knopf „Neu““ zeigt „● Neu“ statt KI-Funkeln (Klaus' Ja 07.11.).
+Danach Sitzung 4 (Hilfe als Baum, Strukturbaum, Vorschaufenster) – siehe Plan, nicht in dieser Sitzung bauen.
 Offen aus Sitzung 2: Punkt 10 (Abgleich zwischen Geräten) – Klaus' Antworten auf u–z in docs/vorschau/daten-2.28.34.html abwarten.
 Sichtbare Änderungen erst als HTML-Vorschau zeigen. Je Paket ein Commit; keine Prüfungen abschalten.
 Codex-Durchsicht am PR auslassen (Klaus 07.11.: läuft nebenbei, unwichtig, kommt später; zurzeit wird nicht parallel in Codex gearbeitet).
