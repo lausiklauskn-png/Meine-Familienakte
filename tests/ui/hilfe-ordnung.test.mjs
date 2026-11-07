@@ -33,7 +33,7 @@ try {
     await step(`${name}: Tipp auf einen Treffer öffnet das Thema und rahmt es`, async () => {
       await page.locator("#hilfe-frage-feld").fill("Glocke klingelt nicht"); await page.waitForTimeout(350);
       await page.locator('[data-hilfe-treffer="app-glocke"]').click(); await page.waitForTimeout(900);
-      return await page.locator('[data-hilfe-id="app-glocke"] details').evaluate((e) => e.open && e.classList.contains("hilfe-ziel-rahmen"));
+      return await page.locator('[data-hilfe-id="app-glocke"] > details').evaluate((e) => e.open && e.classList.contains("hilfe-ziel-rahmen"));
     });
     await step(`${name}: Unsinn findet nichts und sagt es`, async () => {
       await page.locator("#hilfe-frage-feld").fill("xqzv wrrp"); await page.waitForTimeout(350);

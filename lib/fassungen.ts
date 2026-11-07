@@ -6,6 +6,7 @@
 export type Fassung = { fassung: string; datum: string; inhalt: string };
 
 export const FASSUNGEN: Fassung[] = [
+  { fassung: "2.28.36", datum: "07.11.2026", inhalt: "Landkarte der App ganz oben in der Hilfe (Stand je Kasten, Geändertes golden, am Handy als Liste), zehn Hilfe-Themen als Bild mit kurzen Merkpunkten, Android-App im Vollbild und in allen Lagen drehbar, Windows startet maximiert (F11 für ganz)" },
   { fassung: "2.28.35", datum: "07.11.2026", inhalt: "Hilfe „E-Mail in die Familienakte“ als Karte mit Verbindungen und Stand (fertig, geplant), Knopf „Neu“ mit „● Neu“ in der Hilfe, Hilfe-Text zu Fehlendem berichtigt" },
   { fassung: "2.28.34", datum: "07.11.2026", inhalt: "Daten: sichere Dateigröße je Gerät, Fotos verkleinern mit Texterkennungs-Gegenprobe, Ausgabe bis 100 MB, Vollsicherung auf Android und Windows mit Programm daneben, Sicherung einlesen, Demo als Kopie der eigenen Daten" },
   { fassung: "2.28.33", datum: "07.11.2026", inhalt: "Hilfe neu: 13 neue Themen, veraltete Texte berichtigt, „Wie kann ich dir helfen?“, Ordnung nach Schritten und A–Z, Sprung mit rotem Rahmen, Zurück an die Stelle markiert, Benutzerabnahme als Bild mit vier Antworten, Seitenleiste rechts" },
