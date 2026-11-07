@@ -3249,6 +3249,15 @@ export async function demoKopieAnlegen(quelle: FileSystemDirectoryHandle): Promi
   return { art: "kopie", zeit, revision: index.revision ?? 0, dokumente: index.documents.length, eintraege: index.records.length, proVerweise };
 }
 
+/** Darf die vorhandene Demo weiterlaufen? Ja, solange sie zur eigenen Akte passt: Beispielfamilie ohne eigene Daten,
+ *  oder Kopie, und die eigene Akte wurde seither nicht geändert. Sonst entsteht beim Start eine frische Kopie. */
+export async function demoNochPassend(quelle: FileSystemDirectoryHandle, vorher: DemoQuelle | null) {
+  const index = await readIndex(quelle), eigene = eigeneDatenDa(index);
+  if (!vorher || vorher.art === "beispiel") return !eigene || browserStorageKind() === "indexeddb" || typeof navigator.storage?.getDirectory !== "function";
+  if (!eigene || (index.revision ?? 0) !== (vorher.revision ?? 0)) return false;
+  try { await demoTresor(false); return true; } catch { return false; }
+}
+
 /** In der echten Akte: was würde sich durch das Übernehmen der Demo ändern? Nichts wird geschrieben. */
 export async function demoUebernahmePlan(aktiv: FileSystemDirectoryHandle, quelle: DemoQuelle | null) {
   if (demoActive()) throw new Error("Übernehmen geht aus der eigenen Akte heraus.");

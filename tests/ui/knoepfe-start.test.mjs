@@ -242,9 +242,10 @@ try {
     await footer(page, "Tagebuch & Erinnerungen");
     return (await page.locator("text=Elektriker war heute da").count()) > 0 || (await page.locator("text=Hausaufgaben allein").count()) > 0;
   });
-  await step("„Demo starten“ (oben in der Hilfe) legt die Beispielfamilie wieder an", async () => {
+  // P7 (Klaus 07.11.): Hier liegen eigene Einträge in der Akte; dann arbeitet die Demo an einer Kopie davon.
+  await step("„Demo starten“ (oben in der Hilfe) arbeitet bei eigenen Daten an einer Kopie", async () => {
     await demoUmschalten(page, true);
-    await page.locator('.site-header[data-demo-beispiele="ja"]').waitFor({ state: "attached", timeout: 60000 });
+    await page.locator('.demo-knopf-schalter[data-demo-kopie="ja"]').waitFor({ state: "attached", timeout: 60000 });
     return true;
   });
   check(errors.length === 0, "Keine Seitenfehler", errors.join(" | "));

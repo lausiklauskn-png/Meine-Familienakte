@@ -34,10 +34,17 @@ try {
     if (t.includes("Nur in der Demo")) throw new Error("Original verändert");
     return `${t.length} Einträge im Original`;
   });
-  await step("Erneut starten, ändern, „Übernehmen …“: Liste „Was ändert sich?“ vor dem Schreiben", async () => {
+  await step("Erneut starten: Demo läuft mit ihren Änderungen weiter, solange die eigene Akte unverändert ist", async () => {
     await demoUmschalten(page, true);
     await page.locator('.demo-knopf-schalter[data-demo-kopie="ja"]').waitFor();
-    if ((await titel()).includes("Nur in der Demo")) throw new Error("alte Demo nicht verworfen");
+    if (!(await titel()).includes("Nur in der Demo")) throw new Error("Demo verworfen");
+    await Promise.all([page.waitForURL((u) => !u.searchParams.has("demo")), demoMenue(page, "Demo löschen und verlassen").then(() => page.getByRole("button", { name: "Ja, fortfahren", exact: true }).click())]);
+    await page.waitForLoadState("networkidle");
+  });
+  await step("Nach dem Löschen frisch gestartet, ändern, „Übernehmen …“: Liste „Was ändert sich?“ vor dem Schreiben", async () => {
+    await demoUmschalten(page, true);
+    await page.locator('.demo-knopf-schalter[data-demo-kopie="ja"]').waitFor();
+    if ((await titel()).includes("Nur in der Demo")) throw new Error("gelöschte Demo nicht verworfen");
     await anlegen("Aus der Demo übernommen");
     await Promise.all([page.waitForURL((u) => !u.searchParams.has("demo")), demoMenue(page, "Übernehmen …")]);
     const dlg = page.locator("[data-demo-uebernahme]"); await dlg.waitFor({ timeout: 60000 });

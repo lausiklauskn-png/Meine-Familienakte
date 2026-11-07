@@ -72,16 +72,17 @@ try {
     const erg = (await page.locator("[aria-live]").allInnerTexts()).join(" ").match(/Systemprüfung abgeschlossen[^.]*\./);
     return erg ? erg[0].slice(0, 100) : false;
   });
-  await step("Leere Akte: getrennte Demo; eigene Frist bleibt nach Rückkehr erhalten", async () => {
+  // P7 (Klaus 07.11.): Mit der eigenen Frist hat die Akte eigene Daten; die Demo arbeitet dann an einer Kopie davon.
+  await step("Eigene Frist: Demo ist eine Kopie und zeigt sie; nach Rückkehr bleibt sie im Original", async () => {
     try {
     // Die Demo startet hinten in der Hilfe (2026-11-04).
     await demoUmschalten(page, true);
-    await page.locator('.site-header[data-demo-beispiele="ja"]').waitFor({ state: "attached", timeout: 60000 });
+    await page.locator('.demo-knopf-schalter[data-demo-kopie="ja"]').waitFor({ state: "attached", timeout: 60000 });
     await footer(page, "Fristen und Aufgaben"); await page.locator("button.schedule-filter", { hasText: "Offen" }).click();
     const eigeneFristInDemo = (await page.locator("main").innerText()).includes("Erste eigene Frist");
     await demoUmschalten(page, false);
     await footer(page, "Fristen und Aufgaben"); await page.locator("button.schedule-filter", { hasText: "Offen" }).click();
-    return !eigeneFristInDemo && (await page.locator("main").innerText()).includes("Erste eigene Frist");
+    return eigeneFristInDemo && (await page.locator("main").innerText()).includes("Erste eigene Frist");
     } catch (error) {
       console.error("Demo-Rückweg-Diagnose:", error.stack || String(error));
       console.error("Adresse:", page.url());
