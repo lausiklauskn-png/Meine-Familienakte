@@ -1,6 +1,8 @@
 // Sitzung 4 (Klaus 07.11.2026): „Landkarte der App“ ganz oben in der Hilfe, Stand aus der Liste, Geändertes golden bis zum
 // Antippen (höchstens 14 Tage), am Handy als Liste; Welle 1 der Hilfe als Bild mit höchstens drei Merkpunkten und „Ausführlich“.
 import { startApp, launchBrowser, DESKTOP, HANDY, ready, check, step, summary, footer, collectErrors } from "./_harness.mjs";
+// step() wertet einen zurückgegebenen Text als grün; darum scheitert soll() mit einer Ausnahme.
+const soll = (ok, info) => { if (!ok) throw new Error(typeof info === "string" ? info : JSON.stringify(info)); return true; };
 const app = await startApp();
 const browser = await launchBrowser();
 const WELLE1 = ["eingangszentrale", "fotografieren", "zu-gross", "vollsicherung", "export", "umzug", "fristen-verwalten", "mein-kalender", "app-glocke", "assistenz"];
@@ -36,7 +38,7 @@ try {
       const text = await karte.locator(".lk-info").textContent();
       await karte.locator(".lk-info button", { hasText: "Hingehen" }).click(); await page.waitForTimeout(600);
       const da = await page.evaluate(() => /Eingangszentrale/.test(document.querySelector("main")?.innerText || ""));
-      return /geht zu: Prüfung der Anlagen/.test(text) && da ? true : text;
+      return soll(/geht zu: Prüfung der Anlagen/.test(text) && da, text);
     });
     await step(`${name}: Geändertes golden bis zum Antippen, nach 14 Tagen weg`, async () => {
       await page.evaluate(() => { const g = JSON.parse(localStorage.getItem("fa_landkarte_app_v2")); g.stand.pruefung = "imbau"; g.stand.wfpdf = "geplant"; g.gold = {}; localStorage.setItem("fa_landkarte_app_v2", JSON.stringify(g)); });
@@ -52,7 +54,7 @@ try {
       await page.evaluate(() => { const g = JSON.parse(localStorage.getItem("fa_landkarte_app_v2")); g.gold.wfpdf = Date.now() - 15 * 86400000; localStorage.setItem("fa_landkarte_app_v2", JSON.stringify(g)); });
       await page.reload({ waitUntil: "networkidle" }); await ready(page); await footer(page, "Hilfe");
       const rest = await page.evaluate(() => JSON.parse(localStorage.getItem("fa_landkarte_app_v2")).gold);
-      return zahl === "2" && vorher && !nachher && !("pruefung" in rest) && !("wfpdf" in rest) ? true : JSON.stringify({ zahl, vorher, nachher, rest });
+      return soll(zahl === "2" && vorher && !nachher && !("pruefung" in rest) && !("wfpdf" in rest), JSON.stringify({ zahl, vorher, nachher, rest }));
     });
     for (const id of WELLE1) {
       const r = await page.locator(`[data-hilfe-id="${id}"]`).evaluate((e) => ({
@@ -63,7 +65,7 @@ try {
     await step(`${name}: die Suche findet den eingeklappten Text weiter („Message-ID“ → Eingangszentrale)`, async () => {
       await page.locator("#hilfe-frage-feld").fill("eml Message-ID Anlagen"); await page.waitForTimeout(350);
       const ids = await page.locator("[data-hilfe-treffer]").evaluateAll((l) => l.map((e) => e.dataset.hilfeTreffer));
-      return ids.includes("eingangszentrale") ? true : ids.join(",");
+      return soll(ids.includes("eingangszentrale"), ids.join(","));
     });
     check(errors.length === 0, `${name}: keine Fehler in der Konsole`, errors.join(" | "));
     await context.close();

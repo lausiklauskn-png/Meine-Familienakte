@@ -63,7 +63,7 @@ try {
     });
 
     await step(`${name}: Seitenleiste: Griff rechts, öffnet Knöpfe, „Alle zuklappen“ schließt alle Hilfe-Themen`, async () => {
-      await page.locator('details[data-hilfe-thema="notiz"] summary').click();
+      await page.locator('details[data-hilfe-thema="notiz"] > summary').click();
       const griff = page.locator(".seitenleiste-griff");
       const g = await griff.boundingBox();
       const rechts = g && Math.abs(g.x + g.width - page.viewportSize().width) <= 2;

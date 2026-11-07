@@ -2390,3 +2390,23 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .hilfe-ausfuehrlich[open] > summary::before { content: "▾ "; }
 .hilfe-ausfuehrlich > div, .hilfe-ausfuehrlich > ul { font-size: .92rem; color: #33424d; }
 .hilfe-bild-ziel { margin-top: 10px; }
+
+/* Hilfe überall als Bild (2.28.37): Kastenreihe ohne Pfeile, fette Kernpunkte, Vorschaufenster mit Skizze */
+.kastenreihe { list-style: none; margin: 8px 0 12px; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.kastenreihe > li { display: flex; min-width: 0; }
+.kastenreihe .ablauf-knoten { width: 100%; }
+.hilfe-merk li b { color: #1f4e79; }
+.hv-knopf { margin-left: auto; flex: none; font: inherit; font-size: .85rem; line-height: 1; padding: 4px 8px; border: 1px solid #c8d9e2; border-radius: 6px; background: #fff; color: #4f6472; cursor: pointer; min-height: 30px; }
+.hv-knopf:hover, .hv-knopf:focus-visible { border-color: #1f4e79; color: #1f4e79; }
+.hilfe-thema > summary, .hilfe-bild > summary { display: flex; align-items: center; gap: 8px; }
+.hilfe-vorschau { position: fixed; z-index: 1200; right: max(16px, env(safe-area-inset-right, 0px)); top: 120px; width: min(440px, calc(100vw - 32px)); max-height: calc(100vh - 140px); overflow: auto;
+  background: #fff; border: 1px solid #c8d9e2; border-radius: 14px; box-shadow: 0 12px 36px rgba(15, 40, 60, .22); padding: 12px 14px 14px; display: grid; gap: 10px; }
+.hv-kopf { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.hv-zu { font: inherit; border: 0; background: transparent; font-size: 1.1rem; cursor: pointer; color: #4f6472; min-width: 34px; min-height: 34px; }
+.hv-seite { display: grid; gap: 7px; padding: 10px; border: 1px solid #c8d9e2; border-radius: 10px; background: #f4f7f9; font-size: .82rem; }
+.hv-leiste { height: 14px; border-radius: 4px; background: #0b3154; opacity: .85; }
+.hv-titel { font-weight: 700; font-size: .95rem; padding: 2px 6px; border-radius: 6px; }
+.hv-karte { display: block; padding: 7px 9px; border: 1px solid #d5e0e7; border-radius: 8px; background: #fff; color: #4f6472; }
+.hv-ziel { outline: 3px solid #d32f2f; outline-offset: 1px; color: #17262f; font-weight: 700; }
+.hv-text { margin: 0; font-size: .86rem; color: #33424d; }
+@media (max-width: 699px) { .hilfe-vorschau { top: auto; bottom: max(16px, env(safe-area-inset-bottom, 0px)); left: 16px; right: 16px; width: auto; max-height: 70vh; } }

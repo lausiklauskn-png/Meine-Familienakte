@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { standVon } from "../lib/app-stand";
-import { Ablaufbild, type AblaufKnoten } from "./ablaufbild";
+import { Ablaufbild, zurKarte, zurStelle, type AblaufKnoten } from "./ablaufbild";
+import { useHilfeVorschau, type Vorschau } from "./hilfe-vorschau";
 import { Landkarte, type KartenGruppe, type KartenKante, type KartenKnoten, type KartenPunkt } from "./landkarte";
 import type { SectionId } from "./portal-types";
 
@@ -8,10 +9,12 @@ import type { SectionId } from "./portal-types";
  * Hilfe als Baum, Welle 1 (Klaus 07.11.2026, Sitzung 4, Fragen D und E): ein Bild je Thema (Ablauf bei Schritten, Karte bei
  * Verbindungen), höchstens drei Merkpunkte, der bisherige Text eingeklappt unter „Ausführlich“ – die Suche findet ihn weiter.
  */
-export function BildThema({ id, symbol, titel, weg, bild, merk, ausfuehrlich, ziel }: { id: string; symbol: ReactNode; titel: string; weg?: string;
-  bild: ReactNode; merk: ReactNode[]; ausfuehrlich?: ReactNode; ziel?: { text: string; los: () => void } }) {
+export function BildThema({ id, symbol, titel, weg, bild, merk, ausfuehrlich, ziel, vorschau }: { id: string; symbol: ReactNode; titel: string; weg?: ReactNode;
+  bild: ReactNode; merk: ReactNode[]; ausfuehrlich?: ReactNode; ziel?: { text: string; los: () => void }; vorschau?: Vorschau }) {
+  const { knopf, schweben, fenster } = useHilfeVorschau(vorschau);
   return <details className="hilfe-thema hilfe-bild" data-hilfe-thema={id} data-hilfe-bild>
-    <summary>{symbol} {titel}</summary>
+    <summary {...schweben}>{symbol} {titel}{knopf}</summary>
+    {fenster}
     <div>
       {weg && <p className="hilfe-weg">{weg}</p>}
       {bild}
@@ -21,6 +24,21 @@ export function BildThema({ id, symbol, titel, weg, bild, merk, ausfuehrlich, zi
     </div>
   </details>;
 }
+
+/** Kästen nebeneinander ohne Pfeile: Gegenüberstellungen (Farben, erlaubt/nicht erlaubt). Kästen mit Ziel springen. */
+export function KastenReihe({ knoten, label }: { knoten: AblaufKnoten[]; label: string }) {
+  return <ul className="kastenreihe" aria-label={label} data-kastenreihe>
+    {knoten.map((k) => <li key={k.titel}>{k.ziel
+      ? <button type="button" className={`ablauf-knoten art-${k.art || "normal"} ablauf-link`} onClick={() => zurStelle(k.ziel!)} title={`${k.titel} – hierhin springen`}><span className="ablauf-text"><strong>{k.titel}</strong>{k.unter && <small>{k.unter}</small>}</span><span className="ablauf-pfeil" aria-hidden="true">›</span></button>
+      : <div className={`ablauf-knoten art-${k.art || "normal"}`}><span className="ablauf-text"><strong>{k.titel}</strong>{k.unter && <small>{k.unter}</small>}</span></div>}</li>)}
+  </ul>;
+}
+
+/** Sprung zu einer Seite und, wenn genannt, zur Karte mit diesem Titel (roter Rahmen). */
+export const sprung = (onGo: (id: SectionId) => void, seite: SectionId, karte?: string) => () => {
+  onGo(seite);
+  if (karte) window.setTimeout(() => zurKarte(karte), 500);
+};
 
 type Geh = (id: SectionId) => void;
 const zu = (onGo: Geh, id: SectionId) => () => onGo(id);
@@ -108,6 +126,26 @@ export function FristenKarte({ onGo, eingerichtet }: { onGo: Geh; eingerichtet: 
   ];
   const kanten: KartenKante[] = [{ von: "f-liste", nach: "f-mein", beide: true }, { von: "f-liste", nach: "kalender", beide: true }, { von: "f-liste", nach: "glocke" }];
   return <Landkarte id="fristen" label="Fristen: woher sie kommen und wohin sie gehen" gruppen={gruppen} knoten={knoten} kanten={kanten} breiten={[200, 176, 196]} spalten={["Frist entsteht", "Liste", "Wohin sie geht"]}/>;
+}
+
+/** Karte „Gemeinsames Datenmodell“: was verbunden wird, was noch nicht eingeschaltet ist. */
+export function DatenmodellKarte({ onGo }: { onGo: Geh }) {
+  const z = (seite: SectionId) => ({ ziel: () => onGo(seite), zielText: "Hingehen" });
+  const knoten: KartenKnoten[] = [
+    { id: "d-personen", titel: "Personen", wo: "Familie & Personen", spalte: 0, ...z("family") },
+    { id: "d-objekte", titel: "Objekte", wo: "Wohnung, Auto, Geräte", spalte: 0, ...z("home") },
+    { id: "d-vorgaenge", titel: "Vorgänge", wo: "Cockpit", spalte: 0, ...z("cockpit") },
+    { id: "d-modell", titel: "Gemeinsames Datenmodell", wo: "Grundlage im Hintergrund", spalte: 1, mitte: true },
+    { id: "d-dokumente", titel: "Dokumente", wo: "Dokumentenbibliothek", spalte: 2, ...z("documents") },
+    { id: "d-fristen", titel: "Fristen und Aufgaben", wo: "Fristen und Aufgaben", spalte: 2, ...z("reminders") },
+    { id: "d-nochnicht", titel: "Noch nicht eingeschaltet", wo: "Dateianalyse · Fristenerkennung · OneDrive-Sortierung", spalte: 2, stand: "geplant" },
+  ];
+  const kanten: KartenKante[] = [
+    { von: "d-personen", nach: "d-modell", beide: true }, { von: "d-objekte", nach: "d-modell", beide: true }, { von: "d-vorgaenge", nach: "d-modell", beide: true },
+    { von: "d-modell", nach: "d-dokumente", beide: true }, { von: "d-modell", nach: "d-fristen", beide: true }, { von: "d-modell", nach: "d-nochnicht" },
+  ];
+  return <Landkarte id="datenmodell" label="Gemeinsames Datenmodell: was verbunden wird" gruppen={[]} knoten={knoten} kanten={kanten} breiten={[170, 190, 210]}
+    spalten={["Wer und was", "Grundlage", "Wird verbunden"]}/>;
 }
 
 export { Ablaufbild };

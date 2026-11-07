@@ -21,7 +21,7 @@ try {
   check(lage.demoSichtbar, "„Demo starten“ ist ohne langes Rollen zu sehen");
   await step("Eine Frage lässt sich aufklappen und zeigt ihren Text", async () => {
     const f = page.locator(".hilfe-eintrag > details", { hasText: "Was ist „Bestand prüfen“?" }).first();
-    await f.locator("summary").click();
+    await f.locator(":scope > summary").click(); // nur die Überschrift des Themas, nicht die von „Ausführlich“
     return await f.evaluate((d) => d.open && d.querySelector("div").innerText.length > 20);
   });
   await step("Gesperrte Demo nennt den Grund (kein Datentresor gewählt)", async () => {
