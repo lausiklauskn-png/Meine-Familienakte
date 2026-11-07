@@ -2329,49 +2329,41 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .demo-starten-zeile { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; }
 .demo-starten-zeile h2 { margin: 0; }
 .hilfe-ziel-rahmen.hilfe-ziel-gut { outline-color: #1d8a4f !important; }
-/* Flussbaum (Klaus 2026-11-07): quer, Mitte als Stamm; Pfeile auf den Ästen (→ eine Richtung, ⇄ hin und zurück); Tipp hebt den Weg hervor */
-.flussbaum-rahmen { display: grid; gap: 10px; margin: 10px 0 14px; min-width: 0; }
-.flussbaum-scroll { overflow-x: auto; padding: 6px 2px 10px; }
-.flussbaum { display: flex; align-items: center; gap: 0; width: max-content; min-width: 100%; }
-.fb-seite, .fb-kinder { display: flex; flex-direction: column; gap: 10px; position: relative; }
-.fb-links { align-items: flex-end; padding-right: 18px; }
-.fb-rechts, .fb-kinder { align-items: flex-start; padding-left: 18px; }
-/* kurzes Stück vom Elternkasten (bzw. der Mitte) zur senkrechten Linie */
-.fb-rechts::before, .fb-kinder::before { content: ""; position: absolute; left: 0; top: 50%; width: 18px; border-top: 2px solid #8fb3c4; }
-.fb-links::before { content: ""; position: absolute; right: 0; top: 50%; width: 18px; border-top: 2px solid #8fb3c4; }
-.fb-mitte { position: relative; z-index: 1; min-width: 160px; max-width: 200px; display: flex; }
-.fb-ast { display: flex; align-items: center; position: relative; }
-.fb-links > .fb-ast { flex-direction: row-reverse; }
-/* je Ast sein Stück der senkrechten Linie, über die Lücke hinweg; erster und letzter Ast nur bis zur Mitte */
-.fb-ast::before { content: ""; position: absolute; left: 0; top: -5px; bottom: -5px; border-left: 2px solid #8fb3c4; }
-.fb-links > .fb-ast::before { left: auto; right: 0; border-left: 0; border-right: 2px solid #8fb3c4; }
-.fb-ast:first-child::before { top: 50%; }
-.fb-ast:last-child::before { bottom: 50%; }
-.fb-ast:only-child::before { display: none; }
-.fb-linie { position: relative; flex: 0 0 30px; height: 0; border-top: 2px solid #8fb3c4; }
-/* Pfeilspitze in Flussrichtung: rechts von der Mitte weg, links zur Mitte hin – beides zeigt nach rechts */
-.fb-linie::after { content: ""; position: absolute; right: -1px; top: -6px; border: 5px solid transparent; border-left: 7px solid #8fb3c4; border-right: 0; }
-.fb-linie.fb-beide::before { content: ""; position: absolute; left: -1px; top: -6px; border: 5px solid transparent; border-right: 7px solid #8fb3c4; border-left: 0; }
-.fb-kasten { width: 196px; flex: 0 0 auto; position: relative; flex-wrap: wrap; }
-.fb-mitte .fb-kasten { width: 100%; }
-.fb-kasten.fb-geplant { border-style: dashed; border-color: #1f4e79; background: #f3f7fc; }
-.fb-kasten.fb-spaeter, .fb-kasten.fb-nicht { border-color: #d3d9dd; background: #f1f3f4; color: #5e6b73; }
-.fb-kasten.art-warnung { border-color: #d9a3a3; background: #fdf3f3; }
-.fb-chip { display: inline-block; font-size: .7rem; font-weight: 700; padding: 0 7px; border-radius: 999px; line-height: 1.6; background: #e3ebf2; color: #1f4e79; }
-.fb-chip-heute { background: #e9f6ee; color: #2f6b43; }
-.fb-chip-spaeter, .fb-chip-nicht { background: #e6e9eb; color: #5e6b73; }
-.fb-kasten .fb-chip { margin-top: 4px; }
-.fb-an > .fb-linie, .fb-ast.fb-an > .fb-linie { border-top-color: #c0392b; border-top-width: 3px; }
-.fb-an > .fb-linie::after { border-left-color: #c0392b; } .fb-an > .fb-linie.fb-beide::before { border-right-color: #c0392b; }
-.fb-kasten.fb-an { outline: 3px solid #c0392b; outline-offset: 2px; }
-.fb-info { padding: 10px 12px; border: 1px solid #c8d9e2; border-radius: 10px; background: #f7fafc; display: grid; gap: 4px; justify-items: start; }
-.fb-info p { margin: 0; }
-.fb-info .fb-richtung { font-weight: 700; color: #1f4e79; }
-.fb-tipp { color: #4f6472; }
-.fb-legende { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-size: .84rem; margin: 0; }
-.fb-legende span { display: inline-flex; align-items: center; gap: 6px; }
-.fb-muster { display: inline-block; width: 26px; height: 16px; border: 1px solid #c8d9e2; border-radius: 4px; background: #f7fafc; }
-.fb-muster.fb-geplant { border: 1px dashed #1f4e79; background: #f3f7fc; }
-.fb-muster.fb-spaeter { border-color: #d3d9dd; background: #f1f3f4; }
-.fb-muster.art-warnung { border-color: #d9a3a3; background: #fdf3f3; }
-@media (prefers-reduced-motion: no-preference) { .fb-kasten { transition: outline-color .2s; } }
+/* Landkarte (Klaus 2026-11-07, Vorbild Sage-Modul-Topologie): Container mit Wege-Knöpfen, Kästen direkt mit Ästen verbunden */
+.landkarte { display: grid; gap: 10px; margin: 10px 0 14px; min-width: 0; }
+.lk-rahmen { overflow-x: auto; border: 1px solid #c8d9e2; border-radius: 12px; background: #fff; }
+.lk-buehne { position: relative; }
+.lk-aeste { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
+.lk-ast { fill: none; stroke: #8fb3c4; stroke-width: 2; transition: stroke .2s, stroke-width .2s; }
+.lk-ast.geplant { stroke-dasharray: 6 5; }
+.lk-ast.an { stroke: #1f4e79; stroke-width: 3; }
+.lk-spitze { fill: #8fb3c4; } .lk-spitze-an { fill: #1f4e79; }
+.lk-gruppe { position: absolute; box-sizing: border-box; width: 236px; border: 2px solid #2a7f86; border-radius: 12px; background: #fff; padding: 8px; display: grid; gap: 4px; }
+.lk-gruppe > strong { font-size: .95rem; padding: 0 2px; }
+.lk-gruppe > small { font-size: .76rem; color: #4f6472; padding: 0 2px; }
+.lk-chips { display: grid; gap: 5px; position: relative; }
+.lk-platz { position: absolute; }
+.lk-chip, .lk-kasten { position: relative; display: grid; gap: 1px; width: 100%; box-sizing: border-box; text-align: left; font: inherit; color: inherit; border: 1px solid #c8d9e2; border-radius: 8px; background: #f7fafc; cursor: pointer; min-height: 0; line-height: 1.25; }
+.lk-chip { padding: 4px 8px 4px 22px; font-size: .8rem; }
+.lk-chip strong { font-size: .82rem; } .lk-chip small { font-size: .72rem; color: #4f6472; }
+.lk-kasten { padding: 8px 10px 8px 24px; }
+.lk-kasten strong { font-size: .9rem; } .lk-kasten small { font-size: .76rem; color: #4f6472; }
+.lk-punkt { position: absolute; left: 8px; top: 10px; width: 9px; height: 9px; border-radius: 50%; background: #2f8a4f; }
+.lk-chip .lk-punkt { left: 7px; top: 8px; width: 8px; height: 8px; }
+/* Stand als Rahmen (Klaus 07.11.): grün fertig · gelb gestrichelt im Bau · rot einschalten · grau gestrichelt geplant/abzusprechen */
+.lk-chip.s-fertig, .lk-kasten.s-fertig { border: 2px solid #2f8a4f; background: #eef8f1; }
+.lk-chip.s-imbau, .lk-kasten.s-imbau { border: 2px dashed #c58a00; background: #fff8e6; } .s-imbau > .lk-punkt { background: #c58a00; }
+.lk-chip.s-aktivieren, .lk-kasten.s-aktivieren { border: 2px solid #c0392b; background: #fdf3f3; } .s-aktivieren > .lk-punkt { background: #c0392b; }
+.lk-chip.s-geplant, .lk-kasten.s-geplant { border: 2px dashed #9aa5ad; background: #f1f3f4; color: #4f5b63; } .s-geplant > .lk-punkt { background: #9aa5ad; }
+.lk-kasten.mitte { border-width: 3px; }
+.lk-chip.an, .lk-kasten.an { box-shadow: 0 0 0 3px #1f4e79; }
+.lk-chip.frisch, .lk-kasten.frisch { box-shadow: 0 0 0 3px #b8860b; }
+.lk-chip:hover, .lk-kasten:hover { border-color: #1f4e79; }
+.lk-info { padding: 10px 12px; border: 1px solid #c8d9e2; border-radius: 10px; background: #f7fafc; display: grid; gap: 4px; justify-items: start; }
+.lk-info p { margin: 0; } .lk-richtung { font-weight: 700; color: #1f4e79; } .lk-tipp { color: #4f6472; }
+.lk-marke { font-size: .72rem; font-weight: 700; padding: 0 8px; border-radius: 999px; background: #e9f6ee; color: #2f6b43; }
+.lk-marke.s-imbau { background: #fff3cc; color: #7a5600; } .lk-marke.s-aktivieren { background: #fbe5e3; color: #9b2c22; } .lk-marke.s-geplant { background: #e6e9eb; color: #4f5b63; }
+.lk-legende { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-size: .84rem; margin: 0; }
+.lk-legende span { display: inline-flex; align-items: center; gap: 6px; }
+.lk-muster { display: inline-block; width: 24px; height: 15px; border: 1px solid #c8d9e2; border-radius: 4px; background: #f7fafc; }
+.lk-muster.s-fertig { border: 2px solid #2f8a4f; background: #eef8f1; } .lk-muster.s-imbau { border: 2px dashed #c58a00; background: #fff8e6; } .lk-muster.s-aktivieren { border: 2px solid #c0392b; background: #fdf3f3; } .lk-muster.s-geplant { border: 2px dashed #9aa5ad; background: #f1f3f4; } .lk-muster.frisch { box-shadow: 0 0 0 2px #b8860b; }
