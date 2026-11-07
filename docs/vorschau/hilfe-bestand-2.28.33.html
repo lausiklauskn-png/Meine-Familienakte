@@ -1,0 +1,157 @@
+<title>Hilfe-Bestandsaufnahme 2.28.33</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: eine Spalte, oben die Bilanz, dann drei Listen (fehlt · veraltet · fachlich), Farben wie in der App */
+:root{
+  --navy:#0b3154;--ink:#15283a;--muted:#5d6b7a;--line:#d8e2ea;--canvas:#f2f7fa;--paper:#ffffff;
+  --teal:#087f7a;--teal-soft:#e8f6f5;--green:#167249;--green-soft:#eaf7f0;--amber:#8a5b08;--amber-soft:#fff4dc;
+  --red:#8f252b;--red-soft:#f8e5e6;--grey:#5e6670;--grey-soft:#eef1f4;
+  --f:"Source Sans 3",Arial,Helvetica,sans-serif;--fh:"Source Serif 4",Georgia,serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --navy:#cfe3f5;--ink:#e3ebf2;--muted:#9fb0c0;--line:#2c3e50;--canvas:#0f1a24;--paper:#16232f;
+  --teal:#5cc7c0;--teal-soft:#123331;--green:#7fd3a5;--green-soft:#123024;--amber:#f0c060;--amber-soft:#33280f;
+  --red:#f0989d;--red-soft:#3a1a1d;--grey:#b3bcc6;--grey-soft:#222e3a;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --navy:#cfe3f5;--ink:#e3ebf2;--muted:#9fb0c0;--line:#2c3e50;--canvas:#0f1a24;--paper:#16232f;
+  --teal:#5cc7c0;--teal-soft:#123331;--green:#7fd3a5;--green-soft:#123024;--amber:#f0c060;--amber-soft:#33280f;
+  --red:#f0989d;--red-soft:#3a1a1d;--grey:#b3bcc6;--grey-soft:#222e3a;color-scheme:dark}
+body{background:var(--canvas);color:var(--ink);font:16px/1.5 var(--f)}
+.w{max-width:860px;margin:0 auto;padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:22px}
+h1{font:700 1.7rem/1.2 var(--fh);color:var(--navy);margin:0;text-wrap:balance}
+h2{font:700 1.2rem/1.3 var(--fh);color:var(--navy);margin:0;text-wrap:balance}
+p{margin:0}.klein{color:var(--muted);font-size:.92rem}
+.bilanz{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.bilanz div{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:2px}
+.bilanz b{font-size:1.6rem;font-variant-numeric:tabular-nums}
+.bilanz .rot b{color:var(--red)}.bilanz .gelb b{color:var(--amber)}.bilanz .gruen b{color:var(--green)}.bilanz .grau b{color:var(--grey)}
+section{display:grid;gap:10px}
+.liste{display:grid;gap:8px}
+details{background:var(--paper);border:1px solid var(--line);border-radius:12px}
+summary{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;font-weight:700;color:var(--navy);list-style:none}
+summary::-webkit-details-marker{display:none}
+summary .t{flex:1;min-width:0}
+summary::after{content:"›";color:var(--muted);transition:transform .15s}
+details[open] summary::after{transform:rotate(90deg)}
+details>div{border-top:1px solid var(--line);padding:10px 14px 14px;display:grid;gap:8px}
+ul{margin:0;padding-left:1.2em;display:grid;gap:4px}
+.chip{flex:none;font-size:.75rem;font-weight:700;letter-spacing:.03em;border-radius:99px;padding:2px 9px}
+.c-neu{background:var(--red-soft);color:var(--red)}
+.c-alt{background:var(--amber-soft);color:var(--amber)}
+.c-ok{background:var(--green-soft);color:var(--green)}
+.c-fach{background:var(--grey-soft);color:var(--grey)}
+.c-zus{background:var(--teal-soft);color:var(--teal)}
+.weg{font-size:.88rem;color:var(--teal);font-weight:600}
+.zeile{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+.zeile span{min-width:0}
+.box{background:var(--teal-soft);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:6px}
+.ok-liste{display:flex;flex-wrap:wrap;gap:6px}
+.ok-liste span{background:var(--paper);border:1px solid var(--line);border-radius:99px;padding:3px 10px;font-size:.9rem}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+</style>
+
+<div class="w">
+  <header style="display:grid;gap:6px">
+    <h1>Hilfe-Bestandsaufnahme vor 2.28.33</h1>
+    <p class="klein">Stand der App 2.28.32. Jede Funktion seit 2.28.20 gegen die Hilfe-Themen geprüft. Das ist Schritt 1 von Paket P1: erst den Inhalt richtig machen, die neue Gestaltung (Baum, Links, Farben) folgt in P2.</p>
+  </header>
+
+  <div class="bilanz" aria-label="Bilanz">
+    <div class="rot"><b>13</b><span>fehlen ganz</span></div>
+    <div class="gelb"><b>16</b><span>veraltet</span></div>
+    <div class="grau"><b>9</b><span>Fachliches, nach hinten</span></div>
+    <div class="gruen"><b>16</b><span>passen</span></div>
+  </div>
+
+  <section>
+    <h2>Fehlt: neue Funktionen ohne Hilfe</h2>
+    <p class="klein">Je ein kurzes Thema in Punkten mit Weg in der App. Antippen zeigt den geplanten Inhalt.</p>
+    <div class="liste">
+      <details><summary><span class="chip c-neu">neu</span><span class="t">Mein Kalender</span></summary><div>
+        <p class="weg">Kopf › Kalender-Knopf</p>
+        <ul><li>Alle Termine und Fristen als Zeile „Anfang … Ende“.</li><li>Auge öffnet den Eintrag; dort Ändern und Löschen.</li><li>Termin an Ort und Stelle ändern; der verbundene Kalender zieht nach.</li></ul></div></details>
+      <details><summary><span class="chip c-neu">neu</span><span class="t">App-Glocke</span></summary><div>
+        <p class="weg">Fristen und Aufgaben › Erinnern › Glocke</p>
+        <ul><li>Ab Werk aus; nach dem Speichern einer Erinnerung von selbst an.</li><li>Dauer und Ton wählbar; Android: Kanal-Einstellung des Geräts.</li><li>Android meldet sich auch bei geschlossener App. Im Ruhemodus kann es Minuten später kommen; nach einem Neustart erst beim Öffnen neu geplant.</li></ul></div></details>
+      <details><summary><span class="chip c-neu">neu</span><span class="t">Knopf „Notiz“</span></summary><div>
+        <p class="weg">Kopf › Notiz</p>
+        <ul><li>Schreiben, oder Mikrofon antippen zum Diktieren (startet nie von selbst).</li><li>Kamera für Fotos zur Notiz.</li><li>Erkennt die App ein Datum, schlägt sie eine Erinnerung vor; gespeichert wird erst nach deinem Ja.</li><li>Notizen gehen nie in den Kalender.</li></ul></div></details>
+      <details><summary><span class="chip c-neu">neu</span><span class="t">Listen mit Auge</span></summary><div>
+        <p class="weg">Mein Kalender · Fristenliste · Tagebuch · Notiz-Liste</p>
+        <ul><li>Jeder Eintrag als eine Zeile „Anfang … Ende“.</li><li>Auge öffnet ihn; Ändern und Löschen liegen dahinter.</li><li>In der Fristenliste bleibt der Haken „erledigt“ in der Zeile.</li></ul></div></details>
+      <details><summary><span class="chip c-neu">neu</span><span class="t">Löschen mit dem Mülleimer</span></summary><div>
+        <p class="weg">an Erinnerungen und Notizen</p>
+        <ul><li>Löschen heißt archivieren; nichts ist sofort weg.</li><li>Ein verbundener Kalender-Eintrag wird entfernt.</li></ul></div></details>
+      <details><summary><span class="chip c-neu">neu</span><span class="t">Einklappen und Knopf „alle“</span></summary><div>
+        <p class="weg">Fristen und Aufgaben › Seitenkopf</p>
+        <ul><li>Tipp auf eine Überschrift klappt den Abschnitt auf oder zu.</li><li>Die Pfeile im Knopf „alle“ zeigen, was ein Tipp bewirkt.</li><li>Die drei Zähler-Kästchen (Überfällig, Bald fällig, Offen) filtern und springen zur Liste.</li></ul></div></details>
+      <details><summary><span class="chip c-neu">neu</span><span class="t">Knopf „Neu“</span></summary><div>
+        <p class="weg">Kopf › Neu</p>
+        <ul><li>Roter Punkt: es gibt Ungelesenes.</li><li>× blendet einen Eintrag aus, gemerkt je Gerät.</li></ul></div></details>
+      <details><summary><span class="chip c-neu">neu</span><span class="t">Demo ausprobieren</span></summary><div>
+        <p class="weg">Hilfe › ganz unten › Demo starten</p>
+        <ul><li>Eigener Bestand mit erfundener Familie; deine Akte bleibt unberührt.</li><li>Roter Knopf „DEMO ▾“: verlassen · zurücksetzen · löschen.</li></ul></div></details>
+      <details><summary><span class="chip c-neu">neu</span><span class="t">Update und Basic/Pro</span></summary><div>
+        <p class="weg">Fuß › Versionszeile antippen</p>
+        <ul><li>Android und Windows prüfen den Update-Server und bieten die neue Fassung an.</li><li>Die Web-App (Basic) aktualisiert sich von selbst; die Apps heißen Pro.</li></ul></div></details>
+      <details><summary><span class="chip c-neu">neu</span><span class="t">Teilen an die Familienakte</span></summary><div>
+        <p class="weg">andere App › Teilen › Familienakte</p>
+        <ul><li>Aus Mail-App, Galerie, Kamera oder Scanner-App, auch E-Mails als .eml/.msg.</li><li>Landet in der Eingangszentrale zur Prüfung. Keine Anmeldung nötig.</li></ul></div></details>
+      <details><summary><span class="chip c-neu">neu</span><span class="t">Workflow PDF und Stapel</span></summary><div>
+        <p class="weg">Dokumente › Workflow PDF</p>
+        <ul><li>PDF ansehen, bearbeiten, Seiten ordnen, zusammenfügen.</li><li>Scans werden durchsuchbar; die Rückgabe geht an denselben Akteneintrag.</li></ul></div></details>
+      <details><summary><span class="chip c-neu">neu</span><span class="t">Drucken</span></summary><div>
+        <p class="weg">Kopf › Drucker</p>
+        <ul><li>Druckt die aktuelle Seite. Android über den Druckdienst des Geräts (am Gerät noch ungeprüft).</li></ul></div></details>
+      <details><summary><span class="chip c-neu">neu</span><span class="t">Auf ein neues Gerät umziehen</span></summary><div>
+        <p class="weg">Sicherheit › Geräteübergabe</p>
+        <ul><li>Akte von einem Gerät aufs andere über einen frei gewählten Weg (USB, Ordner).</li><li>Wird mit der Vollsicherung (Paket P5) einfacher.</li></ul></div></details>
+    </div>
+  </section>
+
+  <section>
+    <h2>Veraltet: Text stimmt nicht mehr</h2>
+    <div class="liste">
+      <details><summary><span class="chip c-alt">alt</span><span class="t">Wie schützt Version 2.27.1 meine Daten?</span></summary><div><ul><li>Neuer Titel „Wie schützt die Familienakte meine Daten?“, dazu „Stand Fassung …“ von selbst aus der App.</li></ul></div></details>
+      <details><summary><span class="chip c-alt">alt</span><span class="t">Versionshistorie und „Was gibt’s Neues?“</span></summary><div><ul><li>Die Liste endet bei 2.28.1; 31 Fassungen fehlen.</li><li>Oben steht 2.28.1, unten im Fuß 2.28.32. Künftig überall die echte Fassung.</li><li>Fassungen 2.28.2–2.28.32 knapp nachtragen (je eine Zeile).</li></ul></div></details>
+      <details><summary><span class="chip c-alt">alt</span><span class="t">Wie verwalte ich Fristen und Erinnerungen?</span></summary><div><ul><li>Kalender, Glocke, Haken, Auge, Mülleimer, Zähler-Kästchen und Einklappen fehlen. Kurz fassen, auf die neuen Themen verweisen.</li></ul></div></details>
+      <details><summary><span class="chip c-alt">alt</span><span class="t">Was macht der lokale Datentresor?</span></summary><div><ul><li>Spricht nur von OneDrive als erstem Ort. Heute: Speicher dieses Geräts, Pro-Tresor (auch SD-Karte) oder ein Ordner am Rechner.</li></ul></div></details>
+      <details><summary><span class="chip c-alt">alt</span><span class="t">Wie suche ich etwas? · Ich finde ein Dokument nicht</span></summary><div><ul><li>„PDF-Inhalte werden nicht gelesen“ stimmt nicht mehr: der Eingang liest Text, die Bedeutungssuche findet Sinnverwandtes.</li><li>„Online-Altbestand“ streichen.</li></ul></div></details>
+      <details><summary><span class="chip c-alt">alt</span><span class="t">Vollständige Sicherung · Familienakte exportieren</span></summary><div><ul><li>Hinweis ergänzen: in der Android-App noch nicht möglich, am Rechner ja (bis Paket P5).</li></ul></div></details>
+      <details><summary><span class="chip c-alt">alt</span><span class="t">Tagebuch &amp; Erinnerungsprotokoll</span></summary><div><ul><li>Medien liegen nicht nur in OneDrive/PC/USB, sondern im gewählten Speicher.</li></ul></div></details>
+      <details><summary><span class="chip c-alt">alt</span><span class="t">Was finde ich auf der Startseite? · Menü- und Unterseiten</span></summary><div><ul><li>Kopf mit Neu, Kalender, Notiz, Drucken; Seitenkopf in einer Linie mit kleinem „?“.</li><li>„Änderungen mit ChatGPT“ und „Webseite bearbeiten“ am Bestand prüfen und nur nennen, was es gibt.</li></ul></div></details>
+      <details><summary><span class="chip c-alt">alt</span><span class="t">Assistenz- und Korrespondenzzentrale</span></summary><div><ul><li>„private Testfassung“ streichen. E-Mails: weiterhin nur Entwurf; dazu „Teilen an die Familienakte“.</li></ul></div></details>
+      <details><summary><span class="chip c-alt">alt</span><span class="t">Was funktioniert noch nicht vollständig?</span></summary><div><ul><li>Auf heute stellen: Vollsicherung auf Android, Einlesen einer Sicherung, E-Mail-Postfach, Probemodus folgen.</li></ul></div></details>
+      <details><summary><span class="chip c-alt">alt</span><span class="t">Wie werden persönliche Daten geschützt?</span></summary><div><ul><li>„Die Website ist privat angemeldet“ gilt nicht für die Apps. Neu: alles bleibt auf dem Gerät; Kalender bekommt nur Titel und Zeit, Notizen nie.</li></ul></div></details>
+      <details><summary><span class="chip c-zus">zusammen</span><span class="t">Eingabefelder · Diktierfunktion · Suche mit Mikrofon</span></summary><div><ul><li>Drei Themen erklären dasselbe Mikrofon. Zu einem Thema „Mikrofon und Diktat“ zusammenlegen.</li></ul></div></details>
+      <details><summary><span class="chip c-alt">alt</span><span class="t">Praktische Benutzerabnahme</span></summary><div><ul><li>Bekommt in P2 Bild, Links und die vier Knöpfe; in P1 nur „für Prüfer“ kennzeichnen.</li></ul></div></details>
+    </div>
+  </section>
+
+  <section>
+    <h2>Fachliches: bleibt, rückt ans Ende</h2>
+    <p class="klein">Für Prüfung und Weiterentwicklung. In P3 unter „Fachliches“ gesammelt, damit neue Nutzer es nicht zuerst sehen.</p>
+    <div class="ok-liste">
+      <span>Testakte für Weiterentwicklung</span><span>FaWoGa-OneDrive-Prüfung</span><span>Wie lernt FaWoGa</span><span>Gemeinsames Datenmodell</span><span>Welches System ist führend</span><span>Was prüft „Familienakte prüfen“</span><span>Dauerhafte Entwicklungsregel</span><span>OneDrive auf PC oder USB sichern</span><span>Hilfe zu Karten und Funktionen (Ausbau in P2)</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Passt</h2>
+    <div class="ok-liste">
+      <span>Wo liegt was?</span><span>Akten sichern – Plan zum Abhaken</span><span>Fristen im Kalender</span><span>Eingangszentrale</span><span>Dokument fotografieren</span><span>Dokumentenbibliothek</span><span>Interaktives Cockpit</span><span>Bestand prüfen</span><span>Mehrere Erinnerungen erfassen</span><span>Dokumente und Erinnerungen verbinden</span><span>Memories bearbeiten oder löschen</span><span>Ein Dokument an mehreren Orten</span><span>Gesundheitsangaben geschützt</span><span>Kategorien und Verknüpfungen</span><span>GRÜN, GELB, ROT</span><span>Farben der Arbeitsknöpfe</span>
+    </div>
+  </section>
+
+  <div class="box">
+    <h2>Was P1 baut</h2>
+    <ul>
+      <li>13 neue Themen, kurz in Punkten, je mit Weg in der App.</li>
+      <li>16 veraltete Themen berichtigt, drei Mikrofon-Themen zu einem.</li>
+      <li>Fassung überall echt (Titel, Versionshistorie), fehlende Fassungen knapp nachgetragen.</li>
+      <li>„Neu“-Knopf: Eintrag „Hilfe auf neuem Stand“.</li>
+      <li>Nebenbei: CI-Prüfung darf 45 statt 30 Minuten laufen.</li>
+    </ul>
+    <p class="klein">Noch ohne neue Gestaltung. Bilder, Bäume, Links mit rotem Rahmen, Seitenleiste und neue Ordnung kommen in P2 und P3.</p>
+  </div>
+</div>

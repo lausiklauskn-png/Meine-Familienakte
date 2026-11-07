@@ -2276,3 +2276,13 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .page-title.kopf-flach > h1 { display: flex; align-items: flex-start; white-space: nowrap; text-wrap: nowrap; }
 .page-title.kopf-flach > h1 > .kopf-text { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .page-title.kopf-flach > h1 > .kopf-frage { flex: 0 0 auto; vertical-align: baseline; margin-top: -6px; }
+
+/* Versionshistorie: ausgegebene Fassungen (2.28.33) */
+.fassungen-liste ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 8px; }
+.fassungen-liste li { display: grid; grid-template-columns: auto auto 1fr; gap: 4px 10px; align-items: baseline; border-top: 1px solid var(--line); padding-top: 8px; }
+.fassungen-liste li strong { color: var(--navy); font-variant-numeric: tabular-nums; }
+.fassungen-liste li small { color: var(--muted); }
+.fassungen-liste li span { min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 560px) { .fassungen-liste li { grid-template-columns: auto 1fr; } .fassungen-liste li span { grid-column: 1 / -1; } }
+.fassungen-liste .klein-hinweis { color: var(--muted); font-size: .9rem; margin: 10px 0 0; }
+.hilfe-weg { margin: 8px 0 0; color: var(--teal); font-weight: 700; font-size: .92rem; }
