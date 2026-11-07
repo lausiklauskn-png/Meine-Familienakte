@@ -76,6 +76,7 @@ Speicherwege wie in CLAUDE.md), Wege bei Google und Microsoft nachprüfen, dann 
 A sichtbar (Teilen), B Senden über die Mail-App, dann C Microsoft; D/E nur nach Kostenentscheidung, G nicht.
 Offen aus Sitzung 2: Punkt 10 (Abgleich zwischen Geräten) – Klaus' Antworten auf u–z in docs/vorschau/daten-2.28.34.html abwarten.
 Sichtbare Änderungen erst als HTML-Vorschau zeigen. Je Paket ein Commit; keine Prüfungen abschalten.
+Codex-Durchsicht am PR auslassen (Klaus 07.11.: läuft nebenbei, unwichtig, kommt später; zurzeit wird nicht parallel in Codex gearbeitet).
 Nicht: Schlüssel/Tokens in Dateien oder Chat, Forschung im Repo (nur KimHub).
 Am Ende Abschlussbrief mit Stundennachweis und KimHub-Eintrag.
 ```
