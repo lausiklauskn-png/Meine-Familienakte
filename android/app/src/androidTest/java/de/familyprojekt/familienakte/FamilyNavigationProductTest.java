@@ -44,12 +44,21 @@ public final class FamilyNavigationProductTest {
                 UiObject2 close=device.findObject(By.res("android:id/aerr_close"));assertNotNull(close);close.click();
                 device.wait(Until.gone(By.res("android:id/alertTitle").text("Pixel Launcher isn't responding")),5000);
             }
+            // The app runs full screen (Klaus 2026-11-07). On the first immersive start Android shows its own one-time
+            // hint ("Viewing full screen", button android:id/ok) above the app; a user confirms it once, so does this probe.
+            UiObject2 hint=device.findObject(By.pkg("android").res("android:id/ok"));
+            if(hint!=null){
+                android.util.Log.w("FamilyNavigation","Confirm Android full-screen hint");
+                hint.click();device.wait(Until.gone(By.pkg("android").res("android:id/ok")),5000);
+            }
             app.onActivity(a->focused.set(a.hasWindowFocus()&&a.getBridge().getWebView().isShown()&&a.getBridge().getWebView().getHeight()>100));
             if(focused.get())return;Thread.sleep(100);
         }
         File cache=InstrumentationRegistry.getInstrumentation().getTargetContext().getFilesDir();
         device.dumpWindowHierarchy(new File(cache,"navigation-focus.xml"));device.takeScreenshot(new File(cache,"navigation-focus.png"));
-        fail("Family window must own focus before real input; foreground="+device.getCurrentPackageName());
+        StringBuilder system=new StringBuilder();
+        for(UiObject2 o:device.findObjects(By.pkg("android"))){String t=o.getText(),r=o.getResourceName();if(t!=null||r!=null)system.append(" [").append(r).append(": ").append(t).append("]");}
+        fail("Family window must own focus before real input; foreground="+device.getCurrentPackageName()+system);
     }
     @Test public void backReturnsThroughViewsAndStaysOpenAtBeginning()throws Exception{
         try(ActivityScenario<MainActivity> app=ActivityScenario.launch(MainActivity.class)){
