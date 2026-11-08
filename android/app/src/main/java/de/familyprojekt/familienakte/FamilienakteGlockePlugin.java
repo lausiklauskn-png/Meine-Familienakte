@@ -68,6 +68,8 @@ public class FamilienakteGlockePlugin extends Plugin {
         int alt = vorrat.getInt("anzahl", 0);
         for (int i = 0; i < alt; i++) am.cancel(absicht(ctx, i, "", ""));
         JSONArray liste = call.getArray("glocken", new JSArray());
+        // Glocke aus: auch schon angezeigte Meldungen dieser App aus der Leiste nehmen (Nutzer 08.11.2026).
+        if (Boolean.TRUE.equals(call.getBoolean("aus", false))) { try { androidx.core.app.NotificationManagerCompat.from(ctx).cancelAll(); } catch (Exception ignoriert) { /* nichts angezeigt */ } }
         long jetzt = System.currentTimeMillis();
         int n = 0;
         for (int i = 0; i < liste.length() && n < MAX; i++) {

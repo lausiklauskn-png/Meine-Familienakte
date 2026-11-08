@@ -19,7 +19,7 @@ const START = Date.now();
 function glockeLesen(): GlockeStand { try { const s = JSON.parse(workspaceStorage.getItem(GLOCKE_KEY) || "null"); if (s && typeof s.an === "boolean") return { an: s.an, seit: Number(s.seit) || 0, geläutet: Array.isArray(s.geläutet) ? s.geläutet.slice(-200) : [], dauer: ["einmal", "30s", "bisOk"].includes(s.dauer) ? s.dauer : "einmal" }; } catch { /* leer */ } return { an: !kalenderEinstLesen(), seit: START, geläutet: [] }; }
 function glockeSchreiben(s: GlockeStand) { try { workspaceStorage.setItem(GLOCKE_KEY, JSON.stringify(s)); } catch { /* ohne Speicher geht es weiter */ } window.dispatchEvent(new Event(GLOCKE_KEY)); }
 /** Android: eigener Baustein plant die Glocken als Benachrichtigung, auch bei geschlossener App (Klaus 2026-11-06). */
-type GlockePlugin = { einstellungen?: () => Promise<void>; erlauben: () => Promise<{ erlaubt: boolean }>; planen: (o: { glocken: Array<{ titel: string; text: string; um: number }> }) => Promise<{ geplant: number; erlaubt: boolean }> };
+type GlockePlugin = { einstellungen?: () => Promise<void>; erlauben: () => Promise<{ erlaubt: boolean }>; planen: (o: { glocken: Array<{ titel: string; text: string; um: number }>; aus?: boolean }) => Promise<{ geplant: number; erlaubt: boolean }> };
 function glockePlugin(): GlockePlugin | null {
   // Nur die Android-Hülle registriert den Baustein; im Browser und unter Windows fehlt er.
   return (window as unknown as { Capacitor?: { Plugins?: { FamilienakteGlocke?: GlockePlugin } } }).Capacitor?.Plugins?.FamilienakteGlocke || null;
@@ -82,7 +82,8 @@ export function AppGlocke({ records, relations, onOeffnen, onErledigt }: { recor
     const plugin = glockePlugin(); if (!plugin) return;
     const jetzt = Date.now();
     const glocken = s.an ? zeiten.filter((z) => { const um = Date.parse(z.um); return um > jetzt && um < jetzt + 60 * 86400000; }).slice(0, 50).map((z) => ({ titel: z.titel, text: wannText(z), um: Date.parse(z.um) })) : [];
-    void plugin.planen({ glocken }).catch(() => undefined);
+    // aus: auch schon angezeigte Meldungen aus der Leiste nehmen (Nutzer 08.11.2026).
+    void plugin.planen({ glocken, aus: !s.an }).catch(() => undefined);
   }, [s.an, zeiten]);
   useEffect(() => {
     if (!s.an) return;

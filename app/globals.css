@@ -2142,6 +2142,9 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .mein-kalender .card-heading h2 { display: flex; align-items: center; gap: 8px; }
 .mein-kalender .card-heading { flex-wrap: wrap; gap: 10px; }
 .glocken-schalter { display: inline-flex; align-items: center; gap: 6px; }
+/* Glocke grün, wenn sie aktiv ist (Nutzer 08.11.2026). */
+.glocken-schalter[data-glocke="an"] { background: var(--green); border-color: var(--green); color: #fff; }
+.app-glocke > svg { color: var(--green); flex: 0 0 auto; }
 .glocken-schalter small { font-weight: 400; }
 .mk-kopf { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
 .mk-kopf strong { text-transform: capitalize; }
