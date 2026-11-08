@@ -19,7 +19,12 @@ type Device = {
   vorDemLaden: (name: string) => Promise<{ weiter: boolean }>;
 };
 type MeaningWindow = Window & { Capacitor?: { Plugins?: { FamilyModels?: ModelPlugin } }; ProGeraet?: Device };
-export const modelPlugin = () => (window as MeaningWindow).Capacitor?.Plugins?.FamilyModels || null;
+const nativePlugin = () => (window as MeaningWindow).Capacitor?.Plugins?.FamilyModels || null;
+// Stufe G: ohne native Hülle übernimmt der Browser-Lader (OPFS) dieselbe Schnittstelle – die Web-App kann so selbst suchen.
+let browserPlugin: ModelPlugin | null = null;
+export function browserModelleEinhaengen(p: ModelPlugin) { browserPlugin = p; }
+export const modelPlugin = () => nativePlugin() || browserPlugin;
+export const modelImBrowser = () => !nativePlugin() && Boolean(browserPlugin);
 export const modelDevice = () => (window as MeaningWindow).ProGeraet;
 export const deviceModelName = (stage: ModelStage) => ({ klein: "bedeutung", mittel: "bedeutungMittel", gross: "bedeutungGross" })[stage];
 export function modelStage(model: MeaningModel): ModelStage {
@@ -56,13 +61,14 @@ export class MeaningRuntime {
     if (generation !== this.generation) throw new DOMException("Modell angehalten", "AbortError");
     if (!state.localAssets || !actual?.installed || actual.running || actual.id !== model.id || actual.revision !== model.revision || actual.dim !== model.dim) throw Error("MODEL_NOT_INSTALLED");
     this.model = { ...model }; const worker = new Worker(new URL("native/familienakte-meaning-worker.js", document.baseURI)); this.worker = worker;
+    const browser = modelImBrowser();
     worker.onmessage = event => {
       const message = event.data, request = this.pending.get(message.id); if (!request) return;
       this.pending.delete(message.id);
       if (message.error) request.reject(Error(message.error)); else request.resolve(message.ok);
     };
     worker.onerror = () => { if (this.worker !== worker) return; for (const request of this.pending.values()) request.reject(Error("MODEL_RUNTIME_FAILED")); this.stop(); };
-    this.loading = this.call({ kind: "init", stage, model }).then(() => {});
+    this.loading = this.call({ kind: "init", stage, model, browser }).then(() => {});
     try { await this.loading; } catch (error) { if (this.worker === worker) this.stop(); throw error; }
   }
   async embed(text: string, model: MeaningModel) {

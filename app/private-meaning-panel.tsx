@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { activeMeaningModel, buildMeaningIndex, clearMeaningIndex, searchMeaningIndex } from "./private-meaning-index";
 import { readMeaningCorpus, type MeaningTarget } from "./private-meaning-corpus";
 import { getVaultSummary } from "./local-vault";
-import { MeaningRuntime, MEANING_MODELS, MODEL_STAGES, deviceModelName, modelDevice, modelPlugin, type DeviceMeasurement, type ModelStage, type NativeModelsState } from "./private-meaning-runtime";
+import { MeaningRuntime, MEANING_MODELS, MODEL_STAGES, browserModelleEinhaengen, deviceModelName, modelDevice, modelImBrowser, modelPlugin, type DeviceMeasurement, type ModelStage, type NativeModelsState } from "./private-meaning-runtime";
+import { browserModelle, browserModelleMoeglich } from "./browser-modelle";
 import type { SectionId } from "./portal-types";
 import { InfoPopover } from "./ui-controls";
 
@@ -27,6 +28,8 @@ export function PrivateMeaningPanel({ handle, query = "", onOpen }: { handle: Fi
   const hits = results.handle === handle ? results.items : [];
   const setHits = (items: MeaningTarget[]) => setResults({ handle, items });
   const runtime = useRef(new MeaningRuntime()), operation = useRef<AbortController | null>(null), currentHandle = useRef(handle);
+  // Stufe G: Web-App ohne native Hülle – Modelle im Browser-Speicher, dieselben Knöpfe.
+  if (!modelPlugin() && browserModelleMoeglich()) browserModelleEinhaengen(browserModelle);
   useEffect(() => { currentHandle.current = handle; return () => { operation.current?.abort(); runtime.current.stop(); }; }, [handle]);
   useEffect(() => { setQuestion(query); setHits([]); }, [query, handle]);
   const refresh = async () => { const next = await modelPlugin()?.getState(); if (next) setState(next); };
@@ -34,8 +37,11 @@ export function PrivateMeaningPanel({ handle, query = "", onOpen }: { handle: Fi
     if (!expanded) return;
     let live = true;
     const read = () => { void modelPlugin()?.getState().then(next => { if (live) setState(next); }).catch(error => { if (live) setMessage(errorText(error)); }); };
-    read(); const timer = window.setInterval(read, 1000); return () => { live = false; clearInterval(timer); };
+    read(); const timer = window.setInterval(read, 1000);
+    window.addEventListener("familienakte:modelle", read);
+    return () => { live = false; clearInterval(timer); window.removeEventListener("familienakte:modelle", read); };
   }, [expanded]);
+  const [indexStand, setIndexStand] = useState<{ done: number; total: number } | null>(null);
 
   async function action(work: (signal: AbortSignal) => Promise<void>) {
     if (operation.current) return;
@@ -58,10 +64,15 @@ export function PrivateMeaningPanel({ handle, query = "", onOpen }: { handle: Fi
     const currentScope = () => !signal.aborted && currentHandle.current === handle ? scope : null;
     const check = () => { signal.throwIfAborted(); if (currentScope() !== scope) throw Error("INDEX_SCOPE_CHANGED"); };
     let coverage = "";
-    const read = async () => { const corpus = await readMeaningCorpus(handle, check); if (corpus.scope !== scope) throw Error("INDEX_SCOPE_CHANGED"); coverage = `${corpus.metadataOnly} Dateien nur nach Namen/Angaben, ${corpus.partial} Inhalte teilweise gelesen.`; return corpus.documents; };
-    const result = await buildMeaningIndex({ scope, model: MEANING_MODELS[stage], currentScope, signal, read,
-      embed: (text, model) => runtime.current.embed(text, model), progress: (done, total) => setMessage(`Suchindex: ${done} von ${total} Abschnitten gespeichert …`) });
-    setMessage(`Suchindex bereit: ${result.documents} Einträge, ${result.sections} Abschnitte. ${coverage} ${result.limited.length} lange Texte nur auszugsweise indexiert.`);
+    // Stufe G (Entscheidung 10): gescannte Seiten ohne Text liest die Texterkennung einmal für den Index – auf diesem Gerät.
+    const ocr = async (file: File) => { setMessage(`Texterkennung für „${file.name}“ (nur für den Index) …`); const { dokumentTextOcr } = await import("./ki-auftrag-dialog"); return dokumentTextOcr(file); };
+    const read = async () => { const corpus = await readMeaningCorpus(handle, check, { ocr }); if (corpus.scope !== scope) throw Error("INDEX_SCOPE_CHANGED"); coverage = `${corpus.metadataOnly} Dateien nur nach Namen/Angaben, ${corpus.partial} Inhalte teilweise gelesen.`; return corpus.documents; };
+    setIndexStand({ done: 0, total: 0 });
+    try {
+      const result = await buildMeaningIndex({ scope, model: MEANING_MODELS[stage], currentScope, signal, read,
+        embed: (text, model) => runtime.current.embed(text, model), progress: (done, total) => { setIndexStand({ done, total }); setMessage(`Suchindex: ${done} von ${total} Abschnitten (${total ? Math.round(done / total * 100) : 0} %) …`); } });
+      setMessage(`Suchindex bereit: ${result.documents} Einträge, ${result.sections} Abschnitte. ${coverage} ${result.limited.length} lange Texte nur auszugsweise indexiert.`);
+    } finally { setIndexStand(null); }
   });
   const search = () => action(async signal => {
     if (!handle) throw Error("Bitte zuerst eine Akte öffnen.");
@@ -86,19 +97,23 @@ export function PrivateMeaningPanel({ handle, query = "", onOpen }: { handle: Fi
     {expanded && <>
       <div className="button-row"><button className="button secondary" disabled={busy} onClick={measure}>Dieses Gerät prüfen</button></div>
       {measurement && <p role="status">{modelDevice()?.werteText(measurement)} · Rechenprobe {measurement.probeMs} ms · Quelle: {measurement.quelle}.</p>}
-      {!modelPlugin() ? <p>Die Geräteprüfung funktioniert auch im Browser. Die dauerhafte Modellablage dieses Bausteins ist derzeit in den Android- und Windows-Apps angeschlossen.</p> : <>
+      {!modelPlugin() ? <p>Die Geräteprüfung funktioniert auch im Browser. Dieser Browser kann keine Modelle dauerhaft ablegen (kein eigener Dateispeicher); die Bedeutungssuche gibt es in Chrome, Edge oder der Android-/Windows-App.</p> : <>
+        {modelImBrowser() && <p className="fine-print" data-modell-browser>Web-App: Modell und Suchindex liegen im Speicher dieses Browsers (Chrome/Edge) auf diesem Gerät. Der Download ist bewusst; er lässt sich anhalten und fortsetzen.</p>}
         <label>Modellstufe <select value={stage} disabled={busy || Boolean(downloading)} onChange={e => setStage(e.target.value as ModelStage)}>
           {MODEL_STAGES.map(s => <option key={s} value={s}>{({ klein: "Klein", mittel: "Mittel", gross: "Groß" })[s]} – {MEANING_MODELS[s].id.split("/")[1]}</option>)}
         </select></label>
         {measurement && <p>Geräteempfehlung: {({ passt: "passt", knapp: "knapp", nein: "nicht empfohlen" })[modelDevice()?.urteil(measurement, deviceModelName(stage)).stand as "passt" | "knapp" | "nein"] || "nicht bestimmbar"}. Die Werte sind eine Orientierung; die Messung am eigenen Gerät bleibt entscheidend.</p>}
         {selected && <p>{selected.installed ? "Modell vollständig abgelegt" : selected.running ? "Modell wird geladen" : "Modell noch nicht vollständig"}: {mb(selected.present)} von etwa {mb(selected.total)}. {selected.error && (selected.error === "CANCELLED" ? "Download angehalten; später fortsetzbar." : selected.error === "APP_OFFLINE" ? "Internet ausgeschaltet; später fortsetzbar." : "Download nicht abgeschlossen. Verbindung und freien Speicher prüfen; später fortsetzen.")}</p>}
+        {selected && (selected.running || (!selected.installed && selected.present > 0)) && selected.total > 0 && <div className="modell-fortschritt" data-modell-fortschritt={Math.round(Math.min(selected.running ? selected.done : selected.present, selected.total) / selected.total * 100)}><progress max={selected.total} value={Math.min(selected.running ? selected.done : selected.present, selected.total)} aria-label="Download des Modells"/><span>{Math.round(Math.min(selected.running ? selected.done : selected.present, selected.total) / selected.total * 100)} % · {mb(selected.running ? selected.done : selected.present)} von {mb(selected.total)}{selected.source ? ` · von ${selected.source}` : ""}</span></div>}
+        {selected?.error === "MODEL_CHECKSUM" && <p className="form-error" data-modell-pruefsumme>Eine Modelldatei trug nicht den festen Fingerabdruck und wurde verworfen. Bitte erneut laden; passt es wieder nicht, stimmt die Quelle nicht.</p>}
+        {indexStand && indexStand.total > 0 && <div className="modell-fortschritt" data-index-fortschritt={Math.round(indexStand.done / indexStand.total * 100)}><progress max={indexStand.total} value={indexStand.done} aria-label="Aufbau des Suchindex"/><span>{Math.round(indexStand.done / indexStand.total * 100)} % · {indexStand.done} von {indexStand.total} Abschnitten</span></div>}
         {state && !state.localAssets && <p>Die lokale Modellbereitstellung ist in dieser Hülle nicht verfügbar. Die Akte und die Wortsuche bleiben nutzbar.</p>}
         <div className="button-row">
           <button className="button secondary" disabled={busy || Boolean(downloading) || !state?.localAssets} onClick={install}>{selected?.installed ? "Modelldateien erneut prüfen" : "Gewähltes Modell laden / fortsetzen"}</button>
           <button className="button secondary" disabled={!selected?.running} onClick={() => action(async () => { await modelPlugin()!.cancel({ stage }); await refresh(); })}>Download anhalten</button>
           <button className="button secondary" disabled={busy || Boolean(downloading) || !selected?.present} onClick={() => action(async () => { runtime.current.stop(); await modelPlugin()!.remove({ stage }); await refresh(); })}>Gewähltes Modell entfernen</button>
         </div>
-        <span className="ui-heading-help"><strong>Suchindex</strong><InfoPopover label="Suchindex erklären" text="Der Suchindex wird aus deinen Unterlagen und dem gewählten Modell gebaut. Wechselst du das Modell, wird er neu gebaut; ein abgebrochener Wechsel lässt den bisherigen nutzbar. Gescannte Bilder ohne Textebene werden nur über ihre Angaben gefunden; es startet keine automatische Texterkennung."/></span>
+        <span className="ui-heading-help"><strong>Suchindex</strong><InfoPopover label="Suchindex erklären" text="Der Suchindex wird aus deinen Unterlagen und dem gewählten Modell gebaut. Wechselst du das Modell, wird er neu gebaut; ein abgebrochener Wechsel lässt den bisherigen nutzbar. Gescannte Seiten ohne Textebene: der beim Eingang erkannte Text zählt mit; fehlt er, liest die Texterkennung beim Aufbau einmal auf diesem Gerät (auch Gesundheitsunterlagen – nur für den Index, nichts verlässt das Gerät)."/></span>
         <div className="button-row"><button className="button primary" disabled={busy || !handle || !selected?.installed || Boolean(downloading)} onClick={build}>Index aufbauen / fortsetzen</button><button className="button secondary" disabled={busy || !handle} onClick={clear}>Privaten Index löschen</button></div>
         <span className="ui-heading-help"><label>Wonach suchst du? <input value={question} maxLength={500} onChange={e => setQuestion(e.target.value)} placeholder="z. B. Garantie Waschmaschine"/></label><InfoPopover label="Bedeutungssuche: wo wird gesucht?" text="Gesucht wird in deiner Familienakte, also in allen Unterlagen, die du hier gespeichert hast (in der Demo im Demo-Bestand). Du kannst in eigenen Worten fragen; die Treffer sind Vorschläge, das Original bitte selbst prüfen."/></span>
         <div className="button-row"><button className="button primary" disabled={busy || !handle || !question.trim()} onClick={search}>Nach Bedeutung suchen</button></div>

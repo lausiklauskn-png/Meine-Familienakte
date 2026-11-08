@@ -2711,3 +2711,7 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 /* Stufe D: Termine aus dem Kalender holen */
 .kalender-hol-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 .kalender-hol-liste small { color: var(--muted); }
+/* Stufe G: Ladebalken für Modell-Download und Suchindex */
+.modell-fortschritt { display: grid; gap: 4px; margin: 6px 0; }
+.modell-fortschritt progress { width: 100%; height: 12px; }
+.modell-fortschritt span { font-size: 0.9rem; color: var(--muted); }
