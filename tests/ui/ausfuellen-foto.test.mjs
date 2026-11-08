@@ -15,6 +15,9 @@ await page.addInitScript(windowStub);
 const errors = collectErrors(page);
 const dlg = page.locator("[data-af]");
 const NAME = "Foto_Anmeldeformular_Musterstadt.png";
+const GLEICHE_UNTERLAGE = /Foto[ _]Anmeldeformular[ _]Musterstadt/;   // Titel (seit 2.28.39) oder Dateiname
+// step() wertet einen zurückgegebenen Text als grün; darum scheitert soll() mit einer Ausnahme.
+const soll = (ok, info) => { if (!ok) throw new Error(typeof info === "string" ? info : JSON.stringify(info)); return true; };
 
 try {
   await step("Start", async () => { await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page); });
@@ -33,10 +36,10 @@ try {
     await page.locator(".intake-queue-item", { hasText: "Foto Anmeldeformular Musterstadt" }).first().locator("button", { hasText: "Zuordnung prüfen" }).click();
     await page.locator(".intake-modal button[type=submit]").click();
     await page.locator(".intake-modal").waitFor({ state: "detached", timeout: 20000 });
-    await page.locator(".document-item", { hasText: NAME }).first().waitFor({ timeout: 20000 });
+    await page.locator(".document-item", { hasText: GLEICHE_UNTERLAGE }).first().waitFor({ timeout: 20000 });
   });
   await step("Ausfüllen öffnet das Foto als Seite (umgewandelt in ein PDF)", async () => {
-    await page.locator(".document-item", { hasText: NAME }).first().locator("[data-af-oeffnen]").click();
+    await page.locator(".document-item", { hasText: GLEICHE_UNTERLAGE }).first().locator("[data-af-oeffnen]").click();
     await dlg.locator(".af-seite").first().waitFor({ timeout: 30000 });
     return `${await dlg.locator(".af-seite").count()} Seite`;
   });
@@ -67,13 +70,15 @@ try {
   });
   await step("Das Foto wird unter derselben Unterlage zum ausfüllbaren PDF, kein zweiter Eintrag", async () => {
     await dlg.locator("button[aria-label='Ausfüllen schließen']").click();
-    const name = NAME.replace(/\.[^.]+$/, ".pdf");
-    await page.locator(".document-item", { hasText: name }).first().waitFor({ timeout: 15000 });
-    if (await page.locator(".document-item", { hasText: name }).count() !== 1) return false;
-    return /Ausgefüllt/.test(await page.locator(".document-item", { hasText: name }).first().innerText());
+    // Seit 2.28.39 zeigt die Liste den Titel aus dem Eingang; der Ablageort (kleine Zeile) zeigt, dass es jetzt ein PDF ist.
+    const eintraege = page.locator(".document-item", { hasText: GLEICHE_UNTERLAGE });
+    await eintraege.first().waitFor({ timeout: 15000 });
+    const n = await eintraege.count();
+    const text = (await eintraege.first().innerText()).replace(/\s+/g, " ");
+    return soll(n === 1 && /Ausgefüllt/.test(text) && /\.pdf\b/i.test(text) && !/\.png\b/i.test(text), `${n} Einträge · ${text.slice(0, 200)}`);
   });
   await step("„Neu scannen“ öffnet den Scanner von Workflow PDF (Stil geladen), Schließen geht", async () => {
-    await page.locator(".document-item", { hasText: NAME.replace(/\.[^.]+$/, ".pdf") }).first().locator("[data-af-oeffnen]").click();
+    await page.locator(".document-item", { hasText: GLEICHE_UNTERLAGE }).first().locator("[data-af-oeffnen]").click();
     await dlg.locator(".af-seite").first().waitFor({ timeout: 30000 });
     await dlg.locator("[role=tab]", { hasText: "Felder setzen" }).click();
     await dlg.locator("button", { hasText: "Neu scannen" }).click();

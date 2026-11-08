@@ -69,6 +69,9 @@ try {
     await modal.locator("button[type=submit]").click();
     await modal.waitFor({ state: "detached", timeout: 20000 });
     await zeile().locator("[data-gespeichert]").waitFor({ timeout: 20000 });
+    // Die Zeile ist schon „Übernommen“, bevor Fristen angelegt und der Bestand neu gelesen sind; die Meldung folgt danach.
+    // Darum auf die Meldung warten statt sofort zu lesen (sonst stand manchmal noch „noch nichts gespeichert“ da).
+    await page.locator(".global-activity-row", { hasText: "Gespeichert ✓" }).first().waitFor({ timeout: 20000 }).catch(() => {});
     const text = await aktivitaet();
     return soll(/Gespeichert ✓/.test(text) && !/noch nichts gespeichert/.test(text), text);
   });

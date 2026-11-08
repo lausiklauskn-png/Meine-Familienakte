@@ -10,6 +10,8 @@ try {
   page.setDefaultTimeout(8000);
   await page.addInitScript(windowStub);
   const errors = collectErrors(page);
+  // step() wertet einen zurückgegebenen Text als grün; darum scheitert soll() mit einer Ausnahme.
+  const soll = (ok, info) => { if (!ok) throw new Error(typeof info === "string" ? info : JSON.stringify(info)); return true; };
   await step("Start", async () => { await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page); });
 
   // ---------- Dokumentenbibliothek ----------
@@ -53,6 +55,28 @@ try {
     const geoeffnet = await page.evaluate(() => window.__geoeffnet.length);
     await schliesseDialoge(page);
     return geoeffnet >= 1 && (await page.locator(".modal").count()) === 0 ? `window.open-Aufrufe: ${geoeffnet}` : false;
+  });
+  await step("Bibliothek: Auge an der Zeile klappt die volle Karte mit „Ausfüllen“ / „In Workflow PDF öffnen“ auf, zweiter Tipp klappt zu", async () => {
+    const zeilen = page.locator("[data-bibliothek-zeile]");
+    const n = Math.min(await zeilen.count(), 30);
+    for (let i = 0; i < n; i++) {
+      const id = await zeilen.nth(i).getAttribute("data-bibliothek-zeile");
+      const auge = zeilen.nth(i).locator("[data-bibliothek-auge]");
+      soll(await auge.count() === 1, `Zeile ${i + 1} ohne Auge`);
+      await auge.click();
+      const karte = page.locator(`[data-bibliothek-karte="${id}"]`).first();
+      await karte.waitFor();
+      const ausfuellen = await karte.locator("button", { hasText: "Ausfüllen" }).count();
+      const wfpdf = await karte.locator("[data-wfpdf-oeffnen]").count();
+      if (ausfuellen && wfpdf) {
+        const offen = await auge.getAttribute("aria-expanded");
+        await auge.click();
+        await karte.waitFor({ state: "detached" });
+        return soll(offen === "true" && await auge.getAttribute("aria-expanded") === "false", { offen }) && `Zeile ${i + 1}: Karte mit „Ausfüllen“ und „In Workflow PDF öffnen“, wieder zu`;
+      }
+      await auge.click(); await karte.waitFor({ state: "detached" });
+    }
+    return soll(false, `keine der ${n} Zeilen zeigt „Ausfüllen“ und „In Workflow PDF öffnen“ in der Karte`);
   });
   await step("Bibliothek: Umschalter „Karten“ zeigt wieder die großen Karten", async () => {
     await page.locator('[data-ansicht="karten"]').click();
@@ -196,7 +220,10 @@ try {
   // ---------- Dokument fotografieren ----------
   await step("„Dokument fotografieren“ mit zwei Bildern → Seiten, Drehen, Reihenfolge, PDF bauen → Ablage-Dialog", async () => {
     await aufraeumen(page);
-    const kamera = page.locator('input[type="file"][capture]').first();
+    // Seit 2.28.39 steht im Kopf der Knopf „Ablegen“ mit eigener Kamera-Eingabe (geht in die Warteschlange, nicht in den Scan-Dialog);
+    // gemeint ist hier die Kamera der Eingangszentrale.
+    await footer(page, "Eingangszentrale");
+    const kamera = page.locator('.central-intake input[type="file"][capture]').first();
     await kamera.setInputFiles([probePng("Seite1.png"), probePng("Seite2.png", 48, 64)]);
     await page.waitForSelector(".modal");
     await page.waitForTimeout(800);

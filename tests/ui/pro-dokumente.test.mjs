@@ -130,7 +130,11 @@ try {
     const alterPfad = vorher.register.documents[0].storedPath;
     assert.ok(!alterPfad.startsWith("pro-tresor:"));
     await footer(page, "Dokumentenbibliothek");
-    await page.getByRole("button", { name: "In Pro-Tresor übernehmen", exact: true }).first().click();
+    // Seit 2.28.39 zeigt die Bibliothek ab Werk Zeilen; das Auge der Zeile klappt die volle Karte mit dem Knopf auf.
+    const zeile = page.locator("[data-bibliothek-zeile]", { hasText: /Bestand[-_ ]Original/ }).first();
+    await zeile.locator("[data-bibliothek-auge]").click();
+    const karte = page.locator(`[data-bibliothek-karte="${await zeile.getAttribute("data-bibliothek-zeile")}"]`).first();
+    await karte.getByRole("button", { name: "In Pro-Tresor übernehmen", exact: true }).click();
     await page.locator(".global-activity-row", { hasText: "Das ausgewählte Original liegt geprüft im Pro-Tresor. Der bisherige Bestand wurde beibehalten." }).first().waitFor();
     const danach = await bestand("Pro-Anderer-Arbeitsstand");
     assert.match(danach.register.documents[0].storedPath, /^pro-tresor:/);
