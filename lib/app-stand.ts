@@ -29,6 +29,14 @@ export const APP_STAND: Readonly<Record<string, StandEintrag>> = {
   "anderes-geraet": { stand: "fertig", seit: "2.28.39" },
   // Neugestaltung 2.28.39 (Punkt 2): ein Einstieg zum Ablegen im Kopf; Drucken nur noch über das Menü.
   "kopf-ablegen": { stand: "fertig", seit: "2.28.39" },
+  // Ablaufprüfung 2.28.39: geänderte Wege golden markieren (Eingang mit Titel/Text/Sammelbestätigung, Frist mit Erinnerung
+  // als Teil der Aufgabe, Suche nach Inhalt und Alltagswörtern, Personen anlegen, Glocke grün).
+  "eingang": { stand: "fertig", seit: "2.28.39" },
+  "vorschlag": { stand: "fertig", seit: "2.28.39" },
+  "akte": { stand: "fertig", seit: "2.28.39" },
+  "eintrag": { stand: "fertig", seit: "2.28.39" },
+  "frist-neu": { stand: "fertig", seit: "2.28.39" },
+  "aus-fristen": { stand: "fertig", seit: "2.28.39" },
   "aus-drucken": { stand: "fertig", seit: "2.28.39" },
 };
 
