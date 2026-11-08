@@ -198,7 +198,7 @@ public final class NetzDienst {
         ByteArrayOutputStream b = new ByteArrayOutputStream(); int c;
         while ((c = in.read()) >= 0) { if (c == '\n') break; if (c != '\r') b.write(c); if (b.size() > 8192) throw new IOException("FA_NETZ_KOPF"); }
         if (c < 0 && b.size() == 0) return null;
-        return b.toString(StandardCharsets.UTF_8);
+        return new String(b.toByteArray(), StandardCharsets.UTF_8);   // toString(Charset) erst ab Android 13
     }
     private static void antwort(OutputStream out, int status, String art, byte[] body) throws IOException {
         out.write(("HTTP/1.1 " + status + " " + (status == 200 ? "OK" : status == 401 ? "Unauthorized" : status == 404 ? "Not Found" : status == 403 ? "Forbidden" : status == 400 ? "Bad Request" : "Error") + "\r\nContent-Type: " + art + "\r\nContent-Length: " + body.length + "\r\nConnection: close\r\nCache-Control: no-store\r\n\r\n").getBytes(StandardCharsets.UTF_8));
