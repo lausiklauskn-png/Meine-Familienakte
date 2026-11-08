@@ -86,12 +86,12 @@ try {
     await footer(page, "Sicherheitscenter");
     await footer(page, "Hilfe");
     await page.reload({ waitUntil: "networkidle" });
-    await page.locator(".breadcrumb > span", { hasText: "Hilfe" }).waitFor();
+    await page.locator(".breadcrumb .pfad > span", { hasText: "Hilfe" }).waitFor();
     await page.goBack();
-    await page.locator(".breadcrumb > span", { hasText: "Sicherheit & lokaler Tresor" }).waitFor();
+    await page.locator(".breadcrumb .pfad > span", { hasText: "Sicherheit & lokaler Tresor" }).waitFor();
     assert.ok(page.url().endsWith("#security"));
     await page.goForward();
-    await page.locator(".breadcrumb > span", { hasText: "Hilfe" }).waitFor();
+    await page.locator(".breadcrumb .pfad > span", { hasText: "Hilfe" }).waitFor();
     assert.ok(page.url().endsWith("#help"));
   });
   await step("Keine Seitenfehler", () => assert.deepEqual(errors, []));

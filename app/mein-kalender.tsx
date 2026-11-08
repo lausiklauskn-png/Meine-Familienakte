@@ -1,3 +1,4 @@
+import { hierZumZiel } from "./sprung";
 import { CalendarDays, ChevronLeft, ChevronRight, Plus, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { FamilyRecordUnion, FamilyRelation } from "../lib/family-data-model";
@@ -52,8 +53,11 @@ export function MeinKalender({ vaultHandle, records, relations, onRefresh, onNot
   const alle = useMemo(() => eintraege(records), [records]);
   const proTag = useMemo(() => { const m = new Map<string, Eintrag[]>(); for (const e of alle) m.set(e.tag, [...(m.get(e.tag) || []), e]); return m; }, [alle]);
   useEffect(() => {
-    const auf = (ev: Event) => { klappOeffnen("kalender"); const t = (ev as CustomEvent<{ tag?: string }>).detail?.tag; if (t && /^\d{4}-\d{2}-\d{2}$/.test(t)) { setTag(t); setMonat(new Date(Number(t.slice(0, 4)), Number(t.slice(5, 7)) - 1, 1)); } window.setTimeout(() => box.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 80); };
-    window.addEventListener(MEIN_KALENDER_OEFFNEN, auf); return () => window.removeEventListener(MEIN_KALENDER_OEFFNEN, auf);
+    const auf = (ev: Event) => { klappOeffnen("kalender"); const t = (ev as CustomEvent<{ tag?: string }>).detail?.tag; if (t && /^\d{4}-\d{2}-\d{2}$/.test(t)) { setTag(t); setMonat(new Date(Number(t.slice(0, 4)), Number(t.slice(5, 7)) - 1, 1)); } window.requestAnimationFrame(() => hierZumZiel(box.current)); };
+    window.addEventListener(MEIN_KALENDER_OEFFNEN, auf);
+    // Gemeinsamer Sprungweg: erst wenn der Kalender zuhört, darf ein Sprung „Mein Kalender öffnen“ auslösen.
+    if (box.current) box.current.dataset.mkBereit = "ja";
+    return () => window.removeEventListener(MEIN_KALENDER_OEFFNEN, auf);
   }, []);
   const ersterTag = (monat.getDay() + 6) % 7;
   const tageImMonat = new Date(monat.getFullYear(), monat.getMonth() + 1, 0).getDate();

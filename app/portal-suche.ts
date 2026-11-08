@@ -8,6 +8,7 @@ import { isSensitiveHealthText, protectedFamilyLabel } from "../lib/family-priva
 import { cockpitRecordLabel } from "../lib/family-cockpit";
 import { memoryData } from "../lib/family-memory";
 import { buildScheduleItems, scheduleStatusLabels } from "../lib/family-reminders";
+import { zielFuerDatensatz } from "../lib/menu-optimization";
 
 export type SearchNavigation = Array<{ id: string; label: string; groups: Array<{ title: string; items: Array<{ id: SectionId; label: string; detail: string }> }> }>;
 export type SearchResult = { id: string; section: SectionId; targetId?: string; contextCaseId?: string; title: string; detail: string; kind: string; reason: string; score: number };
@@ -62,12 +63,15 @@ export function buildPortalSearchResults(topNavigation: SearchNavigation, query:
       : null;
     const kind = recordTypeDefinitions[record.recordType].label;
     const detail = schedule ? `${scheduleStatusLabels[schedule.displayStatus]} · ${schedule.date ? fmtDate(schedule.date.slice(0, 10)) : "ohne Datum"}` : `${record.status} · Kennung ${record.id}`;
+    // U6: dieselbe Zuordnung wie Startseite, Cockpit und Verknüpfungen – Termine öffnen in „Fristen und Aufgaben“.
+    const ziel = zielFuerDatensatz(record.recordType, record.id, { geschuetzt: sensitive, tagebuch: Boolean(memory) });
     add(
-      { id: `record-${record.id}`, section: sensitive ? "health" : memory ? "memory" : "cockpit", targetId: record.id, contextCaseId: record.recordType === "case" ? record.id : linkedCaseId(record.id, relations), title: sensitive ? "Geschützter Gesundheitseintrag" : title, detail: memory ? `${memory.lifeArea} · ${memory.eventType}` : detail, kind: memory ? "Erinnerung" : kind, reason: memory ? "Passendes Ereignis aus dem Erinnerungsprotokoll" : "Passender Datensatz aus dem gemeinsamen Familienaktenmodell" },
+      // U12: Tagebuch-Einträge heißen „Tagebuch“; „Erinnerung“ bleibt der Glocken-Erinnerung vorbehalten.
+      { id: `record-${record.id}`, section: ziel.section as SectionId, targetId: ziel.targetId, contextCaseId: record.recordType === "case" ? record.id : linkedCaseId(record.id, relations), title: sensitive ? "Geschützter Gesundheitseintrag" : title, detail: memory ? `${memory.lifeArea} · ${memory.eventType}` : detail, kind: memory ? "Tagebuch" : kind, reason: memory ? "Passender Eintrag aus dem Tagebuch" : "Passender Datensatz aus dem gemeinsamen Familienaktenmodell" },
       [record.id, title, record.recordType, record.status, record.source || "", record.notes || "", JSON.stringify(record.data)].join(" "),
     );
   });
-  const unique = [...new Map(candidates.map((item) => [`${item.section}-${item.targetId || ""}-${item.title}`, item])).values()];
+  const unique = [...new Map(candidates.map((item) => [`${item.section}-${item.targetId || (item.id.startsWith("record-") ? item.id : "")}-${item.title}`, item])).values()];
   return unique.sort((a, b) => b.score - a.score || a.title.localeCompare(b.title, "de")).slice(0, 20);
 }
 

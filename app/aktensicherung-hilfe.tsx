@@ -75,8 +75,9 @@ const SELEKTOR: Record<Exclude<Ziel, "akte">, string> = { datentresor: '[data-hi
 /**
  * @param datentresor Name des verbundenen Datentresors; dann führt der Kasten direkt zur Akte und steht grün.
  */
-export function AktensicherungHilfe({ onSicherheit, onDokumente, datentresor }: { onSicherheit: () => void; onDokumente: () => void; datentresor?: string }) {
-  const hin = (z: Ziel) => { if (z === "akte") { onDokumente(); return; } onSicherheit(); window.setTimeout(() => zurStelle(SELEKTOR[z]), 350); };
+export function AktensicherungHilfe({ onSicherheit, onDokumente, datentresor }: { onSicherheit: (ziel?: () => boolean) => void; onDokumente: () => void; datentresor?: string }) {
+  // Gemeinsamer Sprungweg: Sicherheitscenter öffnen und nach dem Zeichnen einmal zur Stelle (kein Zeitgeber).
+  const hin = (z: Ziel) => { if (z === "akte") { onDokumente(); return; } onSicherheit(() => zurStelle(SELEKTOR[z], { sofort: true })); };
   const zielWort: Record<Ziel, string> = { akte: "zur Akte", datentresor: "Datentresor im Sicherheitscenter", "pro-tresor": "Pro-Tresor im Sicherheitscenter", vollsicherung: "Sicherung im Sicherheitscenter" };
   const [stand, setStand] = useState<Record<string, Stand>>(lesen);
   const wechseln = (id: string) => setStand((alt) => { const neu = { ...alt, [id]: FOLGE[alt[id] || "offen"] }; schreiben(neu); return neu; });

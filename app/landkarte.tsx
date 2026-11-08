@@ -33,11 +33,12 @@ function lesen(id: string): Gemerkt {
 }
 function merken(id: string, g: Gemerkt) { try { localStorage.setItem(`fa_landkarte_${id}_v2`, JSON.stringify(g)); } catch { /* nur Komfort */ } }
 
-export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, onFrisch }: { id: string; label: string; gruppen: KartenGruppe[]; knoten: KartenKnoten[]; kanten: KartenKante[]; breiten: number[];
-  spalten?: string[]; onFrisch?: (anzahl: number) => void }) {
+export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, onFrisch, startAktiv = null }: { id: string; label: string; gruppen: KartenGruppe[]; knoten: KartenKnoten[]; kanten: KartenKante[]; breiten: number[];
+  spalten?: string[]; onFrisch?: (anzahl: number) => void; startAktiv?: string | null }) {
   const buehne = useRef<HTMLDivElement>(null);
   const [lage, setLage] = useState<Lage | null>(null);
-  const [aktiv, setAktiv] = useState<string | null>(null);
+  // Rücksprung (W12): nach „Hingehen ›“ und Zurück steht derselbe Kasten wieder gewählt, damit die Marke ihn findet.
+  const [aktiv, setAktiv] = useState<string | null>(startAktiv);
   const [frisch, setFrisch] = useState<Set<string>>(new Set());
 
   const alle = useMemo(() => {

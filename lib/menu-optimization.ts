@@ -2,7 +2,8 @@ import type { FamilyRecordType } from "./family-data-model";
 
 export const MENU_OPTIMIZATION_VERSION = 1 as const;
 // Klaus 04.11.2026: Demo-Ablage und bewusst gewählten eigenen Tresor auf der Startseite unterscheiden.
-export const START_PAGE_REFERENCE_SHA256 = "50004c3d63981d492035dbf179b9ddd30e43283886492130fcb8987784a78b70";
+// 2.28.39 (Navigation U6, U10, U11): Punkte im Objekt-Cockpit-Kasten und in „Zuletzt wichtig“ öffnen genau diesen Punkt.
+export const START_PAGE_REFERENCE_SHA256 = "0d028ad02913383883d187c7c57326a17dd3fc35ea0ce1b6af64a0e534af54b4";
 
 export type MenuSection =
   | "documents" | "inbox" | "medical" | "benefits" | "work" | "assessment"
@@ -11,35 +12,36 @@ export type MenuSection =
   | "changelog" | "versions" | "systemcheck" | "memory";
 
 export type MenuTarget = { section: MenuSection; targetId?: string };
-export type MenuAction = MenuTarget & { label: string; detail: string; query?: string; area?: string };
+/** anker: Stelle auf der Zielseite, zu der der gemeinsame Sprungweg rollt (U2, 2.28.39). */
+export type MenuAction = MenuTarget & { label: string; detail: string; query?: string; area?: string; anker?: string };
 
 export const menuPageActions = {
   health: [
-    { label: "Medizinische Akte", detail: "Diagnosen, AU-Zeiten und Ärzte", section: "medical" },
+    { label: "Diagnosen, AU & ICD-Codes", detail: "Medizinische Akte: Diagnosen, AU-Zeiten und Ärzte", section: "medical" },
     { label: "Gesundheitsdokumente", detail: "Geschützte Unterlagen in der Bibliothek", section: "documents", area: "Gesundheit" },
     { label: "Fristen und Aufgaben", detail: "Offene gesundheitliche und berufliche Punkte", section: "reminders" },
     { label: "Im Cockpit anzeigen", detail: "Datensparsame Arbeitsübersicht", section: "cockpit" },
   ],
   family: [
     { label: "Tagebuch und Erinnerungen", detail: "Ereignisse festhalten und offene Punkte klären", section: "memory" },
-    { label: "Personenakten", detail: "Personen und ihre vorhandenen Beziehungen", section: "cockpit" },
-    { label: "Gemeinsame Vorgänge", detail: "Verknüpfte Vorgänge im Cockpit", section: "cockpit" },
+    { label: "Personen über ihre Vorgänge", detail: "Noch keine eigene Personenliste – Personen öffnen sich aus ihren Vorgängen", section: "cockpit", anker: "#cockpit-cases" },
+    { label: "Gemeinsame Vorgänge", detail: "Offene Vorgänge im Cockpit", section: "cockpit", anker: "#cockpit-cases" },
     { label: "Termine und Fristen", detail: "Offene, fällige und erledigte Punkte", section: "reminders" },
     { label: "Familienunterlagen", detail: "Dokumente dieses Lebensbereichs", section: "documents", area: "Familie & persönliche Unterlagen" },
   ],
   home: [
     { label: "Dokumente", detail: "Unterlagen zu Haus und Wohnung", section: "documents", area: "Haus & Wohnung" },
-    { label: "Vorgänge und Objekte", detail: "Vorhandene Zusammenhänge öffnen", section: "cockpit" },
+    { label: "Vorgänge und Objekte", detail: "Offene Vorgänge und Objektakten im Cockpit", section: "cockpit", anker: "#cockpit-cases" },
     { label: "Fristen und Aufgaben", detail: "Termine und Wiedervorlagen", section: "reminders" },
   ],
   vehicles: [
     { label: "Dokumente", detail: "Fahrzeug- und Motorradunterlagen", section: "documents", area: "Fahrzeuge" },
-    { label: "Fahrzeugakten", detail: "Objekte und Vorgänge öffnen", section: "cockpit" },
+    { label: "Objektakten im Cockpit", detail: "Alle Objekte, auch Fahrzeuge – nicht nach Fahrzeugen gefiltert", section: "cockpit", anker: "#cockpit-objects" },
     { label: "Fristen und Aufgaben", detail: "TÜV, Wartung und Wiedervorlagen", section: "reminders" },
   ],
   purchases: [
     { label: "Dokumente", detail: "Rechnungen, Garantien und Geräteunterlagen", section: "documents", area: "Rechnungen & Garantien" },
-    { label: "Objekte und Vorgänge", detail: "Geräte- und Reparaturakten öffnen", section: "cockpit" },
+    { label: "Objektakten im Cockpit", detail: "Alle Objekte, auch Geräte – nicht nach Geräten gefiltert", section: "cockpit", anker: "#cockpit-objects" },
     { label: "Fristen und Aufgaben", detail: "Garantieenden und Wiedervorlagen", section: "reminders" },
   ],
   medical: [
@@ -88,6 +90,17 @@ export function targetForRelation(type: FamilyRecordType | "document", id: strin
   if (type === "document") return { section: "documents", targetId: id };
   if (["deadline", "task", "reminder"].includes(type)) return { section: "reminders", targetId: id };
   return { section: "cockpit", targetId: id };
+}
+
+/**
+ * Eine Zuordnung „Datensatzart → Bereich“ für Suche, Startseite, Cockpit und Verknüpfungen (U6, 2.28.39):
+ * Fristen, Aufgaben und Erinnerungen → „Fristen und Aufgaben“ mit Ziel; Tagebuch-Einträge → Tagebuch mit Ziel;
+ * Dokumente → Bibliothek mit Direkttreffer; Geschütztes → Gesundheitsbereich ohne Kennung; alles andere → Cockpit-Akte.
+ */
+export function zielFuerDatensatz(art: FamilyRecordType | "document", id: string, merkmale: { geschuetzt?: boolean; tagebuch?: boolean } = {}): MenuTarget {
+  if (merkmale.geschuetzt) return { section: "health" };
+  if (merkmale.tagebuch) return { section: "memory", targetId: id };
+  return targetForRelation(art, id);
 }
 
 const commonDossierOrder: Array<FamilyRecordType | "document"> = [

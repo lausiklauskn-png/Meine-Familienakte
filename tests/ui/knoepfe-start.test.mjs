@@ -20,7 +20,7 @@ try {
   await step("Drucken ruft window.print()", async () => { await page.locator('button[title="Aktuelle Seite drucken"]').click(); return (await page.evaluate(() => window.__gedruckt)) === 1; });
   await step("Markenknopf „FAMILIENAKTE“ führt zur Startseite", async () => {
     await footer(page, "Hilfe"); await page.locator(".site-brand").click();
-    return page.url().endsWith("#startseite") && (await page.locator(".breadcrumb > button").allTextContents()).join("") === "Startseite";
+    return page.url().endsWith("#startseite") && (await page.locator(".breadcrumb .pfad > button").allTextContents()).join("") === "Startseite";
   });
   await step("Ausloggen lädt die Seite neu (kein Konto, nur Neustart)", async () => {
     await page.locator(".logout-button").click();

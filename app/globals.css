@@ -498,6 +498,15 @@ code { display: inline-block; color: var(--navy); background: var(--blue-soft); 
 .breadcrumb .navigation-history { display: inline-flex; align-items: center; gap: 3px; margin-right: 7px; }
 .breadcrumb .navigation-history button { display: inline-flex; align-items: center; gap: 4px; min-width: 32px; min-height: 32px; padding: 4px 6px; border: 1px solid #c9dceb; border-radius: 7px; }
 .breadcrumb .navigation-history button:disabled { opacity: .4; cursor: default; }
+/* Pfad (2.28.39, Regeln 4 und 5): bleibt beim Scrollen unter dem Kopf stehen, eine Zeile; „Zurück“ (gegangener Weg)
+   ist durch einen Strich vom Pfad (Ort in der Ordnung) getrennt; am Handy ohne „Startseite“, das letzte Glied wird gekürzt. */
+.breadcrumb { position: sticky; top: var(--kopf-hoehe, 0px); z-index: 40; flex-wrap: nowrap; margin: 0 -6px; padding: 3px 6px; background: var(--canvas); white-space: nowrap; }
+.breadcrumb .navigation-history { flex: none; padding-right: 9px; border-right: 1px solid #c9dceb; }
+.breadcrumb .pfad { display: flex; align-items: center; gap: 5px; min-width: 0; overflow: hidden; }
+.breadcrumb .pfad > button, .breadcrumb .pfad > svg { flex: none; }
+.breadcrumb .pfad-ende { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 600px) { .breadcrumb .pfad .pfad-start { display: none; } }
+@media print { .breadcrumb { position: static; } }
 .site-footer { color: #dce7ef; background: #092944; }
 .footer-inner { width: calc(100% - 48px); margin: 0 auto; padding: 27px 0 18px; }
 .footer-brand-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 28px; border-bottom: 1px solid rgba(220,231,239,.2); padding-bottom: 18px; }
@@ -531,13 +540,16 @@ code { display: inline-block; color: var(--navy); background: var(--blue-soft); 
 .hero-cockpit-heading strong { font-size: 1.22rem; }
 .hero-cockpit-open { width: 100%; display: grid; gap: 10px; border: 0; padding: 10px 0 0; color: white; background: transparent; text-align: left; }
 .hero-cockpit-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 7px; }
-.hero-cockpit-grid > span { min-width: 0; border-radius: 9px; padding: 8px 9px; background: rgba(255,255,255,.1); }
+.hero-cockpit-grid > span, .hero-cockpit-grid > button { min-width: 0; border-radius: 9px; padding: 8px 9px; background: rgba(255,255,255,.1); }
+/* U11 (2.28.39): genannte Punkte einzeln antippbar – gleiches Aussehen, nur ein leichter Rahmen beim Zeigen. */
+.hero-cockpit-grid > button { border: 1px solid transparent; color: white; text-align: left; font: inherit; cursor: pointer; }
+.hero-cockpit-grid > button:hover, .hero-cockpit-grid > button:focus-visible { border-color: rgba(255,255,255,.55); }
 .hero-cockpit-grid small, .hero-cockpit-grid strong { display: block; }
 .hero-cockpit-grid small { color: #dcecf3; font-size: .65rem; }
 .hero-cockpit-grid strong { margin-top: 3px; overflow: hidden; font-size: .76rem; line-height: 1.3; text-overflow: ellipsis; white-space: nowrap; }
 .hero-cockpit-empty { min-height: 100px; display: grid; place-items: center; color: #e7f0f6; text-align: center; }
-.hero-cockpit-link { display: inline-flex; align-items: center; justify-content: flex-end; gap: 4px; color: #fff; font-size: .77rem; font-weight: 800; }
-.hero-cockpit-open:hover .hero-cockpit-link { text-decoration: underline; text-underline-offset: 3px; }
+.hero-cockpit-link { justify-self: end; display: inline-flex; align-items: center; justify-content: flex-end; gap: 4px; border: 0; padding: 4px 0; color: #fff; background: transparent; font-size: .77rem; font-weight: 800; cursor: pointer; }
+.hero-cockpit-link:hover { text-decoration: underline; text-underline-offset: 3px; }
 .start-title-row, .intake-method-heading { display: flex; align-items: center; gap: 8px; }
 .start-title-row { flex-wrap: wrap; }
 .start-section-title, .card .start-section-title { margin: 0; color: var(--navy); font-size: 1.22rem; font-weight: 800; line-height: 1.25; }
@@ -1123,6 +1135,9 @@ button.object-card:hover { transform: translateY(-2px); border-color: #8fb2c9; b
 .queue-total { border: 0; cursor: pointer; }
 .queue-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 15px 0; }
 .queue-summary button { display: flex; align-items: baseline; gap: 8px; min-height: 54px; padding: 12px 15px; border: 1px solid #c5d7e2; border-radius: 12px; background: white; color: var(--navy); text-align: left; cursor: pointer; }
+.queue-summary-leer { display: flex; align-items: baseline; gap: 8px; min-height: 54px; padding: 12px 15px; border: 1px dashed #d6e2ea; border-radius: 12px; color: var(--muted); }
+.queue-summary button.active { border-color: var(--navy-2); box-shadow: inset 0 0 0 1px var(--navy-2); }
+.queue-filter-hinweis { margin: 0 0 6px; color: var(--muted); font-size: .86rem; }
 .queue-summary strong { font-size: 1.2rem; }
 .queue-summary span { color: var(--muted); }
 .queue-batch { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; margin: 12px 0 16px; padding: 12px; border-radius: 12px; background: #edf5fa; }
@@ -2301,7 +2316,7 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .user-test-result.result-na { background: #edf0f3; color: #384958; }
 
 /* Ziel eines Hilfe-Sprungs: roter Rahmen, bis man dort etwas tut (Klaus 07.11.2026) */
-.hilfe-ziel-rahmen { outline: 3px solid #c62d3a !important; outline-offset: 4px; border-radius: 10px; scroll-margin: 80px; }
+.hilfe-ziel-rahmen { outline: 3px solid #c62d3a !important; outline-offset: 4px; border-radius: 10px; scroll-margin: 80px; scroll-margin-top: calc(var(--kopf-hoehe, 0px) + 56px); }
 .hilfe-sprung { margin: 0 0 12px; display: inline-flex; gap: 6px; align-items: center; min-height: 40px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--teal-soft); color: var(--teal); font-weight: 700; cursor: pointer; text-align: left; }
 .hilfe-sprung:hover { border-color: var(--teal); }
 
@@ -2492,3 +2507,13 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
   .site-brand .brand-symbol { width: 28px; height: 28px; }
   .site-brand .brand-symbol svg { width: 20px; height: 20px; }
 }
+
+/* U3 (2.28.39): „Was ist noch offen?“ als Liste je Gruppe. */
+.case-open-gruppen { display: grid; gap: 10px; }
+.case-open-gruppen h4 { margin: 4px 0; font-size: .86rem; }
+.case-open-gruppen ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+.case-open-gruppen li button { width: 100%; min-height: 40px; display: flex; align-items: center; justify-content: space-between; gap: 8px; border: 1px solid var(--line); border-radius: 9px; padding: 7px 10px; background: white; color: var(--ink); text-align: left; }
+.case-open-gruppen li button:hover { border-color: var(--navy-2); }
+
+/* Gemeinsamer Sprungweg (2.28.39): bis das Ziel gezeichnet ist (höchstens 600 ms) bleibt der neue Inhalt unsichtbar (der Pfad nicht). */
+.sprung-wartet main.site-main > :not(.breadcrumb) { visibility: hidden; }

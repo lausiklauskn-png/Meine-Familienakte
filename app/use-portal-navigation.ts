@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { SectionId } from "./portal-types";
 import { markeAnwenden, markeErstellen, tippMerken, type Ruecksprung } from "./ruecksprung";
+import { sprungFolgen, zielFuerKennung, type Sprungziel, type SprungZusatz } from "./sprung";
+
+export type NavigationsZusatz = SprungZusatz;
 
 export type PortalView = {
   section: SectionId;
@@ -27,7 +30,7 @@ export function usePortalNavigation(sections: Record<SectionId, string>) {
   const session = useRef("");
   const index = useRef(0);
   const visits = useRef<Visit[]>([]);
-  const restore = useRef<{ x: number; y: number; watch: boolean; marke?: Ruecksprung | null } | null>(null);
+  const restore = useRef<{ x: number; y: number; watch: boolean; marke?: Ruecksprung | null; ziel?: Sprungziel | null } | null>(null);
   const [traversal, setTraversal] = useState(false);
   const restoring = useRef(false);
 
@@ -83,16 +86,21 @@ export function usePortalNavigation(sections: Record<SectionId, string>) {
     // A lazy section may initially be shorter than its restored scroll offset.
     // Retry on layout growth, bounded to two seconds, and stop on user input.
     const scroll = () => window.scrollTo({ left: target.x, top: target.y, behavior: "instant" });
+    // Gemeinsamer Sprungweg: nach dem Zeichnen einmal zum Ziel, markieren – kein Zeitgeber, kein Hoch-Runter.
+    if (target.ziel) return sprungFolgen(target.ziel, { nachSeitenwechsel: true });
     scroll();
     if (!target.watch) return;
-    const observer = new ResizeObserver(scroll);
+    // Ist die Marke gefunden, hält das Nachführen sie in der Bildmitte, solange die Seite noch wächst
+    // (z. B. die Landkarte in der Hilfe ordnet ihre Kästen erst nach dem Zeichnen an, W12).
+    let gefunden: HTMLElement | null = null;
+    const observer = new ResizeObserver(() => { if (gefunden) gefunden.scrollIntoView({ block: "center", behavior: "instant" as ScrollBehavior }); else scroll(); });
     observer.observe(document.body);
     let versuche = 0, markeTimer = 0;
     const stop = () => { observer.disconnect(); restoring.current = false; window.clearTimeout(markeTimer); };
     const timer = window.setTimeout(stop, 2000);
     // Rücksprung: zuletzt angetippte Stelle wieder aufklappen, in die Mitte holen und markieren (Punkt 4).
     const marke = target.marke;
-    const versuch = () => { if (!marke) return; if (markeAnwenden(marke)) { stop(); return; } if (++versuche < 15) markeTimer = window.setTimeout(versuch, 100); };
+    const versuch = () => { if (!marke) return; gefunden = markeAnwenden(marke); if (gefunden) return; if (++versuche < 15) markeTimer = window.setTimeout(versuch, 100); };
     versuch();
     window.addEventListener("wheel", stop, { once: true, passive: true });
     window.addEventListener("touchstart", stop, { once: true, passive: true });
@@ -105,18 +113,26 @@ export function usePortalNavigation(sections: Record<SectionId, string>) {
     };
   }, [view, revision]);
 
-  const navigate = useCallback((section: SectionId, targetId: string | null = null, library = { area: "", query: "" }) => {
+  const navigate = useCallback((section: SectionId, targetId: string | null = null, library = { area: "", query: "" }, zusatz: NavigationsZusatz = {}) => {
     const next: PortalView = { section, targetId, query: "", library };
     const current = visits.current[index.current];
-    if (current && JSON.stringify(current.view) === JSON.stringify(next)) return;
+    const ziel = zusatz.ziel ?? (targetId ? zielFuerKennung(section, targetId) : null);
+    if (current && JSON.stringify(current.view) === JSON.stringify(next)) {
+      // Dieselbe Ansicht: nur noch zur genannten Stelle (z. B. erneuter Tipp auf denselben Treffer).
+      if (ziel) sprungFolgen(ziel);
+      if (zusatz.bereich) current.ui.__bereich = zusatz.bereich;
+      if (zusatz.detail !== undefined) { current.ui.__detail = zusatz.detail; setRevision((value) => value + 1); }
+      return;
+    }
     restoring.current = false;
     rememberScroll();
     if (current) current.ui.__ruecksprung = markeErstellen();
     visits.current.splice(index.current + 1);
     index.current += 1;
-    visits.current.push({ view: next, x: 0, y: 0, ui: {} });
+    // Menübereich für den Pfad: ausdrücklich genannt, sonst der bisherige (wenn die Seite dort auch steht – das prüft der Pfad).
+    visits.current.push({ view: next, x: 0, y: 0, ui: { __bereich: zusatz.bereich ?? current?.ui.__bereich ?? null, __herkunft: current?.view.section ?? null, __detail: zusatz.detail ?? null } });
     window.history.pushState({ ...window.history.state, [STATE_KEY]: { session: session.current, index: index.current } }, "", section === "overview" ? "#startseite" : `#${section}`);
-    restore.current = { x: 0, y: 0, watch: false };
+    restore.current = { x: 0, y: 0, watch: false, ziel };
     setTraversal(false);
     setView(next);
     setPosition({ index: index.current, last: index.current });
@@ -170,7 +186,10 @@ export function usePortalNavigation(sections: Record<SectionId, string>) {
     const visit = visits.current[position.index];
     if (visit) visit.ui[key] = value;
   }, [position.index]);
-  return { view, navigate, setQuery, back, forward, vorher: visits.current[position.index - 1]?.view.section as SectionId | undefined, canBack: position.index > 0, canForward: position.index < position.last, visitKey: `${position.index}:${revision}`, traversal, readUi, saveUi };
+  const bereich = (visits.current[position.index]?.ui.__bereich as string | null | undefined) ?? null;
+  const herkunft = (visits.current[position.index]?.ui.__herkunft as SectionId | null | undefined) ?? null;
+  const detail = (visits.current[position.index]?.ui.__detail as string | null | undefined) ?? null;
+  return { view, navigate, bereich, herkunft, detail, setQuery, back, forward, vorher: visits.current[position.index - 1]?.view.section as SectionId | undefined, canBack: position.index > 0, canForward: position.index < position.last, visitKey: `${position.index}:${revision}`, traversal, readUi, saveUi };
 }
 
 export type PortalNavigation = ReturnType<typeof usePortalNavigation>;

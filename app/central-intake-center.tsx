@@ -10,6 +10,7 @@ import {
 } from "@/lib/central-intake";
 import type { DocumentIntakeSource } from "@/lib/document-intake";
 import { fristAusHinweis, fristVorschlagSetzen } from "./kalender-karte";
+import { gleichZumZiel } from "./sprung";
 
 const statusClass: Record<CentralIntakeStatus, string> = {
   "Neu": "neutral",
@@ -69,6 +70,11 @@ export function CentralIntakeCenter({
   onGo: (id: "help" | "documents" | "security" | "reminders") => void;
 }) {
   const [dragging, setDragging] = useState(false);
+  // U8 (2.28.39): Zähler filtern die Liste nach Status; ein zweiter Tipp zeigt wieder alle.
+  const [statusFilter, setStatusFilter] = useState<string | null>(null);
+  const zaehler = (status: string, anzahl: number, wort: string) => anzahl
+    ? <button type="button" className={statusFilter === status ? "active" : undefined} aria-pressed={statusFilter === status} data-eingang-filter={status} onClick={() => { const neu = statusFilter === status ? null : status; setStatusFilter(neu); gleichZumZiel("#intake-queue-list", { nurWennNoetig: true }); }}><strong>{anzahl}</strong><span>{wort}</span></button>
+    : <div className="queue-summary-leer" data-eingang-filter-leer={status}><strong>0</strong><span>{wort}</span></div>;
   const inputRef = useRef<HTMLInputElement>(null);
   const cameraRef = useRef<HTMLInputElement>(null);
   const stapelRef = useRef<HTMLInputElement>(null);
@@ -114,13 +120,14 @@ export function CentralIntakeCenter({
     <section className="card intake-queue" aria-labelledby="intake-queue-title">
       <div className="card-heading"><div><span className="eyebrow dark">Gemeinsame Warteschlange</span><span className="ui-heading-help"><h2 id="intake-queue-title">Eingänge prüfen</h2><InfoPopover label="Eingänge prüfen erklären" text={UI_HELP["Eingänge prüfen"]}/></span></div><button className="badge neutral queue-total" onClick={() => activeQueue.forEach((item) => !item.selected && onToggle(item.id))}>{counts.total} Eingänge</button></div>
       <div className="queue-summary">
-        <button onClick={() => document.getElementById("intake-queue-list")?.scrollIntoView({ behavior: "smooth" })}><strong>{counts.ready}</strong><span>bereit</span></button>
-        <button onClick={() => document.getElementById("intake-queue-list")?.scrollIntoView({ behavior: "smooth" })}><strong>{counts.review}</strong><span>prüfen</span></button>
-        <button onClick={() => document.getElementById("intake-queue-list")?.scrollIntoView({ behavior: "smooth" })}><strong>{counts.deferred}</strong><span>zurückgestellt</span></button>
+        {zaehler("Bereit zur Übernahme", counts.ready, "bereit")}
+        {zaehler("Prüfung erforderlich", counts.review, "prüfen")}
+        {zaehler("Zurückgestellt", counts.deferred, "zurückgestellt")}
       </div>
       {selectedIds.length > 0 && <div className="queue-batch"><strong>{selectedIds.length} ausgewählt</strong>{selectedImages.length > 1 && selectedImages.length === selectedIds.length && <button className="button primary" onClick={() => onScanQueued(selectedImages.map((item) => item.id))}>Als gemeinsames Scan-Dokument prüfen</button>}<button className="button secondary" onClick={() => onSetStatus(selectedIds, "Bereit zur Übernahme")}>Sichere Vorschläge vormerken</button><button className="button secondary" onClick={() => onSetStatus(selectedIds, "Zurückgestellt")}>Zurückstellen</button><button className="button secondary" onClick={() => onSetStatus(selectedIds, "Nicht übernommen")}>Nicht übernehmen</button></div>}
       {!queue.length ? <div className="empty-state"><FileText size={34}/><strong>Noch keine neuen Eingänge</strong><span>Ziehe oben Dateien hinein oder prüfe einen bewusst ausgewählten Ordner.</span></div> : <div className="intake-queue-list" id="intake-queue-list">
-        {queue.map((item) => {
+        {statusFilter && <p className="queue-filter-hinweis">Gefiltert: nur „{statusFilter}“ <button type="button" className="text-link" onClick={() => setStatusFilter(null)}>Alle zeigen</button></p>}
+        {queue.filter((item) => !statusFilter || item.status === statusFilter).map((item) => {
           const analysis = item.analysis;
           return <article className={`intake-queue-item status-${statusClass[item.status]}`} key={item.id}>
             <label className="queue-select" title="Für Sammelbearbeitung auswählen" aria-label="Für Sammelbearbeitung auswählen"><input type="checkbox" checked={item.selected} disabled={item.status === "Übernommen" || item.status === "Nicht übernommen"} onChange={() => onToggle(item.id)}/></label>

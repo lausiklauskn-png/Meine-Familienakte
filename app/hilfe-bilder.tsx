@@ -4,6 +4,7 @@ import { Ablaufbild, zurKarte, zurStelle, type AblaufKnoten } from "./ablaufbild
 import { useHilfeVorschau, type Vorschau } from "./hilfe-vorschau";
 import { Landkarte, type KartenGruppe, type KartenKante, type KartenKnoten, type KartenPunkt } from "./landkarte";
 import type { SectionId } from "./portal-types";
+import type { GehMitZiel } from "./sprung";
 
 /**
  * Hilfe als Baum, Welle 1 (Klaus 07.11.2026, Sitzung 4, Fragen D und E): ein Bild je Thema (Ablauf bei Schritten, Karte bei
@@ -35,9 +36,9 @@ export function KastenReihe({ knoten, label }: { knoten: AblaufKnoten[]; label: 
 }
 
 /** Sprung zu einer Seite und, wenn genannt, zur Karte mit diesem Titel (roter Rahmen). */
-export const sprung = (onGo: (id: SectionId) => void, seite: SectionId, karte?: string) => () => {
-  onGo(seite);
-  if (karte) window.setTimeout(() => zurKarte(karte), 500);
+export const sprung = (onGo: GehMitZiel, seite: SectionId, karte?: string) => () => {
+  // Gemeinsamer Sprungweg: Seite öffnen, nach dem Zeichnen einmal zur Karte (roter Hilfe-Rahmen), kein Zeitgeber.
+  onGo(seite, undefined, karte ? { ziel: () => zurKarte(karte, { sofort: true }) } : undefined);
 };
 
 type Geh = (id: SectionId) => void;
