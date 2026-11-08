@@ -7,6 +7,7 @@ import { ERINNERUNG_VORGABE, erinnerungAusDatum, erinnerungenOrdnen, erinnerunge
 import { workspaceStorage } from "../lib/demo-workspace.ts";
 import type { ProUebergabe } from "../lib/pro-verbund-vertrag";
 import { kontaktPruefen, kontaktUebernehmen, type PersonKontakt } from "../lib/person-kontakt.ts";
+import { stammDaten, stammPruefen, type StammAngaben, type StammArt } from "../lib/familie-stamm.ts";
 import { istProOriginal, proOriginalLesen, proOriginalName, proOriginalSpeichern, proOriginalVaultId, proOriginalMerkmale, proTresor, proTresorVerfuegbar } from "./pro-tresor.ts";
 import { pruefePdfQuelle, type PdfQuelle, type PdfRueckgabe } from "../lib/pdf-bearbeitung.ts";
 import type { AusfuellInfo } from "../lib/ausfuellen";
@@ -3643,6 +3644,34 @@ export async function updateLocalPersonContact(handle: FileSystemDirectoryHandle
   record.data = kontaktUebernehmen((record.data || {}) as Record<string, unknown>, sauber) as typeof record.data;
   record.updatedAt = now;
   index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Kontaktangaben geändert", recordId: record.id, details: `${record.id}: Anschrift/Kontakt nach ausdrücklichem Speichern geändert (${Object.keys(sauber).length} Angaben).` });
+  await writeIndex(handle, index);
+  return record;
+}
+
+/** Punkt 8 (2.28.39): Person, Organisation, Objekt oder Vorgang selbst anlegen oder Name/Art/Notiz ändern.
+ * Anlegen nutzt die vorhandene Vergabe der Kennnummer (nextFamilyRecordId/createFamilyRecord); die Nummer bleibt intern. */
+export async function saveLocalStammRecord(handle: FileSystemDirectoryHandle, input: { recordType: StammArt; id?: string; angaben: StammAngaben }) {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  const index = await readIndex(handle);
+  const fehler = stammPruefen(input.recordType, input.angaben, index.records, input.id);
+  if (fehler.length) throw new Error(fehler.join(" "));
+  const notiz = input.angaben.notiz.trim() || null;
+  const now = new Date().toISOString();
+  if (!input.id) {
+    const allocation = nextFamilyRecordId(input.recordType, index.sequences);
+    const record = createFamilyRecord({ id: allocation.id, recordType: input.recordType, status: input.recordType === "case" ? "offen" : "aktiv", source: "Selbst angelegt", notes: notiz, data: stammDaten(input.recordType, input.angaben), now });
+    index.sequences = allocation.sequences;
+    index.records.push(record as FamilyRecordUnion);
+    index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Datensatz angelegt", recordId: record.id, details: `${recordTypeDefinitions[input.recordType].label} wurde nach ausdrücklichem Speichern angelegt.` });
+    await writeIndex(handle, index);
+    return record as FamilyRecordUnion;
+  }
+  const record = index.records.find((item) => item.id === input.id);
+  if (!record || record.recordType !== input.recordType) throw new Error("Der Eintrag wurde im lokalen Register nicht gefunden.");
+  record.data = stammDaten(input.recordType, input.angaben, (record.data || {}) as Record<string, unknown>) as typeof record.data;
+  record.notes = notiz;
+  record.updatedAt = now;
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Datensatz geändert", recordId: record.id, details: `${recordTypeDefinitions[input.recordType].label}: Name, Art oder Notiz nach ausdrücklichem Speichern geändert.` });
   await writeIndex(handle, index);
   return record;
 }

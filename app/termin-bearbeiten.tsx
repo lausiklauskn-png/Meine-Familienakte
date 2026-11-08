@@ -51,7 +51,7 @@ export function TerminBearbeiten({ record, vaultHandle, onZu, onGespeichert }: {
   };
   return <div className="modal-backdrop" role="presentation" onMouseDown={(e) => { if (e.target === e.currentTarget && !busy) onZu(); }}>
     <section className="modal termin-bearbeiten" role="dialog" aria-modal="true" aria-labelledby="termin-bearbeiten-titel" data-termin-bearbeiten>
-      <div className="modal-head"><div><span className="eyebrow dark">{record.id} · {record.recordType === "deadline" ? "Frist" : nurErinnerung ? "Erinnerung" : "Aufgabe"}</span><h2 id="termin-bearbeiten-titel">{nurErinnerung ? "🔔 Erinnerung ändern" : "🔔 Termin und Erinnerung"}</h2></div><button type="button" className="icon-button" onClick={onZu} aria-label="Schließen" disabled={busy}><X size={18}/></button></div>
+      <div className="modal-head"><div><span className="eyebrow dark">{record.recordType === "deadline" ? "Frist" : nurErinnerung ? "Erinnerung" : "Aufgabe"}</span><h2 id="termin-bearbeiten-titel">{nurErinnerung ? "🔔 Erinnerung ändern" : "🔔 Termin und Erinnerung"}</h2></div><button type="button" className="icon-button" onClick={onZu} aria-label="Schließen" disabled={busy}><X size={18}/></button></div>
       <div className="memory-erinnern-felder">
         <label className="memory-erinnern-titel"><span>Woran erinnern</span><VoiceInput value={titel} onValueChange={setTitel} speechLabel="Titel" data-tb-titel/></label>
         <label><span>Tag</span><DatumFeld value={datum} required onChange={(e) => tagSetzen(e.target.value)} data-tb-tag/></label>

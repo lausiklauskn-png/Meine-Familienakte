@@ -2531,3 +2531,17 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .search-more { padding: 8px 13px; align-items: center; }
 .library-filter-active { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin: 0 0 12px; color: var(--muted); }
 .liste-mehr { justify-content: center; align-items: center; gap: 12px; margin: 14px 0; color: var(--muted); }
+
+/* 2.28.39 Punkt 8: Personen, Organisationen, Objekte, Vorgänge anlegen */
+.stamm-karte .stamm-arten { margin: 4px 0 10px; flex-wrap: wrap; }
+.stamm-formular { display: grid; gap: 10px; margin: 8px 0 12px; border: 1px solid var(--line); border-radius: 12px; padding: 12px; background: #f6fafc; }
+.stamm-formular-kopf { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.stamm-gruppe > h3 { margin: 14px 0 4px; }
+.stamm-zeile { display: flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--line); }
+.stamm-zeile .stamm-oeffnen { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; border: 0; padding: 9px 4px; text-align: left; color: var(--ink); background: transparent; }
+.stamm-zeile .stamm-oeffnen strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.stamm-zeile .stamm-oeffnen small { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stamm-zeile .stamm-oeffnen > svg { margin-left: auto; flex: 0 0 auto; }
+.stamm-zeile:hover { background: var(--blue-soft); }
+.stamm-leer { color: var(--muted); }
+.intake-weitere-zuordnung { display: grid; gap: 4px; margin-top: 8px; }

@@ -118,7 +118,7 @@ export function AssistantCenter({ records, relations, documents, initialCaseId, 
     <section className="card assistant-question-card">
       <div className="card-heading"><div><span className="eyebrow dark">Gemeinsamer Familienakten-Kern</span><span className="ui-heading-help"><h2>Was möchtest du klären?</h2><InfoPopover label="Was möchtest du klären? erklären" text={UI_HELP["Was möchtest du klären?"]}/></span></div><span className="badge neutral">Benutzer entscheidet</span></div>
       <div className="assistant-question-grid">
-        <label><span>Vorhandener Vorgang, optional</span><select value={caseId} onChange={(event) => setCaseId(event.target.value)}><option value="">Automatisch passenden Vorgang suchen</option>{cases.map((record) => <option key={record.id} value={record.id}>{labelOf(record)} · {record.id}</option>)}</select></label>
+        <label><span>Vorhandener Vorgang, optional</span><select value={caseId} onChange={(event) => setCaseId(event.target.value)}><option value="">Automatisch passenden Vorgang suchen</option>{cases.map((record) => <option key={record.id} value={record.id}>{labelOf(record)}</option>)}</select></label>
         <label className="assistant-question"><span>Frage oder gewünschtes Ergebnis</span><VoiceTextarea rows={4} value={question} onValueChange={(spokenValue) => setQuestion(spokenValue)} placeholder="Zum Beispiel: Welche Unterlagen fehlen für meine Reklamation und wie formuliere ich die E-Mail?" speechLabel="Assistenzfrage"/></label>
       </div>
       <button className="button primary" disabled={!question.trim()} onClick={analyze}><SearchCheck size={18}/> Familienakte prüfen und Vorschlag vorbereiten</button>

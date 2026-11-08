@@ -51,7 +51,7 @@ export function MemoryBearbeiten({ event, data, aufgaben, vaultHandle, onZu, onG
 
   return <div className="modal-backdrop" role="presentation">
     <section className="modal memory-bearbeiten" role="dialog" aria-modal="true" aria-labelledby="memory-bearbeiten-titel" data-memory-bearbeiten>
-      <div className="modal-head"><div><span className="eyebrow dark">{event.id}</span><h2 id="memory-bearbeiten-titel">Eintrag bearbeiten</h2></div><button type="button" className="icon-button" onClick={onZu} aria-label="Schließen" disabled={busy}><X size={18}/></button></div>
+      <div className="modal-head"><div><span className="eyebrow dark">Tagebuch</span><h2 id="memory-bearbeiten-titel">Eintrag bearbeiten</h2></div><button type="button" className="icon-button" onClick={onZu} aria-label="Schließen" disabled={busy}><X size={18}/></button></div>
       <div className="form-grid">
         <label><span>Titel</span><VoiceInput value={titel} onValueChange={setTitel} speechLabel="Titel" data-mb-titel/></label>
         <label><span>Lebensbereich</span><select value={bereich} onChange={(e) => setBereich(e.target.value)} data-mb-bereich>{FAWOGA_LIFE_AREAS.map((b) => <option key={b}>{b}</option>)}</select></label>

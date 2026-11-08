@@ -112,9 +112,10 @@ try {
     const y = await page.evaluate(() => window.scrollY);
     await ref.click();
     await d.locator(`[data-dossier-auf="${fall.id}"]`).waitFor({ timeout: 5000 });
-    const kopf = await d.locator(".eyebrow").first().innerText();
+    // 2.28.39 Punkt 8: der Kopf nennt den Namen der Aufgabe, keine Kennnummer.
+    const kopf = await d.locator(".card-heading h2").first().innerText();
     const y2 = await page.evaluate(() => window.scrollY);
-    return soll(kopf.includes(aufgabe.id) && Math.abs(y2 - y) < 40, { kopf, y, y2 });
+    return soll(kopf.includes("Probe Zuordnung Aufklappen") && Math.abs(y2 - y) < 40, { kopf, y, y2 });
   });
   await step("Detail (C): Direkte Aktionen ✓ ✎ 🗑 „Im Kalender ›“, „Zuordnung prüfen“ nicht mehr", async () => {
     const a = d.locator(".dossier-actions");
