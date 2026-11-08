@@ -42,7 +42,7 @@ try {
     const r = await register(page);
     const ev = r.find((x) => x.recordType === "event" && /Anruf um 15 Uhr/.test(x.data.originalText || ""));
     const task = r.find((x) => x.recordType === "task" && x.source === ev?.id);
-    const ok = ev?.data.lifeArea === bereich && ev?.data.eventAt === "2026-11-04T14:10:00" && ev?.data.confidence === "unklar" && task?.data.dueAt === "2026-11-12" && task?.data.dueTime === "15:00" && task?.data.kalenderEintragen === true;
+    const ok = ev?.data.lifeArea === bereich && ev?.data.eventAt === "2026-11-04T14:10:00" && ev?.data.confidence === "unklar" && task?.data.dueAt === "2026-11-12" && task?.data.dueTime === "15:00" && task?.data.kalenderEintragen === undefined; // 2.28.39 (U5/U6): ohne verbundenen Kalender „noch offen“
     return ok ? true : (console.log("   ↳", JSON.stringify(ev?.data).slice(0, 300), JSON.stringify(task?.data)), false);
   });
   await step("Erinnerung später ändern: Uhrzeit 16:30 im zweiten Bearbeiten", async () => {
@@ -52,7 +52,7 @@ try {
     const r = await register(page);
     const ev = r.find((x) => x.recordType === "event" && /Anruf um 15 Uhr/.test(x.data.originalText || ""));
     const tasks = r.filter((x) => x.recordType === "task" && x.source === ev?.id);
-    return tasks.length === 1 && tasks[0].data.dueTime === "16:30" && tasks[0].data.kalenderEintragen === true ? true : (console.log("   ↳", tasks.length, JSON.stringify(tasks.map((t) => t.data))), false);
+    return tasks.length === 1 && tasks[0].data.dueTime === "16:30" && tasks[0].data.kalenderEintragen === undefined ? true : (console.log("   ↳", tasks.length, JSON.stringify(tasks.map((t) => t.data))), false);
   });
   await step("Ansicht: Kasten „Erinnerung aktiv“ mit Tag und Uhrzeit, Glocke in der Chronologie", async () => {
     const k = page.locator("[data-erinnerung-kasten]");

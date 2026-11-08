@@ -26,7 +26,7 @@ try {
 
   const memory = await suchen(page, "Stützräder");
   if (process.env.SUCHE_ZEIGEN) console.log(JSON.stringify(memory));
-  check(memory.some((t) => t.art === "Erinnerung" && /Stützräder/.test(t.titel)), "Memory: Tagebucheintrag „ohne Stützräder“ wird gefunden", memory.map((t) => `${t.art}: ${t.titel}`).slice(0, 4).join(" | "));
+  check(memory.some((t) => t.art === "Tagebuch-Eintrag" && /Stützräder/.test(t.titel)), "Memory: Tagebucheintrag „ohne Stützräder“ wird gefunden", memory.map((t) => `${t.art}: ${t.titel}`).slice(0, 4).join(" | "));
 
   const vorgang = await suchen(page, "Nebenkosten");
   if (process.env.SUCHE_ZEIGEN) console.log(JSON.stringify(vorgang));

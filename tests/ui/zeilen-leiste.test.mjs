@@ -19,7 +19,9 @@ try {
     // Je Gerät ein eigener Browser-Speicher: Frist mit Uhrzeit, Glocke und Erinnerungsdatum anlegen, dann neu laden.
     const ids = await page.evaluate(async (titel) => {
       const f = window.__vaultFixture;
+      // 2.28.39: das Erinnerungsdatum steht in der Aufgabe selbst; eine freie Erinnerung (ohne Aufgabe) bleibt eigener Eintrag.
       await f.createLocalScheduleBundle(await f.browserVault(), { recordType: "task", title: titel, dueAt: "2026-11-25", dueTime: "08:20", erinnerungen: ["15m"], reminderAt: "2026-11-24T09:00", references: [] });
+      await f.createLocalFamilyRecord(await f.browserVault(), { recordType: "reminder", data: { title: `Erinnerung: ${titel}`, remindAt: "2026-11-24T09:00" }, status: "offen", source: "Probe" });
       return { alle: (await f.readLocalVaultData(await f.browserVault())).records.filter((x) => (x.recordType === "task" || x.recordType === "reminder") && String(x.data.title || "").includes(titel)).map((x) => [x.recordType, x.id]) };
     }, TITEL);
     await page.reload({ waitUntil: "networkidle" }); await ready(page); await vaultFixture(page);
@@ -35,7 +37,13 @@ try {
       const punkte = await zeileA.locator(".flach-p").count();
       const zeit = await zeileA.locator(".mk-zeit").innerText();
       const klein = await zeileA.locator(".mk-text small").innerText();
-      return soll(ende === "Arztbesuch" && punkte === 1 && /25\.11/.test(zeit) && /08:20/.test(zeit) && /Aufgabe/.test(klein) && /15 Min/.test(klein), { ende, punkte, zeit, klein });
+      return soll(ende === "Arztbesuch" && punkte === 1 && /25\.11/.test(zeit) && /08:20/.test(zeit) && /Aufgabe/.test(klein) && /15 Min/.test(klein) && /24\.11\., 09:00 Uhr/.test(klein), { ende, punkte, zeit, klein });
+    });
+    await step(`${name}: Erinnerungsdatum ist Teil der Aufgabe – kein zweiter Datensatz „Erinnerung: …“ (Vorschau D)`, async () => {
+      const r = await register(page);
+      const t = r.find((x) => x.id === aufgabe);
+      const rems = r.filter((x) => x.recordType === "reminder" && x.status !== "archiviert" && String(x.data.title).includes(TITEL));
+      return soll((t?.data.erinnerungen || []).includes("@2026-11-24T09:00") && rems.length === 1 && rems[0].id === erinnerung, { erinnerungen: t?.data.erinnerungen, rems: rems.map((x) => x.id) });
     });
 
     if (name === "Desktop") {

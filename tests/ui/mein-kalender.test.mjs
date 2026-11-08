@@ -1,6 +1,6 @@
 // „Mein Kalender“ und App-Glocke (Klaus 2026-11-05): Monat und Tagesliste in der App, Eintrag an einem Tag anlegen und ändern,
 // Notiz mit Erinnerung springt in den Kalender, Fristenliste zeigt Uhrzeit und „Ändern“ ohne Seitenwechsel, die Glocke läutet
-// (abschaltbar, ab Werk aus). Die Uhr ist gestellt.
+// (abschaltbar, ab Werk an, solange kein Kalender verbunden ist). Die Uhr ist gestellt.
 import { startApp, launchBrowser, DESKTOP, HANDY, ready, check, step, summary, collectErrors, internetAn, footer } from "./_harness.mjs";
 import { speechStub } from "./_stubs.mjs";
 import { vaultFixture } from "./_vault-fixture.mjs";
@@ -16,12 +16,12 @@ try {
   await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page); await internetAn(page);
   const kal = page.locator("[data-mein-kalender]");
 
-  await step("Kopf: Kalender-Knopf öffnet „Mein Kalender“ mit Monat und heutigem Tag; App-Glocke ab Werk aus", async () => {
+  await step("Kopf: Kalender-Knopf öffnet „Mein Kalender“ mit Monat und heutigem Tag; App-Glocke ab Werk an (kein Kalender verbunden)", async () => {
     await page.locator("[data-mein-kalender-knopf]").click(); await kal.waitFor();
     const monat = await kal.locator("[data-mk-monat]").innerText();
     const heute = await kal.locator('[data-mk-tag="2026-11-10"]').getAttribute("aria-pressed");
     const glocke = await kal.locator("[data-glocke]").getAttribute("data-glocke");
-    return /November 2026/i.test(monat) && heute === "true" && glocke === "aus" ? true : (console.log("   ↳", monat, heute, glocke), false);
+    return /November 2026/i.test(monat) && heute === "true" && glocke === "an" ? true : (console.log("   ↳", monat, heute, glocke), false);
   });
   await step("Eintrag am Tag: Titel, 14:30, Erinnerung 15 Min. vorher – steht im Register und in der Tagesliste", async () => {
     await kal.locator("[data-mk-neu]").click();
@@ -149,7 +149,7 @@ try {
     erlauben: async () => { window.__glocke.erlauben++; return { erlaubt: true }; },
     planen: async ({ glocken }) => { window.__glocke.plaene.push(glocken); return { geplant: glocken.length, erlaubt: true }; } } } }; });
   await p3.goto(app.base, { waitUntil: "networkidle" }); await ready(p3); await internetAn(p3);
-  await step("Notiz: Uhrzeit aus dem Text, „Auch in der App läuten“ schaltet die Glocke ein; sie läutet ohne verbundenen Kalender", async () => {
+  await step("Notiz: Uhrzeit aus dem Text, App-Glocke ist ohne Kalender schon an; sie läutet ohne verbundenen Kalender", async () => {
     await p3.locator("[data-notiz-knopf]").click();
     const f = p3.locator("[data-notiz-fenster]"); await f.waitFor();
     await p3.locator("[data-notiz-fenster] .dictation-button").click(); // 2.28.32: Mikrofon nur auf Tipp
@@ -157,7 +157,6 @@ try {
     await f.locator(".dictation-button.listening").click().catch(() => {});
     const schalter = f.locator("[data-memory-erinnern] [data-glocke]");
     const vorher = await schalter.getAttribute("data-glocke");
-    await schalter.click();
     const nachher = await schalter.getAttribute("data-glocke");
     const zeit = await f.locator("[data-memory-erinnern-zeit]").inputValue();
     await f.locator("[data-notiz-speichern]").click(); await f.locator("[data-notiz-liste] li").first().waitFor();
@@ -169,7 +168,7 @@ try {
     const plan = g.plaene.find((l) => l.some((x) => /Zahnarzt/i.test(x.titel)));
     const zeitpunkt = plan && plan.find((x) => /Zahnarzt/i.test(x.titel)).um;
     const androidOk = g.erlauben >= 1 && zeitpunkt === new Date(2026, 10, 10, 14, 15).getTime();
-    return vorher === "aus" && nachher === "an" && zeit === "14:30" && /Zahnarzt/i.test(text) && androidOk ? true : (console.log("   ↳", vorher, nachher, zeit, text, JSON.stringify(g)), false);
+    return vorher === "an" && nachher === "an" && zeit === "14:30" && /Zahnarzt/i.test(text) && androidOk ? true : (console.log("   ↳", vorher, nachher, zeit, text, JSON.stringify(g)), false);
   });
   check(err3.length === 0, "Notiz mit Glocke: keine Seitenfehler", err3.join(" | "));
   await ctx3.close();
