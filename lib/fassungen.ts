@@ -6,6 +6,7 @@
 export type Fassung = { fassung: string; datum: string; inhalt: string };
 
 export const FASSUNGEN: Fassung[] = [
+  { fassung: "2.28.38", datum: "08.11.2026", inhalt: "Listen mit Aufklappleiste (Pfeil ‹ auf, › zu): Haken, Stift, Mülleimer und Auge am Handy hinter dem Pfeil, breit direkt in der Zeile; „Anfang … Hauptwort“, Datum und Uhrzeit zusammen; Stift ändert auch Erinnerungen. Hilfe oben ein Kasten mit „Demo starten“ und Landkarten-Symbol, Landkarte immer als Karte. Kopf im geteilten Bildschirm ohne Überlagerung, weitere Knöpfe hinter dem Pfeil; „Installieren“ nur, solange die Web-App fehlt" },
   { fassung: "2.28.37", datum: "07.11.2026", inhalt: "Alle Hilfe-Themen als Bild zum Antippen mit höchstens drei fett hervorgehobenen Kernpunkten, langer Text eingeklappt unter „Ausführlich“; Vorschaufenster „Wo in der App?“ (Maus auf das Thema oder ▣) mit Skizze der Seite, Stelle rot, „Hingehen ›“" },
   { fassung: "2.28.36", datum: "07.11.2026", inhalt: "Landkarte der App ganz oben in der Hilfe (Stand je Kasten, Geändertes golden, am Handy als Liste), zehn Hilfe-Themen als Bild mit kurzen Merkpunkten, Android-App im Vollbild und in allen Lagen drehbar, Windows startet maximiert (F11 für ganz)" },
   { fassung: "2.28.35", datum: "07.11.2026", inhalt: "Hilfe „E-Mail in die Familienakte“ als Karte mit Verbindungen und Stand (fertig, geplant), Knopf „Neu“ mit „● Neu“ in der Hilfe, Hilfe-Text zu Fehlendem berichtigt" },
