@@ -1,6 +1,6 @@
 // Klaus 2026-10-31 (Tablet, geteilte Ansicht ≈ 1000 px): „ich finde nicht mal das Wort Eingangszentrale“. Ursache: zwischen 901 und
 // 1000 px lief die Menüleiste rechts aus dem Fenster (1090 px), „Käufe & Garantien“, „Dokumente“ und „Hilfe“ waren unsichtbar.
-// Jetzt bricht sie dort wie bei 1001–1439 px in zwei Reihen um. Geprüft: alle acht Menüs ganz im Fenster, Eingangszentrale erreichbar.
+// Jetzt bricht sie dort wie bei 1001–1439 px in zwei Reihen um. Geprüft: alle neun Menüs (seit 2.28.39 mit „Termine & Aufgaben“) ganz im Fenster, Eingangszentrale erreichbar.
 import { startApp, launchBrowser, ready, check, step, summary, collectErrors } from "./_harness.mjs";
 
 const app = await startApp();
@@ -13,7 +13,7 @@ try {
     await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page);
     const lage = await page.evaluate(() => [...document.querySelectorAll(".main-navigation .nav-cluster > button")].map((b) => { const r = b.getBoundingClientRect(); return { t: b.textContent.trim(), l: r.left, r: r.right, sichtbar: r.width > 0 && r.left >= 0 && r.right <= window.innerWidth + 0.5 }; }));
     const weg = lage.filter((x) => !x.sichtbar).map((x) => x.t);
-    check(lage.length === 8 && weg.length === 0, `${breite} px: alle acht Menüs ganz im Fenster`, weg.length ? `abgeschnitten: ${weg.join(", ")}` : "");
+    check(lage.length === 9 && weg.length === 0, `${breite} px: alle neun Menüs ganz im Fenster`, weg.length ? `abgeschnitten: ${weg.join(", ")}` : "");
     await step(`${breite} px: Menü bleibt unter allen Navigationszeilen; Fahrzeuge und Käufe lassen sich direkt wieder schließen`, async () => {
       const assistenz = page.locator(".nav-cluster > button", { hasText: "Assistenz" });
       await assistenz.click();

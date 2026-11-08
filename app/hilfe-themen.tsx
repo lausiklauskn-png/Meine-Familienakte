@@ -65,10 +65,11 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
     "Solange sie läuft, steht hinter dem Namen ein roter Knopf „DEMO ▾“: verlassen · zurücksetzen · löschen.",
     "Die Demo gehört nicht in deine Sicherung.",
   ] },
-  { id: "update", titel: "Update und Basic oder Pro", symbol: <RefreshCw/>, weg: "Kopf › Versionszeile unter dem Namen oder Knopf ⟳", ablauf: [{ titel: "Internet für die App an", unter: "WLAN-Symbol im Kopf" }, { titel: "Versionszeile oder ⟳ antippen", unter: "oben im Kopf" }, { titel: "Neue Fassung?", unter: "Android, Windows", art: "hervor" }, { titel: "Laden und installieren", art: "gut" }], merk: [<><b>Oben im Kopf:</b> Versionszeile unter dem Namen oder Knopf ⟳ „Auf eine neue Fassung prüfen“.</>, <><b>Internet für die App</b> muss dafür an sein.</>, <><b>Die Web-App „Basic“</b> aktualisiert sich von selbst; die Apps heißen „Pro“.</>], punkte: [
-    "In der Android- und der Windows-App prüft ein Tipp auf die Versionszeile oben unter dem Namen oder auf den Knopf ⟳ „Auf eine neue Fassung prüfen“, ob es eine neue Fassung gibt, und bietet sie an.",
-    "Dafür muss das Internet für die App an sein (WLAN-Symbol im Kopf). Ist es aus, sagt die App das.",
-    "Die Web-App heißt „Basic“ und aktualisiert sich von selbst. Die Apps heißen „Pro“.",
+  { id: "update", titel: "Update und Basic oder Pro", symbol: <RefreshCw/>, weg: "Kopf › rotes Fähnchen „Update verfügbar“ an der Versionszeile", ablauf: [{ titel: "Internet für die App an", unter: "WLAN-Symbol im Kopf" }, { titel: "App prüft selbst", unter: "beim Start und gelegentlich" }, { titel: "Rotes Fähnchen", unter: "an der Versionszeile", art: "hervor" }, { titel: "Antippen: Laden und installieren", art: "gut" }], merk: [<><b>Die App prüft selbst</b> beim Start und gelegentlich, nur bei eingeschaltetem Internet.</>, <><b>Rotes Fähnchen „Update verfügbar“</b> an der Versionszeile antippen; nach dem Update ist es weg.</>, <><b>Die Web-App „Basic“</b> aktualisiert sich über das Fähnchen; die Apps heißen „Pro“.</>], punkte: [
+    "Die App prüft selbst, ob es eine neue Fassung gibt: beim Start und gelegentlich, nur wenn das Internet für die App an ist (WLAN-Symbol im Kopf). Einen eigenen Update-Knopf gibt es nicht mehr.",
+    "Gibt es eine, steht an der Versionszeile oben unter dem Namen ein rotes Fähnchen „Update verfügbar“ (am Handy „Update“). Antippen bietet die neue Fassung zum Laden und Installieren an; danach ist das Fähnchen weg.",
+    "In der Android- und der Windows-App prüft auch ein Tipp auf die Versionszeile selbst, wie bisher. Ist das Internet aus, sagt die App das.",
+    "Die Web-App heißt „Basic“; eine neue Fassung lädt sie mit einem Tipp auf das Fähnchen neu. Die Apps heißen „Pro“.",
   ] },
   { id: "teilen", titel: "Teilen an die Familienakte", symbol: <Share2/>, weg: "andere App › Teilen › Familienakte", ablauf: [{ titel: "Andere App › Teilen" }, { titel: "Familienakte wählen" }, { titel: "Eingangszentrale", unter: "zur Prüfung", art: "gut" }], merk: [<><b>Keine Anmeldung nötig</b>; geht mit jedem Mail-Anbieter.</>, <><b>PDF, Fotos, Word, Excel, .eml</b> werden angenommen; .msg (Outlook) am Rechner hineinziehen.</>], punkte: [
     "Aus Mail-App, Galerie, Kamera oder Scanner-App: PDF, Fotos, Word, Excel, E-Mails als .eml. In der Web-App auch .msg; in der Android-App eine .msg-Datei am Rechner in die Eingangszentrale ziehen.",
@@ -81,9 +82,9 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
     "Das Ergebnis geht an denselben Akteneintrag zurück; es entsteht keine zweite Ablage.",
     "Stapel: viele Fotos oder Scans auf einmal aufnehmen, gerade gezogen, und erst später einordnen.",
   ] },
-  { id: "drucken", titel: "Drucken", symbol: <Printer/>, weg: "Kopf › Drucker · bis Tabletbreite hinter ‹ „Weitere Knöpfe“ · am Handy: Menü › Seite drucken", ablauf: [{ titel: "Seite öffnen" }, { titel: "Drucker im Kopf", unter: "Handy: Menü › Seite drucken", art: "hervor" }, { titel: "Druckdienst des Geräts" }], merk: [<><b>Gedruckt wird die Seite, die gerade offen ist.</b></>], punkte: [
+  { id: "drucken", titel: "Drucken", symbol: <Printer/>, weg: "Menü › Seite drucken · am PC Strg+P", ablauf: [{ titel: "Seite öffnen" }, { titel: "Menü › Seite drucken", unter: "am PC: Strg+P", art: "hervor" }, { titel: "Druckdienst des Geräts" }], merk: [<><b>Gedruckt wird die Seite, die gerade offen ist.</b></>, <><b>Im Kopf</b> steht kein Drucker mehr.</>], punkte: [
     "Druckt die Seite, die gerade offen ist.",
-    "Bei schmalem Bildschirm steckt der Drucker im Kopf hinter dem Pfeil ‹ „Weitere Knöpfe“; am Handy im Menü unter „Seite drucken“.",
+    "Am Handy und Tablet: Menü (☰) › „Seite drucken“. Am PC im Browser: Strg+P. Im Kopf steht kein Drucker-Knopf mehr.",
     "Android druckt über den Druckdienst des Geräts.",
   ] },
   { id: "zu-gross", titel: "Datei zu groß für dieses Gerät", symbol: <Minimize2/>, weg: "Eingangszentrale › Zuordnung prüfen", ablauf: ablaufZuGross, merk: [<><b>Sichere Größe:</b> 15, 20 oder 40 MB je nach Gerät; Pro-Tresor 20 MB.</>, <><b>Nur „Verkleinern“ oder „Abbrechen“</b>; das große Original wird nicht aufbewahrt.</>, <><b>PDF mit Textebene</b> lässt sich nicht verkleinern: am Rechner ablegen.</>], punkte: [
@@ -105,7 +106,7 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
   { id: "internet", titel: "Internet für die App", symbol: <Wifi/>, weg: "Kopf › WLAN-Symbol", ablauf: [{ titel: "WLAN-Symbol im Kopf", unter: "durchgestrichen = aus" }, { titel: "Antippen", unter: "an oder aus", art: "hervor" }, { titel: "Gerät merkt es sich", art: "gut" }], merk: [<><b>Ab Werk aus:</b> die Akte arbeitet ohne Internet.</>, <><b>Braucht Internet:</b> neue Fassung prüfen, Kalender verbinden und abgleichen, Diktat im Browser, Netz (Mycel), Suchmodell laden.</>, <><b>Ausschalten</b> geht jederzeit; nichts geht verloren.</>], punkte: [
     "Das WLAN-Symbol oben im Kopf schaltet das Internet nur für diese App an oder aus. Ab Werk ist es aus; das Gerät merkt sich die Wahl.",
     "Ohne Internet arbeitet die Akte ganz normal: ablegen, suchen, Fristen, Sicherung.",
-    "Internet brauchen: auf eine neue Fassung prüfen (Versionszeile oder ⟳), Kalender verbinden und abgleichen (Google, Microsoft), Diktat mit dem Mikrofon im Browser, Netz (Mycel) und das Laden des Suchmodells.",
+    "Internet brauchen: auf eine neue Fassung prüfen (Fähnchen „Update verfügbar“ an der Versionszeile), Kalender verbinden und abgleichen (Google, Microsoft), Diktat mit dem Mikrofon im Browser, Netz (Mycel) und das Laden des Suchmodells.",
     "Ist es aus, sagt die App an diesen Stellen: „Internet für die App ist aus“, mit dem Hinweis, wo man es einschaltet.",
   ] },
 ];

@@ -24,7 +24,8 @@ export const APP_BREITEN = [236, 172, 172, 172, 172, 172, 236, 172];
 type Gruppe = Omit<KartenGruppe, "chips"> & { chips: Array<KartenChip & KartenSeite> };
 export const APP_GRUPPEN: Gruppe[] = [
   { id: "g-mail", titel: "Mail einfügen", wo: "aus der Mail-App oder dem Postfach", spalte: 0, chips: MAIL_WEGE },
-  { id: "g-datei", titel: "Datei einfügen", wo: "Dokumente › Eingangszentrale", spalte: 0, chips: [
+  { id: "g-datei", titel: "Datei einfügen", wo: "Kopf › Ablegen · Dokumente › Eingangszentrale", spalte: 0, chips: [
+    { id: "kopf-ablegen", titel: "Ablegen im Kopf", wo: "Kopf › Ablegen › Fotografieren · Dateien · Ordner", nach: "eingang", seite: "inbox", mehr: "Ein Einstieg für alles: Fotos, Dateien oder ein ganzer Ordner landen in der Eingangszentrale zur Prüfung." },
     { id: "datei-waehlen", titel: "Datei wählen", wo: "Knopf in der Eingangszentrale", nach: "eingang", seite: "inbox" },
     { id: "datei-ziehen", titel: "Hineinziehen", wo: "am Rechner mit der Maus", nach: "eingang", seite: "inbox" },
     { id: "datei-teilen", titel: "Teilen aus anderer App", wo: "Galerie, Dateien › Teilen", nach: "eingang" },
@@ -54,7 +55,7 @@ export const APP_GRUPPEN: Gruppe[] = [
     { id: "aus-fristen", titel: "Fristen und Erinnerungen", wo: "Fristen und Aufgaben · Mein Kalender", seite: "reminders" },
     { id: "aus-sicherung", titel: "Vollsicherung", wo: "Sicherheit › sichern und testen", seite: "security", mehr: "Mit Prüfsummen; Android legt die APK bei, Windows einen Lies-mich mit Download." },
     { id: "aus-demo", titel: "Demo als Kopie", wo: "Hilfe › Demo starten", seite: "help", mehr: "Probieren an einer Kopie der eigenen Daten; das Original bleibt unverändert." },
-    { id: "aus-drucken", titel: "Drucken", wo: "Kopf › Drucker" },
+    { id: "aus-drucken", titel: "Drucken", wo: "Menü › Seite drucken · am PC Strg+P" },
   ] },
 ];
 

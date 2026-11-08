@@ -98,7 +98,7 @@ try {
   await page.evaluate(async (fallId) => { const f = window.__vaultFixture; await f.createLocalScheduleBundle(await f.browserVault(), { recordType: "task", title: "Probe Zuordnung Aufklappen", dueAt: "2026-11-12", reminderAt: "2026-11-11T18:00", references: [{ recordType: "case", id: fallId, relationType: "gehört zu" }] }); }, fall.id);
   await page.reload({ waitUntil: "networkidle" }); await page.waitForSelector(".site-brand-version");
   const aufgabe = (await register(page)).find((x) => x.data?.title === "Probe Zuordnung Aufklappen");
-  await footer(page, "Interaktives Cockpit");
+  await footer(page, "Cockpit");
   await page.locator(".cockpit-todo-main", { hasText: "Probe Zuordnung Aufklappen" }).first().click();
   const d = page.locator("#cockpit-dossier"); await d.waitFor();
   await step("Detail (A): Aufgabe zeigt alle ihre Erinnerungen mit Zeit", async () => {

@@ -3,13 +3,42 @@ import type { FamilyRecordType } from "./family-data-model";
 export const MENU_OPTIMIZATION_VERSION = 1 as const;
 // Klaus 04.11.2026: Demo-Ablage und bewusst gewählten eigenen Tresor auf der Startseite unterscheiden.
 // Entscheidung 08.11.2026 (2.28.39): interne Angaben aus der Oberfläche – kein mitgelieferter Prüfbericht vom 13.10., keine Fassung 2.28.1 auf der Startseite.
-export const START_PAGE_REFERENCE_SHA256 = "caf7ecc72074322685b9cffc98a360caa9e9bca7f0326adf720904100dc014bd";
+// Klaus 08.11.2026 (Vorschau neugestaltung-2.28.39, Punkte 1 und 4): „So fängst du an“ ganz oben; ein Name „Cockpit“ statt „Objekt-Cockpit“.
+export const START_PAGE_REFERENCE_SHA256 = "614112849ef2304a7f73338c01dffc405632bd1c55bd638696f05cbe375da656";
 
 export type MenuSection =
   | "documents" | "inbox" | "medical" | "benefits" | "work" | "assessment"
   | "correspondence" | "sources" | "health" | "family" | "home" | "vehicles"
   | "purchases" | "reminders" | "cockpit" | "directory" | "security" | "help"
   | "changelog" | "versions" | "systemcheck" | "memory";
+
+// 2.28.39 (Klaus 08.11.2026, Vorschau neugestaltung Punkt 4): ein Cockpit; „Im Cockpit anzeigen“ öffnet es auf den Bereich
+// gefiltert. Die Kennung „bereich:<seite>“ läuft als Ziel durch die Navigation (Zurück/Vorwärts behalten den Filter).
+export const COCKPIT_BEREICH = "bereich:";
+export type CockpitBereich = { name: string; sections: string[]; woerter: RegExp; geschuetzt?: boolean };
+export const cockpitBereiche: Record<string, CockpitBereich> = {
+  health: { name: "Gesundheit & Arbeit", sections: ["health", "medical", "benefits", "work", "assessment", "correspondence"], woerter: /(arzt|ärzt|kranken|gesund|befund|arbeit|antrag|bescheid|rente|leistung|behörd)/i, geschuetzt: true },
+  medical: { name: "Diagnosen, AU & ICD-Codes", sections: ["health", "medical"], woerter: /(arzt|ärzt|befund|diagnos|krankschreib|arbeitsunfähig|praxis|klinik)/i, geschuetzt: true },
+  benefits: { name: "Krankenkasse & Leistungen", sections: ["benefits"], woerter: /(krankenkasse|krankengeld|leistung|kasse)/i, geschuetzt: true },
+  work: { name: "Arbeit & Arbeitgeber", sections: ["work"], woerter: /(arbeitgeber|arbeit|urlaub|lohn|gehalt|anwesenheit)/i },
+  assessment: { name: "Anträge & Bescheide", sections: ["assessment"], woerter: /(antrag|bescheid|behörd|amt\b|rente|widerspruch)/i },
+  correspondence: { name: "Anfragen & Antworten", sections: ["correspondence"], woerter: /(anfrage|antwort|schreiben|brief|e-mail|mail)/i },
+  inbox: { name: "Neue Unterlagen", sections: ["documents", "inbox"], woerter: /(dokument|unterlage|eingang|scan)/i },
+  home: { name: "Wohnen", sections: ["home"], woerter: /(haus|wohnung|miete|vermiet|nebenkosten|garten)/i },
+  vehicles: { name: "Fahrzeuge", sections: ["vehicles"], woerter: /(fahrzeug|auto|motorrad|tüv|kfz|werkstatt)/i },
+  purchases: { name: "Käufe & Garantien", sections: ["purchases"], woerter: /(kauf|garantie|gerät|rechnung|reparatur)/i },
+  family: { name: "Familie & Personen", sections: ["family"], woerter: /(familie|person|vollmacht|vorsorge)/i },
+};
+export function cockpitBereichAus(ziel?: string | null) {
+  if (!ziel?.startsWith(COCKPIT_BEREICH)) return null;
+  const id = ziel.slice(COCKPIT_BEREICH.length);
+  const bereich = cockpitBereiche[id];
+  return bereich ? { id, ...bereich } : null;
+}
+/** Gehört ein Cockpit-Eintrag zum Bereich? Nach Bereich (Abschnitt), geschütztem Gesundheitseintrag oder Wort im Titel. */
+export function passtZumBereich(bereich: CockpitBereich, eintrag: { section?: string; sensitive?: boolean; text: string }) {
+  return (!!eintrag.section && bereich.sections.includes(eintrag.section)) || (!!bereich.geschuetzt && !!eintrag.sensitive) || bereich.woerter.test(eintrag.text);
+}
 
 export type MenuTarget = { section: MenuSection; targetId?: string };
 export type MenuAction = MenuTarget & { label: string; detail: string; query?: string; area?: string };
@@ -21,7 +50,7 @@ export const menuPageActions = {
     { label: "Medizinische Akte", detail: "Diagnosen, AU-Zeiten und Ärzte", section: "medical" },
     { label: "Gesundheitsdokumente", detail: "Geschützte Unterlagen in der Bibliothek", section: "documents", area: "Gesundheit & Pflege" },
     { label: "Fristen und Aufgaben", detail: "Offene gesundheitliche und berufliche Punkte", section: "reminders" },
-    { label: "Im Cockpit anzeigen", detail: "Datensparsame Arbeitsübersicht", section: "cockpit" },
+    { label: "Im Cockpit anzeigen", detail: "Datensparsame Arbeitsübersicht", section: "cockpit", targetId: `${COCKPIT_BEREICH}health` },
   ],
   family: [
     { label: "Tagebuch und Erinnerungen", detail: "Ereignisse festhalten und offene Punkte klären", section: "memory" },
@@ -49,31 +78,31 @@ export const menuPageActions = {
     { label: "Gesundheitsdokumente", detail: "Geschützte Originalunterlagen anzeigen", section: "documents", area: "Gesundheit & Pflege" },
     { label: "Krankenkasse und Leistungen", detail: "Leistungszeiten und offene Klärungen", section: "benefits" },
     { label: "Arbeit und Arbeitgeber", detail: "Arbeitsverlauf und Arbeitszeiten", section: "work" },
-    { label: "Im Cockpit anzeigen", detail: "Datensparsame Aufgabenübersicht", section: "cockpit" },
+    { label: "Im Cockpit anzeigen", detail: "Datensparsame Aufgabenübersicht", section: "cockpit", targetId: `${COCKPIT_BEREICH}medical` },
   ],
   benefits: [
     { label: "Krankenkasse-Unterlagen", detail: "Leistungsauskunft und Antworten suchen", section: "documents", query: "Krankenkasse oder Leistung" },
     { label: "Anfragen und Antworten", detail: "Schriftverkehr chronologisch öffnen", section: "correspondence" },
     { label: "Fristen und Aufgaben", detail: "Offene Antworten und Wiedervorlagen", section: "reminders" },
-    { label: "Im Cockpit anzeigen", detail: "Aktuelle Vorgänge und Aufgaben", section: "cockpit" },
+    { label: "Im Cockpit anzeigen", detail: "Aktuelle Vorgänge und Aufgaben", section: "cockpit", targetId: `${COCKPIT_BEREICH}benefits` },
   ],
   work: [
     { label: "Arbeitsunterlagen", detail: "Arbeitgeber- und Anwesenheitsdokumente", section: "documents", query: "Arbeitgeber oder Arbeit oder Anwesenheit" },
     { label: "Bescheinigung und Anträge", detail: "Anträge, Bescheide und Behördenpost", section: "assessment" },
     { label: "Anfragen und Antworten", detail: "Arbeitsbezogenen Schriftverkehr öffnen", section: "correspondence" },
-    { label: "Im Cockpit anzeigen", detail: "Vorgänge, Aufgaben und Fristen", section: "cockpit" },
+    { label: "Im Cockpit anzeigen", detail: "Vorgänge, Aufgaben und Fristen", section: "cockpit", targetId: `${COCKPIT_BEREICH}work` },
   ],
   assessment: [
     { label: "Antragsunterlagen", detail: "Anträge und Bescheide", section: "documents", query: "Antrag oder Bescheid" },
     { label: "Anfragen und Antworten", detail: "Rentenversicherung-, Arbeitsagentur- und Arbeitgeber-Schriftverkehr", section: "correspondence" },
     { label: "Fristen und Aufgaben", detail: "Nachreichungen und Termine", section: "reminders" },
-    { label: "Im Cockpit anzeigen", detail: "Laufende Vorgänge öffnen", section: "cockpit" },
+    { label: "Im Cockpit anzeigen", detail: "Laufende Vorgänge öffnen", section: "cockpit", targetId: `${COCKPIT_BEREICH}assessment` },
   ],
   correspondence: [
     { label: "Schriftverkehr", detail: "Anfragen und Antworten als Dokumente", section: "documents", query: "Anfrage oder Antwort oder Schreiben" },
     { label: "Krankenkasse und Leistungen", detail: "Leistungszeiten und offene Klärungen", section: "benefits" },
     { label: "Fristen und Aufgaben", detail: "Offene Antworten und Wiedervorlagen", section: "reminders" },
-    { label: "Im Cockpit anzeigen", detail: "Vorgänge und nächste Schritte", section: "cockpit" },
+    { label: "Im Cockpit anzeigen", detail: "Vorgänge und nächste Schritte", section: "cockpit", targetId: `${COCKPIT_BEREICH}correspondence` },
   ],
   sources: [
     { label: "Alle Dokumente", detail: "Zentrale Bibliothek vollständig öffnen", section: "documents" },
@@ -83,7 +112,7 @@ export const menuPageActions = {
   inbox: [
     { label: "Dokumentenbibliothek", detail: "Vorhandene Unterlagen suchen", section: "documents" },
     { label: "Sicherheit", detail: "Lokalen Datentresor verbinden", section: "security" },
-    { label: "Im Cockpit anzeigen", detail: "Neue und offene Dokumentvorgänge", section: "cockpit" },
+    { label: "Im Cockpit anzeigen", detail: "Neue und offene Dokumentvorgänge", section: "cockpit", targetId: `${COCKPIT_BEREICH}inbox` },
   ],
 } satisfies Record<string, MenuAction[]>;
 

@@ -74,10 +74,11 @@ try {
   });
 
   // ---------- Korrespondenz, Gesundheit & Arbeit, Unterseiten ----------
-  for (const [nav, eintrag] of [[0, "Korrespondenz", /Schriftverkehr|Anfragen/], [1, "Diagnosen, AU & ICD-Codes", /Gesundheitsdokumente/], [1, "Krankenkasse & Leistungen", /Leistung/], [1, "Arbeit & Arbeitgeber", /Arbeit/], [1, "Anträge & Bescheide", /Antr/], [2, "Familienübersicht", /Öffnen/]]) {
+  // 2.28.39: Menügruppe „Termine & Aufgaben“ an zweiter Stelle – Gesundheit & Arbeit ist jetzt 2, Familie 3 usw.
+  for (const [nav, eintrag] of [[0, "Korrespondenz", /Schriftverkehr|Anfragen/], [2, "Diagnosen, AU & ICD-Codes", /Gesundheitsdokumente/], [2, "Krankenkasse & Leistungen", /Leistung/], [2, "Arbeit & Arbeitgeber", /Arbeit/], [2, "Anträge & Bescheide", /Antr/], [3, "Familienübersicht", /Öffnen/]]) {
     if (eintrag === "Familienübersicht") {
       await step("Unterseite „Familienübersicht“: „Öffnen“-Karten führen zu Tagebuch, Cockpit, Fristen, Bibliothek", async () => {
-        await aufraeumen(page); await openMenu(page, 2, "Familienübersicht");
+        await aufraeumen(page); await openMenu(page, 3, "Familienübersicht");
         await page.locator("main button", { hasText: "Termine und Fristen" }).first().click(); await page.waitForTimeout(300);
         return (await page.locator(".breadcrumb").innerText()).includes("Fristen");
       });
@@ -95,7 +96,7 @@ try {
     });
   }
   await step("Gesundheit: Beispiel-Einträge mit Suchwörtern (z. B. „Brillenpass Mattis“) starten die Suche", async () => {
-    await openMenu(page, 1, "Diagnosen, AU & ICD-Codes");
+    await openMenu(page, 2, "Diagnosen, AU & ICD-Codes");
     const b = page.locator("main button", { hasText: "Brillenpass Mattis" }).first();
     if (!(await b.count())) return "Knopf nicht da";
     await b.click(); await page.waitForTimeout(300);
@@ -106,7 +107,7 @@ try {
     await aufraeumen(page); await page.locator(".global-search input").fill(""); await page.waitForTimeout(200);
     await klick(page.locator(".site-brand"), "Marke");
     await page.evaluate(() => window.scrollTo(0, 0));
-    await klick(page.locator(".main-navigation .nav-cluster > button").nth(3), "Wohnen-Menü");
+    await klick(page.locator(".main-navigation .nav-cluster > button").nth(4), "Wohnen-Menü");
     await klick(page.locator(".mega-menu button", { hasText: "Miet- & Vermieterunterlagen" }).first(), "Menüeintrag");
     await page.waitForTimeout(300);
     const u = page.locator("main button", { hasText: "Unterlage hinzufügen" }).first();
@@ -117,9 +118,9 @@ try {
     return offen && (await page.locator(".breadcrumb").innerText()).includes("Dokumentenbibliothek");
   });
   await step("Fahrzeuge und Käufe: dieselben Karten (vorbereitete Bereiche)", async () => {
-    await aufraeumen(page); await openMenu(page, 4, "Fahrzeugpapiere");
+    await aufraeumen(page); await openMenu(page, 5, "Fahrzeugpapiere");
     const f = await page.locator("main button", { hasText: /^0\d/ }).count();
-    await openMenu(page, 5, "Käufe & Rechnungen");
+    await openMenu(page, 6, "Käufe & Rechnungen");
     const k = await page.locator("main button", { hasText: /^0\d/ }).count();
     return f >= 3 && k >= 3 ? `Fahrzeuge ${f}, Käufe ${k} Unterbereiche` : false;
   });
@@ -140,7 +141,7 @@ try {
     return n > 0 ? `${n} Karten (${sensibel} geschützt); erste → ${crumb.split("\n").pop()}` : false;
   });
   await step("Unterlagen & Quellen: Kerndokument-Knöpfe filtern die Bibliothek", async () => {
-    await openMenu(page, 6, "Unterlagen & Quellen");
+    await openMenu(page, 7, "Unterlagen & Quellen");
     await page.locator("main button", { hasText: "Mietvertrag Pustelblumenweg 7" }).first().click(); await page.waitForTimeout(300);
     return (await page.locator(".breadcrumb").innerText()).includes("Dokumentenbibliothek");
   });
