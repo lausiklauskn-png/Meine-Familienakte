@@ -130,7 +130,7 @@ public final class NetzDienst {
             if (!token.equals(kopf.getOrDefault("x-familienakte-token", ""))) { antwort(out, 401, "application/json", "{\"fehler\":\"FA_NETZ_TOKEN\"}".getBytes(StandardCharsets.UTF_8)); return; }
             String pfadTeil = ziel, abfrage = ""; int f = ziel.indexOf('?'); if (f >= 0) { pfadTeil = ziel.substring(0, f); abfrage = ziel.substring(f + 1); }
             Map<String, String> q = new HashMap<>();
-            for (String p : abfrage.split("&")) { int g = p.indexOf('='); if (g > 0) q.put(URLDecoder.decode(p.substring(0, g), StandardCharsets.UTF_8), URLDecoder.decode(p.substring(g + 1), StandardCharsets.UTF_8)); }
+            for (String p : abfrage.split("&")) { int g = p.indexOf('='); if (g > 0) q.put(dekodieren(p.substring(0, g)), dekodieren(p.substring(g + 1))); }
             String pfad = q.getOrDefault("pfad", "");
             if (!pfadOk(pfad)) { antwort(out, 400, "application/json", "{\"fehler\":\"FA_PFAD_UNGUELTIG\"}".getBytes(StandardCharsets.UTF_8)); return; }
             switch (methode + " " + pfadTeil) {
@@ -186,6 +186,8 @@ public final class NetzDienst {
             try { OutputStream out = k.getOutputStream(); antwort(out, 500, "application/json", ("{\"fehler\":" + json(code(e)) + "}").getBytes(StandardCharsets.UTF_8)); } catch (IOException ignoriert) { }
         }
     }
+    /** URLDecoder mit Charset-Objekt gibt es auf Android erst ab API 33; die Zeichensatz-Namensform geht überall. */
+    private static String dekodieren(String s) { try { return URLDecoder.decode(s, "UTF-8"); } catch (java.io.UnsupportedEncodingException e) { return s; } }
     private static boolean pfadOk(String pfad) {
         if (pfad.isEmpty()) return true;
         if (pfad.length() > 1024) return false;
