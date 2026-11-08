@@ -20,6 +20,8 @@ import { proDateiWeitergeben, proVerbundFehler, PRO_ZIELE, type ProZiel } from "
 import { proUebergabeAnnehmen } from "./pro-uebergabe";
 import { uebergabeVorschlaege, type UebergabeVorschlag } from "../lib/uebergabe-vorschlaege";
 import { askConfirm } from "./page-dialogs";
+import { AuswahlKaestchen, AuswahlLeiste } from "./auswahl-leiste";
+import { briefkopfAusText, quelleName, sammelDaten, sammelLage } from "./sammel-ablage";
 import { useEingang } from "./use-eingang";
 import { usePortalNavigation, type PortalNavigation } from "./use-portal-navigation";
 import { useProDestination, type ProDestination } from "./use-pro-destination";
@@ -71,7 +73,7 @@ import { UI_HELP_ZIEL } from "../lib/ui-help-ziele";
 import { Seitenleiste } from "./seitenleiste";
 import { latestUserAcceptance, latestUserResult } from "../lib/practical-acceptance";
 import { KlappLeiste, klappOeffnen } from "./klapp";
-import { AugeKnopf, FlachText, KnopfLeiste, StiftKnopf, useEinzeilig } from "./flach-zeile";
+import { anfangEnde, AugeKnopf, FlachText, KnopfLeiste, StiftKnopf, useEinzeilig } from "./flach-zeile";
 import { ErinnerungLoeschen, NotizLoeschen } from "./loesch-knopf";
 import { AppGlocke, MeinKalender, meinKalenderOeffnen } from "./mein-kalender";
 import { ErinnerungKasten, MemoryBearbeiten } from "./memory-bearbeiten";
@@ -83,7 +85,7 @@ import { KiAuftragDialog } from "./ki-auftrag-dialog";
 import { inventoryScanFeedback, inventoryAssignmentFeedback, inventoryArchiveFeedback, inventoryReleaseFeedback } from "../lib/ui-activity";
 import healthData from "./health-data.json";
 import { assessmentGroups, categories, coreDocuments, portalAreas } from "./portal-data";
-import { appendLocalFamilyRecordNote, archiveInventoryItems, buildAutomatedTestFailureReport, changeLocalContextLink, checkVaultHoldings, chooseDevelopmentBaseFolder, chooseExportDestination, chooseInboxFolder, chooseInventoryArchiveFolder, chooseInventorySourceFolder, chooseOneDriveVault, chooseVault, compareVaults, confirmInventoryAssignment, confirmLocalContextLink, copyMissingDocuments, createLocalFamilyRecord, createLocalMemoryBundle, createLocalScheduleBundle, createOrUpdateLocalMemoryDraft, deleteLocalMemoryDraft, deleteLocalMemoryRecord, forgetOneDriveVault, forgetVault, getLocalMemoryDeleteImpact, getVaultSummary, inspectTestWorkspace, inventorySourcePermission, type AutomatedStorageDiagnosticReport, type AutomatedTestFailureReport, type AutomatedTestEnvironmentReport, type IncomingFolderFile, type InventoryArchiveResult, type InventoryReferenceChoice, type InventoryScanProgress, type InventoryScanResult, linkLocalDocuments, LocalDocument, LocalScheduleStatus, prepareTestRegisterPreview, type PreparedTestRegister, readInventorySourcePreview, readLocalDocumentFile, readLocalMemoryDraftFiles, readLocalMemoryMediaFile, readLocalSystemSnapshot, readLocalVaultData, erinnerungenInAufgabenUmziehen, rejectLocalContextLink, releaseInventoryItemsForAssistant, rememberedDevelopmentBaseFolder, rememberedInboxFolder, rememberedInventoryArchiveFolder, rememberedInventorySourceFolder, rememberedOneDriveVault, rememberedVault, removeLocalContextLink, requestVaultPermission, resetAutomatedTestEnvironment, resetInventoryItemsForRetest, restoreFullFamilyBackup, runAutomatedStorageDiagnostic, runAutomatedTestEnvironmentSelfTests, runInventoryTextDecodingSelfTests, runPreparedTestRegisterSelfTests, runTestWorkspaceSelfTests, saveLocalDocument, savePreparedTestRegister, TEXTAUSZUG_MAX, scanInventoryFolder, scanLocalInbox, scanOneDriveInbox, setupAutomatedTestEnvironment, type TestWorkspaceReport, updateLocalMemoryDraftStatus, updateLocalMemoryOpenPointStatus, updateLocalScheduleStatus, updateLocalStatus, setLocalDocumentAusfuellen, updateLocalPersonContact, readAusfuellAblage, writeAusfuellAblage, VaultSummary, VaultSyncPreview, VaultSyncResult, vaultSupported, writeFamilyArchiveExport, writeFullFamilyBackup, sicherungEinlesen, sicherungProben, type EinleseProbe, demoKopieAnlegen, demoNochPassend, demoUebernahmePlan, demoUebernehmen } from "./local-vault";
+import { appendLocalFamilyRecordNote, archiveInventoryItems, buildAutomatedTestFailureReport, changeLocalContextLink, checkVaultHoldings, chooseDevelopmentBaseFolder, chooseExportDestination, chooseInboxFolder, chooseInventoryArchiveFolder, chooseInventorySourceFolder, chooseOneDriveVault, chooseVault, compareVaults, confirmInventoryAssignment, confirmLocalContextLink, copyMissingDocuments, createLocalFamilyRecord, createLocalMemoryBundle, createLocalScheduleBundle, createOrUpdateLocalMemoryDraft, deleteLocalMemoryDraft, deleteLocalMemoryRecord, forgetOneDriveVault, forgetVault, getLocalMemoryDeleteImpact, getVaultSummary, inspectTestWorkspace, inventorySourcePermission, type AutomatedStorageDiagnosticReport, type AutomatedTestFailureReport, type AutomatedTestEnvironmentReport, type IncomingFolderFile, type InventoryArchiveResult, type InventoryReferenceChoice, type InventoryScanProgress, type InventoryScanResult, linkLocalDocuments, LocalDocument, LocalScheduleStatus, prepareTestRegisterPreview, type PreparedTestRegister, readInventorySourcePreview, readLocalDocumentFile, readLocalMemoryDraftFiles, readLocalMemoryMediaFile, readLocalSystemSnapshot, readLocalVaultData, erinnerungenInAufgabenUmziehen, rejectLocalContextLink, releaseInventoryItemsForAssistant, rememberedDevelopmentBaseFolder, rememberedInboxFolder, rememberedInventoryArchiveFolder, rememberedInventorySourceFolder, rememberedOneDriveVault, rememberedVault, removeLocalContextLink, requestVaultPermission, resetAutomatedTestEnvironment, resetInventoryItemsForRetest, restoreFullFamilyBackup, runAutomatedStorageDiagnostic, runAutomatedTestEnvironmentSelfTests, runInventoryTextDecodingSelfTests, runPreparedTestRegisterSelfTests, runTestWorkspaceSelfTests, saveLocalDocument, savePreparedTestRegister, dokumenteAussortieren, dokumenteZurueckholen, dokumenteBereichSetzen, dokumenteZuordnen, type AussortierErgebnis, TEXTAUSZUG_MAX, scanInventoryFolder, scanLocalInbox, scanOneDriveInbox, setupAutomatedTestEnvironment, type TestWorkspaceReport, updateLocalMemoryDraftStatus, updateLocalMemoryOpenPointStatus, updateLocalScheduleStatus, updateLocalStatus, setLocalDocumentAusfuellen, updateLocalPersonContact, readAusfuellAblage, writeAusfuellAblage, VaultSummary, VaultSyncPreview, VaultSyncResult, vaultSupported, writeFamilyArchiveExport, writeFullFamilyBackup, sicherungEinlesen, sicherungProben, type EinleseProbe, demoKopieAnlegen, demoNochPassend, demoUebernahmePlan, demoUebernehmen } from "./local-vault";
 import { sicherungsOrdnerWaehlbar } from "./local-vault";
 import { createFamilyRecord, FamilyRecordUnion, FamilyRelation, type FamilyRecordType, formatFamilyRecordId, recordTypeDefinitions } from "@/lib/family-data-model";
 import { assignmentProposalHasNoAutomaticWrites, assignmentSequence, FAMILY_ASSIGNMENT_VERSION, proposeFamilyAssignment } from "@/lib/family-assignment";
@@ -450,7 +452,8 @@ const objectAreas = [
 function cockpitDocuments(documents: UploadedDocument[], localDocuments: LocalDocument[]): FamilyCockpitDocument[] {
   return [
     // Titel aus dem Prüfdialog statt Dateiname (2.28.39); geschützte Gesundheitsunterlagen behalten den Dateinamen und ihren Schutz.
-    ...localDocuments.map((item) => ({ id: item.id, originalName: dokumentTitel(item), dateiname: item.titel ? item.originalName : null, textAuszug: item.textAuszug || null, category: item.category, documentDate: item.documentDate, status: item.status, createdAt: item.addedAt, updatedAt: item.updatedAt, mimeType: item.mimeType, notes: item.notes, storageType: item.storageType, storedPath: item.storedPath, relativePath: item.relativePath, oneDrivePath: item.oneDrivePath })),
+    // „Aus der Akte nehmen“ (2.28.39): aussortierte Dokumente stehen nur noch unter „Aussortiert (n)“ in der Bibliothek.
+    ...localDocuments.filter((item) => !item.aussortiert).map((item) => ({ id: item.id, originalName: dokumentTitel(item), dateiname: item.titel ? item.originalName : null, textAuszug: item.textAuszug || null, category: item.category, documentDate: item.documentDate, status: item.status, createdAt: item.addedAt, updatedAt: item.updatedAt, mimeType: item.mimeType, notes: item.notes, storageType: item.storageType, storedPath: item.storedPath, relativePath: item.relativePath, oneDrivePath: item.oneDrivePath })),
     ...documents.map((item) => ({ id: item.id, originalName: item.originalName, category: item.category, documentDate: item.documentDate, status: item.status, createdAt: item.uploadedAt, updatedAt: null, mimeType: item.mimeType, previewUrl: item.mimeType.startsWith("image/") ? item.downloadUrl : null, notes: item.notes, storageType: "online-r2", downloadUrl: item.downloadUrl })),
   ];
 }
@@ -576,6 +579,8 @@ function HealthPortalContent() {
   const vaultHandle = oneDriveHandle || localVaultHandle;
   const [sampleBusy, setSampleBusy] = useState(false);
   const samplePresent = useMemo(() => sampleDataPresent({ documents: localDocuments, records: familyRecords }), [localDocuments, familyRecords]);
+  // „Aus der Akte nehmen“ (2.28.39): aussortierte Dokumente fehlen in Suche, Assistenz, Cockpit und Bibliotheksliste.
+  const aktenDokumente = useMemo(() => localDocuments.filter((d) => !d.aussortiert), [localDocuments]);
   const removeSampleData = async () => {
     if (!vaultHandle) return;
     if (!await askConfirm("Alle Beispieldaten entfernen?\n\nEntfernt werden nur die erfundenen Beispieleinträge und Beispieldokumente. Deine eigenen Unterlagen und Einträge bleiben erhalten.")) return;
@@ -709,7 +714,9 @@ function HealthPortalContent() {
         if (position < 0 || item.status !== "Analyse läuft") return item;
         const analysis = analyzed[position];
         const batchDuplicate = (checksumCounts.get(analysis.checksum) || 0) > 1;
-        return { ...item, analysis, status: batchDuplicate ? "Prüfung erforderlich" : initialCentralIntakeStatus(analysis), error: batchDuplicate ? "Mögliche Dublette innerhalb dieser Auswahl – bitte vergleichen." : null };
+        const fertig: CentralIntakeQueueItem = { ...item, analysis, status: batchDuplicate ? "Prüfung erforderlich" : initialCentralIntakeStatus(analysis), error: batchDuplicate ? "Mögliche Dublette innerhalb dieser Auswahl – bitte vergleichen." : null };
+        // Sammelbestätigung: sichere Vorschläge stehen angehakt, unsichere abgewählt (2.28.39, Punkt 6).
+        return { ...fertig, selected: sammelLage(fertig, aktuelleGrenze().bytes).sicher };
       }));
       if (!saved) return;
       const reviewCount = analyzed.filter((analysis) => analysis.plan.requiresReview || analysis.plan.duplicateIds.length || (checksumCounts.get(analysis.checksum) || 0) > 1).length;
@@ -776,6 +783,49 @@ function HealthPortalContent() {
   const setCentralIntakeStatus = async (ids: string[], status: CentralIntakeStatus) => {
     if (!await setCentralIntakeQueue((current) => current.map((item) => ids.includes(item.id) ? { ...item, status, selected: false } : item))) return;
     reportActivity({ kind: "info", text: `${ids.length} Eingang${ids.length === 1 ? " wurde" : "sfälle wurden"} als „${status}“ vorgemerkt. Es wurde keine Datei gespeichert oder gelöscht.` });
+  };
+  // Sammelbestätigung (2.28.39, Punkt 6): angehakte Eingänge nacheinander ablegen – dieselben Felder wie im Prüfdialog.
+  const sammelAblegen = async (ids: string[], fristIds: string[], fortschritt: (fertig: number) => void) => {
+    if (!vaultHandle) { go("security"); return { abgelegt: 0, fehler: ["Bitte zuerst einen Speicherort verbinden."] }; }
+    const fehler: string[] = []; const neu: LocalDocument[] = []; const gespeichertAls = new Map<string, string>();
+    let abgelegt = 0; let fristen = 0;
+    for (const id of ids) {
+      const queued = centralIntakeQueue.find((entry) => entry.id === id);
+      const name = queued?.analysis ? queued.analysis.title : queued?.file.name || id;
+      if (!queued?.analysis || !sammelLage(queued, aktuelleGrenze().bytes).ablegbar) { fehler.push(`„${name}“: bitte einzeln prüfen (✎).`); continue; }
+      try {
+        const file = await eingangDatei(queued);
+        const text = queued.analysis.contentHint?.trim() ? queued.analysis.contentHint : await dokumentTextLesen(file);
+        const kopf = await briefkopfAusText(text);
+        const daten = sammelDaten({ item: queued, text, briefTitel: kopf.titel, brief: kopf.brief, fristAnlegen: fristIds.includes(id), documents: [...localDocuments, ...neu, ...documents], records: familyRecords });
+        const item = await saveLocalDocument(vaultHandle, file, { category: daten.category, documentDate: daten.documentDate, notes: eingangNotizen(queued, daten.notes), assignmentLinks: [], titel: daten.titel, textAuszug: daten.textAuszug, proUebergabe: queued.proUebergabe });
+        neu.push(item); gespeichertAls.set(id, item.id);
+        const elternId = queued.parentQueueId ? gespeichertAls.get(queued.parentQueueId) || centralIntakeQueue.find((entry) => entry.id === queued.parentQueueId)?.savedDocumentId : null;
+        if (elternId) await linkLocalDocuments(vaultHandle, elternId, item.id, "enthält Anlage").catch(() => undefined);
+        for (const kind of centralIntakeQueue.filter((entry) => entry.parentQueueId === id && entry.savedDocumentId)) await linkLocalDocuments(vaultHandle, item.id, kind.savedDocumentId!, "enthält Anlage").catch(() => undefined);
+        for (const frist of daten.fristen) {
+          try { await createLocalScheduleBundle(vaultHandle, { recordType: frist.recordType, title: frist.title, dueAt: frist.dueAt, reminderAt: null, source: `Eingang: ${dokumentTitel(item)}`, notes: null, references: [{ recordType: "document", id: item.id, relationType: "basiert auf" }] }); fristen++; }
+          catch (reason) { fehler.push(`Frist zu „${dokumentTitel(item)}“ nicht angelegt: ${reason instanceof Error ? reason.message : "unbekannter Fehler"}`); }
+        }
+        if (!await setCentralIntakeQueue((current) => current.map((entry) => entry.id === id ? { ...entry, status: "Übernommen", selected: false, savedDocumentId: item.id, error: null } : entry))) fehler.push(`„${dokumentTitel(item)}“ ist abgelegt, der Arbeitsstand konnte noch nicht bestätigt werden.`);
+        abgelegt++;
+      } catch (reason) { fehler.push(`„${name}“: ${reason instanceof Error ? reason.message : "nicht abgelegt"}`); }
+      fortschritt(abgelegt);
+    }
+    if (abgelegt) await refreshLocal(vaultHandle);
+    setNotice({ kind: fehler.length ? (abgelegt ? "info" : "error") : "success", issue: "eingang-pruefung", text: `${abgelegt ? `Gespeichert ✓ ${abgelegt} ${abgelegt === 1 ? "Dokument liegt" : "Dokumente liegen"} im Datentresor.${fristen ? ` ${fristen} ${fristen === 1 ? "Frist wurde" : "Fristen wurden"} mit dem Dokument verknüpft angelegt.` : ""}` : "Nichts abgelegt."}${fehler.length ? ` ${fehler.length} nicht abgelegt – bitte einzeln prüfen.` : ""} Originaldateien wurden nicht verschoben oder gelöscht.` });
+    return { abgelegt, fehler };
+  };
+  // „Löschen“ im Eingang (Punkt 6): nur noch nicht abgelegte Eingänge, nach Rückfrage, wirklich aus der Warteschlange.
+  const eingaengeLoeschen = async (ids: string[]) => {
+    const weg = centralIntakeQueue.filter((item) => ids.includes(item.id) && item.status !== "Übernommen");
+    if (!weg.length) return false;
+    const namen = weg.slice(0, 3).map((item) => `„${item.analysis?.title || item.file.name}“`).join(", ");
+    if (!await askConfirm(`${weg.length} ${weg.length === 1 ? "Eingang" : "Eingänge"} aus der Warteschlange löschen?\n\n${namen}${weg.length > 3 ? " …" : ""}\n\nSie werden nicht abgelegt. Abgelegte Dokumente und Originaldateien im Eingangsordner bleiben unberührt.`)) return false;
+    const wegIds = new Set(weg.map((item) => item.id));
+    if (!await setCentralIntakeQueue((current) => current.filter((item) => !wegIds.has(item.id)))) return false;
+    reportActivity({ kind: "success", text: `Gelöscht ✓ ${weg.length} ${weg.length === 1 ? "Eingang" : "Eingänge"} aus der Warteschlange entfernt.` });
+    return true;
   };
   const toggleCentralIntake = (id: string) => setCentralIntakeQueue((current) => current.map((item) => item.id === id ? { ...item, selected: !item.selected } : item));
   // PDF-Raum: Bestandsdokumente kehren zum selben Eintrag zurück; neue/ungebundene Dateien gehen in den Eingang.
@@ -1072,7 +1122,7 @@ function HealthPortalContent() {
 
   // Feste Beispielangaben (health-data.json) nur in der Demo bzw. solange die Beispielfamilie im Bestand ist.
   const searchBeispiele = demoActive() || samplePresent;
-  const searchResults = useMemo(() => buildSearchResults(query, documents, localDocuments, familyRecords, familyRelations, { beispiele: searchBeispiele }), [query, documents, localDocuments, familyRecords, familyRelations, searchBeispiele]);
+  const searchResults = useMemo(() => buildSearchResults(query, documents, aktenDokumente, familyRecords, familyRelations, { beispiele: searchBeispiele }), [query, documents, aktenDokumente, familyRecords, familyRelations, searchBeispiele]);
   const searchInterpretation = useMemo(() => interpretFamilySearchQuery(query), [query]);
 
   const loadDocuments = async () => { setLoadingDocs(false); };
@@ -1399,6 +1449,14 @@ function HealthPortalContent() {
           initialFocusId={documentLibraryFocusId} initialArea={documentLibraryRequest.area} initialQuery={documentLibraryRequest.query}
           onUebergabe={proTresorVerfuegbar() ? anProApp : undefined} onPro={proTresorVerfuegbar() ? inProTresor : undefined} proKandidaten={new Set(localDocuments.filter((d) => !istProOriginal(d.storedPath)).map((d) => d.id))}
           fillStates={fillStates} onFill={setFillDocId} onWfpdf={(id) => void inWorkflowPdf(id)} onOpenDocument={openDocument} onGo={go} onUpload={openLocalUpload} onUnlink={unlinkContext} onChange={changeContextLink}
+          lokaleIds={new Set(localDocuments.filter((d) => !d.aussortiert).map((d) => d.id))} aussortiert={localDocuments.filter((d) => d.aussortiert)}
+          bereichsWahl={[...new Set([...categories, ...localDocuments.map((d) => d.category)])].sort((a, b) => a.localeCompare(b, "de"))}
+          sammel={vaultHandle ? {
+            aussortieren: async (ids) => { const r = await dokumenteAussortieren(vaultHandle, ids); await refreshLocal(vaultHandle); return r; },
+            zurueckholen: async (ids) => { const r = await dokumenteZurueckholen(vaultHandle, ids); await refreshLocal(vaultHandle); return r; },
+            bereich: async (ids, bereich) => { const n = await dokumenteBereichSetzen(vaultHandle, ids, bereich); await refreshLocal(vaultHandle); return n; },
+            person: async (ids, personId) => { const n = await dokumenteZuordnen(vaultHandle, ids, { type: "person", id: personId }); await refreshLocal(vaultHandle); return n; },
+          } : undefined}
         />}
         {!query && active === "inventory" && <InventoryCenter
           vaultReady={!!vaultHandle}
@@ -1433,9 +1491,9 @@ function HealthPortalContent() {
           queue={centralIntakeQueue} storageReady={!!vaultHandle} oneDriveConnected={!!oneDriveHandle} inboxFolderName={inboxFolderName} busy={intakeBusy} checkedAt={intakeCheckedAt}
           onFiles={(files, source) => void queueCentralIntakeFiles(files, source)} onStartDocumentScan={openDocumentScan} onScanForm={() => void scanFormular()} onStapel={(files) => { setStapelNeu(files); go("stapel"); }}
           onSelectInbox={selectInboxFolder} onScanInbox={() => void scanSelectedInbox()} onScanOneDrive={checkOneDriveInbox}
-          onReview={reviewCentralIntake} onExtractAttachments={(id) => void extractCentralEmailAttachments(id)} onToggle={toggleCentralIntake} onSetStatus={setCentralIntakeStatus}
+          onReview={reviewCentralIntake} onExtractAttachments={(id) => void extractCentralEmailAttachments(id)} onToggle={toggleCentralIntake} onSetStatus={setCentralIntakeStatus} onSammelAblegen={sammelAblegen} onLoeschen={eingaengeLoeschen} grenzeBytes={aktuelleGrenze().bytes}
           onGo={(id, targetId) => go(id, targetId)}
-        /></Suspense><Inbox compact documents={documents} localDocuments={localDocuments} loading={loadingDocs} onUpload={openLocalUpload} onOpenDocument={openDocument} onFill={setFillDocId} onWfpdf={(id) => void inWorkflowPdf(id)} onRefresh={async () => { await loadDocuments(); await refreshLocal(); }} onLocalStatus={async (id, status) => { if (!vaultHandle) return; await updateLocalStatus(vaultHandle, id, status); await refreshLocal(vaultHandle); }} onStatus={async (id, status) => {
+        /></Suspense><Inbox compact documents={documents} localDocuments={localDocuments.filter((d) => !d.aussortiert)} loading={loadingDocs} onUpload={openLocalUpload} onOpenDocument={openDocument} onFill={setFillDocId} onWfpdf={(id) => void inWorkflowPdf(id)} onRefresh={async () => { await loadDocuments(); await refreshLocal(); }} onLocalStatus={async (id, status) => { if (!vaultHandle) return; await updateLocalStatus(vaultHandle, id, status); await refreshLocal(vaultHandle); }} onStatus={async (id, status) => {
           setBusy(true);
           try { await changeStatus(id, status); await loadDocuments(); setNotice({ kind: "success", text: `Bearbeitungsstand: ${statusLabel[status]}.` }); }
           catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Speichern nicht möglich." }); }
@@ -1469,7 +1527,7 @@ function HealthPortalContent() {
         {!query && active === "assistant" && <Suspense fallback={null}><AssistantCenter
           records={familyRecords}
           relations={familyRelations}
-          documents={localDocuments.map((document) => ({
+          documents={aktenDokumente.map((document) => ({
             id: document.id,
             title: visibleDocumentTitle(document),
             category: document.category,
@@ -1561,12 +1619,7 @@ function HealthPortalContent() {
         try {
           const { newCaseTitle, rejectedContext, resolveOpenPointEventId, fristen = [], ...documentData } = data;
           const queued = uploadQueueId ? centralIntakeQueue.find((entry) => entry.id === uploadQueueId) : null;
-          if (queued?.analysis?.email) {
-            const email = queued.analysis.email;
-            documentData.notes = [documentData.notes, `E-Mail-Herkunft: ${email.sender || "Absender unbekannt"}`, email.messageId ? `Message-ID: ${email.messageId}` : "", email.attachmentNames.length ? `Anlagen: ${email.attachmentNames.join(", ")}` : ""].filter(Boolean).join(" · ");
-          }
-          // Ohne Versionsnummer in der sichtbaren Notiz (Klaus 08.11.2026: interne Angaben aus der Oberfläche); die Systemprüfung zählt beide Schreibweisen.
-          if (queued?.analysis) documentData.notes = [documentData.notes, `Eingangszentrale: ${queued.analysis.fileKind} · kontrolliert bestätigt`].filter(Boolean).join(" · ");
+          documentData.notes = eingangNotizen(queued, documentData.notes);
           if (newCaseTitle) {
             const createdCase = await createLocalFamilyRecord(vaultHandle, { recordType: "case", data: { title: newCaseTitle, caseType: "Benutzerbestätigter Vorgang" }, status: "offen", source: "Dokumenteneingang", notes: "Bewusst im Zusammenhangs-Dialog angelegt." });
             documentData.assignmentLinks = [...(documentData.assignmentLinks || []), { toType: "case", toId: createdCase.id, relationType: "gehört zu" }];
@@ -3562,8 +3615,42 @@ function DocumentLibraryCard({ item, fill, onFill, onWfpdf, onPro, onUebergabe, 
   </article>;
 }
 
-function DocumentLibrary({ documents, records, relations, initialFocusId, initialArea, initialQuery, navigation, fillStates, onFill, onWfpdf, onPro, onUebergabe, proKandidaten, onOpenDocument, onGo, onUpload, onUnlink, onChange }: {
+/** Kompakte Zeile der Bibliothek (2.28.39, Punkt 7): Datum · Titel · Bereich; Karten bleiben wählbar. */
+function DocumentLibraryZeile({ item, gewaehlt, onWahl, onOpen, onArea }: { item: DocumentLibraryItem; gewaehlt?: boolean; onWahl?: () => void; onOpen: () => void; onArea: () => void }) {
+  return <article className={`library-zeile${item.sensitive ? " sensitive" : ""}${gewaehlt ? " gewaehlt" : ""}`} data-bibliothek-zeile={item.id}>
+    {onWahl ? <AuswahlKaestchen an={!!gewaehlt} onWechsel={onWahl} titel={item.title} data-bibliothek-wahl={item.id}/> : <span className="auswahl-platz"/>}
+    <span className="library-zeile-datum">{item.date ? fmtDate(item.date) : "ohne Datum"}</span>
+    <button type="button" className="library-zeile-titel" onClick={onOpen} title={item.title}>{item.protectedHealth && <LockKeyhole size={13} aria-label="geschützt"/>}<FlachText text={item.title}/></button>
+    <button type="button" className="library-zeile-bereich" onClick={onArea} title={`Alle aus „${item.area}“`}>{item.area}</button>
+    <button type="button" className="icon-button library-zeile-auf" onClick={onOpen} aria-label={`${item.title} öffnen`}><ChevronRight size={17}/></button>
+  </article>;
+}
+
+type BibliothekSammel = {
+  aussortieren: (ids: string[]) => Promise<AussortierErgebnis>;
+  zurueckholen: (ids: string[]) => Promise<AussortierErgebnis>;
+  bereich: (ids: string[], bereich: string) => Promise<number>;
+  person: (ids: string[], personId: string) => Promise<number>;
+};
+
+/** Ehrlicher Satz, wohin die Dateien gegangen sind (Pro-Tresor kann nicht verschieben). */
+function aussortierText(r: AussortierErgebnis, zurueck: boolean) {
+  const n = r.verschoben + r.nurArchiviert;
+  return [
+    `Gespeichert ✓ ${n} ${n === 1 ? "Dokument" : "Dokumente"} ${zurueck ? "wieder in der Akte" : "aus der Akte genommen"}.`,
+    r.verschoben ? `${r.verschoben} ${r.verschoben === 1 ? "Datei liegt" : "Dateien liegen"} jetzt im Ordner „${zurueck ? "01_Dokumente" : "Aussortiert"}“.` : "",
+    r.nurArchiviert ? (zurueck ? `${r.nurArchiviert} ${r.nurArchiviert === 1 ? "Datei blieb" : "Dateien blieben"} an ihrem Platz.` : `${r.nurArchiviert} ${r.nurArchiviert === 1 ? "Datei" : "Dateien"} konnte die App nicht verschieben (z. B. im gemeinsamen Pro-Tresor) – ${r.nurArchiviert === 1 ? "sie liegt" : "sie liegen"} unverändert an ${r.nurArchiviert === 1 ? "ihrem" : "ihrem"} Platz und ${r.nurArchiviert === 1 ? "ist" : "sind"} nur aus der Akte genommen.`) : "",
+    r.altLiegtNoch ? `${r.altLiegtNoch} alte ${r.altLiegtNoch === 1 ? "Kopie liegt" : "Kopien liegen"} noch am bisherigen Ort.` : "",
+  ].filter(Boolean).join(" ");
+}
+
+function DocumentLibrary({ documents, records, relations, initialFocusId, initialArea, initialQuery, navigation, fillStates, onFill, onWfpdf, onPro, onUebergabe, proKandidaten, onOpenDocument, onGo, onUpload, onUnlink, onChange, lokaleIds = new Set<string>(), aussortiert = [], bereichsWahl = [], sammel }: {
   navigation: PortalNavigation;
+  /** Nur Dokumente im eigenen Datentresor sind für Sammelaktionen wählbar. */
+  lokaleIds?: Set<string>;
+  aussortiert?: LocalDocument[];
+  bereichsWahl?: string[];
+  sammel?: BibliothekSammel;
   documents: FamilyCockpitDocument[];
   fillStates: Record<string, FillState>;
   onFill: (id: string) => void;
@@ -3582,7 +3669,8 @@ function DocumentLibrary({ documents, records, relations, initialFocusId, initia
   onUnlink: (relationId: string) => void | Promise<void>;
   onChange: (sourceType: ContextSourceType, sourceId: string, previousRelationId: string | null, caseId: string) => void | Promise<void>;
 }) {
-  const saved = navigation.readUi("library", { view: (initialFocusId || initialArea || initialQuery ? "all" : "overview") as "all" | "overview", query: initialQuery, area: initialArea, documentType: "", startDate: "", endDate: "", sort: "newest" as DocumentLibrarySort, anzahl: LISTEN_SEITE });
+  const saved = navigation.readUi("library", { view: (initialFocusId || initialArea || initialQuery ? "all" : "overview") as "all" | "overview", query: initialQuery, area: initialArea, documentType: "", startDate: "", endDate: "", sort: "newest" as DocumentLibrarySort, anzahl: LISTEN_SEITE, ansicht: "zeilen" as "zeilen" | "karten" });
+  const [ansicht, setAnsicht] = useState<"zeilen" | "karten">(saved.ansicht || "zeilen");
   const [view, setView] = useState(saved.view);
   const [query, setQuery] = useState(saved.query);
   const [area, setArea] = useState(saved.area);
@@ -3597,15 +3685,52 @@ function DocumentLibrary({ documents, records, relations, initialFocusId, initia
   const visible = useMemo(() => filterDocumentLibraryItems(items, { query, area, documentType, startDate, endDate, sort }), [items, query, area, documentType, startDate, endDate, sort]);
   // Seitenweise: 50 je Seite, „Weitere anzeigen“; die Zahl bleibt beim Zurück erhalten.
   const [gezeigt, mehrZeigen] = useSeiten(visible.length, [query, area, documentType, startDate, endDate, sort].join("|"), saved.anzahl || LISTEN_SEITE);
-  useEffect(() => { saveUi("library", { view, query, area, documentType, startDate, endDate, sort, anzahl: Math.max(gezeigt, LISTEN_SEITE) }); }, [saveUi, view, query, area, documentType, startDate, endDate, sort, gezeigt]);
+  useEffect(() => { saveUi("library", { view, query, area, documentType, startDate, endDate, sort, anzahl: Math.max(gezeigt, LISTEN_SEITE), ansicht }); }, [saveUi, view, query, area, documentType, startDate, endDate, sort, gezeigt, ansicht]);
+  // Mehrfachauswahl (Punkt 6/7): dieselbe Auswahl-Leiste wie im Eingang; gewählt werden nur sichtbare eigene Dokumente.
+  const [wahl, setWahl] = useState<Set<string>>(() => new Set());
+  const waehlbar = useMemo(() => sammel ? visible.slice(0, gezeigt).filter((item) => lokaleIds.has(item.id)).map((item) => item.id) : [], [sammel, visible, gezeigt, lokaleIds]);
+  const gewaehlt = waehlbar.filter((id) => wahl.has(id));
+  const wechsel = (id: string) => setWahl((alt) => { const neu = new Set(alt); if (neu.has(id)) neu.delete(id); else neu.add(id); return neu; });
+  const [sammelForm, setSammelForm] = useState<"bereich" | "person" | null>(null);
+  const [sammelWert, setSammelWert] = useState("");
+  const [sammelLaeuft, setSammelLaeuft] = useState(false);
+  const [sammelMeldung, setSammelMeldung] = useState<{ ok: boolean; text: string; wo: "liste" | "aussortiert" } | null>(null);
+  const [rausWahl, setRausWahl] = useState<Set<string>>(() => new Set());
+  const personen = useMemo(() => records.filter((r) => r.recordType === "person" && r.status !== "archiviert").sort((a, b) => cockpitRecordLabel(a).localeCompare(cockpitRecordLabel(b), "de")), [records]);
+  const fuehre = async (wo: "liste" | "aussortiert", arbeit: () => Promise<string>) => {
+    setSammelLaeuft(true); setSammelMeldung(null);
+    try { setSammelMeldung({ ok: true, text: await arbeit(), wo }); setWahl(new Set()); setRausWahl(new Set()); setSammelForm(null); setSammelWert(""); }
+    catch (reason) { setSammelMeldung({ ok: false, text: reason instanceof Error ? reason.message : "Nicht gespeichert.", wo }); }
+    finally { setSammelLaeuft(false); }
+  };
+  const aussortieren = async () => {
+    if (!sammel || !gewaehlt.length) return;
+    if (!await askConfirm(`${gewaehlt.length} ${gewaehlt.length === 1 ? "Dokument" : "Dokumente"} aus der Akte nehmen?\n\nNichts wird gelöscht: die ${gewaehlt.length === 1 ? "Datei wandert" : "Dateien wandern"} in den Ordner „Aussortiert“ und ${gewaehlt.length === 1 ? "steht" : "stehen"} unten unter „Aussortiert“ mit „Zurückholen“. Liegt ein Original im gemeinsamen Pro-Tresor, bleibt es dort an seinem Platz.`)) return;
+    await fuehre("liste", async () => aussortierText(await sammel.aussortieren(gewaehlt), false));
+  };
+  const leiste = sammel && view === "all" ? <><AuswahlLeiste name="Dokumente" gesamt={waehlbar.length} gewaehlt={gewaehlt.length} onAlle={(alle) => setWahl(alle ? new Set(waehlbar) : new Set())}
+    aktionen={[
+      { key: "bereich", label: "Bereich ändern", disabled: sammelLaeuft, onClick: () => { setSammelForm("bereich"); setSammelWert(""); setSammelMeldung(null); } },
+      { key: "person", label: "Person zuordnen", disabled: sammelLaeuft || !personen.length, title: personen.length ? undefined : "Noch keine Person angelegt", onClick: () => { setSammelForm("person"); setSammelWert(""); setSammelMeldung(null); } },
+      { key: "aussortieren", label: "Aus der Akte nehmen", gefahr: true, disabled: sammelLaeuft, onClick: () => void aussortieren() },
+    ]}>
+    {sammelForm && gewaehlt.length > 0 && <form className="auswahl-form" data-sammel-form={sammelForm} onSubmit={(event) => { event.preventDefault(); if (!sammelWert) return; void fuehre("liste", async () => sammelForm === "bereich" ? `Gespeichert ✓ Bereich „${sammelWert}“ für ${await sammel.bereich(gewaehlt, sammelWert)} ${gewaehlt.length === 1 ? "Dokument" : "Dokumente"} gesetzt.` : `Gespeichert ✓ ${await sammel.person(gewaehlt, sammelWert)} ${gewaehlt.length === 1 ? "Dokument" : "Dokumente"} „${cockpitRecordLabel(personen.find((p) => p.id === sammelWert)!)}“ zugeordnet.`); }}>
+      <label><span>{sammelForm === "bereich" ? "Neuer Bereich" : "Person"}</span><select value={sammelWert} onChange={(event) => setSammelWert(event.target.value)} data-sammel-wert><option value="">Bitte wählen</option>{sammelForm === "bereich" ? bereichsWahl.map((b) => <option key={b} value={b}>{b}</option>) : personen.map((p) => <option key={p.id} value={p.id}>{cockpitRecordLabel(p)}</option>)}</select></label>
+      <button type="button" className="button secondary" onClick={() => setSammelForm(null)}>Abbrechen</button>
+      <button type="submit" className="button primary" disabled={!sammelWert || sammelLaeuft} data-sammel-speichern>{sammelLaeuft ? "Wird gespeichert …" : "✓ Speichern"}</button>
+    </form>}
+  </AuswahlLeiste>{sammelMeldung?.wo === "liste" && <p className={sammelMeldung.ok ? "notiz-gespeichert" : "form-error"} role="status" data-bibliothek-meldung>{sammelMeldung.text}</p>}</> : null;
   const filterText = [area && `Bereich „${area}“`, documentType && `Art „${documentType}“`, query && `Suche „${query}“`, (startDate || endDate) && `Zeitraum ${startDate ? fmtDate(startDate) : "…"} bis ${endDate ? fmtDate(endDate) : "…"}`].filter(Boolean).join(" · ");
   const selected = initialFocusId ? items.find((item) => item.id === initialFocusId) || null : null;
   const grouped = useMemo(() => areas.map((name) => ({ name, items: filterDocumentLibraryItems(items, { area: name, sort: "newest" }) })).filter((group) => group.items.length), [areas, items]);
   const showAll = (next: Partial<{ area: string; documentType: string; startDate: string; endDate: string; query: string }> = {}) => {
-    setArea(next.area ?? ""); setDocumentType(next.documentType ?? ""); setStartDate(next.startDate ?? ""); setEndDate(next.endDate ?? ""); setQuery(next.query ?? ""); setSort("newest"); setView("all"); window.scrollTo({ top: 0, behavior: "smooth" });
+    setSammelMeldung(null); setArea(next.area ?? ""); setDocumentType(next.documentType ?? ""); setStartDate(next.startDate ?? ""); setEndDate(next.endDate ?? ""); setQuery(next.query ?? ""); setSort("newest"); setView("all"); window.scrollTo({ top: 0, behavior: "smooth" });
   };
   const openItem = (item: DocumentLibraryItem) => item.protectedHealth ? onGo("health") : void onOpenDocument(item.id);
   const openReference = (reference: DocumentLibraryReference) => onGo(reference.sensitive ? "health" : reference.section as SectionId, reference.id);
+  const zeile = (item: DocumentLibraryItem, mitWahl = false) => <DocumentLibraryZeile key={item.id} item={item} gewaehlt={wahl.has(item.id)} onWahl={mitWahl && sammel && lokaleIds.has(item.id) ? () => wechsel(item.id) : undefined} onOpen={() => openItem(item)} onArea={() => showAll({ area: item.area })}/>;
+  const liste = (eintraege: DocumentLibraryItem[], mitWahl = false, kompakt = false) => ansicht === "zeilen" ? <section className="library-zeilen" data-bibliothek-ansicht="zeilen">{eintraege.map((item) => zeile(item, mitWahl))}</section> : <section className={`library-document-grid${kompakt ? " compact" : ""}`} data-bibliothek-ansicht="karten">{eintraege.map(card)}</section>;
+  const umschalter = <div className="ansicht-umschalter" role="group" aria-label="Ansicht"><button type="button" aria-pressed={ansicht === "zeilen"} className={ansicht === "zeilen" ? "active" : ""} onClick={() => setAnsicht("zeilen")} data-ansicht="zeilen">Zeilen</button><button type="button" aria-pressed={ansicht === "karten"} className={ansicht === "karten" ? "active" : ""} onClick={() => setAnsicht("karten")} data-ansicht="karten">Karten</button></div>;
   const card = (item: DocumentLibraryItem) => <DocumentLibraryCard key={item.id} item={item} fill={fillStates[item.id]} onFill={() => onFill(item.id)} onWfpdf={onWfpdf ? () => onWfpdf(item.id) : undefined} onPro={onPro && proKandidaten?.has(item.id) ? () => onPro(item.id) : undefined} onUebergabe={onUebergabe ? (ziel) => onUebergabe(item.id, ziel) : undefined} onOpen={() => openItem(item)} onArea={() => showAll({ area: item.area })} onType={() => showAll({ documentType: item.documentType })} onDate={() => item.date ? showAll({ startDate: item.date, endDate: item.date }) : openItem(item)} onReference={openReference}/>;
   return <><PageTitle icon={<Archive/>} title="Dokumentenbibliothek" text="Der zentrale Zugang zu deinen bereits vorhandenen Dokumenten – aus demselben Datenbestand wie Cockpit, Vorgänge und „Was gibt’s Neues?“."/>
     <section className="library-toolbar card"><label><span><Search size={17}/> Dokumente durchsuchen</span><div className="library-search"><Search size={18}/><input value={query} onChange={(event) => { setQuery(event.target.value); setView("all"); }} placeholder="Titel, Dateiname, Person, Vorgang, Aktenzeichen …"/><DictationButton value={query} onChange={(value) => { setQuery(value); setView("all"); }} label="Dokumentensuche" append={false}/>{query && <button onClick={() => setQuery("")} aria-label="Dokumentensuche löschen"><X size={16}/></button>}</div></label><div className="button-row"><button className="button secondary" onClick={() => showAll()}><Archive size={17}/> Alle ansehen</button><button className="button primary" onClick={onUpload}><Plus size={17}/> Neue Unterlage</button></div></section>
@@ -3613,14 +3738,25 @@ function DocumentLibrary({ documents, records, relations, initialFocusId, initia
     {selected && <section className="library-selected"><div className="section-heading"><div><span className="eyebrow dark">Ausgewähltes Dokument</span><h2>Direkter Treffer</h2></div></div>{card(selected)}<section className="card"><RelatedContextPanel sourceType="document" sourceId={selected.id} documents={documents} records={records} relations={relations} onGo={onGo} onOpenDocument={onOpenDocument} onUnlink={onUnlink} onChange={onChange}/></section></section>}
     {view === "overview" ? <>
       <section className="section-heading"><div><span className="eyebrow dark">Zuletzt hinzugefügt oder bearbeitet</span><h2>Neueste Dokumente</h2></div><button className="text-link" onClick={() => showAll()}>Alle ansehen <ChevronRight size={17}/></button></section>
-      {items.length ? <section className="library-document-grid">{filterDocumentLibraryItems(items, { sort: "updated" }).slice(0, 8).map(card)}</section> : <section className="card empty-state"><Archive size={34}/><strong>Noch keine erreichbaren Dokumente</strong><span>Verbinde den lokalen Datentresor oder füge eine neue Unterlage hinzu. Es werden keine Beispieldokumente erfunden.</span><button className="button primary" onClick={onUpload}><Plus size={17}/> Unterlage hinzufügen</button></section>}
-      {grouped.length > 0 && <><section className="section-heading"><div><span className="eyebrow dark">Nur vorhandene Bestände</span><h2>Dokumentbereiche</h2></div></section><section className="library-area-grid">{grouped.map((group) => <button key={group.name} onClick={() => showAll({ area: group.name })}><DocumentLibraryAreaIcon area={group.name}/><span><strong>{group.name}</strong><small>{group.items.length} Dokument{group.items.length === 1 ? "" : "e"} · Alle ansehen</small></span><ChevronRight/></button>)}</section>{grouped.map((group) => <section className="library-area-section" key={`group-${group.name}`}><div className="section-heading"><div><span className="eyebrow dark">{group.name}</span><h2>Aktuelle Dokumente</h2></div><button className="text-link" onClick={() => showAll({ area: group.name })}>Alle ansehen <ChevronRight size={17}/></button></div><div className="library-document-grid compact">{group.items.slice(0, 3).map(card)}</div></section>)}</>}
+      {items.length ? <>{umschalter}{liste(filterDocumentLibraryItems(items, { sort: "updated" }).slice(0, 8))}</> : <section className="card empty-state"><Archive size={34}/><strong>Noch keine erreichbaren Dokumente</strong><span>Verbinde den lokalen Datentresor oder füge eine neue Unterlage hinzu. Es werden keine Beispieldokumente erfunden.</span><button className="button primary" onClick={onUpload}><Plus size={17}/> Unterlage hinzufügen</button></section>}
+      {grouped.length > 0 && <><section className="section-heading"><div><span className="eyebrow dark">Nur vorhandene Bestände</span><h2>Dokumentbereiche</h2></div></section><section className="library-area-grid">{grouped.map((group) => <button key={group.name} onClick={() => showAll({ area: group.name })}><DocumentLibraryAreaIcon area={group.name}/><span><strong>{group.name}</strong><small>{group.items.length} Dokument{group.items.length === 1 ? "" : "e"} · Alle ansehen</small></span><ChevronRight/></button>)}</section>{grouped.map((group) => <section className="library-area-section" key={`group-${group.name}`}><div className="section-heading"><div><span className="eyebrow dark">{group.name}</span><h2>Aktuelle Dokumente</h2></div><button className="text-link" onClick={() => showAll({ area: group.name })}>Alle ansehen <ChevronRight size={17}/></button></div>{liste(group.items.slice(0, 3), false, true)}</section>)}</>}
     </> : <>
       <section className="card library-filters"><div className="card-heading"><div><span className="eyebrow dark">Vollständige Dokumentansicht</span><span className="ui-heading-help"><h2>Alle ansehen</h2><InfoPopover label="Alle ansehen erklären" text={UI_HELP["Alle ansehen"]}/></span></div><button className="text-link" onClick={() => { setView("overview"); setQuery(""); setArea(""); setDocumentType(""); setStartDate(""); setEndDate(""); }}>Zur Bibliotheksübersicht</button></div><div className="library-filter-grid"><label><span>Bereich</span><select value={area} onChange={(event) => setArea(event.target.value)}><option value="">Alle Bereiche</option>{area && !areas.includes(area) && <option value={area}>{area}</option>}{areas.map((item) => <option key={item}>{item}</option>)}</select></label><label><span>Dokumentart</span><select value={documentType} onChange={(event) => setDocumentType(event.target.value)}><option value="">Alle Dokumentarten</option>{documentTypes.map((item) => <option key={item}>{item}</option>)}</select></label><label><span>Von</span><DatumFeld value={startDate} onChange={(event) => setStartDate(event.target.value)}/></label><label><span>Bis</span><DatumFeld value={endDate} onChange={(event) => setEndDate(event.target.value)}/></label><label><span>Sortierung</span><select value={sort} onChange={(event) => setSort(event.target.value as DocumentLibrarySort)}><option value="newest">Neueste zuerst</option><option value="oldest">Älteste zuerst</option><option value="title">Titel A–Z</option><option value="area">Bereich</option><option value="updated">Zuletzt bearbeitet</option></select></label></div></section>
       <section className="news-result-heading"><div><span className="eyebrow dark">Gefilterter Bestand</span><h2>{visible.length} Dokument{visible.length === 1 ? "" : "e"}</h2></div><button className="badge neutral library-count-button" onClick={() => showAll()}>{visible.length} Datensätze anzeigen</button></section>
       {filterText && <p className="library-filter-active" data-filter-aktiv><span>Gefiltert nach {filterText}</span><button className="text-link" onClick={() => showAll()}>Filter aufheben</button></p>}
-      {visible.length ? <><section className="library-document-grid">{visible.slice(0, gezeigt).map(card)}</section><WeitereAnzeigen gezeigt={gezeigt} gesamt={visible.length} onMehr={mehrZeigen}/></> : <section className="card empty-state"><Search size={34}/><strong>Keine passenden Dokumente gefunden</strong><span>Ändere Suche oder Filter. Die Bibliothek erfindet keine Treffer.</span><button className="button secondary" onClick={() => showAll()}>Filter zurücksetzen</button></section>}
+      {visible.length ? <>{umschalter}{leiste}{liste(visible.slice(0, gezeigt), true)}<WeitereAnzeigen gezeigt={gezeigt} gesamt={visible.length} onMehr={mehrZeigen}/></> : <section className="card empty-state"><Search size={34}/><strong>Keine passenden Dokumente gefunden</strong><span>Ändere Suche oder Filter. Die Bibliothek erfindet keine Treffer.</span><button className="button secondary" onClick={() => showAll()}>Filter zurücksetzen</button></section>}
     </>}
+    {(aussortiert.length > 0 || sammelMeldung?.wo === "aussortiert") && <section className="card library-aussortiert" id="aussortiert" data-aussortiert={aussortiert.length}><details open={sammelMeldung?.wo === "aussortiert" || undefined}><summary><strong>Aussortiert ({aussortiert.length})</strong><small>aus der Akte genommen, nicht gelöscht</small></summary>
+      {sammel && <AuswahlLeiste name="aussortierte Dokumente" gesamt={aussortiert.length} gewaehlt={aussortiert.filter((d) => rausWahl.has(d.id)).length} onAlle={(alle) => setRausWahl(alle ? new Set(aussortiert.map((d) => d.id)) : new Set())}
+        aktionen={[{ key: "zurueckholen", haupt: true, disabled: sammelLaeuft, label: sammelLaeuft ? "Wird zurückgeholt …" : "Zurückholen", onClick: () => { const ids = aussortiert.filter((d) => rausWahl.has(d.id)).map((d) => d.id); void fuehre("aussortiert", async () => aussortierText(await sammel.zurueckholen(ids), true)); } }]}/>}
+      {sammelMeldung?.wo === "aussortiert" && <p className={sammelMeldung.ok ? "notiz-gespeichert" : "form-error"} role="status" data-aussortiert-meldung>{sammelMeldung.text}</p>}
+      <div className="library-zeilen">{aussortiert.map((d) => { const titel = isSensitiveHealthText(d.originalName, d.category, d.notes) ? "Geschützte Gesundheitsunterlage" : visibleDocumentTitle(d); return <article className="library-zeile" key={d.id} data-aussortiert-zeile={d.id}>
+        {sammel ? <AuswahlKaestchen an={rausWahl.has(d.id)} titel={titel} onWechsel={() => setRausWahl((alt) => { const neu = new Set(alt); if (neu.has(d.id)) neu.delete(d.id); else neu.add(d.id); return neu; })} data-aussortiert-wahl={d.id}/> : <span className="auswahl-platz"/>}
+        <span className="library-zeile-datum">{d.documentDate ? fmtDate(d.documentDate) : "ohne Datum"}</span>
+        <span className="library-zeile-titel"><FlachText text={titel}/></span>
+        <small className="library-zeile-bereich">{d.aussortiert?.verschoben ? "im Ordner „Aussortiert“" : "Datei blieb an ihrem Platz"}</small>
+      </article>; })}</div>
+    </details></section>}
   </>;
 }
 
@@ -3883,11 +4019,11 @@ function glockeText(r: FamilyRecordUnion) {
   return `🔔 ${(kalenderEinstLesen()?.erinnerungen || ERINNERUNG_VORGABE).map(erinnerungsName).join(", ")}`;
 }
 const arbeitsStand: Record<string, string> = { in_bearbeitung: "in Bearbeitung", wartet_auf_antwort: "wartet auf Antwort" };
-function terminErinnerung(records: FamilyRecordUnion[], id: string) {
+/** Im Auge nur der Kalender-Stand; die Glocke steht schon in der Zeile (2.28.39). */
+function kalenderStand(records: FamilyRecordUnion[], id: string) {
   const r = records.find((x) => x.id === id); if (!r) return null;
   const k = kalenderFelder(r);
-  const teile = [glockeText(r), k.kalenderEintragen ? ((k.kalender || []).length ? "im Kalender" : "geht in den Kalender") : ""].filter(Boolean);
-  return teile.length ? <p className="termin-erinnerung" data-termin-erinnerung>{teile.join(" · ")}</p> : null;
+  return k.kalenderEintragen ? <p className="termin-erinnerung" data-termin-erinnerung>{(k.kalender || []).length ? "im Kalender" : "geht in den Kalender"}</p> : null;
 }
 
 function ReminderCenter({ vaultHandle, records, relations, documents = [], focusId, onRefresh, onGo, onNotice }: {
@@ -3935,7 +4071,9 @@ function ReminderCenter({ vaultHandle, records, relations, documents = [], focus
   useEffect(() => { if (!erledigtZuletzt) return; const t = window.setTimeout(() => setErledigtZuletzt(null), 8000); return () => window.clearTimeout(t); }, [erledigtZuletzt]);
   // Frist aus dem Eingang (U12): gleich zum vorausgefüllten Formular springen statt oben im Kalender stehen zu bleiben.
   useEffect(() => { if (!vorschlag) return; const t = window.setTimeout(() => { klappOeffnen("anlegen"); document.querySelector("[data-frist-vorschlag]")?.scrollIntoView({ behavior: "smooth", block: "center" }); }, 400); return () => window.clearTimeout(t); }, [vorschlag]);
-  const [viewFilter, setViewFilter] = useState<"all" | "overdue" | "dueSoon" | "open">("all");
+  // Fristenliste mit Suchfeld und Filtern (2.28.39, Punkt 10): Offen · Diese Woche · Überfällig · Erledigt, 50 je Seite.
+  const [viewFilter, setViewFilter] = useState<"all" | "overdue" | "dueSoon" | "open" | "woche">("all");
+  const [suche, setSuche] = useState("");
   // Klaus 2026-11-05: kein Hin und Her – der angesprungene Eintrag wird gezeigt und hervorgehoben, „Ändern“ bearbeitet ihn hier.
   const [terminId, setTerminId] = useState<string | null>(null);
   const terminRecord = terminId ? records.find((r) => r.id === terminId) || null : null;
@@ -3946,6 +4084,8 @@ function ReminderCenter({ vaultHandle, records, relations, documents = [], focus
   const augeTippen = (id: string) => setAufIds((alt) => { const neu = new Set(alt); if (neu.has(id)) neu.delete(id); else neu.add(id); return neu; });
   useEffect(() => {
     if (!focusId) return;
+    // Sprung an #termin-<id> (auch auf einer späteren Seite oder hinter einem Filter): Filter und Suche geben ihn frei.
+    setViewFilter("all"); setSuche("");
     setAufIds((alt) => new Set(alt).add(focusId));
     const t = window.setTimeout(() => { const el = document.getElementById(`termin-${focusId}`); if (el) { el.closest("details")?.setAttribute("open", ""); el.scrollIntoView({ behavior: "smooth", block: "center" }); el.classList.add("hervorgehoben"); window.setTimeout(() => el.classList.remove("hervorgehoben"), 2600); } }, 350);
     return () => window.clearTimeout(t);
@@ -3954,7 +4094,20 @@ function ReminderCenter({ vaultHandle, records, relations, documents = [], focus
   const active = items.filter((item) => !["done", "postponed"].includes(item.displayStatus));
   const completed = items.filter((item) => ["done", "postponed"].includes(item.displayStatus));
   const counts = { overdue: active.filter((item) => item.displayStatus === "overdue").length, dueSoon: active.filter((item) => item.displayStatus === "dueSoon").length, open: active.filter((item) => item.displayStatus === "open").length };
-  const visibleActive = viewFilter === "all" ? active : active.filter((item) => item.displayStatus === viewFilter);
+  const woche = (() => { const heute = new Date(); const tag = (heute.getDay() + 6) % 7; const mo = new Date(heute.getFullYear(), heute.getMonth(), heute.getDate() - tag); const so = new Date(mo.getFullYear(), mo.getMonth(), mo.getDate() + 6); const iso = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; return [iso(mo), iso(so)] as const; })();
+  const linkName = (type: FamilyRecordUnion["recordType"], id: string) => {
+    if (type === "document") { const d = documents.find((x) => x.id === id); return d ? (isSensitiveHealthText(d.originalName, d.category, d.notes) ? "Geschützte Gesundheitsunterlage" : visibleDocumentTitle(d)) : "Dokument"; }
+    const r = records.find((x) => x.id === id); return r ? cockpitRecordLabel(r) : "nicht mehr vorhanden";
+  };
+  const sucheNorm = suche.trim().toLocaleLowerCase("de");
+  const passt = (item: (typeof items)[number]) => !sucheNorm || [item.title, item.source, item.notes, ...item.links.map((link) => { const own = link.fromId === item.id; return linkName(own ? link.toType : link.fromType, own ? link.toId : link.fromId); })].filter(Boolean).join(" ").toLocaleLowerCase("de").includes(sucheNorm);
+  const visibleActive = (viewFilter === "all" ? active : viewFilter === "woche" ? active.filter((item) => { const t = item.date?.slice(0, 10) || ""; return t >= woche[0] && t <= woche[1]; }) : active.filter((item) => item.displayStatus === viewFilter)).filter(passt);
+  const visibleCompleted = completed.filter(passt);
+  const fokusOffen = focusId ? visibleActive.findIndex((item) => item.id === focusId) + 1 : 0;
+  const fokusErledigt = focusId ? visibleCompleted.findIndex((item) => item.id === focusId) + 1 : 0;
+  const [offenGezeigt, offenMehr] = useSeiten(visibleActive.length, `${viewFilter}|${sucheNorm}`, LISTEN_SEITE, fokusOffen);
+  const [erledigtGezeigt, erledigtMehr] = useSeiten(visibleCompleted.length, sucheNorm, LISTEN_SEITE, fokusErledigt);
+  const zeilenDatum = (iso: string) => iso.slice(0, 4) === String(new Date().getFullYear()) ? fmtDate(iso).slice(0, 6) : fmtDate(iso);
   const save = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!vaultHandle) return setError("Bitte zuerst im Sicherheitscenter einen lokalen Datentresor verbinden.");
@@ -3992,7 +4145,7 @@ function ReminderCenter({ vaultHandle, records, relations, documents = [], focus
   const renderItem = (item: ReturnType<typeof buildScheduleItems>[number]) => { const auf = aufIds.has(item.id); const art = item.recordType === "deadline" ? "Frist" : item.recordType === "task" ? "Aufgabe" : "Erinnerung"; const uhr = terminZeit(records, item.id).replace(/^, /, "").replace(/ Uhr$/, "");
     return <article className={`schedule-item schedule-flach schedule-${item.displayStatus}${auf ? " offen" : ""}`} key={item.id} id={`termin-${item.id}`}>
     <div className="fz-kopf fz-voll">
-      <span className="mk-zeit">{item.date ? fmtDate(item.date.slice(0, 10)).slice(0, 6) : "–"}{uhr && <small>{uhr}</small>}</span>
+      <span className="mk-zeit">{item.date ? zeilenDatum(item.date.slice(0, 10)) : "–"}{uhr && <small>{uhr}</small>}</span>
       <span className="mk-text"><strong><FlachText text={item.title}/></strong><small>{[scheduleStatusLabels[item.displayStatus], arbeitsStand[item.status], art, terminGlockeKurz(records, item.id)].filter(Boolean).join(" · ")}</small></span>
       <KnopfLeiste titel={item.title}>
         {item.displayStatus !== "done" && <button type="button" className="icon-button" disabled={busy} onClick={() => changeStatus(item.id, "erledigt")} aria-label={`„${item.title}“ als erledigt markieren`} title="Als erledigt markieren" data-termin-erledigt={item.id}><Check size={18}/></button>}
@@ -4002,9 +4155,10 @@ function ReminderCenter({ vaultHandle, records, relations, documents = [], focus
       </KnopfLeiste>
     </div>
     {auf && <div className="fz-offen schedule-item-main" data-termin-offen>
-      <p><strong>{item.title}</strong></p>
-      <p><strong>{item.date ? fmtDate(item.date.slice(0, 10)) : "Ohne Fälligkeitsdatum"}{terminZeit(records, item.id)}</strong> · {art} · {scheduleStatusLabels[item.displayStatus]}</p>{terminErinnerung(records, item.id)}<small>Quelle: {item.source || "nicht angegeben"}</small>{item.notes && <p>{item.notes}</p>}
-      <div className="schedule-links">{item.links.length ? item.links.map((link) => { const ownFrom = link.fromId === item.id; const type = ownFrom ? link.toType : link.fromType; const id = ownFrom ? link.toId : link.fromId; const target = targetForRelation(type, id); return <button key={link.id} className="text-link" onClick={() => onGo(target.section as SectionId, target.targetId)}>{recordTypeDefinitions[type].label}: {bezugName(type, id, records, documents)}</button>; }) : <small>Keine zusätzliche Zuordnung</small>}</div><div className="button-row">{item.displayStatus !== "postponed" && item.displayStatus !== "done" && <button className="button secondary" disabled={busy} onClick={() => changeStatus(item.id, "zurückgestellt")}>Zurückstellen</button>}{["done", "postponed"].includes(item.displayStatus) && <button className="button secondary" disabled={busy} onClick={() => changeStatus(item.id, "offen")}>Wieder öffnen</button>}</div>
+      {/* Auge (2.28.39, Punkt 10): nur, was nicht schon in der Zeile steht – keine Doppelung von Titel, Datum, Art und Glocke. */}
+      {(anfangEnde(item.title)[2] || item.title.length > 60) && <p data-termin-volltitel><strong>{item.title}</strong></p>}
+      {kalenderStand(records, item.id)}<small>Quelle: {item.source || "nicht angegeben"}</small>{item.notes && <p>{item.notes}</p>}
+      <div className="schedule-links">{item.links.length ? item.links.map((link) => { const ownFrom = link.fromId === item.id; const type = ownFrom ? link.toType : link.fromType; const id = ownFrom ? link.toId : link.fromId; const target = targetForRelation(type, id); return <button key={link.id} className="text-link" onClick={() => onGo(target.section as SectionId, target.targetId)} data-termin-verweis={type}>{recordTypeDefinitions[type].label}: {bezugName(type, id, records, documents)}</button>; }) : <small>Keine zusätzliche Zuordnung</small>}</div><div className="button-row">{item.displayStatus !== "postponed" && item.displayStatus !== "done" && <button className="button secondary" disabled={busy} onClick={() => changeStatus(item.id, "zurückgestellt")}>Zurückstellen</button>}{["done", "postponed"].includes(item.displayStatus) && <button className="button secondary" disabled={busy} onClick={() => changeStatus(item.id, "offen")}>Wieder öffnen</button>}</div>
     </div>}
   </article>; };
   return <><PageTitle icon={<FileClock/>} title="Fristen und Aufgaben" text="Offene, bald fällige und überfällige Punkte aus dem bestehenden Familienakten-Datenmodell. Änderungen erfolgen nur nach deinem Befehl." extra={<KlappLeiste seite="fristen"/>}/>
@@ -4013,8 +4167,17 @@ function ReminderCenter({ vaultHandle, records, relations, documents = [], focus
     <section className="card schedule-create" data-klapp="anlegen"><div className="card-heading"><div><span className="badge success">Manuelle Eingabe</span><span className="ui-heading-help"><h2>Frist oder Aufgabe anlegen</h2><InfoPopover label="Frist oder Aufgabe anlegen erklären" text={UI_HELP["Frist oder Aufgabe anlegen"]}/></span></div></div>{!vaultHandle && <div className="sync-message warning">Bitte zuerst im Sicherheitscenter einen lokalen PC-, USB- oder OneDrive-Ordner verbinden.</div>}<form onSubmit={save}>{vorschlag && <p className="kalender-vorschlag" data-frist-vorschlag>{vorschlag.hinweis} – bitte prüfen.</p>}<div className="form-grid"><label><span>Art</span><select value={recordType} onChange={(event) => setRecordType(event.target.value as "deadline" | "task")}><option value="deadline">Frist</option><option value="task">Aufgabe</option></select></label><label><span>Bezeichnung</span><VoiceInput value={title} required onValueChange={(spokenValue) => setTitle(spokenValue)} placeholder="Zum Beispiel: Antwort an Krankenkasse" speechLabel="Titel"/></label><label><span>Fälligkeitsdatum</span><DatumFeld value={dueAt} required onChange={(event) => setDueAt(event.target.value)}/></label><label><span>Uhrzeit, frei</span><DatumFeld art="time" value={dueTime} onChange={(event) => setDueTime(event.target.value)} data-frist-uhrzeit/></label><label><span>Erinnerungsdatum, optional</span><DatumFeld value={reminderAt} onChange={(event) => setReminderAt(event.target.value)}/></label><label><span>Erinnerungsuhrzeit, optional</span><DatumFeld art="time" value={reminderTime} onChange={(event) => setReminderTime(event.target.value)} disabled={!reminderAt} data-erinnerung-uhrzeit/></label><label><span>Quelle</span><VoiceInput value={source} onValueChange={(spokenValue) => setSource(spokenValue)} placeholder="Zum Beispiel: Schreiben vom 07.10.2026" speechLabel="Quelle"/></label>{/* 2.28.39: Auswahl mit Namen statt eingetippter Kennung; gespeichert wird die Kennung. */}
 <label><span>Person, optional</span><select value={personId} onChange={(event) => setPersonId(event.target.value)} data-frist-bezug="person"><option value="">Keine Person</option>{bezugListe("person").map((r) => <option key={r.id} value={r.id}>{cockpitRecordLabel(r)}</option>)}</select></label><label><span>Objekt, optional</span><select value={objectId} onChange={(event) => setObjectId(event.target.value)} data-frist-bezug="object"><option value="">Kein Objekt</option>{bezugListe("object").map((r) => <option key={r.id} value={r.id}>{cockpitRecordLabel(r)}</option>)}</select></label><label><span>Vorgang, optional</span><select value={caseId} onChange={(event) => setCaseId(event.target.value)} data-frist-bezug="case"><option value="">Kein Vorgang</option>{bezugListe("case").map((r) => <option key={r.id} value={r.id}>{cockpitRecordLabel(r)}</option>)}</select></label><label><span>Dokument, optional</span><select value={documentId} onChange={(event) => setDocumentId(event.target.value)} data-frist-bezug="document"><option value="">Kein Dokument</option>{documents.map((d) => <option key={d.id} value={d.id}>{visibleDocumentTitle(d)}{d.documentDate ? ` · ${fmtDate(d.documentDate)}` : ""}</option>)}</select></label></div><label><span>Notizen, optional</span><VoiceTextarea rows={3} value={notes} onValueChange={(spokenValue) => setNotes(spokenValue)} speechLabel="Notizen"/></label><KalenderFormTeil einst={kalender} eintragen={kalenderEintragen} setEintragen={setKalenderEintragen} erinnerungen={erinnerungen} setErinnerungen={setErinnerungen} kalenderWahl={kalenderWahl} setKalenderWahl={setKalenderWahl}/><label className="check-row schedule-confirm"><input type="checkbox" checked={confirmed} onChange={(event) => setConfirmed(event.target.checked)}/><span><strong>Ja, diesen Eintrag nach dem Speichern anlegen</strong><small>Es wird nichts aus Dokumenten automatisch übernommen oder verändert.</small></span></label>{error && <div className="form-error">{error}</div>}<div className="modal-actions"><button className="button primary" disabled={busy || !vaultHandle}>{busy ? "Wird gespeichert …" : "✓ Frist oder Aufgabe bestätigt anlegen"}</button></div>{gespeichert && <p className="notiz-gespeichert" role="status" data-frist-gespeichert>{gespeichert}</p>}</form></section>
     <KalenderVerbinden vaultHandle={vaultHandle} records={records} relations={relations} onRefresh={onRefresh} onNotice={onNotice}/>
-    <section className="card" id="offene-fristen" data-klapp="offen" data-ziel-stand={active.length ? "offen" : "erledigt"}><div className="card-heading"><div><span className="ui-heading-help"><h2>Offene Fristen und Aufgaben</h2><InfoPopover label="Offene Fristen und Aufgaben erklären" text={UI_HELP["Offene Fristen und Aufgaben"]}/></span></div><div className="button-row"><span className="badge neutral">{visibleActive.length} angezeigt</span>{viewFilter !== "all" && <button className="text-link" onClick={() => setViewFilter("all")}>Alle offenen anzeigen</button>}</div></div>{erledigtZuletzt && <p className="erledigt-meldung" role="status" data-erledigt-meldung={erledigtZuletzt.id}><Check size={16}/><span><strong>{erledigtZuletzt.jetzt === "erledigt" ? "Erledigt" : "Zurückgestellt"}:</strong> <FlachText text={erledigtZuletzt.titel}/> <small>steht jetzt unter „Erledigte und zurückgestellte Punkte“</small></span><button type="button" className="button secondary" disabled={busy} onClick={() => { const z = erledigtZuletzt; setErledigtZuletzt(null); void changeStatus(z.id, z.vorher).then(() => setErledigtZuletzt(null)); }} data-erledigt-rueckgaengig>Rückgängig</button></p>}<div className="schedule-list">{visibleActive.length ? visibleActive.map(renderItem) : <div className="empty-state"><CheckCircle2 size={30}/><strong>Keine passenden offenen Fristen oder Aufgaben</strong><span>Der gewählte Filter enthält derzeit keinen Eintrag.</span></div>}</div></section>
-    <section className="card"><details data-klapp="erledigt"><summary><strong>Erledigte und zurückgestellte Punkte ({completed.length})</strong></summary><div className="schedule-list">{completed.length ? completed.map(renderItem) : <div className="empty-state">Noch keine erledigten oder zurückgestellten Punkte.</div>}</div></details></section>
+    <section className="card" id="offene-fristen" data-klapp="offen" data-ziel-stand={active.length ? "offen" : "erledigt"}><div className="card-heading"><div><span className="ui-heading-help"><h2>Offene Fristen und Aufgaben</h2><InfoPopover label="Offene Fristen und Aufgaben erklären" text={UI_HELP["Offene Fristen und Aufgaben"]}/></span></div><div className="button-row"><span className="badge neutral">{visibleActive.length} angezeigt</span>{(viewFilter !== "all" || suche) && <button className="text-link" onClick={() => { setViewFilter("all"); setSuche(""); }}>Alle offenen anzeigen</button>}</div></div>
+      <div className="fristen-filter" data-fristen-filter>
+        <label className="fristen-suche"><Search size={17} aria-hidden="true"/><input type="search" value={suche} onChange={(event) => setSuche(event.target.value)} placeholder="In Fristen suchen" aria-label="In Fristen suchen" data-fristen-suche/>{suche && <button type="button" className="icon-button" onClick={() => setSuche("")} aria-label="Suche löschen"><X size={15}/></button>}</label>
+        <span className="fristen-chips" role="group" aria-label="Fristen filtern">
+          <button type="button" aria-pressed={viewFilter === "all"} className={viewFilter === "all" ? "active" : ""} onClick={() => setViewFilter("all")} data-fristen-chip="offen">Offen ({active.length})</button>
+          <button type="button" aria-pressed={viewFilter === "woche"} className={viewFilter === "woche" ? "active" : ""} onClick={() => setViewFilter("woche")} data-fristen-chip="woche">Diese Woche</button>
+          <button type="button" aria-pressed={viewFilter === "overdue"} className={viewFilter === "overdue" ? "active" : ""} onClick={() => setViewFilter("overdue")} data-fristen-chip="ueberfaellig">Überfällig ({counts.overdue})</button>
+          <button type="button" onClick={() => { klappOeffnen("erledigt"); window.setTimeout(() => document.getElementById("erledigte-fristen")?.scrollIntoView({ behavior: "smooth", block: "start" }), 60); }} data-fristen-chip="erledigt">Erledigt ({completed.length}) ›</button>
+        </span>
+      </div>{erledigtZuletzt && <p className="erledigt-meldung" role="status" data-erledigt-meldung={erledigtZuletzt.id}><Check size={16}/><span><strong>{erledigtZuletzt.jetzt === "erledigt" ? "Erledigt" : "Zurückgestellt"}:</strong> <FlachText text={erledigtZuletzt.titel}/> <small>steht jetzt unter „Erledigte und zurückgestellte Punkte“</small></span><button type="button" className="button secondary" disabled={busy} onClick={() => { const z = erledigtZuletzt; setErledigtZuletzt(null); void changeStatus(z.id, z.vorher).then(() => setErledigtZuletzt(null)); }} data-erledigt-rueckgaengig>Rückgängig</button></p>}<div className="schedule-list">{visibleActive.length ? visibleActive.slice(0, offenGezeigt).map(renderItem) : <div className="empty-state"><CheckCircle2 size={30}/><strong>Keine passenden offenen Fristen oder Aufgaben</strong><span>{suche ? `Nichts zu „${suche}“ im gewählten Filter.` : "Der gewählte Filter enthält derzeit keinen Eintrag."}</span></div>}</div><WeitereAnzeigen gezeigt={offenGezeigt} gesamt={visibleActive.length} onMehr={offenMehr}/></section>
+    <section className="card" id="erledigte-fristen"><details data-klapp="erledigt"><summary><strong>Erledigte und zurückgestellte Punkte ({suche ? `${visibleCompleted.length} von ${completed.length}` : completed.length})</strong></summary><div className="schedule-list">{visibleCompleted.length ? visibleCompleted.slice(0, erledigtGezeigt).map(renderItem) : <div className="empty-state">{suche ? `Nichts zu „${suche}“.` : "Noch keine erledigten oder zurückgestellten Punkte."}</div>}</div><WeitereAnzeigen gezeigt={erledigtGezeigt} gesamt={visibleCompleted.length} onMehr={erledigtMehr}/></details></section>
     {terminRecord && vaultHandle && <TerminBearbeiten record={terminRecord} vaultHandle={vaultHandle} onZu={() => setTerminId(null)} onGespeichert={async (text) => { await onRefresh(); onNotice({ kind: "success", text }); }}/>}
   </>;
 }
@@ -4121,7 +4284,35 @@ function ExportDialog({ sourceHandle, documents, localDocuments, records, relati
 
 type IntakeFristWahl = { recordType: "deadline" | "task"; title: string; dueAt: string };
 const ZUORDNUNG_NAMEN: Record<string, string> = { person: "Person", organisation: "Organisation", object: "Objekt", deadline: "Frist", task: "Aufgabe" };
-const quelleName = (source: DocumentIntakeSource) => source === "camera-scan" ? "Foto oder Scan" : source === "onedrive-inbox" ? "OneDrive-Familienordner" : source === "local-inbox" ? "Lokaler Eingangsordner" : source === "drag-drop" ? "Hineingezogen" : "Dateiauswahl";
+
+/** Text einer Unterlage wie im Prüfdialog: Textebene, sonst Texterkennung auf dem Gerät (Tesseract aus Workflow PDF). Nichts geht hinaus.
+ *  Klaus 2026-10-31: „die Texterkennung hat nur Dokumentenscan und Datum erfasst“ – PDFs und Fotos werden darum ganz gelesen.
+ *  Die Sammelbestätigung (2.28.39) liest mit derselben Funktion, damit beide Wege dieselben Angaben speichern. */
+async function dokumentTextLesen(file: File, ocrLaeuft: (an: boolean) => void = () => undefined) {
+  let value = await extractDocumentIntakeTextHint(file).catch(() => "");
+  const istPdf = /\.pdf$/i.test(file.name) || file.type === "application/pdf", istBild = /^image\/(jpeg|png|webp)$/.test(file.type);
+  if (!value.trim() && (istPdf || istBild)) {
+    ocrLaeuft(true);
+    try {
+      const { dokumentText, dokumentTextOcr } = await import("./ki-auftrag-dialog");
+      if (istPdf) value = await dokumentText(file).catch(() => "");
+      if (!value.trim() || value.trim().length < 20) value = await dokumentTextOcr(file).catch(() => value);
+    } finally { ocrLaeuft(false); }
+  }
+  return value.slice(0, 300000);
+}
+
+/** Hinweise, die jede Ablage aus der Eingangszentrale bekommt (Prüfdialog und Sammelbestätigung gleich). */
+function eingangNotizen(queued: CentralIntakeQueueItem | null | undefined, notes: string | null) {
+  let text = notes;
+  if (queued?.analysis?.email) {
+    const email = queued.analysis.email;
+    text = [text, `E-Mail-Herkunft: ${email.sender || "Absender unbekannt"}`, email.messageId ? `Message-ID: ${email.messageId}` : "", email.attachmentNames.length ? `Anlagen: ${email.attachmentNames.join(", ")}` : ""].filter(Boolean).join(" · ");
+  }
+  // Ohne Versionsnummer in der sichtbaren Notiz (Klaus 08.11.2026: interne Angaben aus der Oberfläche); die Systemprüfung zählt beide Schreibweisen.
+  if (queued?.analysis) text = [text, `Eingangszentrale: ${queued.analysis.fileKind} · kontrolliert bestätigt`].filter(Boolean).join(" · ");
+  return text;
+}
 
 function UploadDialog({ initialFile, uebergabeVorschlag, source, knownDocuments, records, relations, decisions, suggestedCaseId, fristVorgabe, onClose, onAnsehen, onDasselbe, onSave }: {
   initialFile: File | null; source: DocumentIntakeSource;
@@ -4212,19 +4403,8 @@ function UploadDialog({ initialFile, uebergabeVorschlag, source, knownDocuments,
     if (!file) { setTextHint(""); return () => { cancelled = true; }; }
     // Klaus 2026-10-31: „die Texterkennung hat nur Dokumentenscan und Datum erfasst“ — PDFs und Fotos wurden gar nicht gelesen.
     // Jetzt: Textebene des PDF, sonst Texterkennung auf dem Gerät (Tesseract aus Workflow PDF, höchstens 5 Seiten). Nichts geht hinaus.
-    void (async () => {
-      let value = await extractDocumentIntakeTextHint(file).catch(() => "");
-      const istPdf = /\.pdf$/i.test(file.name) || file.type === "application/pdf", istBild = /^image\/(jpeg|png|webp)$/.test(file.type);
-      if (!value.trim() && (istPdf || istBild)) {
-        if (!cancelled) setTextLesen(true);
-        try {
-          const { dokumentText, dokumentTextOcr } = await import("./ki-auftrag-dialog");
-          if (istPdf) value = await dokumentText(file).catch(() => "");
-          if (!value.trim() || value.trim().length < 20) value = await dokumentTextOcr(file).catch(() => value);
-        } finally { if (!cancelled) setTextLesen(false); }
-      }
-      if (!cancelled) setTextHint(value.slice(0, 300000));
-    })().catch(() => { if (!cancelled) { setTextHint(""); setTextLesen(false); } });
+    void dokumentTextLesen(file, (an) => { if (!cancelled) setTextLesen(an); }).then((value) => { if (!cancelled) setTextHint(value); })
+      .catch(() => { if (!cancelled) { setTextHint(""); setTextLesen(false); } });
     return () => { cancelled = true; };
   }, [file]);
   useEffect(() => {

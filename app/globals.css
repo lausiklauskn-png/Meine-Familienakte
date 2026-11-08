@@ -2559,3 +2559,53 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .stamm-zeile:hover { background: var(--blue-soft); }
 .stamm-leer { color: var(--muted); }
 .intake-weitere-zuordnung { display: grid; gap: 4px; margin-top: 8px; }
+/* 2.28.39 Punkt 6/7/10: eine Auswahl-Leiste für alle Listen, Bibliothek als Zeilen, Fristen mit Suchfeld und Filtern. */
+.auswahl-leiste { position: sticky; bottom: 8px; z-index: 5; display: flex; align-items: center; flex-wrap: wrap; gap: 9px; margin: 12px 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--blue-soft); }
+.auswahl-leiste.aktiv { border-color: var(--teal); box-shadow: var(--shadow); }
+.auswahl-alle { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--navy); cursor: pointer; }
+.auswahl-alle input, .auswahl-kaestchen input { width: 20px; height: 20px; accent-color: var(--teal); cursor: pointer; }
+.auswahl-zahl { margin-right: auto; color: var(--navy); }
+.auswahl-aktionen { display: flex; flex-wrap: wrap; gap: 8px; }
+.auswahl-hinweis { flex-basis: 100%; color: var(--muted); }
+.auswahl-form { flex-basis: 100%; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px; }
+.auswahl-form label { display: grid; gap: 4px; min-width: 220px; }
+.auswahl-kaestchen { display: inline-flex; align-items: center; justify-content: center; min-width: 32px; min-height: 32px; cursor: pointer; }
+.auswahl-platz { display: inline-block; width: 32px; }
+.button.gefahr { color: var(--red); border-color: #d9a9ad; }
+.button.gefahr:hover:not(:disabled) { background: var(--red-soft); }
+.queue-sammel { margin: 2px 0; font-size: .86rem; color: var(--amber); }
+.queue-sammel.sicher { color: var(--green); }
+.queue-sammel.einzeln { color: var(--red); }
+.queue-frist-an { margin: 4px 0; font-size: .9rem; }
+.sammel-meldung { margin: 0 0 12px; padding: 10px 12px; border-radius: 12px; background: var(--green-soft); color: var(--green); }
+.sammel-meldung .form-error { margin: 4px 0 0; }
+.ansicht-umschalter { display: inline-flex; margin: 0 0 10px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.ansicht-umschalter button { padding: 6px 14px; border: 0; background: white; color: var(--navy); font: inherit; cursor: pointer; }
+.ansicht-umschalter button.active { background: var(--teal); color: white; font-weight: 700; }
+.library-zeilen { display: grid; margin-bottom: 18px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: white; }
+.library-zeile { display: grid; grid-template-columns: 32px 6.2rem minmax(0,1fr) minmax(0,14rem) 36px; align-items: center; gap: 8px; min-height: 46px; padding: 2px 8px; border-bottom: 1px solid var(--line); }
+.library-zeile:last-child { border-bottom: 0; }
+.library-zeile.gewaehlt { background: var(--teal-soft); }
+.library-zeile.sensitive { border-left: 4px solid #6689a2; }
+.library-zeile-datum { color: var(--muted); font-size: .9rem; white-space: nowrap; }
+.library-zeile-titel { min-width: 0; display: flex; align-items: center; gap: 5px; padding: 6px 0; border: 0; background: none; color: var(--navy); font: inherit; font-weight: 700; text-align: left; cursor: pointer; white-space: nowrap; overflow: hidden; }
+.library-zeile-bereich { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border: 0; background: none; color: var(--muted); font: inherit; font-size: .88rem; text-align: left; cursor: pointer; }
+.library-aussortiert summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; cursor: pointer; }
+.library-aussortiert summary small { color: var(--muted); }
+.library-aussortiert .library-zeile { grid-template-columns: 32px 6.2rem minmax(0,1fr) minmax(0,12rem); }
+.fristen-filter { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 6px 0 12px; }
+.fristen-suche { flex: 1 1 220px; display: flex; align-items: center; gap: 6px; padding: 0 8px; border: 1px solid var(--line); border-radius: 10px; background: white; }
+.fristen-suche input { flex: 1; min-width: 0; padding: 8px 2px; border: 0; background: none; font: inherit; }
+.fristen-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.fristen-chips button { padding: 6px 12px; border: 1px solid #c5d7e2; border-radius: 999px; background: white; color: var(--navy); font: inherit; font-size: .92rem; cursor: pointer; }
+.fristen-chips button.active { border-color: var(--teal); background: var(--teal-soft); font-weight: 700; }
+@media (max-width: 600px) {
+  .library-zeile { grid-template-columns: 32px minmax(0,1fr) 32px; grid-template-areas: "w t a" "w d d"; row-gap: 0; padding: 4px 6px; }
+  .library-zeile > .auswahl-kaestchen, .library-zeile > .auswahl-platz { grid-area: w; }
+  .library-zeile-titel { grid-area: t; }
+  .library-zeile-auf { grid-area: a; }
+  .library-zeile-datum { grid-area: d; font-size: .82rem; }
+  .library-zeile-bereich { display: none; }
+  .library-aussortiert .library-zeile { grid-template-columns: 32px minmax(0,1fr); grid-template-areas: "w t" "w d"; }
+  .auswahl-leiste { bottom: 4px; }
+}

@@ -316,12 +316,15 @@ try {
     await item.locator("button", { hasText: "Nicht übernehmen" }).count();
   });
   await step("Sammelauswahl: zwei Häkchen → „Nicht übernehmen“", async () => {
+    // 2.28.39: sichere Vorschläge stehen schon angehakt (Sammelbestätigung); darum zuerst „Alle“ abwählen.
+    const leiste = page.locator('[data-auswahl-leiste="Eingänge"]');
+    for (let i = 0; i < 2 && (await leiste.locator("[data-auswahl-zahl]").getAttribute("data-auswahl-zahl")) !== "0"; i++) await leiste.locator("[data-auswahl-alle]").click();
     for (const name of ["Nebenkosten_Uebersicht_2025.xlsx", "Foto_Garantiebeleg_Lavorix_Seite2.jpg"]) {
       const item = queueItem(name);
-      await item.locator("input[type=checkbox]").click();
-      await item.locator("input[type=checkbox]:checked").waitFor();
+      await item.locator("[data-queue-wahl]").click();
+      await item.locator("[data-queue-wahl]:checked").waitFor();
     }
-    await page.locator(".queue-batch button", { hasText: "Nicht übernehmen" }).click();
+    await leiste.locator('[data-auswahl-aktion="nicht"]').click();
     await queueItem("Nebenkosten_Uebersicht_2025.xlsx").locator(".badge", { hasText: "Nicht übernommen" }).waitFor();
   });
 
@@ -354,8 +357,10 @@ try {
   await step("Dokumentenbibliothek zeigt die neuen Unterlagen", async () => {
     await footer(page, "Dokumentenbibliothek");
     await page.locator("input[placeholder*='Titel, Dateiname']").fill("Lavorix");
-    await page.locator("text=Garantiebeleg_Waschautomat_Lavorix").first().waitFor({ timeout: 10000 });
-    return String(await page.locator("text=Garantiebeleg_Waschautomat_Lavorix").count()) + " Treffer";
+    // 2.28.39: kompakte Zeilen (Datum · Titel · Bereich); Titel statt Dateiname.
+    const zeilen = page.locator("[data-bibliothek-zeile]", { hasText: /Lavorix/ });
+    await zeilen.first().waitFor({ timeout: 10000 });
+    return String(await zeilen.count()) + " Treffer";
   });
   await step("Suche auf der Startseite findet die neue Unterlage", async () => {
     await page.locator(".main-navigation .nav-cluster > button").first().waitFor();

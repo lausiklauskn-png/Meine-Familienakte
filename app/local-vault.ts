@@ -66,6 +66,9 @@ export type LocalDocument = {
   titel?: string | null;
   /** Kurzer gelesener Textauszug für die Suche (nur Text, höchstens TEXTAUSZUG_MAX Zeichen; keine zweite PDF). */
   textAuszug?: string | null;
+  /** „Aus der Akte nehmen“ (2.28.39): archiviert, nicht gelöscht. verschoben = Datei liegt im Ordner „Aussortiert“;
+   *  false, wenn der Speicherweg das Verschieben nicht kann (Pro-Tresor) – dann bleibt die Datei an ihrem Platz. */
+  aussortiert?: { am: string; vorherPfad: string; verschoben: boolean } | null;
 };
 
 /** Obergrenze für den gespeicherten Textauszug je Dokument (Klaus 08.11.2026: nur Text, begrenzt). */
@@ -2779,6 +2782,124 @@ export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file:
 export async function updateLocalStatus(handle: FileSystemDirectoryHandle, id: string, status: LocalDocument["status"]) {
   const index = await readIndex(handle); const item = index.documents.find((document) => document.id === id);
   if (item) { item.status = status; item.updatedAt = new Date().toISOString(); } await writeIndex(handle, index);
+}
+
+/** Ergebnis von „Aus der Akte nehmen“ und „Zurückholen“: was verschoben wurde und was nur im Register umgestellt ist. */
+export type AussortierErgebnis = { verschoben: number; nurArchiviert: number; altLiegtNoch: number; fehler: string[] };
+
+/** Datei innerhalb des Aktenordners an einen neuen Pfad kopieren und prüfen (Prüfsumme). Gibt den neuen Pfad zurück. */
+async function dateiKopieren(handle: FileSystemDirectoryHandle, document: LocalDocument, zielPfad: string) {
+  const quelle = await documentFile(handle, document);
+  const ziel = await unusedTargetPath(handle, zielPfad, document.id);
+  const target = await ziel.directory.getFileHandle(ziel.fileName, { create: true });
+  const writable = await target.createWritable(); await writable.write(quelle); await writable.close();
+  const soll = document.checksum || await fileChecksum(quelle);
+  const ist = await fileChecksum(await target.getFile());
+  if (ist !== soll) { try { await ziel.directory.removeEntry(ziel.fileName); } catch { /* bereits weg */ } throw new Error(`Die Kopie von „${document.titel || document.originalName}“ stimmt nicht mit dem Original überein.`); }
+  return ziel.storedPath;
+}
+
+function pfadSetzen(document: LocalDocument, alt: string, neu: string) {
+  document.storedPath = neu; document.relativePath = neu;
+  if (document.oneDrivePath) document.oneDrivePath = neu;
+  for (const ort of document.storageLocations || []) if (ort.path === alt) ort.path = neu;
+}
+
+/**
+ * „Aus der Akte nehmen“ (Klaus 08.11.2026): archivieren statt löschen. Im Aktenordner wandert die Datei nach
+ * „01_Dokumente/Aussortiert/<Bereich>“ (erst Kopie mit Prüfsumme, dann Register, dann Original entfernen). Liegt das
+ * Original im gemeinsamen Pro-Tresor, kann die App es dort nicht verschieben: dann wird nur im Register archiviert.
+ */
+export async function dokumenteAussortieren(handle: FileSystemDirectoryHandle, ids: string[]): Promise<AussortierErgebnis> {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  const index = await readIndex(handle);
+  const am = new Date().toISOString();
+  const ergebnis: AussortierErgebnis = { verschoben: 0, nurArchiviert: 0, altLiegtNoch: 0, fehler: [] };
+  const neuAngelegt: string[] = []; const altEntfernen: string[] = [];
+  for (const document of index.documents.filter((d) => ids.includes(d.id) && !d.aussortiert)) {
+    const vorher = document.storedPath;
+    if (istProOriginal(vorher)) { document.aussortiert = { am, vorherPfad: vorher, verschoben: false }; ergebnis.nurArchiviert++; continue; }
+    try {
+      const name = vorher.split("/").filter(Boolean).pop() || clean(document.originalName);
+      const neu = await dateiKopieren(handle, document, `${ROOT}/01_Dokumente/Aussortiert/${clean(document.category)}/${name}`);
+      neuAngelegt.push(neu); altEntfernen.push(vorher);
+      pfadSetzen(document, vorher, neu);
+      document.aussortiert = { am, vorherPfad: vorher, verschoben: true }; ergebnis.verschoben++;
+    } catch (error) {
+      // Verschieben ging nicht (Speicherweg kann es nicht): trotzdem aus der Akte nehmen, Datei bleibt, wo sie ist.
+      document.aussortiert = { am, vorherPfad: vorher, verschoben: false }; ergebnis.nurArchiviert++;
+      ergebnis.fehler.push(`${document.titel || document.originalName}: ${error instanceof Error ? error.message : "Verschieben nicht möglich"}`);
+    }
+    document.updatedAt = am;
+    index.auditLog.unshift({ id: crypto.randomUUID(), at: am, action: "Aus der Akte genommen", recordId: document.id, details: document.aussortiert.verschoben ? "Archiviert; Datei liegt im Ordner „Aussortiert“. Zurückholen ist möglich." : "Archiviert; die Datei blieb an ihrem Platz. Zurückholen ist möglich." });
+  }
+  const basis = await root(handle);
+  try { await writeIndex(handle, index); } catch (error) {
+    for (const pfad of neuAngelegt) { try { await removeFileByRelativePath(basis, pfad, true); } catch { /* bleibt liegen */ } }
+    throw error;
+  }
+  for (const pfad of altEntfernen) { try { await removeFileByRelativePath(basis, pfad, true); } catch { ergebnis.altLiegtNoch++; } }
+  return ergebnis;
+}
+
+/** „Zurückholen“: das Dokument steht wieder in der Akte; eine verschobene Datei kehrt in den Bereichsordner zurück. */
+export async function dokumenteZurueckholen(handle: FileSystemDirectoryHandle, ids: string[]): Promise<AussortierErgebnis> {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  const index = await readIndex(handle);
+  const am = new Date().toISOString();
+  const ergebnis: AussortierErgebnis = { verschoben: 0, nurArchiviert: 0, altLiegtNoch: 0, fehler: [] };
+  const neuAngelegt: string[] = []; const altEntfernen: string[] = [];
+  for (const document of index.documents.filter((d) => ids.includes(d.id) && d.aussortiert)) {
+    const info = document.aussortiert!;
+    if (info.verschoben && !istProOriginal(document.storedPath)) {
+      try {
+        const vorher = document.storedPath;
+        const neu = await dateiKopieren(handle, document, info.vorherPfad || `${ROOT}/01_Dokumente/${clean(document.category)}/${clean(document.originalName)}`);
+        neuAngelegt.push(neu); altEntfernen.push(vorher); pfadSetzen(document, vorher, neu); ergebnis.verschoben++;
+      } catch (error) {
+        ergebnis.nurArchiviert++;
+        ergebnis.fehler.push(`${document.titel || document.originalName}: ${error instanceof Error ? error.message : "Zurückschieben nicht möglich"} – die Datei bleibt im Ordner „Aussortiert“.`);
+      }
+    } else ergebnis.nurArchiviert++;
+    document.aussortiert = null; document.updatedAt = am;
+    index.auditLog.unshift({ id: crypto.randomUUID(), at: am, action: "In die Akte zurückgeholt", recordId: document.id, details: "Das Dokument steht wieder in Bibliothek, Suche und Cockpit." });
+  }
+  const basis = await root(handle);
+  try { await writeIndex(handle, index); } catch (error) {
+    for (const pfad of neuAngelegt) { try { await removeFileByRelativePath(basis, pfad, true); } catch { /* bleibt liegen */ } }
+    throw error;
+  }
+  for (const pfad of altEntfernen) { try { await removeFileByRelativePath(basis, pfad, true); } catch { ergebnis.altLiegtNoch++; } }
+  return ergebnis;
+}
+
+/** Sammelaktion „Bereich ändern“: nur der Eintrag im Register, die Datei bleibt, wo sie ist. */
+export async function dokumenteBereichSetzen(handle: FileSystemDirectoryHandle, ids: string[], bereich: string) {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  const wert = bereich.replace(/\s+/g, " ").trim().slice(0, 100);
+  if (!wert) throw new Error("Bitte einen Bereich wählen.");
+  const index = await readIndex(handle); const am = new Date().toISOString(); let n = 0;
+  for (const document of index.documents.filter((d) => ids.includes(d.id))) {
+    if (document.category === wert) continue;
+    index.auditLog.unshift({ id: crypto.randomUUID(), at: am, action: "Bereich geändert", recordId: document.id, details: `„${document.category}“ → „${wert}“ (Sammelaktion).` });
+    document.category = wert; document.updatedAt = am; n++;
+  }
+  await writeIndex(handle, index);
+  return n;
+}
+
+/** Sammelaktion „Person zuordnen“: je Dokument eine Verknüpfung „betrifft“; vorhandene bleiben unverändert. */
+export async function dokumenteZuordnen(handle: FileSystemDirectoryHandle, ids: string[], ziel: { type: FamilyRecordType; id: string }) {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  const index = await readIndex(handle); const am = new Date().toISOString(); let n = 0;
+  if (!index.records.some((r) => r.id === ziel.id && r.recordType === ziel.type)) throw new Error("Die gewählte Person ist im Register nicht vorhanden.");
+  for (const document of index.documents.filter((d) => ids.includes(d.id))) {
+    if (index.relations.some((r) => r.fromType === "document" && r.fromId === document.id && r.toType === ziel.type && r.toId === ziel.id)) continue;
+    index.relations.push({ id: crypto.randomUUID(), fromType: "document", fromId: document.id, toType: ziel.type, toId: ziel.id, relationType: "betrifft", createdAt: am, source: "Sammelaktion Bibliothek", notes: null }); n++;
+  }
+  if (n) index.auditLog.unshift({ id: crypto.randomUUID(), at: am, action: "Verknüpfung angelegt", details: `${n} Dokument${n === 1 ? "" : "e"} nach Benutzerbestätigung zugeordnet (Sammelaktion).` });
+  await writeIndex(handle, index);
+  return n;
 }
 
 export async function attachLocalDocumentStorageLocation(handle: FileSystemDirectoryHandle, documentId: string, location: Omit<DocumentStorageLocation, "id">) {

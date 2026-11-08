@@ -3,12 +3,13 @@ import { useState } from "react";
 
 export const LISTEN_SEITE = 50;
 
-/** Wie viele Einträge gezeigt werden; beginnt bei einer Seite und wieder von vorn, sobald sich der Schlüssel (Filter) ändert. */
-export function useSeiten(gesamt: number, schluessel: string, start = LISTEN_SEITE): [number, () => void] {
+/** Wie viele Einträge gezeigt werden; beginnt bei einer Seite und wieder von vorn, sobald sich der Schlüssel (Filter) ändert.
+ *  mindestens: so viele werden auf jeden Fall gezeigt (Sprung an einen Eintrag auf einer späteren Seite, 2.28.39). */
+export function useSeiten(gesamt: number, schluessel: string, start = LISTEN_SEITE, mindestens = 0): [number, () => void] {
   const [anzahl, setAnzahl] = useState(start);
   const [bisher, setBisher] = useState(schluessel);
   if (bisher !== schluessel) { setBisher(schluessel); setAnzahl(LISTEN_SEITE); }
-  return [Math.min(anzahl, gesamt), () => setAnzahl((wert) => wert + LISTEN_SEITE)];
+  return [Math.min(Math.max(anzahl, mindestens), gesamt), () => setAnzahl((wert) => Math.max(wert, mindestens) + LISTEN_SEITE)];
 }
 
 export function WeitereAnzeigen({ gezeigt, gesamt, onMehr }: { gezeigt: number; gesamt: number; onMehr: () => void }) {
