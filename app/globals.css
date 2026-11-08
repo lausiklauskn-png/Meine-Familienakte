@@ -2461,3 +2461,34 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .hilfe-oben-karte-kopf h3 { margin: 0; font-size: 1.05rem; color: var(--navy); }
 /* Web-App schon installiert, Seite im Browser offen: kein Knopf „Installieren“ (app/installiert.ts). */
 .pwa-installiert .familienakte-install { display: none !important; }
+
+/* Kopf mit Aufklappleiste (Klaus 08.11.2026): bis 900 px stehen Drucken, Installieren und Abmelden hinter dem Pfeil ‹;
+   die Leiste schiebt sich über die Knöpfe rechts, › schließt sie (auch Tipp daneben, Esc). Breiter: kein Pfeil. */
+.kopf-pfeil { display: none; font: 700 1.25rem/1 inherit; color: var(--teal, #2a7f86); background: var(--teal-soft, #e8f6f5); }
+@media (max-width: 900px) {
+  .masthead { position: relative; }
+  .header-actions > .kopf-pfeil-auf { display: inline-grid; place-items: center; order: 99; }
+  .header-actions.kopf-auf { position: absolute; top: 0; bottom: 0; right: 0; z-index: 5; justify-content: flex-end; padding: 0 12px 0 0; background: var(--paper, #fff); box-shadow: -10px 0 18px rgba(9, 38, 63, .16); }
+  .header-actions.kopf-auf > :not(.drucken-knopf):not(.logout-button):not(.login-button):not(.familienakte-install):not(.kopf-pfeil-zu) { display: none !important; }
+  .header-actions.kopf-auf > .kopf-pfeil-zu { display: inline-grid; place-items: center; order: -1; }
+  .header-actions.kopf-auf > .drucken-knopf, .header-actions.kopf-auf > .logout-button, .header-actions.kopf-auf > .login-button { display: inline-flex !important; align-items: center; justify-content: center; }
+  .header-actions.kopf-auf > .familienakte-install:not([hidden]) { display: inline-flex !important; }
+  .pwa-installiert .header-actions.kopf-auf > .familienakte-install { display: none !important; }
+  @media (prefers-reduced-motion: no-preference) { .header-actions.kopf-auf { animation: kopf-leiste-rein .2s ease; } }
+}
+@keyframes kopf-leiste-rein { from { transform: translateX(40%); opacity: .4; } to { transform: none; opacity: 1; } }
+@media (max-width: 620px) {
+  .header-actions > .kopf-pfeil { width: 20px; min-width: 20px; font-size: 1.1rem; }
+  .masthead { gap: 6px; }
+}
+@media (max-width: 420px) {
+  .masthead { padding-left: 8px; padding-right: 8px; gap: 5px; }
+  .header-actions { gap: 2px; }
+  .header-actions .neu-knopf-schalter { padding-left: 6px; padding-right: 6px; }
+}
+.site-brand strong { overflow: hidden; }
+@media (max-width: 380px) {
+  .site-brand { gap: 5px; }
+  .site-brand .brand-symbol { width: 28px; height: 28px; }
+  .site-brand .brand-symbol svg { width: 20px; height: 20px; }
+}
