@@ -74,16 +74,18 @@ export function AppGlocke({ records, relations, onOeffnen, onErledigt }: { recor
   const [klingelt, setKlingelt] = useState<GlockenZeit[]>([]);
   const klingelnBis = useRef(0);
   const zeiten = useMemo(() => glockenZeiten(records, relations, kalender?.erinnerungen || ERINNERUNG_VORGABE), [records, relations, kalender?.erinnerungen?.join()]);
-  // Ab Werk an (ohne Kalender): beim ersten Start festhalten; unter Android je Start die Erlaubnis für Meldungen sichern
-  // (fragt nur, solange sie fehlt).
-  useEffect(() => { if (!s.an) return; if (!glockeGespeichert()) glockeSchreiben(glockeLesen()); void glockePlugin()?.erlauben().catch(() => undefined); }, [s.an]);
+  // Ab Werk an (ohne Kalender): beim ersten Start festhalten. Die Erlaubnis für Meldungen fragt Android erst, wenn es
+  // eine kommende Erinnerung gibt (siehe unten) – ein leerer erster Start zeigt kein Berechtigungsfenster.
+  useEffect(() => { if (s.an && !glockeGespeichert()) glockeSchreiben(glockeLesen()); }, [s.an]);
   // Android: alle kommenden Glocken (höchstens 50, 60 Tage) als Benachrichtigung einplanen; aus = alle löschen.
   useEffect(() => {
     const plugin = glockePlugin(); if (!plugin) return;
     const jetzt = Date.now();
     const glocken = s.an ? zeiten.filter((z) => { const um = Date.parse(z.um); return um > jetzt && um < jetzt + 60 * 86400000; }).slice(0, 50).map((z) => ({ titel: z.titel, text: wannText(z), um: Date.parse(z.um) })) : [];
+    // Erst wenn etwas zu läuten ist, die Erlaubnis sichern (fragt nur, solange sie fehlt); dann einplanen.
     // aus: auch schon angezeigte Meldungen aus der Leiste nehmen (Nutzer 08.11.2026).
-    void plugin.planen({ glocken, aus: !s.an }).catch(() => undefined);
+    const erlaubt = s.an && glocken.length ? plugin.erlauben().catch(() => undefined) : Promise.resolve(undefined);
+    void erlaubt.then(() => plugin.planen({ glocken, aus: !s.an })).catch(() => undefined);
   }, [s.an, zeiten]);
   useEffect(() => {
     if (!s.an) return;
