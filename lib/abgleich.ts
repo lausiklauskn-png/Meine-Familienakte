@@ -8,7 +8,21 @@
  *  - Mit gemerktem Stand vom letzten Abgleich: nur eine Seite geändert → still übernehmen; beide geändert → fragen.
  *    Ohne gemerkten Stand ist jeder Unterschied eine Frage; vorgeschlagen ist die jüngere Änderung.
  *  - Nichts wird über den Abgleich gelöscht. Was nur hier liegt, bleibt; was nur dort liegt, kommt dazu.
- *  - Die Uhrzeit entscheidet nie, sie wird nur angezeigt und für den Vorschlag genutzt. */
+ *  - Die Uhrzeit entscheidet nie, sie wird nur angezeigt und für den Vorschlag genutzt.
+ *  - Gerätelokale Felder eines Dokuments (wo die Datei auf DIESEM Gerät liegt) zählen nicht als Unterschied und bleiben beim
+ *    Übernehmen der anderen Fassung erhalten (Stufe C: zwei Geräte legen dieselbe Datei an verschiedenen Pfaden ab). */
+
+/** Felder, die je Gerät verschieden sein dürfen, ohne dass der Eintrag als geändert gilt. */
+export const LOKALE_DOKUMENTFELDER = ["storedPath", "relativePath", "storageType", "oneDrivePath", "storageLocations", "proScanOriginals", "scanOriginalsPath", "proBezug", "proUebergabe"] as const;
+export function ohneLokaleFelder(bereich: Bereich, x: Item): Item {
+  if (bereich !== "documents") return x;
+  const o: Item = { ...x }; for (const f of LOKALE_DOKUMENTFELDER) delete o[f]; return o;
+}
+/** Übernimmt `dort`, behält aber die gerätelokalen Felder von `hier`. */
+export function mitLokalenFeldern(bereich: Bereich, dort: Item, hier: Item | undefined): Item {
+  if (bereich !== "documents" || !hier) return dort;
+  const o: Item = { ...dort }; for (const f of LOKALE_DOKUMENTFELDER) { if (hier[f] !== undefined) o[f] = hier[f]; else delete o[f]; } return o;
+}
 
 export type Bereich = "documents" | "records" | "relations" | "memoryDrafts" | "linkDecisions";
 export const BEREICHE: Bereich[] = ["documents", "records", "relations", "memoryDrafts", "linkDecisions"];
@@ -32,7 +46,8 @@ export type AbgleichPlan = {
   umbenannt: Record<string, string>;
   liste: Zeile[];
   konflikte: Konflikt[];
-  zaehlung: { neu: number; uebernommen: number; konflikte: number; gleich: number; nurHier: number };
+  /** hierGeaendert: eigene Änderungen seit dem gemerkten Stand (neu oder geändert), die zur anderen Seite gehen. */
+  zaehlung: { neu: number; uebernommen: number; konflikte: number; gleich: number; nurHier: number; hierGeaendert: number };
 };
 
 /** Feste Reihenfolge der Schlüssel, damit gleicher Inhalt den gleichen Fingerabdruck gibt. */
@@ -52,9 +67,10 @@ export const schluessel = (bereich: Bereich, id: string) => `${bereich}:${id}`;
 /** Stand nach einem Abgleich, zum Merken je Partner. */
 export function basisAus(akte: Akte): Basis {
   const b: Basis = {};
-  for (const bereich of BEREICHE) for (const x of akte[bereich] || []) b[schluessel(bereich, x.id)] = fingerabdruck(x);
+  for (const bereich of BEREICHE) for (const x of akte[bereich] || []) b[schluessel(bereich, x.id)] = fingerabdruck(ohneLokaleFelder(bereich, x));
   return b;
 }
+const fa = (bereich: Bereich, x: Item) => fingerabdruck(ohneLokaleFelder(bereich, x));
 
 const NUMMER = /^([A-Z]{2,5})-(\d{6})$/;
 const zeitVon = (x: Item) => (typeof x.updatedAt === "string" && x.updatedAt) || (typeof x.createdAt === "string" && x.createdAt) || (typeof x.addedAt === "string" && x.addedAt) || null;
@@ -117,17 +133,21 @@ export function abgleichPlanen(hier: Akte, dort: Akte, basis: Basis | null = nul
 
   // 3. Drei-Wege-Vergleich je Bereich.
   const konflikte: Konflikt[] = [];
-  let neu = 0, uebernommen = 0, gleich = 0, nurHier = 0;
+  let neu = 0, uebernommen = 0, gleich = 0, nurHier = 0, hierGeaendert = 0;
   for (const bereich of BEREICHE) {
     const a = new Map((hier[bereich] || []).map((x) => [x.id, x])), b = new Map((dortAngepasst[bereich] || []).map((x) => [x.id, x]));
+    for (const [id, y] of a) {
+      if (basis) { const alt = basis[schluessel(bereich, id)]; if (!alt || alt !== fa(bereich, y)) hierGeaendert++; }
+      else { const x = b.get(id); if (!x || fa(bereich, x) !== fa(bereich, y)) hierGeaendert++; }
+    }
     for (const [id, x] of b) {
       const y = a.get(id);
       if (!y) { neu++; if (bereich !== "relations" && bereich !== "linkDecisions") liste.push({ art: "neu", bereich, titel: titelVon(bereich, x) }); continue; }
-      const fa = fingerabdruck(y), fb = fingerabdruck(x);
-      if (fa === fb) { gleich++; continue; }
+      const fHier = fa(bereich, y), fDort = fa(bereich, x);
+      if (fHier === fDort) { gleich++; continue; }
       const alt = basis?.[schluessel(bereich, id)];
-      if (alt && alt === fb) continue;                                   // nur hier geändert → hier bleibt
-      if (alt && alt === fa) { uebernommen++; liste.push({ art: "übernommen", bereich, titel: titelVon(bereich, x) }); continue; } // nur dort geändert
+      if (alt && alt === fDort) continue;                                // nur hier geändert → hier bleibt
+      if (alt && alt === fHier) { uebernommen++; liste.push({ art: "übernommen", bereich, titel: titelVon(bereich, x) }); continue; } // nur dort geändert
       const hz = zeitVon(y), dz = zeitVon(x);
       konflikte.push({ schluessel: schluessel(bereich, id), bereich, id, titel: titelVon(bereich, y), hier: y, dort: x, hierZeit: hz, dortZeit: dz, vorschlag: hz && dz && dz > hz ? "dort" : "hier" });
     }
@@ -135,7 +155,7 @@ export function abgleichPlanen(hier: Akte, dort: Akte, basis: Basis | null = nul
   }
   const reihenfolge = { "übernommen": 0, "neu": 1, "neu-nummeriert": 2, "gleich-datei": 3 } as const;
   liste.sort((x, y) => reihenfolge[x.art] - reihenfolge[y.art] || x.titel.localeCompare(y.titel, "de"));
-  return { hier, dort, dortAngepasst, umbenannt, liste, konflikte, zaehlung: { neu, uebernommen, konflikte: konflikte.length, gleich, nurHier } };
+  return { hier, dort, dortAngepasst, umbenannt, liste, konflikte, zaehlung: { neu, uebernommen, konflikte: konflikte.length, gleich, nurHier, hierGeaendert } };
 }
 
 /** Wendet den Plan an. `wahl` je Konflikt-Schlüssel; fehlt sie, bleibt „hier“. Gibt die neue Akte und die neue Basis zurück. */
@@ -149,9 +169,9 @@ export function abgleichAnwenden(plan: AbgleichPlan, wahl: Record<string, Seite>
       const x = dort.get(y.id); dort.delete(y.id);
       if (!x) { liste.push(y); continue; }
       const k = schluessel(bereich, y.id), w = konfliktWahl.get(k);
-      if (w) { liste.push(w === "dort" ? x : y); continue; }
+      if (w) { liste.push(w === "dort" ? mitLokalenFeldern(bereich, x, y) : y); continue; }
       const alt = basis?.[k];
-      liste.push(alt && alt === fingerabdruck(y) && alt !== fingerabdruck(x) ? x : y);
+      liste.push(alt && alt === fa(bereich, y) && alt !== fa(bereich, x) ? mitLokalenFeldern(bereich, x, y) : y);
     }
     for (const x of dort.values()) liste.push(x);
     ergebnis[bereich] = liste;

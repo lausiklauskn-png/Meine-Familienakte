@@ -86,7 +86,7 @@ export async function tresorAnlegen(passwort: string, angaben: { appVersion: str
 }
 
 /** Vorhandene Sicherung öffnen, mit Passwort oder Notfallschlüssel. Falsch → Error("PASSWORT_FALSCH"). */
-export async function tresorOeffnen(kopf: SicherungsKopf, zugang: { passwort?: string; notfall?: string }): Promise<CryptoKey> {
+export async function tresorOeffnen(kopf: SicherungsKopf, zugang: { passwort?: string; notfall?: string }, extrahierbar = false): Promise<CryptoKey> {
   if (kopf.format !== FORMAT || kopf.version !== 1) throw new Error("Diese Sicherung hat ein unbekanntes Format.");
   let datenBytes: Uint8Array;
   try {
@@ -94,10 +94,13 @@ export async function tresorOeffnen(kopf: SicherungsKopf, zugang: { passwort?: s
     else if (zugang.passwort) datenBytes = await auspacken(await passwortSchluessel(zugang.passwort, unb64(kopf.kdf.salt), kopf.kdf.iterations), kopf.schluessel.passwort);
     else throw new Error("PASSWORT_FEHLT");
   } catch (e) { if (e instanceof Error && e.message === "PASSWORT_FEHLT") throw e; throw new Error("PASSWORT_FALSCH"); }
-  const daten = await rohSchluessel(datenBytes);
+  const daten = await rohSchluessel(datenBytes, extrahierbar);
   try { if (dec.decode(await auspacken(daten, kopf.pruefung)) !== FORMAT) throw new Error(); } catch { throw new Error("PASSWORT_FALSCH"); }
   return daten;
 }
+/** Stufe C: Datenschlüssel als Bytes merken (im eigenen App-Speicher des Geräts) und wieder einlesen. */
+export const schluesselExportieren = async (daten: CryptoKey) => b64(new Uint8Array(await crypto.subtle.exportKey("raw", daten)));
+export const schluesselImportieren = (text: string) => rohSchluessel(unb64(text));
 
 /** IV je Stück: 8 Byte Datei-Nonce + 4 Byte Zähler. */
 function stueckIv(nonce: Uint8Array, nr: number) { const iv = new Uint8Array(12); iv.set(nonce); new DataView(iv.buffer).setUint32(8, nr); return iv; }

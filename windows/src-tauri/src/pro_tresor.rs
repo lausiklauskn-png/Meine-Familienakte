@@ -24,6 +24,8 @@ fn aktion_erlaubt(request: &Value) -> bool {
         Some("zustand" | "verbinden" | "entsperren" | "sperren" | "speichern" | "lesen" | "uebergabeSenden" | "uebergabeEingang" | "uebergabeLesen" | "uebergabeQuittieren" | "uebergabeStand" | "dateiExportieren"
             // P4/P5: frei gewählter Sicherungsordner und stückweise Ausgabe bis 100 MB (FamilyFolders.java)
             | "ordnerWaehlen" | "ordnerListe" | "ordnerAnlegen" | "dateiInfo" | "dateiLesen" | "eigeneDateiEntfernen"
+            // Stufe C (Plan 08.11.): gemeinsame Festplatte – Ort merken, wieder öffnen, Laufwerke nach der Kennung absuchen
+            | "ordnerMerken" | "ordnerOeffnen" | "laufwerkeSuchen"
             | "dateiBeginn" | "dateiAnhaengen" | "dateiFertig" | "dateiVerwerfen"
             | "ausgabeBeginn" | "ausgabeAnhaengen" | "ausgabeFertig" | "ausgabeSpeichern" | "ausgabeVerwerfen"))
 }
@@ -103,7 +105,7 @@ mod tests {
             assert!(aktion_erlaubt(&json!({"aktion": aktion})));
         }
         // P5: Sicherungsordner-Aktionen; ein allgemeines Löschen gibt es weiterhin nicht.
-        for aktion in ["ordnerWaehlen", "dateiBeginn", "dateiAnhaengen", "dateiFertig", "eigeneDateiEntfernen", "ausgabeBeginn", "ausgabeSpeichern"] {
+        for aktion in ["ordnerWaehlen", "dateiBeginn", "dateiAnhaengen", "dateiFertig", "eigeneDateiEntfernen", "ausgabeBeginn", "ausgabeSpeichern", "ordnerMerken", "ordnerOeffnen", "laufwerkeSuchen"] {
             assert!(aktion_erlaubt(&json!({"aktion": aktion})));
         }
         for bad in [json!({}), json!({"aktion": "shell"}), json!({"aktion": "dateiLoeschen"})] {

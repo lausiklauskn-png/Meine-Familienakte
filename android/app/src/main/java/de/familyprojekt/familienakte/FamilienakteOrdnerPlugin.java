@@ -37,6 +37,8 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
     static final long MAX_DATEI = 100L * 1024 * 1024 + 8192 + 12;
     private final ExecutorService worker = Executors.newSingleThreadExecutor();
     private final Map<String, SafAblage> ordner = new HashMap<>();
+    /** Stufe C: Baum-Uri je Kennung, damit eine Freigabe dauerhaft gemerkt werden kann (gemeinsame Festplatte). */
+    private final Map<String, Uri> baeume = new HashMap<>();
     private final Map<String, Schreiben> offen = new HashMap<>();
     private final java.util.Set<String> selbstAngelegt = new java.util.HashSet<>();
     private static final class Schreiben { SafAblage ablage; String token; String pfad; OutputStream out; long groesse; MessageDigest sha; }
@@ -71,10 +73,58 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
         arbeit(call, () -> {
             SafAblage a = new SafAblage(getContext().getContentResolver(), baum);
             a.liste(""); // Probe: lesbar
-            String token = UUID.randomUUID().toString(); ordner.put(token, a);
+            String token = UUID.randomUUID().toString(); ordner.put(token, a); baeume.put(token, baum);
             String name = baum.getLastPathSegment() == null ? "Ordner" : baum.getLastPathSegment();
             int i = name.lastIndexOf(':'); if (i >= 0) name = name.substring(i + 1);
             return new JSObject().put("token", token).put("name", name.isEmpty() ? "Speicher" : name);
+        });
+    }
+    /** Stufe C (Plan 08.11.): Freigabe dauerhaft merken; die Seite bekommt einen Ort-Text zurück, den ordnerOeffnen wieder öffnet. */
+    @PluginMethod public void ordnerMerken(PluginCall call) {
+        arbeit(call, () -> {
+            Uri baum = baeume.get(call.getString("token", ""));
+            if (baum == null) throw new IOException("FA_ORDNER_NICHT_ERREICHBAR");
+            getContext().getContentResolver().takePersistableUriPermission(baum, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            return new JSObject().put("ort", baum.toString());
+        });
+    }
+    private static String ortName(Uri baum) {
+        String name = baum.getLastPathSegment() == null ? "Ordner" : baum.getLastPathSegment();
+        int i = name.lastIndexOf(':'); if (i >= 0) name = name.substring(i + 1);
+        return name.isEmpty() ? "Speicher" : name;
+    }
+    private boolean freigegeben(Uri baum) {
+        return getContext().getContentResolver().getPersistedUriPermissions().stream()
+            .anyMatch(p -> p.getUri().equals(baum) && p.isReadPermission() && p.isWritePermission());
+    }
+    /** Gemerkten Ort wieder öffnen; ohne Freigabe oder ohne Laufwerk kommt erreichbar=false statt eines Fehlers. */
+    @PluginMethod public void ordnerOeffnen(PluginCall call) {
+        arbeit(call, () -> {
+            Uri baum = Uri.parse(call.getString("ort", ""));
+            if (!freigegeben(baum)) return new JSObject().put("erreichbar", false).put("grund", "FA_FREIGABE_FEHLT");
+            try {
+                SafAblage a = new SafAblage(getContext().getContentResolver(), baum); a.liste("");
+                String token = UUID.randomUUID().toString(); ordner.put(token, a); baeume.put(token, baum);
+                return new JSObject().put("erreichbar", true).put("token", token).put("name", ortName(baum));
+            } catch (Exception e) { return new JSObject().put("erreichbar", false).put("grund", "FA_ORDNER_NICHT_ERREICHBAR"); }
+        });
+    }
+    /** Alle dauerhaft freigegebenen Orte nach einer Kennungsdatei absuchen (z. B. Familienakte-Abgleich/Familienakte-Laufwerk.json). */
+    @PluginMethod public void laufwerkeSuchen(PluginCall call) {
+        arbeit(call, () -> {
+            String datei = call.getString("datei", "");
+            JSArray treffer = new JSArray();
+            if (datei.isEmpty()) return new JSObject().put("treffer", treffer);
+            for (android.content.UriPermission p : getContext().getContentResolver().getPersistedUriPermissions()) {
+                if (!p.isReadPermission() || !p.isWritePermission()) continue;
+                try {
+                    SafAblage a = new SafAblage(getContext().getContentResolver(), p.getUri());
+                    if (!a.gibtEs(datei) || a.istOrdner(datei)) continue;
+                    byte[] b = a.lesen(datei, 65536);
+                    treffer.put(new JSObject().put("ort", p.getUri().toString()).put("name", ortName(p.getUri())).put("inhalt", new String(b, java.nio.charset.StandardCharsets.UTF_8)));
+                } catch (Exception ignoriert) { /* dieser Ort ist gerade nicht da */ }
+            }
+            return new JSObject().put("treffer", treffer);
         });
     }
     @PluginMethod public void ordnerListe(PluginCall call) {

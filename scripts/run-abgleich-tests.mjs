@@ -111,4 +111,20 @@ gruen("Fingerabdruck: gleiche Inhalte gleich, unabhängig von der Feldreihenfolg
   gruen("Zweiter Abgleich mit demselben Stand: keine Frage, nichts Neues, Ergebnis unverändert");
 }
 
+// Stufe C: gerätelokale Felder (Pfad, Speicherart) sind kein Unterschied; beim Übernehmen bleibt der eigene Pfad.
+{
+  const start = leer(); start.documents = [doc("d-1", "s1", "Brief.pdf")]; const basis = a.basisAus(start);
+  const hier = structuredClone(start), dort = structuredClone(start);
+  dort.documents[0].storedPath = "Familienakte/01_Dokumente/Anders/d-1.pdf"; dort.documents[0].storageType = "external";
+  const p1 = a.abgleichPlanen(hier, dort, basis);
+  assert.equal(p1.konflikte.length, 0); assert.equal(p1.zaehlung.gleich, 1, "anderer Pfad ist kein Unterschied");
+  dort.documents[0].titel = "Brief vom Amt"; dort.documents[0].updatedAt = "2026-11-02T10:00:00Z";
+  const p2 = a.abgleichPlanen(hier, dort, basis);
+  assert.equal(p2.zaehlung.uebernommen, 1);
+  const { akte } = a.abgleichAnwenden(p2, {}, basis);
+  assert.equal(akte.documents[0].titel, "Brief vom Amt"); assert.equal(akte.documents[0].storedPath, "Familienakte/01_Dokumente/d-1.pdf", "eigener Pfad bleibt");
+  assert.equal(akte.documents[0].storageType, undefined, "fremde lokale Felder kommen nicht mit");
+  gruen("Gerätelokale Felder: anderer Pfad kein Unterschied; Titel wird übernommen, eigener Pfad bleibt");
+}
+
 console.log(`\nAbgleich: ${n} Proben grün.`);
