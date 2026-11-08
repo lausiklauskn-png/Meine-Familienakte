@@ -88,6 +88,14 @@ section { display: grid; gap: 12px; min-width: 0; }
 .hk-legende span { border: 2px solid; border-radius: 6px; padding: 0 6px; }
 .hk-legende .g { border-color: var(--gruen); } .hk-legende .w { border-color: #c58a00; border-style: dashed; } .hk-legende .r { border-color: var(--rot); } .hk-legende .x { border-color: var(--muted); border-style: dashed; }
 .hk-flaeche { border: 1px solid var(--line); border-radius: 8px; padding: 30px 10px; text-align: center; color: var(--muted); background: var(--soft); }
+.kopfz { position: relative; overflow: hidden; display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; max-width: 640px; }
+.kopf-name { display: grid; line-height: 1.1; min-width: 0; } .kopf-name small { color: var(--muted); }
+.kopf-knoepfe { margin-left: auto; display: flex; gap: 6px; }
+.kk { display: inline-grid; place-items: center; min-width: 34px; height: 34px; padding: 0 6px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--fg); font: 600 .85rem var(--body); white-space: nowrap; }
+.kk.neu { color: var(--teal); } .kk.pfeil { color: var(--accent); font-size: 1.2rem; cursor: pointer; background: var(--soft); }
+.kopf-leiste { position: absolute; top: 0; bottom: 0; right: 0; display: flex; align-items: center; gap: 6px; padding: 0 10px 0 0; background: var(--soft); box-shadow: -8px 0 14px rgba(0,0,0,.14); transform: translateX(105%); visibility: hidden; }
+.kopfz.auf .kopf-leiste { transform: none; visibility: visible; }
+@media (prefers-reduced-motion: no-preference) { .kopf-leiste { transition: transform .2s ease, visibility .2s; } }
 .hinweis { border-left: 4px solid var(--teal); background: var(--card); border-radius: 0 10px 10px 0; padding: 10px 14px; display: grid; gap: 6px; }
 .fragen { list-style: none; padding: 0; display: grid; gap: 10px; }
 .fragen li { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; display: grid; gap: 4px; }
@@ -202,6 +210,24 @@ section { display: grid; gap: 12px; min-width: 0; }
   </section>
 
   <section>
+    <span class="eyebrow">5 · Kopf der App</span>
+    <h2>Weitere Knöpfe hinter dem Pfeil ‹</h2>
+    <p>Gefunden im geteilten Bildschirm (Tablet, etwa 640 px breit): „Neu“ lag über dem Namen „FAMILIENAKTE“. Schon behoben: Drucken, Abmelden und Installieren rutschen bis 900 px Breite aus dem Kopf. Neu nach deinem Wunsch: Sie stecken in einer Aufklappleiste im Kopf, wie bei den Zeilen.</p>
+    <div class="bild neu"><b>Zum Ausprobieren: Pfeil ‹ im Kopf antippen</b>
+      <div class="kopfz" id="kopfz">
+        <span class="kopf-name"><b>FAMILIENAKTE</b><small>Pro 2.28.38</small></span>
+        <span class="kopf-knoepfe"><span class="kk neu">● Neu</span><span class="kk">📶</span><span class="kk">⟳</span><span class="kk">🗒</span><span class="kk">📅</span>
+          <button class="kk pfeil" type="button" id="kopfAuf" aria-label="Weitere Knöpfe">‹</button></span>
+        <span class="kopf-leiste" id="kopfLeiste" aria-hidden="true"><button class="kk pfeil" type="button" id="kopfZu" aria-label="Schließen">›</button><span class="kk">🖨 Drucken</span><span class="kk">⤓ Installieren</span><span class="kk">⇥ Abmelden</span></span>
+      </div></div>
+    <ul>
+      <li>Bis 900 px Breite (Handy, geteilter Bildschirm, kleines Fenster): <b>‹ öffnet</b> die Leiste mit Drucken, Installieren (nur Web-App) und Abmelden, <b>› schließt</b> sie. Ein Tipp daneben schließt auch.</li>
+      <li>Breiter: alle Knöpfe stehen wie bisher direkt im Kopf, kein Pfeil.</li>
+      <li>Am Handy bleibt zusätzlich das Menü ☰ rechts mit denselben Punkten.</li>
+    </ul>
+  </section>
+
+  <section>
     <span class="eyebrow">Fragen</span>
     <h2>Bitte je Buchstabe kurz antworten</h2>
     <ol class="fragen">
@@ -210,8 +236,9 @@ section { display: grid; gap: 12px; min-width: 0; }
       <li><b>C</b> ✓ Löschen mit zwei Tipps.</li>
       <li><b>D</b> ✓ Auge bleibt (ganzer Text und Extras).</li>
       <li><b>G</b> ✓ Aufklappleiste mit seitlichem Pfeil (‹ auf, › zu), für alle Listen.</li>
-      <li><b>H</b> Hilfe oben (Abschnitt 4): so? Und das „?“ oben rechts im Kasten – meintest du das mit „oben hin“?</li>
-      <li><b>F</b> Danach als 2.28.38 gleich als APK, PWA und Windows ausgeben?<span class="empf">Empfehlung: ja.</span></li>
+      <li><b>H</b> ✓ Hilfe oben: nur Knopf „Demo starten“ (blau) und Landkarten-Symbol, „?“ oben rechts; Listenansicht der Landkarte fällt ganz weg.</li>
+      <li><b>K</b> Kopf (Abschnitt 5): Aufklappleiste mit ‹ / › so?</li>
+      <li><b>F</b> ✓ Ausgabe als 2.28.38 (APK, PWA, Windows).</li>
     </ol>
   </section>
 </main>
@@ -239,6 +266,9 @@ section { display: grid; gap: 12px; min-width: 0; }
       else { eimer.classList.remove("sicher"); eimer.textContent = "✓"; z.style.opacity = ".45"; }
     });
   });
+  var kz = document.getElementById("kopfz");
+  document.getElementById("kopfAuf").addEventListener("click", function (e) { e.stopPropagation(); kz.classList.add("auf"); });
+  document.getElementById("kopfZu").addEventListener("click", function (e) { e.stopPropagation(); kz.classList.remove("auf"); });
   var hk = document.getElementById("hkKarte"), hko = document.getElementById("hkOffen");
   hk.addEventListener("click", function () { hko.hidden = !hko.hidden; hk.setAttribute("aria-expanded", String(!hko.hidden)); });
   document.addEventListener("click", function (e) { if (!e.target.closest || !e.target.closest("[data-kl]")) zeilen.forEach(function (z) { setze(z, false); }); });
