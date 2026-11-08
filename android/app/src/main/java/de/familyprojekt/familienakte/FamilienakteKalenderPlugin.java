@@ -119,7 +119,7 @@ public class FamilienakteKalenderPlugin extends Plugin {
         Uri.Builder b = CalendarContract.Instances.CONTENT_URI.buildUpon();
         ContentUris.appendId(b, von); ContentUris.appendId(b, bis);
         String[] spalten = { CalendarContract.Instances.EVENT_ID, CalendarContract.Instances.TITLE, CalendarContract.Instances.BEGIN, CalendarContract.Instances.END,
-            CalendarContract.Instances.ALL_DAY, CalendarContract.Instances.DESCRIPTION, CalendarContract.Instances.UID_2445, CalendarContract.Instances.DIRTY };
+            CalendarContract.Instances.ALL_DAY, CalendarContract.Instances.DESCRIPTION, CalendarContract.Instances.UID_2445 };
         JSArray termine = new JSArray();
         try (Cursor c = getContext().getContentResolver().query(b.build(), spalten, CalendarContract.Instances.CALENDAR_ID + " = ?", new String[] { kalenderId }, CalendarContract.Instances.BEGIN + " ASC")) {
             int n = 0;
