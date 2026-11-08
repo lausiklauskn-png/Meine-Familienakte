@@ -20,7 +20,7 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
     "Auge öffnet einen Eintrag; dort ändern (Tag, Uhrzeit, Erinnerung, Kalender) oder löschen.",
     "Ist ein Kalender verbunden, zieht er Änderungen nach.",
   ] },
-  { id: "app-glocke", titel: "App-Glocke", symbol: <Bell/>, weg: "Mein Kalender › App-Glocke", ablauf: ablaufGlocke, merk: [<><b>Läutet in der App</b>; Android meldet sich auch, wenn sie zu ist.</>, <><b>Dauer und Ton</b> sind wählbar.</>, <><b>Ruhemodus</b> kann um Minuten verschieben; nach Neustart erst beim Öffnen neu geplant.</>], punkte: [
+  { id: "app-glocke", titel: "App-Glocke", symbol: <Bell/>, weg: "Mein Kalender › App-Glocke", ablauf: ablaufGlocke, merk: [<><b>Grün = an.</b> Läutet in der App; Android meldet sich auch, wenn sie zu ist.</>, <><b>Aus</b> = keine Meldung mehr, auch nicht oben in der Leiste.</>, <><b>Dauer und Ton</b> wählbar; Ruhemodus kann um Minuten verschieben.</>], punkte: [
     "Ab Werk an, solange kein Kalender verbunden ist; mit Kalender erinnert dieser. Beim Speichern einer Erinnerung geht sie von selbst an.",
     "Sie läutet für jede offene Frist und Aufgabe zu deren Erinnerungen, ohne eigene Wahl zur Vorgabe (1 Woche und 1 Tag vorher). Im Hinweis: 👁 ansehen, ✓ erledigt, OK.",
     "Läutet in der App. Die Android-App meldet sich zusätzlich, auch wenn sie zu ist.",
