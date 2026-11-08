@@ -15,7 +15,8 @@ async function suchen(page, frage) {
   await page.waitForSelector(".search-results", { timeout: 10000 });
   await page.waitForTimeout(300);
   return page.locator(".search-results article").evaluateAll((els) => els.map((el) => ({
-    art: el.querySelector(".badge")?.textContent?.trim() || "",
+    art: el.getAttribute("data-such-art") || "",
+    datum: el.querySelector(".such-datum")?.textContent?.trim() || "",
     titel: el.querySelector("strong")?.textContent?.trim() || "",
     detail: el.querySelector("small")?.textContent?.trim() || "",
     gruppe: el.closest("[data-such-gruppe]")?.getAttribute("data-such-gruppe") || "",
@@ -61,20 +62,20 @@ try {
   });
   await step("„15.03.2022“ als deutsches Datum: nur Auszüge vom 15.03.2022", async () => {
     const t = (await suchen(page, "Kontoauszug 15.03.2022")).filter((x) => x.art === "Dokument");
-    return soll(t.length >= 1 && t.every((x) => /15\.03\.2022/.test(x.detail)), t.map((x) => `${x.titel} ${x.detail}`).join(" | "));
+    return soll(t.length >= 1 && t.every((x) => x.datum === "15.03.2022"), t.map((x) => `${x.datum} ${x.titel}`).join(" | "));
   });
   await step("Mehr Wörter = weniger Treffer: „Kontoauszug März 2022“ < „Kontoauszug“", async () => {
     await suchen(page, "Kontoauszug"); const alle = await datenTreffer(page);
     await suchen(page, "Kontoauszug März 2022"); const eng = await datenTreffer(page);
     return soll(alle === 61 && eng > 0 && eng < alle, { alle, eng });
   });
-  await step("Alle 61 Kontoauszüge erreichbar: neueste zuerst, „Weitere … anzeigen“ zeigt mehr", async () => {
+  await step("Alle 61 Kontoauszüge erreichbar: neueste zuerst, „Weitere Ergebnisse“ zeigt mehr", async () => {
     const t = await suchen(page, "Kontoauszug");
     const erste = t.find((x) => x.art === "Dokument");
     const vorher = (await suchen(page, "Kontoauszug")).filter((x) => x.art === "Dokument").length;
     await page.locator('[data-such-gruppe="Dokumente"] [data-such-mehr]').click();
     const nachher = (await page.locator('[data-such-gruppe="Dokumente"] article').count());
-    return soll(/2026|2025/.test(erste?.detail || "") && vorher < nachher && /61 Treffer/.test(await page.locator("[data-such-gesamt]").innerText()), { erste, vorher, nachher });
+    return soll(/2026|2025/.test(erste?.datum || "") && vorher < nachher && /61 Treffer/.test(await page.locator("[data-such-gesamt]").innerText()), { erste, vorher, nachher });
   });
   await step("Gesundheit: ein zusammengefasster Treffer statt drei gleicher Zeilen", async () => {
     const t = await suchen(page, "Zahnarzt");
@@ -137,7 +138,7 @@ try {
   });
   await step("Frist aus der Suche führt nach „Fristen und Aufgaben“ an den Termin (nicht ins Cockpit)", async () => {
     await suchen(demo, "Kfz-Versicherung");
-    await demo.locator(".search-results article", { has: demo.locator(".badge", { hasText: /^Frist$/ }) }).first().locator("button").first().click();
+    await demo.locator(".search-results article[data-such-art=\"Frist\"]").first().locator("button").first().click();
     await demo.waitForTimeout(1200);
     const crumb = await demo.locator(".breadcrumb").innerText();
     const sichtbar = await demo.evaluate(() => { const el = document.querySelector("[id^='termin-'].hervorgehoben, [id^='termin-'].offen"); if (!el) return null; const r = el.getBoundingClientRect(); return r.top >= 0 && r.top < innerHeight; });
@@ -145,7 +146,7 @@ try {
   });
   await step("Tagebuch-Treffer: der Eintrag steht im Bild, nicht nur das Eingabefeld", async () => {
     await suchen(demo, "Stützräder");
-    await demo.locator(".search-results article", { has: demo.locator(".badge", { hasText: /^Tagebuch$/ }) }).first().locator("button").first().click();
+    await demo.locator(".search-results article[data-such-art^=\"Tagebuch\"]").first().locator("button").first().click();
     await demo.waitForTimeout(1500);
     const lage = await demo.evaluate(() => { const el = document.querySelector(".memory-detail"); const r = el?.getBoundingClientRect(); return r ? { top: Math.round(r.top), text: el.textContent.slice(0, 80) } : null; });
     return soll(lage && lage.top >= -40 && lage.top < 600 && /Stützräder|Fiete/.test(lage.text), lage);

@@ -11,7 +11,8 @@ async function suchen(page, frage) {
   await page.waitForSelector(".search-results", { timeout: 10000 });
   await page.waitForTimeout(300);
   return page.locator(".search-results article").evaluateAll((els) => els.map((el) => ({
-    art: el.querySelector(".badge")?.textContent?.trim() || "",
+    art: el.getAttribute("data-such-art") || "",
+    datum: el.querySelector(".such-datum")?.textContent?.trim() || "",
     titel: el.querySelector("strong")?.textContent?.trim() || "",
     detail: el.querySelector("small")?.textContent?.trim() || "",
   })));
@@ -35,7 +36,7 @@ try {
   check(vorgang.some((t) => /frist|aufgabe/i.test(t.art)), "Fristen/Aufgaben zum Vorgang werden mitgefunden");
 
   await step("Tipp auf den Vorgang-Treffer führt aus der Suche heraus an seine Stelle", async () => {
-    await page.locator(".search-results article", { has: page.locator(".badge", { hasText: "Vorgang" }) }).first().locator("button").first().click();
+    await page.locator(".search-results article[data-such-art=\"Vorgang\"]").first().locator("button").first().click();
     await page.waitForTimeout(500);
     return (await page.locator(".global-search input").inputValue()) === "" || (await page.locator(".search-results").count()) === 0 ? "Suche verlassen" : false;
   });

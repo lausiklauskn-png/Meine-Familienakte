@@ -2014,7 +2014,8 @@ function MemoryCenter({ documents, records, relations, drafts, initialFocusId, v
 
 // Ausgeklappte Trefferzahl je Suchwort und Gruppe: bleibt beim Zurück aus einem Treffer erhalten.
 const suchMehr = new Map<string, number>();
-const SUCH_SEITE = 8;
+const SUCH_SEITE = 5;
+const SUCH_MEHR = 20;
 
 function SearchPanel({ query, results, interpretation, onOpen, onDocuments }: {
   query: string;
@@ -2034,11 +2035,12 @@ function SearchPanel({ query, results, interpretation, onOpen, onDocuments }: {
     <section className="search-privacy"><ShieldCheck size={18}/><span><strong>Lokale interaktive Suche</strong> · berücksichtigt ähnliche Begriffe, Kategorien, Zeiträume, Dokumentbeschreibungen und gespeicherte Textauszüge.</span></section>
     {(interpretation.labels.length > 0 || datumHinweis) && <section className="search-interpretation" aria-live="polite"><strong>Verstanden als:</strong><div>{interpretation.labels.map((label) => <span key={label}>{label}</span>)}{datumHinweis && <span data-such-datum>Zeitraum: {datumHinweis.label}</span>}</div></section>}
     <section className="card search-results" data-such-anzahl={datenTreffer}>{results.length ? <>
-      <p className="search-total" data-such-gesamt>{datenTreffer ? `${datenTreffer} Treffer in der Akte` : "Keine Einträge in der Akte gefunden"}{results.length > datenTreffer ? ` · ${results.length - datenTreffer} passende Bereiche der App` : ""} · neueste zuerst</p>
+      <p className="search-total" data-such-gesamt>{datenTreffer ? `${datenTreffer} Treffer in der Akte` : "Keine Einträge in der Akte gefunden"}{results.length > datenTreffer ? ` · ${results.length - datenTreffer} passende Bereiche der App` : ""} · nach Art getrennt, neueste zuerst</p>
       {groups.map((group) => { const n = zeigen(group.name); const rest = group.items.length - n; return <div className="search-group" key={group.name} data-such-gruppe={group.name}>
-        <h3 className="eyebrow dark">{group.name} · {group.items.length}</h3>
-        {group.items.slice(0, n).map((item) => <article key={item.id} className="search-result-with-context"><button onClick={() => oeffnen(item)}><span className="badge neutral">{item.kind}</span><div><strong>{item.title}</strong><small>{item.detail}</small><em>{item.reason}</em></div><ChevronRight size={18}/></button>{item.contextCaseId && <button className="text-link context-open-link" onClick={() => onOpen("cockpit", item.contextCaseId)}>Zusammenhang öffnen <ChevronRight size={15}/></button>}</article>)}
-        {(rest > 0 || (group.name === "Dokumente" && group.items.length > 1)) && <div className="button-row search-more">{rest > 0 && <button className="button secondary" data-such-mehr onClick={() => mehr(group.name, n + 25)}>Weitere {Math.min(rest, 25)} von {rest} anzeigen</button>}{group.name === "Dokumente" && group.items.length > 1 && <button className="text-link" onClick={() => onDocuments({ query })}>Alle in der Dokumentenbibliothek <ChevronRight size={15}/></button>}</div>}
+        <h3 className="eyebrow dark">{group.name} ({group.items.length})</h3>
+        {/* Punkt 9 (2.28.39): eine kompakte Zeile je Treffer – Datum · Titel · Bereich bzw. Art. Die Art steht in der Gruppe. */}
+        {group.items.slice(0, n).map((item) => <article key={item.id} className="such-zeile" data-such-art={item.kind}><button className="such-zeile-knopf" onClick={() => oeffnen(item)} title={item.reason}><span className="such-datum">{item.date ? fmtDate(item.date.slice(0, 10)) : ""}</span><strong>{item.title}</strong><small>{item.bereich || item.kind}</small><ChevronRight size={16}/></button>{item.contextCaseId && <button className="text-link context-open-link such-zusammenhang" onClick={() => onOpen("cockpit", item.contextCaseId)} aria-label={`Zusammenhang zu „${item.title}“ öffnen`}>Zusammenhang <ChevronRight size={14}/></button>}</article>)}
+        {(rest > 0 || (group.name === "Dokumente" && group.items.length > 1)) && <div className="button-row search-more">{rest > 0 && <button className="button secondary" data-such-mehr onClick={() => mehr(group.name, n + SUCH_MEHR)}>Weitere Ergebnisse ({rest})</button>}{group.name === "Dokumente" && group.items.length > 1 && <button className="text-link" onClick={() => onDocuments({ query })}>Alle in der Dokumentenbibliothek <ChevronRight size={15}/></button>}</div>}
       </div>; })}
     </> : <div className="empty-state"><Search size={32}/><strong>Keine passende gespeicherte Angabe gefunden</strong><span>Versuche weniger Wörter, einen Namen, ein Datum (15.03.2026, März 2026) oder einen allgemeineren Begriff. Die Familienakte erfindet keine Treffer.</span></div>}</section></>;
 }

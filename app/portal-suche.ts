@@ -8,11 +8,12 @@ import { isSensitiveHealthText } from "../lib/family-privacy";
 import { cockpitRecordLabel } from "../lib/family-cockpit";
 import { memoryData } from "../lib/family-memory";
 import { buildScheduleItems, scheduleStatusLabels } from "../lib/family-reminders";
+import { istStammArt, stammLesen } from "../lib/familie-stamm";
 import { familyDocumentSearchText, familyRecordKindLabel, familyRecordSearchText } from "../lib/family-search-text";
 
 export type SearchNavigation = Array<{ id: string; label: string; groups: Array<{ title: string; items: Array<{ id: SectionId; label: string; detail: string }> }> }>;
 /** library: Treffer öffnet die Dokumentenbibliothek mit diesem Filter (z. B. zusammengefasste Gesundheitsunterlagen). */
-export type SearchResult = { id: string; section: SectionId; targetId?: string; contextCaseId?: string; title: string; detail: string; kind: string; group: string; reason: string; score: number; date?: string | null; library?: { area?: string; query?: string } };
+export type SearchResult = { id: string; section: SectionId; targetId?: string; contextCaseId?: string; title: string; detail: string; kind: string; group: string; reason: string; score: number; date?: string | null; /** kurze Angabe für die Trefferzeile (Bereich oder Art), 2.28.39 */ bereich?: string; library?: { area?: string; query?: string } };
 export type SearchResultGroup = { name: string; items: SearchResult[] };
 /** beispiele: nur in der Demo bzw. bei vorhandener Beispielfamilie werden die festen Beispielangaben (health-data.json) durchsucht. */
 export type PortalSearchOptions = { beispiele?: boolean; now?: Date };
@@ -35,7 +36,7 @@ export function buildPortalSearchResults(topNavigation: SearchNavigation, query:
     kind: intent.kind, group: SEARCH_AREA_GROUP, reason: intent.reason, score: 100 - index,
   }));
   topNavigation.forEach((area) => area.groups.forEach((group) => group.items.forEach((item) => add(
-    { id: `nav-${area.id}-${item.label}`, section: item.id, title: item.label, detail: `${area.label} · ${item.detail}`, kind: "Bereich", group: SEARCH_AREA_GROUP, reason: "Passender Bereich oder Hilfetext" },
+    { id: `nav-${area.id}-${item.label}`, section: item.id, title: item.label, detail: `${area.label} · ${item.detail}`, kind: "Bereich", group: SEARCH_AREA_GROUP, reason: "Passender Bereich oder Hilfetext", bereich: area.label },
     [area.label, group.title, item.label, item.detail].join(" "),
   ))));
   if (options.beispiele) {
@@ -76,7 +77,7 @@ export function buildPortalSearchResults(topNavigation: SearchNavigation, query:
       return;
     }
     add(
-      { id: `doc-${item.id}`, section: "documents", targetId: item.id, contextCaseId: linkedCaseId(item.id, relations), title: titel, detail: `${item.category} · ${fmtDate(item.documentDate)}`, kind: "Dokument", group: "Dokumente", reason: "Dateiname, Kategorie, Datum, Beschreibung oder Textauszug passen", date: item.documentDate },
+      { id: `doc-${item.id}`, section: "documents", targetId: item.id, contextCaseId: linkedCaseId(item.id, relations), title: titel, detail: `${item.category} · ${fmtDate(item.documentDate)}`, kind: "Dokument", group: "Dokumente", reason: "Dateiname, Kategorie, Datum, Beschreibung oder Textauszug passen", date: item.documentDate, bereich: item.category || undefined },
       searchable, [item.documentDate],
     );
   });
@@ -85,7 +86,7 @@ export function buildPortalSearchResults(topNavigation: SearchNavigation, query:
     candidates.push({
       id: "health-documents", section: "documents", title: `${healthDocs.length} geschützte Gesundheitsunterlage${healthDocs.length === 1 ? "" : "n"}`,
       detail: `Namen bleiben geschützt${newest ? ` · neueste vom ${fmtDate(newest)}` : ""} · in der Bibliothek nach Datum`, kind: "Dokument", group: "Dokumente",
-      reason: "Passende Gesundheitsunterlagen, zusammengefasst", score: Math.max(...healthDocs.map((item) => item.score)), date: newest,
+      reason: "Passende Gesundheitsunterlagen, zusammengefasst", score: Math.max(...healthDocs.map((item) => item.score)), date: newest, bereich: "Gesundheit & Pflege",
       library: { area: "Gesundheit & Pflege", query },
     });
   }
@@ -106,8 +107,9 @@ export function buildPortalSearchResults(topNavigation: SearchNavigation, query:
     const kind = familyRecordKindLabel(record);
     const date = schedule?.date ? schedule.date.slice(0, 10) : memory?.eventAt ? memory.eventAt.slice(0, 10) : null;
     const detail = memory ? `${memory.lifeArea} · ${memory.eventType}${date ? ` · ${fmtDate(date)}` : ""}` : schedule ? `${scheduleStatusLabels[schedule.displayStatus]} · ${schedule.date ? fmtDate(schedule.date.slice(0, 10)) : "ohne Datum"}` : record.status;
+    const bereich = memory ? memory.lifeArea : schedule ? scheduleStatusLabels[schedule.displayStatus] : istStammArt(record.recordType) ? stammLesen(record).art || kind : kind;
     add(
-      { id: `record-${record.id}`, section: memory ? "memory" : schedule ? "reminders" : "cockpit", targetId: record.id, contextCaseId: record.recordType === "case" ? record.id : linkedCaseId(record.id, relations), title, detail, kind, group: kind, reason: memory ? "Passender Tagebucheintrag" : "Passender Eintrag aus der Familienakte", date },
+      { id: `record-${record.id}`, section: memory ? "memory" : schedule ? "reminders" : "cockpit", targetId: record.id, contextCaseId: record.recordType === "case" ? record.id : linkedCaseId(record.id, relations), title, detail, kind, group: kind, reason: memory ? "Passender Tagebucheintrag" : "Passender Eintrag aus der Familienakte", date, bereich },
       searchable,
     );
   });
@@ -120,10 +122,12 @@ export function buildPortalSearchResults(topNavigation: SearchNavigation, query:
   return unique.sort((a, b) => b.score - a.score || (b.date || "").localeCompare(a.date || "") || a.title.localeCompare(b.title, "de"));
 }
 
-/** Treffer nach Art gruppieren; Datengruppen nach bestem Treffer, die Bereiche der App zuletzt. */
+/** Treffer nach Art gruppieren; Datengruppen nach bestem Treffer, die Bereiche der App zuletzt.
+ * Innerhalb einer Datengruppe neueste zuerst (Punkt 9, 2.28.39); Einträge ohne Datum danach, nach Treffergüte. */
 export function groupSearchResults(results: SearchResult[]): SearchResultGroup[] {
   const groups = new Map<string, SearchResult[]>();
   results.forEach((item) => { const list = groups.get(item.group) || []; list.push(item); groups.set(item.group, list); });
+  groups.forEach((items, name) => { if (name !== SEARCH_AREA_GROUP) items.sort((a, b) => Number(!a.date) - Number(!b.date) || (b.date || "").localeCompare(a.date || "") || b.score - a.score || a.title.localeCompare(b.title, "de")); });
   const best = (items: SearchResult[]) => Math.max(...items.map((item) => item.score));
   return [...groups.entries()].map(([name, items]) => ({ name, items }))
     .sort((a, b) => Number(a.name === SEARCH_AREA_GROUP) - Number(b.name === SEARCH_AREA_GROUP) || best(b.items) - best(a.items) || a.name.localeCompare(b.name, "de"));

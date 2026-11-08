@@ -2532,6 +2532,20 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .library-filter-active { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin: 0 0 12px; color: var(--muted); }
 .liste-mehr { justify-content: center; align-items: center; gap: 12px; margin: 14px 0; color: var(--muted); }
 
+/* 2.28.39 Punkt 9: Suchtreffer als kompakte Zeilen (Datum · Titel · Bereich), nach Art getrennt */
+.search-results .such-zeile { display: flex; align-items: center; border-bottom: 1px solid var(--line); }
+.search-results .such-zeile-knopf { flex: 1; min-width: 0; display: grid; grid-template-columns: 6.4em minmax(0,1fr) auto 16px; align-items: center; gap: 10px; border: 0; padding: 9px 13px; text-align: left; color: var(--ink); background: white; }
+.search-results .such-zeile-knopf:hover { background: var(--blue-soft); }
+.search-results .such-datum { color: var(--muted); font-size: .82rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.search-results .such-zeile-knopf strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.search-results .such-zeile-knopf small { margin: 0; max-width: 15em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.search-results .such-zusammenhang { margin: 0 10px 0 0; white-space: nowrap; font-size: .8rem; }
+@media (max-width: 600px) {
+  .search-results .such-zeile-knopf { grid-template-columns: 5.6em minmax(0,1fr) 16px; row-gap: 2px; padding: 8px 10px; }
+  .search-results .such-zeile-knopf small { grid-column: 2; grid-row: 2; max-width: none; }
+  .search-results .such-zeile-knopf > svg { grid-column: 3; grid-row: 1 / span 2; }
+}
+
 /* 2.28.39 Punkt 8: Personen, Organisationen, Objekte, Vorgänge anlegen */
 .stamm-karte .stamm-arten { margin: 4px 0 10px; flex-wrap: wrap; }
 .stamm-formular { display: grid; gap: 10px; margin: 8px 0 12px; border: 1px solid var(--line); border-radius: 12px; padding: 12px; background: #f6fafc; }

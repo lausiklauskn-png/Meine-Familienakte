@@ -101,9 +101,10 @@ try {
   await step("H5: Suche oben nach der Seriennummer im Text findet das Dokument", async () => {
     await page.locator(".global-search input").fill("FRO-4711-XQ");
     await page.waitForSelector(".search-results", { timeout: 10000 });
-    const treffer = await page.locator(".search-results article").allInnerTexts();
+    // 2.28.39 Punkt 9: die Art steht als Gruppe/Merkmal an der kompakten Zeile, nicht mehr als Wort in der Zeile.
+    const treffer = await page.locator('.search-results article[data-such-art="Dokument"]').allInnerTexts();
     await page.locator(".global-search input").fill("");
-    return soll(treffer.some((t) => /Dokument/.test(t) && t.includes(doc.titel)), treffer.slice(0, 3));
+    return soll(treffer.some((t) => t.includes(doc.titel)), treffer.slice(0, 3));
   });
 
   // ---------- H1: Dublette ansehen beendet die Prüfung nicht ----------
