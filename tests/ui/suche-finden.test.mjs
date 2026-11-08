@@ -95,13 +95,14 @@ try {
     const auswahl = await page.locator(".library-filter-grid select").first().inputValue();
     return soll(/^[1-9]/.test(zahl) && /Fahrzeuge/.test(filter) && auswahl === "Fahrzeuge", { zahl, filter, auswahl });
   });
-  await step("Bibliothek „Alle ansehen“: 50 Karten je Seite, „Weitere anzeigen“ lädt nach", async () => {
+  await step("Bibliothek „Alle ansehen“: 50 Zeilen je Seite, „Weitere anzeigen“ lädt nach", async () => {
     await footer(page, "Dokumentenbibliothek");
     await page.locator(".library-toolbar button", { hasText: "Alle ansehen" }).click();
     await page.waitForSelector(".library-filters");
-    const vorher = await page.locator(".library-document-grid article").count();
+    // 2.28.39 (Punkt 7): kompakte Zeilen statt Karten, weiter 50 je Seite.
+    const vorher = await page.locator("[data-bibliothek-zeile]").count();
     await page.locator("[data-liste-mehr] button").click();
-    const nachher = await page.locator(".library-document-grid article").count();
+    const nachher = await page.locator("[data-bibliothek-zeile]").count();
     return soll(vorher === 50 && nachher === 65, { vorher, nachher });
   });
   await step("„Unterlagen & Quellen“ zeigt in der eigenen Akte keine Beispiel-Kerndokumente", async () => {

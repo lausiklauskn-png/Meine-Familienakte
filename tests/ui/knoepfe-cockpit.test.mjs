@@ -139,10 +139,10 @@ try {
     await page.waitForTimeout(600);
     return (await page.locator("body").innerText()).includes("zurückgestellt");
   });
-  await step("Fristen: Verweis-Knopf (z. B. „Vorgang: VORG-…“) öffnet das Cockpit", async () => {
+  await step("Fristen: Verweis-Knopf (z. B. „Vorgang: <Name>“, 2.28.39 ohne Kennung) öffnet das Cockpit", async () => {
     // 2.28.39: keine eigenen Erinnerungs-Zeilen mehr; der zuvor aufgeklappte Eintrag steht nach „Zurückstellen“ im
     // zugeklappten Bereich. Darum einen offenen Eintrag mit Vorgang aufklappen.
-    const link = page.locator("#offene-fristen button.text-link:visible", { hasText: /^Vorgang: VORG-/ }).first();
+    const link = page.locator("#offene-fristen button.text-link:visible", { hasText: /^Vorgang: (?!VORG-)/ }).first();
     const augen = page.locator("#offene-fristen [data-termin-auge]");
     for (let i = 0; i < Math.min(await augen.count(), 15) && !(await link.count()); i++) { await augen.nth(i).click(); await page.waitForTimeout(100); }
     if (!(await link.count())) return "kein Verweis sichtbar";

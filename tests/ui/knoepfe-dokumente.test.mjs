@@ -17,7 +17,8 @@ try {
   await step("Bibliothek: Übersicht nach Lebensbereichen, „Alle ansehen“ zeigt die Liste", async () => {
     await page.locator("button", { hasText: "Alle ansehen" }).first().click();
     await page.waitForTimeout(300);
-    return (await page.locator(".library-count-button").count()) === 1 && (await page.locator("button.library-preview").count()) > 5;
+    // 2.28.39: Bibliothek als kompakte Zeilen (Karten wählbar).
+    return (await page.locator(".library-count-button").count()) === 1 && (await page.locator("[data-bibliothek-zeile]").count()) > 5;
   });
   await step("Bibliothek: Suchfeld filtert („Waschmaschine“) und ✕ leert", async () => {
     const feld = page.locator('input[placeholder^="Titel, Dateiname"]');
@@ -37,8 +38,8 @@ try {
     await page.locator("button", { hasText: "Filter zurücksetzen" }).click();
     return `${vorher} → Bereich: ${nachher} → +Datum: ${mitDatum}`;
   });
-  await step("Bibliothek: Karte „öffnen“ zeigt die Dokumentvorschau (PDF)", async () => {
-    await page.locator("button.library-preview").first().click();
+  await step("Bibliothek: Zeile „öffnen“ zeigt die Dokumentvorschau (PDF)", async () => {
+    await page.locator("[data-bibliothek-zeile] .library-zeile-titel").first().click();
     await page.waitForSelector(".modal", { timeout: 8000 });
     await page.waitForTimeout(2500);
     const text = await page.locator(".modal").last().innerText();
@@ -52,6 +53,10 @@ try {
     const geoeffnet = await page.evaluate(() => window.__geoeffnet.length);
     await schliesseDialoge(page);
     return geoeffnet >= 1 && (await page.locator(".modal").count()) === 0 ? `window.open-Aufrufe: ${geoeffnet}` : false;
+  });
+  await step("Bibliothek: Umschalter „Karten“ zeigt wieder die großen Karten", async () => {
+    await page.locator('[data-ansicht="karten"]').click();
+    return (await page.locator("button.library-preview").count()) > 5 && (await page.locator("[data-bibliothek-zeile]").count()) === 0;
   });
   await step("Bibliothek: Verweis-Knopf „Vorgang …“ auf der Karte öffnet das Cockpit", async () => {
     const link = page.locator(".document-library-card button, article button", { hasText: /^Vorgang\s/ }).first();
@@ -147,10 +152,13 @@ try {
   });
   await step("Eingangszentrale: Eingang ankreuzen → Sammelknöpfe; „Nicht übernehmen“ nimmt ihn aus der Prüfung", async () => {
     const vorher = (await page.locator("body").innerText()).match(/(\d+) Eingänge/)[1];
-    await page.locator('main input[type="checkbox"]').first().click();
-    await page.locator('main input[type="checkbox"]:checked').first().waitFor();
-    const sammel = await page.locator("button", { hasText: "Sichere Vorschläge vormerken" }).count();
-    await page.locator("button", { hasText: "Nicht übernehmen" }).first().click(); await page.waitForTimeout(300);
+    // 2.28.39: gemeinsame Auswahl-Leiste; sichere Vorschläge stehen schon angehakt, darum zuerst „Alle“ abwählen.
+    const leiste = page.locator('[data-auswahl-leiste="Eingänge"]');
+    for (let i = 0; i < 2 && (await leiste.locator("[data-auswahl-zahl]").getAttribute("data-auswahl-zahl")) !== "0"; i++) await leiste.locator("[data-auswahl-alle]").click();
+    await page.locator("[data-queue-wahl]").first().click();
+    await page.locator("[data-queue-wahl]:checked").first().waitFor();
+    const sammel = await leiste.locator('[data-auswahl-aktion="ablegen"]').count();
+    await leiste.locator('[data-auswahl-aktion="nicht"]').click(); await page.waitForTimeout(300);
     const nachher = (await page.locator("body").innerText()).match(/(\d+) Eingänge/)[1];
     return `${vorher} → ${nachher}; Sammelknöpfe nach Ankreuzen: ${sammel ? "ja" : "nein"}`;
   });
@@ -161,15 +169,16 @@ try {
     await schliesseDialoge(page);
     return text.includes("Probe") || text.includes("Zuordnung");
   });
-  await step("Eingangszentrale: „Sichere Vorschläge vormerken“ / „Als gemeinsames Scan-Dokument prüfen“", async () => {
+  await step("Eingangszentrale: „✓ N ausgewählte ablegen“ / „Als gemeinsames Scan-Dokument prüfen“", async () => {
     await aufraeumen(page);
-    const a = page.locator("button", { hasText: "Sichere Vorschläge vormerken" }).first();
-    const aVorhanden = await a.count();
-    if (aVorhanden) { await a.click(); await page.waitForTimeout(300); }
+    // 2.28.39: „Sichere Vorschläge vormerken“ ist in der Sammelbestätigung aufgegangen; hier nur sichtbar, abgelegt wird in sammelablage.
+    const leiste = page.locator('[data-auswahl-leiste="Eingänge"]');
+    if ((await leiste.count()) && (await leiste.locator("[data-auswahl-zahl]").getAttribute("data-auswahl-zahl")) === "0") await page.locator("[data-queue-wahl]").first().click();
+    const aVorhanden = await page.locator('[data-auswahl-aktion="ablegen"]').count();
     const scan = page.locator("button", { hasText: "Als gemeinsames Scan-Dokument prüfen" }).first();
     const sVorhanden = await scan.count();
     if (sVorhanden) { await scan.click(); await page.waitForTimeout(500); await schliesseDialoge(page); }
-    return `vormerken: ${aVorhanden ? "da" : "nicht sichtbar"}, Scan-Sammel: ${sVorhanden ? "da" : "nicht sichtbar (keine 2 Bilder)"}`;
+    return `ablegen: ${aVorhanden ? "da" : "nicht sichtbar"}, Scan-Sammel: ${sVorhanden ? "da" : "nicht sichtbar (keine 2 Bilder)"}`;
   });
   await step("Eingangszentrale: Bestandsliste „Abgleich vormerken“ / „Als geprüft bestätigen“ / „Als eingearbeitet bestätigen“", async () => {
     await aufraeumen(page);

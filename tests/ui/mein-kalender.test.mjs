@@ -60,10 +60,12 @@ try {
     const flach = await art.locator(".fz-kopf").innerText(); // 2.28.30: flache Zeile, Rest hinter dem Auge
     await art.locator("[data-termin-auge]").click();
     const text = await art.innerText();
+    const offen = await art.locator("[data-termin-offen]").innerText();
     await art.locator("[data-termin-aendern]").click();
     const d = page.locator("[data-termin-bearbeiten]"); await d.waitFor();
     await d.locator("button", { hasText: "Abbrechen" }).click();
-    return /18:45 Uhr/.test(text) && /15 Min\. vorher/.test(text) && /18:45/.test(flach) && !/Kennung/.test(flach) ? true : (console.log("   ↳", flach, "|", text), false);
+    // 2.28.39 (Punkt 10): das Auge wiederholt Datum, Uhrzeit und Glocke nicht – sie stehen schon in der Zeile.
+    return /18:45/.test(flach) && /15 Min\. vorher/.test(flach) && !/18:45/.test(offen) && !/Kennung/.test(text) ? true : (console.log("   ↳", flach, "|", offen), false);
   });
   await step("Löschen (Klaus 2026-11-06): Mülleimer – erster Tipp „Löschen?“, zweiter löscht; weg aus Kalender und Fristenliste", async () => {
     const zeile = kal.locator("[data-mk-eintrag]", { hasText: "Zahnarzt anrufen" }).first();
