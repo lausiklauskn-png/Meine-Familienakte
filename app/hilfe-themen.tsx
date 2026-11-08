@@ -21,7 +21,8 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
     "Ist ein Kalender verbunden, zieht er Änderungen nach.",
   ] },
   { id: "app-glocke", titel: "App-Glocke", symbol: <Bell/>, weg: "Mein Kalender › App-Glocke", ablauf: ablaufGlocke, merk: [<><b>Läutet in der App</b>; Android meldet sich auch, wenn sie zu ist.</>, <><b>Dauer und Ton</b> sind wählbar.</>, <><b>Ruhemodus</b> kann um Minuten verschieben; nach Neustart erst beim Öffnen neu geplant.</>], punkte: [
-    "Ab Werk aus. Beim Speichern einer Erinnerung geht sie von selbst an.",
+    "Ab Werk an, solange kein Kalender verbunden ist; mit Kalender erinnert dieser. Beim Speichern einer Erinnerung geht sie von selbst an.",
+    "Sie läutet für jede offene Frist und Aufgabe zu deren Erinnerungen, ohne eigene Wahl zur Vorgabe (1 Woche und 1 Tag vorher). Im Hinweis: 👁 ansehen, ✓ erledigt, OK.",
     "Läutet in der App. Die Android-App meldet sich zusätzlich, auch wenn sie zu ist.",
     "Dauer und Ton sind wählbar; in Android auch über die Einstellung des Geräts.",
     "Android kann eine Meldung im Ruhemodus um einige Minuten verschieben. Nach einem Neustart des Handys wird erst beim Öffnen der App neu geplant.",
@@ -38,6 +39,8 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
     "Am Handy stecken Haken, Stift, Mülleimer und Auge in einer Leiste am rechten Rand: Pfeil ‹ (oder nach links wischen) öffnet, Pfeil › schließt. Ist genug Platz, stehen die Knöpfe direkt in der Zeile.",
     "Der Stift öffnet sofort das Fenster zum Ändern, auch für reine Erinnerungen (Titel, Tag, Uhrzeit).",
     "Der Mülleimer wird beim ersten Tipp rot („Löschen?“) und löscht beim zweiten.",
+    "Der Haken ✓ heißt überall dasselbe: erledigt – in der Fristenliste, in Mein Kalender, in der Notiz-Liste, an der App-Glocke und in der Detailansicht. Danach steht kurz „Rückgängig“ an derselben Stelle.",
+    "Eine Erinnerung gehört zu ihrer Aufgabe oder Frist: eine Zeile je Aufgabe, darunter alle 🔔-Zeiten.",
     "Das Auge zeigt den ganzen Text und weitere Angaben, in der Fristenliste auch Zurückstellen und Wieder öffnen.",
   ] },
   { id: "loeschen", titel: "Löschen mit dem Mülleimer", symbol: <Trash2/>, weg: "an Erinnerungen und Notizen", ablauf: [{ titel: "Mülleimer" }, { titel: "Archiviert", unter: "nicht sofort weg", art: "gut" }, { titel: "Kalender-Eintrag", unter: "wird mit entfernt" }], merk: [<><b>Löschen heißt archivieren.</b></>], punkte: [

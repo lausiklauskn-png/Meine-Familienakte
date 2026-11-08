@@ -53,7 +53,8 @@ export function buildPortalSearchResults(topNavigation: SearchNavigation, query:
     { id: `doc-${item.id}`, section: isSensitiveHealthText(item.originalName, item.category, item.notes) ? "health" : "documents", targetId: item.id, contextCaseId: linkedCaseId(item.id, relations), title: protectedFamilyLabel({ label: item.originalName, category: item.category, notes: item.notes }), detail: isSensitiveHealthText(item.originalName, item.category, item.notes) ? "Einzelheiten im geschützten Gesundheitsbereich" : `${item.category} · ${fmtDate(item.documentDate)}`, kind: "Dokument", reason: "Dateiname, Kategorie, Datum oder Beschreibung passen" },
     [item.originalName, item.category, item.documentDate || "", item.notes || ""].join(" "),
   ));
-  records.forEach((record) => {
+  // Gelöschte und umgezogene (archivierte) Einträge erscheinen nicht: eine Zeile je Aufgabe (2.28.39).
+  records.filter((record) => record.status !== "archiviert").forEach((record) => {
     const title = cockpitRecordLabel(record);
     const memory = memoryData(record);
     const sensitive = memory?.sensitive || /(gesund|arzt|medizin|diagnos|krank|krankenkasse|rente|physio|pflege|heuschnupfen|erkält|rücken|heuschnupfen)/i.test(`${title} ${record.source || ""} ${record.notes || ""}`);
@@ -63,7 +64,7 @@ export function buildPortalSearchResults(topNavigation: SearchNavigation, query:
     const kind = recordTypeDefinitions[record.recordType].label;
     const detail = schedule ? `${scheduleStatusLabels[schedule.displayStatus]} · ${schedule.date ? fmtDate(schedule.date.slice(0, 10)) : "ohne Datum"}` : `${record.status} · Kennung ${record.id}`;
     add(
-      { id: `record-${record.id}`, section: sensitive ? "health" : memory ? "memory" : "cockpit", targetId: record.id, contextCaseId: record.recordType === "case" ? record.id : linkedCaseId(record.id, relations), title: sensitive ? "Geschützter Gesundheitseintrag" : title, detail: memory ? `${memory.lifeArea} · ${memory.eventType}` : detail, kind: memory ? "Erinnerung" : kind, reason: memory ? "Passendes Ereignis aus dem Erinnerungsprotokoll" : "Passender Datensatz aus dem gemeinsamen Familienaktenmodell" },
+      { id: `record-${record.id}`, section: sensitive ? "health" : memory ? "memory" : "cockpit", targetId: record.id, contextCaseId: record.recordType === "case" ? record.id : linkedCaseId(record.id, relations), title: sensitive ? "Geschützter Gesundheitseintrag" : title, detail: memory ? `${memory.lifeArea} · ${memory.eventType}` : detail, kind: memory ? "Tagebuch-Eintrag" : kind, reason: memory ? "Passendes Ereignis aus dem Erinnerungsprotokoll" : "Passender Datensatz aus dem gemeinsamen Familienaktenmodell" },
       [record.id, title, record.recordType, record.status, record.source || "", record.notes || "", JSON.stringify(record.data)].join(" "),
     );
   });
