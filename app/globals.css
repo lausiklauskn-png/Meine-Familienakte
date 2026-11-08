@@ -472,7 +472,8 @@ code { display: inline-block; color: var(--navy); background: var(--blue-soft); 
 .nav-cluster { position: static; }
 /* A7: Zwischen 1001 und 1480 px passten die acht Bereiche nicht in eine Zeile und liefen über den rechten Rand
    (gemessen: 1024 px → 78 px Überhang). Jetzt bricht die Leiste in eine zweite Zeile um; ab 1440 px wie bisher. */
-@media (min-width: 901px) and (max-width: 1439px) { .main-navigation { flex-wrap: wrap; } }
+/* 2.28.39: mit „Termine & Aufgaben“ sind es neun Menüs; die Leiste darf auf jeder Breite ab 901 px umbrechen (passt sie, bleibt sie einzeilig). */
+@media (min-width: 901px) { .main-navigation { flex-wrap: wrap; } }
 .mega-menu { position: absolute; top: 100%; left: 50%; width: min(1080px,calc(100vw - 32px)); transform: translateX(-50%); display: grid; grid-template-columns: 240px repeat(2,minmax(0,1fr)); gap: 28px; padding: 26px; border: 1px solid #c7d5df; border-top: 0; border-radius: 0 0 16px 16px; color: var(--ink); background: white; box-shadow: 0 20px 40px rgba(8,34,56,.2); }
 .mega-intro { padding-right: 22px; border-right: 1px solid var(--line); }
 .mega-intro h2 { margin: 5px 0 14px; color: var(--navy); font-size: 1.35rem; }
@@ -2609,3 +2610,51 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
   .library-aussortiert .library-zeile { grid-template-columns: 32px minmax(0,1fr); grid-template-areas: "w t" "w d"; }
   .auswahl-leiste { bottom: 4px; }
 }
+/* 2.28.39 (Klaus 08.11.2026, Vorschau neugestaltung-2.28.39): Knopf „Ablegen“ im Kopf mit Auswahl; am Handy ein kleines
+   Wort unter jedem Kopf-Symbol; rotes Fähnchen „Update verfügbar“ an der Versionszeile; „So fängst du an“ auf der Startseite. */
+.kopf-wort { display: none; }
+.ablegen-knopf { position: relative; flex: 0 0 auto; display: inline-flex; }
+.ablegen-knopf-schalter[aria-expanded="true"] { outline: 2px solid var(--teal, #2a7f86); outline-offset: 1px; }
+.ablegen-auswahl { position: absolute; top: calc(100% + 6px); right: 0; z-index: 80; width: min(290px, calc(100vw - 24px)); display: grid; gap: 4px; padding: 8px; border: 1px solid var(--line); border-radius: 12px; background: #fff; box-shadow: 0 10px 26px rgba(9,38,63,.2); color: var(--ink); text-align: left; }
+.ablegen-auswahl button { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px; border: 1px solid transparent; border-radius: 9px; background: transparent; color: var(--navy); font: inherit; text-align: left; cursor: pointer; }
+.ablegen-auswahl button:hover, .ablegen-auswahl button:focus-visible { border-color: var(--line); background: var(--blue-soft, #eaf3fa); }
+.ablegen-auswahl button span { display: grid; }
+.ablegen-auswahl button small { color: var(--muted, #5a6b7a); font-size: .78rem; }
+.ablegen-auswahl-ziel { margin: 4px 6px 2px; font-size: .78rem; color: var(--muted, #5a6b7a); }
+.update-fahne { display: inline-block; flex: 0 0 auto; margin-left: 0; padding: 1px 6px; border-radius: 4px 9px 9px 4px; background: #c62828; color: #fff; font-size: .68rem; font-weight: 800; line-height: 1.35; letter-spacing: .01em; white-space: nowrap; cursor: pointer; vertical-align: middle; }
+.update-fahne:hover, .update-fahne:focus-visible { background: #a51f1f; outline: 2px solid #f6c3c3; outline-offset: 1px; }
+.erste-schritte { display: grid; gap: 8px; margin-bottom: 18px; border-left: 4px solid var(--teal, #2a7f86); }
+.erste-schritte h2 { margin: 0; font-size: 1.15rem; color: var(--navy); }
+.erste-schritte ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.erste-schritte li { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; min-height: 40px; }
+.erste-schritte-nr { display: inline-grid; place-items: center; flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; background: var(--blue-soft, #eaf3fa); color: var(--navy); font-weight: 800; }
+.erste-schritte li.fertig .erste-schritte-nr { background: #2f9e5b; color: #fff; }
+.erste-schritte li.fertig .erste-schritte-text { color: #2f7a4b; font-weight: 700; }
+.erste-schritte li.uebersprungen { opacity: .7; }
+.erste-schritte-los { display: inline-flex; align-items: center; gap: 4px; padding: 8px 12px; border: 1px solid var(--teal, #2a7f86); border-radius: 9px; background: var(--teal-soft, #e8f6f5); color: var(--navy); font: inherit; font-weight: 700; cursor: pointer; }
+.erste-schritte-weg { margin-left: auto; }
+.erste-schritte > p { margin: 0; font-size: .8rem; }
+@media (max-width: 620px) {
+  .header-actions :is(.netz-schalter, .ablegen-knopf-schalter, .notiz-knopf-schalter, .kalender-knopf-schalter) { position: relative; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; width: auto; min-width: 30px; height: 38px; padding: 2px 1px 1px; }
+  .header-actions .kopf-wort { display: block; font-size: .52rem; font-weight: 700; line-height: 1; letter-spacing: -.01em; white-space: nowrap; color: var(--navy); }
+  .header-actions .netz-schalter .netz-lampe { top: 3px; bottom: auto; right: 3px; width: 7px; height: 7px; }
+  .header-actions .neu-knopf-schalter { height: 38px; }
+  .ablegen-auswahl { position: fixed; top: calc(env(safe-area-inset-top, 0px) + 56px); left: 12px; right: 12px; width: auto; }
+  .update-fahne .fahne-lang { display: none; }
+  .erste-schritte-weg { margin-left: 38px; }
+}
+@media (max-width: 430px) {
+  .header-actions .kopf-wort { font-size: .47rem; letter-spacing: -.03em; }
+  .header-actions :is(.netz-schalter, .ablegen-knopf-schalter, .notiz-knopf-schalter, .kalender-knopf-schalter) { min-width: 27px; padding-left: 0; padding-right: 0; }
+  .header-actions .neu-knopf-schalter { padding-left: 5px; padding-right: 5px; gap: 3px; font-size: .74rem; }
+  .header-actions { gap: 1px; }
+}
+/* Fähnchen am Handy: Platz in der Versionszeile machen statt es abzuschneiden (erst „Basic/Pro“, ganz schmal auch die Nummer). */
+@media (max-width: 620px) {
+  .site-brand .site-brand-zeile:has(.update-fahne) .site-brand-variante { display: none; }
+  .update-fahne { font-size: .62rem; padding: 0 5px; }
+}
+@media (max-width: 400px) {
+  .site-brand .site-brand-zeile:has(.update-fahne) .site-brand-version { display: none; }
+}
+.erste-schritte-weg { font-size: .85rem; }

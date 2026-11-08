@@ -23,7 +23,8 @@ try {
     if (!text.includes("Aktive Objekte")) return "Objekt-Cockpit wird ohne Daten gar nicht angezeigt";
     return /Aktive Objekte\s*0/.test(text) ? "Objekt-Cockpit 0" : false;
   });
-  const seiten = [[0, "Assistenzzentrale"], [0, "Korrespondenz"], [1, "Diagnosen, AU & ICD-Codes"], [2, "Interaktives Cockpit"], [2, "Familienübersicht"], [2, "Fristen und Aufgaben"], [2, "Tagebuch & Erinnerungen"], [3, "Miet- & Vermieterunterlagen"], [6, "Dokumentenbibliothek"], [6, "Bestand prüfen"], [6, "Eingangszentrale"], [6, "Sicherheit & lokaler Tresor"], [6, "Unterlagen & Quellen"], [7, "Hilfe & erste Schritte"], [7, "Systemprüfung"], [7, "Was gibt’s Neues?"]];
+  // 2.28.39: neue Gruppe „Termine & Aufgaben“ an zweiter Stelle (Cockpit, Fristen, Mein Kalender, Tagebuch); die übrigen rücken eins weiter.
+  const seiten = [[0, "Assistenzzentrale"], [0, "Korrespondenz"], [1, "Cockpit"], [1, "Fristen und Aufgaben"], [1, "Tagebuch & Erinnerungen"], [2, "Diagnosen, AU & ICD-Codes"], [3, "Familienübersicht"], [4, "Miet- & Vermieterunterlagen"], [7, "Dokumentenbibliothek"], [7, "Bestand prüfen"], [7, "Eingangszentrale"], [7, "Sicherheit & lokaler Tresor"], [7, "Unterlagen & Quellen"], [8, "Hilfe & erste Schritte"], [8, "Systemprüfung"], [8, "Was gibt’s Neues?"]];
   for (const [nav, eintrag] of seiten) {
     await step(`Leere Akte: „${eintrag}“ lädt ohne Fehler`, async () => {
       const vorher = errors.length;
@@ -38,7 +39,7 @@ try {
     await page.locator(".global-search input").fill(""); return leer;
   });
   await step("Leere Akte: Cockpit-Statuswechsel/Kacheln ohne Einträge ohne Fehler", async () => {
-    await footer(page, "Interaktives Cockpit");
+    await footer(page, "Cockpit");
     await page.locator("button.card", { hasText: "Jetzt wichtig" }).click();
     return (await page.locator(".cockpit-todo").count()) === 0;
   });

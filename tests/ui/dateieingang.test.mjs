@@ -380,7 +380,7 @@ try {
     await ziel.waitFor({ timeout: 10000 });
   });
   await step("Cockpit lädt nach dem Eingang ohne Fehler", async () => {
-    await footer(page, "Interaktives Cockpit");
+    await footer(page, "Cockpit");
     await page.locator("h1", { hasText: "Cockpit" }).waitFor();
   });
 

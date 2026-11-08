@@ -105,7 +105,7 @@ try {
     await mobile.waitForTimeout(350);
     await sammeln(mobile, `${clusters[i].trim()} › ${erster}`, "handy"); mSeiten++;
   }
-  for (const eintrag of ["Interaktives Cockpit", "Dokumentenbibliothek", "Eingangszentrale", "Sicherheitscenter", "Fristen und Aufgaben", "Tagebuch & Erinnerungen", "Hilfe", "Systemprüfung"]) {
+  for (const eintrag of ["Cockpit", "Dokumentenbibliothek", "Eingangszentrale", "Sicherheitscenter", "Fristen und Aufgaben", "Tagebuch & Erinnerungen", "Hilfe", "Systemprüfung"]) {
     await ruhig(mobile);
     await mobile.locator(".footer-directory button", { hasText: eintrag }).first().click({ force: true });
     await mobile.waitForTimeout(300);

@@ -23,7 +23,7 @@ export function NotizKnopf({ vaultHandle, records, relations, onGespeichert, onF
 }) {
   const [offen, setOffen] = useState(false);
   return <>
-    <button type="button" className="icon-button notiz-knopf-schalter" onClick={() => setOffen(true)} title="Notiz oder Erinnerung einsprechen" aria-label="Notiz" aria-haspopup="dialog" data-notiz-knopf><StickyNote size={18}/></button>
+    <button type="button" className="icon-button notiz-knopf-schalter" onClick={() => setOffen(true)} title="Notiz oder Erinnerung einsprechen" aria-label="Notiz" aria-haspopup="dialog" data-notiz-knopf><StickyNote size={18}/><span className="kopf-wort" aria-hidden="true">Notiz</span></button>
     {offen && <NotizFenster vaultHandle={vaultHandle} records={records} relations={relations} onZu={() => setOffen(false)} onGespeichert={onGespeichert} onFehler={onFehler} onKalender={onKalender}/>}
   </>;
 }

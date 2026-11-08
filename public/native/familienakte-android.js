@@ -104,6 +104,7 @@
       const r = await upd.pruefen();
       if (r?.neu) app.hinweis(`Neu: Fassung ${r.neu} (du hast ${r.installiert}), ${mb(r.groesse)}.`, 0, { text: 'Laden und installieren', run: installieren });
       else app.hinweis(`Du verwendest die aktuelle Fassung ${r?.version || app.version || ''}.`, 6000);
+      app.fahne?.(!!r?.neu, r?.neu);
     } catch (e) { fehler(e); }
   }
   if (upd?.pruefen) {
@@ -118,6 +119,16 @@
     };
     new MutationObserver(versionsknopf).observe(document.documentElement, { childList: true, subtree: true });
     versionsknopf();
+    // Fähnchen „Update verfügbar“ (2.28.39): still selbst prüfen – beim Start, alle 6 Stunden und nach dem Einschalten
+    // des Internets; nur bei Internet an, ohne Hinweisleiste. Antippen des Fähnchens = Tipp auf die Versionszeile.
+    let stillLaeuft = false;
+    const stillPruefen = async () => {
+      if (offline() || stillLaeuft) return; stillLaeuft = true;
+      try { const r = await upd.pruefen(); window.FamilienakteApp?.fahne?.(!!r?.neu, r?.neu); } catch { /* still: der Tipp auf die Versionszeile meldet Fehler */ } finally { stillLaeuft = false; }
+    };
+    window.addEventListener('pb:network', (e) => { if (!e.detail?.offline) stillPruefen(); });
+    window.addEventListener('familienakte:bereit', () => { window.PBNetwork?.initialized?.then(stillPruefen).catch(() => {}); }, { once: true });
+    setInterval(stillPruefen, 6 * 60 * 60 * 1000);
   }
   window.FamilienakteAndroid = { abholen, updatePruefen, installieren };
 })();

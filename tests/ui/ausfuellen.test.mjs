@@ -173,7 +173,7 @@ try {
     await dlg.locator("[data-af-vormerken]").click();
     await dlg.locator("[data-af-hinweis]", { hasText: "Vorgemerkt" }).waitFor();
     await dlg.locator("button[aria-label='Ausfüllen schließen']").click();
-    await footer(page, "Interaktives Cockpit");
+    await footer(page, "Cockpit");
     const k = page.locator("[data-cockpit-ausfuellen]");
     await k.waitFor();
     const t = await k.innerText();

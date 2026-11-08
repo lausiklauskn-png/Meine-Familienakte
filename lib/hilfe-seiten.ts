@@ -7,7 +7,7 @@ import type { SectionId } from "../app/portal-types";
  * ein Sprung dorthin führt nur zur Seite (der Rahmen säße sonst auf dem kleinen „?“).
  */
 export const SEITEN_KARTEN: Partial<Record<SectionId, string[]>> = {
-  overview: ["Objekt-Cockpit", "Zuletzt wichtig", "Datentresor und Sicherung", "Dokumenteneingang", "Erinnerungsprotokoll", "Lebensbereiche", "Systemprüfung"],
+  overview: ["Cockpit", "Zuletzt wichtig", "Datentresor und Sicherung", "Dokumenteneingang", "Erinnerungsprotokoll", "Lebensbereiche", "Systemprüfung"],
   inventory: ["Inkrementell prüfen"],
   cockpit: ["Was ist jetzt wichtig?", "To-do-Liste", "Dokumente, Memories und Vorgänge", "Offene Vorgänge", "Objektakten", "Neu hinzugekommen"],
   memory: ["Erinnerungsprotokoll", "Tagebuch", "Unbehandelte Memory-Ereignisse", "Zwei getrennte Arbeitslisten", "Offene Memory-Punkte", "Chronologie"],

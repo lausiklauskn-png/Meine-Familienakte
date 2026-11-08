@@ -8,7 +8,7 @@ try {
   const errors = collectErrors(page);
   await step("Startseite lädt (Desktop)", async () => { await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page); });
   check(errors.length === 0, "keine Seitenfehler beim Start", errors.join(" | "));
-  await step("Acht Hauptmenüs vorhanden", async () => (await page.locator(".main-navigation .nav-cluster > button").count()) === 8);
+  await step("Neun Hauptmenüs vorhanden (seit 2.28.39 mit „Termine & Aufgaben“)", async () => (await page.locator(".main-navigation .nav-cluster > button").count()) === 9);
   const mobile = await (await browser.newContext(HANDY)).newPage();
   await step("Startseite lädt (Handy)", async () => { await mobile.goto(app.base, { waitUntil: "networkidle" }); await ready(mobile); });
 } finally { await browser.close(); await app.stop(); }

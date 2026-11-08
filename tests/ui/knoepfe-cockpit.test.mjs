@@ -15,7 +15,7 @@ try {
   await step("Start", async () => { await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page); });
 
   // ---------- Cockpit ----------
-  await footer(page, "Interaktives Cockpit");
+  await footer(page, "Cockpit");
   await step("Cockpit: vier Zähl-Kacheln sind Knöpfe und rollen zum Abschnitt", async () => {
     await page.locator("button.card", { hasText: "Aktive To-dos" }).click();
     await page.waitForTimeout(400);
@@ -65,7 +65,7 @@ try {
     if (!(await assist.count())) return `nur ${n} Dossier-Knöpfe, kein Assistenz-Knopf`;
     await assist.click(); await page.waitForTimeout(300);
     const ok = (await page.locator(".breadcrumb").innerText()).includes("Assistenz");
-    await footer(page, "Interaktives Cockpit");
+    await footer(page, "Cockpit");
     return ok;
   });
   await step("Cockpit: Zusammenhangs-Vorschlag „Verknüpfen“ / „Nicht verknüpfen“", async () => {

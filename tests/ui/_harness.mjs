@@ -86,14 +86,14 @@ export const ready = async (page) => {
   const notice = new URL(page.url()).searchParams.get("demo") === "1" ? "Alle Daten" : "Alte Beispieldaten";
   await page.waitForSelector(`.sample-data-notice strong:has-text("${notice}")`, { timeout: 120000 });
 };
-/** Hauptmenü (Index 0 = Assistenz … 7 = Hilfe) und Eintrag im Mega-Menü. */
+/** Hauptmenü (Index 0 = Assistenz, 1 = Termine & Aufgaben … 8 = Hilfe) und Eintrag im Mega-Menü. */
 export async function openMenu(page, navIndex, itemText) {
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.locator(".main-navigation .nav-cluster > button").nth(navIndex).click({ force: true });
   await page.locator(".mega-menu button", { hasText: itemText }).first().click();
   await page.waitForTimeout(400);
 }
-/** Fußzeilen-Verzeichnis („Interaktives Cockpit“, „Dokumentenbibliothek“, „Eingangszentrale“, „Sicherheitscenter“, „Hilfe“ …). */
+/** Fußzeilen-Verzeichnis („Cockpit“, „Dokumentenbibliothek“, „Eingangszentrale“, „Sicherheitscenter“, „Hilfe“ …). */
 // Wartet, bis das sanfte Rollen (go() rollt nach oben mit behavior: smooth) zur Ruhe gekommen ist – sonst meldet
 // Playwright „Element is outside of the viewport“, wenn der Knopf während der Animation wegrutscht (Wackler in der CI).
 export async function ruhig(page, maxMs = 2000) {
