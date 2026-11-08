@@ -38,6 +38,7 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(FamilienakteGlockePlugin.class);
         registerPlugin(FamilienakteOrdnerPlugin.class);
         registerPlugin(FamilienakteArbeitPlugin.class);
+        registerPlugin(FamilienakteNetzPlugin.class);
         super.onCreate(state);
         vollbild();
         if (bridge == null) return;

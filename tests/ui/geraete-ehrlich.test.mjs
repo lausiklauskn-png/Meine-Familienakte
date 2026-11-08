@@ -52,14 +52,14 @@ try {
     const kasten = await page.locator('[data-aktensicherung] [data-sicherung-ziel]').first().innerText().catch(() => "");
     return soll(!/Verbunden: Browserspeicher/.test(kasten), kasten);
   });
-  await step("Hilfe „Auf ein neues Gerät umziehen“: Weg führt zu „Sicherung einlesen“; Zusammenführen da, automatischer Abgleich als geplant genannt", async () => {
+  await step("Hilfe „Auf ein neues Gerät umziehen“: Weg führt zu „Sicherung einlesen“; Zusammenführen, Festplatte und Netz-Abgleich genannt", async () => {
     const thema = page.locator('[data-hilfe-thema="umzug"]');
     await thema.locator("summary").first().click();
     const weg = await thema.locator(".hilfe-weg").innerText();
     for (const zu of await thema.locator("details:not([open]) > summary").all()) await zu.click();
     const text = await thema.innerText();
-    // Stufe A (Plan 08.11.): Einlesen führt in eine benutzte Akte zusammen; nur der automatische Abgleich ist noch geplant.
-    return soll(/Sicherung einlesen/.test(weg) && !/Geräteübergabe/.test(weg) && /zusammengeführt|führt zusammen/.test(text) && /geplant/.test(text), { weg, text: text.slice(0, 200) });
+    // Stufen A, C, F (Plan 08.11.): Einlesen führt zusammen; gemeinsame Festplatte und Gastgeber im eigenen Netz sind gebaut.
+    return soll(/Sicherung einlesen/.test(weg) && !/Geräteübergabe/.test(weg) && /zusammengeführt|führt zusammen/.test(text) && /Festplatte/.test(text) && /Gastgeber/.test(text), { weg, text: text.slice(0, 200) });
   });
   await step("Hilfe-Thema „Internet für die App“ vorhanden und gefunden", async () => {
     soll(await page.locator('[data-hilfe-thema="internet"]').count() === 1, "Thema fehlt");

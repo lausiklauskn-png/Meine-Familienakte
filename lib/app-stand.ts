@@ -28,7 +28,7 @@ export const APP_STAND: Readonly<Record<string, StandEintrag>> = {
   "glocke": { stand: "aktivieren", selbst: "app-glocke" },
   // Abgleich zwischen Geräten (Plan Punkt 10): die Übergabe einer Unterlage ist fertig, der Abgleich steht im Kastentext als geplant.
   // Stufe C: gemeinsame Festplatte – vorbereiten, verbinden, abgleichen; erkannt an der Kennung.
-  "anderes-geraet": { stand: "fertig", seit: "2.28.42" },
+  "anderes-geraet": { stand: "fertig", seit: "2.28.45" },
   // Stufe A (Plan 08.11.): Sicherung einlesen führt in eine benutzte Akte zusammen.
   // Stufe B: verschlüsselte Vollsicherung mit Notfallblatt, Erinnerung nach 7 Tagen, Papierkorb leeren.
   "sicherungsordner": { stand: "fertig", seit: "2.28.42" },
