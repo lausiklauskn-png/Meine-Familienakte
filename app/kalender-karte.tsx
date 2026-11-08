@@ -31,12 +31,17 @@ export function kalenderZiel(einst: KalenderEinst | null) {
 
 // ---------- Vorschlag aus dem Eingang ----------
 
-export type FristVorschlag = { titel: string; datum: string | null; hinweis: string; quelle?: string };
+export type FristVorschlag = { titel: string; datum: string | null; hinweis: string; quelle?: string; dokumentId?: string };
 let vorschlag: FristVorschlag | null = null;
 /** Eingang → Fristen: Vorschlag ablegen; das Formular übernimmt ihn vorausgefüllt, gespeichert wird erst nach Bestätigung. */
 export function fristVorschlagSetzen(v: FristVorschlag) { vorschlag = v; }
 export function fristVorschlagNehmen() { const v = vorschlag; vorschlag = null; return v; }
-export function fristAusHinweis(hinweis: string) { return hinweis.match(/\b(20\d{2}-\d{2}-\d{2})\b/)?.[1] || null; }
+export function fristAusHinweis(hinweis: string) {
+  const iso = hinweis.match(/\b(20\d{2}-\d{2}-\d{2})\b/)?.[1];
+  if (iso) return iso;
+  const de = hinweis.match(/\b(\d{1,2})\.(\d{1,2})\.(20\d{2})\b/);
+  return de ? `${de[3]}-${de[2].padStart(2, "0")}-${de[1].padStart(2, "0")}` : null;
+}
 
 // ---------- Erinnerungs-Chips ----------
 

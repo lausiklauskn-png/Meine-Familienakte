@@ -1037,6 +1037,7 @@ button.object-card:hover { transform: translateY(-2px); border-color: #8fb2c9; b
 .library-document-kicker button:hover { background: var(--blue-soft); }
 .library-document-title { display: block; margin: 9px 0 6px; border: 0; padding: 0; color: var(--navy); background: transparent; text-align: left; font-size: 1.04rem; font-weight: 900; overflow-wrap: anywhere; }
 .library-document-title:hover { color: var(--teal); text-decoration: underline; }
+.library-dateiname { display: block; margin: -2px 0 6px; color: var(--muted); font-size: .78rem; overflow-wrap: anywhere; }
 .library-document-meta button { border: 0; padding: 0; color: var(--muted); background: transparent; font-size: .76rem; font-weight: 750; }
 .library-document-meta button + button::before { content: "·"; margin-right: 6px; }
 .library-document-meta button:hover { color: var(--teal); text-decoration: underline; }
@@ -2492,3 +2493,18 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
   .site-brand .brand-symbol { width: 28px; height: 28px; }
   .site-brand .brand-symbol svg { width: 20px; height: 20px; }
 }
+
+/* 2.28.39 Eingang: angehakte Zuordnungen, erkannte Fristen, Dublette mit Namen, gefilterte Warteschlange, „Gespeichert ✓“ */
+.intake-zuordnung { grid-template-columns: auto 85px minmax(0,1fr); align-items: center; cursor: pointer; }
+.intake-zuordnung > input { grid-row: 1 / 3; margin: 0 4px 0 0; }
+.duplicate-warning > .dublette-zeile { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 6px 0; color: var(--ink); font-size: .88rem; }
+.duplicate-warning > small { display: block; color: var(--muted); font-size: .76rem; margin-bottom: 6px; }
+.intake-fristen { display: grid; gap: 8px; margin: 12px 0; border: 1px solid #c5d7e2; border-radius: 10px; padding: 11px; background: var(--canvas); }
+.intake-fristen > strong { color: var(--navy); font-size: .9rem; }
+.intake-frist { display: grid; gap: 6px; border-top: 1px solid var(--line); padding-top: 8px; }
+.intake-frist.an { border-top-color: var(--teal); }
+.queue-total-reihe { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.queue-summary button.active { border-color: var(--teal); box-shadow: inset 0 0 0 1px var(--teal); }
+.queue-filter-hinweis { margin: -6px 0 10px; color: var(--muted); font-size: .85rem; }
+.intake-queue-item.erledigt { opacity: .8; }
+.queue-gespeichert { color: var(--teal); font-weight: 800; font-size: .88rem; }

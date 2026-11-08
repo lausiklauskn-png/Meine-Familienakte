@@ -132,6 +132,16 @@ function referencesFor(document: FamilyCockpitDocument, records: FamilyRecordUni
     .sort((a, b) => a.type.localeCompare(b.type, "de") || a.label.localeCompare(b.label, "de"));
 }
 
+// Sichtbare Beschreibung ohne interne Kürzel (Prüfbericht Neuling: „Was ist FaWoGa, file-picker?“). Die Notiz selbst bleibt
+// unverändert, denn readIntakeMetadata liest die Marken „FaWoGa:“ und „Dokumentart:“ daraus.
+const EINGANG_NAMEN: Record<string, string> = { "file-picker": "Dateiauswahl", "drag-drop": "Hineingezogen", "local-inbox": "Lokaler Eingangsordner", "onedrive-inbox": "OneDrive-Familienordner", "camera-scan": "Foto oder Scan" };
+export function lesbareNotiz(notes: string) {
+  return notes
+    .replace(/FaWoGa:\s*/g, "Lebensbereich: ")
+    .replace(/Eingang:\s*(file-picker|drag-drop|local-inbox|onedrive-inbox|camera-scan)\b/g, (_alles, quelle: string) => `Eingang: ${EINGANG_NAMEN[quelle]}`)
+    .replace(/Eingangszentrale 2\.28\.0:/g, "Eingangszentrale:");
+}
+
 function shorten(value: string, max = 150) {
   const clean = value.replace(/\s+/g, " ").trim();
   return clean.length <= max ? clean : `${clean.slice(0, max - 1).trimEnd()}…`;
@@ -149,9 +159,9 @@ export function buildDocumentLibraryItems(documents: FamilyCockpitDocument[], re
     const updatedAt = document.updatedAt || document.createdAt || document.documentDate || "";
     const description = protectedHealth
       ? "Geschützte Gesundheitsunterlage. Einzelheiten sind nur im Gesundheitsbereich sichtbar."
-      : shorten(document.notes || `Das Dokument ist im Bereich „${area}“ gespeichert und mit seinem ursprünglichen Datensatz verknüpft.`);
+      : shorten(document.notes ? lesbareNotiz(document.notes) : `Das Dokument ist im Bereich „${area}“ gespeichert und mit seinem ursprünglichen Datensatz verknüpft.`);
     const searchable = [
-      document.id, document.originalName, document.category, documentType, date || "", document.status,
+      document.id, document.originalName, document.dateiname || "", protectedHealth ? "" : document.textAuszug || "", document.category, documentType, date || "", document.status,
       document.notes || "", document.storageType || "", document.storedPath || "", document.relativePath || "", document.oneDrivePath || "",
       ...references.flatMap((reference) => [reference.id, reference.type, reference.label]),
     ].join(" ");
