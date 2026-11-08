@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FAWOGA_LIFE_AREAS } from "../lib/document-intake";
 import type { FamilyRecordUnion } from "../lib/family-data-model";
 import { erinnerungAusText, erinnerungsTitel, type MemoryConfidence, type MemoryEventData } from "../lib/family-memory";
-import { ERINNERUNG_VORGABE, erinnerungsName as erinnerungsNameKurz, kalenderFelder, KURZ_ERINNERUNGEN, type ErinnerungsWahl } from "../lib/kalender";
+import { ERINNERUNG_VORGABE, erinnerungsName as erinnerungsNameKurz, kalenderFelder, KURZ_ERINNERUNGEN, type ErinnerungsWahl , erinnerungenVerschieben, tageZwischen } from "../lib/kalender";
 import { DatumFeld } from "./datum-feld";
 import { ErinnernTeil, type ErinnernWert } from "./erinnern-teil";
 import { ErinnerungsChips, KalenderAuswahl, useKalenderEinst, type KalenderWahl } from "./kalender-karte";
@@ -29,6 +29,7 @@ export function MemoryBearbeiten({ event, data, aufgaben, vaultHandle, onZu, onG
   const [uhr, setUhr] = useState(data.eventAt.slice(11, 16));
   const [einordnung, setEinordnung] = useState<MemoryConfidence>(data.confidence);
   const [termine, setTermine] = useState<Termin[]>(() => aufgaben.map((a) => { const d = a.data as { title: string; dueAt?: string }; const k = kalenderFelder(a); return { id: a.id, titel: d.title, datum: d.dueAt || "", zeit: k.dueTime || "", wahl: k.erinnerungen || kalender?.erinnerungen || ERINNERUNG_VORGABE, kal: k.kalenderWahl || null }; }));
+  const [anfang] = useState(() => termine);
   const [neu, setNeu] = useState<ErnnernOderNull>(null);
   const [busy, setBusy] = useState(false);
   const [fehler, setFehler] = useState("");
@@ -38,7 +39,9 @@ export function MemoryBearbeiten({ event, data, aufgaben, vaultHandle, onZu, onG
     setBusy(true); setFehler("");
     try {
       await updateLocalMemoryRecord(vaultHandle, event.id, { title: titel, originalText: text, lifeArea: bereich, eventAt: `${tag}T${uhr || "00:00"}:00`, confidence: einordnung });
-      for (const t of termine) await updateLocalScheduleTermin(vaultHandle, t.id, { title: t.titel, dueAt: t.datum, dueTime: t.zeit || null, erinnerungen: t.wahl, kalenderWahl: t.kal, kalenderEintragen: true }); // hier bearbeitet = für den Kalender gemeint
+      // U6: nur Geändertes; Kalender nur, wenn einer verbunden ist (hier bearbeitet = für den Kalender gemeint).
+      for (const t of termine) { const vorher = anfang.find((x) => x.id === t.id); const gleich = (x: unknown, y: unknown) => JSON.stringify(x) === JSON.stringify(y);
+        await updateLocalScheduleTermin(vaultHandle, t.id, { title: t.titel, dueAt: t.datum, dueTime: t.zeit || null, ...(vorher && gleich(vorher.wahl, t.wahl) ? {} : { erinnerungen: t.wahl }), ...(vorher && gleich(vorher.kal, t.kal) ? {} : { kalenderWahl: t.kal }), ...(kalender ? { kalenderEintragen: true } : {}) }); }
       if (neu) await addLocalMemoryErinnerung(vaultHandle, event.id, neu);
       await onGespeichert("Eintrag gespeichert" + (termine.length || neu ? "; die Erinnerung geht beim nächsten Abgleich in den Kalender." : "."));
       onZu();
@@ -61,7 +64,7 @@ export function MemoryBearbeiten({ event, data, aufgaben, vaultHandle, onZu, onG
         <strong>🔔 Erinnerung</strong>
         <div className="memory-erinnern-felder">
           <label className="memory-erinnern-titel"><span>Woran erinnern</span><VoiceInput value={t.titel} onValueChange={(v) => aendern(t.id, { titel: v })} speechLabel="Woran erinnern" data-mb-termin-titel/></label>
-          <label><span>Tag</span><DatumFeld value={t.datum} required onChange={(e) => aendern(t.id, { datum: e.target.value })} data-mb-termin-tag/></label>
+          <label><span>Tag</span><DatumFeld value={t.datum} required onChange={(e) => aendern(t.id, { datum: e.target.value, ...(t.datum && /^\d{4}-\d{2}-\d{2}$/.test(e.target.value) ? { wahl: erinnerungenVerschieben(t.wahl, tageZwischen(t.datum, e.target.value)) } : {}) })} data-mb-termin-tag/></label>
           <label><span>Uhrzeit</span><DatumFeld art="time" value={t.zeit} onChange={(e) => aendern(t.id, { zeit: e.target.value })} data-mb-termin-uhr/></label>
           <KalenderAuswahl einst={kalender} wert={t.kal} onChange={(w) => aendern(t.id, { kal: w })}/>
           <ErinnerungsChips wert={t.wahl} onChange={(w) => aendern(t.id, { wahl: w })} schnell={[...KURZ_ERINNERUNGEN, "1d"]} name="Erinnern"/>

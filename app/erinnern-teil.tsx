@@ -8,7 +8,7 @@ import { GlockenSchalter } from "./app-glocke";
 import { ErinnerungsChips, KalenderAuswahl, kalenderZiel, useKalenderEinst, type KalenderWahl } from "./kalender-karte";
 
 /** Was „Erinnern lassen“ beim Speichern übergibt: eine Aufgabe mit Termin, auf Wunsch im Kalender. */
-export type ErinnernWert = { titel: string; dueAt: string; dueTime?: string; erinnerungen: ErinnerungsWahl[]; kalenderEintragen: boolean; kalenderWahl?: KalenderWahl | null };
+export type ErinnernWert = { titel: string; dueAt: string; dueTime?: string; erinnerungen: ErinnerungsWahl[]; kalenderEintragen?: boolean; kalenderWahl?: KalenderWahl | null };
 
 const heuteIso = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
 const wahlFuer = (zeit: string | null | undefined): ErinnerungsWahl[] => zeit ? ["15m", "0m"] : ["0m"];
@@ -42,7 +42,7 @@ export function ErinnernTeil({ erkannt, titelVorschlag, onChange, onKalender }: 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [schluessel]);
 
-  const wert: ErinnernWert | null = an && datum ? { titel: titel.trim() || titelVorschlag, dueAt: datum, dueTime: zeit || undefined, erinnerungen: wahl, kalenderEintragen: true, kalenderWahl: kalWahl } : null; // Klaus 2026-11-05: wohin sonst? Ohne Kalender bleibt es eine Aufgabe und geht später hinein
+  const wert: ErinnernWert | null = an && datum ? { titel: titel.trim() || titelVorschlag, dueAt: datum, dueTime: zeit || undefined, erinnerungen: wahl, kalenderEintragen: kalender ? true : undefined, kalenderWahl: kalWahl } : null; // Klaus 2026-11-05: wohin sonst? Ohne Kalender bleibt es eine Aufgabe; „noch offen“ (U5), „Einmal alle offenen eintragen“ nimmt sie später mit
   const wertSchluessel = JSON.stringify(wert);
   useEffect(() => { onChange(wert); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [wertSchluessel]);
 

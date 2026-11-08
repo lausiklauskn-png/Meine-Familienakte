@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { FamilyRecordUnion, FamilyRelation } from "../lib/family-data-model";
 import { buildMemoryAnalysis, erinnerungAusText, erinnerungsTitel, memoryData } from "../lib/family-memory";
 import { ErinnernTeil, KALENDER_OEFFNEN, type ErinnernWert } from "./erinnern-teil";
-import { createLocalMemoryBundle, readLocalVaultData } from "./local-vault";
+import { createLocalMemoryBundle, readLocalVaultData, updateLocalScheduleStatus } from "./local-vault";
 import { NotizLoeschen } from "./loesch-knopf";
 import { MemoryBearbeiten } from "./memory-bearbeiten";
 import { glockeEinschalten } from "./app-glocke";
@@ -48,7 +48,15 @@ function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, on
   const [fotos, setFotos] = useState<File[]>([]);
   const kamera = useRef<HTMLInputElement>(null);
   const [listeAuf, setListeAuf] = useState<string | null>(null); // Auge (Klaus 2026-11-06)
-  const [liste, setListe] = useState<Array<{ id: string; titel: string; wann: string; tag?: string }>>([]);
+  const [liste, setListe] = useState<Array<{ id: string; titel: string; wann: string; tag?: string; aufgabe?: string; erledigt?: boolean }>>([]);
+  // U9: derselbe ✓ wie in den Listen – die Erinnerung (Aufgabe) zur Notiz als erledigt markieren.
+  const erledigen = async (id: string, aufgabe: string) => {
+    if (!vaultHandle) return;
+    setBusy(true); setFehler("");
+    try { await updateLocalScheduleStatus(vaultHandle, aufgabe, "erledigt"); geaendert.current = true; setListe((l) => l.map((x) => x.id === id ? { ...x, erledigt: true, wann: `✓ erledigt · ${x.wann}` } : x)); }
+    catch (g) { const t = g instanceof Error ? g.message : String(g); setFehler(t); onFehler(t); }
+    finally { setBusy(false); }
+  };
   const geaendert = useRef(false);
   const feld = useRef<HTMLDivElement>(null);
   const erkannt = useMemo(() => erinnerungAusText(text), [text]);
@@ -77,7 +85,7 @@ function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, on
       const wann = erinnerung ? `🔔 ${new Date(`${erinnerung.dueAt}T00:00`).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" })}${erinnerung.dueTime ? `, ${erinnerung.dueTime} Uhr` : ""} · in Mein Kalender${erinnerung.kalenderEintragen && kalender ? ` und ${kalenderZiel(kalender)}` : ""}` : "im Tagebuch, ohne Erinnerung";
       geaendert.current = true;
       if (erinnerung) glockeEinschalten(); // Klaus 2026-11-06: Erinnerung gespeichert = Glocke an, ohne extra Tipp
-      setListe((l) => [{ id: r.event.id, titel: erinnerung?.titel || (text.trim() ? analyseJetzt.title : `Foto-Notiz (${fotos.length})`), wann: fotos.length ? `📷 ${fotos.length} · ${wann}` : wann, tag: erinnerung?.dueAt }, ...l]);
+      setListe((l) => [{ id: r.event.id, titel: erinnerung?.titel || (text.trim() ? analyseJetzt.title : `Foto-Notiz (${fotos.length})`), wann: fotos.length ? `📷 ${fotos.length} · ${wann}` : wann, tag: erinnerung?.dueAt, aufgabe: erinnerung && r.task ? r.task.id : undefined }, ...l]);
       setText(""); setFotos([]); setErinnerung(null); setRunde((x) => x + 1);
       feld.current?.querySelector("textarea")?.focus();
     } catch (g) { const t = g instanceof Error ? g.message : String(g); setFehler(t); onFehler(t); }
@@ -114,7 +122,7 @@ function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, on
       {text.trim() && <ErinnernTeil key={runde} erkannt={erkannt} titelVorschlag={erkannt?.wunsch ? erinnerungsTitel(text) : analyse?.taskProposal || analyse?.title || text.trim().slice(0, 80)} onChange={setErinnerung} onKalender={zumKalender}/>}
       {fehler && <p className="form-error" role="alert">{fehler}</p>}
       {liste.length > 0 && <ul className="notiz-liste" aria-label="Gespeicherte Notizen" data-notiz-liste>
-        {liste.map((n) => { const auf = listeAuf === n.id; return <li key={n.id} data-notiz-eintrag={n.id} className={auf ? "offen" : undefined}><div className="fz-kopf fz-voll"><Check size={16}/><span className="mk-text"><strong><FlachText text={n.titel}/></strong><small>{n.wann}</small></span><KnopfLeiste titel={n.titel}>{vaultHandle && <StiftKnopf titel={n.titel} disabled={busy} onClick={() => void aendernOeffnen(n.id)} data-notiz-aendern={n.id}/>}{vaultHandle && <NotizLoeschen id={n.id} titel={n.titel} vaultHandle={vaultHandle} onGeloescht={() => { geaendert.current = true; setListe((l) => l.filter((x) => x.id !== n.id)); }}/>}<AugeKnopf offen={auf} titel={n.titel} onClick={() => setListeAuf(auf ? null : n.id)} data-notiz-auge/></KnopfLeiste></div>
+        {liste.map((n) => { const auf = listeAuf === n.id; return <li key={n.id} data-notiz-eintrag={n.id} className={auf ? "offen" : undefined}><div className="fz-kopf fz-voll"><Check size={16}/><span className="mk-text"><strong><FlachText text={n.titel}/></strong><small>{n.wann}</small></span><KnopfLeiste titel={n.titel}>{vaultHandle && n.aufgabe && !n.erledigt && <button type="button" className="icon-button" disabled={busy} onClick={() => void erledigen(n.id, n.aufgabe!)} aria-label={`Erinnerung „${n.titel}“ als erledigt markieren`} title="Als erledigt markieren" data-notiz-erledigt={n.id}><Check size={18}/></button>}{vaultHandle && <StiftKnopf titel={n.titel} disabled={busy} onClick={() => void aendernOeffnen(n.id)} data-notiz-aendern={n.id}/>}{vaultHandle && <NotizLoeschen id={n.id} titel={n.titel} vaultHandle={vaultHandle} onGeloescht={() => { geaendert.current = true; setListe((l) => l.filter((x) => x.id !== n.id)); }}/>}<AugeKnopf offen={auf} titel={n.titel} onClick={() => setListeAuf(auf ? null : n.id)} data-notiz-auge/></KnopfLeiste></div>
           {auf && <div className="fz-offen"><p><strong>{n.titel}</strong></p><small>{n.wann}</small><div className="button-row">{n.tag && onKalender && <button type="button" className="button secondary" onClick={() => { const t = n.tag!; void schliessen().then(() => onKalender(t)); }} disabled={busy} title="Im Kalender ansehen" data-notiz-im-kalender><CalendarDays size={16}/> Im Kalender</button>}</div></div>}</li>; })}
       </ul>}
       <div className="modal-actions"><button type="button" className="button secondary" onClick={() => void schliessen()} disabled={busy} data-notiz-fertig>{liste.length ? "Fertig" : "Abbrechen"}</button></div>

@@ -2,7 +2,8 @@ import { workspaceName, demoActive } from "../lib/demo-workspace.ts";
 import { aktuelleGrenze, mbText } from "../lib/geraete-grenze.ts";
 import { istNativerOrdner, nativenOrdnerWaehlen, ordnerPlugin } from "./nativer-ordner.ts";
 import { DEMO_PRAEFIX, eigeneDatenDa, wasAendertSich, type DemoQuelle } from "../lib/demo-kopie.ts";
-import { erinnerungenOrdnen, gueltigeUhrzeit, zuordnungSetzen, type ErinnerungsWahl, type KalenderAnbieter, type KalenderFelder, type KalenderZuordnung } from "../lib/kalender.ts";
+import { erinnerungenUmziehen } from "../lib/erinnerung-umzug.ts";
+import { ERINNERUNG_VORGABE, erinnerungAusDatum, erinnerungenOrdnen, erinnerungenVerschieben, gueltigeUhrzeit, tageZwischen, zuordnungSetzen, type ErinnerungsWahl, type KalenderAnbieter, type KalenderFelder, type KalenderZuordnung } from "../lib/kalender.ts";
 import { workspaceStorage } from "../lib/demo-workspace.ts";
 import type { ProUebergabe } from "../lib/pro-verbund-vertrag";
 import { kontaktPruefen, kontaktUebernehmen, type PersonKontakt } from "../lib/person-kontakt.ts";
@@ -3490,6 +3491,31 @@ export async function changeLocalContextLink(handle: FileSystemDirectoryHandle, 
   return relation;
 }
 
+/**
+ * Einmaliger Umzug beim Start (2.28.39, Vorschau D): Erinnerungen, die zu einer Aufgabe oder Frist gehören, werden in diese
+ * übernommen; der alte Datensatz bleibt archiviert. Vorher legt die App eine eigene Sicherung des Registers an
+ * (00_Register/Sicherungen-Umzug, wird nicht automatisch aufgeräumt). Ohne etwas umzuziehen wird nichts geschrieben.
+ */
+export async function erinnerungenInAufgabenUmziehen(handle: FileSystemDirectoryHandle, vorgabe: ErinnerungsWahl[] = ERINNERUNG_VORGABE) {
+  const index = await readIndex(handle);
+  const plan = erinnerungenUmziehen(index.records, index.relations, vorgabe);
+  if (!plan.umgezogen.length) return 0;
+  const alt = await readExistingRegisterText(handle);
+  if (alt !== null) {
+    const ordner = await (await registerDir(handle)).getDirectoryHandle("Sicherungen-Umzug", { create: true });
+    const name = `Familienakte_Register_vor-Umzug-Erinnerungen_${new Date().toISOString().replace(/[:.]/g, "-")}.json`;
+    const datei = await ordner.getFileHandle(name, { create: true });
+    const w = await datei.createWritable(); await w.write(alt); await w.close();
+    if ((await (await datei.getFile()).text()) !== alt) throw new Error("Die Sicherung vor dem Umzug der Erinnerungen ließ sich nicht prüfen; es wurde nichts geändert.");
+  }
+  index.records = plan.records;
+  index.relations = plan.relations;
+  const now = new Date().toISOString();
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Erinnerungen umgezogen", recordId: plan.umgezogen[0].ziel, details: `${plan.umgezogen.length} Erinnerung${plan.umgezogen.length === 1 ? "" : "en"} in ihre Aufgabe oder Frist übernommen (${plan.umgezogen.map((u) => `${u.erinnerung} → ${u.ziel}`).join(", ")}); alte Einträge archiviert. Sicherung vorher angelegt.` });
+  await writeIndex(handle, index);
+  return plan.umgezogen.length;
+}
+
 export async function createLocalScheduleBundle(handle: FileSystemDirectoryHandle, input: CreateScheduleInput) {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   if (!input.title.trim() || !input.dueAt) throw new Error("Bezeichnung und Fälligkeitsdatum sind erforderlich.");
@@ -3513,15 +3539,14 @@ export async function createLocalScheduleBundle(handle: FileSystemDirectoryHandl
     if (index.relations.some((item) => item.fromType === input.recordType && item.fromId === schedule.id && item.toType === reference.recordType && item.toId === reference.id.trim() && item.relationType === reference.relationType)) continue;
     index.relations.push({ id: crypto.randomUUID(), fromType: input.recordType, fromId: schedule.id, toType: reference.recordType, toId: reference.id.trim(), relationType: reference.relationType, createdAt: now, source: input.source || "Manuelle Eingabe", notes: null });
   }
-  let reminder: FamilyRecordUnion | null = null;
-  if (input.reminderAt) {
-    const reminderAllocation = nextFamilyRecordId("reminder", index.sequences);
-    index.sequences = reminderAllocation.sequences;
-    reminder = createFamilyRecord({ id: reminderAllocation.id, recordType: "reminder", status: "offen", source: schedule.id, notes: input.notes || null, data: { title: `Erinnerung: ${input.title.trim()}`, remindAt: input.reminderAt }, now }) as FamilyRecordUnion;
-    index.records.push(reminder);
-    index.relations.push({ id: crypto.randomUUID(), fromType: "reminder", fromId: reminder.id, toType: input.recordType, toId: schedule.id, relationType: "erinnert an", createdAt: now, source: input.source || "Manuelle Eingabe", notes: null });
+  // 2.28.39 (Vorschau D): das Erinnerungsdatum gehört zur Aufgabe selbst – kein zweiter Datensatz „Erinnerung: …“ mehr.
+  const reminder: FamilyRecordUnion | null = null;
+  const eigeneZeit = erinnerungAusDatum(input.reminderAt);
+  if (eigeneZeit) {
+    const d = schedule.data as KalenderFelder;
+    d.erinnerungen = erinnerungenOrdnen([...(Array.isArray(d.erinnerungen) ? d.erinnerungen : ERINNERUNG_VORGABE), eigeneZeit]);
   }
-  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Frist oder Aufgabe angelegt", recordId: schedule.id, details: `${schedule.id} wurde nach ausdrücklicher Benutzerbestätigung angelegt.${reminder ? ` ${reminder.id} wurde verknüpft.` : ""}` });
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Frist oder Aufgabe angelegt", recordId: schedule.id, details: `${schedule.id} wurde nach ausdrücklicher Benutzerbestätigung angelegt.${eigeneZeit ? " Erinnerungszeit gespeichert." : ""}` });
   await writeIndex(handle, index);
   return { schedule, reminder };
 }
@@ -3577,6 +3602,11 @@ export async function updateLocalScheduleStatus(handle: FileSystemDirectoryHandl
   record.status = status;
   record.updatedAt = now;
   if (record.recordType === "task") record.data.completedAt = status === "erledigt" ? now : undefined;
+  // U2: Eine noch verknüpfte Erinnerung (älterer Stand) geht mit ihrer Aufgabe mit – erledigt heißt erledigt.
+  if (record.recordType !== "reminder") for (const rel of index.relations.filter((r) => r.toId === id && r.fromType === "reminder" && r.relationType === "erinnert an")) {
+    const rem = index.records.find((r) => r.id === rel.fromId);
+    if (rem && rem.status !== "archiviert") { rem.status = status; rem.updatedAt = now; }
+  }
   index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Status geändert", recordId: record.id, details: `${record.id}: ${previous} → ${status}; Änderung durch Benutzerbefehl.` });
   await writeIndex(handle, index);
   return record;
@@ -3762,7 +3792,7 @@ export type CreateLocalMemoryInput = {
   createTask?: boolean;
   createDeadline?: boolean;
   /** „Erinnern lassen“: eine Aufgabe mit Termin, auf Wunsch im Kalender (Klaus 2026-11-05). */
-  erinnerung?: { titel: string; dueAt: string; dueTime?: string; erinnerungen: unknown[]; kalenderEintragen: boolean; kalenderWahl?: KalenderFelder["kalenderWahl"] | null };
+  erinnerung?: { titel: string; dueAt: string; dueTime?: string; erinnerungen: unknown[]; kalenderEintragen?: boolean; kalenderWahl?: KalenderFelder["kalenderWahl"] | null };
 };
 
 function memoryMediaKind(file: File): MemoryMediaReference["kind"] {
@@ -3913,7 +3943,12 @@ export async function updateLocalScheduleTermin(handle: FileSystemDirectoryHandl
   if (!record || (record.recordType !== "deadline" && record.recordType !== "task")) throw new Error("Die Aufgabe oder Frist wurde nicht gefunden.");
   const data = record.data as { title: string; dueAt?: string } & KalenderFelder;
   if (changes.title !== undefined) { if (!changes.title.trim()) throw new Error("Der Titel darf nicht leer sein."); data.title = changes.title.trim(); }
-  if (changes.dueAt !== undefined) { if (!/^\d{4}-\d{2}-\d{2}$/.test(changes.dueAt)) throw new Error("Bitte einen gültigen Tag wählen."); data.dueAt = changes.dueAt; }
+  if (changes.dueAt !== undefined) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(changes.dueAt)) throw new Error("Bitte einen gültigen Tag wählen.");
+    // U7: Termin verschoben – eigene Erinnerungszeiten ziehen mit, wenn sie nicht ausdrücklich mitgeschickt werden.
+    if (changes.erinnerungen === undefined && data.dueAt && Array.isArray(data.erinnerungen)) data.erinnerungen = erinnerungenOrdnen(erinnerungenVerschieben(data.erinnerungen, tageZwischen(data.dueAt, changes.dueAt)));
+    data.dueAt = changes.dueAt;
+  }
   if (changes.dueTime !== undefined) { const zeit = gueltigeUhrzeit(changes.dueTime); if (zeit) data.dueTime = zeit; else delete data.dueTime; }
   if (changes.erinnerungen !== undefined) data.erinnerungen = erinnerungenOrdnen(changes.erinnerungen);
   if (typeof changes.kalenderEintragen === "boolean") data.kalenderEintragen = changes.kalenderEintragen;

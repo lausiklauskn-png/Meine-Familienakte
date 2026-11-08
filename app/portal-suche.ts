@@ -91,7 +91,8 @@ export function buildPortalSearchResults(topNavigation: SearchNavigation, query:
   }
   let healthRecords = 0; let healthRecordScore = 0;
   const now = options.now || new Date();
-  records.forEach((record) => {
+  // Gelöschte und umgezogene (archivierte) Einträge erscheinen nicht: eine Zeile je Aufgabe (2.28.39).
+  records.filter((record) => record.status !== "archiviert").forEach((record) => {
     const title = cockpitRecordLabel(record);
     const memory = memoryData(record);
     const searchable = familyRecordSearchText(record);

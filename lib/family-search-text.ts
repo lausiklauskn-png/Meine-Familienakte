@@ -9,7 +9,7 @@ export type FamilySearchDocument = { id: string; originalName: string; category?
 
 /** Deutscher Name der Art („Frist“, „Aufgabe“, „Tagebuch“) – nie die interne Kennung („task“). */
 export function familyRecordKindLabel(record: FamilyRecordUnion) {
-  if (memoryData(record)) return "Tagebuch";
+  if (memoryData(record)) return "Tagebuch-Eintrag";
   return recordTypeDefinitions[record.recordType]?.label || "Eintrag";
 }
 

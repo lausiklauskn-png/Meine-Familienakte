@@ -80,7 +80,7 @@ export const ablaufMeinKalender: AblaufKnoten[] = [
 ];
 export const ablaufGlocke: AblaufKnoten[] = [
   { titel: "Erinnerung speichern" },
-  { titel: "Glocke geht an", unter: "ab Werk aus", art: "hervor" },
+  { titel: "Glocke ist an", unter: "ab Werk, solange kein Kalender verbunden ist", art: "hervor" },
   { titel: "Läutet", unter: "in der App · Android auch geschlossen", art: "gut" },
   { titel: "Ausschalten", unter: "Knopf „App-Glocke an“" },
 ];
@@ -122,7 +122,7 @@ export function FristenKarte({ onGo, eingerichtet }: { onGo: Geh; eingerichtet: 
     { id: "f-liste", titel: "Fristen und Aufgaben", wo: "Haken = erledigt · Mülleimer = archiviert", spalte: 1, mitte: true, ziel: f, zielText: "Hingehen" },
     { id: "f-mein", titel: "Mein Kalender", wo: "Kopf › Kalender-Knopf", unter: "nach Tag", spalte: 2, ziel: f, zielText: "Hingehen" },
     st({ id: "kalender", titel: "Kalender verbunden", wo: "Google, Microsoft, Gerät, .ics", unter: "Notizen gehen nie hinaus", spalte: 2, ziel: f, zielText: "Hingehen" }),
-    st({ id: "glocke", titel: "App-Glocke", wo: "Mein Kalender › App-Glocke", unter: "ab Werk aus", spalte: 2, ziel: f, zielText: "Hingehen" }),
+    st({ id: "glocke", titel: "App-Glocke", wo: "Mein Kalender › App-Glocke", unter: "ab Werk an ohne Kalender", spalte: 2, ziel: f, zielText: "Hingehen" }),
   ];
   const kanten: KartenKante[] = [{ von: "f-liste", nach: "f-mein", beide: true }, { von: "f-liste", nach: "kalender", beide: true }, { von: "f-liste", nach: "glocke" }];
   return <Landkarte id="fristen" label="Fristen: woher sie kommen und wohin sie gehen" gruppen={gruppen} knoten={knoten} kanten={kanten} breiten={[200, 176, 196]} spalten={["Frist entsteht", "Liste", "Wohin sie geht"]}/>;
