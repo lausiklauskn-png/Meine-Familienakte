@@ -48,8 +48,9 @@ Schritt entschieden. Freigabe der Ausgabe: „F ja“, dann „ausgeben, sobald 
 ## Ausgabe 2.28.38
 
 - APK `android-v2.28.38` (Lauf 42476552670, `server=ja`, Upload und Prüfung von außen im Lauf grün): anonym geladen,
-  SHA-256 = SHA256SUMS, innen 2.28.38 / 38f0087.
-- Windows `windows-v2.28.38` (Lauf 42476554508): erster Versuch am NSIS-Download (504) gescheitert, neu gestartet. Siehe Nachweis.
+  SHA-256 = SHA256SUMS (`953abb93…ea5e`, 19 918 881 Bytes), innen 2.28.38 / 38f0087.
+- Windows `windows-v2.28.38` (Lauf 42476554508, `server=ja`): erster Versuch am NSIS-Download (504) gescheitert, zweiter grün;
+  Setup anonym geladen, SHA-256 = SHA256SUMS (`ad9a509c…bf2a`, 34 076 148 Bytes), `latest.json` nennt 2.28.38.
 - PWA: Pages Lauf 149 (42476536556) grün.
 - Nachweis `docs/VEROEFFENTLICHUNG-2.28.38.json`.
 
@@ -72,8 +73,10 @@ Klaus' eigene Angabe geht vor. Zeiten in MEZ. Die Nacht zwischen Block 1 und 2 z
 | 2 | 08.11. 08:55 | 10:15 | 80 min | Gerätetest-Bilder, Vorschau A–F, Zeile mit Leiste, Bausteine |
 | 3 | 10:15 | 10:30 | 15 min | Hilfe-Kasten, Kopf, Installieren, Proben, UI-Gesamtlauf gestartet |
 | 4 | 10:30 | 11:00 | 30 min | CI-Ausfälle (GitHub 504), Gradle-Wartezeit, Fassung 2.28.38 |
-| 5 | 11:00 | 12:35 | 95 min | Warten auf GitHub, Neustarts, Zusammenführen, Ausgabe, Nachweis |
-| 6 | 12:35 | ENDE | – | Abschlussbrief, KimHub |
+| 5 | 11:00 | 12:37 | 97 min | Warten auf GitHub (504), Neustarts, Zusammenführen #127 |
+| 6 | 12:37 | 13:10 | 33 min | Ausgabe APK/Windows/PWA, Downloads prüfen, Nachweis, Abschlussbrief, KimHub |
+
+Zusammen: 6 min am 07.11. und 08:55 bis 13:10 am 08.11. = **4 h 21 min**, davon rund 2 h Warten auf GitHub.
 
 ## Startauftrag zum Einfügen
 
