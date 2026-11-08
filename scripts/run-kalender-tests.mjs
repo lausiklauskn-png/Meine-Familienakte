@@ -183,4 +183,13 @@ const glocke = (await import("../lib/glocke.ts")).runGlockeSelfTest();
 for (const e of glocke.ergebnisse) assert.ok(e.ok, `Glocke: ${e.name}`);
 gruen(`App-Glocke: ${glocke.ergebnisse.map((e) => e.name).join(" · ")}`);
 
+const remUmzug = (await import("../lib/erinnerung-umzug.ts")).runErinnerungsUmzugSelfTest();
+for (const e of remUmzug.ergebnisse) assert.ok(e.ok, `Umzug: ${e.name}`);
+gruen(`Erinnerung in die Aufgabe (Umzug 2.28.39): ${remUmzug.ergebnisse.map((e) => e.name).join(" · ")}`);
+assert.equal(k.erinnerungAusDatum("2026-11-18"), "@2026-11-18T09:00");
+assert.equal(k.erinnerungAusDatum("2026-11-18T10:30"), "@2026-11-18T10:30");
+assert.deepEqual(k.erinnerungenVerschieben(["1d", "@2026-11-28T10:00"], -2), ["1d", "@2026-11-26T10:00"]);
+assert.equal(k.tageZwischen("2026-11-30", "2026-12-02"), 2);
+gruen("Erinnerungsdatum als eigene Zeit, zieht beim Verschieben mit");
+
 console.log(`Kalender-Kern: ${n} grün · 0 rot`);
