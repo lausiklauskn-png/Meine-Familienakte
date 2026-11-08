@@ -88,7 +88,7 @@ try {
     assert.match(b.register.documents[0].storedPath, /^pro-tresor:\/\/erfundener-tresor-a\//);
     assert.ok(!b.dateien.some((p) => p.includes("Pro-Original")), "keine dauerhafte interne Zweitkopie");
     await footer(page, "Dokumentenbibliothek");
-    await page.locator("button.library-preview").first().click();
+    await page.locator("button.library-preview, button.library-zeile-titel").first().click();
     await page.locator(".file-viewer").waitFor();
     assert.ok(await page.evaluate(() => window.__proDok.reads > 0));
     assert.equal(context.pages().length, 1, "Ablageprobe öffnet kein weiteres Browserfenster");
@@ -112,7 +112,7 @@ try {
     await panel.getByRole("button", { name: "Pro-Tresor entsperren …", exact: true }).click();
     await panel.getByText("Entsperrt", { exact: true }).waitFor();
     await footer(page, "Dokumentenbibliothek");
-    await page.locator("button.library-preview").first().click(); await page.locator(".file-viewer").waitFor();
+    await page.locator("button.library-preview, button.library-zeile-titel").first().click(); await page.locator(".file-viewer").waitFor();
     assert.ok(await page.evaluate(() => window.__proDok.reads > 0)); await schliesseDialoge(page);
   });
   await probe("Pro-Dokumente: anderer Akten-Arbeitsstand übernimmt die Ablagewahl nicht", async () => {
