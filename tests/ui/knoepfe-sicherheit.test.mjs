@@ -4,7 +4,7 @@ import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { vaultFixture } from "./_vault-fixture.mjs";
-import { startApp, chromium, DESKTOP, ready, check, step, summary, collectErrors, footer } from "./_harness.mjs";
+import { startApp, chromium, DESKTOP, ready, check, step, summary, collectErrors, footer, vollsicherungStarten } from "./_harness.mjs";
 import { windowStub, directoryPickerStub, schliesseDialoge } from "./_stubs.mjs";
 
 const app = await startApp();
@@ -75,7 +75,7 @@ try {
   });
   await step("„Vollständige Sicherung erstellen“ schreibt eine Sicherung in den gewählten Ordner", async () => {
     await page.evaluate(() => { window.__naechsterOrdner = "Sicherung-Probe"; });
-    await page.locator("button", { hasText: "Vollständige Sicherung erstellen" }).click();
+    await vollsicherungStarten(page);
     await page.waitForFunction(() => /Sicherung/.test([...document.querySelectorAll("[aria-live]")].map((e) => e.innerText).join(" ")), null, { timeout: 15000 }).catch(() => {});
     const m = await meldung(page);
     const dateien = await page.evaluate(async () => { const r = await navigator.storage.getDirectory(); const d = await r.getDirectoryHandle("Sicherung-Probe"); const out = []; for await (const [n] of d.entries()) out.push(n); return out; });

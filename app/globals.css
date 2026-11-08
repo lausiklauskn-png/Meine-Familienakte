@@ -2687,3 +2687,19 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 /* Bibliothek als Zeilen (2.28.39): das Auge klappt die volle Karte unter der Zeile auf. */
 .library-zeile-karte { padding: 8px; border-bottom: 1px solid var(--line); background: var(--canvas); }
 .library-zeile-karte .library-document-card { margin: 0; }
+
+/* Stufe B (Plan 08.11.2026): verschlüsselte Vollsicherung, Notfallblatt, Papierkorb, Erinnerung */
+.sicherung-arten { display: grid; gap: 10px; margin: 6px 0 14px; }
+.sicherung-art { display: grid; grid-template-columns: auto auto 1fr; align-items: start; gap: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; cursor: pointer; }
+.sicherung-art.gewaehlt { border-color: var(--accent, #2563eb); background: color-mix(in srgb, var(--accent, #2563eb) 7%, transparent); }
+.sicherung-art span { display: grid; gap: 2px; } .sicherung-art small { color: var(--muted); }
+.checkbox-row { display: flex; align-items: center; gap: 8px; }
+.notfall-schluessel { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 1.05rem; letter-spacing: 0.04em; word-break: break-all; padding: 12px; border: 1px dashed var(--line); border-radius: 10px; background: var(--surface-2, #f6f7f9); user-select: all; }
+.sicherung-erinnerung { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.sicherung-erinnerung span { flex: 1 1 240px; } .sicherung-erinnerung.kompakt { margin: 0 0 10px; }
+.button.gefahr { border-color: #b91c1c; color: #b91c1c; } .button.primary.gefahr { background: #b91c1c; border-color: #b91c1c; color: #fff; }
+.notfallblatt-druck { display: none; }
+@media print {
+  body.druck-notfallblatt > *:not(.notfallblatt-druck) { display: none !important; }
+  body.druck-notfallblatt .notfallblatt-druck { display: block; white-space: pre-wrap; font: 12pt ui-monospace, Consolas, monospace; padding: 2cm; }
+}

@@ -4,6 +4,8 @@ export type FamilyBackupFile = {
   path: string;
   sizeBytes: number;
   checksum: string;
+  /** Verschlüsselte Sicherung (Stufe B): Name der Geheimdatei unter „Dateien/“; der Pfad steht nur hier im Manifest. */
+  datei?: string;
 };
 
 export type FamilyBackupManifest = {

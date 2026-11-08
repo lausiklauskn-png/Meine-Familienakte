@@ -4,7 +4,7 @@
 import { vaultFixture } from "./_vault-fixture.mjs";
 import { capacitorStub } from "./_capacitor-stub.mjs";
 import { ordnerStub } from "./_ordner-stub.mjs";
-import { startApp, launchBrowser, DESKTOP, ready, footer, step, fail, summary, collectErrors } from "./_harness.mjs";
+import { startApp, launchBrowser, DESKTOP, ready, footer, step, fail, summary, collectErrors, vollsicherungStarten } from "./_harness.mjs";
 
 // step() wertet einen zurückgegebenen Text als grün; darum scheitert soll() mit einer Ausnahme.
 const soll = (ok, info) => { if (!ok) throw new Error(typeof info === "string" ? info : JSON.stringify(info)); return true; };
@@ -22,7 +22,7 @@ try {
     await page.evaluate(async () => { const f = window.__vaultFixture; await f.seedSampleFamily(await f.browserVault(), { force: true }); });
     await page.reload({ waitUntil: "networkidle" }); await ready(page); await vaultFixture(page);
     await footer(page, "Sicherheitscenter");
-    await page.locator("button", { hasText: "Vollständige Sicherung erstellen" }).click();
+    await vollsicherungStarten(page);
     await page.waitForFunction(() => /Installationsdatei/.test(document.body.innerText), null, { timeout: 60000 });
     return soll(await page.locator("[data-zwei-wege]").count() === 1, "Satz zu den zwei Wegen zurück fehlt");
   });

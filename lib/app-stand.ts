@@ -28,8 +28,9 @@ export const APP_STAND: Readonly<Record<string, StandEintrag>> = {
   // Abgleich zwischen Geräten (Plan Punkt 10): die Übergabe einer Unterlage ist fertig, der Abgleich steht im Kastentext als geplant.
   "anderes-geraet": { stand: "fertig", seit: "2.28.39" },
   // Stufe A (Plan 08.11.): Sicherung einlesen führt in eine benutzte Akte zusammen.
-  "sicherungsordner": { stand: "fertig", seit: "2.28.40" },
-  "aus-sicherung": { stand: "fertig", seit: "2.28.40" },
+  // Stufe B: verschlüsselte Vollsicherung mit Notfallblatt, Erinnerung nach 7 Tagen, Papierkorb leeren.
+  "sicherungsordner": { stand: "fertig", seit: "2.28.41" },
+  "aus-sicherung": { stand: "fertig", seit: "2.28.41" },
   // Neugestaltung 2.28.39 (Punkt 2): ein Einstieg zum Ablegen im Kopf; Drucken nur noch über das Menü.
   "kopf-ablegen": { stand: "fertig", seit: "2.28.39" },
   // Ablaufprüfung 2.28.39: geänderte Wege golden markieren (Eingang mit Titel/Text/Sammelbestätigung, Frist mit Erinnerung

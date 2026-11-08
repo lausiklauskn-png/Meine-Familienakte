@@ -53,7 +53,7 @@ export const APP_GRUPPEN: Gruppe[] = [
   { id: "g-aus", titel: "Ausgabe", wo: "von der Akte aus", spalte: 6, chips: [
     { id: "aus-antwort", titel: "Antwort schreiben", wo: "Assistenz › Schreiben / E-Mail", seite: "assistant", mehr: "Entwurf, Prüf-Haken, „Als versendet speichern“. Die App verschickt heute nie selbst." },
     { id: "aus-fristen", titel: "Fristen und Erinnerungen", wo: "Fristen und Aufgaben · Mein Kalender", seite: "reminders" },
-    { id: "aus-sicherung", titel: "Vollsicherung", wo: "Sicherheit › sichern und testen", seite: "security", mehr: "Mit Prüfsummen; Android legt die APK bei, Windows einen Lies-mich mit Download." },
+    { id: "aus-sicherung", titel: "Vollsicherung", wo: "Sicherheit › sichern und testen", seite: "security", mehr: "Verschlüsselt mit Passwort und Notfallblatt oder lesbar; mit Prüfsummen; Android legt die APK bei, Windows einen Lies-mich mit Download." },
     { id: "aus-demo", titel: "Demo als Kopie", wo: "Hilfe › Demo starten", seite: "help", mehr: "Probieren an einer Kopie der eigenen Daten; das Original bleibt unverändert." },
     { id: "aus-drucken", titel: "Drucken", wo: "Menü › Seite drucken · am PC Strg+P" },
   ] },
