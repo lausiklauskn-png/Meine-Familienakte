@@ -34,7 +34,8 @@ try {
   check(n0 > 20, "Startseite: sichtbare Bedienelemente gesammelt", `${n0}`);
 
   const clusters = await page.locator(".main-navigation .nav-cluster > button").allInnerTexts();
-  check(clusters.length === 8, "Acht Hauptbereiche", clusters.join(" | "));
+  // 2.28.39: Menügruppe „Termine & Aufgaben“ dazu (Nutzer 08.11.2026) – neun Hauptbereiche.
+  check(clusters.length === 9, "Neun Hauptbereiche", clusters.join(" | "));
   let seiten = 0;
   for (let i = 0; i < clusters.length; i++) {
     await page.evaluate(() => window.scrollTo(0, 0));

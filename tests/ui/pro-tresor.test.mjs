@@ -17,6 +17,8 @@ try {
   await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page);
   await step("Pro-Tresor: unerfüllter Anschluss-Hinweis bleibt sichtbar", async () => {
     await footer(page, "Dokumentenbibliothek");
+    // Seit 2.28.39 zeigt die Bibliothek ab Werk Zeilen; die Kartenansicht trägt die Knöpfe wie zuvor.
+    await page.locator('.ansicht-umschalter [data-ansicht="karten"]').click();
     await page.getByRole("button", { name: "In Pro-Tresor übernehmen", exact: true }).first().click();
     await page.locator('.global-activity-text', { hasText: "Bitte zuerst den gewünschten Pro-Tresor" }).waitFor();
     return await page.locator('.global-activity-row').count() === 1;
