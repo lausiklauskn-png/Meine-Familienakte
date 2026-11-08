@@ -20,6 +20,7 @@ public class ArbeitDienst extends Service {
     private static int fortschritt = -1, gesamt = -1;
 
     static void kanal(Context ctx) {
+        if (Build.VERSION.SDK_INT < 26) return;   // Kanäle gibt es erst ab Android 8
         NotificationManager nm = ctx.getSystemService(NotificationManager.class);
         if (nm != null && nm.getNotificationChannel(KANAL) == null) {
             NotificationChannel k = new NotificationChannel(KANAL, "Arbeit im Hintergrund (Eingangsordner)", NotificationManager.IMPORTANCE_LOW);
