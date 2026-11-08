@@ -1,9 +1,11 @@
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Pencil } from "lucide-react";
 import { useLayoutEffect, type RefObject } from "react";
 
 /**
  * Flache Zeile (Klaus 2026-11-06): am Handy lieber flach und breit als hoch und schmal. Ein langer Text steht in einer
  * Zeile als „Anfang … Ende“; das Auge klappt den ganzen Eintrag auf.
+ * Listen mit Stift und Mülleimer (Klaus 2026-11-08, Klasse `fz-voll`): Text in ganzer Länge; breit eine Reihe,
+ * schmal Text oben und die Knöpfe darunter.
  */
 
 /** Teilt einen Text in Anfang und Endworte (ohne das trennende Leerzeichen). */
@@ -22,6 +24,11 @@ export function anfangEnde(text: string): [string, string] {
 export function FlachText({ text }: { text: string }) {
   const [a, e] = anfangEnde(text);
   return <span className="flach" title={text}><span className="flach-a">{a}</span>{e && <><span className="flach-l"> </span><span className="flach-e">{e}</span></>}</span>;
+}
+
+/** Stift direkt in der Zeile (Klaus 2026-11-08): öffnet sofort das Fenster zum Ändern. */
+export function StiftKnopf({ titel, onClick, disabled, ...rest }: { titel: string; onClick: () => void; disabled?: boolean } & Record<`data-${string}`, string | boolean | undefined>) {
+  return <button type="button" className="icon-button stift-knopf" onClick={onClick} disabled={disabled} aria-label={`„${titel}“ ändern`} title="Ändern" {...rest}><Pencil size={18}/></button>;
 }
 
 /** Auge zum Ansehen: klappt den ganzen Eintrag auf und wieder zu. */

@@ -1,11 +1,11 @@
-import { CalendarDays, ChevronLeft, ChevronRight, Pencil, Plus, X } from "lucide-react";
+import { CalendarDays, ChevronLeft, ChevronRight, Plus, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { FamilyRecordUnion, FamilyRelation } from "../lib/family-data-model";
 import { GlockenEinstellung, GlockenSchalter, glockeEinschalten } from "./app-glocke";
 export { AppGlocke } from "./app-glocke";
 import { KURZ_ERINNERUNGEN, erinnerungsName, istTermin, kalenderFelder, type ErinnerungsWahl } from "../lib/kalender";
 import { DatumFeld } from "./datum-feld";
-import { AugeKnopf, FlachText } from "./flach-zeile";
+import { AugeKnopf, StiftKnopf } from "./flach-zeile";
 import { ErinnerungsChips, kalenderZiel, useKalenderEinst } from "./kalender-karte";
 import { createLocalScheduleBundle } from "./local-vault";
 import { klappOeffnen } from "./klapp";
@@ -62,23 +62,23 @@ export function MeinKalender({ vaultHandle, records, relations, onRefresh, onNot
   const kommend = alle.filter((e) => e.tag >= heute && e.tag !== tag).slice(0, 5); // Klaus 2026-11-06: nicht doppelt zur Tagesliste
   const tagName = new Date(`${tag}T00:00`).toLocaleDateString("de-DE", { weekday: "long", day: "2-digit", month: "long" });
   const bearbeitet = bearbeiten ? records.find((r) => r.id === bearbeiten) || null : null;
-  // Flache Zeile (Klaus 2026-11-06): Zeit, „Anfang … Ende“, kurze Zusatzzeile, Auge. Stift und Mülleimer hinter dem Auge.
+  // Zeile (Klaus 2026-11-08): Zeit, ganzer Text, Zusatzzeile; Stift, Mülleimer und Auge direkt (breit eine Reihe, schmal darunter).
   const zeile = (e: Eintrag, mitTag = false) => { const auf = offen === e.record.id; const art = e.record.recordType === "deadline" ? "Frist" : "Aufgabe";
     const glocke = e.erinnerungen?.length ? `🔔 ${e.erinnerungen.map(erinnerungsName).join(", ")}` : "";
     const kal = e.imKalender ? (e.eingetragen ? "im Kalender" : "geht in den Kalender") : "";
     return <li key={e.record.id} data-mk-eintrag={e.record.id} className={auf ? "offen" : undefined}>
-    <div className="fz-kopf">
+    <div className="fz-kopf fz-voll">
       <span className="mk-zeit">{mitTag && <small>{new Date(`${e.tag}T00:00`).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" })}</small>}{e.zeit || "–"}</span>
-      <span className="mk-text"><strong><FlachText text={e.titel}/></strong><small>{[art, glocke, kal].filter(Boolean).join(" · ")}</small></span>
-      <AugeKnopf offen={auf} titel={e.titel} onClick={() => setOffen(auf ? null : e.record.id)} data-mk-auge/>
+      <span className="mk-text"><strong className="fz-titel">{e.titel}</strong><small>{[art, glocke, kal].filter(Boolean).join(" · ")}</small></span>
+      <span className="fz-knoepfe">
+        {vaultHandle && <StiftKnopf titel={e.titel} onClick={() => setBearbeiten(e.record.id)} data-mk-aendern/>}
+        {vaultHandle && <ErinnerungLoeschen id={e.record.id} titel={e.titel} vaultHandle={vaultHandle} onGeloescht={async (t) => { setOffen(null); await onRefresh(); onNotice({ kind: "success", text: t }); }}/>}
+        <AugeKnopf offen={auf} titel={e.titel} onClick={() => setOffen(auf ? null : e.record.id)} data-mk-auge/>
+      </span>
     </div>
     {auf && <div className="fz-offen" data-mk-offen>
       <p><strong>{e.titel}</strong></p>
       <small>{new Date(`${e.tag}T00:00`).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit", year: "numeric" })}{e.zeit ? `, ${e.zeit} Uhr` : ""} · {[art, glocke, kal].filter(Boolean).join(" · ")}</small>
-      <div className="button-row">
-        <button type="button" className="button secondary" onClick={() => setBearbeiten(e.record.id)} aria-label={`„${e.titel}“ ändern`} data-mk-aendern><Pencil size={16}/> Ändern</button>
-        {vaultHandle && <ErinnerungLoeschen id={e.record.id} titel={e.titel} vaultHandle={vaultHandle} mitText onGeloescht={async (t) => { setOffen(null); await onRefresh(); onNotice({ kind: "success", text: t }); }}/>}
-      </div>
     </div>}
   </li>; };
   return <section ref={box} className="card mein-kalender" id="mein-kalender" data-mein-kalender data-klapp="kalender">
