@@ -91,6 +91,11 @@ td.n { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .st { font-size: .85rem; color: var(--gruen); font-weight: 700; }
 .st.fehler { color: var(--rot); }
 button:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.pill { display: inline-block; font: 700 .72rem/1 var(--body); padding: 3px 7px; border-radius: 99px; margin: 1px 0; white-space: nowrap; }
+.pill.s { background: var(--rot-bg); color: var(--rot); } .pill.m { background: var(--gelb-bg); color: var(--gelb); } .pill.k { background: var(--soft); color: var(--muted); }
+.muster ul.pro { margin: 2px 0 0; padding: 0; list-style: none; display: grid; gap: 3px; font-size: .9rem; }
+.muster ul.pro li::before { content: "●"; color: var(--rot); margin-right: 8px; font-size: .7rem; vertical-align: 2px; }
+.muster .loesung { font-weight: 700; color: var(--gruen); font-size: .92rem; }
 </style>
 
 <main>
@@ -99,7 +104,7 @@ button:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent);
     <h1>Ablaufprüfung der Familienakte</h1>
     <p class="muted">Frage: Führt jeder Schritt nachvollziehbar zum Ziel? Ziel: rund 1000 eigene Dokumente ablegen, oben eine Frage stellen und Dokument, Termin oder Erinnerung finden, an Eingetragenes erinnert werden.</p>
     <div class="zahlen">
-      <div class="zahl"><b>11</b><span>Prüfer</span></div>
+      <div class="zahl"><b>11</b><span>Prüfer: KI-Agenten, je einer für einen Bereich oder eine Rolle</span></div>
       <div class="zahl"><b>~240</b><span>Klicks und Schritte im Browser gemessen</span></div>
       <div class="zahl"><b>113</b><span>Ungereimtheiten in den Abläufen</span></div>
       <div class="zahl"><b>89</b><span>Fragen und Funde der drei Nutzerrollen</span></div>
@@ -144,23 +149,23 @@ button:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent);
     </div>
     <div class="tabelle">
       <table>
-        <thead><tr><th>Prüfer</th><th>Was</th><th>Umfang</th><th>Ergebnis</th></tr></thead>
+        <thead><tr><th>Prüfer (KI-Agent)</th><th>Was geprüft</th><th>Umfang</th><th>Gefundene Ungereimtheiten</th></tr></thead>
         <tbody>
-          <tr><td>Eingang</td><td>Kamera, Datei, Stapel, Ordner, E-Mail, Formular</td><td class="n">11 Wege</td><td class="n"><span class="h">5</span> · 10 · 7</td></tr>
-          <tr><td>Erinnerungen</td><td>Notiz, Fristen, Kalender, Glocke, Stift, ✓, 🗑</td><td class="n">8 Wege</td><td class="n"><span class="h">4</span> · 8 · 5</td></tr>
-          <tr><td>Suche</td><td>Frage oben, Bibliothek, Bereiche, 1000 Dokumente</td><td class="n">6 Wege</td><td class="n"><span class="h">6</span> · 5 · 3</td></tr>
-          <tr><td>Geräte</td><td>Speicher, Sicherung, Übergabe, Abgleich, E-Mail</td><td class="n">11 Wege</td><td class="n"><span class="h">3</span> · 7 · 5</td></tr>
-          <tr><td>Navigation</td><td>Sprünge zwischen Bereichen, Zurück</td><td class="n">64 Klicks</td><td class="n"><span class="h">1</span> · 8 · 3</td></tr>
-          <tr><td>Hilfe</td><td>Hilfe sagt ↔ App tut</td><td class="n">103 Stellen</td><td class="n"><span class="h">6</span> · 13 · 14</td></tr>
-          <tr><td>Neuling, 70 J.</td><td>6 Alltagsaufgaben am Handy</td><td class="n">3 / 6 geschafft</td><td class="n">31 Fragen</td></tr>
-          <tr><td>Erfahren, App neu</td><td>7 Aufgaben, Vergleich mit anderen Apps</td><td class="n">5 / 7 geschafft</td><td class="n">25 Fragen</td></tr>
-          <tr><td>Erfahrener Nutzer</td><td>Viel Bestand, Tempo</td><td class="n">3 / 6 geschafft</td><td class="n"><span class="h">15</span> von 33 schwer</td></tr>
-          <tr><td>Orientierung</td><td>Pfade, Rückwege</td><td class="n" id="ori-umfang">18 Wege</td><td class="n" id="ori-erg">Pfad stimmt 3 / 18</td></tr>
-          <tr><td>Professor</td><td>Regeln gegen Regeln und Ziel</td><td class="n">30 Regeln</td><td class="n"><span class="h">10</span> · 14 · 3</td></tr>
+          <tr><td>Eingang</td><td>Kamera, Datei, Stapel, Ordner, E-Mail, Formular</td><td class="n">11 Wege</td><td class="n"><span class="pill s">5 schwer</span> <span class="pill m">10 mittel</span> <span class="pill k">7 klein</span></td></tr>
+          <tr><td>Erinnerungen</td><td>Notiz, Fristen, Kalender, Glocke, Stift, ✓, 🗑</td><td class="n">8 Wege</td><td class="n"><span class="pill s">4 schwer</span> <span class="pill m">8 mittel</span> <span class="pill k">5 klein</span></td></tr>
+          <tr><td>Suche</td><td>Frage oben, Bibliothek, Bereiche, 1000 Dokumente</td><td class="n">6 Wege</td><td class="n"><span class="pill s">6 schwer</span> <span class="pill m">5 mittel</span> <span class="pill k">3 klein</span></td></tr>
+          <tr><td>Geräte</td><td>Speicher, Sicherung, Übergabe, Abgleich, E-Mail</td><td class="n">11 Wege</td><td class="n"><span class="pill s">3 schwer</span> <span class="pill m">7 mittel</span> <span class="pill k">5 klein</span></td></tr>
+          <tr><td>Navigation</td><td>Sprünge zwischen Bereichen, Zurück</td><td class="n">64 Klicks</td><td class="n"><span class="pill s">1 schwer</span> <span class="pill m">8 mittel</span> <span class="pill k">3 klein</span></td></tr>
+          <tr><td>Hilfe</td><td>Hilfe sagt ↔ App tut</td><td class="n">103 Stellen</td><td class="n"><span class="pill s">6 schwer</span> <span class="pill m">13 mittel</span> <span class="pill k">14 klein</span></td></tr>
+          <tr><td>Neuling, 70 J.</td><td>6 Alltagsaufgaben am Handy</td><td class="n">3 / 6 geschafft</td><td class="n">31 offene Fragen</td></tr>
+          <tr><td>Erfahren, App neu</td><td>7 Aufgaben, Vergleich mit anderen Apps</td><td class="n">5 / 7 geschafft</td><td class="n">25 offene Fragen</td></tr>
+          <tr><td>Erfahrener Nutzer</td><td>Viel Bestand, Tempo</td><td class="n">3 / 6 geschafft</td><td class="n">33 Funde, davon <span class="pill s">15 schwer</span></td></tr>
+          <tr><td>Orientierung</td><td>Pfade, Rückwege</td><td class="n" id="ori-umfang">18 Wege</td><td class="n" id="ori-erg">Pfad stimmt nur in 3 von 18</td></tr>
+          <tr><td>Professor</td><td>Regeln gegen Regeln und Ziel</td><td class="n">30 Regeln</td><td class="n"><span class="pill s">10 schwer</span> <span class="pill m">14 mittel</span> <span class="pill k">3 klein</span></td></tr>
         </tbody>
       </table>
     </div>
-    <p class="muted">Schwer · mittel · klein. Schwer heißt: Ziel nicht erreichbar, Daten weg oder Hin- und Herspringen.</p>
+    <p class="muted"><b>Prüfer</b> = KI-Agenten, die die App eigenständig im Browser bedient und den Code gelesen haben, ohne etwas zu ändern. <b>Wege</b> = vollständig durchgespielte Abläufe. <b>Schwer</b>: Ziel nicht erreichbar, Daten weg oder Hin- und Herspringen · <b>mittel</b>: Umweg oder unklarer nächster Schritt · <b>klein</b>: Wortlaut, Anzeige.</p>
   </section>
 
   <section>
@@ -174,11 +179,11 @@ button:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent);
       <div class="station"><h3>⑤ Finden</h3><span class="menge">14</span><ul><li>Liest den Inhalt nicht</li><li>„Bankauszug März“ findet nichts</li><li>Max. 20 Treffer, Beispieldaten dabei</li></ul></div>
       <div class="station"><h3>⑥ Anderes Gerät</h3><span class="menge">15</span><ul><li>Kein Abgleich zweier Akten</li><li>Sichern am Handy nicht möglich</li><li>Gesundheit unverschlüsselt per Mail</li></ul></div>
     </div>
-    <div class="muster"><b>Muster 1: Springen statt Zeigen</b><span class="muted">Jeder Sprung setzt die Seite nach oben; danach rollt jeder Bereich anders, verzögert oder gar nicht. Ein Weg „hingehen → einmal hinrollen → markieren“ löst mehrere Funde zugleich.</span></div>
-    <div class="muster"><b>Muster 2: Ein Ding, mehrere Einträge</b><span class="muted">Erinnerung neben Aufgabe, Frist neben Dokument, ohne Verknüpfung. Daraus entstehen Doppelzeilen, verwaiste Reste und Ping-Pong.</span></div>
-    <div class="muster"><b>Muster 3: Schutz ohne Gegenweg</b><span class="muted">Ausblenden, Sperren, Nicht-Löschen ohne Ort, an dem man es bewusst doch sieht oder zurückholt. Dazu ein Wort, drei Bedeutungen: „Erinnerung“.</span></div>
-    <div class="muster"><b>Muster 5: Der Pfad zeigt die Ordnung, nicht den Weg</b><span class="muted">Die Idee „überall sehen, wo man ist“ ist richtig (WCAG 2.2, Kriterium 2.4.8). Gemessen passt der Pfad aber nur in 3 von 18 Wegen: Steht eine Seite zweimal im Menü, nennt er immer den ersten Bereich. Ein Tipp aufs mittlere Glied führt dann dorthin, wo man nie war. Am Handy verschwindet die Pfadleiste beim Scrollen.</span></div>
-    <div class="muster"><b>Muster 4: Erkanntes wird weggeworfen</b><span class="muted">Die App liest Absender, Datum, Frist und Text richtig aus und speichert davon nur den Dateinamen. Darum kann die Suche später nichts finden.</span></div>
+    <div class="muster"><b>Muster 1: Springen statt Zeigen</b><ul class="pro"><li>Jeder Sprung setzt die Seite erst nach oben</li><li>Danach rollt jeder Bereich anders: verzögert, gar nicht oder am Ziel vorbei</li><li>Folge: Hin und Her, Ziel nicht zu sehen</li></ul><p class="loesung">→ Ein Sprungweg für alle · Stufe 2</p></div>
+    <div class="muster"><b>Muster 2: Ein Ding, mehrere Einträge</b><ul class="pro"><li>Erinnerung als eigener Eintrag neben der Aufgabe</li><li>Frist aus Dokument ohne Verknüpfung zum Dokument</li><li>Folge: Doppelzeilen, offene Reste, Ping-Pong</li></ul><p class="loesung">→ Ein Eintrag, eine Seite · Stufe 3</p></div>
+    <div class="muster"><b>Muster 3: Schutz ohne Gegenweg</b><ul class="pro"><li>Ausblenden, Sperren, Nicht-Löschen ohne Weg zurück</li><li>Gesundheits-Stichwörter zu breit: auch Finanzpapiere verdeckt</li><li>Ein Wort, drei Bedeutungen: „Erinnerung“</li></ul><p class="loesung">→ Jeder Schutz mit Gegenweg · Stufe 2, Fragen 1–2</p></div>
+    <div class="muster"><b>Muster 4: Erkanntes wird weggeworfen</b><ul class="pro"><li>Absender, Datum, Frist und Text werden richtig erkannt</li><li>Gespeichert wird nur der Dateiname</li><li>Folge: Suche findet „Bankauszug März“ nicht</li></ul><p class="loesung">→ Erkanntes mitspeichern · Stufe 1 und 5</p></div>
+    <div class="muster"><b>Muster 5: Der Pfad zeigt die Ordnung, nicht den Weg</b><ul class="pro"><li>Idee richtig (WCAG 2.2, 2.4.8: „wo bin ich“)</li><li>Pfad passt nur in 3 von 18 Wegen</li><li>Am Handy verschwindet die Pfadleiste beim Scrollen</li></ul><p class="loesung">→ Pfad = gegangener Weg · Stufe 2</p></div>
     <p class="muted">Was trägt und bleibt:</p>
     <div class="gut"><span>Prüfdialog vor dem Ablegen</span><span>Zurück führt an die Stelle (39 von 39)</span><span>Mein Kalender</span><span>Erinnerungsbalken am Morgen</span><span>Dubletten-Warnung</span><span>Hilfe-Suche und Landkarte</span><span>Originale bleiben unverändert</span><span>Listenzeilen seit 2.28.38</span><span>Suche schnell (unter 0,2 s)</span></div>
   </section>
