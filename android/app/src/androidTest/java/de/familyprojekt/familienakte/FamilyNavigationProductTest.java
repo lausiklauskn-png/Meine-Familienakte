@@ -61,6 +61,7 @@ public final class FamilyNavigationProductTest {
         fail("Family window must own focus before real input; foreground="+device.getCurrentPackageName()+system);
     }
     @Test public void backReturnsThroughViewsAndStaysOpenAtBeginning()throws Exception{
+        FamilyDemoFixture.allowNotifications();
         try(ActivityScenario<MainActivity> app=ActivityScenario.launch(MainActivity.class)){
             until(app,"typeof window.familienakteZurueck==='function'&&!!document.querySelector('.footer-directory')");
             focus(app);

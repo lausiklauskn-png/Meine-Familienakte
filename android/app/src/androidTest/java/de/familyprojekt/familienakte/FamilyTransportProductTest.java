@@ -51,6 +51,7 @@ public final class FamilyTransportProductTest {
                 return new Instrumentation.ActivityResult(Activity.RESULT_OK,new Intent().setData(FileProvider.getUriForFile(context,context.getPackageName()+".fileprovider",target)));
             }
         };ins.addMonitor(monitor);
+        FamilyDemoFixture.allowNotifications();
         try(ActivityScenario<MainActivity> app=ActivityScenario.launch(MainActivity.class)){
             panel(app);
             eval(app,"const root=document.querySelector('.pro-geraetetransport'),s=root.querySelector('select'),i=root.querySelector('input:not([type=file])');s.value=s.options[1].value;s.dispatchEvent(new Event('change',{bubbles:true}));Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(i,'Erfundenes Zielgerät');i.dispatchEvent(new Event('input',{bubbles:true}));true");
