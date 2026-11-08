@@ -42,6 +42,16 @@ try {
     const aktionen = await leiste.locator("[data-auswahl-aktion]").count();
     return soll(alle === "3" && keine === "0" && aktionen === 0, { alle, keine, aktionen });
   });
+  await step("Mehrfachauswahl mit Abwahl: zwei anhaken, eines abwählen, „Auswahl aufheben“ leert alles", async () => {
+    await page.locator(`[data-bibliothek-wahl="${ids.a}"]`).check();
+    await page.locator(`[data-bibliothek-wahl="${ids.b}"]`).check();
+    const zwei = await leiste.locator("[data-auswahl-zahl]").getAttribute("data-auswahl-zahl");
+    await page.locator(`[data-bibliothek-wahl="${ids.a}"]`).uncheck();
+    const eins = await leiste.locator("[data-auswahl-zahl]").getAttribute("data-auswahl-zahl");
+    await leiste.locator("[data-auswahl-aufheben]").click();
+    const keine = await leiste.locator("[data-auswahl-zahl]").getAttribute("data-auswahl-zahl");
+    return soll(zwei === "2" && eins === "1" && keine === "0", { zwei, eins, keine });
+  });
   await step("„Bereich ändern“: Auswahl, „✓ Speichern“, „Gespeichert ✓“ an der Stelle, Register geändert", async () => {
     await page.locator(`[data-bibliothek-wahl="${ids.a}"]`).check();
     await page.locator(`[data-bibliothek-wahl="${ids.b}"]`).check();

@@ -40,6 +40,8 @@ export function AuswahlLeiste({ name, gesamt, gewaehlt, onAlle, aktionen, hinwei
     </label>
     <strong className="auswahl-zahl" data-auswahl-zahl={gewaehlt}>{gewaehlt ? `${gewaehlt} von ${gesamt} ausgewählt` : `${gesamt} ${name}`}</strong>
     {gewaehlt > 0 && <span className="auswahl-aktionen">
+      {/* Abwählen in einem Schritt, auch wenn nur ein Teil angehakt ist (Nutzer 08.11.2026). */}
+      <button type="button" className="button secondary" onClick={() => onAlle(false)} data-auswahl-aufheben>Auswahl aufheben</button>
       {aktionen.map((a) => <button key={a.key} type="button" className={`button ${a.haupt ? "primary" : "secondary"}${a.gefahr ? " gefahr" : ""}`} disabled={a.disabled} title={a.title} onClick={a.onClick} data-auswahl-aktion={a.key}>{a.label}</button>)}
     </span>}
     {gewaehlt > 0 && hinweis && <small className="auswahl-hinweis">{hinweis}</small>}
