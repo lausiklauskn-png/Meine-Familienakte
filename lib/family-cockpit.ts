@@ -12,6 +12,8 @@ export type FamilyCockpitDocument = FamilyNewsDocument & {
   relativePath?: string | null;
   oneDrivePath?: string | null;
   downloadUrl?: string | null;
+  /** Gespeicherter Textauszug (falls das Register ihn führt); wird mit durchsucht. */
+  textauszug?: string | null;
 };
 
 export type CockpitSection = "cockpit" | "documents" | "inbox" | "health" | "medical" | "benefits" | "work" | "assessment" | "correspondence" | "family" | "home" | "vehicles" | "purchases" | "reminders" | "memory" | "directory" | "versions";

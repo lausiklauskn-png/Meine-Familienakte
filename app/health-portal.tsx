@@ -13,7 +13,8 @@ import type { SectionId, UploadedDocument } from "./portal-types";
 import { PrivateMeaningPanel } from "./private-meaning-panel";
 import { ProGeraetetransportPanel } from "./pro-geraetetransport-panel";
 import { fmtDate } from "./portal-format";
-import { buildPortalSearchResults, type SearchResult } from "./portal-suche";
+import { LISTEN_SEITE, useSeiten, WeitereAnzeigen } from "./seiten";
+import { buildPortalSearchResults, groupSearchResults, SEARCH_AREA_GROUP, type SearchResult } from "./portal-suche";
 import { ProUebergabeKnopf } from "./pro-uebergabe-knopf";
 import { proDateiWeitergeben, proVerbundFehler, PRO_ZIELE, type ProZiel } from "./pro-verbund";
 import { proUebergabeAnnehmen } from "./pro-uebergabe";
@@ -93,7 +94,7 @@ import { PersonKontaktKasten } from "./person-kontakt";
 import type { PersonKontakt } from "@/lib/person-kontakt";
 import { buildCockpitDossier, buildFamilyCockpit, cockpitRecordLabel, FamilyCockpitDocument, runFamilyCockpitSelfTests, type CockpitPriorityItem, type CockpitReference, type CockpitTodoItem } from "@/lib/family-cockpit";
 import { interpretFamilySearchQuery, runFamilySearchSelfTests, type FamilySearchInterpretation } from "@/lib/family-search";
-import { buildDocumentLibraryItems, filterDocumentLibraryItems, runDocumentLibrarySelfTests, type DocumentLibraryItem, type DocumentLibrarySort, type DocumentLibraryReference } from "@/lib/document-library";
+import { buildDocumentLibraryItems, filterDocumentLibraryItems, runDocumentLibrarySelfTests, textauszugVon, type DocumentLibraryItem, type DocumentLibrarySort, type DocumentLibraryReference } from "@/lib/document-library";
 import { dossierTypeOrder, menuPageActions, runMenuOptimizationSelfTests, targetForRelation, type MenuAction } from "@/lib/menu-optimization";
 import { buildDocumentIntakePlan, extractDocumentIntakeTextHint, FAWOGA_LIFE_AREAS, type DocumentIntakePlan, type DocumentIntakeSource, runDocumentIntakeSelfTests } from "@/lib/document-intake";
 import { buildIntakeChoiceOptions, buildStoredPersonalLifeAreas, INTAKE_PRIVACY_CLASSES, type IntakePrivacyClass } from "@/lib/document-intake-metadata";
@@ -441,7 +442,7 @@ const objectAreas = [
 
 function cockpitDocuments(documents: UploadedDocument[], localDocuments: LocalDocument[]): FamilyCockpitDocument[] {
   return [
-    ...localDocuments.map((item) => ({ id: item.id, originalName: item.originalName, category: item.category, documentDate: item.documentDate, status: item.status, createdAt: item.addedAt, updatedAt: item.updatedAt, mimeType: item.mimeType, notes: item.notes, storageType: item.storageType, storedPath: item.storedPath, relativePath: item.relativePath, oneDrivePath: item.oneDrivePath })),
+    ...localDocuments.map((item) => ({ id: item.id, originalName: item.originalName, category: item.category, documentDate: item.documentDate, status: item.status, createdAt: item.addedAt, updatedAt: item.updatedAt, mimeType: item.mimeType, notes: item.notes, storageType: item.storageType, storedPath: item.storedPath, relativePath: item.relativePath, oneDrivePath: item.oneDrivePath, textauszug: textauszugVon(item) || null })),
     ...documents.map((item) => ({ id: item.id, originalName: item.originalName, category: item.category, documentDate: item.documentDate, status: item.status, createdAt: item.uploadedAt, updatedAt: null, mimeType: item.mimeType, previewUrl: item.mimeType.startsWith("image/") ? item.downloadUrl : null, notes: item.notes, storageType: "online-r2", downloadUrl: item.downloadUrl })),
   ];
 }
@@ -1038,7 +1039,9 @@ function HealthPortalContent() {
     );
   }, [query]);
 
-  const searchResults = useMemo(() => buildSearchResults(query, documents, localDocuments, familyRecords, familyRelations), [query, documents, localDocuments, familyRecords, familyRelations]);
+  // Feste Beispielangaben (health-data.json) nur in der Demo bzw. solange die Beispielfamilie im Bestand ist.
+  const searchBeispiele = demoActive() || samplePresent;
+  const searchResults = useMemo(() => buildSearchResults(query, documents, localDocuments, familyRecords, familyRelations, { beispiele: searchBeispiele }), [query, documents, localDocuments, familyRecords, familyRelations, searchBeispiele]);
   const searchInterpretation = useMemo(() => interpretFamilySearchQuery(query), [query]);
 
   const loadDocuments = async () => { setLoadingDocs(false); };
@@ -1337,7 +1340,7 @@ function HealthPortalContent() {
           </span>}
           <button onClick={() => go("overview")}>Startseite</button>{active !== "overview" && <><ChevronRight size={14}/>{parentArea && parentArea.label !== sectionLabels[active] && <><button onClick={() => go(parentArea.landing)}>{parentArea.label}</button><ChevronRight size={14}/></>}<span>{sectionLabels[active]}</span></>}
         </div>
-        {query && <><SearchPanel query={query} results={searchResults} interpretation={searchInterpretation} onOpen={go}/><PrivateMeaningPanel handle={vaultHandle} query={query} onOpen={go}/></>}
+        {query && <><SearchPanel query={query} results={searchResults} interpretation={searchInterpretation} onOpen={go} onDocuments={openDocumentLibrary}/><PrivateMeaningPanel handle={vaultHandle} query={query} onOpen={go}/></>}
         {!query && active === "overview" && <Overview
           documents={documents} localDocuments={localDocuments} oneDriveSummary={oneDriveSummary}
           oneDriveName={oneDriveName} localVaultName={localVaultName}
@@ -1427,17 +1430,20 @@ function HealthPortalContent() {
             title: visibleDocumentTitle(document),
             category: document.category,
             notes: document.notes,
+            documentDate: document.documentDate,
+            textauszug: textauszugVon(document) || null,
             assistantReleased: inventoryItems.some((item) => item.documentId === document.id && item.state === "ASSISTENZ_FREIGEGEBEN"),
           }))}
           initialCaseId={assistantCaseId}
           vaultReady={!!vaultHandle}
-          onOpenRecord={(id) => go("cockpit", id)}
+          onOpenRecord={(id) => { const record = familyRecords.find((item) => item.id === id); go(record && ["deadline", "task", "reminder"].includes(record.recordType) ? "reminders" : "cockpit", id); }}
           onOpenDocument={(id) => void openDocument(id)}
+          onOpenInventory={() => go("inventory")}
           onSaveCorrespondence={saveAssistantCorrespondence}
           onNotice={setNotice}
         /></Suspense>}
         {!query && active === "correspondence" && <Correspondence onGo={go} onDocuments={openDocumentLibrary} onSearch={setQuery}/>}
-        {!query && active === "sources" && <Sources onDocuments={openDocumentLibrary}/>}
+        {!query && active === "sources" && <Sources onDocuments={openDocumentLibrary} beispiele={searchBeispiele}/>}
         {!query && active === "family" && <FamilyArea onGo={go} onDocuments={openDocumentLibrary}/>}
         {!query && active === "reminders" && <ReminderCenter
           vaultHandle={vaultHandle} records={familyRecords} relations={familyRelations} focusId={remindersFocusId}
@@ -1875,6 +1881,12 @@ function MemoryCenter({ documents, records, relations, drafts, initialFocusId, v
   const today = buildTodayMemorySummary(records);
   const orderedDrafts = sortMemoryDraftQueue(drafts, draftDirection);
   useEffect(() => { if (initialFocusId) setSelectedId(initialFocusId); }, [initialFocusId]);
+  // Aus der Suche angesprungen: zum ausgewählten Eintrag rollen, statt oben bei der Eingabe stehen zu bleiben.
+  useEffect(() => {
+    if (!initialFocusId) return;
+    const t = window.setTimeout(() => { const el = document.querySelector(".memory-detail"); if (el && window.scrollY < 120) el.scrollIntoView({ behavior: "smooth", block: "start" }); }, 250);
+    return () => window.clearTimeout(t);
+  }, [initialFocusId]);
   const changeOpenStatus = async (eventId: string, status: MemoryOpenStatus) => {
     if (!vaultHandle) { onGo("security"); return; }
     if (!await askConfirm(`Soll dieser offene Punkt wirklich auf „${memoryStatusLabel[status]}“ gesetzt werden?`)) return;
@@ -1932,16 +1944,35 @@ function MemoryCenter({ documents, records, relations, drafts, initialFocusId, v
   </>;
 }
 
-function SearchPanel({ query, results, interpretation, onOpen }: {
+// Ausgeklappte Trefferzahl je Suchwort und Gruppe: bleibt beim Zurück aus einem Treffer erhalten.
+const suchMehr = new Map<string, number>();
+const SUCH_SEITE = 8;
+
+function SearchPanel({ query, results, interpretation, onOpen, onDocuments }: {
   query: string;
   results: SearchResult[];
   interpretation: FamilySearchInterpretation;
   onOpen: (id: SectionId, targetId?: string) => void;
+  onDocuments: OpenDocumentLibrary;
 }) {
-  return <><PageTitle icon={<Search/>} title={`Suche nach „${query}“`} text="Die Suche versteht häufige Alltagssätze und wertet sie nur innerhalb der Familienakte aus. Es werden dafür keine Daten an einen externen KI-Dienst gesendet."/>
-    <section className="search-privacy"><ShieldCheck size={18}/><span><strong>Lokale interaktive Suche</strong> · berücksichtigt ähnliche Begriffe, Kategorien, Ärzte, Zeiträume, Diagnosen und Dokumentbeschreibungen.</span></section>
-    {interpretation.labels.length > 0 && <section className="search-interpretation" aria-live="polite"><strong>Verstanden als:</strong><div>{interpretation.labels.map((label) => <span key={label}>{label}</span>)}</div></section>}
-    <section className="card search-results">{results.length ? results.map((item) => <article key={item.id} className="search-result-with-context"><button onClick={() => onOpen(item.section, item.targetId)}><span className="badge neutral">{item.kind}</span><div><strong>{item.title}</strong><small>{item.detail}</small><em>{item.reason}</em></div><ChevronRight size={18}/></button>{item.contextCaseId && <button className="text-link context-open-link" onClick={() => onOpen("cockpit", item.contextCaseId)}>Zusammenhang öffnen <ChevronRight size={15}/></button>}</article>) : <div className="empty-state"><Search size={32}/><strong>Keine passende gespeicherte Angabe gefunden</strong><span>Versuche einen Namen, ein Jahr, einen ICD-Code oder einen allgemeineren Begriff. Die Familienakte erfindet keine Treffer.</span></div>}</section></>;
+  const [, setStand] = useState(0);
+  const groups = groupSearchResults(results);
+  const zeigen = (gruppe: string) => suchMehr.get(`${query}\u0000${gruppe}`) || SUCH_SEITE;
+  const mehr = (gruppe: string, anzahl: number) => { suchMehr.set(`${query}\u0000${gruppe}`, anzahl); setStand((n) => n + 1); };
+  const datenTreffer = results.filter((item) => item.group !== SEARCH_AREA_GROUP).length;
+  const datumHinweis = interpretation.date || interpretation.alternatives.find((part) => part.date)?.date || null;
+  const oeffnen = (item: SearchResult) => item.library ? onDocuments({ area: item.library.area || "", query: item.library.query || "" }) : onOpen(item.section, item.targetId);
+  return <><PageTitle icon={<Search/>} title={`Suche nach „${query}“`} text="Die Suche versteht häufige Alltagssätze, gleichbedeutende Wörter (Bankauszug = Kontoauszug), Monate und deutsche Daten. Mehrere Wörter grenzen ein, „oder“ verbindet. Ausgewertet wird nur innerhalb der Familienakte; es werden keine Daten an einen externen KI-Dienst gesendet."/>
+    <section className="search-privacy"><ShieldCheck size={18}/><span><strong>Lokale interaktive Suche</strong> · berücksichtigt ähnliche Begriffe, Kategorien, Zeiträume, Dokumentbeschreibungen und gespeicherte Textauszüge.</span></section>
+    {(interpretation.labels.length > 0 || datumHinweis) && <section className="search-interpretation" aria-live="polite"><strong>Verstanden als:</strong><div>{interpretation.labels.map((label) => <span key={label}>{label}</span>)}{datumHinweis && <span data-such-datum>Zeitraum: {datumHinweis.label}</span>}</div></section>}
+    <section className="card search-results" data-such-anzahl={datenTreffer}>{results.length ? <>
+      <p className="search-total" data-such-gesamt>{datenTreffer ? `${datenTreffer} Treffer in der Akte` : "Keine Einträge in der Akte gefunden"}{results.length > datenTreffer ? ` · ${results.length - datenTreffer} passende Bereiche der App` : ""} · neueste zuerst</p>
+      {groups.map((group) => { const n = zeigen(group.name); const rest = group.items.length - n; return <div className="search-group" key={group.name} data-such-gruppe={group.name}>
+        <h3 className="eyebrow dark">{group.name} · {group.items.length}</h3>
+        {group.items.slice(0, n).map((item) => <article key={item.id} className="search-result-with-context"><button onClick={() => oeffnen(item)}><span className="badge neutral">{item.kind}</span><div><strong>{item.title}</strong><small>{item.detail}</small><em>{item.reason}</em></div><ChevronRight size={18}/></button>{item.contextCaseId && <button className="text-link context-open-link" onClick={() => onOpen("cockpit", item.contextCaseId)}>Zusammenhang öffnen <ChevronRight size={15}/></button>}</article>)}
+        {(rest > 0 || (group.name === "Dokumente" && group.items.length > 1)) && <div className="button-row search-more">{rest > 0 && <button className="button secondary" data-such-mehr onClick={() => mehr(group.name, n + 25)}>Weitere {Math.min(rest, 25)} von {rest} anzeigen</button>}{group.name === "Dokumente" && group.items.length > 1 && <button className="text-link" onClick={() => onDocuments({ query })}>Alle in der Dokumentenbibliothek <ChevronRight size={15}/></button>}</div>}
+      </div>; })}
+    </> : <div className="empty-state"><Search size={32}/><strong>Keine passende gespeicherte Angabe gefunden</strong><span>Versuche weniger Wörter, einen Namen, ein Datum (15.03.2026, März 2026) oder einen allgemeineren Begriff. Die Familienakte erfindet keine Treffer.</span></div>}</section></>;
 }
 
 function InventoryAssignmentEditor({ item, areaOptions, records, busy, onConfirm }: { item: InventoryItem; areaOptions: string[]; records: FamilyRecordUnion[]; busy: boolean; onConfirm: (itemId: string, canonicalLifeArea: string, personalLifeArea: string, documentType: string, keywords: string[], referenceChoices: InventoryReferenceChoice[]) => Promise<void> }) {
@@ -2923,7 +2954,7 @@ function SystemCheck({ documents, localDocuments, vaultHandle, onCompleted }: {
       });
 
       const probeTerms = [topNavigation[0]?.label, healthData.doctors[0]?.name, healthData.correspondence[0]?.subject, healthData.currentDiagnoses[0]?.codes, (localDocuments[0] || documents[0])?.originalName].filter((value): value is string => !!value && value !== "–"); // „–“ ist ein Platzhalter (keine Codes in Beispieldaten), kein Suchbegriff
-      const successfulProbes = probeTerms.filter((term) => buildSearchResults(term, documents, localDocuments).length > 0).length;
+      const successfulProbes = probeTerms.filter((term) => buildSearchResults(term, documents, localDocuments, [], [], { beispiele: true }).length > 0).length;
       const assistantTests = runFamilyAssistantSelfTests();
       const searchOnlyTests = runFamilySearchSelfTests();
       const searchTests = [...searchOnlyTests, ...assistantTests.map((test) => ({ id: test.id as SystemCheckReport["testCases"][number]["id"], label: test.summary, status: test.passed ? "bestanden" as const : "fehlgeschlagen" as const, summary: test.summary }))];
@@ -3310,11 +3341,12 @@ function WhatsNew({ documents, localDocuments, records, relations, onGo }: {
   const newsDocuments = useMemo(() => cockpitDocuments(documents, localDocuments), [documents, localDocuments]);
   const allItems = useMemo(() => buildFamilyNewsItems({ documents: newsDocuments, records, relations, versions: versionHistory }), [newsDocuments, records, relations]);
   const visibleItems = useMemo(() => filterFamilyNews(allItems, period, new Date(), customStart, customEnd), [allItems, period, customStart, customEnd]);
+  const [newsGezeigt, newsMehr] = useSeiten(visibleItems.length, `${period}|${customStart}|${customEnd}`);
   const periodLabels: Record<FamilyNewsPeriod, string> = { "7days": "Letzte 7 Tage", "30days": "Letzte 30 Tage", "60days": "Letzte 60 Tage", currentMonth: "Aktueller Monat", previousMonth: "Vorheriger Monat", custom: "Eigener Zeitraum" };
   return <><PageTitle icon={<History/>} title="Was gibt’s Neues in der Familienakte?" text="Neue Dokumente, wichtige Vorgänge und Veränderungen – aus dem vorhandenen gemeinsamen Datenmodell, neueste Einträge zuerst."/>
     <section className="card news-filter"><div><span className="eyebrow dark">Zeitraum</span><h2>{periodLabels[period]}</h2><p>Der Filter verändert keine Daten.</p></div><div className="news-filter-controls"><label><span>Anzeige</span><select value={period} onChange={(event) => setPeriod(event.target.value as FamilyNewsPeriod)}><option value="60days">Letzte 60 Tage</option><option value="7days">Letzte 7 Tage</option><option value="30days">Letzte 30 Tage</option><option value="currentMonth">Aktueller Monat</option><option value="previousMonth">Vorheriger Monat</option><option value="custom">Eigener Zeitraum</option></select></label>{period === "custom" && <><label><span>Von</span><DatumFeld value={customStart} onChange={(event) => setCustomStart(event.target.value)}/></label><label><span>Bis</span><DatumFeld value={customEnd} onChange={(event) => setCustomEnd(event.target.value)}/></label></>}</div></section>
     <section className="news-result-heading"><div><span className="eyebrow dark">Chronologische Übersicht</span><h2>{visibleItems.length} neue{visibleItems.length === 1 ? "r Eintrag" : " Einträge"}</h2></div><span className="badge neutral">neueste zuerst</span></section>
-    {visibleItems.length ? <section className="news-list">{visibleItems.map((item) => { const open = () => { if (item.sensitive) return onGo("health"); if (item.sourceType === "version") return onGo("versions"); const target = targetForRelation(item.sourceType === "document" ? "document" : (records.find((record) => record.id === item.sourceId)?.recordType || "case"), item.sourceId); onGo(target.section as SectionId, target.targetId); }; return <article className="card news-item" key={item.id}><NewsPreview item={item} onOpen={open}/><div className="news-content"><time>{item.dateLabel}</time><span className="news-area">{item.area}</span><button className="news-title-link" onClick={open}>{item.title}</button><p>{item.summary}</p><small>{item.sensitive ? "Datenschutzgerechte Vorschau – Einzelheiten nur im geschützten Fachbereich." : `Quelle: ${item.sourceType === "version" ? "Versionshistorie" : item.sourceType === "document" ? "Dokumentenregister" : "gemeinsames Datenmodell"}`}</small></div><button className="news-open" onClick={open} aria-label={`${item.title} öffnen`}><ChevronRight/></button></article>; })}</section> : <section className="card empty-state news-empty"><History size={34}/><strong>In diesem Zeitraum gibt es keine neuen Einträge.</strong><span>Es werden keine künstlichen Beispielinhalte eingesetzt.</span></section>}
+    {visibleItems.length ? <><section className="news-list">{visibleItems.slice(0, newsGezeigt).map((item) => { const open = () => { if (item.sensitive) return onGo("health"); if (item.sourceType === "version") return onGo("versions"); const target = targetForRelation(item.sourceType === "document" ? "document" : (records.find((record) => record.id === item.sourceId)?.recordType || "case"), item.sourceId); onGo(target.section as SectionId, target.targetId); }; return <article className="card news-item" key={item.id}><NewsPreview item={item} onOpen={open}/><div className="news-content"><time>{item.dateLabel}</time><span className="news-area">{item.area}</span><button className="news-title-link" onClick={open}>{item.title}</button><p>{item.summary}</p><small>{item.sensitive ? "Datenschutzgerechte Vorschau – Einzelheiten nur im geschützten Fachbereich." : `Quelle: ${item.sourceType === "version" ? "Versionshistorie" : item.sourceType === "document" ? "Dokumentenregister" : "gemeinsames Datenmodell"}`}</small></div><button className="news-open" onClick={open} aria-label={`${item.title} öffnen`}><ChevronRight/></button></article>; })}</section><WeitereAnzeigen gezeigt={newsGezeigt} gesamt={visibleItems.length} onMehr={newsMehr}/></> : <section className="card empty-state news-empty"><History size={34}/><strong>In diesem Zeitraum gibt es keine neuen Einträge.</strong><span>Es werden keine künstlichen Beispielinhalte eingesetzt.</span></section>}
     <section className="card action-row"><div><span className="ui-heading-help"><h2>Technische Änderungen</h2><InfoPopover label="Technische Änderungen erklären" text={UI_HELP["Technische Änderungen"]}/></span></div><button className="button secondary" onClick={() => onGo("versions")}><History size={17}/> Versionshistorie öffnen</button></section>
   </>;
 }
@@ -3361,6 +3393,22 @@ function FamilyArea({ onGo, onDocuments }: { onGo: (id: SectionId, targetId?: st
   </>;
 }
 
+// Thema → Suchwörter, mit „oder“ verbunden: der Thementitel selbst steht in keinem Dateinamen.
+const preparedTopicQueries: Record<string, string> = {
+  "Mietvertrag & Übergaben": "Mietvertrag oder Übergabe oder Schlüssel",
+  "Vermieter & Schriftverkehr": "Vermieter oder Schreiben oder Anfrage oder Antwort",
+  "Nebenkosten & Zahlungen": "Nebenkosten oder Abrechnung oder Zahlung",
+  "Mängel & Reparaturen": "Mangel oder Mängel oder Reparatur oder Handwerker",
+  Fahrzeugpapiere: "Fahrzeugschein oder Fahrzeugbrief oder Zulassung oder Kaufvertrag",
+  "Werkstatt & Wartung": "Werkstatt oder Wartung oder Inspektion oder Reparatur",
+  "TÜV & Gutachten": "TÜV oder Hauptuntersuchung oder Gutachten oder Prüfbericht",
+  Versicherung: "Versicherung oder Police oder Schaden oder Beitrag",
+  "Kauf & Rechnung": "Kauf oder Rechnung oder Beleg",
+  Garantie: "Garantie",
+  "Reparatur & Service": "Reparatur oder Service oder Reklamation",
+  "Geräte & Technik": "Gerät oder Technik oder Anleitung oder Seriennummer",
+};
+
 const preparedContent = {
   home: { icon: Building2, title: "Haus, Wohnung und Vermieter", text: "Eine gemeinsame Objektakte für Verträge, Abrechnungen, Schriftverkehr, Schäden und Reparaturen.", items: [
     ["Mietvertrag & Übergaben", "Vertrag, Nachträge, Übergabeprotokolle und Schlüssel"],
@@ -3388,7 +3436,7 @@ function PreparedArea({ kind, onUpload, onGo, onDocuments }: { kind: keyof typeo
     <InfoNotice title="Bereich für die schrittweise Befüllung vorbereitet"><p>Nicht vorhandene Inhalte werden nicht vermutet. Neue Originalunterlagen werden nur nach deinem bewussten Befehl abgelegt.</p></InfoNotice>
     <SubpageActions actions={menuPageActions[kind]} onGo={onGo} onDocuments={onDocuments}/>
     <section className="card action-row"><div><span className="ui-heading-help"><h2>Neue Unterlage</h2><InfoPopover label="Neue Unterlage erklären" text={UI_HELP["Neue Unterlage"]}/></span></div><button className="button primary" onClick={onUpload}><Plus size={17}/> Unterlage hinzufügen</button></section>
-    <section className="topic-list">{area.items.map(([title, text], index) => <button key={title} onClick={() => onDocuments({ query: title, area: menuPageActions[kind][0]?.area || "" })}><span className="topic-number">{String(index + 1).padStart(2, "0")}</span><div><h2>{title}</h2><p>{text}</p></div><span className="badge neutral">Dokumente anzeigen</span><ChevronRight/></button>)}</section>
+    <section className="topic-list">{area.items.map(([title, text], index) => <button key={title} onClick={() => onDocuments({ query: preparedTopicQueries[title] || title, area: menuPageActions[kind][0]?.area || "" })}><span className="topic-number">{String(index + 1).padStart(2, "0")}</span><div><h2>{title}</h2><p>{text}</p></div><span className="badge neutral">Dokumente anzeigen</span><ChevronRight/></button>)}</section>
     <InfoNotice title="Angaben für eine verknüpfte Objektakte"><div className="field-chips"><span>Objekt / Person</span><span>Dokumentart</span><span>Datum</span><span>Frist / Termin</span><span>Garantie bis</span><span>Betrag</span><span>Status</span><span>Ereignisverlauf</span></div></InfoNotice>
   </>;
 }
@@ -3400,13 +3448,13 @@ function Directory({ onGo }: { onGo: (id: SectionId) => void }) {
 }
 
 function DocumentLibraryAreaIcon({ area }: { area: string }) {
-  if (area === "Gesundheit") return <HeartPulse aria-hidden="true"/>;
-  if (["Fahrzeuge", "Motorrad"].includes(area)) return <Car aria-hidden="true"/>;
-  if (area === "Haus & Wohnung") return <Home aria-hidden="true"/>;
-  if (["Rechnungen & Garantien", "Technik & Geräte"].includes(area)) return <PackageCheck aria-hidden="true"/>;
-  if (["Behörden", "Arbeit, Rente & Sozialversicherung"].includes(area)) return <Landmark aria-hidden="true"/>;
-  if (["Versicherungen", "Finanzen", "Verträge"].includes(area)) return <ShieldCheck aria-hidden="true"/>;
-  if (area === "Familie & persönliche Unterlagen") return <Users aria-hidden="true"/>;
+  if (["Gesundheit & Pflege", "Gesundheit"].includes(area)) return <HeartPulse aria-hidden="true"/>;
+  if (["Auto & Mobilität", "Motorrad", "Fahrzeuge"].includes(area)) return <Car aria-hidden="true"/>;
+  if (["Haus & Wohnung", "Garten & Grundstück", "Energie & Versorgung"].includes(area)) return <Home aria-hidden="true"/>;
+  if (["Einkäufe, Rechnungen & Garantien", "Technik, Geräte & Reparaturen", "Käufe & Garantien"].includes(area)) return <PackageCheck aria-hidden="true"/>;
+  if (["Steuern & Behörden", "Rente, Arbeit & Sozialversicherung"].includes(area)) return <Landmark aria-hidden="true"/>;
+  if (["Versicherungen", "Finanzen & Konten", "Verträge & Abonnements"].includes(area)) return <ShieldCheck aria-hidden="true"/>;
+  if (["Familie & persönliche Dokumente", "Erbschaft, Vollmachten & Vorsorge"].includes(area)) return <Users aria-hidden="true"/>;
   return <FileText aria-hidden="true"/>;
 }
 
@@ -3463,7 +3511,7 @@ function DocumentLibrary({ documents, records, relations, initialFocusId, initia
   onUnlink: (relationId: string) => void | Promise<void>;
   onChange: (sourceType: ContextSourceType, sourceId: string, previousRelationId: string | null, caseId: string) => void | Promise<void>;
 }) {
-  const saved = navigation.readUi("library", { view: (initialFocusId || initialArea || initialQuery ? "all" : "overview") as "all" | "overview", query: initialQuery, area: initialArea, documentType: "", startDate: "", endDate: "", sort: "newest" as DocumentLibrarySort });
+  const saved = navigation.readUi("library", { view: (initialFocusId || initialArea || initialQuery ? "all" : "overview") as "all" | "overview", query: initialQuery, area: initialArea, documentType: "", startDate: "", endDate: "", sort: "newest" as DocumentLibrarySort, anzahl: LISTEN_SEITE });
   const [view, setView] = useState(saved.view);
   const [query, setQuery] = useState(saved.query);
   const [area, setArea] = useState(saved.area);
@@ -3472,11 +3520,14 @@ function DocumentLibrary({ documents, records, relations, initialFocusId, initia
   const [endDate, setEndDate] = useState(saved.endDate);
   const [sort, setSort] = useState(saved.sort);
   const saveUi = navigation.saveUi;
-  useEffect(() => { saveUi("library", { view, query, area, documentType, startDate, endDate, sort }); }, [saveUi, view, query, area, documentType, startDate, endDate, sort]);
   const items = useMemo(() => buildDocumentLibraryItems(documents, records, relations), [documents, records, relations]);
   const areas = useMemo(() => [...new Set(items.map((item) => item.area))].sort((a, b) => a.localeCompare(b, "de")), [items]);
   const documentTypes = useMemo(() => [...new Set(items.map((item) => item.documentType))].sort((a, b) => a.localeCompare(b, "de")), [items]);
   const visible = useMemo(() => filterDocumentLibraryItems(items, { query, area, documentType, startDate, endDate, sort }), [items, query, area, documentType, startDate, endDate, sort]);
+  // Seitenweise: 50 je Seite, „Weitere anzeigen“; die Zahl bleibt beim Zurück erhalten.
+  const [gezeigt, mehrZeigen] = useSeiten(visible.length, [query, area, documentType, startDate, endDate, sort].join("|"), saved.anzahl || LISTEN_SEITE);
+  useEffect(() => { saveUi("library", { view, query, area, documentType, startDate, endDate, sort, anzahl: Math.max(gezeigt, LISTEN_SEITE) }); }, [saveUi, view, query, area, documentType, startDate, endDate, sort, gezeigt]);
+  const filterText = [area && `Bereich „${area}“`, documentType && `Art „${documentType}“`, query && `Suche „${query}“`, (startDate || endDate) && `Zeitraum ${startDate ? fmtDate(startDate) : "…"} bis ${endDate ? fmtDate(endDate) : "…"}`].filter(Boolean).join(" · ");
   const selected = initialFocusId ? items.find((item) => item.id === initialFocusId) || null : null;
   const grouped = useMemo(() => areas.map((name) => ({ name, items: filterDocumentLibraryItems(items, { area: name, sort: "newest" }) })).filter((group) => group.items.length), [areas, items]);
   const showAll = (next: Partial<{ area: string; documentType: string; startDate: string; endDate: string; query: string }> = {}) => {
@@ -3491,12 +3542,13 @@ function DocumentLibrary({ documents, records, relations, initialFocusId, initia
     {selected && <section className="library-selected"><div className="section-heading"><div><span className="eyebrow dark">Ausgewähltes Dokument</span><h2>Direkter Treffer</h2></div></div>{card(selected)}<section className="card"><RelatedContextPanel sourceType="document" sourceId={selected.id} documents={documents} records={records} relations={relations} onGo={onGo} onOpenDocument={onOpenDocument} onUnlink={onUnlink} onChange={onChange}/></section></section>}
     {view === "overview" ? <>
       <section className="section-heading"><div><span className="eyebrow dark">Zuletzt hinzugefügt oder bearbeitet</span><h2>Neueste Dokumente</h2></div><button className="text-link" onClick={() => showAll()}>Alle ansehen <ChevronRight size={17}/></button></section>
-      {items.length ? <section className="library-document-grid">{filterDocumentLibraryItems(items, { sort: "newest" }).slice(0, 8).map(card)}</section> : <section className="card empty-state"><Archive size={34}/><strong>Noch keine erreichbaren Dokumente</strong><span>Verbinde den lokalen Datentresor oder füge eine neue Unterlage hinzu. Es werden keine Beispieldokumente erfunden.</span><button className="button primary" onClick={onUpload}><Plus size={17}/> Unterlage hinzufügen</button></section>}
+      {items.length ? <section className="library-document-grid">{filterDocumentLibraryItems(items, { sort: "updated" }).slice(0, 8).map(card)}</section> : <section className="card empty-state"><Archive size={34}/><strong>Noch keine erreichbaren Dokumente</strong><span>Verbinde den lokalen Datentresor oder füge eine neue Unterlage hinzu. Es werden keine Beispieldokumente erfunden.</span><button className="button primary" onClick={onUpload}><Plus size={17}/> Unterlage hinzufügen</button></section>}
       {grouped.length > 0 && <><section className="section-heading"><div><span className="eyebrow dark">Nur vorhandene Bestände</span><h2>Dokumentbereiche</h2></div></section><section className="library-area-grid">{grouped.map((group) => <button key={group.name} onClick={() => showAll({ area: group.name })}><DocumentLibraryAreaIcon area={group.name}/><span><strong>{group.name}</strong><small>{group.items.length} Dokument{group.items.length === 1 ? "" : "e"} · Alle ansehen</small></span><ChevronRight/></button>)}</section>{grouped.map((group) => <section className="library-area-section" key={`group-${group.name}`}><div className="section-heading"><div><span className="eyebrow dark">{group.name}</span><h2>Aktuelle Dokumente</h2></div><button className="text-link" onClick={() => showAll({ area: group.name })}>Alle ansehen <ChevronRight size={17}/></button></div><div className="library-document-grid compact">{group.items.slice(0, 3).map(card)}</div></section>)}</>}
     </> : <>
-      <section className="card library-filters"><div className="card-heading"><div><span className="eyebrow dark">Vollständige Dokumentansicht</span><span className="ui-heading-help"><h2>Alle ansehen</h2><InfoPopover label="Alle ansehen erklären" text={UI_HELP["Alle ansehen"]}/></span></div><button className="text-link" onClick={() => { setView("overview"); setQuery(""); setArea(""); setDocumentType(""); setStartDate(""); setEndDate(""); }}>Zur Bibliotheksübersicht</button></div><div className="library-filter-grid"><label><span>Bereich</span><select value={area} onChange={(event) => setArea(event.target.value)}><option value="">Alle Bereiche</option>{areas.map((item) => <option key={item}>{item}</option>)}</select></label><label><span>Dokumentart</span><select value={documentType} onChange={(event) => setDocumentType(event.target.value)}><option value="">Alle Dokumentarten</option>{documentTypes.map((item) => <option key={item}>{item}</option>)}</select></label><label><span>Von</span><DatumFeld value={startDate} onChange={(event) => setStartDate(event.target.value)}/></label><label><span>Bis</span><DatumFeld value={endDate} onChange={(event) => setEndDate(event.target.value)}/></label><label><span>Sortierung</span><select value={sort} onChange={(event) => setSort(event.target.value as DocumentLibrarySort)}><option value="newest">Neueste zuerst</option><option value="oldest">Älteste zuerst</option><option value="title">Titel A–Z</option><option value="area">Bereich</option><option value="updated">Zuletzt bearbeitet</option></select></label></div></section>
+      <section className="card library-filters"><div className="card-heading"><div><span className="eyebrow dark">Vollständige Dokumentansicht</span><span className="ui-heading-help"><h2>Alle ansehen</h2><InfoPopover label="Alle ansehen erklären" text={UI_HELP["Alle ansehen"]}/></span></div><button className="text-link" onClick={() => { setView("overview"); setQuery(""); setArea(""); setDocumentType(""); setStartDate(""); setEndDate(""); }}>Zur Bibliotheksübersicht</button></div><div className="library-filter-grid"><label><span>Bereich</span><select value={area} onChange={(event) => setArea(event.target.value)}><option value="">Alle Bereiche</option>{area && !areas.includes(area) && <option value={area}>{area}</option>}{areas.map((item) => <option key={item}>{item}</option>)}</select></label><label><span>Dokumentart</span><select value={documentType} onChange={(event) => setDocumentType(event.target.value)}><option value="">Alle Dokumentarten</option>{documentTypes.map((item) => <option key={item}>{item}</option>)}</select></label><label><span>Von</span><DatumFeld value={startDate} onChange={(event) => setStartDate(event.target.value)}/></label><label><span>Bis</span><DatumFeld value={endDate} onChange={(event) => setEndDate(event.target.value)}/></label><label><span>Sortierung</span><select value={sort} onChange={(event) => setSort(event.target.value as DocumentLibrarySort)}><option value="newest">Neueste zuerst</option><option value="oldest">Älteste zuerst</option><option value="title">Titel A–Z</option><option value="area">Bereich</option><option value="updated">Zuletzt bearbeitet</option></select></label></div></section>
       <section className="news-result-heading"><div><span className="eyebrow dark">Gefilterter Bestand</span><h2>{visible.length} Dokument{visible.length === 1 ? "" : "e"}</h2></div><button className="badge neutral library-count-button" onClick={() => showAll()}>{visible.length} Datensätze anzeigen</button></section>
-      {visible.length ? <section className="library-document-grid">{visible.map(card)}</section> : <section className="card empty-state"><Search size={34}/><strong>Keine passenden Dokumente gefunden</strong><span>Ändere Suche oder Filter. Die Bibliothek erfindet keine Treffer.</span><button className="button secondary" onClick={() => showAll()}>Filter zurücksetzen</button></section>}
+      {filterText && <p className="library-filter-active" data-filter-aktiv><span>Gefiltert nach {filterText}</span><button className="text-link" onClick={() => showAll()}>Filter aufheben</button></p>}
+      {visible.length ? <><section className="library-document-grid">{visible.slice(0, gezeigt).map(card)}</section><WeitereAnzeigen gezeigt={gezeigt} gesamt={visible.length} onMehr={mehrZeigen}/></> : <section className="card empty-state"><Search size={34}/><strong>Keine passenden Dokumente gefunden</strong><span>Ändere Suche oder Filter. Die Bibliothek erfindet keine Treffer.</span><button className="button secondary" onClick={() => showAll()}>Filter zurücksetzen</button></section>}
     </>}
   </>;
 }
@@ -3507,11 +3559,12 @@ function Inbox({ documents, localDocuments, loading, onUpload, onOpenDocument, o
   documents: UploadedDocument[]; localDocuments: LocalDocument[]; loading: boolean; compact?: boolean; onUpload: () => void; onOpenDocument: (id: string) => Promise<void>; onRefresh: () => void;
   onStatus: (id: string, status: UploadedDocument["status"]) => Promise<void>; onLocalStatus: (id: string, status: LocalDocument["status"]) => Promise<void>; busy: boolean;
 }) {
+  const [lokalGezeigt, lokalMehr] = useSeiten(localDocuments.length, "lokal");
   return <>
     {!compact && <PageTitle icon={<Upload/>} title="Eingangszentrale" text="Neue Unterlagen bleiben im lokalen Tresor auf deinem PC oder USB-Stick." />}
     <section className="card action-row"><div><h2>{compact ? "Übernommene Unterlagen" : "Neue Unterlage lokal hinzufügen"}</h2><p>{compact ? "Bereits bestätigte Eingänge erscheinen im gemeinsamen Dokumentregister." : "Die Originaldatei wird unverändert im gewählten Ordner gespeichert. Sie wird nicht an den Webserver übertragen."}</p></div><div className="button-row"><button className="button primary" onClick={onUpload}><Plus size={18}/> Einzelne Unterlage prüfen</button><button className="button secondary" onClick={onRefresh}><RefreshCw size={18}/> Neu laden</button></div></section>
     <section className="card"><div className="card-heading"><div><span className="ui-heading-help"><h2>Lokale Unterlagen</h2><InfoPopover label="Lokale Unterlagen erklären" text={UI_HELP["Lokale Unterlagen"]}/></span></div><span className="badge success">{localDocuments.length} lokal</span></div>
-      {localDocuments.length === 0 ? <div className="empty-state"><HardDrive size={34}/><strong>Noch keine lokale Unterlage</strong><span>Verbinde zuerst den lokalen Tresor im Sicherheitscenter.</span></div> : <div className="document-list">{localDocuments.map((item) => { const sensitive = isSensitiveHealthText(item.originalName, item.category, item.notes); return <article className="document-item" key={item.id}><div className="file-icon"><FileText size={22}/></div><div className="document-copy"><button className="document-title-link" onClick={() => void onOpenDocument(item.id)}>{visibleDocumentTitle(item)}</button><span>{sensitive ? "Geschützte Gesundheitsunterlage" : item.category} · {fmtDate(item.documentDate)} · {fmtBytes(item.sizeBytes)}</span>{sensitive ? <small>Speicherort und Einzelheiten sind nur im geschützten Gesundheitsbereich sichtbar.</small> : <><small>{istProOriginal(item.storedPath) ? "Gemeinsamer Pro-Tresor · Original verschlüsselt" : item.storedPath}</small>{item.notes && <small>{item.notes}</small>}</>}</div><span className={`badge status-${item.status}`}>{statusLabel[item.status]}</span>{!sensitive && ausfuellMarke(item) && <span className={`badge af-marke af-marke-${item.ausfuellen?.stand}`} data-af-marke>{ausfuellMarke(item)}</span>}<div className="document-actions">{onFill && fillStateOf(item).fuellbar && <button disabled={busy} onClick={() => onFill(item.id)} data-af-oeffnen>Ausfüllen</button>}{onWfpdf && !sensitive && fillStateOf(item).fuellbar && <button disabled={busy} onClick={() => onWfpdf(item.id)} data-wfpdf-oeffnen>In Workflow PDF öffnen</button>}{item.status === "hochgeladen" && <button disabled={busy} onClick={() => onLocalStatus(item.id, "abgleich_offen")}>Abgleich vormerken</button>}{item.status === "abgleich_offen" && <button disabled={busy} onClick={() => onLocalStatus(item.id, "geprüft")}>Als geprüft bestätigen</button>}{item.status === "geprüft" && <button disabled={busy} onClick={() => onLocalStatus(item.id, "eingearbeitet")}>Als eingearbeitet bestätigen</button>}</div></article>; })}</div>}
+      {localDocuments.length === 0 ? <div className="empty-state"><HardDrive size={34}/><strong>Noch keine lokale Unterlage</strong><span>Verbinde zuerst den lokalen Tresor im Sicherheitscenter.</span></div> : <div className="document-list">{localDocuments.slice(0, lokalGezeigt).map((item) => { const sensitive = isSensitiveHealthText(item.originalName, item.category, item.notes); return <article className="document-item" key={item.id}><div className="file-icon"><FileText size={22}/></div><div className="document-copy"><button className="document-title-link" onClick={() => void onOpenDocument(item.id)}>{visibleDocumentTitle(item)}</button><span>{sensitive ? "Geschützte Gesundheitsunterlage" : item.category} · {fmtDate(item.documentDate)} · {fmtBytes(item.sizeBytes)}</span>{sensitive ? <small>Speicherort und Einzelheiten sind nur im geschützten Gesundheitsbereich sichtbar.</small> : <><small>{istProOriginal(item.storedPath) ? "Gemeinsamer Pro-Tresor · Original verschlüsselt" : item.storedPath}</small>{item.notes && <small>{item.notes}</small>}</>}</div><span className={`badge status-${item.status}`}>{statusLabel[item.status]}</span>{!sensitive && ausfuellMarke(item) && <span className={`badge af-marke af-marke-${item.ausfuellen?.stand}`} data-af-marke>{ausfuellMarke(item)}</span>}<div className="document-actions">{onFill && fillStateOf(item).fuellbar && <button disabled={busy} onClick={() => onFill(item.id)} data-af-oeffnen>Ausfüllen</button>}{onWfpdf && !sensitive && fillStateOf(item).fuellbar && <button disabled={busy} onClick={() => onWfpdf(item.id)} data-wfpdf-oeffnen>In Workflow PDF öffnen</button>}{item.status === "hochgeladen" && <button disabled={busy} onClick={() => onLocalStatus(item.id, "abgleich_offen")}>Abgleich vormerken</button>}{item.status === "abgleich_offen" && <button disabled={busy} onClick={() => onLocalStatus(item.id, "geprüft")}>Als geprüft bestätigen</button>}{item.status === "geprüft" && <button disabled={busy} onClick={() => onLocalStatus(item.id, "eingearbeitet")}>Als eingearbeitet bestätigen</button>}</div></article>; })}<WeitereAnzeigen gezeigt={lokalGezeigt} gesamt={localDocuments.length} onMehr={lokalMehr}/></div>}
     </section>
     <section className="card"><div className="card-heading"><div><span className="ui-heading-help"><h2>Online-Altbestand</h2><InfoPopover label="Online-Altbestand erklären" text={UI_HELP["Online-Altbestand"]}/></span></div><span className="badge warning">{documents.length} online</span></div>
       {loading ? <div className="empty-state">Unterlagen werden geladen …</div> : documents.length === 0 ? <div className="empty-state"><FolderHeart size={34}/><strong>Noch keine Unterlage über diese Seite hochgeladen</strong><span>Bereits vorhandene Aktenbestandteile findest du unter „Unterlagen“.</span></div> : <div className="document-list">{documents.map((item) => { const sensitive = isSensitiveHealthText(item.originalName, item.category, item.notes); return <article className="document-item" key={item.id}><div className="file-icon"><FileText size={22}/></div><div className="document-copy"><button className="document-title-link" onClick={() => void onOpenDocument(item.id)}>{visibleDocumentTitle(item)}</button><span>{sensitive ? "Geschützte Gesundheitsunterlage" : item.category} · {fmtDate(item.documentDate)} · {fmtBytes(item.sizeBytes)}</span>{!sensitive && item.notes && <small>{item.notes}</small>}</div><span className={`badge status-${item.status}`}>{statusLabel[item.status]}</span><div className="document-actions"><a className="icon-button" href={item.downloadUrl} title="Originaldatei herunterladen"><Download size={18}/></a>{item.status === "hochgeladen" && <button disabled={busy} onClick={() => onStatus(item.id, "abgleich_offen")}>Abgleich vormerken</button>}{item.status === "abgleich_offen" && <button disabled={busy} onClick={() => onStatus(item.id, "geprüft")}>Als geprüft bestätigen</button>}{item.status === "geprüft" && <button disabled={busy} onClick={() => onStatus(item.id, "eingearbeitet")}>Als eingearbeitet bestätigen</button>}</div></article>; })}</div>}
@@ -3825,9 +3878,9 @@ function Correspondence({ onGo, onDocuments, onSearch }: { onGo: (id: SectionId,
   <section className="card timeline-list">{healthData.correspondence.map((item) => <article key={`${item.date}-${item.subject}`}><div className="timeline-dot"/><div><span>{item.date} · {item.type}</span><button className="timeline-title-link" onClick={() => onDocuments({ query: item.subject })}>{item.subject}<ChevronRight/></button><p><strong>Anliegen:</strong> {item.request}</p><p><strong>Ergebnis:</strong> {item.answer}</p><span className="badge neutral">{item.status}</span></div></article>)}</section>
   <section className="card"><div className="card-heading"><div><h2>Offene Punkte</h2><p>Diese Liste wird mit jeder neuen Antwort fortgeschrieben.</p></div></div><div className="open-items interactive-open-items">{healthData.openItems.map((item) => <button key={item.title} onClick={() => onSearch(item.title)}><FileClock size={18}/><span><strong>{item.title}</strong><small>{item.next}</small></span><span className="badge warning">{item.priority}</span><ChevronRight/></button>)}</div></section></>; }
 
-function Sources({ onDocuments }: { onDocuments: OpenDocumentLibrary }) { return <><PageTitle icon={<Archive/>} title="Unterlagen und Quellen" text="Die Online-Übersicht verbindet die Aussagen. Verbindlich bleiben die Originaldokumente." />
+function Sources({ onDocuments, beispiele }: { onDocuments: OpenDocumentLibrary; beispiele: boolean }) { return <><PageTitle icon={<Archive/>} title="Unterlagen und Quellen" text="Die Online-Übersicht verbindet die Aussagen. Verbindlich bleiben die Originaldokumente." />
   <section className="card action-row"><div><span className="ui-heading-help"><h2>Dokumentenbibliothek</h2><InfoPopover label="Dokumentenbibliothek erklären" text={UI_HELP["Dokumentenbibliothek"]}/></span></div><button className="button primary" onClick={() => onDocuments()}><Archive size={17}/> Alle Dokumente ansehen</button></section>
-  <section className="card"><div className="card-heading"><div><span className="ui-heading-help"><h2>Zentrale Unterlagen</h2><InfoPopover label="Zentrale Unterlagen erklären" text={UI_HELP["Zentrale Unterlagen"]}/></span></div><span className="badge neutral">{coreDocuments.length} Kerndokumente</span></div><div className="table-wrap"><table><thead><tr><th>Datum</th><th>Unterlage</th><th>Bereich</th><th>Stand</th></tr></thead><tbody>{coreDocuments.map((item) => <tr key={`${item.date}-${item.name}`}><td><strong>{item.date}</strong></td><td><button className="data-link" onClick={() => onDocuments({ query: item.name })}>{item.name}</button></td><td><button className="data-link" onClick={() => onDocuments({ area: item.area })}>{item.area}</button></td><td><span className={`badge ${item.status === "Antwort offen" ? "warning" : "success"}`}>{item.status}</span></td></tr>)}</tbody></table></div></section>
+  <section className="card"><div className="card-heading"><div><span className="ui-heading-help"><h2>Zentrale Unterlagen</h2><InfoPopover label="Zentrale Unterlagen erklären" text={UI_HELP["Zentrale Unterlagen"]}/></span></div><span className="badge neutral">{beispiele ? `${coreDocuments.length} Kerndokumente (Beispiel)` : "eigene Akte"}</span></div>{!beispiele ? <div className="empty-state" data-quellen-leer><Archive size={30}/><strong>Keine festen Beispielunterlagen in deiner Akte</strong><span>Deine eigenen Unterlagen stehen vollständig in der Dokumentenbibliothek – nach Bereich, Art und Datum sortierbar.</span><button className="button secondary" onClick={() => onDocuments()}><Archive size={17}/> Dokumentenbibliothek öffnen</button></div> : <div className="table-wrap"><table><thead><tr><th>Datum</th><th>Unterlage</th><th>Bereich</th><th>Stand</th></tr></thead><tbody>{coreDocuments.map((item) => <tr key={`${item.date}-${item.name}`}><td><strong>{item.date}</strong></td><td><button className="data-link" onClick={() => onDocuments({ query: item.name })}>{item.name}</button></td><td><button className="data-link" onClick={() => onDocuments({ area: item.area })}>{item.area}</button></td><td><span className={`badge ${item.status === "Antwort offen" ? "warning" : "success"}`}>{item.status}</span></td></tr>)}</tbody></table></div>}</section>
   <InfoNotice title="Umgang mit Quellen"><p>Diagnosen, Zeiträume und Ärzte nur aus Originalunterlagen übernehmen. Neueste Einträge stehen oben; Fachbefund, eAU, betriebliche Krankmeldung und eigene Notiz bleiben getrennt.</p></InfoNotice></>; }
 
 // Klaus 2026-11-06: Symbol, Titel und Knopf der Seite (z. B. „alle auf/zu“) auf einer Linie; das „?“ klein rechts oben am Titel wie ein ©.

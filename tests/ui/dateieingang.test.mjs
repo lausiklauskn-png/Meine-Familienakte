@@ -365,7 +365,11 @@ try {
   });
   await step("„Was gibt’s Neues?“ nennt die neue Unterlage", async () => {
     await page.locator(".footer-directory button", { hasText: "Was gibt’s Neues" }).first().click();
-    await page.locator("text=/Garantiebeleg[ _]Waschautomat[ _]Lavorix/").first().waitFor({ timeout: 10000 });
+    // 2.28.39: lange Listen seitenweise (50 je Seite) – „Weitere anzeigen“, bis die Unterlage dasteht.
+    const ziel = page.locator("text=/Garantiebeleg[ _]Waschautomat[ _]Lavorix/").first();
+    await page.locator(".news-list").first().waitFor({ timeout: 10000 });
+    for (let i = 0; i < 10 && !(await ziel.count()) && (await page.locator("[data-liste-mehr] button").count()); i++) await page.locator("[data-liste-mehr] button").click();
+    await ziel.waitFor({ timeout: 10000 });
   });
   await step("Cockpit lädt nach dem Eingang ohne Fehler", async () => {
     await footer(page, "Interaktives Cockpit");

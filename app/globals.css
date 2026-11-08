@@ -2492,3 +2492,10 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
   .site-brand .brand-symbol { width: 28px; height: 28px; }
   .site-brand .brand-symbol svg { width: 20px; height: 20px; }
 }
+
+/* 2.28.39 Suche nach Art gruppiert, „Weitere anzeigen“, sichtbarer Bibliotheksfilter, seitenweise Listen */
+.search-total { margin: 6px 13px 2px; color: var(--muted); font-size: .85rem; }
+.search-group > h3 { margin: 14px 13px 4px; }
+.search-more { padding: 8px 13px; align-items: center; }
+.library-filter-active { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin: 0 0 12px; color: var(--muted); }
+.liste-mehr { justify-content: center; align-items: center; gap: 12px; margin: 14px 0; color: var(--muted); }
