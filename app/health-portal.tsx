@@ -46,6 +46,7 @@ import { istProOriginal, proTresor, proTresorVerfuegbar } from "./pro-tresor";
 import { copyLocalDocumentToPro } from "./local-vault";
 import { eingangDatei } from "./eingang-ablage";
 import { openFile } from "./file-viewer";
+import { dateiTeilen, teilenText } from "./teilen";
 import { lazy, Suspense } from "react";
 import { PracticalAcceptance, StoredUserAcceptance } from "./practical-acceptance";
 // E1: große Teilansichten werden erst beim Öffnen geladen (eigene Dateien im Build).
@@ -58,7 +59,7 @@ import {
   Network, Plus, Printer, RefreshCw, Search, ShieldCheck, ShoppingBag, Upload, UserRound,
   Users, X, HardDrive, LockKeyhole, Usb, HelpCircle, History, Cloud, LifeBuoy, Mic,
   Copy, ExternalLink, BookHeart, Camera, Video, NotebookPen, Trash2, CircleHelp, Tags, FolderSearch, Eye, ListChecks, Save, Bot, Sparkles,
-  PenLine, CalendarDays, Check, Pencil,
+  PenLine, CalendarDays, Check, Pencil, Share2,
 } from "lucide-react";
 import { DictationButton, InfoPopover, VoiceInput, VoiceTextarea } from "./ui-controls";
 import { FormEvent, Fragment, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -1423,6 +1424,16 @@ function HealthPortalContent() {
       openFile(file, local.originalName);
     } catch (reason) { setNotice({ kind: "error", text: reason instanceof Error ? reason.message : "Das Dokument konnte nicht geöffnet werden." }); }
   };
+  // Stufe H: „Teilen“ an der Unterlage – die Datei geht an die App, die der Nutzer wählt; die Akte verschickt nichts von selbst.
+  const teileDokument = async (id: string) => {
+    const local = localDocuments.find((item) => item.id === id);
+    if (!local || !vaultHandle) { setNotice({ kind: "error", text: "Bitte den zugehörigen Datentresor verbinden." }); return; }
+    try {
+      const file = await readLocalDocumentFile(vaultHandle, id);
+      const r = await dateiTeilen(new File([file], local.originalName, { type: file.type || local.mimeType }));
+      const t = teilenText(r, local.originalName); if (t) setNotice({ kind: r === "geteilt" ? "success" : "info", text: t });
+    } catch (reason) { setNotice({ kind: "error", text: reason instanceof Error ? reason.message : "Die Datei konnte nicht geteilt werden." }); }
+  };
   // Ausfüllen (Sitzung F): neue Fassung neben dem Original, Original bleibt unverändert; Stand am Dokument im Register.
   const fillPersons: AusfuellPerson[] = useMemo(() => familyRecords.filter((r) => r.recordType === "person").map((r) => { const d = (r.data || {}) as Record<string, string | undefined>; return { id: r.id, name: d.displayName || r.id, angaben: { displayName: d.displayName, birthDate: d.birthDate, birthPlace: d.birthPlace, address: d.address, street: d.street, postalCode: d.postalCode, city: d.city, email: d.email, phone: d.phone } }; }), [familyRecords]);
   const fillStates = useMemo(() => Object.fromEntries(localDocuments.map((item) => [item.id, fillStateOf(item)])), [localDocuments]);
@@ -1594,7 +1605,7 @@ function HealthPortalContent() {
         {!query && active === "documents" && <DocumentLibrary key={`library-${navigation.visitKey}`} navigation={navigation}
           documents={cockpitDocuments(documents, localDocuments)} records={familyRecords} relations={familyRelations}
           initialFocusId={documentLibraryFocusId} initialArea={documentLibraryRequest.area} initialQuery={documentLibraryRequest.query}
-          onUebergabe={proTresorVerfuegbar() ? anProApp : undefined} onPro={proTresorVerfuegbar() ? inProTresor : undefined} proKandidaten={new Set(localDocuments.filter((d) => !istProOriginal(d.storedPath)).map((d) => d.id))}
+          onUebergabe={proTresorVerfuegbar() ? anProApp : undefined} onPro={proTresorVerfuegbar() ? inProTresor : undefined} onTeilen={teileDokument} proKandidaten={new Set(localDocuments.filter((d) => !istProOriginal(d.storedPath)).map((d) => d.id))}
           fillStates={fillStates} onFill={setFillDocId} onWfpdf={(id) => void inWorkflowPdf(id)} onOpenDocument={openDocument} onGo={go} onUpload={openLocalUpload} onUnlink={unlinkContext} onChange={changeContextLink}
           lokaleIds={new Set(localDocuments.filter((d) => !d.aussortiert).map((d) => d.id))} aussortiert={localDocuments.filter((d) => d.aussortiert)}
           bereichsWahl={[...new Set([...categories, ...localDocuments.map((d) => d.category)])].sort((a, b) => a.localeCompare(b, "de"))}
@@ -1774,6 +1785,8 @@ function HealthPortalContent() {
             documentData.assignmentLinks = [...(documentData.assignmentLinks || []), { toType: "case", toId: createdCase.id, relationType: "gehört zu" }];
           }
           const scan = (file as DocumentScanPdfFile).documentScan;
+          // Stufe H: Vermerk „bearbeitet“ und Original-Foto (aus dem Stapel) am Dokument – das Original liegt als Scan-Original daneben.
+          if (scan?.bearbeitung) documentData.notes = [documentData.notes, `Scan bearbeitet: ${scan.bearbeitung}.${scan.keepOriginals && scan.originals.length ? ` Original-Foto liegt bei (${scan.originals.length}).` : ""}`].filter(Boolean).join("\n");
           const item = await saveLocalDocument(vaultHandle, file, { ...documentData, scanPageCount: scan?.pageCount, scanOriginals: scan?.keepOriginals ? scan.originals : [], proUebergabe: queued?.proUebergabe });
           if (queued?.parentQueueId) {
             const parent = centralIntakeQueue.find((entry) => entry.id === queued.parentQueueId);
@@ -3737,8 +3750,10 @@ function DocumentLibraryAreaIcon({ area }: { area: string }) {
   return <FileText aria-hidden="true"/>;
 }
 
-function DocumentLibraryCard({ item, fill, onFill, onWfpdf, onPro, onUebergabe, onOpen, onArea, onType, onDate, onReference }: {
+function DocumentLibraryCard({ item, fill, onFill, onWfpdf, onPro, onUebergabe, onTeilen, onOpen, onArea, onType, onDate, onReference }: {
   item: DocumentLibraryItem;
+  /** Stufe H: Datei an eine andere App geben (Mail, Messenger, Dateien); nicht bei geschützten Gesundheitsunterlagen. */
+  onTeilen?: () => Promise<void>;
   fill?: FillState;
   onFill?: () => void;
   onWfpdf?: () => void;
@@ -3763,12 +3778,19 @@ function DocumentLibraryCard({ item, fill, onFill, onWfpdf, onPro, onUebergabe, 
       <div className="library-document-meta"><button onClick={onDate}>{item.date ? fmtDate(item.date) : "Ohne Dokumentdatum"}</button><button onClick={onOpen}>{statusLabel[item.status as keyof typeof statusLabel] || item.status}</button></div>
       <p>{item.description}</p>
       {onPro && <ProDokumentKnopf onUebernehmen={onPro}/>}
+      {onTeilen && !item.protectedHealth && <TeilenKnopf onTeilen={onTeilen}/>}
       {onUebergabe && !item.sensitive && <ProUebergabeKnopf onSenden={onUebergabe}/>}
       {fill && (fill.marke || fill.fuellbar) && <div className="af-karte" data-af-karte>{fill.fuellbar && onWfpdf && !item.sensitive && <button type="button" className="button secondary compact-button" onClick={onWfpdf} data-wfpdf-oeffnen><FileText size={15}/> In Workflow PDF öffnen</button>}{fill.marke && <span className={`badge af-marke af-marke-${fill.stand}`} data-af-marke>{fill.marke}</span>}{fill.fuellbar && onFill && <button type="button" className="button secondary compact-button" onClick={onFill} data-af-oeffnen><PenLine size={15}/> Ausfüllen</button>}</div>}
       {item.references.length > 0 && <div className="library-reference-list" aria-label="Verknüpfte Datensätze">{item.references.slice(0, 4).map((reference) => <button key={`${reference.type}-${reference.id}`} onClick={() => onReference(reference)}><span>{recordTypeDefinitions[reference.type].label}</span><strong>{reference.label}</strong></button>)}</div>}
     </div>
     <button className="library-card-open" onClick={onOpen} aria-label={`${item.title} öffnen`}><ChevronRight/></button>
   </article>;
+}
+
+/** Stufe H: „Teilen“ an der Unterlage – gibt die Datei an eine andere App (Android-Teilen-Fenster, Web Share, sonst Download). */
+function TeilenKnopf({ onTeilen }: { onTeilen: () => Promise<void> }) {
+  const [busy, setBusy] = useState(false);
+  return <button type="button" className="button secondary compact-button" disabled={busy} data-dokument-teilen onClick={() => { setBusy(true); void onTeilen().finally(() => setBusy(false)); }}><Share2 size={15}/> {busy ? "Teilen …" : "Teilen"}</button>;
 }
 
 /** Kompakte Zeile der Bibliothek (2.28.39, Punkt 7): Datum · Titel · Bereich; Karten bleiben wählbar. */
@@ -3804,7 +3826,7 @@ function aussortierText(r: AussortierErgebnis, zurueck: boolean) {
   ].filter(Boolean).join(" ");
 }
 
-function DocumentLibrary({ documents, records, relations, initialFocusId, initialArea, initialQuery, navigation, fillStates, onFill, onWfpdf, onPro, onUebergabe, proKandidaten, onOpenDocument, onGo, onUpload, onUnlink, onChange, lokaleIds = new Set<string>(), aussortiert = [], bereichsWahl = [], sammel }: {
+function DocumentLibrary({ documents, records, relations, initialFocusId, initialArea, initialQuery, navigation, fillStates, onFill, onWfpdf, onPro, onUebergabe, onTeilen, proKandidaten, onOpenDocument, onGo, onUpload, onUnlink, onChange, lokaleIds = new Set<string>(), aussortiert = [], bereichsWahl = [], sammel }: {
   navigation: PortalNavigation;
   /** Nur Dokumente im eigenen Datentresor sind für Sammelaktionen wählbar. */
   lokaleIds?: Set<string>;
@@ -3817,6 +3839,7 @@ function DocumentLibrary({ documents, records, relations, initialFocusId, initia
   onWfpdf?: (id: string) => void;
   onPro?: (id: string) => Promise<void>;
   onUebergabe?: (id: string, ziel: ProZiel) => Promise<void>;
+  onTeilen?: (id: string) => Promise<void>;
   proKandidaten?: Set<string>;
   records: FamilyRecordUnion[];
   relations: FamilyRelation[];
@@ -3892,7 +3915,7 @@ function DocumentLibrary({ documents, records, relations, initialFocusId, initia
   const zeile = (item: DocumentLibraryItem, mitWahl = false) => <DocumentLibraryZeile key={item.id} item={item} gewaehlt={wahl.has(item.id)} onWahl={mitWahl && sammel && lokaleIds.has(item.id) ? () => wechsel(item.id) : undefined} onOpen={() => openItem(item)} onArea={() => showAll({ area: item.area })} karte={card(item)}/>;
   const liste = (eintraege: DocumentLibraryItem[], mitWahl = false, kompakt = false) => ansicht === "zeilen" ? <section className="library-zeilen" data-bibliothek-ansicht="zeilen">{eintraege.map((item) => zeile(item, mitWahl))}</section> : <section className={`library-document-grid${kompakt ? " compact" : ""}`} data-bibliothek-ansicht="karten">{eintraege.map(card)}</section>;
   const umschalter = <div className="ansicht-umschalter" role="group" aria-label="Ansicht"><button type="button" aria-pressed={ansicht === "zeilen"} className={ansicht === "zeilen" ? "active" : ""} onClick={() => setAnsicht("zeilen")} data-ansicht="zeilen">Zeilen</button><button type="button" aria-pressed={ansicht === "karten"} className={ansicht === "karten" ? "active" : ""} onClick={() => setAnsicht("karten")} data-ansicht="karten">Karten</button></div>;
-  const card = (item: DocumentLibraryItem) => <DocumentLibraryCard key={item.id} item={item} fill={fillStates[item.id]} onFill={() => onFill(item.id)} onWfpdf={onWfpdf ? () => onWfpdf(item.id) : undefined} onPro={onPro && proKandidaten?.has(item.id) ? () => onPro(item.id) : undefined} onUebergabe={onUebergabe ? (ziel) => onUebergabe(item.id, ziel) : undefined} onOpen={() => openItem(item)} onArea={() => showAll({ area: item.area })} onType={() => showAll({ documentType: item.documentType })} onDate={() => item.date ? showAll({ startDate: item.date, endDate: item.date }) : openItem(item)} onReference={openReference}/>;
+  const card = (item: DocumentLibraryItem) => <DocumentLibraryCard key={item.id} item={item} fill={fillStates[item.id]} onFill={() => onFill(item.id)} onWfpdf={onWfpdf ? () => onWfpdf(item.id) : undefined} onPro={onPro && proKandidaten?.has(item.id) ? () => onPro(item.id) : undefined} onUebergabe={onUebergabe ? (ziel) => onUebergabe(item.id, ziel) : undefined} onTeilen={onTeilen && lokaleIds.has(item.id) ? () => onTeilen(item.id) : undefined} onOpen={() => openItem(item)} onArea={() => showAll({ area: item.area })} onType={() => showAll({ documentType: item.documentType })} onDate={() => item.date ? showAll({ startDate: item.date, endDate: item.date }) : openItem(item)} onReference={openReference}/>;
   return <><PageTitle icon={<Archive/>} title="Dokumentenbibliothek" text="Der zentrale Zugang zu deinen bereits vorhandenen Dokumenten – aus demselben Datenbestand wie Cockpit, Vorgänge und „Was gibt’s Neues?“."/>
     <section className="library-toolbar card"><label><span><Search size={17}/> Dokumente durchsuchen</span><div className="library-search"><Search size={18}/><input value={query} onChange={(event) => { setQuery(event.target.value); setView("all"); }} placeholder="Titel, Dateiname, Person, Vorgang, Aktenzeichen …"/><DictationButton value={query} onChange={(value) => { setQuery(value); setView("all"); }} label="Dokumentensuche" append={false}/>{query && <button onClick={() => setQuery("")} aria-label="Dokumentensuche löschen"><X size={16}/></button>}</div></label><div className="button-row"><button className="button secondary" onClick={() => showAll()}><Archive size={17}/> Alle ansehen</button><button className="button primary" onClick={onUpload}><Plus size={17}/> Neue Unterlage</button></div></section>
     <InfoNotice title="Datensparsame Dokumentvorschau"><p>Bei Gesundheits-, Behörden- und Finanzunterlagen werden keine lesbaren vertraulichen Miniaturen angezeigt. Gesundheitsdokumente öffnen den geschützten Gesundheitsbereich.</p></InfoNotice>

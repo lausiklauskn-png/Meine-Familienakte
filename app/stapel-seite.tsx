@@ -12,7 +12,8 @@ import { ShieldCheck } from "lucide-react";
 const groesse = (n: number) => n < 1024 * 1024 ? `${Math.max(1, Math.round(n / 1024))} KB` : `${(n / 1024 / 1024).toFixed(1).replace(".", ",")} MB`;
 export async function stapelAblegen(e: StapelErgebnis) {
   const id = crypto.randomUUID();
-  await stapelLegen({ id, name: e.file.name, sicher: e.sicher, grund: e.grund, quelle: e.quelle, groesse: e.file.size, zeit: new Date().toISOString(), pdf: e.file, vorschau: e.vorschau });
+  await stapelLegen({ id, name: e.file.name, sicher: e.sicher, grund: e.grund, quelle: e.quelle, groesse: e.file.size, zeit: new Date().toISOString(), pdf: e.file, vorschau: e.vorschau,
+    originale: e.original ? [{ blob: e.original, name: e.original.name, typ: e.original.type || "image/jpeg" }] : undefined, bearbeitung: e.bearbeitung });
   window.dispatchEvent(new Event("familienakte:stapel"));
   return id;
 }
@@ -30,7 +31,8 @@ export async function eintraegeZusammenfuegen(eintraege: StapelEintrag[]) {
   const basis = eintraege[0].name.replace(/\s*\(Ecken prüfen\)/, "").replace(/\s*\(\d+ Blätter\)/, "").replace(/\.pdf$/i, "");
   const neu: StapelEintrag = { id: crypto.randomUUID(), name: `${basis} (${seiten} Blätter).pdf`, sicher: eintraege.every((e) => e.sicher),
     grund: `${seiten} Seiten, zusammengefügt aus: ${eintraege.map((e) => e.name).join(" · ")}`, quelle: "zusammen", groesse: bytes.length,
-    zeit: eintraege[0].zeit, pdf: new Blob([bytes as BlobPart], { type: "application/pdf" }), vorschau: eintraege[0].vorschau };
+    zeit: eintraege[0].zeit, pdf: new Blob([bytes as BlobPart], { type: "application/pdf" }), vorschau: eintraege[0].vorschau,
+    originale: eintraege.flatMap((e) => e.originale || []), bearbeitung: [...new Set(eintraege.map((e) => e.bearbeitung).filter(Boolean))].join(" / ") || undefined };
   await stapelLegen(neu);
   for (const e of eintraege) await stapelWeg(e.id);
   window.dispatchEvent(new Event("familienakte:stapel"));
@@ -148,12 +150,15 @@ export function StapelSeite({ kopf, neu, onNeuGenommen, onEinordnen, onWorkflowP
                 {offen === e.id ? <ChevronDown size={16}/> : <ChevronRight size={16}/>}<span>{e.name}</span>
               </button>
               <span className={`badge ${e.sicher ? "" : "warn"}`} data-stapel-stand={e.sicher ? "sicher" : "pruefen"}>{e.quelle === "pdf" ? "PDF" : e.quelle === "zusammen" ? "zusammengefügt" : e.sicher ? "gerade gezogen" : "Ecken prüfen"}</span>
+              {e.bearbeitung && <span className="badge" data-stapel-bearbeitet title={e.bearbeitung}>bearbeitet · Original dabei</span>}
               {e.pruefung && <span className={`badge ${e.pruefung.stand === "warnung" ? "warn" : ""}`} data-stapel-geprueft={e.pruefung.stand}>{e.pruefung.stand === "warnung" ? "Prüfung: Befund" : e.pruefung.stand === "sauber" ? "geprüft" : "ungeprüft"}</span>}
               <small>{groesse(e.groesse)}</small>
             </div>
             {offen === e.id && <div className="fa-stapel-detail" data-stapel-detail>
               {bild ? <img src={bild} alt={`Vorschau ${e.name}`} data-stapel-vorschau/> : <button type="button" className="button secondary" onClick={() => openFile(stapelDatei(e))}><FileText size={16}/> PDF ansehen</button>}
               <p className="fa-stapel-grund">{e.grund}</p>
+              {e.bearbeitung && <p className="fa-stapel-original" data-stapel-original={e.originale?.length || 0}><strong>Bearbeitet:</strong> {e.bearbeitung}.{e.originale?.length ? <> Das Original-Foto bleibt erhalten und wird beim Einordnen neben das PDF gelegt.{" "}
+                <button type="button" className="link-button" onClick={() => openFile(new File([e.originale![0].blob], e.originale![0].name, { type: e.originale![0].typ }))} data-stapel-original-ansehen>Original ansehen</button></> : null}</p>}
               {e.pruefung && <div className="fa-stapel-bericht" data-stapel-bericht={e.pruefung.stand}><strong>Prüfbericht: {e.pruefung.stand === "warnung" ? `${e.pruefung.funde.length} Befund(e)` : e.pruefung.stand === "sauber" ? "nichts Verstecktes gefunden" : "nicht geprüft"}</strong>
                 {e.pruefung.funde.map((f, i) => <span key={i}>{f.name}: {f.satz}</span>)}{e.pruefung.stand !== "sauber" && e.pruefung.hinweise.slice(0, 3).map((h, i) => <small key={`h${i}`}>{h}</small>)}</div>}
               <div className="button-row">

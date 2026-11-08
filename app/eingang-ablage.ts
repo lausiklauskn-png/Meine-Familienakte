@@ -1,5 +1,6 @@
 import type { CentralIntakeQueueItem } from "../lib/central-intake";
 import { stapelDatenbank } from "./stapel-ablage";
+import type { DocumentScanMetadata, DocumentScanPdfFile } from "../lib/document-scan";
 
 type Stand = CentralIntakeQueueItem & { folge: number };
 /** Stufe E: Dateien aus dem Eingangsordner werden bei Bedarf von dort gelesen (kein Doppel im Arbeitsspeicher). */
@@ -37,7 +38,11 @@ export async function eingangAblage(aendern?: EingangAenderung, stapelIds: strin
             // Nach bestätigter Ablage nur den kleinen Arbeitsstand behalten.
             // Die Originaldatei wird bei Bedarf aus dem verbundenen Dokument-Tresor gelesen.
             if (e.status === "Übernommen" && e.savedDocumentId) dateien.delete(e.id);
-            else if (e.file instanceof File && !e.ordnerDatei) dateien.put({ id: e.id, file: e.file });
+            else if (e.file instanceof File && !e.ordnerDatei) {
+              // Stufe H: Original-Fotos aus dem Stapel bleiben beim Arbeitsstand (eine Eigenschaft am File übersteht das Speichern nicht).
+              const scan = (e.file as DocumentScanPdfFile).documentScan;
+              dateien.put({ id: e.id, file: e.file, scan: scan ? { ...scan, originals: scan.originals.map((o) => ({ blob: o, name: o.name, typ: o.type })) } : undefined });
+            }
           }
           for (const id of stapelIds) t.objectStore("stapel").delete(id);
         } catch (error) { fehler = error; t.abort(); }
@@ -60,7 +65,12 @@ export async function eingangDatei(item: CentralIntakeQueueItem): Promise<File> 
     return await new Promise((resolve, reject) => {
       const t = db.transaction("eingang-dateien", "readonly");
       const r = t.objectStore("eingang-dateien").get(item.id);
-      t.oncomplete = () => r.result?.file instanceof File ? resolve(r.result.file) : reject(new Error("Die Arbeitsdatei des Eingangs ist nicht erreichbar."));
+      t.oncomplete = () => {
+        if (!(r.result?.file instanceof File)) { reject(new Error("Die Arbeitsdatei des Eingangs ist nicht erreichbar.")); return; }
+        const f = r.result.file as DocumentScanPdfFile; const scan = r.result.scan as (Omit<DocumentScanMetadata, "originals"> & { originals: Array<{ blob: Blob; name: string; typ: string }> }) | undefined;
+        if (scan && !f.documentScan) f.documentScan = { ...scan, originals: scan.originals.map((o) => new File([o.blob], o.name, { type: o.typ })) };
+        resolve(f);
+      };
       t.onabort = () => reject(t.error || new Error("Die Arbeitsdatei konnte nicht geladen werden."));
     });
   } finally { db.close(); }

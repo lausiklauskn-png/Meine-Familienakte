@@ -3,6 +3,7 @@
 // Eingabe-Speicher) → unterschreiben → festes oder ausfüllbares PDF im selben Akteneintrag speichern → teilen.
 // Die Maschine ist Workflow PDF (public/wfpdf/, byte-1:1): Linien-Erkennung, Beschriftung, Export mit pdf-lib, Reinigung,
 // Schloss, Scanner, Texterkennung. Dieser Klebstoff ist Familienakte-eigen (React), Vorbild der Editor in Workflow PDF.
+import { dateiTeilen, teilenText } from "./teilen";
 import { useEffect, useMemo, useRef, useState, type PointerEvent as RPointerEvent } from "react";
 import { Check, Copy, Download, ExternalLink, LoaderCircle, PenLine, ScanLine, Share2, Sparkles, Trash2, Wand2, X } from "lucide-react";
 import { loadPdfJs } from "./file-viewer";
@@ -340,13 +341,8 @@ export function AusfuellenDialog({ dokument, geschuetzt = false, leseDatei, pers
   };
   const teilen = async () => {
     if (!ergebnis) return;
-    const nav = navigator as Navigator & { canShare?: (d: { files: File[] }) => boolean };
-    if (nav.share && nav.canShare?.({ files: [ergebnis] })) {
-      try { await nav.share({ files: [ergebnis], title: ergebnis.name }); return; } catch (e) { if ((e as Error).name === "AbortError") return; }
-    }
-    const url = URL.createObjectURL(ergebnis); const a = document.createElement("a"); a.href = url; a.download = ergebnis.name; document.body.appendChild(a); a.click(); a.remove();
-    window.setTimeout(() => URL.revokeObjectURL(url), 60000);
-    onNotice({ kind: "info", text: "Teilen geht auf diesem Gerät nicht direkt — die Datei wurde heruntergeladen." });
+    const r = await dateiTeilen(ergebnis); const t = teilenText(r, ergebnis.name);
+    if (t) onNotice({ kind: "info", text: t });
   };
   const vormerken = async (an: boolean) => {
     try {

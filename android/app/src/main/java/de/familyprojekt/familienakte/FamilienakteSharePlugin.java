@@ -98,5 +98,41 @@ public class FamilienakteSharePlugin extends Plugin {
         worker.execute(() -> { try { call.resolve(new JSObject().put("data", Base64.encodeToString(inbox.read(id, offset), Base64.NO_WRAP))); } catch (Exception error) { call.reject("Shared file unavailable", "SHARE_UNAVAILABLE"); } });
     }
     @PluginMethod public void done(PluginCall call) { String id = call.getString("id", ""); worker.execute(() -> { inbox.remove(id); call.resolve(); }); }
+
+    // ---- Stufe H (Plan 08.11.2026): Teilen AUS der Akte heraus – Datei in Stücken in den Cache, dann Androids Teilen-Fenster.
+    private File ausgang() { File d = new File(getContext().getCacheDir(), "geteilt-ausgang"); if (!d.isDirectory()) d.mkdirs(); return d; }
+    private static boolean kennungOk(String id) { return id != null && id.matches("[A-Za-z0-9-]{8,64}"); }
+    @PluginMethod public void teilenStueck(PluginCall call) {
+        String id = call.getString("id", ""); String data = call.getString("data", "");
+        if (!kennungOk(id)) { call.reject("FA_TEILEN_KENNUNG"); return; }
+        worker.execute(() -> {
+            try (java.io.FileOutputStream out = new java.io.FileOutputStream(new File(ausgang(), id), true)) { out.write(Base64.decode(data, Base64.DEFAULT)); call.resolve(); }
+            catch (Exception fehler) { call.reject("FA_TEILEN_SCHREIBEN"); }
+        });
+    }
+    @PluginMethod public void teilenFertig(PluginCall call) {
+        String id = call.getString("id", ""); String name = ShareInbox.safeName(call.getString("name", ""), "Unterlage"); String mime = ShareInbox.safeMime(call.getString("mime", ""));
+        if (!kennungOk(id)) { call.reject("FA_TEILEN_KENNUNG"); return; }
+        File quelle = new File(ausgang(), id);
+        if (!quelle.isFile()) { call.reject("FA_TEILEN_LEER"); return; }
+        try {
+            // Unter dem sichtbaren Namen ablegen, damit die Ziel-App ihn anzeigt; alte Ausgänge räumen.
+            File ordner = new File(ausgang(), id + ".d"); ordner.mkdirs();
+            File ziel = new File(ordner, name); if (ziel.exists()) ziel.delete(); if (!quelle.renameTo(ziel)) throw new java.io.IOException("rename");
+            aufraeumen(ordner);
+            Uri uri = androidx.core.content.FileProvider.getUriForFile(getContext(), getContext().getPackageName() + ".fileprovider", ziel);
+            Intent send = new Intent(Intent.ACTION_SEND).setType(mime).putExtra(Intent.EXTRA_STREAM, uri).putExtra(Intent.EXTRA_SUBJECT, name).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            send.setClipData(ClipData.newRawUri(name, uri));
+            Intent chooser = Intent.createChooser(send, "Teilen: " + name).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getContext().startActivity(chooser);
+            call.resolve(new JSObject().put("geteilt", true));
+        } catch (Exception fehler) { quelle.delete(); call.reject("FA_TEILEN_FENSTER"); }
+    }
+    /** Ältere Ausgänge (über eine Stunde) entfernen – die Ziel-App hat die Datei längst gelesen. */
+    private void aufraeumen(File behalten) {
+        File[] alle = ausgang().listFiles(); if (alle == null) return;
+        long grenze = System.currentTimeMillis() - 3600_000L;
+        for (File f : alle) { if (f.equals(behalten) || f.lastModified() > grenze) continue; if (f.isDirectory()) { File[] k = f.listFiles(); if (k != null) for (File x : k) x.delete(); } f.delete(); }
+    }
     @Override protected void handleOnDestroy() { worker.shutdownNow(); }
 }
