@@ -4,6 +4,8 @@ import { istNativerOrdner, nativenOrdnerWaehlen, ordnerPlugin } from "./nativer-
 import { DEMO_PRAEFIX, eigeneDatenDa, wasAendertSich, type DemoQuelle } from "../lib/demo-kopie.ts";
 import { erinnerungenUmziehen } from "../lib/erinnerung-umzug.ts";
 import { KOPF_DATEI, dateiEntschluesseln, dateiVerschluesseln, geheimerName, textEntschluesseln, textVerschluesseln, tresorAnlegen, tresorOeffnen, type SicherungsKopf, type Tresor } from "../lib/sicherung-krypto.ts";
+import { fremdStand, lokaleFelder, quelleAus, type EinleseSchritt, type FremdTermin, type TerminFelder } from "../lib/kalender-einlesen.ts";
+import { kalenderAnbieterNamen } from "../lib/kalender.ts";
 import { abgleichAnwenden, abgleichPlanen, type Akte as AbgleichAkte, type Konflikt as AbgleichKonflikt, type Seite as AbgleichSeite, type Zeile as AbgleichZeile } from "../lib/abgleich.ts";
 import { ERINNERUNG_VORGABE, erinnerungAusDatum, erinnerungenOrdnen, erinnerungenVerschieben, gueltigeUhrzeit, tageZwischen, zuordnungSetzen, type ErinnerungsWahl, type KalenderAnbieter, type KalenderFelder, type KalenderZuordnung } from "../lib/kalender.ts";
 import { workspaceStorage } from "../lib/demo-workspace.ts";
@@ -3544,6 +3546,49 @@ export async function dokumentDateiAblegen(handle: FileSystemDirectoryHandle, do
     storageLocations: [{ id: `LOC-${crypto.randomUUID()}`, storageType: "local", path: storedPath, source: "Abgleich über die gemeinsame Festplatte", checksum: summe, fileSize: file.size, verifiedAt: new Date().toISOString() }] };
   delete neu.proScanOriginals; neu.scanOriginalsPath = null; delete neu.proUebergabe; delete neu.proBezug;
   return neu;
+}
+
+/** Stufe D: eingelesene Kalendertermine in die Akte übernehmen – als Fristen mit Quelle. Konflikte kommen mit `wahl`
+ *  (recordId → "hier" | "dort"); ohne Wahl bleibt die Fassung der Akte, der Merker wird trotzdem auf den Kalender gesetzt,
+ *  damit nicht jedes Mal dieselbe Frage kommt. */
+export async function kalenderTermineEinlesen(handle: FileSystemDirectoryHandle, schritte: EinleseSchritt[], anbieter: KalenderAnbieter, kalenderName: string | undefined, wahl: Record<string, "hier" | "dort"> = {}) {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  const index = await readIndex(handle);
+  const now = new Date().toISOString();
+  const z = { angelegt: 0, geaendert: 0, archiviert: 0, konflikteDort: 0, konflikteHier: 0 };
+  const setzen = (record: FamilyRecordUnion, felder: TerminFelder, termin: FremdTermin, standLokalVon: TerminFelder) => {
+    const data = record.data as Record<string, unknown>;
+    data.title = felder.title; data.dueAt = felder.dueAt; if (felder.dueTime) data.dueTime = felder.dueTime; else delete data.dueTime;
+    data.kalenderQuelle = quelleAus(termin, anbieter, standLokalVon, kalenderName);
+    record.updatedAt = now;
+  };
+  for (const s of schritte) {
+    if (s.art === "anlegen") {
+      const { id, sequences } = nextFamilyRecordId("deadline", index.sequences); index.sequences = sequences;
+      const quelle = quelleAus(s.termin, anbieter, s.felder, kalenderName);
+      const record = createFamilyRecord({ id, recordType: "deadline", status: "offen", source: `Kalender: ${kalenderName || kalenderAnbieterNamen[anbieter]}`, notes: null, now,
+        data: { title: s.felder.title, dueAt: s.felder.dueAt, ...(s.felder.dueTime ? { dueTime: s.felder.dueTime } : {}), kalenderEintragen: true, kalenderQuelle: quelle,
+          kalender: [{ anbieter, kalenderId: s.termin.kalenderId, eintragId: s.termin.eintragId, stand: quelle.stand, am: now }] } as never });
+      index.records.push(record); z.angelegt++;
+      index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Termin aus dem Kalender eingelesen", recordId: id, details: `„${s.felder.title}“ (${s.felder.dueAt}${s.felder.dueTime ? ` ${s.felder.dueTime}` : ""}) aus ${kalenderName || kalenderAnbieterNamen[anbieter]}.` });
+      continue;
+    }
+    if (s.art === "eigener") continue;
+    const record = index.records.find((r) => r.id === s.recordId); if (!record) continue;
+    if (s.art === "aendern") { setzen(record, s.felder, s.termin, s.felder); z.geaendert++; continue; }
+    if (s.art === "archivieren") {
+      if (record.status !== "archiviert") { record.status = "archiviert"; record.updatedAt = now; z.archiviert++; }
+      (record.data as Record<string, unknown>).kalenderQuelle = { ...((record.data as KalenderFelder).kalenderQuelle || quelleAus(s.termin, anbieter, lokaleFelder(record), kalenderName)), stand: fremdStand(s.termin), am: now };
+      index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Termin im Kalender gelöscht – in der Akte archiviert", recordId: record.id, details: `„${(record.data as { title?: string }).title || record.id}“ bleibt archiviert; nichts wurde gelöscht.` });
+      continue;
+    }
+    if (s.art === "konflikt") {
+      if (wahl[s.recordId] === "dort") { setzen(record, s.felder, s.termin, s.felder); z.konflikteDort++; }
+      else { (record.data as Record<string, unknown>).kalenderQuelle = quelleAus(s.termin, anbieter, lokaleFelder(record), kalenderName); z.konflikteHier++; }
+    }
+  }
+  if (z.angelegt + z.geaendert + z.archiviert + z.konflikteDort + z.konflikteHier) await writeIndex(handle, index);
+  return z;
 }
 
 /** P7 (Plan 07.11., Punkt 3): Demo als Kopie der eigenen Daten. Läuft in der echten Akte, bevor die Demo startet:

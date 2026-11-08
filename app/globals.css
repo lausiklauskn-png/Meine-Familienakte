@@ -2708,3 +2708,6 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .laufwerk-liste li { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; align-items: center; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; }
 .laufwerk-liste li small { grid-column: 1 / -1; color: var(--muted); }
 .laufwerk-liste li .button-row { grid-column: 1 / -1; }
+/* Stufe D: Termine aus dem Kalender holen */
+.kalender-hol-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.kalender-hol-liste small { color: var(--muted); }

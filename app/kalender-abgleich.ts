@@ -16,6 +16,8 @@ export type KalenderEinst = {
   erinnerungen: ErinnerungsWahl[];
   letzterAbgleich?: string;
   letzterFehler?: string | null;
+  /** Stufe D: Termine aus dem Kalender holen – welche Kalender, Merker je Kalender, letzter Lauf. */
+  einlesen?: { an: boolean; kalender: Array<{ id: string; name: string }>; staende: Record<string, string | null>; zuletzt?: string | null; fehler?: string | null };
 };
 
 export function kalenderEinstLesen(): KalenderEinst | null {
