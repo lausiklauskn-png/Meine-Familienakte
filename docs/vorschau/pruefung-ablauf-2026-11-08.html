@@ -74,6 +74,7 @@ p { margin: 0; } section { display: grid; gap: 14px; min-width: 0; }
 .frage { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; display: grid; grid-template-columns: 28px 1fr; gap: 8px; font-size: .92rem; }
 .frage::before { counter-increment: f; content: counter(f); font: 600 1.1rem/1.2 var(--display); color: var(--accent); }
 .tabelle { overflow-x: auto; }
+h3 { margin: 6px 0 0; font: 700 1.05rem/1.2 var(--body); }
 table { border-collapse: collapse; width: 100%; font-size: .84rem; min-width: 560px; }
 th, td { text-align: left; border-bottom: 1px solid var(--line); padding: 6px 8px; vertical-align: top; }
 th { font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
@@ -201,6 +202,108 @@ button:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent);
       <div class="stufe"><span class="s">6</span><div><h3>Abgleich zwischen Geräten <span class="chip ja">Punkt 10, Fragen u–z</span></h3><ul><li>Bis dahin sagt die App ehrlich, was noch fehlt</li></ul></div></div>
     </div>
   </section>
+
+  <section><span class="eyebrow">Teil 5</span><h2>Antworten auf die Fragen der Rollen</h2>
+<p>Je Frage: was die App künftig zeigt oder tut. „Siehe …“ fasst gleiche Fragen zusammen.</p>
+<h3>Neuling (31 Fragen)</h3>
+<div class="tabelle"><table><thead><tr><th>Nr.</th><th>Frage</th><th>Vorschlag</th><th>Stand</th></tr></thead><tbody>
+<tr><td>1</td><td>Wo fange ich an?</td><td>Die Startseite zeigt oben drei große Knöpfe: „Brief ablegen“, „Erinnerung anlegen“, „Suchen“.</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>2</td><td>Was ist ein Objekt-Cockpit?</td><td>Der Kasten bekommt einen verständlichen Namen und einen Satz, was er zeigt.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>3</td><td>Datentresor – muss ich das wählen, ist mein Zeug sicher?</td><td>Klartext: „Ihre Unterlagen liegen in diesem Browser. Ein eigener Ordner ist zusätzlich sicherer.“ – als Empfehlung, nicht als Fehler.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>4</td><td>Unterschied zwischen Ablegen, Datei auswählen, Abgleich, Aktualisieren?</td><td>Ein Knopf „Unterlage ablegen“ als Haupteinstieg, die übrigen mit einer Zeile Erklärung; das Zusammenlegen braucht eine Skizze.</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>5</td><td>„Datenschutz: vertraulich“ – muss ich etwas tun?</td><td>Daneben steht: „Wird verdeckt angezeigt. Sie müssen nichts tun.“</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>6</td><td>Warum „Sonstiges“, wo doch „Energie“ dasteht?</td><td>Der Bereich folgt dem erkannten Thema, „Sonstiges“ nur, wenn nichts passt.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>7</td><td>Hat es gespeichert?</td><td>An derselben Stelle steht „Gespeichert ✓ in …“; die gelbe Zeile „noch nichts gespeichert“ verschwindet. (Auch Neu-erfahren 9.)</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>8</td><td>Was ist „Copy“?</td><td>Der Knopf heißt „Kopieren“, gleiche Meldungen erscheinen nur einmal. (Auch Neu-erfahren 24, Erfahren 11.)</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>9</td><td>Wo ist mein Brief jetzt?</td><td>Die Seite bleibt stehen und zeigt „Abgelegt unter … · Ansehen ›“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>10</td><td>„Neu“ – lege ich etwas neu an?</td><td>Der Knopf heißt „Neuigkeiten“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>11</td><td>Welches Symbol ist der Kalender? Was bedeuten die Zeichen oben?</td><td>Am Handy stehen kurze Namen unter den Symbolen oder ein Tipp zeigt sie. (Auch Neu-erfahren 1.)</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>12</td><td>Termin oder Aufgabe?</td><td>Einträge mit Uhrzeit heißen „Termin“, ohne Uhrzeit „Aufgabe“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>13</td><td>Klingelt es auch bei geschlossener App? Was ist die App-Glocke?</td><td>Glocke ab Werk an; daneben ein Satz: „Klingelt, solange die App offen ist – für mehr: Kalender verbinden“. (Auch Neu-erfahren 18.)</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>14</td><td>Warum heißt mein Zahnarzt „Geschützter neuer Eintrag“?</td><td>Die Zeile sagt „verdeckt zum Schutz vor Mitlesern – antippen zum Zeigen“; die Wahl je Nutzer kommt später.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>15</td><td>Was ist ein ICD-Code?</td><td>Der Suchhinweis nennt nur Alltagswörter: Name, Absender, Jahr, Monat.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>16</td><td>Warum findet „Strom“ meinen Strombrief nicht?</td><td>Die Suche durchsucht auch den gelesenen Brieftext. (Auch Neu-erfahren 19.)</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>17</td><td>Wie schaue ich mir den Brief an?</td><td>Jede Dokumentkarte hat einen Knopf „Ansehen“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>18</td><td>Was ist FaWoGa, file-picker, Workflow PDF?</td><td>Interne Wörter verschwinden; Werkzeuge heißen nach ihrem Zweck, z. B. „PDF bearbeiten“. (Auch Neu-erfahren 13.)</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>19</td><td>Warum steht „KORRESPONDENZ“ zweimal?</td><td>Die Art steht nur einmal auf der Karte.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>20</td><td>Was ist „Geschützter Eingang“?</td><td>Heißt „Neu eingegangen, noch nicht abgelegt“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>21</td><td>„Nicht gelesen“ hier, „Text gelesen“ dort?</td><td>Die Warteschlange nutzt den schon gelesenen Text; beide Stellen sagen dasselbe. (Auch Neu-erfahren 15, Erfahren 1.)</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>22</td><td>Woher kommt ein fremder „Beispieleintrag“?</td><td>Beispiele gibt es nur in der Demo, nie in der eigenen Akte. (Auch Neu-erfahren 20.)</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>23</td><td>Wo sind meine Bankpapiere?</td><td>„Finanzen & Konten“ erscheint als eigener Bereich, sobald etwas darin liegt.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>24</td><td>Warum „ohne Dokumentdatum“, der März steht doch drauf?</td><td>Das Datum aus dem Brief wird übernommen und lässt sich ändern. (Auch Neu-erfahren 12.)</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>25</td><td>Was bedeutet „1f52bfe7-…“?</td><td>Statt der Kennung stehen Titel und Datum des Dokuments.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>26</td><td>Wie werfe ich das doppelte Papier weg?</td><td>Knopf „Aus der Akte nehmen“: Datei kommt in den Ordner „Aussortiert“ und lässt sich zurückholen.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>27</td><td>Wo ist der Mülleimer bei der Erinnerung?</td><td>Die Aktionen passen sichtbar zum Eintrag (Vorschau C); der Pfeil trägt das Wort „Mehr“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>28</td><td>Wo ist „Löschen?“ hin?</td><td>Die Rückfrage bleibt stehen, bis man „Ja“ oder „Abbrechen“ tippt.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>29</td><td>Welche der zwei gleichen Erinnerungen lösche ich?</td><td>Die Rückfrage nennt Titel und Datum des Eintrags.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>30</td><td>„Gesundheitsbezogene Aktion“ – ich habe nur gelöscht?</td><td>Meldung: „Erinnerung gelöscht · Rückgängig“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>31</td><td>Warum „mm/dd/yyyy“?</td><td>Datumsfelder zeigen überall TT.MM.JJJJ.</td><td><span class="pill k">wird behoben</span></td></tr>
+</tbody></table></div>
+<h3>Neu, aber erfahren (25 Fragen)</h3>
+<div class="tabelle"><table><thead><tr><th>Nr.</th><th>Frage</th><th>Vorschlag</th><th>Stand</th></tr></thead><tbody>
+<tr><td>1</td><td>Was bedeuten die Symbole oben?</td><td>Siehe Neuling 11.</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>2</td><td>Wo fange ich an?</td><td>Siehe Neuling 1.</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>3</td><td>Warum Cockpit, Fristen, Tagebuch unter „Familie & Personen“?</td><td>Das Menü ordnet Fristen und Kalender in eine eigene Gruppe.</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>4</td><td>Objekt-Cockpit oder Interaktives Cockpit?</td><td>Ein Name, eine Seite; bis dahin eine Zeile zum Unterschied. Das Zusammenlegen braucht eine Skizze. (Vgl. Neuling 2.)</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>5</td><td>Systemprüfung 13.10., Version 2.28.1 in leerer Akte?</td><td>Interne Prüfangaben verschwinden aus der normalen Oberfläche.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>6</td><td>Wo liegen meine Daten?</td><td>War beantwortet; zusätzlich nennt die Startseite eine Zeile „Gespeichert in: diesem Browser“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>7</td><td>Was passiert beim Löschen der Browserdaten?</td><td>Deutliche Warnung „dann sind die Unterlagen weg“ mit Knopf „Jetzt sichern“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>8</td><td>Liegt doch etwas online („Online-Altbestand“)?</td><td>Das Wort erscheint nur, wenn wirklich etwas online liegt.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>9</td><td>„Im freigegebenen Datentresor erfasst“ – welchem?</td><td>Siehe Neuling 7: die Meldung nennt den echten Ort.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>10</td><td>Mehrere Dateien auf einmal ablegen?</td><td>Ablegen nimmt mehrere Dateien; sichere Vorschläge mit einem Tipp speichern (Sammelbestätigung). (Auch Erfahren 2.)</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>11</td><td>Warum heißt es weiter scan_0001.pdf? Umbenennen?</td><td>Der vorgeschlagene Titel wird gespeichert und lässt sich mit ✎ ändern. (Auch Erfahren 3.)</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>12</td><td>„Ohne Dokumentdatum“</td><td>Siehe Neuling 24.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>13</td><td>Was ist „FaWoGa“?</td><td>Siehe Neuling 18.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>14</td><td>Kfz-Rechnung „Versicherungen“ und „Werkstatt“ zugleich?</td><td>Gezeigt wird ein Pfad: „Versicherungen › Werkstatt / Wartung“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>15</td><td>Warteschlange „nicht lesbar“, Dialog „gelesen“?</td><td>Siehe Neuling 21.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>16</td><td>Erinnerung mit Dokument verknüpfen – ohne ID?</td><td>Auswahlliste mit Suche statt ID-Feld. (Auch Erfahren 17.)</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>17</td><td>„Bald fällig 1, Offen 0“?</td><td>„Bald fällig“ zählt bei „Offen“ mit.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>18</td><td>Klingelt sie bei geschlossener App?</td><td>Siehe Neuling 13.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>19</td><td>Warum findet die Suche „Waschmaschine“ nicht?</td><td>Siehe Neuling 16.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>20</td><td>Fremde „Beispielantwort“ in leerer Akte?</td><td>Siehe Neuling 22.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>21</td><td>Wie kommen die Daten aufs zweite Gerät?</td><td>Umzug per Sicherung bleibt; ein laufender Abgleich ist Punkt 10. (Auch Erfahren 33.)</td><td><span class="pill s">Entscheidung offen</span></td></tr>
+<tr><td>22</td><td>Was ist „Netz (Mycel)“?</td><td>Verschwindet aus dem normalen Menü.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>23</td><td>Hat „Vollständige Sicherung erstellen“ etwas getan?</td><td>Danach steht „Gespeichert ✓ in …“ mit Ordner und Uhrzeit.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>24</td><td>Englische „Copy“-Knöpfe</td><td>Siehe Neuling 8.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>25</td><td>Wozu Workflow PDF, Stapel, Bestand prüfen?</td><td>Jeder Menüpunkt bekommt eine Zeile, wozu er dient.</td><td><span class="pill k">wird behoben</span></td></tr>
+</tbody></table></div>
+<h3>Erfahrener Nutzer (33 Funde)</h3>
+<div class="tabelle"><table><thead><tr><th>Nr.</th><th>Frage</th><th>Vorschlag</th><th>Stand</th></tr></thead><tbody>
+<tr><td>1</td><td>Warteschlange liest PDFs nicht, Prüffenster schon</td><td>Siehe Neuling 21.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>2</td><td>Kein Sammel-Speichern</td><td>Siehe Neu-erfahren 10.</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>3</td><td>Titel nicht gespeichert, nur Dateiname</td><td>Siehe Neu-erfahren 11.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>4</td><td>Organisation ohne Rückfrage verknüpft</td><td>Nur vorschlagen, wenn der Name im Briefkopf steht, sonst leer.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>5</td><td>Vorgangsvorschlag fast immer falsch</td><td>Vorschlag nur bei klarer Übereinstimmung, sonst „kein Vorschlag“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>6</td><td>Vorgang wählen nur mit Vorschlag</td><td>Der Vorgangsbereich ist immer da.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>7</td><td>48 Vorgänge ungeordnet</td><td>Mit Suchfeld, offene zuerst, alphabetisch.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>8</td><td>Adresszeile als Titel</td><td>Die Betreffzeile des Briefs wird Titel.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>9</td><td>Erledigte bleiben in der Warteschlange stehen</td><td>Erledigte rutschen ans Ende, das nächste offene öffnet sich.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>10</td><td>„20 Eingänge“ wählt nur aus</td><td>Sichtbares Kästchen „alle / keine“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>11</td><td>Doppelte Meldung, „Copy“</td><td>Siehe Neuling 8.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>12</td><td>„Zuletzt hinzugefügt“ sortiert nach Dokumentdatum</td><td>Sortiert nach Hinzufügedatum.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>13</td><td>Bibliothek 166 Karten ohne Auswahl</td><td>Kompakte Zeilen mit Mehrfachauswahl und Sammelaktionen.</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>14</td><td>Frist nimmt Rechnungsdatum, ISO-Format</td><td>Datum nach „bis“, „spätestens“, „zahlbar bis“ bevorzugen, deutsch anzeigen.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>15</td><td>„Als Frist übernehmen“ verlässt die Ablage</td><td>Frist wird im Prüffenster mit angelegt und mit dem Dokument verknüpft.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>16</td><td>Formular liegt weit unten</td><td>Die Seite springt direkt zum Formular.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>17</td><td>IDs müssen eingetippt werden</td><td>Siehe Neu-erfahren 16.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>18</td><td>Zusätzlicher Bestätigungshaken</td><td>Der Knopf „anlegen“ genügt.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>19</td><td>Zweiter Eintrag „Erinnerung: …“</td><td>Die Erinnerung gehört zur Aufgabe und steht in ihr (Vorschau A, D).</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>20</td><td>Verschieben: Erinnerung zieht nicht mit</td><td>Erinnerungen ziehen mit und sind im Bearbeitungsfenster sichtbar.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>21</td><td>Erledigen: Erinnerung bleibt offen</td><td>Erinnerungen werden mit erledigt; „Erledigt“ bestätigt sichtbar (Vorschau E).</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>22</td><td>Mein Kalender ohne Erinnerungen</td><td>Kalender und Fristenliste zeigen dieselben Einträge.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>23</td><td>Roter Kasten „Kein Kalender verbunden“</td><td>Einmaliger, ruhiger Hinweis.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>24</td><td>Leerzeichen vor dem Hauptwort fehlt</td><td>Wird in der Listenzeile berichtigt.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>25</td><td>Fristenliste 287 Zeilen ohne Suche</td><td>Liste weiter oben, mit Suchfeld, Filter und Jahr bei anderem Jahr.</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>26</td><td>Personen, Organisationen, Objekte nicht anlegbar</td><td>Knopf „Neu …“ in Familie & Personen und im Prüffenster.</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>27</td><td>Vorgang zeigt fremde Dokumente</td><td>Nur direkt verknüpfte Dokumente, dazu Personen und Organisationen.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>28</td><td>Tagebuch-Fenster bleibt offen</td><td>Schließt sich und zeigt „Gespeichert ✓“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>29</td><td>Suche: max. 20 Treffer, kein Datum, keine Tippfehler</td><td>„Weitere Treffer“, Suche nach Datum und Monat, unscharfe Suche, Daten vor Menüpunkten.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>30</td><td>Suche: große zentrierte Karten</td><td>Kompakte Trefferzeilen mit Art-Filter – Suche als Mitte der App.</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>31</td><td>Sicherungsprobe „bestanden“ trotz fehlender Originale</td><td>Meldet deutlich „unvollständig“ und nennt die fehlenden Dateien.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>32</td><td>Umlaute in Ordnernamen</td><td>Ordnernamen werden ohne Umlaute angelegt (ö → oe).</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>33</td><td>Zurück vom zweiten Gerät</td><td>Siehe Neu-erfahren 21 (Punkt 10).</td><td><span class="pill s">Entscheidung offen</span></td></tr>
+</tbody></table></div>
+</section>
 
   <section>
     <span class="eyebrow">Teil 4</span>
