@@ -1,5 +1,5 @@
 // 2.28.39 (U10, Plan 08.11.): Fehlt in einer Vollsicherung ein Original, das das Register nennt, meldet die Probe das als
-// Warnung – nicht als „bestanden“ ohne Einschränkung. Und in einer vollen Akte nennt das Fenster den nächsten Schritt.
+// Warnung – nicht als „bestanden“ ohne Einschränkung. In einer vollen Akte wird zusammengeführt (Stufe A, Plan 08.11.).
 // Gestellt: Android-App mit nativem Ordner-Plugin; aus dem Manifest der Sicherung wird ein Eintrag entfernt (Datei fehlt).
 import { vaultFixture } from "./_vault-fixture.mjs";
 import { capacitorStub } from "./_capacitor-stub.mjs";
@@ -43,12 +43,11 @@ try {
     soll(/mit Warnung/.test(badge) && /kommt beim Einlesen nicht zurück/.test(warn) && /Versicherungsschein_Hausrat/.test(warn), { badge, warn: warn.slice(0, 200), weg });
     return `${badge} · ${warn.split("\n")[0]}`;
   });
-  await step("Volle Akte: kein „Jetzt einlesen“, aber der nächste Schritt und „Zur Eingangszentrale ›“", async () => {
-    soll(!(await dialog.locator("[data-einlesen-start]").count()), "Einlesen in volle Akte angeboten");
-    const naechst = await dialog.locator("[data-einlesen-naechster-schritt]").innerText().catch(() => "");
-    soll(/01_Dokumente/.test(naechst) && /geplant/.test(naechst), naechst.slice(0, 200));
-    await dialog.locator("[data-einlesen-zum-eingang]").click();
-    await page.locator(".breadcrumb", { hasText: "Eingangszentrale" }).waitFor({ timeout: 5000 });
+  await step("Volle Akte: es wird zusammengeführt (Stufe A), bei gleichem Stand nichts zu tun", async () => {
+    soll(await dialog.locator("[data-einlesen-zusammen]").count() === 1, "Zusammenführen fehlt");
+    const text = (await dialog.innerText()).replace(/\s+/g, " ");
+    soll(/nichts zusammenzuführen/.test(text) && !(await dialog.locator("[data-einlesen-start]").count()), text.slice(0, 300));
+    await dialog.locator("button", { hasText: "Schließen" }).click();
     return soll(!(await dialog.count()), "Fenster bleibt offen");
   });
   await step("Keine Seitenfehler", async () => { const e = errors.filter((x) => !/cdnjs|ERR_TUNNEL|Failed to load resource/.test(x)); return soll(!e.length, e.join(" | ")); });

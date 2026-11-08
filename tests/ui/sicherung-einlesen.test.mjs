@@ -1,5 +1,6 @@
 // P6 (Plan 07.11., Punkt 2b): Sicherung einlesen in der Android-App (natives Ordner-Plugin gestellt).
-// Probe ohne Schreiben; nicht leere Akte und beschädigte Sicherung werden abgewiesen; in die leere Akte einlesen und vergleichen.
+// Probe ohne Schreiben; beschädigte Sicherung wird abgewiesen; in die leere Akte einlesen und vergleichen.
+// Stufe A (Plan 08.11.): in eine volle Akte wird zusammengeführt – gleicher Stand: nichts zu tun; Unterschied: Wahl je Eintrag.
 import { vaultFixture } from "./_vault-fixture.mjs";
 import { capacitorStub } from "./_capacitor-stub.mjs";
 import { ordnerStub } from "./_ordner-stub.mjs";
@@ -26,19 +27,17 @@ try {
     sicherung = await page.evaluate(() => window.__ordnerSichern());
     return `${vorher.dokumente} Dokumente, ${vorher.eintraege} Einträge`;
   });
-  await step("Probe in der vollen Akte: bestanden, aber kein „Jetzt einlesen“ (nur in eine leere Akte)", async () => {
+  await step("Probe in der vollen Akte mit gleichem Stand: zusammenführen, nichts zu tun", async () => {
     await page.locator("[data-sicherung-einlesen-knopf]").click();
     await dialog.waitFor({ timeout: 60000 }).catch(async () => { throw new Error(((await page.locator("[aria-live], .notice").allInnerTexts()).join(" ")).slice(0, 300)); });
     const text = (await dialog.innerText()).replace(/\s+/g, " ");
     if (!/per Prüfsumme geprüft/.test(text) || /Fehler/.test(await dialog.locator("[data-einlesen-dateien]").innerText())) throw new Error(text.slice(0, 300));
-    if (!(await dialog.locator("[data-einlesen-nicht-leer]").count()) || await dialog.locator("[data-einlesen-start]").count()) throw new Error("Einlesen in volle Akte angeboten");
-    const titel = await page.evaluate(() => window.__ordner.gewaehlt.at(-1));
-    // Keine Sackgasse: der nächste mögliche Schritt steht da, mit Knopf zur Eingangszentrale; kein interner Prüfstand.
-    const weiter = await dialog.locator("[data-einlesen-naechster-schritt]").innerText().catch(() => "");
-    if (!/01_Dokumente/.test(weiter) || !/geplant/.test(weiter) || !(await dialog.locator("[data-einlesen-zum-eingang]").count())) throw new Error(`nächster Schritt fehlt: ${weiter.slice(0, 200)}`);
+    if (!(await dialog.locator("[data-einlesen-zusammen]").count())) throw new Error(`kein Zusammenführen: ${text.slice(0, 200)}`);
+    if (await dialog.locator("[data-einlesen-start]").count() || !/nichts zusammenzuführen/.test(text)) throw new Error(`gleicher Stand, trotzdem Knopf: ${text.slice(0, 300)}`);
+    if (await dialog.locator("[data-einlesen-konflikte]").count()) throw new Error("Konflikte bei gleichem Stand");
     if (/Prüfstand|2\.28\.1/.test(text)) throw new Error("interne Fassung im Fenster");
     await dialog.locator("button", { hasText: "Schließen" }).click();
-    return `${titel} · ${(await zaehlen()).dokumente} Dokumente unverändert`;
+    return `${(await zaehlen()).dokumente} Dokumente unverändert`;
   });
   await step("Akte leeren (wie Neuinstallation), Sicherung wieder einsetzen", async () => {
     await page.evaluate(async () => { const f = window.__vaultFixture; await (await navigator.storage.getDirectory()).removeEntry(f.BROWSER_VAULT_NAME, { recursive: true }); });
@@ -81,12 +80,27 @@ try {
     if (!ok.gleich) throw new Error(JSON.stringify(ok));
     return ok.name;
   });
-  await step("Zweites Einlesen in die nun volle Akte wird abgewiesen", async () => {
+  await step("Volle Akte, ein Eintrag geändert: Zusammenführen fragt nach, „meine“ bleibt, nichts geht verloren", async () => {
+    const info = await page.evaluate(async () => {
+      const f = window.__vaultFixture, h = await f.browserVault(), d = await f.readLocalVaultData(h);
+      const r = d.records.find((x) => x.recordType === "person");
+      await f.updateLocalPersonContact(h, r.id, { telefon: "0170 1234567" }).catch(() => null);
+      return { person: r.id };
+    });
+    const vorZ = await zaehlen();
+    // Ohne Neuladen: der gestellte SD-Ordner lebt nur in dieser Seite.
+    await footer(page, "Sicherheitscenter");
     await page.locator("[data-sicherung-einlesen-knopf]").click(); await dialog.waitFor({ timeout: 60000 });
-    if (!(await dialog.locator("[data-einlesen-nicht-leer]").count())) throw new Error("nicht abgewiesen");
-    await dialog.locator("[data-einlesen-zum-eingang]").click();
-    await page.locator(".breadcrumb", { hasText: "Eingangszentrale" }).waitFor({ timeout: 5000 });
-    return "abgewiesen, „Zur Eingangszentrale ›“ führt dorthin";
+    if (!(await dialog.locator("[data-einlesen-zusammen]").count())) throw new Error("kein Zusammenführen");
+    const zahl = await dialog.locator("[data-einlesen-zaehlung]").innerText();
+    if (!(await dialog.locator("[data-einlesen-konflikte]").count())) throw new Error(`keine Frage zum geänderten Eintrag: ${zahl}`);
+    await dialog.locator("[data-einlesen-alle-hier]").click();
+    await dialog.locator("[data-einlesen-start]").click();
+    await dialog.waitFor({ state: "detached", timeout: 120000 });
+    await page.waitForFunction(() => [...document.querySelectorAll("[aria-live], .notice")].some((e) => /zusammengeführt/.test(e.textContent || "")), null, { timeout: 30000 });
+    const nachZ = await zaehlen();
+    if (nachZ.dokumente !== vorZ.dokumente || nachZ.eintraege !== vorZ.eintraege) throw new Error(`${JSON.stringify(vorZ)} → ${JSON.stringify(nachZ)} (${JSON.stringify(info)})`);
+    return `${zahl.replace(/\s+/g, " ").slice(0, 120)} · Zahlen gleich, nichts verloren`;
   });
   await step("Keine Seitenfehler", async () => { const e = errors.filter((x) => !/cdnjs|ERR_TUNNEL|Failed to load resource/.test(x)); if (e.length) throw new Error(e.join(" | ")); });
 } catch (error) { fail("Abbruch", String(error?.message || error)); }
