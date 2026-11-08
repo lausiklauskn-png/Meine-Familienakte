@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Ablaufbild, type AblaufKnoten } from "./ablaufbild";
 import { useHilfeVorschau, type Vorschau } from "./hilfe-vorschau";
 import { ablaufGlocke, ablaufMeinKalender, ablaufUmzug, ablaufZuGross } from "./hilfe-bilder";
-import { Bell, CalendarDays, ChevronsDownUp, Eye, FileStack, FlaskConical, Minimize2, Printer, RefreshCw, Share2, Smartphone, StickyNote, Trash2 } from "lucide-react";
+import { Bell, CalendarDays, ChevronsDownUp, Eye, FileStack, FlaskConical, Minimize2, Printer, RefreshCw, Share2, Smartphone, StickyNote, Trash2, Wifi } from "lucide-react";
 
 /**
  * Hilfe zu den Funktionen seit 2.28.20 (Plan 07.11.2026, Paket P1: erst der Inhalt).
@@ -40,9 +40,11 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
     "Der Mülleimer wird beim ersten Tipp rot („Löschen?“) und löscht beim zweiten.",
     "Das Auge zeigt den ganzen Text und weitere Angaben, in der Fristenliste auch Zurückstellen und Wieder öffnen.",
   ] },
-  { id: "loeschen", titel: "Löschen mit dem Mülleimer", symbol: <Trash2/>, weg: "an Erinnerungen und Notizen", ablauf: [{ titel: "Mülleimer" }, { titel: "Archiviert", unter: "nicht sofort weg", art: "gut" }, { titel: "Kalender-Eintrag", unter: "wird mit entfernt" }], merk: [<><b>Löschen heißt archivieren.</b></>], punkte: [
-    "Löschen heißt archivieren. Nichts ist sofort weg.",
+  { id: "loeschen", titel: "Löschen mit dem Mülleimer", symbol: <Trash2/>, weg: "an Erinnerungen und Notizen", ablauf: [{ titel: "Mülleimer" }, { titel: "Archiviert", unter: "aus den Listen, bleibt im Register", art: "gut" }, { titel: "Kalender-Eintrag", unter: "wird mit entfernt" }], merk: [<><b>Löschen heißt archivieren:</b> der Eintrag verschwindet aus den Listen, bleibt aber im Register und in der Sicherung.</>, <><b>Zurückholen</b> in der App geht noch nicht.</>], punkte: [
+    "Gilt für Erinnerungen und Notizen mit Mülleimer: Der Eintrag verschwindet aus den Listen, bleibt aber als „archiviert“ im Register und kommt mit der Vollsicherung mit.",
+    "Eine Ansicht zum Ansehen oder Zurückholen archivierter Einträge gibt es noch nicht.",
     "Ein verbundener Kalender-Eintrag wird dabei entfernt.",
+    "Dokumente haben keinen Mülleimer; ihre Originale werden nie gelöscht.",
   ] },
   { id: "einklappen", titel: "Einklappen und Knopf „alle“", symbol: <ChevronsDownUp/>, weg: "Fristen und Aufgaben › Seitenkopf", ablauf: [{ titel: "Tipp auf Überschrift", unter: "auf oder zu" }, { titel: "Knopf „alle“", unter: "Pfeile zeigen die Wirkung", art: "hervor" }, { titel: "Drei Kästchen", unter: "Überfällig · Bald · Offen" }], merk: [<><b>Die Pfeile</b> zeigen, was ein Tipp bewirkt: alle auf oder alle zu.</>, <><b>Die Kästchen</b> filtern die Liste und springen dorthin.</>], punkte: [
     "Tipp auf eine Überschrift klappt den Abschnitt auf oder zu.",
@@ -60,12 +62,13 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
     "Solange sie läuft, steht hinter dem Namen ein roter Knopf „DEMO ▾“: verlassen · zurücksetzen · löschen.",
     "Die Demo gehört nicht in deine Sicherung.",
   ] },
-  { id: "update", titel: "Update und Basic oder Pro", symbol: <RefreshCw/>, weg: "Fuß › Versionszeile antippen", ablauf: [{ titel: "Versionszeile antippen", unter: "unten im Fuß" }, { titel: "Neue Fassung?", unter: "Android, Windows", art: "hervor" }, { titel: "Laden und installieren", art: "gut" }], merk: [<><b>Die Web-App „Basic“</b> aktualisiert sich von selbst; die Apps heißen „Pro“.</>], punkte: [
-    "In der Android- und der Windows-App prüft ein Tipp, ob es eine neue Fassung gibt, und bietet sie an.",
+  { id: "update", titel: "Update und Basic oder Pro", symbol: <RefreshCw/>, weg: "Kopf › Versionszeile unter dem Namen oder Knopf ⟳", ablauf: [{ titel: "Internet für die App an", unter: "WLAN-Symbol im Kopf" }, { titel: "Versionszeile oder ⟳ antippen", unter: "oben im Kopf" }, { titel: "Neue Fassung?", unter: "Android, Windows", art: "hervor" }, { titel: "Laden und installieren", art: "gut" }], merk: [<><b>Oben im Kopf:</b> Versionszeile unter dem Namen oder Knopf ⟳ „Auf eine neue Fassung prüfen“.</>, <><b>Internet für die App</b> muss dafür an sein.</>, <><b>Die Web-App „Basic“</b> aktualisiert sich von selbst; die Apps heißen „Pro“.</>], punkte: [
+    "In der Android- und der Windows-App prüft ein Tipp auf die Versionszeile oben unter dem Namen oder auf den Knopf ⟳ „Auf eine neue Fassung prüfen“, ob es eine neue Fassung gibt, und bietet sie an.",
+    "Dafür muss das Internet für die App an sein (WLAN-Symbol im Kopf). Ist es aus, sagt die App das.",
     "Die Web-App heißt „Basic“ und aktualisiert sich von selbst. Die Apps heißen „Pro“.",
   ] },
-  { id: "teilen", titel: "Teilen an die Familienakte", symbol: <Share2/>, weg: "andere App › Teilen › Familienakte", ablauf: [{ titel: "Andere App › Teilen" }, { titel: "Familienakte wählen" }, { titel: "Eingangszentrale", unter: "zur Prüfung", art: "gut" }], merk: [<><b>Keine Anmeldung nötig</b>; geht mit jedem Mail-Anbieter.</>, <><b>PDF, Fotos, Word, Excel, .eml, .msg</b> werden angenommen.</>], punkte: [
-    "Aus Mail-App, Galerie, Kamera oder Scanner-App: PDF, Fotos, Word, Excel, E-Mails als .eml oder .msg.",
+  { id: "teilen", titel: "Teilen an die Familienakte", symbol: <Share2/>, weg: "andere App › Teilen › Familienakte", ablauf: [{ titel: "Andere App › Teilen" }, { titel: "Familienakte wählen" }, { titel: "Eingangszentrale", unter: "zur Prüfung", art: "gut" }], merk: [<><b>Keine Anmeldung nötig</b>; geht mit jedem Mail-Anbieter.</>, <><b>PDF, Fotos, Word, Excel, .eml</b> werden angenommen; .msg (Outlook) am Rechner hineinziehen.</>], punkte: [
+    "Aus Mail-App, Galerie, Kamera oder Scanner-App: PDF, Fotos, Word, Excel, E-Mails als .eml. In der Web-App auch .msg; in der Android-App eine .msg-Datei am Rechner in die Eingangszentrale ziehen.",
     "Alles landet zuerst in der Eingangszentrale zur Prüfung.",
     "Keine Anmeldung nötig; geht mit jedem Mail-Anbieter.",
   ] },
@@ -75,8 +78,9 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
     "Das Ergebnis geht an denselben Akteneintrag zurück; es entsteht keine zweite Ablage.",
     "Stapel: viele Fotos oder Scans auf einmal aufnehmen, gerade gezogen, und erst später einordnen.",
   ] },
-  { id: "drucken", titel: "Drucken", symbol: <Printer/>, weg: "Kopf › Drucker · am Handy: Menü › Seite drucken", ablauf: [{ titel: "Seite öffnen" }, { titel: "Drucker im Kopf", unter: "Handy: Menü › Seite drucken", art: "hervor" }, { titel: "Druckdienst des Geräts" }], merk: [<><b>Gedruckt wird die Seite, die gerade offen ist.</b></>], punkte: [
+  { id: "drucken", titel: "Drucken", symbol: <Printer/>, weg: "Kopf › Drucker · bis Tabletbreite hinter ‹ „Weitere Knöpfe“ · am Handy: Menü › Seite drucken", ablauf: [{ titel: "Seite öffnen" }, { titel: "Drucker im Kopf", unter: "Handy: Menü › Seite drucken", art: "hervor" }, { titel: "Druckdienst des Geräts" }], merk: [<><b>Gedruckt wird die Seite, die gerade offen ist.</b></>], punkte: [
     "Druckt die Seite, die gerade offen ist.",
+    "Bei schmalem Bildschirm steckt der Drucker im Kopf hinter dem Pfeil ‹ „Weitere Knöpfe“; am Handy im Menü unter „Seite drucken“.",
     "Android druckt über den Druckdienst des Geräts.",
   ] },
   { id: "zu-gross", titel: "Datei zu groß für dieses Gerät", symbol: <Minimize2/>, weg: "Eingangszentrale › Zuordnung prüfen", ablauf: ablaufZuGross, merk: [<><b>Sichere Größe:</b> 15, 20 oder 40 MB je nach Gerät; Pro-Tresor 20 MB.</>, <><b>Nur „Verkleinern“ oder „Abbrechen“</b>; das große Original wird nicht aufbewahrt.</>, <><b>PDF mit Textebene</b> lässt sich nicht verkleinern: am Rechner ablegen.</>], punkte: [
@@ -87,9 +91,19 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
     "Am Eintrag steht „verkleinert von X MB, Text geprüft“. Das große Original wird nicht aufbewahrt.",
     "Ein PDF mit eigener Textebene lässt sich nicht verkleinern: bitte am Rechner ablegen.",
   ] },
-  { id: "umzug", titel: "Auf ein neues Gerät umziehen", symbol: <Smartphone/>, weg: "Sicherheit › Geräteübergabe", ablauf: ablaufUmzug, merk: [<><b>Weg frei wählbar:</b> USB-Stick oder Ordner.</>, <><b>Vorher sichern:</b> Hilfe › Akten sichern.</>], punkte: [
-    "Die Akte von einem Gerät auf ein anderes bringen, über einen frei gewählten Weg (USB-Stick, Ordner).",
-    "Vorher eine Sicherung anlegen: Hilfe › Akten sichern – Plan zum Abhaken.",
+  { id: "umzug", titel: "Auf ein neues Gerät umziehen", symbol: <Smartphone/>, weg: "Sicherheit › Familienakte vollständig sichern und testen › Sicherung einlesen", ablauf: ablaufUmzug, merk: [<><b>Ganze Akte:</b> Vollsicherung, dann auf dem neuen Gerät „Sicherung einlesen“ – nur in eine leere Akte.</>, <><b>Weg frei wählbar:</b> USB-Stick, SD-Karte oder Ordner.</>, <><b>Abgleich</b> zwischen zwei benutzten Geräten ist geplant, noch nicht gebaut.</>], punkte: [
+    "Die ganze Akte von einem Gerät auf ein anderes bringen: auf dem alten Gerät „Vollständige Sicherung erstellen“, den Sicherungsordner über einen frei gewählten Weg (USB-Stick, SD-Karte, Ordner) mitnehmen, auf dem neuen Gerät „Sicherung einlesen“.",
+    "Eingelesen wird nur in eine leere Akte, zum Beispiel direkt nach der Installation. Es wird nichts zusammengeführt.",
+    "Sichern und Einlesen brauchen eine Ordnerwahl: in der Android- oder Windows-App oder am PC in Chrome oder Edge. Die Web-App am Handy oder Tablet kann das nicht.",
+    "Nur eine einzelne Unterlage? Sicherheit › „Eine Unterlage an ein anderes Gerät geben“. Einträge, Fristen und Erinnerungen gehen dort nicht mit.",
+    "Einträge zwischen zwei Geräten abgleichen, die beide schon benutzt werden: geplant, noch nicht gebaut.",
+    "Vorher den Plan durchgehen: Hilfe › Akten sichern – Plan zum Abhaken.",
+  ] },
+  { id: "internet", titel: "Internet für die App", symbol: <Wifi/>, weg: "Kopf › WLAN-Symbol", ablauf: [{ titel: "WLAN-Symbol im Kopf", unter: "durchgestrichen = aus" }, { titel: "Antippen", unter: "an oder aus", art: "hervor" }, { titel: "Gerät merkt es sich", art: "gut" }], merk: [<><b>Ab Werk aus:</b> die Akte arbeitet ohne Internet.</>, <><b>Braucht Internet:</b> neue Fassung prüfen, Kalender verbinden und abgleichen, Diktat im Browser, Netz (Mycel), Suchmodell laden.</>, <><b>Ausschalten</b> geht jederzeit; nichts geht verloren.</>], punkte: [
+    "Das WLAN-Symbol oben im Kopf schaltet das Internet nur für diese App an oder aus. Ab Werk ist es aus; das Gerät merkt sich die Wahl.",
+    "Ohne Internet arbeitet die Akte ganz normal: ablegen, suchen, Fristen, Sicherung.",
+    "Internet brauchen: auf eine neue Fassung prüfen (Versionszeile oder ⟳), Kalender verbinden und abgleichen (Google, Microsoft), Diktat mit dem Mikrofon im Browser, Netz (Mycel) und das Laden des Suchmodells.",
+    "Ist es aus, sagt die App an diesen Stellen: „Internet für die App ist aus“, mit dem Hinweis, wo man es einschaltet.",
   ] },
 ];
 

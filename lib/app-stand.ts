@@ -25,8 +25,8 @@ export const APP_STAND: Readonly<Record<string, StandEintrag>> = {
   "protresor": { stand: "aktivieren" },
   "kalender": { stand: "aktivieren", selbst: "fristen-kalender" },
   "glocke": { stand: "aktivieren", selbst: "app-glocke" },
-  // Im Bau
-  "tresor-einschritt": { stand: "imbau" },
+  // Abgleich zwischen Geräten (Plan Punkt 10): die Übergabe einer Unterlage ist fertig, der Abgleich steht im Kastentext als geplant.
+  "anderes-geraet": { stand: "fertig", seit: "2.28.39" },
 };
 
 /** Stand eines Kastens auf diesem Gerät. */

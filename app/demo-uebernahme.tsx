@@ -25,7 +25,7 @@ export function DemoUebernahmeDialog({ plan, onUebernehmen, onClose }: {
         <li>Vorher wird das bisherige Register gesichert (Registersicherung); keine Originaldatei wird gelöscht.</li>
         {plan.kalender > 0 && <li>{plan.kalender} Einträge mit Kalender: geänderte und entfernte Fristen ändern beim nächsten Abgleich auch den Kalender.</li>}
       </ul>
-      {plan.geaendertSeitStart && <p className="form-error" data-demo-veraltet>Die eigene Akte wurde seit dem Start der Demo geändert. Übernehmen würde diese Änderungen verlieren und ist darum gesperrt.</p>}
+      {plan.geaendertSeitStart && <p className="form-error" data-demo-veraltet>Die eigene Akte wurde seit dem Start der Demo geändert. Übernehmen würde diese Änderungen verlieren und ist darum gesperrt. Die Demo wird dabei nicht gelöscht. Was du aus der Demo behalten willst, trägst du in deiner Akte selbst nach; die Liste oben zeigt, was sich unterscheidet.</p>}
       {fehler && <p className="form-error">{fehler}</p>}
       <div className="modal-actions"><button className="button secondary" onClick={onClose} disabled={laeuft}>Abbrechen</button>{!leer && !plan.geaendertSeitStart && <button className="button primary" data-demo-uebernehmen-start disabled={laeuft} onClick={() => void los()}>{laeuft ? "Wird übernommen …" : "Übernehmen"}</button>}</div>
     </div>

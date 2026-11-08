@@ -211,6 +211,8 @@ function db(): Promise<IDBDatabase> {
 export const folderPickerSupported = () => typeof window !== "undefined" && !!(window as PickerWindow).showDirectoryPicker;
 const browserStorageSupported = () => (typeof navigator !== "undefined" && typeof navigator.storage?.getDirectory === "function") || idbStorageSupported();
 export const vaultSupported = () => folderPickerSupported() || browserStorageSupported();
+/** Ordner für Vollsicherung, Wiederherstellungstest, Einlesen und Export wählbar: native Ordnerwahl (Android-, Windows-App) oder Chrome/Edge am PC. */
+export const sicherungsOrdnerWaehlbar = () => !!ordnerPlugin() || folderPickerSupported();
 export const BROWSER_VAULT_NAME = workspaceName("Browser-Datentresor");
 
 /** Datentresor im geschützten Speicher dieses Browsers (Origin Private File System).

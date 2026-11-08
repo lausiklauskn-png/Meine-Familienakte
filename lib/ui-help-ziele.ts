@@ -7,7 +7,7 @@ import type { SectionId } from "../app/portal-types";
  */
 export const UI_HELP_ZIEL: Readonly<Record<string, SectionId>> = {
   "Diagnosen und ICD-Codes": "medical", "Behandelnde Ärzte und AU-Zuordnung": "medical", "Arbeitsunfähigkeitszeiten": "medical",
-  "Leistungen der Krankenkasse": "medical", "Fristdiagnosen": "medical",
+  "Leistungen der Krankenkasse": "benefits", "Fristdiagnosen": "benefits",
   "Arbeitsverlauf": "work", "Zugeordnete Arbeitsunterlagen": "work",
   "Vorhandene Notizen": "cockpit", "Gemeinsame Vorgangschronologie": "cockpit", "Was ist noch offen?": "cockpit",
   "Was ist jetzt wichtig?": "cockpit", "To-do-Liste": "cockpit", "Dokumente, Memories und Vorgänge": "cockpit",
@@ -15,7 +15,7 @@ export const UI_HELP_ZIEL: Readonly<Record<string, SectionId>> = {
   "Vorhandene Datensätze verknüpfen": "memory", "Erkannte Aussagen prüfen": "memory", "Nur nach Bestätigung anlegen": "memory",
   "Unbehandelte Memory-Ereignisse": "memory", "Zwei getrennte Arbeitslisten": "memory", "Offene Memory-Punkte": "memory", "Chronologie": "memory",
   "Zuordnung prüfen und bestätigen": "inventory", "Testakte für Weiterentwicklung": "inventory", "Inkrementell prüfen": "inventory",
-  "Was möchtest du tun?": "help", "Wie suche ich etwas?": "overview", "Technische Änderungen": "changelog",
+  "Was möchtest du tun?": "help", "Wie suche ich etwas?": "help", "Technische Änderungen": "changelog",
   "Andere Lebensbereiche": "family", "Neue Unterlage": "home",
   "Alle ansehen": "documents", "Lokale Unterlagen": "inbox", "Online-Altbestand": "inbox",
   "OneDrive auf PC oder USB sichern": "security", "Familienakte exportieren": "security",
