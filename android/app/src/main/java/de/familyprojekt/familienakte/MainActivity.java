@@ -37,6 +37,7 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(FamilienakteKalenderPlugin.class);
         registerPlugin(FamilienakteGlockePlugin.class);
         registerPlugin(FamilienakteOrdnerPlugin.class);
+        registerPlugin(FamilienakteArbeitPlugin.class);
         super.onCreate(state);
         vollbild();
         if (bridge == null) return;

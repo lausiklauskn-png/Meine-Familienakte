@@ -67,4 +67,4 @@ Fassungsnummern sind Richtwerte; vor jeder Ausgabe die tatsächlichen Releases p
 
 ## Stand
 
-- [x] A (2.28.40, #131) · [x] B (2.28.41) · [x] C (2.28.42) · [x] D (2.28.43) · [ ] E · [ ] F · [ ] G · [ ] H · [ ] I
+- [x] A (2.28.40, #131) · [x] B (2.28.41) · [x] C (2.28.42) · [x] D (2.28.43) · [x] E (2.28.44) · [ ] F · [ ] G · [ ] H · [ ] I

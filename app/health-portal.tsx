@@ -5,6 +5,10 @@ import { programmBeilegen } from "./sicherung-programm";
 import { SicherungEinlesenDialog } from "./sicherung-einlesen";
 import { NotfallblattDialog, PapierkorbLeerenDialog, SicherungAnlegenDialog, SicherungErinnerung, SicherungPasswortDialog } from "./sicherung-dialoge";
 import { LaufwerkKarte } from "./laufwerk-karte";
+import { BLOCK, blockText, dateiSchluessel, gesehenMerken, inBloecke, mbText as mbBlock, neueImOrdner, speicherReicht } from "../lib/eingang-bloecke";
+import { arbeitDienst } from "./arbeit-dienst";
+import { eingangOrdnerLeserSetzen } from "./eingang-ablage";
+import { dateiAusEingangsordner } from "./local-vault";
 import { DemoUebernahmeDialog, DEMO_NEU_MERKER, DEMO_UEBERNAHME_MERKER } from "./demo-uebernahme";
 import { DEMO_QUELLE_SCHLUESSEL, demoQuelleLesen } from "../lib/demo-kopie";
 import { resetDemoStorage } from "../lib/demo-workspace.ts";
@@ -111,7 +115,7 @@ import { buildDocumentLibraryItems, filterDocumentLibraryItems, runDocumentLibra
 import { cockpitBereichAus, dossierTypeOrder, menuPageActions, passtZumBereich, runMenuOptimizationSelfTests, targetForRelation, zielFuerDatensatz, type MenuAction, type MenuTarget } from "@/lib/menu-optimization";
 import { buildDocumentIntakePlan, extractDocumentIntakeTextHint, FAWOGA_LIFE_AREAS, type DocumentIntakePlan, type DocumentIntakeSource, runDocumentIntakeSelfTests } from "@/lib/document-intake";
 import { buildIntakeChoiceOptions, buildStoredPersonalLifeAreas, INTAKE_PRIVACY_CLASSES, type IntakePrivacyClass } from "@/lib/document-intake-metadata";
-import { analyzeCentralIntakeFile, deutschesDatum, erkenneAufgabe, erkenneDokumentDatum, erkenneFristen, extractEmlAttachments, groupCentralIntakeAnalyses, initialCentralIntakeStatus, runCentralIntakeSelfTests, type CentralIntakeQueueItem, type CentralIntakeStatus } from "@/lib/central-intake";
+import { analyzeCentralIntakeFile, deutschesDatum, erkenneAufgabe, erkenneDokumentDatum, erkenneFristen, extractEmlAttachments, groupCentralIntakeAnalyses, initialCentralIntakeStatus, runCentralIntakeSelfTests, type CentralIntakeAnalysis, type CentralIntakeQueueItem, type CentralIntakeStatus } from "@/lib/central-intake";
 const CentralIntakeCenter = lazy(() => import("./central-intake-center").then((m) => ({ default: m.CentralIntakeCenter })));
 import { runDocumentScanSelfTests, type DocumentScanPdfFile } from "@/lib/document-scan";
 import { briefTitel, briefAngaben, briefZeile, gleicheNummer, vorgangVon, nummernAusText, nummernText, type BriefAngaben, type BriefkopfRoh } from "@/lib/briefkopf-titel";
@@ -747,19 +751,45 @@ function HealthPortalContent() {
         if (!(/\.pdf$/i.test(file.name) || file.type === "application/pdf")) return "";
         try { const { dokumentText } = await import("./ki-auftrag-dialog"); return (await dokumentText(file)).slice(0, 300000); } catch { return ""; }
       };
-      const analyzed = groupCentralIntakeAnalyses(await Promise.all(placeholders.map(async (item) => { const file = await eingangDatei(item); return analyzeCentralIntakeFile({ file, source: item.source, documents: [...localDocuments, ...documents], records: familyRecords, gelesenerText: await textEbene(file) }); })));
+      // Stufe E (Plan 08.11., Entscheidung 9): Block für Block (20), jede Datei nacheinander statt alle zugleich; vor jedem Block
+      // der freie Speicher; jeder fertige Block wird sofort festgehalten, ein Abbruch kostet höchstens den laufenden Block.
+      const bloecke = inBloecke(placeholders, BLOCK);
+      const analyzedAll: CentralIntakeAnalysis[] = [];
       const checksumCounts = new Map<string, number>();
-      analyzed.forEach((item) => checksumCounts.set(item.checksum, (checksumCounts.get(item.checksum) || 0) + 1));
-      const saved = await setCentralIntakeQueue((current) => current.map((item) => {
-        const position = placeholders.findIndex((candidate) => candidate.id === item.id);
-        if (position < 0 || item.status !== "Analyse läuft") return item;
-        const analysis = analyzed[position];
-        const batchDuplicate = (checksumCounts.get(analysis.checksum) || 0) > 1;
-        const fertig: CentralIntakeQueueItem = { ...item, analysis, status: batchDuplicate ? "Prüfung erforderlich" : initialCentralIntakeStatus(analysis), error: batchDuplicate ? "Mögliche Dublette innerhalb dieser Auswahl – bitte vergleichen." : null };
-        // Sammelbestätigung: sichere Vorschläge stehen angehakt, unsichere abgewählt (2.28.39, Punkt 6).
-        return { ...fertig, selected: sammelLage(fertig, aktuelleGrenze().bytes).sicher };
-      }));
-      if (!saved) return;
+      let abbruch: string | null = null;
+      if (bloecke.length > 1) await arbeitDienst.start(`${placeholders.length} Dateien in ${bloecke.length} Blöcken`);
+      try {
+        for (const [bi, block] of bloecke.entries()) {
+          const bytes = block.reduce((n, item) => n + (item.file.size || 0), 0);
+          const stand = await navigator.storage?.estimate?.().catch(() => null);
+          const platz = speicherReicht(stand ?? null, bytes);
+          if (!platz.ok) { abbruch = `Zu wenig freier Speicher für ${blockText(bi + 1, bloecke.length, block.length)}: ${mbBlock(platz.frei || 0)} frei, ${mbBlock(platz.noetig)} nötig. Bitte Platz schaffen (Papierkorb leeren, Sicherung auf eine Festplatte) und erneut prüfen.`; break; }
+          if (bloecke.length > 1) { setNotice({ kind: "info", text: `Eingang: ${blockText(bi + 1, bloecke.length, block.length)} wird gelesen …` }); await arbeitDienst.update(`${blockText(bi + 1, bloecke.length, block.length)}`, bi, bloecke.length); }
+          const analyzedBlock: CentralIntakeAnalysis[] = [];
+          for (const item of block) { const file = await eingangDatei(item); analyzedBlock.push(await analyzeCentralIntakeFile({ file, source: item.source, documents: [...localDocuments, ...documents], records: familyRecords, gelesenerText: await textEbene(file) })); }
+          const grouped = groupCentralIntakeAnalyses(analyzedBlock);
+          grouped.forEach((a) => checksumCounts.set(a.checksum, (checksumCounts.get(a.checksum) || 0) + 1));
+          analyzedAll.push(...grouped);
+          const saved = await setCentralIntakeQueue((current) => current.map((item) => {
+            const position = block.findIndex((candidate) => candidate.id === item.id);
+            if (position < 0 || item.status !== "Analyse läuft") return item;
+            const analysis = grouped[position];
+            const batchDuplicate = (checksumCounts.get(analysis.checksum) || 0) > 1;
+            const fertig: CentralIntakeQueueItem = { ...item, analysis, status: batchDuplicate ? "Prüfung erforderlich" : initialCentralIntakeStatus(analysis), error: batchDuplicate ? "Mögliche Dublette innerhalb dieser Auswahl – bitte vergleichen." : null };
+            // Sammelbestätigung: sichere Vorschläge stehen angehakt, unsichere abgewählt (2.28.39, Punkt 6).
+            return { ...fertig, selected: sammelLage(fertig, aktuelleGrenze().bytes).sicher };
+          }));
+          if (!saved) return;
+        }
+      } finally { await arbeitDienst.stop(); }
+      if (abbruch) {
+        const offen = new Set(placeholders.slice(analyzedAll.length).map((item) => item.id));
+        await setCentralIntakeQueue((current) => current.map((item) => offen.has(item.id) && item.status === "Analyse läuft" ? { ...item, status: "Prüfung erforderlich", error: abbruch } : item));
+        offen.forEach((id) => intakeAnalyses.current.delete(id));
+        setNotice({ kind: "error", text: abbruch });
+        return;
+      }
+      const analyzed = analyzedAll;
       const reviewCount = analyzed.filter((analysis) => analysis.plan.requiresReview || analysis.plan.duplicateIds.length || (checksumCounts.get(analysis.checksum) || 0) > 1).length;
       setNotice({ kind: reviewCount ? "info" : "success", text: `${placeholders.length} Eingang${placeholders.length === 1 ? " wurde" : "sfälle wurden"} erkannt und in „Eingänge prüfen“ vorbereitet.${reviewCount ? ` ${reviewCount} erfordern eine Prüfung, beispielsweise wegen unklarer Zuordnung oder möglicher Dubletten.` : ""} Es wurde noch nichts übernommen.` });
     } catch (error) {
@@ -770,7 +800,9 @@ function HealthPortalContent() {
   const queueCentralIntakeFiles = async (files: File[], source: DocumentIntakeSource, parentQueueId: string | null = null, stapelIds: string[] = []) => {
     if (!files.length) return false;
     const metadata = await uebergabeVorschlaege(files);
-    const placeholders: CentralIntakeQueueItem[] = files.map((file) => ({ id: crypto.randomUUID(), file, source, status: "Analyse läuft", selected: false, addedAt: new Date().toISOString(), analysis: null, error: null, parentQueueId, uebergabeVorschlag: metadata.vorschlaege.get(file), uebergabeHinweis: metadata.hinweise.get(file) }));
+    // Stufe E: Dateien aus dem Eingangsordner bleiben dort und werden bei Bedarf gelesen – keine zweite Kopie im Arbeitsspeicher.
+    const ordnerDatei = source === "local-inbox" ? (file: File) => file.name : () => null;
+    const placeholders: CentralIntakeQueueItem[] = files.map((file) => ({ id: crypto.randomUUID(), file, source, status: "Analyse läuft", selected: false, addedAt: new Date().toISOString(), analysis: null, error: null, parentQueueId, ordnerDatei: ordnerDatei(file), uebergabeVorschlag: metadata.vorschlaege.get(file), uebergabeHinweis: metadata.hinweise.get(file) }));
     placeholders.forEach((item) => intakeAnalyses.current.add(item.id));
     // Erst die bestätigte Transaktion darf den Stapel freigeben; Analyse darf später fertig werden.
     if (!await setCentralIntakeQueue((current) => [...placeholders, ...current], stapelIds)) return false;
@@ -939,20 +971,46 @@ function HealthPortalContent() {
     setScanInitialFiles(files); setScanQueueIds(centralIntakeQueue.filter((item) => files.some((file) => file === item.file)).map((item) => item.id)); setScanOpen(true); setActionState("upload", "pending");
     reportActivity({ kind: "info", text: `Dokumentfotografie geöffnet · ${files.length} Aufnahme${files.length === 1 ? "" : "n"} zur Prüfung vorbereitet. Es wurde noch nichts gespeichert.` });
   };
-  const scanSelectedInbox = async (handle = inboxFolderHandle) => {
+  // Stufe E: der Eingangsordner wird in Blöcken zu 20 geholt; was schon einmal geholt wurde, merkt sich das Gerät (auch Verworfenes
+  // kommt nicht wieder). Läuft von Hand („Jetzt prüfen“) und von selbst (beim Start, beim Zurückkehren, alle 60 Sekunden).
+  const GESEHEN_SCHLUESSEL = "familienakte-eingangsordner-gesehen-v1";
+  const gesehenLesen = (): string[] => { try { const v = JSON.parse(workspaceStorage.getItem(GESEHEN_SCHLUESSEL) || "[]"); return Array.isArray(v) ? v.filter((x): x is string => typeof x === "string") : []; } catch { return []; } };
+  const scanSelectedInbox = async (handle = inboxFolderHandle, leise = false) => {
     if (!handle) return;
     setIntakeBusy(true);
     try {
       const found = await scanLocalInbox(handle, localDocuments); setIncomingFiles(found); setIntakeCheckedAt(new Date().toISOString());
-      const fresh = found.filter((candidate) => !centralIntakeQueue.some((queued) => queued.file.name === candidate.name && queued.file.size === candidate.size && queued.file.lastModified === candidate.lastModified));
-      if (fresh.length) await queueCentralIntakeFiles(fresh.map((item) => item.file), "local-inbox");
-      setNotice({ kind: "info", text: found.length ? `${found.length} neue oder geänderte Datei${found.length === 1 ? " wurde" : "en wurden"} im freigegebenen Eingangsordner gefunden.` : "Im freigegebenen Eingangsordner wurden keine neuen Dateien gefunden." });
-    } catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Der Eingangsordner konnte nicht geprüft werden." }); }
+      const gesehen = gesehenLesen();
+      const inWarteschlange = new Set(centralIntakeQueue.map((queued) => dateiSchluessel(queued.file)));
+      const fresh = neueImOrdner(found, new Set(gesehen), inWarteschlange, BLOCK);
+      const weitere = found.filter((f) => !gesehen.includes(dateiSchluessel(f)) && !inWarteschlange.has(dateiSchluessel(f))).length - fresh.length;
+      if (fresh.length) {
+        try { workspaceStorage.setItem(GESEHEN_SCHLUESSEL, JSON.stringify(gesehenMerken(gesehen, fresh.map(dateiSchluessel)))); } catch { /* dann beim nächsten Mal erneut angeboten */ }
+        await queueCentralIntakeFiles(fresh.map((item) => item.file), "local-inbox");
+      }
+      if (!leise || fresh.length) setNotice({ kind: "info", text: fresh.length ? `${fresh.length} Datei${fresh.length === 1 ? "" : "en"} aus dem Eingangsordner „${handle.name}“ in die Eingangszentrale geholt${weitere > 0 ? `; ${weitere} weitere folgen Block für Block` : ""}.` : "Im Eingangsordner wurden keine neuen Dateien gefunden." });
+    } catch (error) { if (!leise) setNotice({ kind: "error", text: error instanceof Error ? error.message : "Der Eingangsordner konnte nicht geprüft werden." }); }
     finally { setIntakeBusy(false); }
   };
+  // Von selbst: solange die App offen ist (Android mit Dauer-Meldung während eines Blocks), nie zwei Läufe zugleich.
+  const scanRef = useRef(scanSelectedInbox); scanRef.current = scanSelectedInbox;
+  const intakeBusyRef = useRef(intakeBusy); intakeBusyRef.current = intakeBusy;
+  const inboxBusyRef = useRef(false);
+  useEffect(() => {
+    if (!inboxFolderHandle || demoActive()) return;
+    eingangOrdnerLeserSetzen((name) => dateiAusEingangsordner(inboxFolderHandle, name));
+    // Nur Takt, Sichtbarkeit und ausdrücklicher Anstoß – nicht jede Zustandsänderung, sonst liefe die Prüfung in einer Schleife.
+    const lauf = async () => { if (inboxBusyRef.current || intakeBusyRef.current || document.visibilityState !== "visible") return; inboxBusyRef.current = true; try { await scanRef.current(inboxFolderHandle, true); } finally { inboxBusyRef.current = false; } };
+    const takt = window.setInterval(() => void lauf(), 60000);
+    const sichtbar = () => { if (document.visibilityState === "visible") void lauf(); };
+    document.addEventListener("visibilitychange", sichtbar);
+    window.addEventListener("familienakte:eingangsordner-pruefen", sichtbar);
+    return () => { window.clearInterval(takt); document.removeEventListener("visibilitychange", sichtbar); window.removeEventListener("familienakte:eingangsordner-pruefen", sichtbar); eingangOrdnerLeserSetzen(null); };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inboxFolderHandle]);
   const selectInboxFolder = async () => {
     setIntakeBusy(true);
-    try { const handle = await chooseInboxFolder(); setInboxFolderHandle(handle); setInboxFolderName(handle.name); const found = await scanLocalInbox(handle, localDocuments); setIncomingFiles(found); setIntakeCheckedAt(new Date().toISOString()); const fresh = found.filter((candidate) => !centralIntakeQueue.some((queued) => queued.file.name === candidate.name && queued.file.size === candidate.size && queued.file.lastModified === candidate.lastModified)); if (fresh.length) await queueCentralIntakeFiles(fresh.map((item) => item.file), "local-inbox"); setNotice({ kind: "success", text: `Nur der Ordner „${handle.name}“ wurde freigegeben und geprüft. ${fresh.length} neue Datei${fresh.length === 1 ? " wurde" : "en wurden"} in der Eingangszentrale vorbereitet.` }); }
+    try { const handle = await chooseInboxFolder(); setInboxFolderHandle(handle); setInboxFolderName(handle.name); setIntakeBusy(false); await scanSelectedInbox(handle); }
     catch (error) { if ((error as DOMException)?.name !== "AbortError") setNotice({ kind: "error", text: error instanceof Error ? error.message : "Der Eingangsordner konnte nicht ausgewählt werden." }); }
     finally { setIntakeBusy(false); }
   };
@@ -1929,7 +1987,7 @@ function DocumentIntakePanel({ oneDriveConnected, storageReady, inboxFolderName,
         <div className="intake-method-heading"><h3 className="start-card-title">Dokument hier hineinziehen</h3><InfoPopover label="Dateien hineinziehen erklären" text="Hier kannst du eine oder mehrere Dateien direkt hineinziehen. Die Familienakte erkennt den Dateityp und bereitet die Unterlagen zur Prüfung vor."/></div><div className="intake-method-action"><Upload size={26}/><span>Datei ablegen oder bewusst auswählen</span><button className="button primary compact-button" type="button" onClick={() => inputRef.current?.click()}>Datei auswählen</button></div>
       </article>
       <article className="intake-method-card intake-camera"><div className="intake-method-heading"><h3 className="start-card-title">Dokument fotografieren</h3><InfoPopover label="Dokument fotografieren erklären" text="Diese Funktion ist besonders für Smartphone und Tablet gedacht. Damit kannst du ein Papierdokument fotografieren und anschließend in der Familienakte prüfen und zuordnen."/></div><button className="intake-source" type="button" onClick={() => onStartDocumentScan([])} disabled={busy} data-dokument-scannen><Camera/><span><strong>Fotofunktion öffnen</strong><small>{storageReady ? "Eine oder mehrere Seiten als PDF prüfen" : "Zuerst lokalen Datentresor verbinden"}</small></span><ChevronRight/></button></article>
-      <article className="intake-method-card intake-desktop"><div className="intake-method-heading"><h3 className="start-card-title">Eingangsordner auswählen</h3><InfoPopover label="Eingangsordner erklären" text="Diese Funktion ist besonders am PC praktisch. Wähle einen Ordner aus, dessen neue Unterlagen du prüfen möchtest."/></div><button className="intake-source" type="button" onClick={inboxFolderName ? onScanInbox : onSelectInbox} disabled={busy}><Folder/><span><strong>{inboxFolderName ? "Eingangsordner jetzt prüfen" : "Ordner auswählen"}</strong><small>{inboxFolderName ? `Freigegeben: ${inboxFolderName}` : "Nur den ausdrücklich ausgewählten lokalen Ordner"}</small></span><ChevronRight/></button></article>
+      <article className="intake-method-card intake-desktop"><div className="intake-method-heading"><h3 className="start-card-title">Eingangsordner auswählen</h3><InfoPopover label="Eingangsordner erklären" text="Ein Ordner, in den du PDFs und Scans nur hineinkopierst (PC, SD-Karte, USB, Netzordner). Die App holt sie von selbst in Blöcken zu 20 in die Eingangszentrale, prüft vorher den freien Speicher und macht nach einem Abbruch weiter – solange die App offen ist, in der Android-App mit Dauer-Meldung. Was schon geholt wurde, kommt nicht noch einmal. Abgelegt wird erst nach deiner Bestätigung (Sammelbestätigung)."/></div><button className="intake-source" type="button" onClick={inboxFolderName ? onScanInbox : onSelectInbox} disabled={busy}><Folder/><span><strong>{inboxFolderName ? "Eingangsordner jetzt prüfen" : "Ordner auswählen"}</strong><small>{inboxFolderName ? `„${inboxFolderName}“ – wird von selbst in Blöcken zu 20 geholt` : "Nur den ausdrücklich ausgewählten Ordner; Blöcke zu 20, von selbst"}</small></span><ChevronRight/></button></article>
       <article className="intake-method-card intake-desktop"><div className="intake-method-heading"><h3 className="start-card-title">OneDrive-Familienordner prüfen</h3><InfoPopover label="OneDrive-Ordner erklären" text="Hier kannst du einen bewusst ausgewählten OneDrive-Ordner prüfen lassen. Es werden keine anderen OneDrive-Ordner automatisch durchsucht."/></div><button className="intake-source" type="button" onClick={onScanOneDrive} disabled={busy}><Cloud/><span><strong>OneDrive-Ordner prüfen</strong><small>{oneDriveConnected ? `Verbunden · letzte Prüfung: ${lastChecked}` : "Noch kein lokaler OneDrive-Ordner verbunden"}</small></span><ChevronRight/></button></article>
     </div>
     {busy && <div className="intake-progress" role="status"><RefreshCw className="spin"/><span>Der freigegebene Ordner wird geprüft. Originaldateien bleiben unverändert.</span></div>}
