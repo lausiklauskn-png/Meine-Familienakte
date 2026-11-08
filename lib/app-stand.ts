@@ -27,6 +27,9 @@ export const APP_STAND: Readonly<Record<string, StandEintrag>> = {
   "glocke": { stand: "aktivieren", selbst: "app-glocke" },
   // Abgleich zwischen Geräten (Plan Punkt 10): die Übergabe einer Unterlage ist fertig, der Abgleich steht im Kastentext als geplant.
   "anderes-geraet": { stand: "fertig", seit: "2.28.39" },
+  // Stufe A (Plan 08.11.): Sicherung einlesen führt in eine benutzte Akte zusammen.
+  "sicherungsordner": { stand: "fertig", seit: "2.28.40" },
+  "aus-sicherung": { stand: "fertig", seit: "2.28.40" },
   // Neugestaltung 2.28.39 (Punkt 2): ein Einstieg zum Ablegen im Kopf; Drucken nur noch über das Menü.
   "kopf-ablegen": { stand: "fertig", seit: "2.28.39" },
   // Ablaufprüfung 2.28.39: geänderte Wege golden markieren (Eingang mit Titel/Text/Sammelbestätigung, Frist mit Erinnerung

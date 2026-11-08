@@ -148,7 +148,7 @@ export async function liesMichWindows(fassung: string): Promise<string> {
     "  Get-FileHash .\\Familienakte-Windows-<Fassung>-x64-setup.exe -Algorithm SHA256",
     "Die angezeigte Zahl muss genau mit der oben übereinstimmen.",
     "",
-    "Danach installieren und unter Sicherheit › Sicherung einlesen diesen Sicherungsordner wählen (nur in eine leere Akte).",
+    "Danach installieren und unter Sicherheit › Sicherung einlesen diesen Sicherungsordner wählen (eine benutzte Akte wird zusammengeführt).",
     "",
   ].join("\r\n");
 }

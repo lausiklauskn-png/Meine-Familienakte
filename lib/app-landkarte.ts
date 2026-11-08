@@ -73,8 +73,8 @@ export const APP_KNOTEN: Array<KartenKnoten & KartenSeite> = [
   { id: "mssend", titel: "Microsoft-Postfach", wo: "nach „Jetzt senden?“", unter: "liegt dann in „Gesendete Elemente“", spalte: 7 },
   { id: "kalender", titel: "Kalender", wo: "Fristen › Kalender verbinden", unter: "Google, Microsoft, Gerät, .ics", spalte: 7, seite: "reminders", mehr: "Einmal verbinden. Gesundheitsfristen gehen mit echtem Titel hinaus, Notizen nie." },
   { id: "glocke", titel: "App-Glocke", wo: "Mein Kalender › App-Glocke", unter: "ab Werk an ohne Kalender · Android meldet auch bei geschlossener App", spalte: 7, seite: "reminders" },
-  { id: "sicherungsordner", titel: "Sicherungsordner", wo: "frei gewählt, getrennt vom Datentresor", unter: "sichern · einlesen in eine leere Akte", spalte: 7, seite: "security" },
-  { id: "anderes-geraet", titel: "Anderes Gerät", wo: "Sicherheit › Unterlage an ein anderes Gerät geben", unter: "eine Unterlage als Paket · Abgleich geplant", spalte: 7, seite: "security", mehr: "Heute geht eine einzelne Datei als Paket (ohne Einträge und Fristen) oder die ganze Akte per Vollsicherung in eine leere Akte. Einträge zwischen zwei benutzten Geräten abgleichen: geplant." },
+  { id: "sicherungsordner", titel: "Sicherungsordner", wo: "frei gewählt, getrennt vom Datentresor", unter: "sichern · einlesen · zusammenführen", spalte: 7, seite: "security" },
+  { id: "anderes-geraet", titel: "Anderes Gerät", wo: "Sicherheit › Unterlage an ein anderes Gerät geben", unter: "Unterlage als Paket · Sicherung zusammenführen · automatisch geplant", spalte: 7, seite: "security", mehr: "Heute geht eine einzelne Datei als Paket (ohne Einträge und Fristen) oder die ganze Akte per Vollsicherung in eine leere Akte. Einträge zwischen zwei benutzten Geräten abgleichen: geplant." },
 ];
 
 export const APP_KANTEN: KartenKante[] = [

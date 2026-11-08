@@ -95,12 +95,12 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
     "Am Eintrag steht „verkleinert von X MB, Text geprüft“. Das große Original wird nicht aufbewahrt.",
     "Ein PDF mit eigener Textebene lässt sich nicht verkleinern: bitte am Rechner ablegen.",
   ] },
-  { id: "umzug", titel: "Auf ein neues Gerät umziehen", symbol: <Smartphone/>, weg: "Sicherheit › Familienakte vollständig sichern und testen › Sicherung einlesen", ablauf: ablaufUmzug, merk: [<><b>Ganze Akte:</b> Vollsicherung, dann auf dem neuen Gerät „Sicherung einlesen“ – nur in eine leere Akte.</>, <><b>Weg frei wählbar:</b> USB-Stick, SD-Karte oder Ordner.</>, <><b>Abgleich</b> zwischen zwei benutzten Geräten ist geplant, noch nicht gebaut.</>], punkte: [
+  { id: "umzug", titel: "Auf ein neues Gerät umziehen", symbol: <Smartphone/>, weg: "Sicherheit › Familienakte vollständig sichern und testen › Sicherung einlesen", ablauf: ablaufUmzug, merk: [<><b>Ganze Akte:</b> Vollsicherung, dann auf dem neuen Gerät „Sicherung einlesen“. Ist die Akte schon benutzt, wird zusammengeführt.</>, <><b>Weg frei wählbar:</b> USB-Stick, SD-Karte oder Ordner.</>, <><b>Zwei benutzte Geräte:</b> Sicherung einlesen führt zusammen, gelöscht wird nichts.</>], punkte: [
     "Die ganze Akte von einem Gerät auf ein anderes bringen: auf dem alten Gerät „Vollständige Sicherung erstellen“, den Sicherungsordner über einen frei gewählten Weg (USB-Stick, SD-Karte, Ordner) mitnehmen, auf dem neuen Gerät „Sicherung einlesen“.",
-    "Eingelesen wird nur in eine leere Akte, zum Beispiel direkt nach der Installation. Es wird nichts zusammengeführt.",
+    "In eine leere Akte wird alles eingelesen. In eine benutzte Akte wird zusammengeführt: Neues kommt dazu, bei Unterschieden wählst du die Fassung (vorgewählt die jüngere), gelöscht wird nichts.",
     "Sichern und Einlesen brauchen eine Ordnerwahl: in der Android- oder Windows-App oder am PC in Chrome oder Edge. Die Web-App am Handy oder Tablet kann das nicht.",
     "Nur eine einzelne Unterlage? Sicherheit › „Eine Unterlage an ein anderes Gerät geben“. Einträge, Fristen und Erinnerungen gehen dort nicht mit.",
-    "Einträge zwischen zwei Geräten abgleichen, die beide schon benutzt werden: geplant, noch nicht gebaut.",
+    "Zwei benutzte Geräte abgleichen: auf dem einen sichern, auf dem anderen „Sicherung einlesen“ – das führt zusammen. Automatisch über Festplatte und WLAN: geplant.",
     "Vorher den Plan durchgehen: Hilfe › Akten sichern – Plan zum Abhaken.",
   ] },
   { id: "internet", titel: "Internet für die App", symbol: <Wifi/>, weg: "Kopf › WLAN-Symbol", ablauf: [{ titel: "WLAN-Symbol im Kopf", unter: "durchgestrichen = aus" }, { titel: "Antippen", unter: "an oder aus", art: "hervor" }, { titel: "Gerät merkt es sich", art: "gut" }], merk: [<><b>Ab Werk aus:</b> die Akte arbeitet ohne Internet.</>, <><b>Braucht Internet:</b> neue Fassung prüfen, Kalender verbinden und abgleichen, Diktat im Browser, Netz (Mycel), Suchmodell laden.</>, <><b>Ausschalten</b> geht jederzeit; nichts geht verloren.</>], punkte: [

@@ -3,6 +3,7 @@ import { aktuelleGrenze, mbText } from "../lib/geraete-grenze.ts";
 import { istNativerOrdner, nativenOrdnerWaehlen, ordnerPlugin } from "./nativer-ordner.ts";
 import { DEMO_PRAEFIX, eigeneDatenDa, wasAendertSich, type DemoQuelle } from "../lib/demo-kopie.ts";
 import { erinnerungenUmziehen } from "../lib/erinnerung-umzug.ts";
+import { abgleichAnwenden, abgleichPlanen, type Akte as AbgleichAkte, type Konflikt as AbgleichKonflikt, type Seite as AbgleichSeite, type Zeile as AbgleichZeile } from "../lib/abgleich.ts";
 import { ERINNERUNG_VORGABE, erinnerungAusDatum, erinnerungenOrdnen, erinnerungenVerschieben, gueltigeUhrzeit, tageZwischen, zuordnungSetzen, type ErinnerungsWahl, type KalenderAnbieter, type KalenderFelder, type KalenderZuordnung } from "../lib/kalender.ts";
 import { workspaceStorage } from "../lib/demo-workspace.ts";
 import type { ProUebergabe } from "../lib/pro-verbund-vertrag";
@@ -3253,6 +3254,8 @@ export type EinleseProbe = {
   ordner: string; hinweis: string; erstellt: string; appVersion: string;
   dateien: number; bytes: number; zaehlung: FamilyBackupManifest["counts"];
   fehler: string[]; warnungen: string[]; akteLeer: boolean; akteZaehlung: { dokumente: number; eintraege: number }; ok: boolean;
+  /** Stufe A (Plan 08.11.): ist die Akte nicht leer, wird zusammengeführt. Plan ohne Schreiben. */
+  zusammen?: { liste: AbgleichZeile[]; konflikte: AbgleichKonflikt[]; zaehlung: { neu: number; uebernommen: number; konflikte: number; gleich: number; nurHier: number }; revision: number };
 };
 const SICHERUNGS_PRAEFIX = "Familienakte_Vollsicherung_";
 async function sicherungFinden(gewaehlt: FileSystemDirectoryHandle): Promise<{ handle: FileSystemDirectoryHandle; name: string; hinweis: string }> {
@@ -3307,6 +3310,10 @@ async function sicherungPruefen(gewaehlt: FileSystemDirectoryHandle, aktiv: File
     akteLeer: akteIstLeer(aktuell), akteZaehlung: { dokumente: aktuell.documents.length, eintraege: aktuell.records.length },
     ok: !fehler.length,
   };
+  if (index && !probe.akteLeer) {
+    const plan = abgleichPlanen(aktuell as unknown as AbgleichAkte, index as unknown as AbgleichAkte);
+    probe.zusammen = { liste: plan.liste, konflikte: plan.konflikte, zaehlung: plan.zaehlung, revision: aktuell.revision ?? 0 };
+  }
   return { probe, fund, manifest, index, dateienOrdner };
 }
 
@@ -3315,13 +3322,14 @@ export async function sicherungProben(gewaehlt: FileSystemDirectoryHandle, aktiv
   return (await sicherungPruefen(gewaehlt, aktiv)).probe;
 }
 
-/** Liest eine geprüfte Vollsicherung in die leere laufende Akte. Überschreibt nie etwas; bricht vor dem ersten Schreiben ab. */
-export async function sicherungEinlesen(gewaehlt: FileSystemDirectoryHandle, aktiv: FileSystemDirectoryHandle): Promise<EinleseProbe & { kopiert: number }> {
+/** Liest eine geprüfte Vollsicherung in die laufende Akte. Leere Akte: alles kopieren. Volle Akte: zusammenführen (Stufe A,
+ *  Plan 08.11.) mit der Wahl je Konflikt. Überschreibt nie eine vorhandene Datei; bricht vor dem ersten Schreiben ab. */
+export async function sicherungEinlesen(gewaehlt: FileSystemDirectoryHandle, aktiv: FileSystemDirectoryHandle, wahl: Record<string, AbgleichSeite> = {}, erwarteteRevision?: number): Promise<EinleseProbe & { kopiert: number; zusammengefuehrt?: { neu: number; uebernommen: number; konflikteDort: number; dateienVorhanden: number } }> {
   if (demoActive()) throw new Error("In der Demo wird keine Sicherung eingelesen. Bitte zuerst die Demo verlassen.");
   if (!(await requestVaultPermission(aktiv))) throw new Error("Der Datentresor wurde nicht freigegeben.");
   const { probe, manifest, index, dateienOrdner } = await sicherungPruefen(gewaehlt, aktiv);
   if (!probe.ok || !index) throw new Error(`Die Sicherung hat die Probe nicht bestanden: ${probe.fehler.slice(0, 3).join(" · ")}`);
-  if (!probe.akteLeer) throw new Error(`Die Akte ist nicht leer (${probe.akteZaehlung.dokumente} Dokumente, ${probe.akteZaehlung.eintraege} Einträge). Eine Sicherung wird nur in eine leere Akte eingelesen; es wird nichts zusammengeführt.`);
+  if (!probe.akteLeer) return sicherungZusammenfuehren(aktiv, probe, manifest, index, dateienOrdner, wahl, erwarteteRevision);
   const ziel = await root(aktiv);
   // Erst prüfen, dass keine Zieldatei schon da ist; dann erst schreiben.
   const zielOrdner = async (pfad: string, anlegen: boolean) => { const teile = pfad.split("/"); const name = teile.pop()!; let o = ziel; for (const t of teile) o = await o.getDirectoryHandle(t, { create: anlegen }); return { o, name }; };
@@ -3349,6 +3357,38 @@ export async function sicherungEinlesen(gewaehlt: FileSystemDirectoryHandle, akt
   const nachher = await readIndex(aktiv);
   if (nachher.documents.length !== manifest.counts.documents || nachher.records.length !== manifest.counts.records) throw new Error("Nach dem Einlesen stimmen die Zahlen nicht mit der Sicherung überein.");
   return { ...probe, akteLeer: false, kopiert: kopiert.length };
+}
+
+/** Stufe A: Vollsicherung in eine volle Akte zusammenführen. Dateien, die schon da sind, bleiben unberührt; neue werden kopiert
+ *  und per Prüfsumme bestätigt. Das bisherige Register sichert writeIndex vorher (00_Register/Sicherungen). */
+async function sicherungZusammenfuehren(aktiv: FileSystemDirectoryHandle, probe: EinleseProbe, manifest: FamilyBackupManifest, index: VaultIndex, dateienOrdner: FileSystemDirectoryHandle | null, wahl: Record<string, AbgleichSeite>, erwarteteRevision?: number) {
+  const vorher = await readIndex(aktiv);
+  if (erwarteteRevision !== undefined && (vorher.revision ?? 0) !== erwarteteRevision) throw new Error("Die Akte wurde seit der Probe geändert. Bitte die Probe neu starten; es wurde nichts geschrieben.");
+  const ziel = await root(aktiv);
+  let kopiert = 0, dateienVorhanden = 0;
+  const warnungen = [...probe.warnungen];
+  for (const eintrag of manifest.files) {
+    const teile = eintrag.path.split("/"); const name = teile.pop()!;
+    let o = ziel, da: File | null = null;
+    try { for (const t of teile) o = await o.getDirectoryHandle(t); da = await (await o.getFileHandle(name)).getFile(); }
+    catch (error) { if (!isNotFoundError(error)) throw error; }
+    if (da) { dateienVorhanden++; if (da.size !== eintrag.sizeBytes || await fileChecksum(da) !== eintrag.checksum) warnungen.push(`„${eintrag.path}“ liegt in der Akte schon in anderer Fassung und wurde nicht ersetzt.`); continue; }
+    const quelle = await dateiAusSicherung(dateienOrdner!, eintrag.path);
+    o = ziel; for (const t of teile) o = await o.getDirectoryHandle(t, { create: true });
+    const h = await o.getFileHandle(name, { create: true }); const w = await h.createWritable(); await w.write(quelle); await w.close();
+    const geschrieben = await h.getFile();
+    if (geschrieben.size !== eintrag.sizeBytes || await fileChecksum(geschrieben) !== eintrag.checksum) throw new Error(`Die Kopie von „${eintrag.path}“ stimmt nicht mit der Sicherung überein. Das Register wurde nicht geändert.`);
+    kopiert++;
+  }
+  const aktuell = await readIndex(aktiv);
+  if ((aktuell.revision ?? 0) !== (vorher.revision ?? 0)) throw new Error("Die Akte wurde während des Zusammenführens verändert. Das Register wurde nicht geändert; neu kopierte Dateien bleiben liegen.");
+  const plan = abgleichPlanen(aktuell as unknown as AbgleichAkte, index as unknown as AbgleichAkte);
+  const { akte } = abgleichAnwenden(plan, wahl);
+  const neu = { ...aktuell, ...akte } as unknown as VaultIndex;
+  const konflikteDort = plan.konflikte.filter((k) => wahl[k.schluessel] === "dort").length;
+  neu.auditLog = [{ id: crypto.randomUUID(), at: new Date().toISOString(), action: "Vollsicherung zusammengeführt", details: `Sicherung „${probe.ordner}“ vom ${probe.erstellt.slice(0, 10)} zusammengeführt: ${plan.zaehlung.neu} neu, ${plan.zaehlung.konflikte} Unterschiede (${konflikteDort} aus der Sicherung übernommen), ${kopiert} Dateien kopiert. Nichts wurde gelöscht; das vorige Register liegt unter 00_Register/Sicherungen.` }, ...(neu.auditLog || [])];
+  await writeIndex(aktiv, neu);
+  return { ...probe, warnungen, kopiert, zusammengefuehrt: { neu: plan.zaehlung.neu, uebernommen: plan.zaehlung.uebernommen, konflikteDort, dateienVorhanden } };
 }
 
 /** P7 (Plan 07.11., Punkt 3): Demo als Kopie der eigenen Daten. Läuft in der echten Akte, bevor die Demo startet:

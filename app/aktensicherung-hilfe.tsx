@@ -116,7 +116,7 @@ export function AktensicherungHilfe({ onSicherheit, onDokumente, datentresor }: 
         { titel: "Pro-Tresor verbinden", unter: "falls genutzt, gleiches Passwort" },
         { titel: "Nachsehen", unter: "Unterlagen, Fristen, Fotos da?", art: "gut" },
       ]}/>
-      <p><strong>Zwei Knöpfe, zwei Aufgaben:</strong> „Wiederherstellung testen“ prüft die Sicherung nur in einem leeren Testordner und holt nichts in die Akte. „Sicherung einlesen“ holt sie in die Akte zurück – nur in eine leere Akte.</p>
+      <p><strong>Zwei Knöpfe, zwei Aufgaben:</strong> „Wiederherstellung testen“ prüft die Sicherung nur in einem leeren Testordner und holt nichts in die Akte. „Sicherung einlesen“ holt sie in die Akte zurück – in eine benutzte Akte zusammengeführt.</p>
       <ul className="merkpunkte">
         <li><strong>Nicht</strong> in den Datentresor sichern – immer ein getrennter Ordner.</li>
         <li><strong>Nichts umbenennen</strong> in der Sicherung – sonst passen die Prüfsummen nicht.</li>
