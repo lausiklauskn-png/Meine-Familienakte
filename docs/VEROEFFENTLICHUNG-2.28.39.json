@@ -1,0 +1,57 @@
+{
+  "version": "2.28.39",
+  "source": "48c16fefc1e100146d976c92ec6ad35350c7dac6",
+  "pullRequest": [129],
+  "recordedUtc": "2026-11-08T18:06:00Z",
+  "freigabe": "Klaus 2026-11-08: Bericht der Ablaufprüfung (Antworten f1–f8), Vorschau neugestaltung-2.28.39 zehn Punkte alle Ja; „Ok, dann bau die zehn Punkte so ein“, „auch mehrfachauswahl mit abwahlmöglichkeit“, „die Glocke Grün wenn sie Aktiv ist“, „wenn aus nicht in der Leiste“, „du kannst es danach ausgeben“.",
+  "inhalt": "Ablaufprüfung mit elf KI-Prüfern, danach gebaut: Erinnerung als Teil der Aufgabe (Umzug alter Einträge), Detail klappt im Cockpit auf, Erledigt mit Rückgängig; ein Sprungweg und Pfad nach dem gegangenen Weg; Eingang speichert Titel, Datum, Textauszug, übernimmt erkannte Fristen, Sammelbestätigung und gemeinsame Auswahl-Leiste mit Abwahl, Aus der Akte nehmen mit Zurückholen, Knopf „Ablegen“ im Kopf; Suche mit Alltagswörtern, Monaten, Daten, Synonymen, Treffer als Zeilen; Bibliothek als Zeilen mit Auge; Fristenliste mit Suche und Filtern; Personen, Organisationen, Objekte, Vorgänge anlegen; Startseite „So fängst du an“, Menügruppe „Termine & Aufgaben“, ein Cockpit, Update-Fähnchen; Glocke grün wenn an, aus = keine Meldung in der Leiste, Erlaubnis-Frage erst beim ersten geplanten Termin; Geräte und Hilfe ehrlich.",
+  "ciAmPrStand": "#129 2befd9a: pruefung, webview, android, windows, transport, abgleich, product (31, pixel_c), product (35, pixel_2) success; die Produktprobe „Private Bedeutungssuche“ zusätzlich von Hand auf 95f23ff (Lauf 42503134433) success",
+  "releases": [
+    {
+      "tag": "android-v2.28.39",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.39",
+      "run": 42506245415,
+      "conclusion": "success",
+      "updateServer": "server=ja; Schritt „Auf family-projekt.de hochladen und von außen prüfen“ success",
+      "downloadProof": [
+        {
+          "name": "Familienakte-android-v2.28.39.apk",
+          "bytes": 19959841,
+          "sha256": "d508f59d31a78f2f2da2e3a41ecc18467eccd651c8cc9aa5bd5826c56d11d03d",
+          "anonymousDownload": true,
+          "matchesSHA256SUMS": true,
+          "versionInside": "2.28.39 (assets/public/version.json, commit 48c16fe)"
+        },
+        {
+          "name": "Familienakte-Einzeldatei-2.28.39.html",
+          "bytes": 3713708,
+          "sha256": "d77e04fc3d97a6da86d1635a05ac241017298dda21a4b1ac41650a8e400695b2",
+          "anonymousDownload": true,
+          "matchesSHA256SUMS": true
+        }
+      ]
+    },
+    {
+      "tag": "windows-v2.28.39",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.39",
+      "run": 42506247322,
+      "conclusion": "success",
+      "updateServer": "server=ja; Job „server“ success; latest.json nennt 2.28.39",
+      "downloadProof": [
+        {
+          "name": "Familienakte-Windows-2.28.39-x64-setup.exe",
+          "bytes": 34116075,
+          "sha256": "32375a7367a65df61c9d496d9a09ded4002fc364a5b7050c0ea31265e1987ace",
+          "anonymousDownload": true,
+          "matchesSHA256SUMS": true
+        }
+      ]
+    }
+  ],
+  "pwa": "Pages auf 48c16fe: Lauf 153 (42506215109) success; Seite selbst aus dem Behälter nicht geprüft",
+  "notChecked": [
+    "Kein physisches Gerät: Erinnerung als Teil der Aufgabe (Klaus' Ausgangsfall), Sprungweg und Pfad, Sammelbestätigung, Auswahl-Leiste, Aussortiert nativ, Glocke grün und Entfernen der Meldung, Erlaubnis-Frage beim ersten geplanten Termin, Update-Fähnchen nativ, „So fängst du an“",
+    "Umzug alter Erinnerungen nur mit Testdaten geprüft",
+    "family-projekt.de aus dem Behälter nicht erreichbar; die Freigabeläufe prüfen den Server selbst"
+  ]
+}
