@@ -129,9 +129,29 @@ section { display: grid; gap: 12px; min-width: 0; }
   </section>
 
   <section>
-    <span class="eyebrow">D · später</span>
+    <span class="eyebrow">D · gleich mit</span>
     <h2>Erinnerung als Teil der Aufgabe speichern</h2>
-    <p>Die Ursache wäre weg: keine zwei Einträge mehr. Dafür müssten alle gespeicherten Erinnerungen in ihre Aufgaben umziehen, mit Sicherung vorher. Mein Rat: erst A bis C, D später.</p>
+    <ul>
+      <li>Neue Aufgaben speichern ihre Erinnerungen in sich selbst. Es entsteht kein zweiter Eintrag REM-… mehr, also auch kein Wechselspiel.</li>
+      <li>Schon gespeicherte Erinnerungen, die zu einer Aufgabe gehören, zieht die App beim ersten Start von 2.28.39 einmal in ihre Aufgabe um. Vorher legt sie eine Sicherung des Registers an.</li>
+      <li>Freie Erinnerungen ohne Aufgabe (zum Beispiel aus „Notiz“) bleiben eigene Einträge wie heute.</li>
+      <li>Bisher sind nur Probeeinträge gespeichert; der Umzug wird trotzdem für jedes Gerät gebaut.</li>
+    </ul>
+  </section>
+
+  <section>
+    <span class="eyebrow">E</span>
+    <h2>„Erledigt“ verschwindet nicht wortlos</h2>
+    <div class="paar">
+      <div class="bild alt"><b>Heute: Offene Aufgaben, Status „erledigt“</b>
+        <div class="akte"><div class="hinweis">Die Zeile ist sofort weg, ohne Hinweis, wohin.</div></div>
+      </div>
+      <div class="bild neu"><b>Neu: einige Sekunden sichtbar</b>
+        <div class="akte">
+          <div class="ref erledigt"><span class="badge ok">✓ erledigt</span><span><strong>es geht um den Eintrag …</strong><small>steht jetzt bei den erledigten Aufgaben</small></span><button class="knopf">Rückgängig</button></div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section>
@@ -139,6 +159,7 @@ section { display: grid; gap: 12px; min-width: 0; }
     <div class="frage"><span><b>A</b> Erinnerung zeigt ihre Aufgabe mit allen Erinnerungen, erledigte durchgestrichen unten: ja?</span></div>
     <div class="frage"><span><b>B</b> Tipp klappt auf, Seite bleibt stehen: ja?</span></div>
     <div class="frage"><span><b>C</b> ✓ ✎ 🗑 und „Im Kalender“ unter Direkte Aktionen, „Zuordnung prüfen“ dort weg: ja?</span></div>
-    <div class="frage"><span><b>D</b> Später oder gar nicht?</span></div>
+    <div class="frage"><span><b>D</b> Gleich mit, freie Erinnerungen bleiben eigene Einträge: ja?</span></div>
+    <div class="frage"><span><b>E</b> „Erledigt“ bleibt kurz mit „Rückgängig“ stehen: ja?</span></div>
   </section>
 </main>
