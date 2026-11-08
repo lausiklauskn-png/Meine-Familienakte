@@ -30,17 +30,17 @@ export function DemoKnopf({ gesperrt, verlassen, zuruecksetzen, loeschen, kopie 
   </span>;
 }
 
-/** Hinten in der Hilfe: die Demo starten (oder sagen, dass sie läuft und wo man sie verlässt). */
-/** Demo-Kasten in der Hilfe (Klaus 2026-11-07): nur der Knopf „Demo starten“, die Erklärung hinter dem „?“. */
+/**
+ * Demo im Kasten oben in der Hilfe (Klaus 2026-11-08): nur der blaue Knopf „Demo starten“, kein eigenes Wort „Demo“;
+ * das „?“ steht oben rechts im Kasten und erklärt die Demo. Der Kasten selbst ist {@link AppLandkarteHilfe}.
+ */
 const DEMO_HILFE = "• Hast du eigene Daten, arbeitet die Demo an einer Kopie davon. Du probierst aus, das Original bleibt unverändert.\n• Ohne eigene Daten zeigt sie eine erfundene Beispielfamilie.\n• Übernehmen (nur bei der Kopie): vorher kommt die Liste „Was ändert sich?“; das bisherige Register wird gesichert.\n• Während sie läuft, steht oben der rote Knopf „DEMO ▾“: verlassen · zurücksetzen · löschen.";
 export function DemoStarten({ aktiv, gesperrt, starten, grund }: { aktiv: boolean; gesperrt: boolean; starten: () => void; grund?: string }) {
-  return <section className="card demo-starten" aria-label="Demo">
-    <div className="demo-starten-zeile">
-      <span className="ui-heading-help"><h2>Demo</h2><InfoPopover label="Demo erklären" text={DEMO_HILFE}/></span>
-      {aktiv
-        ? <span className="fine-print" data-demo-laeuft>läuft – roter Knopf „DEMO“ oben</span>
-        : <button type="button" className="button secondary" data-demo-start disabled={gesperrt} onClick={starten}><Play size={16}/> Demo starten</button>}
-    </div>
-    {!aktiv && gesperrt && grund && <p className="fine-print" data-demo-grund>{grund}</p>}
-  </section>;
+  return <>
+    <span className="hilfe-oben-frage"><InfoPopover label="Demo erklären" text={DEMO_HILFE}/></span>
+    {aktiv
+      ? <span className="fine-print" data-demo-laeuft>Demo läuft – roter Knopf „DEMO“ oben</span>
+      : <button type="button" className="button demo-start-knopf" data-demo-start disabled={gesperrt} onClick={starten}><Play size={16}/> Demo starten</button>}
+    {!aktiv && gesperrt && grund && <p className="fine-print hilfe-oben-grund" data-demo-grund>{grund}</p>}
+  </>;
 }

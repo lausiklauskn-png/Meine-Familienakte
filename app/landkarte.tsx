@@ -7,7 +7,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode }
  * woher Daten kommen, wohin sie gehen und wo der Kasten in der App liegt.
  * Live: der Stand kommt aus den Daten (in der App lib/app-stand.ts, wie status.json im Sage-Protokoll). Was sich seit dem letzten
  * Öffnen geändert hat, trägt einen Goldrahmen, bis man den Kasten antippt, höchstens 14 Tage (Klaus 07.11., gemerkt je Gerät).
- * Mit `spalten` gibt es den Umschalter „Karte · Liste“; am Handy (schmal) beginnt die Karte als Liste (Klaus 07.11.).
+ * Immer als Karte, auch am Handy (Klaus 08.11.2026: die Liste sagt ohne die Wege wenig; die Karte wischt man seitlich).
  */
 export type KartenStand = "fertig" | "imbau" | "aktivieren" | "geplant";
 export type KartenPunkt = { id: string; titel: string; wo?: string; unter?: string; mehr?: string; stand?: KartenStand; warn?: boolean; mitte?: boolean;
@@ -32,15 +32,13 @@ function lesen(id: string): Gemerkt {
   } catch { return { stand: {}, gold: {} }; }
 }
 function merken(id: string, g: Gemerkt) { try { localStorage.setItem(`fa_landkarte_${id}_v2`, JSON.stringify(g)); } catch { /* nur Komfort */ } }
-const schmal = () => { try { return window.matchMedia("(max-width: 699px)").matches; } catch { return false; } };
 
-export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, spalten, onFrisch }: { id: string; label: string; gruppen: KartenGruppe[]; knoten: KartenKnoten[]; kanten: KartenKante[]; breiten: number[];
+export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, onFrisch }: { id: string; label: string; gruppen: KartenGruppe[]; knoten: KartenKnoten[]; kanten: KartenKante[]; breiten: number[];
   spalten?: string[]; onFrisch?: (anzahl: number) => void }) {
   const buehne = useRef<HTMLDivElement>(null);
   const [lage, setLage] = useState<Lage | null>(null);
   const [aktiv, setAktiv] = useState<string | null>(null);
   const [frisch, setFrisch] = useState<Set<string>>(new Set());
-  const [ansicht, setAnsicht] = useState<"karte" | "liste">(() => spalten && schmal() ? "liste" : "karte");
 
   const alle = useMemo(() => {
     const m = new Map<string, KartenPunkt & { gruppe?: KartenGruppe }>();
@@ -70,7 +68,7 @@ export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, spalten
   };
 
   useLayoutEffect(() => {
-    const b = buehne.current; if (!b || ansicht !== "karte") return;
+    const b = buehne.current; if (!b) return;
     const rechnen = () => {
       const xs: number[] = []; let x = RAND;
       breiten.forEach((w, i) => { xs[i] = x; x += w + ABSTAND; });
@@ -124,7 +122,7 @@ export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, spalten
     const beob = typeof ResizeObserver === "function" ? new ResizeObserver(() => { const w = b.querySelector<HTMLElement>("[data-karte-gruppe], [data-karte-knoten]")?.offsetWidth || 0; if (!tot && w !== breiteAlt) { breiteAlt = w; rechnen(); } }) : null;
     const erster = b.querySelector<HTMLElement>("[data-karte-gruppe], [data-karte-knoten]"); if (erster && beob) { breiteAlt = erster.offsetWidth; beob.observe(erster); }
     return () => { tot = true; beob?.disconnect(); };
-  }, [gruppen, knoten, aeste, breiten, ansicht]);
+  }, [gruppen, knoten, aeste, breiten]);
 
   const nachbarn = aktiv ? aeste.filter((k) => k.von === aktiv || k.nach === aktiv) : [];
   const an = new Set(nachbarn.flatMap((k) => [k.von, k.nach]));
@@ -137,21 +135,8 @@ export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, spalten
       aria-label={`${p.titel} (${WORT[p.stand || "fertig"]}) – Verbindungen zeigen`} onClick={() => wahl(p.id)}>{inhalt(p, art === "lk-kasten")}</button>;
   const titel = (pid: string) => alle.get(pid)?.titel || pid;
 
-  const liste = spalten && ansicht === "liste";
-  return <div className="landkarte" data-landkarte={id} data-ansicht={ansicht}>
-    {spalten && <div className="lk-umschalter" role="group" aria-label="Ansicht">
-      {(["karte", "liste"] as const).map((a) => <button key={a} type="button" aria-pressed={ansicht === a} data-lk-ansicht={a} onClick={() => setAnsicht(a)}>{a === "karte" ? "Karte" : "Liste"}</button>)}
-    </div>}
-    {liste ? <div className="lk-liste" role="group" aria-label={label}>
-      {spalten!.map((name, s) => {
-        const teile = [...gruppen.filter((g) => g.spalte === s).flatMap((g) => g.chips.map((c) => ({ p: c as KartenPunkt, g: g.titel }))), ...knoten.filter((k) => k.spalte === s).map((k) => ({ p: k as KartenPunkt, g: "" }))];
-        if (!teile.length) return null;
-        return <section key={name} className="lk-liste-spalte" data-lk-spalte={s}>
-          <h4><span aria-hidden="true">{s + 1}</span> {name}</h4>
-          {teile.map(({ p, g }) => knopf(g ? { ...p, wo: [g, p.wo].filter(Boolean).join(" · ") } : p, "lk-kasten", { "data-karte-id": p.id }))}
-        </section>;
-      })}
-    </div> : <div className="lk-rahmen">
+  return <div className="landkarte" data-landkarte={id} data-ansicht="karte">
+    <div className="lk-rahmen">
       <div className="lk-buehne" ref={buehne} role="group" aria-label={label} style={lage ? { width: lage.breite, height: lage.hoehe } : { visibility: "hidden" }}>
         <svg className="lk-aeste" aria-hidden="true" width={lage?.breite || 0} height={lage?.hoehe || 0}>
           <defs>
@@ -175,7 +160,7 @@ export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, spalten
           {knopf(k, "lk-kasten", { "data-karte-id": k.id })}
         </div>)}
       </div>
-    </div>}
+    </div>
     <div className="lk-info" aria-live="polite" data-karte-info={gewaehlt?.id || ""}>
       {gewaehlt ? <>
         <strong>{gewaehlt.titel}</strong>

@@ -1,5 +1,7 @@
-// Sitzung 4 (Klaus 07.11.2026): „Landkarte der App“ ganz oben in der Hilfe, Stand aus der Liste, Geändertes golden bis zum
-// Antippen (höchstens 14 Tage), am Handy als Liste; Welle 1 der Hilfe als Bild mit höchstens drei Merkpunkten und „Ausführlich“.
+// Sitzung 4 (Klaus 07.11.2026): Landkarte ganz oben in der Hilfe, Stand aus der Liste, Geändertes golden bis zum Antippen
+// (höchstens 14 Tage); Welle 1 der Hilfe als Bild mit höchstens drei Merkpunkten und „Ausführlich“.
+// 2.28.38 (Klaus 08.11.2026): ein Kasten mit blauem „Demo starten“, Landkarten-Symbol und „?“ oben rechts; das Symbol klappt die
+// „Interaktive Landkarte der App“ auf – immer als Karte, auch am Handy (keine Listenansicht mehr).
 import { startApp, launchBrowser, DESKTOP, HANDY, ready, check, step, summary, footer, collectErrors } from "./_harness.mjs";
 // step() wertet einen zurückgegebenen Text als grün; darum scheitert soll() mit einer Ausnahme.
 const soll = (ok, info) => { if (!ok) throw new Error(typeof info === "string" ? info : JSON.stringify(info)); return true; };
@@ -12,18 +14,22 @@ try {
     const page = await context.newPage(); const errors = collectErrors(page);
     await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page);
     await footer(page, "Hilfe");
-    const karte = page.locator("details[data-app-landkarte]");
-    check(await karte.count() === 1, `${name}: „Landkarte der App“ ist da`);
+    const karte = page.locator("[data-app-landkarte]");
+    check(await karte.count() === 1, `${name}: Kasten mit Demo und Landkarte ist da`);
+    await step(`${name}: ein Kasten – blauer Knopf „Demo starten“, Landkarten-Symbol, „?“ oben rechts, kein Wort „Demo“ als Überschrift`, async () => {
+      const r = await karte.evaluate((k) => { const b = k.getBoundingClientRect(), f = k.querySelector(".hilfe-oben-frage")?.getBoundingClientRect(), d = k.querySelector("[data-demo-start]");
+        return { demo: Boolean(d), blau: d ? getComputedStyle(d).backgroundColor : "", symbol: Boolean(k.querySelector("[data-app-landkarte-knopf] svg")), h2: k.querySelectorAll("h2").length,
+          obenRechts: Boolean(f && f.top - b.top < 24 && b.right - f.right < 24) }; });
+      return soll(r.demo && r.blau === "rgb(29, 91, 148)" && r.symbol && r.h2 === 0 && r.obenRechts, r);
+    });
     check(await page.evaluate(() => { const k = document.querySelector("[data-app-landkarte]"), f = document.querySelector("[data-hilfe-frage]");
       return Boolean(k && f && k.compareDocumentPosition(f) & Node.DOCUMENT_POSITION_FOLLOWING); }), `${name}: steht über „Wie kann ich dir helfen?“`);
-    check(await karte.evaluate((d) => !d.open), `${name}: ist zugeklappt`);
-    await karte.locator("summary").click(); await page.waitForTimeout(500);
+    check(await karte.getAttribute("data-app-landkarte") === "zu" && !(await karte.locator("[data-app-landkarte-inhalt]").isVisible()), `${name}: Landkarte ist zugeklappt`);
+    await karte.locator("[data-app-landkarte-knopf]").click(); await page.waitForTimeout(500);
     const ansicht = await karte.locator("[data-landkarte]").getAttribute("data-ansicht");
-    check(ansicht === (name === "Handy" ? "liste" : "karte"), `${name}: beginnt als ${name === "Handy" ? "Liste" : "Karte"} (${ansicht})`);
-    if (name === "Handy") {
-      check(await karte.locator("[data-lk-spalte]").count() === 8, `${name}: Liste mit acht Schritten`);
-      await karte.locator('[data-lk-ansicht="karte"]').click(); await page.waitForTimeout(500);
-    }
+    const kopf = await karte.locator(".hilfe-oben-karte-kopf h3").innerText();
+    check(ansicht === "karte" && (await karte.locator("[data-lk-ansicht], .lk-umschalter").count()) === 0, `${name}: immer als Karte, kein Umschalter (${ansicht})`);
+    check(kopf === "Interaktive Landkarte der App" && !/Woher etwas kommt/.test(await karte.innerText()), `${name}: Überschrift „Interaktive Landkarte der App“, ohne Satz darunter (${kopf})`);
     const lage = await karte.evaluate((d) => ({ kaesten: d.querySelectorAll("[data-karte-id]").length, aeste: d.querySelectorAll("path[data-ast]").length,
       quer: document.documentElement.scrollWidth <= innerWidth + 1,
       trifft: (() => { const p = d.querySelector('path[data-ast="eingang>pruefung"]'), e = d.querySelector('[data-karte-knoten="pruefung"]'); if (!p || !e) return false;
@@ -43,10 +49,9 @@ try {
     await step(`${name}: Geändertes golden bis zum Antippen, nach 14 Tagen weg`, async () => {
       await page.evaluate(() => { const g = JSON.parse(localStorage.getItem("fa_landkarte_app_v2")); g.stand.pruefung = "imbau"; g.stand.wfpdf = "geplant"; g.gold = {}; localStorage.setItem("fa_landkarte_app_v2", JSON.stringify(g)); });
       await page.reload({ waitUntil: "networkidle" }); await ready(page); await footer(page, "Hilfe");
-      const k = page.locator("details[data-app-landkarte]");
+      const k = page.locator("[data-app-landkarte]");
       const zahl = await k.locator("[data-lk-gold]").getAttribute("data-lk-gold");
-      await k.locator("summary").click(); await page.waitForTimeout(400);
-      if (name === "Handy") { await k.locator('[data-lk-ansicht="karte"]').click(); await page.waitForTimeout(400); }
+      await k.locator("[data-app-landkarte-knopf]").click(); await page.waitForTimeout(400);
       const vorher = await k.locator('[data-karte-id="pruefung"]').evaluate((e) => e.classList.contains("frisch"));
       await k.locator('[data-karte-id="pruefung"]').click();
       const nachher = await k.locator('[data-karte-id="pruefung"]').evaluate((e) => e.classList.contains("frisch"));

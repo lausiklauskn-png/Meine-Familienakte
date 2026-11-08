@@ -25,7 +25,7 @@ try {
     return await f.evaluate((d) => d.open && d.querySelector("div").innerText.length > 20);
   });
   await step("Gesperrte Demo nennt den Grund (kein Datentresor gewählt)", async () => {
-    const knopf = page.locator(".demo-starten button", { hasText: "Demo starten" });
+    const knopf = page.locator(".demo-starten [data-demo-start]");
     if (!(await knopf.isDisabled())) return true; // mit Tresor: kein Grund nötig
     return /Datentresor wählen/.test(await page.locator(".demo-starten [data-demo-grund]").innerText());
   });

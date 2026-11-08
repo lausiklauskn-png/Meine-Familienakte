@@ -5,7 +5,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+import android.view.View;
 import androidx.activity.OnBackPressedCallback;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
@@ -37,6 +40,7 @@ public class MainActivity extends BridgeActivity {
         super.onCreate(state);
         vollbild();
         if (bridge == null) return;
+        freiVonLeisten((View) bridge.getWebView().getParent());
         // Internetschalter (Standard aus): auch Bilder, Schriften und der Service Worker bleiben im Gerät.
         // Textzoom fest 100 %: die WebView vergrößert sonst nur den Text nach der System-Schriftgröße (Chrome zoomt die
         // ganze Seite). Folge war eine 1,5-fach große, zerschossene Darstellung gegenüber der PWA (Klaus 2026-10-28).
@@ -83,6 +87,27 @@ public class MainActivity extends BridgeActivity {
         WindowInsetsControllerCompat leisten = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
         leisten.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
         leisten.hide(WindowInsetsCompat.Type.systemBars());
+    }
+
+    /**
+     * Geteilter Bildschirm und Fenster (Klaus 08.11.2026, Galaxy Tab S6): dort blendet Android die Navigationsleiste ein und
+     * lässt sich nicht ausblenden; die randlose App lag dann darunter. Die Hülle hält so viel Rand, wie die gerade sichtbaren
+     * Systemleisten brauchen – im Vollbild sind sie ausgeblendet, der Rand ist 0 und nichts verschiebt sich.
+     */
+    private static void freiVonLeisten(View huelle) {
+        if (huelle == null) return;
+        ViewCompat.setOnApplyWindowInsetsListener(huelle, (v, insets) -> {
+            Insets rand = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(rand.left, rand.top, rand.right, rand.bottom);
+            return WindowInsetsCompat.CONSUMED;
+        });
+        ViewCompat.requestApplyInsets(huelle);
+    }
+
+    @Override public void onMultiWindowModeChanged(boolean geteilt, android.content.res.Configuration neu) {
+        super.onMultiWindowModeChanged(geteilt, neu);
+        vollbild();
+        if (bridge != null) ViewCompat.requestApplyInsets((View) bridge.getWebView().getParent());
     }
 
     @Override public void onWindowFocusChanged(boolean fokus) {
