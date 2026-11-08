@@ -67,7 +67,9 @@ section { display: grid; gap: 12px; min-width: 0; }
 .kl-text strong, .kl-text small { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .kl-text small { color: var(--muted); }
 .kl-griff { flex: none; align-self: stretch; width: 26px; margin: -8px 0; border: 0; border-left: 1px solid var(--line); background: var(--soft); color: var(--muted); font: 700 1.1rem var(--body); cursor: pointer; }
-.kl-leiste { position: absolute; top: 0; bottom: 0; right: 0; display: flex; align-items: center; gap: 6px; padding: 0 8px 0 10px; background: var(--soft); border-left: 1px solid var(--line); box-shadow: -6px 0 12px rgba(0,0,0,.12); transform: translateX(100%); visibility: hidden; }
+.kl-zu { align-self: stretch; width: 26px; border: 0; border-right: 1px solid var(--line); background: var(--soft); color: var(--accent); font: 700 1.1rem var(--body); cursor: pointer; }
+.kl-griff { color: var(--accent); }
+.kl-leiste { position: absolute; top: 0; bottom: 0; right: 0; display: flex; align-items: center; gap: 6px; padding: 0 8px 0 0; background: var(--soft); border-left: 1px solid var(--line); box-shadow: -6px 0 12px rgba(0,0,0,.12); transform: translateX(100%); visibility: hidden; }
 .kl.auf .kl-leiste { transform: none; visibility: visible; }
 .kl.auf .kl-griff { visibility: hidden; }
 @media (prefers-reduced-motion: no-preference) { .kl-leiste { transition: transform .2s ease, visibility .2s; } }
@@ -112,19 +114,19 @@ section { display: grid; gap: 12px; min-width: 0; }
     <p>Deine Rückmeldung vom 08.11.: Der Text nicht ganz, sondern <b>Anfang … Hauptwort</b>. Datum und Uhrzeit gehören zusammen, dahinter die Art und die Glocke. Die Knöpfe passen nicht mit in die Zeile, sie kommen in eine <b>Aufklappleiste am rechten Rand</b>, wie die Seitenleiste am Handy.</p>
     <div class="bild alt"><b>Heute</b>
       <div class="zeile"><span class="dat">06.11.</span><span class="txt"><strong>Erinnerung: es geht um den Eintrag für die Kalender App</strong><small>überfällig · Erinnerung</small></span><button class="ik" type="button" aria-label="Erledigt">✓</button><button class="ik" type="button" aria-label="Ansehen">👁</button></div></div>
-    <div class="bild neu"><b>Neu – zum Ausprobieren: den Griff ‹ rechts antippen (oder nach links wischen)</b>
+    <div class="bild neu"><b>Neu – zum Ausprobieren: Pfeil ‹ rechts öffnet, Pfeil › schließt (Wischen geht auch)</b>
       <div class="kl-liste">
         <div class="kl" data-kl>
           <div class="kl-zeit"><b>25.11.</b><span>08:20</span></div>
           <div class="kl-text"><strong>er mich an meinen … Arztbesuch</strong><small>Aufgabe · 🔔 15 Min. vorher · im Kalender</small></div>
           <button class="kl-griff" type="button" aria-expanded="false" aria-label="Knöpfe zeigen">‹</button>
-          <div class="kl-leiste" aria-hidden="true"><button class="ik" type="button" aria-label="Erledigt">✓</button><button class="ik" type="button" aria-label="Ändern" data-stift>✎</button><button class="ik loe" type="button" aria-label="Löschen" data-eimer>🗑</button><button class="ik" type="button" aria-label="Ansehen">👁</button></div>
+          <div class="kl-leiste" aria-hidden="true"><button class="kl-zu" type="button" aria-label="Knöpfe schließen">›</button><button class="ik" type="button" aria-label="Erledigt">✓</button><button class="ik" type="button" aria-label="Ändern" data-stift>✎</button><button class="ik loe" type="button" aria-label="Löschen" data-eimer>🗑</button><button class="ik" type="button" aria-label="Ansehen">👁</button></div>
         </div>
         <div class="kl kl-rot" data-kl>
           <div class="kl-zeit"><b>06.11.</b><span>09:00</span></div>
           <div class="kl-text"><strong>Erinnerung: es geht um … Kalender App</strong><small>überfällig · Erinnerung</small></div>
           <button class="kl-griff" type="button" aria-expanded="false" aria-label="Knöpfe zeigen">‹</button>
-          <div class="kl-leiste" aria-hidden="true"><button class="ik" type="button" aria-label="Erledigt">✓</button><button class="ik" type="button" aria-label="Ändern" data-stift>✎</button><button class="ik loe" type="button" aria-label="Löschen" data-eimer>🗑</button><button class="ik" type="button" aria-label="Ansehen">👁</button></div>
+          <div class="kl-leiste" aria-hidden="true"><button class="kl-zu" type="button" aria-label="Knöpfe schließen">›</button><button class="ik" type="button" aria-label="Erledigt">✓</button><button class="ik" type="button" aria-label="Ändern" data-stift>✎</button><button class="ik loe" type="button" aria-label="Löschen" data-eimer>🗑</button><button class="ik" type="button" aria-label="Ansehen">👁</button></div>
         </div>
       </div>
       <div class="kl-liste" style="max-width:360px">
@@ -132,7 +134,7 @@ section { display: grid; gap: 12px; min-width: 0; }
           <div class="kl-zeit"><b>25.11.</b><span>08:20</span></div>
           <div class="kl-text"><strong>er mich an meinen … Arztbesuch</strong><small>Aufgabe · 🔔 15 Min. vorher</small></div>
           <button class="kl-griff" type="button" aria-expanded="false" aria-label="Knöpfe zeigen">‹</button>
-          <div class="kl-leiste" aria-hidden="true"><button class="ik" type="button" aria-label="Erledigt">✓</button><button class="ik" type="button" aria-label="Ändern" data-stift>✎</button><button class="ik loe" type="button" aria-label="Löschen" data-eimer>🗑</button><button class="ik" type="button" aria-label="Ansehen">👁</button></div>
+          <div class="kl-leiste" aria-hidden="true"><button class="kl-zu" type="button" aria-label="Knöpfe schließen">›</button><button class="ik" type="button" aria-label="Erledigt">✓</button><button class="ik" type="button" aria-label="Ändern" data-stift>✎</button><button class="ik loe" type="button" aria-label="Löschen" data-eimer>🗑</button><button class="ik" type="button" aria-label="Ansehen">👁</button></div>
         </div>
       </div>
       <small class="muted">Oben breit (Tablet), darunter schmal wie am Handy. Die Zeile bleibt in beiden Fällen einzeilig mit Zusatzzeile.</small></div>
@@ -143,7 +145,7 @@ section { display: grid; gap: 12px; min-width: 0; }
     <ul>
       <li><b>Links:</b> Datum und Uhrzeit untereinander, immer zusammen.</li>
       <li><b>Mitte:</b> erste Worte … Hauptwort. Darunter klein: Art (Aufgabe, Frist, Termin, Erinnerung) · 🔔 wie lange vorher · im Kalender.</li>
-      <li><b>Rechts:</b> ein schmaler Griff ‹. Antippen oder nach links wischen schiebt die Leiste mit ✓ ✎ 🗑 👁 über das Zeilenende; nochmal tippen, wischen oder ein Tipp daneben schiebt sie zurück. Es ist immer nur eine Leiste offen.</li>
+      <li><b>Rechts:</b> seitlicher Pfeil <b>‹ = Menü auf</b>: die Leiste mit ✓ ✎ 🗑 👁 schiebt sich über das Zeilenende. Vorne in der Leiste <b>› = Menü zu</b>. Wischen und ein Tipp daneben schließen auch. Immer nur eine Leiste offen; gilt für alle vier Listen.</li>
       <li><b>Hauptwort:</b> das Hauptwort, das im Text am häufigsten vorkommt (hier „Arztbesuch“); Füllwörter wie Uhr, Minuten, Tag zählen nicht. Gibt es keins, bleiben die letzten Worte wie bisher.</li>
       <li>✎ öffnet sofort „Ändern“ (auch für reine Erinnerungen), 🗑 zweimal tippen, 👁 zeigt den ganzen Text und die Extras.</li>
     </ul>
@@ -168,7 +170,7 @@ section { display: grid; gap: 12px; min-width: 0; }
       <li><b>B</b> ✓ in allen vier Listen (Fristen und Aufgaben, Mein Kalender, Tagebuch, Notiz-Liste).</li>
       <li><b>C</b> ✓ Löschen mit zwei Tipps.</li>
       <li><b>D</b> ✓ Auge bleibt (ganzer Text und Extras).</li>
-      <li><b>G</b> Neu: Passt die Zeile mit Aufklappleiste so (Griff ‹ antippen oder wischen)?<span class="empf">Bitte oben ausprobieren, am Tablet und im schmalen Fenster.</span></li>
+      <li><b>G</b> ✓ Aufklappleiste mit seitlichem Pfeil (‹ auf, › zu), für alle Listen.</li>
       <li><b>F</b> Danach als 2.28.38 gleich als APK, PWA und Windows ausgeben?<span class="empf">Empfehlung: ja.</span></li>
     </ol>
   </section>
@@ -188,6 +190,7 @@ section { display: grid; gap: 12px; min-width: 0; }
     var x0 = null;
     z.addEventListener("pointerdown", function (e) { x0 = e.clientX; });
     z.addEventListener("pointerup", function (e) { if (x0 === null) return; var dx = e.clientX - x0; x0 = null; if (dx < -30) nurDiese(z, true); else if (dx > 30) setze(z, false); });
+    z.querySelector(".kl-zu").addEventListener("click", function (e) { e.stopPropagation(); setze(z, false); });
     z.querySelector("[data-stift]").addEventListener("click", function (e) { e.stopPropagation(); fenster.hidden = false; });
     var eimer = z.querySelector("[data-eimer]"), t;
     eimer.addEventListener("click", function (e) {
