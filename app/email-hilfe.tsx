@@ -34,7 +34,9 @@ export function EmailHilfe({ onEingang, onSchreiben }: { onEingang: () => void; 
     ];
     const kanten: KartenKante[] = [
       { von: "eingang", nach: "pruefung" }, { von: "pruefung", nach: "echt" }, { von: "pruefung", nach: "scan" }, { von: "pruefung", nach: "befund" }, { von: "pruefung", nach: "programm" },
-      { von: "echt", nach: "akte" }, { von: "scan", nach: "akte" }, { von: "akte", nach: "antwort-entwurf" },
+      { von: "echt", nach: "akte" }, { von: "scan", nach: "akte" },
+      // Heutiger Weg, solange die Prüfung jeder Anlage geplant ist (U13): direkt zu „Scan oder Foto“ (Texterkennung wie heute).
+      { von: "eingang", nach: "scan", unten: true }, { von: "akte", nach: "antwort-entwurf" },
       { von: "antwort-entwurf", nach: "mailapp" }, { von: "antwort-entwurf", nach: "mssend" },
     ];
     const mitStand = <T extends KartenPunkt>(p: T): T => ({ ...p, stand: standVon(p.id, new Set()) });
@@ -50,7 +52,7 @@ export function EmailHilfe({ onEingang, onSchreiben }: { onEingang: () => void; 
         breiten={[236, 176, 176, 176, 176, 236, 176]}/>
       <ul className="merkpunkte">
         <li><strong>Nichts geht still hinaus.</strong> Gesendet wird nur auf deinen Befehl.</li>
-        <li><strong>Keine Virenprüfung.</strong> Die App öffnet keine Anlage von selbst und warnt bei Auffälligem.</li>
+        <li><strong>Keine Virenprüfung.</strong> Die App öffnet keine Anlage von selbst. Warnen bei Auffälligem ist geplant (Prüfung jeder Anlage); heute prüft nur der Stapel auf Wahl.</li>
         <li><strong>Gesundheit im Betreff</strong> lieber neutral halten; E-Mails sind unterwegs nicht verschlüsselt.</li>
       </ul>
     </div>

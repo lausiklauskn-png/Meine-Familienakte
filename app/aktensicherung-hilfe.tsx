@@ -29,7 +29,7 @@ const ORTE: Ort[] = [
     ] },
     { id: "ort", titel: "Ort des Datentresors notiert", unter: "welches Gerät, welcher Speicher" },
   ] },
-  { titel: "Pro-Tresor", unter: "nur wenn verbunden", ziel: "pro-tresor", punkte: [
+  { titel: "Pro-Tresor", unter: "nur in der Android- und Windows-App, wenn verbunden", ziel: "pro-tresor", punkte: [
     { titel: "Tresor-Hauptordner", unter: "verschlüsselte Originale · nichts von Hand" },
     { id: "passwort", titel: "Tresor-Passwort auf Papier", unter: "gilt für alle Pro-Apps" },
     { id: "ersatz", titel: "Ersatzschlüssel ausgedruckt", unter: "getrennt aufbewahren, nie in den Tresor" },
@@ -43,7 +43,7 @@ const ORTE: Ort[] = [
     ] },
     { titel: "Lesbar, nicht verschlüsselt", unter: "nur auf eigenen Speicher legen" },
   ] },
-  { titel: "Testordner", unter: "leer, nur für die Probe", ziel: "vollsicherung", punkte: [
+  { titel: "Testordner", unter: "leer, nur für die Probe · holt nichts in die Akte", ziel: "vollsicherung", punkte: [
     { id: "test", titel: "Wiederherstellung getestet", unter: "„Wiederherstellung testen“" },
     { id: "bericht", titel: "Bericht ohne Fehler", unter: "Register und Prüfsummen stimmen" },
     { titel: "Laufende Akte", unter: "wird beim Test nicht verändert", ziel: "akte" },
@@ -107,15 +107,15 @@ export function AktensicherungHilfe({ onSicherheit, onDokumente, datentresor }: 
           <ul className="ordnerbaum aktensicherung-baum"><li className="baum-wurzel-leer"><ul>{o.punkte.map(zweig)}</ul></li></ul>
         </section>)}
       </div>
-      <p className="pfad-titel"><strong>Neues Gerät oder App neu installiert</strong> (noch nicht am Gerät durchgespielt):</p>
+      <p className="pfad-titel"><strong>Neues Gerät oder App neu installiert</strong> (am Gerät noch nicht durchgespielt):</p>
       <Ablaufbild label="Akte aus der Vollsicherung wiederherstellen" knoten={[
         { titel: "App installieren" },
-        { titel: "Leeren Ordner wählen", unter: "wird der neue Datentresor" },
-        { titel: "Sicherung zurückholen", unter: "in diesen Ordner" },
-        { titel: "Als Datentresor wählen" },
+        { titel: "Speicher wählen", unter: "falls gewünscht eigener Datentresor; die Akte bleibt leer" },
+        { titel: "Sicherung einlesen", unter: "Sicherheit › erst Probe, dann „Jetzt einlesen“", art: "hervor" },
         { titel: "Pro-Tresor verbinden", unter: "falls genutzt, gleiches Passwort" },
-        { titel: "Nachsehen", unter: "Unterlagen, Fristen, Fotos da?" },
+        { titel: "Nachsehen", unter: "Unterlagen, Fristen, Fotos da?", art: "gut" },
       ]}/>
+      <p><strong>Zwei Knöpfe, zwei Aufgaben:</strong> „Wiederherstellung testen“ prüft die Sicherung nur in einem leeren Testordner und holt nichts in die Akte. „Sicherung einlesen“ holt sie in die Akte zurück – nur in eine leere Akte.</p>
       <ul className="merkpunkte">
         <li><strong>Nicht</strong> in den Datentresor sichern – immer ein getrennter Ordner.</li>
         <li><strong>Nichts umbenennen</strong> in der Sicherung – sonst passen die Prüfsummen nicht.</li>
