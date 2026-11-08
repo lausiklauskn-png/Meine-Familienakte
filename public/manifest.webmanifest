@@ -10,6 +10,7 @@
   "background_color": "#f2f7fa",
   "theme_color": "#0b3154",
   "id": "./index.html",
+  "related_applications": [{ "platform": "webapp", "url": "./manifest.webmanifest" }],
   "share_target": {
     "action": "./teilen-empfang",
     "method": "POST",

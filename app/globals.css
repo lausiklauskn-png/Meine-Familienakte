@@ -2459,3 +2459,5 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .hilfe-oben-karte[hidden] { display: none; }
 .hilfe-oben-karte-kopf { display: flex; align-items: center; gap: 8px; color: #1d5b94; }
 .hilfe-oben-karte-kopf h3 { margin: 0; font-size: 1.05rem; color: var(--navy); }
+/* Web-App schon installiert, Seite im Browser offen: kein Knopf „Installieren“ (app/installiert.ts). */
+.pwa-installiert .familienakte-install { display: none !important; }

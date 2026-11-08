@@ -1302,7 +1302,7 @@ function HealthPortalContent() {
             </div>}
           </div>)}
           {mobileOpen && <div className="mobile-menu-extra" aria-label="Weitere Aktionen">
-            {mobileOpen && typeof document !== "undefined" && document.querySelector<HTMLElement>(".header-actions .familienakte-install:not([hidden])") && <button type="button" onClick={() => { setMobileOpen(false); document.querySelector<HTMLElement>(".header-actions .familienakte-install")?.click(); }}><Download size={17}/> App installieren</button>}
+            {mobileOpen && typeof document !== "undefined" && document.querySelector<HTMLElement>(".header-actions .familienakte-install:not([hidden])") && !document.documentElement.classList.contains("pwa-installiert") && <button type="button" onClick={() => { setMobileOpen(false); document.querySelector<HTMLElement>(".header-actions .familienakte-install")?.click(); }}><Download size={17}/> App installieren</button>}
             <button type="button" onClick={() => { setMobileOpen(false); seiteDrucken(); }}><Printer size={17}/> Seite drucken</button>
             <AnmeldeKnopf art="menue"/>
           </div>}
