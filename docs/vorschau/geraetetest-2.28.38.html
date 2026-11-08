@@ -52,6 +52,12 @@ section { display: grid; gap: 12px; min-width: 0; }
 .fenster { border: 1px solid var(--line); border-radius: 10px; background: var(--card); padding: 12px; display: grid; gap: 8px; font-size: .9rem; }
 .fenster label { display: grid; gap: 2px; font-size: .8rem; color: var(--muted); }
 .fenster .feld { border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; color: var(--fg); background: var(--soft); }
+.zeile2 { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--rot); border-radius: 10px; padding: 10px 12px; min-width: 0; }
+.zeile2 > strong { flex: 1 1 340px; min-width: 0; overflow-wrap: anywhere; line-height: 1.3; }
+.zeile2 .unten { flex: 1 0 auto; }
+.zeile2 .unten { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.zeile2 .unten small { color: var(--muted); }
+.zeile2 .knoepfe { margin-left: auto; display: flex; gap: 6px; }
 .hinweis { border-left: 4px solid var(--teal); background: var(--card); border-radius: 0 10px 10px 0; padding: 10px 14px; display: grid; gap: 6px; }
 .fragen { list-style: none; padding: 0; display: grid; gap: 10px; }
 .fragen li { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; display: grid; gap: 4px; }
@@ -93,8 +99,12 @@ section { display: grid; gap: 12px; min-width: 0; }
     <p>Heute stehen „Ändern“ und „Löschen“ erst hinter dem Auge. Neu stehen beide gleich in der Zeile:</p>
     <div class="bild alt"><b>Heute</b>
       <div class="zeile"><span class="dat">06.11.</span><span class="txt"><strong>Erinnerung: es geht um den Eintrag für die Kalender App</strong><small>überfällig · Erinnerung</small></span><button class="ik" type="button" aria-label="Erledigt">✓</button><button class="ik" type="button" aria-label="Ansehen">👁</button></div></div>
-    <div class="bild neu"><b>Neu (zum Ausprobieren: Mülleimer antippen)</b>
-      <div class="zeile"><span class="dat">06.11.</span><span class="txt"><strong>Erinnerung: es geht um den Eintrag für die Kalender App</strong><small>überfällig · Erinnerung</small></span><button class="ik" type="button" aria-label="Erledigt">✓</button><button class="ik" type="button" aria-label="Ändern" id="stift">✎</button><button class="ik loe" type="button" aria-label="Löschen" id="eimer">🗑</button><button class="ik" type="button" aria-label="Ansehen">👁</button></div></div>
+    <div class="bild neu"><b>Neu, wie du es beschrieben hast: breit eine Reihe, schmal Text oben und Knöpfe darunter (zum Ausprobieren: Stift oder Mülleimer antippen)</b>
+      <div class="zeile2"><strong>Erinnerung: es geht um den Eintrag für die Eintrag für die Kalender App</strong>
+        <div class="unten"><span class="dat">06.11.</span><small>überfällig · Erinnerung</small><span class="knoepfe"><button class="ik" type="button" aria-label="Erledigt">✓</button><button class="ik" type="button" aria-label="Ändern" id="stift">✎</button><button class="ik loe" type="button" aria-label="Löschen" id="eimer">🗑</button><button class="ik" type="button" aria-label="Ansehen">👁</button></span></div></div>
+      <div class="zeile2" style="max-width:360px"><strong>08:20 er mich an meinen Arztbesuch einen Tag um 15 Minuten vorher erinnere mich an meinen Arztbesuch Uhr 15:23 Uhr</strong>
+        <div class="unten"><span class="dat">25.11.</span><small>Aufgabe · 🔔 15 Min.</small><span class="knoepfe"><button class="ik" type="button" aria-label="Erledigt">✓</button><button class="ik" type="button" aria-label="Ändern">✎</button><button class="ik loe" type="button" aria-label="Löschen">🗑</button><button class="ik" type="button" aria-label="Ansehen">👁</button></span></div></div>
+      <small class="muted">Oben breit (Tablet, Rechner): eine Reihe. Darunter schmal wie am Handy: Text oben ganz, Knöpfe darunter. Die App schaltet von selbst um, je nach Platz.</small></div>
     <div class="fenster" id="aendern" hidden><b>Ändern</b>
       <label>Titel<span class="feld">Erinnerung: es geht um den Eintrag für die Kalender App</span></label>
       <label>Tag und Uhrzeit<span class="feld">06.11.2026 · 09:00</span></label>
@@ -103,7 +113,10 @@ section { display: grid; gap: 12px; min-width: 0; }
       <li><b>✎ Stift</b> öffnet sofort das Fenster „Ändern“ (Titel, Tag, Uhrzeit, Erinnerung, Kalender). Für reine Erinnerungen gibt es das bisher gar nicht; das baue ich mit (Titel, Tag, Uhrzeit).</li>
       <li><b>🗑 Mülleimer</b>: ein Tipp macht ihn rot „Löschen?“, ein zweiter löscht. So wie jetzt hinter dem Auge, nur direkt.</li>
       <li><b>👁 Auge</b> bleibt nur noch zum Lesen langer Texte und für Zurückstellen / Wieder öffnen.</li>
-      <li>Am Handy (schmal) bleiben alle vier Knöpfe; der Text wird dafür kürzer abgeschnitten.</li>
+      <li><b>Breiter Bildschirm:</b> eine Reihe – Text, Datum und Art, ✓ ✎ 🗑 👁.</li>
+      <li><b>Schmal (Handy):</b> Text oben in ganzer Länge (meist zwei Zeilen, kein „…“ mehr), darunter die Knöpfe.</li>
+      <li>Mülleimer oder ✕ ist dir gleich; ich nehme den Mülleimer, weil ✕ in der App schon „Fenster schließen“ heißt.</li>
+      <li>Gilt in denselben Listen wie Frage B.</li>
     </ul>
   </section>
 
@@ -125,7 +138,7 @@ section { display: grid; gap: 12px; min-width: 0; }
       <li><b>A</b> Kalender: Habe ich richtig verstanden, dass oben etwas hinter dem Kopf verschwindet? Oder fehlt unten ein Eintrag, wenn zwei am selben Tag stehen?<span class="empf">Mein Verständnis: oben verdeckt. Bitte bestätigen oder ein Bild schicken.</span></li>
       <li><b>B</b> Stift und Mülleimer direkt: in <b>allen</b> Listen (Fristen und Aufgaben, Mein Kalender, Tagebuch/Chronologie, Notiz-Liste) oder nur bei Fristen und im Kalender?<span class="empf">Empfehlung: alle vier, damit es überall gleich ist.</span></li>
       <li><b>C</b> Mülleimer: weiter zweimal tippen („Löschen?“) oder sofort löschen?<span class="empf">Empfehlung: zweimal tippen. Gelöscht wird archiviert, trotzdem schützt das vor einem versehentlichen Tipp.</span></li>
-      <li><b>D</b> Auge behalten (nur noch zum Lesen und Zurückstellen) oder ganz weg?<span class="empf">Empfehlung: behalten, sonst ist der lange Text nicht mehr lesbar.</span></li>
+      <li><b>D</b> Auge behalten? Der Text steht jetzt ganz da; das Auge zeigt dann nur noch Quelle, Notiz und „Zurückstellen / Wieder öffnen“.<span class="empf">Empfehlung: behalten für diese Extras.</span></li>
       <li><b>E</b> Drehen: probierst du DeX aus und Automatisch drehen? Wenn es danach immer noch nicht dreht, schick mir bitte ein Bild der Schnellleiste.</li>
       <li><b>F</b> Ausgabe: wenn A–D klar sind, als 2.28.38 gleich als APK, PWA und Windows?<span class="empf">Empfehlung: ja, wie bei den letzten Fassungen.</span></li>
     </ol>
