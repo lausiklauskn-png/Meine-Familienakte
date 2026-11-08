@@ -4,6 +4,7 @@ import { cockpitRecordLabel } from "./family-cockpit.ts";
 import { interpretFamilySearchQuery, normalizeFamilySearch, scoreFamilySearchText } from "./family-search.ts";
 import { protectedFamilyLabel } from "./family-privacy.ts";
 import { readIntakeMetadata } from "./document-intake-metadata.ts";
+import { canonicalFamilyCategory, type FamilyCategory } from "./family-categories.ts";
 
 export const DOCUMENT_LIBRARY_VERSION = 1 as const;
 
@@ -47,6 +48,13 @@ export type DocumentLibraryFilters = {
 const healthPattern = /(gesund|arzt|ärzt|medizin|diagnos|krank|krankenkasse|pflege|physio|heuschnupfen|erkält|rücken|heuschnupfen|zahn|klinik|labor)/i;
 const sensitivePattern = /(gesund|arzt|ärzt|medizin|diagnos|krank|krankenkasse|rente|behörd|finanz|rechnung|bank|versicherung|persönlich|physio|pflege|steuer|gehalt)/i;
 
+/** Gespeicherter Textauszug eines Dokuments, falls das Register ihn führt (Feld „textauszug“); sonst leer. */
+export function textauszugVon(document: unknown) {
+  const d = document as { textauszug?: unknown; textAuszug?: unknown } | null;
+  const value = d?.textAuszug ?? d?.textauszug;
+  return typeof value === "string" ? value : "";
+}
+
 function validDate(value: string | null | undefined) {
   if (!value) return null;
   const date = new Date(value.length === 10 ? `${value}T12:00:00` : value);
@@ -57,22 +65,56 @@ function textOf(record: FamilyRecordUnion) {
   return `${cockpitRecordLabel(record)} ${record.source || ""} ${record.notes || ""} ${JSON.stringify(record.data)}`;
 }
 
+/** Ein Wörterbuch für Bereiche: die Lebensbereiche des Eingangs (FAMILY_CATEGORIES). Ältere oder freie Angaben
+ *  („Gesundheit“, „Fahrzeuge“, „Finanzen“) werden darauf abgebildet, damit kein Thema doppelt erscheint. */
+export function canonicalDocumentArea(value: string | null | undefined) {
+  const clean = value?.trim();
+  if (!clean) return null;
+  const canonical = canonicalFamilyCategory(clean).category;
+  if (canonical) return canonical;
+  const legacy: Record<string, FamilyCategory> = {
+    gesundheit: "Gesundheit & Pflege", fahrzeuge: "Auto & Mobilität", finanzen: "Finanzen & Konten", behorden: "Steuern & Behörden",
+    "rechnungen & garantien": "Einkäufe, Rechnungen & Garantien", "kaufe & garantien": "Einkäufe, Rechnungen & Garantien", vertrage: "Verträge & Abonnements",
+    "technik & gerate": "Technik, Geräte & Reparaturen", "arbeit, rente & sozialversicherung": "Rente, Arbeit & Sozialversicherung",
+    "familie & personliche unterlagen": "Familie & persönliche Dokumente", hauptakte: "Familie & persönliche Dokumente",
+    krankenversicherung: "Gesundheit & Pflege", "arbeit / arbeitgeber": "Rente, Arbeit & Sozialversicherung",
+  };
+  return legacy[clean.toLocaleLowerCase("de").normalize("NFD").replace(/[\u0300-\u036f]/g, "")] || null;
+}
+
+/** Sammelbereiche der Lebensbereich-Seiten: „Fahrzeuge“ umfasst Auto und Motorrad usw. */
+export const DOCUMENT_AREA_GROUPS: Record<string, readonly string[]> = {
+  Fahrzeuge: ["Auto & Mobilität", "Motorrad"],
+  "Käufe & Garantien": ["Einkäufe, Rechnungen & Garantien", "Technik, Geräte & Reparaturen"],
+};
+
+export function documentAreaMatches(itemArea: string, filterArea: string) {
+  if (!filterArea || itemArea === filterArea) return true;
+  const group = DOCUMENT_AREA_GROUPS[filterArea];
+  if (group) return group.includes(itemArea);
+  return canonicalDocumentArea(filterArea) === itemArea;
+}
+
 function areaFor(document: FamilyCockpitDocument) {
   const selected = readIntakeMetadata(document.notes).lifeArea;
-  if (selected) return selected;
+  if (selected) return canonicalDocumentArea(selected) || selected;
   const text = `${document.category} ${document.originalName} ${document.notes || ""}`;
-  if (healthPattern.test(text)) return "Gesundheit";
+  if (healthPattern.test(text)) return "Gesundheit & Pflege";
+  const fromCategory = canonicalDocumentArea(document.category);
+  if (fromCategory) return fromCategory;
   if (/(motorrad|motoria|guzzi)/i.test(text)) return "Motorrad";
-  if (/(fahrzeug|auto|tüv|werkstatt|wartung)/i.test(text)) return "Fahrzeuge";
-  if (/(wohnung|haus|miete|vermieter|nebenkosten|garten)/i.test(text)) return "Haus & Wohnung";
+  if (/(fahrzeug|auto|kfz|tüv|werkstatt|wartung)/i.test(text)) return "Auto & Mobilität";
+  if (/(wohnung|haus|miete|vermieter|nebenkosten)/i.test(text)) return "Haus & Wohnung";
+  if (/(garten|grundstück)/i.test(text)) return "Garten & Grundstück";
   if (/(versicherung|police)/i.test(text)) return "Versicherungen";
-  if (/(behörd|bescheid|amt|antrag)/i.test(text)) return "Behörden";
-  if (/(vertrag)/i.test(text)) return "Verträge";
-  if (/(rechnung|garantie|kauf|beleg)/i.test(text)) return "Rechnungen & Garantien";
-  if (/(technik|gerät|computer|telefon)/i.test(text)) return "Technik & Geräte";
-  if (/(arbeit|arbeitgeber|rente|rentenversicherung|sozial|teilzeit)/i.test(text)) return "Arbeit, Rente & Sozialversicherung";
-  if (/(finanz|bank|zahlung|kosten)/i.test(text)) return "Finanzen";
-  if (/(familie|person|vollmacht|vorsorge)/i.test(text)) return "Familie & persönliche Unterlagen";
+  if (/(behörd|bescheid|amt|antrag|steuer)/i.test(text)) return "Steuern & Behörden";
+  if (/(vertrag|abo)/i.test(text)) return "Verträge & Abonnements";
+  if (/(rechnung|garantie|kauf|beleg)/i.test(text)) return "Einkäufe, Rechnungen & Garantien";
+  if (/(technik|gerät|computer|telefon)/i.test(text)) return "Technik, Geräte & Reparaturen";
+  if (/(arbeit|arbeitgeber|rente|rentenversicherung|sozial|teilzeit|gehalt|lohn)/i.test(text)) return "Rente, Arbeit & Sozialversicherung";
+  if (/(finanz|bank|konto|zahlung|kosten)/i.test(text)) return "Finanzen & Konten";
+  if (/(strom|gas|wasser|energie)/i.test(text)) return "Energie & Versorgung";
+  if (/(familie|person|vollmacht|vorsorge)/i.test(text)) return "Familie & persönliche Dokumente";
   return document.category?.trim() || "Weitere Dokumente";
 }
 
@@ -161,7 +203,7 @@ export function buildDocumentLibraryItems(documents: FamilyCockpitDocument[], re
       ? "Geschützte Gesundheitsunterlage. Einzelheiten sind nur im Gesundheitsbereich sichtbar."
       : shorten(document.notes ? lesbareNotiz(document.notes) : `Das Dokument ist im Bereich „${area}“ gespeichert und mit seinem ursprünglichen Datensatz verknüpft.`);
     const searchable = [
-      document.id, document.originalName, document.dateiname || "", protectedHealth ? "" : document.textAuszug || "", document.category, documentType, date || "", document.status,
+      document.id, document.originalName, document.dateiname || "", protectedHealth ? "" : textauszugVon(document), document.category, documentType, date || "", document.status,
       document.notes || "", document.storageType || "", document.storedPath || "", document.relativePath || "", document.oneDrivePath || "",
       ...references.flatMap((reference) => [reference.id, reference.type, reference.label]),
     ].join(" ");
@@ -190,7 +232,7 @@ export function filterDocumentLibraryItems(items: DocumentLibraryItem[], filters
   const start = validDate(filters.startDate || null);
   const end = validDate(filters.endDate || null);
   const filtered = items.filter((item) => {
-    if (filters.area && item.area !== filters.area) return false;
+    if (filters.area && !documentAreaMatches(item.area, filters.area)) return false;
     if (filters.documentType && item.documentType !== filters.documentType) return false;
     const date = validDate(item.date || item.updatedAt);
     if (start && (!date || date < start)) return false;
@@ -198,7 +240,7 @@ export function filterDocumentLibraryItems(items: DocumentLibraryItem[], filters
       const endOfDay = new Date(end); endOfDay.setHours(23, 59, 59, 999);
       if (!date || date > endOfDay) return false;
     }
-    if (query && scoreFamilySearchText(item.searchable, interpretation) === 0 && !normalizeFamilySearch(item.searchable).includes(query)) return false;
+    if (query && scoreFamilySearchText(item.searchable, interpretation, [item.date]) === 0 && !normalizeFamilySearch(item.searchable).includes(query)) return false;
     return true;
   });
   const time = (item: DocumentLibraryItem, updated = false) => validDate(updated ? item.updatedAt : item.date || item.updatedAt)?.getTime() || 0;

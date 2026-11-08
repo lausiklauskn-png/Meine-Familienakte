@@ -16,6 +16,8 @@ export type FamilyCockpitDocument = FamilyNewsDocument & {
   dateiname?: string | null;
   /** Gelesener Textauszug für die Suche in der Bibliothek. */
   textAuszug?: string | null;
+  /** Gespeicherter Textauszug (falls das Register ihn führt); wird mit durchsucht. */
+  textauszug?: string | null;
 };
 
 export type CockpitSection = "cockpit" | "documents" | "inbox" | "health" | "medical" | "benefits" | "work" | "assessment" | "correspondence" | "family" | "home" | "vehicles" | "purchases" | "reminders" | "memory" | "directory" | "versions";

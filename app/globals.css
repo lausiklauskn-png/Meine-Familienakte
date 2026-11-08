@@ -2508,3 +2508,9 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .queue-filter-hinweis { margin: -6px 0 10px; color: var(--muted); font-size: .85rem; }
 .intake-queue-item.erledigt { opacity: .8; }
 .queue-gespeichert { color: var(--teal); font-weight: 800; font-size: .88rem; }
+/* 2.28.39 Suche nach Art gruppiert, „Weitere anzeigen“, sichtbarer Bibliotheksfilter, seitenweise Listen */
+.search-total { margin: 6px 13px 2px; color: var(--muted); font-size: .85rem; }
+.search-group > h3 { margin: 14px 13px 4px; }
+.search-more { padding: 8px 13px; align-items: center; }
+.library-filter-active { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin: 0 0 12px; color: var(--muted); }
+.liste-mehr { justify-content: center; align-items: center; gap: 12px; margin: 14px 0; color: var(--muted); }

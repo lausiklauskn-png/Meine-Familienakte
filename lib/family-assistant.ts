@@ -1,4 +1,7 @@
 import type { FamilyRecordUnion, FamilyRelation } from "./family-data-model";
+import { interpretFamilySearchQuery, scoreFamilySearchText } from "./family-search.ts";
+import { familyDocumentSearchText, familyRecordKindLabel, familyRecordSearchText } from "./family-search-text.ts";
+import { buildScheduleItems } from "./family-reminders.ts";
 
 export type AssistantMode = "question" | "advice" | "writing" | "appointment" | "continue";
 export type AssistantConfidence = "Sicher" | "Wahrscheinlich" | "Unklar";
@@ -7,6 +10,8 @@ export type AssistantDocument = {
   title: string;
   category?: string | null;
   notes?: string | null;
+  documentDate?: string | null;
+  textauszug?: string | null;
   assistantReleased?: boolean;
 };
 
@@ -16,7 +21,11 @@ export type AssistantAnalysis = {
   caseId: string | null;
   caseTitle: string | null;
   confidence: AssistantConfidence;
-  archiveFacts: Array<{ id: string; kind: string; title: string }>;
+  archiveFacts: Array<{ id: string; kind: string; title: string; date?: string | null }>;
+  /** Kurze Antwort aus der Akte, z. B. das Datum bei „Wann …?“. */
+  answer: string | null;
+  /** Passende, aber nicht für die Assistenz freigegebene Dokumente (gleiche Treffer wie in der Kopfsuche). */
+  unreleasedMatchIds: string[];
   research: { status: "not_configured"; message: string; sources: string[] };
   assessment: {
     situation: string;
@@ -77,20 +86,37 @@ export function buildAssistantAnalysis(input: {
   const selectedCase = cases.find((record) => record.id === input.selectedCaseId)
     || (bestCase && overlapScore(question, recordLabel(bestCase)) > 0 ? bestCase : null);
   const connected = selectedCase ? relatedIds(selectedCase.id, input.relations) : new Set<string>();
+  // Dieselbe Suche wie oben im Kopf: gleiche Frage → gleiche Einträge. Nur wenn sie nichts findet, zählt die Wortüberschneidung.
+  const interpretation = interpretFamilySearchQuery(question);
+  const searchScore = (record: FamilyRecordUnion) => scoreFamilySearchText(familyRecordSearchText(record), interpretation);
+  const searchHits = input.records.filter((record) => searchScore(record) > 0).sort((a, b) => searchScore(b) - searchScore(a));
   const relevantRecords = selectedCase
     ? input.records.filter((record) => connected.has(record.id))
-    : input.records.filter((record) => overlapScore(question, `${recordLabel(record)} ${record.notes || ""}`) > 0).slice(0, 12);
+    : (searchHits.length ? searchHits : input.records.filter((record) => overlapScore(question, `${recordLabel(record)} ${record.notes || ""}`) > 0)).slice(0, 12);
+  const documentMatches = (document: AssistantDocument) => scoreFamilySearchText(familyDocumentSearchText({ id: document.id, originalName: document.title, category: document.category, notes: document.notes, textauszug: document.textauszug }), interpretation, [document.documentDate]) > 0
+    || overlapScore(question, `${document.title} ${document.category || ""} ${document.notes || ""}`) > 0;
   const relevantDocuments = input.documents.filter((document) => {
     const explicitlyLinked = selectedCase && connected.has(document.id);
     const released = document.assistantReleased === true;
-    return explicitlyLinked || (released && overlapScore(question, `${document.title} ${document.category || ""} ${document.notes || ""}`) > 0);
+    return explicitlyLinked || (released && documentMatches(document));
   });
   const excludedDocumentIds = input.documents.filter((document) => !relevantDocuments.includes(document) && document.assistantReleased !== true).map((document) => document.id);
+  const unreleasedMatchIds = input.documents.filter((document) => !relevantDocuments.includes(document) && document.assistantReleased !== true && documentMatches(document)).map((document) => document.id);
+  const dateOf = (record: FamilyRecordUnion) => {
+    if (!["deadline", "task", "reminder"].includes(record.recordType)) return null;
+    const date = buildScheduleItems([record], [], new Date())[0]?.date;
+    return date ? date.slice(0, 10) : null;
+  };
   const archiveFacts = [
-    ...(selectedCase ? [{ id: selectedCase.id, kind: "Vorgang", title: recordLabel(selectedCase) }] : []),
-    ...relevantRecords.filter((record) => record.id !== selectedCase?.id).slice(0, 12).map((record) => ({ id: record.id, kind: record.recordType, title: recordLabel(record) })),
-    ...relevantDocuments.slice(0, 12).map((document) => ({ id: document.id, kind: "Dokument", title: document.title })),
+    ...(selectedCase ? [{ id: selectedCase.id, kind: "Vorgang", title: recordLabel(selectedCase), date: null }] : []),
+    ...relevantRecords.filter((record) => record.id !== selectedCase?.id).slice(0, 12).map((record) => ({ id: record.id, kind: familyRecordKindLabel(record), title: recordLabel(record), date: dateOf(record) })),
+    ...relevantDocuments.slice(0, 12).map((document) => ({ id: document.id, kind: "Dokument", title: document.title, date: document.documentDate || null })),
   ];
+  const dated = archiveFacts.filter((fact) => fact.date);
+  const germanDate = (iso: string) => `${iso.slice(8, 10)}.${iso.slice(5, 7)}.${iso.slice(0, 4)}`;
+  const answer = /\bwann\b/i.test(question)
+    ? dated.length ? dated.slice(0, 3).map((fact) => `${fact.title}: ${germanDate(fact.date as string)}`).join(" · ") : "In der Akte steht dazu kein Datum."
+    : null;
   const lower = question.toLocaleLowerCase("de");
   const appointment = input.mode === "appointment" || /(arzt|termin|sprechstunde|untersuchung)/i.test(lower);
   const legal = /(widerspruch|kündigung|frist|anspruch|recht|behörde|versicherung)/i.test(lower);
@@ -119,6 +145,8 @@ export function buildAssistantAnalysis(input: {
     caseTitle: selectedCase ? recordLabel(selectedCase) : null,
     confidence: selectedCase && relevantDocuments.length ? "Sicher" : selectedCase || archiveFacts.length ? "Wahrscheinlich" : "Unklar",
     archiveFacts,
+    answer,
+    unreleasedMatchIds,
     research: {
       status: "not_configured",
       message: "Aktuelle Internetrecherche ist in dieser privaten Testfassung noch nicht sicher angebunden. Es wurden keine externen Quellen verwendet.",

@@ -13,10 +13,12 @@ export type MenuSection =
 export type MenuTarget = { section: MenuSection; targetId?: string };
 export type MenuAction = MenuTarget & { label: string; detail: string; query?: string; area?: string };
 
+// Bereichsnamen der Dokument-Knöpfe = Lebensbereiche des Eingangs (lib/family-categories.ts) bzw. die Sammelbereiche
+// „Fahrzeuge“ und „Käufe & Garantien“ aus lib/document-library.ts. Mehrere Suchwörter mit „oder“ verbinden.
 export const menuPageActions = {
   health: [
     { label: "Medizinische Akte", detail: "Diagnosen, AU-Zeiten und Ärzte", section: "medical" },
-    { label: "Gesundheitsdokumente", detail: "Geschützte Unterlagen in der Bibliothek", section: "documents", area: "Gesundheit" },
+    { label: "Gesundheitsdokumente", detail: "Geschützte Unterlagen in der Bibliothek", section: "documents", area: "Gesundheit & Pflege" },
     { label: "Fristen und Aufgaben", detail: "Offene gesundheitliche und berufliche Punkte", section: "reminders" },
     { label: "Im Cockpit anzeigen", detail: "Datensparsame Arbeitsübersicht", section: "cockpit" },
   ],
@@ -25,7 +27,7 @@ export const menuPageActions = {
     { label: "Personenakten", detail: "Personen und ihre vorhandenen Beziehungen", section: "cockpit" },
     { label: "Gemeinsame Vorgänge", detail: "Verknüpfte Vorgänge im Cockpit", section: "cockpit" },
     { label: "Termine und Fristen", detail: "Offene, fällige und erledigte Punkte", section: "reminders" },
-    { label: "Familienunterlagen", detail: "Dokumente dieses Lebensbereichs", section: "documents", area: "Familie & persönliche Unterlagen" },
+    { label: "Familienunterlagen", detail: "Dokumente dieses Lebensbereichs", section: "documents", area: "Familie & persönliche Dokumente" },
   ],
   home: [
     { label: "Dokumente", detail: "Unterlagen zu Haus und Wohnung", section: "documents", area: "Haus & Wohnung" },
@@ -38,36 +40,36 @@ export const menuPageActions = {
     { label: "Fristen und Aufgaben", detail: "TÜV, Wartung und Wiedervorlagen", section: "reminders" },
   ],
   purchases: [
-    { label: "Dokumente", detail: "Rechnungen, Garantien und Geräteunterlagen", section: "documents", area: "Rechnungen & Garantien" },
+    { label: "Dokumente", detail: "Rechnungen, Garantien und Geräteunterlagen", section: "documents", area: "Käufe & Garantien" },
     { label: "Objekte und Vorgänge", detail: "Geräte- und Reparaturakten öffnen", section: "cockpit" },
     { label: "Fristen und Aufgaben", detail: "Garantieenden und Wiedervorlagen", section: "reminders" },
   ],
   medical: [
-    { label: "Gesundheitsdokumente", detail: "Geschützte Originalunterlagen anzeigen", section: "documents", area: "Gesundheit" },
+    { label: "Gesundheitsdokumente", detail: "Geschützte Originalunterlagen anzeigen", section: "documents", area: "Gesundheit & Pflege" },
     { label: "Krankenkasse und Leistungen", detail: "Leistungszeiten und offene Klärungen", section: "benefits" },
     { label: "Arbeit und Arbeitgeber", detail: "Arbeitsverlauf und Arbeitszeiten", section: "work" },
     { label: "Im Cockpit anzeigen", detail: "Datensparsame Aufgabenübersicht", section: "cockpit" },
   ],
   benefits: [
-    { label: "Krankenkasse-Unterlagen", detail: "Leistungsauskunft und Antworten suchen", section: "documents", query: "Krankenkasse Leistung" },
+    { label: "Krankenkasse-Unterlagen", detail: "Leistungsauskunft und Antworten suchen", section: "documents", query: "Krankenkasse oder Leistung" },
     { label: "Anfragen und Antworten", detail: "Schriftverkehr chronologisch öffnen", section: "correspondence" },
     { label: "Fristen und Aufgaben", detail: "Offene Antworten und Wiedervorlagen", section: "reminders" },
     { label: "Im Cockpit anzeigen", detail: "Aktuelle Vorgänge und Aufgaben", section: "cockpit" },
   ],
   work: [
-    { label: "Arbeitsunterlagen", detail: "Arbeitgeber- und Anwesenheitsdokumente", section: "documents", query: "Arbeitgeber Arbeit Anwesenheit" },
+    { label: "Arbeitsunterlagen", detail: "Arbeitgeber- und Anwesenheitsdokumente", section: "documents", query: "Arbeitgeber oder Arbeit oder Anwesenheit" },
     { label: "Bescheinigung und Anträge", detail: "Anträge, Bescheide und Behördenpost", section: "assessment" },
     { label: "Anfragen und Antworten", detail: "Arbeitsbezogenen Schriftverkehr öffnen", section: "correspondence" },
     { label: "Im Cockpit anzeigen", detail: "Vorgänge, Aufgaben und Fristen", section: "cockpit" },
   ],
   assessment: [
-    { label: "Antragsunterlagen", detail: "Anträge und Bescheide", section: "documents", query: "Antrag Bescheid" },
+    { label: "Antragsunterlagen", detail: "Anträge und Bescheide", section: "documents", query: "Antrag oder Bescheid" },
     { label: "Anfragen und Antworten", detail: "Rentenversicherung-, Arbeitsagentur- und Arbeitgeber-Schriftverkehr", section: "correspondence" },
     { label: "Fristen und Aufgaben", detail: "Nachreichungen und Termine", section: "reminders" },
     { label: "Im Cockpit anzeigen", detail: "Laufende Vorgänge öffnen", section: "cockpit" },
   ],
   correspondence: [
-    { label: "Schriftverkehr", detail: "Anfragen und Antworten als Dokumente", section: "documents", query: "Anfrage Antwort Krankenkasse Rentenversicherung Arbeitgeber" },
+    { label: "Schriftverkehr", detail: "Anfragen und Antworten als Dokumente", section: "documents", query: "Anfrage oder Antwort oder Schreiben" },
     { label: "Krankenkasse und Leistungen", detail: "Leistungszeiten und offene Klärungen", section: "benefits" },
     { label: "Fristen und Aufgaben", detail: "Offene Antworten und Wiedervorlagen", section: "reminders" },
     { label: "Im Cockpit anzeigen", detail: "Vorgänge und nächste Schritte", section: "cockpit" },

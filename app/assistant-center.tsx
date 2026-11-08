@@ -31,7 +31,7 @@ function labelOf(record: FamilyRecordUnion) {
   return String(data.title || data.displayName || data.name || record.notes || record.id);
 }
 
-export function AssistantCenter({ records, relations, documents, initialCaseId, vaultReady, onOpenRecord, onOpenDocument, onSaveCorrespondence, onNotice }: {
+export function AssistantCenter({ records, relations, documents, initialCaseId, vaultReady, onOpenRecord, onOpenDocument, onOpenInventory, onSaveCorrespondence, onNotice }: {
   records: FamilyRecordUnion[];
   relations: FamilyRelation[];
   documents: AssistantDocument[];
@@ -39,6 +39,8 @@ export function AssistantCenter({ records, relations, documents, initialCaseId, 
   vaultReady: boolean;
   onOpenRecord: (id: string) => void;
   onOpenDocument: (id: string) => void;
+  /** Weg zur Freigabe: Dokumente → Bestand prüfen. */
+  onOpenInventory?: () => void;
   onSaveCorrespondence: (input: {
     status: "Entwurf" | "Versandbereit" | "Versendet" | "Antwort ausstehend" | "Antwort eingegangen" | "Erledigt";
     kind: CorrespondenceKind;
@@ -71,7 +73,7 @@ export function AssistantCenter({ records, relations, documents, initialCaseId, 
   const analyze = () => {
     const next = buildAssistantAnalysis({ question, mode, selectedCaseId: caseId || null, records, relations, documents });
     setAnalysis(next);
-    reportActivity({ kind: next.sourceDocumentIds.length ? "success" : "info", text: `Assistenzvorschlag aus vorhandenen Akteninformationen vorbereitet · ${next.sourceDocumentIds.length} Dokumente verwendet · ${next.excludedDocumentIds.length} nicht freigegebene Dokumente nicht aktiv verwendet. Keine aktuelle Internetrecherche und kein automatischer Versand.` });
+    reportActivity({ kind: next.sourceDocumentIds.length ? "success" : "info", text: `Assistenzvorschlag aus vorhandenen Akteninformationen vorbereitet · ${next.sourceDocumentIds.length} Dokumente verwendet · ${next.unreleasedMatchIds.length} passende, nicht freigegebene Dokumente nicht verwendet. Keine aktuelle Internetrecherche und kein automatischer Versand.` });
     if (next.caseId) setCaseId(next.caseId);
     if (["writing", "appointment"].includes(mode)) {
       const defaultKind: CorrespondenceKind = mode === "appointment" ? "Terminvorbereitung" : kind;
@@ -124,7 +126,7 @@ export function AssistantCenter({ records, relations, documents, initialCaseId, 
 
     {analysis && <>
       <section className="assistant-evidence-grid">
-        <article className="card evidence-card"><div className="assistant-card-title"><ShieldCheck/><h2>A · Aus meiner Familienakte</h2></div><span className={`badge ${analysis.confidence === "Sicher" ? "success" : analysis.confidence === "Wahrscheinlich" ? "warning" : "neutral"}`}>{analysis.confidence}</span>{analysis.archiveFacts.length ? <ul>{analysis.archiveFacts.map((fact) => <li key={`${fact.kind}-${fact.id}`}><button className="text-link" onClick={() => fact.kind === "Dokument" ? onOpenDocument(fact.id) : onOpenRecord(fact.id)}><strong>{fact.kind}</strong> · {fact.title}</button></li>)}</ul> : <p>Keine passende bestätigte Grundlage gefunden.</p>}<small>{analysis.excludedDocumentIds.length} nicht freigegebene Dokumente wurden nicht aktiv verwendet.</small></article>
+        <article className="card evidence-card"><div className="assistant-card-title"><ShieldCheck/><h2>A · Aus meiner Familienakte</h2></div><span className={`badge ${analysis.confidence === "Sicher" ? "success" : analysis.confidence === "Wahrscheinlich" ? "warning" : "neutral"}`}>{analysis.confidence}</span>{analysis.answer && <p className="assistant-answer" data-assistenz-antwort><strong>Antwort aus der Akte:</strong> {analysis.answer}</p>}{analysis.archiveFacts.length ? <ul>{analysis.archiveFacts.map((fact) => <li key={`${fact.kind}-${fact.id}`}><button className="text-link" onClick={() => fact.kind === "Dokument" ? onOpenDocument(fact.id) : onOpenRecord(fact.id)}><strong>{fact.kind}</strong> · {fact.title}{fact.date ? ` · ${fact.date.slice(8, 10)}.${fact.date.slice(5, 7)}.${fact.date.slice(0, 4)}` : ""}</button></li>)}</ul> : <p>Keine passende bestätigte Grundlage gefunden.</p>}{analysis.unreleasedMatchIds.length > 0 ? <small data-assistenz-freigabe>{analysis.unreleasedMatchIds.length} passende{analysis.unreleasedMatchIds.length === 1 ? "s Dokument ist" : " Dokumente sind"} nicht für die Assistenz freigegeben. Weg: oben den Vorgang wählen, zu dem {analysis.unreleasedMatchIds.length === 1 ? "es gehört" : "sie gehören"} (dann zählen verknüpfte Dokumente mit), oder unter Dokumente → Bestand prüfen freigeben.{onOpenInventory && <> <button type="button" className="text-link" onClick={onOpenInventory}>Bestand prüfen öffnen</button></>}</small> : <small>Nur freigegebene oder zum Vorgang gehörende Dokumente werden verwendet.</small>}</article>
         <article className="card evidence-card research-unavailable"><div className="assistant-card-title"><SearchCheck/><h2>B · Aktuell recherchiert</h2></div><span className="badge warning">Nicht eingerichtet</span><p>{analysis.research.message}</p><small>Keine Quelle und keine Aktualität wird erfunden.</small></article>
         <article className="card evidence-card"><div className="assistant-card-title"><MessageSquareText/><h2>C · Einschätzung und Vorschlag</h2></div><p>{analysis.assessment.recommendation}</p><small>Dies ist eine Arbeitshilfe, keine Rechtsberatung oder medizinische Diagnose.</small></article>
       </section>

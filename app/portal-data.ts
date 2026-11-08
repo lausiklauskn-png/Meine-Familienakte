@@ -59,11 +59,12 @@ export const assessmentGroups = [
   },
 ];
 
+// Nur für die Beispielfamilie (Demo); Bereiche = Lebensbereiche des Eingangs, damit der Bereichsknopf trifft.
 export const coreDocuments = [
-  { date: "14.03.2026", name: "Familienübersicht Lindqvist-Arenberg (Beispiel)", area: "Hauptakte", status: "aktuell" },
-  { date: "03.10.2025", name: "Beleg neue Brille", area: "Gesundheit", status: "berücksichtigt" },
-  { date: "21.01.2026", name: "Zuschuss Brille – Antwort Krankenversicherung", area: "Krankenversicherung", status: "berücksichtigt" },
-  { date: "02.03.2026", name: "Antrag auf Teilzeit", area: "Arbeit / Arbeitgeber", status: "Antwort offen" },
-  { date: "01.08.2025", name: "Mietvertrag Pustelblumenweg 7", area: "Wohnen", status: "berücksichtigt" },
-  { date: "12.11.2024", name: "Rechnung Waschmaschine", area: "Käufe & Garantien", status: "berücksichtigt" },
+  { date: "14.03.2026", name: "Familienübersicht Lindqvist-Arenberg (Beispiel)", area: "Familie & persönliche Dokumente", status: "aktuell" },
+  { date: "03.10.2025", name: "Beleg neue Brille", area: "Gesundheit & Pflege", status: "berücksichtigt" },
+  { date: "21.01.2026", name: "Zuschuss Brille – Antwort Krankenversicherung", area: "Gesundheit & Pflege", status: "berücksichtigt" },
+  { date: "02.03.2026", name: "Antrag auf Teilzeit", area: "Rente, Arbeit & Sozialversicherung", status: "Antwort offen" },
+  { date: "01.08.2025", name: "Mietvertrag Pustelblumenweg 7", area: "Haus & Wohnung", status: "berücksichtigt" },
+  { date: "12.11.2024", name: "Rechnung Waschmaschine", area: "Einkäufe, Rechnungen & Garantien", status: "berücksichtigt" },
 ];
