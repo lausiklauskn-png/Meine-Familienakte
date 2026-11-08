@@ -714,9 +714,9 @@ button.object-card:hover { transform: translateY(-2px); border-color: #8fb2c9; b
 .memory-quick textarea { padding-right: 13px; }
 .memory-quick .card-heading { align-items: flex-start; }
 .memory-day-summary, .memory-event-list, .memory-media-list { display: grid; gap: 7px; }
-.memory-day-summary button, .memory-event-list > button, .memory-event-zeile .fz-kopf > button:not(.auge-knopf), .memory-media-list > button { width: 100%; display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 10px; align-items: center; border: 1px solid var(--line); border-radius: 10px; padding: 10px 11px; color: var(--ink); background: white; text-align: left; }
+.memory-day-summary button, .memory-event-list > button, .memory-event-zeile .fz-kopf > button:not(.auge-knopf):not(.fz-griff), .memory-media-list > button { width: 100%; display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 10px; align-items: center; border: 1px solid var(--line); border-radius: 10px; padding: 10px 11px; color: var(--ink); background: white; text-align: left; }
 .memory-day-summary button { grid-template-columns: minmax(0,1fr) auto; }
-.memory-event-list > button:hover, .memory-event-list > button.active, .memory-event-zeile .fz-kopf > button:not(.auge-knopf):hover, .memory-event-zeile .fz-kopf > button.active, .memory-media-list > button:hover, .memory-day-summary button:hover { border-color: var(--teal); background: #f0f7f8; }
+.memory-event-list > button:hover, .memory-event-list > button.active, .memory-event-zeile .fz-kopf > button:not(.auge-knopf):not(.fz-griff):hover, .memory-event-zeile .fz-kopf > button.active, .memory-media-list > button:hover, .memory-day-summary button:hover { border-color: var(--teal); background: #f0f7f8; }
 .memory-event-list strong, .memory-event-list small, .memory-media-list strong, .memory-media-list small, .memory-day-summary strong, .memory-day-summary small { display: block; }
 .memory-event-list small, .memory-media-list small, .memory-day-summary small { margin-top: 2px; color: var(--muted); }
 .memory-event-icon { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 9px; color: white; background: var(--navy-2); }
@@ -2249,7 +2249,7 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .schedule-flach .fz-offen .button-row { grid-column: auto; }
 .schedule-flach .fz-offen .schedule-links { display: flex; flex-wrap: wrap; gap: 6px; }
 .memory-event-zeile { display: grid; gap: 0; }
-.memory-event-zeile .fz-kopf > button:not(.auge-knopf) { flex: 1 1 auto; min-width: 0; grid-template-columns: auto minmax(0,1fr); padding: 7px 9px; }
+.memory-event-zeile .fz-kopf > button:not(.auge-knopf):not(.fz-griff) { flex: 1 1 auto; min-width: 0; grid-template-columns: auto minmax(0,1fr); padding: 7px 9px; }
 .memory-event-zeile .fz-offen { padding: 8px 4px 4px; }
 .memory-event-zeile .fz-offen .loesch-knopf span { display: inline; }
 .notiz-liste li { display: grid; gap: 0; padding: 6px 6px 6px 10px; }
@@ -2371,14 +2371,6 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .lk-muster { display: inline-block; width: 24px; height: 15px; border: 1px solid #c8d9e2; border-radius: 4px; background: #f7fafc; }
 .lk-muster.s-fertig { border: 2px solid #2f8a4f; background: #eef8f1; } .lk-muster.s-imbau { border: 2px dashed #c58a00; background: #fff8e6; } .lk-muster.s-aktivieren { border: 2px solid #c0392b; background: #fdf3f3; } .lk-muster.s-geplant { border: 2px dashed #9aa5ad; background: #f1f3f4; } .lk-muster.frisch { box-shadow: 0 0 0 2px #b8860b; }
 
-/* Landkarte: Umschalter Karte · Liste, Liste am Handy (Klaus 07.11.2026, Sitzung 4) */
-.lk-umschalter { display: inline-flex; justify-self: start; border: 1px solid #c8d9e2; border-radius: 999px; overflow: hidden; }
-.lk-umschalter button { font: inherit; font-size: .86rem; font-weight: 600; padding: 4px 14px; border: 0; background: #fff; color: #1f4e79; cursor: pointer; min-height: 34px; }
-.lk-umschalter button[aria-pressed="true"] { background: #1f4e79; color: #fff; }
-.lk-liste { display: grid; gap: 12px; }
-.lk-liste-spalte { display: grid; gap: 6px; }
-.lk-liste-spalte h4 { margin: 0; font-size: .9rem; display: flex; align-items: center; gap: 8px; color: #1f4e79; }
-.lk-liste-spalte h4 span { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #1f4e79; color: #fff; font-size: .75rem; }
 .app-landkarte-hilfe > summary .lk-gold { margin-left: 8px; font-size: .78rem; font-weight: 600; border: 1.5px solid #b8860b; color: #8a6508; border-radius: 999px; padding: 0 9px; }
 
 /* Hilfe als Baum (Sitzung 4): Bild, Merkpunkte, „Ausführlich“ eingeklappt */
@@ -2417,4 +2409,86 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
   .neu-fenster { position: fixed; top: 120px; right: max(16px, env(safe-area-inset-right, 0px)); width: min(960px, calc(100vw - 32px));
     max-height: calc(100vh - 140px); overflow: auto; }
   .neu-fenster ul { grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); align-items: start; }
+}
+
+/* Zeilen mit Aufklappleiste (Klaus 2026-11-08): links Datum und Uhrzeit, Mitte „Anfang … Hauptwort“ mit Art und Glocke,
+   rechts Pfeil ‹ (auf) – die Leiste mit ✓ ✎ 🗑 👁 schiebt sich über das Zeilenende, › schließt. Ist die Zeile breit
+   genug, stehen die Knöpfe direkt darin. Alle Zeilen einer Liste sind gleich breit. */
+.fz-kopf.fz-voll { position: relative; overflow: hidden; container-type: inline-size; width: 100%; box-sizing: border-box; touch-action: pan-y; }
+.fz-voll .mk-zeit { flex: 0 0 auto; text-align: center; font-variant-numeric: tabular-nums; }
+.flach-p { flex: 0 0 auto; white-space: pre; color: var(--muted); }
+.fz-griff, .fz-zu { flex: 0 0 auto; align-self: stretch; width: 30px; min-height: 40px; border: 0; background: var(--teal-soft, #e8f3f4); color: var(--teal, #2a7f86); font: 700 1.25rem/1 inherit; cursor: pointer; padding: 0; }
+.fz-griff { border-left: 1px solid var(--line); border-radius: 8px 0 0 8px; }
+.fz-griff[aria-expanded="true"] { visibility: hidden; }
+.fz-zu { border-right: 1px solid var(--line); border-radius: 8px 0 0 8px; }
+.fz-leiste { position: absolute; top: 0; bottom: 0; right: 0; z-index: 2; display: flex; align-items: center; gap: 6px; padding-right: 6px; background: var(--paper, #fff); border-left: 1px solid var(--line); box-shadow: -8px 0 14px rgba(9, 38, 63, .14); transform: translateX(105%); visibility: hidden; }
+.fz-leiste.auf { transform: none; visibility: visible; }
+.fz-leiste > * { flex: 0 0 auto; }
+.fz-leiste .loesch-knopf span { display: none; }
+.fz-leiste .loesch-knopf.sicher span { display: inline; }
+@media (prefers-reduced-motion: no-preference) { .fz-leiste { transition: transform .2s ease, visibility .2s; } }
+/* breit genug: Knöpfe direkt in der Zeile, ohne Pfeile */
+@container (min-width: 600px) {
+  .fz-griff, .fz-zu { display: none; }
+  .fz-leiste, .fz-leiste.auf { position: static; transform: none; visibility: visible; box-shadow: none; border: 0; background: transparent; padding: 0; }
+}
+
+/* Geteilter Bildschirm und schmale Fenster (Klaus 08.11.2026, Tablet): zwischen 621 und 900 px lag „Neu“ über dem Namen,
+   weil Drucken, Abmelden und „Installieren“ noch im Kopf standen. Sie wandern wie am Handy ins Menü; reicht der Platz
+   trotzdem nicht, kürzt sich der Name mit „…“ statt überdeckt zu werden. */
+@media (max-width: 900px) {
+  .header-actions > .drucken-knopf, .header-actions > .logout-button, .header-actions > .login-button, .header-actions > .familienakte-install { display: none !important; }
+  .main-navigation.mobile-open .mobile-menu-extra { display: flex; flex-direction: column; gap: 4px; border-top: 1px solid var(--line); margin-top: 6px; padding-top: 6px; }
+  .mobile-menu-extra button { display: flex; align-items: center; gap: 8px; }
+  .site-brand > span:last-child { overflow: hidden; }
+  .site-brand strong, .site-brand .site-brand-zeile { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+}
+
+/* Kasten oben in der Hilfe (Klaus 08.11.2026): blauer Knopf „Demo starten“, Landkarten-Symbol, „?“ oben rechts;
+   das Symbol klappt die „Interaktive Landkarte der App“ im selben Kasten auf. */
+.hilfe-oben { position: relative; display: grid; gap: 10px; padding-right: 40px; }
+.hilfe-oben .demo-starten-zeile { justify-content: flex-start; }
+.hilfe-oben-frage { position: absolute; top: 8px; right: 8px; }
+.hilfe-oben .demo-start-knopf { background: #1d5b94; border-color: #1d5b94; color: #fff; }
+.hilfe-oben .demo-start-knopf:hover:not(:disabled) { background: #174b7a; border-color: #174b7a; }
+.hilfe-oben-karte-knopf { position: relative; display: inline-grid; place-items: center; width: 46px; height: 42px; border: 1px solid var(--line); border-radius: 10px; background: #eaf3fa; color: #1d5b94; cursor: pointer; }
+.hilfe-oben-karte-knopf[aria-expanded="true"] { outline: 2px solid #1d5b94; outline-offset: 1px; }
+.hilfe-oben-karte-knopf .lk-gold { position: absolute; top: -8px; right: -10px; margin: 0; }
+.hilfe-oben-grund { flex-basis: 100%; margin: 0; }
+.hilfe-oben-karte { display: grid; gap: 8px; border-top: 1px dashed var(--line); padding-top: 10px; margin-right: -32px; min-width: 0; }
+.hilfe-oben-karte[hidden] { display: none; }
+.hilfe-oben-karte-kopf { display: flex; align-items: center; gap: 8px; color: #1d5b94; }
+.hilfe-oben-karte-kopf h3 { margin: 0; font-size: 1.05rem; color: var(--navy); }
+/* Web-App schon installiert, Seite im Browser offen: kein Knopf „Installieren“ (app/installiert.ts). */
+.pwa-installiert .familienakte-install { display: none !important; }
+
+/* Kopf mit Aufklappleiste (Klaus 08.11.2026): bis 900 px stehen Drucken, Installieren und Abmelden hinter dem Pfeil ‹;
+   die Leiste schiebt sich über die Knöpfe rechts, › schließt sie (auch Tipp daneben, Esc). Breiter: kein Pfeil. */
+.kopf-pfeil { display: none; font: 700 1.25rem/1 inherit; color: var(--teal, #2a7f86); background: var(--teal-soft, #e8f6f5); }
+@media (max-width: 900px) {
+  .masthead { position: relative; }
+  .header-actions > .kopf-pfeil-auf { display: inline-grid; place-items: center; order: 99; }
+  .header-actions.kopf-auf { position: absolute; top: 0; bottom: 0; right: 0; z-index: 5; justify-content: flex-end; padding: 0 12px 0 0; background: var(--paper, #fff); box-shadow: -10px 0 18px rgba(9, 38, 63, .16); }
+  .header-actions.kopf-auf > :not(.drucken-knopf):not(.logout-button):not(.login-button):not(.familienakte-install):not(.kopf-pfeil-zu) { display: none !important; }
+  .header-actions.kopf-auf > .kopf-pfeil-zu { display: inline-grid; place-items: center; order: -1; }
+  .header-actions.kopf-auf > .drucken-knopf, .header-actions.kopf-auf > .logout-button, .header-actions.kopf-auf > .login-button { display: inline-flex !important; align-items: center; justify-content: center; }
+  .header-actions.kopf-auf > .familienakte-install:not([hidden]) { display: inline-flex !important; }
+  .pwa-installiert .header-actions.kopf-auf > .familienakte-install { display: none !important; }
+  @media (prefers-reduced-motion: no-preference) { .header-actions.kopf-auf { animation: kopf-leiste-rein .2s ease; } }
+}
+@keyframes kopf-leiste-rein { from { transform: translateX(40%); opacity: .4; } to { transform: none; opacity: 1; } }
+@media (max-width: 620px) {
+  .header-actions > .kopf-pfeil { width: 20px; min-width: 20px; font-size: 1.1rem; }
+  .masthead { gap: 6px; }
+}
+@media (max-width: 420px) {
+  .masthead { padding-left: 8px; padding-right: 8px; gap: 5px; }
+  .header-actions { gap: 2px; }
+  .header-actions .neu-knopf-schalter { padding-left: 6px; padding-right: 6px; }
+}
+.site-brand strong { overflow: hidden; }
+@media (max-width: 380px) {
+  .site-brand { gap: 5px; }
+  .site-brand .brand-symbol { width: 28px; height: 28px; }
+  .site-brand .brand-symbol svg { width: 20px; height: 20px; }
 }

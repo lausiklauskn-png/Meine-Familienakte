@@ -48,8 +48,9 @@ try {
   await step("Speichern legt einen Erinnerungseintrag und eine Aufgabe mit Termin, Uhrzeit, Erinnerung und Kalender-Haken an", async () => {
     await fenster.locator("[data-notiz-speichern]").click();
     await fenster.locator("[data-notiz-liste] li").first().waitFor({ timeout: 10000 });
-    await fenster.locator("[data-notiz-liste] [data-notiz-auge]").first().click(); // 2.28.30: hinter dem Auge
-    const muell = await fenster.locator("[data-notiz-liste] [data-notiz-loeschen]").isVisible() && (await fenster.locator("[data-notiz-eingabe]").inputValue()) === "" && /Jens anzurufen/.test(await fenster.locator("[data-notiz-liste]").innerText());
+    await fenster.locator("[data-notiz-liste] li").first().locator("[data-fz-griff]").click(); // 2.28.38: Pfeil ‹ öffnet die Leiste
+    await fenster.locator("[data-notiz-liste] [data-fz-leiste=auf]").first().waitFor();
+    const muell = await fenster.locator("[data-notiz-liste] [data-fz-leiste=auf] [data-notiz-tagebuch-loeschen]").isVisible() && (await fenster.locator("[data-notiz-eingabe]").inputValue()) === "" && /Jens anzurufen/.test(await fenster.locator("[data-notiz-liste]").innerText());
     await fenster.locator("[data-notiz-fertig]").click();
     await fenster.waitFor({ state: "detached", timeout: 10000 });
     if (!muell) { console.log("   ↳ nach dem Haken keine Liste mit Mülleimer"); return false; }
@@ -95,8 +96,10 @@ try {
     await fenster.locator("[data-notiz-speichern]").click();
     await page.waitForFunction(() => document.querySelectorAll("[data-notiz-liste] li").length === 2);
     const nachSpeichern = await zahl();
-    await fenster.locator("[data-notiz-liste] li", { hasText: "Müll rausbringen" }).locator("[data-notiz-auge]").click();
-    await fenster.locator("[data-notiz-liste] li", { hasText: "Müll rausbringen" }).locator("[data-notiz-loeschen]").click();
+    const muellZeile = fenster.locator("[data-notiz-liste] li", { hasText: "Müll rausbringen" });
+    await muellZeile.locator("[data-fz-griff]").click(); // 2.28.38: Leiste auf, Mülleimer zweimal (Klaus 2026-11-08)
+    await muellZeile.locator("[data-notiz-tagebuch-loeschen]").click();
+    await muellZeile.locator("[data-notiz-tagebuch-loeschen=sicher]").click();
     await page.waitForFunction(() => document.querySelectorAll("[data-notiz-liste] li").length === 1);
     const nachLoeschen = await zahl();
     const bleibt = /Blumen gießen/.test(await fenster.locator("[data-notiz-liste]").innerText());

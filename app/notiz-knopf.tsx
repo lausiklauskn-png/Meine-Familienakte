@@ -1,13 +1,15 @@
-import { CalendarDays, Camera, Check, NotebookPen, StickyNote, Trash2, X } from "lucide-react";
+import { CalendarDays, Camera, Check, NotebookPen, StickyNote, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { FamilyRecordUnion, FamilyRelation } from "../lib/family-data-model";
-import { buildMemoryAnalysis, erinnerungAusText, erinnerungsTitel } from "../lib/family-memory";
+import { buildMemoryAnalysis, erinnerungAusText, erinnerungsTitel, memoryData } from "../lib/family-memory";
 import { ErinnernTeil, KALENDER_OEFFNEN, type ErinnernWert } from "./erinnern-teil";
-import { createLocalMemoryBundle, deleteLocalMemoryRecord } from "./local-vault";
+import { createLocalMemoryBundle, readLocalVaultData } from "./local-vault";
+import { NotizLoeschen } from "./loesch-knopf";
+import { MemoryBearbeiten } from "./memory-bearbeiten";
 import { glockeEinschalten } from "./app-glocke";
 import { kalenderZiel, useKalenderEinst } from "./kalender-karte";
 import { VoiceTextarea } from "./ui-controls";
-import { AugeKnopf, FlachText } from "./flach-zeile";
+import { AugeKnopf, FlachText, KnopfLeiste, StiftKnopf } from "./flach-zeile";
 
 /**
  * Knopf „Notiz“ im Kopf (Klaus 2026-11-05): eine Notiz einsprechen oder tippen, direkt vom Handy, ohne erst ins Tagebuch zu
@@ -62,7 +64,7 @@ function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, on
     onZu();
   };
   const zuRef = useRef(schliessen); zuRef.current = schliessen;
-  useEffect(() => { const esc = (e: KeyboardEvent) => { if (e.key === "Escape") void zuRef.current(); }; window.addEventListener("keydown", esc); return () => window.removeEventListener("keydown", esc); }, []);
+  useEffect(() => { const esc = (e: KeyboardEvent) => { if (e.key === "Escape" && !document.querySelector("[data-memory-bearbeiten]")) void zuRef.current(); }; window.addEventListener("keydown", esc); return () => window.removeEventListener("keydown", esc); }, []);
 
   const speichern = async () => {
     if (!text.trim() && !fotos.length) return setFehler("Bitte eine Notiz eingeben, einsprechen oder ein Foto machen.");
@@ -81,11 +83,18 @@ function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, on
     } catch (g) { const t = g instanceof Error ? g.message : String(g); setFehler(t); onFehler(t); }
     finally { setBusy(false); }
   };
-  const loeschen = async (id: string) => {
+  // Stift in der Notiz-Liste (Klaus 2026-11-08): gespeicherte Notiz frisch aus dem Tresor lesen und gleich bearbeiten.
+  const [aendern, setAendern] = useState<{ event: FamilyRecordUnion; aufgaben: FamilyRecordUnion[] } | null>(null);
+  const aendernOeffnen = async (id: string) => {
     if (!vaultHandle) return;
     setBusy(true); setFehler("");
-    try { await deleteLocalMemoryRecord(vaultHandle, id, { keepLinkedSchedules: false }); geaendert.current = true; setListe((l) => l.filter((x) => x.id !== id)); }
-    catch (g) { const t = g instanceof Error ? g.message : String(g); setFehler(t); onFehler(t); }
+    try {
+      const d = await readLocalVaultData(vaultHandle);
+      const event = d.records.find((r) => r.id === id);
+      if (!event || !memoryData(event)) throw new Error("Die Notiz wurde nicht gefunden.");
+      const aufgaben = d.records.filter((r) => (r.recordType === "task" || r.recordType === "deadline") && r.status !== "erledigt" && d.relations.some((rel) => rel.fromId === r.id && rel.toId === id));
+      setAendern({ event, aufgaben });
+    } catch (g) { const t = g instanceof Error ? g.message : String(g); setFehler(t); onFehler(t); }
     finally { setBusy(false); }
   };
   // Kalender-Knopf: Entwurf behalten, Fenster zu, zu „Kalender verbinden“.
@@ -105,11 +114,16 @@ function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, on
       {text.trim() && <ErinnernTeil key={runde} erkannt={erkannt} titelVorschlag={erkannt?.wunsch ? erinnerungsTitel(text) : analyse?.taskProposal || analyse?.title || text.trim().slice(0, 80)} onChange={setErinnerung} onKalender={zumKalender}/>}
       {fehler && <p className="form-error" role="alert">{fehler}</p>}
       {liste.length > 0 && <ul className="notiz-liste" aria-label="Gespeicherte Notizen" data-notiz-liste>
-        {liste.map((n) => { const auf = listeAuf === n.id; return <li key={n.id} data-notiz-eintrag={n.id} className={auf ? "offen" : undefined}><div className="fz-kopf"><Check size={16}/><span className="mk-text"><strong><FlachText text={n.titel}/></strong><small>{n.wann}</small></span><AugeKnopf offen={auf} titel={n.titel} onClick={() => setListeAuf(auf ? null : n.id)} data-notiz-auge/></div>
-          {auf && <div className="fz-offen"><p><strong>{n.titel}</strong></p><small>{n.wann}</small><div className="button-row">{n.tag && onKalender && <button type="button" className="button secondary" onClick={() => { const t = n.tag!; void schliessen().then(() => onKalender(t)); }} disabled={busy} title="Im Kalender ansehen" data-notiz-im-kalender><CalendarDays size={16}/> Im Kalender</button>}<button type="button" className="loesch-knopf mit-text" onClick={() => void loeschen(n.id)} disabled={busy} aria-label={`„${n.titel}“ wieder löschen`} title="Wieder löschen" data-notiz-loeschen><Trash2 size={16}/><span>Löschen</span></button></div></div>}</li>; })}
+        {liste.map((n) => { const auf = listeAuf === n.id; return <li key={n.id} data-notiz-eintrag={n.id} className={auf ? "offen" : undefined}><div className="fz-kopf fz-voll"><Check size={16}/><span className="mk-text"><strong><FlachText text={n.titel}/></strong><small>{n.wann}</small></span><KnopfLeiste titel={n.titel}>{vaultHandle && <StiftKnopf titel={n.titel} disabled={busy} onClick={() => void aendernOeffnen(n.id)} data-notiz-aendern={n.id}/>}{vaultHandle && <NotizLoeschen id={n.id} titel={n.titel} vaultHandle={vaultHandle} onGeloescht={() => { geaendert.current = true; setListe((l) => l.filter((x) => x.id !== n.id)); }}/>}<AugeKnopf offen={auf} titel={n.titel} onClick={() => setListeAuf(auf ? null : n.id)} data-notiz-auge/></KnopfLeiste></div>
+          {auf && <div className="fz-offen"><p><strong>{n.titel}</strong></p><small>{n.wann}</small><div className="button-row">{n.tag && onKalender && <button type="button" className="button secondary" onClick={() => { const t = n.tag!; void schliessen().then(() => onKalender(t)); }} disabled={busy} title="Im Kalender ansehen" data-notiz-im-kalender><CalendarDays size={16}/> Im Kalender</button>}</div></div>}</li>; })}
       </ul>}
       <div className="modal-actions"><button type="button" className="button secondary" onClick={() => void schliessen()} disabled={busy} data-notiz-fertig>{liste.length ? "Fertig" : "Abbrechen"}</button></div>
     </section>
+    {aendern && vaultHandle && <MemoryBearbeiten event={aendern.event} data={memoryData(aendern.event)!} aufgaben={aendern.aufgaben} vaultHandle={vaultHandle} onZu={() => setAendern(null)} onGespeichert={async () => {
+      geaendert.current = true;
+      const d = await readLocalVaultData(vaultHandle); const neu = d.records.find((r) => r.id === aendern.event.id); const titel = neu ? memoryData(neu)?.title : undefined;
+      if (titel) setListe((l) => l.map((x) => x.id === aendern.event.id ? { ...x, titel } : x));
+    }}/>}
   </div>;
 }
 

@@ -33,10 +33,12 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
     "Steht ein Datum darin, schlägt die App eine Erinnerung vor. Gespeichert wird erst nach deinem Ja.",
     "Notizen gehen nie in einen Kalender.",
   ] },
-  { id: "auge", titel: "Listen mit Auge", symbol: <Eye/>, weg: "Mein Kalender · Fristenliste · Tagebuch · Notizen", ablauf: [{ titel: "Zeile „Anfang … Ende“" }, { titel: "Auge öffnet", art: "hervor" }, { titel: "Ändern oder Löschen" }], merk: [<><b>Ein Eintrag, eine Zeile</b>; Einzelheiten hinter dem Auge.</>, <><b>Haken „erledigt“</b> bleibt in der Fristenliste direkt in der Zeile.</>], punkte: [
-    "Jeder Eintrag steht als eine Zeile „Anfang … Ende“.",
-    "Das Auge öffnet den Eintrag; Ändern und Löschen liegen dahinter.",
-    "In der Fristenliste bleibt der Haken „erledigt“ direkt in der Zeile.",
+  { id: "auge", titel: "Listen mit Leiste", symbol: <Eye/>, weg: "Mein Kalender · Fristenliste · Tagebuch · Notizen", ablauf: [{ titel: "Zeile „Anfang … Hauptwort“" }, { titel: "Pfeil ‹ öffnet", art: "hervor" }, { titel: "✓ ✎ 🗑 👁" }], merk: [<><b>Datum und Uhrzeit</b> links, dann der Text, darunter Art und Glocke.</>, <><b>Am Handy</b> öffnet der Pfeil ‹ die Leiste mit Haken, Stift, Mülleimer und Auge; › schließt sie.</>, <><b>Mülleimer</b> löscht erst beim zweiten Tipp.</>], punkte: [
+    "Jeder Eintrag steht als eine Zeile: Datum und Uhrzeit, die ersten Worte … das Hauptwort, darunter Art und Glocke.",
+    "Am Handy stecken Haken, Stift, Mülleimer und Auge in einer Leiste am rechten Rand: Pfeil ‹ (oder nach links wischen) öffnet, Pfeil › schließt. Ist genug Platz, stehen die Knöpfe direkt in der Zeile.",
+    "Der Stift öffnet sofort das Fenster zum Ändern, auch für reine Erinnerungen (Titel, Tag, Uhrzeit).",
+    "Der Mülleimer wird beim ersten Tipp rot („Löschen?“) und löscht beim zweiten.",
+    "Das Auge zeigt den ganzen Text und weitere Angaben, in der Fristenliste auch Zurückstellen und Wieder öffnen.",
   ] },
   { id: "loeschen", titel: "Löschen mit dem Mülleimer", symbol: <Trash2/>, weg: "an Erinnerungen und Notizen", ablauf: [{ titel: "Mülleimer" }, { titel: "Archiviert", unter: "nicht sofort weg", art: "gut" }, { titel: "Kalender-Eintrag", unter: "wird mit entfernt" }], merk: [<><b>Löschen heißt archivieren.</b></>], punkte: [
     "Löschen heißt archivieren. Nichts ist sofort weg.",

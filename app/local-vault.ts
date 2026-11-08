@@ -3882,6 +3882,22 @@ export async function updateLocalMemoryRecord(handle: FileSystemDirectoryHandle,
 export async function updateLocalScheduleTermin(handle: FileSystemDirectoryHandle, id: string, changes: { title?: string; dueAt?: string; dueTime?: string | null; erinnerungen?: ErinnerungsWahl[]; kalenderWahl?: KalenderFelder["kalenderWahl"] | null; kalenderEintragen?: boolean }) {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   const index = await readIndex(handle);
+  const erinnerung = index.records.find((item) => item.id === id && item.recordType === "reminder");
+  if (erinnerung) {
+    // Reine Erinnerung (Klaus 2026-11-08: Stift direkt in der Zeile): nur Titel, Tag und Uhrzeit.
+    const d = erinnerung.data as { title?: string; remindAt?: string };
+    if (changes.title !== undefined) { if (!changes.title.trim()) throw new Error("Der Titel darf nicht leer sein."); d.title = changes.title.trim(); }
+    const altTag = String(d.remindAt || "").slice(0, 10);
+    const tag = changes.dueAt ?? altTag;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(tag)) throw new Error("Bitte einen gültigen Tag wählen.");
+    const zeit = changes.dueTime !== undefined ? gueltigeUhrzeit(changes.dueTime) : gueltigeUhrzeit(String(d.remindAt || "").slice(11, 16));
+    d.remindAt = zeit ? `${tag}T${zeit}` : tag;
+    const jetzt = new Date().toISOString();
+    erinnerung.updatedAt = jetzt;
+    index.auditLog.unshift({ id: crypto.randomUUID(), at: jetzt, action: "Erinnerung geändert", recordId: erinnerung.id, details: `${erinnerung.id}: Erinnerung nach ausdrücklicher Benutzeraktion geändert.` });
+    await writeIndex(handle, index);
+    return structuredClone(erinnerung);
+  }
   const record = index.records.find((item) => item.id === id && (item.recordType === "deadline" || item.recordType === "task"));
   if (!record || (record.recordType !== "deadline" && record.recordType !== "task")) throw new Error("Die Aufgabe oder Frist wurde nicht gefunden.");
   const data = record.data as { title: string; dueAt?: string } & KalenderFelder;

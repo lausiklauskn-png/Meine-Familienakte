@@ -25,6 +25,7 @@ const manifest = readFileSync(new URL("../android/app/src/main/AndroidManifest.x
 pruefe(/android:screenOrientation="fullUser"/.test(manifest), "Android dreht in alle Lagen und achtet die Drehsperre (fullUser)");
 const main = readFileSync(new URL("../android/app/src/main/java/de/familyprojekt/familienakte/MainActivity.java", import.meta.url), "utf8");
 pruefe(/hide\(WindowInsetsCompat\.Type\.systemBars\(\)\)/.test(main) && /BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE/.test(main) && /onWindowFocusChanged/.test(main), "Android: Vollbild, Leisten per Wischen, nach Fokus wieder");
+pruefe(/setOnApplyWindowInsetsListener/.test(main) && /getInsets\(WindowInsetsCompat\.Type\.systemBars\(\)\)/.test(main) && /setPadding\(rand\.left, rand\.top, rand\.right, rand\.bottom\)/.test(main) && /onMultiWindowModeChanged/.test(main), "Android: geteilter Bildschirm – Inhalt bleibt frei von sichtbaren Systemleisten");
 const tauri = JSON.parse(readFileSync(new URL("../windows/src-tauri/tauri.conf.json", import.meta.url), "utf8"));
 pruefe(tauri.app.windows[0].maximized === true, "Windows startet maximiert");
 const cap = JSON.parse(readFileSync(new URL("../windows/src-tauri/capabilities/default.json", import.meta.url), "utf8"));
