@@ -49,10 +49,17 @@ export function buildPortalSearchResults(topNavigation: SearchNavigation, query:
     { id: `work-${item.period}-${item.entry}`, section: "work", title: `${item.period} · ${item.entry}`, detail: item.assessment, kind: "Arbeit", reason: "Passender Arbeitszeit- oder Belastungseintrag" },
     [item.period, item.entry, item.assessment, "Arbeitgeber Arbeit Arbeitszeit"].join(" "),
   ));
-  [...localDocuments, ...documents].forEach((item) => add(
-    { id: `doc-${item.id}`, section: isSensitiveHealthText(item.originalName, item.category, item.notes) ? "health" : "documents", targetId: item.id, contextCaseId: linkedCaseId(item.id, relations), title: protectedFamilyLabel({ label: item.originalName, category: item.category, notes: item.notes }), detail: isSensitiveHealthText(item.originalName, item.category, item.notes) ? "Einzelheiten im geschützten Gesundheitsbereich" : `${item.category} · ${fmtDate(item.documentDate)}`, kind: "Dokument", reason: "Dateiname, Kategorie, Datum oder Beschreibung passen" },
-    [item.originalName, item.category, item.documentDate || "", item.notes || ""].join(" "),
-  ));
+  // Titel und gelesener Textauszug aus dem Prüfdialog (2.28.39): wer nach dem Inhalt fragt, findet das Dokument. Geschützte
+  // Gesundheitsunterlagen bleiben bei Dateiname, Bereich, Datum und Notiz.
+  [...localDocuments, ...documents].forEach((item) => {
+    const geschuetzt = isSensitiveHealthText(item.originalName, item.category, item.notes);
+    const lokal = item as Partial<LocalDocument>;
+    const titel = !geschuetzt && lokal.titel ? lokal.titel : item.originalName;
+    add(
+      { id: `doc-${item.id}`, section: geschuetzt ? "health" : "documents", targetId: item.id, contextCaseId: linkedCaseId(item.id, relations), title: protectedFamilyLabel({ label: titel, category: item.category, notes: item.notes, sensitive: geschuetzt }), detail: geschuetzt ? "Einzelheiten im geschützten Gesundheitsbereich" : `${item.category} · ${fmtDate(item.documentDate)}`, kind: "Dokument", reason: "Titel, Dateiname, Inhalt, Kategorie, Datum oder Beschreibung passen" },
+      [titel, item.originalName, item.category, item.documentDate || "", fmtDate(item.documentDate), item.notes || "", geschuetzt ? "" : lokal.textAuszug || ""].join(" "),
+    );
+  });
   records.forEach((record) => {
     const title = cockpitRecordLabel(record);
     const memory = memoryData(record);

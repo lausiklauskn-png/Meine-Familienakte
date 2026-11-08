@@ -60,7 +60,14 @@ export type LocalDocument = {
   /** Ausfüllen (Sitzung F): Felder/Stand am Original, Verweis an der ausgefüllten Fassung. */
   ausfuellen?: AusfuellInfo | null;
   pdfRueckgabe?: PdfRueckgabe;
+  /** Titel aus dem Prüfdialog (änderbar); fehlt er, gilt der Dateiname. */
+  titel?: string | null;
+  /** Kurzer gelesener Textauszug für die Suche (nur Text, höchstens TEXTAUSZUG_MAX Zeichen; keine zweite PDF). */
+  textAuszug?: string | null;
 };
+
+/** Obergrenze für den gespeicherten Textauszug je Dokument (Klaus 08.11.2026: nur Text, begrenzt). */
+export const TEXTAUSZUG_MAX = 20000;
 
 export type VaultAuditEntry = {
   id: string;
@@ -2674,7 +2681,7 @@ export async function readLocalSystemSnapshot(handle: FileSystemDirectoryHandle)
     confirmedInventoryAssignmentCount: index.inventoryItems.filter((item) => !!item.assignmentConfirmedAt).length,
     inventoryLearningSignalCount: index.inventoryLearningSignals.length,
     pausedInventoryScanCount: index.auditLog.filter((entry) => entry.action === "FaWoGa 2.28.1 Bestandsanalyse pausiert").length,
-    centralIntakeDocumentCount: index.documents.filter((item) => item.notes?.includes("Eingangszentrale 2.28.0")).length,
+    centralIntakeDocumentCount: index.documents.filter((item) => /Eingangszentrale(?: 2\.28\.0)?: /.test(item.notes || "")).length,
     completedOneDriveScanCounts: index.auditLog
       .filter((entry) => entry.action === "FaWoGa 2.28.1 OneDrive-Bestand inkrementell analysiert"
         || entry.action === "FaWoGa 2.28.1 lokaler Bestand inkrementell analysiert")
@@ -2690,7 +2697,7 @@ export async function getVaultSummary(handle: FileSystemDirectoryHandle): Promis
   return { vaultId: identity.vaultId, vaultName: identity.vaultName, updatedAt: index.updatedAt, documentCount: index.documents.length };
 }
 
-export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file: File, data: { category: string; documentDate: string | null; notes: string | null; migration?: boolean; allowDuplicate?: boolean; assignmentLinks?: Array<{ toType: FamilyRecordType; toId: string; relationType: string }>; scanPageCount?: number; scanOriginals?: File[]; proUebergabe?: ProUebergabe; proBezug?: string }) {
+export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file: File, data: { category: string; documentDate: string | null; notes: string | null; migration?: boolean; allowDuplicate?: boolean; assignmentLinks?: Array<{ toType: FamilyRecordType; toId: string; relationType: string }>; scanPageCount?: number; scanOriginals?: File[]; proUebergabe?: ProUebergabe; proBezug?: string; titel?: string | null; textAuszug?: string | null }) {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   const index = await readIndex(handle);
   // P4: Grenze aus der Geräteprüfung; der gemeinsame Pro-Tresor bleibt bei höchstens 20 MB.
@@ -2699,7 +2706,7 @@ export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file:
   const checksum = await fileChecksum(file);
   if (data.proUebergabe && (data.proUebergabe.sha256 !== checksum || data.proUebergabe.groesse !== file.size)) throw new Error("Die Übergabe-Herkunft passt nicht zur Originaldatei.");
   const possibleDuplicate = index.documents.find((document) => document.checksum === checksum || (document.originalName.toLocaleLowerCase("de") === file.name.toLocaleLowerCase("de") && document.sizeBytes === file.size));
-  if (possibleDuplicate && !data.allowDuplicate) throw new Error(`Mögliche Dublette: ${possibleDuplicate.id}. Bitte das vorhandene Dokument zuerst vergleichen oder die bewusste Übernahme bestätigen.`);
+  if (possibleDuplicate && !data.allowDuplicate) throw new Error(`Mögliche Dublette: „${possibleDuplicate.titel || possibleDuplicate.originalName}“ ist schon abgelegt. Bitte das vorhandene Dokument zuerst ansehen oder die bewusste Übernahme bestätigen.`);
   const id = crypto.randomUUID();
   const storedName = `${data.documentDate || new Date().toISOString().slice(0, 10)}_${id.slice(0, 8)}_${clean(file.name)}`;
   const proId = proZiel(index);
@@ -2742,7 +2749,9 @@ export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file:
     source: proId ? "Gemeinsamer Pro-Tresor" : identity.storageKind === "onedrive" ? "OneDrive-Datentresor" : "Lokaler Datentresor",
     checksum, ...(data.proUebergabe ? { proUebergabe: data.proUebergabe } : {}), ...(data.proBezug ? { proBezug: data.proBezug } : {}),
     storageLocations: [{ id: `LOC-${crypto.randomUUID()}`, storageType, path: storedPath, source: proId ? "Gemeinsamer Pro-Tresor" : identity.storageKind === "onedrive" ? "OneDrive-Datentresor" : "Lokaler Datentresor", checksum, fileSize: file.size, verifiedAt: addedAt }],
-    scanPageCount: data.scanPageCount, scanOriginalCount: scanOriginals.length, scanOriginalsPath, ...(proId ? { proScanOriginals } : {}) };
+    scanPageCount: data.scanPageCount, scanOriginalCount: scanOriginals.length, scanOriginalsPath, ...(proId ? { proScanOriginals } : {}),
+    ...(data.titel?.trim() ? { titel: data.titel.replace(/\s+/g, " ").trim().slice(0, 200) } : {}),
+    ...(data.textAuszug?.trim() ? { textAuszug: data.textAuszug.replace(/[ \t]+/g, " ").replace(/\n{3,}/g, "\n\n").trim().slice(0, TEXTAUSZUG_MAX) } : {}) };
   index.documents.unshift(item);
   for (const link of data.assignmentLinks || []) {
     if (!index.records.some((record) => record.id === link.toId && record.recordType === link.toType)) continue;

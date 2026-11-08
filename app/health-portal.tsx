@@ -75,13 +75,13 @@ import { ErinnerungLoeschen, NotizLoeschen } from "./loesch-knopf";
 import { AppGlocke, MeinKalender, meinKalenderOeffnen } from "./mein-kalender";
 import { ErinnerungKasten, MemoryBearbeiten } from "./memory-bearbeiten";
 import { TerminBearbeiten } from "./termin-bearbeiten";
-import { fristVorschlagNehmen, KalenderAnmeldeHinweis, KalenderFormTeil, KalenderVerbinden, type KalenderWahl, useKalenderAutoAbgleich, useKalenderEinst } from "./kalender-karte";
+import { fristAusHinweis, fristVorschlagNehmen, KalenderAnmeldeHinweis, KalenderFormTeil, KalenderVerbinden, type KalenderWahl, useKalenderAutoAbgleich, useKalenderEinst } from "./kalender-karte";
 import { ERINNERUNG_VORGABE, erinnerungsName, kalenderFelder, type ErinnerungsWahl } from "../lib/kalender";
 import { KiAuftragDialog } from "./ki-auftrag-dialog";
 import { inventoryScanFeedback, inventoryAssignmentFeedback, inventoryArchiveFeedback, inventoryReleaseFeedback } from "../lib/ui-activity";
 import healthData from "./health-data.json";
 import { assessmentGroups, categories, coreDocuments, portalAreas } from "./portal-data";
-import { appendLocalFamilyRecordNote, archiveInventoryItems, buildAutomatedTestFailureReport, changeLocalContextLink, checkVaultHoldings, chooseDevelopmentBaseFolder, chooseExportDestination, chooseInboxFolder, chooseInventoryArchiveFolder, chooseInventorySourceFolder, chooseOneDriveVault, chooseVault, compareVaults, confirmInventoryAssignment, confirmLocalContextLink, copyMissingDocuments, createLocalFamilyRecord, createLocalMemoryBundle, createLocalScheduleBundle, createOrUpdateLocalMemoryDraft, deleteLocalMemoryDraft, deleteLocalMemoryRecord, forgetOneDriveVault, forgetVault, getLocalMemoryDeleteImpact, getVaultSummary, inspectTestWorkspace, inventorySourcePermission, type AutomatedStorageDiagnosticReport, type AutomatedTestFailureReport, type AutomatedTestEnvironmentReport, type IncomingFolderFile, type InventoryArchiveResult, type InventoryReferenceChoice, type InventoryScanProgress, type InventoryScanResult, linkLocalDocuments, LocalDocument, LocalScheduleStatus, prepareTestRegisterPreview, type PreparedTestRegister, readInventorySourcePreview, readLocalDocumentFile, readLocalMemoryDraftFiles, readLocalMemoryMediaFile, readLocalSystemSnapshot, readLocalVaultData, rejectLocalContextLink, releaseInventoryItemsForAssistant, rememberedDevelopmentBaseFolder, rememberedInboxFolder, rememberedInventoryArchiveFolder, rememberedInventorySourceFolder, rememberedOneDriveVault, rememberedVault, removeLocalContextLink, requestVaultPermission, resetAutomatedTestEnvironment, resetInventoryItemsForRetest, restoreFullFamilyBackup, runAutomatedStorageDiagnostic, runAutomatedTestEnvironmentSelfTests, runInventoryTextDecodingSelfTests, runPreparedTestRegisterSelfTests, runTestWorkspaceSelfTests, saveLocalDocument, savePreparedTestRegister, scanInventoryFolder, scanLocalInbox, scanOneDriveInbox, setupAutomatedTestEnvironment, type TestWorkspaceReport, updateLocalMemoryDraftStatus, updateLocalMemoryOpenPointStatus, updateLocalScheduleStatus, updateLocalStatus, setLocalDocumentAusfuellen, updateLocalPersonContact, readAusfuellAblage, writeAusfuellAblage, VaultSummary, VaultSyncPreview, VaultSyncResult, vaultSupported, writeFamilyArchiveExport, writeFullFamilyBackup, sicherungEinlesen, sicherungProben, type EinleseProbe, demoKopieAnlegen, demoNochPassend, demoUebernahmePlan, demoUebernehmen } from "./local-vault";
+import { appendLocalFamilyRecordNote, archiveInventoryItems, buildAutomatedTestFailureReport, changeLocalContextLink, checkVaultHoldings, chooseDevelopmentBaseFolder, chooseExportDestination, chooseInboxFolder, chooseInventoryArchiveFolder, chooseInventorySourceFolder, chooseOneDriveVault, chooseVault, compareVaults, confirmInventoryAssignment, confirmLocalContextLink, copyMissingDocuments, createLocalFamilyRecord, createLocalMemoryBundle, createLocalScheduleBundle, createOrUpdateLocalMemoryDraft, deleteLocalMemoryDraft, deleteLocalMemoryRecord, forgetOneDriveVault, forgetVault, getLocalMemoryDeleteImpact, getVaultSummary, inspectTestWorkspace, inventorySourcePermission, type AutomatedStorageDiagnosticReport, type AutomatedTestFailureReport, type AutomatedTestEnvironmentReport, type IncomingFolderFile, type InventoryArchiveResult, type InventoryReferenceChoice, type InventoryScanProgress, type InventoryScanResult, linkLocalDocuments, LocalDocument, LocalScheduleStatus, prepareTestRegisterPreview, type PreparedTestRegister, readInventorySourcePreview, readLocalDocumentFile, readLocalMemoryDraftFiles, readLocalMemoryMediaFile, readLocalSystemSnapshot, readLocalVaultData, rejectLocalContextLink, releaseInventoryItemsForAssistant, rememberedDevelopmentBaseFolder, rememberedInboxFolder, rememberedInventoryArchiveFolder, rememberedInventorySourceFolder, rememberedOneDriveVault, rememberedVault, removeLocalContextLink, requestVaultPermission, resetAutomatedTestEnvironment, resetInventoryItemsForRetest, restoreFullFamilyBackup, runAutomatedStorageDiagnostic, runAutomatedTestEnvironmentSelfTests, runInventoryTextDecodingSelfTests, runPreparedTestRegisterSelfTests, runTestWorkspaceSelfTests, saveLocalDocument, savePreparedTestRegister, TEXTAUSZUG_MAX, scanInventoryFolder, scanLocalInbox, scanOneDriveInbox, setupAutomatedTestEnvironment, type TestWorkspaceReport, updateLocalMemoryDraftStatus, updateLocalMemoryOpenPointStatus, updateLocalScheduleStatus, updateLocalStatus, setLocalDocumentAusfuellen, updateLocalPersonContact, readAusfuellAblage, writeAusfuellAblage, VaultSummary, VaultSyncPreview, VaultSyncResult, vaultSupported, writeFamilyArchiveExport, writeFullFamilyBackup, sicherungEinlesen, sicherungProben, type EinleseProbe, demoKopieAnlegen, demoNochPassend, demoUebernahmePlan, demoUebernehmen } from "./local-vault";
 import { createFamilyRecord, FamilyRecordUnion, FamilyRelation, formatFamilyRecordId, recordTypeDefinitions } from "@/lib/family-data-model";
 import { assignmentProposalHasNoAutomaticWrites, assignmentSequence, FAMILY_ASSIGNMENT_VERSION, proposeFamilyAssignment } from "@/lib/family-assignment";
 import { allFamilyExportScopes, buildFamilyArchiveExport, familyExportScopeLabels, FamilyExportScope, runFamilyExportSelfTest } from "@/lib/family-export";
@@ -97,7 +97,7 @@ import { buildDocumentLibraryItems, filterDocumentLibraryItems, runDocumentLibra
 import { dossierTypeOrder, menuPageActions, runMenuOptimizationSelfTests, targetForRelation, type MenuAction } from "@/lib/menu-optimization";
 import { buildDocumentIntakePlan, extractDocumentIntakeTextHint, FAWOGA_LIFE_AREAS, type DocumentIntakePlan, type DocumentIntakeSource, runDocumentIntakeSelfTests } from "@/lib/document-intake";
 import { buildIntakeChoiceOptions, buildStoredPersonalLifeAreas, INTAKE_PRIVACY_CLASSES, type IntakePrivacyClass } from "@/lib/document-intake-metadata";
-import { analyzeCentralIntakeFile, extractEmlAttachments, groupCentralIntakeAnalyses, initialCentralIntakeStatus, runCentralIntakeSelfTests, type CentralIntakeQueueItem, type CentralIntakeStatus } from "@/lib/central-intake";
+import { analyzeCentralIntakeFile, deutschesDatum, erkenneAufgabe, erkenneDokumentDatum, erkenneFristen, extractEmlAttachments, groupCentralIntakeAnalyses, initialCentralIntakeStatus, runCentralIntakeSelfTests, type CentralIntakeQueueItem, type CentralIntakeStatus } from "@/lib/central-intake";
 const CentralIntakeCenter = lazy(() => import("./central-intake-center").then((m) => ({ default: m.CentralIntakeCenter })));
 import { runDocumentScanSelfTests, type DocumentScanPdfFile } from "@/lib/document-scan";
 import { briefTitel, briefAngaben, briefZeile, gleicheNummer, vorgangVon, nummernAusText, nummernText, type BriefAngaben, type BriefkopfRoh } from "@/lib/briefkopf-titel";
@@ -260,7 +260,10 @@ const fmtBytes = (value: number) => value < 1024 * 1024
   : `${(value / 1024 / 1024).toFixed(1)} MB`;
 type FillState = { stand: string; marke: string | null; fuellbar: boolean };
 const fillStateOf = (item: LocalDocument): FillState => ({ stand: item.ausfuellen?.stand || "", marke: ausfuellMarke(item), fuellbar: (/^application\/pdf$|^image\/(jpeg|png|webp)$/.test(item.mimeType) || /\.(pdf|jpe?g|png|webp)$/i.test(item.originalName)) });
-const visibleDocumentTitle = (item: { originalName: string; category?: string | null; notes?: string | null }) => protectedFamilyLabel({ label: item.originalName, category: item.category, notes: item.notes });
+/** Titel eines lokalen Dokuments: der im Prüfdialog bestätigte Titel, sonst der Dateiname. Geschützte Unterlagen behalten den Dateinamen. */
+const dokumentTitel = (item: { originalName: string; category?: string | null; notes?: string | null; titel?: string | null }) =>
+  item.titel && !isSensitiveHealthText(item.originalName, item.category, item.notes) ? item.titel : item.originalName;
+const visibleDocumentTitle = (item: { originalName: string; category?: string | null; notes?: string | null; titel?: string | null }) => protectedFamilyLabel({ label: dokumentTitel(item), category: item.category, notes: item.notes, sensitive: isSensitiveHealthText(item.originalName, item.category, item.notes) });
 
 type SystemCheckBackup = {
   id: string;
@@ -441,7 +444,8 @@ const objectAreas = [
 
 function cockpitDocuments(documents: UploadedDocument[], localDocuments: LocalDocument[]): FamilyCockpitDocument[] {
   return [
-    ...localDocuments.map((item) => ({ id: item.id, originalName: item.originalName, category: item.category, documentDate: item.documentDate, status: item.status, createdAt: item.addedAt, updatedAt: item.updatedAt, mimeType: item.mimeType, notes: item.notes, storageType: item.storageType, storedPath: item.storedPath, relativePath: item.relativePath, oneDrivePath: item.oneDrivePath })),
+    // Titel aus dem Prüfdialog statt Dateiname (2.28.39); geschützte Gesundheitsunterlagen behalten den Dateinamen und ihren Schutz.
+    ...localDocuments.map((item) => ({ id: item.id, originalName: dokumentTitel(item), dateiname: item.titel ? item.originalName : null, textAuszug: item.textAuszug || null, category: item.category, documentDate: item.documentDate, status: item.status, createdAt: item.addedAt, updatedAt: item.updatedAt, mimeType: item.mimeType, notes: item.notes, storageType: item.storageType, storedPath: item.storedPath, relativePath: item.relativePath, oneDrivePath: item.oneDrivePath })),
     ...documents.map((item) => ({ id: item.id, originalName: item.originalName, category: item.category, documentDate: item.documentDate, status: item.status, createdAt: item.uploadedAt, updatedAt: null, mimeType: item.mimeType, previewUrl: item.mimeType.startsWith("image/") ? item.downloadUrl : null, notes: item.notes, storageType: "online-r2", downloadUrl: item.downloadUrl })),
   ];
 }
@@ -485,6 +489,12 @@ function HealthPortalContent() {
   const [uploadSource, setUploadSource] = useState<DocumentIntakeSource>("file-picker");
   const [uploadFromStart, setUploadFromStart] = useState(false);
   const [uploadQueueId, setUploadQueueId] = useState<string | null>(null);
+  // Prüfbericht 08.11.2026 (M3, M4, M6): nach dem Speichern dorthin zurück, wo die Unterlage begonnen wurde.
+  const [uploadZurueck, setUploadZurueck] = useState<SectionId>("inbox");
+  const [uploadFristVorgabe, setUploadFristVorgabe] = useState<{ datum: string | null; angehakt: boolean } | null>(null);
+  const nachSpeichernAusfuellen = useRef(false);
+  const scanZurueck = useRef<SectionId>("overview");
+  const [scanRueckweg, setScanRueckweg] = useState<SectionId | null>(null);
   const [lastIntakeReceipt, setLastIntakeReceipt] = useState<IntakeReceipt | null>(null);
   const [scanOpen, setScanOpen] = useState(false);
   const [scanInitialFiles, setScanInitialFiles] = useState<File[]>([]);
@@ -659,17 +669,27 @@ function HealthPortalContent() {
   useKalenderAutoAbgleich(vaultHandle, familyRecords, familyRelations, async () => { if (vaultHandle) await refreshLocal(vaultHandle); }, setNotice);
   const lockOneDrive = async () => { await forgetOneDriveVault(); setOneDriveHandle(null); setOneDriveName(""); setOneDriveSummary(null); setSyncPreview(null); setSyncResult(null); if (localVaultHandle && await requestVaultPermission(localVaultHandle)) { const data = await readLocalVaultData(localVaultHandle); applyLocalData(data); setActionState("vault", "success"); } else { setLocalDocuments([]); setFamilyRecords([]); setFamilyRelations([]); setMemoryDrafts([]); setLinkDecisions([]); setInventoryItems([]); setVaultAuditLog([]); setActionState("vault", "pending"); } setNotice({ kind: "info", text: "Die OneDrive-Ordnerfreigabe wurde in diesem Browser gesperrt. Dateien wurden nicht gelöscht." }); };
   const lockLocalVault = async () => { await forgetVault(); setLocalVaultHandle(null); setLocalVaultName(""); setLocalVaultSummary(null); setSyncPreview(null); setSyncResult(null); if (!oneDriveHandle) { setLocalDocuments([]); setFamilyRecords([]); setFamilyRelations([]); setMemoryDrafts([]); setLinkDecisions([]); setInventoryItems([]); setVaultAuditLog([]); setActionState("vault", "pending"); } else setActionState("vault", "success"); setNotice({ kind: "info", text: "Der PC-/USB-Tresor wurde in diesem Browser gesperrt. Dateien wurden nicht gelöscht." }); };
-  const beginLocalUpload = (file: File | null, source: DocumentIntakeSource, fromStart: boolean, suggestedCaseId: string | null = null, queueId: string | null = null) => {
+  const beginLocalUpload = (file: File | null, source: DocumentIntakeSource, fromStart: boolean, suggestedCaseId: string | null = null, queueId: string | null = null, optionen: { fristAngehakt?: boolean; zurueck?: SectionId } = {}) => {
     if (!vaultHandle) { setActionState("upload", "failed"); go("security"); setNotice({ kind: "error", text: "Bitte zuerst den lokalen OneDrive-Ordner oder einen PC-/USB-Tresor verbinden." }); return; }
+    const frist = queueId ? centralIntakeQueue.find((item) => item.id === queueId)?.analysis?.possibleDeadline : null;
+    setUploadFristVorgabe(frist || optionen.fristAngehakt ? { datum: frist ? fristAusHinweis(frist) : null, angehakt: Boolean(optionen.fristAngehakt) } : null);
+    setUploadZurueck(optionen.zurueck || (queueId ? "inbox" : active));
     setUploadInitialFile(file); setUploadSource(source); setUploadFromStart(fromStart); setUploadSuggestedCaseId(suggestedCaseId); setUploadQueueId(queueId); setActionState("upload", "pending"); setUploadOpen(true);
-    reportActivity({ kind: "info", text: file ? "1 Unterlage zur Zuordnungsprüfung geöffnet. Es wurde noch nichts gespeichert." : "Dokumenteneingang geöffnet. Bitte eine Datei auswählen; es wurde noch nichts gespeichert." });
+    // Eine Meldung je Prüfung (issue): „Gespeichert“ ersetzt danach „noch nichts gespeichert“ statt sich darunter zu stapeln (M10).
+    reportActivity({ kind: "info", issue: "eingang-pruefung", text: file ? "1 Unterlage zur Zuordnungsprüfung geöffnet. Es wurde noch nichts gespeichert." : "Dokumenteneingang geöffnet. Bitte eine Datei auswählen; es wurde noch nichts gespeichert." });
   };
   const openLocalUpload = () => beginLocalUpload(null, "file-picker", false);
   const openStartIntake = (file: File | null = null, source: DocumentIntakeSource = file ? "drag-drop" : "file-picker") => beginLocalUpload(file, source, true);
   const analyzeQueuedIntake = async (placeholders: CentralIntakeQueueItem[]) => {
     setIntakeBusy(true);
     try {
-      const analyzed = groupCentralIntakeAnalyses(await Promise.all(placeholders.map(async (item) => analyzeCentralIntakeFile({ file: await eingangDatei(item), source: item.source, documents: [...localDocuments, ...documents], records: familyRecords }))));
+      // Prüfbericht M7: die Warteschlange liest die Textebene eines PDF wie der Prüfdialog (ohne Texterkennung, die bleibt
+      // dem Dialog); so widersprechen sich „nicht gelesen“ in der Zeile und „Text gelesen“ im Dialog nicht mehr.
+      const textEbene = async (file: File) => {
+        if (!(/\.pdf$/i.test(file.name) || file.type === "application/pdf")) return "";
+        try { const { dokumentText } = await import("./ki-auftrag-dialog"); return (await dokumentText(file)).slice(0, 300000); } catch { return ""; }
+      };
+      const analyzed = groupCentralIntakeAnalyses(await Promise.all(placeholders.map(async (item) => { const file = await eingangDatei(item); return analyzeCentralIntakeFile({ file, source: item.source, documents: [...localDocuments, ...documents], records: familyRecords, gelesenerText: await textEbene(file) }); })));
       const checksumCounts = new Map<string, number>();
       analyzed.forEach((item) => checksumCounts.set(item.checksum, (checksumCounts.get(item.checksum) || 0) + 1));
       const saved = await setCentralIntakeQueue((current) => current.map((item) => {
@@ -709,11 +729,11 @@ function HealthPortalContent() {
   const queueFromShell = useRef(queueCentralIntakeFiles); queueFromShell.current = queueCentralIntakeFiles;
   useEffect(() => {
     const handler = (event: Event) => {
-      const detail = (event as CustomEvent<{ files?: File[]; bestaetigen?: (ok: boolean) => void }>).detail;
+      const detail = (event as CustomEvent<{ files?: File[]; quelle?: DocumentIntakeSource; bestaetigen?: (ok: boolean) => void }>).detail;
       const files = detail?.files || [];
       if (demoActive() || !files.length) { detail?.bestaetigen?.(false); return; }
       go("inbox");
-      void queueFromShell.current(files, "file-picker").then(
+      void queueFromShell.current(files, detail?.quelle || "file-picker").then(
         (ok) => detail?.bestaetigen?.(ok),
         () => detail?.bestaetigen?.(false),
       );
@@ -722,10 +742,10 @@ function HealthPortalContent() {
     window.dispatchEvent(new Event("familienakte:bereit"));
     return () => window.removeEventListener("familienakte:dateien", handler);
   }, []);
-  const reviewCentralIntake = async (id: string) => {
+  const reviewCentralIntake = async (id: string, fristAngehakt = false) => {
     const item = centralIntakeQueue.find((candidate) => candidate.id === id);
     if (!item) return;
-    try { beginLocalUpload(await eingangDatei(item), item.source, false, null, item.id); }
+    try { beginLocalUpload(await eingangDatei(item), item.source, false, null, item.id, { fristAngehakt }); }
     catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die Arbeitsdatei konnte nicht geladen werden." }); }
   };
   const extractCentralEmailAttachments = async (id: string) => {
@@ -794,7 +814,7 @@ function HealthPortalContent() {
     const quittungen = [];
     for (const [i, file] of dateien.entries()) quittungen.push(await proUebergabeAnnehmen(vertraege[i], file));
     if (!await setCentralIntakeQueue(current => current)) throw new Error("Eingang gespeichert, Anzeige konnte nicht neu geladen werden. Erneutes Senden bleibt möglich.");
-    if (quelle === "scan" && dateien.length === 1) beginLocalUpload(dateien[0], "camera-scan", true, null, quittungen[0].eingangId);
+    if (quelle === "scan" && dateien.length === 1) beginLocalUpload(dateien[0], "camera-scan", scanZurueck.current === "overview", null, quittungen[0].eingangId, { zurueck: scanZurueck.current });
     else setNotice({ kind: "success", text: `${dateien.length} Datei${dateien.length === 1 ? "" : "en"} aus Workflow PDF liegen in der Eingangszentrale zur Prüfung.` });
     return quittungen;
   };
@@ -805,7 +825,7 @@ function HealthPortalContent() {
     // Workflow PDF (Ecken ziehen, gerade richten, Filter, Texterkennung); das fertige PDF geht in den Dokumenteneingang.
     // Seit 2.28.10 (Klaus 2026-11-01: „‚Dokument fotografieren‘ öffnet den Klon“): die ganze App Workflow PDF mit dem Scanner;
     // „PDF erstellen“ legt den Scan im Klon ab UND gibt ihn gleich an die Prüfung der Akte (Brücke, quelle „scan“).
-    if (!files.length && !wfpdfAlt()) { setWfpdfOeffnen(null); setWfpdfScan(true); setWfpdfStart((n) => n + 1); setActionState("upload", "pending"); go("workflowpdf"); return; }
+    if (!files.length && !wfpdfAlt()) { scanZurueck.current = active === "workflowpdf" ? scanZurueck.current : active; setScanRueckweg(scanZurueck.current); setWfpdfOeffnen(null); setWfpdfScan(true); setWfpdfStart((n) => n + 1); setActionState("upload", "pending"); go("workflowpdf"); return; }
     if (!files.length) { void (async () => {
       try {
         const { scannen } = await import("./wfpdf-kern");
@@ -1163,7 +1183,7 @@ function HealthPortalContent() {
     window.addEventListener(KALENDER_OEFFNEN, oeffnen);
     return () => window.removeEventListener(KALENDER_OEFFNEN, oeffnen);
   }, []);
-  useEffect(() => { if (active !== "workflowpdf") { setWfpdfSitzung(null); setWfpdfOeffnen(null); } }, [active]);
+  useEffect(() => { if (active !== "workflowpdf") { setWfpdfSitzung(null); setWfpdfOeffnen(null); setScanRueckweg(null); } }, [active]);
   const saveAssistantCorrespondence = async (input: {
     status: "Entwurf" | "Versandbereit" | "Versendet" | "Antwort ausstehend" | "Antwort eingegangen" | "Erledigt";
     kind: CorrespondenceKind;
@@ -1216,11 +1236,11 @@ function HealthPortalContent() {
     if (!vaultHandle) { go("security"); setNotice({ kind: "error", text: "Bitte zuerst den lokalen OneDrive-, PC- oder USB-Datentresor verbinden." }); return; }
     try {
       const { scannen } = await import("./wfpdf-kern");
-      await scannen({ titel: "Formular scannen", fertigText: "Weiter zum Ausfüllen", name: `Formular ${new Date().toISOString().slice(0, 10)}`, fertig: async (file) => {
-        const neu = await saveLocalDocument(vaultHandle, file, { category: "Formular", documentDate: new Date().toISOString().slice(0, 10), notes: "Gescanntes Formular zum Ausfüllen · Eingang: Scanner (Workflow PDF)", allowDuplicate: true });
-        await refreshLocal(vaultHandle);
-        setFillDocId(neu.id);
-        setNotice({ kind: "success", text: "Der Scan liegt als Unterlage in der Akte. Jetzt die Felder erkennen und ausfüllen." });
+      // Prüfbericht M6: auch das gescannte Formular geht durch den Prüfdialog (Titel, Bereich, Vorgang); erst nach
+      // „Geprüft lokal speichern“ liegt es in der Akte, danach öffnet sich das Ausfüllen.
+      await scannen({ titel: "Formular scannen", fertigText: "Weiter zur Prüfung", name: `Formular ${deutschesDatum(new Date().toISOString().slice(0, 10))}`, fertig: async (file) => {
+        nachSpeichernAusfuellen.current = true;
+        beginLocalUpload(file, "camera-scan", false, null, null, { zurueck: active });
       } });
     } catch (reason) { setNotice({ kind: "error", text: reason instanceof Error ? reason.message : "Der Scanner konnte nicht geöffnet werden." }); }
   };
@@ -1394,16 +1414,22 @@ function HealthPortalContent() {
           onFiles={(files, source) => void queueCentralIntakeFiles(files, source)} onStartDocumentScan={openDocumentScan} onScanForm={() => void scanFormular()} onStapel={(files) => { setStapelNeu(files); go("stapel"); }}
           onSelectInbox={selectInboxFolder} onScanInbox={() => void scanSelectedInbox()} onScanOneDrive={checkOneDriveInbox}
           onReview={reviewCentralIntake} onExtractAttachments={(id) => void extractCentralEmailAttachments(id)} onToggle={toggleCentralIntake} onSetStatus={setCentralIntakeStatus}
-          onGo={(id) => go(id)}
+          onGo={(id, targetId) => go(id, targetId)}
         /></Suspense><Inbox compact documents={documents} localDocuments={localDocuments} loading={loadingDocs} onUpload={openLocalUpload} onOpenDocument={openDocument} onFill={setFillDocId} onWfpdf={(id) => void inWorkflowPdf(id)} onRefresh={async () => { await loadDocuments(); await refreshLocal(); }} onLocalStatus={async (id, status) => { if (!vaultHandle) return; await updateLocalStatus(vaultHandle, id, status); await refreshLocal(vaultHandle); }} onStatus={async (id, status) => {
           setBusy(true);
           try { await changeStatus(id, status); await loadDocuments(); setNotice({ kind: "success", text: `Bearbeitungsstand: ${statusLabel[status]}.` }); }
           catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Speichern nicht möglich." }); }
           finally { setBusy(false); }
         }} busy={busy}/></>} 
-        {!query && active === "stapel" && <Suspense fallback={null}><StapelSeite neu={stapelNeu} onNeuGenommen={() => setStapelNeu(null)} onWorkflowPdf={dateiInWorkflowPdf} onEinordnen={(dateien, ids) => queueCentralIntakeFiles(dateien, "camera-scan", null, ids)} kopf={<PageTitle icon={<Upload/>} title="Stapel (noch einordnen)" text="Viele Fotos oder Scans auf einmal: Workflow PDF findet je Bild das Blatt und zieht es gerade. Wo sich die Verfahren nicht einig sind, bleibt das ganze Foto stehen („Ecken prüfen“). Erst „Einordnen“ gibt die Unterlagen an die Eingangszentrale."/>}/></Suspense>}
+        {!query && active === "stapel" && <Suspense fallback={null}><StapelSeite neu={stapelNeu} onNeuGenommen={() => setStapelNeu(null)} onWorkflowPdf={dateiInWorkflowPdf} onEinordnen={async (dateien, ids) => {
+          // Prüfbericht M5: der Zusatz „(Ecken prüfen)“ ist ein Arbeitsstand im Stapel, kein Name; danach zur Eingangszentrale.
+          const ohneZusatz = dateien.map((d) => /\s*\(Ecken prüfen\)/.test(d.name) ? new File([d], d.name.replace(/\s*\(Ecken prüfen\)/, ""), { type: d.type, lastModified: d.lastModified }) : d);
+          const ok = await queueCentralIntakeFiles(ohneZusatz, "camera-scan", null, ids);
+          if (ok) { go("inbox"); setNotice({ kind: "info", issue: "eingang-stapel", text: `${dateien.length} Unterlage${dateien.length === 1 ? " steht" : "n stehen"} jetzt oben in „Eingänge prüfen“. Es wurde noch nichts gespeichert.` }); }
+          return ok;
+        }} kopf={<PageTitle icon={<Upload/>} title="Stapel (noch einordnen)" text="Viele Fotos oder Scans auf einmal: Workflow PDF findet je Bild das Blatt und zieht es gerade. Wo sich die Verfahren nicht einig sind, bleibt das ganze Foto stehen („Ecken prüfen“). Erst „Einordnen“ gibt die Unterlagen an die Eingangszentrale."/>}/></Suspense>}
         {!query && active === "workflowpdf" && demoActive() && <p>Workflow PDF hat eine eigene Bibliothek. Bitte die Demo verlassen, um sie zu verwenden.</p>}
-        {!query && active === "workflowpdf" && !demoActive() && <Suspense fallback={null}><WorkflowPdfSeite key={wfpdfStart} scan={wfpdfScan} oeffnen={wfpdfOeffnen} bindung={wfpdfSitzung?.quelle} onZurueck={() => { const sitzung = wfpdfSitzung; setWfpdfSitzung(null); setWfpdfOeffnen(null); if (sitzung) go(sitzung.zurueck, sitzung.quelle.dokumentId); }} onAblegen={ausWorkflowPdf} onGeoeffnet={() => { setWfpdfOeffnen(null); setWfpdfScan(false); }} kopf={<PageTitle icon={<FileText/>} title="Workflow PDF" text={wfpdfSitzung ? "PDF bearbeiten und an dieselbe Stelle in der Akte zurückspeichern. Keine dauerhafte Zweitablage im PDF-Raum." : "Das ganze Werkzeug von Workflow PDF in der Familienakte: scannen, zuschneiden, Felder erkennen und setzen, ausfüllen, Prüfbericht, PDF ausgeben. Eigene Bibliothek, getrennt von der Workflow-PDF-App; nichts geht ins Netz, bis du es selbst wählst."}/>}/></Suspense>}
+        {!query && active === "workflowpdf" && !demoActive() && <Suspense fallback={null}><WorkflowPdfSeite key={wfpdfStart} scan={wfpdfScan} oeffnen={wfpdfOeffnen} bindung={wfpdfSitzung?.quelle} onZurueck={() => { const sitzung = wfpdfSitzung; setWfpdfSitzung(null); setWfpdfOeffnen(null); if (sitzung) go(sitzung.zurueck, sitzung.quelle.dokumentId); }} onAblegen={ausWorkflowPdf} onGeoeffnet={() => { setWfpdfOeffnen(null); setWfpdfScan(false); }} kopf={<PageTitle icon={<FileText/>} title="Workflow PDF" extra={scanRueckweg && !wfpdfSitzung ? <button type="button" className="button secondary compact-button" onClick={() => go(scanRueckweg)} data-scan-zurueck><ArrowLeft size={15}/> Zurück: {scanRueckweg === "overview" ? "Startseite" : sectionLabels[scanRueckweg] || "Eingangszentrale"}</button> : undefined} text={scanRueckweg && !wfpdfSitzung ? "Dokument fotografieren: Seiten aufnehmen und „PDF erstellen“ tippen – danach öffnet sich die Prüfung für die Akte. Zurück führt ohne Scan an die Stelle, von der du kamst." : wfpdfSitzung ? "PDF bearbeiten und an dieselbe Stelle in der Akte zurückspeichern. Keine dauerhafte Zweitablage im PDF-Raum." : "Das ganze Werkzeug von Workflow PDF in der Familienakte: scannen, zuschneiden, Felder erkennen und setzen, ausfüllen, Prüfbericht, PDF ausgeben. Eigene Bibliothek, getrennt von der Workflow-PDF-App; nichts geht ins Netz, bis du es selbst wählst."}/>}/></Suspense>}
         {!query && active === "netz" && <Suspense fallback={null}><NetzSeite kopf={<PageTitle icon={<Network/>} title="Netz (Mycel)" text="Verbindet die Familienakte auf Wunsch mit anderen Geräten im SBKIM-Netz. Beim Öffnen der Akte geht nichts ins Netz; hinaus geht nur die Visitenkarte, keine Unterlagen."/>}/></Suspense>}
         {!query && active === "security" && <SecurityCenter onDokumente={() => go("documents")}
           aktenHandle={vaultHandle} onMeaningOpen={go} onProChange={refreshProDestination} proDestination={proDestination} browserStorage={browserStorage} folderSelectionSupported={folderPickerSupported()}
@@ -1495,23 +1521,28 @@ function HealthPortalContent() {
           }}
         />
       </Suspense>)}
-      {uploadOpen && vaultHandle && <UploadDialog initialFile={uploadInitialFile} uebergabeVorschlag={centralIntakeQueue.find(item => item.id === uploadQueueId)?.uebergabeVorschlag} source={uploadSource} knownDocuments={[...localDocuments, ...documents]} records={familyRecords} relations={familyRelations} decisions={linkDecisions} suggestedCaseId={uploadSuggestedCaseId} onOpenExisting={async (id) => {
+      {uploadOpen && vaultHandle && <UploadDialog initialFile={uploadInitialFile} uebergabeVorschlag={centralIntakeQueue.find(item => item.id === uploadQueueId)?.uebergabeVorschlag} source={uploadSource} knownDocuments={[...localDocuments, ...documents]} records={familyRecords} relations={familyRelations} decisions={linkDecisions} suggestedCaseId={uploadSuggestedCaseId} fristVorgabe={uploadFristVorgabe}
+        onAnsehen={(id) => void openDocument(id)}
+        onDasselbe={async (id) => {
+        // Nur auf ausdrückliche Wahl „Ist dasselbe“ (Prüfbericht H1): der Eingang zeigt auf das vorhandene Dokument, nichts wird kopiert.
         const queued = uploadQueueId ? centralIntakeQueue.find((item) => item.id === uploadQueueId) : null;
-        if (!await setCentralIntakeQueue((current) => current.map((item) => item.id === uploadQueueId ? { ...item, status: "Übernommen", selected: false, savedDocumentId: id, error: "Vorhandener Dokumentdatensatz wurde wiederverwendet; es wurde keine Kopie angelegt." } : item))) return;
+        if (uploadQueueId && !await setCentralIntakeQueue((current) => current.map((item) => item.id === uploadQueueId ? { ...item, status: "Übernommen", selected: false, savedDocumentId: id, error: null, dasselbe: true } : item))) return;
         if (queued?.parentQueueId) {
           const parent = centralIntakeQueue.find((item) => item.id === queued.parentQueueId);
           if (parent?.savedDocumentId && localDocuments.some((item) => item.id === id)) void linkLocalDocuments(vaultHandle, parent.savedDocumentId, id, "enthält Anlage").catch(() => undefined);
         }
-        setUploadOpen(false); setUploadQueueId(null); openDocumentLibrary({ focusId: id });
-      }} onClose={() => { setUploadOpen(false); setUploadInitialFile(null); setUploadSuggestedCaseId(null); setUploadQueueId(null); }} onSave={async (file, data) => {
+        setUploadOpen(false); setUploadInitialFile(null); setUploadSuggestedCaseId(null); setUploadQueueId(null); setActionState("upload", "success");
+        setNotice({ kind: "success", issue: "eingang-pruefung", text: "Nicht noch einmal abgelegt: der Eingang ist mit dem vorhandenen Dokument abgeschlossen. Es wurde keine Kopie angelegt." });
+      }} onClose={() => { setUploadOpen(false); setUploadInitialFile(null); setUploadSuggestedCaseId(null); setUploadQueueId(null); nachSpeichernAusfuellen.current = false; reportActivity({ kind: "info", issue: "eingang-pruefung", text: "Prüfung abgebrochen. Es wurde nichts gespeichert." }); }} onSave={async (file, data) => {
         try {
-          const { newCaseTitle, rejectedContext, resolveOpenPointEventId, ...documentData } = data;
+          const { newCaseTitle, rejectedContext, resolveOpenPointEventId, fristen = [], ...documentData } = data;
           const queued = uploadQueueId ? centralIntakeQueue.find((entry) => entry.id === uploadQueueId) : null;
           if (queued?.analysis?.email) {
             const email = queued.analysis.email;
             documentData.notes = [documentData.notes, `E-Mail-Herkunft: ${email.sender || "Absender unbekannt"}`, email.messageId ? `Message-ID: ${email.messageId}` : "", email.attachmentNames.length ? `Anlagen: ${email.attachmentNames.join(", ")}` : ""].filter(Boolean).join(" · ");
           }
-          if (queued?.analysis) documentData.notes = [documentData.notes, `Eingangszentrale 2.28.0: ${queued.analysis.fileKind} · kontrolliert bestätigt`].filter(Boolean).join(" · ");
+          // Ohne Versionsnummer in der sichtbaren Notiz (Klaus 08.11.2026: interne Angaben aus der Oberfläche); die Systemprüfung zählt beide Schreibweisen.
+          if (queued?.analysis) documentData.notes = [documentData.notes, `Eingangszentrale: ${queued.analysis.fileKind} · kontrolliert bestätigt`].filter(Boolean).join(" · ");
           if (newCaseTitle) {
             const createdCase = await createLocalFamilyRecord(vaultHandle, { recordType: "case", data: { title: newCaseTitle, caseType: "Benutzerbestätigter Vorgang" }, status: "offen", source: "Dokumenteneingang", notes: "Bewusst im Zusammenhangs-Dialog angelegt." });
             documentData.assignmentLinks = [...(documentData.assignmentLinks || []), { toType: "case", toId: createdCase.id, relationType: "gehört zu" }];
@@ -1537,12 +1568,31 @@ function HealthPortalContent() {
             await rejectLocalContextLink(vaultHandle, { sourceType: "document", sourceId: item.id, caseId: rejectedContext.caseId, contextHash: actualSuggestion?.contextHash || rejectedContext.contextHash });
           }
           if (resolveOpenPointEventId) await updateLocalMemoryOpenPointStatus(vaultHandle, resolveOpenPointEventId, "erledigt");
+          // Erkannte und angehakte Frist, Garantie oder Aufgabe: angelegt und mit dem Dokument (und dem Vorgang) verknüpft (H3).
+          const vorgangId = documentData.assignmentLinks?.find((link) => link.toType === "case")?.toId || "";
+          let fristenAngelegt = 0; let fristFehler = "";
+          for (const frist of fristen) {
+            try {
+              await createLocalScheduleBundle(vaultHandle, { recordType: frist.recordType, title: frist.title, dueAt: frist.dueAt, reminderAt: null, source: `Eingang: ${dokumentTitel(item)}`, notes: null,
+                references: [{ recordType: "document", id: item.id, relationType: "basiert auf" }, { recordType: "case", id: vorgangId, relationType: "gehört zu" }] });
+              fristenAngelegt++;
+            } catch (reason) { fristFehler = reason instanceof Error ? reason.message : "Frist konnte nicht angelegt werden."; }
+          }
+          const queueIdFertig = uploadQueueId;
           setUploadOpen(false); setUploadInitialFile(null); setUploadSuggestedCaseId(null); setUploadQueueId(null); await refreshLocal(vaultHandle);
           setIncomingFiles((current) => current.filter((candidate) => !(candidate.name === file.name && candidate.size === file.size)));
-          if (uploadFromStart) { setLastIntakeReceipt({ id: item.id, title: item.originalName, category: item.category, source: item.source || "Lokaler Datentresor" }); go("overview"); }
-          else go("inbox");
+          if (uploadFromStart) { setLastIntakeReceipt({ id: item.id, title: dokumentTitel(item), category: item.category, source: item.source || "Lokaler Datentresor" }); go("overview"); }
+          else if (queueIdFertig || uploadZurueck === "inbox") {
+            go("inbox");
+            // „Gespeichert ✓“ steht an der Zeile; dorthin zurück statt irgendwo auf der Seite (M10).
+            if (queueIdFertig) window.setTimeout(() => document.getElementById(`eingang-${queueIdFertig}`)?.scrollIntoView({ behavior: "smooth", block: "center" }), 350);
+          }
+          else if (uploadZurueck === "documents") openDocumentLibrary({ focusId: item.id });
+          else go(uploadZurueck);
+          if (nachSpeichernAusfuellen.current) { nachSpeichernAusfuellen.current = false; setFillDocId(item.id); }
           setActionState("upload", "success");
-          setNotice({ kind: "success", text: scan ? `Das PDF aus ${scan.pageCount} Scan-Seite${scan.pageCount === 1 ? "" : "n"} wurde im freigegebenen Datentresor erfasst.${scan.keepOriginals ? " Die Originalaufnahmen wurden als Anlagen derselben PDF behalten." : " Es wurden keine zusätzlichen Scan-Fotos als Dokumente angelegt."}` : "Die Unterlage wurde im freigegebenen Datentresor erfasst. Die Originaldatei wurde nicht verschoben, umbenannt oder gelöscht." });
+          const fristText = fristenAngelegt ? ` ${fristenAngelegt === 1 ? "1 Frist oder Aufgabe wurde" : `${fristenAngelegt} Fristen oder Aufgaben wurden`} mit dem Dokument verknüpft angelegt.` : "";
+          setNotice({ kind: fristFehler ? "error" : "success", issue: "eingang-pruefung", text: (scan ? `Gespeichert ✓ Das PDF aus ${scan.pageCount} Scan-Seite${scan.pageCount === 1 ? "" : "n"} wurde im freigegebenen Datentresor erfasst.${scan.keepOriginals ? " Die Originalaufnahmen wurden als Anlagen derselben PDF behalten." : " Es wurden keine zusätzlichen Scan-Fotos als Dokumente angelegt."}` : `Gespeichert ✓ „${dokumentTitel(item)}“ liegt im Datentresor. Die Originaldatei wurde nicht verschoben, umbenannt oder gelöscht.`) + fristText + (fristFehler ? ` Eine Frist wurde nicht angelegt: ${fristFehler}` : "") });
           return item;
         } catch (error) {
           setActionState("upload", "failed");
@@ -1680,17 +1730,19 @@ function DocumentIntakePanel({ oneDriveConnected, storageReady, inboxFolderName,
   onFile: (file?: File | null, source?: DocumentIntakeSource) => void; onStartDocumentScan: (files: File[]) => void; onSelectInbox: () => void; onScanInbox: () => void; onScanOneDrive: () => void; onGo: (id: SectionId, targetId?: string) => void;
 }) {
   const [dragging, setDragging] = useState(false);
-  const [showAll, setShowAll] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const cameraRef = useRef<HTMLInputElement>(null);
   const lastChecked = checkedAt ? new Intl.DateTimeFormat("de-DE", { dateStyle: "short", timeStyle: "short" }).format(new Date(checkedAt)) : "noch nicht geprüft";
+  // Prüfbericht H4: eine Datei → gleich der Prüfdialog; mehrere → alle in die Eingangszentrale (vorher ging nur die erste
+  // weiter). Derselbe Weg wie „Teilen → Familienakte“ (Ereignis familienakte:dateien): Warteschlange, dann Eingangszentrale.
   const acceptFiles = (files: FileList | null, source: DocumentIntakeSource) => {
-    const file = files?.[0];
-    if (file) onFile(file, source);
+    const alle = files ? Array.from(files) : [];
+    if (alle.length === 1) onFile(alle[0], source);
+    else if (alle.length > 1) window.dispatchEvent(new CustomEvent("familienakte:dateien", { detail: { files: alle, quelle: source } }));
   };
   return <section className="document-intake card" aria-labelledby="document-intake-title">
     <div className="card-heading document-intake-heading"><div><span className="eyebrow dark">Gemeinsamer Dokumenteneingang</span><div className="start-title-row"><h2 className="start-section-title" id="document-intake-title">Neue Dokumente erfassen</h2><InfoPopover label="Dokumenteneingang erklären" text="So nutzt du den Dokumenteneingang am besten: Einzelne Dateien kannst du direkt hineinziehen. Mehrere zusammengehörende Dateien wählst du gemeinsam aus. Auf dem Handy kannst du Dokumente fotografieren; am PC kannst du einen Eingangsordner oder einen OneDrive-Ordner verwenden. Die Familienakte schlägt Zuordnungen vor, du bestätigst die endgültige Zuordnung selbst. Originaldateien bleiben unverändert."/></div><p>Wähle den Eingangsweg, der zu deinem Gerät und deinen Unterlagen passt.</p></div><button className="text-link" onClick={() => onGo("help")}>Hilfe <ChevronRight size={16}/></button></div>
-    <input ref={inputRef} className="sr-only" type="file" accept=".pdf,.docx,.xlsx,.jpg,.jpeg,.png,.webp,.txt,.vtt,.msg,.zip" onChange={(event) => acceptFiles(event.target.files, "file-picker")}/>
+    <input ref={inputRef} className="sr-only" type="file" multiple accept=".pdf,.docx,.xlsx,.jpg,.jpeg,.png,.webp,.txt,.vtt,.msg,.eml,.zip" onChange={(event) => { acceptFiles(event.target.files, "file-picker"); event.currentTarget.value = ""; }}/>
     <input ref={cameraRef} className="sr-only" type="file" accept="image/*" capture="environment" onChange={(event) => { const files = event.target.files ? Array.from(event.target.files) : []; if (files.length) onStartDocumentScan(files); event.currentTarget.value = ""; }}/>
     <div className="document-intake-grid">
       <article className={`intake-method-card intake-drop ${dragging ? "dragging" : ""}`} onDragOver={(event) => { event.preventDefault(); setDragging(true); }} onDragLeave={() => setDragging(false)} onDrop={(event) => { event.preventDefault(); setDragging(false); acceptFiles(event.dataTransfer.files, "drag-drop"); }}>
@@ -1701,8 +1753,9 @@ function DocumentIntakePanel({ oneDriveConnected, storageReady, inboxFolderName,
       <article className="intake-method-card intake-desktop"><div className="intake-method-heading"><h3 className="start-card-title">OneDrive-Familienordner prüfen</h3><InfoPopover label="OneDrive-Ordner erklären" text="Hier kannst du einen bewusst ausgewählten OneDrive-Ordner prüfen lassen. Es werden keine anderen OneDrive-Ordner automatisch durchsucht."/></div><button className="intake-source" type="button" onClick={onScanOneDrive} disabled={busy}><Cloud/><span><strong>OneDrive-Ordner prüfen</strong><small>{oneDriveConnected ? `Verbunden · letzte Prüfung: ${lastChecked}` : "Noch kein lokaler OneDrive-Ordner verbunden"}</small></span><ChevronRight/></button></article>
     </div>
     {busy && <div className="intake-progress" role="status"><RefreshCw className="spin"/><span>Der freigegebene Ordner wird geprüft. Originaldateien bleiben unverändert.</span></div>}
-    {incomingFiles.length > 0 && <div className="intake-results" id="intake-new-files"><button className="intake-count" onClick={() => setShowAll((value) => !value)}>{incomingFiles.length} neue oder geänderte Datei{incomingFiles.length === 1 ? "" : "en"} <ChevronRight size={16}/></button><div>{incomingFiles.slice(0, showAll ? incomingFiles.length : 5).map((item) => <button key={item.key} onClick={() => onFile(item.file, item.source)}><FileText/><span><strong>{item.name}</strong><small>{fmtBytes(item.size)} · prüfen und erfassen</small></span><ChevronRight/></button>)}</div>{incomingFiles.length > 5 && <button className="text-link" onClick={() => setShowAll((value) => !value)}>{showAll ? "Kompakt anzeigen" : "Alle Eingangsfälle ansehen"} <ChevronRight size={16}/></button>}</div>}
-    {receipt && <button className="intake-receipt" onClick={() => onGo("documents", receipt.id)}><CheckCircle2/><span><strong>Dokument erfolgreich erfasst</strong><small>{receipt.title} · {receipt.category} · {receipt.source}</small></span><ChevronRight/></button>}
+    {/* Prüfbericht M1: eine Liste – die Eingangszentrale. Die Startseite zählt nur und führt dorthin. */}
+    {incomingFiles.length > 0 && <div className="intake-results" id="intake-new-files"><button className="intake-count" onClick={() => onGo("inbox")} data-zur-eingangszentrale>{incomingFiles.length} neue Datei{incomingFiles.length === 1 ? " wartet" : "en warten"} in der Eingangszentrale <ChevronRight size={16}/></button></div>}
+    {receipt && <button className="intake-receipt" onClick={() => onGo("documents", receipt.id)} data-gespeichert><CheckCircle2/><span><strong>Gespeichert ✓ – Dokument erfasst</strong><small>{receipt.title} · {receipt.category} · {receipt.source}</small></span><ChevronRight/></button>}
   </section>;
 }
 
@@ -2445,8 +2498,8 @@ function HelpCenter({ onGo, onSearch, demo, datentresor, herkunft }: { onGo: (id
     ...NEUE_HILFE_THEMEN.map((t) => ({ id: t.id, titel: t.titel, el: <HilfeThemaEintrag thema={t} vorschau={VORSCHAU_NEU[t.id] ? vs(...VORSCHAU_NEU[t.id]!) : undefined}/> })),
     { id: "benutzerabnahme", titel: "Praktische Benutzerabnahme (für Prüfer)", el: <BenutzerabnahmeHilfe ergebnisse={abnahmeErgebnisse()} zurAbnahme={(id) => { onGo("systemcheck"); window.setTimeout(() => { if (!(id && zurStelle(`[data-user-test="${id}"]`))) zurStelle("#benutzerabnahme"); }, 500); }}/> },
     { id: "kartenhilfe", titel: "Hilfe zu Karten und Funktionen", el: <details data-kartenhilfe><summary><CircleHelp/> Hilfe zu Karten und Funktionen</summary><div>{Object.entries(UI_HELP).map(([title, text]) => { const ziel = UI_HELP_ZIEL[title]; return <details key={title} data-kartenhilfe-eintrag={title}><summary>{title}</summary><p>{text}</p>{ziel && <button type="button" className="hilfe-sprung" data-kartenhilfe-ziel={ziel} onClick={() => { onGo(ziel); window.setTimeout(() => zurKarte(title), 500); }}>{sectionLabels[ziel]} › {title} <span aria-hidden="true">›</span></button>}</details>; })}</div></details> },
-    { id: "aktivitaet", titel: "Was zeigen die zwei Aktivitätszeilen?", el: <BildThema id="aktivitaet" symbol={<ListChecks/>} titel="Was zeigen die zwei Aktivitätszeilen?" weg="Startseite › direkt unter der Suche" bild={<Ablaufbild label="Was die Aktivitätszeilen zeigen" knoten={[{ titel: "Du tust etwas" }, { titel: "Zeile erscheint", unter: "neueste oben", art: "hervor" }, { titel: "Farbe", unter: "grün erledigt · gelb prüfen · rot fehlgeschlagen" }, { titel: "Copy", unter: "kopiert nur diese Zeile" }]}/>}
-      merk={[<><b>Nur deine laufende Sitzung</b>; nach dem Neuladen sind die Zeilen leer.</>, <><b>Ein offener Dialog ist noch nicht gespeichert.</b></>, <><b>Copy</b> verändert nichts.</>]} vorschau={vs("overview")}
+    { id: "aktivitaet", titel: "Was zeigen die zwei Aktivitätszeilen?", el: <BildThema id="aktivitaet" symbol={<ListChecks/>} titel="Was zeigen die zwei Aktivitätszeilen?" weg="Startseite › direkt unter der Suche" bild={<Ablaufbild label="Was die Aktivitätszeilen zeigen" knoten={[{ titel: "Du tust etwas" }, { titel: "Zeile erscheint", unter: "neueste oben", art: "hervor" }, { titel: "Farbe", unter: "grün erledigt · gelb prüfen · rot fehlgeschlagen" }, { titel: "Kopieren", unter: "kopiert nur diese Zeile" }]}/>}
+      merk={[<><b>Nur deine laufende Sitzung</b>; nach dem Neuladen sind die Zeilen leer.</>, <><b>Ein offener Dialog ist noch nicht gespeichert.</b></>, <><b>Kopieren</b> verändert nichts.</>]} vorschau={vs("overview")}
       ausfuehrlich={<><p>Direkt unter der Suche stehen die letzten zwei tatsächlichen Rückmeldungen deiner laufenden Sitzung. Die neueste steht oben. Grün bedeutet erfolgreich, Rot fehlgeschlagen und Gelb noch zu prüfen. Ein geöffneter Dialog oder eine vorbereitete Datei bedeutet noch keine Speicherung.</p><p>„Copy“ kopiert nur den vollständigen Text der jeweiligen Zeile. „Kopiert“ bestätigt den Vorgang. Die beiden Schaltflächen arbeiten unabhängig und verändern keine Dokumente oder Prüfberichte. Nach einem vollständigen Neuladen sind die Zeilen wieder leer; die bestehenden Register und Prüfberichte bleiben erhalten. Gesundheitsbezogene Einzelheiten werden hier nicht offen angezeigt.</p></>}/> },
     { id: "assistenz", titel: "Wie arbeitet die Assistenz- und Korrespondenzzentrale?", el: <BildThema id="assistenz" symbol={<Bot/>} titel="Wie arbeitet die Assistenz- und Korrespondenzzentrale?" weg="Assistenz › Schreiben / E-Mail" bild={<Ablaufbild label="Von der Frage zum Schreiben" knoten={ablaufAssistenz(onGo)}/>}
       merk={[<><b>Nur freigegebene</b> oder mit dem Vorgang verbundene Dokumente.</>, <><b>Die Familienakte versendet nie selbst.</b></>, <><b>Internetrecherche</b> ist noch nicht eingerichtet.</>]} vorschau={vs("assistant")} ziel={{ text: "Zur Assistenz", los: () => onGo("assistant") }}
@@ -3432,6 +3485,7 @@ function DocumentLibraryCard({ item, fill, onFill, onWfpdf, onPro, onUebergabe, 
     <div className="library-document-copy">
       <div className="library-document-kicker"><button onClick={onArea}>{item.area}</button><button onClick={onType}>{item.documentType}</button></div>
       <button className="library-document-title" onClick={onOpen}>{item.title}</button>
+      {item.source.dateiname && !item.protectedHealth && <small className="library-dateiname" data-dateiname>Datei: {item.source.dateiname}</small>}
       <div className="library-document-meta"><button onClick={onDate}>{item.date ? fmtDate(item.date) : "Ohne Dokumentdatum"}</button><button onClick={onOpen}>{statusLabel[item.status as keyof typeof statusLabel] || item.status}</button></div>
       <p>{item.description}</p>
       {onPro && <ProDokumentKnopf onUebernehmen={onPro}/>}
@@ -3711,8 +3765,14 @@ function ReminderCenter({ vaultHandle, records, relations, focusId, onRefresh, o
   const [personId, setPersonId] = useState("");
   const [objectId, setObjectId] = useState("");
   const [caseId, setCaseId] = useState("");
-  const [documentId, setDocumentId] = useState("");
+  const [documentId, setDocumentId] = useState(vorschlag?.dokumentId || "");
   const [confirmed, setConfirmed] = useState(false);
+  // Prüfbericht M2: ein Vorschlag (vorausgefülltes Formular) wird ins Bild gerollt und kurz hervorgehoben.
+  useEffect(() => {
+    if (!vorschlag) return undefined;
+    const t = window.setTimeout(() => { const el = document.querySelector<HTMLElement>(".schedule-create"); if (!el) return; el.closest("details")?.setAttribute("open", ""); el.scrollIntoView({ behavior: "smooth", block: "start" }); el.classList.add("hervorgehoben"); window.setTimeout(() => el.classList.remove("hervorgehoben"), 2600); }, 350);
+    return () => window.clearTimeout(t);
+  }, [vorschlag]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useActivityMessage("error", "Frist oder Aufgabe speichern");
   const [viewFilter, setViewFilter] = useState<"all" | "overdue" | "dueSoon" | "open">("all");
@@ -3894,12 +3954,23 @@ function ExportDialog({ sourceHandle, documents, localDocuments, records, relati
   </div></div>;
 }
 
-function UploadDialog({ initialFile, uebergabeVorschlag, source, knownDocuments, records, relations, decisions, suggestedCaseId, onClose, onOpenExisting, onSave }: {
+type IntakeFristWahl = { recordType: "deadline" | "task"; title: string; dueAt: string };
+const ZUORDNUNG_NAMEN: Record<string, string> = { person: "Person", organisation: "Organisation", object: "Objekt", deadline: "Frist", task: "Aufgabe" };
+const quelleName = (source: DocumentIntakeSource) => source === "camera-scan" ? "Foto oder Scan" : source === "onedrive-inbox" ? "OneDrive-Familienordner" : source === "local-inbox" ? "Lokaler Eingangsordner" : source === "drag-drop" ? "Hineingezogen" : "Dateiauswahl";
+
+function UploadDialog({ initialFile, uebergabeVorschlag, source, knownDocuments, records, relations, decisions, suggestedCaseId, fristVorgabe, onClose, onAnsehen, onDasselbe, onSave }: {
   initialFile: File | null; source: DocumentIntakeSource;
   uebergabeVorschlag?: UebergabeVorschlag;
-  knownDocuments: Array<{ id: string; originalName: string; sizeBytes: number; documentDate?: string | null; updatedAt?: string | null; category?: string | null; notes?: string | null }>;
-  records: FamilyRecordUnion[]; relations: FamilyRelation[]; decisions: ContextLinkDecision[]; suggestedCaseId: string | null; onClose: () => void; onOpenExisting: (id: string) => void;
-  onSave: (file: File, data: { category: string; documentDate: string | null; notes: string | null; allowDuplicate?: boolean; assignmentLinks?: Array<{ toType: FamilyRecordUnion["recordType"]; toId: string; relationType: string }>; newCaseTitle?: string; rejectedContext?: ContextLinkSuggestion; resolveOpenPointEventId?: string }) => Promise<LocalDocument>;
+  knownDocuments: Array<{ id: string; originalName: string; sizeBytes: number; documentDate?: string | null; updatedAt?: string | null; category?: string | null; notes?: string | null; titel?: string | null }>;
+  records: FamilyRecordUnion[]; relations: FamilyRelation[]; decisions: ContextLinkDecision[]; suggestedCaseId: string | null;
+  /** Aus der Warteschlange: erkannte Frist (Datum oder leer); angehakt, wenn „Als Frist übernehmen“ getippt wurde. */
+  fristVorgabe?: { datum: string | null; angehakt: boolean } | null;
+  onClose: () => void;
+  /** Vorhandenes Dokument nur ansehen – der Prüfdialog bleibt offen (Prüfbericht H1). */
+  onAnsehen: (id: string) => void;
+  /** „Ist dasselbe“: nichts neu ablegen, den Eingang mit dem vorhandenen Dokument abschließen. */
+  onDasselbe: (id: string) => void;
+  onSave: (file: File, data: { category: string; documentDate: string | null; notes: string | null; allowDuplicate?: boolean; assignmentLinks?: Array<{ toType: FamilyRecordUnion["recordType"]; toId: string; relationType: string }>; newCaseTitle?: string; rejectedContext?: ContextLinkSuggestion; resolveOpenPointEventId?: string; titel?: string | null; textAuszug?: string | null; fristen?: IntakeFristWahl[] }) => Promise<LocalDocument>;
 }) {
   const reportActivity = useActivity();
   const initialPlan = initialFile ? buildDocumentIntakePlan({ file: initialFile, source, documents: knownDocuments, records }) : null;
@@ -3929,8 +4000,11 @@ function UploadDialog({ initialFile, uebergabeVorschlag, source, knownDocuments,
       const t = briefTitel(kopf);
       if (!aus && t) setBriefTitelHint(t);
       const a = briefAngaben(kopf as BriefkopfRoh);
-      if (!aus && a && !briefHand) { setBrief(a); setBriefNummern(nummernText(a.nummern)); if (a.datum) setDocumentDate((d) => d || a.datum); }
-    })().catch(() => { /* ohne Baustein bleibt der alte Titel */ });
+      if (!aus && a && !briefHand) { setBrief(a); setBriefNummern(nummernText(a.nummern)); }
+      // Dokumentdatum: Briefkopf zuerst, sonst „Kaufdatum“, „Datum“, „vom“ … aus dem gelesenen Text (Prüfbericht H5).
+      const datum = a?.datum || erkenneDokumentDatum(textHint);
+      if (!aus && datum) setDocumentDate((d) => d || datum);
+    })().catch(() => { const datum = erkenneDokumentDatum(textHint); if (!aus && datum) setDocumentDate((d) => d || datum); });
     return () => { aus = true; };
     // briefHand absichtlich nicht als Abhängigkeit: von Hand Geändertes soll nicht neu gelesen werden
   }, [textHint]);
@@ -3997,18 +4071,46 @@ function UploadDialog({ initialFile, uebergabeVorschlag, source, knownDocuments,
   }, [plan, overrides]);
   // Die Auswahl folgt dem Vorschlag, bis jemand selbst wählt (Klaus 2026-10-31: „wird jedes Mal wieder zurückgesetzt“). Vorher setzte
   // eine Automatik jede leere Auswahl sofort wieder auf den Vorschlag; „Nicht verknüpfen“ war wirkungslos.
+  // Prüfbericht 08.11.2026 (H2): Ein Vorschlag wird nur gezeigt; verknüpft wird erst nach „Verknüpfen“ oder eigener Wahl.
+  // Vorbelegt ist nur ein Vorgang, aus dem heraus man die Unterlage bewusst hinzufügt (suggestedCaseId).
   const selbstGewaehlt = useRef(false);
   const waehle = (id: string) => { selbstGewaehlt.current = true; setSelectedCaseId(id); };
-  useEffect(() => { if (selbstGewaehlt.current) return; const vorschlag = suggestedCaseId || vorgangAusNummer || contextSuggestions[0]?.caseId || ""; if (vorschlag && vorschlag !== selectedCaseId) setSelectedCaseId(vorschlag); }, [suggestedCaseId, vorgangAusNummer, contextSuggestions, selectedCaseId]);
+  // Zuordnungen zu Person, Organisation, Objekt: nur angehakte werden gespeichert (vorher still als „betrifft“).
+  const [zuordnungWahl, setZuordnungWahl] = useState<Set<string>>(() => new Set());
+  const zuordnungKey = (step: { stage: string; selectedId?: string | null }) => `${step.stage}:${step.selectedId}`;
+  // Titel: folgt dem Vorschlag, bis jemand ihn ändert.
+  const [titel, setTitel] = useState(""); const [titelHand, setTitelHand] = useState(false);
+  useEffect(() => { if (!titelHand && plan) setTitel(plan.title); }, [plan, titelHand]);
+  // Erkannte Frist, Garantie und Aufgabe (Prüfbericht H3): angezeigt, angelegt wird nur Angehaktes – verknüpft mit dem Dokument.
+  const erkannt = useMemo(() => {
+    const funde = erkenneFristen(textHint);
+    const zeilen: Array<{ key: string; art: "Frist" | "Garantie" | "Aufgabe"; recordType: "deadline" | "task"; datum: string; ausschnitt: string }> = [];
+    const garantie = funde.find((f) => f.art === "garantie");
+    const frist = funde.find((f) => f.art === "frist");
+    if (frist || fristVorgabe) zeilen.push({ key: "frist", art: "Frist", recordType: "deadline", datum: frist?.datum || fristVorgabe?.datum || "", ausschnitt: frist?.ausschnitt || "" });
+    if (garantie) zeilen.push({ key: "garantie", art: "Garantie", recordType: "deadline", datum: garantie.datum || "", ausschnitt: garantie.ausschnitt });
+    if (erkenneAufgabe(textHint)) zeilen.push({ key: "aufgabe", art: "Aufgabe", recordType: "task", datum: frist?.datum || fristVorgabe?.datum || "", ausschnitt: "" });
+    return zeilen;
+  }, [textHint, fristVorgabe]);
+  const [fristWahl, setFristWahl] = useState<Record<string, { an?: boolean; title?: string; datum?: string }>>((): Record<string, { an?: boolean; title?: string; datum?: string }> => fristVorgabe?.angehakt ? { frist: { an: true } } : {});
+  const fristZeile = (z: (typeof erkannt)[number]) => {
+    const w = fristWahl[z.key] || {};
+    const name = titel.trim() || plan?.title || "Unterlage";
+    return { ...z, an: Boolean(w.an), title: w.title ?? (z.art === "Garantie" ? `Garantie endet: ${name}` : z.art === "Aufgabe" ? `Erledigen: ${name}` : `Frist: ${name}`), datum: w.datum ?? z.datum };
+  };
+  const setFrist = (key: string, teil: { an?: boolean; title?: string; datum?: string }) => setFristWahl((alt) => ({ ...alt, [key]: { ...alt[key], ...teil } }));
+  const fristRef = useRef<HTMLElement>(null);
+  useEffect(() => { if (!fristVorgabe?.angehakt) return undefined; const t = window.setTimeout(() => fristRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 400); return () => window.clearTimeout(t); }, [fristVorgabe?.angehakt]);
   const selectFile = (selected: File | null) => {
     setFile(selected); setKleinNotiz(""); setKleinFehler(""); setKleinSchritt(""); setTextHint(""); setBriefHand(false); setBrief(null); setBriefNummern(""); setAllowDuplicate(false); setError(""); setChoiceField(null); setCustomChoice("");
     setNotes(""); setDocumentDate(""); setFremdVerwendet(false);
     setSelectedCaseId(suggestedCaseId || ""); setNewCaseTitle(""); setRejectedContext(undefined); setResolveOpenPointEventId(""); selbstGewaehlt.current = false;
+    setZuordnungWahl(new Set()); setTitelHand(false); setTitel(""); setFristWahl({});
     setOverrides({ lifeArea: false, documentType: false, privacyClass: false, category: false });
     if (selected) {
       const nextPlan = buildDocumentIntakePlan({ file: selected, source, documents: knownDocuments, records });
       setLifeArea(nextPlan.lifeArea); setDocumentType(nextPlan.documentType); setPrivacyClass(nextPlan.privacyClass); setCategory(nextPlan.category);
-      reportActivity({ kind: "info", text: nextPlan.duplicateIds.length ? "Mögliche Dublette erkannt · vorhandenes Dokument vergleichen. Noch keine Datei gespeichert." : "1 Datei zur Zuordnungsprüfung ausgewählt. Noch keine Datei gespeichert; Originaldatei unverändert." });
+      reportActivity({ kind: "info", issue: "eingang-pruefung", text: nextPlan.duplicateIds.length ? "Mögliche Dublette erkannt · vorhandenes Dokument ansehen. Noch keine Datei gespeichert." : "1 Datei zur Zuordnungsprüfung ausgewählt. Noch keine Datei gespeichert; Originaldatei unverändert." });
     }
   };
   const chooseSpokenDate = (spoken: string) => {
@@ -4038,11 +4140,19 @@ function UploadDialog({ initialFile, uebergabeVorschlag, source, knownDocuments,
     setSubmitting(true); setError(""); const form = new FormData(event.currentTarget);
     const userNotes = String(form.get("notes") || "").trim();
     const manuallyAdjusted = Object.values(overrides).some(Boolean);
-    const intakeNotes = plan ? [`FaWoGa: ${lifeArea}`, `Dokumentart: ${documentType}`, `Datenschutz: ${privacyClass}`, `Eingang: ${source}`, manuallyAdjusted ? "Zuordnung vom Benutzer angepasst" : "Intelligenter Vorschlag übernommen", briefZeile(brief)].filter(Boolean).join(" · ") : "";
+    const intakeNotes = plan ? [`FaWoGa: ${lifeArea}`, `Dokumentart: ${documentType}`, `Datenschutz: ${privacyClass}`, `Eingang: ${quelleName(source)}`, manuallyAdjusted ? "Zuordnung vom Benutzer angepasst" : "Intelligenter Vorschlag übernommen", briefZeile(brief)].filter(Boolean).join(" · ") : "";
     const stageType: Partial<Record<string, FamilyRecordUnion["recordType"]>> = { person: "person", organisation: "organisation", object: "object", case: "case", deadline: "deadline", task: "task" };
-    const assignmentLinks = (plan?.assignment.steps || []).filter((step) => step.selectedId && stageType[step.stage] && step.stage !== "case" && (step.stage !== "area" || step.selectedLabel === lifeArea)).map((step) => ({ toType: stageType[step.stage]!, toId: step.selectedId!, relationType: "betrifft" }));
+    // Nur ausdrücklich angehakte Zuordnungen und der gewählte Vorgang werden gespeichert (Prüfbericht H2, K8).
+    const assignmentLinks = (plan?.assignment.steps || []).filter((step) => step.selectedId && stageType[step.stage] && step.stage !== "case" && step.stage !== "area" && zuordnungWahl.has(zuordnungKey(step))).map((step) => ({ toType: stageType[step.stage]!, toId: step.selectedId!, relationType: "betrifft" }));
     if (selectedCaseId) assignmentLinks.push({ toType: "case", toId: selectedCaseId, relationType: "gehört zu" });
-    try { await onSave(file, { category: category || "Sonstiges", documentDate: String(form.get("documentDate") || "") || null, notes: [userNotes, kleinNotiz, intakeNotes].filter(Boolean).join(" · ") || null, allowDuplicate, assignmentLinks, newCaseTitle: newCaseTitle.trim() || undefined, rejectedContext, resolveOpenPointEventId: resolveOpenPointEventId || undefined }); }
+    const fristen = erkannt.map(fristZeile).filter((z) => z.an);
+    const unvollstaendig = fristen.find((z) => !z.title.trim() || !z.datum);
+    if (unvollstaendig) { setSubmitting(false); return setError(`${unvollstaendig.art}: bitte Bezeichnung und Datum eintragen oder den Haken entfernen.`); }
+    // Titel und kurzer Textauszug für die Suche; bei Gesundheitsunterlagen bleibt beides weg (Gesundheitsschutz unverändert).
+    const geschuetzt = lifeArea === "Gesundheit & Pflege" || isSensitiveHealthText(file.name, category, titel, textHint.slice(0, TEXTAUSZUG_MAX));
+    try { await onSave(file, { category: category || "Sonstiges", documentDate: String(form.get("documentDate") || "") || null, notes: [userNotes, kleinNotiz, intakeNotes].filter(Boolean).join(" · ") || null, allowDuplicate, assignmentLinks, newCaseTitle: newCaseTitle.trim() || undefined, rejectedContext, resolveOpenPointEventId: resolveOpenPointEventId || undefined,
+      titel: geschuetzt ? null : titel.trim() || null, textAuszug: geschuetzt ? null : textHint.slice(0, TEXTAUSZUG_MAX) || null,
+      fristen: fristen.map((z) => ({ recordType: z.recordType, title: z.title.trim(), dueAt: z.datum })) }); }
     catch (reason) { setError(reason instanceof Error ? reason.message : "Lokales Speichern nicht möglich."); setSubmitting(false); }
   };
   return <div className="modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}><div className="modal intake-modal" role="dialog" aria-modal="true" aria-labelledby="upload-title"><div className="modal-head"><div><span className="badge success">Gemeinsamer Dokumenteneingang</span><span className="ui-heading-help"><h2 id="upload-title">Neue Unterlage prüfen und lokal ablegen</h2><InfoPopover label="Neue Unterlage prüfen und lokal ablegen erklären" text={UI_HELP["Neue Unterlage prüfen und lokal ablegen"]}/></span></div><button className="icon-button" onClick={onClose} aria-label="Fenster schließen"><X/></button></div><form onSubmit={submit}>
@@ -4069,14 +4179,16 @@ function UploadDialog({ initialFile, uebergabeVorschlag, source, knownDocuments,
       <label><span>Empfänger</span><input data-brief-feld="empfaenger" value={brief?.empfaenger || ""} onChange={(e) => briefAendern("empfaenger", e.target.value)} placeholder="nicht erkannt"/></label>
       <label><span>Kunden-/Aktennummer</span><input data-brief-feld="nummern" value={briefNummern} onChange={(e) => nummernAendern(e.target.value)} placeholder="z. B. Kundennummer 12345"/></label>
       {brief?.thema && <small data-brief-thema>Thema: {brief.thema}</small>}
-      {gleich.length > 0 && <div className="intake-brief-gleich" data-brief-gleich>{gleich.map((g) => <span key={g.dokument.id}>{g.nummer.art} {g.nummer.wert} auch in <button type="button" className="text-link" onClick={() => onOpenExisting(g.dokument.id)}>{g.dokument.originalName}</button></span>)}{vorgangAusNummer && <small data-brief-vorgang>Vorgang dieser Unterlage vorgeschlagen.</small>}</div>}
+      {gleich.length > 0 && <div className="intake-brief-gleich" data-brief-gleich>{gleich.map((g) => <span key={g.dokument.id}>{g.nummer.art} {g.nummer.wert} auch in <button type="button" className="text-link" onClick={() => onAnsehen(g.dokument.id)} title="Nur ansehen – diese Prüfung bleibt offen">{dokumentTitel(g.dokument)}</button></span>)}{vorgangAusNummer && <small data-brief-vorgang>{selectedCaseId === vorgangAusNummer ? <>Wird mit dem Vorgang dieser Unterlage verknüpft.</> : <>Vorgang dieser Unterlage: „{String((records.find((record) => record.id === vorgangAusNummer)?.data as { title?: string } | undefined)?.title || "Vorgang")}“ <button type="button" className="text-link" onClick={() => { waehle(vorgangAusNummer); setNewCaseTitle(""); setRejectedContext(undefined); }} data-brief-vorgang-waehlen>Verknüpfen</button></>}</small>}</div>}
     </section>}
-    {plan && <section className={`intake-analysis confidence-${plan.confidence}`} aria-label="Vorschlag der Dokumentenverarbeitung"><div className="intake-analysis-head"><div><span>Zuordnung prüfen</span><strong>{plan.title}</strong><small>Quelle: {source === "camera-scan" ? "PDF aus fotografierten Dokumentseiten" : source === "onedrive-inbox" ? "OneDrive-Familienordner" : source === "local-inbox" ? "Lokaler Eingangsordner" : source === "drag-drop" ? "Drag & Drop" : "Dateiauswahl"}</small></div><span className="badge neutral">{plan.confidence}</span></div><dl className="intake-choice-grid"><div className="intake-choice-card"><dt>Lebensbereich</dt><dd>{lifeArea}<small>{overrides.lifeArea ? "von dir gewählt" : "Vorschlag der Software"}</small></dd><button type="button" className="intake-choice-tab" onClick={() => openChoice("lifeArea")} aria-label="Lebensbereich auswählen"><Menu size={15}/></button></div><div className="intake-choice-card"><dt>Dokumentenart</dt><dd>{documentType}<small>{overrides.documentType ? "von dir gewählt" : "Vorschlag der Software"}</small></dd><button type="button" className="intake-choice-tab" onClick={() => openChoice("documentType")} aria-label="Dokumentenart auswählen"><Menu size={15}/></button></div><div className="intake-choice-card"><dt>Datenschutz</dt><dd>{privacyClass}<small>{overrides.privacyClass ? "von dir gewählt" : "Vorschlag der Software"}</small></dd><button type="button" className="intake-choice-tab" onClick={() => openChoice("privacyClass")} aria-label="Datenschutzstufe auswählen"><Menu size={15}/></button></div><div className="intake-choice-card"><dt>Bereich</dt><dd>{category}<small>{overrides.category ? "von dir gewählt" : "Vorschlag der Software"}</small></dd><button type="button" className="intake-choice-tab" onClick={() => openChoice("category")} aria-label="Bereich auswählen"><Menu size={15}/></button></div></dl>
-      {plan.assignment.steps.filter((step) => step.selectedId && step.stage !== "area").slice(0, 4).map((step) => <div className="intake-assignment" key={step.stage}><span>{step.stage}</span><strong>{step.selectedLabel}</strong><small>{step.message}</small></div>)}
-      {plan.duplicateIds.length > 0 && <div className="duplicate-warning"><strong>Mögliche Dublette</strong><span>Ein gleich benanntes Dokument mit gleicher Dateigröße ist bereits registriert.</span>{plan.duplicateIds.map((id) => <button type="button" className="text-link" key={id} onClick={() => onOpenExisting(id)}>Vorhandenes Dokument {id} öffnen <ChevronRight size={15}/></button>)}<label className="check-row"><input type="checkbox" checked={allowDuplicate} onChange={(event) => { setAllowDuplicate(event.target.checked); reportActivity({ kind: "info", text: event.target.checked ? "Mögliche Dublette: „Trotzdem übernehmen“ von dir bestätigt. Erst der Speicherbefehl übernimmt die Datei." : "Zusätzliche Übernahme der möglichen Dublette nicht bestätigt. Noch keine Datei gespeichert." }); }}/><span><strong>Trotzdem übernehmen</strong><small>Nur auswählen, wenn es sich tatsächlich um eine andere Datei handelt.</small></span></label></div>}
+    {plan && <section className={`intake-analysis confidence-${plan.confidence}`} aria-label="Vorschlag der Dokumentenverarbeitung"><div className="intake-analysis-head"><div><span>Zuordnung prüfen</span><strong>{plan.title}</strong><small>Quelle: {quelleName(source)}</small></div><span className="badge neutral">{plan.confidence}</span></div><dl className="intake-choice-grid"><div className="intake-choice-card"><dt>Lebensbereich</dt><dd>{lifeArea}<small>{overrides.lifeArea ? "von dir gewählt" : "Vorschlag der Software"}</small></dd><button type="button" className="intake-choice-tab" onClick={() => openChoice("lifeArea")} aria-label="Lebensbereich auswählen"><Menu size={15}/></button></div><div className="intake-choice-card"><dt>Dokumentenart</dt><dd>{documentType}<small>{overrides.documentType ? "von dir gewählt" : "Vorschlag der Software"}</small></dd><button type="button" className="intake-choice-tab" onClick={() => openChoice("documentType")} aria-label="Dokumentenart auswählen"><Menu size={15}/></button></div><div className="intake-choice-card"><dt>Datenschutz</dt><dd>{privacyClass}<small>{overrides.privacyClass ? "von dir gewählt" : "Vorschlag der Software"}</small></dd><button type="button" className="intake-choice-tab" onClick={() => openChoice("privacyClass")} aria-label="Datenschutzstufe auswählen"><Menu size={15}/></button></div><div className="intake-choice-card"><dt>Bereich</dt><dd>{category}<small>{overrides.category ? "von dir gewählt" : "Vorschlag der Software"}</small></dd><button type="button" className="intake-choice-tab" onClick={() => openChoice("category")} aria-label="Bereich auswählen"><Menu size={15}/></button></div></dl>
+      {plan.assignment.steps.filter((step) => step.selectedId && step.stage !== "area" && step.stage !== "case" && ZUORDNUNG_NAMEN[step.stage]).slice(0, 4).map((step) => <label className="intake-assignment intake-zuordnung" key={step.stage} data-zuordnung={step.stage}><input type="checkbox" checked={zuordnungWahl.has(zuordnungKey(step))} onChange={(event) => setZuordnungWahl((alt) => { const neu = new Set(alt); if (event.target.checked) neu.add(zuordnungKey(step)); else neu.delete(zuordnungKey(step)); return neu; })}/><span>{ZUORDNUNG_NAMEN[step.stage]}</span><strong>{step.selectedLabel}</strong><small>{zuordnungWahl.has(zuordnungKey(step)) ? "wird verknüpft" : "Vorschlag – nur mit Haken verknüpfen"}</small></label>)}
+      {plan.duplicateIds.length > 0 && <div className="duplicate-warning"><strong>Mögliche Dublette</strong><span>Ein gleich benanntes Dokument mit gleicher Dateigröße ist bereits registriert.</span>{plan.duplicateIds.map((id) => { const vorhanden = knownDocuments.find((d) => d.id === id); const name = vorhanden ? protectedFamilyLabel({ label: dokumentTitel(vorhanden), category: vorhanden.category, notes: vorhanden.notes }) : "vorhandenes Dokument"; return <span className="dublette-zeile" key={id} data-dublette={id}><button type="button" className="text-link" onClick={() => onAnsehen(id)} data-dublette-ansehen>„{name}“{vorhanden?.documentDate ? ` vom ${fmtDate(vorhanden.documentDate)}` : ""} ansehen <ChevronRight size={15}/></button><button type="button" className="button secondary compact-button" onClick={() => onDasselbe(id)} data-dublette-dasselbe>Ist dasselbe – nicht noch einmal ablegen</button></span>; })}<small>„Ansehen“ öffnet nur das vorhandene Dokument; diese Prüfung bleibt offen.</small><label className="check-row"><input type="checkbox" checked={allowDuplicate} onChange={(event) => { setAllowDuplicate(event.target.checked); reportActivity({ kind: "info", issue: "eingang-pruefung", text: event.target.checked ? "Mögliche Dublette: „Trotzdem übernehmen“ von dir bestätigt. Erst der Speicherbefehl übernimmt die Datei." : "Zusätzliche Übernahme der möglichen Dublette nicht bestätigt. Noch keine Datei gespeichert." }); }}/><span><strong>Trotzdem übernehmen</strong><small>Nur auswählen, wenn es sich tatsächlich um eine andere Datei handelt.</small></span></label></div>}
     </section>}
-    {file && contextSuggestions.length > 0 && <section className="context-suggestion"><div><span className="eyebrow dark">Möglicher vorhandener Zusammenhang</span><h3>{selectedCaseId && selectedCaseId !== contextSuggestions[0].caseId ? <>Wird verknüpft mit „{String((records.find((record) => record.id === selectedCaseId)?.data as { title?: string } | undefined)?.title || selectedCaseId)}“.</> : <>Dieses Dokument passt wahrscheinlich zu „{contextSuggestions[0].caseLabel}“.</>}</h3><p>Die Datensätze werden nur verknüpft und nicht zusammengeführt.</p><details><summary>Warum vorgeschlagen?</summary><ul>{contextSuggestions[0].reasons.map((reason) => <li key={reason}>{reason}</li>)}</ul></details></div><div className="context-suggestion-actions"><button type="button" className="button primary" data-kontext-verknuepfen onClick={() => { waehle(selectedCaseId || contextSuggestions[0].caseId); setNewCaseTitle(""); setRejectedContext(undefined); }}>Verknüpfen</button><label><span>Anderen Vorgang wählen</span><select data-kontext-vorgang value={selectedCaseId} onChange={(event) => { waehle(event.target.value); setNewCaseTitle(""); setRejectedContext(undefined); }}><option value="">Noch nicht verknüpfen</option>{records.filter((record) => record.recordType === "case").map((record) => <option value={record.id} key={record.id}>{String((record.data as { title?: string }).title || record.id)}</option>)}</select></label><label><span>Neuen Vorgang nur bewusst anlegen</span><VoiceInput value={newCaseTitle} onValueChange={(spokenValue) => { setNewCaseTitle(spokenValue); waehle(""); setRejectedContext(undefined); }} placeholder="Bezeichnung des neuen Vorgangs" speechLabel="Neuer Vorgang"/></label><button type="button" className="button secondary" onClick={() => { waehle(""); setNewCaseTitle(""); setRejectedContext(contextSuggestions[0]); }}>Nicht verknüpfen</button></div>{contextSuggestions[0].openPointEventIds.length > 0 && <label className="check-row context-open-point"><input type="checkbox" checked={resolveOpenPointEventId === contextSuggestions[0].openPointEventIds[0]} onChange={(event) => setResolveOpenPointEventId(event.target.checked ? contextSuggestions[0].openPointEventIds[0] : "")}/><span><strong>Offener Punkt möglicherweise geklärt</strong><small>Erst nach dieser Bestätigung wird der ausgewählte Memory-Punkt als erledigt markiert.</small></span></label>}</section>}
-    <div className="form-grid intake-date-row"><label><span>Dokumentdatum, falls bekannt</span><div className="dictation-field"><DatumFeld name="documentDate" value={documentDate} onChange={(event) => setDocumentDate(event.target.value)}/><DictationButton value="" onChange={chooseSpokenDate} label="Dokumentdatum" append={false}/></div></label></div>
+    {file && <section className="context-suggestion" data-kontext>{(() => { const v = contextSuggestions[0]; const gewaehlt = selectedCaseId ? String((records.find((record) => record.id === selectedCaseId)?.data as { title?: string } | undefined)?.title || selectedCaseId) : "";
+      return <><div><span className="eyebrow dark">{v ? "Möglicher vorhandener Zusammenhang" : "Zu einem Vorgang zuordnen (freiwillig)"}</span><h3 data-kontext-stand={selectedCaseId ? "verknuepft" : "offen"}>{selectedCaseId ? <>Wird verknüpft mit „{gewaehlt}“.</> : v ? <>Dieses Dokument passt vielleicht zu „{v.caseLabel}“ – noch nicht verknüpft.</> : <>Noch keinem Vorgang zugeordnet.</>}</h3><p>{v ? "Verknüpft wird erst nach „Verknüpfen“ oder deiner Auswahl. Die Datensätze werden nur verknüpft und nicht zusammengeführt." : "Wähle einen vorhandenen Vorgang oder lege bewusst einen neuen an – oder lass es offen."}</p>{v && <details><summary>Warum vorgeschlagen?</summary><ul>{v.reasons.map((reason) => <li key={reason}>{reason}</li>)}</ul></details>}</div><div className="context-suggestion-actions">{v && <button type="button" className="button primary" data-kontext-verknuepfen onClick={() => { waehle(selectedCaseId || v.caseId); setNewCaseTitle(""); setRejectedContext(undefined); }}>Verknüpfen</button>}<label><span>{v ? "Anderen Vorgang wählen" : "Vorgang wählen"}</span><select data-kontext-vorgang value={selectedCaseId} onChange={(event) => { waehle(event.target.value); setNewCaseTitle(""); setRejectedContext(undefined); }}><option value="">Noch nicht verknüpfen</option>{records.filter((record) => record.recordType === "case").map((record) => ({ id: record.id, title: String((record.data as { title?: string }).title || record.id) })).sort((a, b) => a.title.localeCompare(b.title, "de")).map((record) => <option value={record.id} key={record.id}>{record.title}</option>)}</select></label><label><span>Neuen Vorgang nur bewusst anlegen</span><VoiceInput value={newCaseTitle} onValueChange={(spokenValue) => { setNewCaseTitle(spokenValue); waehle(""); setRejectedContext(undefined); }} placeholder="Bezeichnung des neuen Vorgangs" speechLabel="Neuer Vorgang"/></label>{v && <button type="button" className="button secondary" onClick={() => { waehle(""); setNewCaseTitle(""); setRejectedContext(v); }}>Nicht verknüpfen</button>}</div>{v && v.openPointEventIds.length > 0 && <label className="check-row context-open-point"><input type="checkbox" checked={resolveOpenPointEventId === v.openPointEventIds[0]} onChange={(event) => setResolveOpenPointEventId(event.target.checked ? v.openPointEventIds[0] : "")}/><span><strong>Offener Punkt möglicherweise geklärt</strong><small>Erst nach dieser Bestätigung wird der ausgewählte Memory-Punkt als erledigt markiert.</small></span></label>}</>; })()}</section>}
+    <div className="form-grid intake-date-row">{file && <label><span>Titel</span><input data-intake-titel value={titel} onChange={(event) => { setTitelHand(true); setTitel(event.target.value); }} placeholder="Wie soll die Unterlage heißen?"/></label>}<label><span>Dokumentdatum, falls bekannt</span><div className="dictation-field"><DatumFeld name="documentDate" value={documentDate} onChange={(event) => setDocumentDate(event.target.value)}/><DictationButton value="" onChange={chooseSpokenDate} label="Dokumentdatum" append={false}/></div></label></div>
+    {file && erkannt.length > 0 && <section className="intake-fristen" ref={fristRef} data-intake-fristen aria-label="Im Text erkannt"><strong>Im Text erkannt – angelegt wird nur, was du anhakst</strong>{erkannt.map(fristZeile).map((z) => <div className={`intake-frist${z.an ? " an" : ""}`} key={z.key} data-intake-frist={z.key}><label className="check-row"><input type="checkbox" checked={z.an} onChange={(event) => setFrist(z.key, { an: event.target.checked })} data-intake-frist-an={z.key}/><span><strong>{z.art} anlegen</strong><small>{z.ausschnitt ? `„${z.ausschnitt}“` : z.datum ? `Datum ${deutschesDatum(z.datum)}` : "Datum bitte eintragen"} · wird mit diesem Dokument verknüpft</small></span></label>{z.an && <div className="form-grid"><label><span>Bezeichnung</span><input value={z.title} onChange={(event) => setFrist(z.key, { title: event.target.value })} data-intake-frist-titel={z.key}/></label><label><span>{z.art === "Garantie" ? "Garantie endet am" : "Fällig am"}</span><DatumFeld value={z.datum} onChange={(event) => setFrist(z.key, { datum: event.target.value })} data-intake-frist-datum={z.key}/></label></div>}</div>)}</section>}
     <label><span>Kurzer Hinweis, optional</span><div className="dictation-field"><textarea name="notes" rows={2} value={notes} onChange={(event) => setNotes(event.target.value)} placeholder="Zum Beispiel: Antwort auf meine Anfrage vom 02.10.2026"/><DictationButton value={notes} onChange={setNotes} label="Hinweistext"/></div></label>{dictationHint && <div className="dictation-hint" aria-live="polite"><Mic size={16}/>{dictationHint}</div>}{error && <div className="form-error">{error}</div>}
     <p className="fine-print">Originaldateien werden nicht automatisch verschoben, umbenannt, gelöscht oder überschrieben. Das Dokument wird erst durch deinen Speicherbefehl in den freigegebenen Datentresor übernommen.</p>
     <div className="modal-actions"><button type="button" className="button secondary" onClick={onClose}>Abbrechen</button><button type="submit" className="button primary" disabled={submitting || !file || zuGross || kleinLaeuft}>{submitting ? "Wird lokal gespeichert …" : "Geprüft lokal speichern"}</button></div>

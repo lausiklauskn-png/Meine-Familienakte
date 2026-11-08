@@ -55,7 +55,7 @@ function ActivityRow({ entry, position, onDismiss }: { entry: ActivityEntry; pos
   return <div className={`global-activity-row activity-${entry?.kind || "empty"}`} aria-label={`Aktivitätszeile ${position}`}>
     <Icon size={17} aria-hidden="true"/>
     <span className="global-activity-text" aria-live="polite" aria-atomic="true">{entry.text}</span>
-    <div className="activity-copy-control"><button type="button" onClick={() => void copy()} aria-label={`Aktivitätszeile ${position} kopieren`}><Copy size={14} aria-hidden="true"/>Copy</button><span role="status">{copyState === "copied" ? "Kopiert" : copyState === "error" ? "Kopieren nicht möglich" : ""}</span></div>
+    <div className="activity-copy-control"><button type="button" onClick={() => void copy()} aria-label={`Aktivitätszeile ${position} kopieren`}><Copy size={14} aria-hidden="true"/>Kopieren</button><span role="status">{copyState === "copied" ? "Kopiert" : copyState === "error" ? "Kopieren nicht möglich" : ""}</span></div>
     <button className="activity-dismiss" type="button" onClick={() => onDismiss(entry.id)} aria-label={`Aktivitätszeile ${position} ausblenden`} title="Hinweis ausblenden"><X size={15}/></button>
   </div>;
 }
