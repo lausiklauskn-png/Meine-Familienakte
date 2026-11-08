@@ -2,6 +2,10 @@
 // Lädt den Klebstoff public/native/familienakte-mycel.js erst hier; der lädt die Kanon-Module. Nichts geht ins Netz,
 // bis jemand im Kanon-Fenster selbst verbindet. Siegel und Lampen kommen in einem eigenen Stück auf diese Seite.
 import { useEffect, useState } from "react";
+import { InfoPopover } from "./ui-controls";
+
+/** Fachwörter der Seite, kurz erklärt (Netz-Seite, Wortlaut 2.28.39). */
+const WOERTER = "Mycel: der Name des offenen Netzes der SBKIM-Apps. SBKIM: die Familie von Apps, zu der die Familienakte gehört. Knoten: ein Gerät mit einer solchen App. Visitenkarte: dein Gerätename und die Liste deiner Lebensbereiche – keine Unterlagen, keine Einträge. Treffpunkt (Relais): ein Server im Internet, über den sich die Knoten finden.";
 
 type MycelZustand = { geladen: boolean; verbunden: boolean; relais: number; antwortet: boolean; name: string; geraetename: string; fensterOffen: boolean; internet: boolean };
 type MycelApi = { starten: () => Promise<boolean>; oeffnen: () => Promise<void>; schliessen: () => void; zustand: () => MycelZustand; setzeGeraetename: (v: string) => void; geraetename: () => string };
@@ -35,7 +39,8 @@ export function NetzSeite({ kopf }: { kopf: React.ReactNode }) {
   return <>
     {kopf}
     <section className="card fa-netz" data-netz-seite>
-      <div className="card-heading"><div><h2>Mit anderen Geräten verbinden</h2></div></div>
+      <div className="card-heading"><div><span className="ui-heading-help"><h2>Im SBKIM-Netz sichtbar werden</h2><InfoPopover label="Wörter auf dieser Seite erklären" text={WOERTER}/></span></div></div>
+      <p className="fa-netz-satz" data-netz-kein-abgleich><strong>Kein Abgleich deiner Daten:</strong> Unterlagen, Einträge, Fristen und Erinnerungen gehen hier nicht auf ein anderes Gerät. Ein Abgleich zwischen deinen Geräten ist geplant, noch nicht gebaut. Eine einzelne Unterlage gibst du unter Sicherheit › „Eine Unterlage an ein anderes Gerät geben“ weiter.</p>
       <p className="fa-netz-satz">Beim Öffnen der Akte geht nichts ins Netz. Verbunden wird nur, wenn du unten „Verbinden …“ antippst und im Fenster selbst verbindest. Hinaus geht dann nur die Visitenkarte (Name und die Liste der Lebensbereiche) – keine Unterlagen.</p>
       {fehler && <p className="fa-netz-fehler" role="alert">{fehler}</p>}
       <div className="fa-netz-zustand" data-netz-zustand>
@@ -47,8 +52,8 @@ export function NetzSeite({ kopf }: { kopf: React.ReactNode }) {
         <input type="text" maxLength={40} value={name} data-sbkim-geraetename="1" placeholder="z. B. Tablet Küche (frei wählbar)"
           onChange={(e) => { setName(e.target.value); api()?.setzeGeraetename(e.target.value); }}/>
       </label>
-      {z && !z.internet && <p className="fa-netz-hinweis">Das Internet für die App ist aus. Zum Verbinden oben einschalten.</p>}
-      <button type="button" className="button primary" disabled={!z?.geladen} onClick={() => void api()?.oeffnen()} data-netz-verbinden>Verbinden …</button>
+      {z && !z.internet && <p className="fa-netz-hinweis">Das Internet für die App ist aus. Zum Verbinden oben im Kopf das WLAN-Symbol antippen.</p>}
+      <button type="button" className="button primary" disabled={!z?.geladen || !z.internet} onClick={() => void api()?.oeffnen()} data-netz-verbinden>Verbinden …</button>
     </section>
   </>;
 }

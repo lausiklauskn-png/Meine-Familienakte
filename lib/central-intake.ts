@@ -265,7 +265,7 @@ export async function analyzeCentralIntakeFile(input: {
     date,
     contentReadable: readable,
     contentHint: contentHint.slice(0, 300000),
-    contentMessage: readable ? "Inhalt wurde für den Zuordnungsvorschlag gelesen." : "Inhalt konnte nicht automatisch gelesen werden. Die Datei kann trotzdem manuell geprüft werden.",
+    contentMessage: uebergabeHinweis(input.file.name) || (readable ? "Inhalt wurde für den Zuordnungsvorschlag gelesen." : "Inhalt konnte nicht automatisch gelesen werden. Die Datei kann trotzdem manuell geprüft werden."),
     email,
     plan,
     possibleTask: findPossibleTask(`${title} ${contentHint}`),
@@ -331,4 +331,11 @@ export async function runCentralIntakeSelfTests() {
     { id: "central-local-folder", label: "Lokaler Ordner bewusst", passed: (await analyzeCentralIntakeFile({ file: named("Brief.pdf", "application/pdf"), source: "local-inbox", documents: [], records: [] })).source === "local-inbox", summary: "Lokale Ordner bleiben ein bewusst ausgelöster Eingangsweg." },
     { id: "central-no-paid-api", label: "Keine kostenpflichtige API", passed: emlAnalysis.safeguards.includes("keine kostenpflichtige externe API"), summary: "Die Eingangszentrale arbeitet ohne externen kostenpflichtigen Schlüssel." },
   ];
+}
+
+/** Übergabepaket oder Empfangsdatei einer anderen Familienakte (U5): nicht hier ablegen, sondern im Sicherheitscenter öffnen. */
+export function uebergabeHinweis(name: string): string | null {
+  if (/\.familienakte-paket$/i.test(name)) return "Das ist ein Übergabepaket einer anderen Familienakte, keine Unterlage. Bitte nicht hier ablegen, sondern unter Sicherheit › „Eine Unterlage an ein anderes Gerät geben“ › „Übergabepaket öffnen“ annehmen.";
+  if (/\.familienakte-quittung$/i.test(name)) return "Das ist eine Empfangsdatei zu einem Übergabepaket, keine Unterlage. Bitte unter Sicherheit › „Eine Unterlage an ein anderes Gerät geben“ › „Empfangsdatei prüfen“ öffnen.";
+  return null;
 }
