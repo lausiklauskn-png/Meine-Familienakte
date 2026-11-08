@@ -2,7 +2,8 @@ import type { FamilyRecordType } from "./family-data-model";
 
 export const MENU_OPTIMIZATION_VERSION = 1 as const;
 // Klaus 04.11.2026: Demo-Ablage und bewusst gewählten eigenen Tresor auf der Startseite unterscheiden.
-export const START_PAGE_REFERENCE_SHA256 = "50004c3d63981d492035dbf179b9ddd30e43283886492130fcb8987784a78b70";
+// Entscheidung 08.11.2026 (2.28.39): interne Angaben aus der Oberfläche – kein mitgelieferter Prüfbericht vom 13.10., keine Fassung 2.28.1 auf der Startseite.
+export const START_PAGE_REFERENCE_SHA256 = "caf7ecc72074322685b9cffc98a360caa9e9bca7f0326adf720904100dc014bd";
 
 export type MenuSection =
   | "documents" | "inbox" | "medical" | "benefits" | "work" | "assessment"

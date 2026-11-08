@@ -89,7 +89,7 @@ export function CentralIntakeCenter({
   return <>
     <section className="page-title central-intake-title">
       <div className="page-title-icon"><Upload/></div>
-      <span className="page-title-copy"><span className="eyebrow dark">Version 2.28.1 · gemeinsame Verarbeitung</span><h1>Eingangszentrale</h1><p>Neue Unterlagen einfach hineinziehen, prüfen, verstehen und kontrolliert der Familienakte zuordnen.</p></span>
+      <span className="page-title-copy"><span className="eyebrow dark">Gemeinsame Verarbeitung</span><h1>Eingangszentrale</h1><p>Neue Unterlagen einfach hineinziehen, prüfen, verstehen und kontrolliert der Familienakte zuordnen.</p></span>
     </section>
 
     <section className="card central-intake" aria-labelledby="central-intake-drop-title">
