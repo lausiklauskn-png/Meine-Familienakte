@@ -66,4 +66,4 @@ Fassungsnummern sind Richtwerte; vor jeder Ausgabe die tatsächlichen Releases p
 
 ## Stand
 
-- [ ] A · [ ] B · [ ] C · [ ] D · [ ] E · [ ] F · [ ] G · [ ] H · [ ] I
+- [x] A (2.28.40, #131, PWA) · [ ] B · [ ] C · [ ] D · [ ] E · [ ] F · [ ] G · [ ] H · [ ] I

@@ -9,7 +9,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 - **Plan Abgleich** `docs/PLAN_2026-11-08_ABGLEICH.md` (Klaus 08.11., **Freibrief**: ohne Rückfrage umsetzen, Fragen selbst nach
   Logik und Benutzerfreundlichkeit entscheiden; je Stufe mindestens PWA ausgeben, APK/Windows bei nativen Änderungen oder jede zweite
-  Stufe). Stufen A–I: Zusammenführen, verschlüsselte Vollsicherung, gemeinsame Festplatte, Kalender beidseitig, Eingangsordner in
+  Stufe). **Stufe A erledigt** (2.28.40, #131, nur PWA): `lib/abgleich.ts`, Sicherung einlesen führt in benutzte Akte zusammen. Stufen A–I: Zusammenführen, verschlüsselte Vollsicherung, gemeinsame Festplatte, Kalender beidseitig, Eingangsordner in
   Blöcken, WLAN/LAN/USB, Bedeutungssuche in der PWA, Scan-Original, Paket. Ersetzt Punkt 10 und die Fragen u–z.
 - **Plan** `docs/PLAN_2026-11-07.md` (#116, von Klaus bestätigt): drei Bausitzungen – 1 Hilfe (2.28.33, erledigt), 2 Daten (2.28.34, erledigt bis auf Punkt 10), 3 E-Mail (2.28.35: Plan und Hilfe-Thema, Senden/Abholen nicht gebaut). **Punkt 10** (Abgleich zwischen den Geräten): nur Vorschlagsrunde, `docs/vorschau/daten-2.28.34.html` (https://claude.ai/artifact/2wECZ4S96eYLgL9mKkXhDN), Fragen u–z an Klaus offen, nichts gebaut.
 - **Fassung 2.28.39** (Android, Windows, PWA; #129; Bericht `docs/vorschau/pruefung-ablauf-2026-11-08.html`, Vorschauen
@@ -84,7 +84,8 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
-  - `BRIEF_ABSCHLUSS_2026-11-08_ABLAUF-2.28.39.md` (jüngster Abschluss: Sitzung 6, 2.28.39; Startauftrag für Sitzung 7)
+  - `BRIEF_ABSCHLUSS_2026-11-08_ABGLEICH-A.md` (jüngster Abschluss: Prüfbericht, Plan Abgleich, Stufe A, PWA 2.28.40; Startauftrag Stufe B)
+  - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-08_ABLAUF-2.28.39.md` (Startauftrag Sitzung 7: Gerätetest 2.28.39, f1, E-Mail, soll())
   - `BRIEF_CODEX_2026-11-04_NACH-2.28.24.md` (Abstimmung mit Codex: welche Dateien Claude gehören)
   - `BRIEF_ABSCHLUSS_2026-11-04_PDF-ARBEITSRAUM.md`, `BRIEF_ABSCHLUSS_2026-11-04_PDF-FUNKTIONSABGLEICH.md` (Codex)
 
