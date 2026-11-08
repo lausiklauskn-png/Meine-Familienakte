@@ -14,25 +14,25 @@ export type AblaufKnoten = {
 };
 
 /** Zur Stelle springen, kurz markieren und fokussieren. Fehlt sie, passiert nichts. */
-export function zurStelle(ziel: string | (() => void)): boolean {
+export function zurStelle(ziel: string | (() => void), optionen: { sofort?: boolean } = {}): boolean {
   if (typeof ziel === "function") { ziel(); return true; }
   const el = document.querySelector<HTMLElement>(ziel);
   if (!el) return false;
-  zumElement(el);
+  zumElement(el, optionen.sofort);
   return true;
 }
 
 /** Zur Karte springen, deren „?“ den Titel trägt (InfoPopover-Label „‹Titel› erklären“). */
-export function zurKarte(titel: string): boolean {
+export function zurKarte(titel: string, optionen: { sofort?: boolean } = {}): boolean {
   const alle = [...document.querySelectorAll<HTMLElement>("main.site-main [aria-label]")].filter((e) => e.getAttribute("aria-label") === `${titel} erklären`);
   const knopf = alle.find((e) => e.getClientRects().length) || alle[0];
   const karte = knopf?.closest<HTMLElement>(".card, article, section, details") || knopf;
   if (!karte) return false;
-  zumElement(karte);
+  zumElement(karte, optionen.sofort);
   return true;
 }
 
-function zumElement(el: HTMLElement) {
+function zumElement(el: HTMLElement, sofort = false) {
   // Eingeklappte Abschnitte der Seite (Knopf „alle“) zuerst öffnen.
   for (let k = el.closest<HTMLElement>(".klapp-zu[data-klapp]"); k; k = k.parentElement?.closest<HTMLElement>(".klapp-zu[data-klapp]") || null) klappOeffnen(k.dataset.klapp!);
   // Liegt die Stelle in einem eingeklappten Bereich (oder ist selbst einer), wird er geöffnet.
@@ -40,7 +40,8 @@ function zumElement(el: HTMLElement) {
   rahmen(el);
   // Große Karten mit dem Anfang ins Bild, sonst wäre der Rahmen außerhalb (2.28.33).
   const gross = el.getBoundingClientRect().height > window.innerHeight * 0.7;
-  el.scrollIntoView({ behavior: "smooth", block: gross ? "start" : "center" });
+  // Nach einem Seitenwechsel (gemeinsamer Sprungweg) ohne weiches Rollen: kein sichtbares Hoch-Runter.
+  el.scrollIntoView({ behavior: sofort ? "instant" as ScrollBehavior : "smooth", block: gross ? "start" : "center" });
   el.focus?.({ preventScroll: true });
 }
 
@@ -51,8 +52,12 @@ function rahmen(el: HTMLElement) {
   // Ist am Ziel alles erledigt (data-ziel-stand="erledigt"), ist der Rahmen grün statt rot (Klaus 2026-11-07).
   el.classList.toggle("hilfe-ziel-gut", el.dataset.zielStand === "erledigt");
   el.classList.add("hilfe-ziel-rahmen");
+  // Nach einem Seitenwechsel zeichnet React die Zielseite noch einmal (className neu): Rahmen bis zum Tun halten.
+  const gut = el.classList.contains("hilfe-ziel-gut");
+  const halten = typeof MutationObserver !== "undefined" ? new MutationObserver(() => { if (!el.classList.contains("hilfe-ziel-rahmen")) el.classList.add("hilfe-ziel-rahmen"); if (gut) el.classList.add("hilfe-ziel-gut"); }) : null;
+  halten?.observe(el, { attributes: true, attributeFilter: ["class"] });
   const ereignisse = ["pointerdown", "keydown", "wheel", "touchmove"] as const;
-  const weg = () => { el.classList.remove("hilfe-ziel-rahmen", "hilfe-ziel-gut"); for (const e of ereignisse) document.removeEventListener(e, weg, true); window.clearTimeout(scharf); rahmenWeg = null; };
+  const weg = () => { halten?.disconnect(); el.classList.remove("hilfe-ziel-rahmen", "hilfe-ziel-gut"); for (const e of ereignisse) document.removeEventListener(e, weg, true); window.clearTimeout(scharf); rahmenWeg = null; };
   // Erst nach dem eigenen weichen Scrollen scharf schalten, sonst nähme der auslösende Tipp den Rahmen gleich wieder weg.
   const scharf = window.setTimeout(() => { for (const e of ereignisse) document.addEventListener(e, weg, { capture: true, passive: true }); }, 600);
   rahmenWeg = weg;

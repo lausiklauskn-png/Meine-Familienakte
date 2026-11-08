@@ -1,5 +1,5 @@
 import { Map as KartenSymbol } from "lucide-react";
-import { useCallback, useMemo, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { APP_BREITEN, APP_GRUPPEN, APP_KANTEN, APP_KNOTEN, APP_SPALTEN, type KartenSeite } from "../lib/app-landkarte";
 import { standVon } from "../lib/app-stand";
 import { KartenLegende, Landkarte, type KartenChip, type KartenGruppe, type KartenKnoten, type KartenPunkt } from "./landkarte";
@@ -13,13 +13,18 @@ import { InfoPopover } from "./ui-controls";
  */
 const KARTE_HILFE = "• Die ganze App auf einer Karte: von den Wegen hinein bis zu Speicher und Ausgabe.\n• Tipp auf einen Kasten zeigt seine Wege; „Hingehen ›“ führt an die Stelle.\n• Rahmen: grün fertig, gelb im Bau, rot einschalten, grau geplant. Golden = seit dem letzten Besuch geändert.";
 
+/** Zustand beim „Hingehen ›“: beim nächsten Aufbau der Hilfe (Zurück) ist die Karte wieder offen und der Kasten gewählt. */
+let beimHingehen: { kasten: string } | null = null;
+
 export function AppLandkarteHilfe({ onGo, eingerichtet, demo }: { onGo: (id: SectionId) => void; eingerichtet: ReadonlySet<string>; demo?: ReactNode }) {
   const [frisch, setFrisch] = useState(0);
-  const [offen, setOffen] = useState(false);
+  const [start] = useState(() => beimHingehen);
+  const [offen, setOffen] = useState(Boolean(start));
+  useEffect(() => { beimHingehen = null; }, []);
   const geh = useRef(onGo); geh.current = onGo;
   const { gruppen, knoten } = useMemo(() => {
     const mach = <T extends KartenPunkt & KartenSeite>(p: T): T => ({ ...p, stand: standVon(p.id, eingerichtet),
-      ...(p.seite ? { ziel: () => geh.current(p.seite!), zielText: "Hingehen" } : {}) });
+      ...(p.seite ? { ziel: () => { beimHingehen = { kasten: p.id }; geh.current(p.seite!); }, zielText: "Hingehen" } : {}) });
     const gruppen: KartenGruppe[] = APP_GRUPPEN.map((g) => ({ ...g, chips: g.chips.map((c) => mach(c) as KartenChip) }));
     const knoten: KartenKnoten[] = APP_KNOTEN.map((k) => mach(k));
     return { gruppen, knoten };
@@ -37,7 +42,7 @@ export function AppLandkarteHilfe({ onGo, eingerichtet, demo }: { onGo: (id: Sec
       <div className="hilfe-oben-karte-kopf"><KartenSymbol size={18}/><h3>Interaktive Landkarte der App</h3><InfoPopover label="Landkarte erklären" text={KARTE_HILFE}/></div>
       <KartenLegende/>
       <Landkarte id="app" label="Landkarte der ganzen App: von den Wegen hinein über Eingangszentrale und Akte bis zu Speicher und Ausgabe"
-        gruppen={gruppen} knoten={knoten} kanten={APP_KANTEN} breiten={APP_BREITEN} spalten={APP_SPALTEN} onFrisch={zaehlen}/>
+        gruppen={gruppen} knoten={knoten} kanten={APP_KANTEN} breiten={APP_BREITEN} spalten={APP_SPALTEN} onFrisch={zaehlen} startAktiv={start?.kasten}/>
     </div>
   </section>;
 }

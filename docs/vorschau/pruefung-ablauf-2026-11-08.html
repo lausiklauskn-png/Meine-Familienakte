@@ -1,0 +1,385 @@
+<title>Ablaufprüfung Familienakte</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: Lesespalte. Teil 1 Prüfverfahren als Schlangenlinie (Reihe links→rechts, Rückpfeil zum Anfang der nächsten Reihe),
+   Teil 2 Grundablauf mit Funden je Station, Teil 3 Lösungen in Stufen, Teil 4 Entscheidungen. */
+:root {
+  --bg: #f5f7fa; --fg: #17212b; --muted: #5b6878; --line: #c9d2dd; --card: #ffffff; --soft: #eef2f6;
+  --accent: #0c79d8; --rot: #c62d3a; --rot-bg: #fdecee; --gelb: #a86b00; --gelb-bg: #fff4d6; --gruen: #2f8a4f; --gruen-bg: #eaf6ee;
+  --display: "Fraunces", Georgia, serif; --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11161c; --fg: #e6ebf1; --muted: #9aa7b6; --line: #34404d; --card: #18202a; --soft: #1d2731;
+  --accent: #5bb3ff; --rot: #ff7b7b; --rot-bg: #2e1517; --gelb: #f0b84a; --gelb-bg: #2b2412; --gruen: #5fc78a; --gruen-bg: #13281b; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #11161c; --fg: #e6ebf1; --muted: #9aa7b6; --line: #34404d; --card: #18202a; --soft: #1d2731;
+  --accent: #5bb3ff; --rot: #ff7b7b; --rot-bg: #2e1517; --gelb: #f0b84a; --gelb-bg: #2b2412; --gruen: #5fc78a; --gruen-bg: #13281b; color-scheme: dark }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 16px/1.45 var(--body); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 56px; }
+main { max-width: 1000px; margin: 0 auto; display: grid; gap: 44px; }
+h1, h2 { font-family: var(--display); font-weight: 600; text-wrap: balance; margin: 0; }
+h1 { font-size: 2rem; line-height: 1.1; } h2 { font-size: 1.4rem; }
+p { margin: 0; } section { display: grid; gap: 14px; min-width: 0; }
+.eyebrow { font: 700 .72rem/1 var(--body); letter-spacing: .09em; text-transform: uppercase; color: var(--accent); }
+.muted { color: var(--muted); font-size: .9rem; }
+.zahlen { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
+.zahl { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+.zahl b { display: block; font: 600 1.6rem/1.1 var(--display); font-variant-numeric: tabular-nums; }
+.zahl span { font-size: .8rem; color: var(--muted); }
+
+/* Schlangenlinie */
+.schlange { display: grid; gap: 0; }
+.reihe { display: flex; align-items: stretch; gap: 0; }
+.knoten { flex: 1 1 0; min-width: 0; background: var(--card); border: 1.5px solid var(--line); border-radius: 10px; padding: 9px 10px; display: grid; gap: 3px; align-content: start; }
+.knoten .nr { font: 700 .7rem/1 var(--body); color: var(--accent); letter-spacing: .06em; }
+.knoten b { font-size: .92rem; line-height: 1.2; }
+.knoten small { font-size: .78rem; color: var(--muted); line-height: 1.3; }
+.knoten.ergebnis { border-color: var(--rot); background: var(--rot-bg); }
+.pfeil { flex: 0 0 22px; display: grid; place-items: center; color: var(--accent); font-weight: 700; }
+.rueck { height: 34px; position: relative; margin: 0 6% 0 6%; }
+.rueck::before { content: ""; position: absolute; inset: 0 0 14px 0; border: 2px solid var(--accent); border-top: none; border-radius: 0 0 12px 12px; border-left-color: transparent; }
+.rueck::after { content: ""; position: absolute; left: 0; top: 4px; width: 2px; height: 26px; background: var(--accent); }
+.rueck i { position: absolute; left: -6px; bottom: 0; width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-top: 9px solid var(--accent); }
+@media (max-width: 640px) {
+  .reihe { flex-direction: column; }
+  .pfeil { flex-basis: 20px; transform: rotate(90deg); }
+  .rueck { height: 20px; margin: 0; } .rueck::before { display: none; } .rueck::after { left: 50%; top: 0; height: 12px; } .rueck i { left: calc(50% - 6px); }
+}
+
+/* Grundablauf */
+.ablauf { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+@media (max-width: 760px) { .ablauf { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.station { background: var(--card); border: 1.5px solid var(--line); border-radius: 10px; padding: 10px; display: grid; gap: 6px; align-content: start; }
+.station h3 { margin: 0; font: 700 .95rem/1.2 var(--body); }
+.station .menge { font: 600 1.3rem/1 var(--display); color: var(--rot); }
+.station ul { margin: 0; padding-left: 1.05em; display: grid; gap: 3px; font-size: .8rem; }
+.station.ok .menge { color: var(--gruen); }
+
+.muster { border-left: 4px solid var(--accent); background: var(--card); padding: 10px 14px; border-radius: 0 10px 10px 0; display: grid; gap: 4px; }
+.muster b { font-size: 1rem; }
+
+/* Stufen */
+.stufen { display: grid; gap: 10px; }
+.stufe { display: grid; grid-template-columns: 54px 1fr; gap: 12px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+.stufe .s { font: 600 1.6rem/1 var(--display); color: var(--accent); text-align: center; }
+.stufe h3 { margin: 0 0 4px; font: 700 1rem/1.25 var(--body); }
+.stufe ul { margin: 0; padding-left: 1.05em; display: grid; gap: 2px; font-size: .86rem; }
+.chip { display: inline-block; font: 700 .68rem/1 var(--body); letter-spacing: .04em; padding: 3px 7px; border-radius: 99px; margin-left: 6px; vertical-align: 2px; }
+.chip.frei { background: var(--gruen-bg); color: var(--gruen); } .chip.ja { background: var(--gelb-bg); color: var(--gelb); }
+
+.gut { display: flex; flex-wrap: wrap; gap: 6px; }
+.gut span { background: var(--gruen-bg); color: var(--fg); border: 1px solid var(--gruen); border-radius: 99px; padding: 3px 10px; font-size: .82rem; }
+.fragen { display: grid; gap: 8px; counter-reset: f; }
+.frage { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; display: grid; grid-template-columns: 28px 1fr; gap: 8px; font-size: .92rem; }
+.frage::before { counter-increment: f; content: counter(f); font: 600 1.1rem/1.2 var(--display); color: var(--accent); }
+.tabelle { overflow-x: auto; }
+h3 { margin: 6px 0 0; font: 700 1.05rem/1.2 var(--body); }
+table { border-collapse: collapse; width: 100%; font-size: .84rem; min-width: 560px; }
+th, td { text-align: left; border-bottom: 1px solid var(--line); padding: 6px 8px; vertical-align: top; }
+th { font-size: .72rem; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+td.n { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.h { color: var(--rot); font-weight: 700; }
+.frage .ftext { display: grid; gap: 8px; min-width: 0; }
+.wahl { display: flex; flex-wrap: wrap; gap: 6px; }
+.wahl button, .sp { font: 600 .85rem/1 var(--body); border: 1.5px solid var(--line); background: var(--soft); color: var(--fg); border-radius: 8px; padding: 8px 12px; cursor: pointer; }
+.wahl button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent); color: var(--bg); }
+.wahl .stift { font-size: 1rem; padding: 6px 10px; }
+.frage textarea { width: 100%; font: inherit; color: var(--fg); background: var(--bg); border: 1.5px solid var(--line); border-radius: 8px; padding: 8px; }
+.speichern { display: flex; align-items: center; gap: 10px; }
+.sp { background: var(--gruen); border-color: var(--gruen); color: var(--bg); }
+.sp:disabled { opacity: .45; cursor: default; }
+.st { font-size: .85rem; color: var(--gruen); font-weight: 700; }
+.st.fehler { color: var(--rot); }
+button:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.pill { display: inline-block; font: 700 .72rem/1 var(--body); padding: 3px 7px; border-radius: 99px; margin: 1px 0; white-space: nowrap; }
+.pill.s { background: var(--rot-bg); color: var(--rot); } .pill.m { background: var(--gelb-bg); color: var(--gelb); } .pill.k { background: var(--soft); color: var(--muted); }
+.muster ul.pro { margin: 2px 0 0; padding: 0; list-style: none; display: grid; gap: 3px; font-size: .9rem; }
+.muster ul.pro li::before { content: "●"; color: var(--rot); margin-right: 8px; font-size: .7rem; vertical-align: 2px; }
+.muster .loesung { font-weight: 700; color: var(--gruen); font-size: .92rem; }
+</style>
+
+<main>
+  <header style="display:grid;gap:10px">
+    <span class="eyebrow">Prüfbericht · 08.11.2026 · Fassung 2.28.38</span>
+    <h1>Ablaufprüfung der Familienakte</h1>
+    <p class="muted">Frage: Führt jeder Schritt nachvollziehbar zum Ziel? Ziel: rund 1000 eigene Dokumente ablegen, oben eine Frage stellen und Dokument, Termin oder Erinnerung finden, an Eingetragenes erinnert werden.</p>
+    <div class="zahlen">
+      <div class="zahl"><b>11</b><span>Prüfer: KI-Agenten, je einer für einen Bereich oder eine Rolle</span></div>
+      <div class="zahl"><b>~240</b><span>Klicks und Schritte im Browser gemessen</span></div>
+      <div class="zahl"><b>113</b><span>Ungereimtheiten in den Abläufen</span></div>
+      <div class="zahl"><b>89</b><span>Fragen und Funde der drei Nutzerrollen</span></div>
+      <div class="zahl"><b>27</b><span>Regelkonflikte</span></div>
+      <div class="zahl"><b>0</b><span>Änderungen an der App</span></div>
+    </div>
+  </header>
+
+  <section>
+    <span class="eyebrow">Teil 1</span>
+    <h2>So wurde geprüft</h2>
+    <div class="schlange">
+      <div class="reihe">
+        <div class="knoten"><span class="nr">1</span><b>Auslöser</b><small>Ping-Pong Aufgabe ↔ Erinnerung am Tablet</small></div>
+        <div class="pfeil">→</div>
+        <div class="knoten"><span class="nr">2</span><b>Ursache im Code</b><small>zwei Einträge statt einem, Seitenwechsel statt Aufklappen</small></div>
+        <div class="pfeil">→</div>
+        <div class="knoten"><span class="nr">3</span><b>Frische App gebaut</b><small>Stand 2.28.38, Browser Chromium, Desktop und Handy</small></div>
+        <div class="pfeil">→</div>
+        <div class="knoten"><span class="nr">4</span><b>Auftrag geteilt</b><small>11 Prüfer, je ein Bereich, nichts verändern</small></div>
+      </div>
+      <div class="rueck"><i></i></div>
+      <div class="reihe">
+        <div class="knoten"><span class="nr">5</span><b>Abläufe</b><small>Eingang · Erinnerungen · Suche · Geräte · Navigation</small></div>
+        <div class="pfeil">→</div>
+        <div class="knoten"><span class="nr">6</span><b>Hilfe-Abgleich</b><small>59 Themen, 44 Landkarten-Kästen gegen die App</small></div>
+        <div class="pfeil">→</div>
+        <div class="knoten"><span class="nr">7</span><b>Drei Nutzerrollen</b><small>Neuling 70 J. · erfahrener Nutzer · erfahren, App neu</small></div>
+        <div class="pfeil">→</div>
+        <div class="knoten"><span class="nr">8</span><b>Orientierung</b><small>Pfade, Rückwege, „wo bin ich“</small></div>
+      </div>
+      <div class="rueck"><i></i></div>
+      <div class="reihe">
+        <div class="knoten"><span class="nr">9</span><b>Regelprüfung</b><small>30 Regeln auf Widersprüche (Professor-Rolle)</small></div>
+        <div class="pfeil">→</div>
+        <div class="knoten"><span class="nr">10</span><b>Je Klick gemessen</b><small>wohin, Scroll vorher/nachher, Ziel markiert, Zurück</small></div>
+        <div class="pfeil">→</div>
+        <div class="knoten"><span class="nr">11</span><b>Zusammengeführt</b><small>gemessen und aus dem Code gelesen getrennt</small></div>
+        <div class="pfeil">→</div>
+        <div class="knoten ergebnis"><span class="nr">12</span><b>Ergebnis</b><small>Funde je Station, Lösung in Stufen, Fragen an dich</small></div>
+      </div>
+    </div>
+    <div class="tabelle">
+      <table>
+        <thead><tr><th>Prüfer (KI-Agent)</th><th>Was geprüft</th><th>Umfang</th><th>Gefundene Ungereimtheiten</th></tr></thead>
+        <tbody>
+          <tr><td>Eingang</td><td>Kamera, Datei, Stapel, Ordner, E-Mail, Formular</td><td class="n">11 Wege</td><td class="n"><span class="pill s">5 schwer</span> <span class="pill m">10 mittel</span> <span class="pill k">7 klein</span></td></tr>
+          <tr><td>Erinnerungen</td><td>Notiz, Fristen, Kalender, Glocke, Stift, ✓, 🗑</td><td class="n">8 Wege</td><td class="n"><span class="pill s">4 schwer</span> <span class="pill m">8 mittel</span> <span class="pill k">5 klein</span></td></tr>
+          <tr><td>Suche</td><td>Frage oben, Bibliothek, Bereiche, 1000 Dokumente</td><td class="n">6 Wege</td><td class="n"><span class="pill s">6 schwer</span> <span class="pill m">5 mittel</span> <span class="pill k">3 klein</span></td></tr>
+          <tr><td>Geräte</td><td>Speicher, Sicherung, Übergabe, Abgleich, E-Mail</td><td class="n">11 Wege</td><td class="n"><span class="pill s">3 schwer</span> <span class="pill m">7 mittel</span> <span class="pill k">5 klein</span></td></tr>
+          <tr><td>Navigation</td><td>Sprünge zwischen Bereichen, Zurück</td><td class="n">64 Klicks</td><td class="n"><span class="pill s">1 schwer</span> <span class="pill m">8 mittel</span> <span class="pill k">3 klein</span></td></tr>
+          <tr><td>Hilfe</td><td>Hilfe sagt ↔ App tut</td><td class="n">103 Stellen</td><td class="n"><span class="pill s">6 schwer</span> <span class="pill m">13 mittel</span> <span class="pill k">14 klein</span></td></tr>
+          <tr><td>Neuling, 70 J.</td><td>6 Alltagsaufgaben am Handy</td><td class="n">3 / 6 geschafft</td><td class="n">31 offene Fragen</td></tr>
+          <tr><td>Erfahren, App neu</td><td>7 Aufgaben, Vergleich mit anderen Apps</td><td class="n">5 / 7 geschafft</td><td class="n">25 offene Fragen</td></tr>
+          <tr><td>Erfahrener Nutzer</td><td>Viel Bestand, Tempo</td><td class="n">3 / 6 geschafft</td><td class="n">33 Funde, davon <span class="pill s">15 schwer</span></td></tr>
+          <tr><td>Orientierung</td><td>Pfade, Rückwege</td><td class="n" id="ori-umfang">18 Wege</td><td class="n" id="ori-erg">Pfad stimmt nur in 3 von 18</td></tr>
+          <tr><td>Professor</td><td>Regeln gegen Regeln und Ziel</td><td class="n">30 Regeln</td><td class="n"><span class="pill s">10 schwer</span> <span class="pill m">14 mittel</span> <span class="pill k">3 klein</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted"><b>Prüfer</b> = KI-Agenten, die die App eigenständig im Browser bedient und den Code gelesen haben, ohne etwas zu ändern. <b>Wege</b> = vollständig durchgespielte Abläufe. <b>Schwer</b>: Ziel nicht erreichbar, Daten weg oder Hin- und Herspringen · <b>mittel</b>: Umweg oder unklarer nächster Schritt · <b>klein</b>: Wortlaut, Anzeige.</p>
+  </section>
+
+  <section>
+    <span class="eyebrow">Teil 2</span>
+    <h2>Grundablauf und wo es hakt</h2>
+    <div class="ablauf">
+      <div class="station"><h3>① Eingang</h3><span class="menge">22</span><ul><li>2. Datei auf Startseite still verworfen</li><li>Warteschlange liest PDF nicht, Dialog schon</li><li>20 Dokumente = 60 Klicks</li></ul></div>
+      <div class="station"><h3>② Prüfen</h3><span class="menge">8</span><ul><li>Erkannte Frist geht verloren</li><li>Falscher Vorgang vorgewählt</li><li>„Vergleichen“ beendet die Prüfung</li></ul></div>
+      <div class="station"><h3>③ Ablegen</h3><span class="menge">9</span><ul><li>Titel, Datum, Text nicht gespeichert</li><li>Dokument nicht löschbar</li><li>„Hat es gespeichert?“</li></ul></div>
+      <div class="station"><h3>④ Erinnern</h3><span class="menge">17</span><ul><li>Aufgabe + Erinnerung = 2 Einträge</li><li>Handy: Speichern-Knopf ausgeblendet</li><li>Kalender-Haken hängt vom Weg ab</li></ul></div>
+      <div class="station"><h3>⑤ Finden</h3><span class="menge">14</span><ul><li>Liest den Inhalt nicht</li><li>„Bankauszug März“ findet nichts</li><li>Max. 20 Treffer, Beispieldaten dabei</li></ul></div>
+      <div class="station"><h3>⑥ Anderes Gerät</h3><span class="menge">15</span><ul><li>Kein Abgleich zweier Akten</li><li>Sichern am Handy nicht möglich</li><li>Gesundheit unverschlüsselt per Mail</li></ul></div>
+    </div>
+    <div class="muster"><b>Muster 1: Springen statt Zeigen</b><ul class="pro"><li>Jeder Sprung setzt die Seite erst nach oben</li><li>Danach rollt jeder Bereich anders: verzögert, gar nicht oder am Ziel vorbei</li><li>Folge: Hin und Her, Ziel nicht zu sehen</li></ul><p class="loesung">→ Ein Sprungweg für alle · Stufe 2</p></div>
+    <div class="muster"><b>Muster 2: Ein Ding, mehrere Einträge</b><ul class="pro"><li>Erinnerung als eigener Eintrag neben der Aufgabe</li><li>Frist aus Dokument ohne Verknüpfung zum Dokument</li><li>Folge: Doppelzeilen, offene Reste, Ping-Pong</li></ul><p class="loesung">→ Ein Eintrag, eine Seite · Stufe 3</p></div>
+    <div class="muster"><b>Muster 3: Schutz ohne Gegenweg</b><ul class="pro"><li>Ausblenden, Sperren, Nicht-Löschen ohne Weg zurück</li><li>Gesundheits-Stichwörter zu breit: auch Finanzpapiere verdeckt</li><li>Ein Wort, drei Bedeutungen: „Erinnerung“</li></ul><p class="loesung">→ Jeder Schutz mit Gegenweg · Stufe 2, Fragen 1–2</p></div>
+    <div class="muster"><b>Muster 4: Erkanntes wird weggeworfen</b><ul class="pro"><li>Absender, Datum, Frist und Text werden richtig erkannt</li><li>Gespeichert wird nur der Dateiname</li><li>Folge: Suche findet „Bankauszug März“ nicht</li></ul><p class="loesung">→ Erkanntes mitspeichern · Stufe 1 und 5</p></div>
+    <div class="muster"><b>Muster 5: Der Pfad zeigt die Ordnung, nicht den Weg</b><ul class="pro"><li>Idee richtig (WCAG 2.2, 2.4.8: „wo bin ich“)</li><li>Pfad passt nur in 3 von 18 Wegen</li><li>Am Handy verschwindet die Pfadleiste beim Scrollen</li></ul><p class="loesung">→ Pfad = gegangener Weg · Stufe 2</p></div>
+    <p class="muted">Was trägt und bleibt:</p>
+    <div class="gut"><span>Prüfdialog vor dem Ablegen</span><span>Zurück führt an die Stelle (39 von 39)</span><span>Mein Kalender</span><span>Erinnerungsbalken am Morgen</span><span>Dubletten-Warnung</span><span>Hilfe-Suche und Landkarte</span><span>Originale bleiben unverändert</span><span>Listenzeilen seit 2.28.38</span><span>Suche schnell (unter 0,2 s)</span></div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Teil 3</span>
+    <h2>Lösung in Stufen</h2>
+    <p class="muted">Das Aussehen bleibt. Umgebaut wird vor allem, was hinter einem Tipp passiert. Jede sichtbare Änderung erst als Vorschau.</p>
+    <div class="stufen">
+      <div class="stufe"><span class="s">1</span><div><h3>Versehen reparieren <span class="chip frei">ohne neue Entscheidung</span></h3><ul><li>Handy: Speichern/Fertig im Notiz-Fenster wieder sichtbar</li><li>Keine Beispieldaten in der echten Suche</li><li>Startseite nimmt alle Dateien, nicht nur die erste</li><li>Vorgeschlagenen Titel, Datum und Frist wirklich speichern</li><li>Frist aus Dokument mit dem Dokument verknüpfen</li><li>Bereichsknöpfe filtern auf die richtigen Namen</li><li>„Noch nichts gespeichert“ verschwindet nach dem Speichern</li></ul></div></div>
+      <div class="stufe"><span class="s">2</span><div><h3>Feste Regeln für alle Seiten <span class="chip frei">Grundsatz</span></h3><ul><li>Jede Eingabe endet mit „✓ Speichern“ und „Gespeichert ✓“ an derselben Stelle</li><li>Ein Tipp klappt auf oder geht hin, rollt einmal, markiert</li><li>Pfad: eine Seite, ein Bereich, ein Name; letztes Glied ist, was man sieht; bleibt beim Scrollen sichtbar</li><li>Jede Rückkehr landet an der letzten Stelle und markiert sie</li><li>Je Ansicht höchstens ein hervorgehobener nächster Schritt</li><li>Schutz immer mit Gegenweg</li></ul></div></div>
+      <div class="stufe"><span class="s">3</span><div><h3>Ein Eintrag, eine Seite <span class="chip ja">Vorschau A–E liegt vor</span></h3><ul><li>Erinnerung ist Teil der Aufgabe</li><li>Verknüpftes klappt an Ort und Stelle auf</li><li>✓ ✎ 🗑 überall gleich</li><li>„Erledigt“ mit Rückgängig</li></ul></div></div>
+      <div class="stufe"><span class="s">4</span><div><h3>Eingang für viele Dokumente <span class="chip ja">Vorschau folgt</span></h3><ul><li>Sammelbestätigung: Vorschläge ankreuzen, ein Knopf</li><li>Person, Vorgang, Objekt per Auswahl statt Kennnummer</li><li>Lange Listen in Seiten, mit Filter und Auswahl</li></ul></div></div>
+      <div class="stufe"><span class="s">5</span><div><h3>Die Frage oben wird die Mitte <span class="chip ja">Vorschau folgt</span></h3><ul><li>Sucht im gelesenen Text der Dokumente</li><li>Versteht Monate, Daten und gleichbedeutende Wörter</li><li>Alle Treffer, nach Art getrennt, neueste zuerst</li></ul></div></div>
+      <div class="stufe"><span class="s">6</span><div><h3>Abgleich zwischen Geräten <span class="chip ja">Punkt 10, Fragen u–z</span></h3><ul><li>Bis dahin sagt die App ehrlich, was noch fehlt</li></ul></div></div>
+    </div>
+  </section>
+
+  <section><span class="eyebrow">Teil 5</span><h2>Antworten auf die Fragen der Rollen</h2>
+<p>Je Frage: was die App künftig zeigt oder tut. „Siehe …“ fasst gleiche Fragen zusammen.</p>
+<h3>Neuling (31 Fragen)</h3>
+<div class="tabelle"><table><thead><tr><th>Nr.</th><th>Frage</th><th>Vorschlag</th><th>Stand</th></tr></thead><tbody>
+<tr><td>1</td><td>Wo fange ich an?</td><td>Die Startseite zeigt oben drei große Knöpfe: „Brief ablegen“, „Erinnerung anlegen“, „Suchen“.</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>2</td><td>Was ist ein Objekt-Cockpit?</td><td>Der Kasten bekommt einen verständlichen Namen und einen Satz, was er zeigt.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>3</td><td>Datentresor – muss ich das wählen, ist mein Zeug sicher?</td><td>Klartext: „Ihre Unterlagen liegen in diesem Browser. Ein eigener Ordner ist zusätzlich sicherer.“ – als Empfehlung, nicht als Fehler.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>4</td><td>Unterschied zwischen Ablegen, Datei auswählen, Abgleich, Aktualisieren?</td><td>Ein Knopf „Unterlage ablegen“ als Haupteinstieg, die übrigen mit einer Zeile Erklärung; das Zusammenlegen braucht eine Skizze.</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>5</td><td>„Datenschutz: vertraulich“ – muss ich etwas tun?</td><td>Daneben steht: „Wird verdeckt angezeigt. Sie müssen nichts tun.“</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>6</td><td>Warum „Sonstiges“, wo doch „Energie“ dasteht?</td><td>Der Bereich folgt dem erkannten Thema, „Sonstiges“ nur, wenn nichts passt.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>7</td><td>Hat es gespeichert?</td><td>An derselben Stelle steht „Gespeichert ✓ in …“; die gelbe Zeile „noch nichts gespeichert“ verschwindet. (Auch Neu-erfahren 9.)</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>8</td><td>Was ist „Copy“?</td><td>Der Knopf heißt „Kopieren“, gleiche Meldungen erscheinen nur einmal. (Auch Neu-erfahren 24, Erfahren 11.)</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>9</td><td>Wo ist mein Brief jetzt?</td><td>Die Seite bleibt stehen und zeigt „Abgelegt unter … · Ansehen ›“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>10</td><td>„Neu“ – lege ich etwas neu an?</td><td>Der Knopf heißt „Neuigkeiten“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>11</td><td>Welches Symbol ist der Kalender? Was bedeuten die Zeichen oben?</td><td>Am Handy stehen kurze Namen unter den Symbolen oder ein Tipp zeigt sie. (Auch Neu-erfahren 1.)</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>12</td><td>Termin oder Aufgabe?</td><td>Einträge mit Uhrzeit heißen „Termin“, ohne Uhrzeit „Aufgabe“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>13</td><td>Klingelt es auch bei geschlossener App? Was ist die App-Glocke?</td><td>Glocke ab Werk an; daneben ein Satz: „Klingelt, solange die App offen ist – für mehr: Kalender verbinden“. (Auch Neu-erfahren 18.)</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>14</td><td>Warum heißt mein Zahnarzt „Geschützter neuer Eintrag“?</td><td>Die Zeile sagt „verdeckt zum Schutz vor Mitlesern – antippen zum Zeigen“; die Wahl je Nutzer kommt später.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>15</td><td>Was ist ein ICD-Code?</td><td>Der Suchhinweis nennt nur Alltagswörter: Name, Absender, Jahr, Monat.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>16</td><td>Warum findet „Strom“ meinen Strombrief nicht?</td><td>Die Suche durchsucht auch den gelesenen Brieftext. (Auch Neu-erfahren 19.)</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>17</td><td>Wie schaue ich mir den Brief an?</td><td>Jede Dokumentkarte hat einen Knopf „Ansehen“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>18</td><td>Was ist FaWoGa, file-picker, Workflow PDF?</td><td>Interne Wörter verschwinden; Werkzeuge heißen nach ihrem Zweck, z. B. „PDF bearbeiten“. (Auch Neu-erfahren 13.)</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>19</td><td>Warum steht „KORRESPONDENZ“ zweimal?</td><td>Die Art steht nur einmal auf der Karte.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>20</td><td>Was ist „Geschützter Eingang“?</td><td>Heißt „Neu eingegangen, noch nicht abgelegt“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>21</td><td>„Nicht gelesen“ hier, „Text gelesen“ dort?</td><td>Die Warteschlange nutzt den schon gelesenen Text; beide Stellen sagen dasselbe. (Auch Neu-erfahren 15, Erfahren 1.)</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>22</td><td>Woher kommt ein fremder „Beispieleintrag“?</td><td>Beispiele gibt es nur in der Demo, nie in der eigenen Akte. (Auch Neu-erfahren 20.)</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>23</td><td>Wo sind meine Bankpapiere?</td><td>„Finanzen & Konten“ erscheint als eigener Bereich, sobald etwas darin liegt.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>24</td><td>Warum „ohne Dokumentdatum“, der März steht doch drauf?</td><td>Das Datum aus dem Brief wird übernommen und lässt sich ändern. (Auch Neu-erfahren 12.)</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>25</td><td>Was bedeutet „1f52bfe7-…“?</td><td>Statt der Kennung stehen Titel und Datum des Dokuments.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>26</td><td>Wie werfe ich das doppelte Papier weg?</td><td>Knopf „Aus der Akte nehmen“: Datei kommt in den Ordner „Aussortiert“ und lässt sich zurückholen.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>27</td><td>Wo ist der Mülleimer bei der Erinnerung?</td><td>Die Aktionen passen sichtbar zum Eintrag (Vorschau C); der Pfeil trägt das Wort „Mehr“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>28</td><td>Wo ist „Löschen?“ hin?</td><td>Die Rückfrage bleibt stehen, bis man „Ja“ oder „Abbrechen“ tippt.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>29</td><td>Welche der zwei gleichen Erinnerungen lösche ich?</td><td>Die Rückfrage nennt Titel und Datum des Eintrags.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>30</td><td>„Gesundheitsbezogene Aktion“ – ich habe nur gelöscht?</td><td>Meldung: „Erinnerung gelöscht · Rückgängig“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>31</td><td>Warum „mm/dd/yyyy“?</td><td>Datumsfelder zeigen überall TT.MM.JJJJ.</td><td><span class="pill k">wird behoben</span></td></tr>
+</tbody></table></div>
+<h3>Neu, aber erfahren (25 Fragen)</h3>
+<div class="tabelle"><table><thead><tr><th>Nr.</th><th>Frage</th><th>Vorschlag</th><th>Stand</th></tr></thead><tbody>
+<tr><td>1</td><td>Was bedeuten die Symbole oben?</td><td>Siehe Neuling 11.</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>2</td><td>Wo fange ich an?</td><td>Siehe Neuling 1.</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>3</td><td>Warum Cockpit, Fristen, Tagebuch unter „Familie & Personen“?</td><td>Das Menü ordnet Fristen und Kalender in eine eigene Gruppe.</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>4</td><td>Objekt-Cockpit oder Interaktives Cockpit?</td><td>Ein Name, eine Seite; bis dahin eine Zeile zum Unterschied. Das Zusammenlegen braucht eine Skizze. (Vgl. Neuling 2.)</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>5</td><td>Systemprüfung 13.10., Version 2.28.1 in leerer Akte?</td><td>Interne Prüfangaben verschwinden aus der normalen Oberfläche.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>6</td><td>Wo liegen meine Daten?</td><td>War beantwortet; zusätzlich nennt die Startseite eine Zeile „Gespeichert in: diesem Browser“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>7</td><td>Was passiert beim Löschen der Browserdaten?</td><td>Deutliche Warnung „dann sind die Unterlagen weg“ mit Knopf „Jetzt sichern“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>8</td><td>Liegt doch etwas online („Online-Altbestand“)?</td><td>Das Wort erscheint nur, wenn wirklich etwas online liegt.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>9</td><td>„Im freigegebenen Datentresor erfasst“ – welchem?</td><td>Siehe Neuling 7: die Meldung nennt den echten Ort.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>10</td><td>Mehrere Dateien auf einmal ablegen?</td><td>Ablegen nimmt mehrere Dateien; sichere Vorschläge mit einem Tipp speichern (Sammelbestätigung). (Auch Erfahren 2.)</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>11</td><td>Warum heißt es weiter scan_0001.pdf? Umbenennen?</td><td>Der vorgeschlagene Titel wird gespeichert und lässt sich mit ✎ ändern. (Auch Erfahren 3.)</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>12</td><td>„Ohne Dokumentdatum“</td><td>Siehe Neuling 24.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>13</td><td>Was ist „FaWoGa“?</td><td>Siehe Neuling 18.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>14</td><td>Kfz-Rechnung „Versicherungen“ und „Werkstatt“ zugleich?</td><td>Gezeigt wird ein Pfad: „Versicherungen › Werkstatt / Wartung“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>15</td><td>Warteschlange „nicht lesbar“, Dialog „gelesen“?</td><td>Siehe Neuling 21.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>16</td><td>Erinnerung mit Dokument verknüpfen – ohne ID?</td><td>Auswahlliste mit Suche statt ID-Feld. (Auch Erfahren 17.)</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>17</td><td>„Bald fällig 1, Offen 0“?</td><td>„Bald fällig“ zählt bei „Offen“ mit.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>18</td><td>Klingelt sie bei geschlossener App?</td><td>Siehe Neuling 13.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>19</td><td>Warum findet die Suche „Waschmaschine“ nicht?</td><td>Siehe Neuling 16.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>20</td><td>Fremde „Beispielantwort“ in leerer Akte?</td><td>Siehe Neuling 22.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>21</td><td>Wie kommen die Daten aufs zweite Gerät?</td><td>Umzug per Sicherung bleibt; ein laufender Abgleich ist Punkt 10. (Auch Erfahren 33.)</td><td><span class="pill s">Entscheidung offen</span></td></tr>
+<tr><td>22</td><td>Was ist „Netz (Mycel)“?</td><td>Verschwindet aus dem normalen Menü.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>23</td><td>Hat „Vollständige Sicherung erstellen“ etwas getan?</td><td>Danach steht „Gespeichert ✓ in …“ mit Ordner und Uhrzeit.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>24</td><td>Englische „Copy“-Knöpfe</td><td>Siehe Neuling 8.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>25</td><td>Wozu Workflow PDF, Stapel, Bestand prüfen?</td><td>Jeder Menüpunkt bekommt eine Zeile, wozu er dient.</td><td><span class="pill k">wird behoben</span></td></tr>
+</tbody></table></div>
+<h3>Erfahrener Nutzer (33 Funde)</h3>
+<div class="tabelle"><table><thead><tr><th>Nr.</th><th>Frage</th><th>Vorschlag</th><th>Stand</th></tr></thead><tbody>
+<tr><td>1</td><td>Warteschlange liest PDFs nicht, Prüffenster schon</td><td>Siehe Neuling 21.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>2</td><td>Kein Sammel-Speichern</td><td>Siehe Neu-erfahren 10.</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>3</td><td>Titel nicht gespeichert, nur Dateiname</td><td>Siehe Neu-erfahren 11.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>4</td><td>Organisation ohne Rückfrage verknüpft</td><td>Nur vorschlagen, wenn der Name im Briefkopf steht, sonst leer.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>5</td><td>Vorgangsvorschlag fast immer falsch</td><td>Vorschlag nur bei klarer Übereinstimmung, sonst „kein Vorschlag“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>6</td><td>Vorgang wählen nur mit Vorschlag</td><td>Der Vorgangsbereich ist immer da.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>7</td><td>48 Vorgänge ungeordnet</td><td>Mit Suchfeld, offene zuerst, alphabetisch.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>8</td><td>Adresszeile als Titel</td><td>Die Betreffzeile des Briefs wird Titel.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>9</td><td>Erledigte bleiben in der Warteschlange stehen</td><td>Erledigte rutschen ans Ende, das nächste offene öffnet sich.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>10</td><td>„20 Eingänge“ wählt nur aus</td><td>Sichtbares Kästchen „alle / keine“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>11</td><td>Doppelte Meldung, „Copy“</td><td>Siehe Neuling 8.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>12</td><td>„Zuletzt hinzugefügt“ sortiert nach Dokumentdatum</td><td>Sortiert nach Hinzufügedatum.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>13</td><td>Bibliothek 166 Karten ohne Auswahl</td><td>Kompakte Zeilen mit Mehrfachauswahl und Sammelaktionen.</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>14</td><td>Frist nimmt Rechnungsdatum, ISO-Format</td><td>Datum nach „bis“, „spätestens“, „zahlbar bis“ bevorzugen, deutsch anzeigen.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>15</td><td>„Als Frist übernehmen“ verlässt die Ablage</td><td>Frist wird im Prüffenster mit angelegt und mit dem Dokument verknüpft.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>16</td><td>Formular liegt weit unten</td><td>Die Seite springt direkt zum Formular.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>17</td><td>IDs müssen eingetippt werden</td><td>Siehe Neu-erfahren 16.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>18</td><td>Zusätzlicher Bestätigungshaken</td><td>Der Knopf „anlegen“ genügt.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>19</td><td>Zweiter Eintrag „Erinnerung: …“</td><td>Die Erinnerung gehört zur Aufgabe und steht in ihr (Vorschau A, D).</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>20</td><td>Verschieben: Erinnerung zieht nicht mit</td><td>Erinnerungen ziehen mit und sind im Bearbeitungsfenster sichtbar.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>21</td><td>Erledigen: Erinnerung bleibt offen</td><td>Erinnerungen werden mit erledigt; „Erledigt“ bestätigt sichtbar (Vorschau E).</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>22</td><td>Mein Kalender ohne Erinnerungen</td><td>Kalender und Fristenliste zeigen dieselben Einträge.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>23</td><td>Roter Kasten „Kein Kalender verbunden“</td><td>Einmaliger, ruhiger Hinweis.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>24</td><td>Leerzeichen vor dem Hauptwort fehlt</td><td>Wird in der Listenzeile berichtigt.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>25</td><td>Fristenliste 287 Zeilen ohne Suche</td><td>Liste weiter oben, mit Suchfeld, Filter und Jahr bei anderem Jahr.</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>26</td><td>Personen, Organisationen, Objekte nicht anlegbar</td><td>Knopf „Neu …“ in Familie & Personen und im Prüffenster.</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>27</td><td>Vorgang zeigt fremde Dokumente</td><td>Nur direkt verknüpfte Dokumente, dazu Personen und Organisationen.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>28</td><td>Tagebuch-Fenster bleibt offen</td><td>Schließt sich und zeigt „Gespeichert ✓“.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>29</td><td>Suche: max. 20 Treffer, kein Datum, keine Tippfehler</td><td>„Weitere Treffer“, Suche nach Datum und Monat, unscharfe Suche, Daten vor Menüpunkten.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>30</td><td>Suche: große zentrierte Karten</td><td>Kompakte Trefferzeilen mit Art-Filter – Suche als Mitte der App.</td><td><span class="pill m">braucht Vorschau</span></td></tr>
+<tr><td>31</td><td>Sicherungsprobe „bestanden“ trotz fehlender Originale</td><td>Meldet deutlich „unvollständig“ und nennt die fehlenden Dateien.</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>32</td><td>Umlaute in Ordnernamen</td><td>Ordnernamen werden ohne Umlaute angelegt (ö → oe).</td><td><span class="pill k">wird behoben</span></td></tr>
+<tr><td>33</td><td>Zurück vom zweiten Gerät</td><td>Siehe Neu-erfahren 21 (Punkt 10).</td><td><span class="pill s">Entscheidung offen</span></td></tr>
+</tbody></table></div>
+</section>
+
+  <section>
+    <span class="eyebrow">Teil 4</span>
+    <h2>Deine Entscheidungen</h2>
+    <p class="muted">Tippe Ja, Nein oder Später und schreib mit ✎ dazu, was du meinst. „✓ Speichern“ legt die Antwort bei der Seite ab; ich lese sie direkt aus.</p>
+    <div class="fragen">
+      <div class="frage" data-f="f1"><div class="ftext"><span>Wovor schützt der Gesundheitsschutz: nur vor Mitlesern am Bildschirm (Aufdecken per Tipp) oder auch vor Kalender, Mail und Sicherung?</span>
+        <div class="wahl"><button type="button" data-w="ja">Ja</button><button type="button" data-w="nein">Nein</button><button type="button" data-w="spaeter">Später</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+        <textarea id="notiz-f1" rows="2" placeholder="Deine Anmerkung" hidden></textarea>
+        <div class="speichern"><button type="button" class="sp" disabled>✓ Speichern</button><span class="st" aria-live="polite"></span></div></div></div>
+      <div class="frage" data-f="f2"><div class="ftext"><span>Darf man Dokumente „aus der Akte nehmen“, wenn die Datei in einen Ordner „Aussortiert“ wandert und zurückholbar bleibt?</span>
+        <div class="wahl"><button type="button" data-w="ja">Ja</button><button type="button" data-w="nein">Nein</button><button type="button" data-w="spaeter">Später</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+        <textarea id="notiz-f2" rows="2" placeholder="Deine Anmerkung" hidden></textarea>
+        <div class="speichern"><button type="button" class="sp" disabled>✓ Speichern</button><span class="st" aria-live="polite"></span></div></div></div>
+      <div class="frage" data-f="f3"><div class="ftext"><span>Soll die App-Glocke ab Werk an sein, solange kein Kalender verbunden ist?</span>
+        <div class="wahl"><button type="button" data-w="ja">Ja</button><button type="button" data-w="nein">Nein</button><button type="button" data-w="spaeter">Später</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+        <textarea id="notiz-f3" rows="2" placeholder="Deine Anmerkung" hidden></textarea>
+        <div class="speichern"><button type="button" class="sp" disabled>✓ Speichern</button><span class="st" aria-live="polite"></span></div></div></div>
+      <div class="frage" data-f="f4"><div class="ftext"><span>Sammelbestätigung für viele Dokumente statt eines Dialogs je Dokument?</span>
+        <div class="wahl"><button type="button" data-w="ja">Ja</button><button type="button" data-w="nein">Nein</button><button type="button" data-w="spaeter">Später</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+        <textarea id="notiz-f4" rows="2" placeholder="Deine Anmerkung" hidden></textarea>
+        <div class="speichern"><button type="button" class="sp" disabled>✓ Speichern</button><span class="st" aria-live="polite"></span></div></div></div>
+      <div class="frage" data-f="f5"><div class="ftext"><span>Interne Angaben (Prüfstand 2.28.1, Freigabe NEIN, Testordner) aus der normalen Oberfläche nehmen?</span>
+        <div class="wahl"><button type="button" data-w="ja">Ja</button><button type="button" data-w="nein">Nein</button><button type="button" data-w="spaeter">Später</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+        <textarea id="notiz-f5" rows="2" placeholder="Deine Anmerkung" hidden></textarea>
+        <div class="speichern"><button type="button" class="sp" disabled>✓ Speichern</button><span class="st" aria-live="polite"></span></div></div></div>
+      <div class="frage" data-f="f6"><div class="ftext"><span>Für reine Berichtigungen (Rechtschreibung, Datumsformat, deutsche statt englische Wörter) ein Ja für alle statt je Änderung?</span>
+        <div class="wahl"><button type="button" data-w="ja">Ja</button><button type="button" data-w="nein">Nein</button><button type="button" data-w="spaeter">Später</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+        <textarea id="notiz-f6" rows="2" placeholder="Deine Anmerkung" hidden></textarea>
+        <div class="speichern"><button type="button" class="sp" disabled>✓ Speichern</button><span class="st" aria-live="polite"></span></div></div></div>
+      <div class="frage" data-f="f7"><div class="ftext"><span>Vorschau A–E (Aufgabe und Erinnerung): ja?</span>
+        <div class="wahl"><button type="button" data-w="ja">Ja</button><button type="button" data-w="nein">Nein</button><button type="button" data-w="spaeter">Später</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+        <textarea id="notiz-f7" rows="2" placeholder="Deine Anmerkung" hidden></textarea>
+        <div class="speichern"><button type="button" class="sp" disabled>✓ Speichern</button><span class="st" aria-live="polite"></span></div></div></div>
+      <div class="frage" data-f="f8"><div class="ftext"><span>Reihenfolge der Stufen 1 bis 6 so?</span>
+        <div class="wahl"><button type="button" data-w="ja">Ja</button><button type="button" data-w="nein">Nein</button><button type="button" data-w="spaeter">Später</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+        <textarea id="notiz-f8" rows="2" placeholder="Deine Anmerkung" hidden></textarea>
+        <div class="speichern"><button type="button" class="sp" disabled>✓ Speichern</button><span class="st" aria-live="polite"></span></div></div></div>
+    </div>
+  </section>
+</main>
+
+<script>
+(() => {
+  let db = null;
+  const karten = [...document.querySelectorAll(".frage[data-f]")];
+  const lokal = (k, v) => { try { if (v === undefined) return JSON.parse(localStorage.getItem("pa-" + k) || "null"); localStorage.setItem("pa-" + k, JSON.stringify(v)); } catch { return null; } };
+  const zeigen = (k, d) => {
+    if (!d) return;
+    k.querySelectorAll(".wahl [data-w]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.w === d.antwort)));
+    const t = k.querySelector("textarea"); if (d.notiz) { t.value = d.notiz; t.hidden = false; }
+    k.dataset.antwort = d.antwort || "";
+    k.querySelector(".st").textContent = "Gespeichert ✓";
+  };
+  karten.forEach((k) => {
+    const sp = k.querySelector(".sp"), st = k.querySelector(".st"), t = k.querySelector("textarea");
+    const geaendert = () => { sp.disabled = false; st.textContent = ""; st.classList.remove("fehler"); };
+    k.querySelectorAll(".wahl [data-w]").forEach((b) => b.addEventListener("click", () => {
+      k.querySelectorAll(".wahl [data-w]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      k.dataset.antwort = b.dataset.w; geaendert();
+    }));
+    k.querySelector(".stift").addEventListener("click", () => { t.hidden = false; t.focus(); });
+    t.addEventListener("input", geaendert);
+    sp.addEventListener("click", async () => {
+      const d = { antwort: k.dataset.antwort || "", notiz: t.value.trim(), wann: new Date().toISOString() };
+      sp.disabled = true; st.textContent = "Wird gespeichert …";
+      try {
+        if (db) await db.doc("antworten/" + k.dataset.f).set(d); else lokal(k.dataset.f, d);
+        st.textContent = db ? "Gespeichert ✓" : "Nur in diesem Browser gespeichert";
+      } catch (e) { sp.disabled = false; st.textContent = "Nicht gespeichert, bitte noch einmal tippen"; st.classList.add("fehler"); }
+    });
+    zeigen(k, lokal(k.dataset.f));
+  });
+  if (window.claude && claude.use) claude.use("db").then((d) => {
+    if (!d) return; db = d;
+    karten.forEach((k) => db.doc("antworten/" + k.dataset.f).get().then((x) => { const v = x && (x.data ? (typeof x.data === "function" ? x.data() : x.data) : x); if (v && v.antwort !== undefined) zeigen(k, v); }).catch(() => {}));
+  }).catch(() => {});
+})();
+</script>

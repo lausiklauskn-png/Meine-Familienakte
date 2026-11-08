@@ -15,7 +15,7 @@ try {
   await step("Start", async () => { await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page); });
 
   // ---------- Cockpit ----------
-  await footer(page, "Interaktives Cockpit");
+  await footer(page, "Cockpit");
   await step("Cockpit: vier Zähl-Kacheln sind Knöpfe und rollen zum Abschnitt", async () => {
     await page.locator("button.card", { hasText: "Aktive To-dos" }).click();
     await page.waitForTimeout(400);
@@ -65,7 +65,7 @@ try {
     if (!(await assist.count())) return `nur ${n} Dossier-Knöpfe, kein Assistenz-Knopf`;
     await assist.click(); await page.waitForTimeout(300);
     const ok = (await page.locator(".breadcrumb").innerText()).includes("Assistenz");
-    await footer(page, "Interaktives Cockpit");
+    await footer(page, "Cockpit");
     return ok;
   });
   await step("Cockpit: Zusammenhangs-Vorschlag „Verknüpfen“ / „Nicht verknüpfen“", async () => {
@@ -139,8 +139,12 @@ try {
     await page.waitForTimeout(600);
     return (await page.locator("body").innerText()).includes("zurückgestellt");
   });
-  await step("Fristen: Verweis-Knopf (z. B. „Vorgang: VORG-…“) öffnet das Cockpit", async () => {
-    const link = page.locator("button.text-link", { hasText: /^Vorgang: VORG-/ }).first();
+  await step("Fristen: Verweis-Knopf (z. B. „Vorgang: Name“, keine Kennnummer) öffnet das Cockpit", async () => {
+    // 2.28.39: keine eigenen Erinnerungs-Zeilen mehr; der zuvor aufgeklappte Eintrag steht nach „Zurückstellen“ im
+    // zugeklappten Bereich. Darum einen offenen Eintrag mit Vorgang aufklappen.
+    const link = page.locator("#offene-fristen button.text-link:visible", { hasText: /^Vorgang: (?!VORG-)/ }).first();
+    const augen = page.locator("#offene-fristen [data-termin-auge]");
+    for (let i = 0; i < Math.min(await augen.count(), 15) && !(await link.count()); i++) { await augen.nth(i).click(); await page.waitForTimeout(100); }
     if (!(await link.count())) return "kein Verweis sichtbar";
     await link.click(); await page.waitForTimeout(300);
     return (await page.locator(".breadcrumb").innerText()).includes("Cockpit");
@@ -165,7 +169,7 @@ try {
   await step("Tagebuch: „Ergänzen“ führt zur Startseite und holt den Entwurf ins Eingabefeld", async () => {
     await klick(page.locator("#memory-draft-queue button", { hasText: "Ergänzen" }).first(), "Ergänzen");
     await page.waitForTimeout(400);
-    const start = page.url().endsWith("#startseite") && (await page.locator(".breadcrumb > button").allTextContents()).join("") === "Startseite";
+    const start = page.url().endsWith("#startseite") && (await page.locator(".breadcrumb .pfad > button").allTextContents()).join("") === "Startseite";
     return start && (await page.locator(".memory-text textarea").inputValue()).includes("Probe-Entwurf");
   });
   await step("Startseite: ergänzter Entwurf geht mit „Nächste Eingabe“ zurück in die Warteschlange (kein Doppel)", async () => {

@@ -37,7 +37,7 @@ await desktop.goto(base, { waitUntil: "networkidle" });
 await ready(desktop);
 await desktop.waitForTimeout(800);
 await desktop.screenshot({ path: `${out}01-startseite.png`, fullPage: true });
-await footer(desktop, "Interaktives Cockpit");
+await footer(desktop, "Cockpit");
 await shot(desktop, `${out}02-cockpit.png`);
 await footer(desktop, "Dokumentenbibliothek");
 await shot(desktop, `${out}03-dokumentenbibliothek.png`);

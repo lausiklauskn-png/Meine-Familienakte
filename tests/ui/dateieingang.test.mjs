@@ -78,7 +78,8 @@ try {
   }
   check(kinds["Programm_nicht_erlaubt.exe"].status === "Prüfung erforderlich", "Nicht erlaubter Typ (.exe) bleibt bei „Prüfung erforderlich“, wird nicht abgewiesen", kinds["Programm_nicht_erlaubt.exe"].status);
   check(kinds["Mail_Garantiefall_mit_PDF.eml"].text.includes("1 Anlage") && kinds["Mail_Garantiefall_mit_PDF.eml"].text.includes("Frist"), "EML: Absender, Anlagenzahl und mögliche Frist erkannt", kinds["Mail_Garantiefall_mit_PDF.eml"].text.slice(0, 200));
-  check(kinds["Nebenkostenabrechnung_2025_Arenberg-Hof.pdf"].text.includes("Inhalt konnte nicht automatisch gelesen"), "PDF-Textebene wird im Eingang NICHT gelesen (nur Dateiname zählt)", kinds["Nebenkostenabrechnung_2025_Arenberg-Hof.pdf"].text.slice(0, 160));
+  // Seit 2.28.39 (Prüfbericht M7) liest die Warteschlange die PDF-Textebene wie der Prüfdialog.
+  check(kinds["Nebenkostenabrechnung_2025_Arenberg-Hof.pdf"].text.includes("Inhalt wurde für den Zuordnungsvorschlag gelesen"), "PDF-Textebene wird schon in der Warteschlange gelesen (wie im Prüfdialog)", kinds["Nebenkostenabrechnung_2025_Arenberg-Hof.pdf"].text.slice(0, 160));
   check(kinds["Mietvertrag_Arenberg-Hof_Nachtrag.docx"].text.includes("Inhalt konnte nicht automatisch gelesen"), "DOCX-Inhalt wird im Eingang NICHT gelesen (nur in „Bestand prüfen“)", kinds["Mietvertrag_Arenberg-Hof_Nachtrag.docx"].text.slice(0, 160));
   check(kinds["Outlook_Nachricht_Stromtarif.msg"].text.includes("Inhalt wurde"), "MSG (UTF-16-Text) wird gelesen", kinds["Outlook_Nachricht_Stromtarif.msg"].text.slice(0, 160));
   check(kinds["Foto_Garantiebeleg_Lavorix.png"].text.includes("Fotoserie") || kinds["Foto_Garantiebeleg_Lavorix_Seite2.jpg"].text.includes("Fotoserie"), "Zwei Bilder → Hinweis auf Fotoserie", kinds["Foto_Garantiebeleg_Lavorix.png"].text.slice(0, 200));
@@ -263,14 +264,15 @@ try {
     await page.locator(".scan-modal button", { hasText: "PDF erstellen" }).click();
     await page.locator(".intake-modal").waitFor({ timeout: 40000 });
     const head = await page.locator(".intake-analysis-head").innerText();
-    if (!head.includes("fotografierten")) throw new Error(head);
+    if (!head.includes("Foto oder Scan")) throw new Error(head);
     await page.locator(".intake-modal button[type=submit]").click();
     await page.locator(".intake-modal").waitFor({ state: "detached", timeout: 20000 });
     // Nach einem Kamera-Scan zeigt die App die Quittung auf der Startseite (uploadFromStart) – einen Augenblick nach dem
     // Schließen des Fensters. Erst dort ankommen, sonst sucht die Probe den Scan auf der falschen Seite (war ein Wackler).
     await page.waitForFunction(() => location.hash === "#startseite", null, { timeout: 10000 }).catch(() => {});
     if (!(await page.locator("h1", { hasText: "Eingangszentrale" }).count())) { await footer(page, "Eingangszentrale"); await page.locator("h1", { hasText: "Eingangszentrale" }).waitFor(); }
-    const saved = page.locator(".document-item", { hasText: "Dokumentscan_" }).first();
+    // Seit 2.28.39 zeigt die Liste den Titel aus dem Prüfdialog („Dokumentscan 2026-…“), nicht mehr den Dateinamen.
+    const saved = page.locator(".document-item", { hasText: /Dokumentscan[ _]/ }).first();
     await saved.waitFor({ timeout: 20000 });
     const savedText = (await saved.innerText()).replace(/\s+/g, " ");
     return `${head.replace(/\s+/g, " ").slice(0, 80)} · ${savedText.slice(0, 120)}`;
@@ -314,12 +316,15 @@ try {
     await item.locator("button", { hasText: "Nicht übernehmen" }).count();
   });
   await step("Sammelauswahl: zwei Häkchen → „Nicht übernehmen“", async () => {
+    // 2.28.39: sichere Vorschläge stehen schon angehakt (Sammelbestätigung); darum zuerst „Alle“ abwählen.
+    const leiste = page.locator('[data-auswahl-leiste="Eingänge"]');
+    for (let i = 0; i < 2 && (await leiste.locator("[data-auswahl-zahl]").getAttribute("data-auswahl-zahl")) !== "0"; i++) await leiste.locator("[data-auswahl-alle]").click();
     for (const name of ["Nebenkosten_Uebersicht_2025.xlsx", "Foto_Garantiebeleg_Lavorix_Seite2.jpg"]) {
       const item = queueItem(name);
-      await item.locator("input[type=checkbox]").click();
-      await item.locator("input[type=checkbox]:checked").waitFor();
+      await item.locator("[data-queue-wahl]").click();
+      await item.locator("[data-queue-wahl]:checked").waitFor();
     }
-    await page.locator(".queue-batch button", { hasText: "Nicht übernehmen" }).click();
+    await leiste.locator('[data-auswahl-aktion="nicht"]').click();
     await queueItem("Nebenkosten_Uebersicht_2025.xlsx").locator(".badge", { hasText: "Nicht übernommen" }).waitFor();
   });
 
@@ -352,8 +357,10 @@ try {
   await step("Dokumentenbibliothek zeigt die neuen Unterlagen", async () => {
     await footer(page, "Dokumentenbibliothek");
     await page.locator("input[placeholder*='Titel, Dateiname']").fill("Lavorix");
-    await page.locator("text=Garantiebeleg_Waschautomat_Lavorix").first().waitFor({ timeout: 10000 });
-    return String(await page.locator("text=Garantiebeleg_Waschautomat_Lavorix").count()) + " Treffer";
+    // 2.28.39: kompakte Zeilen (Datum · Titel · Bereich); Titel statt Dateiname.
+    const zeilen = page.locator("[data-bibliothek-zeile]", { hasText: /Lavorix/ });
+    await zeilen.first().waitFor({ timeout: 10000 });
+    return String(await zeilen.count()) + " Treffer";
   });
   await step("Suche auf der Startseite findet die neue Unterlage", async () => {
     await page.locator(".main-navigation .nav-cluster > button").first().waitFor();
@@ -361,14 +368,19 @@ try {
     const search = page.getByLabel("Gesamte Akte in natürlichen Worten durchsuchen");
     await search.fill("Lavorix");
     await search.press("Enter");
-    await page.locator("text=Garantiebeleg_Waschautomat_Lavorix").first().waitFor({ timeout: 10000 });
+    // Treffer zeigen seit 2.28.39 den Titel (Dateiname mit Leerzeichen bzw. Briefkopf-Titel), nicht den Dateinamen.
+    await page.locator(".search-results article", { hasText: /Lavorix/ }).first().waitFor({ timeout: 10000 });
   });
   await step("„Was gibt’s Neues?“ nennt die neue Unterlage", async () => {
     await page.locator(".footer-directory button", { hasText: "Was gibt’s Neues" }).first().click();
-    await page.locator("text=/Garantiebeleg[ _]Waschautomat[ _]Lavorix/").first().waitFor({ timeout: 10000 });
+    // 2.28.39: lange Listen seitenweise (50 je Seite) – „Weitere anzeigen“, bis die Unterlage dasteht.
+    const ziel = page.locator("text=/Garantiebeleg[ _]Waschautomat[ _]Lavorix/").first();
+    await page.locator(".news-list").first().waitFor({ timeout: 10000 });
+    for (let i = 0; i < 10 && !(await ziel.count()) && (await page.locator("[data-liste-mehr] button").count()); i++) await page.locator("[data-liste-mehr] button").click();
+    await ziel.waitFor({ timeout: 10000 });
   });
   await step("Cockpit lädt nach dem Eingang ohne Fehler", async () => {
-    await footer(page, "Interaktives Cockpit");
+    await footer(page, "Cockpit");
     await page.locator("h1", { hasText: "Cockpit" }).waitFor();
   });
 

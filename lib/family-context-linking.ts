@@ -311,7 +311,13 @@ export function buildCaseOpenSummary(caseId: string, input: ContextInput) {
   const openMemory = buildMemoryOpenPoints(input.records).filter((point) => linked.has(point.eventId));
   const tasks = input.records.filter((record) => linked.has(record.id) && record.recordType === "task" && !["erledigt", "zurückgestellt"].includes(record.status));
   const deadlines = input.records.filter((record) => linked.has(record.id) && record.recordType === "deadline" && !["erledigt", "zurückgestellt"].includes(record.status));
-  return { memoryQuestions: openMemory.length, tasks: tasks.length, deadlines: deadlines.length, total: openMemory.length + tasks.length + deadlines.length };
+  // U3 (2.28.39): die offenen Punkte selbst, damit „5 Aufgaben“ eine Liste zeigt statt nur die Zahl zu wiederholen.
+  const eintraege = [
+    ...openMemory.map((point) => ({ id: point.eventId, art: "memory" as const, titel: point.title, geschuetzt: point.sensitive })),
+    ...tasks.map((record) => ({ id: record.id, art: "task" as const, titel: recordLabel(record), geschuetzt: isSensitiveText(recordText(record)) })),
+    ...deadlines.map((record) => ({ id: record.id, art: "deadline" as const, titel: recordLabel(record), geschuetzt: isSensitiveText(recordText(record)) })),
+  ];
+  return { memoryQuestions: openMemory.length, tasks: tasks.length, deadlines: deadlines.length, total: openMemory.length + tasks.length + deadlines.length, eintraege };
 }
 
 export function buildRelatedContext(sourceId: string, input: ContextInput) {

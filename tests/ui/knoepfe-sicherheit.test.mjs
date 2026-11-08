@@ -42,13 +42,13 @@ try {
   });
   // Früher gab der Knopf den Tresor zugleich als Analysequelle und Register an die Bestandsanalyse – deren
   // Selbstanalyse-Schutz lehnte das jedes Mal ab („derselbe Ordner … SOFTWARE TESTORDNER“). Jetzt prüft er den Tresor selbst.
-  await step("„Jetzt Abgleich durchführen“ prüft den bewusst gewählten eigenen Tresor selbst: Register und Originale, ohne Selbstanalyse-Fehler", async () => {
-    await page.locator("button", { hasText: "Jetzt Abgleich durchführen" }).click();
-    await page.waitForFunction(() => /Abgleich (abgeschlossen|des Datentresors)|derselbe Ordner|nicht geprüft werden/.test([...document.querySelectorAll("[aria-live], .notice")].map((e) => e.innerText).join(" ")), null, { timeout: 20000 }).catch(() => {});
+  await step("„Datentresor jetzt prüfen“ prüft den bewusst gewählten eigenen Tresor selbst: Register und Originale, ohne Selbstanalyse-Fehler", async () => {
+    await page.locator("button", { hasText: "Datentresor jetzt prüfen" }).click();
+    await page.waitForFunction(() => /Prüfung (abgeschlossen|des Datentresors)|derselbe Ordner|nicht geprüft werden/.test([...document.querySelectorAll("[aria-live], .notice")].map((e) => e.innerText).join(" ")), null, { timeout: 20000 }).catch(() => {});
     const crumb = (await page.locator(".breadcrumb").innerText()).replace(/\n/g, " › ");
     const m = await meldung(page);
     check(!/derselbe Ordner|SOFTWARE TESTORDNER/.test(m), "Abgleich: kein Selbstanalyse-Fehler, kein Testordner-Hinweis", m.slice(0, 160));
-    check(/Abgleich abgeschlossen: Datentresor „Eigener-Tresor-Probe“ – Register lesbar, \d+ von \d+ Originalen? vorhanden und unverändert/.test(m), "Abgleich: tatsächlicher Prüfstand mit Zahlen", m.slice(0, 220));
+    check(/Prüfung abgeschlossen: Datentresor „Eigener-Tresor-Probe“ – Register lesbar, \d+ von \d+ Originalen? vorhanden und unverändert/.test(m), "Abgleich: tatsächlicher Prüfstand mit Zahlen", m.slice(0, 220));
     check(!/Bestand prüfen$/.test(crumb), "Abgleich: bleibt im Sicherheitscenter statt nach „Bestand prüfen“ zu springen", crumb);
     await schliesseDialoge(page);
     await footer(page, "Sicherheitscenter");
@@ -100,8 +100,8 @@ try {
     await page.waitForTimeout(2500);
     return (await page.locator("main").innerText()).includes("OneDrive-Probe");
   });
-  await step("„Abgleich prüfen“ (OneDrive ↔ PC) meldet fehlende/vorhandene Dateien", async () => {
-    const b = page.locator("button", { hasText: "Abgleich prüfen" });
+  await step("„Fehlende Dateien suchen“ (OneDrive ↔ PC) meldet fehlende/vorhandene Dateien", async () => {
+    const b = page.locator("button", { hasText: "Fehlende Dateien suchen" });
     if (await b.isDisabled()) return false;
     await b.click(); await page.waitForTimeout(2500);
     return (await meldung(page)).slice(0, 120);
@@ -175,7 +175,7 @@ try {
   await step("Bestand: „Windows-Dateisystem diagnostizieren“ erzeugt einen Bericht, „Diagnose kopieren“ kopiert", async () => {
     await page.locator("button", { hasText: "Windows-Dateisystem diagnostizieren" }).click(); await page.waitForTimeout(3000);
     const text = await page.locator("main").innerText();
-    const kopieren = page.locator("main button", { hasText: /kopieren/i }).first();
+    const kopieren = page.locator("main button:not(.activity-copy-control > button)", { hasText: /kopieren/i }).first();
     if (await kopieren.count()) { await kopieren.click(); await page.waitForTimeout(300); const clip = await page.evaluate(() => navigator.clipboard.readText()); return clip.includes("DIAGNOSE") ? "Bericht in der Zwischenablage" : (console.log("   ↳ Zwischenablage:", clip.slice(0, 80)), false); }
     return text.includes("Diagnose") ? "Bericht sichtbar, kein Kopierknopf" : false;
   });

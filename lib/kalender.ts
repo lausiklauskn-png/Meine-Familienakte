@@ -40,6 +40,27 @@ export function erinnerungsTage(w: string): number | null {
   const n = m ? Number(m[1]) : NaN;
   return Number.isInteger(n) && n >= 1 && n <= MAX_TAGE_VORHER ? n : null;
 }
+/** Erinnerungsdatum aus dem Formular („JJJJ-MM-TT“ oder „JJJJ-MM-TTTHH:MM“) als eigene Erinnerungszeit; ohne Uhrzeit 9 Uhr. */
+export function erinnerungAusDatum(wert: string | null | undefined): ErinnerungsWahl | null {
+  const m = /^(\d{4}-\d{2}-\d{2})(?:T(\d{2}:\d{2}))?/.exec(String(wert || ""));
+  if (!m) return null;
+  const w = `@${m[1]}T${m[2] && /^([01]\d|2[0-3]):[0-5]\d$/.test(m[2]) ? m[2] : "09:00"}`;
+  return erinnerungsZeitpunkt(w) ? (w as ErinnerungsWahl) : null;
+}
+/** Ganze Tage zwischen zwei Daten (JJJJ-MM-TT), b minus a. */
+export function tageZwischen(a: string, b: string) {
+  const t = (d: string) => { const [j, m, x] = d.slice(0, 10).split("-").map(Number); return Date.UTC(j, m - 1, x); };
+  return Math.round((t(b) - t(a)) / 86400000);
+}
+/** Termin verschoben (U7): eigene Erinnerungszeiten („@…“) ziehen um dieselbe Zahl Tage mit; „vorher“-Wahlen ohnehin. */
+export function erinnerungenVerschieben(liste: ErinnerungsWahl[], tage: number): ErinnerungsWahl[] {
+  if (!tage) return liste;
+  return liste.map((w) => {
+    const z = erinnerungsZeitpunkt(w); if (!z) return w;
+    const [j, m, t] = z.datum.split("-").map(Number); const d = new Date(Date.UTC(j, m - 1, t + tage));
+    return `@${d.toISOString().slice(0, 10)}T${z.uhrzeit}` as ErinnerungsWahl;
+  });
+}
 /** „<n>m“: 0 bis 1439 Minuten vor dem Termin. */
 export function erinnerungsMinutenVorher(w: string): number | null {
   const m = /^(0|[1-9]\d{0,3})m$/.exec(w);
@@ -180,6 +201,18 @@ export function kalenderEintrag(record: FamilyRecordUnion, opt: EintragOptionen 
   const inhalt = { titel, beschreibung, beginn: beginn.toISOString(), ende: ende.toISOString(), erinnerungen };
   const updated = Date.parse(record.updatedAt);
   return { recordId: record.id, uid: kalenderUid(record), ...inhalt, geschuetzt, sequenz: Number.isFinite(updated) ? Math.floor(updated / 1000) % 2147483647 : 0, stand: kurzHash(JSON.stringify(inhalt)) };
+}
+
+/** Alle Erinnerungen einer Aufgabe/Frist mit Zeitpunkt (Detailansicht, Vorschau A): eigene, sonst die Vorgabe; früheste zuerst. */
+export function erinnerungsZeiten(record: FamilyRecordUnion, vorgabe: ErinnerungsWahl[] = ERINNERUNG_VORGABE): Array<{ wahl: ErinnerungsWahl; um: string; vorgabe: boolean }> {
+  if (!istTermin(record) || !record.data.dueAt || !/^\d{4}-\d{2}-\d{2}/.test(record.data.dueAt)) return [];
+  const felder = record.data as KalenderFelder;
+  const uhrzeit = gueltigeUhrzeit(felder.dueTime) || STANDARD_UHRZEIT;
+  const beginn = ortszeit(record.data.dueAt, uhrzeit);
+  const eigen = Array.isArray(felder.erinnerungen);
+  const wahl = eigen ? erinnerungenOrdnen(felder.erinnerungen as unknown[]) : vorgabe;
+  return wahl.flatMap((w) => { const min = erinnerungsMinuten([w], uhrzeit, [], beginn)[0]; return min === undefined ? [] : [{ wahl: w, um: new Date(beginn.getTime() - min * 60000).toISOString(), vorgabe: !eigen }]; })
+    .sort((a, b) => a.um.localeCompare(b.um));
 }
 
 export function soll(record: FamilyRecordUnion) {

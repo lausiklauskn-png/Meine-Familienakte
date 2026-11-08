@@ -36,6 +36,8 @@ public class GlockeEmpfaenger extends BroadcastReceiver {
         String text = intent.getStringExtra("text");
         NotificationCompat.Builder b = new NotificationCompat.Builder(ctx, KANAL)
             .setSmallIcon(android.R.drawable.ic_popup_reminder)
+            // Glocke grün, solange die Erinnerung aktiv ist (Nutzer 08.11.2026); die Statusleiste färbt Android selbst.
+            .setColor(0xFF167249)
             .setContentTitle("🔔 " + (titel == null || titel.isEmpty() ? "Erinnerung" : titel))
             .setContentText(text == null ? "" : text)
             .setPriority(NotificationCompat.PRIORITY_HIGH)

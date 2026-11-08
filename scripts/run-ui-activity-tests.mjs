@@ -38,7 +38,7 @@ count++; console.log("🟢 Verweigerte Zwischenablage meldet keinen Kopiererfolg
 const js = ts.transpileModule(component, { compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText.replace(/from "([^"]+)"/g, (_all, specifier) => `from ${JSON.stringify(specifier === "../lib/ui-activity" ? new URL("../lib/ui-activity.ts", import.meta.url).href : import.meta.resolve(specifier))}`);
 const { ActivityLinesView } = await import(`data:text/javascript;base64,${Buffer.from(js).toString("base64")}`);
 const markup = renderToStaticMarkup(React.createElement(ActivityLinesView, { entries }));
-check("React-Ausgabe enthält genau zwei Aktivitätszeilen und zwei Copy-Buttons", () => { assert.equal((markup.match(/class="global-activity-row /g) || []).length, 2); assert.equal((markup.match(/>Copy<\/button>/g) || []).length, 2); });
+check("React-Ausgabe enthält genau zwei Aktivitätszeilen und zwei Kopieren-Knöpfe", () => { assert.equal((markup.match(/class="global-activity-row /g) || []).length, 2); assert.equal((markup.match(/>Kopieren<\/button>/g) || []).length, 2); });
 check("React-Ausgabe verwendet tatsächliche Statusklassen und vollständige Texte", () => { assert.match(markup, /activity-warning/); assert.match(markup, /activity-error/); assert.match(markup, /Dritte echte Rückmeldung/); });
 const emptyMarkup = renderToStaticMarkup(React.createElement(ActivityLinesView, { entries: [] }));
 check("Ohne Aktion wird kein Platz für leere Aktivitätszeilen belegt", () => assert.equal(emptyMarkup, ""));

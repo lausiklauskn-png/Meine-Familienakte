@@ -8,7 +8,7 @@ try {
   const errors = collectErrors(page);
   await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page);
   await step("Start ohne Aktion: keine Platzhalter über dem Inhalt", async () => assert.equal(await page.locator(".global-activity-lines").count(), 0));
-  await footer(page, "Interaktives Cockpit");
+  await footer(page, "Cockpit");
   const object = page.locator("#cockpit-cases button:not(.start-info-trigger)").first();
   await object.scrollIntoViewIfNeeded();
   const sourceY = await page.evaluate(() => window.scrollY);
@@ -67,7 +67,7 @@ try {
     await global.fill("");
   });
   await step("Zehn aufeinanderfolgende Rückschritte bleiben innerhalb der App", async () => {
-    const sequence = ["Interaktives Cockpit", "Eingangszentrale", "Dokumentenbibliothek", "Sicherheitscenter", "Hilfe", "Interaktives Cockpit", "Eingangszentrale", "Dokumentenbibliothek", "Sicherheitscenter", "Hilfe"];
+    const sequence = ["Cockpit", "Eingangszentrale", "Dokumentenbibliothek", "Sicherheitscenter", "Hilfe", "Cockpit", "Eingangszentrale", "Dokumentenbibliothek", "Sicherheitscenter", "Hilfe"];
     const urls = [page.url()];
     for (const name of sequence) { await footer(page, name); urls.push(page.url()); }
     for (let i = sequence.length - 1; i >= 0; i--) { await page.goBack(); await page.waitForURL(urls[i]); }
@@ -86,12 +86,12 @@ try {
     await footer(page, "Sicherheitscenter");
     await footer(page, "Hilfe");
     await page.reload({ waitUntil: "networkidle" });
-    await page.locator(".breadcrumb > span", { hasText: "Hilfe" }).waitFor();
+    await page.locator(".breadcrumb .pfad > span", { hasText: "Hilfe" }).waitFor();
     await page.goBack();
-    await page.locator(".breadcrumb > span", { hasText: "Sicherheit & lokaler Tresor" }).waitFor();
+    await page.locator(".breadcrumb .pfad > span", { hasText: "Sicherheit & lokaler Tresor" }).waitFor();
     assert.ok(page.url().endsWith("#security"));
     await page.goForward();
-    await page.locator(".breadcrumb > span", { hasText: "Hilfe" }).waitFor();
+    await page.locator(".breadcrumb .pfad > span", { hasText: "Hilfe" }).waitFor();
     assert.ok(page.url().endsWith("#help"));
   });
   await step("Keine Seitenfehler", () => assert.deepEqual(errors, []));

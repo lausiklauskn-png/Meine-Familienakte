@@ -68,10 +68,17 @@ try {
     const k = page.locator("[data-stapel-einordnen]");
     if (!/Einordnen \(3\)/.test(await k.innerText())) throw new Error(await k.innerText());
     await k.click();
-    await page.locator(".fa-stapel-leer").waitFor();
-    await footer(page, "Eingangszentrale");
+    // Seit 2.28.39 (Prüfbericht M5) führt „Einordnen“ gleich in die Eingangszentrale; der Stapel wird danach geprüft.
+    await page.locator("h1", { hasText: "Eingangszentrale" }).waitFor({ timeout: 30000 });
     await page.locator(".intake-queue-item", { hasText: "Stapel 03" }).first().waitFor({ timeout: 60000 });
-    return `${await page.locator(".intake-queue-item", { hasText: "Stapel 0" }).count()} in der Eingangszentrale`;
+    const anzahl = await page.locator(".intake-queue-item", { hasText: "Stapel 0" }).count();
+    const ecken = await page.locator(".intake-queue-item", { hasText: "Ecken prüfen" }).count();
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.locator(".main-navigation .nav-cluster > button", { hasText: "Dokumente" }).first().click({ force: true });
+    await page.locator(".mega-menu button", { hasText: "Stapel (noch einordnen)" }).first().click();
+    await page.locator(".fa-stapel-leer").waitFor();
+    if (ecken) throw new Error("„(Ecken prüfen)“ steht noch im Namen in der Eingangszentrale");
+    return `${anzahl} in der Eingangszentrale, Stapel leer`;
   });
   await step("Anhalten · Weiter beim Einscannen", async () => {
     await page.evaluate(() => window.scrollTo(0, 0));

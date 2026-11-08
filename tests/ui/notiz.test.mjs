@@ -45,7 +45,7 @@ try {
     await fenster.locator("[data-notiz-eingabe]").fill("Erinnere mich morgen um 9 Uhr Jens anzurufen, Nummer liegt im Ordner");
     return (await t.locator("[data-memory-erinnern-zeit]").inputValue()) === "10:30" && (await t.locator(".kalender-chip.an").allInnerTexts()).join() === "1 Std. vorher,15 Min. vorher,zur Uhrzeit";
   });
-  await step("Speichern legt einen Erinnerungseintrag und eine Aufgabe mit Termin, Uhrzeit, Erinnerung und Kalender-Haken an", async () => {
+  await step("Speichern legt einen Erinnerungseintrag und eine Aufgabe mit Termin, Uhrzeit und Erinnerung an; ohne Kalender „noch offen“ (U5)", async () => {
     await fenster.locator("[data-notiz-speichern]").click();
     await fenster.locator("[data-notiz-liste] li").first().waitFor({ timeout: 10000 });
     await fenster.locator("[data-notiz-liste] li").first().locator("[data-fz-griff]").click(); // 2.28.38: Pfeil ‹ öffnet die Leiste
@@ -58,7 +58,7 @@ try {
     const records = await page.evaluate(async () => { const f = window.__vaultFixture; return (await f.readLocalVaultData(await f.browserVault())).records; });
     const ev = records.find((r) => r.recordType === "event" && /Jens anzurufen/.test(JSON.stringify(r.data)));
     const task = records.find((r) => r.recordType === "task" && r.source === ev?.id);
-    const ok = ev && task && task.data.dueAt === morgen && task.data.dueTime === "10:30" && task.data.kalenderEintragen === true && JSON.stringify(task.data.erinnerungen) === JSON.stringify(["60m", "15m", "0m"]);
+    const ok = ev && task && task.data.dueAt === morgen && task.data.dueTime === "10:30" && task.data.kalenderEintragen === undefined && JSON.stringify(task.data.erinnerungen) === JSON.stringify(["60m", "15m", "0m"]);
     return ok ? true : (console.log("   ↳", JSON.stringify(task?.data)), false);
   });
   await step("Ohne „Erinnern lassen“: nur die Notiz, keine Aufgabe; Erinnern bleibt von Hand einschaltbar", async () => {

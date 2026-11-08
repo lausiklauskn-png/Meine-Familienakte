@@ -33,7 +33,8 @@ export function tippMerken() {
   const merken = (event: Event) => {
     if (event instanceof KeyboardEvent && event.key !== "Enter" && event.key !== " ") return;
     const t = event.target instanceof Element ? event.target.closest(KANDIDAT) : null;
-    if (t && wurzel()?.contains(t)) letzterTipp = t;
+    // Der Pfad oben steht fest (sticky): ein Tipp darauf ist keine Stelle der Seite, die Scrollhöhe genügt (W15).
+    if (t && wurzel()?.contains(t) && !t.closest(".breadcrumb")) letzterTipp = t;
   };
   document.addEventListener("pointerdown", merken, true);
   document.addEventListener("keydown", merken, true);
@@ -53,21 +54,24 @@ let aufheben: (() => void) | null = null;
 export function markieren(el: HTMLElement, klasse = "zurueck-hier") {
   aufheben?.();
   el.classList.add(klasse);
-  const weg = () => { el.classList.remove(klasse); document.removeEventListener("pointerdown", weg, true); document.removeEventListener("keydown", weg, true); aufheben = null; };
+  // React setzt className bei jedem Neuzeichnen neu (z. B. wenn der Eintrag gleich aufklappt): Marke bis zum nächsten Tipp halten.
+  const halten = typeof MutationObserver !== "undefined" ? new MutationObserver(() => { if (!el.classList.contains(klasse)) el.classList.add(klasse); }) : null;
+  halten?.observe(el, { attributes: true, attributeFilter: ["class"] });
+  const weg = () => { halten?.disconnect(); el.classList.remove(klasse); document.removeEventListener("pointerdown", weg, true); document.removeEventListener("keydown", weg, true); aufheben = null; };
   // Erst nach dem eigenen Sprung scharf schalten, damit der auslösende Tipp sie nicht gleich wieder entfernt.
   window.setTimeout(() => { if (el.classList.contains(klasse)) { document.addEventListener("pointerdown", weg, true); document.addEventListener("keydown", weg, true); } }, 250);
   aufheben = weg;
 }
 
-/** Wendet die Marke an; true, wenn die Stelle gefunden und markiert wurde. */
-export function markeAnwenden(marke: Ruecksprung): boolean {
+/** Wendet die Marke an; liefert die gefundene und markierte Stelle (sonst null). */
+export function markeAnwenden(marke: Ruecksprung): HTMLElement | null {
   for (const pfad of marke.offen) { const d = finden(pfad); if (d instanceof HTMLDetailsElement) d.open = true; }
-  if (!marke.ziel) return false;
+  if (!marke.ziel) return null;
   const el = finden(marke.ziel);
-  if (!el || !el.getClientRects().length) return false;
+  if (!el || !el.getClientRects().length) return null;
   for (let d: HTMLElement | null = el.parentElement; d; d = d.parentElement) if (d instanceof HTMLDetailsElement) d.open = true;
   el.scrollIntoView({ block: "center", behavior: "instant" as ScrollBehavior });
   el.focus?.({ preventScroll: true });
   markieren(el);
-  return true;
+  return el;
 }

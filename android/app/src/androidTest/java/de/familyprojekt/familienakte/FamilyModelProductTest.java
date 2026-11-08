@@ -42,6 +42,7 @@ public final class FamilyModelProductTest {
         eval(app, "[...document.querySelectorAll('.private-meaning button')].find(b=>b.textContent===" + JSONObject.quote(text) + ").click();true");
     }
     @Test public void actualNativeModelAndPrivateSearchSurviveActivityRestart() throws Exception {
+        FamilyDemoFixture.allowNotifications();
         try (ActivityScenario<MainActivity> app = ActivityScenario.launch(MainActivity.class)) {
             ready(app);
             eval(app, "window.__modelError=null;window.__modelProof=null;(async()=>{const p=Capacitor.Plugins;await PBNetwork.setOffline(true);const s=await p.FamilyModels.getState();let blocked=false;try{await p.FamilyModels.install({stage:'klein'});}catch{blocked=true;}window.__modelProof={blocked,state:s,device:await p.ProDevice.measure()};})().catch(e=>window.__modelError=String(e));true");

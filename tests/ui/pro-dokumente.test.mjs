@@ -88,7 +88,7 @@ try {
     assert.match(b.register.documents[0].storedPath, /^pro-tresor:\/\/erfundener-tresor-a\//);
     assert.ok(!b.dateien.some((p) => p.includes("Pro-Original")), "keine dauerhafte interne Zweitkopie");
     await footer(page, "Dokumentenbibliothek");
-    await page.locator("button.library-preview").first().click();
+    await page.locator("button.library-preview, button.library-zeile-titel").first().click();
     await page.locator(".file-viewer").waitFor();
     assert.ok(await page.evaluate(() => window.__proDok.reads > 0));
     assert.equal(context.pages().length, 1, "Ablageprobe öffnet kein weiteres Browserfenster");
@@ -112,7 +112,7 @@ try {
     await panel.getByRole("button", { name: "Pro-Tresor entsperren …", exact: true }).click();
     await panel.getByText("Entsperrt", { exact: true }).waitFor();
     await footer(page, "Dokumentenbibliothek");
-    await page.locator("button.library-preview").first().click(); await page.locator(".file-viewer").waitFor();
+    await page.locator("button.library-preview, button.library-zeile-titel").first().click(); await page.locator(".file-viewer").waitFor();
     assert.ok(await page.evaluate(() => window.__proDok.reads > 0)); await schliesseDialoge(page);
   });
   await probe("Pro-Dokumente: anderer Akten-Arbeitsstand übernimmt die Ablagewahl nicht", async () => {
@@ -130,7 +130,11 @@ try {
     const alterPfad = vorher.register.documents[0].storedPath;
     assert.ok(!alterPfad.startsWith("pro-tresor:"));
     await footer(page, "Dokumentenbibliothek");
-    await page.getByRole("button", { name: "In Pro-Tresor übernehmen", exact: true }).first().click();
+    // Seit 2.28.39 zeigt die Bibliothek ab Werk Zeilen; das Auge der Zeile klappt die volle Karte mit dem Knopf auf.
+    const zeile = page.locator("[data-bibliothek-zeile]", { hasText: /Bestand[-_ ]Original/ }).first();
+    await zeile.locator("[data-bibliothek-auge]").click();
+    const karte = page.locator(`[data-bibliothek-karte="${await zeile.getAttribute("data-bibliothek-zeile")}"]`).first();
+    await karte.getByRole("button", { name: "In Pro-Tresor übernehmen", exact: true }).click();
     await page.locator(".global-activity-row", { hasText: "Das ausgewählte Original liegt geprüft im Pro-Tresor. Der bisherige Bestand wurde beibehalten." }).first().waitFor();
     const danach = await bestand("Pro-Anderer-Arbeitsstand");
     assert.match(danach.register.documents[0].storedPath, /^pro-tresor:/);

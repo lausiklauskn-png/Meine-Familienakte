@@ -31,12 +31,17 @@ export function kalenderZiel(einst: KalenderEinst | null) {
 
 // ---------- Vorschlag aus dem Eingang ----------
 
-export type FristVorschlag = { titel: string; datum: string | null; hinweis: string; quelle?: string };
+export type FristVorschlag = { titel: string; datum: string | null; hinweis: string; quelle?: string; dokumentId?: string };
 let vorschlag: FristVorschlag | null = null;
 /** Eingang → Fristen: Vorschlag ablegen; das Formular übernimmt ihn vorausgefüllt, gespeichert wird erst nach Bestätigung. */
 export function fristVorschlagSetzen(v: FristVorschlag) { vorschlag = v; }
 export function fristVorschlagNehmen() { const v = vorschlag; vorschlag = null; return v; }
-export function fristAusHinweis(hinweis: string) { return hinweis.match(/\b(20\d{2}-\d{2}-\d{2})\b/)?.[1] || null; }
+export function fristAusHinweis(hinweis: string) {
+  const iso = hinweis.match(/\b(20\d{2}-\d{2}-\d{2})\b/)?.[1];
+  if (iso) return iso;
+  const de = hinweis.match(/\b(\d{1,2})\.(\d{1,2})\.(20\d{2})\b/);
+  return de ? `${de[3]}-${de[2].padStart(2, "0")}-${de[1].padStart(2, "0")}` : null;
+}
 
 // ---------- Erinnerungs-Chips ----------
 
@@ -97,7 +102,8 @@ export function KalenderFormTeil({ einst, eintragen, setEintragen, erinnerungen,
   return <div className="kalender-formteil" data-kalender-formteil>
     <label className="check-row"><input type="checkbox" checked={eintragen} onChange={(e) => setEintragen(e.target.checked)} data-kalender-haken/><span><strong>In den Kalender eintragen</strong><small>{einst ? `Kalender: ${kalenderZiel(einst)} (gewählt unter „Kalender verbinden“)` : <>Kein Kalender verbunden <button type="button" className="kalender-sprung" aria-label="Zu „Kalender verbinden“" title="Zu „Kalender verbinden“" data-kalender-sprung onClick={(e) => { e.preventDefault(); zurStelle("#kalender-verbinden"); }}>▽</button></>}</small></span></label>
     {eintragen && setKalenderWahl && <KalenderAuswahl einst={einst} wert={kalenderWahl} onChange={setKalenderWahl}/>}
-    {eintragen && <details className="kalender-erinnerung" data-kalender-erinnerung>
+    {/* U16: die Erinnerungszeiten gelten auch für die App-Glocke – immer sichtbar, nicht nur mit Kalender-Haken. */}
+    {<details className="kalender-erinnerung" data-kalender-erinnerung>
       <summary><span className="kalender-etikett">Erinnern:</span> <strong>{erinnerungen.map((w) => erinnerungsName(w)).join(", ") || "keine"}</strong> <span className="kalender-aendern">ändern ▾</span></summary>
       <ErinnerungsChips wert={erinnerungen} onChange={setErinnerungen}/>{einst?.anbieter === "microsoft" && erinnerungen.length > 1 && <small className="fine-print">Microsoft kennt eine Erinnerung je Termin: es gilt die früheste.</small>}
     </details>}

@@ -23,7 +23,7 @@ try {
   await step("Zurück schließt zuerst die Dokumentvorschau und erhält die Listenposition",async()=>{
     await footer(page,"Dokumentenbibliothek");
     await page.getByRole("button",{name:"Alle ansehen",exact:true}).first().click();
-    const preview=page.locator("button.library-preview").first();await preview.scrollIntoViewIfNeeded();
+    const preview=page.locator("button.library-preview, button.library-zeile-titel").first();await preview.scrollIntoViewIfNeeded();
     const y=await page.evaluate(()=>scrollY), url=page.url();await preview.click();
     await page.locator(".file-viewer").waitFor();
     await page.evaluate(()=>window.familienakteZurueck());

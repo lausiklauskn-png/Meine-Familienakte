@@ -40,11 +40,16 @@ const page = await context.newPage();
 page.setDefaultTimeout(15000);
 await page.addInitScript(windowStub);
 const errors = collectErrors(page);
+// step() wertet einen zurückgegebenen Text als grün; darum scheitert soll() mit einer Ausnahme.
+const soll = (ok, info) => { if (!ok) throw new Error(typeof info === "string" ? info : JSON.stringify(info)); return true; };
 const dlg = page.locator("[data-af]");
 const feldMit = async (label) => dlg.locator(`[data-af-feld][aria-label="${label}"], [data-af-feld][title="${label}"]`).first();
+const TITEL = "Antrag Bewohnerparkausweis Musterstadt";
+const GLEICHES_DOKUMENT = /Antrag[ _]Bewohnerparkausweis[ _]Musterstadt/;   // Titel oder Dateiname – auch ein Zweiteintrag „(ausgefuellt …)“ fiele darunter
 const oeffneAusfuellen = async () => {
   await footer(page, "Eingangszentrale");
-  const item = page.locator(".document-item", { hasText: "Antrag_Bewohnerparkausweis_Musterstadt.pdf" }).filter({ hasNotText: "ausgefuellt" }).first();
+  // Seit 2.28.39 zeigt die Liste den Titel aus dem Eingang (Leerzeichen), nicht mehr den Dateinamen.
+  const item = page.locator(".document-item", { hasText: TITEL }).filter({ hasNotText: "ausgefuellt" }).first();
   await item.locator("[data-af-oeffnen]").click();
   await dlg.locator(".af-seite").first().waitFor({ timeout: 30000 });
 };
@@ -58,7 +63,7 @@ try {
     await q.locator("button", { hasText: "Zuordnung prüfen" }).click();
     await page.locator(".intake-modal button[type=submit]").click();
     await page.locator(".intake-modal").waitFor({ state: "detached", timeout: 20000 });
-    await page.locator(".document-item", { hasText: "Antrag_Bewohnerparkausweis_Musterstadt" }).first().waitFor({ timeout: 20000 });
+    await page.locator(".document-item", { hasText: GLEICHES_DOKUMENT }).first().waitFor({ timeout: 20000 });
   });
   await step("Knopf „Ausfüllen“ an der Unterlage öffnet das Fenster mit der Seite", async () => { await oeffneAusfuellen(); return `${await dlg.locator(".af-seite").count()} Seite`; });
   await step("Felder erkennen (offline): Linien und Kästchen mit Beschriftung aus der Textebene", async () => {
@@ -115,9 +120,11 @@ try {
     await dlg.locator("[data-af-ausfuellbar]").click();
     await dlg.locator("[data-af-hinweis]", { hasText: "am selben Dokument" }).waitFor({ timeout: 30000 });
     await dlg.locator("button[aria-label='Ausfüllen schließen']").click();
-    const orig = page.locator(".document-item", { hasText: "Antrag_Bewohnerparkausweis_Musterstadt.pdf" });
-    if (await orig.count() !== 1) return false;
-    return /Ausgefüllt/.test(await orig.first().innerText()) && await page.locator('.document-item', { hasText: 'Antrag_Bewohnerparkausweis_Musterstadt (ausgefuellt' }).count() === 0;
+    const eintraege = page.locator(".document-item", { hasText: GLEICHES_DOKUMENT });
+    const n = await eintraege.count();
+    if (n !== 1) return soll(false, `${n} Einträge statt einem: ${(await eintraege.allInnerTexts()).map((t) => t.replace(/\s+/g, " ").slice(0, 80)).join(" | ")}`);
+    const text = await eintraege.first().innerText();
+    return soll(/Ausgefüllt/.test(text) && !/ausgefuellt/.test(text), `Marke fehlt oder Zweitname: ${text.replace(/\s+/g, " ").slice(0, 160)}`);
   });
   await step("Wieder öffnen: Felder gemerkt, Eingabe-Speicher schlägt nach „to“ die E-Mail vor", async () => {
     await oeffneAusfuellen();
@@ -173,13 +180,13 @@ try {
     await dlg.locator("[data-af-vormerken]").click();
     await dlg.locator("[data-af-hinweis]", { hasText: "Vorgemerkt" }).waitFor();
     await dlg.locator("button[aria-label='Ausfüllen schließen']").click();
-    await footer(page, "Interaktives Cockpit");
+    await footer(page, "Cockpit");
     const k = page.locator("[data-cockpit-ausfuellen]");
     await k.waitFor();
     const t = await k.innerText();
-    await k.locator("button", { hasText: "Antrag_Bewohnerparkausweis_Musterstadt" }).click();
+    await k.locator("button", { hasText: GLEICHES_DOKUMENT }).click();
     await dlg.locator(".af-seite").first().waitFor({ timeout: 30000 });
-    return t.includes("Muss noch ausgefüllt werden") ? "Cockpit-Eintrag öffnet das Ausfüllen" : false;
+    return soll(t.includes("Muss noch ausgefüllt werden"), t.slice(0, 200)) && "Cockpit-Eintrag öffnet das Ausfüllen";
   });
   await step("Handy-Breite: Fenster passt ohne Querrollen", async () => {
     await page.setViewportSize({ width: 390, height: 844 });

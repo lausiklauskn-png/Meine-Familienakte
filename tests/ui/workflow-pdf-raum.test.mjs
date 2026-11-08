@@ -5,6 +5,8 @@ import { startApp, launchBrowser, DESKTOP, ready, footer, step, check, summary, 
 import { windowStub } from './_stubs.mjs';
 const FORM = path.join(ROOT, 'tests/testdateien/Garantiebeleg_Waschautomat_Lavorix.pdf');
 const NAME = 'Garantiebeleg_Waschautomat_Lavorix.pdf';
+// Seit 2.28.39 zeigt die Liste den Titel aus dem Eingang (Leerzeichen), nicht den Dateinamen.
+const GLEICHE_UNTERLAGE = /Garantiebeleg[ _]Waschautomat[ _]Lavorix/;
 const app = await startApp(), browser = await launchBrowser();
 try {
   const page = await (await browser.newContext({ ...DESKTOP, serviceWorkers: 'block' })).newPage();
@@ -84,7 +86,7 @@ try {
     if (fehlstand.documents.find(d => d.id === original.id).checksum !== original.checksum || !await page.locator('[data-wfpdf-rahmen]').count()) throw new Error('Fehlgeschlagene Rückgabe hat Quelle oder Arbeitsraum verloren');
     await page.locator('[data-wfpdf-zurueck]').click();
     await page.locator('[data-wfpdf-rahmen]').waitFor({state:'detached',timeout:30000});
-    await page.locator('.document-item', {hasText:NAME}).first().waitFor();
+    await page.locator('.document-item', {hasText:GLEICHE_UNTERLAGE}).first().waitFor();
     const nach=await register(), d=nach.documents.find(d=>d.id===original.id);
     if(nach.documents.length!==vorher.documents.length||d.checksum===original.checksum)throw new Error('Eintrag dupliziert oder Bytes nicht geändert');
     for(const k of ['id','originalName','category','documentDate','addedAt','notes'])if(d[k]!==original[k])throw new Error('Zuordnung geändert: '+k);
@@ -94,7 +96,7 @@ try {
   });
   await step('Erneutes Öffnen liest den zurückgegebenen Inhalt; unveränderte Rückgabe bleibt ein Eintrag', async () => {
     const vor=await register(), d=vor.documents.find(d=>d.id===original.id);
-    await page.locator('.document-item', {hasText:NAME}).first().locator('[data-wfpdf-oeffnen]').click();
+    await page.locator('.document-item', {hasText:GLEICHE_UNTERLAGE}).first().locator('[data-wfpdf-oeffnen]').click();
     await page.locator('[data-wfpdf-zurueck]:not([disabled])').waitFor();
     raum=page.frames().find(f=>f.url().includes('/apps/workflow-pdf/'));
     const text=await raum.evaluate(async()=>{const p=await window.__wfpdf.S.pdf.getPage(1);return(await p.getTextContent()).items.map(t=>t.str||'').join('')});

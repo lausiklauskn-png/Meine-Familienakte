@@ -1,5 +1,7 @@
 import { UI_HELP } from "../lib/ui-help";
 import { InfoPopover } from "./ui-controls";
+import { AuswahlKaestchen, AuswahlLeiste } from "./auswahl-leiste";
+import { sammelFrist, sammelLage } from "./sammel-ablage";
 
 import { Camera, CheckCircle2, ChevronRight, Cloud, FileText, Folder, Mail, PenLine, RefreshCw, ShieldCheck, Upload } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
@@ -9,7 +11,13 @@ import {
   type CentralIntakeStatus,
 } from "@/lib/central-intake";
 import type { DocumentIntakeSource } from "@/lib/document-intake";
-import { fristAusHinweis, fristVorschlagSetzen } from "./kalender-karte";
+import { gleichZumZiel } from "./sprung";
+
+type QueueFilter = "alle" | "bereit" | "pruefen" | "zurueck";
+const FILTER_STATUS: Record<Exclude<QueueFilter, "alle">, CentralIntakeStatus> = { bereit: "Bereit zur Übernahme", pruefen: "Prüfung erforderlich", zurueck: "Zurückgestellt" };
+const istErledigt = (item: CentralIntakeQueueItem) => item.status === "Übernommen" || item.status === "Nicht übernommen";
+/** Alte Einträge tragen das Datum noch als JJJJ-MM-TT; angezeigt wird TT.MM.JJJJ. */
+const deutsch = (text: string) => text.replace(/\b(20\d{2})-(\d{2})-(\d{2})\b/g, "$3.$2.$1");
 
 const statusClass: Record<CentralIntakeStatus, string> = {
   "Neu": "neutral",
@@ -44,6 +52,9 @@ export function CentralIntakeCenter({
   onExtractAttachments,
   onToggle,
   onSetStatus,
+  onSammelAblegen,
+  onLoeschen,
+  grenzeBytes = Infinity,
   onGo,
 }: {
   queue: CentralIntakeQueueItem[];
@@ -62,18 +73,47 @@ export function CentralIntakeCenter({
   /** Stapel direkt übernehmen (Klaus 2026-11-01): viele Fotos/Scans, Blatt finden und gerade ziehen, später einordnen. */
   onStapel?: (files: File[]) => void;
   onScanOneDrive: () => void;
-  onReview: (id: string) => void;
+  /** Prüfdialog öffnen; mit frist = true ist die erkannte Frist darin schon angehakt („Als Frist übernehmen“). */
+  onReview: (id: string, frist?: boolean) => void;
   onExtractAttachments: (id: string) => void;
   onToggle: (id: string) => void;
   onSetStatus: (ids: string[], status: CentralIntakeStatus) => void;
-  onGo: (id: "help" | "documents" | "security" | "reminders") => void;
+  /** Sammelbestätigung (2.28.39): angehakte Eingänge so ablegen wie „Geprüft lokal speichern“; fristIds = „Frist anlegen“ angehakt. */
+  onSammelAblegen?: (ids: string[], fristIds: string[], fortschritt: (fertig: number) => void) => Promise<{ abgelegt: number; fehler: string[] }>;
+  /** Noch nicht abgelegte Eingänge aus der Warteschlange entfernen (nach Rückfrage beim Aufrufer). */
+  onLoeschen?: (ids: string[]) => Promise<boolean>;
+  /** Sichere Dateigröße dieses Geräts; darüber nur einzeln (Verkleinern). */
+  grenzeBytes?: number;
+  onGo: (id: "help" | "documents" | "security" | "reminders", targetId?: string) => void;
 }) {
   const [dragging, setDragging] = useState(false);
+  // U8 (2.28.39): Zähler filtern die Liste nach Status; ein zweiter Tipp zeigt wieder alle.
   const inputRef = useRef<HTMLInputElement>(null);
   const cameraRef = useRef<HTMLInputElement>(null);
   const stapelRef = useRef<HTMLInputElement>(null);
-  const activeQueue = queue.filter((item) => item.status !== "Übernommen" && item.status !== "Nicht übernommen");
+  const activeQueue = queue.filter((item) => !istErledigt(item));
+  // Prüfbericht K1: die Zählerkästen filtern die Liste (vorher rollten alle drei nur zur selben Liste).
+  const [filter, setFilter] = useState<QueueFilter>("alle");
+  const sichtbar = filter === "alle" ? queue : queue.filter((item) => item.status === FILTER_STATUS[filter]);
+  const zeigeFilter = (f: QueueFilter) => { setFilter((alt) => alt === f ? "alle" : f); gleichZumZiel("#intake-queue-list", { nurWennNoetig: true }); };
+  // U8 (2.28.39): ein Zähler mit 0 ist kein Knopf (er hätte nichts zu zeigen); sonst filtert er die Liste, zweiter Tipp zeigt alle.
+  const zaehler = (f: Exclude<QueueFilter, "alle">, anzahl: number, wort: string) => anzahl
+    ? <button aria-pressed={filter === f} className={filter === f ? "active" : ""} data-queue-filter={f} onClick={() => zeigeFilter(f)}><strong>{anzahl}</strong><span>{wort}</span></button>
+    : <div className="queue-summary-leer" data-eingang-filter-leer={f}><strong>0</strong><span>{wort}</span></div>;
   const selectedIds = activeQueue.filter((item) => item.selected).map((item) => item.id);
+  const lage = useMemo(() => new Map(queue.map((item) => [item.id, sammelLage(item, grenzeBytes)])), [queue, grenzeBytes]);
+  const ablegbarIds = selectedIds.filter((id) => lage.get(id)?.ablegbar);
+  const [fristAn, setFristAn] = useState<Set<string>>(() => new Set());
+  const [sammel, setSammel] = useState<{ laeuft: boolean; fertig: number; gesamt: number; text: string; fehler: string[] }>({ laeuft: false, fertig: 0, gesamt: 0, text: "", fehler: [] });
+  const sammelAblegen = async () => {
+    if (!onSammelAblegen || !ablegbarIds.length || sammel.laeuft) return;
+    const ids = [...ablegbarIds];
+    setSammel({ laeuft: true, fertig: 0, gesamt: ids.length, text: "", fehler: [] });
+    try {
+      const r = await onSammelAblegen(ids, ids.filter((id) => fristAn.has(id)), (fertig) => setSammel((s) => ({ ...s, fertig })));
+      setSammel({ laeuft: false, fertig: r.abgelegt, gesamt: ids.length, text: r.abgelegt ? `Gespeichert ✓ ${r.abgelegt} ${r.abgelegt === 1 ? "Dokument" : "Dokumente"} abgelegt.` : "Nichts abgelegt.", fehler: r.fehler });
+    } catch (error) { setSammel({ laeuft: false, fertig: 0, gesamt: ids.length, text: "", fehler: [error instanceof Error ? error.message : "Ablegen nicht möglich."] }); }
+  };
   const selectedImages = activeQueue.filter((item) => item.selected && item.analysis?.fileKind === "Foto / Bild");
   const counts = useMemo(() => ({
     total: queue.length,
@@ -89,7 +129,7 @@ export function CentralIntakeCenter({
   return <>
     <section className="page-title central-intake-title">
       <div className="page-title-icon"><Upload/></div>
-      <span className="page-title-copy"><span className="eyebrow dark">Version 2.28.1 · gemeinsame Verarbeitung</span><h1>Eingangszentrale</h1><p>Neue Unterlagen einfach hineinziehen, prüfen, verstehen und kontrolliert der Familienakte zuordnen.</p></span>
+      <span className="page-title-copy"><span className="eyebrow dark">Gemeinsame Verarbeitung</span><h1>Eingangszentrale</h1><p>Neue Unterlagen einfach hineinziehen, prüfen, verstehen und kontrolliert der Familienakte zuordnen.</p></span>
     </section>
 
     <section className="card central-intake" aria-labelledby="central-intake-drop-title">
@@ -112,30 +152,49 @@ export function CentralIntakeCenter({
     </section>
 
     <section className="card intake-queue" aria-labelledby="intake-queue-title">
-      <div className="card-heading"><div><span className="eyebrow dark">Gemeinsame Warteschlange</span><span className="ui-heading-help"><h2 id="intake-queue-title">Eingänge prüfen</h2><InfoPopover label="Eingänge prüfen erklären" text={UI_HELP["Eingänge prüfen"]}/></span></div><button className="badge neutral queue-total" onClick={() => activeQueue.forEach((item) => !item.selected && onToggle(item.id))}>{counts.total} Eingänge</button></div>
+      <div className="card-heading"><div><span className="eyebrow dark">Gemeinsame Warteschlange</span><span className="ui-heading-help"><h2 id="intake-queue-title">Eingänge prüfen</h2><InfoPopover label="Eingänge prüfen erklären" text={UI_HELP["Eingänge prüfen"]}/></span></div><span className="queue-total-reihe"><span className="badge neutral queue-total" data-queue-zahl>{counts.total} Eingänge · {activeQueue.length} offen</span></span></div>
       <div className="queue-summary">
-        <button onClick={() => document.getElementById("intake-queue-list")?.scrollIntoView({ behavior: "smooth" })}><strong>{counts.ready}</strong><span>bereit</span></button>
-        <button onClick={() => document.getElementById("intake-queue-list")?.scrollIntoView({ behavior: "smooth" })}><strong>{counts.review}</strong><span>prüfen</span></button>
-        <button onClick={() => document.getElementById("intake-queue-list")?.scrollIntoView({ behavior: "smooth" })}><strong>{counts.deferred}</strong><span>zurückgestellt</span></button>
+        {zaehler("bereit", counts.ready, "bereit")}
+        {zaehler("pruefen", counts.review, "prüfen")}
+        {zaehler("zurueck", counts.deferred, "zurückgestellt")}
       </div>
-      {selectedIds.length > 0 && <div className="queue-batch"><strong>{selectedIds.length} ausgewählt</strong>{selectedImages.length > 1 && selectedImages.length === selectedIds.length && <button className="button primary" onClick={() => onScanQueued(selectedImages.map((item) => item.id))}>Als gemeinsames Scan-Dokument prüfen</button>}<button className="button secondary" onClick={() => onSetStatus(selectedIds, "Bereit zur Übernahme")}>Sichere Vorschläge vormerken</button><button className="button secondary" onClick={() => onSetStatus(selectedIds, "Zurückgestellt")}>Zurückstellen</button><button className="button secondary" onClick={() => onSetStatus(selectedIds, "Nicht übernommen")}>Nicht übernehmen</button></div>}
+      {filter !== "alle" && <p className="queue-filter-hinweis" data-queue-filter-an>Gezeigt: nur „{FILTER_STATUS[filter]}“ ({sichtbar.length}). <button type="button" className="text-link" onClick={() => setFilter("alle")}>Alle zeigen</button></p>}
+      <AuswahlLeiste name="Eingänge" gesamt={activeQueue.length} gewaehlt={selectedIds.length}
+        onAlle={(alle) => activeQueue.forEach((item) => item.selected !== alle && onToggle(item.id))}
+        hinweis={selectedIds.length > ablegbarIds.length ? <>{selectedIds.length - ablegbarIds.length} davon bitte einzeln prüfen (✎) – sie bleiben liegen.</> : <>Abgelegt wird so, wie es in der Zeile steht. Unsichere sind abgewählt und werden einzeln geprüft (✎).</>}
+        aktionen={[
+          ...(onSammelAblegen ? [{ key: "ablegen", haupt: true, disabled: !ablegbarIds.length || sammel.laeuft || !storageReady, title: storageReady ? "Legt die angehakten Eingänge mit den Angaben aus der Zeile ab" : "Zuerst einen Speicherort verbinden", label: sammel.laeuft ? `Wird abgelegt … ${sammel.fertig} von ${sammel.gesamt}` : `✓ ${ablegbarIds.length} ausgewählte ablegen`, onClick: () => void sammelAblegen() }] : []),
+          ...(selectedImages.length > 1 && selectedImages.length === selectedIds.length ? [{ key: "scan", label: "Als gemeinsames Scan-Dokument prüfen", onClick: () => onScanQueued(selectedImages.map((item) => item.id)) }] : []),
+          { key: "zurueck", label: "Zurückstellen", onClick: () => onSetStatus(selectedIds, "Zurückgestellt") },
+          { key: "nicht", label: "Nicht übernehmen", onClick: () => onSetStatus(selectedIds, "Nicht übernommen") },
+          ...(onLoeschen ? [{ key: "loeschen", gefahr: true, label: "Löschen", title: "Nur aus der Warteschlange; nichts Abgelegtes und kein Original wird gelöscht", onClick: () => void onLoeschen(selectedIds) }] : []),
+        ]}/>
+      {(sammel.text || sammel.fehler.length > 0) && <div className="sammel-meldung" role="status" data-sammel-meldung>{sammel.text && <strong data-sammel-gespeichert>{sammel.text}</strong>}{sammel.fehler.map((f) => <p className="form-error" key={f}>{f}</p>)}</div>}
       {!queue.length ? <div className="empty-state"><FileText size={34}/><strong>Noch keine neuen Eingänge</strong><span>Ziehe oben Dateien hinein oder prüfe einen bewusst ausgewählten Ordner.</span></div> : <div className="intake-queue-list" id="intake-queue-list">
-        {queue.map((item) => {
+        {sichtbar.map((item) => {
           const analysis = item.analysis;
-          return <article className={`intake-queue-item status-${statusClass[item.status]}`} key={item.id}>
-            <label className="queue-select" title="Für Sammelbearbeitung auswählen" aria-label="Für Sammelbearbeitung auswählen"><input type="checkbox" checked={item.selected} disabled={item.status === "Übernommen" || item.status === "Nicht übernommen"} onChange={() => onToggle(item.id)}/></label>
+          const erledigt = istErledigt(item);
+          const l = lage.get(item.id);
+          const fristTag = !erledigt && l?.ablegbar ? sammelFrist(item) : null;
+          return <article className={`intake-queue-item status-${statusClass[item.status]}${erledigt ? " erledigt" : ""}`} key={item.id} id={`eingang-${item.id}`}>
+            <span className="queue-select">{!erledigt && <AuswahlKaestchen an={item.selected} titel={analysis ? centralIntakeDisplayTitle(analysis) : item.file.name} onWechsel={() => onToggle(item.id)} data-queue-wahl={item.id}/>}</span>
             <div className="queue-icon">{analysis?.email ? <Mail/> : <FileText/>}</div>
             <div className="queue-copy"><div className="queue-title-row"><strong>{analysis ? centralIntakeDisplayTitle(analysis) : item.file.name}</strong><span className={`badge ${statusClass[item.status]}`}>{item.status}</span></div>
               <small>{analysis ? `${analysis.fileKind} · ${analysis.plan.lifeArea} · ${fmtBytes(item.file.size)}` : `${fmtBytes(item.file.size)} · Analyse läuft`}</small>
-              {analysis && <><p>{analysis.contentMessage}</p>{analysis.groupHint && <p><b>Zusammenhang:</b> {analysis.groupHint}</p>}{analysis.email && <p><b>E-Mail:</b> {analysis.plan.privacyClass === "besonders geschützt" ? "geschützte Absender- und Betreffdaten" : `${analysis.email.sender || "Absender unbekannt"} · ${analysis.email.attachmentNames.length} Anlage${analysis.email.attachmentNames.length === 1 ? "" : "n"}`}</p>}{analysis.possibleTask && <p><b>Aufgabe:</b> {analysis.possibleTask}</p>}{analysis.possibleDeadline && <p><b>Frist:</b> {analysis.possibleDeadline} <button type="button" className="text-link" data-frist-uebernehmen onClick={() => { fristVorschlagSetzen({ titel: centralIntakeDisplayTitle(analysis), datum: fristAusHinweis(analysis.possibleDeadline!), hinweis: `Aus dem Eingang erkannt: ${analysis.possibleDeadline}`, quelle: item.file.name }); onGo("reminders"); }}>Als Frist übernehmen</button></p>}{analysis.plan.duplicateIds.length > 0 && <p className="queue-warning"><b>Mögliche Dublette:</b> vorhandenes Dokument zuerst vergleichen.</p>}</>}
+              {!erledigt && l?.grund && <p className={`queue-sammel${l.ablegbar ? "" : " einzeln"}`} data-sammel-grund={l.ablegbar ? "unsicher" : "einzeln"}>{l.grund}</p>}
+              {!erledigt && l?.sicher && <p className="queue-sammel sicher" data-sammel-grund="sicher">sicherer Vorschlag – wird mit „ablegen“ so gespeichert</p>}
+              {fristTag && <label className="check-row queue-frist-an" data-sammel-frist={item.id}><input type="checkbox" checked={fristAn.has(item.id)} onChange={(e) => setFristAn((alt) => { const n = new Set(alt); if (e.target.checked) n.add(item.id); else n.delete(item.id); return n; })}/><span>Frist {deutsch(fristTag)} beim Ablegen mit anlegen</span></label>}
+              {analysis && <><p>{analysis.contentMessage}</p>{analysis.groupHint && <p><b>Zusammenhang:</b> {analysis.groupHint}</p>}{analysis.email && <p><b>E-Mail:</b> {analysis.plan.privacyClass === "besonders geschützt" ? "geschützte Absender- und Betreffdaten" : `${analysis.email.sender || "Absender unbekannt"} · ${analysis.email.attachmentNames.length} Anlage${analysis.email.attachmentNames.length === 1 ? "" : "n"}`}</p>}{!erledigt && analysis.possibleTask && <p><b>Aufgabe:</b> {analysis.possibleTask}</p>}{!erledigt && analysis.possibleDeadline && <p><b>Frist:</b> {deutsch(analysis.possibleDeadline)} <button type="button" className="text-link" data-frist-uebernehmen disabled={item.status === "Analyse läuft"} onClick={() => onReview(item.id, true)} title="Öffnet die Prüfung mit angehakter Frist; Dokument und Frist werden zusammen gespeichert und verknüpft">Als Frist übernehmen</button></p>}{!erledigt && analysis.plan.duplicateIds.length > 0 && <p className="queue-warning"><b>Mögliche Dublette:</b> vorhandenes Dokument zuerst ansehen.</p>}</>}
               {item.error && <p className="form-error">{item.error}</p>}
               {item.uebergabeVorschlag && <p>Fremde Einordnungsvorschläge aus „{item.uebergabeVorschlag.quelle}“ sind in „Zuordnung prüfen“ verfügbar.</p>}
               {item.uebergabeHinweis && <p>{item.uebergabeHinweis}</p>}
             </div>
             <div className="queue-actions">
-              {analysis?.email?.attachmentNames.length ? <button className="text-link" onClick={() => onExtractAttachments(item.id)}>Anlagen in Warteschlange prüfen</button> : null}
-              {item.status !== "Übernommen" && item.status !== "Nicht übernommen" && <button className="button primary" disabled={item.status === "Analyse läuft"} onClick={() => onReview(item.id)}>Zuordnung prüfen</button>}
-              {item.status !== "Übernommen" && item.status !== "Nicht übernommen" && <button className="button secondary" onClick={() => onSetStatus([item.id], "Zurückgestellt")}>Zurückstellen</button>}
+              {!erledigt && analysis?.email?.attachmentNames.length ? <button className="text-link" onClick={() => onExtractAttachments(item.id)}>Anlagen in Warteschlange prüfen</button> : null}
+              {!erledigt && <button className="button primary" disabled={item.status === "Analyse läuft"} onClick={() => onReview(item.id)} title="Einzeln prüfen: alle Angaben ansehen und ändern" data-einzeln-pruefen={item.id}><PenLine size={15} aria-hidden="true"/>Zuordnung prüfen</button>}
+              {!erledigt && <button className="button secondary" onClick={() => onSetStatus([item.id], "Zurückgestellt")}>Zurückstellen</button>}
+              {item.status === "Übernommen" && <span className="queue-gespeichert" data-gespeichert>{item.dasselbe ? "Nicht doppelt abgelegt ✓" : "Gespeichert ✓"}</span>}
+              {item.status === "Übernommen" && item.savedDocumentId && <button type="button" className="text-link" data-zum-dokument onClick={() => onGo("documents", item.savedDocumentId!)}>Zum Dokument <ChevronRight size={15}/></button>}
               {item.status === "Zurückgestellt" && <button className="button secondary" onClick={() => onSetStatus([item.id], analysis?.plan.requiresReview ? "Prüfung erforderlich" : "Bereit zur Übernahme")}>Weiterbearbeiten</button>}
             </div>
           </article>;

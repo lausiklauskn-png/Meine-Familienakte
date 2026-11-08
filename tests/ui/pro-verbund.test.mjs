@@ -80,6 +80,8 @@ try {
  }));
  await step('Dokumentenbibliothek: nur ausgewählte Unterlage weitergeben, Wiederholung behält Kennung',async()=>{
    await footer(page,'Dokumentenbibliothek');
+   // Seit 2.28.39 zeigt die Bibliothek ab Werk Zeilen; die Kartenansicht trägt die Knöpfe wie zuvor.
+   await page.locator('.ansicht-umschalter [data-ansicht="karten"]').click();
    const index=await page.locator('.library-document-card').filter({has:page.getByRole('button',{name:'An Pro-App geben …',exact:true})}).first().evaluate(e=>[...document.querySelectorAll('.library-document-card')].indexOf(e));
    const karte=page.locator('.library-document-card').nth(index);
    const originalName=await karte.locator('.library-document-title').innerText();
