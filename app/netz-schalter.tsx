@@ -27,6 +27,6 @@ export function NetzSchalter() {
   };
   const text = !bereit ? "Internet für die App: wird geprüft …" : offline ? "Internet für die App: aus – antippen zum Einschalten" : "Internet für die App: an – antippen zum Ausschalten";
   return <button type="button" className={`icon-button netz-schalter ${offline ? "netz-aus" : "netz-an"}`} onClick={() => void umschalten()} disabled={!bereit || busy} title={text} aria-label={text} aria-pressed={!offline} data-netz={offline ? "aus" : "an"}>
-    {offline ? <WifiOff size={18}/> : <Wifi size={18}/>}<span className="netz-lampe" aria-hidden="true"/>
+    {offline ? <WifiOff size={18}/> : <Wifi size={18}/>}<span className="netz-lampe" aria-hidden="true"/><span className="kopf-wort" aria-hidden="true">Internet</span>
   </button>;
 }

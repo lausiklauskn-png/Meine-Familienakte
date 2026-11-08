@@ -54,7 +54,8 @@ try {
   await step("Zweiter Brief mit derselben Kundennummer", async () => { await oeffnen(ZWEIT);
     await m.locator("[data-brief-gleich]").waitFor({ timeout: 15000 }).catch(() => {}); return "geöffnet"; });
   const gleich = await m.locator("[data-brief-gleich]").innerText().catch(() => "");
-  check(/4711-0815/.test(gleich) && /Dokumentscan 2026-10-12/.test(gleich), "frühere Unterlage mit derselben Nummer genannt", gleich);
+  // Seit 2.28.39 nennt der Hinweis die frühere Unterlage mit ihrem gespeicherten Titel statt dem Dateinamen.
+  check(/4711-0815/.test(gleich) && /Brief von Stadtwerke Lindwurm GmbH, 12.10.2026/.test(gleich), "frühere Unterlage mit derselben Nummer (Titel) genannt", gleich);
   check(errors.length === 0, "keine Seitenfehler", errors.join(" | "));
 } finally { await browser.close(); await app.stop(); }
 process.exit(summary("Briefkopf im Eingang"));

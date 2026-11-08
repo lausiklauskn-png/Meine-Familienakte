@@ -1,0 +1,232 @@
+<title>Vorschau Neugestaltung 2.28.39</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: Lesespalte; je Vorschlag ein Abschnitt mit „heute / neu“ als nachgebaute Detailansicht und einer Frage. */
+:root {
+  --bg: #f5f7fa; --fg: #17212b; --muted: #5b6878; --line: #d8dee6; --card: #ffffff; --soft: #eef2f6;
+  --accent: #0c79d8; --rot: #c62d3a; --rot-bg: #fdecee; --gruen: #2f8a4f; --gruen-bg: #eef8f1; --gelb-bg: #fff6dd;
+  --display: "Fraunces", Georgia, serif; --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11161c; --fg: #e6ebf1; --muted: #9aa7b6; --line: #2a3440; --card: #18202a; --soft: #1d2731;
+  --accent: #5bb3ff; --rot: #ff6b6b; --rot-bg: #2e1517; --gruen: #5fc78a; --gruen-bg: #13281b; --gelb-bg: #2b2412; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #11161c; --fg: #e6ebf1; --muted: #9aa7b6; --line: #2a3440; --card: #18202a; --soft: #1d2731;
+  --accent: #5bb3ff; --rot: #ff6b6b; --rot-bg: #2e1517; --gruen: #5fc78a; --gruen-bg: #13281b; --gelb-bg: #2b2412; color-scheme: dark }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 16px/1.5 var(--body); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 48px; }
+main { max-width: 880px; margin: 0 auto; display: grid; gap: 36px; }
+h1, h2 { font-family: var(--display); font-weight: 600; text-wrap: balance; margin: 0; }
+h1 { font-size: 1.9rem; line-height: 1.15; } h2 { font-size: 1.3rem; }
+p, ul, ol { margin: 0; } ul, ol { padding-left: 1.3em; display: grid; gap: 4px; }
+section { display: grid; gap: 12px; min-width: 0; }
+.eyebrow { font: 600 .75rem/1 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.muted { color: var(--muted); }
+.paar { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.bild { display: grid; gap: 6px; align-content: start; min-width: 0; }
+.bild > b { font-size: .85rem; }
+.bild.alt > b { color: var(--rot); } .bild.neu > b { color: var(--gruen); }
+.akte { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px; display: grid; gap: 8px; font-size: .88rem; }
+.akte h3 { margin: 0; font: 600 1rem/1.3 var(--body); }
+.akte .k { font: 600 .68rem/1 var(--body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.ref { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; background: var(--soft); min-width: 0; }
+.ref span { flex: 1; min-width: 0; }
+.ref small { display: block; color: var(--muted); font-size: .72rem; }
+.ref.erledigt { opacity: .65; } .ref.erledigt span strong { text-decoration: line-through; }
+.badge { font-size: .68rem; border: 1px solid var(--line); border-radius: 99px; padding: 1px 7px; background: var(--card); white-space: nowrap; }
+.badge.ok { color: var(--gruen); border-color: var(--gruen); }
+.knopf { font: 600 .78rem/1 var(--body); border: 1px solid var(--line); border-radius: 7px; padding: 6px 9px; background: var(--card); color: var(--fg); }
+.reihe { display: flex; flex-wrap: wrap; gap: 6px; }
+.offen-auf { border-color: var(--accent); background: var(--gelb-bg); }
+.auf { border: 1px dashed var(--accent); border-radius: 8px; padding: 8px; display: grid; gap: 6px; }
+.hinweis { background: var(--rot-bg); color: var(--fg); border-left: 3px solid var(--rot); padding: 6px 9px; border-radius: 4px; font-size: .82rem; }
+.gut { background: var(--gruen-bg); border-left-color: var(--gruen); }
+.frage { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 6px; }
+.frage b { color: var(--accent); }
+.schritt { border: 1.5px solid var(--line); border-radius: 99px; padding: 5px 11px; font-size: .82rem; background: var(--soft); }
+.schritt.fertig { border-color: var(--gruen); color: var(--gruen); } .schritt.jetzt { border-color: var(--accent); background: var(--accent); color: var(--bg); font-weight: 700; }
+.sym { display: grid; place-items: center; width: 52px; padding: 6px 0; border: 1px solid var(--line); border-radius: 8px; background: var(--soft); font-size: 1.1rem; }
+.sym small { font-size: .62rem; color: var(--muted); }
+.zeile { display: grid; grid-template-columns: auto 82px 1fr auto; gap: 8px; align-items: center; border-bottom: 1px solid var(--line); padding: 5px 2px; font-size: .84rem; font-variant-numeric: tabular-nums; }
+.zeile small { color: var(--muted); }
+.knopf.gruen { background: var(--gruen); color: var(--bg); border-color: var(--gruen); } .knopf.an { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+.such { flex: 1 1 160px; border: 1.5px solid var(--line); border-radius: 8px; padding: 6px 10px; color: var(--muted); font-size: .84rem; }
+.ref input, .zeile input { width: 18px; height: 18px; }
+.frage .ftext { display: grid; gap: 8px; min-width: 0; }
+.wahl { display: flex; flex-wrap: wrap; gap: 6px; }
+.wahl button, .sp { font: 600 .85rem/1 var(--body); border: 1.5px solid var(--line); background: var(--soft); color: var(--fg); border-radius: 8px; padding: 8px 12px; cursor: pointer; }
+.wahl button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent); color: var(--bg); }
+.wahl .stift { font-size: 1rem; padding: 6px 10px; }
+.frage textarea { width: 100%; font: inherit; color: var(--fg); background: var(--bg); border: 1.5px solid var(--line); border-radius: 8px; padding: 8px; }
+.speichern { display: flex; align-items: center; gap: 10px; }
+.sp { background: var(--gruen); border-color: var(--gruen); color: var(--bg); }
+.sp:disabled { opacity: .45; cursor: default; }
+.st { font-size: .85rem; color: var(--gruen); font-weight: 700; }
+.st.fehler { color: var(--rot); }
+button:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.pill { display: inline-block; font: 700 .72rem/1 var(--body); padding: 3px 7px; border-radius: 99px; margin: 1px 0; white-space: nowrap; }
+.pill.s { background: var(--rot-bg); color: var(--rot); } .pill.m { background: var(--gelb-bg); color: var(--gelb); } .pill.k { background: var(--soft); color: var(--muted); }
+.muster ul.pro { margin: 2px 0 0; padding: 0; list-style: none; display: grid; gap: 3px; font-size: .9rem; }
+.muster ul.pro li::before { content: "●"; color: var(--rot); margin-right: 8px; font-size: .7rem; vertical-align: 2px; }
+.muster .loesung { font-weight: 700; color: var(--gruen); font-size: .92rem; }
+
+</style>
+
+<main>
+  <header style="display:grid;gap:8px">
+    <span class="eyebrow">Vorschau 2.28.39 · nichts gebaut</span>
+    <h1>Zehn Punkte, die neu gestaltet werden müssen</h1>
+    <p class="muted">Aus den 13 Einträgen „braucht Vorschau“ (einige doppelt). Farben, Container und Listenzeilen bleiben wie heute; die Kästen hier zeigen nur, was dazukommt. Beispieldaten sind erfunden. Unter jedem Punkt: Ja, Nein, Später, ✎ und „✓ Speichern“ — bitte über diesen Link öffnen, dann lese ich die Antworten direkt.</p>
+  </header>
+  <section>
+    <span class="eyebrow">1 · Neuling 1 · Neu-erfahren 2</span>
+    <h2>Erste Schritte auf der Startseite</h2>
+    <div class="paar"><div class="bild alt"><b>Heute</b><div class="akte"><span class="k">Startseite</span><div class="hinweis">Viele Kästen gleich wichtig, „Datei auswählen“ erst nach zweimal Wischen.</div></div></div><div class="bild neu"><b>Neu</b><div class="akte"><span class="k">Startseite · ganz oben</span><h3>So fängst du an</h3>
+ <div class="reihe"><span class="schritt fertig">✓ 1 Speicherort gewählt</span><span class="schritt jetzt">2 Erstes Dokument ablegen ›</span><span class="schritt">3 Erste Erinnerung ›</span></div>
+ <span class="muted">Verschwindet, sobald alle drei erledigt sind. Darunter die Startseite wie heute.</span></div></div></div>
+    <div class="frage" data-f="v1"><div class="ftext"><span><b>So umsetzen?</b></span>
+      <div class="wahl"><button type="button" data-w="ja">Ja</button><button type="button" data-w="nein">Nein</button><button type="button" data-w="spaeter">Später</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+      <textarea id="notiz-v1" rows="2" placeholder="Deine Anmerkung" hidden></textarea>
+      <div class="speichern"><button type="button" class="sp" disabled>✓ Speichern</button><span class="st" aria-live="polite"></span></div></div></div>
+  </section>
+  <section>
+    <span class="eyebrow">2 · Neuling 4</span>
+    <h2>Ein Einstieg zum Ablegen</h2>
+    <div class="paar"><div class="bild alt"><b>Heute</b><div class="akte"><span class="k">Heute</span><div class="hinweis">Startseite, Eingangszentrale, Bibliothek „Neue Unterlage“, Stapel, Workflow PDF, Formular scannen: sechs Wege, verschiedene Enden.</div></div></div><div class="bild neu"><b>Neu</b><div class="akte"><span class="k">Kopf, Knopf „Ablegen“ (neben Notiz)</span>
+ <div class="reihe"><button class="knopf">📷 Fotografieren</button><button class="knopf">📄 Dateien wählen</button><button class="knopf">📁 Ordner</button></div>
+ <span class="muted">Alle drei enden in derselben Eingangszentrale mit Prüfliste. Die übrigen Wege bleiben, führen aber dorthin.</span></div></div></div>
+    <div class="frage" data-f="v2"><div class="ftext"><span><b>So umsetzen?</b></span>
+      <div class="wahl"><button type="button" data-w="ja">Ja</button><button type="button" data-w="nein">Nein</button><button type="button" data-w="spaeter">Später</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+      <textarea id="notiz-v2" rows="2" placeholder="Deine Anmerkung" hidden></textarea>
+      <div class="speichern"><button type="button" class="sp" disabled>✓ Speichern</button><span class="st" aria-live="polite"></span></div></div></div>
+  </section>
+  <section>
+    <span class="eyebrow">3 · Neuling 11 · Neu-erfahren 1</span>
+    <h2>Kopf-Symbole am Handy beschriften</h2>
+    <div class="paar"><div class="bild alt"><b>Heute</b><div class="akte"><span class="k">Heute am Handy</span><div class="reihe"><span class="sym">🔔</span><span class="sym">📅</span><span class="sym">✎</span><span class="sym">⟳</span></div><div class="hinweis">Nur Symbole, keiner weiß, was „⟳“ tut.</div></div></div><div class="bild neu"><b>Neu</b><div class="akte"><span class="k">Neu am Handy</span><div class="reihe"><span class="sym">🔔<small>Glocke</small></span><span class="sym">📅<small>Kalender</small></span><span class="sym">✎<small>Notiz</small></span><span class="sym">⟳<small>Update</small></span></div><span class="muted">Ein Wort klein unter jedem Symbol.</span></div></div></div>
+    <div class="frage" data-f="v3"><div class="ftext"><span><b>So umsetzen?</b></span>
+      <div class="wahl"><button type="button" data-w="ja">Ja</button><button type="button" data-w="nein">Nein</button><button type="button" data-w="spaeter">Später</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+      <textarea id="notiz-v3" rows="2" placeholder="Deine Anmerkung" hidden></textarea>
+      <div class="speichern"><button type="button" class="sp" disabled>✓ Speichern</button><span class="st" aria-live="polite"></span></div></div></div>
+  </section>
+  <section>
+    <span class="eyebrow">4 · Neu-erfahren 4</span>
+    <h2>Ein Cockpit statt zwei</h2>
+    <div class="paar"><div class="bild alt"><b>Heute</b><div class="akte"><div class="hinweis">„Interaktives Cockpit“ und „Vorgänge weiterbearbeiten“ öffnen dieselbe Seite, dazu 8× „Im Cockpit anzeigen“ in den Bereichen.</div></div></div><div class="bild neu"><b>Neu</b><div class="akte"><span class="k">Menü</span><div class="ref"><span><strong>Cockpit</strong><small>Was jetzt wichtig ist: Fristen, Aufgaben, Vorgänge</small></span></div><span class="muted">Ein Name überall. „Im Cockpit anzeigen“ öffnet es gefiltert auf den Bereich.</span></div></div></div>
+    <div class="frage" data-f="v4"><div class="ftext"><span><b>So umsetzen?</b></span>
+      <div class="wahl"><button type="button" data-w="ja">Ja</button><button type="button" data-w="nein">Nein</button><button type="button" data-w="spaeter">Später</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+      <textarea id="notiz-v4" rows="2" placeholder="Deine Anmerkung" hidden></textarea>
+      <div class="speichern"><button type="button" class="sp" disabled>✓ Speichern</button><span class="st" aria-live="polite"></span></div></div></div>
+  </section>
+  <section>
+    <span class="eyebrow">5 · Neu-erfahren 3</span>
+    <h2>Menü: eigene Gruppe „Termine & Aufgaben“</h2>
+    <div class="paar"><div class="bild alt"><b>Heute</b><div class="akte"><span class="k">Familie & Personen</span><div class="ref"><span>Interaktives Cockpit · Familienübersicht · Fristen und Aufgaben · Tagebuch · Verzeichnis</span></div><div class="hinweis">Fristen und Tagebuch stehen unter „Personen“.</div></div></div><div class="bild neu"><b>Neu</b><div class="akte"><span class="k">Neue Gruppe im Menü</span><div class="ref"><span><strong>Termine & Aufgaben</strong><small>Cockpit · Fristen und Aufgaben · Mein Kalender · Tagebuch</small></span></div><div class="ref"><span><strong>Familie & Personen</strong><small>Familienübersicht · Personen · Vollmachten · Versicherungen</small></span></div><span class="muted">Übrige Gruppen bleiben.</span></div></div></div>
+    <div class="frage" data-f="v5"><div class="ftext"><span><b>So umsetzen?</b></span>
+      <div class="wahl"><button type="button" data-w="ja">Ja</button><button type="button" data-w="nein">Nein</button><button type="button" data-w="spaeter">Später</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+      <textarea id="notiz-v5" rows="2" placeholder="Deine Anmerkung" hidden></textarea>
+      <div class="speichern"><button type="button" class="sp" disabled>✓ Speichern</button><span class="st" aria-live="polite"></span></div></div></div>
+  </section>
+  <section>
+    <span class="eyebrow">6 · Neu-erfahren 10 · Erfahren 2 · Deine Antwort 4: Ja</span>
+    <h2>Sammelbestätigung beim Ablegen</h2>
+    <div class="paar"><div class="bild alt"><b>Heute</b><div class="akte"><div class="hinweis">20 Dokumente = 20 Prüfdialoge ≈ 60 Klicks.</div></div></div><div class="bild neu"><b>Neu</b><div class="akte"><span class="k">Eingangszentrale · 20 neue Dokumente</span>
+ <div class="ref"><input type="checkbox" checked aria-label="auswählen"><span><strong>Stadtwerke · Rechnung · 02.11.2026</strong><small>Finanzen · Frist 16.11.</small></span><button class="knopf">✎</button></div>
+ <div class="ref"><input type="checkbox" checked aria-label="auswählen"><span><strong>Sparkasse · Kontoauszug · 31.10.2026</strong><small>Finanzen & Konten</small></span><button class="knopf">✎</button></div>
+ <div class="ref offen-auf"><input type="checkbox" aria-label="auswählen"><span><strong>scan_0003 · unsicher</strong><small>bitte einzeln prüfen</small></span><button class="knopf">✎</button></div>
+ <div class="reihe"><button class="knopf gruen">✓ 19 ausgewählte ablegen</button></div><span class="muted">Unsichere bleiben abgewählt und werden einzeln geprüft.</span></div></div></div>
+    <div class="frage" data-f="v6"><div class="ftext"><span><b>So umsetzen?</b></span>
+      <div class="wahl"><button type="button" data-w="ja">Ja</button><button type="button" data-w="nein">Nein</button><button type="button" data-w="spaeter">Später</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+      <textarea id="notiz-v6" rows="2" placeholder="Deine Anmerkung" hidden></textarea>
+      <div class="speichern"><button type="button" class="sp" disabled>✓ Speichern</button><span class="st" aria-live="polite"></span></div></div></div>
+  </section>
+  <section>
+    <span class="eyebrow">7 · Erfahren 13</span>
+    <h2>Bibliothek als kompakte Zeilen mit Mehrfachauswahl</h2>
+    <div class="paar"><div class="bild alt"><b>Heute</b><div class="akte"><div class="hinweis">Große Karten, 166 Dokumente = 47 700 px, keine Auswahl.</div></div></div><div class="bild neu"><b>Neu</b><div class="akte"><span class="k">Dokumente · Ansicht „Zeilen“ (Karten bleiben wählbar)</span>
+ <div class="zeile"><input type="checkbox" aria-label="auswählen"><span>02.11.2026</span><b>Stadtwerke Rechnung</b><small>Finanzen</small></div>
+ <div class="zeile"><input type="checkbox" aria-label="auswählen"><span>31.10.2026</span><b>Kontoauszug Oktober</b><small>Finanzen & Konten</small></div>
+ <div class="zeile"><input type="checkbox" aria-label="auswählen"><span>14.07.2026</span><b>Garantie Waschmaschine</b><small>Käufe</small></div>
+ <div class="reihe"><button class="knopf">Bereich ändern</button><button class="knopf">Person zuordnen</button><button class="knopf">Aus der Akte nehmen</button></div><span class="muted">50 je Seite, „Weitere anzeigen“.</span></div></div></div>
+    <div class="frage" data-f="v7"><div class="ftext"><span><b>So umsetzen?</b></span>
+      <div class="wahl"><button type="button" data-w="ja">Ja</button><button type="button" data-w="nein">Nein</button><button type="button" data-w="spaeter">Später</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+      <textarea id="notiz-v7" rows="2" placeholder="Deine Anmerkung" hidden></textarea>
+      <div class="speichern"><button type="button" class="sp" disabled>✓ Speichern</button><span class="st" aria-live="polite"></span></div></div></div>
+  </section>
+  <section>
+    <span class="eyebrow">8 · Erfahren 26</span>
+    <h2>Personen, Organisationen, Objekte anlegen</h2>
+    <div class="paar"><div class="bild alt"><b>Heute</b><div class="akte"><div class="hinweis">Anlegen geht nirgends; Zuordnen nur über Kennnummern.</div></div></div><div class="bild neu"><b>Neu</b><div class="akte"><span class="k">Familienübersicht · „+ Neu“</span>
+ <div class="reihe"><button class="knopf">+ Person</button><button class="knopf">+ Organisation</button><button class="knopf">+ Objekt (Auto, Gerät …)</button><button class="knopf">+ Vorgang</button></div>
+ <div class="ref"><span><strong>Name</strong><small>z. B. „Hausarzt Dr. Beispiel“ · Art · Notiz</small></span></div><div class="reihe"><button class="knopf gruen">✓ Speichern</button></div>
+ <span class="muted">Danach überall in Auswahllisten statt Kennnummer.</span></div></div></div>
+    <div class="frage" data-f="v8"><div class="ftext"><span><b>So umsetzen?</b></span>
+      <div class="wahl"><button type="button" data-w="ja">Ja</button><button type="button" data-w="nein">Nein</button><button type="button" data-w="spaeter">Später</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+      <textarea id="notiz-v8" rows="2" placeholder="Deine Anmerkung" hidden></textarea>
+      <div class="speichern"><button type="button" class="sp" disabled>✓ Speichern</button><span class="st" aria-live="polite"></span></div></div></div>
+  </section>
+  <section>
+    <span class="eyebrow">9 · Erfahren 30 · Ziel „eine Frage oben“</span>
+    <h2>Suche als Mitte, kompakte Treffer</h2>
+    <div class="paar"><div class="bild alt"><b>Heute</b><div class="akte"><div class="hinweis">4 Treffer je Bildschirm, max. 20, gemischt.</div></div></div><div class="bild neu"><b>Neu</b><div class="akte"><span class="k">Frage oben: „Bankauszug März“</span>
+ <span class="k">Dokumente (3)</span>
+ <div class="zeile"><span>31.03.2026</span><b>Kontoauszug März</b><small>Sparkasse</small></div>
+ <div class="zeile"><span>28.02.2026</span><b>Kontoauszug Februar</b><small>Sparkasse</small></div>
+ <span class="k">Termine & Erinnerungen (0)</span><span class="k">Personen (1)</span>
+ <div class="zeile"><span></span><b>Sparkasse Musterstadt</b><small>Organisation</small></div>
+ <span class="muted">Neueste zuerst, nach Art getrennt, „Alle 12 anzeigen“.</span></div></div></div>
+    <div class="frage" data-f="v9"><div class="ftext"><span><b>So umsetzen?</b></span>
+      <div class="wahl"><button type="button" data-w="ja">Ja</button><button type="button" data-w="nein">Nein</button><button type="button" data-w="spaeter">Später</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+      <textarea id="notiz-v9" rows="2" placeholder="Deine Anmerkung" hidden></textarea>
+      <div class="speichern"><button type="button" class="sp" disabled>✓ Speichern</button><span class="st" aria-live="polite"></span></div></div></div>
+  </section>
+  <section>
+    <span class="eyebrow">10 · Erfahren 25</span>
+    <h2>Fristenliste mit Suchfeld und Filter</h2>
+    <div class="paar"><div class="bild alt"><b>Heute</b><div class="akte"><div class="hinweis">287 Zeilen am Stück, kein Suchfeld.</div></div></div><div class="bild neu"><b>Neu</b><div class="akte"><span class="k">Fristen und Aufgaben</span>
+ <div class="reihe"><span class="such">🔍 In Fristen suchen</span><button class="knopf an">Offen</button><button class="knopf">Diese Woche</button><button class="knopf">Überfällig</button><button class="knopf">Erledigt</button></div>
+ <span class="muted">Zeilen wie heute (2.28.38). Andere Jahre mit Jahreszahl. 50 je Seite.</span></div></div></div>
+    <div class="frage" data-f="v10"><div class="ftext"><span><b>So umsetzen?</b></span>
+      <div class="wahl"><button type="button" data-w="ja">Ja</button><button type="button" data-w="nein">Nein</button><button type="button" data-w="spaeter">Später</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+      <textarea id="notiz-v10" rows="2" placeholder="Deine Anmerkung" hidden></textarea>
+      <div class="speichern"><button type="button" class="sp" disabled>✓ Speichern</button><span class="st" aria-live="polite"></span></div></div></div>
+  </section>
+</main>
+<script>
+(() => {
+  let db = null;
+  const karten = [...document.querySelectorAll(".frage[data-f]")];
+  const lokal = (k, v) => { try { if (v === undefined) return JSON.parse(localStorage.getItem("pa-" + k) || "null"); localStorage.setItem("pa-" + k, JSON.stringify(v)); } catch { return null; } };
+  const zeigen = (k, d) => {
+    if (!d) return;
+    k.querySelectorAll(".wahl [data-w]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.w === d.antwort)));
+    const t = k.querySelector("textarea"); if (d.notiz) { t.value = d.notiz; t.hidden = false; }
+    k.dataset.antwort = d.antwort || "";
+    k.querySelector(".st").textContent = "Gespeichert ✓";
+  };
+  karten.forEach((k) => {
+    const sp = k.querySelector(".sp"), st = k.querySelector(".st"), t = k.querySelector("textarea");
+    const geaendert = () => { sp.disabled = false; st.textContent = ""; st.classList.remove("fehler"); };
+    k.querySelectorAll(".wahl [data-w]").forEach((b) => b.addEventListener("click", () => {
+      k.querySelectorAll(".wahl [data-w]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      k.dataset.antwort = b.dataset.w; geaendert();
+    }));
+    k.querySelector(".stift").addEventListener("click", () => { t.hidden = false; t.focus(); });
+    t.addEventListener("input", geaendert);
+    sp.addEventListener("click", async () => {
+      const d = { antwort: k.dataset.antwort || "", notiz: t.value.trim(), wann: new Date().toISOString() };
+      sp.disabled = true; st.textContent = "Wird gespeichert …";
+      try {
+        if (db) await db.doc("antworten/" + k.dataset.f).set(d); else lokal(k.dataset.f, d);
+        st.textContent = db ? "Gespeichert ✓" : "Nur in diesem Browser gespeichert";
+      } catch (e) { sp.disabled = false; st.textContent = "Nicht gespeichert, bitte noch einmal tippen"; st.classList.add("fehler"); }
+    });
+    zeigen(k, lokal(k.dataset.f));
+  });
+  if (window.claude && claude.use) claude.use("db").then((d) => {
+    if (!d) return; db = d;
+    karten.forEach((k) => db.doc("antworten/" + k.dataset.f).get().then((x) => { const v = x && (x.data ? (typeof x.data === "function" ? x.data() : x.data) : x); if (v && v.antwort !== undefined) zeigen(k, v); }).catch(() => {}));
+  }).catch(() => {});
+})();
+</script>

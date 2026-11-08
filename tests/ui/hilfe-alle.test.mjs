@@ -67,7 +67,7 @@ try {
     if (name === "Desktop") {
       // Die Skizzen zeigen nur Kartentitel aus lib/hilfe-seiten.ts; jeder muss auf seiner Seite noch vorkommen (sonst veraltet).
       const { SEITEN_KARTEN } = await import("../../lib/hilfe-seiten.ts");
-      const FUSS = { inventory: "Bestand prüfen", cockpit: "Interaktives Cockpit", memory: "Tagebuch & Erinnerungen", reminders: "Fristen und Aufgaben", inbox: "Eingangszentrale",
+      const FUSS = { inventory: "Bestand prüfen", cockpit: "Cockpit", memory: "Tagebuch & Erinnerungen", reminders: "Fristen und Aufgaben", inbox: "Eingangszentrale",
         documents: "Dokumentenbibliothek", security: "Sicherheitscenter", changelog: "Was gibt’s Neues?", systemcheck: "Systemprüfung" };
       for (const [seite, karten] of Object.entries(SEITEN_KARTEN)) await step(`${name}: Skizze „${seite}“ passt zur App`, async () => {
         if (seite === "overview") { await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page); } else await footer(page, FUSS[seite]);

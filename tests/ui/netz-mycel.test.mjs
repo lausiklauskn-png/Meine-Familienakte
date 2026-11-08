@@ -2,7 +2,7 @@
 // Geprüft: beim Start wird kein SBKIM-Baustein geladen und keine Verbindung geöffnet · Seite „Netz (Mycel)“ lädt die
 // byte-gleichen Kanon-Module, öffnet aber nichts ins Netz · kein schwebender Kanon-Knopf · Gerätename wird gemerkt und
 // steht im Kanon-Fenster · „Verbinden …“ öffnet nur das Fenster · Seite verlassen schließt es · Handy ohne Querrollen.
-import { startApp, launchBrowser, DESKTOP, HANDY, ready, check, step, summary, collectErrors } from "./_harness.mjs";
+import { startApp, launchBrowser, DESKTOP, HANDY, ready, check, step, summary, collectErrors, internetAn } from "./_harness.mjs";
 
 const ZAEHLER = `(() => { const W = window.WebSocket; window.__ws = [];
   window.WebSocket = function (url, p) { window.__ws.push(String(url)); return new W(url, p); };
@@ -49,6 +49,8 @@ try {
     return (await page.evaluate(() => localStorage.getItem("sbkim_geraetename"))) === "Tablet Küche";
   });
   await step("„Verbinden …“ öffnet das Kanon-Fenster, Gerätename steht darin, noch keine Verbindung", async () => {
+    if (!(await page.locator("[data-netz-verbinden]").isDisabled())) throw new Error("„Verbinden …“ ist bei ausgeschaltetem Internet bedienbar");
+    await internetAn(page);
     await page.locator("[data-netz-verbinden]").click();
     await page.locator("#sbkim-rdv-panel").waitFor({ state: "visible" });
     const imFenster = await page.locator("#sbkim-rdv-panel [data-sbkim-geraetename]").inputValue();

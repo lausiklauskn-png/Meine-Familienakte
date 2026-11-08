@@ -8,7 +8,7 @@ const soll = (ok, info) => { if (!ok) throw new Error(typeof info === "string" ?
 
 const app = await startApp();
 const browser = await launchBrowser();
-const BEREICH = { Assistenz: 0, Gesundheit: 1, Familie: 2, Wohnen: 3, Fahrzeuge: 4, Käufe: 5, Dokumente: 6, Hilfe: 7 };
+const BEREICH = { Assistenz: 0, Termine: 1, Gesundheit: 2, Familie: 3, Wohnen: 4, Fahrzeuge: 5, Käufe: 6, Dokumente: 7, Hilfe: 8 };
 
 try {
   for (const [geraet, profil] of [["Desktop", DESKTOP], ["Handy", HANDY]]) {
@@ -31,7 +31,9 @@ try {
       await page.evaluate(() => window.scrollTo(0, 0));
       if (handy) { await page.locator(".mobile-menu-button").click(); await page.waitForTimeout(200); }
       await page.locator(".main-navigation .nav-cluster > button").nth(BEREICH[bereich]).click({ force: true });
-      await page.locator(".mega-menu button", { hasText: eintrag }).first().click();
+      // Eintrag nach seinem Namen (nicht nach dem Erklärtext darunter: „Familienübersicht“ erwähnt auch „Personen“).
+      const name = new RegExp(`^\\s*${eintrag.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`);
+      await page.locator(".mega-menu button").filter({ has: page.locator("strong", { hasText: name }) }).first().click();
       await page.waitForTimeout(600);
     };
     const weg = async (name, fn) => {
@@ -43,13 +45,13 @@ try {
     };
     const pruefe = (l, text, extra = true) => soll(gleich(l.pfad, text) && extra, { pfad: l.pfad, soll: erwartet(text), h1: l.h1 });
 
-    await weg("W1 Start → Arbeitsübersicht → Akte: Pfad ohne erfundenen Bereich, Akte als letztes Glied", async (p) => {
+    await weg("W1 Start → Arbeitsübersicht → Akte: Akte als letztes Glied", async (p) => {
       await p.locator("main button", { hasText: "Arbeitsübersicht öffnen" }).first().click(); await p.waitForTimeout(700);
-      const a = await lage(p); soll(gleich(a.pfad, "Startseite › Interaktives Cockpit"), a);
+      const a = await lage(p); soll(gleich(a.pfad, "Startseite › Termine & Aufgaben › Cockpit"), a);
       const akte = p.locator("#cockpit-cases .cockpit-case-list button").first(); const titel = (await akte.locator("strong").innerText()).trim();
       await akte.click(); await p.waitForTimeout(900);
       const b = await lage(p);
-      return pruefe(b, `Startseite › Interaktives Cockpit › ${titel}`, b.pfadImBild);
+      return pruefe(b, `Startseite › Termine & Aufgaben › Cockpit › ${titel}`, b.pfadImBild);
     });
     await weg("W2 Start → Neue Unterlage ablegen (Dialog über der Startseite)", async (p) => {
       await p.locator("main button", { hasText: "Neue Unterlage ablegen" }).first().click(); await p.waitForTimeout(800);
@@ -59,16 +61,18 @@ try {
       const k = p.locator("main button", { hasText: "Dokumenteneingang" }).last(); await k.scrollIntoViewIfNeeded(); await k.click(); await p.waitForTimeout(800);
       return pruefe(await lage(p), "Startseite › Dokumente › Eingangszentrale");
     });
-    await weg("W4 Menü Familie → Interaktives Cockpit: Bereich Familie; Tipp aufs Glied führt dorthin", async (p) => {
-      await menue(p, "Familie", "Interaktives Cockpit");
-      const a = await lage(p); pruefe(a, "Startseite › Familie & Personen › Interaktives Cockpit");
+    await weg("W4 Menü Termine & Aufgaben → Fristen und Aufgaben; Tipp aufs Glied führt zum Cockpit (Bereichsanfang)", async (p) => {
+      await menue(p, "Termine", "Fristen und Aufgaben");
+      const a = await lage(p); pruefe(a, "Startseite › Termine & Aufgaben › Fristen und Aufgaben", a.h1 === "Fristen und Aufgaben");
       await p.locator(".breadcrumb [data-pfad-bereich]").click(); await p.waitForTimeout(600);
       const b = await lage(p);
-      return pruefe(b, "Startseite › Familie & Personen", b.h1 === "Familie & Personen");
+      return pruefe(b, "Startseite › Termine & Aufgaben › Cockpit", b.h1 === "Cockpit");
     });
-    await weg("W4b Menü Assistenz → Interaktives Cockpit: Bereich Assistenz, gleicher Name", async (p) => {
-      await menue(p, "Assistenz", "Interaktives Cockpit");
-      const a = await lage(p); return pruefe(a, "Startseite › Assistenz › Interaktives Cockpit", a.h1 === "Interaktives Cockpit");
+    await weg("W4b Menü Familie → Personen: Personenliste im Bild, Eintrag im Pfad", async (p) => {
+      await menue(p, "Familie", "Personen");
+      const a = await lage(p);
+      const imBild = await p.locator("#familie-stamm").evaluate((e) => { const r = e.getBoundingClientRect(); return r.top >= 0 && r.top < innerHeight; });
+      return pruefe(a, "Startseite › Familie & Personen › Personen", imBild && a.h1 === "Familie & Personen");
     });
     await weg("W5 Menü Dokumente → Gesamtes Verzeichnis", async (p) => {
       await menue(p, "Dokumente", "Gesamtes Verzeichnis");
@@ -91,13 +95,13 @@ try {
       const a = await lage(p); pruefe(a, "Startseite › Suche „Teilzeit“");
       // „Antrag auf Teilzeit“ ist ein Vorgang (mit Termin): er öffnet als Akte im Cockpit, das Ziel steht als letztes Glied.
       await p.locator("main button").filter({ hasText: /Antrag auf Teilzeit/ }).first().click(); await p.waitForTimeout(1000);
-      const b = await lage(p); pruefe(b, "Startseite › Interaktives Cockpit › Antrag auf Teilzeit", b.pfadImBild);
+      const b = await lage(p); pruefe(b, "Startseite › Termine & Aufgaben › Cockpit › Antrag auf Teilzeit", b.pfadImBild);
       await p.locator(".breadcrumb .navigation-history button").first().click(); await p.waitForTimeout(1000);
       return soll((await p.inputValue(".global-search input")) === "Teilzeit", "Suchwort weg");
     });
     await weg("W10 Fußzeile Fristen und Aufgaben", async (p) => {
       await footer(p, "Fristen und Aufgaben");
-      const a = await lage(p); return pruefe(a, "Startseite › Familie & Personen › Fristen und Aufgaben", a.h1 === "Fristen und Aufgaben");
+      const a = await lage(p); return pruefe(a, "Startseite › Termine & Aufgaben › Fristen und Aufgaben", a.h1 === "Fristen und Aufgaben");
     });
     await weg("W11 Hilfe → Thema Eingangszentrale → Ziel → Zurück mit Marke", async (p) => {
       await footer(p, "Hilfe");
@@ -141,14 +145,14 @@ try {
     });
     await weg("W16 Fußzeile Gesamtes Verzeichnis → Eingangszentrale", async (p) => {
       await footer(p, "Gesamtes Verzeichnis");
-      pruefe(await lage(p), "Startseite › Gesamtes Verzeichnis");
+      pruefe(await lage(p), "Startseite › Dokumente › Gesamtes Verzeichnis");
       const b = p.locator("main button", { hasText: "Eingangszentrale" }).first(); await b.scrollIntoViewIfNeeded(); await b.click(); await p.waitForTimeout(800);
       return pruefe(await lage(p), "Startseite › Dokumente › Eingangszentrale");
     });
     await weg("W17 Kopf „Mein Kalender“: „Mein Kalender“ ist das letzte Glied, Pfad im Bild", async (p) => {
       if (handy && !(await p.locator("[data-mein-kalender-knopf]").isVisible())) await p.locator("[data-kopf-auf]").click();
       await p.locator("[data-mein-kalender-knopf]").click(); await p.waitForTimeout(900);
-      const a = await lage(p); return pruefe(a, "Startseite › Familie & Personen › Fristen und Aufgaben › Mein Kalender", a.pfadImBild);
+      const a = await lage(p); return pruefe(a, "Startseite › Termine & Aufgaben › Fristen und Aufgaben › Mein Kalender", a.pfadImBild);
     });
     await weg("W18 Eingangszentrale gescrollt → Seitenleiste Startseite → Zurück an dieselbe Stelle", async (p) => {
       await footer(p, "Eingangszentrale"); await p.evaluate(() => window.scrollTo(0, 900)); await p.waitForTimeout(300);

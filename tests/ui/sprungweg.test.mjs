@@ -37,13 +37,14 @@ try {
     const start = async () => { await page.evaluate(() => window.scrollTo(0, 0)); await page.locator(".site-brand").click(); await page.waitForTimeout(500); };
     const suche = async (wort) => { await page.evaluate(() => window.scrollTo(0, 0)); await page.fill(".global-search input", wort); await page.waitForTimeout(700); };
 
-    await step(`${geraet}: U1 Suche → Tagebuch-Treffer: Eintrag im Bild und markiert, Treffer heißt „Tagebuch“ (U12)`, async () => {
+    await step(`${geraet}: U1 Suche → Tagebuch-Treffer: Eintrag im Bild und markiert, Treffer heißt „Tagebuch-Eintrag“ (U12)`, async () => {
       await suche("Waschmaschine pumpt");
       const treffer = page.locator("main button, main a").filter({ hasText: /Waschmaschine pumpt/ }).first();
-      const art = await treffer.innerText();
+      // Art steht als Gruppenüberschrift über den kompakten Trefferzeilen (Suche als Mitte, Punkt 9).
+      const art = await treffer.evaluate((e) => e.closest("[data-such-gruppe]")?.getAttribute("data-such-gruppe") || "");
       const m = await springe(page, treffer, ".memory-detail");
       await page.fill(".global-search input", "");
-      return soll(m.hash === "#memory" && m.imBild && m.markiert && ohneHochRunter(m) && /Tagebuch/.test(art) && !/^Erinnerung/.test(art.trim()), { m, art: art.slice(0, 80) });
+      return soll(m.hash === "#memory" && m.imBild && m.markiert && ohneHochRunter(m) && /Tagebuch-Eintrag/.test(art), { m, art: art.slice(0, 80) });
     });
 
     await step(`${geraet}: U6 Suche → Frist: öffnet „Fristen und Aufgaben“ mit der Zeile im Bild und markiert`, async () => {
@@ -84,7 +85,7 @@ try {
     });
 
     await step(`${geraet}: Cockpit → Vorgang: Detail direkt im Bild und markiert, kein Zwischenstopp oben`, async () => {
-      await footer(page, "Interaktives Cockpit");
+      await footer(page, "Cockpit");
       const vorgang = page.locator("#cockpit-cases .cockpit-case-list button").first();
       const m = await springe(page, vorgang, "#cockpit-dossier");
       return soll(m.imBild && m.markiert && ohneHochRunter(m), m);
@@ -106,7 +107,7 @@ try {
     });
 
     await step(`${geraet}: U2 Familie → „Gemeinsame Vorgänge“ landet bei „Offene Vorgänge“; „Personenakten“ ist ehrlich benannt`, async () => {
-      await footer(page, "Interaktives Cockpit"); await start();
+      await footer(page, "Cockpit"); await start();
       await page.locator(".object-card").filter({ hasText: /Familie/ }).first().click(); await page.waitForTimeout(500);
       const personen = await page.locator("main .object-card").filter({ hasText: /^.*Personenakten/ }).count();
       const knopf = page.locator("main .object-card").filter({ hasText: "Gemeinsame Vorgänge" }).first();
@@ -150,8 +151,8 @@ try {
     });
 
     if (geraet === "Desktop") {
-      await step("Desktop: Menü Familie → Fristen und Aufgaben: Seite oben, kein Ziel, keine Marke", async () => {
-        await openMenu(page, 2, "Fristen und Aufgaben");
+      await step("Desktop: Menü Termine & Aufgaben → Fristen und Aufgaben: Seite oben, kein Ziel, keine Marke", async () => {
+        await openMenu(page, 1, "Fristen und Aufgaben");
         const y = await page.evaluate(() => Math.round(scrollY));
         const marken = await page.locator("main .zurueck-hier").count();
         return soll(y === 0 && marken === 0, { y, marken });

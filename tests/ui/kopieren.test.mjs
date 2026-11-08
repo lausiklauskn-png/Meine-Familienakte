@@ -52,7 +52,7 @@ try {
     await page.locator("textarea").first().fill("Bitte um Belegeinsicht zur Nebenkostenabrechnung 2025.");
     await page.locator("button", { hasText: "Familienakte prüfen und Vorschlag vorbereiten" }).click(); await page.waitForTimeout(600);
     await page.locator("button", { hasText: "Schreiben vorbereiten" }).click(); await page.waitForTimeout(400);
-    await page.locator("button", { hasText: "Kopieren" }).first().click(); await page.waitForTimeout(300);
+    await page.locator("button:not([aria-label*='Aktivitätszeile'])", { hasText: "Kopieren" }).first().click(); await page.waitForTimeout(300);
     const clip = await page.evaluate(() => navigator.clipboard.readText());
     return clip.startsWith("Betreff:") ? `„${clip.split("\n")[0].slice(0, 60)}“` : (console.log("   ↳", clip.slice(0, 80)), false);
   });

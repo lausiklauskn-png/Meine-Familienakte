@@ -15,7 +15,7 @@ try {
   const zurPerson = async () => {
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.locator(".global-search input").fill("Gerlinde Arenberg");
-    await page.locator(".search-results article", { has: page.locator(".badge", { hasText: /^Person$/ }) }).first().locator("button").first().click();
+    await page.locator('.search-results article[data-such-art="Person"]').first().locator("button").first().click();
     await page.locator("#cockpit-dossier").waitFor();
   };
   const kasten = page.locator("#cockpit-dossier [data-person-kontakt]");

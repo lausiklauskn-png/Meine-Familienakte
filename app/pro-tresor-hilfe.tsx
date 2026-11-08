@@ -41,7 +41,7 @@ export function ProTresorWoLiegtWas({ open = false, onVerbinden, onDokumente, st
       <li><strong>Nichts von Hand</strong> in den Tresor legen – die Dateien dort sind verschlüsselt und heißen nach Nummern.</li>
       <li><strong>Ersatzschlüssel</strong> ausdrucken oder getrennt aufbewahren, nie in den Tresor.</li>
     </ul>
-    <p className="pfad-titel"><strong>Verbinden:</strong></p>
+    <p className="pfad-titel"><strong>Verbinden</strong> (nur in der Android- und der Windows-App; die Web-App „Basic“ zeigt keinen Pro-Tresor):</p>
     <Pfad teile={[{ text: "Dokumente" }, { text: "Sicherheit & lokaler Tresor" }, { text: "Gemeinsamer Pro-Tresor" }, { text: "Verbinden …", ziel: verbinden }]}/>
     <p className="sr-only">Ein Passwort gilt für alle Pro-Apps. Weg: {PRO_TRESOR_MENUEWEG}</p>
   </details>;

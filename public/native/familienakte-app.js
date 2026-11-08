@@ -42,14 +42,25 @@
     if (dauer) leisteTimer = setTimeout(() => leiste.remove(), dauer);
   }
 
-  // 2. Service Worker und Aktualisierung
-  function neueVersion(registration) {
-    hinweis('Neue Version verfügbar.', 0, { text: 'Jetzt neu laden', run: () => {
-      const waiting = registration.waiting; if (!waiting) { location.reload(); return; }
-      navigator.serviceWorker.addEventListener('controllerchange', () => location.reload(), { once: true });
-      waiting.postMessage({ typ: 'jetzt-aktivieren' });
-    } });
+  // Fähnchen „Update verfügbar“ an der Versionszeile (2.28.39, Klaus 08.11.2026: kein Update-Knopf im Kopf mehr; die App
+  // prüft selbst beim Start und gelegentlich, nur bei eingeschaltetem Internet). Die Oberfläche liest den Stand aus
+  // <html data-update-verfuegbar> und dem Ereignis „familienakte:update“ (app/update-fahne.tsx).
+  let updateNeu = '';
+  function fahne(an, neu) {
+    updateNeu = an ? String(neu || '') : '';
+    if (an) document.documentElement.dataset.updateVerfuegbar = updateNeu || 'ja';
+    else delete document.documentElement.dataset.updateVerfuegbar;
+    window.dispatchEvent(new CustomEvent('familienakte:update', { detail: { verfuegbar: !!an, neu: updateNeu } }));
   }
+  // 2. Service Worker und Aktualisierung
+  let wartendeRegistrierung = null;
+  function jetztNeuLaden(registration) {
+    const waiting = registration?.waiting; if (!waiting) { location.reload(); return; }
+    navigator.serviceWorker.addEventListener('controllerchange', () => location.reload(), { once: true });
+    waiting.postMessage({ typ: 'jetzt-aktivieren' });
+  }
+  // Eine neue Fassung der Web-App wartet: nur das Fähnchen, keine Leiste (Antippen lädt neu).
+  function neueVersion(registration) { wartendeRegistrierung = registration; fahne(true); }
   if ('serviceWorker' in navigator && !window.Capacitor?.isNativePlatform?.() && location.protocol !== 'file:') {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./sw.js').then((registration) => {
@@ -58,10 +69,11 @@
           const neu = registration.installing; if (!neu) return;
           neu.addEventListener('statechange', () => { if (neu.state === 'installed' && navigator.serviceWorker.controller) neueVersion(registration); });
         });
-        // Nur bei eingeschaltetem Internet nach einer neuen Fassung fragen (alle 6 Stunden und nach dem Einschalten).
+        // Nur bei eingeschaltetem Internet nach einer neuen Fassung fragen (beim Start, alle 6 Stunden und nach dem Einschalten).
         const pruefen = () => { if (!offline()) registration.update().catch(() => {}); };
         window.addEventListener('pb:network', (e) => { if (!e.detail?.offline) pruefen(); });
         setInterval(pruefen, 6 * 60 * 60 * 1000);
+        window.PBNetwork?.initialized?.then(pruefen).catch(() => {});
       }).catch(() => { /* ohne Worker läuft die App weiter, nur ohne Offline-Vorrat */ });
     });
   }
@@ -110,9 +122,10 @@
       try { history.replaceState(history.state, '', location.pathname + location.hash); } catch { /* egal */ }
     })();
   }
-  // Knopf „Aktualisieren“ oben (zwei Pfeile im Kreis): in den Apps dieselbe Prüfung wie der Tipp auf die Versionszeile,
-  // in der PWA fragt der Service Worker nach einer neuen Fassung. Nur bei eingeschaltetem Internet.
+  // Update auf Wunsch (Tipp auf das Fähnchen „Update verfügbar“): in den Apps dieselbe Prüfung wie der Tipp auf die
+  // Versionszeile; in der PWA lädt eine wartende Fassung sofort neu, sonst fragt der Service Worker. Nur bei Internet an.
   async function aktualisieren() {
+    if (wartendeRegistrierung?.waiting) { hinweis('Neue Fassung wird geladen …', 0); jetztNeuLaden(wartendeRegistrierung); return; }
     if (offline()) { hinweis('Internet für die App ist aus. Oben in der Kopfleiste einschalten, dann erneut prüfen.', 6000); return; }
     const app = window.FamilienakteAndroid || window.FamilienakteWindows;
     if (app?.updatePruefen) { app.updatePruefen(); return; }
@@ -120,8 +133,10 @@
     if (!reg) { location.reload(); return; }
     hinweis('Prüfung läuft …', 0);
     try { await reg.update(); } catch { /* unten gemeldet */ }
-    if (reg.waiting || reg.installing) { if (reg.waiting) neueVersion(reg); else hinweis('Neue Fassung wird geladen …', 0); return; }
+    if (reg.waiting) { hinweis('Neue Fassung wird geladen …', 0); jetztNeuLaden(reg); return; }
+    if (reg.installing) { hinweis('Neue Fassung wird geladen …', 0); return; }
+    fahne(false);
     hinweis(`Du verwendest die aktuelle Fassung ${VERSION || ''}.`.replace(' .', '.'), 6000);
   }
-  window.FamilienakteApp = { build: BUILD, version: VERSION, hinweis, dateienUebergeben, aktualisieren };
+  window.FamilienakteApp = { build: BUILD, version: VERSION, hinweis, dateienUebergeben, aktualisieren, fahne, updateVerfuegbar: () => !!document.documentElement.dataset.updateVerfuegbar };
 })();

@@ -17,7 +17,16 @@ try {
   await step("Start mit Beispieldaten", async () => { await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page); });
 
   // --- Kopfzeile ---
-  await step("Drucken ruft window.print()", async () => { await page.locator('button[title="Aktuelle Seite drucken"]').click(); return (await page.evaluate(() => window.__gedruckt)) === 1; });
+  // 2.28.39 (Vorschau neugestaltung Punkt 2): kein Drucker mehr im Kopf; gedruckt wird über Menü › „Seite drucken“ (am PC Strg+P).
+  await step("Kein Drucker im Kopf; Menü › „Seite drucken“ ruft window.print()", async () => {
+    if (await page.locator(".header-actions .drucken-knopf").count()) return false;
+    const vorher = page.viewportSize(); await page.setViewportSize({ width: 390, height: 844 });
+    try {
+      await page.locator(".mobile-menu-button").click();
+      await page.locator(".mobile-menu-extra button", { hasText: "Seite drucken" }).click();
+      return (await page.evaluate(() => window.__gedruckt)) === 1;
+    } finally { await page.setViewportSize(vorher); }
+  });
   await step("Markenknopf „FAMILIENAKTE“ führt zur Startseite", async () => {
     await footer(page, "Hilfe"); await page.locator(".site-brand").click();
     return page.url().endsWith("#startseite") && (await page.locator(".breadcrumb .pfad > button").allTextContents()).join("") === "Startseite";

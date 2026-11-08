@@ -29,8 +29,12 @@ try {
   const auswahl = modal.locator("[data-kontext-vorgang]");
   const titel = () => modal.locator(".context-suggestion h3").innerText();
   if (process.env.ZEIGEN) console.log("Titel:", await titel(), "| Wahl:", await auswahl.inputValue());
+  // Seit 2.28.39 (Prüfbericht H2): der Vorschlag wird genannt, aber nicht vorbelegt; erst „Verknüpfen“ übernimmt ihn.
+  check((await auswahl.inputValue()) === "" && /passt vielleicht zu „.+“ – noch nicht verknüpft/.test(await titel()), "Vorschlag wird genannt, aber nicht vorbelegt", await titel());
+  await modal.locator("[data-kontext-verknuepfen]").click();
+  await page.waitForTimeout(300);
   const vorschlag = await auswahl.inputValue();
-  check(!!vorschlag && /passt wahrscheinlich zu/.test(await titel()), "Vorschlag ist vorbelegt und die Überschrift nennt ihn", await titel());
+  check(!!vorschlag && /Wird verknüpft mit „/.test(await titel()), "„Verknüpfen“ übernimmt den Vorschlag", await titel());
   // Ein anderer Vorgang als der Vorschlag (welcher das ist, hängt vom gelesenen Text ab).
   const nebenkosten = await auswahl.locator("option").evaluateAll((os, v) => os.map((o) => o.value).find((x) => x && x !== v), vorschlag);
   await step("Anderen Vorgang wählen → Überschrift nennt die Wahl", async () => {

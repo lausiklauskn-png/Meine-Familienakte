@@ -76,6 +76,8 @@ export type CentralIntakeQueueItem = {
   error: string | null;
   parentQueueId?: string | null;
   savedDocumentId?: string | null;
+  /** Ausdrücklich als „Ist dasselbe“ abgeschlossen: kein neues Dokument, der Eingang zeigt auf das vorhandene. */
+  dasselbe?: boolean;
 };
 
 type FileLike = Pick<File, "name" | "size" | "type">;
@@ -224,11 +226,55 @@ function findPossibleTask(value: string) {
   return null;
 }
 
+/** Ob der Text nach einer Aufgabe klingt (Antwort, Nachreichen, Zahlen …); angelegt wird nur nach Bestätigung. */
+export function erkenneAufgabe(value: string) { return Boolean(findPossibleTask(value)); }
+
+/** TT.MM.JJJJ aus JJJJ-MM-TT (Klaus 08.11.2026: Datumsformat überall deutsch). */
+export function deutschesDatum(iso: string) {
+  const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  return m ? `${m[3]}.${m[2]}.${m[1]}` : iso;
+}
+
+export type ErkannteFrist = { art: "frist" | "garantie"; datum: string | null; ausschnitt: string };
+
+const DATUM = String.raw`(?:(20\d{2})-(0[1-9]|1[0-2])-([0-2]\d|3[01])|([0-2]?\d|3[01])\.\s?(0?[1-9]|1[0-2])\.\s?(20\d{2}))`;
+const isoAus = (m: RegExpMatchArray, start: number) => m[start]
+  ? `${m[start]}-${m[start + 1]}-${m[start + 2]}`
+  : `${m[start + 5]}-${m[start + 4].padStart(2, "0")}-${m[start + 3].padStart(2, "0")}`;
+
+/**
+ * Frist und Garantie aus dem gelesenen Text (Prüfbericht 08.11.2026: das erste Datum war oft das Rechnungsdatum).
+ * Bevorzugt wird das Datum direkt nach „bis zum“, „spätestens“, „zahlbar bis“, „fällig am“, „Frist“; „Garantie bis …“
+ * wird getrennt erkannt. Steht nur ein Fristwort ohne Datum da, bleibt das Datum leer – nichts wird geraten.
+ */
+export function erkenneFristen(value: string): ErkannteFrist[] {
+  const text = value.replace(/\s+/g, " ");
+  const funde: ErkannteFrist[] = [];
+  const garantie = text.match(new RegExp(String.raw`(garantie|gew(?:ä|ae)hrleistung)[^.;:\n]{0,40}?\b(?:bis|endet|l(?:ä|ae)uft(?: ab)?|g(?:ü|ue)ltig bis)\s*(?:zum|am)?\s*` + DATUM, "i"));
+  if (garantie) funde.push({ art: "garantie", datum: isoAus(garantie, 2), ausschnitt: garantie[0].trim().slice(0, 120) });
+  const fristMuster = new RegExp(String.raw`(sp(?:ä|ae)testens(?: (?:bis )?(?:zum|am))?|zahlbar bis(?: zum)?|f(?:ä|ae)llig (?:am|bis(?: zum)?)|bis (?:zum|sp(?:ä|ae)testens)|frist(?:ende)?(?: (?:bis|endet)(?: (?:zum|am))?)?:?|einzureichen bis(?: zum)?|antworten sie bis(?: zum)?|innerhalb .{0,20}?bis(?: zum)?)\s*` + DATUM, "gi");
+  const ohneGarantie = garantie ? text.replace(garantie[0], " ") : text;
+  const frist = [...ohneGarantie.matchAll(fristMuster)][0]
+    || ohneGarantie.match(new RegExp(String.raw`(frist|f(?:ä|ae)llig|sp(?:ä|ae)testens)[^.!?]{0,60}?` + DATUM, "i"));
+  if (frist) funde.push({ art: "frist", datum: isoAus(frist, 2), ausschnitt: frist[0].trim().slice(0, 120) });
+  else if (/(frist|f(?:ä|ae)llig|sp(?:ä|ae)testens|bis zum|innerhalb)/i.test(ohneGarantie)) funde.push({ art: "frist", datum: null, ausschnitt: "" });
+  return funde;
+}
+
+/** Dokumentdatum aus dem gelesenen Text: „Datum“, „Kaufdatum“, „Rechnungsdatum“, „vom“ zuerst, sonst das erste Datum, das keine Frist ist. */
+export function erkenneDokumentDatum(value: string): string | null {
+  const text = value.replace(/\s+/g, " ");
+  const benannt = text.match(new RegExp(String.raw`(?:kaufdatum|rechnungsdatum|belegdatum|ausstellungsdatum|datum|vom)\s*:?\s*` + DATUM, "i"));
+  if (benannt) return isoAus(benannt, 1);
+  const fristen = new Set(erkenneFristen(text).map((f) => f.datum).filter(Boolean));
+  for (const m of text.matchAll(new RegExp(DATUM, "g"))) { const iso = isoAus(m, 1); if (!fristen.has(iso)) return iso; }
+  return null;
+}
+
 function findPossibleDeadline(value: string) {
-  const text = normalize(value);
-  if (!/(frist|fallig|spatestens|bis zum|innerhalb)/.test(text)) return null;
-  const date = dateFromText(value);
-  return date ? `Mögliche Frist am ${date} – erst nach Bestätigung anlegen` : "Mögliche Frist erkannt – Datum bitte prüfen";
+  const frist = erkenneFristen(value).find((f) => f.art === "frist");
+  if (!frist) return null;
+  return frist.datum ? `Mögliche Frist am ${deutschesDatum(frist.datum)} – erst nach Bestätigung anlegen` : "Mögliche Frist erkannt – Datum bitte prüfen";
 }
 
 export async function analyzeCentralIntakeFile(input: {
@@ -236,9 +282,11 @@ export async function analyzeCentralIntakeFile(input: {
   source: DocumentIntakeSource;
   documents: IntakeDocumentReference[];
   records?: FamilyRecordUnion[];
+  /** Text, den die App schon gelesen hat (PDF-Textebene), damit Warteschlange und Prüfdialog dasselbe zeigen. */
+  gelesenerText?: string;
 }): Promise<CentralIntakeAnalysis> {
   const fileKind = detectCentralIntakeFileKind(input.file);
-  let contentHint = await extractDocumentIntakeTextHint(input.file);
+  let contentHint = input.gelesenerText?.trim() ? input.gelesenerText : await extractDocumentIntakeTextHint(input.file);
   let email: IntakeEmailMetadata | null = null;
   if (fileKind === "E-Mail (.eml)") {
     const parsed = parseEmlText(await input.file.text());
@@ -265,7 +313,7 @@ export async function analyzeCentralIntakeFile(input: {
     date,
     contentReadable: readable,
     contentHint: contentHint.slice(0, 300000),
-    contentMessage: readable ? "Inhalt wurde für den Zuordnungsvorschlag gelesen." : "Inhalt konnte nicht automatisch gelesen werden. Die Datei kann trotzdem manuell geprüft werden.",
+    contentMessage: uebergabeHinweis(input.file.name) || (readable ? "Inhalt wurde für den Zuordnungsvorschlag gelesen." : fileKind === "PDF" || fileKind === "Foto / Bild" ? "Text wird beim Prüfen gelesen (Texterkennung auf diesem Gerät)." : "Inhalt konnte nicht automatisch gelesen werden. Die Datei kann trotzdem manuell geprüft werden."),
     email,
     plan,
     possibleTask: findPossibleTask(`${title} ${contentHint}`),
@@ -317,7 +365,9 @@ export async function runCentralIntakeSelfTests() {
     ...typeTests,
     { id: "central-eml", label: "EML-Erfassung", passed: emlAnalysis.email?.sender === "service@example.de" && emlAnalysis.email.subject === "Rechnung und Antwort erforderlich", summary: "Absender und Betreff werden aus der Original-E-Mail gelesen." },
     { id: "central-email-task", label: "E-Mail-Aufgabe", passed: Boolean(emlAnalysis.possibleTask), summary: "Handlungsbedarf wird nur als möglicher Vorschlag gekennzeichnet." },
-    { id: "central-email-deadline", label: "E-Mail-Frist", passed: Boolean(emlAnalysis.possibleDeadline?.includes("2026-10-20")), summary: "Eine mögliche Frist wird erkannt, aber nicht gespeichert." },
+    { id: "central-email-deadline", label: "E-Mail-Frist", passed: Boolean(emlAnalysis.possibleDeadline?.includes("20.10.2026")), summary: "Eine mögliche Frist wird erkannt (TT.MM.JJJJ), aber nicht gespeichert." },
+    { id: "central-deadline-bis", label: "Frist nach „bis zum“", passed: erkenneFristen("Rechnung vom 03.11.2026. Bitte zahlen Sie bis zum 01.12.2026.").find((f) => f.art === "frist")?.datum === "2026-12-01", summary: "Das Datum nach „bis zum“ gilt, nicht das Rechnungsdatum." },
+    { id: "central-garantie", label: "Garantie bis", passed: erkenneFristen("Kaufdatum: 14.07.2026 · Garantie bis 14.07.2028").find((f) => f.art === "garantie")?.datum === "2028-07-14", summary: "„Garantie bis …“ wird als eigene Frist erkannt." },
     { id: "central-email-message-id", label: "Message-ID", passed: emlAnalysis.email?.messageId === "<abc@example.de>", summary: "Die technische Nachrichtenkennung bleibt für die Dublettenprüfung erhalten." },
     { id: "central-unknown", label: "Unbekannter Dateityp", passed: unknown.fileKind === "Unbekannter Dateityp" && initialCentralIntakeStatus(unknown) === "Prüfung erforderlich", summary: "Unbekannte Dateien führen zur manuellen Prüfung statt zum Absturz." },
     { id: "central-multi-image", label: "Mehrere Bilder", passed: imageGroup.every((item) => Boolean(item.groupHint)), summary: "Mehrere Bilder werden als mögliche Serie oder mehrseitige Aufnahme markiert." },
@@ -331,4 +381,11 @@ export async function runCentralIntakeSelfTests() {
     { id: "central-local-folder", label: "Lokaler Ordner bewusst", passed: (await analyzeCentralIntakeFile({ file: named("Brief.pdf", "application/pdf"), source: "local-inbox", documents: [], records: [] })).source === "local-inbox", summary: "Lokale Ordner bleiben ein bewusst ausgelöster Eingangsweg." },
     { id: "central-no-paid-api", label: "Keine kostenpflichtige API", passed: emlAnalysis.safeguards.includes("keine kostenpflichtige externe API"), summary: "Die Eingangszentrale arbeitet ohne externen kostenpflichtigen Schlüssel." },
   ];
+}
+
+/** Übergabepaket oder Empfangsdatei einer anderen Familienakte (U5): nicht hier ablegen, sondern im Sicherheitscenter öffnen. */
+export function uebergabeHinweis(name: string): string | null {
+  if (/\.familienakte-paket$/i.test(name)) return "Das ist ein Übergabepaket einer anderen Familienakte, keine Unterlage. Bitte nicht hier ablegen, sondern unter Sicherheit › „Eine Unterlage an ein anderes Gerät geben“ › „Übergabepaket öffnen“ annehmen.";
+  if (/\.familienakte-quittung$/i.test(name)) return "Das ist eine Empfangsdatei zu einem Übergabepaket, keine Unterlage. Bitte unter Sicherheit › „Eine Unterlage an ein anderes Gerät geben“ › „Empfangsdatei prüfen“ öffnen.";
+  return null;
 }

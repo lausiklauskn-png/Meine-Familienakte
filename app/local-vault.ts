@@ -2,10 +2,12 @@ import { workspaceName, demoActive } from "../lib/demo-workspace.ts";
 import { aktuelleGrenze, mbText } from "../lib/geraete-grenze.ts";
 import { istNativerOrdner, nativenOrdnerWaehlen, ordnerPlugin } from "./nativer-ordner.ts";
 import { DEMO_PRAEFIX, eigeneDatenDa, wasAendertSich, type DemoQuelle } from "../lib/demo-kopie.ts";
-import { erinnerungenOrdnen, gueltigeUhrzeit, zuordnungSetzen, type ErinnerungsWahl, type KalenderAnbieter, type KalenderFelder, type KalenderZuordnung } from "../lib/kalender.ts";
+import { erinnerungenUmziehen } from "../lib/erinnerung-umzug.ts";
+import { ERINNERUNG_VORGABE, erinnerungAusDatum, erinnerungenOrdnen, erinnerungenVerschieben, gueltigeUhrzeit, tageZwischen, zuordnungSetzen, type ErinnerungsWahl, type KalenderAnbieter, type KalenderFelder, type KalenderZuordnung } from "../lib/kalender.ts";
 import { workspaceStorage } from "../lib/demo-workspace.ts";
 import type { ProUebergabe } from "../lib/pro-verbund-vertrag";
 import { kontaktPruefen, kontaktUebernehmen, type PersonKontakt } from "../lib/person-kontakt.ts";
+import { stammDaten, stammPruefen, type StammAngaben, type StammArt } from "../lib/familie-stamm.ts";
 import { istProOriginal, proOriginalLesen, proOriginalName, proOriginalSpeichern, proOriginalVaultId, proOriginalMerkmale, proTresor, proTresorVerfuegbar } from "./pro-tresor.ts";
 import { pruefePdfQuelle, type PdfQuelle, type PdfRueckgabe } from "../lib/pdf-bearbeitung.ts";
 import type { AusfuellInfo } from "../lib/ausfuellen";
@@ -60,7 +62,17 @@ export type LocalDocument = {
   /** Ausfüllen (Sitzung F): Felder/Stand am Original, Verweis an der ausgefüllten Fassung. */
   ausfuellen?: AusfuellInfo | null;
   pdfRueckgabe?: PdfRueckgabe;
+  /** Titel aus dem Prüfdialog (änderbar); fehlt er, gilt der Dateiname. */
+  titel?: string | null;
+  /** Kurzer gelesener Textauszug für die Suche (nur Text, höchstens TEXTAUSZUG_MAX Zeichen; keine zweite PDF). */
+  textAuszug?: string | null;
+  /** „Aus der Akte nehmen“ (2.28.39): archiviert, nicht gelöscht. verschoben = Datei liegt im Ordner „Aussortiert“;
+   *  false, wenn der Speicherweg das Verschieben nicht kann (Pro-Tresor) – dann bleibt die Datei an ihrem Platz. */
+  aussortiert?: { am: string; vorherPfad: string; verschoben: boolean } | null;
 };
+
+/** Obergrenze für den gespeicherten Textauszug je Dokument (Klaus 08.11.2026: nur Text, begrenzt). */
+export const TEXTAUSZUG_MAX = 20000;
 
 export type VaultAuditEntry = {
   id: string;
@@ -204,6 +216,8 @@ function db(): Promise<IDBDatabase> {
 export const folderPickerSupported = () => typeof window !== "undefined" && !!(window as PickerWindow).showDirectoryPicker;
 const browserStorageSupported = () => (typeof navigator !== "undefined" && typeof navigator.storage?.getDirectory === "function") || idbStorageSupported();
 export const vaultSupported = () => folderPickerSupported() || browserStorageSupported();
+/** Ordner für Vollsicherung, Wiederherstellungstest, Einlesen und Export wählbar: native Ordnerwahl (Android-, Windows-App) oder Chrome/Edge am PC. */
+export const sicherungsOrdnerWaehlbar = () => !!ordnerPlugin() || folderPickerSupported();
 export const BROWSER_VAULT_NAME = workspaceName("Browser-Datentresor");
 
 /** Datentresor im geschützten Speicher dieses Browsers (Origin Private File System).
@@ -2674,7 +2688,7 @@ export async function readLocalSystemSnapshot(handle: FileSystemDirectoryHandle)
     confirmedInventoryAssignmentCount: index.inventoryItems.filter((item) => !!item.assignmentConfirmedAt).length,
     inventoryLearningSignalCount: index.inventoryLearningSignals.length,
     pausedInventoryScanCount: index.auditLog.filter((entry) => entry.action === "FaWoGa 2.28.1 Bestandsanalyse pausiert").length,
-    centralIntakeDocumentCount: index.documents.filter((item) => item.notes?.includes("Eingangszentrale 2.28.0")).length,
+    centralIntakeDocumentCount: index.documents.filter((item) => /Eingangszentrale(?: 2\.28\.0)?: /.test(item.notes || "")).length,
     completedOneDriveScanCounts: index.auditLog
       .filter((entry) => entry.action === "FaWoGa 2.28.1 OneDrive-Bestand inkrementell analysiert"
         || entry.action === "FaWoGa 2.28.1 lokaler Bestand inkrementell analysiert")
@@ -2690,7 +2704,7 @@ export async function getVaultSummary(handle: FileSystemDirectoryHandle): Promis
   return { vaultId: identity.vaultId, vaultName: identity.vaultName, updatedAt: index.updatedAt, documentCount: index.documents.length };
 }
 
-export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file: File, data: { category: string; documentDate: string | null; notes: string | null; migration?: boolean; allowDuplicate?: boolean; assignmentLinks?: Array<{ toType: FamilyRecordType; toId: string; relationType: string }>; scanPageCount?: number; scanOriginals?: File[]; proUebergabe?: ProUebergabe; proBezug?: string }) {
+export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file: File, data: { category: string; documentDate: string | null; notes: string | null; migration?: boolean; allowDuplicate?: boolean; assignmentLinks?: Array<{ toType: FamilyRecordType; toId: string; relationType: string }>; scanPageCount?: number; scanOriginals?: File[]; proUebergabe?: ProUebergabe; proBezug?: string; titel?: string | null; textAuszug?: string | null }) {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   const index = await readIndex(handle);
   // P4: Grenze aus der Geräteprüfung; der gemeinsame Pro-Tresor bleibt bei höchstens 20 MB.
@@ -2699,7 +2713,7 @@ export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file:
   const checksum = await fileChecksum(file);
   if (data.proUebergabe && (data.proUebergabe.sha256 !== checksum || data.proUebergabe.groesse !== file.size)) throw new Error("Die Übergabe-Herkunft passt nicht zur Originaldatei.");
   const possibleDuplicate = index.documents.find((document) => document.checksum === checksum || (document.originalName.toLocaleLowerCase("de") === file.name.toLocaleLowerCase("de") && document.sizeBytes === file.size));
-  if (possibleDuplicate && !data.allowDuplicate) throw new Error(`Mögliche Dublette: ${possibleDuplicate.id}. Bitte das vorhandene Dokument zuerst vergleichen oder die bewusste Übernahme bestätigen.`);
+  if (possibleDuplicate && !data.allowDuplicate) throw new Error(`Mögliche Dublette: „${possibleDuplicate.titel || possibleDuplicate.originalName}“ ist schon abgelegt. Bitte das vorhandene Dokument zuerst ansehen oder die bewusste Übernahme bestätigen.`);
   const id = crypto.randomUUID();
   const storedName = `${data.documentDate || new Date().toISOString().slice(0, 10)}_${id.slice(0, 8)}_${clean(file.name)}`;
   const proId = proZiel(index);
@@ -2742,7 +2756,9 @@ export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file:
     source: proId ? "Gemeinsamer Pro-Tresor" : identity.storageKind === "onedrive" ? "OneDrive-Datentresor" : "Lokaler Datentresor",
     checksum, ...(data.proUebergabe ? { proUebergabe: data.proUebergabe } : {}), ...(data.proBezug ? { proBezug: data.proBezug } : {}),
     storageLocations: [{ id: `LOC-${crypto.randomUUID()}`, storageType, path: storedPath, source: proId ? "Gemeinsamer Pro-Tresor" : identity.storageKind === "onedrive" ? "OneDrive-Datentresor" : "Lokaler Datentresor", checksum, fileSize: file.size, verifiedAt: addedAt }],
-    scanPageCount: data.scanPageCount, scanOriginalCount: scanOriginals.length, scanOriginalsPath, ...(proId ? { proScanOriginals } : {}) };
+    scanPageCount: data.scanPageCount, scanOriginalCount: scanOriginals.length, scanOriginalsPath, ...(proId ? { proScanOriginals } : {}),
+    ...(data.titel?.trim() ? { titel: data.titel.replace(/\s+/g, " ").trim().slice(0, 200) } : {}),
+    ...(data.textAuszug?.trim() ? { textAuszug: data.textAuszug.replace(/[ \t]+/g, " ").replace(/\n{3,}/g, "\n\n").trim().slice(0, TEXTAUSZUG_MAX) } : {}) };
   index.documents.unshift(item);
   for (const link of data.assignmentLinks || []) {
     if (!index.records.some((record) => record.id === link.toId && record.recordType === link.toType)) continue;
@@ -2766,6 +2782,124 @@ export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file:
 export async function updateLocalStatus(handle: FileSystemDirectoryHandle, id: string, status: LocalDocument["status"]) {
   const index = await readIndex(handle); const item = index.documents.find((document) => document.id === id);
   if (item) { item.status = status; item.updatedAt = new Date().toISOString(); } await writeIndex(handle, index);
+}
+
+/** Ergebnis von „Aus der Akte nehmen“ und „Zurückholen“: was verschoben wurde und was nur im Register umgestellt ist. */
+export type AussortierErgebnis = { verschoben: number; nurArchiviert: number; altLiegtNoch: number; fehler: string[] };
+
+/** Datei innerhalb des Aktenordners an einen neuen Pfad kopieren und prüfen (Prüfsumme). Gibt den neuen Pfad zurück. */
+async function dateiKopieren(handle: FileSystemDirectoryHandle, document: LocalDocument, zielPfad: string) {
+  const quelle = await documentFile(handle, document);
+  const ziel = await unusedTargetPath(handle, zielPfad, document.id);
+  const target = await ziel.directory.getFileHandle(ziel.fileName, { create: true });
+  const writable = await target.createWritable(); await writable.write(quelle); await writable.close();
+  const soll = document.checksum || await fileChecksum(quelle);
+  const ist = await fileChecksum(await target.getFile());
+  if (ist !== soll) { try { await ziel.directory.removeEntry(ziel.fileName); } catch { /* bereits weg */ } throw new Error(`Die Kopie von „${document.titel || document.originalName}“ stimmt nicht mit dem Original überein.`); }
+  return ziel.storedPath;
+}
+
+function pfadSetzen(document: LocalDocument, alt: string, neu: string) {
+  document.storedPath = neu; document.relativePath = neu;
+  if (document.oneDrivePath) document.oneDrivePath = neu;
+  for (const ort of document.storageLocations || []) if (ort.path === alt) ort.path = neu;
+}
+
+/**
+ * „Aus der Akte nehmen“ (Klaus 08.11.2026): archivieren statt löschen. Im Aktenordner wandert die Datei nach
+ * „01_Dokumente/Aussortiert/<Bereich>“ (erst Kopie mit Prüfsumme, dann Register, dann Original entfernen). Liegt das
+ * Original im gemeinsamen Pro-Tresor, kann die App es dort nicht verschieben: dann wird nur im Register archiviert.
+ */
+export async function dokumenteAussortieren(handle: FileSystemDirectoryHandle, ids: string[]): Promise<AussortierErgebnis> {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  const index = await readIndex(handle);
+  const am = new Date().toISOString();
+  const ergebnis: AussortierErgebnis = { verschoben: 0, nurArchiviert: 0, altLiegtNoch: 0, fehler: [] };
+  const neuAngelegt: string[] = []; const altEntfernen: string[] = [];
+  for (const document of index.documents.filter((d) => ids.includes(d.id) && !d.aussortiert)) {
+    const vorher = document.storedPath;
+    if (istProOriginal(vorher)) { document.aussortiert = { am, vorherPfad: vorher, verschoben: false }; ergebnis.nurArchiviert++; continue; }
+    try {
+      const name = vorher.split("/").filter(Boolean).pop() || clean(document.originalName);
+      const neu = await dateiKopieren(handle, document, `${ROOT}/01_Dokumente/Aussortiert/${clean(document.category)}/${name}`);
+      neuAngelegt.push(neu); altEntfernen.push(vorher);
+      pfadSetzen(document, vorher, neu);
+      document.aussortiert = { am, vorherPfad: vorher, verschoben: true }; ergebnis.verschoben++;
+    } catch (error) {
+      // Verschieben ging nicht (Speicherweg kann es nicht): trotzdem aus der Akte nehmen, Datei bleibt, wo sie ist.
+      document.aussortiert = { am, vorherPfad: vorher, verschoben: false }; ergebnis.nurArchiviert++;
+      ergebnis.fehler.push(`${document.titel || document.originalName}: ${error instanceof Error ? error.message : "Verschieben nicht möglich"}`);
+    }
+    document.updatedAt = am;
+    index.auditLog.unshift({ id: crypto.randomUUID(), at: am, action: "Aus der Akte genommen", recordId: document.id, details: document.aussortiert.verschoben ? "Archiviert; Datei liegt im Ordner „Aussortiert“. Zurückholen ist möglich." : "Archiviert; die Datei blieb an ihrem Platz. Zurückholen ist möglich." });
+  }
+  const basis = await root(handle);
+  try { await writeIndex(handle, index); } catch (error) {
+    for (const pfad of neuAngelegt) { try { await removeFileByRelativePath(basis, pfad, true); } catch { /* bleibt liegen */ } }
+    throw error;
+  }
+  for (const pfad of altEntfernen) { try { await removeFileByRelativePath(basis, pfad, true); } catch { ergebnis.altLiegtNoch++; } }
+  return ergebnis;
+}
+
+/** „Zurückholen“: das Dokument steht wieder in der Akte; eine verschobene Datei kehrt in den Bereichsordner zurück. */
+export async function dokumenteZurueckholen(handle: FileSystemDirectoryHandle, ids: string[]): Promise<AussortierErgebnis> {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  const index = await readIndex(handle);
+  const am = new Date().toISOString();
+  const ergebnis: AussortierErgebnis = { verschoben: 0, nurArchiviert: 0, altLiegtNoch: 0, fehler: [] };
+  const neuAngelegt: string[] = []; const altEntfernen: string[] = [];
+  for (const document of index.documents.filter((d) => ids.includes(d.id) && d.aussortiert)) {
+    const info = document.aussortiert!;
+    if (info.verschoben && !istProOriginal(document.storedPath)) {
+      try {
+        const vorher = document.storedPath;
+        const neu = await dateiKopieren(handle, document, info.vorherPfad || `${ROOT}/01_Dokumente/${clean(document.category)}/${clean(document.originalName)}`);
+        neuAngelegt.push(neu); altEntfernen.push(vorher); pfadSetzen(document, vorher, neu); ergebnis.verschoben++;
+      } catch (error) {
+        ergebnis.nurArchiviert++;
+        ergebnis.fehler.push(`${document.titel || document.originalName}: ${error instanceof Error ? error.message : "Zurückschieben nicht möglich"} – die Datei bleibt im Ordner „Aussortiert“.`);
+      }
+    } else ergebnis.nurArchiviert++;
+    document.aussortiert = null; document.updatedAt = am;
+    index.auditLog.unshift({ id: crypto.randomUUID(), at: am, action: "In die Akte zurückgeholt", recordId: document.id, details: "Das Dokument steht wieder in Bibliothek, Suche und Cockpit." });
+  }
+  const basis = await root(handle);
+  try { await writeIndex(handle, index); } catch (error) {
+    for (const pfad of neuAngelegt) { try { await removeFileByRelativePath(basis, pfad, true); } catch { /* bleibt liegen */ } }
+    throw error;
+  }
+  for (const pfad of altEntfernen) { try { await removeFileByRelativePath(basis, pfad, true); } catch { ergebnis.altLiegtNoch++; } }
+  return ergebnis;
+}
+
+/** Sammelaktion „Bereich ändern“: nur der Eintrag im Register, die Datei bleibt, wo sie ist. */
+export async function dokumenteBereichSetzen(handle: FileSystemDirectoryHandle, ids: string[], bereich: string) {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  const wert = bereich.replace(/\s+/g, " ").trim().slice(0, 100);
+  if (!wert) throw new Error("Bitte einen Bereich wählen.");
+  const index = await readIndex(handle); const am = new Date().toISOString(); let n = 0;
+  for (const document of index.documents.filter((d) => ids.includes(d.id))) {
+    if (document.category === wert) continue;
+    index.auditLog.unshift({ id: crypto.randomUUID(), at: am, action: "Bereich geändert", recordId: document.id, details: `„${document.category}“ → „${wert}“ (Sammelaktion).` });
+    document.category = wert; document.updatedAt = am; n++;
+  }
+  await writeIndex(handle, index);
+  return n;
+}
+
+/** Sammelaktion „Person zuordnen“: je Dokument eine Verknüpfung „betrifft“; vorhandene bleiben unverändert. */
+export async function dokumenteZuordnen(handle: FileSystemDirectoryHandle, ids: string[], ziel: { type: FamilyRecordType; id: string }) {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  const index = await readIndex(handle); const am = new Date().toISOString(); let n = 0;
+  if (!index.records.some((r) => r.id === ziel.id && r.recordType === ziel.type)) throw new Error("Die gewählte Person ist im Register nicht vorhanden.");
+  for (const document of index.documents.filter((d) => ids.includes(d.id))) {
+    if (index.relations.some((r) => r.fromType === "document" && r.fromId === document.id && r.toType === ziel.type && r.toId === ziel.id)) continue;
+    index.relations.push({ id: crypto.randomUUID(), fromType: "document", fromId: document.id, toType: ziel.type, toId: ziel.id, relationType: "betrifft", createdAt: am, source: "Sammelaktion Bibliothek", notes: null }); n++;
+  }
+  if (n) index.auditLog.unshift({ id: crypto.randomUUID(), at: am, action: "Verknüpfung angelegt", details: `${n} Dokument${n === 1 ? "" : "e"} nach Benutzerbestätigung zugeordnet (Sammelaktion).` });
+  await writeIndex(handle, index);
+  return n;
 }
 
 export async function attachLocalDocumentStorageLocation(handle: FileSystemDirectoryHandle, documentId: string, location: Omit<DocumentStorageLocation, "id">) {
@@ -3479,6 +3613,31 @@ export async function changeLocalContextLink(handle: FileSystemDirectoryHandle, 
   return relation;
 }
 
+/**
+ * Einmaliger Umzug beim Start (2.28.39, Vorschau D): Erinnerungen, die zu einer Aufgabe oder Frist gehören, werden in diese
+ * übernommen; der alte Datensatz bleibt archiviert. Vorher legt die App eine eigene Sicherung des Registers an
+ * (00_Register/Sicherungen-Umzug, wird nicht automatisch aufgeräumt). Ohne etwas umzuziehen wird nichts geschrieben.
+ */
+export async function erinnerungenInAufgabenUmziehen(handle: FileSystemDirectoryHandle, vorgabe: ErinnerungsWahl[] = ERINNERUNG_VORGABE) {
+  const index = await readIndex(handle);
+  const plan = erinnerungenUmziehen(index.records, index.relations, vorgabe);
+  if (!plan.umgezogen.length) return 0;
+  const alt = await readExistingRegisterText(handle);
+  if (alt !== null) {
+    const ordner = await (await registerDir(handle)).getDirectoryHandle("Sicherungen-Umzug", { create: true });
+    const name = `Familienakte_Register_vor-Umzug-Erinnerungen_${new Date().toISOString().replace(/[:.]/g, "-")}.json`;
+    const datei = await ordner.getFileHandle(name, { create: true });
+    const w = await datei.createWritable(); await w.write(alt); await w.close();
+    if ((await (await datei.getFile()).text()) !== alt) throw new Error("Die Sicherung vor dem Umzug der Erinnerungen ließ sich nicht prüfen; es wurde nichts geändert.");
+  }
+  index.records = plan.records;
+  index.relations = plan.relations;
+  const now = new Date().toISOString();
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Erinnerungen umgezogen", recordId: plan.umgezogen[0].ziel, details: `${plan.umgezogen.length} Erinnerung${plan.umgezogen.length === 1 ? "" : "en"} in ihre Aufgabe oder Frist übernommen (${plan.umgezogen.map((u) => `${u.erinnerung} → ${u.ziel}`).join(", ")}); alte Einträge archiviert. Sicherung vorher angelegt.` });
+  await writeIndex(handle, index);
+  return plan.umgezogen.length;
+}
+
 export async function createLocalScheduleBundle(handle: FileSystemDirectoryHandle, input: CreateScheduleInput) {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   if (!input.title.trim() || !input.dueAt) throw new Error("Bezeichnung und Fälligkeitsdatum sind erforderlich.");
@@ -3502,15 +3661,14 @@ export async function createLocalScheduleBundle(handle: FileSystemDirectoryHandl
     if (index.relations.some((item) => item.fromType === input.recordType && item.fromId === schedule.id && item.toType === reference.recordType && item.toId === reference.id.trim() && item.relationType === reference.relationType)) continue;
     index.relations.push({ id: crypto.randomUUID(), fromType: input.recordType, fromId: schedule.id, toType: reference.recordType, toId: reference.id.trim(), relationType: reference.relationType, createdAt: now, source: input.source || "Manuelle Eingabe", notes: null });
   }
-  let reminder: FamilyRecordUnion | null = null;
-  if (input.reminderAt) {
-    const reminderAllocation = nextFamilyRecordId("reminder", index.sequences);
-    index.sequences = reminderAllocation.sequences;
-    reminder = createFamilyRecord({ id: reminderAllocation.id, recordType: "reminder", status: "offen", source: schedule.id, notes: input.notes || null, data: { title: `Erinnerung: ${input.title.trim()}`, remindAt: input.reminderAt }, now }) as FamilyRecordUnion;
-    index.records.push(reminder);
-    index.relations.push({ id: crypto.randomUUID(), fromType: "reminder", fromId: reminder.id, toType: input.recordType, toId: schedule.id, relationType: "erinnert an", createdAt: now, source: input.source || "Manuelle Eingabe", notes: null });
+  // 2.28.39 (Vorschau D): das Erinnerungsdatum gehört zur Aufgabe selbst – kein zweiter Datensatz „Erinnerung: …“ mehr.
+  const reminder: FamilyRecordUnion | null = null;
+  const eigeneZeit = erinnerungAusDatum(input.reminderAt);
+  if (eigeneZeit) {
+    const d = schedule.data as KalenderFelder;
+    d.erinnerungen = erinnerungenOrdnen([...(Array.isArray(d.erinnerungen) ? d.erinnerungen : ERINNERUNG_VORGABE), eigeneZeit]);
   }
-  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Frist oder Aufgabe angelegt", recordId: schedule.id, details: `${schedule.id} wurde nach ausdrücklicher Benutzerbestätigung angelegt.${reminder ? ` ${reminder.id} wurde verknüpft.` : ""}` });
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Frist oder Aufgabe angelegt", recordId: schedule.id, details: `${schedule.id} wurde nach ausdrücklicher Benutzerbestätigung angelegt.${eigeneZeit ? " Erinnerungszeit gespeichert." : ""}` });
   await writeIndex(handle, index);
   return { schedule, reminder };
 }
@@ -3566,6 +3724,11 @@ export async function updateLocalScheduleStatus(handle: FileSystemDirectoryHandl
   record.status = status;
   record.updatedAt = now;
   if (record.recordType === "task") record.data.completedAt = status === "erledigt" ? now : undefined;
+  // U2: Eine noch verknüpfte Erinnerung (älterer Stand) geht mit ihrer Aufgabe mit – erledigt heißt erledigt.
+  if (record.recordType !== "reminder") for (const rel of index.relations.filter((r) => r.toId === id && r.fromType === "reminder" && r.relationType === "erinnert an")) {
+    const rem = index.records.find((r) => r.id === rel.fromId);
+    if (rem && rem.status !== "archiviert") { rem.status = status; rem.updatedAt = now; }
+  }
   index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Status geändert", recordId: record.id, details: `${record.id}: ${previous} → ${status}; Änderung durch Benutzerbefehl.` });
   await writeIndex(handle, index);
   return record;
@@ -3602,6 +3765,34 @@ export async function updateLocalPersonContact(handle: FileSystemDirectoryHandle
   record.data = kontaktUebernehmen((record.data || {}) as Record<string, unknown>, sauber) as typeof record.data;
   record.updatedAt = now;
   index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Kontaktangaben geändert", recordId: record.id, details: `${record.id}: Anschrift/Kontakt nach ausdrücklichem Speichern geändert (${Object.keys(sauber).length} Angaben).` });
+  await writeIndex(handle, index);
+  return record;
+}
+
+/** Punkt 8 (2.28.39): Person, Organisation, Objekt oder Vorgang selbst anlegen oder Name/Art/Notiz ändern.
+ * Anlegen nutzt die vorhandene Vergabe der Kennnummer (nextFamilyRecordId/createFamilyRecord); die Nummer bleibt intern. */
+export async function saveLocalStammRecord(handle: FileSystemDirectoryHandle, input: { recordType: StammArt; id?: string; angaben: StammAngaben }) {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  const index = await readIndex(handle);
+  const fehler = stammPruefen(input.recordType, input.angaben, index.records, input.id);
+  if (fehler.length) throw new Error(fehler.join(" "));
+  const notiz = input.angaben.notiz.trim() || null;
+  const now = new Date().toISOString();
+  if (!input.id) {
+    const allocation = nextFamilyRecordId(input.recordType, index.sequences);
+    const record = createFamilyRecord({ id: allocation.id, recordType: input.recordType, status: input.recordType === "case" ? "offen" : "aktiv", source: "Selbst angelegt", notes: notiz, data: stammDaten(input.recordType, input.angaben), now });
+    index.sequences = allocation.sequences;
+    index.records.push(record as FamilyRecordUnion);
+    index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Datensatz angelegt", recordId: record.id, details: `${recordTypeDefinitions[input.recordType].label} wurde nach ausdrücklichem Speichern angelegt.` });
+    await writeIndex(handle, index);
+    return record as FamilyRecordUnion;
+  }
+  const record = index.records.find((item) => item.id === input.id);
+  if (!record || record.recordType !== input.recordType) throw new Error("Der Eintrag wurde im lokalen Register nicht gefunden.");
+  record.data = stammDaten(input.recordType, input.angaben, (record.data || {}) as Record<string, unknown>) as typeof record.data;
+  record.notes = notiz;
+  record.updatedAt = now;
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Datensatz geändert", recordId: record.id, details: `${recordTypeDefinitions[input.recordType].label}: Name, Art oder Notiz nach ausdrücklichem Speichern geändert.` });
   await writeIndex(handle, index);
   return record;
 }
@@ -3751,7 +3942,7 @@ export type CreateLocalMemoryInput = {
   createTask?: boolean;
   createDeadline?: boolean;
   /** „Erinnern lassen“: eine Aufgabe mit Termin, auf Wunsch im Kalender (Klaus 2026-11-05). */
-  erinnerung?: { titel: string; dueAt: string; dueTime?: string; erinnerungen: unknown[]; kalenderEintragen: boolean; kalenderWahl?: KalenderFelder["kalenderWahl"] | null };
+  erinnerung?: { titel: string; dueAt: string; dueTime?: string; erinnerungen: unknown[]; kalenderEintragen?: boolean; kalenderWahl?: KalenderFelder["kalenderWahl"] | null };
 };
 
 function memoryMediaKind(file: File): MemoryMediaReference["kind"] {
@@ -3902,7 +4093,12 @@ export async function updateLocalScheduleTermin(handle: FileSystemDirectoryHandl
   if (!record || (record.recordType !== "deadline" && record.recordType !== "task")) throw new Error("Die Aufgabe oder Frist wurde nicht gefunden.");
   const data = record.data as { title: string; dueAt?: string } & KalenderFelder;
   if (changes.title !== undefined) { if (!changes.title.trim()) throw new Error("Der Titel darf nicht leer sein."); data.title = changes.title.trim(); }
-  if (changes.dueAt !== undefined) { if (!/^\d{4}-\d{2}-\d{2}$/.test(changes.dueAt)) throw new Error("Bitte einen gültigen Tag wählen."); data.dueAt = changes.dueAt; }
+  if (changes.dueAt !== undefined) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(changes.dueAt)) throw new Error("Bitte einen gültigen Tag wählen.");
+    // U7: Termin verschoben – eigene Erinnerungszeiten ziehen mit, wenn sie nicht ausdrücklich mitgeschickt werden.
+    if (changes.erinnerungen === undefined && data.dueAt && Array.isArray(data.erinnerungen)) data.erinnerungen = erinnerungenOrdnen(erinnerungenVerschieben(data.erinnerungen, tageZwischen(data.dueAt, changes.dueAt)));
+    data.dueAt = changes.dueAt;
+  }
   if (changes.dueTime !== undefined) { const zeit = gueltigeUhrzeit(changes.dueTime); if (zeit) data.dueTime = zeit; else delete data.dueTime; }
   if (changes.erinnerungen !== undefined) data.erinnerungen = erinnerungenOrdnen(changes.erinnerungen);
   if (typeof changes.kalenderEintragen === "boolean") data.kalenderEintragen = changes.kalenderEintragen;

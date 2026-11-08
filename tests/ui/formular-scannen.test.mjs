@@ -41,8 +41,14 @@ try {
   check(await knopf.count() === 1, "Eingangszentrale: Knopf „Formular scannen und ausfüllen“ ist da");
   check(await page.locator(".intake-source", { hasText: "Dokument fotografieren" }).count() === 1, "„Dokument fotografieren“ des Freundes bleibt");
   const dlg = page.locator("[data-af]");
-  await step("Tipp → Scanner → Scan liegt als Unterlage in der Akte und das Ausfüllen öffnet sich", async () => {
+  // Seit 2.28.39 (Prüfbericht M6): der Scan geht erst durch den Prüfdialog; nach „Geprüft lokal speichern“ öffnet sich das Ausfüllen.
+  await step("Tipp → Scanner → Prüfdialog (noch nichts gespeichert)", async () => {
     await knopf.click();
+    await page.locator(".intake-modal").waitFor({ timeout: 30000 });
+    return (await page.locator(".intake-modal").innerText()).includes("Anmeldung Ferienbetreuung") ? "Prüfdialog mit dem Scan" : false;
+  });
+  await step("Geprüft speichern → Scan liegt als Unterlage in der Akte und das Ausfüllen öffnet sich", async () => {
+    await page.locator(".intake-modal button[type=submit]").click();
     await dlg.locator(".af-seite").first().waitFor({ timeout: 30000 });
     const titel = await dlg.locator("#af-titel").textContent();
     return /Anmeldung Ferienbetreuung\.pdf/.test(titel) && (await page.evaluate(() => window.__scanOffen)) === 1 ? titel : false;

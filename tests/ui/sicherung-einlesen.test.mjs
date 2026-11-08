@@ -33,7 +33,11 @@ try {
     if (!/per Prüfsumme geprüft/.test(text) || /Fehler/.test(await dialog.locator("[data-einlesen-dateien]").innerText())) throw new Error(text.slice(0, 300));
     if (!(await dialog.locator("[data-einlesen-nicht-leer]").count()) || await dialog.locator("[data-einlesen-start]").count()) throw new Error("Einlesen in volle Akte angeboten");
     const titel = await page.evaluate(() => window.__ordner.gewaehlt.at(-1));
-    await dialog.locator("button", { hasText: "Abbrechen" }).click();
+    // Keine Sackgasse: der nächste mögliche Schritt steht da, mit Knopf zur Eingangszentrale; kein interner Prüfstand.
+    const weiter = await dialog.locator("[data-einlesen-naechster-schritt]").innerText().catch(() => "");
+    if (!/01_Dokumente/.test(weiter) || !/geplant/.test(weiter) || !(await dialog.locator("[data-einlesen-zum-eingang]").count())) throw new Error(`nächster Schritt fehlt: ${weiter.slice(0, 200)}`);
+    if (/Prüfstand|2\.28\.1/.test(text)) throw new Error("interne Fassung im Fenster");
+    await dialog.locator("button", { hasText: "Schließen" }).click();
     return `${titel} · ${(await zaehlen()).dokumente} Dokumente unverändert`;
   });
   await step("Akte leeren (wie Neuinstallation), Sicherung wieder einsetzen", async () => {
@@ -80,7 +84,9 @@ try {
   await step("Zweites Einlesen in die nun volle Akte wird abgewiesen", async () => {
     await page.locator("[data-sicherung-einlesen-knopf]").click(); await dialog.waitFor({ timeout: 60000 });
     if (!(await dialog.locator("[data-einlesen-nicht-leer]").count())) throw new Error("nicht abgewiesen");
-    await dialog.locator("button", { hasText: "Abbrechen" }).click();
+    await dialog.locator("[data-einlesen-zum-eingang]").click();
+    await page.locator(".breadcrumb", { hasText: "Eingangszentrale" }).waitFor({ timeout: 5000 });
+    return "abgewiesen, „Zur Eingangszentrale ›“ führt dorthin";
   });
   await step("Keine Seitenfehler", async () => { const e = errors.filter((x) => !/cdnjs|ERR_TUNNEL|Failed to load resource/.test(x)); if (e.length) throw new Error(e.join(" | ")); });
 } catch (error) { fail("Abbruch", String(error?.message || error)); }

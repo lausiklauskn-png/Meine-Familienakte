@@ -71,7 +71,8 @@ try {
   });
   await probe("Einordnen bestätigt Originaldatei und Arbeitsstand zusammen", async () => {
     await page.locator("[data-stapel-einordnen]").click();
-    await page.locator(".fa-stapel-leer").waitFor();
+    // Seit 2.28.39 (Prüfbericht M5) führt „Einordnen“ gleich in die Eingangszentrale.
+    await page.locator("h1", { hasText: "Eingangszentrale" }).waitFor();
     const state = await lesen();
     assert.equal(state.eingang.length, 1); assert.equal(state.dateien.length, 1); assert.equal(state.stapel.length, 0);
     assert.equal(state.eingang[0].file.size, pdf.length);

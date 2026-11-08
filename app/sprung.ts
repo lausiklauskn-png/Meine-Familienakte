@@ -32,7 +32,8 @@ const MIT_STELLE = new Set<SectionId>(["cockpit", "reminders", "memory"]);
 
 /** Wohin ein Sprung mit Kennung in diesem Bereich zielt (null: kein Sprung, Seite öffnet oben). */
 export function zielFuerKennung(section: SectionId, kennung: string): string | null {
-  if (!MIT_STELLE.has(section)) return null;
+  // „bereich:<seite>“ filtert das Cockpit (Punkt 4) – das ist keine Akte, die Seite öffnet oben.
+  if (!MIT_STELLE.has(section) || kennung.startsWith("bereich:")) return null;
   return SPRUNG_STELLE[section]?.(kennung) || sprungSelektor(kennung);
 }
 

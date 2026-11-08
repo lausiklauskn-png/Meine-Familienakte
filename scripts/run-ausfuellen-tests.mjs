@@ -4,6 +4,7 @@ import { readFileSync, existsSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { runAusfuellenSelfTests } from "../lib/ausfuellen.ts";
 import { runPersonKontaktSelfTests } from "../lib/person-kontakt.ts";
+import { runFamilieStammSelfTests } from "../lib/familie-stamm.ts";
 import { runBriefkopfTitelSelfTests } from "../lib/briefkopf-titel.ts";
 import { buildDocumentIntakePlan } from "../lib/document-intake.ts";
 import "./run-wfpdf-kopie-tests.mjs";
@@ -55,7 +56,7 @@ if (existsSync(`${klon}/assets/scanner.js`)) {
     console.log(anders ? `🟡 Klon: ${anders} Dateien im Workflow-PDF-Klon daneben inzwischen anders (nachziehen?)` : "🟢 Klon gleich mit dem Workflow-PDF-Klon daneben");
   }
 }
-for (const test of [...runAusfuellenSelfTests(), ...runPersonKontaktSelfTests(), ...runBriefkopfTitelSelfTests()]) {
+for (const test of [...runAusfuellenSelfTests(), ...runPersonKontaktSelfTests(), ...runFamilieStammSelfTests(), ...runBriefkopfTitelSelfTests()]) {
   assert.equal(test.passed, true, `${test.label}: ${test.summary}`);
   console.log(`🟢 ${test.label}: ${test.summary}`);
 }

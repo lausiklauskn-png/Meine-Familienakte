@@ -57,7 +57,9 @@ export async function geraetePaket(ausgang: GeraeteAusgang, file: File): Promise
   const encoded = new TextEncoder().encode(JSON.stringify(header));
   if (encoded.length > MAX_HEADER) throw Error("Der Übergabevertrag ist zu groß.");
   const prefix = new Uint8Array(12); prefix.set(MAGIC); new DataView(prefix.buffer).setUint32(8, encoded.length);
-  return new File([prefix, encoded, file], "Familienakte-" + vertrag.id + ".familienakte-paket", { type: "application/octet-stream" });
+  // Der Name der Unterlage steht im Dateinamen, damit man das Paket unterwegs wiedererkennt (U12); die Kennung hält ihn eindeutig.
+  const stamm = vertrag.name.replace(/\.[^.]+$/, "").replace(/[^\p{L}\p{N}_-]+/gu, "_").replace(/^_+|_+$/g, "").slice(0, 60);
+  return new File([prefix, encoded, file], `Familienakte-${stamm ? stamm + "-" : ""}${vertrag.id}.familienakte-paket`, { type: "application/octet-stream" });
 }
 export async function geraetePaketLesen(packet: File): Promise<{ vertrag: ProUebergabe; rueckkanal: ProRueckkanal; file: File }> {
   if (packet.size < 12 || packet.size > MAX_DOCUMENT + MAX_HEADER + 12) throw Error("Das Paket ist unvollständig oder überschreitet 20 MiB Originaldatei.");

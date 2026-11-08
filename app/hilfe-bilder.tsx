@@ -51,7 +51,7 @@ export const ablaufEingang = (onGo: Geh): AblaufKnoten[] => [
   { titel: "In der Akte", unter: "erst nach deinem Tipp", art: "gut" },
 ];
 export const ablaufFoto = (onGo: Geh): AblaufKnoten[] => [
-  { titel: "Dokument fotografieren", unter: "Neue Dokumente erfassen", ziel: zu(onGo, "inbox") },
+  { titel: "Dokument fotografieren", unter: "Neue Unterlagen erfassen", ziel: zu(onGo, "inbox") },
   { titel: "Seiten prüfen", unter: "drehen · zuschneiden · ordnen · neu aufnehmen" },
   { titel: "Fertig – PDF erstellen", unter: "alle Seiten in einer PDF", art: "hervor" },
   { titel: "Dokumentenprüfung", unter: "Bereich, Vorgang, Doppeltes", art: "gut" },
@@ -63,15 +63,15 @@ export const ablaufZuGross: AblaufKnoten[] = [
   { titel: "Text gegenprüfen", unter: "mindestens 98 % gleich", art: "gut" },
 ];
 export const ablaufExport = (onGo: Geh): AblaufKnoten[] => [
-  { titel: "Familienakte exportieren", unter: "Sicherheit und Verwaltung", ziel: zu(onGo, "security") },
+  { titel: "Familienakte exportieren", unter: "Sicherheit und lokaler Tresor", ziel: zu(onGo, "security") },
   { titel: "Bereiche und Zielordner wählen" },
   { titel: "Neuer Ordner", unter: "Übersicht · Datendatei · Bericht", art: "gut" },
 ];
 export const ablaufUmzug: AblaufKnoten[] = [
-  { titel: "Altes Gerät: Vollsicherung", unter: "Sicherheit › sichern" },
-  { titel: "USB-Stick oder Ordner", unter: "frei gewählter Weg" },
-  { titel: "Neues Gerät: App installieren" },
-  { titel: "Sicherung einlesen", unter: "in die leere Akte", art: "gut" },
+  { titel: "Altes Gerät: Vollsicherung", unter: "Sicherheit › Vollständige Sicherung erstellen" },
+  { titel: "USB-Stick, SD-Karte oder Ordner", unter: "frei gewählter Weg" },
+  { titel: "Neues Gerät: App installieren", unter: "Akte bleibt leer" },
+  { titel: "Sicherung einlesen", unter: "Sicherheit › erst Probe, dann einlesen", art: "gut" },
 ];
 export const ablaufMeinKalender: AblaufKnoten[] = [
   { titel: "Kalender-Knopf", unter: "oben im Kopf" },
@@ -81,7 +81,7 @@ export const ablaufMeinKalender: AblaufKnoten[] = [
 ];
 export const ablaufGlocke: AblaufKnoten[] = [
   { titel: "Erinnerung speichern" },
-  { titel: "Glocke geht an", unter: "ab Werk aus", art: "hervor" },
+  { titel: "Glocke ist an", unter: "ab Werk, solange kein Kalender verbunden ist", art: "hervor" },
   { titel: "Läutet", unter: "in der App · Android auch geschlossen", art: "gut" },
   { titel: "Ausschalten", unter: "Knopf „App-Glocke an“" },
 ];
@@ -123,7 +123,7 @@ export function FristenKarte({ onGo, eingerichtet }: { onGo: Geh; eingerichtet: 
     { id: "f-liste", titel: "Fristen und Aufgaben", wo: "Haken = erledigt · Mülleimer = archiviert", spalte: 1, mitte: true, ziel: f, zielText: "Hingehen" },
     { id: "f-mein", titel: "Mein Kalender", wo: "Kopf › Kalender-Knopf", unter: "nach Tag", spalte: 2, ziel: f, zielText: "Hingehen" },
     st({ id: "kalender", titel: "Kalender verbunden", wo: "Google, Microsoft, Gerät, .ics", unter: "Notizen gehen nie hinaus", spalte: 2, ziel: f, zielText: "Hingehen" }),
-    st({ id: "glocke", titel: "App-Glocke", wo: "Mein Kalender › App-Glocke", unter: "ab Werk aus", spalte: 2, ziel: f, zielText: "Hingehen" }),
+    st({ id: "glocke", titel: "App-Glocke", wo: "Mein Kalender › App-Glocke", unter: "ab Werk an ohne Kalender", spalte: 2, ziel: f, zielText: "Hingehen" }),
   ];
   const kanten: KartenKante[] = [{ von: "f-liste", nach: "f-mein", beide: true }, { von: "f-liste", nach: "kalender", beide: true }, { von: "f-liste", nach: "glocke" }];
   return <Landkarte id="fristen" label="Fristen: woher sie kommen und wohin sie gehen" gruppen={gruppen} knoten={knoten} kanten={kanten} breiten={[200, 176, 196]} spalten={["Frist entsteht", "Liste", "Wohin sie geht"]}/>;
@@ -139,7 +139,7 @@ export function DatenmodellKarte({ onGo }: { onGo: Geh }) {
     { id: "d-modell", titel: "Gemeinsames Datenmodell", wo: "Grundlage im Hintergrund", spalte: 1, mitte: true },
     { id: "d-dokumente", titel: "Dokumente", wo: "Dokumentenbibliothek", spalte: 2, ...z("documents") },
     { id: "d-fristen", titel: "Fristen und Aufgaben", wo: "Fristen und Aufgaben", spalte: 2, ...z("reminders") },
-    { id: "d-nochnicht", titel: "Noch nicht eingeschaltet", wo: "Dateianalyse · Fristenerkennung · OneDrive-Sortierung", spalte: 2, stand: "geplant" },
+    { id: "d-nochnicht", titel: "Noch nicht eingeschaltet", wo: "automatisch einsortieren · OneDrive-Sortierung", unter: "Frist-Vorschläge gibt es: Eingangszentrale, nach deinem Ja", spalte: 2, stand: "geplant" },
   ];
   const kanten: KartenKante[] = [
     { von: "d-personen", nach: "d-modell", beide: true }, { von: "d-objekte", nach: "d-modell", beide: true }, { von: "d-vorgaenge", nach: "d-modell", beide: true },
