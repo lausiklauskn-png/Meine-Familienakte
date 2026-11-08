@@ -1,0 +1,57 @@
+{
+  "version": "2.28.38",
+  "source": "38f0087114bbfdcf50fcdba0971c17cb711b684d",
+  "pullRequest": [127],
+  "recordedUtc": "2026-11-08T12:05:00Z",
+  "freigabe": "Klaus 2026-11-08: Vorschau geraetetest-2.28.38 Fragen A–K entschieden (Aufklappleiste mit Pfeil „Perfekt“, Hilfe oben „so okay“); „F ja“; „ausgeben, sobald alles grün ist“.",
+  "inhalt": "Listenzeilen mit Aufklappleiste (Pfeil ‹ auf, › zu; breit direkt in der Zeile), „Anfang … Hauptwort“, Datum und Uhrzeit zusammen, Stift ändert auch Erinnerungen, Mülleimer zwei Tipps; Hilfe oben ein Kasten mit blauem „Demo starten“, Landkarten-Symbol und „?“, Landkarte nur noch als Karte; Kopf im geteilten Bildschirm ohne Überlagerung, weitere Knöpfe hinter dem Pfeil; Android-Abstand zu sichtbaren Systemleisten; „Installieren“ nur, solange die Web-App fehlt.",
+  "ciAmPrStand": "#127 b357f60: pruefung, webview, android, windows, product (31, pixel_c), product (35, pixel_2) success – nach Neustarts; GitHub lieferte etwa 08:40–11:00 UTC Release-Dateien (Gradle-Wrapper, NSIS) mit HTTP 504",
+  "releases": [
+    {
+      "tag": "android-v2.28.38",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.38",
+      "run": 42476552670,
+      "conclusion": "success",
+      "updateServer": "server=ja; Upload und Prüfung von außen (cmp aktuell-android.json/.sig, SHA-256 der APK) im Lauf grün",
+      "downloadProof": [
+        {
+          "name": "Familienakte-android-v2.28.38.apk",
+          "bytes": 19918881,
+          "sha256": "953abb938b81abdf188554346564158d1cc799d3f883d1d9737c9a49ae96ea5e",
+          "anonymousDownload": true,
+          "matchesSHA256SUMS": true,
+          "versionInside": "2.28.38 (assets/public/version.json, commit 38f0087)"
+        },
+        {
+          "name": "Familienakte-Einzeldatei-2.28.38.html",
+          "bytes": 3602000,
+          "sha256": "2cb45d94d77b460f5565c80dd56536c22a91d1b192d4e0c96a73a4b762e1e465",
+          "anonymousDownload": true,
+          "matchesSHA256SUMS": true
+        }
+      ]
+    },
+    {
+      "tag": "windows-v2.28.38",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.38",
+      "run": 42476554508,
+      "attempts": "1. Versuch am NSIS-Download gescheitert (HTTP 504, kein Release angelegt), 2. Versuch success",
+      "conclusion": "success",
+      "updateServer": "server=ja; Job „server“ success; latest.json nennt 2.28.38",
+      "downloadProof": [
+        {
+          "name": "Familienakte-Windows-2.28.38-x64-setup.exe",
+          "bytes": 34076148,
+          "sha256": "ad9a509c534953d763583e77bb618c0921eb5fb54ad21a64cdb9500d77e2bf2a",
+          "anonymousDownload": true,
+          "matchesSHA256SUMS": true
+        }
+      ]
+    }
+  ],
+  "pwa": "Pages auf 38f0087: Lauf 149 (42476536556) success; Seite selbst aus dem Behälter nicht geprüft",
+  "notChecked": [
+    "Kein physisches Gerät: Aufklappleiste in Listen und Kopf, Stift an Erinnerungen, Hilfe-Kasten, geteilter Bildschirm am Tablet, „Installieren“ bei installierter Web-App",
+    "family-projekt.de aus dem Behälter nicht erreichbar; die Freigabeläufe prüfen den Server selbst"
+  ]
+}

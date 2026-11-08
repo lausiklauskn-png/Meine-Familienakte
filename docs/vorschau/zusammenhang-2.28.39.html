@@ -1,0 +1,165 @@
+<title>Aufgabe und Erinnerung 2.28.39</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: Lesespalte; je Vorschlag ein Abschnitt mit „heute / neu“ als nachgebaute Detailansicht und einer Frage. */
+:root {
+  --bg: #f5f7fa; --fg: #17212b; --muted: #5b6878; --line: #d8dee6; --card: #ffffff; --soft: #eef2f6;
+  --accent: #0c79d8; --rot: #c62d3a; --rot-bg: #fdecee; --gruen: #2f8a4f; --gruen-bg: #eef8f1; --gelb-bg: #fff6dd;
+  --display: "Fraunces", Georgia, serif; --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11161c; --fg: #e6ebf1; --muted: #9aa7b6; --line: #2a3440; --card: #18202a; --soft: #1d2731;
+  --accent: #5bb3ff; --rot: #ff6b6b; --rot-bg: #2e1517; --gruen: #5fc78a; --gruen-bg: #13281b; --gelb-bg: #2b2412; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #11161c; --fg: #e6ebf1; --muted: #9aa7b6; --line: #2a3440; --card: #18202a; --soft: #1d2731;
+  --accent: #5bb3ff; --rot: #ff6b6b; --rot-bg: #2e1517; --gruen: #5fc78a; --gruen-bg: #13281b; --gelb-bg: #2b2412; color-scheme: dark }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 16px/1.5 var(--body); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 48px; }
+main { max-width: 880px; margin: 0 auto; display: grid; gap: 36px; }
+h1, h2 { font-family: var(--display); font-weight: 600; text-wrap: balance; margin: 0; }
+h1 { font-size: 1.9rem; line-height: 1.15; } h2 { font-size: 1.3rem; }
+p, ul, ol { margin: 0; } ul, ol { padding-left: 1.3em; display: grid; gap: 4px; }
+section { display: grid; gap: 12px; min-width: 0; }
+.eyebrow { font: 600 .75rem/1 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.muted { color: var(--muted); }
+.paar { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.bild { display: grid; gap: 6px; align-content: start; min-width: 0; }
+.bild > b { font-size: .85rem; }
+.bild.alt > b { color: var(--rot); } .bild.neu > b { color: var(--gruen); }
+.akte { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px; display: grid; gap: 8px; font-size: .88rem; }
+.akte h3 { margin: 0; font: 600 1rem/1.3 var(--body); }
+.akte .k { font: 600 .68rem/1 var(--body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.ref { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; background: var(--soft); min-width: 0; }
+.ref span { flex: 1; min-width: 0; }
+.ref small { display: block; color: var(--muted); font-size: .72rem; }
+.ref.erledigt { opacity: .65; } .ref.erledigt span strong { text-decoration: line-through; }
+.badge { font-size: .68rem; border: 1px solid var(--line); border-radius: 99px; padding: 1px 7px; background: var(--card); white-space: nowrap; }
+.badge.ok { color: var(--gruen); border-color: var(--gruen); }
+.knopf { font: 600 .78rem/1 var(--body); border: 1px solid var(--line); border-radius: 7px; padding: 6px 9px; background: var(--card); color: var(--fg); }
+.reihe { display: flex; flex-wrap: wrap; gap: 6px; }
+.offen-auf { border-color: var(--accent); background: var(--gelb-bg); }
+.auf { border: 1px dashed var(--accent); border-radius: 8px; padding: 8px; display: grid; gap: 6px; }
+.hinweis { background: var(--rot-bg); color: var(--fg); border-left: 3px solid var(--rot); padding: 6px 9px; border-radius: 4px; font-size: .82rem; }
+.gut { background: var(--gruen-bg); border-left-color: var(--gruen); }
+.frage { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 6px; }
+.frage b { color: var(--accent); }
+</style>
+
+<main>
+  <header style="display:grid;gap:8px">
+    <span class="eyebrow">Vorschau 2.28.39 · nichts gebaut</span>
+    <h1>Aufgabe und Erinnerung in der Detailansicht</h1>
+    <p class="muted">Warum es heute hin und her springt: Eine Aufgabe mit „Erinnerung am …“ wird als zwei Einträge gespeichert (TASK-000001 und REM-000001). Ein Tipp auf den einen ersetzt die ganze Seite durch den anderen; die Seite springt nach oben und scrollt dann wieder hinunter. Von der Erinnerung aus sieht man nur die Aufgabe, nicht die zweite Erinnerung.</p>
+  </header>
+
+  <section>
+    <span class="eyebrow">A</span>
+    <h2>Eine Erinnerung zeigt ihre Aufgabe mit allen Erinnerungen</h2>
+    <div class="paar">
+      <div class="bild alt"><b>Heute: Erinnerung geöffnet</b>
+        <div class="akte">
+          <span class="k">Erinnerung · REM-000001</span>
+          <h3>Erinnerung: es geht um den Eintrag für die Kalender App</h3>
+          <span class="k">Zugehörige Informationen</span>
+          <div class="ref"><span class="badge">Aufgabe</span><span><strong>es geht um den Eintrag …</strong><small>TASK-000001</small></span>›</div>
+          <div class="hinweis">Die zweite Erinnerung derselben Aufgabe fehlt hier.</div>
+        </div>
+      </div>
+      <div class="bild neu"><b>Neu: Erinnerung geöffnet</b>
+        <div class="akte">
+          <span class="k">Erinnerung · REM-000001</span>
+          <h3>Erinnerung: es geht um den Eintrag für die Kalender App</h3>
+          <span class="k">Gehört zur Aufgabe</span>
+          <div class="ref"><span class="badge">Aufgabe</span><span><strong>es geht um den Eintrag …</strong><small>fällig 25.11. · 08:20</small></span></div>
+          <span class="k">Alle Erinnerungen dieser Aufgabe</span>
+          <div class="ref offen-auf"><span class="badge">diese</span><span><strong>24.11. · 09:00</strong><small>REM-000001 · offen</small></span></div>
+          <div class="ref"><span class="badge">Erinnerung</span><span><strong>25.11. · 07:00</strong><small>REM-000002 · offen</small></span>›</div>
+          <div class="ref erledigt"><span class="badge ok">✓ erledigt</span><span><strong>20.11. · 18:00</strong><small>REM-000003</small></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">B</span>
+    <h2>Ein Tipp klappt auf, statt die Seite zu wechseln</h2>
+    <div class="paar">
+      <div class="bild alt"><b>Heute: Tipp auf eine verknüpfte Erinnerung</b>
+        <ol>
+          <li>Die ganze Seite wird durch die Erinnerung ersetzt.</li>
+          <li>Die Seite steht oben, 0,1 s später scrollt sie hinunter.</li>
+          <li>Dort steht wieder die Aufgabe, der nächste Tipp springt zurück.</li>
+        </ol>
+      </div>
+      <div class="bild neu"><b>Neu: Tipp klappt an Ort und Stelle auf</b>
+        <div class="akte">
+          <div class="ref offen-auf"><span class="badge">Erinnerung</span><span><strong>25.11. · 07:00</strong><small>REM-000002 · offen</small></span>⌄</div>
+          <div class="auf">
+            <span>Erinnerung: es geht um den Eintrag für die Kalender App</span>
+            <div class="reihe"><button class="knopf">✓ erledigt</button><button class="knopf">✎ ändern</button><button class="knopf">🗑 löschen</button></div>
+          </div>
+          <div class="hinweis gut">Die Seite bleibt, wo sie ist. Ganz öffnen nur über „Eigene Seite ›“ im aufgeklappten Teil.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">C</span>
+    <h2>Direkte Aktionen passen zum Eintrag</h2>
+    <div class="paar">
+      <div class="bild alt"><b>Heute</b>
+        <div class="akte">
+          <span class="k">Direkte Aktionen</span>
+          <div class="reihe"><button class="knopf">Zuordnung prüfen</button></div>
+          <span class="muted">scrollt nur zur Liste darüber</span>
+          <span class="k">Notiz ergänzen</span>
+        </div>
+      </div>
+      <div class="bild neu"><b>Neu bei Aufgabe und Erinnerung</b>
+        <div class="akte">
+          <span class="k">Direkte Aktionen</span>
+          <div class="reihe"><button class="knopf">✓ erledigt</button><button class="knopf">✎ ändern</button><button class="knopf">🗑 löschen</button><button class="knopf">Im Kalender ›</button></div>
+          <span class="k">Notiz ergänzen</span>
+          <span class="muted">„Zuordnung prüfen“ bleibt bei Vorgängen, Personen und Objekten.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">D · gleich mit</span>
+    <h2>Erinnerung als Teil der Aufgabe speichern</h2>
+    <ul>
+      <li>Neue Aufgaben speichern ihre Erinnerungen in sich selbst. Es entsteht kein zweiter Eintrag REM-… mehr, also auch kein Wechselspiel.</li>
+      <li>Schon gespeicherte Erinnerungen, die zu einer Aufgabe gehören, zieht die App beim ersten Start von 2.28.39 einmal in ihre Aufgabe um. Vorher legt sie eine Sicherung des Registers an.</li>
+      <li>Freie Erinnerungen ohne Aufgabe (zum Beispiel aus „Notiz“) bleiben eigene Einträge wie heute.</li>
+      <li>Bisher sind nur Probeeinträge gespeichert; der Umzug wird trotzdem für jedes Gerät gebaut.</li>
+    </ul>
+  </section>
+
+  <section>
+    <span class="eyebrow">E</span>
+    <h2>„Erledigt“ verschwindet nicht wortlos</h2>
+    <div class="paar">
+      <div class="bild alt"><b>Heute: Offene Aufgaben, Status „erledigt“</b>
+        <div class="akte"><div class="hinweis">Die Zeile ist sofort weg, ohne Hinweis, wohin.</div></div>
+      </div>
+      <div class="bild neu"><b>Neu: einige Sekunden sichtbar</b>
+        <div class="akte">
+          <div class="ref erledigt"><span class="badge ok">✓ erledigt</span><span><strong>es geht um den Eintrag …</strong><small>steht jetzt bei den erledigten Aufgaben</small></span><button class="knopf">Rückgängig</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Fragen</h2>
+    <div class="frage"><span><b>A</b> Erinnerung zeigt ihre Aufgabe mit allen Erinnerungen, erledigte durchgestrichen unten: ja?</span></div>
+    <div class="frage"><span><b>B</b> Tipp klappt auf, Seite bleibt stehen: ja?</span></div>
+    <div class="frage"><span><b>C</b> ✓ ✎ 🗑 und „Im Kalender“ unter Direkte Aktionen, „Zuordnung prüfen“ dort weg: ja?</span></div>
+    <div class="frage"><span><b>D</b> Gleich mit, freie Erinnerungen bleiben eigene Einträge: ja?</span></div>
+    <div class="frage"><span><b>E</b> „Erledigt“ bleibt kurz mit „Rückgängig“ stehen: ja?</span></div>
+  </section>
+</main>
