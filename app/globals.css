@@ -2683,3 +2683,7 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
   .site-brand .site-brand-zeile:has(.update-fahne) .site-brand-version { display: none; }
 }
 .erste-schritte-weg { font-size: .85rem; }
+
+/* Bibliothek als Zeilen (2.28.39): das Auge klappt die volle Karte unter der Zeile auf. */
+.library-zeile-karte { padding: 8px; border-bottom: 1px solid var(--line); background: var(--canvas); }
+.library-zeile-karte .library-document-card { margin: 0; }

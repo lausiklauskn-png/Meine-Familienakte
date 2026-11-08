@@ -3672,14 +3672,16 @@ function DocumentLibraryCard({ item, fill, onFill, onWfpdf, onPro, onUebergabe, 
 }
 
 /** Kompakte Zeile der Bibliothek (2.28.39, Punkt 7): Datum · Titel · Bereich; Karten bleiben wählbar. */
-function DocumentLibraryZeile({ item, gewaehlt, onWahl, onOpen, onArea }: { item: DocumentLibraryItem; gewaehlt?: boolean; onWahl?: () => void; onOpen: () => void; onArea: () => void }) {
-  return <article className={`library-zeile${item.sensitive ? " sensitive" : ""}${gewaehlt ? " gewaehlt" : ""}`} data-bibliothek-zeile={item.id}>
+function DocumentLibraryZeile({ item, gewaehlt, onWahl, onOpen, onArea, karte }: { item: DocumentLibraryItem; gewaehlt?: boolean; onWahl?: () => void; onOpen: () => void; onArea: () => void; karte?: React.ReactNode }) {
+  const [auf, setAuf] = useState(false);
+  return <><article className={`library-zeile${item.sensitive ? " sensitive" : ""}${gewaehlt ? " gewaehlt" : ""}`} data-bibliothek-zeile={item.id}>
     {onWahl ? <AuswahlKaestchen an={!!gewaehlt} onWechsel={onWahl} titel={item.title} data-bibliothek-wahl={item.id}/> : <span className="auswahl-platz"/>}
     <span className="library-zeile-datum">{item.date ? fmtDate(item.date) : "ohne Datum"}</span>
     <button type="button" className="library-zeile-titel" onClick={onOpen} title={item.title}>{item.protectedHealth && <LockKeyhole size={13} aria-label="geschützt"/>}<FlachText text={item.title}/></button>
     <button type="button" className="library-zeile-bereich" onClick={onArea} title={`Alle aus „${item.area}“`}>{item.area}</button>
-    <button type="button" className="icon-button library-zeile-auf" onClick={onOpen} aria-label={`${item.title} öffnen`}><ChevronRight size={17}/></button>
-  </article>;
+    {/* Auge wie in den übrigen Listen: klappt die volle Karte mit allen Knöpfen (Ausfüllen, Workflow PDF, Pro-Tresor …) darunter auf. */}
+    {karte ? <AugeKnopf offen={auf} titel={item.title} onClick={() => setAuf(!auf)} data-bibliothek-auge={item.id}/> : <button type="button" className="icon-button library-zeile-auf" onClick={onOpen} aria-label={`${item.title} öffnen`}><ChevronRight size={17}/></button>}
+  </article>{auf && karte && <div className="library-zeile-karte" data-bibliothek-karte={item.id}>{karte}</div>}</>;
 }
 
 type BibliothekSammel = {
@@ -3784,7 +3786,7 @@ function DocumentLibrary({ documents, records, relations, initialFocusId, initia
   };
   const openItem = (item: DocumentLibraryItem) => item.protectedHealth ? onGo("health") : void onOpenDocument(item.id);
   const openReference = (reference: DocumentLibraryReference) => onGo(reference.sensitive ? "health" : reference.section as SectionId, reference.id);
-  const zeile = (item: DocumentLibraryItem, mitWahl = false) => <DocumentLibraryZeile key={item.id} item={item} gewaehlt={wahl.has(item.id)} onWahl={mitWahl && sammel && lokaleIds.has(item.id) ? () => wechsel(item.id) : undefined} onOpen={() => openItem(item)} onArea={() => showAll({ area: item.area })}/>;
+  const zeile = (item: DocumentLibraryItem, mitWahl = false) => <DocumentLibraryZeile key={item.id} item={item} gewaehlt={wahl.has(item.id)} onWahl={mitWahl && sammel && lokaleIds.has(item.id) ? () => wechsel(item.id) : undefined} onOpen={() => openItem(item)} onArea={() => showAll({ area: item.area })} karte={card(item)}/>;
   const liste = (eintraege: DocumentLibraryItem[], mitWahl = false, kompakt = false) => ansicht === "zeilen" ? <section className="library-zeilen" data-bibliothek-ansicht="zeilen">{eintraege.map((item) => zeile(item, mitWahl))}</section> : <section className={`library-document-grid${kompakt ? " compact" : ""}`} data-bibliothek-ansicht="karten">{eintraege.map(card)}</section>;
   const umschalter = <div className="ansicht-umschalter" role="group" aria-label="Ansicht"><button type="button" aria-pressed={ansicht === "zeilen"} className={ansicht === "zeilen" ? "active" : ""} onClick={() => setAnsicht("zeilen")} data-ansicht="zeilen">Zeilen</button><button type="button" aria-pressed={ansicht === "karten"} className={ansicht === "karten" ? "active" : ""} onClick={() => setAnsicht("karten")} data-ansicht="karten">Karten</button></div>;
   const card = (item: DocumentLibraryItem) => <DocumentLibraryCard key={item.id} item={item} fill={fillStates[item.id]} onFill={() => onFill(item.id)} onWfpdf={onWfpdf ? () => onWfpdf(item.id) : undefined} onPro={onPro && proKandidaten?.has(item.id) ? () => onPro(item.id) : undefined} onUebergabe={onUebergabe ? (ziel) => onUebergabe(item.id, ziel) : undefined} onOpen={() => openItem(item)} onArea={() => showAll({ area: item.area })} onType={() => showAll({ documentType: item.documentType })} onDate={() => item.date ? showAll({ startDate: item.date, endDate: item.date }) : openItem(item)} onReference={openReference}/>;
