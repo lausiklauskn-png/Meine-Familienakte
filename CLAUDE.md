@@ -7,6 +7,10 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Aktueller Stand (08.11.2026)
 
+- **Plan Abgleich** `docs/PLAN_2026-11-08_ABGLEICH.md` (Klaus 08.11., **Freibrief**: ohne Rückfrage umsetzen, Fragen selbst nach
+  Logik und Benutzerfreundlichkeit entscheiden; je Stufe mindestens PWA ausgeben, APK/Windows bei nativen Änderungen oder jede zweite
+  Stufe). Stufen A–I: Zusammenführen, verschlüsselte Vollsicherung, gemeinsame Festplatte, Kalender beidseitig, Eingangsordner in
+  Blöcken, WLAN/LAN/USB, Bedeutungssuche in der PWA, Scan-Original, Paket. Ersetzt Punkt 10 und die Fragen u–z.
 - **Plan** `docs/PLAN_2026-11-07.md` (#116, von Klaus bestätigt): drei Bausitzungen – 1 Hilfe (2.28.33, erledigt), 2 Daten (2.28.34, erledigt bis auf Punkt 10), 3 E-Mail (2.28.35: Plan und Hilfe-Thema, Senden/Abholen nicht gebaut). **Punkt 10** (Abgleich zwischen den Geräten): nur Vorschlagsrunde, `docs/vorschau/daten-2.28.34.html` (https://claude.ai/artifact/2wECZ4S96eYLgL9mKkXhDN), Fragen u–z an Klaus offen, nichts gebaut.
 - **Fassung 2.28.39** (Android, Windows, PWA; #129; Bericht `docs/vorschau/pruefung-ablauf-2026-11-08.html`, Vorschauen
   `zusammenhang-2.28.39.html` A–E und `neugestaltung-2.28.39.html` zehn Punkte, alle von Klaus mit Ja): Ablaufprüfung mit elf
