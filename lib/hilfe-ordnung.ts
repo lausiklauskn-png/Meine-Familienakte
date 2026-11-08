@@ -38,7 +38,7 @@ export const HILFE_ORDNUNG: Record<string, HilfeEintrag> = {
   // Erinnern
   "fristen-verwalten": { gruppe: "arbeiten", schritt: 3, seiten: ["reminders"], worte: ["frist", "aufgabe", "erledigt", "haken", "termin anlegen", "to-do"] },
   "mein-kalender": { gruppe: "arbeiten", schritt: 3, seiten: ["reminders"], worte: ["kalender", "termine", "tag", "termin ändern", "verschieben"] },
-  "auge": { gruppe: "arbeiten", schritt: 3, seiten: ["reminders", "memory"], worte: ["auge", "öffnen", "ändern", "liste", "zeile"] },
+  "auge": { gruppe: "arbeiten", schritt: 3, seiten: ["reminders", "memory"], worte: ["auge", "öffnen", "ändern", "liste", "zeile", "leiste", "pfeil", "stift", "mülleimer", "löschen"] },
   "loeschen": { gruppe: "arbeiten", schritt: 3, seiten: ["reminders", "memory"], worte: ["löschen", "mülleimer", "weg", "entfernen", "versehentlich gelöscht", "archiv"] },
   "einklappen": { gruppe: "arbeiten", schritt: 3, seiten: ["reminders"], worte: ["einklappen", "zuklappen", "aufklappen", "alle", "zu viel auf der seite", "pfeile"] },
   // Finden

@@ -86,7 +86,8 @@ try {
     await f.locator(".dictation-button.listening").click().catch(() => {});
     await f.locator("[data-notiz-speichern]").click(); await f.locator("[data-notiz-liste] li").first().waitFor();
     const zeile = await f.locator("[data-notiz-liste] li").first().innerText();
-    await f.locator("[data-notiz-liste] [data-notiz-auge]").first().click(); // 2.28.30: hinter dem Auge
+    await f.locator("[data-notiz-liste] [data-fz-griff]").first().click(); // 2.28.38: Pfeil ‹ öffnet die Leiste
+    await f.locator("[data-notiz-liste] [data-notiz-auge]").first().click(); // „Im Kalender“ hinter dem Auge
     await f.locator("[data-notiz-im-kalender]").first().click();
     await page.waitForFunction(() => document.querySelector('[data-mk-tag="2026-11-11"]')?.getAttribute("aria-pressed") === "true", null, { timeout: 5000 });
     const liste = await kal.locator(".mk-tagesliste").innerText();

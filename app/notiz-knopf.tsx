@@ -9,7 +9,7 @@ import { MemoryBearbeiten } from "./memory-bearbeiten";
 import { glockeEinschalten } from "./app-glocke";
 import { kalenderZiel, useKalenderEinst } from "./kalender-karte";
 import { VoiceTextarea } from "./ui-controls";
-import { AugeKnopf, StiftKnopf } from "./flach-zeile";
+import { AugeKnopf, FlachText, KnopfLeiste, StiftKnopf } from "./flach-zeile";
 
 /**
  * Knopf „Notiz“ im Kopf (Klaus 2026-11-05): eine Notiz einsprechen oder tippen, direkt vom Handy, ohne erst ins Tagebuch zu
@@ -114,7 +114,7 @@ function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, on
       {text.trim() && <ErinnernTeil key={runde} erkannt={erkannt} titelVorschlag={erkannt?.wunsch ? erinnerungsTitel(text) : analyse?.taskProposal || analyse?.title || text.trim().slice(0, 80)} onChange={setErinnerung} onKalender={zumKalender}/>}
       {fehler && <p className="form-error" role="alert">{fehler}</p>}
       {liste.length > 0 && <ul className="notiz-liste" aria-label="Gespeicherte Notizen" data-notiz-liste>
-        {liste.map((n) => { const auf = listeAuf === n.id; return <li key={n.id} data-notiz-eintrag={n.id} className={auf ? "offen" : undefined}><div className="fz-kopf fz-voll"><Check size={16}/><span className="mk-text"><strong className="fz-titel">{n.titel}</strong><small>{n.wann}</small></span><span className="fz-knoepfe">{vaultHandle && <StiftKnopf titel={n.titel} disabled={busy} onClick={() => void aendernOeffnen(n.id)} data-notiz-aendern={n.id}/>}{vaultHandle && <NotizLoeschen id={n.id} titel={n.titel} vaultHandle={vaultHandle} onGeloescht={() => { geaendert.current = true; setListe((l) => l.filter((x) => x.id !== n.id)); }}/>}<AugeKnopf offen={auf} titel={n.titel} onClick={() => setListeAuf(auf ? null : n.id)} data-notiz-auge/></span></div>
+        {liste.map((n) => { const auf = listeAuf === n.id; return <li key={n.id} data-notiz-eintrag={n.id} className={auf ? "offen" : undefined}><div className="fz-kopf fz-voll"><Check size={16}/><span className="mk-text"><strong><FlachText text={n.titel}/></strong><small>{n.wann}</small></span><KnopfLeiste titel={n.titel}>{vaultHandle && <StiftKnopf titel={n.titel} disabled={busy} onClick={() => void aendernOeffnen(n.id)} data-notiz-aendern={n.id}/>}{vaultHandle && <NotizLoeschen id={n.id} titel={n.titel} vaultHandle={vaultHandle} onGeloescht={() => { geaendert.current = true; setListe((l) => l.filter((x) => x.id !== n.id)); }}/>}<AugeKnopf offen={auf} titel={n.titel} onClick={() => setListeAuf(auf ? null : n.id)} data-notiz-auge/></KnopfLeiste></div>
           {auf && <div className="fz-offen"><p><strong>{n.titel}</strong></p><small>{n.wann}</small><div className="button-row">{n.tag && onKalender && <button type="button" className="button secondary" onClick={() => { const t = n.tag!; void schliessen().then(() => onKalender(t)); }} disabled={busy} title="Im Kalender ansehen" data-notiz-im-kalender><CalendarDays size={16}/> Im Kalender</button>}</div></div>}</li>; })}
       </ul>}
       <div className="modal-actions"><button type="button" className="button secondary" onClick={() => void schliessen()} disabled={busy} data-notiz-fertig>{liste.length ? "Fertig" : "Abbrechen"}</button></div>

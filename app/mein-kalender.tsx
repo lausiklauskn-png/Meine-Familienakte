@@ -5,7 +5,7 @@ import { GlockenEinstellung, GlockenSchalter, glockeEinschalten } from "./app-gl
 export { AppGlocke } from "./app-glocke";
 import { KURZ_ERINNERUNGEN, erinnerungsName, istTermin, kalenderFelder, type ErinnerungsWahl } from "../lib/kalender";
 import { DatumFeld } from "./datum-feld";
-import { AugeKnopf, StiftKnopf } from "./flach-zeile";
+import { AugeKnopf, FlachText, KnopfLeiste, StiftKnopf } from "./flach-zeile";
 import { ErinnerungsChips, kalenderZiel, useKalenderEinst } from "./kalender-karte";
 import { createLocalScheduleBundle } from "./local-vault";
 import { klappOeffnen } from "./klapp";
@@ -63,18 +63,18 @@ export function MeinKalender({ vaultHandle, records, relations, onRefresh, onNot
   const tagName = new Date(`${tag}T00:00`).toLocaleDateString("de-DE", { weekday: "long", day: "2-digit", month: "long" });
   const bearbeitet = bearbeiten ? records.find((r) => r.id === bearbeiten) || null : null;
   // Zeile (Klaus 2026-11-08): Zeit, ganzer Text, Zusatzzeile; Stift, Mülleimer und Auge direkt (breit eine Reihe, schmal darunter).
-  const zeile = (e: Eintrag, mitTag = false) => { const auf = offen === e.record.id; const art = e.record.recordType === "deadline" ? "Frist" : "Aufgabe";
+  const zeile = (e: Eintrag) => { const auf = offen === e.record.id; const art = e.record.recordType === "deadline" ? "Frist" : "Aufgabe";
     const glocke = e.erinnerungen?.length ? `🔔 ${e.erinnerungen.map(erinnerungsName).join(", ")}` : "";
     const kal = e.imKalender ? (e.eingetragen ? "im Kalender" : "geht in den Kalender") : "";
     return <li key={e.record.id} data-mk-eintrag={e.record.id} className={auf ? "offen" : undefined}>
     <div className="fz-kopf fz-voll">
-      <span className="mk-zeit">{mitTag && <small>{new Date(`${e.tag}T00:00`).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" })}</small>}{e.zeit || "–"}</span>
-      <span className="mk-text"><strong className="fz-titel">{e.titel}</strong><small>{[art, glocke, kal].filter(Boolean).join(" · ")}</small></span>
-      <span className="fz-knoepfe">
+      <span className="mk-zeit">{new Date(`${e.tag}T00:00`).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" })}{e.zeit && <small>{e.zeit}</small>}</span>
+      <span className="mk-text"><strong><FlachText text={e.titel}/></strong><small>{[art, glocke, kal].filter(Boolean).join(" · ")}</small></span>
+      <KnopfLeiste titel={e.titel}>
         {vaultHandle && <StiftKnopf titel={e.titel} onClick={() => setBearbeiten(e.record.id)} data-mk-aendern/>}
         {vaultHandle && <ErinnerungLoeschen id={e.record.id} titel={e.titel} vaultHandle={vaultHandle} onGeloescht={async (t) => { setOffen(null); await onRefresh(); onNotice({ kind: "success", text: t }); }}/>}
         <AugeKnopf offen={auf} titel={e.titel} onClick={() => setOffen(auf ? null : e.record.id)} data-mk-auge/>
-      </span>
+      </KnopfLeiste>
     </div>
     {auf && <div className="fz-offen" data-mk-offen>
       <p><strong>{e.titel}</strong></p>
@@ -94,7 +94,7 @@ export function MeinKalender({ vaultHandle, records, relations, onRefresh, onNot
       <div className="mk-tag-kopf"><strong>{tagName}</strong><button type="button" className="button secondary" onClick={() => setNeu(true)} disabled={!vaultHandle} data-mk-neu><Plus size={16}/> Eintrag</button></div>
       {neu && vaultHandle && <NeuerEintrag tag={tag} vaultHandle={vaultHandle} onZu={() => setNeu(false)} onGespeichert={async (t) => { await onRefresh(); onNotice({ kind: "success", text: t }); }}/>}
       {amTag.length ? <ul className="mk-liste">{amTag.map((e) => zeile(e))}</ul> : !neu && <p className="muted">Nichts an diesem Tag.</p>}
-      {kommend.length > 0 && <details className="mk-kommend"><summary>Als Nächstes ({kommend.length})</summary><ul className="mk-liste">{kommend.map((e) => zeile(e, true))}</ul></details>}
+      {kommend.length > 0 && <details className="mk-kommend"><summary>Als Nächstes ({kommend.length})</summary><ul className="mk-liste">{kommend.map((e) => zeile(e))}</ul></details>}
     </div>
     {bearbeitet && vaultHandle && <TerminBearbeiten record={bearbeitet} vaultHandle={vaultHandle} onZu={() => setBearbeiten(null)} onGespeichert={async (t) => { await onRefresh(); onNotice({ kind: "success", text: t }); }}/>}
   </section>;

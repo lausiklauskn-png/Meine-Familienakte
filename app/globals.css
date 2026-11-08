@@ -714,9 +714,9 @@ button.object-card:hover { transform: translateY(-2px); border-color: #8fb2c9; b
 .memory-quick textarea { padding-right: 13px; }
 .memory-quick .card-heading { align-items: flex-start; }
 .memory-day-summary, .memory-event-list, .memory-media-list { display: grid; gap: 7px; }
-.memory-day-summary button, .memory-event-list > button, .memory-event-zeile .fz-kopf > button:not(.auge-knopf), .memory-media-list > button { width: 100%; display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 10px; align-items: center; border: 1px solid var(--line); border-radius: 10px; padding: 10px 11px; color: var(--ink); background: white; text-align: left; }
+.memory-day-summary button, .memory-event-list > button, .memory-event-zeile .fz-kopf > button:not(.auge-knopf):not(.fz-griff), .memory-media-list > button { width: 100%; display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 10px; align-items: center; border: 1px solid var(--line); border-radius: 10px; padding: 10px 11px; color: var(--ink); background: white; text-align: left; }
 .memory-day-summary button { grid-template-columns: minmax(0,1fr) auto; }
-.memory-event-list > button:hover, .memory-event-list > button.active, .memory-event-zeile .fz-kopf > button:not(.auge-knopf):hover, .memory-event-zeile .fz-kopf > button.active, .memory-media-list > button:hover, .memory-day-summary button:hover { border-color: var(--teal); background: #f0f7f8; }
+.memory-event-list > button:hover, .memory-event-list > button.active, .memory-event-zeile .fz-kopf > button:not(.auge-knopf):not(.fz-griff):hover, .memory-event-zeile .fz-kopf > button.active, .memory-media-list > button:hover, .memory-day-summary button:hover { border-color: var(--teal); background: #f0f7f8; }
 .memory-event-list strong, .memory-event-list small, .memory-media-list strong, .memory-media-list small, .memory-day-summary strong, .memory-day-summary small { display: block; }
 .memory-event-list small, .memory-media-list small, .memory-day-summary small { margin-top: 2px; color: var(--muted); }
 .memory-event-icon { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 9px; color: white; background: var(--navy-2); }
@@ -2249,7 +2249,7 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .schedule-flach .fz-offen .button-row { grid-column: auto; }
 .schedule-flach .fz-offen .schedule-links { display: flex; flex-wrap: wrap; gap: 6px; }
 .memory-event-zeile { display: grid; gap: 0; }
-.memory-event-zeile .fz-kopf > button:not(.auge-knopf) { flex: 1 1 auto; min-width: 0; grid-template-columns: auto minmax(0,1fr); padding: 7px 9px; }
+.memory-event-zeile .fz-kopf > button:not(.auge-knopf):not(.fz-griff) { flex: 1 1 auto; min-width: 0; grid-template-columns: auto minmax(0,1fr); padding: 7px 9px; }
 .memory-event-zeile .fz-offen { padding: 8px 4px 4px; }
 .memory-event-zeile .fz-offen .loesch-knopf span { display: inline; }
 .notiz-liste li { display: grid; gap: 0; padding: 6px 6px 6px 10px; }
@@ -2417,4 +2417,26 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
   .neu-fenster { position: fixed; top: 120px; right: max(16px, env(safe-area-inset-right, 0px)); width: min(960px, calc(100vw - 32px));
     max-height: calc(100vh - 140px); overflow: auto; }
   .neu-fenster ul { grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); align-items: start; }
+}
+
+/* Zeilen mit Aufklappleiste (Klaus 2026-11-08): links Datum und Uhrzeit, Mitte „Anfang … Hauptwort“ mit Art und Glocke,
+   rechts Pfeil ‹ (auf) – die Leiste mit ✓ ✎ 🗑 👁 schiebt sich über das Zeilenende, › schließt. Ist die Zeile breit
+   genug, stehen die Knöpfe direkt darin. Alle Zeilen einer Liste sind gleich breit. */
+.fz-kopf.fz-voll { position: relative; overflow: hidden; container-type: inline-size; width: 100%; box-sizing: border-box; touch-action: pan-y; }
+.fz-voll .mk-zeit { flex: 0 0 auto; text-align: center; font-variant-numeric: tabular-nums; }
+.flach-p { flex: 0 0 auto; white-space: pre; color: var(--muted); }
+.fz-griff, .fz-zu { flex: 0 0 auto; align-self: stretch; width: 30px; min-height: 40px; border: 0; background: var(--teal-soft, #e8f3f4); color: var(--teal, #2a7f86); font: 700 1.25rem/1 inherit; cursor: pointer; padding: 0; }
+.fz-griff { border-left: 1px solid var(--line); border-radius: 8px 0 0 8px; }
+.fz-griff[aria-expanded="true"] { visibility: hidden; }
+.fz-zu { border-right: 1px solid var(--line); border-radius: 8px 0 0 8px; }
+.fz-leiste { position: absolute; top: 0; bottom: 0; right: 0; z-index: 2; display: flex; align-items: center; gap: 6px; padding-right: 6px; background: var(--paper, #fff); border-left: 1px solid var(--line); box-shadow: -8px 0 14px rgba(9, 38, 63, .14); transform: translateX(105%); visibility: hidden; }
+.fz-leiste.auf { transform: none; visibility: visible; }
+.fz-leiste > * { flex: 0 0 auto; }
+.fz-leiste .loesch-knopf span { display: none; }
+.fz-leiste .loesch-knopf.sicher span { display: inline; }
+@media (prefers-reduced-motion: no-preference) { .fz-leiste { transition: transform .2s ease, visibility .2s; } }
+/* breit genug: Knöpfe direkt in der Zeile, ohne Pfeile */
+@container (min-width: 600px) {
+  .fz-griff, .fz-zu { display: none; }
+  .fz-leiste, .fz-leiste.auf { position: static; transform: none; visibility: visible; box-shadow: none; border: 0; background: transparent; padding: 0; }
 }
