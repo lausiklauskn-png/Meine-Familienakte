@@ -72,7 +72,11 @@ try {
       { name: "Ablegen-Probe-Rechnung.txt", mimeType: "text/plain", buffer: Buffer.from("Rechnung Beispiel GmbH, erfunden, 12,30 Euro") },
       { name: "Ablegen-Probe-Brief.txt", mimeType: "text/plain", buffer: Buffer.from("Brief Beispielamt, erfunden") },
     ]);
-    await page.waitForFunction(() => document.body.innerText.includes("Ablegen-Probe-Rechnung") && document.body.innerText.includes("Ablegen-Probe-Brief"), null, { timeout: 15000 });
+    // In der CI (langsamer Rechner) brauchte die Prüfung der zwei Dateien mehr als 15 s; bei Zeitablauf den Stand der Seite nennen.
+    await page.waitForFunction(() => document.body.innerText.includes("Ablegen-Probe-Rechnung") && document.body.innerText.includes("Ablegen-Probe-Brief"), null, { timeout: 45000 }).catch(async (e) => {
+      const stand = await page.evaluate(() => ({ crumb: document.querySelector(".breadcrumb")?.textContent || "", auswahl: !!document.querySelector("[data-ablegen-auswahl]"), text: document.body.innerText.replace(/\s+/g, " ").slice(0, 600) }));
+      throw new Error(`${e.message.split("\n")[0]} · ${JSON.stringify(stand)}`);
+    });
     const crumb = await page.locator(".breadcrumb").innerText();
     const zu = (await page.locator("[data-ablegen-auswahl]").count()) === 0;
     return soll(crumb.includes("Eingangszentrale") && zu, { crumb, zu });
