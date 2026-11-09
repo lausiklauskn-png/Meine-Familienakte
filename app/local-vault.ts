@@ -1,6 +1,6 @@
 import { workspaceName, demoActive } from "../lib/demo-workspace.ts";
 import { aktuelleGrenze, mbText } from "../lib/geraete-grenze.ts";
-import { istNativerOrdner, nativenOrdnerWaehlen, ordnerPlugin } from "./nativer-ordner.ts";
+import { istNativerOrdner, nativenOrdnerWaehlen, ordnerPlugin, NativerOrdner } from "./nativer-ordner.ts";
 import { DEMO_PRAEFIX, eigeneDatenDa, wasAendertSich, type DemoQuelle } from "../lib/demo-kopie.ts";
 import { erinnerungenUmziehen } from "../lib/erinnerung-umzug.ts";
 import { KOPF_DATEI, dateiEntschluesseln, dateiVerschluesseln, geheimerName, textEntschluesseln, textVerschluesseln, tresorAnlegen, tresorOeffnen, type SicherungsKopf, type Tresor } from "../lib/sicherung-krypto.ts";
@@ -334,10 +334,21 @@ type DirectoryWithResolve = FileSystemDirectoryHandle & {
   resolve?: (possibleDescendant: FileSystemHandle) => Promise<string[] | null>;
 };
 
+const EINGANGSORDNER_NATIV = "familienakte-eingangsordner-v1";
+/** Stufe E: in der Android- und Windows-App ein frei gewählter Eingangsordner (SD, USB, Netzordner), dauerhaft gemerkt. */
 export async function chooseInboxFolder(): Promise<FileSystemDirectoryHandle> {
   if (demoActive()) throw new Error("In der Demo bleibt die Ablage im getrennten lokalen Demobestand. Bitte für eigene Ordner die Demo verlassen.");
+  const plugin = ordnerPlugin() as (NonNullable<ReturnType<typeof ordnerPlugin>> & { ordnerMerken?: (a: { token: string }) => Promise<{ ort: string }> }) | null;
+  if (plugin) {
+    const handle = await nativenOrdnerWaehlen("Eingangsordner wählen (PDFs nur hineinkopieren)");
+    if (plugin.ordnerMerken && istNativerOrdner(handle)) {
+      const { ort } = await plugin.ordnerMerken({ token: handle.token });
+      try { workspaceStorage.setItem(EINGANGSORDNER_NATIV, JSON.stringify({ ort, name: handle.name })); } catch { /* dann nur diese Sitzung */ }
+    }
+    return handle;
+  }
   const picker = (window as PickerWindow).showDirectoryPicker;
-  if (!picker) throw new Error("Diese Funktion benötigt Chrome oder Edge auf einem PC.");
+  if (!picker) throw new Error("Diese Funktion benötigt Chrome oder Edge auf einem PC oder die Android- bzw. Windows-App.");
   const handle = await picker({ mode: "read" });
   const database = await db();
   await new Promise<void>((resolve, reject) => {
@@ -347,8 +358,24 @@ export async function chooseInboxFolder(): Promise<FileSystemDirectoryHandle> {
   return handle;
 }
 
-export const rememberedInboxFolder = () => rememberedVaultFor(INBOX_KEY);
-export const forgetInboxFolder = () => forgetVaultFor(INBOX_KEY);
+export async function rememberedInboxFolder(): Promise<FileSystemDirectoryHandle | null> {
+  const plugin = ordnerPlugin() as (NonNullable<ReturnType<typeof ordnerPlugin>> & { ordnerOeffnen?: (a: { ort: string }) => Promise<{ erreichbar: boolean; token?: string; name?: string }> }) | null;
+  if (plugin) {
+    if (!plugin.ordnerOeffnen || demoActive()) return null;
+    let gemerkt: { ort: string; name: string } | null = null;
+    try { gemerkt = JSON.parse(workspaceStorage.getItem(EINGANGSORDNER_NATIV) || "null"); } catch { return null; }
+    if (!gemerkt?.ort) return null;
+    const r: { erreichbar: boolean; token?: string; name?: string } = await plugin.ordnerOeffnen({ ort: gemerkt.ort }).catch(() => ({ erreichbar: false }));
+    return r.erreichbar && r.token ? new NativerOrdner(plugin, r.token, "", r.name || gemerkt.name) as unknown as FileSystemDirectoryHandle : null;
+  }
+  return rememberedVaultFor(INBOX_KEY);
+}
+export const forgetInboxFolder = async () => { try { workspaceStorage.removeItem(EINGANGSORDNER_NATIV); } catch { /* nichts gemerkt */ } if (folderPickerSupported()) await forgetVaultFor(INBOX_KEY); };
+/** Stufe E: eine Datei aus dem Eingangsordner lesen (für Einträge, die keine Kopie im Arbeitsspeicher haben). */
+export async function dateiAusEingangsordner(handle: FileSystemDirectoryHandle, name: string): Promise<File | null> {
+  try { return await (await handle.getFileHandle(name)).getFile(); }
+  catch (error) { if (isNotFoundError(error)) return null; throw error; }
+}
 
 async function chooseRememberedDirectory(key: string, mode: "read" | "readwrite") {
   if (demoActive()) throw new Error("In der Demo bleibt die Ablage im getrennten lokalen Demobestand. Bitte für eigene Ordner die Demo verlassen.");
@@ -388,7 +415,7 @@ async function scanDirectory(directory: FileSystemDirectoryHandle, source: Incom
 
 export async function scanLocalInbox(handle: FileSystemDirectoryHandle, known: LocalDocument[]) {
   const permissionHandle = handle as PermissionHandle;
-  const granted = await permissionHandle.queryPermission?.({ mode: "read" }) === "granted" || await permissionHandle.requestPermission?.({ mode: "read" }) === "granted";
+  const granted = istNativerOrdner(handle) || await permissionHandle.queryPermission?.({ mode: "read" }) === "granted" || await permissionHandle.requestPermission?.({ mode: "read" }) === "granted";
   if (!granted) throw new Error("Der Eingangsordner wurde nicht freigegeben.");
   return scanDirectory(handle, "local-inbox", known);
 }

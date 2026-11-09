@@ -78,6 +78,8 @@ export type CentralIntakeQueueItem = {
   savedDocumentId?: string | null;
   /** Ausdrücklich als „Ist dasselbe“ abgeschlossen: kein neues Dokument, der Eingang zeigt auf das vorhandene. */
   dasselbe?: boolean;
+  /** Stufe E: die Datei liegt im Eingangsordner und wird von dort gelesen – keine zweite Kopie im Arbeitsspeicher. */
+  ordnerDatei?: string | null;
 };
 
 type FileLike = Pick<File, "name" | "size" | "type">;

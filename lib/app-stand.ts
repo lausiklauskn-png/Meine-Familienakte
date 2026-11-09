@@ -37,7 +37,8 @@ export const APP_STAND: Readonly<Record<string, StandEintrag>> = {
   "kopf-ablegen": { stand: "fertig", seit: "2.28.39" },
   // Ablaufprüfung 2.28.39: geänderte Wege golden markieren (Eingang mit Titel/Text/Sammelbestätigung, Frist mit Erinnerung
   // als Teil der Aufgabe, Suche nach Inhalt und Alltagswörtern, Personen anlegen, Glocke grün).
-  "eingang": { stand: "fertig", seit: "2.28.39" },
+  // Stufe E: Eingangsordner in Blöcken zu 20, von selbst, ohne Zweitkopie, Speicherprüfung.
+  "eingang": { stand: "fertig", seit: "2.28.44" },
   "vorschlag": { stand: "fertig", seit: "2.28.39" },
   "akte": { stand: "fertig", seit: "2.28.39" },
   "eintrag": { stand: "fertig", seit: "2.28.39" },

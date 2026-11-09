@@ -2,6 +2,9 @@ import type { CentralIntakeQueueItem } from "../lib/central-intake";
 import { stapelDatenbank } from "./stapel-ablage";
 
 type Stand = CentralIntakeQueueItem & { folge: number };
+/** Stufe E: Dateien aus dem Eingangsordner werden bei Bedarf von dort gelesen (kein Doppel im Arbeitsspeicher). */
+let ordnerLeser: ((name: string) => Promise<File | null>) | null = null;
+export function eingangOrdnerLeserSetzen(fn: ((name: string) => Promise<File | null>) | null) { ordnerLeser = fn; }
 export type EingangAenderung = (bisher: CentralIntakeQueueItem[]) => CentralIntakeQueueItem[];
 
 /** Arbeitsspeicher: kleine, JSON-fähige Stände getrennt von den Originaldateien.
@@ -34,7 +37,7 @@ export async function eingangAblage(aendern?: EingangAenderung, stapelIds: strin
             // Nach bestätigter Ablage nur den kleinen Arbeitsstand behalten.
             // Die Originaldatei wird bei Bedarf aus dem verbundenen Dokument-Tresor gelesen.
             if (e.status === "Übernommen" && e.savedDocumentId) dateien.delete(e.id);
-            else if (e.file instanceof File) dateien.put({ id: e.id, file: e.file });
+            else if (e.file instanceof File && !e.ordnerDatei) dateien.put({ id: e.id, file: e.file });
           }
           for (const id of stapelIds) t.objectStore("stapel").delete(id);
         } catch (error) { fehler = error; t.abort(); }
@@ -47,6 +50,11 @@ export async function eingangAblage(aendern?: EingangAenderung, stapelIds: strin
 /** Nur die gerade benötigte Arbeitsdatei laden, nicht alle PDFs beim App-Start. */
 export async function eingangDatei(item: CentralIntakeQueueItem): Promise<File> {
   if (item.file instanceof File) return item.file;
+  if (item.ordnerDatei) {
+    const f = ordnerLeser ? await ordnerLeser(item.ordnerDatei) : null;
+    if (!f) throw new Error(`„${item.ordnerDatei}“ liegt im Eingangsordner, der gerade nicht erreichbar ist. Ordner anschließen oder freigeben, dann weiter.`);
+    return f;
+  }
   const db = await stapelDatenbank();
   try {
     return await new Promise((resolve, reject) => {
