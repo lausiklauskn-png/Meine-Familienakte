@@ -51,11 +51,13 @@ export function geraetUmbenennen(name: string) { const g = { ...geraetKennung(),
 const DB = "FamilienakteLaufwerk1";
 function db(): Promise<IDBDatabase> {
   return new Promise((ok, nein) => {
-    const r = indexedDB.open(DB, 1);
-    r.onupgradeneeded = () => { const d = r.result; if (!d.objectStoreNames.contains("laufwerke")) d.createObjectStore("laufwerke", { keyPath: "kennung" }); if (!d.objectStoreNames.contains("handles")) d.createObjectStore("handles"); };
+    // Version 2 (Stufe I): Store „pakete“ für die Partner des Pakets per Teilen.
+    const r = indexedDB.open(DB, 2);
+    r.onupgradeneeded = () => { const d = r.result; if (!d.objectStoreNames.contains("laufwerke")) d.createObjectStore("laufwerke", { keyPath: "kennung" }); if (!d.objectStoreNames.contains("handles")) d.createObjectStore("handles"); if (!d.objectStoreNames.contains("pakete")) d.createObjectStore("pakete", { keyPath: "geraetId" }); };
     r.onsuccess = () => ok(r.result); r.onerror = () => nein(r.error);
   });
 }
+export async function laufwerkTx<T>(store: string, modus: IDBTransactionMode, f: (s: IDBObjectStore) => IDBRequest<T>) { return tx(store, modus, f); }
 async function tx<T>(store: string, modus: IDBTransactionMode, f: (s: IDBObjectStore) => IDBRequest<T>) {
   const d = await db();
   return new Promise<T>((ok, nein) => { const r = f(d.transaction(store, modus).objectStore(store)); r.onsuccess = () => ok(r.result); r.onerror = () => nein(r.error); });

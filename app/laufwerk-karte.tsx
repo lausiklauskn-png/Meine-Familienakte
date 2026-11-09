@@ -11,6 +11,9 @@ import { abgleichAusfuehren, abgleichVorbereiten, angeschlosseneLaufwerke, gastK
 import { codeAnzeige, neuerCode, netzPlugin as netzPluginDa } from "./netz-laufwerk";
 import { Wifi } from "lucide-react";
 import { NotfallblattDialog, SicherungPasswortDialog } from "./sicherung-dialoge";
+import { paketAnwenden, paketErstellen, paketKopfLesen, paketOeffnen, paketPartnerAlle, paketPartnerVergessen, paketVorbereiten, partnerFuer, type PaketInhalt, type PaketKopf, type PaketPartner, type PaketVorschau } from "./paket";
+import { dateiTeilen, teilenText } from "./teilen";
+import { Package } from "lucide-react";
 
 const zeit = (z: string | null | undefined) => { if (!z) return "–"; const d = new Date(z); return Number.isNaN(d.getTime()) ? z : d.toLocaleString("de-DE", { dateStyle: "medium", timeStyle: "short" }); };
 const AUTO_ABSTAND = 5 * 60 * 1000;
@@ -178,7 +181,8 @@ export function LaufwerkKarte({ aktiv, appVersion, busy, onBusy, onNotice, onRef
     finally { onBusy(false); }
   };
 
-  if (!laufwerkMoeglich()) return <article className="card security-action-card" data-laufwerk-karte="nicht-moeglich"><div className="security-card-heading"><h2><HardDrive size={18}/> Gemeinsame Festplatte</h2></div><p className="sync-message warning">Hier nicht möglich: Die Web-App kann auf diesem Gerät keinen Ordner wählen. Der Abgleich über eine Festplatte geht in der Android- oder Windows-App oder am PC in Chrome oder Edge.</p></article>;
+  // Ohne Ordnerwahl (Web-App am Handy) bleibt das Paket per Teilen möglich – es braucht nur eine Datei.
+  if (!laufwerkMoeglich()) return <><article className="card security-action-card" data-laufwerk-karte="nicht-moeglich"><div className="security-card-heading"><h2><HardDrive size={18}/> Gemeinsame Festplatte</h2></div><p className="sync-message warning">Hier nicht möglich: Die Web-App kann auf diesem Gerät keinen Ordner wählen. Der Abgleich über eine Festplatte geht in der Android- oder Windows-App oder am PC in Chrome oder Edge.</p></article><PaketKarte aktiv={aktiv} appVersion={appVersion} busy={busy} onBusy={onBusy} onNotice={onNotice} onRefresh={onRefresh} onDrucken={onDrucken}/></>;
   const geraet = geraetKennung();
   return <>
     <article className="card security-action-card" data-hilfe-ziel="laufwerk" data-laufwerk-karte={gemerkt.length}>
@@ -206,7 +210,160 @@ export function LaufwerkKarte({ aktiv, appVersion, busy, onBusy, onNotice, onRef
     {passwort && <SicherungPasswortDialog ordner={passwort.name} fehler={passwort.fehler} laeuft={passwort.laeuft} onZugang={(z) => void zugang(z)} onClose={() => setPasswort(null)}
       extra={<label className="checkbox-row" data-laufwerk-merken><input type="checkbox" checked={passwort.merken} onChange={(e) => setPasswort({ ...passwort, merken: e.target.checked })}/> Schlüssel auf diesem Gerät merken (dann gleicht die App beim Anstecken von selbst ab)</label>}/>}
     {offen && <AbgleichDialog offen={offen} laeuft={laeuft} onAbgleichen={ausfuehren} onClose={() => setOffen(null)}/>}
+    <PaketKarte aktiv={aktiv} appVersion={appVersion} busy={busy} onBusy={onBusy} onNotice={onNotice} onRefresh={onRefresh} onDrucken={onDrucken}/>
   </>;
+}
+
+/* ---------- Stufe I: Paket per Teilen ---------- */
+type PaketOffen = { kopf: PaketKopf; inhalt: PaketInhalt; schluessel: string; vorschau: PaketVorschau; partner: PaketPartner | null };
+function PaketKarte({ aktiv, appVersion, busy, onBusy, onNotice, onRefresh, onDrucken }: {
+  aktiv: FileSystemDirectoryHandle | null; appVersion: string; busy: boolean; onBusy: (b: boolean) => void;
+  onNotice: (n: { kind: "success" | "error" | "info"; text: string } | null) => void; onRefresh: () => Promise<void>; onDrucken: () => void;
+}) {
+  const [partner, setPartner] = useState<PaketPartner[]>([]);
+  const [erstellen, setErstellen] = useState(false);
+  const [notfall, setNotfall] = useState<{ notfall: string; ordner: string; erstellt: string; danach: File } | null>(null);
+  const [passwort, setPasswort] = useState<{ kopf: PaketKopf; geheim: Blob; fehler: string; laeuft: boolean } | null>(null);
+  const [offen, setOffen] = useState<PaketOffen | null>(null);
+  const [laeuft, setLaeuft] = useState("");
+  const datei = useRef<HTMLInputElement>(null);
+  const laden = useCallback(async () => { setPartner(await paketPartnerAlle().catch(() => [])); }, []);
+  useEffect(() => { void laden(); }, [laden]);
+
+  const teilen = async (file: File) => {
+    const r = await dateiTeilen(file); const t = teilenText(r, file.name);
+    (window as Window & { __faPaket?: File }).__faPaket = file;   // für die Probe
+    if (t) onNotice({ kind: r === "geteilt" ? "success" : "info", text: t });
+  };
+  const erstellenLos = async (ziel: PaketPartner | { name: string; passwort: string }, wahl: { originale: boolean; alles: boolean }) => {
+    if (!aktiv) return;
+    setErstellen(false); onBusy(true); setLaeuft("Paket wird gepackt …");
+    try {
+      const r = await paketErstellen(aktiv, ziel, wahl, appVersion);
+      await laden();
+      if (!r) { onNotice({ kind: "info", text: `Seit dem letzten Paket an „${ziel.name}“ hat sich nichts geändert – kein Paket nötig.` }); return; }
+      onNotice({ kind: "success", text: `Paket für „${r.partner.name}“: ${r.eintraege} Einträge, ${r.originale} Originale, ${(r.file.size / 1024 / 1024).toFixed(1).replace(".", ",")} MB.${r.zuGross.length ? ` ${r.zuGross.length} Originale passten nicht mehr hinein (Grenze 100 MB).` : ""}` });
+      if (r.notfall) setNotfall({ notfall: r.notfall, ordner: `Paket an ${r.partner.name}`, erstellt: new Date().toISOString(), danach: r.file });
+      else await teilen(r.file);
+    } catch (error) { onNotice({ kind: "error", text: error instanceof Error ? error.message : "Das Paket konnte nicht erstellt werden." }); }
+    finally { setLaeuft(""); onBusy(false); }
+  };
+  const einlesen = async (file: File) => {
+    if (!aktiv) { onNotice({ kind: "error", text: "Bitte zuerst den Datentresor verbinden." }); return; }
+    onBusy(true);
+    try {
+      const { kopf, geheim } = await paketKopfLesen(file);
+      const p = partnerFuer(kopf, partner);
+      if (p?.schluessel) {
+        try { const r = await paketOeffnen(kopf, geheim, { schluessel: p.schluessel }); await vorschau(kopf, r.inhalt, r.schluessel, p); return; }
+        catch { /* Schlüssel passt nicht (neues Passwort am anderen Gerät) → fragen */ }
+      }
+      setPasswort({ kopf, geheim, fehler: "", laeuft: false });
+    } catch (error) { onNotice({ kind: "error", text: error instanceof Error ? error.message : "Das Paket konnte nicht gelesen werden." }); }
+    finally { onBusy(false); }
+  };
+  const vorschau = async (kopf: PaketKopf, inhalt: PaketInhalt, schluessel: string, p: PaketPartner | null) => {
+    if (!aktiv) return;
+    const v = await paketVorbereiten(aktiv, inhalt, p);
+    setPasswort(null); setOffen({ kopf, inhalt, schluessel, vorschau: v, partner: p });
+  };
+  const zugang = async (z: { passwort?: string; notfall?: string }) => {
+    if (!passwort) return;
+    setPasswort({ ...passwort, laeuft: true, fehler: "" });
+    try { const r = await paketOeffnen(passwort.kopf, passwort.geheim, z); await vorschau(passwort.kopf, r.inhalt, r.schluessel, partnerFuer(passwort.kopf, partner)); }
+    catch (error) { const t = error instanceof Error ? error.message : ""; setPasswort({ ...passwort, laeuft: false, fehler: t === "PASSWORT_FALSCH" ? (z.notfall ? "Der Notfallschlüssel passt nicht zu diesem Paket." : "Das Passwort ist falsch.") : t || "Das Paket konnte nicht geöffnet werden." }); }
+  };
+  const uebernehmen = async (wahl: Record<string, Seite>) => {
+    if (!offen || !aktiv) return;
+    onBusy(true); setLaeuft("Paket wird eingelesen …");
+    try {
+      const r = await paketAnwenden(aktiv, offen.kopf, offen.inhalt, offen.schluessel, offen.vorschau, wahl, offen.partner);
+      setOffen(null);
+      onNotice({ kind: "success", text: `Paket von „${offen.kopf.von.name}“ eingelesen: ${r.neu} neu, ${r.uebernommen} übernommen${r.konflikteDort ? `, ${r.konflikteDort} Fassungen aus dem Paket gewählt` : ""}, ${r.abgelegt} Originale abgelegt.${r.fehlen ? ` ${r.fehlen} Originale fehlen noch (beim nächsten Paket „Originaldateien beilegen“).` : ""} Gelöscht wurde nichts.` });
+      try { await onRefresh(); await laden(); } catch (error) { console.warn("Auffrischen nach dem Paket", error); }
+    } finally { setLaeuft(""); onBusy(false); }
+  };
+  const vergessen = async (p: PaketPartner) => { await paketPartnerVergessen(p.geraetId); await laden(); onNotice({ kind: "info", text: `„${p.name}“ wird für Pakete nicht mehr gemerkt. Das nächste Paket braucht wieder ein Passwort.` }); };
+  return <>
+    <article className="card security-action-card" data-hilfe-ziel="paket" data-paket-karte={partner.length}>
+      <div className="security-card-heading"><h2><Package size={18}/> Paket per Teilen</h2></div>
+      <p className="fine-print">Ohne Platte und ohne gemeinsames Netz: Die App packt deine Änderungen seit dem letzten Paket an dieses Gerät in <strong>eine verschlüsselte Datei</strong> und gibt sie an Mail, Messenger oder einen Stick. Am anderen Gerät „Paket einlesen“ – Neues kommt dazu, bei Unterschieden fragt die App, gelöscht wird nichts. Beim ersten Mal ein Passwort, danach kennt jedes Gerät den Schlüssel.</p>
+      {partner.length > 0 && <ul className="laufwerk-liste">{partner.map((p) => <li key={p.geraetId} data-paket-partner={p.geraetId}>
+        <strong>{p.name}</strong>
+        <small>letztes Paket gesendet: {zeit(p.letztesPaket)} · empfangen: {zeit(p.letzterEmpfang)}{p.schluessel ? " · Schlüssel gemerkt" : ""}</small>
+        <span className="button-row"><button className="button primary" disabled={busy || !aktiv} onClick={() => void erstellenLos(p, { originale: true, alles: false })} data-paket-an>Paket an „{p.name}“</button><button className="button secondary" disabled={busy || !aktiv} onClick={() => void erstellenLos(p, { originale: true, alles: true })} data-paket-alles>Alles senden</button><button className="button secondary" disabled={busy} onClick={() => void vergessen(p)} data-paket-vergessen>Vergessen</button></span>
+      </li>)}</ul>}
+      {laeuft && <p className="notiz-gespeichert" role="status" data-paket-laeuft>{laeuft}</p>}
+      <div className="button-row"><button className="button secondary" disabled={busy || !aktiv} onClick={() => setErstellen(true)} data-paket-erstellen>Paket erstellen …</button><button className="button secondary" disabled={busy || !aktiv} onClick={() => datei.current?.click()} data-paket-einlesen>Paket einlesen …</button>
+        <input ref={datei} type="file" accept=".fav,application/octet-stream" hidden data-paket-datei onChange={(e) => { const f = e.target.files?.[0]; e.target.value = ""; if (f) void einlesen(f); }}/></div>
+    </article>
+    {erstellen && <PaketDialog partner={partner} onStart={(ziel, wahl) => void erstellenLos(ziel, wahl)} onClose={() => setErstellen(false)}/>}
+    {notfall && <NotfallblattDialog notfall={notfall.notfall} ordner={notfall.ordner} erstellt={notfall.erstellt} appVersion={appVersion} onDrucken={onDrucken} onClose={() => { const f = notfall.danach; setNotfall(null); void teilen(f); }}/>}
+    {passwort && <SicherungPasswortDialog ordner={`Paket von ${passwort.kopf.von.name}`} fehler={passwort.fehler} laeuft={passwort.laeuft} onZugang={(z) => void zugang(z)} onClose={() => setPasswort(null)}/>}
+    {offen && <PaketVorschauDialog offen={offen} laeuft={laeuft} onUebernehmen={uebernehmen} onClose={() => setOffen(null)}/>}
+  </>;
+}
+
+function PaketDialog({ partner, onStart, onClose }: { partner: PaketPartner[]; onStart: (ziel: PaketPartner | { name: string; passwort: string }, wahl: { originale: boolean; alles: boolean }) => void; onClose: () => void }) {
+  const [ziel, setZiel] = useState(partner[0]?.geraetId || "neu"); const [name, setName] = useState(""); const [pw, setPw] = useState(""); const [pw2, setPw2] = useState(""); const [zeigen, setZeigen] = useState(false);
+  const [originale, setOriginale] = useState(true); const [alles, setAlles] = useState(false); const [fehler, setFehler] = useState("");
+  const neu = ziel === "neu"; const p = partner.find((x) => x.geraetId === ziel);
+  const los = () => {
+    if (neu) { if (!name.trim()) { setFehler("Bitte das andere Gerät benennen (z. B. „Tablet“)."); return; } const f = passwortPruefen(pw); if (f) { setFehler(f); return; } if (pw !== pw2) { setFehler("Die beiden Eingaben stimmen nicht überein."); return; } onStart({ name: name.trim(), passwort: pw }, { originale, alles: true }); }
+    else if (p) onStart(p, { originale, alles });
+  };
+  return <div className="modal-backdrop" role="presentation" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
+    <div className="modal" role="dialog" aria-modal="true" aria-labelledby="paket-titel" data-paket-dialog>
+      <div className="modal-head"><div><span className="badge">Paket per Teilen</span><h2 id="paket-titel">Paket erstellen</h2></div><button className="icon-button" onClick={onClose} aria-label="Fenster schließen"><X/></button></div>
+      <div className="form-grid">
+        <label>Für welches Gerät?<select value={ziel} onChange={(e) => { setZiel(e.target.value); setFehler(""); }} data-paket-ziel>{partner.map((x) => <option key={x.geraetId} value={x.geraetId}>{x.name}</option>)}<option value="neu">Neues Gerät …</option></select></label>
+        {neu && <>
+          <label>Name des Geräts<input value={name} onChange={(e) => setName(e.target.value)} placeholder="z. B. Tablet, PC im Büro" data-paket-name/></label>
+          <label>Passwort für das Paket (mindestens {PASSWORT_MINDESTLAENGE} Zeichen)<input type={zeigen ? "text" : "password"} value={pw} autoComplete="new-password" onChange={(e) => { setPw(e.target.value); setFehler(""); }} data-passwort/></label>
+          <label>Passwort wiederholen<input type={zeigen ? "text" : "password"} value={pw2} autoComplete="new-password" onChange={(e) => { setPw2(e.target.value); setFehler(""); }} data-passwort-wieder/></label>
+          <label className="checkbox-row"><input type="checkbox" checked={zeigen} onChange={(e) => setZeigen(e.target.checked)}/> Passwort anzeigen</label>
+        </>}
+        <label className="checkbox-row"><input type="checkbox" checked={originale} onChange={(e) => setOriginale(e.target.checked)} data-paket-originale/> Originaldateien beilegen (bis 100 MB; sonst nur Einträge und Notizen)</label>
+        {!neu && <label className="checkbox-row"><input type="checkbox" checked={alles} onChange={(e) => setAlles(e.target.checked)} data-paket-alles-haken/> Alles senden, nicht nur Änderungen (wenn ein Paket verloren ging)</label>}
+      </div>
+      <ul className="fine-print"><li>{neu ? "Das erste Paket legt den Schlüssel fest; danach kommt ein Notfallblatt. Am anderen Gerät einmal das Passwort eingeben, dann merken sich beide den Schlüssel." : `Verschlüsselt mit dem gemerkten Schlüssel für „${p?.name}“; am anderen Gerät ohne Passwort einlesbar.`}</li><li>Die Datei geht an die App, die du wählst (Mail, Messenger, Dateien). Die Akte verschickt nichts von selbst.</li></ul>
+      {fehler && <p className="form-error" data-paket-fehler>{fehler}</p>}
+      <div className="modal-actions"><button className="button secondary" onClick={onClose}>Abbrechen</button><button className="button primary" onClick={los} data-paket-los>Paket packen und teilen</button></div>
+    </div>
+  </div>;
+}
+
+function PaketVorschauDialog({ offen, laeuft, onUebernehmen, onClose }: { offen: PaketOffen; laeuft: string; onUebernehmen: (wahl: Record<string, Seite>) => Promise<void>; onClose: () => void }) {
+  const v = offen.vorschau, z = v.plan.zaehlung;
+  const [wahl, setWahl] = useState<Record<string, Seite>>(() => Object.fromEntries(v.plan.konflikte.map((k) => [k.schluessel, k.vorschlag])));
+  const [fehler, setFehler] = useState("");
+  const nichts = !z.neu && !z.uebernommen && !v.plan.konflikte.length && !v.originale;
+  const alle = (s: Seite) => setWahl(Object.fromEntries(v.plan.konflikte.map((k) => [k.schluessel, s])));
+  const los = async () => { setFehler(""); try { await onUebernehmen(wahl); } catch (e) { setFehler(e instanceof Error ? e.message : "Einlesen nicht möglich."); } };
+  return <div className="modal-backdrop" role="presentation" onMouseDown={(e) => e.target === e.currentTarget && !laeuft && onClose()}>
+    <div className="modal" role="dialog" aria-modal="true" aria-labelledby="paket-vorschau-titel" data-paket-vorschau>
+      <div className="modal-head"><div><span className="badge">Paket von {offen.kopf.von.name}</span><h2 id="paket-vorschau-titel">Paket einlesen</h2></div><button className="icon-button" onClick={onClose} disabled={Boolean(laeuft)} aria-label="Fenster schließen"><X/></button></div>
+      <p className="fine-print">Gepackt am {zeit(offen.kopf.zeit)} auf „{offen.kopf.von.name}“ mit Fassung {offen.kopf.fassung}: {offen.kopf.eintraege} Einträge, {offen.kopf.originale} Originale.</p>
+      <ul data-paket-zaehlung>
+        <li>{z.neu} Einträge kommen aus dem Paket dazu</li>
+        <li>{z.uebernommen} Änderungen werden still übernommen</li>
+        <li>{v.originale} Originale liegen bei{v.fehlen ? `, ${v.fehlen} fehlen noch` : ""}</li>
+        {v.plan.konflikte.length > 0 && <li><strong>{v.plan.konflikte.length} unterscheiden sich</strong> – unten wählen</li>}
+        {nichts && <li>Nichts Neues – das Paket ist schon eingelesen oder enthält nur Bekanntes.</li>}
+      </ul>
+      {v.plan.konflikte.length > 0 && <div className="einlesen-konflikte" data-paket-konflikte>
+        <div className="button-row"><strong>Welche Fassung behalten?</strong><button type="button" className="button secondary" onClick={() => alle("hier")}>Alle: meine</button><button type="button" className="button secondary" onClick={() => alle("dort")}>Alle: aus dem Paket</button></div>
+        <ul>{v.plan.konflikte.map((k) => <li key={k.schluessel} data-paket-konflikt={k.schluessel}><span>{k.titel}</span>
+          <label><input type="radio" name={`p-${k.schluessel}`} checked={wahl[k.schluessel] === "hier"} onChange={() => setWahl({ ...wahl, [k.schluessel]: "hier" })}/> meine ({zeit(k.hierZeit)})</label>
+          <label><input type="radio" name={`p-${k.schluessel}`} checked={wahl[k.schluessel] === "dort"} onChange={() => setWahl({ ...wahl, [k.schluessel]: "dort" })}/> aus dem Paket ({zeit(k.dortZeit)})</label>
+        </li>)}</ul>
+      </div>}
+      {laeuft && <p className="notiz-gespeichert" role="status">{laeuft}</p>}
+      {fehler && <p className="form-error">{fehler}</p>}
+      <p className="fine-print">Gelöscht wird nichts. Das bisherige Register wird vorher gesichert.</p>
+      <div className="modal-actions"><button className="button secondary" onClick={onClose} disabled={Boolean(laeuft)}>{nichts ? "Schließen" : "Abbrechen"}</button>{!nichts && <button className="button primary" disabled={Boolean(laeuft)} onClick={() => void los()} data-paket-los-einlesen>{laeuft ? "Läuft …" : "Einlesen"}</button>}</div>
+    </div>
+  </div>;
 }
 
 function VorbereitenDialog({ onStart, onClose }: { onStart: (name: string, passwort: string) => void; onClose: () => void }) {
