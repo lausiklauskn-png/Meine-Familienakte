@@ -1,6 +1,6 @@
 // Startseite, Kopf- und Fußzeile: Suche, Diktat, Drucken, Ausloggen, Objekt-Cockpit, Erinnerung erfassen,
 // Dokumenteneingang-Kacheln, Beispieldaten entfernen/laden.
-import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, collectErrors, footer } from "./_harness.mjs";
+import { startApp, launchBrowser, DESKTOP, ready, check, step, soll, summary, collectErrors, footer } from "./_harness.mjs";
 import { demoUmschalten } from "./_demo.mjs";
 import { speechStub, windowStub, directoryPickerStub, schliesseDialoge, bekannt, verdecktVon } from "./_stubs.mjs";
 
@@ -31,10 +31,14 @@ try {
     await footer(page, "Hilfe"); await page.locator(".site-brand").click();
     return page.url().endsWith("#startseite") && (await page.locator(".breadcrumb .pfad > button").allTextContents()).join("") === "Startseite";
   });
-  await step("Ausloggen lädt die Seite neu (kein Konto, nur Neustart)", async () => {
+  // Klaus 09.11.: Ausloggen = App schließen. Im Browser darf die Seite ihren Tab nicht schließen – Abmeldeseite statt Neuladen.
+  await step("Ausloggen im Browser zeigt die Abmeldeseite; „Wieder öffnen“ lädt neu", async () => {
     await page.locator(".logout-button").click();
+    const seite = page.locator("[data-abgemeldet]"); await seite.waitFor({ timeout: 5000 });
+    const text = await seite.innerText();
+    await seite.locator("[data-wieder-oeffnen]").click();
     await page.waitForLoadState("load"); await ready(page);
-    return (await page.evaluate(() => window.__gedruckt)) === 0; // frisches Fenster-Objekt = neu geladen
+    return soll(/Abgemeldet/.test(text) && (await page.evaluate(() => window.__gedruckt)) === 0, text); // frisches Fenster-Objekt = neu geladen
   });
 
   // --- Suche ---

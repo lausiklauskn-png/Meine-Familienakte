@@ -2819,3 +2819,10 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
   .header-actions :is(.netz-schalter, .ablegen-knopf-schalter, .notiz-knopf-schalter, .kalender-knopf-schalter, .tagebuch-knopf-schalter) { min-width: 25px; }
 }
 @media (max-width: 380px) { .header-actions { gap: 0; } .header-actions .neu-knopf-schalter { padding-left: 3px; padding-right: 3px; } }
+
+/* Ausloggen im Browser (Klaus 09.11.): deutliche Abmeldeseite statt Neuladen – die Seite darf ihren Tab nicht selbst schließen. */
+.abgemeldet-seite { position: fixed; inset: 0; z-index: 5000; display: grid; place-items: center; padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); background: #0b3154; color: #fff; text-align: center; }
+.abgemeldet-seite > div { display: grid; justify-items: center; gap: 12px; max-width: 420px; }
+.abgemeldet-seite h1 { margin: 0; font-size: 1.6rem; }
+.abgemeldet-seite p { margin: 0; color: #dcecf3; }
+.abgemeldet-seite .button { min-height: 44px; padding: 10px 22px; border: 0; border-radius: 10px; background: #fff; color: #0b3154; font-weight: 800; }
