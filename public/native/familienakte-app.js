@@ -138,5 +138,29 @@
     fahne(false);
     hinweis(`Du verwendest die aktuelle Fassung ${VERSION || ''}.`.replace(' .', '.'), 6000);
   }
-  window.FamilienakteApp = { build: BUILD, version: VERSION, hinweis, dateienUebergeben, aktualisieren, fahne, updateVerfuegbar: () => !!document.documentElement.dataset.updateVerfuegbar };
+  // Stille Update-Prüfung der Apps (Android, Windows) für das Fähnchen. `abfrage` fragt den eigenen Update-Server und liefert
+  // { neu } oder { aktuell }. Wann: beim Start, nach dem Einschalten des Internets, beim Zurückkehren in die App (höchstens alle
+  // 10 min), stündlich, und nach einem Fehlversuch bis zu dreimal nach 2 min erneut. Nur bei Internet an; keine Hinweisleiste.
+  const STILL = { rueckkehr: 10 * 60 * 1000, takt: 60 * 60 * 1000, wiederholen: 2 * 60 * 1000, versuche: 3 };
+  function stillPruefenEinrichten(abfrage) {
+    let laeuft = false, zuletzt = 0, fehlversuche = 0, wiederholung = null;
+    const pruefen = async () => {
+      if (offline() || laeuft) return; laeuft = true; clearTimeout(wiederholung);
+      try {
+        const r = await abfrage(); zuletzt = Date.now(); fehlversuche = 0;
+        if (r?.neu) fahne(true, r.neu); else if (r?.aktuell || r?.version) fahne(false);
+      } catch {
+        // still: der Tipp auf die Versionszeile meldet Fehler; beim Start ist das Netz oft noch nicht so weit.
+        if (++fehlversuche <= STILL.versuche) wiederholung = setTimeout(pruefen, STILL.wiederholen);
+      } finally { laeuft = false; }
+    };
+    window.addEventListener('pb:network', (e) => { if (e.detail && !e.detail.offline) pruefen(); });
+    window.addEventListener('familienakte:bereit', () => { window.PBNetwork?.initialized?.then(pruefen).catch(() => {}); }, { once: true });
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible' && Date.now() - zuletzt >= STILL.rueckkehr) { fehlversuche = 0; pruefen(); }
+    });
+    setInterval(pruefen, STILL.takt);
+    return pruefen;
+  }
+  window.FamilienakteApp = { build: BUILD, version: VERSION, hinweis, dateienUebergeben, aktualisieren, fahne, stillPruefenEinrichten, updateVerfuegbar: () => !!document.documentElement.dataset.updateVerfuegbar };
 })();

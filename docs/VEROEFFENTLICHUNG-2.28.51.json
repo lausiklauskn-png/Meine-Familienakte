@@ -1,0 +1,61 @@
+{
+ "version": "2.28.51",
+ "source": "d1f5c855138bd10efeec275f80c1061d8c1eea47",
+ "pullRequest": [
+  144
+ ],
+ "recordedUtc": "2026-11-09T21:15:00Z",
+ "freigabe": "Startauftrag Klaus 09.11.2026: „2.28.51 als APK, Windows und PWA ausgeben (Klaus' Regel 06.11.)“; in der Sitzung „weitermachen bis zur Ausgabe“.",
+ "inhalt": "Gerätetest 09.11. (Galaxy S21, 2.28.49): Tresor einrichten klappt in einem eigenen Ordner im Gerätespeicher (z. B. „Familienakte“, darin entsteht „Family-Projekt“), Meldung direkt unter dem Zustand, „Wo liegt was?“ hinter dem „?“; Hilfekarten live (Fläche = Zustand dieses Geräts, Rahmen = Baustand, „Beheben ›“, Demo-Band), Zugänge „Zustand deines Geräts auf einen Blick“. Dazu von main (#146): Hilfe-Thema „Pro-App-Verbund (Vorschau)“ mit der Karte aus BookLedgerPro (Pin d6dcacd).",
+ "ciAmPrStand": "PR #144 auf 62bde2f (nach Zusammenführen mit main): pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) – alle success. Auf main d1f5c85: Pages Lauf 174 (42697290303) success; „Android-Hülle (Prüf-Bau)“ 42697290597 im ersten Versuch rot (tools/native/test-models.mjs brach nach unter 1 s beim Start ab, lokal und auf dem PR-Zweig grün), zweiter Versuch success.",
+ "releases": [
+  {
+   "tag": "android-v2.28.51",
+   "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.51",
+   "run": 42697305465,
+   "conclusion": "success",
+   "updateServer": "server=ja; Schritte „Update-Datei bauen, unterschreiben, gegen den Schlüssel der App prüfen“ und „Auf family-projekt.de hochladen und von außen prüfen“ success",
+   "downloadProof": [
+    {
+     "name": "Familienakte-android-v2.28.51.apk",
+     "bytes": 20054234,
+     "sha256": "94fb86863b4f52926aca034da3c483da72429f0dece9e9702110c1393e38c9c0",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true,
+     "versionInside": "2.28.51 (assets/public/version.json, commit d1f5c85, Bau 1.95285058)"
+    },
+    {
+     "name": "Familienakte-Einzeldatei-2.28.51.html",
+     "bytes": 3900209,
+     "sha256": "df8ec85be63de4aa65c09e12a627f13b5345d391c0d262edae60da759dde9204",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true
+    }
+   ]
+  },
+  {
+   "tag": "windows-v2.28.51",
+   "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.51",
+   "run": 42697312752,
+   "conclusion": "success",
+   "updateServer": "server=ja; Job „server“ success (Setup aus dem Release geprüft, aktuell-windows.json unterschrieben, auf family-projekt.de hochgeladen und von außen geprüft); latest.json nennt 2.28.51, Commit d1f5c85",
+   "downloadProof": [
+    {
+     "name": "Familienakte-Windows-2.28.51-x64-setup.exe",
+     "bytes": 34199698,
+     "sha256": "7b28a1897983b1ec964d97692656eaf1a98dc0552e7f9dd0ba7e647525b6772e",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true,
+     "matchesLatestJson": true
+    }
+   ]
+  }
+ ],
+ "pwa": "Pages auf d1f5c85: Lauf 174 (42697290303) success, Lauf 175 (42699764379) lief zum Zeitpunkt des Nachweises; Seite selbst aus dem Behälter nicht erreichbar (Netzsperre), nicht geprüft",
+ "windows2_28_50": "Lauf 42670438706 (windows-v2.28.50): Job release success, Job server wurde nie angelegt, Lauf „failure“ ohne fehlgeschlagenen Job und ohne Protokoll. Nicht nachgeholt (wäre eine erneute Ausgabe von 2.28.50); der Server-Job von 2.28.51 ersetzt die Windows-Datei auf family-projekt.de (rsync entfernt alte Setups). Für 2.28.50 gibt es keinen eigenen Nachweis docs/VEROEFFENTLICHUNG-2.28.50.json.",
+ "notChecked": [
+  "Kein physisches Gerät: Tresor im Ordner „Familienakte“ (SAF-Freigabe) und alle Live-Zustände nur gestellt geprüft",
+  "family-projekt.de und die Pages-Seite aus dem Behälter nicht erreichbar; die Freigabeläufe prüfen den Server selbst von außen",
+  "Gerätetest 2.28.48/2.28.49: außer dem Tresor keine Rückmeldung"
+ ]
+}
