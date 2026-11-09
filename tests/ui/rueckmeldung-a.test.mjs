@@ -61,12 +61,8 @@ try {
   });
 
   await footer(page, "Tagebuch");
-  await step("A3: „Tagebuch öffnen“ auf der Tagebuch-Seite führt zur Chronologie", async () => {
-    await page.evaluate(() => scrollTo(0, 0));
-    await page.locator("button", { hasText: "Tagebuch öffnen" }).first().click(); await page.waitForTimeout(400);
-    const r = await page.evaluate(() => { const c = document.getElementById("memory-chronologie").getBoundingClientRect(); return { top: Math.round(c.top), y: scrollY }; });
-    return soll(r.y > 200 && r.top < 400, r);
-  });
+  // A3: der Knopf „Tagebuch öffnen“ auf der Tagebuch-Seite ist seit C (09.11.) weg – der Weg ins Tagebuch ist das Buch oben
+  // (rueckmeldung-c). Hier bleibt: ein Eintrag öffnet sich sichtbar.
   await step("A3: Tipp auf einen Tagebuch-Eintrag zeigt ihn im Bild, markiert", async () => {
     const zeile = page.locator(".memory-event-zeile").nth(1);
     await zeile.locator(".fz-kopf > button").first().click(); await page.waitForTimeout(500);

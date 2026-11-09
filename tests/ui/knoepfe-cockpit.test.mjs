@@ -197,7 +197,9 @@ try {
     await aufraeumen(page);
     await klick(page.locator("#memory-draft-queue button", { hasText: "Entwurf löschen" }).first(), "Entwurf löschen");
     await ja(page);
-    return (await page.locator("#memory-draft-queue").innerText()).includes("Probe-Entwurf") === false;
+    // C (09.11.): ohne Entwürfe verschwindet die Liste ganz (Zähler mit null werden nicht gezeigt).
+    await page.waitForFunction(() => !(document.querySelector("#memory-draft-queue")?.textContent || "").includes("Probe-Entwurf"), null, { timeout: 8000 });
+    return true;
   });
   await step("Tagebuch: offener Memory-Punkt „Weiter beobachten“ / „Als erledigt bestätigen“", async () => {
     const punkt = page.locator("#memory-open-points button", { hasText: "Weiter beobachten" }).first();

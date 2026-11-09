@@ -50,11 +50,11 @@ try {
       return soll(auf === 1 && zu === 0, `${auf}/${zu}`);
     });
     await footer(page, "Hilfe");
-    await step(`${name}: Vorschau „Mehrere Tagebuch-Einträge“ → „Noch zu prüfende Tagebuch-Einträge“ rot gerahmt`, async () => {
+    await step(`${name}: Vorschau „Mehrere Tagebuch-Einträge“ → „Was ist heute passiert?“ rot gerahmt`, async () => {
       await page.locator('[data-hilfe-id="mehrere-erinnerungen"] [data-hv-knopf]').click();
       await page.locator("[data-hilfe-vorschau] [data-hv-hin]").click(); await page.waitForTimeout(1100);
       const t = await page.evaluate(() => document.querySelector(".hilfe-ziel-rahmen")?.textContent?.slice(0, 80) || "");
-      return soll(/Noch zu prüfende Tagebuch-Einträge/.test(t), t);
+      return soll(/Was ist heute passiert\?/.test(t), t);
     });
     await footer(page, "Hilfe");
     await step(`${name}: Kasten im Ablaufbild springt zur Karte und rahmt sie rot („Cockpit“ → Was ist jetzt wichtig?)`, async () => {

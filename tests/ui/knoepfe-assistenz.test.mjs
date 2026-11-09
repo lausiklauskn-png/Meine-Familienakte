@@ -13,11 +13,14 @@ try {
 
   // ---------- Assistenz ----------
   await openMenu(page, 0, "Assistenzzentrale");
-  await step("Assistenz: fünf Modus-Knöpfe schalten um (aria-pressed)", async () => {
+  // D (Rückmeldung 09.11., Klaus d1): drei Wege statt fünf Modi.
+  await step("Assistenz: drei Wege schalten um (aria-pressed)", async () => {
     const modi = page.locator("button.assistant-mode-action");
     const n = await modi.count();
-    await modi.nth(1).click();
-    return n === 5 && (await modi.nth(1).getAttribute("aria-pressed")) === "true" ? `${n} Modi` : false;
+    await modi.nth(2).click();
+    const ok = n === 3 && (await modi.nth(2).getAttribute("aria-pressed")) === "true";
+    await modi.first().click();
+    return ok ? `${n} Wege` : false;
   });
   await internetAn(page);
   await step("Assistenz: Diktat füllt die Frage", async () => {
@@ -43,9 +46,9 @@ try {
     if (!crumb.includes("Assistenz")) { await openMenu(page, 0, "Assistenzzentrale"); await page.locator("textarea").first().fill("Reklamation Waschmaschine"); await page.locator("button", { hasText: "Familienakte prüfen und Vorschlag vorbereiten" }).click(); await page.waitForTimeout(600); }
     return modal ? "öffnet Dokumentvorschau" : "öffnet Vorgang im Cockpit";
   });
-  await step("Assistenz: Modus „Schreiben oder E-Mail erstellen“ → „Schreiben vorbereiten“ zeigt Typ, Ton, Empfänger, Betreff, Entwurf", async () => {
+  await step("Assistenz: Weg „Vorgang oder Termin vorbereiten“ → „Schreiben vorbereiten“ zeigt Typ, Ton, Empfänger, Betreff, Entwurf", async () => {
     await aufraeumen(page); await openMenu(page, 0, "Assistenzzentrale");
-    await page.locator("button.assistant-mode-action", { hasText: "Schreiben oder E-Mail erstellen" }).click();
+    await page.locator("button.assistant-mode-action", { hasText: "Vorgang oder Termin vorbereiten" }).click();
     await page.locator("textarea").first().fill("Bitte um Belegeinsicht zur Nebenkostenabrechnung 2025.");
     await page.locator("button", { hasText: "Familienakte prüfen und Vorschlag vorbereiten" }).click(); await page.waitForTimeout(600);
     await page.locator("button", { hasText: "Schreiben vorbereiten" }).click(); await page.waitForTimeout(400);

@@ -36,7 +36,7 @@ try {
     return soll(h0 < 60 && zu === 0 && /Gesundheits/.test(auf), { h0, zu, auf: auf.slice(0, 40) });
   });
   await step("B3: Bibliothekssuche ohne Lupe im Feld (die Überschrift trägt sie), Mikrofon daneben", async () => {
-    const r = await page.evaluate(() => { const f = document.querySelector(".library-search.such-feld"); return { lupe: f?.querySelectorAll(".such-eingabe svg").length ?? -1, mik: f?.querySelectorAll(":scope > .dictation-control").length ?? 0, kopf: !!f?.closest("label")?.querySelector(":scope > span svg") }; });
+    const r = await page.evaluate(() => { const f = document.querySelector(".library-search.such-feld"); return { lupe: f?.querySelectorAll(".such-eingabe svg").length ?? -1, mik: f?.querySelectorAll(":scope > .dictation-control").length ?? 0, kopf: !!f?.closest(".library-suche-block")?.querySelector("label > span svg") }; });
     return soll(r.lupe === 0 && r.mik === 1 && r.kopf, r);
   });
 
