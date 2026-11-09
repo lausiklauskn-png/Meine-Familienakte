@@ -77,9 +77,19 @@ try {
     await page.evaluate(() => { window.__naechsterOrdner = "Sicherung-Probe"; });
     await vollsicherungStarten(page);
     // Nicht die Meldung „Sicherung läuft“ nehmen (CI-Wettlauf): warten, bis die Sicherung fertig gemeldet ist und der Ordner Inhalt hat.
-    await page.waitForFunction(async () => { const t = [...document.querySelectorAll("[aria-live], .notice")].map((e) => e.innerText).join(" "); if (!/wurde .*erstellt|Erfolgreich/.test(t)) return false; try { const r = await navigator.storage.getDirectory(); const d = await r.getDirectoryHandle("Sicherung-Probe"); for await (const _ of d.entries()) return true; } catch { /* noch nicht da */ } return false; }, null, { timeout: 150000 }).catch(() => {});
+    // Kein waitForFunction mit async-Rückruf – ein zurückgegebenes Promise gilt dort sofort als wahr; deshalb hier eine eigene Schleife.
+    const ende = Date.now() + 150000;
+    while (Date.now() < ende) {
+      const stand = await page.evaluate(async () => {
+        const t = [...document.querySelectorAll("[aria-live], .notice")].map((e) => e.innerText).join(" ");
+        let dateien = 0; try { const r = await navigator.storage.getDirectory(); const d = await r.getDirectoryHandle("Sicherung-Probe"); for await (const eintrag of d.entries()) if (eintrag) dateien++; } catch { /* noch nicht da */ }
+        return { fertig: /wurde .*erstellt|Erfolgreich/.test(t), dateien };
+      });
+      if (stand.fertig && stand.dateien > 0) break;
+      await page.waitForTimeout(500);
+    }
     const m = await meldung(page);
-    const dateien = await page.evaluate(async () => { const r = await navigator.storage.getDirectory(); const d = await r.getDirectoryHandle("Sicherung-Probe"); const out = []; for await (const [n] of d.entries()) out.push(n); return out; });
+    const dateien = await page.evaluate(async () => { try { const r = await navigator.storage.getDirectory(); const d = await r.getDirectoryHandle("Sicherung-Probe"); const out = []; for await (const [n] of d.entries()) out.push(n); return out; } catch { return []; } });
     return dateien.length > 0 && /Sicherung/.test(m) ? `Ordner: ${dateien.join(", ")}; ${m.slice(0, 90)}` : (console.log("   ↳", JSON.stringify(dateien), m.slice(0, 300)), false);
   });
   await step("„Wiederherstellung testen“ (Sicherung → leerer Ordner) läuft durch", async () => {
