@@ -2,6 +2,8 @@ import { useState } from "react";
 import { HardDrive } from "lucide-react";
 import { workspaceStorage } from "../lib/demo-workspace.ts";
 import { Ablaufbild, Pfad, zurStelle } from "./ablaufbild";
+import { DemoBand } from "./demo-band";
+import type { LiveFarbe, LiveZustand } from "./live-zustand";
 
 /**
  * Hilfe „Akten sichern“ (Nutzerwunsch 2026-11-05): Ordnerbaum wie „Wo liegt was?“, je Ort die Schritte zum Abhaken.
@@ -72,10 +74,16 @@ const alleIds = ORTE.flatMap((o) => o.punkte.flatMap((p) => [p, ...(p.kinder || 
 
 const SELEKTOR: Record<Exclude<Ziel, "akte">, string> = { datentresor: '[data-hilfe-ziel="datentresor"]', "pro-tresor": "[data-pro-tresor]", vollsicherung: '[data-hilfe-ziel="vollsicherung"]' };
 
+/** Live (Klaus 09.11.): Farbe eines Orts aus dem Zustand dieses Geräts. */
+const LIVE_ART: Record<LiveFarbe, string> = { gruen: "art-gut", rot: "art-warnung", gelb: "art-gelb", grau: "art-aus" };
+const LIVE_ID: Partial<Record<Ziel, string>> = { datentresor: "datentresor", "pro-tresor": "protresor" };
+const liveVon = (o: Ort, live: LiveZustand) => o.titel === "Sicherungsordner" ? live["aus-sicherung"] : LIVE_ID[o.ziel] ? live[LIVE_ID[o.ziel]!] : undefined;
+
 /**
  * @param datentresor Name des verbundenen Datentresors; dann führt der Kasten direkt zur Akte und steht grün.
+ * @param live        Zustand dieses Geräts: Datentresor, Pro-Tresor und Sicherungsordner färben sich danach (grün, rot, gelb, grau).
  */
-export function AktensicherungHilfe({ onSicherheit, onDokumente, datentresor }: { onSicherheit: (ziel?: () => boolean) => void; onDokumente: () => void; datentresor?: string }) {
+export function AktensicherungHilfe({ onSicherheit, onDokumente, datentresor, live = {} }: { onSicherheit: (ziel?: () => boolean) => void; onDokumente: () => void; datentresor?: string; live?: LiveZustand }) {
   // Gemeinsamer Sprungweg: Sicherheitscenter öffnen und nach dem Zeichnen einmal zur Stelle (kein Zeitgeber).
   const hin = (z: Ziel) => { if (z === "akte") { onDokumente(); return; } onSicherheit(() => zurStelle(SELEKTOR[z], { sofort: true })); };
   const zielWort: Record<Ziel, string> = { akte: "zur Akte", datentresor: "Datentresor im Sicherheitscenter", "pro-tresor": "Pro-Tresor im Sicherheitscenter", vollsicherung: "Sicherung im Sicherheitscenter" };
@@ -96,14 +104,19 @@ export function AktensicherungHilfe({ onSicherheit, onDokumente, datentresor }: 
     <summary><HardDrive/> Akten sichern – Plan zum Abhaken</summary>
     <div>
       <p>Kästen mit › führen an die Stelle in der App. Wiederherstellbar ist die Akte erst, wenn eine Vollsicherung an einem zweiten Ort liegt und einmal in einen leeren Ordner zurückgeholt wurde.</p>
+      <DemoBand/>
+      <p className="aktensicherung-legende" data-live-legende>Die Orte zeigen den Zustand dieses Geräts: <span className="chip-gruen">eingerichtet</span><span className="chip-rot">fehlt</span><span className="chip-gelb">gesperrt oder veraltet</span><span className="chip-grau">freiwillig oder nicht hier</span>. Die Punkte darunter hakst du selbst ab:</p>
       <p className="aktensicherung-legende"><span className="chip-rot">zu tun</span><span className="chip-gruen">✓ erledigt</span><span className="chip-grau">nicht nötig</span><span data-sicherung-stand>{offen} zu tun · {erledigt} erledigt</span></p>
       <div className="aktensicherung-orte">
         {ORTE.map((o) => <section key={o.titel} className="aktensicherung-ort">
           {(() => {
             const verbunden = o.ziel === "datentresor" && datentresor;
             const z: Ziel = verbunden ? "akte" : o.ziel;
-            return <button type="button" className={`ablauf-knoten ablauf-link ${verbunden ? "art-gut" : "art-hervor"}`} data-sicherung-ziel={z} title={`${o.titel} – ${zielWort[z]}`} onClick={() => hin(z)}>
-              <span className="ablauf-text"><strong>{o.titel}</strong><small>{verbunden ? `Verbunden: ${datentresor} · zur Akte` : o.unter}</small></span><span className="ablauf-pfeil" aria-hidden="true">›</span></button>;
+            const l = liveVon(o, live);
+            const art = l ? LIVE_ART[l.farbe] : verbunden ? "art-gut" : "art-hervor";
+            const unter = verbunden ? `Verbunden: ${datentresor} · zur Akte` : l ? `${l.text}${l.los ? ` · ${l.los} ›` : ""}` : o.unter;
+            return <button type="button" className={`ablauf-knoten ablauf-link ${art}`} data-sicherung-ziel={z} data-live={l?.farbe} title={`${o.titel} – ${zielWort[z]}`} onClick={() => hin(z)}>
+              <span className="ablauf-text"><strong>{o.titel}</strong><small>{unter}</small></span><span className="ablauf-pfeil" aria-hidden="true">›</span></button>;
           })()}
           <ul className="ordnerbaum aktensicherung-baum"><li className="baum-wurzel-leer"><ul>{o.punkte.map(zweig)}</ul></li></ul>
         </section>)}

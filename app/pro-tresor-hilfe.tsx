@@ -20,7 +20,8 @@ const LAGE: Record<ProTresorZustand["status"], string> = { offen: "entsperrt", g
 export function ProTresorWoLiegtWas({ open = false, onVerbinden, onDokumente, stand, zahlen }: { open?: boolean; onVerbinden?: () => void; onDokumente?: () => void; stand?: ProTresorZustand; zahlen?: { gesamt: number; imTresor: number } }) {
   const verbinden = onVerbinden || VERBINDEN;
   const lage = stand ? LAGE[stand.status] : null;
-  const hauptArt = !stand ? "hervor" : stand.status === "offen" ? "gut" : "warnung";
+  // Klaus 09.11. (l2, l5): nie eingerichtet = grau (freiwillig), gesperrt = gelb, nicht erreichbar = rot, entsperrt = grün.
+  const hauptArt = !stand ? "hervor" : stand.status === "offen" ? "gut" : stand.status === "gesperrt" ? "gelb" : stand.status === "getrennt" ? "aus" : "warnung";
   const unterlagen = zahlen ? `${zahlen.imTresor} von ${zahlen.gesamt} Unterlage${zahlen.gesamt === 1 ? "" : "n"} im Tresor` : "Diese App: Familienakte · entsteht beim ersten Original";
   return <details data-pro-tresor-hilfe open={open} className="wo-liegt-was">
     <summary><FolderOpen/> Wo liegt was?</summary>

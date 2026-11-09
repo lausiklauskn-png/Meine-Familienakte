@@ -1,0 +1,24 @@
+// Live-Zustand der Hilfekarten (Klaus 09.11., l1–l5): grün eingerichtet · rot nötig und fehlt · gelb gesperrt/veraltet · grau freiwillig.
+const { liveBerechnen, SICHERUNG_TAGE } = await import("../lib/live-zustand.ts");
+let fehler = 0;
+const pruefe = (ok, text) => { console.log(`${ok ? "✓" : "✗"} ${text}`); if (!ok) fehler++; };
+const jetzt = Date.parse("2026-11-09T12:00:00Z");
+const tage = (n) => new Date(jetzt - n * 86400000).toISOString();
+const basis = { datentresor: "Familienakte", letzteSicherung: tage(2), pro: { status: "offen", ort: "Gerät/Familienakte/Family-Projekt" }, nativ: true, kalender: true, glocke: true, laufwerke: 1, demo: false, jetzt };
+const z = liveBerechnen(basis);
+pruefe(["datentresor", "protresor", "tresor-einschritt", "datei-pro", "aus-sicherung", "sicherungsordner", "kalender", "glocke", "anderes-geraet"].every((k) => z[k].farbe === "gruen"), "alles eingerichtet: grün");
+pruefe(z["aus-demo"].farbe === "grau", "Demo aus: grau");
+pruefe(liveBerechnen({ ...basis, datentresor: undefined }).datentresor.farbe === "rot", "Datentresor fehlt: rot (nötig) mit Weg");
+pruefe(liveBerechnen({ ...basis, datentresor: undefined }).datentresor.ziel === '[data-hilfe-ziel="datentresor"]', "Datentresor: Sprung zur Karte im Sicherheitscenter");
+const pro = (status) => liveBerechnen({ ...basis, pro: status ? { status } : null }).protresor.farbe;
+pruefe(pro(null) === "grau" && pro("getrennt") === "grau", "Pro-Tresor nie eingerichtet: grau (freiwillig, l2)");
+pruefe(pro("gesperrt") === "gelb" && pro("nicht_erreichbar") === "rot" && pro("offen") === "gruen", "Pro-Tresor gesperrt gelb, nicht erreichbar rot, entsperrt grün");
+pruefe(liveBerechnen({ ...basis, nativ: false }).protresor.farbe === "grau", "Web-App: Pro-Tresor grau (gibt es hier nicht)");
+const sich = (s) => liveBerechnen({ ...basis, letzteSicherung: s })["aus-sicherung"].farbe;
+pruefe(sich(tage(SICHERUNG_TAGE)) === "gruen" && sich(tage(SICHERUNG_TAGE + 1)) === "gelb" && sich(null) === "rot", "Vollsicherung: grün bis 7 Tage, dann gelb, nie = rot (l3)");
+pruefe(liveBerechnen({ ...basis, kalender: false, glocke: false, laufwerke: 0 }).kalender.farbe === "grau", "Kalender nicht verbunden: grau, nicht rot");
+const demo = liveBerechnen({ ...basis, demo: true, datentresor: undefined });
+pruefe(demo["aus-demo"].farbe === "rot" && demo.datentresor.farbe === "grau" && demo.protresor.farbe === "grau" && !demo.datentresor.los, "Demo an: rot; Datentresor und Pro-Tresor grau ohne Beheben (l4)");
+pruefe(Object.values(liveBerechnen({ ...basis, datentresor: undefined, pro: { status: "gesperrt" }, letzteSicherung: null })).filter((l) => l.farbe === "rot" || l.farbe === "gelb").every((l) => l.los && l.seite), "jedes Rot und Gelb hat einen Weg zum Beheben");
+console.log(fehler ? `Live-Zustand: ${fehler} rot` : "Live-Zustand: alles grün");
+process.exit(fehler ? 1 : 0);

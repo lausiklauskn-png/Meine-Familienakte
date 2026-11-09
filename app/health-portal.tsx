@@ -38,6 +38,7 @@ import { ProTresorWoLiegtWas } from "./pro-tresor-hilfe";
 import { AktensicherungHilfe } from "./aktensicherung-hilfe";
 import { EmailHilfe } from "./email-hilfe";
 import { AppLandkarteHilfe } from "./app-landkarte-hilfe";
+import { useLiveZustand } from "./live-zustand";
 import type { Vorschau } from "./hilfe-vorschau";
 import { SEITEN_KARTEN } from "../lib/hilfe-seiten";
 import { Ablaufbild, BildThema, DatenmodellKarte, FristenKarte, KastenReihe, SichernKarte, sprung, ablaufAssistenz, ablaufEingang, ablaufExport, ablaufFoto } from "./hilfe-bilder";
@@ -1728,7 +1729,7 @@ function HealthPortalContent() {
         {!query && active === "vehicles" && <PreparedArea kind="vehicles" onUpload={openLocalUpload} onGo={go} onDocuments={openDocumentLibrary}/>}
         {!query && active === "purchases" && <PreparedArea kind="purchases" onUpload={openLocalUpload} onGo={go} onDocuments={openDocumentLibrary}/>}
         {!query && active === "directory" && <Directory onGo={go}/>} 
-        {!query && active === "help" && <HelpCenter onGo={go} herkunft={navigation.vorher} datentresor={demoActive() ? undefined : (proDestination ? (proDestination.ready ? "Pro-Tresor" : "") : oneDriveReachable ? (oneDriveName || "OneDrive") : localVaultReachable && !browserStorage ? localVaultName : "") || undefined} onSearch={(value) => { setQuery(value); window.scrollTo({ top: 0, behavior: "smooth" }); }} demo={<DemoStarten aktiv={demoActive()} gesperrt={demoGesperrt} grund={!vaultHandle ? "Zuerst im Sicherheitscenter einen Datentresor wählen, dann lässt sich die Demo starten." : undefined} starten={() => void loadSampleData()}/>}/>} 
+        {!query && active === "help" && <HelpCenter onGo={go} herkunft={navigation.vorher} letzteSicherung={letzteSicherung} datentresor={demoActive() ? undefined : (proDestination ? (proDestination.ready ? "Pro-Tresor" : "") : oneDriveReachable ? (oneDriveName || "OneDrive") : localVaultReachable && !browserStorage ? localVaultName : "") || undefined} onSearch={(value) => { setQuery(value); window.scrollTo({ top: 0, behavior: "smooth" }); }} demo={<DemoStarten aktiv={demoActive()} gesperrt={demoGesperrt} grund={!vaultHandle ? "Zuerst im Sicherheitscenter einen Datentresor wählen, dann lässt sich die Demo starten." : undefined} starten={() => void loadSampleData()}/>}/>} 
         {!query && active === "systemcheck" && <SystemCheck
           documents={documents}
           localDocuments={localDocuments}
@@ -2782,15 +2783,17 @@ function abnahmeErgebnisse() {
   const run = latestUserAcceptance(readSystemCheckReports(), APP_VERSION);
   return Object.fromEntries(Object.entries(run?.answers || {}).map(([id, antwort]) => [id, latestUserResult(antwort)?.result]));
 }
-function HelpCenter({ onGo, onSearch, demo, datentresor, herkunft }: { onGo: GehMitZiel; onSearch: (value: string) => void; demo?: React.ReactNode; datentresor?: string; herkunft?: SectionId }) {
+function HelpCenter({ onGo, onSearch, demo, datentresor, herkunft, letzteSicherung = null }: { onGo: GehMitZiel; onSearch: (value: string) => void; demo?: React.ReactNode; datentresor?: string; herkunft?: SectionId; letzteSicherung?: string | null }) {
   const eingerichtet = useMemo(() => hilfeEingerichtet(datentresor), [datentresor]);
+  // Klaus 09.11.: Landkarte und „Akten sichern“ zeigen den Zustand dieses Geräts (grün, rot, gelb, grau) mit „Beheben ›“.
+  const live = useLiveZustand(datentresor, letzteSicherung);
   // Vorschaufenster (Sitzung 4): Skizze der Zielseite aus den echten Kartentiteln, Sprung mit rotem Rahmen.
   const vs = (seite: SectionId, karte?: string): Vorschau => ({ seite, karte, titel: sectionLabels[seite],
     karten: SEITEN_KARTEN[seite] || [], hin: sprung(onGo, seite, karte) });
   const VORSCHAU_NEU: Record<string, [SectionId, string?]> = { "mein-kalender": ["reminders", "Mein Kalender"], "app-glocke": ["reminders", "Mein Kalender"], "umzug": ["security", "Vollständige Sicherung"], "internet": ["overview"], "zu-gross": ["inbox", "Eingänge prüfen"], "notiz": ["overview"], "auge": ["reminders", "Offene Fristen und Aufgaben"], "loeschen": ["reminders", "Offene Fristen und Aufgaben"], "einklappen": ["reminders", "Offene Fristen und Aufgaben"], "neu": ["overview"], "update": ["overview"], "teilen": ["inbox", "Neue Unterlagen erfassen"], "workflow-pdf": ["workflowpdf"], "drucken": ["overview"] };
   const themen: HilfeThemaEl[] = [
     { id: "wo-liegt-was", titel: "Wo liegt was?", el: <ProTresorWoLiegtWas onVerbinden={() => onGo("security")} onDokumente={() => onGo("documents")}/> },
-    { id: "akten-sichern", titel: "Akten sichern – Plan zum Abhaken", el: <AktensicherungHilfe onSicherheit={(ziel) => onGo("security", undefined, ziel ? { ziel } : undefined)} onDokumente={() => onGo("documents")} datentresor={datentresor}/> },
+    { id: "akten-sichern", titel: "Akten sichern – Plan zum Abhaken", el: <AktensicherungHilfe onSicherheit={(ziel) => onGo("security", undefined, ziel ? { ziel } : undefined)} onDokumente={() => onGo("documents")} datentresor={datentresor} live={live}/> },
     { id: "fristen-kalender", titel: "Fristen im Kalender", el: <KalenderHilfe zurKarte={() => onGo("reminders", undefined, { ziel: () => zurStelle("#kalender-verbinden", { sofort: true }) })}/> },
     { id: "email", titel: "E-Mail in die Familienakte", el: <EmailHilfe onEingang={() => onGo("inbox")} onSchreiben={() => onGo("assistant")}/> },
     ...NEUE_HILFE_THEMEN.map((t) => ({ id: t.id, titel: t.titel, el: <HilfeThemaEintrag thema={t} vorschau={VORSCHAU_NEU[t.id] ? vs(...VORSCHAU_NEU[t.id]!) : undefined}/> })),
@@ -2911,7 +2914,7 @@ function HelpCenter({ onGo, onSearch, demo, datentresor, herkunft }: { onGo: Geh
   ];
   const examples = ["Schreiben der Krankenkasse zum Zuschuss", "Rechnung der Waschmaschine", "Mietvertrag Pustelblumenweg", "Impfpass und Vorsorge"];
   return <><PageTitle icon={<LifeBuoy/>} title="Hilfe" text="Kurze und verständliche Erklärungen zur Familienakte – ohne technische Fachsprache."/>
-    <HilfeOrdnungAnsicht themen={themen} herkunft={herkunft} eingerichtet={eingerichtet} oben={<AppLandkarteHilfe onGo={onGo} eingerichtet={eingerichtet} demo={demo}/>} zwischen={<>
+    <HilfeOrdnungAnsicht themen={themen} herkunft={herkunft} eingerichtet={eingerichtet} oben={<AppLandkarteHilfe onGo={onGo} eingerichtet={eingerichtet} demo={demo} live={live}/>} zwischen={<>
     <section className="help-start card"><div><span className="badge success">Erste Schritte</span><span className="ui-heading-help"><h2>Was möchtest du tun?</h2><InfoPopover label="Was möchtest du tun? erklären" text={UI_HELP["Was möchtest du tun?"]}/></span></div><div className="help-actions"><button onClick={() => onGo("documents")}><Archive/><span><strong>Dokumente finden</strong></span></button><button onClick={() => onGo("inventory")}><FolderSearch/><span><strong>Bestand prüfen</strong></span></button><button onClick={() => onGo("inbox")}><Upload/><span><strong>Dokument ablegen</strong></span></button><button onClick={() => onGo("memory")}><BookHeart/><span><strong>Tagebuch schreiben</strong></span></button><button onClick={() => onGo("security")}><HardDrive/><span><strong>Datentresor öffnen</strong></span></button><button onClick={() => onGo("systemcheck")}><ShieldCheck/><span><strong>Systemprüfung</strong></span></button><button onClick={() => onGo("changelog")}><History/><span><strong>Was gibt’s Neues?</strong></span></button></div></section>
     <details className="card help-suche"><summary><Search size={18}/> Wie suche ich etwas?</summary><div className="search-examples">{examples.map((example) => <button key={example} onClick={() => onSearch(example)}><Search size={16}/>{example}</button>)}</div><p className="fine-print">Das Mikrofon schreibt Gesprochenes in das Suchfeld. Danach erkennt die Familienakte Themen wie Krankenkasse, Leistung, Schreiben, Ärzte, ICD-Codes, Aufgaben oder Fristen. Gesucht wird nur in bereits vorhandenen Angaben; PDF- oder Word-Inhalte werden nicht automatisch gelesen und es werden keine Treffer erfunden.</p></details>
     <KurzhinweiseSchalter/>
