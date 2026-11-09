@@ -47,7 +47,7 @@ export function proTresorMeldung(code: string): string {
   switch (code) {
     case "FA_TRESOR_FREMDE_KENNUNG": return "Anderer Tresor verbunden – bitte den Ordner wählen, in dem tresorordner.json liegt.";
     case "FA_TRESOR_NICHT_VORHANDEN": return `In diesem Ordner liegt keine tresorordner.json. ${ORDNER_HINWEIS} Es wurde kein neuer Tresor angelegt.`;
-    case "FA_TRESOR_UNTERORDNER": return `Du hast einen Unterordner des Tresors gewählt (z. B. „Tresorordner“, „Familienakte“ oder „Eingang-…“). Bitte eine Ebene höher den Ordner wählen, in dem tresorordner.json liegt. Es wurde nichts verändert.`;
+    case "FA_TRESOR_UNTERORDNER": return `Der gewählte Ordner heißt wie ein Ordner im Tresor („Tresorordner“, „Familienakte“, „Eingang-…“). Bitte eine Ebene höher wählen – am einfachsten die SD-Karte oder den Gerätespeicher selbst; die App legt „Family-Projekt“ dann selbst an. Es wurde nichts verändert.`;
     case "FA_TRESOR_MEHRERE": return "In diesem Speicher liegen mehrere Tresore. Bitte direkt den gewünschten Tresor-Ordner wählen. Es wurde nichts verändert.";
     case "TRESOR_NAME_UNGUELTIG": return "Dieser Ordnername geht nicht (keine Zeichen wie / \\ : * ? \" < > |, nicht der Name eines Fachs). Es wurde nichts angelegt.";
     case "TRESOR_NAME_BELEGT": return "Ein Ordner mit diesem Namen liegt dort schon und hat Inhalt. Bitte einen anderen Namen wählen. Es wurde nichts angelegt.";

@@ -6,12 +6,14 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode }
  * diese Richtung, Pfeil an beiden Enden = hin und zurück. Ein Tipp hebt die Äste eines Kastens hervor und nennt darunter,
  * woher Daten kommen, wohin sie gehen und wo der Kasten in der App liegt.
  * Live: der Stand kommt aus den Daten (in der App lib/app-stand.ts, wie status.json im Sage-Protokoll). Was sich seit dem letzten
- * Öffnen geändert hat, trägt einen Goldrahmen, bis man den Kasten antippt, höchstens 14 Tage (Klaus 07.11., gemerkt je Gerät).
+ * Öffnen geändert hat, trägt einen blauen Punkt „neu“ (bis 09.11. Goldrahmen), bis man den Kasten antippt, höchstens 14 Tage (Klaus 07.11., gemerkt je Gerät).
  * Immer als Karte, auch am Handy (Klaus 08.11.2026: die Liste sagt ohne die Wege wenig; die Karte wischt man seitlich).
  */
 export type KartenStand = "fertig" | "imbau" | "aktivieren" | "geplant";
 export type KartenPunkt = { id: string; titel: string; wo?: string; unter?: string; mehr?: string; stand?: KartenStand; warn?: boolean; mitte?: boolean;
-  ziel?: () => void; zielText?: string };
+  ziel?: () => void; zielText?: string;
+  /** Zustand dieses Geräts (Klaus 09.11.: Karten immer live): Fläche grün/rot/gelb/grau, Text statt des Orts. */
+  live?: { farbe: "gruen" | "rot" | "gelb" | "grau"; text: string; los?: string } };
 export type KartenChip = KartenPunkt & { nach?: string; beide?: boolean };
 export type KartenGruppe = { id: string; titel: string; wo?: string; spalte: number; chips: KartenChip[] };
 export type KartenKnoten = KartenPunkt & { spalte: number };
@@ -19,6 +21,9 @@ export type KartenKante = { von: string; nach: string; beide?: boolean; unten?: 
 
 const GOLD_TAGE = 14;
 const WORT: Record<KartenStand, string> = { fertig: "fertig", imbau: "im Bau, bald fertig", aktivieren: "muss eingeschaltet werden", geplant: "geplant, abzusprechen" };
+const LIVE_WORT = { gruen: "eingerichtet", rot: "fehlt", gelb: "gesperrt oder veraltet", grau: "nicht eingerichtet" } as const;
+/** Ein Weg ist gestrichelt, solange einer seiner Kästen noch nicht da ist: Baustand nicht fertig oder auf diesem Gerät nicht grün. */
+const nochNichtDa = (p?: KartenPunkt) => !p ? false : p.live ? p.live.farbe !== "gruen" : (p.stand || "fertig") !== "fertig";
 const RAND = 16, LUECKE = 12, ABSTAND = 34;
 type Rechteck = { l: number; t: number; w: number; h: number };
 type Lage = { pos: Record<string, { x: number; y: number }>; breite: number; hoehe: number; aeste: { k: KartenKante; d: string }[] };
@@ -129,11 +134,11 @@ export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, onFrisc
   const an = new Set(nachbarn.flatMap((k) => [k.von, k.nach]));
   const gewaehlt = aktiv ? alle.get(aktiv) : null;
   const wahl = (pid: string) => { gesehen(pid); setAktiv((alt) => alt === pid ? null : pid); };
-  const klasse = (p: KartenPunkt, art: string) => [art, `s-${p.stand || "fertig"}`, p.warn && "warn", p.mitte && "mitte", an.has(p.id) && "an", frisch.has(p.id) && "frisch"].filter(Boolean).join(" ");
-  const inhalt = (p: KartenPunkt, mitUnter: boolean): ReactNode => <><span className="lk-punkt" aria-hidden="true"/><strong>{p.warn ? "⚠ " : ""}{p.titel}</strong><small>{mitUnter ? [p.wo, p.unter].filter(Boolean).join(" · ") : p.wo}</small></>;
+  const klasse = (p: KartenPunkt, art: string) => [art, `s-${p.stand || "fertig"}`, p.live && `l-${p.live.farbe}`, p.warn && "warn", p.mitte && "mitte", an.has(p.id) && "an", frisch.has(p.id) && "frisch"].filter(Boolean).join(" ");
+  const inhalt = (p: KartenPunkt, mitUnter: boolean): ReactNode => <><span className="lk-punkt" aria-hidden="true"/><strong>{p.warn ? "⚠ " : ""}{p.titel}</strong><small>{p.live ? p.live.text : mitUnter ? [p.wo, p.unter].filter(Boolean).join(" · ") : p.wo}</small></>;
   const knopf = (p: KartenPunkt, art: "lk-chip" | "lk-kasten", data: Record<string, string>) =>
-    <button type="button" key={p.id} className={klasse(p, art)} {...data} aria-pressed={aktiv === p.id}
-      aria-label={`${p.titel} (${WORT[p.stand || "fertig"]}) – Verbindungen zeigen`} onClick={() => wahl(p.id)}>{inhalt(p, art === "lk-kasten")}</button>;
+    <button type="button" key={p.id} className={klasse(p, art)} {...data} aria-pressed={aktiv === p.id} data-live={p.live?.farbe}
+      aria-label={`${p.titel} (${p.live ? `${LIVE_WORT[p.live.farbe]}: ${p.live.text}` : WORT[p.stand || "fertig"]}) – Verbindungen zeigen`} onClick={() => wahl(p.id)}>{inhalt(p, art === "lk-kasten")}</button>;
   const titel = (pid: string) => alle.get(pid)?.titel || pid;
 
   return <div className="landkarte" data-landkarte={id} data-ansicht="karte">
@@ -148,7 +153,7 @@ export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, onFrisc
           </defs>
           {lage?.aeste.map(({ k, d }) => {
             const hervor = aktiv === k.von || aktiv === k.nach, z = hervor ? "-an" : "";
-            const geplant = [k.von, k.nach].some((pid) => (alle.get(pid)?.stand || "fertig") !== "fertig");
+            const geplant = [k.von, k.nach].some((pid) => nochNichtDa(alle.get(pid)));
             return <path key={`${k.von}>${k.nach}`} d={d} className={`lk-ast${hervor ? " an" : ""}${geplant ? " geplant" : ""}`} data-ast={`${k.von}>${k.nach}`} data-richtung={k.beide ? "beide" : "hin"}
               markerEnd={`url(#lk-${id}-spitze${z})`} markerStart={k.beide ? `url(#lk-${id}-anfang${z})` : undefined}/>;
           })}
@@ -165,23 +170,30 @@ export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, onFrisc
     <div className="lk-info" aria-live="polite" data-karte-info={gewaehlt?.id || ""}>
       {gewaehlt ? <>
         <strong>{gewaehlt.titel}</strong>
-        <span className={`lk-marke s-${gewaehlt.stand || "fertig"}`}>{WORT[gewaehlt.stand || "fertig"]}</span>
+        {gewaehlt.live && <span className={`lk-marke l-${gewaehlt.live.farbe}`} data-live-marke>Dieses Gerät: {gewaehlt.live.text}</span>}
+        {(!gewaehlt.live || !["fertig", "aktivieren"].includes(gewaehlt.stand || "fertig")) && <span className={`lk-marke s-${gewaehlt.stand || "fertig"}`}>{WORT[gewaehlt.stand || "fertig"]}</span>}
         {(gewaehlt.wo || gewaehlt.gruppe) && <p>Wo: {[gewaehlt.gruppe?.titel, gewaehlt.wo].filter(Boolean).join(" · ")}</p>}
         {[gewaehlt.unter, gewaehlt.mehr].filter(Boolean).map((t) => <p key={t}>{t}</p>)}
         {nachbarn.some((k) => k.nach === aktiv) && <p className="lk-richtung">← kommt von: {nachbarn.filter((k) => k.nach === aktiv).map((k) => `${k.beide ? "⇄ " : ""}${titel(k.von)}`).join(", ")}</p>}
         {nachbarn.some((k) => k.von === aktiv) && <p className="lk-richtung">→ geht zu: {nachbarn.filter((k) => k.von === aktiv).map((k) => `${k.beide ? "⇄ " : ""}${titel(k.nach)}`).join(", ")}</p>}
-        {gewaehlt.ziel && <button type="button" className="button secondary" onClick={gewaehlt.ziel}>{gewaehlt.zielText || "Hingehen"} ›</button>}
+        {gewaehlt.ziel && <button type="button" className={gewaehlt.live?.los ? "button primary" : "button secondary"} data-live-los={gewaehlt.live?.los || undefined} onClick={gewaehlt.ziel}>{gewaehlt.zielText || "Hingehen"} ›</button>}
       </> : <span className="lk-tipp">Tipp auf einen Kasten zeigt, woher Daten kommen, wohin sie gehen und wo er in der App liegt.</span>}
     </div>
   </div>;
 }
 
-export function KartenLegende() {
+export function KartenLegende({ live = false }: { live?: boolean }) {
   return <p className="lk-legende">
+    {live && <span className="lk-legende-live" data-live-legende><b>Dieses Gerät (Fläche):</b>
+      <span><i className="lk-muster l-gruen" aria-hidden="true"/> eingerichtet</span>
+      <span><i className="lk-muster l-rot" aria-hidden="true"/> fehlt – antippen, beheben</span>
+      <span><i className="lk-muster l-gelb" aria-hidden="true"/> gesperrt oder veraltet</span>
+      <span><i className="lk-muster l-grau" aria-hidden="true"/> freiwillig oder nicht hier</span>
+      <b>Baustand (Rahmen):</b></span>}
     <span><i className="lk-muster s-fertig" aria-hidden="true"/> fertig</span>
     <span><i className="lk-muster s-imbau" aria-hidden="true"/> im Bau, bald fertig</span>
-    <span><i className="lk-muster s-aktivieren" aria-hidden="true"/> muss eingeschaltet werden</span>
+    {!live && <span><i className="lk-muster s-aktivieren l-rot" aria-hidden="true"/> muss eingeschaltet werden</span>}
     <span><i className="lk-muster s-geplant" aria-hidden="true"/> geplant, abzusprechen</span>
-    <span>⚠ Vorsicht</span><span>→ Daten nur in eine Richtung</span><span>⇄ hin und zurück</span><span><i className="lk-muster frisch" aria-hidden="true"/> seit dem letzten Öffnen geändert</span>
+    <span>⚠ Vorsicht</span><span>→ Daten nur in eine Richtung</span><span>⇄ hin und zurück</span><span><i className="lk-muster frisch" aria-hidden="true"/> neu seit dem letzten Öffnen</span>
   </p>;
 }

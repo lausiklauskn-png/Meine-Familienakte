@@ -3,12 +3,14 @@ import type { KartenStand } from "../app/landkarte";
 /**
  * Stand je Kasten der Landkarte (Klaus 07.11.2026, Sitzung 4; wie status.json im Sage-Protokoll).
  * Was hier nicht steht, ist fertig. Jede Bausitzung trägt hier ein, was sich mit ihrer Fassung ändert; die Hilfe umrahmt
- * Geändertes golden, bis man den Kasten antippt (höchstens 14 Tage).
+ * Geändertes mit blauem Punkt „neu“, bis man den Kasten antippt (höchstens 14 Tage; bis 09.11. golden).
  * „selbst“: rot (einschalten) wird grün, sobald es auf diesem Gerät eingerichtet ist (Kennung wie in hilfeEingerichtet).
  */
 export type StandEintrag = { stand: KartenStand; seit?: string; selbst?: "datentresor" | "fristen-kalender" | "app-glocke" };
 
 export const APP_STAND: Readonly<Record<string, StandEintrag>> = {
+  // Gerätetest 09.11. (2.28.51): Tresor in eigenem Ordner im Gerät; Karten live (Gerätezustand als Fläche).
+  "tresor-einschritt": { stand: "fertig", seit: "2.28.51" },
   // Brücken 09.11. (2.28.50): Kurzfassung im Pro-Tresor, E-Mail-Anlagen beliebig tief, Antworten im eigenen Netz.
   // Rückmeldung 09.11. (2.28.49): Tagebuch mit Buch-Knopf, „Erinnerung“ statt „Notiz“, Brief beantworten verdeckt.
   "tagebuch": { stand: "fertig", seit: "2.28.49" },

@@ -7,7 +7,7 @@ import type { ProTresorZustand } from "./pro-tresor";
 export const PRO_TRESOR_FACH = "Familienakte";
 export const PRO_TRESOR_EINGANG = "Eingang-Familienakte";
 export const PRO_TRESOR_MENUEWEG = "Dokumente → Sicherheit & lokaler Tresor → Karte „Gemeinsamer Pro-Tresor“ → „Vorhandenen Pro-Tresor verbinden …“";
-const VERBINDEN = "[data-pro-tresor-verbinden]";
+const VERBINDEN = "[data-pro-tresor-einrichten], [data-pro-tresor-verbinden]";
 
 /** Lage des Tresors für die Anzeige: grün = entsperrt, rot = gesperrt / nicht verbunden / nicht erreichbar. */
 const LAGE: Record<ProTresorZustand["status"], string> = { offen: "entsperrt", gesperrt: "gesperrt", getrennt: "noch nicht verbunden", nicht_erreichbar: "nicht erreichbar" };
@@ -20,12 +20,13 @@ const LAGE: Record<ProTresorZustand["status"], string> = { offen: "entsperrt", g
 export function ProTresorWoLiegtWas({ open = false, onVerbinden, onDokumente, stand, zahlen }: { open?: boolean; onVerbinden?: () => void; onDokumente?: () => void; stand?: ProTresorZustand; zahlen?: { gesamt: number; imTresor: number } }) {
   const verbinden = onVerbinden || VERBINDEN;
   const lage = stand ? LAGE[stand.status] : null;
-  const hauptArt = !stand ? "hervor" : stand.status === "offen" ? "gut" : "warnung";
+  // Klaus 09.11. (l2, l5): nie eingerichtet = grau (freiwillig), gesperrt = gelb, nicht erreichbar = rot, entsperrt = grün.
+  const hauptArt = !stand ? "hervor" : stand.status === "offen" ? "gut" : stand.status === "gesperrt" ? "gelb" : stand.status === "getrennt" ? "aus" : "warnung";
   const unterlagen = zahlen ? `${zahlen.imTresor} von ${zahlen.gesamt} Unterlage${zahlen.gesamt === 1 ? "" : "n"} im Tresor` : "Diese App: Familienakte · entsteht beim ersten Original";
   return <details data-pro-tresor-hilfe open={open} className="wo-liegt-was">
     <summary><FolderOpen/> Wo liegt was?</summary>
     <OrdnerBaum label="Aufbau des gemeinsamen Tresors" wurzel={{
-      titel: "Speicher", unter: stand?.ort ? `Gewählt: ${stand.ort.replace(/^content:\/\/[^/]+\/(tree\/)?/, "")}` : "SD-Karte, Gerät, USB-Stick oder Laufwerk",
+      titel: "Speicher", unter: stand?.ort ? `Gewählt: ${stand.ort.replace(/^content:\/\/[^/]+\/(tree\/)?/, "")}` : "SD-Karte, Gerät, USB-Stick, Laufwerk – oder ein eigener Ordner im Gerät",
       kinder: [{
         titel: lage ? `Tresor-Hauptordner · ${lage}` : "Tresor-Hauptordner", unter: "Name frei, z. B. „Family-Projekt“ · erkennbar an tresorordner.json · diesen Ordner wählen", art: hauptArt, ziel: verbinden,
         kinder: [

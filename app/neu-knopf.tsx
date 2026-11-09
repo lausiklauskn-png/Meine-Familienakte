@@ -7,8 +7,9 @@ import { workspaceStorage } from "../lib/demo-workspace.ts";
  * Ungelesenes da ist; jeder Eintrag verschwindet mit ×, gemerkt je Gerät (Demo getrennt). Die Liste steht hier im Code,
  * neue Einträge bekommen eine neue Kennung. Keine Personennamen.
  */
-export type Neuigkeit = { id: string; titel: string; text: string; knopf?: { text: string; ziel: "kalender" | "hilfe-sichern" | "hilfe" } };
+export type Neuigkeit = { id: string; titel: string; text: string; knopf?: { text: string; ziel: "kalender" | "hilfe-sichern" | "hilfe" | "hilfe-landkarte" } };
 export const NEUIGKEITEN: Neuigkeit[] = [
+  { id: "live-karten-2026-11-09", titel: "Zustand deines Geräts auf einen Blick", text: "Die Landkarte der App und „Akten sichern“ in der Hilfe zeigen jetzt, was auf diesem Gerät eingerichtet ist: grün eingerichtet, rot fehlt, gelb gesperrt oder veraltet, grau freiwillig. Rot und Gelb antippen, „Beheben ›“ führt an die Stelle. Den Tresor kannst du jetzt auch in einem eigenen Ordner im Gerät einrichten.", knopf: { text: "Landkarte öffnen", ziel: "hilfe-landkarte" } },
   { id: "email-2026-11-07", titel: "E-Mail in der Hilfe", text: "Neues Hilfe-Thema als Karte: wie Mails und ihre Anhänge in die Akte kommen, was schon geht und was geplant ist. Ein Tipp auf einen Kasten zeigt die Verbindungen.", knopf: { text: "Zur Hilfe", ziel: "hilfe" } },
   { id: "daten-2026-11-07", titel: "Sichern auch am Handy", text: "Vollsicherung in einen frei gewählten Ordner (SD-Karte, USB), mit Programm daneben. Sicherung einlesen nach Neuinstallation. Zu große Fotos lassen sich verkleinern. Die Demo arbeitet an einer Kopie deiner Daten.", knopf: { text: "Akten sichern", ziel: "hilfe-sichern" } },
   { id: "hilfe-2026-11-07", titel: "Hilfe auf neuem Stand", text: "Oben „Wie kann ich dir helfen?“, Themen nach Schritten geordnet, Sprünge mit rotem Rahmen. Neu am rechten Rand: Seitenleiste mit alle zu, nach oben, zurück.", knopf: { text: "Zur Hilfe", ziel: "hilfe" } },

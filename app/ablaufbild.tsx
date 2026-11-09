@@ -10,7 +10,7 @@ export type AblaufKnoten = {
   unter?: string;
   /** CSS-Selektor einer Stelle auf derselben Seite, oder eine Funktion (z. B. Seitenwechsel). */
   ziel?: string | (() => void);
-  art?: "normal" | "hervor" | "warnung" | "gut";
+  art?: "normal" | "hervor" | "warnung" | "gut" | "gelb" | "aus";
 };
 
 /** Zur Stelle springen, kurz markieren und fokussieren. Fehlt sie, passiert nichts. */

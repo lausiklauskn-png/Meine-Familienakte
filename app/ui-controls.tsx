@@ -24,7 +24,7 @@ export function HinweisText({ text }: { text: string }) {
   </span>;
 }
 
-export function InfoPopover({ text, label = "Weitere Informationen", ziel }: { text: string; label?: string; /** B5: „Hingehen ›“ zur Stelle, um die es geht. */ ziel?: { text?: string; los: () => void } }) {
+export function InfoPopover({ text, label = "Weitere Informationen", ziel, mehr }: { text: string; label?: string; /** B5: „Hingehen ›“ zur Stelle, um die es geht. */ ziel?: { text?: string; los: () => void }; /** Bild unter dem Text (z. B. Ordnerbaum „Wo liegt was?“), statt es lang auf der Seite zu zeigen. */ mehr?: ReactNode }) {
   const id = useId();
   const rootRef = useRef<HTMLSpanElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -66,7 +66,7 @@ export function InfoPopover({ text, label = "Weitere Informationen", ziel }: { t
     window.addEventListener("resize", spaeter);
     return () => { if (rahmen) cancelAnimationFrame(rahmen); window.removeEventListener("scroll", spaeter, true); window.removeEventListener("resize", spaeter); };
   }, [open, text]);
-  const fenster = open ? <span ref={panelRef} id={`${id}-panel`} className="start-info-panel info-angeheftet" role="note" style={lage}><strong>Hinweis</strong><HinweisText text={text}/>{ziel && <button type="button" className="text-link hinweis-ziel" onClick={(event) => { event.stopPropagation(); setOpen(false); ziel.los(); }} data-hinweis-ziel>{ziel.text || "Hingehen"} ›</button>}<button type="button" className="info-close" aria-label="Hinweis schließen" onClick={(event) => { event.stopPropagation(); setOpen(false); triggerRef.current?.focus(); }}><X size={16}/></button></span> : null;
+  const fenster = open ? <span ref={panelRef} id={`${id}-panel`} className="start-info-panel info-angeheftet" role="note" style={lage}><strong>Hinweis</strong><HinweisText text={text}/>{mehr && <span className="hinweis-mehr" data-hinweis-mehr>{mehr}</span>}{ziel && <button type="button" className="text-link hinweis-ziel" onClick={(event) => { event.stopPropagation(); setOpen(false); ziel.los(); }} data-hinweis-ziel>{ziel.text || "Hingehen"} ›</button>}<button type="button" className="info-close" aria-label="Hinweis schließen" onClick={(event) => { event.stopPropagation(); setOpen(false); triggerRef.current?.focus(); }}><X size={16}/></button></span> : null;
   return <span ref={rootRef} className={`start-info-popover ${open ? "open" : ""}`}>
     <button ref={triggerRef} type="button" className="start-info-trigger" aria-label={label} title={label} aria-expanded={open} aria-controls={`${id}-panel`} onClick={(event) => { event.stopPropagation(); if (!open) window.dispatchEvent(new CustomEvent("family-info-open", { detail: id })); setOpen(!open); }}><CircleHelp size={18}/></button>
     {fenster && (typeof document !== "undefined" ? createPortal(fenster, document.body) : fenster)}

@@ -190,6 +190,19 @@ public final class ProTresorAdapterProbe {
             Path leerEingang = Files.createDirectory(root.resolve("Eingang-Familienakte"));
             fehler("FA_TRESOR_UNTERORDNER", () -> ProTresorAdapter.einrichtenPruefen(new DateiAblage(leerEingang.toFile()), "Gerät/Eingang-Familienakte"));
             pruefe(Files.list(leerEingang).count() == 0, "Eingang-Wahl legt etwas an");
+            // Gerätetest 09.11.: selbst angelegter, leerer Ordner „Familienakte“ direkt im Gerätespeicher → Hauptordner darin.
+            Path eigen = Files.createDirectory(root.resolve("geraet-familienakte"));
+            DateiAblage eigenA = new DateiAblage(eigen.toFile());
+            Hauptordner.Ergebnis inEigen = ProTresorAdapter.einrichtenPruefen(eigenA, "Gerät/" + Fach.FAMILIENAKTE.ordner);
+            pruefe(Hauptordner.ANLEGEN_DARIN.equals(inEigen.art) && Files.list(eigen).count() == 0, "Leerer Ordner „Familienakte“ im Gerät: Hauptordner darin, nichts vorab angelegt");
+            ProTresorAdapter.Einrichtung neuEigen = ProTresorAdapter.einrichten(eigenA, inEigen, "", zugang);
+            neuEigen.adapter.close();
+            pruefe("Family-Projekt".equals(neuEigen.pfad) && Files.exists(eigen.resolve("Family-Projekt").resolve(TresorOrdner.KOPF)), "Tresor in „Familienakte/Family-Projekt“ angelegt");
+            pruefe(ProTresorAdapter.einrichtenPruefen(eigenA, "Gerät/" + Fach.FAMILIENAKTE.ordner).gefunden(), "Zweiter Lauf findet ihn");
+            Path sdFach = Files.createDirectory(root.resolve("sd-familienakte"));
+            fehler("FA_TRESOR_UNTERORDNER", () -> ProTresorAdapter.einrichtenPruefen(new DateiAblage(sdFach.toFile()), "SD/USB (1234-5678)/" + Fach.FAMILIENAKTE.ordner));
+            fehler("FA_TRESOR_UNTERORDNER", () -> ProTresorAdapter.einrichtenPruefen(new DateiAblage(sdFach.toFile()), "Gerät/Family-Projekt/" + Fach.FAMILIENAKTE.ordner));
+            pruefe(Files.list(sdFach).count() == 0, "Abgewiesene Fach-Wahl legt etwas an");
             Path zwei = Files.createDirectory(root.resolve("sd-zwei"));
             for (String n : List.of("Tresor A", "Tresor B"))
                 try (TresorOrdner t = TresorOrdner.anlegen(new DateiAblage(Files.createDirectory(zwei.resolve(n)).toFile()), Fach.WORKFLOW_PDF_APP, zugang)) { }
