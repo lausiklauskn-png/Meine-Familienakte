@@ -2869,3 +2869,9 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .lk-gold { border-color: #1d5b94 !important; color: #fff !important; background: #1d5b94; }
 .lk-chip.s-aktivieren:not([data-live]), .lk-kasten.s-aktivieren:not([data-live]) { background: #f9d9d5; }
 .s-aktivieren:not([data-live]) > .lk-punkt { background: #c0392b; }
+
+/* Pro-App-Verbund (Vorschau) in der Hilfe: Karte aus BookLedgerPro im Vollbild-Rahmen über der App. */
+.pro-verbund-rahmen { position: fixed; inset: 0; z-index: 90; display: flex; flex-direction: column; background: var(--paper); padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+.pro-verbund-kopf { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 12px; border-bottom: 1px solid var(--line); }
+.pro-verbund-kopf small { font-weight: 400; color: var(--muted, #4f6472); margin-left: 6px; }
+.pro-verbund-rahmen iframe { flex: 1; width: 100%; border: 0; display: block; background: #fff; }
