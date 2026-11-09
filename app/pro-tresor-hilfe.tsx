@@ -1,6 +1,7 @@
 import { FolderOpen } from "lucide-react";
 import { OrdnerBaum, Pfad } from "./ablaufbild";
 import type { ProTresorZustand } from "./pro-tresor";
+import { TresorLeserKnopf } from "./tresor-leser-knopf";
 
 /** „Wo liegt was?“ – gleicher Inhalt in jeder Pro-App (gemeinsamer Plan vom 2026-11-03), darunter app-spezifisch.
  *  Seit 2026-11-04 als Ordnerbaum, drei Merkpunkte und Pfadangabe (auf einen Blick statt Fließtext). */
@@ -44,6 +45,7 @@ export function ProTresorWoLiegtWas({ open = false, onVerbinden, onDokumente, st
     </ul>
     <p className="pfad-titel"><strong>Verbinden</strong> (nur in der Android- und der Windows-App; die Web-App „Basic“ zeigt keinen Pro-Tresor):</p>
     <Pfad teile={[{ text: "Dokumente" }, { text: "Sicherheit & lokaler Tresor" }, { text: "Gemeinsamer Pro-Tresor" }, { text: "Verbinden …", ziel: verbinden }]}/>
+    <TresorLeserKnopf/>
     <p className="sr-only">Ein Passwort gilt für alle Pro-Apps. Weg: {PRO_TRESOR_MENUEWEG}</p>
   </details>;
 }

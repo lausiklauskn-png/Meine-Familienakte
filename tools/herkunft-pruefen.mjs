@@ -12,7 +12,7 @@ for (const [datei, pin] of Object.entries(herkunft.dateien)) {
   else { rot++; console.log(`🔴 ${datei} weicht ab: ${ist} statt ${pin.sha256}`); }
 }
 // Pro-App-Verbund (Karte aus BookLedgerPro, Hilfe-Thema „Pro-App-Verbund (Vorschau)“): Pin steht neben der Datei.
-for (const pinDatei of ["public/pro-verbund/pro-verbund.herkunft.json"]) {
+for (const pinDatei of ["public/pro-verbund/pro-verbund.herkunft.json", "public/tresor-leser/tresor-leser.herkunft.json"]) {
   const pin = JSON.parse(readFileSync(path.join(root, pinDatei), "utf8"));
   const datei = path.join(path.dirname(pinDatei), path.basename(pin.datei));
   const ist = createHash("sha256").update(readFileSync(path.join(root, datei))).digest("hex");

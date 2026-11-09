@@ -1,0 +1,8 @@
+{
+  "_": "Byte-gleich aus Workflow PDF Pro übernommen (gepflegt neben dem Paket de.familyprojekt.tresor). Nie hier abwandeln; dort pflegen und neu kopieren. npm run check:herkunft prüft die SHA-256.",
+  "quelle": "lausiklauskn-png/Workflow-PDF-Pro",
+  "datei": "tools/tresor-leser/tresor-leser.html",
+  "commit": "414e53fca9586ae816bda98152619c63e2f76b9a",
+  "sha256": "62ae15b5d68e64159f4f6b6598f7ebf6dbb884e3b2c86cffc2083bf34cce0c15",
+  "stand": "2026-11-09"
+}
