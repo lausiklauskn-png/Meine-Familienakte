@@ -37,6 +37,7 @@ import { ProTresorAnschluss } from "./pro-tresor-anschluss";
 import { ProTresorWoLiegtWas } from "./pro-tresor-hilfe";
 import { AktensicherungHilfe } from "./aktensicherung-hilfe";
 import { EmailHilfe } from "./email-hilfe";
+import { ProVerbundHilfe } from "./pro-verbund-hilfe";
 import { AppLandkarteHilfe } from "./app-landkarte-hilfe";
 import type { Vorschau } from "./hilfe-vorschau";
 import { SEITEN_KARTEN } from "../lib/hilfe-seiten";
@@ -2793,6 +2794,7 @@ function HelpCenter({ onGo, onSearch, demo, datentresor, herkunft }: { onGo: Geh
     { id: "akten-sichern", titel: "Akten sichern – Plan zum Abhaken", el: <AktensicherungHilfe onSicherheit={(ziel) => onGo("security", undefined, ziel ? { ziel } : undefined)} onDokumente={() => onGo("documents")} datentresor={datentresor}/> },
     { id: "fristen-kalender", titel: "Fristen im Kalender", el: <KalenderHilfe zurKarte={() => onGo("reminders", undefined, { ziel: () => zurStelle("#kalender-verbinden", { sofort: true }) })}/> },
     { id: "email", titel: "E-Mail in die Familienakte", el: <EmailHilfe onEingang={() => onGo("inbox")} onSchreiben={() => onGo("assistant")}/> },
+    { id: "pro-verbund", titel: "Pro-App-Verbund (Vorschau)", el: <ProVerbundHilfe/> },
     ...NEUE_HILFE_THEMEN.map((t) => ({ id: t.id, titel: t.titel, el: <HilfeThemaEintrag thema={t} vorschau={VORSCHAU_NEU[t.id] ? vs(...VORSCHAU_NEU[t.id]!) : undefined}/> })),
     { id: "benutzerabnahme", titel: "Praktische Benutzerabnahme (für Prüfer)", el: <BenutzerabnahmeHilfe ergebnisse={abnahmeErgebnisse()} zurAbnahme={(id) => { const t0 = performance.now(); onGo("systemcheck", undefined, { ziel: () => (id ? zurStelle(`[data-user-test="${id}"]`, { sofort: true }) : false) || ((!id || performance.now() - t0 > 1500) && zurStelle("#benutzerabnahme", { sofort: true })) }); }}/> },
     { id: "kartenhilfe", titel: "Hilfe zu Karten und Funktionen", el: <details data-kartenhilfe><summary><CircleHelp/> Hilfe zu Karten und Funktionen</summary><div>{Object.entries(UI_HELP).map(([title, text]) => { const ziel = UI_HELP_ZIEL[title]; return <details key={title} data-kartenhilfe-eintrag={title}><summary>{title}</summary><p>{text}</p>{ziel && <button type="button" className="hilfe-sprung" data-kartenhilfe-ziel={ziel} onClick={() => onGo(ziel, undefined, { ziel: () => zurKarte(title, { sofort: true }) })}>{sectionLabels[ziel]} › {title} <span aria-hidden="true">›</span></button>}</details>; })}</div></details> },
