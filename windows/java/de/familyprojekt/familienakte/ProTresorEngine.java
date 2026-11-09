@@ -136,7 +136,7 @@ public final class ProTresorEngine implements Closeable {
                 if (data.length() > ((ProTresorAdapter.MAX_BYTES + 2L) / 3) * 4) throw new IOException("FA_DOKUMENT_ZU_GROSS");
                 byte[] bytes;
                 try { bytes = Base64.getDecoder().decode(data); } catch (IllegalArgumentException e) { throw new IOException("FA_DOKUMENT_UNGUELTIG"); }
-                Eintrag e = p.ablegen(Json.text(m, "documentId"), Json.text(m, "name"), Json.text(m, "mime"), Json.zahl(m, "date"), new ByteArrayInputStream(bytes));
+                Eintrag e = p.ablegen(Json.text(m, "documentId"), Json.text(m, "name"), Json.text(m, "mime"), Json.zahl(m, "date"), new ByteArrayInputStream(bytes), Json.textOder(m, "auszug", ""));
                 Map<String, Object> out = new LinkedHashMap<>(); out.put("entryId", e.id); out.put("vaultId", p.kennung()); out.put("sha256", e.sha256); out.put("size", e.groesse);
                 return out;
             }
