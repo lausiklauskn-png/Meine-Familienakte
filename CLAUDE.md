@@ -5,14 +5,19 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 `docs/briefe-archiv/` (Klaus 2026-11-04: archivieren statt löschen); die Veröffentlichungsnachweise in
 `docs/VEROEFFENTLICHUNG-<fassung>.json`.
 
-## Aktueller Stand (09.11.2026)
+## Aktueller Stand (09.11.2026, nach 2.28.49)
 
-- **Plan Rückmeldung** `docs/PLAN_2026-11-09_GERAETETEST-RUECKMELDUNG.md` (Klaus 09.11., Bilder vom Handy mit 2.28.37): fünf Fehler
-  (A), sieben App-weite Muster (B: Schlagwort oben links, Info-Zeile, Suchfelder wie „In der Familienakte suchen“, Erklärtexte ins
-  „?“, „?“-Texte mit fetten Hauptpunkten, keine Doppelung beim Aufklappen, keine Kennnummern), Trennung Tagebuch/Erinnerung/Memory
-  mit Buch-Knopf oben (C, Vorschau zuerst), **Assistenz neu durchdenken als nächster Bauschritt vor der E-Mail-Abstimmung** (D,
-  Anonymisieren wie im E-Mail-Generator von Private Brain Pro, Vorschau zuerst). Nichts davon gebaut. Startauftrag im Nachtrag
-  des Briefs vom 09.11.
+- **Plan Rückmeldung** `docs/PLAN_2026-11-09_GERAETETEST-RUECKMELDUNG.md` (Klaus 09.11., Bilder vom Handy mit 2.28.37): **A–D gebaut**
+  (#142, Fassung **2.28.49**; Brief `BRIEF_ABSCHLUSS_2026-11-09_RUECKMELDUNG-A-D.md`; Vorschau C/D `docs/vorschau/tagebuch-assistenz-2.28.49.html`,
+  alle sieben Fragen Ja). A: Cockpit öffnet Bearbeitbares als Fenster (`StammBearbeitenFenster` in `app/familie-anlegen.tsx`,
+  `TerminBearbeiten` mit „Ganze Akte ansehen ›“), Startkopf deckend. B als Bausteine: `InfoZeile`, `SuchFeld`, `HinweisText`
+  (`lib/hinweis-text.ts`, jedes „?“) in `app/ui-controls.tsx`, Schlagwort-CSS, `FlachText ganz`, `quelleAnzeige`. C: Kopf
+  „Erinnerung“ + „Buch“, ein Erfassungsblock mit Stimmung (`STIMMUNGEN`, `lib/family-memory.ts`) und Person, „Aus deinem Tagebuch“
+  beim Termin; „Memory“ nicht mehr sichtbar (gespeicherte Quelle „Tagebuch & Erinnerungsprotokoll“ bleibt). D: Assistenz mit drei Wegen,
+  Briefweg verdeckt (`app/brief-antwort.tsx`, `lib/brief-antwort.ts` auf `lib/ki-auftrag.ts`/Modul 25; Mistral EU, Direktlink),
+  PDF `lib/text-pdf.ts`. Nachträge: gesprochenes Datum bei der Erinnerung (`erinnerungAusText`); „Ausloggen“ schließt die App
+  (`app/anmelde-knopf.tsx`, Android `FamilienakteAppPlugin`, Windows-Recht `core:window:allow-close`, im Browser Abmeldeseite).
+  **Ausgegeben** als APK, Windows und PWA (Nachweis `docs/VEROEFFENTLICHUNG-2.28.49.json`). **E (Gerätetest 2.28.48) offen.**
 - **Plan Abgleich** `docs/PLAN_2026-11-08_ABGLEICH.md` (Klaus 08.11., **Freibrief**: ohne Rückfrage umsetzen, Fragen selbst nach
   Logik und Benutzerfreundlichkeit entscheiden). **Alle Stufen A–I gebaut und auf main** (Sitzung 7, 08./09.11.): A Zusammenführen
   (2.28.40, #131) · B verschlüsselte Vollsicherung mit Notfallblatt, Papierkorb leeren, Erinnerung nach 7 Tagen (2.28.41, #132) ·
@@ -71,8 +76,8 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Fassung 2.28.34** (Android, Windows, PWA; #119): sichere Dateigröße je Gerät aus der Geräteprüfung (`lib/geraete-grenze.ts`: unter 3 GB 15 MB, 3–6 GB 20 MB, ab 6 GB 40 MB, Pro-Tresor höchstens 20 MB), Ansage nur „Verkleinern“ · „Abbrechen“, Verkleinern ≥ 300 dpi mit Tesseract-Gegenprobe 98 % (`app/verkleinern.ts`), Dateiausgabe 100 MB; Vollsicherung in der Android- und Windows-App in frei gewählten Ordner (`app/nativer-ordner.ts`, Android `FamilienakteOrdnerPlugin`, Windows `FamilyFolders.java` in der Java-Engine; nur selbst angelegte Dateien entfernbar, kein allgemeines Löschen), APK bzw. Windows-Lies-mich mit SHA-256 (`fa_setup_angaben`) daneben; „Sicherung einlesen“ mit Probe ohne Schreiben, nur in leere Akte (`sicherungProben`/`sicherungEinlesen`, `app/sicherung-einlesen.tsx`); Demo = Kopie der eigenen Daten (nur im Dateispeicher, sonst Beispielfamilie), „Übernehmen …“ mit Liste „Was ändert sich?“ (`lib/demo-kopie.ts`, `app/demo-uebernahme.tsx`). Vergleich mit BookLedgerPro/Private Brain Pro: `docs/SICHERUNG-VERGLEICH.md`.
 - **Fassung 2.28.33** (Android, Windows, PWA; #117): Hilfe neu – 13 neue Themen (`app/hilfe-themen.tsx`), „Wie kann ich dir helfen?“ und Gruppen/A–Z (`app/hilfe-ordnung.tsx`, `lib/hilfe-ordnung.ts`), Sprung mit rotem Rahmen (grün bei erledigt) und Zurück an die Stelle markiert (`app/ruecksprung.ts`), Kartenhilfe mit Sprung (`lib/ui-help-ziele.ts`), Benutzerabnahme als Bild mit vier Antworten, mitwandernde Seitenleiste (`app/seitenleiste.tsx`), Versionshistorie mit echter Fassung (`lib/fassungen.ts`, neue Fassung oben eintragen), Demo-Kasten nur „Demo starten“ (`data-demo-start`). CI-Grenze `pruefung` 45 min. Davor **2.28.32** (#113): Mikrofon in der Notiz startet nicht mehr von selbst, nur auf Tipp. Davor **2.28.31** (#112): Seitentitel immer einzeilig (`useEinzeilig` in `app/flach-zeile.tsx`, Schrift wird kleiner); Zähler-Kästchen klappen „Offene Fristen und Aufgaben“ auf und springen dorthin. Davor **2.28.30** (#111): flach und breit – Seitenkopf mit Symbol, Titel und Knopf auf einer Linie, „?“ klein rechts oben an der Schrift (`PageTitle`, `.ui-heading-help` auf allen Seiten); ein Knopf „alle“ (`app/klapp.tsx`) zeigt die Pfeile dessen, was ein Tipp bewirkt; Glocken-Hinweis breit mit Auge; Listen (Mein Kalender, Fristenliste, Tagebuch, Notiz-Liste) als Zeile „Anfang … Ende“ mit Auge (`app/flach-zeile.tsx`), Ändern/Löschen hinter dem Auge, Fristenliste mit Haken in der Zeile; Zähler als drei Kästchen. Davor **2.28.29** (#108): Abschnitte auf „Fristen und Aufgaben“ einklappbar (`app/klapp.tsx`), Mülleimer an Erinnerungen und Notizen (`app/loesch-knopf.tsx`; Löschen = archiviert, Kalender-Abgleich entfernt den Eintrag), Mikrofon bei „Woran erinnern“, Glocke mit Dauer und Android-Kanal-Einstellung. Davor **2.28.28** (#106): Kamera in der Notiz, App-Glocke nach dem Speichern von selbst an, Android-Benachrichtigung der Glocke auch bei geschlossener App (`FamilienakteGlockePlugin`, `GlockeEmpfaenger`). Davor **2.28.27** (#104): Kalender-Erinnerung (Google, Microsoft, Android-Gerätekalender, .ics),
   Knopf „Notiz“ mit erkannter Erinnerung, Memory bearbeiten, „Mein Kalender“ (Kalender-Knopf im Kopf), App-Glocke (ab Werk aus,
-  läutet nur bei offener App), Termin an Ort und Stelle ändern. Nachweise `docs/VEROEFFENTLICHUNG-2.28.39.json`, `-2.28.38.json`, `-2.28.37.json`, `-2.28.36.json`, `-2.28.35.json`, `-2.28.34.json`, `-2.28.33.json`, `-2.28.32.json`, `-2.28.31.json`, `-2.28.30.json`, `-2.28.29.json`, `-2.28.28.json` und `-2.28.27.json`, darunter 2.28.26
-  und 2.28.25 … 2.28.22. Keine davon erneut ausgeben; nächste freie Fassung 2.28.49 (2.28.40–2.28.47 waren Zwischenstände der Stufen, nur 2.28.48 ist nativ ausgegeben). Klaus 2026-11-06: neue Funktionen immer gleich als APK, PWA und Windows ausgeben. Die Versionszeile zeigt die technische
+  läutet nur bei offener App), Termin an Ort und Stelle ändern. Nachweise `docs/VEROEFFENTLICHUNG-2.28.49.json`, `-2.28.48.json`, `-2.28.39.json`, `-2.28.38.json`, `-2.28.37.json`, `-2.28.36.json`, `-2.28.35.json`, `-2.28.34.json`, `-2.28.33.json`, `-2.28.32.json`, `-2.28.31.json`, `-2.28.30.json`, `-2.28.29.json`, `-2.28.28.json` und `-2.28.27.json`, darunter 2.28.26
+  und 2.28.25 … 2.28.22. Keine davon erneut ausgeben; nächste freie Fassung 2.28.50 (2.28.40–2.28.47 waren Zwischenstände der Stufen, nativ ausgegeben sind 2.28.48 und 2.28.49). Klaus 2026-11-06: neue Funktionen immer gleich als APK, PWA und Windows ausgeben. Die Versionszeile zeigt die technische
   Fassung aus `package.json`; `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
 - **Kalender:** Kern `lib/kalender.ts`, Glocke `lib/glocke.ts`, Oberfläche `app/kalender-karte.tsx`, `app/mein-kalender.tsx`,
   `app/termin-bearbeiten.tsx`, Notiz `app/notiz-knopf.tsx`; Einrichtung `docs/KALENDER-EINRICHTUNG.md` (Google veröffentlicht,
@@ -97,15 +102,15 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
-  - `BRIEF_ABSCHLUSS_2026-11-09_ABGLEICH-B-I.md` (jüngster Abschluss: Stufen B–I, Fassung 2.28.48 auf allen drei Wegen; Nachtrag
-    mit Klaus' Rückmeldung vom 09.11. und Startauftrag für die nächste Bausitzung)
-  - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-08_ABGLEICH-A.md` (Prüfbericht, Plan Abgleich, Stufe A)
+  - `BRIEF_ABSCHLUSS_2026-11-09_RUECKMELDUNG-A-D.md` (jüngster Abschluss: Rückmeldung A–D, Fassung 2.28.49; Startauftrag Gerätetest)
+  - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-09_ABGLEICH-B-I.md` (Stufen B–I, Fassung 2.28.48)
   - `BRIEF_CODEX_2026-11-04_NACH-2.28.24.md` (Abstimmung mit Codex: welche Dateien Claude gehören)
   - `BRIEF_ABSCHLUSS_2026-11-04_PDF-ARBEITSRAUM.md`, `BRIEF_ABSCHLUSS_2026-11-04_PDF-FUNKTIONSABGLEICH.md` (Codex)
 
 ## Offen
 
-- **Plan Rückmeldung 09.11.** (A–D) komplett offen, siehe oben; Reihenfolge A → B → C → D, dann Gerätetest 2.28.48.
+- **2.28.49 am Gerät ungeprüft:** weiße Fläche (A1) ist eine Vermutung (Galaxy S21 nachstellen), Cockpit-Fenster, Kopf mit Buch am
+  Handy, Tagebuch-Block, gesprochenes Datum, Ausloggen (APK beendet sich?), Briefweg mit echter KI/echtem Mistral-Schlüssel nie benutzt.
 - **2.28.48 am Gerät ungeprüft (alle Stufen B–I):** verschlüsselte Vollsicherung und Notfallblatt am Handy (PBKDF2 ein bis zwei
   Sekunden), gemeinsame Festplatte (Android-SAF-Freigabe, Windows-Laufwerkssuche, Erkennen an der Kennung), Kalender holen (Google,
   Microsoft, Gerätekalender), Eingangsordner mit Android-Dauer-Meldung, Netz-Abgleich im echten WLAN/LAN/USB (Port 48200/48201),

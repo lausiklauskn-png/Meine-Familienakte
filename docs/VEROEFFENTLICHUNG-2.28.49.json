@@ -1,0 +1,62 @@
+{
+ "version": "2.28.49",
+ "source": "942478f56501bfb5c5770d206211617ba53ccd30",
+ "pullRequest": [
+  142
+ ],
+ "recordedUtc": "2026-11-09T14:10:00Z",
+ "freigabe": "Startauftrag Klaus 09.11.2026 (Freibrief vom 08.11. gilt): „Am Ende der letzten Stufe APK, Windows und PWA ausgeben“; in der Sitzung zweimal „weitermachen bis zur Ausgabe“. Vorschau C/D: alle sieben Fragen von Klaus mit Ja.",
+ "inhalt": "Rückmeldung vom Handy (Plan docs/PLAN_2026-11-09_GERAETETEST-RUECKMELDUNG.md, Abschnitte A–D): Cockpit öffnet Bearbeitbares direkt als Fenster, „Zuordnung prüfen“ zeigt die Verknüpfungen, Startkopf deckend, lange Titel brechen um (A); Schlagwort oben, Info-Zeile, ein Suchfeld mit Mikrofon daneben, „?“-Texte mit fettem Kern und Punkten, keine Doppelung beim Aufklappen, Namen statt Kennnummern (B); Tagebuch mit Buch-Knopf, Stimmung, Person, „Aus deinem Tagebuch“ beim Termin, „Erinnerung“ statt „Notiz“, „Memory“ nicht mehr sichtbar (C); Assistenz mit drei Wegen und „Brief oder E-Mail beantworten“ verdeckt (Weg aus Private Brain Pro, Kopieren, Direktlink, Mistral EU), als PDF in Workflow PDF (D). Dazu aus Klaus' Rückmeldungen in der Sitzung: eingesprochenes Datum kommt bei der Erinnerung an; „Ausloggen“ sperrt den Pro-Tresor und schließt die App (Android, Windows), im Browser Abmeldeseite.",
+ "ciAmPrStand": "PR #142 auf 8b4f90a: pruefung (99 Proben), android, windows, webview, product (31, pixel_c), product (35, pixel_2) – alle success. Auf main 942478f: Android-Hülle, Windows-App, Pages (Läufe 168 und 169) success; „Prüfung bei jedem PR“ lief zum Zeitpunkt des Nachweises noch.",
+ "releases": [
+  {
+   "tag": "android-v2.28.49",
+   "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.49",
+   "run": 42628437806,
+   "conclusion": "success",
+   "updateServer": "server=ja; Schritte „Update-Datei bauen, unterschreiben, gegen den Schlüssel der App prüfen“ und „Auf family-projekt.de hochladen und von außen prüfen“ success",
+   "downloadProof": [
+    {
+     "name": "Familienakte-android-v2.28.49.apk",
+     "bytes": 20025377,
+     "sha256": "c9c66e84c39676d847b29452c634ef5466a14970ced3d2a18bcb15778e3cd020",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true,
+     "versionInside": "2.28.49 (assets/public/version.json, commit 942478f, Bau 1.b531a1ab)"
+    },
+    {
+     "name": "Familienakte-Einzeldatei-2.28.49.html",
+     "bytes": 3879584,
+     "sha256": "ab888dac636c5cb3936cc4e9b3f1ea8348015b0c8dc221d3b51374e381b9c701",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true
+    }
+   ]
+  },
+  {
+   "tag": "windows-v2.28.49",
+   "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.49",
+   "run": 42628442354,
+   "conclusion": "success",
+   "updateServer": "server=ja; Job „server“ success (aktuell-windows.json unterschrieben, auf family-projekt.de hochgeladen und von außen geprüft); latest.json nennt 2.28.49, Commit 942478f",
+   "downloadProof": [
+    {
+     "name": "Familienakte-Windows-2.28.49-x64-setup.exe",
+     "bytes": 34170636,
+     "sha256": "8400615168496e2fe0c24089247dd13009cc13b6c0109fafce4f07ca6faf320f",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true,
+     "matchesLatestJson": true
+    }
+   ]
+  }
+ ],
+ "pwa": "Pages auf 942478f: Läufe 168 (42628419258) und 169 (42630721510) success; Seite selbst aus dem Behälter nicht erreichbar (Netzsperre), nicht geprüft",
+ "notChecked": [
+  "Kein physisches Gerät: weiße Fläche (A1) ist eine begründete Vermutung, am Galaxy S21 nicht nachgestellt; Kopf mit Buch, Tagebuch-Block, Cockpit-Fenster nur im Browser bei 360/390 px",
+  "Gesprochenes Datum nur mit gestellter Spracherkennung; Ausloggen: Beenden der APK (finishAndRemoveTask) und Schließen des Windows-Fensters nur gestellt bzw. im Bau geprüft",
+  "Briefweg nie mit einer echten KI oder einem echten Mistral-Schlüssel; Mistral und ChatGPT in der Probe gestellt",
+  "family-projekt.de und die Pages-Seite aus dem Behälter nicht erreichbar; die Freigabeläufe prüfen den Server selbst",
+  "Gerätetest 2.28.48 (Plan Abschnitt E) steht weiter aus"
+ ]
+}
