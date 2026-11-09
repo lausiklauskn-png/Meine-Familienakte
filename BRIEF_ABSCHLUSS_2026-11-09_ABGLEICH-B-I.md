@@ -49,7 +49,18 @@ Stand als übermittelt, „Alles senden“ ist der Weg, wenn ein Paket verloren 
 
 ## Ausgabe
 
-RELEASE_PLATZHALTER
+Fassung **2.28.48** auf allen drei Wegen, nach dem Merge der letzten Stufe (main `e1d5833`), Nachweis
+`docs/VEROEFFENTLICHUNG-2.28.48.json`:
+
+| Weg | Lauf | Datei | Bytes | SHA-256 (anonym geladen, = SHA256SUMS) |
+|---|---|---|---|---|
+| Android | 42548395388 success, Server-Upload success | `Familienakte-android-v2.28.48.apk` (innen 2.28.48 / e1d5833) | 20 013 089 | `cdc57e58…8684` |
+| Android | – | `Familienakte-Einzeldatei-2.28.48.html` | 3 851 551 | `22414d97…1d43` |
+| Windows | 42548397739 success, Job `server` success, `latest.json` nennt 2.28.48 | `Familienakte-Windows-2.28.48-x64-setup.exe` | 34 158 986 | `361df12e…c2e1` |
+| PWA | Pages Lauf 164 success auf e1d5833 | – | – | – |
+
+Die Zwischenfassungen 2.28.40–2.28.47 wurden absichtlich nicht nativ ausgegeben (Klaus: erst am Ende); die PWA ging mit jedem
+Merge über Pages hinaus.
 
 ## Nicht geprüft
 
@@ -62,16 +73,16 @@ RELEASE_PLATZHALTER
 ## Stundennachweis
 
 Spanne aus Nachrichten-, Commit- und Laufzeiten, Obergrenze, Pausen nicht abgezogen; Klaus' eigene Angabe geht vor.
-Sitzung 7 begann nach dem Ende von Sitzung 6 (18:15 UTC, 08.11.); erster Commit 19:15 UTC, letzter Commit ENDE_PLATZHALTER.
+Sitzung 7 begann nach dem Ende von Sitzung 6 (18:15 UTC, 08.11.); erster Commit 19:15 UTC, letzter Code-Commit 01:16 UTC (09.11.), Release-Läufe bis 02:14 UTC, Nachweis und Briefe bis ca. 02:30 UTC.
 
 | Block | Inhalt | Dauer |
 |---|---|---|
 | 1 | Bericht, Fragen, Plan, Stufe A (siehe Brief A) | ca. 130 min (18:15–20:25) |
 | 2 | Stufen B–F bauen und proben (f40e7d6 21:35 … ca28dc9 22:50) | ca. 145 min (20:25–22:50) |
 | 3 | Stufen G, H, I (0106987 23:07 … f8eda2f 23:37) | ca. 50 min |
-| 4 | Acht PRs, CI-Funde (Java, Proben), Merges, Ausgabe, Briefe | ca. DAUER4_PLATZHALTER |
+| 4 | Acht PRs, CI-Funde (Java, Proben), Merges, Ausgabe, Nachweis, Briefe (23:37–02:30) | ca. 175 min |
 
-Gesamt: GESAMT_PLATZHALTER (Obergrenze).
+Gesamt: **ca. 8 h 15 min** (18:15–02:30 UTC, Obergrenze; davon lief die Sitzung ab der Freigabe des Plans weitgehend ohne Klaus’ Zutun; lange Wartezeiten auf CI-Läufe sind enthalten).
 
 ## Startauftrag zum Einfügen
 

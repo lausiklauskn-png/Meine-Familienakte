@@ -1,0 +1,39 @@
+{
+  "version": "2.28.48",
+  "source": "e1d5833f87554ac7a16688bf6118cdf6c66b7660",
+  "pullRequest": [132, 133, 134, 135, 136, 137, 138, 139],
+  "recordedUtc": "2026-11-09T02:20:00Z",
+  "freigabe": "Klaus 2026-11-08: vollständiger Freibrief für den Plan Abgleich (docs/PLAN_2026-11-08_ABGLEICH.md), „Apps immer hier als aktuelle Version bereitstellen“; später: „erst am Ende der letzten Sitzung notwendig, die PWA-App, die APK und die Windows-App zu veröffentlichen“. Dies ist die Ausgabe nach der letzten Stufe (I).",
+  "inhalt": "Stufen B–I des Plans Abgleich: verschlüsselte Vollsicherung mit Notfallblatt, Papierkorb leeren, Erinnerung nach 7 Tagen (B); gemeinsame Festplatte mit Kennung und verschlüsseltem Abgleich-Ordner, Abgleich beim Anstecken (C); Kalender in beide Richtungen (D); Eingangsordner in Blöcken zu 20 mit Speicherprüfung und Android-Dauer-Meldung (E); Abgleich im eigenen Netz über WLAN/LAN/USB mit Gastgeber-Dienst und Kopplungscode (F); Bedeutungssuche in der Web-App mit Modell im Browser-Speicher, Ladebalken, OCR-Text im Index (G); Original-Foto im Stapel, Teilen-Knopf, Glocke nach Geräte-Neustart (H); Paket per Teilen als verschlüsselte Datei mit den Änderungen seit dem letzten Paket (I). Dazu vier Android-Lint/Compile-Korrekturen in Java und drei gehärtete Proben.",
+  "ciAmPrStand": "Je PR #132–#139 auf dem gemergten Kopf: pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2), dazu transport/models/abgleich wo ausgelöst – alle success. Auf main e1d5833: Android-Hülle, Windows-App, Pages success; „Prüfung bei jedem PR“ lief zum Zeitpunkt des Nachweises noch.",
+  "releases": [
+    {
+      "tag": "android-v2.28.48",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.48",
+      "run": 42548395388,
+      "conclusion": "success",
+      "updateServer": "server=ja; Schritte „Update-Datei bauen, unterschreiben, gegen den Schlüssel der App prüfen“ und „Auf family-projekt.de hochladen und von außen prüfen“ success",
+      "downloadProof": [
+        { "name": "Familienakte-android-v2.28.48.apk", "bytes": 20013089, "sha256": "cdc57e58eec776ba82b28dc8e9b03c78424633dcbf0c57caf49b234b192f8684", "anonymousDownload": true, "matchesSHA256SUMS": true, "versionInside": "2.28.48 (assets/public/version.json, commit e1d5833, Bau 1.fd8d51b9)" },
+        { "name": "Familienakte-Einzeldatei-2.28.48.html", "bytes": 3851551, "sha256": "22414d97aa8f6bbc2a0983de72ef20a996ef3dad45f941abf52b0df0dcce1d43", "anonymousDownload": true, "matchesSHA256SUMS": true }
+      ]
+    },
+    {
+      "tag": "windows-v2.28.48",
+      "url": "https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.48",
+      "run": 42548397739,
+      "conclusion": "success",
+      "updateServer": "server=ja; Job „server“ success (aktuell-windows.json unterschrieben, auf family-projekt.de hochgeladen und von außen geprüft); latest.json nennt 2.28.48, Commit e1d5833",
+      "downloadProof": [
+        { "name": "Familienakte-Windows-2.28.48-x64-setup.exe", "bytes": 34158986, "sha256": "361df12e0d7f0d3b6d57359968bcc06fc0048d6f82a5c74827ac94678268c2e1", "anonymousDownload": true, "matchesSHA256SUMS": true, "matchesLatestJson": true }
+      ]
+    }
+  ],
+  "pwa": "Pages auf e1d5833: Lauf 164 (42548378706) success; Seite selbst aus dem Behälter nicht geprüft",
+  "notChecked": [
+    "Kein physisches Gerät: alle Stufen B–I nur mit gestellter Hülle geprobt (SAF-Freigabe, Laufwerkssuche, Gerätekalender, Dauer-Meldung, Netzdienst im echten WLAN/LAN/USB, Teilen-Fenster, Boot-Empfänger, Paket zwischen zwei Geräten)",
+    "Google- und Microsoft-Kalender nur mit gestellten Antworten; in der Probe der Bedeutungssuche wurde kein echtes Modell geladen",
+    "family-projekt.de aus dem Behälter nicht erreichbar; die Freigabeläufe prüfen den Server selbst",
+    "Zwischenfassungen 2.28.40–2.28.47 wurden nicht nativ ausgegeben (nur Stufen-Stände auf main; PWA über Pages je Merge)"
+  ]
+}
