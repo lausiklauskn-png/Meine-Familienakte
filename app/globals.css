@@ -2729,3 +2729,52 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 /* A4 (09.11.): Lange Titel in „A · Aus meiner Familienakte“ brechen um, statt über den Kasten hinauszuragen. */
 .evidence-card { min-width: 0; overflow-wrap: anywhere; }
 .evidence-card .text-link { display: inline; white-space: normal; text-align: left; }
+
+/* B5 (09.11.): „?“-Texte in einer Form – Kern fett, darunter Punkte; „Hingehen ›“, wo der Hinweis auf eine Stelle zeigt. */
+.hinweis-text { display: grid; gap: 6px; white-space: normal; }
+.hinweis-kern { font-weight: 800; line-height: 1.4; }
+.hinweis-punkte { margin: 0; padding-left: 1.15em; display: grid; gap: 4px; }
+.hinweis-punkte li { line-height: 1.45; }
+.hinweis-ziel { justify-self: start; margin-top: 6px; }
+
+/* B2 (09.11.): Info-Zeile – eine Zeile „INFO · Titel“, Tipp klappt den Text auf. */
+.info-zeile { margin: 0 0 12px; border: 1px solid #bfd2df; border-radius: 10px; background: white; color: var(--navy); }
+.info-zeile-kopf { width: 100%; display: flex; align-items: center; gap: 9px; border: 0; padding: 7px 11px; background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.info-zeile-titel { flex: 1; min-width: 0; font-weight: 700; font-size: .88rem; }
+.info-zeile-pfeil { color: var(--teal); font-size: .8rem; }
+.info-zeile-text { padding: 0 11px 10px; font-size: .86rem; display: grid; gap: 6px; }
+.info-zeile-text p { margin: 0; }
+
+/* B3 (09.11.): ein Suchfeld für die ganze App – Feld mit Löschen-Kreuz, daneben das Mikrofon als eigener Knopf.
+   Die Klassen global-search / library-search / fristen-suche bleiben als Namen der Stelle; ihr altes Aussehen gilt nicht mehr. */
+.app-shell .such-feld, .such-feld { position: static; display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 8px; width: 100%; min-width: 0; margin: 0; padding: 0; border: 0; background: transparent; }
+.app-shell .such-feld .such-eingabe, .such-feld .such-eingabe { display: flex; align-items: center; gap: 6px; min-width: 0; min-height: 44px; padding: 0 6px 0 12px; border: 1px solid #8faebe; border-radius: 12px; background: #fff; }
+.such-feld .such-eingabe:focus-within { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(8,127,122,.12); }
+.app-shell .such-feld .such-eingabe > svg, .such-feld .such-eingabe > svg { position: static; flex: 0 0 auto; color: var(--muted); }
+.app-shell .such-feld .such-eingabe input, .such-feld .such-eingabe input { flex: 1; width: auto; min-width: 0; min-height: 0; margin: 0; padding: 9px 0; border: 0; border-radius: 0; outline: 0; background: transparent; box-shadow: none; color: var(--ink); font: inherit; }
+.app-shell .such-feld .such-eingabe .search-clear, .such-feld .such-eingabe .search-clear { position: static; display: grid; place-items: center; width: 32px; height: 32px; margin: 0; border: 0; border-radius: 8px; color: var(--muted); background: transparent; }
+.app-shell .such-feld .dictation-control .dictation-button, .such-feld .dictation-control .dictation-button { position: static; right: auto; }
+.search-command-bar .such-feld.global-search { width: 100%; }
+.search-command-bar .such-feld .such-eingabe { border-radius: 999px; min-height: 46px; padding-left: 16px; }
+.fristen-suche.such-feld { flex: 1 1 260px; }
+
+/* B1 (09.11.): Schlagwort oben links, Text darunter in voller Breite – überall, wo eine Kennzeichnung (Art, Bereich,
+   „Info“) bisher als Spalte links neben dem Text stand. Ein Regelblock für alle Listenzeilen mit Schlagwort. */
+:is(.cockpit-action-list, .cockpit-case-list, .cockpit-object-list, .cockpit-news-list, .related-context-list, .case-timeline) > button:has(> .badge:first-child),
+.dossier-link-group > div > button:has(> .badge:first-child) { grid-template-columns: minmax(0,1fr) auto; row-gap: 3px; }
+:is(.cockpit-action-list, .cockpit-case-list, .cockpit-object-list, .cockpit-news-list, .related-context-list, .case-timeline) > button > .badge:first-child,
+.dossier-link-group > div > button > .badge:first-child { grid-column: 1 / -1; justify-self: start; border: 0; padding: 0; background: none; color: var(--muted); font-size: .66rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; line-height: 1.2; }
+:is(.cockpit-action-list, .cockpit-case-list, .cockpit-object-list, .cockpit-news-list, .related-context-list, .case-timeline) > button:has(> .badge:first-child) > svg,
+.dossier-link-group > div > button:has(> .badge:first-child) > svg { display: block; grid-column: 2; }
+.info-notice { grid-template-columns: minmax(0,1fr); gap: 5px; }
+.info-notice > span, .info-notice .info-label { justify-self: start; }
+.interactive-source-list li.source-missing { display: grid; gap: 4px; }
+.interactive-source-list li.source-missing .info-label { justify-self: start; }
+@media (max-width: 640px) {
+  .memory-statements > div { grid-template-columns: minmax(0,1fr) auto; }
+  .memory-statements > div > :first-child { grid-column: 1 / -1; }
+  .intake-assignment { grid-template-columns: minmax(0,1fr); }
+  .intake-assignment > span { grid-row: auto; }
+  .payment-list > div, .payment-row { grid-template-columns: minmax(0,1fr) auto; }
+  .payment-list > div > :first-child, .payment-row > :first-child { grid-column: 1 / -1; }
+}

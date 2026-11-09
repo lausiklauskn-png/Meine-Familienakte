@@ -47,7 +47,8 @@ export function anfangEnde(text: string): [string, string, boolean] {
 
 /** Text in einer Zeile: der Anfang wird bei Platzmangel mit „…“ gekürzt, das Ende (Hauptwort oder Endworte) bleibt sichtbar.
  * Trennzeichen als geschütztes Leerzeichen: ein normales fiel in der Flex-Zeile weg („126Wolkenpost“, 2.28.39). */
-export function FlachText({ text }: { text: string }) {
+export function FlachText({ text, ganz = false }: { text: string; /** B6 (09.11.): aufgeklappte Zeile zeigt den ganzen Text statt einer zweiten Kopie darunter. */ ganz?: boolean }) {
+  if (ganz) return <span className="flach ganz" data-flach-ganz>{text}</span>;
   const [a, e, mitte] = anfangEnde(text);
   return <span className="flach" title={text}><span className="flach-a">{a}</span>{e && <>{mitte ? <span className="flach-p">{"\u00a0…\u00a0"}</span> : <span className="flach-l">{"\u00a0"}</span>}<span className="flach-e">{e}</span></>}</span>;
 }

@@ -1,5 +1,5 @@
 import { UI_HELP } from "../lib/ui-help";
-import { InfoPopover } from "./ui-controls";
+import { InfoPopover, InfoZeile } from "./ui-controls";
 import { AuswahlKaestchen, AuswahlLeiste } from "./auswahl-leiste";
 import { sammelFrist, sammelLage } from "./sammel-ablage";
 
@@ -144,11 +144,11 @@ export function CentralIntakeCenter({
         <button type="button" className="intake-source" onClick={() => storageReady ? onStartDocumentScan([]) : onGo("security")} data-dokument-scannen><Camera/><span><strong>Dokument fotografieren</strong><small>{storageReady ? <><b>Import:</b> einen Brief fotografieren, gleich prüfen</> : "Zuerst lokalen Tresor verbinden"}</small></span><ChevronRight/></button>
         {onStapel && <button type="button" className="intake-source" onClick={() => stapelRef.current?.click()} disabled={busy} data-stapel><Upload/><span><strong>Stapel direkt übernehmen</strong><small><b>Import:</b> viele Blätter auf einmal, später einordnen</small></span><ChevronRight/></button>}
         {onScanForm && <button type="button" className="intake-source" onClick={() => storageReady ? onScanForm() : onGo("security")} disabled={busy} data-formular-scannen><PenLine/><span><strong>Formular scannen und ausfüllen</strong><small>{storageReady ? <><b>Ausfüllen:</b> Formular scannen und am Bildschirm ausfüllen</> : "Zuerst lokalen Tresor verbinden"}</small></span><ChevronRight/></button>}
-        <button type="button" className="intake-source" onClick={inboxFolderName ? onScanInbox : onSelectInbox} disabled={busy}><Folder/><span><strong>{inboxFolderName ? "Eingangsordner jetzt prüfen" : "Eingangsordner auswählen"}</strong><small>{inboxFolderName ? `Freigegeben: ${inboxFolderName}` : "Nur den bewusst ausgewählten Ordner"}</small></span><ChevronRight/></button>
-        <button type="button" className="intake-source" onClick={onScanOneDrive} disabled={busy}><Cloud/><span><strong>OneDrive-Familienordner prüfen</strong><small>{oneDriveConnected ? `Verbunden · letzte Prüfung: ${lastChecked}` : "Keine Dauerüberwachung · zuerst im Sicherheitscenter verbinden"}</small></span><ChevronRight/></button>
+        <button type="button" className="intake-source" onClick={inboxFolderName ? onScanInbox : onSelectInbox} disabled={busy}><Folder/><span><strong>{inboxFolderName ? "Eingangsordner jetzt prüfen" : "Eingangsordner auswählen"}</strong>{inboxFolderName && <small>Freigegeben: {inboxFolderName}</small>}</span><ChevronRight/></button>
+        <button type="button" className="intake-source" onClick={onScanOneDrive} disabled={busy}><Cloud/><span><strong>OneDrive-Familienordner prüfen</strong><small>{oneDriveConnected ? `Verbunden · letzte Prüfung: ${lastChecked}` : "Noch nicht verbunden"}</small></span><ChevronRight/></button>
       </div>
       {busy && <div className="intake-progress" role="status"><RefreshCw className="spin"/><span>Die ausgewählten Unterlagen werden nur lesend geprüft. Originaldateien bleiben unverändert.</span></div>}
-      <div className="info-notice intake-info"><span>Info</span><p>Die Familienakte überwacht weder Ordner noch Outlook dauerhaft. Eine Prüfung beginnt nur nach deinem Klick. Unbekannte Dateitypen bleiben erhalten und werden zur manuellen Prüfung vorgemerkt.</p></div>
+      <InfoZeile title="Keine Überwachung im Hintergrund" className="intake-info"><p>Die Familienakte überwacht weder Ordner noch Outlook dauerhaft. Eine Prüfung beginnt nur nach deinem Klick. Unbekannte Dateitypen bleiben erhalten und werden zur manuellen Prüfung vorgemerkt.</p></InfoZeile>
     </section>
 
     <section className="card intake-queue" aria-labelledby="intake-queue-title">

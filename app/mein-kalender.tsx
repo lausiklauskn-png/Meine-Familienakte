@@ -92,7 +92,7 @@ export function MeinKalender({ vaultHandle, records, relations, onRefresh, onNot
     return <li key={e.record.id} data-mk-eintrag={e.record.id} className={auf ? "offen" : undefined}>
     <div className="fz-kopf fz-voll">
       <span className="mk-zeit">{new Date(`${e.tag}T00:00`).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" })}{e.zeit && <small>{e.zeit}</small>}</span>
-      <span className="mk-text"><strong><FlachText text={e.titel}/></strong><small>{[art, glocke, kal].filter(Boolean).join(" · ")}</small></span>
+      <span className="mk-text"><strong><FlachText text={e.titel} ganz={auf}/></strong><small>{auf ? `${new Date(`${e.tag}T00:00`).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit", year: "numeric" })}${e.zeit ? `, ${e.zeit} Uhr` : ""} · ` : ""}{[art, glocke, kal].filter(Boolean).join(" · ")}</small></span>
       <KnopfLeiste titel={e.titel}>
         {vaultHandle && <button type="button" className="icon-button" disabled={busy} onClick={() => void status(e.record.id, e.titel, "erledigt")} aria-label={`„${e.titel}“ als erledigt markieren`} title="Als erledigt markieren" data-mk-erledigt={e.record.id}><Check size={18}/></button>}
         {vaultHandle && <StiftKnopf titel={e.titel} onClick={() => setBearbeiten(e.record.id)} data-mk-aendern/>}
@@ -100,10 +100,8 @@ export function MeinKalender({ vaultHandle, records, relations, onRefresh, onNot
         <AugeKnopf offen={auf} titel={e.titel} onClick={() => setOffen(auf ? null : e.record.id)} data-mk-auge/>
       </KnopfLeiste>
     </div>
-    {auf && <div className="fz-offen" data-mk-offen>
-      <p><strong>{e.titel}</strong></p>
-      <small>{new Date(`${e.tag}T00:00`).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit", year: "numeric" })}{e.zeit ? `, ${e.zeit} Uhr` : ""} · {[art, glocke, kal].filter(Boolean).join(" · ")}</small>
-    </div>}
+    {/* B6 (09.11.): aufgeklappt wird die Zeile selbst zur vollen Ansicht (Titel ganz, Tag mit Jahr); keine zweite Kopie darunter. */}
+    {auf && <span hidden data-mk-offen/>}
   </li>; };
   return <section ref={box} className="card mein-kalender" id="mein-kalender" data-mein-kalender data-klapp="kalender">
     <div className="card-heading"><div><span className="ui-heading-help"><h2><CalendarDays size={20}/> Mein Kalender</h2><InfoPopover label="Mein Kalender erklären" text={HILFE}/></span></div><GlockenSchalter records={records} relations={relations}/></div>
