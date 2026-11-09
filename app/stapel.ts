@@ -23,7 +23,15 @@ type PdfDok = { embedJpg: (b: Uint8Array) => Promise<unknown>; addPage: (s: [num
 export type StapelEinst = { filter: "original" | "farbe" | "grau" | "dokument" | "sw"; schaerfe: number; zusammen: boolean };
 export const STAPEL_VORGABE: StapelEinst = { filter: "original", schaerfe: 40, zusammen: false };
 export const FILTER_NAMEN: Record<StapelEinst["filter"], string> = { original: "Original", farbe: "Farbe verbessern", grau: "Graustufen", dokument: "Dokument (Schatten weg, Papier weiß)", sw: "Schwarzweiß" };
-export type StapelErgebnis = { file: File; sicher: boolean; grund: string; quelle: string; seite?: [number, number]; vorschau?: Blob };
+/** Stufe H (Plan 08.11.2026, Entscheidung 11): das Original-Foto bleibt neben dem geraden PDF erhalten (wie der GoBD-Weg in
+ *  BookLedgerPro), `bearbeitung` nennt, was mit dem Bild geschah. PDFs werden unverändert übernommen – kein Original, kein Vermerk. */
+export type StapelErgebnis = { file: File; sicher: boolean; grund: string; quelle: string; seite?: [number, number]; vorschau?: Blob; original?: File; bearbeitung?: string };
+export function bearbeitungsText(einst: StapelEinst, sicher: boolean) {
+  const teile = [sicher ? "Blatt gefunden und gerade gezogen" : "ganzes Foto übernommen (Ecken prüfen)"];
+  if (einst.filter !== "original") teile.push(`Filter „${FILTER_NAMEN[einst.filter]}“`);
+  if (einst.schaerfe > 0) teile.push(`Schärfe ${einst.schaerfe}`);
+  return teile.join(" · ");
+}
 
 const DPI = 200;
 const LANG_MAX = 2400;
@@ -81,7 +89,7 @@ export async function stapelSeite(file: File, einst: StapelEinst = STAPEL_VORGAB
   seite.drawImage(bild, { x: 0, y: 0, width: m.seite[0], height: m.seite[1] });
   const name = file.name.replace(/\.[^.]+$/, "") + (e.sicher ? "" : " (Ecken prüfen)") + ".pdf";
   const vorschau = await vorschauAus(z);
-  return { file: new File([await doc.save() as BlobPart], name, { type: "application/pdf" }), sicher: e.sicher, grund: e.grund, quelle: e.quelle, seite: m.seite, vorschau };
+  return { file: new File([await doc.save() as BlobPart], name, { type: "application/pdf" }), sicher: e.sicher, grund: e.grund, quelle: e.quelle, seite: m.seite, vorschau, original: file, bearbeitung: bearbeitungsText(einst, e.sicher) };
 }
 // ---------- Ablauf mit Anhalten · Weiter · Abbrechen (Klaus 2026-11-01) ----------
 // Läuft unabhängig von der Seite weiter (Modulzustand); jedes fertige Blatt liegt sofort in der Stapel-Ablage (IndexedDB).

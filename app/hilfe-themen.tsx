@@ -76,6 +76,7 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
     "Aus Mail-App, Galerie, Kamera oder Scanner-App: PDF, Fotos, Word, Excel, E-Mails als .eml. In der Web-App auch .msg; in der Android-App eine .msg-Datei am Rechner in die Eingangszentrale ziehen.",
     "Alles landet zuerst in der Eingangszentrale zur Prüfung.",
     "Keine Anmeldung nötig; geht mit jedem Mail-Anbieter.",
+    "Auch andersherum: „Teilen“ an einer Unterlage in der Bibliothek gibt die Datei an eine App deiner Wahl (Mail, Messenger, Dateien). Die Akte verschickt nie von selbst; geschützte Gesundheitsunterlagen haben keinen Teilen-Knopf.",
   ] },
   { id: "workflow-pdf", titel: "Workflow PDF und Stapel", symbol: <FileStack/>, weg: "Dokumente › Workflow PDF · Dokumente › Stapel", ablauf: [{ titel: "Workflow PDF öffnen", unter: "Dokumente" }, { titel: "Ansehen, ordnen, zusammenfügen" }, { titel: "Durchsuchbar machen" }, { titel: "Zurück an denselben Eintrag", art: "gut" }], merk: [<><b>Keine zweite Ablage.</b></>, <><b>Stapel:</b> viele Blätter auf einmal, später einordnen.</>], punkte: [
     "PDF ansehen und bearbeiten, Seiten ordnen, mehrere PDF zusammenfügen.",

@@ -15,10 +15,12 @@ export type JpegPdfPage = {
 };
 
 export type DocumentScanMetadata = {
-  source: "camera-scan";
+  source: "camera-scan" | "stapel";
   pageCount: number;
   keepOriginals: boolean;
   originals: File[];
+  /** Stufe H: was mit dem Foto geschah (gerade gezogen, Filter, Schärfe) – kommt als Vermerk in die Notiz des Dokuments. */
+  bearbeitung?: string;
 };
 
 export type DocumentScanPdfFile = File & { documentScan?: DocumentScanMetadata };

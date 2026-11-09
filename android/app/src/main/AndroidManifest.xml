@@ -61,6 +61,14 @@
         </provider>
         <!-- App-Glocke (Klaus 2026-11-06): Benachrichtigung zur Erinnerungszeit, nur von der App selbst ausgelöst. -->
         <receiver android:name=".GlockeEmpfaenger" android:exported="false" />
+        <!-- Stufe H: nach dem Neustart des Geräts die Glocken erneut einplanen (Android verwirft Wecker beim Ausschalten). -->
+        <receiver android:name=".StartEmpfaenger" android:exported="true" android:directBootAware="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
     </application>
 
     <!-- Permissions -->
@@ -75,6 +83,8 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <!-- App-Glocke: Benachrichtigung zur Erinnerungszeit (ab Android 13 erfragt, erst beim Einschalten der Glocke). -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Stufe H: Glocken nach dem Neustart des Geräts erneut einplanen. -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- Stufe E: Dauer-Meldung, solange Blöcke aus dem Eingangsordner verarbeitet werden -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />

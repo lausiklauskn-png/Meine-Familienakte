@@ -25,7 +25,8 @@ export const APP_STAND: Readonly<Record<string, StandEintrag>> = {
   "protresor": { stand: "aktivieren" },
   // Stufe D: Termine aus dem Kalender holen (beidseitig).
   "kalender": { stand: "aktivieren", selbst: "fristen-kalender", seit: "2.28.43" },
-  "glocke": { stand: "aktivieren", selbst: "app-glocke" },
+  // Stufe H: Glocken überstehen den Neustart des Geräts (Android plant sie von selbst neu).
+  "glocke": { stand: "aktivieren", selbst: "app-glocke", seit: "2.28.47" },
   // Abgleich zwischen Geräten (Plan Punkt 10): die Übergabe einer Unterlage ist fertig, der Abgleich steht im Kastentext als geplant.
   // Stufe C: gemeinsame Festplatte – vorbereiten, verbinden, abgleichen; erkannt an der Kennung.
   "anderes-geraet": { stand: "fertig", seit: "2.28.45" },
@@ -40,6 +41,8 @@ export const APP_STAND: Readonly<Record<string, StandEintrag>> = {
   // Stufe E: Eingangsordner in Blöcken zu 20, von selbst, ohne Zweitkopie, Speicherprüfung.
   "eingang": { stand: "fertig", seit: "2.28.44" },
   "vorschlag": { stand: "fertig", seit: "2.28.39" },
+  // Stufe H: Original-Foto bleibt im Stapel erhalten; „Teilen“ an der Unterlage.
+  "scan-stapel": { stand: "fertig", seit: "2.28.47" },
   "akte": { stand: "fertig", seit: "2.28.39" },
   "eintrag": { stand: "fertig", seit: "2.28.39" },
   "frist-neu": { stand: "fertig", seit: "2.28.39" },
