@@ -61,6 +61,22 @@ Für 2.28.50 gibt es keinen eigenen Nachweis.
 - family-projekt.de und die Pages-Seite sind aus dem Sitzungsbehälter nicht erreichbar; die Freigabeläufe prüfen den Server selbst.
 - Gerätetest 2.28.48/2.28.49: außer dem Tresor keine Rückmeldung.
 
+## Nachtrag: Update-Fähnchen ohne Tipp (Klaus 09.11., gebaut, nicht ausgegeben)
+
+Klaus: In der APK ging das rote Fähnchen „Update verfügbar“ erst nach dem Tipp auf die Versionszeile an. Befund: Die stille
+Prüfung gab es, aber nur beim Kaltstart, nach dem Einschalten des Internets und alle 6 Stunden. Holt man die App aus dem
+Hintergrund zurück – am Handy der Normalfall –, wurde nie gefragt; der 6-Stunden-Takt ruht im Hintergrund, und ein Fehlversuch
+beim Start (Netz noch nicht da) wurde nicht wiederholt.
+
+- Gemeinsamer Ablauf `stillPruefenEinrichten` in `public/native/familienakte-app.js`, genutzt von Android- und Windows-Hülle:
+  Start, Internet an, Rückkehr in die App (höchstens alle 10 min), stündlich, nach einem Fehlversuch bis zu dreimal nach 2 min.
+  Meldet der Server nichts Neues mehr, geht das Fähnchen wieder aus. Nur bei Internet an, ohne Hinweisleiste.
+- Probe `tests/ui/update-fahne-auto.test.mjs` (Android und Windows gestellt, Zeit über `page.clock`): 10 grün; mit dem alten Code
+  5 rot (genau Rückkehr, Wiederholung, stündlich). Nachbarproben `android`, `windows`, `pwa`, `neugestaltung-kopf`, `ausloggen`,
+  `test-android.mjs`, `test-windows.mjs`, `npm run check` grün.
+- Wirkt erst ab der Fassung, die es enthält: Von 2.28.51 auf die nächste Fassung muss noch einmal getippt werden. Ausgabe als
+  2.28.52 wartet auf Klaus' Wort.
+
 ## Offen (neu)
 
 - **Baustand hinter Schalter (Klaus 09.11.):** sichtbar, solange intern getestet wird; danach hinter einen versteckten Schalter bzw.
@@ -88,8 +104,10 @@ Reihenfolge (Freibrief vom 08.11. gilt):
    2.28.51 Tresor im Ordner „Familienakte“ am Galaxy S21, Live-Farben der Landkarte und von „Akten sichern“;
    2.28.49 weiße Fläche (A1), Cockpit-Fenster, Kopf mit Buch, gesprochenes Datum, Ausloggen, Briefweg mit echter KI;
    2.28.48 Vollsicherung, Festplatte, Netz-Abgleich, Kalender holen, Eingangsordner, Bedeutungssuche, Teilen, Paket.
-2. Baustand hinter einen versteckten Entwickler-Schalter, sobald Klaus das interne Testen beendet (vorher Vorschau).
-3. Danach die E-Mail-Abstimmung (Plan 2.28.35, Entscheidungen Klaus/Jens) – zuerst Vorschau.
+2. Falls noch nicht ausgegeben: Update-Fähnchen ohne Tipp (PR #147) als 2.28.52 ausgeben, am Handy prüfen (App in den
+   Hintergrund, nach über 10 min zurückholen → Fähnchen da).
+3. Baustand hinter einen versteckten Entwickler-Schalter, sobald Klaus das interne Testen beendet (vorher Vorschau).
+4. Danach die E-Mail-Abstimmung (Plan 2.28.35, Entscheidungen Klaus/Jens) – zuerst Vorschau.
 Am Ende APK, Windows und PWA ausgeben (server=ja, Nachweis docs/VEROEFFENTLICHUNG-<fassung>.json, prüfen, dass der Windows-Job
 „server“ wirklich lief), am Ende jeder Antwort Fortschritt in Prozent.
 

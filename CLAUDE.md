@@ -102,6 +102,11 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Offen
 
+- **Update-Fähnchen ohne Tipp (Klaus 09.11.) gebaut, nicht ausgegeben** (auf Zweig `ccr-5d961255-13yxub`, PR #147): Die Hüllen
+  fragten nur beim Kaltstart, nach „Internet an“ und alle 6 h; beim Zurückholen der App aus dem Hintergrund (am Handy der Normalfall)
+  nie, Fehlversuche ohne Wiederholung. Jetzt gemeinsamer Ablauf `stillPruefenEinrichten` in `public/native/familienakte-app.js`
+  (Start, Internet an, Rückkehr höchstens alle 10 min, stündlich, nach Fehlversuch bis 3× nach 2 min), Probe `update-fahne-auto`
+  (Gegenprobe alter Code: 5 rot). Wirkt erst ab der Fassung, die es enthält (nächste: 2.28.52).
 - **2.28.51 am Gerät ungeprüft:** Tresor im Ordner „Familienakte“ (SAF-Freigabe), Live-Zustände der Karten (alles nur gestellt).
 - **Baustand hinter Schalter (Klaus 09.11.):** Der Rahmen „Baustand“ bleibt sichtbar, solange intern getestet wird; danach hinter einen
   versteckten Schalter bzw. eine Eingabe nur für Entwickler.

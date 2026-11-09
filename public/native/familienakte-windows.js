@@ -121,15 +121,10 @@
   };
   new MutationObserver(versionsknopf).observe(document.documentElement, { childList: true, subtree: true });
   versionsknopf();
-  // Fähnchen „Update verfügbar“ (2.28.39): still selbst prüfen – beim Start, alle 6 Stunden und nach dem Einschalten
-  // des Internets; nur bei Internet an, ohne Hinweisleiste. Antippen des Fähnchens = Tipp auf die Versionszeile.
-  let stillLaeuft = false;
-  const stillPruefen = async () => {
-    if (offline() || stillLaeuft) return; stillLaeuft = true;
-    try { const r = await invoke('fa_update_pruefen'); window.FamilienakteApp?.fahne?.(!!r?.neu, r?.neu); } catch { /* still */ } finally { stillLaeuft = false; }
-  };
-  window.addEventListener('pb:network', (e) => { if (!e.detail?.offline) stillPruefen(); });
-  window.addEventListener('familienakte:bereit', () => { window.PBNetwork?.initialized?.then(stillPruefen).catch(() => {}); }, { once: true });
-  setInterval(stillPruefen, 6 * 60 * 60 * 1000);
+  // Fähnchen „Update verfügbar“: still selbst prüfen (Start, Internet an, Rückkehr ins Fenster, stündlich, Wiederholung nach
+  // Fehlversuch) – gemeinsamer Ablauf in familienakte-app.js (Klaus 09.11.).
+  // Dieses Skript läuft vor familienakte-app.js (nicht „defer“): erst danach einrichten.
+  const stillEinrichten = () => window.FamilienakteApp?.stillPruefenEinrichten?.(() => invoke('fa_update_pruefen'));
+  if (window.FamilienakteApp) stillEinrichten(); else document.addEventListener('DOMContentLoaded', stillEinrichten, { once: true });
   window.FamilienakteWindows = { updatePruefen, installieren, uebergeben };
 })();
