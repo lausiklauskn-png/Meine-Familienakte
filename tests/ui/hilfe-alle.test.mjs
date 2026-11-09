@@ -50,11 +50,11 @@ try {
       return soll(auf === 1 && zu === 0, `${auf}/${zu}`);
     });
     await footer(page, "Hilfe");
-    await step(`${name}: Vorschau „Unbehandelte“ → „Zwei getrennte Arbeitslisten“ rot gerahmt`, async () => {
+    await step(`${name}: Vorschau „Mehrere Tagebuch-Einträge“ → „Noch zu prüfende Tagebuch-Einträge“ rot gerahmt`, async () => {
       await page.locator('[data-hilfe-id="mehrere-erinnerungen"] [data-hv-knopf]').click();
       await page.locator("[data-hilfe-vorschau] [data-hv-hin]").click(); await page.waitForTimeout(1100);
       const t = await page.evaluate(() => document.querySelector(".hilfe-ziel-rahmen")?.textContent?.slice(0, 80) || "");
-      return soll(/Zwei getrennte Arbeitslisten/.test(t), t);
+      return soll(/Noch zu prüfende Tagebuch-Einträge/.test(t), t);
     });
     await footer(page, "Hilfe");
     await step(`${name}: Kasten im Ablaufbild springt zur Karte und rahmt sie rot („Cockpit“ → Was ist jetzt wichtig?)`, async () => {
@@ -67,7 +67,7 @@ try {
     if (name === "Desktop") {
       // Die Skizzen zeigen nur Kartentitel aus lib/hilfe-seiten.ts; jeder muss auf seiner Seite noch vorkommen (sonst veraltet).
       const { SEITEN_KARTEN } = await import("../../lib/hilfe-seiten.ts");
-      const FUSS = { inventory: "Bestand prüfen", cockpit: "Cockpit", memory: "Tagebuch & Erinnerungen", reminders: "Fristen und Aufgaben", inbox: "Eingangszentrale",
+      const FUSS = { inventory: "Bestand prüfen", cockpit: "Cockpit", memory: "Tagebuch", reminders: "Fristen und Aufgaben", inbox: "Eingangszentrale",
         documents: "Dokumentenbibliothek", security: "Sicherheitscenter", changelog: "Was gibt’s Neues?", systemcheck: "Systemprüfung" };
       for (const [seite, karten] of Object.entries(SEITEN_KARTEN)) await step(`${name}: Skizze „${seite}“ passt zur App`, async () => {
         if (seite === "overview") { await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page); } else await footer(page, FUSS[seite]);

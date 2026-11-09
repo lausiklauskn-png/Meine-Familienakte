@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { CircleHelp, Mic, MicOff, Search, X } from "lucide-react";
 import { createDictationSession, microphoneBlockedReason, speechConstructor, type SpeechBrowser } from "../lib/browser-dictation";
 import { useActivity } from "./ui-activity";
-import { fettStuecke, hinweisTeile } from "../lib/hinweis-text";
+import { fettStuecke, hinweisTeile } from "../lib/hinweis-text.ts";
 
 /** Abstand des Hinweisfensters zum Bildschirmrand und zum Fragezeichen (px). */
 const INFO_RAND = 12, INFO_ABSTAND = 8, INFO_BREITE = 560;

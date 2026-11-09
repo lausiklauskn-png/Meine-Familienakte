@@ -33,8 +33,23 @@ export type MemoryDraftEntry = {
   status: MemoryDraftStatus;
   provisionalTitle: string;
   suggestedCaseId?: string;
+  /** C (09.11.): Stimmung beim Erfassen, freiwillig. */
+  stimmung?: Stimmung;
+  /** C (09.11.): beim Erfassen gewählte Personen oder Organisationen (vorgewählt in „Eintrag prüfen“). */
+  verknuepft?: string[];
   updatedAt: string;
 };
+
+/** Stimmung eines Tagebuch-Eintrags (C, 09.11.): fünf Stufen, freiwillig. */
+export type Stimmung = 1 | 2 | 3 | 4 | 5;
+export const STIMMUNGEN: ReadonlyArray<{ wert: Stimmung; zeichen: string; wort: string }> = [
+  { wert: 1, zeichen: "😞", wort: "schlecht" },
+  { wert: 2, zeichen: "🙁", wort: "eher schlecht" },
+  { wert: 3, zeichen: "😐", wort: "mittel" },
+  { wert: 4, zeichen: "🙂", wort: "gut" },
+  { wert: 5, zeichen: "😄", wort: "sehr gut" },
+];
+export const istStimmung = (wert: unknown): wert is Stimmung => wert === 1 || wert === 2 || wert === 3 || wert === 4 || wert === 5;
 
 export type MemoryMediaReference = {
   id: string;
@@ -88,6 +103,8 @@ export type MemoryEventData = {
   tags: string[];
   media: MemoryMediaReference[];
   assistantSummary: string;
+  /** C (09.11.): Stimmung, freiwillig. */
+  stimmung?: Stimmung;
 };
 
 export type MemoryOpenPoint = {
@@ -268,6 +285,8 @@ export function buildMemoryDraftEntry(input: {
   order: number;
   status?: MemoryDraftStatus;
   suggestedCaseId?: string;
+  stimmung?: Stimmung;
+  verknuepft?: string[];
 }): MemoryDraftEntry {
   const text = input.originalText.trim();
   const capturedAt = new Date(input.capturedAt);
@@ -285,6 +304,8 @@ export function buildMemoryDraftEntry(input: {
     status: input.status || "unbehandelt",
     provisionalTitle: text ? titleFromText(text, eventType) : input.media?.length ? "Erinnerung mit Medien" : "Unbehandelte Erinnerung",
     suggestedCaseId: input.suggestedCaseId,
+    ...(istStimmung(input.stimmung) ? { stimmung: input.stimmung } : {}),
+    ...(input.verknuepft?.length ? { verknuepft: [...new Set(input.verknuepft)] } : {}),
     updatedAt: safeCapturedAt,
   };
 }
@@ -395,7 +416,7 @@ export function buildMemoryOpenPoints(records: FamilyRecordUnion[]): MemoryOpenP
   return records.flatMap((record) => {
     const data = memoryData(record);
     if (!data?.openPoint || ["erledigt", "keine_weitere_erinnerung"].includes(data.openPoint.status)) return [];
-    return [{ eventId: record.id, title: data.sensitive ? "Gesundheit – offener Memory-Punkt" : data.title, question: data.openPoint.question, reason: data.openPoint.reason, status: data.openPoint.status, lifeArea: data.lifeArea, updatedAt: record.updatedAt, sensitive: data.sensitive }];
+    return [{ eventId: record.id, title: data.sensitive ? "Gesundheit – offene Rückfrage" : data.title, question: data.openPoint.question, reason: data.openPoint.reason, status: data.openPoint.status, lifeArea: data.lifeArea, updatedAt: record.updatedAt, sensitive: data.sensitive }];
   }).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
 }
 

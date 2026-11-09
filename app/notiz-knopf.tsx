@@ -1,4 +1,4 @@
-import { CalendarDays, Camera, Check, NotebookPen, StickyNote, X } from "lucide-react";
+import { CalendarDays, Camera, Check, BellPlus, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { FamilyRecordUnion, FamilyRelation } from "../lib/family-data-model";
 import { buildMemoryAnalysis, erinnerungAusText, erinnerungsTitel, memoryData } from "../lib/family-memory";
@@ -23,7 +23,7 @@ export function NotizKnopf({ vaultHandle, records, relations, onGespeichert, onF
 }) {
   const [offen, setOffen] = useState(false);
   return <>
-    <button type="button" className="icon-button notiz-knopf-schalter" onClick={() => setOffen(true)} title="Notiz oder Erinnerung einsprechen" aria-label="Notiz" aria-haspopup="dialog" data-notiz-knopf><StickyNote size={18}/><span className="kopf-wort" aria-hidden="true">Notiz</span></button>
+    <button type="button" className="icon-button notiz-knopf-schalter" onClick={() => setOffen(true)} title="Erinnerung einsprechen oder schreiben" aria-label="Erinnerung" aria-haspopup="dialog" data-notiz-knopf><BellPlus size={18}/><span className="kopf-wort" aria-hidden="true">Erinnerung</span></button>
     {offen && <NotizFenster vaultHandle={vaultHandle} records={records} relations={relations} onZu={() => setOffen(false)} onGespeichert={onGespeichert} onFehler={onFehler} onKalender={onKalender}/>}
   </>;
 }
@@ -110,8 +110,8 @@ function NotizFenster({ vaultHandle, records, relations, onZu, onGespeichert, on
 
   return <div className="modal-backdrop" role="presentation" onMouseDown={(e) => { if (e.target === e.currentTarget) void schliessen(); }}>
     <section className="modal notiz-fenster" role="dialog" aria-modal="true" aria-labelledby="notiz-titel" data-notiz-fenster>
-      <div className="modal-head"><div><h2 id="notiz-titel"><NotebookPen size={18}/> Notiz</h2></div><button type="button" className="icon-button" onClick={() => void schliessen()} aria-label="Schließen" disabled={busy} data-notiz-schliessen><X size={18}/></button></div>
-      <div ref={feld} className="notiz-text"><VoiceTextarea rows={3} value={text} onValueChange={setText} placeholder={liste.length ? "Nächste Notiz …" : "Zum Beispiel: Erinnere mich morgen um 9 Uhr, Jens anzurufen"} speechLabel="Notiz" data-notiz-eingabe/>
+      <div className="modal-head"><div><h2 id="notiz-titel"><BellPlus size={18}/> Erinnerung</h2></div><button type="button" className="icon-button" onClick={() => void schliessen()} aria-label="Schließen" disabled={busy} data-notiz-schliessen><X size={18}/></button></div>
+      <div ref={feld} className="notiz-text"><VoiceTextarea rows={3} value={text} onValueChange={setText} placeholder={liste.length ? "Nächste Erinnerung …" : "Zum Beispiel: Erinnere mich morgen um 9 Uhr, Jens anzurufen"} speechLabel="Notiz" data-notiz-eingabe/>
         {(text || fotos.length > 0) && <button type="button" className="notiz-leeren" onClick={() => { setText(""); setFotos([]); setErinnerung(null); setRunde((x) => x + 1); feld.current?.querySelector("textarea")?.focus(); }} aria-label="Text und Erinnerung löschen" title="Text und Erinnerung löschen" data-notiz-leeren><X size={14}/></button>}
         <input ref={kamera} className="sr-only" type="file" accept="image/*" capture="environment" multiple onChange={(e) => { const neu = Array.from(e.target.files || []).filter((f) => f.type.startsWith("image/")); setFotos((f) => [...f, ...neu].slice(0, 12)); e.currentTarget.value = ""; }} data-notiz-kamera-eingabe/>
         <button type="button" className="notiz-aktion kamera" onClick={() => kamera.current?.click()} disabled={busy || fotos.length >= 12} aria-label="Foto zur Notiz aufnehmen" title="Foto aufnehmen" data-notiz-kamera><Camera size={20}/>{fotos.length > 0 && <i className="notiz-foto-zahl">{fotos.length}</i>}</button>

@@ -160,11 +160,12 @@ try {
     await page.locator('.memory-text .dictation-button').click().catch(() => {});
     return true;
   });
-  await step("Erinnerung: „Nächste Eingabe“ legt einen Entwurf in die Warteschlange", async () => {
+  await step("Tagebuch: „Noch einen erfassen“ legt einen Entwurf zur Seite und leert das Feld", async () => {
     await page.locator(".memory-text textarea").fill("Der Elektriker war heute da. Die zweite Lampe flackert weiterhin.");
-    await page.locator("button", { hasText: "Nächste Eingabe" }).click();
-    await page.waitForTimeout(500);
-    return (await page.locator("button", { hasText: /Unbehandelte Erinnerungen: 1/ }).count()) > 0;
+    await page.locator("button", { hasText: "Noch einen erfassen" }).click();
+    await page.waitForFunction(() => (document.querySelector(".memory-text textarea") || {}).value === "", null, { timeout: 5000 });
+    // C (09.11.): der Zähler steht nur noch auf der Tagebuch-Seite.
+    return (await page.locator("main [data-zaehler-entwuerfe]").count()) === 0;
   });
   await step("Erinnerung: „Eintrag prüfen“ bei mehreren Entwürfen führt zur Warteschlange im Tagebuch", async () => {
     await page.locator(".memory-text textarea").fill("Fiete hat heute seine Hausaufgaben allein gemacht.");
@@ -219,10 +220,10 @@ try {
   });
   await step("Erinnerung: „Fotos oder Videos“ öffnet die Dateiauswahl", async () => {
     await schliesseDialoge(page); await page.locator(".site-brand").click();
-    const [chooser] = await Promise.all([page.waitForEvent("filechooser", { timeout: 4000 }), page.locator("button", { hasText: "Fotos oder Videos" }).first().click()]);
+    const [chooser] = await Promise.all([page.waitForEvent("filechooser", { timeout: 4000 }), page.locator("[data-tagebuch-foto]").first().click()]);
     return !!chooser;
   });
-  await step("„Tagebuch öffnen“ führt zum Tagebuch", async () => { await page.locator("button", { hasText: "Tagebuch öffnen" }).first().click(); return (await page.locator(".breadcrumb").innerText()).includes("Tagebuch"); });
+  await step("„Zum Tagebuch“ führt zum Tagebuch", async () => { await page.locator("[data-zum-tagebuch]").first().click(); return (await page.locator(".breadcrumb").innerText()).includes("Tagebuch"); });
   await page.locator(".site-brand").click();
 
   // --- Beispieldaten ---
@@ -248,7 +249,7 @@ try {
     return (await page.locator("text=Beispieldaten entfernt").count()) > 0 || (await page.locator(".sample-data-notice").count()) === 0;
   });
   await step("Eigene Erinnerung bleibt nach dem Entfernen erhalten", async () => {
-    await footer(page, "Tagebuch & Erinnerungen");
+    await footer(page, "Tagebuch");
     return (await page.locator("text=Elektriker war heute da").count()) > 0 || (await page.locator("text=Hausaufgaben allein").count()) > 0;
   });
   // P7 (Klaus 07.11.): Hier liegen eigene Einträge in der Akte; dann arbeitet die Demo an einer Kopie davon.

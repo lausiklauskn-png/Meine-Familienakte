@@ -65,3 +65,12 @@ Entscheidungen von Klaus (09.11.):
 Gerätetest 2.28.48 (Vollsicherung verschlüsselt, Festplatte, Netz-Abgleich, Kalender holen, Eingangsordner, Bedeutungssuche,
 Teilen, Paket) steht weiter aus; Rückmeldungen dazu kommen von Klaus, sobald 2.28.48 auf den Geräten ist. Die Bilder vom 09.11.
 zeigen noch 2.28.37.
+
+## Antworten von Klaus zur Vorschau C/D (09.11.2026)
+
+Vorschau `docs/vorschau/tagebuch-assistenz-2.28.49.html` (https://claude.ai/artifact/438M5ZpFE2xtUnre9yrKUZ). Alle sieben Fragen mit **Ja**:
+c1 Buch-Knopf oben · c2 Stimmung als fünf Gesichter, freiwillig · c3 Tagebuch erscheint beim nächsten Termin mit der verknüpften
+Person/Organisation (Termin-Ansicht, nicht die Glocke) · d1 drei Wege statt fünf, Kasten B weg · d2 eigener Schlüssel nur Mistral (EU) –
+Notiz: „Auch hier gibt es bereits einen Weg sein Abo zu benutzen. Direktlink mit Text kopie wie in Tomys Vorlagengenerator“ (also neben
+„Kopieren“ ein Direktlink, der die KI mit dem verdeckten Text öffnet; die Familienakte hat diesen Weg im KI-Auftrag, `lib/ki-auftrag.ts`)
+· d3 Schlüssel ab Werk nur für die Sitzung, „auf diesem Gerät merken“ wählbar, nie im Pro-Tresor · d4 „In Workflow PDF öffnen“.

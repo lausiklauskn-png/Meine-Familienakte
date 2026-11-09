@@ -60,7 +60,7 @@ try {
     return soll(r.da && r.imBild && r.markiert, r);
   });
 
-  await footer(page, "Tagebuch & Erinnerungen");
+  await footer(page, "Tagebuch");
   await step("A3: „Tagebuch öffnen“ auf der Tagebuch-Seite führt zur Chronologie", async () => {
     await page.evaluate(() => scrollTo(0, 0));
     await page.locator("button", { hasText: "Tagebuch öffnen" }).first().click(); await page.waitForTimeout(400);

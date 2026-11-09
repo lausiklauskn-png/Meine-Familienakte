@@ -81,7 +81,7 @@ globalThis.window = { addEventListener: add, removeEventListener: remove, dispat
 const fakeReact = dataModule('export const {useState,useRef,useId,useEffect,useLayoutEffect}=globalThis.__uiTestHooks;');
 const fakeReactDom = dataModule('export const createPortal=(node)=>node;');
 const fakeJSX = dataModule('export const jsx=(type,props)=>({type,props}); export const jsxs=jsx;');
-const fakeIcons = dataModule('export const CircleHelp="help",Mic="mic",MicOff="mic-off",X="close";');
+const fakeIcons = dataModule('export const CircleHelp="help",Mic="mic",MicOff="mic-off",Search="search",X="close";');
 const simulated = await import(dataModule(compile(controls, { react: fakeReact, "react-dom": fakeReactDom, "react/jsx-runtime": fakeJSX, "lucide-react": fakeIcons, "./ui-activity": activityModule })));
 const rerender = () => { cleanups.splice(0).forEach((cleanup) => cleanup?.()); return simulated.InfoPopover({ text: "Erklärung", label: "Hilfe" }); };
 const clickInfo = (view) => view.props.children[0].props.onClick({ stopPropagation() {} });

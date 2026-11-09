@@ -62,7 +62,7 @@ try {
   });
   await step("B7: Vorgangsakte zeigt die Quelle mit Namen statt Kennnummer", async () => { const t = await page.locator("#cockpit-dossier").innerText(); return soll(!KENNUNG.test(t), t.match(KENNUNG)?.[0]); });
 
-  await footer(page, "Tagebuch & Erinnerungen");
+  await footer(page, "Tagebuch");
   await step("B6: aufgeklappter Tagebuch-Eintrag zeigt Titel und Zeit nur einmal", async () => {
     const z = page.locator(".memory-event-zeile").first(); await z.scrollIntoViewIfNeeded();
     await z.locator("[data-fz-griff]").click().catch(() => {}); await z.locator("[data-memory-auge]").click(); await z.locator("[data-memory-offen]").waitFor();

@@ -96,7 +96,7 @@ try {
     return /in Mein Kalender/.test(zeile) && /09:00/.test(liste) && /Jens anzurufen/i.test(liste) ? true : (console.log("   ↳", zeile, "|", liste), false);
   });
   await step("Tagebuch: „Gehört dazu“ öffnet die Aufgabe im selben Fenster, die Seite bleibt das Tagebuch", async () => {
-    await footer(page, "Tagebuch & Erinnerungen");
+    await footer(page, "Tagebuch");
     await page.locator("button", { hasText: "Jens anzurufen" }).first().click();
     await page.locator(".related-context-list button", { hasText: "Jens" }).first().click();
     const d = page.locator("[data-termin-bearbeiten]"); await d.waitFor({ timeout: 5000 });

@@ -14,8 +14,11 @@ export function familyRecordKindLabel(record: FamilyRecordUnion) {
 }
 
 /** Text, in dem nach einem Datensatz gesucht wird: Titel, deutsche Art, Status, Quelle, Notiz und gespeicherte Angaben. */
+// C (09.11.): Stimmung eines Tagebuch-Eintrags als Wort, damit „gute Tage“ oder „Stimmung schlecht“ ihn findet.
+const STIMMUNG_WORT: Record<number, string> = { 1: "Stimmung schlecht schlechter Tag", 2: "Stimmung eher schlecht", 3: "Stimmung mittel", 4: "Stimmung gut guter Tag gute Tage", 5: "Stimmung sehr gut sehr guter Tag gute Tage" };
 export function familyRecordSearchText(record: FamilyRecordUnion) {
-  return [record.id, cockpitRecordLabel(record), familyRecordKindLabel(record), record.status, record.source || "", record.notes || "", JSON.stringify(record.data)].join(" ");
+  const stimmung = record.recordType === "event" ? STIMMUNG_WORT[Number((record.data as { stimmung?: number }).stimmung)] || "" : "";
+  return [record.id, cockpitRecordLabel(record), familyRecordKindLabel(record), record.status, record.source || "", record.notes || "", JSON.stringify(record.data), stimmung].join(" ");
 }
 
 /** Text, in dem nach einem Dokument gesucht wird: Name, Kategorie, Notiz und – falls gespeichert – der Textauszug. */

@@ -24,7 +24,7 @@ try {
     return /Aktive Objekte\s*0/.test(text) ? "Objekt-Cockpit 0" : false;
   });
   // 2.28.39: neue Gruppe „Termine & Aufgaben“ an zweiter Stelle (Cockpit, Fristen, Mein Kalender, Tagebuch); die übrigen rücken eins weiter.
-  const seiten = [[0, "Assistenzzentrale"], [0, "Korrespondenz"], [1, "Cockpit"], [1, "Fristen und Aufgaben"], [1, "Tagebuch & Erinnerungen"], [2, "Diagnosen, AU & ICD-Codes"], [3, "Familienübersicht"], [4, "Miet- & Vermieterunterlagen"], [7, "Dokumentenbibliothek"], [7, "Bestand prüfen"], [7, "Eingangszentrale"], [7, "Sicherheit & lokaler Tresor"], [7, "Unterlagen & Quellen"], [8, "Hilfe & erste Schritte"], [8, "Systemprüfung"], [8, "Was gibt’s Neues?"]];
+  const seiten = [[0, "Assistenzzentrale"], [0, "Korrespondenz"], [1, "Cockpit"], [1, "Fristen und Aufgaben"], [1, "Tagebuch"], [2, "Diagnosen, AU & ICD-Codes"], [3, "Familienübersicht"], [4, "Miet- & Vermieterunterlagen"], [7, "Dokumentenbibliothek"], [7, "Bestand prüfen"], [7, "Eingangszentrale"], [7, "Sicherheit & lokaler Tresor"], [7, "Unterlagen & Quellen"], [8, "Hilfe & erste Schritte"], [8, "Systemprüfung"], [8, "Was gibt’s Neues?"]];
   for (const [nav, eintrag] of seiten) {
     await step(`Leere Akte: „${eintrag}“ lädt ohne Fehler`, async () => {
       const vorher = errors.length;
@@ -63,7 +63,7 @@ try {
     if (await d.locator("button", { hasText: "Nicht verknüpfen" }).count()) await d.locator("button", { hasText: "Nicht verknüpfen" }).click();
     await d.locator("button", { hasText: "Bestätigt speichern" }).click(); await page.waitForTimeout(1000);
     await schliesseDialoge(page);
-    await footer(page, "Tagebuch & Erinnerungen");
+    await footer(page, "Tagebuch");
     return (await page.locator("main").innerText()).includes("Erste eigene Erinnerung");
   });
   await step("Leere Akte: Systemprüfung läuft und meldet ein Ergebnis", async () => {

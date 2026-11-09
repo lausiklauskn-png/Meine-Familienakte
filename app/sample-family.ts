@@ -246,7 +246,7 @@ async function seedOnce(handle: FileSystemDirectoryHandle, options: { force?: bo
     });
   }
 
-  // ── Tagebuch & Erinnerungen ──────────────────────────────────────────────
+  // ── Tagebuch ──────────────────────────────────────────────
   const latest = await readLocalVaultData(handle);
   const memories: Array<{ text: string; offset: number; refs: string[] }> = [
     { text: SAMPLE_MEMORY_TEXTS[0], offset: -60, refs: ["fiete", "kinderrad", "fall-fahrrad"] },

@@ -48,7 +48,7 @@ import type {
   MemoryMediaReference,
   MemoryOpenStatus,
 } from "../lib/family-memory.ts";
-import { buildMemoryDraftEntry, FAMILY_MEMORY_VERSION, isMemoryRecord, memoryData, sortMemoryDraftQueue } from "../lib/family-memory.ts";
+import { buildMemoryDraftEntry, FAMILY_MEMORY_VERSION, isMemoryRecord, istStimmung, memoryData, sortMemoryDraftQueue, type Stimmung } from "../lib/family-memory.ts";
 import type { ContextLinkDecision, ContextSourceType } from "../lib/family-context-linking.ts";
 import { analyzeInventoryFiles, createInventoryLearningSignal, type InventoryAssignmentReference, type InventoryContentStatus, type InventoryItem, type InventoryLearningSignal, type InventorySourceFile, type InventorySourceKind } from "../lib/fawoga-inventory.ts";
 
@@ -4086,12 +4086,14 @@ export type CreateLocalMemoryDraftInput = {
   captureType: MemoryCaptureType;
   mediaFiles: File[];
   suggestedCaseId?: string;
+  stimmung?: Stimmung;
+  verknuepft?: string[];
 };
 
 function validateMemoryMediaFiles(files: File[]) {
   if (files.length > 12) throw new Error("Bitte höchstens zwölf Fotos oder Videos pro Erinnerungsereignis auswählen.");
   const unsupported = files.find((file) => !file.type.startsWith("image/") && !file.type.startsWith("video/"));
-  if (unsupported) throw new Error(`Das Dateiformat von „${unsupported.name}“ wird als Memory-Medium derzeit nicht unterstützt.`);
+  if (unsupported) throw new Error(`Das Dateiformat von „${unsupported.name}“ wird als Foto oder Video im Tagebuch derzeit nicht unterstützt.`);
   const tooLarge = files.find((file) => file.size > (file.type.startsWith("video/") ? LIMITS.mediaVideoBytes : LIMITS.mediaPhotoBytes));
   if (tooLarge) throw new Error(`„${tooLarge.name}“ ist für diese Erfassung zu groß.`);
 }
@@ -4137,7 +4139,7 @@ export async function createOrUpdateLocalMemoryDraft(handle: FileSystemDirectory
   validateMemoryMediaFiles(input.mediaFiles);
   const index = await readIndex(handle);
   const existing = input.draftId ? index.memoryDrafts.find((item) => item.id === input.draftId) : null;
-  if (input.draftId && !existing) throw new Error("Der ausgewählte Memory-Entwurf wurde nicht gefunden.");
+  if (input.draftId && !existing) throw new Error("Der ausgewählte Tagebuch-Entwurf wurde nicht gefunden.");
   const now = new Date().toISOString();
   const id = existing?.id || memoryDraftId();
   const media = await storeMemoryDraftMedia(handle, id, input.mediaFiles);
@@ -4151,11 +4153,13 @@ export async function createOrUpdateLocalMemoryDraft(handle: FileSystemDirectory
     order: existing?.order || Math.max(0, ...index.memoryDrafts.map((item) => item.order)) + 1,
     status: "unbehandelt",
     suggestedCaseId: input.suggestedCaseId || existing?.suggestedCaseId,
+    stimmung: input.stimmung ?? existing?.stimmung,
+    verknuepft: input.verknuepft ?? existing?.verknuepft,
   });
   draft.updatedAt = now;
   if (existing) index.memoryDrafts = index.memoryDrafts.map((item) => item.id === id ? draft : item);
   else index.memoryDrafts.push(draft);
-  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: existing ? "Memory-Entwurf ergänzt" : "Memory-Entwurf vorgemerkt", recordId: id, details: `${id} wurde lokal als unbehandelter Entwurf gespeichert; noch keine Chronologie, Aufgabe, Frist oder Cockpit-Meldung erzeugt.` });
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: existing ? "Tagebuch-Entwurf ergänzt" : "Tagebuch-Entwurf vorgemerkt", recordId: id, details: `${id} wurde lokal als unbehandelter Entwurf gespeichert; noch keine Chronologie, Aufgabe, Frist oder Cockpit-Meldung erzeugt.` });
   await writeIndex(handle, index);
   return structuredClone(draft);
 }
@@ -4164,7 +4168,7 @@ export async function updateLocalMemoryDraftStatus(handle: FileSystemDirectoryHa
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   const index = await readIndex(handle);
   const draft = index.memoryDrafts.find((item) => item.id === draftId);
-  if (!draft) throw new Error("Der ausgewählte Memory-Entwurf wurde nicht gefunden.");
+  if (!draft) throw new Error("Der ausgewählte Tagebuch-Entwurf wurde nicht gefunden.");
   draft.status = status;
   draft.updatedAt = new Date().toISOString();
   await writeIndex(handle, index);
@@ -4175,7 +4179,7 @@ export async function readLocalMemoryDraftFiles(handle: FileSystemDirectoryHandl
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   const index = await readIndex(handle);
   const draft = index.memoryDrafts.find((item) => item.id === draftId);
-  if (!draft) throw new Error("Der ausgewählte Memory-Entwurf wurde nicht gefunden.");
+  if (!draft) throw new Error("Der ausgewählte Tagebuch-Entwurf wurde nicht gefunden.");
   const files: File[] = [];
   for (const media of [...draft.media].sort((a, b) => a.order - b.order)) {
     const stored = await fileFromStoredPath(handle, media.storedPath);
@@ -4188,10 +4192,10 @@ export async function deleteLocalMemoryDraft(handle: FileSystemDirectoryHandle, 
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   const index = await readIndex(handle);
   const draft = index.memoryDrafts.find((item) => item.id === draftId);
-  if (!draft) throw new Error("Der ausgewählte Memory-Entwurf wurde nicht gefunden.");
+  if (!draft) throw new Error("Der ausgewählte Tagebuch-Entwurf wurde nicht gefunden.");
   index.memoryDrafts = index.memoryDrafts.filter((item) => item.id !== draftId);
   const now = new Date().toISOString();
-  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Memory-Entwurf gelöscht", recordId: draftId, details: `${draftId} wurde nach ausdrücklicher Bestätigung aus der temporären Warteschlange entfernt. Endgültige Memory-Einträge blieben unverändert.` });
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Tagebuch-Entwurf gelöscht", recordId: draftId, details: `${draftId} wurde nach ausdrücklicher Bestätigung aus der temporären Warteschlange entfernt. Endgültige Memory-Einträge blieben unverändert.` });
   await writeIndex(handle, index);
   await removeMemoryDraftFolder(handle, draftId);
 }
@@ -4205,6 +4209,7 @@ export type CreateLocalMemoryInput = {
   captureType: MemoryCaptureType;
   analysis: MemoryAnalysis;
   mediaFiles: File[];
+  stimmung?: Stimmung;
   selectedReferences: Array<{ recordType: Extract<FamilyRecordType, "person" | "organisation" | "object" | "case" | "document">; id: string }>;
   createTask?: boolean;
   createDeadline?: boolean;
@@ -4223,7 +4228,7 @@ export async function createLocalMemoryBundle(handle: FileSystemDirectoryHandle,
   validateMemoryMediaFiles(input.mediaFiles);
 
   const index = await readIndex(handle);
-  if (input.draftId && !index.memoryDrafts.some((draft) => draft.id === input.draftId)) throw new Error("Der zu speichernde Memory-Entwurf wurde nicht gefunden.");
+  if (input.draftId && !index.memoryDrafts.some((draft) => draft.id === input.draftId)) throw new Error("Der zu speichernde Tagebuch-Entwurf wurde nicht gefunden.");
   const now = new Date().toISOString();
   const allocation = nextFamilyRecordId("event", index.sequences);
   index.sequences = allocation.sequences;
@@ -4257,6 +4262,7 @@ export async function createLocalMemoryBundle(handle: FileSystemDirectoryHandle,
     statements: structuredClone(input.analysis.statements),
     openPoint: input.analysis.openPoint ? structuredClone(input.analysis.openPoint) : null,
     tags: [...input.analysis.tags],
+    ...(istStimmung(input.stimmung) ? { stimmung: input.stimmung } : {}),
     media,
     assistantSummary,
   };
@@ -4265,34 +4271,34 @@ export async function createLocalMemoryBundle(handle: FileSystemDirectoryHandle,
   for (const reference of input.selectedReferences) {
     const exists = reference.recordType === "document" ? index.documents.some((item) => item.id === reference.id) : index.records.some((item) => item.recordType === reference.recordType && item.id === reference.id);
     if (!exists || index.relations.some((relation) => relation.fromId === event.id && relation.toId === reference.id)) continue;
-    index.relations.push({ id: crypto.randomUUID(), fromType: "event", fromId: event.id, toType: reference.recordType, toId: reference.id, relationType: reference.recordType === "case" ? "ergänzt Chronologie" : "gehört zu", createdAt: now, source: "Bestätigter Memory-Eintrag", notes: null });
+    index.relations.push({ id: crypto.randomUUID(), fromType: "event", fromId: event.id, toType: reference.recordType, toId: reference.id, relationType: reference.recordType === "case" ? "ergänzt Chronologie" : "gehört zu", createdAt: now, source: "Bestätigter Tagebuch-Eintrag", notes: null });
   }
 
   let task: FamilyRecordUnion | null = null;
   if (input.createTask && input.analysis.taskProposal) {
     const taskAllocation = nextFamilyRecordId("task", index.sequences);
     index.sequences = taskAllocation.sequences;
-    task = createFamilyRecord({ id: taskAllocation.id, recordType: "task", status: "offen", source: event.id, notes: "Vom Benutzer aus einem Memory-Ereignis bestätigt.", data: { title: input.analysis.taskProposal, dueAt: input.analysis.deadlineProposal || undefined }, now }) as FamilyRecordUnion;
+    task = createFamilyRecord({ id: taskAllocation.id, recordType: "task", status: "offen", source: event.id, notes: "Vom Benutzer aus einem Tagebuch-Eintrag bestätigt.", data: { title: input.analysis.taskProposal, dueAt: input.analysis.deadlineProposal || undefined }, now }) as FamilyRecordUnion;
     index.records.push(task);
-    index.relations.push({ id: crypto.randomUUID(), fromType: "task", fromId: task.id, toType: "event", toId: event.id, relationType: "entstand aus", createdAt: now, source: "Bestätigter Memory-Eintrag", notes: null });
+    index.relations.push({ id: crypto.randomUUID(), fromType: "task", fromId: task.id, toType: "event", toId: event.id, relationType: "entstand aus", createdAt: now, source: "Bestätigter Tagebuch-Eintrag", notes: null });
   }
   if (input.erinnerung && input.erinnerung.titel.trim() && /^\d{4}-\d{2}-\d{2}$/.test(input.erinnerung.dueAt)) {
     const e = input.erinnerung;
     const taskAllocation = nextFamilyRecordId("task", index.sequences);
     index.sequences = taskAllocation.sequences;
-    task = createFamilyRecord({ id: taskAllocation.id, recordType: "task", status: "offen", source: event.id, notes: "Erinnerung aus einem Memory-Ereignis, vom Benutzer bestätigt.", data: { title: e.titel.trim(), dueAt: e.dueAt, ...kalenderEingabe({ dueTime: e.dueTime, erinnerungen: e.erinnerungen as ErinnerungsWahl[], kalenderEintragen: e.kalenderEintragen, kalenderWahl: e.kalenderWahl }) }, now }) as FamilyRecordUnion;
+    task = createFamilyRecord({ id: taskAllocation.id, recordType: "task", status: "offen", source: event.id, notes: "Erinnerung aus einem Tagebuch-Eintrag, vom Benutzer bestätigt.", data: { title: e.titel.trim(), dueAt: e.dueAt, ...kalenderEingabe({ dueTime: e.dueTime, erinnerungen: e.erinnerungen as ErinnerungsWahl[], kalenderEintragen: e.kalenderEintragen, kalenderWahl: e.kalenderWahl }) }, now }) as FamilyRecordUnion;
     index.records.push(task);
-    index.relations.push({ id: crypto.randomUUID(), fromType: "task", fromId: task.id, toType: "event", toId: event.id, relationType: "entstand aus", createdAt: now, source: "Bestätigter Memory-Eintrag", notes: null });
+    index.relations.push({ id: crypto.randomUUID(), fromType: "task", fromId: task.id, toType: "event", toId: event.id, relationType: "entstand aus", createdAt: now, source: "Bestätigter Tagebuch-Eintrag", notes: null });
   }
   let deadline: FamilyRecordUnion | null = null;
   if (input.createDeadline && input.analysis.deadlineProposal) {
     const deadlineAllocation = nextFamilyRecordId("deadline", index.sequences);
     index.sequences = deadlineAllocation.sequences;
-    deadline = createFamilyRecord({ id: deadlineAllocation.id, recordType: "deadline", status: "offen", source: event.id, notes: "Vom Benutzer aus einem Memory-Ereignis bestätigt.", data: { title: `Frist zu: ${input.analysis.title}`, dueAt: input.analysis.deadlineProposal }, now }) as FamilyRecordUnion;
+    deadline = createFamilyRecord({ id: deadlineAllocation.id, recordType: "deadline", status: "offen", source: event.id, notes: "Vom Benutzer aus einem Tagebuch-Eintrag bestätigt.", data: { title: `Frist zu: ${input.analysis.title}`, dueAt: input.analysis.deadlineProposal }, now }) as FamilyRecordUnion;
     index.records.push(deadline);
-    index.relations.push({ id: crypto.randomUUID(), fromType: "deadline", fromId: deadline.id, toType: "event", toId: event.id, relationType: "basiert auf", createdAt: now, source: "Bestätigter Memory-Eintrag", notes: null });
+    index.relations.push({ id: crypto.randomUUID(), fromType: "deadline", fromId: deadline.id, toType: "event", toId: event.id, relationType: "basiert auf", createdAt: now, source: "Bestätigter Tagebuch-Eintrag", notes: null });
   }
-  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Memory-Ereignis angelegt", recordId: event.id, details: `${event.id} wurde nach Benutzerbestätigung mit ${media.length} Medium${media.length === 1 ? "" : "en"}, ${input.selectedReferences.length} Verknüpfung${input.selectedReferences.length === 1 ? "" : "en"}${task ? ", einer Aufgabe" : ""}${deadline ? " und einer Frist" : ""} gespeichert. Der Originaltext blieb unverändert.` });
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Tagebuch-Eintrag angelegt", recordId: event.id, details: `${event.id} wurde nach Benutzerbestätigung mit ${media.length} Medium${media.length === 1 ? "" : "en"}, ${input.selectedReferences.length} Verknüpfung${input.selectedReferences.length === 1 ? "" : "en"}${task ? ", einer Aufgabe" : ""}${deadline ? " und einer Frist" : ""} gespeichert. Der Originaltext blieb unverändert.` });
   if (input.draftId) index.memoryDrafts = index.memoryDrafts.filter((draft) => draft.id !== input.draftId);
   await writeIndex(handle, index);
   if (input.draftId) await removeMemoryDraftFolder(handle, input.draftId);
@@ -4303,14 +4309,14 @@ export async function updateLocalMemoryOpenPointStatus(handle: FileSystemDirecto
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   const index = await readIndex(handle);
   const event = index.records.find((record) => record.id === eventId && isMemoryRecord(record));
-  if (!event) throw new Error("Der Memory-Eintrag wurde nicht gefunden.");
+  if (!event) throw new Error("Der Tagebuch-Eintrag wurde nicht gefunden.");
   const data = memoryData(event)!;
-  if (!data.openPoint) throw new Error("Dieser Eintrag enthält keinen offenen Memory-Punkt.");
+  if (!data.openPoint) throw new Error("Dieser Eintrag enthält keinen offenen Rückfrage.");
   const previous = data.openPoint.status;
   data.openPoint.status = status;
   event.status = ["erledigt", "keine_weitere_erinnerung"].includes(status) ? "erledigt" : "offen";
   event.updatedAt = new Date().toISOString();
-  index.auditLog.unshift({ id: crypto.randomUUID(), at: event.updatedAt, action: "Memory-Status geändert", recordId: event.id, details: `${event.id}: ${previous} → ${status}; Änderung durch Benutzerbefehl.` });
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: event.updatedAt, action: "Status des Tagebuch-Eintrags geändert", recordId: event.id, details: `${event.id}: ${previous} → ${status}; Änderung durch Benutzerbefehl.` });
   await writeIndex(handle, index);
   return event;
 }
@@ -4321,7 +4327,7 @@ export async function updateLocalMemoryRecord(handle: FileSystemDirectoryHandle,
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   const index = await readIndex(handle);
   const event = index.records.find((record) => record.id === eventId && isMemoryRecord(record));
-  if (!event) throw new Error("Der Memory-Eintrag wurde nicht gefunden.");
+  if (!event) throw new Error("Der Tagebuch-Eintrag wurde nicht gefunden.");
   const data = memoryData(event)!;
   const allowed: Array<keyof UpdateLocalMemoryInput> = ["title", "eventAt", "originalText", "followUpAnswer", "lifeArea", "eventType", "confidence", "tags"];
   for (const key of allowed) {
@@ -4331,7 +4337,7 @@ export async function updateLocalMemoryRecord(handle: FileSystemDirectoryHandle,
   if (!data.title || !data.eventAt || !data.lifeArea) throw new Error("Titel, Zeitpunkt und Lebensbereich dürfen nicht leer sein.");
   const now = new Date().toISOString();
   event.updatedAt = now;
-  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Memory-Eintrag bearbeitet", recordId: event.id, details: `${event.id} wurde nach ausdrücklicher Benutzeraktion bearbeitet. Verknüpfte Datensätze blieben erhalten.` });
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Tagebuch-Eintrag bearbeitet", recordId: event.id, details: `${event.id} wurde nach ausdrücklicher Benutzeraktion bearbeitet. Verknüpfte Datensätze blieben erhalten.` });
   await writeIndex(handle, index);
   return structuredClone(event);
 }
@@ -4377,19 +4383,19 @@ export async function updateLocalScheduleTermin(handle: FileSystemDirectoryHandl
   return structuredClone(record);
 }
 
-/** Erinnerung (Aufgabe mit Termin) nachträglich an einen gespeicherten Memory-Eintrag hängen. */
+/** Erinnerung (Aufgabe mit Termin) nachträglich an einen gespeicherten Tagebuch-Eintrag hängen. */
 export async function addLocalMemoryErinnerung(handle: FileSystemDirectoryHandle, eventId: string, e: NonNullable<CreateLocalMemoryInput["erinnerung"]>) {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   if (!e.titel.trim() || !/^\d{4}-\d{2}-\d{2}$/.test(e.dueAt)) throw new Error("Bitte Titel und Tag der Erinnerung angeben.");
   const index = await readIndex(handle);
   const event = index.records.find((record) => record.id === eventId && isMemoryRecord(record));
-  if (!event) throw new Error("Der Memory-Eintrag wurde nicht gefunden.");
+  if (!event) throw new Error("Der Tagebuch-Eintrag wurde nicht gefunden.");
   const now = new Date().toISOString();
   const allocation = nextFamilyRecordId("task", index.sequences);
   index.sequences = allocation.sequences;
-  const task = createFamilyRecord({ id: allocation.id, recordType: "task", status: "offen", source: event.id, notes: "Erinnerung aus einem Memory-Ereignis, vom Benutzer bestätigt.", data: { title: e.titel.trim(), dueAt: e.dueAt, ...kalenderEingabe({ dueTime: e.dueTime, erinnerungen: e.erinnerungen as ErinnerungsWahl[], kalenderEintragen: e.kalenderEintragen, kalenderWahl: e.kalenderWahl }) }, now }) as FamilyRecordUnion;
+  const task = createFamilyRecord({ id: allocation.id, recordType: "task", status: "offen", source: event.id, notes: "Erinnerung aus einem Tagebuch-Eintrag, vom Benutzer bestätigt.", data: { title: e.titel.trim(), dueAt: e.dueAt, ...kalenderEingabe({ dueTime: e.dueTime, erinnerungen: e.erinnerungen as ErinnerungsWahl[], kalenderEintragen: e.kalenderEintragen, kalenderWahl: e.kalenderWahl }) }, now }) as FamilyRecordUnion;
   index.records.push(task);
-  index.relations.push({ id: crypto.randomUUID(), fromType: "task", fromId: task.id, toType: "event", toId: event.id, relationType: "entstand aus", createdAt: now, source: "Bestätigter Memory-Eintrag", notes: null });
+  index.relations.push({ id: crypto.randomUUID(), fromType: "task", fromId: task.id, toType: "event", toId: event.id, relationType: "entstand aus", createdAt: now, source: "Bestätigter Tagebuch-Eintrag", notes: null });
   index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Erinnerung angelegt", recordId: task.id, details: `${task.id} zu ${event.id} nach ausdrücklicher Benutzeraktion angelegt.` });
   await writeIndex(handle, index);
   return structuredClone(task);
@@ -4398,7 +4404,7 @@ export async function addLocalMemoryErinnerung(handle: FileSystemDirectoryHandle
 export async function getLocalMemoryDeleteImpact(handle: FileSystemDirectoryHandle, eventId: string) {
   const index = await readIndex(handle);
   const event = index.records.find((record) => record.id === eventId && isMemoryRecord(record));
-  if (!event) throw new Error("Der Memory-Eintrag wurde nicht gefunden.");
+  if (!event) throw new Error("Der Tagebuch-Eintrag wurde nicht gefunden.");
   const linkedScheduleIds = index.relations.filter((relation) => relation.toId === eventId && (relation.fromType === "task" || relation.fromType === "deadline")).map((relation) => relation.fromId);
   return { eventId, linkedScheduleIds, linkedScheduleCount: linkedScheduleIds.length };
 }
@@ -4407,7 +4413,7 @@ export async function deleteLocalMemoryRecord(handle: FileSystemDirectoryHandle,
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   const index = await readIndex(handle);
   const event = index.records.find((record) => record.id === eventId && isMemoryRecord(record));
-  if (!event) throw new Error("Der Memory-Eintrag wurde nicht gefunden.");
+  if (!event) throw new Error("Der Tagebuch-Eintrag wurde nicht gefunden.");
   const linkedScheduleIds = new Set(index.relations.filter((relation) => relation.toId === eventId && (relation.fromType === "task" || relation.fromType === "deadline")).map((relation) => relation.fromId));
   const removedRecordIds = new Set([eventId]);
   const archiviert = new Set<string>();
@@ -4425,7 +4431,7 @@ export async function deleteLocalMemoryRecord(handle: FileSystemDirectoryHandle,
   index.relations = index.relations.filter((relation) => !removedRecordIds.has(relation.fromId) && !removedRecordIds.has(relation.toId) && !archiviert.has(relation.fromId) && !archiviert.has(relation.toId));
   index.linkDecisions = index.linkDecisions.filter((decision) => decision.sourceId !== eventId);
   const now = new Date().toISOString();
-  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Memory-Eintrag gelöscht", recordId: eventId, details: `${eventId} wurde nach ausdrücklicher Bestätigung gelöscht. ${options.keepLinkedSchedules ? "Verknüpfte Aufgaben und Fristen blieben als eigenständige Datensätze erhalten." : `${linkedScheduleIds.size} verbundene Aufgaben/Fristen wurden nach gesonderter Auswahl mit entfernt.`} Gemeinsam verwendete Personen, Organisationen, Objekte, Vorgänge und Dokumente blieben erhalten.` });
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Tagebuch-Eintrag gelöscht", recordId: eventId, details: `${eventId} wurde nach ausdrücklicher Bestätigung gelöscht. ${options.keepLinkedSchedules ? "Verknüpfte Aufgaben und Fristen blieben als eigenständige Datensätze erhalten." : `${linkedScheduleIds.size} verbundene Aufgaben/Fristen wurden nach gesonderter Auswahl mit entfernt.`} Gemeinsam verwendete Personen, Organisationen, Objekte, Vorgänge und Dokumente blieben erhalten.` });
   await writeIndex(handle, index);
   try {
     const mediaRoot = await (await root(handle)).getDirectoryHandle("03_Erinnerungsmedien");
@@ -4441,7 +4447,7 @@ export async function readLocalMemoryMediaFile(handle: FileSystemDirectoryHandle
   const index = await readIndex(handle);
   const event = index.records.find((record) => record.id === eventId && isMemoryRecord(record));
   const media = event ? memoryData(event)?.media.find((item) => item.id === mediaId) : null;
-  if (!media) throw new Error("Das ausgewählte Memory-Medium wurde nicht gefunden.");
+  if (!media) throw new Error("Das ausgewählte Foto oder Video im Tagebuch wurde nicht gefunden.");
   return fileFromStoredPath(handle, media.storedPath);
 }
 

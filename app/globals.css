@@ -2091,8 +2091,8 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 
 /* Knopf „Notiz“ im Kopf (Klaus 2026-11-05) */
 /* Notiz wie die übrigen Kopf-Symbole (Klaus 2026-11-05): gleiche Größe, nur das Symbol */
-.notiz-knopf-schalter, .kalender-knopf-schalter { flex: 0 0 auto; cursor: pointer; transition: background-color .15s, box-shadow .15s, transform .08s; }
-.notiz-knopf-schalter:hover, .kalender-knopf-schalter:hover { border-color: #9fb3c1; background: var(--blue-soft); box-shadow: 0 2px 8px rgba(16,52,83,.12); }
+.notiz-knopf-schalter, .kalender-knopf-schalter, .tagebuch-knopf-schalter { flex: 0 0 auto; cursor: pointer; transition: background-color .15s, box-shadow .15s, transform .08s; }
+.notiz-knopf-schalter:hover, .kalender-knopf-schalter:hover, .tagebuch-knopf-schalter:hover { border-color: #9fb3c1; background: var(--blue-soft); box-shadow: 0 2px 8px rgba(16,52,83,.12); }
 .notiz-knopf-schalter:active { transform: scale(.97); }
 .notiz-knopf-schalter:focus-visible { outline: 3px solid #9fd8d4; outline-offset: 2px; }
 .notiz-fenster { width: min(560px, calc(100vw - 24px)); display: grid; gap: 12px; }
@@ -2107,7 +2107,7 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .notiz-aktion.loeschen:hover:not(:disabled) { background: #f9dcda; }
 .notiz-gespeichert { display: flex; align-items: center; gap: 6px; margin: 0; color: var(--green); font-weight: 700; }
 @media (max-width: 620px) {
-  .site-header.demo-mode .notiz-knopf-schalter, .site-header.demo-mode .kalender-knopf-schalter { display: none; } /* Demo am Handy: Platz für DEMO ▾ und den Namen */
+  .site-header.demo-mode .notiz-knopf-schalter, .site-header.demo-mode .kalender-knopf-schalter, .site-header.demo-mode .tagebuch-knopf-schalter { display: none; } /* Demo am Handy: Platz für DEMO ▾ und den Namen */
 }
 .notiz-leeren { position: absolute; top: 6px; right: 58px; width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line); background: #fff; color: var(--muted); cursor: pointer; }
 .notiz-leeren:hover { border-color: #b42318; color: #b42318; background: #fdf0ef; }
@@ -2660,7 +2660,7 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .erste-schritte-weg { margin-left: auto; }
 .erste-schritte > p { margin: 0; font-size: .8rem; }
 @media (max-width: 620px) {
-  .header-actions :is(.netz-schalter, .ablegen-knopf-schalter, .notiz-knopf-schalter, .kalender-knopf-schalter) { position: relative; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; width: auto; min-width: 30px; height: 38px; padding: 2px 1px 1px; }
+  .header-actions :is(.netz-schalter, .ablegen-knopf-schalter, .notiz-knopf-schalter, .kalender-knopf-schalter, .tagebuch-knopf-schalter) { position: relative; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; width: auto; min-width: 30px; height: 38px; padding: 2px 1px 1px; }
   .header-actions .kopf-wort { display: block; font-size: .52rem; font-weight: 700; line-height: 1; letter-spacing: -.01em; white-space: nowrap; color: var(--navy); }
   .header-actions .netz-schalter .netz-lampe { top: 3px; bottom: auto; right: 3px; width: 7px; height: 7px; }
   .header-actions .neu-knopf-schalter { height: 38px; }
@@ -2670,7 +2670,7 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 }
 @media (max-width: 430px) {
   .header-actions .kopf-wort { font-size: .47rem; letter-spacing: -.03em; }
-  .header-actions :is(.netz-schalter, .ablegen-knopf-schalter, .notiz-knopf-schalter, .kalender-knopf-schalter) { min-width: 27px; padding-left: 0; padding-right: 0; }
+  .header-actions :is(.netz-schalter, .ablegen-knopf-schalter, .notiz-knopf-schalter, .kalender-knopf-schalter, .tagebuch-knopf-schalter) { min-width: 27px; padding-left: 0; padding-right: 0; }
   .header-actions .neu-knopf-schalter { padding-left: 5px; padding-right: 5px; gap: 3px; font-size: .74rem; }
   .header-actions { gap: 1px; }
 }
@@ -2778,3 +2778,18 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
   .payment-list > div, .payment-row { grid-template-columns: minmax(0,1fr) auto; }
   .payment-list > div > :first-child, .payment-row > :first-child { grid-column: 1 / -1; }
 }
+
+/* C (09.11.): Tagebuch – ein Erfassungsblock (Feld, Foto, Stimmung, Person), Zähler nur wenn etwas offen ist. */
+.tagebuch-zusatz { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 10px; }
+.tagebuch-stimmung { display: inline-flex; gap: 4px; }
+.tagebuch-stimmung button { width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 10px; background: #fff; font-size: 1.15rem; line-height: 1; cursor: pointer; filter: grayscale(.6); }
+.tagebuch-stimmung button.gewaehlt { border-color: var(--teal); background: #e6f4f3; filter: none; box-shadow: 0 0 0 2px rgba(8,127,122,.18); }
+.tagebuch-person { min-height: 38px; max-width: 100%; border: 1px solid var(--line); border-radius: 10px; padding: 0 10px; background: #fff; color: var(--navy); font: inherit; }
+.tagebuch-aktionen { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 12px; }
+.tagebuch-zaehler { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.tagebuch-zaehler button { display: inline-flex; align-items: baseline; gap: 6px; border: 1px solid #c7a54a; border-radius: 999px; padding: 6px 12px; background: #fff8e6; color: var(--navy); font: inherit; font-size: .86rem; cursor: pointer; }
+.memory-file-chips span .icon-button { width: 22px; height: 22px; min-height: 0; padding: 0; border: 0; }
+.tagebuch-hinweise { display: grid; gap: 4px; margin: 10px 0; padding: 9px 11px; border: 1px solid #d9c98f; border-radius: 10px; background: #fffbea; }
+.tagebuch-hinweise .text-link { display: grid; justify-items: start; gap: 1px; white-space: normal; text-align: left; font-weight: 600; }
+.tagebuch-hinweise .text-link small { color: var(--muted); font-weight: 500; }
+.kicker-klein { color: var(--muted); font-size: .66rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }

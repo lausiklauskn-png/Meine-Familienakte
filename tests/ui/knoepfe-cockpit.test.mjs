@@ -152,18 +152,18 @@ try {
   });
 
   // ---------- Tagebuch ----------
-  await footer(page, "Tagebuch & Erinnerungen");
+  await footer(page, "Tagebuch");
   await step("Tagebuch: Chronologie-Eintrag auswählen zeigt Details", async () => {
     await aufraeumen(page);
     await page.locator(".memory-chronology button, .chronology button, section:has(h2:has-text('Chronologie')) button:not(.start-info-trigger)").first().click().catch(() => {});
     await page.waitForTimeout(300);
-    return (await page.locator("button", { hasText: /Memory bearbeiten|Memory löschen/ }).count()) > 0;
+    return (await page.locator("button", { hasText: /Eintrag ändern|Eintrag löschen/ }).count()) > 0;
   });
   const klick = async (loc, label) => { try { await loc.click(); } catch (e) { throw new Error(`${label}: ${String(e.message).split("\n")[0]}`); } };
   await step("Tagebuch: Entwurf anlegen („Nächste Eingabe“)", async () => {
     await aufraeumen(page); await page.evaluate(() => window.scrollTo(0, 0));
     await page.locator(".memory-text textarea").fill("Probe-Entwurf zum Löschen (erfunden).");
-    await klick(page.locator("button", { hasText: "Nächste Eingabe" }).first(), "Nächste Eingabe");
+    await klick(page.locator("button", { hasText: "Noch einen erfassen" }).first(), "Noch einen erfassen");
     await page.waitForTimeout(500);
     return (await page.locator("#memory-draft-queue").innerText()).includes("Probe-Entwurf");
   });
@@ -175,9 +175,9 @@ try {
   });
   await step("Startseite: ergänzter Entwurf geht mit „Nächste Eingabe“ zurück in die Warteschlange (kein Doppel)", async () => {
     await page.locator(".memory-text textarea").fill("Probe-Entwurf zum Löschen (erfunden), ergänzt.");
-    await klick(page.locator("button", { hasText: "Nächste Eingabe" }).first(), "Nächste Eingabe");
+    await klick(page.locator("button", { hasText: "Noch einen erfassen" }).first(), "Noch einen erfassen");
     await page.waitForTimeout(500);
-    await footer(page, "Tagebuch & Erinnerungen");
+    await footer(page, "Tagebuch");
     const q = await page.locator("#memory-draft-queue").innerText();
     const anzahl = (q.match(/Probe-Entwurf/g) || []).length;
     return q.includes("ergänzt") && anzahl <= 2 ? `Vorkommen im Text: ${anzahl}` : (console.log("   ↳ Warteschlange:", q.slice(0, 200).replace(/\n/g, " / ")), false);
@@ -208,14 +208,14 @@ try {
   });
   const eintragWaehlen = async () => {
     await aufraeumen(page);
-    if (!(await page.locator("button", { hasText: "Memory bearbeiten" }).count())) {
+    if (!(await page.locator("button", { hasText: "Eintrag ändern" }).count())) {
       await page.locator("section:has(h2:has-text('Chronologie')) button:not(.start-info-trigger)").first().click().catch(() => {});
       await page.waitForTimeout(300);
     }
   };
   await step("Tagebuch: „Memory bearbeiten“ öffnet das Bearbeiten-Fenster (Titel, Text, Bereich, Aufnahmezeit, Erinnerung) und speichert", async () => {
     await eintragWaehlen();
-    const b = page.locator("button", { hasText: "Memory bearbeiten" }).first();
+    const b = page.locator("button", { hasText: "Eintrag ändern" }).first();
     if (!(await b.count())) return "kein gespeicherter Eintrag ausgewählt";
     await b.click(); const d = page.locator("[data-memory-bearbeiten]"); await d.waitFor();
     const felder = (await d.locator("[data-mb-titel]").count()) + (await d.locator("[data-mb-text]").count()) + (await d.locator("[data-mb-bereich]").count()) + (await d.locator("[data-mb-tag]").count());
@@ -225,12 +225,12 @@ try {
   });
   await step("Tagebuch: „Memory löschen“ fragt nach; „Abbrechen“ behält den Eintrag", async () => {
     await eintragWaehlen();
-    const b = page.locator("button", { hasText: "Memory löschen" }).first();
+    const b = page.locator("button", { hasText: "Eintrag löschen" }).first();
     if (!(await b.count())) return "kein gespeicherter Eintrag ausgewählt";
     await b.click(); await page.waitForSelector(".page-dialog");
     const frage = await page.locator(".page-dialog").innerText();
     await page.locator(".page-dialog button", { hasText: "Abbrechen" }).click();
-    return frage.includes("löschen") && (await page.locator("button", { hasText: "Memory löschen" }).count()) > 0;
+    return frage.includes("löschen") && (await page.locator("button", { hasText: "Eintrag löschen" }).count()) > 0;
   });
   await step("Tagebuch: „Verbindung lösen“ fragt nach", async () => {
     await eintragWaehlen();

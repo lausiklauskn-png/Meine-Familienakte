@@ -13,7 +13,7 @@ import { VoiceInput, VoiceTextarea } from "./ui-controls";
 type Termin = { id: string; titel: string; datum: string; zeit: string; wahl: ErinnerungsWahl[]; kal: KalenderWahl | null };
 
 /**
- * „Memory bearbeiten“ (Klaus 2026-11-05): ein Eintrag lässt sich jederzeit ändern – Titel, Text, Lebensbereich, Zeitpunkt,
+ * „Eintrag ändern“ (Klaus 2026-11-05): ein Eintrag lässt sich jederzeit ändern – Titel, Text, Lebensbereich, Zeitpunkt,
  * Einordnung und die Erinnerung (Tag, Uhrzeit, Erinnern, Kalender). Fehlt eine Erinnerung, kann man sie hier anlegen.
  * Gespeichert wird erst auf „Speichern“; der Kalender-Abgleich zieht geänderte Termine nach.
  */

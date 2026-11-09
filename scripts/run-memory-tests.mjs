@@ -21,9 +21,9 @@ for (const test of tests) {
 }
 
 assert.ok(portal.includes("function MemoryCapturePanel") && portal.includes("function MemoryReviewDialog") && portal.includes("function MemoryCenter"), "Erfassung, Prüfansicht oder Erinnerungszentrum fehlt.");
-assert.ok(portal.includes('active === "memory"') && portal.includes('label: "Tagebuch & Erinnerungen"'), "Der Memory-Bereich ist nicht vollständig erreichbar.");
-assert.ok(portal.includes("Nächste Eingabe") && portal.includes("Unbehandelte Memory-Ereignisse") && portal.includes("Alle Memory-Ereignisse bearbeitet"), "Mehrfacherfassung, Warteschlange oder Abschlussmeldung fehlt.");
-assert.ok(portal.includes("Unbehandelte Erinnerungen:") && portal.includes("Offene Memory-Fragen:") && portal.includes("Bereit zum Speichern"), "Die getrennten Zähler oder Statusanzeigen fehlen.");
+assert.ok(portal.includes('active === "memory"') && portal.includes('label: "Tagebuch"'), "Der Memory-Bereich ist nicht vollständig erreichbar.");
+assert.ok(portal.includes("Noch einen erfassen") && portal.includes("Noch zu prüfende Tagebuch-Einträge") && portal.includes("Alle Tagebuch-Einträge geprüft"), "Mehrfacherfassung, Warteschlange oder Abschlussmeldung fehlt.");
+assert.ok(portal.includes("data-zaehler-entwuerfe") && portal.includes("Rückfragen zu gespeicherten Einträgen") && portal.includes("Bereit zum Speichern"), "Die getrennten Zähler oder Statusanzeigen fehlen.");
 assert.ok(vault.includes("createLocalMemoryBundle") && vault.includes("createOrUpdateLocalMemoryDraft") && vault.includes("deleteLocalMemoryDraft") && vault.includes("03_Erinnerungsmedien") && vault.includes("00_Unbehandelt") && vault.includes("updateLocalMemoryOpenPointStatus"), "Lokale Entwurfs-/Endspeicherung, Medienablage oder Statusänderung fehlt.");
 assert.ok(styles.includes(".memory-capture") && styles.includes(".memory-history") && styles.includes(".memory-review") && styles.includes(".memory-draft-queue") && styles.includes(".memory-completion"), "Die responsive Memory- und Warteschlangen-Darstellung ist unvollständig.");
 assert.ok(manifest.memoryReuse.length >= 7 && manifest.memorySafety.length >= 7, "Wiederverwendung oder Schutzregeln sind unvollständig.");
