@@ -7,7 +7,7 @@ import type { ProTresorZustand } from "./pro-tresor";
 export const PRO_TRESOR_FACH = "Familienakte";
 export const PRO_TRESOR_EINGANG = "Eingang-Familienakte";
 export const PRO_TRESOR_MENUEWEG = "Dokumente → Sicherheit & lokaler Tresor → Karte „Gemeinsamer Pro-Tresor“ → „Vorhandenen Pro-Tresor verbinden …“";
-const VERBINDEN = "[data-pro-tresor-verbinden]";
+const VERBINDEN = "[data-pro-tresor-einrichten], [data-pro-tresor-verbinden]";
 
 /** Lage des Tresors für die Anzeige: grün = entsperrt, rot = gesperrt / nicht verbunden / nicht erreichbar. */
 const LAGE: Record<ProTresorZustand["status"], string> = { offen: "entsperrt", gesperrt: "gesperrt", getrennt: "noch nicht verbunden", nicht_erreichbar: "nicht erreichbar" };

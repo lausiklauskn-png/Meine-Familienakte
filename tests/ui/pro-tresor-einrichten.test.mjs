@@ -1,6 +1,6 @@
 // Ein-Schritt-Weg „Tresor einrichten – nur Speicher wählen“ (Klaus 2026-11-04). Die native Seite ist gestellt
 // (Speicherwahl, Fenster und Krypto prüft die JVM-Probe tools/native/test-pro-tresor.mjs). Hier: Knopf, Meldungen, Bestätigung.
-import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, footer, collectErrors } from "./_harness.mjs";
+import { startApp, launchBrowser, DESKTOP, ready, check, step, soll, summary, footer, collectErrors } from "./_harness.mjs";
 import { capacitorStub } from "./_capacitor-stub.mjs";
 const app = await startApp();
 const browser = await launchBrowser();
@@ -25,7 +25,7 @@ try {
     return await knopf.isVisible() && await panel.locator("[data-pro-tresor-verbinden]").count() === 0
       && /Family-Projekt/.test(await panel.locator("[data-pro-tresor-einrichten-hinweis]").innerText());
   });
-  for (const [code, erwartet] of [["FA_TRESOR_MEHRERE", /mehrere Tresore.*nichts verändert/], ["FA_TRESOR_UNTERORDNER", /Unterordner des Tresors/],
+  for (const [code, erwartet] of [["FA_TRESOR_MEHRERE", /mehrere Tresore.*nichts verändert/], ["FA_TRESOR_UNTERORDNER", /wie ein Ordner im Tresor.*Ebene höher.*Family-Projekt/],
     ["TRESOR_NAME_BELEGT", /schon und hat Inhalt.*nichts angelegt/], ["FA_TRESOR_ABGEBROCHEN", /abgebrochen/]]) {
     await step(`Einrichten: ${code} wird verständlich gemeldet, nichts verbunden`, async () => {
       await page.evaluate((c) => { window.__proFehlerCode = c; }, code);
@@ -35,6 +35,27 @@ try {
       return erwartet.test(t) && !(await panel.locator("[data-pro-tresor-bestaetigung]").count()) ? t.slice(0, 90) : (console.log("   ↳", t), false);
     });
   }
+  // Gerätetest 09.11.: die Meldung stand unter dem langen Ordnerbaum und blieb ungesehen; der Baum gehört hinter das „?“.
+  await step("Gerätetest 09.11.: Fehlermeldung steht direkt unter dem Zustand, vor dem Knopf; kein Ordnerbaum in der Karte", async () => {
+    await page.evaluate(() => { window.__proFehlerCode = "FA_TRESOR_UNTERORDNER"; });
+    await panel.getByRole("button", { name: "Tresor einrichten – nur Speicher wählen …", exact: true }).click();
+    const meldung = panel.locator("[data-pro-tresor-meldung]"); await meldung.waitFor();
+    await page.evaluate(() => { window.__proFehlerCode = null; });
+    const vorKnopf = await page.evaluate(() => { const m = document.querySelector("[data-pro-tresor-meldung]"), k = document.querySelector("[data-pro-tresor-einrichten]");
+      return Boolean(m && k && (m.compareDocumentPosition(k) & Node.DOCUMENT_POSITION_FOLLOWING)); });
+    soll(vorKnopf, "Meldung steht nicht vor dem Knopf");
+    soll(await panel.locator("[data-pro-tresor-hilfe]").count() === 0, "Ordnerbaum steht noch in der Karte");
+    return soll(await meldung.isVisible(), "Meldung nicht sichtbar");
+  });
+  await step("Gerätetest 09.11.: „Wo liegt was?“ öffnet sich hinter dem „?“ der Karte, Tipp auf den Hauptordner zeigt auf den Einrichten-Knopf", async () => {
+    await panel.getByRole("button", { name: "Gemeinsamer Pro-Tresor erklären", exact: true }).click();
+    const baum = page.locator("[data-hinweis-mehr] [data-pro-tresor-hilfe]"); await baum.waitFor();
+    const t = await baum.innerText();
+    soll(t.includes("tresorordner.json") && t.includes("Eingang-Familienakte"), t.slice(0, 120));
+    await baum.locator(".ablauf-link", { hasText: "Tresor-Hauptordner" }).first().click();
+    await page.waitForTimeout(400);
+    return soll(await page.locator("[data-pro-tresor-einrichten].hilfe-ziel-rahmen").count() === 1, "Sprung erreicht den Einrichten-Knopf nicht");
+  });
   await step("Einrichten: neuer Tresor – Bestätigung nennt Ort, Kennung und LIES-MICH", async () => {
     await panel.getByRole("button", { name: "Tresor einrichten – nur Speicher wählen …", exact: true }).click();
     const t = await panel.locator("[data-pro-tresor-bestaetigung]").innerText();

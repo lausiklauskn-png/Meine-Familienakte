@@ -80,8 +80,9 @@ export function ProTresorAnschluss({ aktenHandle = null, onChange, onDokumente }
     : stand.status === "nicht_erreichbar" && stand.code === "FA_TRESOR_UMGEZOGEN" ? proTresorMeldung(stand.code) : text[stand.status];
   const empfehlen = Boolean(aktenHandle && stand.status === "offen" && stand.id && ziel !== stand.id);
   return <section className="card" data-pro-tresor>
-    <span className="ui-heading-help"><h3>Gemeinsamer Pro-Tresor</h3><InfoPopover label="Gemeinsamer Pro-Tresor erklären" text={ERKLAERUNG}/></span>
+    <span className="ui-heading-help"><h3>Gemeinsamer Pro-Tresor</h3><InfoPopover label="Gemeinsamer Pro-Tresor erklären" text={ERKLAERUNG} mehr={<ProTresorWoLiegtWas open stand={verfuegbar ? stand : undefined} zahlen={zahlen} onDokumente={onDokumente}/>}/></span>
     <p role="status" data-pro-tresor-status>{statusText}</p>
+    {meldung && <p role="alert" className="pro-tresor-meldung" data-pro-tresor-meldung>{meldung}</p>}
     {stand.status === "nicht_erreichbar" && stand.ort && <p>Der gemerkte Ort bleibt gespeichert. Es wird kein anderer Speicher verwendet, bis du selbst einen anderen Tresor wählst.</p>}
     {bestaetigung && <p role="status" data-pro-tresor-bestaetigung>{bestaetigung}</p>}
     {stand.code === "FA_TRESOR_ZUSTAND_BESCHAEDIGT" && <p>Die gemerkte Verbindung ist beschädigt. Bitte den vorhandenen Pro-Tresor neu wählen. Die Tresordateien wurden nicht verändert.</p>}
@@ -100,8 +101,6 @@ export function ProTresorAnschluss({ aktenHandle = null, onChange, onDokumente }
     {empfehlen && <p data-pro-ablage-empfehlung><strong>Empfohlen:</strong> Neue Originale verschlüsselt im Ordner „{PRO_TRESOR_FACH}“ dieses Pro-Tresors ablegen. Vorhandene Akten bleiben, wo sie sind; du kannst jederzeit zurückwechseln.</p>}
     {aktenHandle && ziel && <button className="button secondary" type="button" disabled={busy} onClick={() => void zielAendern(null)}>Neue Originale wieder im bisherigen Aktenordner ablegen</button>}
     <ProVerbundAnschluss stand={stand}/>
-    <ProTresorWoLiegtWas stand={verfuegbar ? stand : undefined} zahlen={zahlen} onDokumente={onDokumente}/>
     {einrichtenMoeglich && !stand.id && <p data-pro-tresor-einrichten-hinweis>Nur SD-Karte oder Gerätespeicher antippen. Die App findet einen vorhandenen Tresor selbst oder legt den Ordner „Family-Projekt“ an.</p>}
-    {meldung && <p role="alert">{meldung}</p>}
   </section>;
 }

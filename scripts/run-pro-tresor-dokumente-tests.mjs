@@ -196,7 +196,7 @@ await probe("Pro-Tresor-Meldungen: fremder Tresor, falscher Ordner, Unterordner 
   const pt = await import("../app/pro-tresor.ts");
   assert.equal(pt.proTresorMeldung("FA_TRESOR_FREMDE_KENNUNG"), "Anderer Tresor verbunden – bitte den Ordner wählen, in dem tresorordner.json liegt.");
   assert.match(pt.proTresorMeldung("FA_TRESOR_NICHT_VORHANDEN"), /keine tresorordner\.json.*kein neuer Tresor angelegt/);
-  assert.match(pt.proTresorMeldung("FA_TRESOR_UNTERORDNER"), /Unterordner.*Ebene höher/);
+  assert.match(pt.proTresorMeldung("FA_TRESOR_UNTERORDNER"), /Ordner im Tresor.*Ebene höher/);
   assert.equal(pt.proTresorCode({ code: "FA_TRESOR_UNTERORDNER", message: "x" }), "FA_TRESOR_UNTERORDNER");
   assert.equal(pt.proTresorCode("FA_TRESOR_NICHT_VORHANDEN"), "FA_TRESOR_NICHT_VORHANDEN");
   assert.equal(pt.proTresorCode(new Error("Abbruch")), "");

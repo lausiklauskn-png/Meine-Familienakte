@@ -63,6 +63,14 @@ public final class ProTresorAdapter implements Closeable {
     public static Hauptordner.Ergebnis einrichtenPruefen(Ablage gewaehlt, String ordnerName) throws IOException {
         Hauptordner.Ergebnis e = Hauptordner.suchen(gewaehlt, letzterTeil(ordnerName));
         if (e.gefunden()) return e;
+        // Gerätetest 09.11.: ein selbst angelegter Ordner „Familienakte“ direkt im Speicher ist kein Fach eines Tresors.
+        // Nur der Name passt, der Inhalt zeigt keinen Tresor und darüber liegt kein Ordner: darin entsteht ein neuer
+        // Hauptordner (Name wählbar, Vorschlag „Family-Projekt“), nie der Tresor selbst unter dem Namen eines Fachs.
+        if (nurNameWieFach(gewaehlt, ordnerName)) {
+            Hauptordner.Ergebnis n = Hauptordner.suchen(gewaehlt, "");
+            if (n.gefunden() || Hauptordner.ANLEGEN_DARIN.equals(n.art)) return n;
+            if (Hauptordner.ANLEGEN_HIER.equals(n.art)) return Hauptordner.suchen(new MitPlatzhalter(gewaehlt), "");
+        }
         if (Hauptordner.UNTERORDNER.equals(e.art) || istTresorUnterordner(ordnerName)) throw new IOException("FA_TRESOR_UNTERORDNER");
         if (Hauptordner.MEHRERE.equals(e.art)) throw new IOException("FA_TRESOR_MEHRERE");
         if (!e.anlegen()) throw new IOException("FA_TRESOR_ORDNER_" + e.art);
@@ -95,6 +103,38 @@ public final class ProTresorAdapter implements Closeable {
 
     private static void liesMich(Ablage haupt) {
         try { Hauptordner.liesMichAnlegen(haupt); } catch (IOException zusatz) { /* Lies-mich ist ein Zusatz, kein Grund zum Abbruch */ }
+    }
+
+    /** Name wie ein Fach („Familienakte“ …), aber direkt im Gerätespeicher („Gerät/Familienakte“) und ohne Tresor-Spuren
+     * im Inhalt. Die oberste Ebene des Gerätespeichers kann Android (ab 11) nicht freigeben, also liegt dort nie ein Tresor,
+     * dessen Fach das sein könnte. SD-Karte/USB (Tresor direkt im obersten Ordner möglich), tiefere Ordner, Eingänge und
+     * die Verwaltung bleiben abgewiesen. */
+    static boolean nurNameWieFach(Ablage gewaehlt, String ordnerName) throws IOException {
+        if (ordnerName == null) return false;
+        String n = ordnerName.replace('\\', '/');
+        while (n.endsWith("/")) n = n.substring(0, n.length() - 1);
+        if (!n.startsWith("Gerät/") || n.indexOf('/', 6) >= 0) return false;
+        String name = n.substring(6).trim();
+        boolean fach = false;
+        for (Fach f : Fach.ALLE) if (f.empfaenger == null && name.equalsIgnoreCase(f.ordner)) fach = true;
+        return fach && !Hauptordner.UNTERORDNER.equals(Hauptordner.suchen(gewaehlt, "").art);
+    }
+
+    /** Nur zum Lesen für {@link Hauptordner#suchen}: lässt einen leeren Ordner belegt aussehen, damit dort ein eigener
+     * Hauptordner entsteht. Ein Eintrag mit Steuerzeichen, den es auf keinem Datenträger geben kann; sonst alles durchgereicht. */
+    static final class MitPlatzhalter implements Ablage {
+        static final String PLATZ = "\u0000platz";
+        private final Ablage a;
+        MitPlatzhalter(Ablage a) { this.a = a; }
+        @Override public List<String> liste(String o) throws IOException { List<String> l = new ArrayList<>(a.liste(o)); if (o.isEmpty()) l.add(PLATZ); return l; }
+        @Override public boolean gibtEs(String p) throws IOException { return !p.startsWith(PLATZ) && a.gibtEs(p); }
+        @Override public boolean istOrdner(String p) throws IOException { return !p.startsWith(PLATZ) && a.istOrdner(p); }
+        @Override public void ordner(String p) throws IOException { throw new IOException("TRESOR_NUR_LESEN"); }
+        @Override public byte[] lesen(String p, int g) throws IOException { return a.lesen(p, g); }
+        @Override public java.io.OutputStream neu(String p) throws IOException { throw new IOException("TRESOR_NUR_LESEN"); }
+        @Override public Kanal kanal(String p) throws IOException { return a.kanal(p); }
+        @Override public long groesse(String p) throws IOException { return a.groesse(p); }
+        @Override public void loeschen(String p) throws IOException { throw new IOException("TRESOR_NUR_LESEN"); }
     }
 
     static String letzterTeil(String ordnerName) {

@@ -2826,3 +2826,8 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .abgemeldet-seite h1 { margin: 0; font-size: 1.6rem; }
 .abgemeldet-seite p { margin: 0; color: #dcecf3; }
 .abgemeldet-seite .button { min-height: 44px; padding: 10px 22px; border: 0; border-radius: 10px; background: #fff; color: #0b3154; font-weight: 800; }
+
+/* Gerätetest 09.11.: Tresor-Meldung direkt unter dem Zustand, nicht unter dem Ordnerbaum. */
+.pro-tresor-meldung { border-left: 4px solid #c0392b; background: #fdecea; color: #7a1f16; padding: 8px 10px; border-radius: 8px; font-weight: 600; }
+.hinweis-mehr { display: block; }
+.hinweis-mehr .wo-liegt-was > summary { font-weight: 700; }

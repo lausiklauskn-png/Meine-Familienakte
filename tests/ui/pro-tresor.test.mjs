@@ -40,12 +40,13 @@ try {
     return t.includes("Empfohlen") && t.includes("„Familienakte“") && await panel.getByRole("button", { name: "Neue Originale in diesem Pro-Tresor ablegen", exact: true }).isVisible()
       && /bisherigen Aktenordner/.test(await panel.locator("[data-pro-ablage]").innerText());
   });
-  await step("Pro-Tresor: „Wo liegt was?“ steht in der Karte (tresorordner.json, Fach, Eingang, Menüweg)", async () => {
-    const hilfe = panel.locator("[data-pro-tresor-hilfe]"); await hilfe.locator("summary", { hasText: "Wo liegt was?" }).click();
-    const t = await hilfe.innerText();
+  await step("Pro-Tresor: „Wo liegt was?“ steht hinter dem „?“ der Karte (tresorordner.json, Fach, Eingang, Menüweg)", async () => {
+    await panel.getByRole("button", { name: "Gemeinsamer Pro-Tresor erklären", exact: true }).click();
+    const hilfe = page.locator("[data-hinweis-mehr] [data-pro-tresor-hilfe]"); await hilfe.waitFor();
+    const t = await hilfe.innerText(); await page.keyboard.press("Escape");
     return ["tresorordner.json", "Nie den Unterordner „Tresorordner“", "Diese App: Familienakte", "Eingang: Eingang-Familienakte", "Sicherheit & lokaler Tresor"].every((w) => t.includes(w));
   });
-  for (const [code, erwartet] of [["FA_TRESOR_NICHT_VORHANDEN", /keine tresorordner\.json.*kein neuer Tresor angelegt/], ["FA_TRESOR_UNTERORDNER", /Unterordner des Tresors.*Ebene höher.*tresorordner\.json/]]) {
+  for (const [code, erwartet] of [["FA_TRESOR_NICHT_VORHANDEN", /keine tresorordner\.json.*kein neuer Tresor angelegt/], ["FA_TRESOR_UNTERORDNER", /wie ein Ordner im Tresor.*Ebene höher/]]) {
     await step(`Pro-Tresor: falscher Ordner (${code}) wird verständlich gemeldet, bisheriger Tresor bleibt`, async () => {
       await page.evaluate((c) => { window.__proFehlerCode = c; }, code);
       await panel.getByRole("button", { name: "Anderen Pro-Tresor wählen …", exact: true }).click();
