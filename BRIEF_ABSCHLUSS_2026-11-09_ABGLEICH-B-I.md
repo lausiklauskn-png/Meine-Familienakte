@@ -92,7 +92,9 @@ Nach dem Abschluss hat Klaus 14 Beobachtungen und Entscheidungen durchgegeben (B
 ganze App (Schlagwort oben links, Info-Zeile, Suchfelder einheitlich, Erklärtexte ins „?“, „?“-Texte mit fetten Hauptpunkten,
 keine Doppelung beim Aufklappen, keine Kennnummern), die Trennung Tagebuch/Erinnerung/Memory mit Buch-Knopf oben, und die
 Assistenz als nächster Bauschritt vor der E-Mail-Abstimmung (Anonymisieren wie im E-Mail-Generator von Private Brain Pro).
-Zeit für die Aufnahme: ca. 45 min (02:58–03:45 UTC). Nichts davon ist gebaut.
+Spanne der Aufnahme, gemessen: 02:58 UTC (letzte Meldung vor Klaus’ erster Notiz) bis 09:17 UTC (Commit des Plans), also
+**6 h 19 min Obergrenze**; Klaus’ Nachrichten kamen mit langen Pausen dazwischen, die nicht abgezogen sind, weil sie keine Spur
+hinterlassen. Nichts davon ist gebaut.
 
 ## Startauftrag zum Einfügen
 
