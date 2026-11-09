@@ -5,10 +5,24 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 `docs/briefe-archiv/` (Klaus 2026-11-04: archivieren statt löschen); die Veröffentlichungsnachweise in
 `docs/VEROEFFENTLICHUNG-<fassung>.json`.
 
-## Aktueller Stand (09.11.2026, nach 2.28.49)
+## Aktueller Stand (09.11.2026, nach 2.28.51)
+
+- **Fassung 2.28.51** (#144, Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.51.json`; Brief
+  `BRIEF_ABSCHLUSS_2026-11-09_AUSGABE-2.28.51.md`): Gerätetest Galaxy S21 – Tresor einrichten in einem eigenen Ordner im Gerätespeicher
+  (Ordner mit Fachnamen wie „Familienakte“ direkt im Gerät, ohne Tresorspuren, gilt als Speicher; darin entsteht „Family-Projekt“;
+  SD/USB und tiefere Ordner weiter abgewiesen; `ProTresorAdapter`, `Hauptordner.java` unverändert), Meldung unter dem Zustand,
+  „Wo liegt was?“ hinter dem „?“. **Hilfekarten live** (`lib/live-zustand.ts`, `app/live-zustand.ts`; Vorschau
+  `docs/vorschau/live-zustand-2.28.50.html`): Fläche = Gerätezustand (grün/rot/gelb/grau), Rahmen = Baustand (blau fertig, lila
+  gestrichelt im Bau, grau gestrichelt geplant), „neu“ als blauer Punkt, „Beheben ›“, Demo-Band; Zugänge über „Neu“ › „Landkarte
+  öffnen“ und Symbol „Akten sichern“. Proben `live-karten`, `scripts/run-live-zustand-tests.mjs`.
+- **Fassung 2.28.50** (#145, ausgegeben ohne eigenen Nachweis): Kurzfassung je Dokument im Pro-Tresor (`lib/tresor-kurzfassung.ts`),
+  E-Mail-Anlagen beliebig tief, im eigenen Netz antworten (ab Werk aus). Windows-Datei 2.28.50 kam nicht auf family-projekt.de
+  (Server-Job nie angelegt), mit 2.28.51 überholt.
+- **Pro-App-Verbund (Vorschau)** (#146): Hilfe-Thema mit der Karte `public/pro-verbund/pro-verbund.html`, byte-gleich aus
+  BookLedgerPro (Pin `pro-verbund.herkunft.json`, Commit d6dcacd; `check:herkunft`). **Karte nie hier ändern, nur in BookLedgerPro pflegen.**
 
 - **Plan Rückmeldung** `docs/PLAN_2026-11-09_GERAETETEST-RUECKMELDUNG.md` (Klaus 09.11., Bilder vom Handy mit 2.28.37): **A–D gebaut**
-  (#142, Fassung **2.28.49**; Brief `BRIEF_ABSCHLUSS_2026-11-09_RUECKMELDUNG-A-D.md`; Vorschau C/D `docs/vorschau/tagebuch-assistenz-2.28.49.html`,
+  (#142, Fassung **2.28.49**; Brief `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-09_RUECKMELDUNG-A-D.md`; Vorschau C/D `docs/vorschau/tagebuch-assistenz-2.28.49.html`,
   alle sieben Fragen Ja). A: Cockpit öffnet Bearbeitbares als Fenster (`StammBearbeitenFenster` in `app/familie-anlegen.tsx`,
   `TerminBearbeiten` mit „Ganze Akte ansehen ›“), Startkopf deckend. B als Bausteine: `InfoZeile`, `SuchFeld`, `HinweisText`
   (`lib/hinweis-text.ts`, jedes „?“) in `app/ui-controls.tsx`, Schlagwort-CSS, `FlachText ganz`, `quelleAnzeige`. C: Kopf
@@ -47,38 +61,17 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Einträge am Titel** (Liste zeigt den Titel, nicht den Dateinamen); Karten-Knöpfe in der Zeilenansicht hinter `[data-bibliothek-auge]`;
   Android-Produktproben erteilen POST_NOTIFICATIONS vorab (`FamilyDemoFixture.allowNotifications`); die Produktprobe
   „Private Bedeutungssuche“ läuft nur bei bestimmten Pfaden – bei Android-Änderungen von Hand starten.
-- **Fassung 2.28.38** (Android, Windows, PWA; #127; Vorschau `docs/vorschau/geraetetest-2.28.38.html`): Gerätetest-Rückmeldung.
-  Listenzeilen (Fristen und Aufgaben, Mein Kalender, Tagebuch, Notiz-Liste) „Datum/Uhrzeit · Anfang … Hauptwort · Art und Glocke“
-  (`FlachText`/`hauptwort` in `app/flach-zeile.tsx`); ✓ ✎ 🗑 👁 in `KnopfLeiste` (Pfeil ‹ auf, › zu, Wischen, nur eine offen), ab 600 px
-  Zeilenbreite direkt in der Zeile (Containerabfrage `.fz-voll`); Stift ändert auch reine Erinnerungen (`updateLocalScheduleTermin`,
-  `TerminBearbeiten`). Hilfe oben ein Kasten (`AppLandkarteHilfe` mit `demo`): blauer Knopf „Demo starten“, Landkarten-Symbol, „?“
-  oben rechts; Landkarte immer als Karte, **Listenansicht entfernt**. Kopf bis 900 px: Drucken/Installieren/Abmelden hinter ‹ (Kopfleiste),
-  Name per `useEinzeilig` (ganz ab 360 px). Android: Abstand zu sichtbaren Systemleisten im geteilten Bildschirm (`freiVonLeisten`).
-  „Installieren“ weg, wenn die Web-App installiert ist (`app/installiert.ts`, Manifest `related_applications`). Gradle-Wrapper 120 s.
-  Proben neu: `zeilen-leiste`, `kopf-leiste`, `installiert`.
-- **Fassung 2.28.37** (Android, Windows, PWA; #125): alle Hilfe-Themen als Bild zum Antippen (`app/hilfe-bilder.tsx`: `BildThema`,
-  `KastenReihe`, `DatenmodellKarte`, `sprung`), höchstens drei Kernpunkte mit dem Wichtigsten fett, langer Text unter „Ausführlich“;
-  Vorschaufenster „Wo in der App?“ (`app/hilfe-vorschau.tsx`, Maus oder ▣, Skizze aus gemessenen Kartentiteln `lib/hilfe-seiten.ts`,
-  Stelle rot, „Hingehen ›“); „?“-Erklärfenster bis 560 px, „Neu“ ab Tablet bis 960 px quer. Seitentitel sind keine Sprungziele
-  (Rahmen säße auf dem „?“). Proben `hilfe-alle`, `app-landkarte` nutzen `soll()`: `step()` wertet einen zurückgegebenen Text als grün.
-- **Fassung 2.28.36** (Android, Windows, PWA; #123): Landkarte der App ganz oben in der Hilfe (`app/app-landkarte-hilfe.tsx`, Daten
-  `lib/app-landkarte.ts`, **Stand je Kasten in `lib/app-stand.ts` – bei jeder Fassung eintragen**; Gold bis Antippen, höchstens
-  14 Tage; am Handy als Liste). Android immer Vollbild und `fullUser` (dreht in alle Lagen, Drehsperre gilt; beim ersten Start
-  einmal der Android-Hinweis „Vollbild“), Windows maximiert und F11 (`app/vollbild.ts`), Web-App `orientation: any`, bleibt
-  standalone (gepinntes `installieren.js` erkennt nur das als installiert).
-- **Fassung 2.28.35** (Android, Windows, PWA; #121, #122): Hilfe „E-Mail in die Familienakte“ als Landkarte (`app/landkarte.tsx`,
-  `app/email-hilfe.tsx`; Vorbild Sage-Modul-Topologie: Container mit Wege-Knöpfen, Äste direkt am Kasten, → eine Richtung, ⇄ hin und
-  zurück, Tipp nennt woher/wohin; Stand als Rahmen grün fertig · gelb gestrichelt im Bau · rot einschalten · grau gestrichelt
-  geplant, Fläche blass, ⚠ Vorsicht), Knopf „Neu“ mit „E-Mail in der Hilfe“, „● Neu“ im Hilfe-Thema, Hilfe zu Fehlendem berichtigt.
-  E-Mail-Plan: `docs/vorschau/email-2.28.35.html`; zur Abstimmung (Klaus mit Jens) eigenständige Dateien mit Stift-Notizen in
-  `docs/landkarte/` (ganze App, E-Mail-Karte mit Empfehlung und Entscheidung je Kasten, E-Mail-Plan). Geplant, nicht gebaut:
-  Anhang-Prüfung mit `dateiPruefen` (Prüfkern aus Workflow PDF), echtes PDF ohne Befund mit einem Tipp, Mail-App öffnen, Microsoft.
-- **Fassung 2.28.34** (Android, Windows, PWA; #119): sichere Dateigröße je Gerät aus der Geräteprüfung (`lib/geraete-grenze.ts`: unter 3 GB 15 MB, 3–6 GB 20 MB, ab 6 GB 40 MB, Pro-Tresor höchstens 20 MB), Ansage nur „Verkleinern“ · „Abbrechen“, Verkleinern ≥ 300 dpi mit Tesseract-Gegenprobe 98 % (`app/verkleinern.ts`), Dateiausgabe 100 MB; Vollsicherung in der Android- und Windows-App in frei gewählten Ordner (`app/nativer-ordner.ts`, Android `FamilienakteOrdnerPlugin`, Windows `FamilyFolders.java` in der Java-Engine; nur selbst angelegte Dateien entfernbar, kein allgemeines Löschen), APK bzw. Windows-Lies-mich mit SHA-256 (`fa_setup_angaben`) daneben; „Sicherung einlesen“ mit Probe ohne Schreiben, nur in leere Akte (`sicherungProben`/`sicherungEinlesen`, `app/sicherung-einlesen.tsx`); Demo = Kopie der eigenen Daten (nur im Dateispeicher, sonst Beispielfamilie), „Übernehmen …“ mit Liste „Was ändert sich?“ (`lib/demo-kopie.ts`, `app/demo-uebernahme.tsx`). Vergleich mit BookLedgerPro/Private Brain Pro: `docs/SICHERUNG-VERGLEICH.md`.
-- **Fassung 2.28.33** (Android, Windows, PWA; #117): Hilfe neu – 13 neue Themen (`app/hilfe-themen.tsx`), „Wie kann ich dir helfen?“ und Gruppen/A–Z (`app/hilfe-ordnung.tsx`, `lib/hilfe-ordnung.ts`), Sprung mit rotem Rahmen (grün bei erledigt) und Zurück an die Stelle markiert (`app/ruecksprung.ts`), Kartenhilfe mit Sprung (`lib/ui-help-ziele.ts`), Benutzerabnahme als Bild mit vier Antworten, mitwandernde Seitenleiste (`app/seitenleiste.tsx`), Versionshistorie mit echter Fassung (`lib/fassungen.ts`, neue Fassung oben eintragen), Demo-Kasten nur „Demo starten“ (`data-demo-start`). CI-Grenze `pruefung` 45 min. Davor **2.28.32** (#113): Mikrofon in der Notiz startet nicht mehr von selbst, nur auf Tipp. Davor **2.28.31** (#112): Seitentitel immer einzeilig (`useEinzeilig` in `app/flach-zeile.tsx`, Schrift wird kleiner); Zähler-Kästchen klappen „Offene Fristen und Aufgaben“ auf und springen dorthin. Davor **2.28.30** (#111): flach und breit – Seitenkopf mit Symbol, Titel und Knopf auf einer Linie, „?“ klein rechts oben an der Schrift (`PageTitle`, `.ui-heading-help` auf allen Seiten); ein Knopf „alle“ (`app/klapp.tsx`) zeigt die Pfeile dessen, was ein Tipp bewirkt; Glocken-Hinweis breit mit Auge; Listen (Mein Kalender, Fristenliste, Tagebuch, Notiz-Liste) als Zeile „Anfang … Ende“ mit Auge (`app/flach-zeile.tsx`), Ändern/Löschen hinter dem Auge, Fristenliste mit Haken in der Zeile; Zähler als drei Kästchen. Davor **2.28.29** (#108): Abschnitte auf „Fristen und Aufgaben“ einklappbar (`app/klapp.tsx`), Mülleimer an Erinnerungen und Notizen (`app/loesch-knopf.tsx`; Löschen = archiviert, Kalender-Abgleich entfernt den Eintrag), Mikrofon bei „Woran erinnern“, Glocke mit Dauer und Android-Kanal-Einstellung. Davor **2.28.28** (#106): Kamera in der Notiz, App-Glocke nach dem Speichern von selbst an, Android-Benachrichtigung der Glocke auch bei geschlossener App (`FamilienakteGlockePlugin`, `GlockeEmpfaenger`). Davor **2.28.27** (#104): Kalender-Erinnerung (Google, Microsoft, Android-Gerätekalender, .ics),
-  Knopf „Notiz“ mit erkannter Erinnerung, Memory bearbeiten, „Mein Kalender“ (Kalender-Knopf im Kopf), App-Glocke (ab Werk aus,
-  läutet nur bei offener App), Termin an Ort und Stelle ändern. Nachweise `docs/VEROEFFENTLICHUNG-2.28.49.json`, `-2.28.48.json`, `-2.28.39.json`, `-2.28.38.json`, `-2.28.37.json`, `-2.28.36.json`, `-2.28.35.json`, `-2.28.34.json`, `-2.28.33.json`, `-2.28.32.json`, `-2.28.31.json`, `-2.28.30.json`, `-2.28.29.json`, `-2.28.28.json` und `-2.28.27.json`, darunter 2.28.26
-  und 2.28.25 … 2.28.22. Keine davon erneut ausgeben; nächste freie Fassung 2.28.50 (2.28.40–2.28.47 waren Zwischenstände der Stufen, nativ ausgegeben sind 2.28.48 und 2.28.49). Klaus 2026-11-06: neue Funktionen immer gleich als APK, PWA und Windows ausgeben. Die Versionszeile zeigt die technische
-  Fassung aus `package.json`; `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
+- **Ältere Fassungen 2.28.27–2.28.38** (alle als APK, Windows und PWA ausgegeben; Einzelheiten in `lib/fassungen.ts`, den Nachweisen
+  und `docs/briefe-archiv/`): Kalender, Glocke, Notiz (2.28.27–2.28.32), Hilfe neu mit Sprung/Rücksprung (2.28.33), Dateigröße je
+  Gerät, Vollsicherung in frei gewählten Ordner, Sicherung einlesen, Demo-Kopie (2.28.34, `docs/SICHERUNG-VERGLEICH.md`), E-Mail-Karte
+  (2.28.35, `docs/landkarte/`), Landkarte der App mit **Stand je Kasten in `lib/app-stand.ts` – bei jeder Fassung eintragen** (2.28.36),
+  Hilfe-Themen als Bild, Vorschaufenster (2.28.37), Listenzeilen mit `KnopfLeiste`, Kopfleiste (2.28.38).
+  Proben-Hinweise: `step()` wertet einen zurückgegebenen Text als grün, deshalb `soll()`; Seitentitel sind keine Sprungziele.
+- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
+  (2.28.50 ausgegeben, aber ohne eigenen Nachweis; 2.28.40–2.28.47 waren Zwischenstände). Keine davon erneut ausgeben;
+  **nächste freie Fassung 2.28.52**. Klaus 2026-11-06: neue Funktionen immer gleich als APK, PWA und Windows ausgeben.
+  Neue Fassung oben in `lib/fassungen.ts` eintragen. Die Versionszeile zeigt die technische Fassung aus `package.json`;
+  `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
 - **Kalender:** Kern `lib/kalender.ts`, Glocke `lib/glocke.ts`, Oberfläche `app/kalender-karte.tsx`, `app/mein-kalender.tsx`,
   `app/termin-bearbeiten.tsx`, Notiz `app/notiz-knopf.tsx`; Einrichtung `docs/KALENDER-EINRICHTUNG.md` (Google veröffentlicht,
   Microsoft-App eingerichtet, Herausgeber nicht verifiziert). Gesundheitsfristen gehen mit echtem Titel hinaus, Notizen nie.
@@ -102,13 +95,16 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
-  - `BRIEF_ABSCHLUSS_2026-11-09_RUECKMELDUNG-A-D.md` (jüngster Abschluss: Rückmeldung A–D, Fassung 2.28.49; Startauftrag Gerätetest)
-  - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-09_ABGLEICH-B-I.md` (Stufen B–I, Fassung 2.28.48)
+  - `BRIEF_ABSCHLUSS_2026-11-09_AUSGABE-2.28.51.md` (jüngster Abschluss: Zusammenführen #144/#146, Ausgabe 2.28.51; Startauftrag Gerätetest)
+  - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-09_RUECKMELDUNG-A-D.md` (Rückmeldung A–D, Fassung 2.28.49)
   - `BRIEF_CODEX_2026-11-04_NACH-2.28.24.md` (Abstimmung mit Codex: welche Dateien Claude gehören)
   - `BRIEF_ABSCHLUSS_2026-11-04_PDF-ARBEITSRAUM.md`, `BRIEF_ABSCHLUSS_2026-11-04_PDF-FUNKTIONSABGLEICH.md` (Codex)
 
 ## Offen
 
+- **2.28.51 am Gerät ungeprüft:** Tresor im Ordner „Familienakte“ (SAF-Freigabe), Live-Zustände der Karten (alles nur gestellt).
+- **Baustand hinter Schalter (Klaus 09.11.):** Der Rahmen „Baustand“ bleibt sichtbar, solange intern getestet wird; danach hinter einen
+  versteckten Schalter bzw. eine Eingabe nur für Entwickler.
 - **2.28.49 am Gerät ungeprüft:** weiße Fläche (A1) ist eine Vermutung (Galaxy S21 nachstellen), Cockpit-Fenster, Kopf mit Buch am
   Handy, Tagebuch-Block, gesprochenes Datum, Ausloggen (APK beendet sich?), Briefweg mit echter KI/echtem Mistral-Schlüssel nie benutzt.
 - **2.28.48 am Gerät ungeprüft (alle Stufen B–I):** verschlüsselte Vollsicherung und Notfallblatt am Handy (PBKDF2 ein bis zwei
@@ -178,6 +174,8 @@ sondern nur KimHub.“
 
 - Oberfläche und Wortlaut des Freundes nur mit Klaus' Ja je sichtbarer Änderung. Beispieldaten erfunden.
 - Keine Schlüssel, PINs, Passwörter oder Chefcodes in Dateien oder im Chat.
+- **Codex-Prüfungen auslassen (Klaus 09.11.):** Codex ist nicht mehr aktiv, der Zugang ist gesperrt. Kein „@codex review“ anstoßen,
+  Codex-Kommentare (auch „Failed“/„usage limits“) nicht abwarten und nicht als Befund behandeln.
 - Eigene Dateien und eigene Altbriefe bevorzugt erhalten; Beispiele nur nach belegter Herkunft bereinigen.
   Keine automatischen Beispiele im eigenen Bestand (Demo hat einen eigenen Bestand).
 - Byte-1:1-Bausteine nie von Hand ändern: Workflow PDF über `tools/wfpdf-nachziehen.mjs` (Pins `public/wfpdf/HERKUNFT.json`),
