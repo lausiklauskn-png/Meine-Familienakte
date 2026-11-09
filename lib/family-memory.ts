@@ -188,6 +188,19 @@ function parseEventAt(text: string, now: Date) {
 
 export type ErinnerungsVorschlag = { wunsch: boolean; dueAt: string; dueTime: string | null };
 const WOCHENTAGE = ["sonntag", "montag", "dienstag", "mittwoch", "donnerstag", "freitag", "samstag"];
+const MONATE: Record<string, number> = { januar: 1, jänner: 1, jan: 1, februar: 2, feb: 2, märz: 3, maerz: 3, mär: 3, april: 4, apr: 4, mai: 5, juni: 6, jun: 6, juli: 7, jul: 7, august: 8, aug: 8, september: 9, sept: 9, sep: 9, oktober: 10, okt: 10, november: 11, nov: 11, dezember: 12, dez: 12 };
+const MONAT_MUSTER = Object.keys(MONATE).sort((a, b) => b.length - a.length).map((m) => `${m}\\.?`).join("|");
+// Ausgeschriebene Tage („ersten“ … „einunddreißigsten“), wie die Spracherkennung sie manchmal liefert.
+const EINER = ["", "ein", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun"];
+const ORDINAL: Record<string, number> = { erst: 1, zweit: 2, dritt: 3, viert: 4, fünft: 5, sechst: 6, siebt: 7, siebent: 7, acht: 8, neunt: 9, zehnt: 10, elft: 11, zwölft: 12, dreizehnt: 13, vierzehnt: 14, fünfzehnt: 15, sechzehnt: 16, siebzehnt: 17, achtzehnt: 18, neunzehnt: 19, zwanzigst: 20, dreißigst: 30, dreissigst: 30 };
+for (let e = 1; e <= 9; e++) ORDINAL[`${EINER[e]}undzwanzigst`] = 20 + e;
+ORDINAL.einunddreißigst = 31; ORDINAL.einunddreissigst = 31;
+const ORDINAL_MUSTER = `(?:${Object.keys(ORDINAL).sort((a, b) => b.length - a.length).join("|")})(?:e[nrsm]?|e)?`;
+function tagZahl(w: string) {
+  if (/^\d+$/.test(w)) return Number(w);
+  const stamm = w.toLowerCase().replace(/(?:en|er|es|em|e)$/, "");
+  return ORDINAL[stamm] ?? NaN;
+}
 const ortsDatum = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 /**
  * Erkennt einen Erinnerungswunsch („erinnere mich“, „nicht vergessen“, „denk dran“) und einen Zeitpunkt in der Zukunft
@@ -210,18 +223,33 @@ export function erinnerungAusText(text: string, now: Date = new Date()): Erinner
     return { wunsch, dueAt: ortsDatum(ab), dueTime: genau ? `${String(ab.getHours()).padStart(2, "0")}:${String(ab.getMinutes()).padStart(2, "0")}` : dueTime };
   }
   let datum: string | null = null;
-  const dt = text.match(/\b(\d{1,2})\.(\d{1,2})\.(?:(20\d{2}|\d{2})\b)?/);
-  if (dt) {
-    const jahr = dt[3] ? (dt[3].length === 2 ? 2000 + Number(dt[3]) : Number(dt[3])) : tag.getFullYear();
-    let d = new Date(jahr, Number(dt[2]) - 1, Number(dt[1]));
-    if (!dt[3] && d < tag) d = new Date(jahr + 1, Number(dt[2]) - 1, Number(dt[1]));
-    if (d.getMonth() === Number(dt[2]) - 1) datum = ortsDatum(d);
+  // Gesprochene Daten (Klaus 09.11.: „das Datum erscheint von heute, nicht das gewählte“): die Spracherkennung schreibt
+  // „am 15. November“, „am fünfzehnten November“, „15.11“ (ohne zweiten Punkt) oder „am zwanzigsten“. „um 10.30 Uhr“ ist eine Zeit.
+  const setze = (t: number, mon: number, jahr?: number) => {
+    let d = new Date(jahr ?? tag.getFullYear(), mon - 1, t);
+    if (jahr === undefined && d < tag) d = new Date(tag.getFullYear() + 1, mon - 1, t);
+    if (d.getMonth() === mon - 1 && d.getDate() === t) datum = ortsDatum(d);
+  };
+  const monat = text.match(new RegExp(`(?<![\\p{L}\\d])(\\d{1,2}|${ORDINAL_MUSTER})\\.?\\s+(${MONAT_MUSTER})(?![\\p{L}])(?:\\s+(20\\d{2}))?`, "iu"));
+  const dt = text.match(/(?<!\bum\s{0,2})(?<![\d.:])(\d{1,2})\.\s?(\d{1,2})(?:\.\s?(20\d{2})(?!\d)|\.(\d{2})(?![\d.:])|\.)?(?![\d:])(?!\s*uhr)/i);
+  if (monat) setze(tagZahl(monat[1]), MONATE[monat[2].toLowerCase().replace(/\.$/, "")], monat[3] ? Number(monat[3]) : undefined);
+  else if (dt) setze(Number(dt[1]), Number(dt[2]), dt[3] ? Number(dt[3]) : dt[4] ? 2000 + Number(dt[4]) : undefined);
+  if (!datum) {
+    // „am zwanzigsten“ / „am 20.“ ohne Monat: dieser Monat, sonst der nächste
+    const nur = text.match(new RegExp(`\\bam\\s+(\\d{1,2}\\.|${ORDINAL_MUSTER})(?![\\p{L}\\d])`, "iu"));
+    if (nur) {
+      const t = tagZahl(nur[1].replace(/\.$/, ""));
+      let d = new Date(tag.getFullYear(), tag.getMonth(), t);
+      if (d < tag) d = new Date(tag.getFullYear(), tag.getMonth() + 1, t);
+      if (t >= 1 && t <= 31 && d.getDate() === t) datum = ortsDatum(d);
+    }
   }
   if (!datum && /(?<![a-zäöüß])übermorgen\b/i.test(text)) datum = ortsDatum(new Date(tag.getFullYear(), tag.getMonth(), tag.getDate() + 2));
   else if (!datum && /(?<![a-zäöüß])morgen\b/i.test(text)) datum = ortsDatum(new Date(tag.getFullYear(), tag.getMonth(), tag.getDate() + 1));
   else if (!datum && /\bheute\b/i.test(text)) datum = ortsDatum(tag);
   if (!datum) {
-    const w = WOCHENTAGE.findIndex((n) => new RegExp(`\\b(?:am|nächsten|kommenden)\\s+${n}\\b`, "i").test(text));
+    // Mit „am/nächsten/kommenden“ immer; der Wochentag allein („Dienstag um 10“) nur bei einem Erinnerungswunsch.
+    const w = WOCHENTAGE.findIndex((n) => new RegExp(`\\b(?:am|nächsten|kommenden)\\s+${n}\\b`, "i").test(text) || (wunsch && new RegExp(`(?<![\\p{L}])${n}(?![\\p{L}])`, "iu").test(text)));
     if (w >= 0) { const plus = ((w - tag.getDay() + 7) % 7) || 7; datum = ortsDatum(new Date(tag.getFullYear(), tag.getMonth(), tag.getDate() + plus)); }
   }
   if (!wunsch && (!datum || datum <= ortsDatum(tag))) return null; // ohne Wunsch nur ein Datum in der Zukunft
@@ -238,7 +266,7 @@ export function erinnerungsTitel(text: string) {
   const ohne = roh.replace(/^(?:bitte\s+)?(?:erinnere?|erinner)\s+mich\s*/i, "");
   if (ohne === roh) return roh.slice(0, 120); // kein „erinnere mich“: Text bleibt
   const t = ohne
-    .replace(/^(?:(?:heute|morgen|übermorgen|am\s+\S+|in\s+(?:einer\s+)?\S+\s+\S+|um\s*\d{1,2}(?:[:.]\d{2})?\s*(?:uhr)?|noch\s+(?:ein)?mal|nochmal)[\s,]*)+/i, "")
+    .replace(new RegExp(`^(?:(?:heute|morgen|übermorgen|am\\s+\\S+(?:\\s+(?:${MONAT_MUSTER})(?:\\s+20\\d{2})?)?|(?:${WOCHENTAGE.join("|")})|(?:${MONAT_MUSTER})(?:\\s+20\\d{2})?|in\\s+(?:einer\\s+)?\\S+\\s+\\S+|um\\s*\\d{1,2}(?:[:.]\\d{2})?\\s*(?:uhr)?|noch\\s+(?:ein)?mal|nochmal)[\\s,]*)+`, "iu"), "")
     .replace(/^(?:daran,?\s*|an\s+)?(?:dass\s+)?(?:ich\s+)?(?:noch\s+)?/i, "").replace(/[.!]+$/, "").trim();
   return (t || "Erinnerung").slice(0, 120);
 }

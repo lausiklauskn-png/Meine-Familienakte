@@ -173,6 +173,20 @@ assert.equal(ea("in einer halben Stunde erinnern"), JSON.stringify({ wunsch: tru
 assert.equal(ea("am Montag um 9:30 Zahnarzt nicht vergessen"), JSON.stringify({ wunsch: true, dueAt: "2026-11-09", dueTime: "09:30" }));
 assert.equal(ea("erinnere mich um 8 Uhr"), JSON.stringify({ wunsch: true, dueAt: "2026-11-06", dueTime: "08:00" }));
 assert.equal(ea("denk dran am 12.11. Rechnung"), JSON.stringify({ wunsch: true, dueAt: "2026-11-12", dueTime: null }));
+// Gesprochene Daten (Klaus 09.11.: Uhrzeit kam an, das Datum nicht – es stand „heute“ da).
+assert.equal(ea("Erinnere mich am 15. November um 10 Uhr Zahnarzt"), JSON.stringify({ wunsch: true, dueAt: "2026-11-15", dueTime: "10:00" }));
+assert.equal(ea("erinnere mich am fünfzehnten November"), JSON.stringify({ wunsch: true, dueAt: "2026-11-15", dueTime: null }));
+assert.equal(ea("erinnere mich am 15.11 um 10 Uhr"), JSON.stringify({ wunsch: true, dueAt: "2026-11-15", dueTime: "10:00" }));
+assert.equal(ea("erinnere mich am 15. 11. um 9"), JSON.stringify({ wunsch: true, dueAt: "2026-11-15", dueTime: "09:00" }));
+assert.equal(ea("erinnere mich am 3. Januar"), JSON.stringify({ wunsch: true, dueAt: "2027-01-03", dueTime: null }));
+assert.equal(ea("erinnere mich am zwanzigsten um 9"), JSON.stringify({ wunsch: true, dueAt: "2026-11-20", dueTime: "09:00" }));
+assert.equal(ea("erinnere mich am einundzwanzigsten Dezember um 15:30"), JSON.stringify({ wunsch: true, dueAt: "2026-12-21", dueTime: "15:30" }));
+assert.equal(ea("erinnere mich Dienstag um 10 Uhr"), JSON.stringify({ wunsch: true, dueAt: "2026-11-10", dueTime: "10:00" }));
+assert.equal(ea("erinnere mich um 10.30 Uhr"), JSON.stringify({ wunsch: true, dueAt: "2026-11-06", dueTime: "10:30" }), "„um 10.30 Uhr“ ist eine Uhrzeit, kein Datum");
+assert.equal(ea("erinnere mich am 1.12.2026 um 8"), JSON.stringify({ wunsch: true, dueAt: "2026-12-01", dueTime: "08:00" }));
+assert.equal(m.erinnerungsTitel("Erinnere mich am 15. November um 10 Uhr Zahnarzt anrufen"), "Zahnarzt anrufen");
+assert.equal(m.erinnerungsTitel("Erinnere mich Dienstag um 10 Uhr Oma anrufen"), "Oma anrufen");
+gruen("Gesprochene Daten: „15. November“, „fünfzehnten November“, „15.11“ ohne Punkt, „am zwanzigsten“, Wochentag allein; 10.30 Uhr bleibt Zeit");
 assert.equal(m.erinnerungAusText("Wir waren heute beim Arzt", jetzt), null);
 assert.equal(m.erinnerungAusText("nur ein Satz", jetzt), null);
 assert.equal(m.erinnerungsTitel("Erinnere mich heute um 20 Uhr, Jens anzurufen"), "Jens anzurufen");
