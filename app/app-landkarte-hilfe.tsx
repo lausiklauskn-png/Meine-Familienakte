@@ -1,4 +1,4 @@
-import { Map as KartenSymbol } from "lucide-react";
+import { HardDrive, Map as KartenSymbol } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { APP_BREITEN, APP_GRUPPEN, APP_KANTEN, APP_KNOTEN, APP_SPALTEN, type KartenSeite } from "../lib/app-landkarte";
 import { standVon } from "../lib/app-stand";
@@ -17,8 +17,11 @@ const KARTE_HILFE = "• Die ganze App auf einer Karte: von den Wegen hinein bis
 
 /** Zustand beim „Hingehen ›“: beim nächsten Aufbau der Hilfe (Zurück) ist die Karte wieder offen und der Kasten gewählt. */
 let beimHingehen: { kasten: string } | null = null;
+/** „Neu“ › „Landkarte öffnen“ (Klaus 09.11.): beim nächsten Aufbau der Hilfe ist die Karte aufgeklappt. */
+export function landkarteAufmachen() { beimHingehen = { kasten: "" }; }
 
-export function AppLandkarteHilfe({ onGo, eingerichtet, demo, live = {} }: { onGo: GehMitZiel; eingerichtet: ReadonlySet<string>; demo?: ReactNode; live?: LiveZustand }) {
+export function AppLandkarteHilfe({ onGo, eingerichtet, demo, live = {}, aktenSichern }: { onGo: GehMitZiel; eingerichtet: ReadonlySet<string>; demo?: ReactNode; live?: LiveZustand;
+  /** Zweites Symbol oben (Klaus 09.11.): springt zu „Akten sichern“ und klappt es auf. */ aktenSichern?: () => void }) {
   const [frisch, setFrisch] = useState(0);
   const [start] = useState(() => beimHingehen);
   const [offen, setOffen] = useState(Boolean(start));
@@ -43,6 +46,7 @@ export function AppLandkarteHilfe({ onGo, eingerichtet, demo, live = {} }: { onG
         aria-label={offen ? "Interaktive Landkarte der App zuklappen" : "Interaktive Landkarte der App öffnen"} title="Interaktive Landkarte der App" data-app-landkarte-knopf>
         <KartenSymbol size={22}/>{frisch > 0 && <span className="lk-gold" data-lk-gold={frisch}>{frisch}</span>}
       </button>
+      {aktenSichern && <button type="button" className="hilfe-oben-karte-knopf" onClick={aktenSichern} aria-label="Akten sichern – Zustand dieses Geräts" title="Akten sichern – Zustand dieses Geräts" data-akten-sichern-knopf><HardDrive size={22}/></button>}
     </div>
     <div id="hilfe-oben-karte" className="hilfe-oben-karte" hidden={!offen} data-app-landkarte-inhalt>
       <div className="hilfe-oben-karte-kopf"><KartenSymbol size={18}/><h3>Interaktive Landkarte der App</h3><InfoPopover label="Landkarte erklären" text={KARTE_HILFE}/></div>

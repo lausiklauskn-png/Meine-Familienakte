@@ -1815,6 +1815,9 @@ input.af-feld, textarea.af-feld { width: auto; min-height: 0; resize: none; }
 .fa-netz-geraet input { width: 100%; box-sizing: border-box; }
 .fa-netz-hinweis { margin: 0 0 10px; color: #8a5a00; }
 .fa-netz-fehler { color: #b42318; }
+.fa-netz-schalter { display: flex; align-items: flex-start; gap: 8px; margin: 0 0 8px; }
+.fa-netz-schalter input { margin-top: 3px; flex: none; }
+.fa-netz-schalter small { color: var(--muted, #5b6670); }
 .fa-mycel-geraet { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin: 8px 0; }
 .fa-mycel-geraet input { flex: 1; min-width: 120px; }
 /* Workflow PDF als Klon (2026-11-01, Weg B): der Rahmen füllt die Höhe unter Kopf und Seitentitel. */

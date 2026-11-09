@@ -28,12 +28,12 @@ class Ordner {
 }
 function fs(name = "Erfundene Akte") { const f = { fail: new Set() }; f.root = new Ordner(name, f); return f; }
 const summe = (b) => createHash("sha256").update(b).digest("hex");
-const nativ = { status: "offen", id: "tresor-a", dateien: new Map(), aufrufe: 0, falsch: false, kaputt: false };
+const nativ = { status: "offen", id: "tresor-a", auszuege: [], dateien: new Map(), aufrufe: 0, falsch: false, kaputt: false };
 function offen(vaultId) { if (nativ.status !== "offen" || vaultId !== nativ.id) throw new Error("FA_TRESOR_GESPERRT_ODER_FREMD"); }
 globalThis.Capacitor = { isNativePlatform: () => true, getPlatform: () => "windows", Plugins: { FamilienakteTresor: {
   zustand: async () => ({ status: nativ.status, id: nativ.id }),
   speichern: async (a) => {
-    offen(a.vaultId); nativ.aufrufe++;
+    offen(a.vaultId); nativ.aufrufe++; nativ.auszuege.push(a.auszug ?? null);
     const bytes = Buffer.from(a.data, "base64"), sha256 = summe(bytes);
     const entryId = `e-${summe(Buffer.from(JSON.stringify([a.documentId, a.name, a.mime, a.date, sha256]))).slice(0, 36)}`;
     nativ.dateien.set(`${a.vaultId}/${entryId}`, bytes);
@@ -48,7 +48,7 @@ const datei = () => new File(["Erfundener Pro-Brief 123"], "Erfundener-Pro-Brief
 async function vorbereitet() { const f = fs(); await writeIndex(f.root, await readIndex(f.root)); await vault.setProDocumentVault(f.root, "tresor-a"); return f; }
 let gruen = 0, rot = 0;
 async function probe(name, fn) {
-  nativ.id = "tresor-a"; nativ.status = "offen"; nativ.dateien.clear(); nativ.aufrufe = 0; nativ.falsch = false; nativ.kaputt = false;
+  nativ.id = "tresor-a"; nativ.status = "offen"; nativ.dateien.clear(); nativ.auszuege = []; nativ.aufrufe = 0; nativ.falsch = false; nativ.kaputt = false;
   try { await fn(); console.log(`🟢 ${name}`); gruen++; } catch (e) { console.log(`🔴 ${name}: ${e.stack}`); rot++; }
 }
 await probe("Pro-Ablage: freiwillig je Arbeitsstand, vorhandene Dateien bleiben", async () => {
@@ -200,6 +200,21 @@ await probe("Pro-Tresor-Meldungen: fremder Tresor, falscher Ordner, Unterordner 
   assert.equal(pt.proTresorCode({ code: "FA_TRESOR_UNTERORDNER", message: "x" }), "FA_TRESOR_UNTERORDNER");
   assert.equal(pt.proTresorCode("FA_TRESOR_NICHT_VORHANDEN"), "FA_TRESOR_NICHT_VORHANDEN");
   assert.equal(pt.proTresorCode(new Error("Abbruch")), "");
+});
+await probe("Kurzfassung im Inhaltsverzeichnis: Titel · Bereich · Datum und Textanfang, Gesundheit ohne Text", async () => {
+  const f = await vorbereitet();
+  await vault.saveLocalDocument(f.root, datei(), { category: "Einkäufe, Rechnungen & Garantien", documentDate: "2026-10-14", notes: null,
+    titel: "Rechnung Musterhandel", textAuszug: "Musterhandel GmbH  Rechnung Nr. 4711\nKundennummer 815 Betrag 12,80 EUR" });
+  const k = nativ.auszuege.at(-1);
+  assert.match(k, /^Rechnung Musterhandel · Einkäufe, Rechnungen & Garantien · 14\.10\.2026\n/);
+  assert.match(k, /Kundennummer 815 Betrag 12,80 EUR/);
+  await vault.saveLocalDocument(f.root, new File(["Erfundene Apotheke"], "Apotheke.txt", { type: "text/plain" }), { category: "Gesundheit & Pflege", documentDate: "2026-10-20", notes: "Blutdruck",
+    titel: "Rechnung Muster-Apotheke", textAuszug: "Medikament Erfundin 5 mg, Diagnose erfunden" });
+  assert.equal(nativ.auszuege.at(-1), "Rechnung Muster-Apotheke · Gesundheit & Pflege · 20.10.2026", "Gesundheit: kein Text, keine Notiz");
+  const kf = await import("../lib/tresor-kurzfassung.ts");
+  const lang = kf.tresorKurzfassung({ titel: "Lang", category: "Archiv", textAuszug: "Wort ".repeat(600) });
+  assert.ok(lang.length <= 1000 && lang.endsWith("…"), "auf 1000 Zeichen gekürzt");
+  assert.equal(kf.tresorKurzfassung({ originalName: "Arztbrief.pdf", category: "Korrespondenz", textAuszug: "Befund" }), "Arztbrief · Korrespondenz", "Gesundheitswort im Titel schützt auch außerhalb des Bereichs");
 });
 console.log(`Pro-Tresor Dokumente: ${gruen} grün · ${rot} rot`);
 process.exitCode = rot ? 1 : 0;

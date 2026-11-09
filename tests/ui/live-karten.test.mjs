@@ -52,6 +52,19 @@ try {
       const sich = await ak.locator('button[data-live]', { hasText: "Sicherungsordner" }).getAttribute("data-live");
       return soll(pro === "gelb" && sich === "rot" && /freiwillig/.test(await ak.locator("[data-live-legende]").innerText()), { pro, sich });
     });
+    await step(`${name}: Hilfe oben – Symbol „Akten sichern“ neben der Landkarte springt zum Plan und klappt ihn auf`, async () => {
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await page.locator("[data-akten-sichern-knopf]").click();
+      const ok = await page.waitForFunction(() => { const d = document.querySelector("[data-aktensicherung]"); if (!d) return false; const r = d.getBoundingClientRect(); return d.open && r.top >= 0 && r.top < innerHeight; }, null, { timeout: 5000 }).then(() => true, () => false);
+      return soll(ok, await page.locator("[data-aktensicherung]").evaluate((d) => ({ open: d.open, top: Math.round(d.getBoundingClientRect().top), h: innerHeight })));
+    });
+    await step(`${name}: „Neu“ › „Zustand deines Geräts auf einen Blick“ › „Landkarte öffnen“ öffnet die Hilfe mit aufgeklappter Karte`, async () => {
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await page.locator(".neu-knopf-schalter").click();
+      await page.locator('[data-neu="live-karten-2026-11-09"]').getByRole("button", { name: "Landkarte öffnen", exact: true }).click();
+      await page.locator('[data-app-landkarte="offen"]').waitFor({ timeout: 5000 });
+      return soll(await page.locator('[data-app-landkarte="offen"] [data-karte-id="protresor"]').first().isVisible(), "Karte nicht offen");
+    });
     check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${name}: kein seitliches Scrollen der Seite`);
     check(errors.length === 0, `${name}: keine Seitenfehler`, errors.join(" | "));
     await context.close();

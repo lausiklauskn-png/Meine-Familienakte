@@ -106,14 +106,16 @@ function unfoldHeaders(value: string) {
 }
 
 function decodeMimeWord(value: string) {
-  return value.replace(/=\?([^?]+)\?([bqBQ])\?([^?]+)\?=/g, (_all, charset: string, encoding: string, encoded: string) => {
+  // Leerraum zwischen zwei kodierten Wörtern gehört nicht zum Text (RFC 2047 § 6.2).
+  return value.replace(/(=\?[^?]+\?[bqBQ]\?[^?]*\?=)\s+(?==\?)/g, "$1").replace(/=\?([^?]+)\?([bqBQ])\?([^?]+)\?=/g, (_all, charset: string, encoding: string, encoded: string) => {
     try {
       if (encoding.toLocaleUpperCase("de") === "B") {
         const binary = atob(encoded);
         const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
         return new TextDecoder(charset || "utf-8", { fatal: false }).decode(bytes);
       }
-      return encoded.replace(/_/g, " ").replace(/=([0-9a-f]{2})/gi, (_match: string, hex: string) => String.fromCharCode(Number.parseInt(hex, 16)));
+      // Q: Bytes sammeln und im angegebenen Zeichensatz lesen (vorher wurde „=C3=9C“ zu „Ã\x9C“ statt „Ü“).
+      return new TextDecoder(charset || "utf-8", { fatal: false }).decode(quotedPrintableBytes(encoded.replace(/_/g, " ")));
     } catch { return encoded; }
   });
 }
@@ -182,27 +184,73 @@ function decodedAttachmentBody(body: string, transferEncoding: string) {
   return new TextEncoder().encode(body);
 }
 
+/** Parameter einer Kopfzeile (`name="x"`, RFC 2231 `filename*=UTF-8''…` auch in Stücken `filename*0*=`), Werte RFC-2047-dekodiert. */
+export function mimeParameter(headerLine: string, key: string): string {
+  const params: Record<string, string> = {}; const stuecke: Record<string, string[]> = {};
+  for (const teil of headerLine.split(/;(?=(?:[^"]*"[^"]*")*[^"]*$)/).slice(1)) {
+    const i = teil.indexOf("="); if (i < 0) continue;
+    const k = teil.slice(0, i).trim().toLowerCase(); let v = teil.slice(i + 1).trim();
+    if (/^".*"$/.test(v)) v = v.slice(1, -1).replace(/\\(.)/g, "$1");
+    const stern = /^([^*]+)\*(\d+)?\*?$/.exec(k);
+    if (stern) (stuecke[stern[1]] ||= [])[Number(stern[2] || 0)] = v; else params[k] = v;
+  }
+  for (const [basis, teile] of Object.entries(stuecke)) {
+    let ganz = teile.filter((x) => x != null).join("");
+    const m = /^([^']*)'[^']*'(.*)$/.exec(ganz);
+    if (m) {
+      try { ganz = new TextDecoder(m[1] || "utf-8", { fatal: false }).decode(Uint8Array.from(unescape(m[2]), (c) => c.charCodeAt(0))); }
+      catch { try { ganz = decodeURIComponent(m[2]); } catch { ganz = m[2]; } }
+    }
+    if (!params[basis]) params[basis] = ganz;
+  }
+  return decodeMimeWord((params[key.toLowerCase()] || "").trim());
+}
+
+function mimeTeilen(teil: string) {
+  const m = /\r?\n\r?\n/.exec(teil);
+  return m ? { kopf: teil.slice(0, m.index), koerper: teil.slice(m.index + m[0].length) } : { kopf: teil, koerper: "" };
+}
+
+function rohKopf(headers: string, name: string) {
+  return unfoldHeaders(headers).match(new RegExp(`^${name}:\\s*(.+)$`, "im"))?.[1]?.trim() || "";
+}
+
+/** Anlagen in beliebiger Tiefe (mixed › related › alternative, weitergeleitete Mail message/rfc822).
+ *  Dateinamen nach RFC 2047 (`=?UTF-8?B?…?=`) und RFC 2231 (`filename*=UTF-8''…`). Inline-Bilder ohne Dateinamen bleiben in der Mail. */
 export async function extractEmlAttachments(file: File): Promise<File[]> {
   if (detectCentralIntakeFileKind(file) !== "E-Mail (.eml)") return [];
-  const raw = await file.text();
-  const boundary = unfoldHeaders(raw.slice(0, Math.min(raw.length, 20000))).match(/boundary\s*=\s*(?:"([^"]+)"|([^;\r\n]+))/i)?.slice(1).find(Boolean)?.trim();
-  if (!boundary) return [];
-  const parts = raw.split(`--${boundary}`);
   const result: File[] = [];
-  for (const part of parts) {
-    const split = part.search(/\r?\n\r?\n/);
-    if (split < 0) continue;
-    const headers = part.slice(0, split);
-    const body = part.slice(split).replace(/^\r?\n\r?\n/, "").replace(/\r?\n$/, "");
-    const disposition = headerValue(headers, "Content-Disposition");
-    const contentType = headerValue(headers, "Content-Type") || "application/octet-stream";
-    const nameMatch = `${disposition};${contentType}`.match(/(?:filename|name)\*?=(?:UTF-8''|"?)([^";\r\n]+)/i);
-    const name = nameMatch ? decodeURIComponent(nameMatch[1].replace(/^"|"$/g, "").trim()) : "";
-    if (!name || (!/attachment/i.test(disposition) && !/filename/i.test(disposition))) continue;
+  const besuchen = (roh: string, tiefe: number) => {
+    if (tiefe > 12 || result.length >= 40) return;
+    const { kopf, koerper } = mimeTeilen(roh);
+    const typZeile = rohKopf(kopf, "Content-Type") || "text/plain";
+    const typ = typZeile.split(";")[0].trim().toLowerCase();
+    const dispZeile = rohKopf(kopf, "Content-Disposition");
+    const encoding = rohKopf(kopf, "Content-Transfer-Encoding");
+    if (typ.startsWith("multipart/")) {
+      const boundary = mimeParameter(typZeile, "boundary");
+      if (!boundary) return;
+      const marke = new RegExp(`(?:^|\\r?\\n)--${boundary.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?=--|[ \\t]*\\r?\\n|$)`);
+      const stuecke = koerper.split(marke);
+      for (let i = 1; i < stuecke.length; i++) {
+        if (stuecke[i].startsWith("--")) break;
+        besuchen(stuecke[i].replace(/^[ \t]*\r?\n/, ""), tiefe + 1);
+      }
+      return;
+    }
+    const name = mimeParameter(dispZeile, "filename") || mimeParameter(typZeile, "name");
+    const anlage = /^\s*attachment/i.test(dispZeile) || /filename/i.test(dispZeile) || typ === "application/pdf";
+    if (typ === "message/rfc822" && !/base64|quoted-printable/i.test(encoding)) {
+      // Weitergeleitete Mail: ihre Anlagen gehören dazu; die weitergeleitete Mail selbst bleibt Teil des Originals.
+      besuchen(koerper, tiefe + 1);
+      return;
+    }
+    if (!name || !anlage) return;
     try {
-      result.push(new File([decodedAttachmentBody(body, headerValue(headers, "Content-Transfer-Encoding"))], name, { type: contentType.split(";")[0].trim() }));
+      result.push(new File([decodedAttachmentBody(koerper.replace(/\r?\n$/, ""), encoding)], name, { type: typ || "application/octet-stream" }));
     } catch { /* Eine unlesbare Anlage bleibt Bestandteil der Original-E-Mail. */ }
-  }
+  };
+  besuchen(await file.text(), 0);
   return result;
 }
 

@@ -116,7 +116,7 @@
     const relay = window.SbkimNostrRelay, rm = (relay && relay._meta) || {};
     return {
       geladen: !!(window.SbkimRendezvousUI && r),
-      verbunden: Number(rm.liveCount || 0) > 0, relais: Number(rm.liveCount || 0), antwortet: !!m.answering,
+      verbunden: Number(rm.liveCount || 0) > 0, relais: Number(rm.liveCount || 0), antwortet: !!m.answering, eigen: m.network === 'eigen',
       name: anzeigeName(), geraetename: geraetename(),
       fensterOffen: !!(window.SbkimRendezvousUI && window.SbkimRendezvousUI.isOpen && window.SbkimRendezvousUI.isOpen()),
       internet: document.documentElement.dataset.appOffline !== 'true',

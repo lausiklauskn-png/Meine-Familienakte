@@ -184,6 +184,13 @@ public final class ProTresorAdapter implements Closeable {
     /** Für Migration nur EIN ausgewähltes Original. Aufrufer behält die Quelle bis zur eigenen
      * dauerhaften Registerbestätigung. Wiederholung nach Abbruch verwendet dieselbe Fassung. */
     public synchronized Eintrag ablegen(String dokumentId, String name, String mime, long datum, InputStream quelle) throws IOException {
+        return ablegen(dokumentId, name, mime, datum, quelle, "");
+    }
+
+    /** Wie oben, mit Kurzfassung für das gemeinsame Inhaltsverzeichnis (Titel, Bereich, Datum, Textanfang; der
+     * Kanon kürzt auf Eintrag.AUSZUG_MAX). Damit finden die anderen Pro-Apps mit „Überall suchen“ mehr als den Dateinamen.
+     * Die Kurzfassung baut die Oberfläche (lib/tresor-kurzfassung.ts); Gesundheitsunterlagen tragen dort keinen Text. */
+    public synchronized Eintrag ablegen(String dokumentId, String name, String mime, long datum, InputStream quelle, String auszug) throws IOException {
         bereit();
         String pfad = dokumentPfad(dokumentId);
         if (name == null || name.isEmpty() || name.length() > Eintrag.NAME_MAX || mime == null || mime.length() > 200 || datum < 0)
@@ -200,7 +207,7 @@ public final class ProTresorAdapter implements Closeable {
         }
         // Kanon schreibt verschlüsselt, liest zur Probe zurück und bestätigt erst sein Verzeichnis.
         return tresor.ablegen(FACH, pfad.substring(0, pfad.length() - 1), name, mime, datum,
-            new ByteArrayInputStream(bytes), "");
+            new ByteArrayInputStream(bytes), auszug == null ? "" : auszug);
     }
 
     public synchronized byte[] lesen(String eintragId) throws IOException {

@@ -12,6 +12,7 @@ import { workspaceStorage } from "../lib/demo-workspace.ts";
 import type { ProUebergabe } from "../lib/pro-verbund-vertrag";
 import { kontaktPruefen, kontaktUebernehmen, type PersonKontakt } from "../lib/person-kontakt.ts";
 import { stammDaten, stammPruefen, type StammAngaben, type StammArt } from "../lib/familie-stamm.ts";
+import { tresorKurzfassung } from "../lib/tresor-kurzfassung.ts";
 import { istProOriginal, proOriginalLesen, proOriginalName, proOriginalSpeichern, proOriginalVaultId, proOriginalMerkmale, proTresor, proTresorVerfuegbar } from "./pro-tresor.ts";
 import { pruefePdfQuelle, type PdfQuelle, type PdfRueckgabe } from "../lib/pdf-bearbeitung.ts";
 import type { AusfuellInfo } from "../lib/ausfuellen";
@@ -2647,7 +2648,7 @@ export async function copyLocalDocumentToPro(handle: FileSystemDirectoryHandle, 
   const checksum = await fileChecksum(source);
   if (source.size !== document.sizeBytes || (document.checksum && document.checksum !== checksum)) throw new Error("Die Quelldatei stimmt nicht mit dem Aktenregister überein.");
   const file = new File([source], document.originalName, { type: document.mimeType || "application/octet-stream" });
-  const proPath = await proOriginalSpeichern(vaultId, file, checksum, document.documentDate ? Date.parse(document.documentDate) : 0);
+  const proPath = await proOriginalSpeichern(vaultId, file, checksum, document.documentDate ? Date.parse(document.documentDate) : 0, undefined, tresorKurzfassung(document));
   const scanPaths: string[] = [];
   if (document.scanOriginalsPath) {
     const parts = document.scanOriginalsPath.split("/").filter(Boolean); if (parts[0] === ROOT) parts.shift();
@@ -2753,7 +2754,8 @@ export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file:
   let folder: FileSystemDirectoryHandle | null = null;
   let storedPath: string;
   if (proId) {
-    storedPath = await proOriginalSpeichern(proId, file, checksum, data.documentDate ? Date.parse(data.documentDate) : 0);
+    storedPath = await proOriginalSpeichern(proId, file, checksum, data.documentDate ? Date.parse(data.documentDate) : 0, undefined,
+      tresorKurzfassung({ titel: data.titel, originalName: file.name, category: data.category, documentDate: data.documentDate, textAuszug: data.textAuszug }));
   } else {
     const base = await root(handle);
     const parent = await base.getDirectoryHandle(data.migration ? "02_Online-Bestand_gesichert" : "01_Dokumente", { create: true });
@@ -4536,7 +4538,7 @@ export async function copyMissingDocuments(source: FileSystemDirectoryHandle, ta
     const checksum = await fileChecksum(file);
     if (file.size !== document.sizeBytes || (document.checksum && document.checksum !== checksum)) throw new Error("Die Quelldatei stimmt nicht mehr mit dem Aktenregister überein.");
     let storedPath: string;
-    if (targetProId) storedPath = await proOriginalSpeichern(targetProId, file, checksum, document.documentDate ? Date.parse(document.documentDate) : 0);
+    if (targetProId) storedPath = await proOriginalSpeichern(targetProId, file, checksum, document.documentDate ? Date.parse(document.documentDate) : 0, undefined, tresorKurzfassung(document));
     else {
       const destination = await unusedTargetPath(target, document.storedPath, document.id);
       // Auch ein wiederholter Sicherungslauf überschreibt niemals einen unerwarteten Bestand.
@@ -4755,7 +4757,7 @@ export async function saveLocalPdfEdit(handle: FileSystemDirectoryHandle, quelle
     let neuPfad: string, neuOrdner: FileSystemDirectoryHandle | null = null, neuName = "", selbstAngelegt = false;
     if (istProOriginal(altPfad)) {
       // The canonical Pro store is immutable; this is a revision of the same logical document.
-      neuPfad = await proOriginalSpeichern(proOriginalVaultId(altPfad), rueckgabe, checksum, dokument.documentDate ? Date.parse(dokument.documentDate) : 0, `fa-${await fileChecksum(new File([dokument.id], "kennung"))}`);
+      neuPfad = await proOriginalSpeichern(proOriginalVaultId(altPfad), rueckgabe, checksum, dokument.documentDate ? Date.parse(dokument.documentDate) : 0, `fa-${await fileChecksum(new File([dokument.id], "kennung"))}`, tresorKurzfassung(dokument));
     } else {
       const { ordner } = await pdfOrdner(handle, altPfad);
       neuOrdner = ordner; neuName = `PDF_${clean(dokument.id).slice(0, 8)}_${checksum.slice(0, 24)}.pdf`;

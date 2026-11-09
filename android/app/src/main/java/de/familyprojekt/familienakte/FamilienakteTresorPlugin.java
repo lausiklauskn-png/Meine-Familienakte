@@ -285,7 +285,7 @@ public class FamilienakteTresorPlugin extends Plugin {
                 if (data.length() > ((ProTresorAdapter.MAX_BYTES + 2L) / 3) * 4) throw new IOException("FA_DOKUMENT_ZU_GROSS");
                 byte[] bytes = Base64.decode(data, Base64.NO_WRAP);
                 Eintrag e = p.ablegen(call.getString("documentId", ""), call.getString("name", ""), call.getString("mime", ""),
-                    call.getData().optLong("date", 0), new ByteArrayInputStream(bytes));
+                    call.getData().optLong("date", 0), new ByteArrayInputStream(bytes), call.getString("auszug", ""));
                 call.resolve(new JSObject().put("entryId", e.id).put("vaultId", p.kennung()).put("sha256", e.sha256).put("size", e.groesse));
             } catch (Exception e) { fehler(call, e); }
         });
