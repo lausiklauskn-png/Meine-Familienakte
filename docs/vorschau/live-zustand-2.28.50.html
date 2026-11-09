@@ -1,0 +1,207 @@
+<title>Live-Zustand der Hilfekarten</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: eine Spalte zum Lesen; oben Legende und Beispiel-Schalter, darunter die zwei Karten so, wie sie in der Hilfe stünden. */
+:root {
+  --bg: #f4f7f9; --fg: #17262f; --muted: #4f6472; --line: #c8d9e2; --card: #ffffff;
+  --blau: #1f4e79; --teal: #2a7f86;
+  --gruen: #2f8a4f; --gruen-bg: #e9f6ee; --rot: #c0392b; --rot-bg: #fdecea;
+  --gelb: #9a6b00; --gelb-bg: #fff6dc; --grau: #6f7d87; --grau-bg: #eef1f3;
+  --demo: #c0392b;
+  --font: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f171d; --fg: #e3ecf1; --muted: #9fb2bf; --line: #2b3d49; --card: #16222b;
+  --blau: #7db4e6; --teal: #5cc4cc;
+  --gruen: #6fd39b; --gruen-bg: #15301f; --rot: #ff7a6b; --rot-bg: #351c18;
+  --gelb: #e9c46a; --gelb-bg: #33290f; --grau: #98a5af; --grau-bg: #1c262d; --demo: #ff7a6b; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0f171d; --fg: #e3ecf1; --muted: #9fb2bf; --line: #2b3d49; --card: #16222b;
+  --blau: #7db4e6; --teal: #5cc4cc;
+  --gruen: #6fd39b; --gruen-bg: #15301f; --rot: #ff7a6b; --rot-bg: #351c18;
+  --gelb: #e9c46a; --gelb-bg: #33290f; --grau: #98a5af; --grau-bg: #1c262d; --demo: #ff7a6b; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font: 16px/1.45 var(--font);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 48px; }
+main { max-width: 860px; margin: 0 auto; display: grid; gap: 20px; }
+h1 { font-size: 1.55rem; margin: 0; text-wrap: balance; }
+h2 { font-size: 1.15rem; margin: 0; text-wrap: balance; }
+p { margin: 0; max-width: 68ch; }
+.eyebrow { font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--teal); }
+section.block { display: grid; gap: 12px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; min-width: 0; }
+.legende { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; }
+.leg { display: grid; gap: 2px; padding: 8px 10px; border-radius: 8px; border: 2px solid var(--c); background: var(--b); font-size: .9rem; }
+.leg b { color: var(--c); }
+.schalter { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; font-size: .92rem; }
+.schalter label { display: inline-flex; gap: 6px; align-items: center; }
+select, input[type=checkbox] { font: inherit; accent-color: var(--blau); }
+select { padding: 3px 6px; border-radius: 6px; border: 1px solid var(--line); background: var(--card); color: var(--fg); }
+.hinweis { font-size: .85rem; color: var(--muted); }
+.demo-band { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; justify-content: space-between; border: 2px solid var(--demo); background: var(--rot-bg); color: var(--fg); border-radius: 10px; padding: 8px 12px; font-weight: 600; }
+.demo-band .pill { background: var(--demo); color: var(--card); border-radius: 6px; padding: 1px 8px; font-size: .8rem; letter-spacing: .04em; }
+.baum { display: grid; gap: 8px; }
+.ort { display: grid; gap: 6px; }
+.unter { display: grid; gap: 6px; margin-left: 18px; padding-left: 12px; border-left: 2px solid var(--line); }
+.kasten { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; align-items: center; text-align: left; width: 100%;
+  font: inherit; color: var(--fg); border: 2px solid var(--c); background: var(--b); border-radius: 10px; padding: 8px 12px; cursor: pointer; }
+.kasten:focus-visible { outline: 3px solid var(--blau); outline-offset: 2px; }
+.kasten .t { font-weight: 700; }
+.kasten .z { grid-column: 1; font-size: .86rem; color: var(--muted); }
+.kasten .los { grid-row: 1 / span 2; grid-column: 2; font-weight: 700; color: var(--c); white-space: nowrap; font-size: .9rem; }
+.kasten.selbst .t::after { content: " · selbst abhaken"; font-weight: 500; font-size: .8rem; color: var(--muted); }
+.gruen { --c: var(--gruen); --b: var(--gruen-bg); }
+.rot { --c: var(--rot); --b: var(--rot-bg); }
+.gelb { --c: var(--gelb); --b: var(--gelb-bg); }
+.grau { --c: var(--grau); --b: var(--grau-bg); }
+.zeile { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; }
+.meldung { min-height: 1.4em; font-size: .9rem; font-weight: 600; color: var(--blau); }
+ol.fragen { margin: 0; padding-left: 1.4em; display: grid; gap: 8px; }
+ol.fragen li { max-width: 68ch; }
+@media (prefers-reduced-motion: no-preference) { .kasten { transition: background .2s, border-color .2s; } }
+</style>
+
+<main>
+  <header style="display:grid;gap:6px">
+    <span class="eyebrow">Vorschau zu 2.28.50 · Klaus 09.11.</span>
+    <h1>Hilfekarten zeigen den Zustand dieses Geräts</h1>
+    <p>„Akten sichern“ und die Landkarte der App färben jeden Kasten nach dem, was auf <b>diesem Gerät</b> gerade eingerichtet ist. Ein Tipp auf einen roten oder gelben Kasten führt genau zu dem Knopf, der es behebt (roter Rahmen wie bisher bei Sprüngen).</p>
+  </header>
+
+  <section class="block" aria-labelledby="leg-t">
+    <h2 id="leg-t">Was die Farben heißen</h2>
+    <div class="legende">
+      <div class="leg gruen"><b>Grün</b>eingerichtet, verbunden, aktuell</div>
+      <div class="leg rot"><b>Rot</b>nötig und fehlt – Tipp behebt es</div>
+      <div class="leg gelb"><b>Gelb</b>eingerichtet, aber gerade gesperrt, nicht erreichbar oder veraltet</div>
+      <div class="leg grau"><b>Grau</b>freiwillig und nicht eingerichtet, oder gibt es hier nicht</div>
+    </div>
+    <p class="hinweis">Was die App nicht selbst messen kann (Passwort auf Papier, Ersatzschlüssel ausgedruckt, zweiter Ort), bleibt zum Abhaken und ist mit „selbst abhaken“ gekennzeichnet.</p>
+  </section>
+
+  <section class="block" aria-labelledby="bsp-t">
+    <h2 id="bsp-t">Zum Ausprobieren: ein erfundenes Gerät</h2>
+    <div class="schalter">
+      <label for="s-geraet">Gerät <select id="s-geraet"><option value="android">Android-App</option><option value="windows">Windows-App</option><option value="web">Web-App (Basic)</option></select></label>
+      <label for="s-tresor">Pro-Tresor <select id="s-tresor"><option value="offen">entsperrt</option><option value="gesperrt">gesperrt</option><option value="weg">SD-Karte entfernt</option><option value="nie" selected>nie eingerichtet</option></select></label>
+      <label for="s-sich">Letzte Vollsicherung <select id="s-sich"><option value="3">vor 3 Tagen</option><option value="12" selected>vor 12 Tagen</option><option value="nie">noch nie</option></select></label>
+      <label for="s-demo"><input type="checkbox" id="s-demo"> Demo an</label>
+    </div>
+    <p class="hinweis">Die Schalter gibt es nur in dieser Vorschau. In der App liest die Karte den echten Zustand.</p>
+  </section>
+
+  <section class="block" aria-labelledby="ak-t">
+    <span class="eyebrow">Hilfe › Akten sichern</span>
+    <h2 id="ak-t">Akten sichern – live</h2>
+    <div class="demo-band" data-demo hidden><span><span class="pill">DEMO</span> Die Farben zeigen den Zustand der Demo-Kopie, nicht deiner Akte.</span><button class="kasten rot" type="button" data-los="Demo verlassen" style="width:auto;padding:4px 10px"><span class="t">Demo verlassen ›</span></button></div>
+    <div class="baum" id="aktensichern"></div>
+    <p class="meldung" role="status" id="m1"></p>
+  </section>
+
+  <section class="block" aria-labelledby="lk-t">
+    <span class="eyebrow">Hilfe › Landkarte der App (Ausschnitt)</span>
+    <h2 id="lk-t">Wo es liegt · Anderes Gerät · Erinnern</h2>
+    <div class="demo-band" data-demo hidden><span><span class="pill">DEMO</span> Du arbeitest an einer Kopie. Was du hier einrichtest, gilt nur für die Demo.</span></div>
+    <div class="zeile" id="landkarte"></div>
+    <p class="hinweis">Der Baustand (fertig, im Bau, geplant) bleibt als kleines Schild am Kasten; die Farbe gehört dem Zustand dieses Geräts.</p>
+    <p class="meldung" role="status" id="m2"></p>
+  </section>
+
+  <section class="block" aria-labelledby="fr-t">
+    <h2 id="fr-t">Fragen an dich (je Ja oder Nein)</h2>
+    <ol class="fragen">
+      <li><b>l1</b> Vier Farben wie oben: grün, rot, gelb, grau.</li>
+      <li><b>l2</b> Freiwilliges (Pro-Tresor, Festplatte, Netz, Kalender) ist <b>grau</b>, solange du es nie eingerichtet hast – nicht rot. Rot nur, wenn es nötig ist (Datentresor, Vollsicherung) oder etwas Eingerichtetes nicht mehr geht.</li>
+      <li><b>l3</b> Vollsicherung: grün bis 7 Tage, gelb danach, rot wenn noch nie (gleiche 7 Tage wie die Erinnerung).</li>
+      <li><b>l4</b> Demo an: rotes Band über beiden Karten, Farben zeigen die Kopie; „Demo verlassen ›“ direkt dort.</li>
+      <li><b>l5</b> Dasselbe danach auch für „Wo liegt was?“ am Pro-Tresor und die übrigen Kästen der Landkarte, soweit die App den Zustand kennt.</li>
+    </ol>
+  </section>
+</main>
+
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const zustand = () => ({ geraet: $("s-geraet").value, tresor: $("s-tresor").value, sich: $("s-sich").value, demo: $("s-demo").checked });
+
+  function kasten(k, meldung) {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "kasten " + k.farbe + (k.selbst ? " selbst" : "");
+    b.innerHTML = '<span class="t"></span><span class="z"></span><span class="los"></span>';
+    b.querySelector(".t").textContent = k.titel;
+    b.querySelector(".z").textContent = k.zeile;
+    b.querySelector(".los").textContent = k.los ? k.los + " ›" : "";
+    b.addEventListener("click", () => {
+      if (k.selbst) { k.farbe = k.farbe === "gruen" ? "rot" : "gruen"; zeichnen(); return; }
+      $(meldung).textContent = k.ziel ? "In der App: springt zu „" + k.ziel + "“ und rahmt den Knopf rot ein." : "Nichts zu tun.";
+    });
+    return b;
+  }
+
+  const abgehakt = { passwort: "rot", ersatz: "rot", zweit: "grau" };
+
+  function aktenSichern(s) {
+    const pro = s.geraet === "web" ? { farbe: "grau", zeile: "gibt es nur in der Android- und Windows-App" }
+      : { offen: { farbe: "gruen", zeile: "entsperrt · Gerät/Familienakte/Family-Projekt" },
+          gesperrt: { farbe: "gelb", zeile: "gesperrt · Passwort eingeben", los: "Entsperren", ziel: "Pro-Tresor entsperren …" },
+          weg: { farbe: "rot", zeile: "SD-Karte nicht erreichbar · einstecken oder neu wählen", los: "Prüfen", ziel: "Gemeinsamer Pro-Tresor" },
+          nie: { farbe: "grau", zeile: "freiwillig · verschlüsselte Originale", los: "Einrichten", ziel: "Tresor einrichten – nur Speicher wählen …" } }[s.tresor];
+    const sich = { "3": { farbe: "gruen", zeile: "letzte vor 3 Tagen · Notfallblatt vorhanden" },
+      "12": { farbe: "gelb", zeile: "letzte vor 12 Tagen · älter als 7 Tage", los: "Jetzt sichern", ziel: "Vollständig sichern und testen" },
+      "nie": { farbe: "rot", zeile: "noch nie gesichert", los: "Sichern", ziel: "Vollständig sichern und testen" } }[s.sich];
+    return [
+      { titel: "Datentresor", zeile: "verbunden · Gerät/Me_Myself_and_I_Familienakte", farbe: "gruen", kinder: [
+        { titel: "Ort notiert", zeile: "welches Gerät, welcher Speicher", farbe: "gruen", selbst: true } ] },
+      { titel: "Pro-Tresor", ...pro, kinder: s.geraet === "web" ? [] : [
+        { titel: "Passwort auf Papier", zeile: "gilt für alle Pro-Apps", farbe: abgehakt.passwort, selbst: true, key: "passwort" },
+        { titel: "Ersatzschlüssel ausgedruckt", zeile: "getrennt aufbewahren", farbe: abgehakt.ersatz, selbst: true, key: "ersatz" } ] },
+      { titel: "Vollsicherung", ...sich, kinder: [
+        { titel: "Einlesen getestet", zeile: s.sich === "nie" ? "erst nach der ersten Sicherung" : "Probe ohne Schreiben am 02.11.", farbe: s.sich === "nie" ? "grau" : "gruen" } ] },
+      { titel: "Zweiter Ort", zeile: "USB-Stick, Rechner, zweites Laufwerk", farbe: abgehakt.zweit, selbst: true, key: "zweit" },
+    ];
+  }
+
+  function landkarte(s) {
+    const nativ = s.geraet !== "web";
+    return [
+      { titel: "Datentresor", zeile: "verbunden", farbe: "gruen" },
+      { titel: "Pro-Tresor", zeile: !nativ ? "nur in den Apps" : s.tresor === "offen" ? "entsperrt" : s.tresor === "gesperrt" ? "gesperrt" : s.tresor === "weg" ? "nicht erreichbar" : "nicht eingerichtet",
+        farbe: !nativ ? "grau" : { offen: "gruen", gesperrt: "gelb", weg: "rot", nie: "grau" }[s.tresor],
+        los: nativ && s.tresor !== "offen" ? (s.tresor === "gesperrt" ? "Entsperren" : "Einrichten") : "", ziel: "Gemeinsamer Pro-Tresor" },
+      { titel: "Gemeinsame Festplatte", zeile: "„Familie-USB“ gemerkt · gerade nicht angesteckt", farbe: "gelb", los: "Anstecken", ziel: "Gemeinsame Festplatte" },
+      { titel: "Abgleich im Netz", zeile: nativ ? "nicht gekoppelt · freiwillig" : "nur in den Apps", farbe: "grau", los: nativ ? "Koppeln" : "", ziel: nativ ? "Mit Gastgeber koppeln …" : "" },
+      { titel: "Paket per Teilen", zeile: "letztes Paket an „Windows-PC“ vor 2 Tagen", farbe: "gruen" },
+      { titel: "Kalender", zeile: "Google verbunden · holt und schreibt", farbe: "gruen" },
+      { titel: "App-Glocke", zeile: "aus · keine Meldung in der Android-Leiste", farbe: nativ ? "grau" : "grau", los: "Einschalten", ziel: "Mein Kalender › App-Glocke" },
+      { titel: "Demo", zeile: s.demo ? "an · Kopie deiner Daten" : "aus", farbe: s.demo ? "rot" : "grau", los: s.demo ? "Verlassen" : "", ziel: s.demo ? "DEMO ▾ › Demo verlassen" : "" },
+    ];
+  }
+
+  function baumZeichnen(liste) {
+    const wurzel = $("aktensichern"); wurzel.textContent = "";
+    for (const k of liste) {
+      const ort = document.createElement("div"); ort.className = "ort";
+      ort.appendChild(kasten(k, "m1"));
+      if (k.kinder && k.kinder.length) {
+        const u = document.createElement("div"); u.className = "unter";
+        for (const c of k.kinder) {
+          const b = kasten(c, "m1");
+          if (c.key) b.addEventListener("click", () => { abgehakt[c.key] = abgehakt[c.key] === "gruen" ? (c.key === "zweit" ? "grau" : "rot") : "gruen"; zeichnen(); });
+          u.appendChild(b);
+        }
+        ort.appendChild(u);
+      }
+      wurzel.appendChild(ort);
+    }
+  }
+
+  function zeichnen() {
+    const s = zustand();
+    document.querySelectorAll("[data-demo]").forEach((e) => { e.hidden = !s.demo; });
+    baumZeichnen(aktenSichern(s));
+    const lk = $("landkarte"); lk.textContent = "";
+    for (const k of landkarte(s)) lk.appendChild(kasten(k, "m2"));
+  }
+  ["s-geraet", "s-tresor", "s-sich", "s-demo"].forEach((id) => $(id).addEventListener("change", zeichnen));
+  document.querySelectorAll("[data-los]").forEach((b) => b.addEventListener("click", () => { $("s-demo").checked = false; zeichnen(); }));
+  zeichnen();
+})();
+</script>
