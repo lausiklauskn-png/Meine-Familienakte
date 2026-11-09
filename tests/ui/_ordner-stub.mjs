@@ -1,7 +1,7 @@
 // Gestelltes natives Ordner-Plugin (FamilyFolders) wie in der Android- bzw. Windows-App: frei gewählter Ordner im Speicher,
 // dieselben Aktionen und Fehlercodes wie FamilienakteOrdnerPlugin.java / FamilyFolders.java. Nach capacitorStub einhängen.
 export const ordnerStub = (plattform = "android") => `(() => {
-  const S = window.__ordner = { dateien: new Map(), ordner: new Set(), n: 0, gewaehlt: [], naechsterName: 'SD-Karte', abbrechen: false, selbst: new Set() };
+  const S = window.__ordner = { dateien: new Map(), ordner: new Set(), n: 0, gewaehlt: [], naechsterName: 'SD-Karte', abbrechen: false, selbst: new Set(), angesteckt: true, gemerkt: new Set() };
   const offen = new Map();
   const fehler = (code) => Object.assign(new Error(code), { code });
   // Wie am Gerät: jede Wahl zeigt auf denselben Speicher (SD-Karte); nur die Kennung ist neu.
@@ -28,6 +28,10 @@ export const ordnerStub = (plattform = "android") => `(() => {
     async dateiAnhaengen({ id, offset, data }) { const s = offen.get(id); if (!s || offset !== s.size) throw fehler('FA_STUECK_UNGUELTIG'); const u = unb64(data); if (u.length > 1048576) throw fehler('FA_STUECK_UNGUELTIG'); s.teile.push(u); s.size += u.length; return { size: s.size }; },
     async dateiFertig({ id, size }) { const s = offen.get(id); if (!s || size !== s.size) throw fehler('FA_STUECK_UNGUELTIG'); const u = new Uint8Array(s.size); let o = 0; for (const t of s.teile) { u.set(t, o); o += t.length; } S.dateien.set(s.key, u); S.selbst.add(s.key); offen.delete(id); return { size: s.size, sha256: await hex(u) }; },
     async dateiVerwerfen({ id }) { offen.delete(id); return { ok: true }; },
+    // Stufe C: Ort merken/öffnen und Laufwerke absuchen; S.angesteckt = false stellt eine abgezogene Festplatte dar.
+    async ordnerMerken({ token }) { if (!S.ordner.has(k(token, ''))) throw fehler('FA_ORDNER_NICHT_ERREICHBAR'); S.gemerkt.add('ORT:' + S.naechsterName); return { ort: 'ORT:' + S.naechsterName }; },
+    async ordnerOeffnen({ ort }) { if (!S.angesteckt || !String(ort).startsWith('ORT:')) return { erreichbar: false, grund: 'FA_ORDNER_NICHT_ERREICHBAR' }; const t = S.festerToken || 'T' + (++S.n); S.ordner.add(k(t, '')); return { erreichbar: true, token: t, name: ort.slice(4) }; },
+    async laufwerkeSuchen({ datei }) { const u = S.angesteckt ? S.dateien.get(k('R', datei)) : null; return { treffer: u ? [{ ort: 'ORT:' + S.naechsterName, name: S.naechsterName, inhalt: new TextDecoder().decode(u) }] : [] }; },
   };
   if (${JSON.stringify(plattform)} === 'android') P.programmBeilegen = async ({ token, pfad }) => { const u = new TextEncoder().encode('erfundene APK'); const name = 'Familienakte-Pro-2.28.34.apk'; S.dateien.set(k(token, pfad ? pfad + '/' + name : name), u); return { name, groesse: u.length, sha256: await hex(u), fassung: '2.28.34' }; };
   else P.setupAngaben = async () => ({ version: '2.28.34', datei: 'Familienakte-Windows-2.28.34-x64-setup.exe', sha256: 'ab'.repeat(32), groesse: 1000, url: 'https://family-projekt.de/updates/familienakte/Familienakte-Windows-2.28.34-x64-setup.exe' });

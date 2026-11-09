@@ -4,7 +4,7 @@
  *  - SicherungPasswortDialog: Passwort oder Notfallschlüssel zum Einlesen einer verschlüsselten Sicherung.
  *  - PapierkorbLeerenDialog: aussortierte Dokumente endgültig löschen, nur nach zwei Bestätigungen.
  *  - SicherungErinnerung: „lange nicht gesichert“ nach 7 Tagen (Entscheidung 7). */
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { Copy, Download, Printer, ShieldCheck, TriangleAlert, X } from "lucide-react";
 import { PASSWORT_MINDESTLAENGE, notfallblattText, passwortPruefen } from "../lib/sicherung-krypto";
 import { dateiAusgeben } from "./dateiausgabe";
@@ -74,7 +74,7 @@ export function NotfallblattDialog({ notfall, ordner, erstellt, appVersion, onDr
   </div>;
 }
 
-export function SicherungPasswortDialog({ ordner, fehler, laeuft, onZugang, onClose }: { ordner: string; fehler: string; laeuft: boolean; onZugang: (zugang: { passwort?: string; notfall?: string }) => void; onClose: () => void }) {
+export function SicherungPasswortDialog({ ordner, fehler, laeuft, onZugang, onClose, extra }: { ordner: string; fehler: string; laeuft: boolean; onZugang: (zugang: { passwort?: string; notfall?: string }) => void; onClose: () => void; extra?: ReactNode }) {
   const [weg, setWeg] = useState<"passwort" | "notfall">("passwort"); const [wert, setWert] = useState(""); const [zeigen, setZeigen] = useState(false);
   const los = () => { if (!wert.trim()) return; onZugang(weg === "passwort" ? { passwort: wert } : { notfall: wert }); };
   return <div className="modal-backdrop" role="presentation" onMouseDown={(e) => e.target === e.currentTarget && !laeuft && onClose()}>
@@ -84,6 +84,7 @@ export function SicherungPasswortDialog({ ordner, fehler, laeuft, onZugang, onCl
       <form className="form-grid" onSubmit={(e) => { e.preventDefault(); los(); }}>
         <label>{weg === "passwort" ? "Passwort" : "Notfallschlüssel vom Notfallblatt (52 Zeichen, Bindestriche egal)"}<input type={zeigen || weg === "notfall" ? "text" : "password"} value={wert} autoComplete="off" autoFocus onChange={(e) => setWert(e.target.value)} data-zugang-wert/></label>
         {weg === "passwort" && <label className="checkbox-row"><input type="checkbox" checked={zeigen} onChange={(e) => setZeigen(e.target.checked)}/> Passwort anzeigen</label>}
+        {extra}
         {fehler && <p className="form-error" data-zugang-fehler>{fehler}</p>}
         <div className="modal-actions">
           <button type="button" className="text-link" onClick={() => { setWeg(weg === "passwort" ? "notfall" : "passwort"); setWert(""); }} data-zugang-wechsel>{weg === "passwort" ? "Passwort vergessen? Notfallschlüssel eingeben" : "Doch mit Passwort"}</button>

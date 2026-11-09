@@ -4,6 +4,7 @@ import { verkleinerbar } from "./verkleinern";
 import { programmBeilegen } from "./sicherung-programm";
 import { SicherungEinlesenDialog } from "./sicherung-einlesen";
 import { NotfallblattDialog, PapierkorbLeerenDialog, SicherungAnlegenDialog, SicherungErinnerung, SicherungPasswortDialog } from "./sicherung-dialoge";
+import { LaufwerkKarte } from "./laufwerk-karte";
 import { DemoUebernahmeDialog, DEMO_NEU_MERKER, DEMO_UEBERNAHME_MERKER } from "./demo-uebernahme";
 import { DEMO_QUELLE_SCHLUESSEL, demoQuelleLesen } from "../lib/demo-kopie";
 import { resetDemoStorage } from "../lib/demo-workspace.ts";
@@ -56,7 +57,7 @@ import {
   PenLine, CalendarDays, Check, Pencil,
 } from "lucide-react";
 import { DictationButton, InfoPopover, VoiceInput, VoiceTextarea } from "./ui-controls";
-import { FormEvent, Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { FormEvent, Fragment, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ActivityLines, ActivityProvider, useActivity, useActivityMessage } from "./ui-activity";
 import { NetzSchalter } from "./netz-schalter";
 import { AnmeldeKnopf } from "./anmelde-knopf";
@@ -1607,6 +1608,7 @@ function HealthPortalContent() {
           onConnectOneDrive={connectOneDrive} onConnectLocal={connectLocalVault}
           onLockOneDrive={lockOneDrive} onLockLocal={lockLocalVault} onMigrate={migrateOnline} onHelp={() => go("help")}
           onCompare={startVaultInventoryComparison} onCheckSync={checkBackupSync} onRunSync={runBackupSync} onExport={() => { setExportOpen(true); reportActivity({ kind: "info", text: "Exportvorbereitung geöffnet. Noch keine Datei geschrieben; Umfang und Zielordner bitte prüfen." }); }} onFullBackup={runFullBackup} onRestoreTest={runRestoreTest} onEinlesen={runEinlesenProbe} letzteSicherung={letzteSicherung} hatDaten={localDocuments.length + familyRecords.length > 0}
+          laufwerkKarte={<LaufwerkKarte aktiv={vaultHandle} appVersion={APP_FASSUNG} busy={vaultBusy} onBusy={setVaultBusy} onNotice={setNotice} onRefresh={() => refreshLocal()} onDrucken={seiteDrucken}/>}
           ordnerWahl={sicherungsOrdnerWaehlbar()} onEingang={() => go("inbox")}
         />}
         {!query && active === "medical" && <Medical diagnoses={filteredDiagnoses} query={query} onGo={go} onDocuments={openDocumentLibrary} onSearch={setQuery}/>}
@@ -3883,13 +3885,13 @@ function Inbox({ documents, localDocuments, loading, onUpload, onOpenDocument, o
   </>;
 }
 
-function SecurityCenter({ aktenHandle, onDokumente, onMeaningOpen, onProChange, proDestination = null, browserStorage = false, folderSelectionSupported = true, oneDriveConnected, oneDriveName, oneDriveSummary, localConnected, localVaultName, localVaultSummary, supported, onlineCount, localCount, busy, syncPreview, syncResult, onConnectOneDrive, onConnectLocal, onLockOneDrive, onLockLocal, onMigrate, onHelp, onCompare, onCheckSync, onRunSync, onExport, onFullBackup, onRestoreTest, onEinlesen, ordnerWahl = true, onEingang, letzteSicherung = null, hatDaten = false }: {
+function SecurityCenter({ aktenHandle, onDokumente, onMeaningOpen, onProChange, proDestination = null, browserStorage = false, folderSelectionSupported = true, oneDriveConnected, oneDriveName, oneDriveSummary, localConnected, localVaultName, localVaultSummary, supported, onlineCount, localCount, busy, syncPreview, syncResult, onConnectOneDrive, onConnectLocal, onLockOneDrive, onLockLocal, onMigrate, onHelp, onCompare, onCheckSync, onRunSync, onExport, onFullBackup, onRestoreTest, onEinlesen, ordnerWahl = true, onEingang, letzteSicherung = null, hatDaten = false, laufwerkKarte = null }: {
   aktenHandle: FileSystemDirectoryHandle | null; onDokumente?: () => void;
   onMeaningOpen: (section: SectionId, targetId?: string) => void;
   onProChange?: () => void; proDestination?: ProDestination | null; browserStorage?: boolean; folderSelectionSupported?: boolean;
   oneDriveConnected: boolean; oneDriveName: string; oneDriveSummary: VaultSummary | null; localConnected: boolean; localVaultName: string; localVaultSummary: VaultSummary | null; supported: boolean; onlineCount: number; localCount: number; busy: boolean;
   syncPreview: VaultSyncPreview | null; syncResult: VaultSyncResult | null;
-  onConnectOneDrive: () => void; onConnectLocal: () => void; onLockOneDrive: () => void; onLockLocal: () => void; onMigrate: () => void; onHelp: () => void; onCompare: () => void; onCheckSync: () => void; onRunSync: () => void; onExport: () => void; onFullBackup: () => void; onRestoreTest: () => void; onEinlesen: () => void; letzteSicherung?: string | null; hatDaten?: boolean;
+  onConnectOneDrive: () => void; onConnectLocal: () => void; onLockOneDrive: () => void; onLockLocal: () => void; onMigrate: () => void; onHelp: () => void; onCompare: () => void; onCheckSync: () => void; onRunSync: () => void; onExport: () => void; onFullBackup: () => void; onRestoreTest: () => void; onEinlesen: () => void; letzteSicherung?: string | null; hatDaten?: boolean; laufwerkKarte?: ReactNode;
   /** Ordner wählbar (native App oder Chrome/Edge am PC); sonst sind Sichern, Testen, Einlesen und Export hier nicht möglich (U2). */
   ordnerWahl?: boolean; onEingang?: () => void;
 }) {
@@ -3915,6 +3917,7 @@ function SecurityCenter({ aktenHandle, onDokumente, onMeaningOpen, onProChange, 
     </>}
     <section className="security-grid security-grid-two security-action-grid">
       <article className="card security-action-card" data-hilfe-ziel="vollsicherung"><div className="security-card-heading"><h2>Familienakte vollständig sichern und testen</h2><InfoPopover label="Vollständige Sicherung erklären" text="Erstellt nach deinem ausdrücklichen Befehl eine vollständige Sicherung von Register, Datensätzen, Verknüpfungen, Memories, Medien, Aufgaben, Fristen und freigegebenen Originaldateien in einem frei gewählten Ordner – verschlüsselt mit Passwort und Notfallblatt (empfohlen) oder lesbar. Zwei Wege zurück: „Wiederherstellung testen“ ist nur eine Probe in einen leeren Testordner und holt nichts in die Akte. „Sicherung einlesen“ holt eine Sicherung zurück: in eine leere Akte ganz, in eine benutzte Akte zusammengeführt – Neues kommt dazu, bei Unterschieden wählst du, gelöscht wird nichts."/></div><div className="button-row"><button className="button primary" disabled={!supported || !ordnerWahl || busy || (!oneDriveConnected && !localConnected)} onClick={onFullBackup}><Usb size={17}/> Vollständige Sicherung erstellen</button><button className="button primary" disabled={!supported || !ordnerWahl || busy} onClick={onRestoreTest}><ClipboardCheck size={17}/> Wiederherstellung testen</button><button className="button secondary" data-sicherung-einlesen-knopf disabled={!supported || !ordnerWahl || busy} onClick={onEinlesen}><Download size={17}/> Sicherung einlesen</button></div><SicherungErinnerung letzte={letzteSicherung} hatDaten={hatDaten} onSichern={onFullBackup} kompakt/>{letzteSicherung && <p className="fine-print" data-letzte-sicherung>Letzte Vollsicherung: {new Date(letzteSicherung).toLocaleString("de-DE", { dateStyle: "medium", timeStyle: "short" })}.</p>}{ordnerWahl ? <p className="fine-print" data-zwei-wege>„Wiederherstellung testen“ prüft nur in einem leeren Testordner und holt nichts in die Akte. „Sicherung einlesen“ holt die Akte zurück oder führt sie mit deiner zusammen.</p> : <p className="sync-message warning" data-sicherung-nicht-hier>Hier nicht möglich: Die Web-App kann auf diesem Gerät keinen Ordner wählen. Sichern, Testen und Einlesen gehen in der Pro-App (Android, Windows) oder am PC in Chrome oder Edge.</p>}</article>
+      {laufwerkKarte}
       <article className="card security-action-card"><div className="security-card-heading"><h2>Familienakte exportieren</h2><InfoPopover label="Export erklären" text="Bereitet die vorhandene Exportfunktion vor. Du wählst Bereiche und Zielordner bewusst aus und siehst vor dem Start Umfang, Originaldateien und Speicherstatus. Es wird kein Export vorgetäuscht oder automatisch gestartet."/></div><button className="button primary" disabled={!supported || !ordnerWahl || busy} onClick={onExport}><Download size={17}/> Export vorbereiten</button>{!ordnerWahl && <p className="sync-message warning" data-export-nicht-hier>Hier nicht möglich: Exportieren geht in der Pro-App oder am PC in Chrome oder Edge.</p>}</article>
     </section>
     {!demoActive() && (folderSelectionSupported || oneDriveConnected) && <section className="card backup-sync"><div className="backup-sync-head"><div><span className="ui-heading-help"><h2>OneDrive auf PC oder USB sichern</h2><InfoPopover label="OneDrive auf PC oder USB sichern erklären" text={UI_HELP["OneDrive auf PC oder USB sichern"]}/></span></div><ShieldCheck size={36}/></div>

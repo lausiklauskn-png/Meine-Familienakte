@@ -3313,7 +3313,7 @@ export type EinleseProbe = {
   /** Stufe B: die Sicherung war verschlüsselt und wurde mit Passwort oder Notfallschlüssel geöffnet. */
   verschluesselt?: boolean;
   /** Stufe A (Plan 08.11.): ist die Akte nicht leer, wird zusammengeführt. Plan ohne Schreiben. */
-  zusammen?: { liste: AbgleichZeile[]; konflikte: AbgleichKonflikt[]; zaehlung: { neu: number; uebernommen: number; konflikte: number; gleich: number; nurHier: number }; revision: number };
+  zusammen?: { liste: AbgleichZeile[]; konflikte: AbgleichKonflikt[]; zaehlung: { neu: number; uebernommen: number; konflikte: number; gleich: number; nurHier: number; hierGeaendert: number }; revision: number };
 };
 const SICHERUNGS_PRAEFIX = "Familienakte_Vollsicherung_";
 async function dateiVorhanden(ordner: FileSystemDirectoryHandle, name: string) {
@@ -3485,6 +3485,65 @@ async function sicherungZusammenfuehren(aktiv: FileSystemDirectoryHandle, probe:
   neu.auditLog = [{ id: crypto.randomUUID(), at: new Date().toISOString(), action: "Vollsicherung zusammengeführt", details: `Sicherung „${probe.ordner}“ vom ${probe.erstellt.slice(0, 10)}${probe.verschluesselt ? " (verschlüsselt)" : ""} zusammengeführt: ${plan.zaehlung.neu} neu, ${plan.zaehlung.konflikte} Unterschiede (${konflikteDort} aus der Sicherung übernommen), ${kopiert} Dateien kopiert. Nichts wurde gelöscht; das vorige Register liegt unter 00_Register/Sicherungen.` }, ...(neu.auditLog || [])];
   await writeIndex(aktiv, neu);
   return { ...probe, warnungen, kopiert, zusammengefuehrt: { neu: plan.zaehlung.neu, uebernommen: plan.zaehlung.uebernommen, konflikteDort, dateienVorhanden } };
+}
+
+/** Stufe C (Plan 08.11.): Akte für den Abgleich mit der gemeinsamen Festplatte – nur die Bereiche, die zwischen Geräten wandern. */
+export async function akteFuerAbgleich(handle: FileSystemDirectoryHandle): Promise<{ akte: AbgleichAkte; revision: number }> {
+  const index = await readIndex(handle);
+  const akte = { documents: index.documents, records: index.records, relations: index.relations, memoryDrafts: index.memoryDrafts, linkDecisions: index.linkDecisions, sequences: index.sequences, auditLog: index.auditLog } as unknown as AbgleichAkte;
+  return { akte: structuredClone(akte), revision: index.revision ?? 0 };
+}
+/** Schreibt das Ergebnis eines Abgleichs; bricht ab, wenn die Akte seit dem Lesen geändert wurde (nichts wird halb geschrieben). */
+export async function akteNachAbgleichSchreiben(handle: FileSystemDirectoryHandle, akte: AbgleichAkte, revisionVorher: number, action: string, details: string) {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der Datentresor wurde nicht freigegeben.");
+  const aktuell = await readIndex(handle);
+  if ((aktuell.revision ?? 0) !== revisionVorher) throw new Error("Die Akte wurde während des Abgleichs verändert. Es wurde nichts geschrieben; bitte erneut abgleichen.");
+  const neu = { ...aktuell, ...akte } as unknown as VaultIndex;
+  neu.auditLog = [{ id: crypto.randomUUID(), at: new Date().toISOString(), action, details }, ...(neu.auditLog || [])];
+  await writeIndex(handle, neu);
+  return (await readIndex(handle)).revision ?? 0;
+}
+/** Originaldatei eines Dokuments oder null, wenn sie auf diesem Gerät (noch) nicht liegt. */
+export async function dokumentDateiOderNull(handle: FileSystemDirectoryHandle, document: LocalDocument): Promise<File | null> {
+  try { return await documentFile(handle, document); }
+  catch (error) {
+    if (isNotFoundError(error)) return null;
+    const text = error instanceof Error ? error.message : String(error);
+    if (/Tresor|TRESOR|nicht verbunden|nicht erreichbar/i.test(text)) return null;
+    throw error;
+  }
+}
+/** Legt eine vom anderen Gerät geholte Originaldatei im eigenen Aktenordner ab und gibt das Dokument mit eigenem Pfad zurück.
+ *  Liegt am Zielpfad schon dieselbe Datei (Prüfsumme), wird sie wiederverwendet; eine andere Datei wird nie überschrieben. */
+export async function dokumentDateiAblegen(handle: FileSystemDirectoryHandle, document: LocalDocument, file: File): Promise<LocalDocument> {
+  const summe = await fileChecksum(file);
+  if (document.checksum && document.checksum !== summe) throw new Error(`Die geholte Datei zu „${document.titel || document.originalName}“ stimmt nicht mit der Prüfsumme im Register überein.`);
+  const basisName = !document.storedPath || istProOriginal(document.storedPath)
+    ? `${(document.documentDate || document.addedAt || "").slice(0, 10) || "ohne-datum"}_${document.id.slice(0, 8)}_${clean(document.originalName)}`
+    : document.storedPath.split("/").filter(Boolean).pop()!;
+  const ordner = `01_Dokumente/${clean(document.category)}`;
+  const basis = await root(handle);
+  let ziel = basis; for (const teil of ordner.split("/")) ziel = await ziel.getDirectoryHandle(teil, { create: true });
+  let name = basisName;
+  for (let n = 2; ; n++) {
+    let da: File | null = null;
+    try { da = await (await ziel.getFileHandle(name)).getFile(); } catch (error) { if (!isNotFoundError(error)) throw error; }
+    if (!da) break;
+    if (da.size === file.size && await fileChecksum(da) === summe) break; // dieselbe Datei liegt schon da
+    name = basisName.replace(/(\.[^.]+)?$/, ` (${n})$1`);
+  }
+  const h = await ziel.getFileHandle(name, { create: true });
+  const vorhanden = await h.getFile();
+  if (vorhanden.size !== file.size || await fileChecksum(vorhanden) !== summe) {
+    const w = await h.createWritable(); await w.write(file); await w.close();
+    const geschrieben = await h.getFile();
+    if (geschrieben.size !== file.size || await fileChecksum(geschrieben) !== summe) throw new Error(`Die Kopie von „${document.originalName}“ stimmt nicht mit der geholten Datei überein.`);
+  }
+  const storedPath = `${ROOT}/${ordner}/${name}`;
+  const neu: LocalDocument = { ...document, storedPath, relativePath: storedPath, storageType: "local", oneDrivePath: null, checksum: summe, sizeBytes: file.size,
+    storageLocations: [{ id: `LOC-${crypto.randomUUID()}`, storageType: "local", path: storedPath, source: "Abgleich über die gemeinsame Festplatte", checksum: summe, fileSize: file.size, verifiedAt: new Date().toISOString() }] };
+  delete neu.proScanOriginals; neu.scanOriginalsPath = null; delete neu.proUebergabe; delete neu.proBezug;
+  return neu;
 }
 
 /** P7 (Plan 07.11., Punkt 3): Demo als Kopie der eigenen Daten. Läuft in der echten Akte, bevor die Demo startet:

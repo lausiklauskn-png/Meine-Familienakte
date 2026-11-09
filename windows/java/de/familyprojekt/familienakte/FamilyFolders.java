@@ -19,7 +19,7 @@ final class FamilyFolders {
     private static final class Schreiben { Path ziel, teil; long groesse; MessageDigest sha; boolean ausgabe; boolean fertig; String name; }
 
     static boolean aktion(String a) {
-        return a.startsWith("ordner") || a.startsWith("datei") && !a.equals("dateiExportieren") || a.startsWith("ausgabe") || a.equals("eigeneDateiEntfernen");
+        return a.startsWith("ordner") || a.startsWith("datei") && !a.equals("dateiExportieren") || a.startsWith("ausgabe") || a.equals("eigeneDateiEntfernen") || a.equals("laufwerkeSuchen");
     }
 
     Object aufruf(Map<String, Object> m, ProTresorEngine.Dialoge dialoge) throws IOException {
@@ -32,6 +32,35 @@ final class FamilyFolders {
                 if (!Files.isDirectory(p) || Files.isSymbolicLink(p)) throw new IOException("FA_ORDNER_UNGUELTIG");
                 String token = UUID.randomUUID().toString(); ordner.put(token, p);
                 return Map.of("token", token, "name", p.getFileName() == null ? p.toString() : p.getFileName().toString());
+            }
+            // Stufe C (Plan 08.11.): Ort merken und wieder öffnen; Laufwerke nach einer Kennungsdatei absuchen (anderer Buchstabe egal).
+            case "ordnerMerken": {
+                Path p = ordner.get(Json.text(m, "token"));
+                if (p == null) throw new IOException("FA_ORDNER_NICHT_ERREICHBAR");
+                return Map.of("ort", p.toString());
+            }
+            case "ordnerOeffnen": {
+                Path p;
+                try { p = Paths.get(Json.text(m, "ort")).toAbsolutePath().normalize(); } catch (Exception e) { return Map.of("erreichbar", false, "grund", "FA_PFAD_UNGUELTIG"); }
+                if (!Files.isDirectory(p) || Files.isSymbolicLink(p)) return Map.of("erreichbar", false, "grund", "FA_ORDNER_NICHT_ERREICHBAR");
+                String token = UUID.randomUUID().toString(); ordner.put(token, p);
+                return Map.of("erreichbar", true, "token", token, "name", p.getFileName() == null ? p.toString() : p.getFileName().toString());
+            }
+            case "laufwerkeSuchen": {
+                String datei = Json.text(m, "datei");
+                List<Object> treffer = new ArrayList<>();
+                if (datei.isEmpty() || datei.contains("..") || datei.contains("\\")) return Map.of("treffer", treffer);
+                for (File wurzel : File.listRoots()) {
+                    try {
+                        Path f = wurzel.toPath();
+                        for (String teil : datei.split("/")) f = f.resolve(teil);
+                        if (!Files.isRegularFile(f) || Files.size(f) > 65536) continue;
+                        Map<String, Object> t = new LinkedHashMap<>();
+                        t.put("ort", wurzel.toPath().toString()); t.put("name", wurzel.toPath().toString()); t.put("inhalt", Files.readString(f));
+                        treffer.add(t);
+                    } catch (Exception ignoriert) { /* Laufwerk nicht lesbar oder nicht da */ }
+                }
+                return Map.of("treffer", treffer);
             }
             case "ordnerListe": {
                 Path p = pfad(m, true);
