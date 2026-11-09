@@ -3,11 +3,16 @@
 // bis jemand im Kanon-Fenster selbst verbindet. Siegel und Lampen kommen in einem eigenen Stück auf diese Seite.
 import { useEffect, useState } from "react";
 import { InfoPopover } from "./ui-controls";
+import { listLocalDocuments } from "./local-vault";
+import { demoActive } from "../lib/demo-workspace";
+import { antwortenAn, antwortenAus, antwortStand, einstellungLesen, einstellungMerken, imEigenenNetz } from "./netz-antwort";
+
+const ANTWORT_HILFE = "Andere Geräte in deinem eigenen Netz (z. B. BookLedgerPro mit „Überall suchen“) erfahren, dass die Familienakte etwas Passendes hat. Hinaus geht nur eine Zeile: Titel · Bereich · Datum. Im öffentlichen Netz antwortet die Akte nie. Mit Ausschnitt: dazu ein kurzer Ausschnitt aus dem gelesenen Text. Gesundheit & Pflege und Vorsorge bleiben ohne den dritten Schalter draußen. Nach dem Neuladen ist das Antworten wieder aus.";
 
 /** Fachwörter der Seite, kurz erklärt (Netz-Seite, Wortlaut 2.28.39). */
 const WOERTER = "Mycel: der Name des offenen Netzes der SBKIM-Apps. SBKIM: die Familie von Apps, zu der die Familienakte gehört. Knoten: ein Gerät mit einer solchen App. Visitenkarte: dein Gerätename und die Liste deiner Lebensbereiche – keine Unterlagen, keine Einträge. Treffpunkt (Relais): ein Server im Internet, über den sich die Knoten finden.";
 
-type MycelZustand = { geladen: boolean; verbunden: boolean; relais: number; antwortet: boolean; name: string; geraetename: string; fensterOffen: boolean; internet: boolean };
+type MycelZustand = { eigen?: boolean; geladen: boolean; verbunden: boolean; relais: number; antwortet: boolean; name: string; geraetename: string; fensterOffen: boolean; internet: boolean };
 type MycelApi = { starten: () => Promise<boolean>; oeffnen: () => Promise<void>; schliessen: () => void; zustand: () => MycelZustand; setzeGeraetename: (v: string) => void; geraetename: () => string };
 const api = () => (window as Window & { FamilienakteMycel?: MycelApi }).FamilienakteMycel;
 
@@ -22,10 +27,30 @@ function klebstoffLaden(): Promise<MycelApi> {
   });
 }
 
-export function NetzSeite({ kopf }: { kopf: React.ReactNode }) {
+export function NetzSeite({ kopf, vaultHandle }: { kopf: React.ReactNode; vaultHandle?: FileSystemDirectoryHandle | null }) {
   const [z, setZ] = useState<MycelZustand | null>(null);
   const [fehler, setFehler] = useState("");
   const [name, setName] = useState("");
+  const [antwort, setAntwort] = useState(einstellungLesen);
+  const [antwortAn, setAntwortAn] = useState(() => antwortStand().an);
+  const [antwortText, setAntwortText] = useState("");
+  const [antwortLaeuft, setAntwortLaeuft] = useState(false);
+  const einschalten = async (e = antwort) => {
+    setAntwortLaeuft(true); setAntwortText("Unterlagen werden vorbereitet …");
+    try {
+      if (!imEigenenNetz()) throw new Error("Antworten gibt es nur im eigenen Netz. Unter „Verbinden …“ › „Netz“ ein eigenes Netz wählen.");
+      if (!vaultHandle) throw new Error("Zuerst die Akte öffnen.");
+      const docs = await listLocalDocuments(vaultHandle);
+      const r = await antwortenAn(docs, e, (i, n) => setAntwortText(`Unterlagen werden vorbereitet: ${i} von ${n}`));
+      setAntwortAn(r.ok);
+      setAntwortText(r.ok ? `Antwortet im eigenen Netz mit ${r.anzahl} Unterlagen.` : r.reason || "Einschalten ging nicht.");
+    } catch (err) { setAntwortAn(false); setAntwortText((err as Error).message); }
+    finally { setAntwortLaeuft(false); }
+  };
+  const schalter = async (neu: Partial<typeof antwort>) => {
+    const e = { ...antwort, ...neu }; setAntwort(e); einstellungMerken(e);
+    if (antwortAn) await einschalten(e);   // läuft das Antworten, gilt die neue Wahl sofort
+  };
   useEffect(() => {
     let aus = false;
     const neu = () => { const a = api(); if (a && !aus) setZ(a.zustand()); };
@@ -33,7 +58,7 @@ export function NetzSeite({ kopf }: { kopf: React.ReactNode }) {
     window.addEventListener("pb:network", neu);
     const uhr = window.setInterval(neu, 2000);
     klebstoffLaden().then((a) => { setName(a.geraetename()); return a.starten(); }).then(neu).catch((e: Error) => { if (!aus) setFehler(e.message); });
-    return () => { aus = true; window.removeEventListener("familienakte:mycel", neu); window.removeEventListener("pb:network", neu); window.clearInterval(uhr); api()?.schliessen(); };
+    return () => { aus = true; antwortenAus(); window.removeEventListener("familienakte:mycel", neu); window.removeEventListener("pb:network", neu); window.clearInterval(uhr); api()?.schliessen(); };
   }, []);
   const zeile = (label: string, wert: string, gut: boolean | null) => <div className="fa-netz-zeile"><span>{label}</span><strong className={gut === null ? "" : gut ? "gut" : "aus"}>{wert}</strong></div>;
   return <>
@@ -41,12 +66,13 @@ export function NetzSeite({ kopf }: { kopf: React.ReactNode }) {
     <section className="card fa-netz" data-netz-seite>
       <div className="card-heading"><div><span className="ui-heading-help"><h2>Im SBKIM-Netz sichtbar werden</h2><InfoPopover label="Wörter auf dieser Seite erklären" text={WOERTER}/></span></div></div>
       <p className="fa-netz-satz" data-netz-kein-abgleich><strong>Kein Abgleich deiner Daten:</strong> Unterlagen, Einträge, Fristen und Erinnerungen gehen hier nicht auf ein anderes Gerät. Ein Abgleich zwischen deinen Geräten ist geplant, noch nicht gebaut. Eine einzelne Unterlage gibst du unter Sicherheit › „Eine Unterlage an ein anderes Gerät geben“ weiter.</p>
-      <p className="fa-netz-satz">Beim Öffnen der Akte geht nichts ins Netz. Verbunden wird nur, wenn du unten „Verbinden …“ antippst und im Fenster selbst verbindest. Hinaus geht dann nur die Visitenkarte (Name und die Liste der Lebensbereiche) – keine Unterlagen.</p>
+      <p className="fa-netz-satz">Beim Öffnen der Akte geht nichts ins Netz. Verbunden wird nur, wenn du unten „Verbinden …“ antippst und im Fenster selbst verbindest. Hinaus geht dann nur die Visitenkarte (Name und die Liste der Lebensbereiche) – Unterlagen nur, wenn du unten „Im eigenen Netz antworten“ einschaltest, und dann nur Titel · Bereich · Datum.</p>
       {fehler && <p className="fa-netz-fehler" role="alert">{fehler}</p>}
       <div className="fa-netz-zustand" data-netz-zustand>
         {zeile("Bausteine", z?.geladen ? "bereit" : fehler ? "fehlen" : "werden geladen …", z ? z.geladen : null)}
         {zeile("Internet für die App", z ? (z.internet ? "an" : "aus") : "…", z ? z.internet : null)}
         {zeile("Verbindung", z?.verbunden ? `verbunden (${z.relais})` : "keine", z ? z.verbunden : null)}
+        {zeile("Netz", z?.eigen ? "eigenes Netz" : "öffentlich", z ? !!z.eigen : null)}
       </div>
       <label className="fa-netz-geraet"><span>Gerätename</span>
         <input type="text" maxLength={40} value={name} data-sbkim-geraetename="1" placeholder="z. B. Tablet Küche (frei wählbar)"
@@ -54,6 +80,19 @@ export function NetzSeite({ kopf }: { kopf: React.ReactNode }) {
       </label>
       {z && !z.internet && <p className="fa-netz-hinweis">Das Internet für die App ist aus. Zum Verbinden oben im Kopf das WLAN-Symbol antippen.</p>}
       <button type="button" className="button primary" disabled={!z?.geladen || !z.internet} onClick={() => void api()?.oeffnen()} data-netz-verbinden>Verbinden …</button>
+    </section>
+    <section className="card fa-netz" data-netz-antwort>
+      <div className="card-heading"><div><span className="ui-heading-help"><h2>Im eigenen Netz antworten</h2><InfoPopover label="Antworten erklären" text={ANTWORT_HILFE}/></span></div></div>
+      <label className="fa-netz-schalter"><input type="checkbox" checked={antwortAn} disabled={antwortLaeuft || !z?.geladen || demoActive()} data-netz-antworten
+        onChange={(ev) => { if (ev.target.checked) void einschalten(); else { antwortenAus(); setAntwortAn(false); setAntwortText("Antworten ist aus."); } }}/>
+        <span>Im eigenen Netz antworten <small>(Titel · Bereich · Datum, ab Werk aus)</small></span></label>
+      <label className="fa-netz-schalter"><input type="checkbox" checked={antwort.ausschnitt} disabled={antwortLaeuft} data-netz-ausschnitt onChange={(ev) => void schalter({ ausschnitt: ev.target.checked })}/>
+        <span>Mit Ausschnitt <small>(kurzer Text aus der Unterlage)</small></span></label>
+      <label className="fa-netz-schalter"><input type="checkbox" checked={antwort.gesundheit} disabled={antwortLaeuft} data-netz-gesundheit onChange={(ev) => void schalter({ gesundheit: ev.target.checked })}/>
+        <span>Gesundheit einbeziehen <small>(Gesundheit & Pflege, Vorsorge)</small></span></label>
+      {z?.geladen && !z.eigen && !antwortAn && <p className="fa-netz-hinweis" data-netz-nur-eigen>Antworten gibt es nur im eigenen Netz. Unter „Verbinden …“ › „Netz“ ein eigenes Netz wählen.</p>}
+      {demoActive() && <p className="fa-netz-hinweis">In der Demo antwortet die Akte nicht.</p>}
+      {antwortText && <p className="fa-netz-satz" role="status" data-netz-antwort-text>{antwortText}</p>}
     </section>
   </>;
 }

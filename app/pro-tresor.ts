@@ -8,7 +8,7 @@ interface ProTresorPlugin {
   einrichten?(): Promise<ProTresorZustand>;
   entsperren(): Promise<ProTresorZustand>;
   sperren(): Promise<void>;
-  speichern(args: { vaultId: string; documentId: string; name: string; mime: string; date: number; data: string }): Promise<{ vaultId: string; entryId: string; sha256: string; size: number }>;
+  speichern(args: { vaultId: string; documentId: string; name: string; mime: string; date: number; data: string; auszug?: string }): Promise<{ vaultId: string; entryId: string; sha256: string; size: number }>;
   lesen(args: { vaultId: string; entryId: string }): Promise<{ data: string }>;
   uebergabeSenden(args: { vaultId: string; ziel: ProApp; transferId: string; documentId: string; bezug?: string; name: string; mime: string; data: string }): Promise<{ vaultId: string; entryId: string; sha256: string; size: number; stand: string }>;
   uebergabeEingang(args: { vaultId: string }): Promise<{ items: Array<{ entryId: string; vertrag?: ProUebergabe; fehler?: string }> }>;
@@ -97,7 +97,8 @@ async function alsBase64(file: File): Promise<string> {
     reader.readAsDataURL(file);
   });
 }
-export async function proOriginalSpeichern(vaultId: string, file: File, checksum: string, datum = 0, dokumentId?: string): Promise<string> {
+/** kurzfassung: Text fürs gemeinsame Inhaltsverzeichnis (lib/tresor-kurzfassung.ts), höchstens 1000 Zeichen; leer = nur der Dateiname. */
+export async function proOriginalSpeichern(vaultId: string, file: File, checksum: string, datum = 0, dokumentId?: string, kurzfassung = ""): Promise<string> {
   if (file.size > MAX_BYTES) throw new Error("Die Datei ist größer als 20 MB.");
   if (!file.name || file.name.length > 255 || file.type.length > 200 || !/^[a-f0-9]{64}$/.test(checksum)) throw new Error("Name, Dateityp oder Prüfsumme der Quelldatei sind unzulässig.");
   const stand = await proTresor.zustand();
@@ -106,7 +107,7 @@ export async function proOriginalSpeichern(vaultId: string, file: File, checksum
   const date = Number.isFinite(datum) ? Math.max(0, Math.trunc(datum)) : 0;
   if (dokumentId && !/^[a-z0-9-]{1,80}$/.test(dokumentId)) throw new Error("Die Dokumentkennung ist unzulässig.");
   const r = await plugin().speichern({ vaultId, documentId: dokumentId || `d-${checksum}`, name: file.name,
-    mime: file.type || "application/octet-stream", date, data: await alsBase64(file) });
+    mime: file.type || "application/octet-stream", date, data: await alsBase64(file), ...(kurzfassung ? { auszug: kurzfassung.slice(0, 1000) } : {}) });
   if (r.vaultId !== vaultId || r.size !== file.size || r.sha256 !== checksum || !/^[a-z0-9-]{1,80}$/.test(r.entryId))
     throw new Error("Der Pro-Tresor hat die Originaldatei nicht passend bestätigt. Die Quelle bleibt erhalten.");
   const u = new URL(`pro-tresor://${vaultId}/${r.entryId}`);
