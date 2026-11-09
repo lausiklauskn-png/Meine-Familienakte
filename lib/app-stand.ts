@@ -29,7 +29,8 @@ export const APP_STAND: Readonly<Record<string, StandEintrag>> = {
   // Einrichten
   "datei-pro": { stand: "aktivieren" },
   "datentresor": { stand: "aktivieren", selbst: "datentresor" },
-  "protresor": { stand: "aktivieren" },
+  // 2.28.52: Tresor-Leser in „Wo liegt was?“ (Pro-Verbund-Karte t-leser).
+  "protresor": { stand: "aktivieren", seit: "2.28.52" },
   // Stufe D: Termine aus dem Kalender holen (beidseitig).
   "kalender": { stand: "aktivieren", selbst: "fristen-kalender", seit: "2.28.43" },
   // Stufe H: Glocken überstehen den Neustart des Geräts (Android plant sie von selbst neu).
