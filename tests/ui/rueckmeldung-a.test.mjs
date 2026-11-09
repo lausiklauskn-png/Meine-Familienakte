@@ -56,7 +56,10 @@ try {
     await fenster.locator("[data-stamm-akte]").click(); await page.locator("#cockpit-dossier").waitFor();
     const z = page.locator("[data-dossier-zuordnung]"); await z.scrollIntoViewIfNeeded(); await z.click();
     await page.locator("[data-dossier-auf]").first().waitFor({ timeout: 4000 });
-    const r = await page.evaluate(() => { const b = document.querySelector("button[data-dossier-ref][aria-expanded=true]"); const q = b?.getBoundingClientRect(); return { da: !!b, imBild: q ? q.top >= 0 && q.bottom <= innerHeight : false, markiert: b?.classList.contains("zurueck-hier") }; });
+    // Auf langsamen Maschinen (CI) kommt das Hinrollen ein paar Bilder später: bis 3 s auf den Endzustand warten.
+    const lage = () => { const b = document.querySelector("button[data-dossier-ref][aria-expanded=true]"); const q = b?.getBoundingClientRect(); return { da: !!b, imBild: q ? q.top >= 0 && q.bottom <= innerHeight : false, markiert: !!b?.classList.contains("zurueck-hier") }; };
+    await page.waitForFunction((f) => { const r = new Function(`return (${f})()`)(); return r.da && r.imBild && r.markiert; }, lage.toString(), { timeout: 3000 }).catch(() => {});
+    const r = await page.evaluate(lage);
     return soll(r.da && r.imBild && r.markiert, r);
   });
 
