@@ -12,7 +12,8 @@ try {
   const object = page.locator("#cockpit-cases button:not(.start-info-trigger)").first();
   await object.scrollIntoViewIfNeeded();
   const sourceY = await page.evaluate(() => window.scrollY);
-  await object.click(); await page.locator("#cockpit-dossier").waitFor();
+  // A5 (09.11.): der Tipp öffnet die Bearbeitung als Fenster, „Ganze Akte ansehen ›“ die Detailansicht.
+  await object.click(); await page.locator("[data-stamm-akte]").click(); await page.locator("#cockpit-dossier").waitFor();
   await step("Objekt hat einen Rückweg; private Kennung fehlt im Browser-Verlauf", async () => {
     assert.equal(await page.locator('#cockpit-dossier button[aria-label="Detailansicht schließen"]').count(), 1);
     const state = await page.evaluate(() => ({ state: history.state, hash: location.hash }));

@@ -83,7 +83,7 @@ try {
   await step("Hier geändert und im Kalender geändert → Frage; „aus dem Kalender“ gewinnt nach Wahl", async () => {
     const eltern = (await register()).find((r) => r.data.kalenderQuelle?.eintragId === "g-eltern");
     await page.evaluate(async (id) => { const f = window.__vaultFixture; await f.updateLocalScheduleTermin(await f.browserVault(), id, { title: "Elternabend (Aula)" }); }, eltern.id);
-    google.antwort = { items: [{ id: "g-eltern", summary: "Elternabend Klasse 3b", start: { dateTime: "2026-11-26T17:00:00Z" }, end: { dateTime: "2026-11-26T18:30:00Z" }, updated: "2026-11-09T11:00:00Z" }], nextSyncToken: "tok3" };
+    google.antwort = { items: [{ id: "g-eltern", summary: "Elternabend Klasse 3b", start: { dateTime: "2026-11-26T17:00:00Z" }, end: { dateTime: "2026-11-26T18:30:00Z" }, updated: new Date(Date.now() + 60000).toISOString() /* jünger als die Änderung hier eben – fest „09.11. 11:00“ lief am 09.11. ab */ }], nextSyncToken: "tok3" };
     await karte.locator("[data-kalender-jetzt-holen]").click();
     const frage = page.locator("[data-kalender-hol-konflikte]"); await frage.waitFor({ timeout: 30000 });
     const text = (await frage.innerText()).replace(/\s+/g, " ");
