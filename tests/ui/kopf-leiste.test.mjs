@@ -39,9 +39,9 @@ try {
     }
     await step(`${breite} px: kein Drucker und kein ⟳ im Kopf, „Ablegen“ sichtbar`, async () => soll((await page.locator(".header-actions .drucken-knopf, .header-actions .aktualisieren-knopf").count()) === 0 && await sichtbar(page, "[data-ablegen-knopf]"), "Drucker/⟳ noch da oder Ablegen fehlt"));
     if (breite <= 620) {
-      await step(`${breite} px: unter Internet, Ablegen, Notiz, Kalender steht ein Wort`, async () => {
+      await step(`${breite} px: unter Internet, Ablegen, Erinnerung, Kalender, Buch steht ein Wort`, async () => {
         const w = await page.evaluate(() => [...document.querySelectorAll(".header-actions .kopf-wort")].filter((e) => e.getBoundingClientRect().width > 0).map((e) => e.textContent));
-        return soll(["Internet", "Ablegen", "Notiz", "Kalender"].every((x) => w.includes(x)), w);
+        return soll(["Internet", "Ablegen", "Erinnerung", "Kalender", "Buch"].every((x) => w.includes(x)) /* C (09.11.): „Erinnerung“ statt „Notiz“, Buch fürs Tagebuch */, w);
       });
     } else {
       await step(`${breite} px: breiter keine Wörter unter den Symbolen`, async () => soll(!(await sichtbar(page, ".header-actions .kopf-wort")), "Wörter sichtbar"));

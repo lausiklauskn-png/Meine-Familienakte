@@ -1,0 +1,212 @@
+<title>Tagebuch und Assistenz 2.28.49</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: Lesespalte; je Teil (C Tagebuch, D Assistenz) „heute / neu“ als nachgebaute Ansicht, darunter Entscheidungen und Fragen. */
+:root {
+  --bg: #f5f7fa; --fg: #17212b; --muted: #5b6878; --line: #d8dee6; --card: #ffffff; --soft: #eef2f6;
+  --accent: #0c79d8; --rot: #c62d3a; --rot-bg: #fdecee; --gruen: #2f8a4f; --gruen-bg: #eef8f1; --gelb-bg: #fff6dd;
+  --display: "Fraunces", Georgia, serif; --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11161c; --fg: #e6ebf1; --muted: #9aa7b6; --line: #2a3440; --card: #18202a; --soft: #1d2731;
+  --accent: #5bb3ff; --rot: #ff6b6b; --rot-bg: #2e1517; --gruen: #5fc78a; --gruen-bg: #13281b; --gelb-bg: #2b2412; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #11161c; --fg: #e6ebf1; --muted: #9aa7b6; --line: #2a3440; --card: #18202a; --soft: #1d2731;
+  --accent: #5bb3ff; --rot: #ff6b6b; --rot-bg: #2e1517; --gruen: #5fc78a; --gruen-bg: #13281b; --gelb-bg: #2b2412; color-scheme: dark }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 16px/1.5 var(--body); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 48px; }
+main { max-width: 880px; margin: 0 auto; display: grid; gap: 36px; }
+h1, h2 { font-family: var(--display); font-weight: 600; text-wrap: balance; margin: 0; }
+h1 { font-size: 1.9rem; line-height: 1.15; } h2 { font-size: 1.3rem; }
+p, ul, ol { margin: 0; } ul, ol { padding-left: 1.3em; display: grid; gap: 4px; }
+section { display: grid; gap: 12px; min-width: 0; }
+.eyebrow { font: 600 .75rem/1 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.muted { color: var(--muted); }
+.paar { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.bild { display: grid; gap: 6px; align-content: start; min-width: 0; }
+.bild > b { font-size: .85rem; }
+.bild.alt > b { color: var(--rot); } .bild.neu > b { color: var(--gruen); }
+.akte { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px; display: grid; gap: 8px; font-size: .88rem; }
+.akte h3 { margin: 0; font: 600 1rem/1.3 var(--body); }
+.akte .k { font: 600 .68rem/1 var(--body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.ref { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; background: var(--soft); min-width: 0; }
+.ref span { flex: 1; min-width: 0; }
+.ref small { display: block; color: var(--muted); font-size: .72rem; }
+.ref.erledigt { opacity: .65; } .ref.erledigt span strong { text-decoration: line-through; }
+.badge { font-size: .68rem; border: 1px solid var(--line); border-radius: 99px; padding: 1px 7px; background: var(--card); white-space: nowrap; }
+.badge.ok { color: var(--gruen); border-color: var(--gruen); }
+.knopf { font: 600 .78rem/1 var(--body); border: 1px solid var(--line); border-radius: 7px; padding: 6px 9px; background: var(--card); color: var(--fg); }
+.reihe { display: flex; flex-wrap: wrap; gap: 6px; }
+.offen-auf { border-color: var(--accent); background: var(--gelb-bg); }
+.auf { border: 1px dashed var(--accent); border-radius: 8px; padding: 8px; display: grid; gap: 6px; }
+.hinweis { background: var(--rot-bg); color: var(--fg); border-left: 3px solid var(--rot); padding: 6px 9px; border-radius: 4px; font-size: .82rem; }
+.gut { background: var(--gruen-bg); border-left-color: var(--gruen); }
+.frage { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 6px; }
+.frage b { color: var(--accent); }
+.schritt { border: 1.5px solid var(--line); border-radius: 99px; padding: 5px 11px; font-size: .82rem; background: var(--soft); }
+.schritt.fertig { border-color: var(--gruen); color: var(--gruen); } .schritt.jetzt { border-color: var(--accent); background: var(--accent); color: var(--bg); font-weight: 700; }
+.sym { display: grid; place-items: center; width: 52px; padding: 6px 0; border: 1px solid var(--line); border-radius: 8px; background: var(--soft); font-size: 1.1rem; }
+.sym small { font-size: .62rem; color: var(--muted); }
+.zeile { display: grid; grid-template-columns: auto 82px 1fr auto; gap: 8px; align-items: center; border-bottom: 1px solid var(--line); padding: 5px 2px; font-size: .84rem; font-variant-numeric: tabular-nums; }
+.zeile small { color: var(--muted); }
+.knopf.gruen { background: var(--gruen); color: var(--bg); border-color: var(--gruen); } .knopf.an { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+.such { flex: 1 1 160px; border: 1.5px solid var(--line); border-radius: 8px; padding: 6px 10px; color: var(--muted); font-size: .84rem; }
+.ref input, .zeile input { width: 18px; height: 18px; }
+.frage .ftext { display: grid; gap: 8px; min-width: 0; }
+.wahl { display: flex; flex-wrap: wrap; gap: 6px; }
+.wahl button, .sp { font: 600 .85rem/1 var(--body); border: 1.5px solid var(--line); background: var(--soft); color: var(--fg); border-radius: 8px; padding: 8px 12px; cursor: pointer; }
+.wahl button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent); color: var(--bg); }
+.wahl .stift { font-size: 1rem; padding: 6px 10px; }
+.frage textarea { width: 100%; font: inherit; color: var(--fg); background: var(--bg); border: 1.5px solid var(--line); border-radius: 8px; padding: 8px; }
+.speichern { display: flex; align-items: center; gap: 10px; }
+.sp { background: var(--gruen); border-color: var(--gruen); color: var(--bg); }
+.sp:disabled { opacity: .45; cursor: default; }
+.st { font-size: .85rem; color: var(--gruen); font-weight: 700; }
+.st.fehler { color: var(--rot); }
+button:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.pill { display: inline-block; font: 700 .72rem/1 var(--body); padding: 3px 7px; border-radius: 99px; margin: 1px 0; white-space: nowrap; }
+.pill.s { background: var(--rot-bg); color: var(--rot); } .pill.m { background: var(--gelb-bg); color: var(--gelb); } .pill.k { background: var(--soft); color: var(--muted); }
+.muster ul.pro { margin: 2px 0 0; padding: 0; list-style: none; display: grid; gap: 3px; font-size: .9rem; }
+.muster ul.pro li::before { content: "●"; color: var(--rot); margin-right: 8px; font-size: .7rem; vertical-align: 2px; }
+.muster .loesung { font-weight: 700; color: var(--gruen); font-size: .92rem; }
+
+.kopfleiste { display: flex; align-items: center; gap: 6px; background: #0b3154; color: #fff; border-radius: 8px; padding: 6px 8px; font-size: .8rem; }
+.kopfleiste .nm { flex: 1; font-weight: 700; } .kopfleiste .ik { border: 1px solid #5f8db0; border-radius: 7px; padding: 4px 7px; background: #174b77; color: #fff; }
+.kopfleiste .ik.neu { outline: 2px solid #ffd166; }
+.feld { border: 1.5px solid var(--line); border-radius: 8px; padding: 8px 10px; color: var(--muted); background: var(--bg); min-height: 58px; font-size: .84rem; }
+.mik { display: inline-grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); }
+.platz { font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: .8rem; background: var(--soft); border: 1px solid var(--line); border-radius: 8px; padding: 8px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.platz mark { background: var(--gelb-bg); color: var(--fg); border-radius: 3px; padding: 0 2px; }
+.kicker { font: 700 .66rem/1 var(--body); letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.weg { display: grid; gap: 4px; border: 1px solid var(--line); border-radius: 9px; padding: 9px 10px; background: var(--card); }
+.weg strong { font-size: .92rem; }
+.weg small { color: var(--muted); }
+.tabelle { overflow-x: auto; } .tabelle table { border-collapse: collapse; width: 100%; font-size: .86rem; min-width: 420px; }
+.tabelle th, .tabelle td { text-align: left; border-bottom: 1px solid var(--line); padding: 6px 8px; vertical-align: top; }
+.tabelle th { font-size: .74rem; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+</style>
+<main>
+<header style="display:grid;gap:8px"><span class="eyebrow">Vorschau · Rückmeldung vom 09.11.2026 · Abschnitte C und D</span>
+<h1>Tagebuch, Erinnerung und Assistenz neu</h1>
+<p>Zwei Umbauten, die du am 09.11. entschieden hast. Hier steht, wie es aussehen soll, bevor gebaut wird. Bei jeder Frage reicht ein Tipp; „Anders …“ und der Stift nehmen eine Notiz auf. Was ich nach dem Freibrief selbst entschieden habe, steht jeweils unter „So entschieden“.</p></header>
+
+<section><span class="eyebrow">C · Tagebuch und Erinnerung</span><h2>Zwei Namen, zwei Knöpfe</h2>
+<p><b>Erinnerung</b> heißt nur noch die Glocke an Termin, Aufgabe und Frist. Das Wort „Memory“ verschwindet; was heute Memory heißt, ist ein <b>Tagebuch-Eintrag</b>. Das Tagebuch ist dein privates Notizbuch: keine Glocke, keine Frist.</p>
+<div class="paar">
+<div class="bild alt"><b>Heute</b><div class="akte"><div class="kopfleiste"><span class="nm">Familienakte Pro</span><span class="ik">📅</span><span class="ik">📝 Notiz</span><span class="ik">☰</span></div>
+<span class="k">Menü</span><p>Termine &amp; Aufgaben › <b>Tagebuch &amp; Erinnerungen</b></p>
+<span class="k">Erfassungsseite: drei Karten</span><div class="reihe"><span class="knopf">Tagebuch öffnen</span><span class="knopf">Nächste Eingabe</span><span class="knopf">Eintrag prüfen</span></div>
+<p class="muted">je Karte ein Erklärsatz; darunter zweimal „Unbehandelte Erinnerungen: 0“ und „Offene Memory-Fragen: 0“</p></div></div>
+<div class="bild neu"><b>Neu</b><div class="akte"><div class="kopfleiste"><span class="nm">Familienakte Pro</span><span class="ik">📅</span><span class="ik neu">📖</span><span class="ik">🔔 Erinnerung</span><span class="ik">☰</span></div>
+<span class="k">Tipp auf 📖 öffnet direkt</span><h3>Was ist heute passiert?</h3>
+<div class="feld">Besuch bei Firma Lindner Haustechnik. Nächstes Mal eine Flasche Wein als Dankeschön mitbringen.</div>
+<div class="reihe"><span class="mik">🎤</span><span class="mik">📷</span><span class="knopf">🙂 Stimmung</span><span class="knopf">+ Person oder Organisation</span></div>
+<div class="reihe"><span class="knopf an">Eintrag prüfen</span><span class="knopf">Noch einen erfassen</span></div>
+<span class="k">Letzte Einträge</span>
+<div class="zeile"><span>📖</span><span>09.11. 14:10</span><span>Besuch bei Firma Lindner … Wein mitbringen</span><span>›</span></div>
+<div class="zeile"><span>📖</span><span>06.11. 18:30</span><span>Ella freut sich auf den Schulausflug …</span><span>›</span></div>
+<p class="muted">Zähler nur, wenn etwas offen ist: „Noch zu prüfende Tagebuch-Einträge: 2“</p></div></div>
+</div>
+<div class="weg"><span class="kicker">Wiederfinden</span><strong>Beim nächsten Termin mit Firma Lindner steht der Eintrag dabei</strong><small>In der Akte der Organisation und in der Termin-Ansicht erscheint „Aus deinem Tagebuch: … Wein mitbringen“. Die Suche findet Tagebuch-Einträge wie alles andere.</small></div>
+<div class="tabelle"><table><thead><tr><th>Heute</th><th>Neu</th></tr></thead><tbody>
+<tr><td>Tagebuch &amp; Erinnerungen (Menü)</td><td>Tagebuch</td></tr>
+<tr><td>Memory bearbeiten / löschen</td><td>Eintrag ändern / löschen</td></tr>
+<tr><td>Unbehandelte Memory-Ereignisse</td><td>Noch zu prüfende Tagebuch-Einträge</td></tr>
+<tr><td>Offene Memory-Fragen, Offene Memory-Punkte</td><td>Rückfragen zu gespeicherten Einträgen</td></tr>
+<tr><td>Knopf „Notiz“ oben</td><td>Knopf „Erinnerung“ oben (🔔)</td></tr>
+</tbody></table></div>
+<div class="hinweis gut"><b>So entschieden:</b> Der Notiz-Knopf heißt „Erinnerung“ und fragt nicht nach, weil daneben ein eigener Knopf fürs Tagebuch steht: ein Knopf, eine Sache. Die Zähler stehen nur noch auf der Tagebuch-Seite, nicht mehr auf der Startseite. Bestehende Einträge bleiben, wie sie sind; nur Namen und Anordnung ändern sich.</div>
+<div class="frage" data-f="c1"><div class="ftext"><b>Buch-Knopf oben neben dem Kalender</b><p>📖 öffnet direkt „Was ist heute passiert?“ mit Mikrofon und Kamera, darunter die letzten Einträge.</p><p class="muted">Empfehlung: Ja.</p></div>
+<div class="wahl"><button type="button" data-w="ja" aria-pressed="false">Ja, so</button><button type="button" data-w="nein" aria-pressed="false">Nein</button><button type="button" data-w="anders" aria-pressed="false">Anders …</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+<textarea rows="2" hidden aria-label="Notiz zu Buch-Knopf oben neben dem Kalender"></textarea><div class="speichern"><button type="button" class="sp" disabled>Antwort speichern</button><span class="st"></span></div></div>
+<div class="frage" data-f="c2"><div class="ftext"><b>Stimmung als fünf Gesichter</b><p>Optional unter dem Text: 😞 🙁 😐 🙂 😄. Ohne Wahl wird nichts gespeichert. Die Suche kennt dann zum Beispiel „gute Tage im Oktober“.</p><p class="muted">Empfehlung: Ja, aber klein und freiwillig.</p></div>
+<div class="wahl"><button type="button" data-w="ja" aria-pressed="false">Ja, so</button><button type="button" data-w="nein" aria-pressed="false">Nein</button><button type="button" data-w="anders" aria-pressed="false">Anders …</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+<textarea rows="2" hidden aria-label="Notiz zu Stimmung als fünf Gesichter"></textarea><div class="speichern"><button type="button" class="sp" disabled>Antwort speichern</button><span class="st"></span></div></div>
+<div class="frage" data-f="c3"><div class="ftext"><b>Tagebuch taucht beim nächsten Termin wieder auf</b><p>Ist ein Eintrag mit einer Person oder Organisation verknüpft, steht er beim nächsten Termin mit ihr in der Termin-Ansicht. In der Glocke selbst steht er nicht, damit die Meldung kurz bleibt.</p><p class="muted">Empfehlung: Ja, in der Termin-Ansicht, nicht in der Glocke.</p></div>
+<div class="wahl"><button type="button" data-w="ja" aria-pressed="false">Ja, so</button><button type="button" data-w="nein" aria-pressed="false">Nein</button><button type="button" data-w="anders" aria-pressed="false">Anders …</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+<textarea rows="2" hidden aria-label="Notiz zu Tagebuch taucht beim nächsten Termin wieder auf"></textarea><div class="speichern"><button type="button" class="sp" disabled>Antwort speichern</button><span class="st"></span></div></div>
+</section>
+
+<section><span class="eyebrow">D · Assistenz</span><h2>Drei ehrliche Wege statt fünf</h2>
+<p>Heute gibt es fünf Wege. Darunter stehen drei Kästen: A sucht in der Akte, B ist immer „nicht verfügbar“, C sind feste Regeltexte. Eine KI ist nicht dabei. Neu sind es drei Wege, und jeder sagt, was er wirklich tut.</p>
+<div class="paar">
+<div class="bild alt"><b>Heute</b><div class="akte"><span class="k">Was möchtest du klären?</span>
+<div class="reihe"><span class="knopf">Problem oder Frage</span><span class="knopf">Beraten lassen</span><span class="knopf">Schreiben / E-Mail</span><span class="knopf">Termin vorbereiten</span><span class="knopf">Vorgang weiterbearbeiten</span></div>
+<div class="reihe"><span class="knopf">A · Aus meiner Familienakte</span><span class="knopf">B · Aktuell recherchiert <i>(nicht eingerichtet)</i></span><span class="knopf">C · Einschätzung</span></div>
+<p class="muted">Praktische Einordnung · Schreiben (Vorlagen, Tonfall) · Gespeicherte Korrespondenz</p></div></div>
+<div class="bild neu"><b>Neu</b><div class="akte">
+<div class="weg"><span class="kicker">1 · ohne KI</span><strong>In der Akte nachsehen</strong><small>Frage stellen, Antwort aus deinen Unterlagen mit den Fundstellen zum Antippen. Ersetzt „Frage“ und „Beraten“. Kasten B entfällt.</small></div>
+<div class="weg"><span class="kicker">2 · mit deiner eigenen KI, anonym</span><strong>Brief oder E-Mail beantworten</strong><small>Text einfügen oder Unterlage wählen. Namen, Adressen, Nummern und Beträge werden zu Platzhaltern. Antwort kommt zurück, Platzhalter werden wieder ersetzt.</small></div>
+<div class="weg"><span class="kicker">3 · ohne KI</span><strong>Vorgang oder Termin vorbereiten</strong><small>Vorgang wählen: Was ist offen, was fehlt, nächster Schritt. Daraus ein Schreiben aus Vorlagen mit Tonfall.</small></div>
+<span class="k">Darunter</span><p>Gespeicherte Korrespondenz: jeder Brief mit „In Workflow PDF öffnen“ (Briefkopf, unterschreiben, drucken).</p></div></div>
+</div>
+
+<h2>Weg 2 Schritt für Schritt</h2>
+<p>Die Technik ist die aus Private Brain Pro („KI beim Schreiben“). Der Kern, der die Angaben verdeckt und wieder einsetzt, liegt schon heute byte-gleich in der Familienakte (Modul 25) und wird beim KI-Auftrag unten rechts benutzt. Neu gebaut wird nur die Oberfläche in der Assistenz.</p>
+<div class="paar">
+<div class="bild neu"><b>1 · Einfügen</b><div class="akte"><span class="k">Brief oder E-Mail</span><div class="feld" style="color:var(--fg)">Sehr geehrter Herr Brandt,<br>für Ihre Kundennummer KD-2024-118833 ist ein Betrag von 412,50 € offen. Bitte überweisen Sie bis 20.11.2026 auf DE89 3704 0044 0532 0130 00.</div>
+<div class="reihe"><span class="knopf">Aus Unterlage wählen</span><span class="knopf">Gegenlesen</span><span class="knopf an">Antwort schreiben lassen</span></div>
+<span class="k">Was soll in der Antwort stehen?</span><div class="feld">Ratenzahlung in drei Teilen anfragen</div></div></div>
+<div class="bild neu"><b>2 · Das sieht die KI</b><div class="akte"><div class="platz">Sehr geehrter Herr <mark>⟦NAME-1⟧</mark>,
+für Ihre Kundennummer <mark>⟦RECHNUNG-1⟧</mark> ist ein Betrag von <mark>⟦BETRAG-1⟧</mark> offen. Bitte überweisen Sie bis <mark>⟦DATUM-1⟧</mark> auf <mark>⟦IBAN-1⟧</mark>.</div>
+<p class="muted">Vorschläge zum Verdecken antippen: <span class="knopf">+ Brandt</span> · eigene Wörter ergänzen</p>
+<div class="reihe"><span class="knopf an">Kopieren für deine KI</span><span class="knopf">Mit eigenem Schlüssel senden</span></div></div></div>
+<div class="bild neu"><b>3 · Antwort zurück</b><div class="akte"><span class="k">Antwort der KI hier einfügen</span><div class="feld" style="color:var(--fg)">… Ich bitte darum, den Betrag von <b>412,50 €</b> in drei Raten zu begleichen …</div>
+<p class="muted">Platzhalter sind wieder durch die echten Angaben ersetzt. Unbekannte Platzhalter bleiben sichtbar stehen.</p>
+<div class="reihe"><span class="knopf an">Als Entwurf speichern</span><span class="knopf">In Workflow PDF öffnen</span><span class="knopf">Rückgängig</span></div></div></div>
+</div>
+<div class="hinweis"><b>Grenzen, ehrlich:</b> Straßen, Orte und freie Beschreibungen („die Chefin in Kiel“) haben kein festes Muster und bleiben stehen, wenn du sie nicht selbst zum Verdecken einträgst. Vor dem Senden prüft die App, ob noch eine echte Angabe im Text steht; dann geht nichts hinaus. Anhänge gehen nie an die KI.</div>
+<div class="hinweis gut"><b>So entschieden:</b> Namen, die in deiner Akte als Person oder Organisation stehen, werden immer verdeckt, auch ohne Antippen. Die Antwort wird als Entwurf in der gespeicherten Korrespondenz abgelegt, mit dem Vorgang verknüpft, wenn einer gewählt ist.</div>
+<div class="frage" data-f="d1"><div class="ftext"><b>Drei Wege statt fünf</b><p>„In der Akte nachsehen“, „Brief oder E-Mail beantworten“, „Vorgang oder Termin vorbereiten“. Kasten B fällt weg, C heißt „Hinweise (feste Regeln, keine KI)“.</p><p class="muted">Empfehlung: Ja.</p></div>
+<div class="wahl"><button type="button" data-w="ja" aria-pressed="false">Ja, so</button><button type="button" data-w="nein" aria-pressed="false">Nein</button><button type="button" data-w="anders" aria-pressed="false">Anders …</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+<textarea rows="2" hidden aria-label="Notiz zu Drei Wege statt fünf"></textarea><div class="speichern"><button type="button" class="sp" disabled>Antwort speichern</button><span class="st"></span></div></div>
+<div class="frage" data-f="d2"><div class="ftext"><b>Eigener Schlüssel nur für Mistral (EU)</b><p>Wie in Private Brain Pro: direkt senden nur an Mistral in der EU. Alle anderen KIs (ChatGPT, Claude, Le Chat) über „Kopieren“ und Einfügen.</p><p class="muted">Empfehlung: Ja. Weitere Anbieter erst, wenn du sie brauchst.</p></div>
+<div class="wahl"><button type="button" data-w="ja" aria-pressed="false">Ja, so</button><button type="button" data-w="nein" aria-pressed="false">Nein</button><button type="button" data-w="anders" aria-pressed="false">Anders …</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+<textarea rows="2" hidden aria-label="Notiz zu Eigener Schlüssel nur für Mistral (EU)"></textarea><div class="speichern"><button type="button" class="sp" disabled>Antwort speichern</button><span class="st"></span></div></div>
+<div class="frage" data-f="d3"><div class="ftext"><b>Wo der Schlüssel liegt</b><p>Ab Werk nur für diese Sitzung im Speicher. Mit Haken „auf diesem Gerät merken“ bleibt er im Gerät; im Pro-Tresor nie, damit er nicht mit der Akte auf andere Geräte wandert.</p><p class="muted">Empfehlung: Ja.</p></div>
+<div class="wahl"><button type="button" data-w="ja" aria-pressed="false">Ja, so</button><button type="button" data-w="nein" aria-pressed="false">Nein</button><button type="button" data-w="anders" aria-pressed="false">Anders …</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+<textarea rows="2" hidden aria-label="Notiz zu Wo der Schlüssel liegt"></textarea><div class="speichern"><button type="button" class="sp" disabled>Antwort speichern</button><span class="st"></span></div></div>
+<div class="frage" data-f="d4"><div class="ftext"><b>Brief in Workflow PDF</b><p>„In Workflow PDF öffnen“ macht aus dem Entwurf ein PDF und öffnet es im eingebauten Workflow PDF (Briefkopf, Unterschrift, Drucken). Zurück in die Akte kommt es über den gewohnten Weg „Ablegen“.</p><p class="muted">Empfehlung: Ja.</p></div>
+<div class="wahl"><button type="button" data-w="ja" aria-pressed="false">Ja, so</button><button type="button" data-w="nein" aria-pressed="false">Nein</button><button type="button" data-w="anders" aria-pressed="false">Anders …</button><button type="button" class="stift" aria-label="Notiz schreiben">✎</button></div>
+<textarea rows="2" hidden aria-label="Notiz zu Brief in Workflow PDF"></textarea><div class="speichern"><button type="button" class="sp" disabled>Antwort speichern</button><span class="st"></span></div></div>
+<p class="muted">Erst nach diesen Antworten wird gebaut. Danach folgt die Abstimmung zur E-Mail-Anbindung (Plan 2.28.35 mit Jens).</p>
+</section>
+</main>
+<script>
+(() => {
+  let db = null;
+  const karten = [...document.querySelectorAll(".frage[data-f]")];
+  const lokal = (k, v) => { try { if (v === undefined) return JSON.parse(localStorage.getItem("ta-" + k) || "null"); localStorage.setItem("ta-" + k, JSON.stringify(v)); } catch { return null; } };
+  const zeigen = (k, d) => {
+    if (!d) return;
+    k.querySelectorAll(".wahl [data-w]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.w === d.antwort)));
+    const t = k.querySelector("textarea"); if (d.notiz) { t.value = d.notiz; t.hidden = false; }
+    k.dataset.antwort = d.antwort || "";
+    k.querySelector(".st").textContent = "Gespeichert ✓";
+  };
+  karten.forEach((k) => {
+    const sp = k.querySelector(".sp"), st = k.querySelector(".st"), t = k.querySelector("textarea");
+    const geaendert = () => { sp.disabled = false; st.textContent = ""; st.classList.remove("fehler"); };
+    k.querySelectorAll(".wahl [data-w]").forEach((b) => b.addEventListener("click", () => {
+      k.querySelectorAll(".wahl [data-w]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      k.dataset.antwort = b.dataset.w; geaendert();
+    }));
+    k.querySelector(".stift").addEventListener("click", () => { t.hidden = false; t.focus(); });
+    t.addEventListener("input", geaendert);
+    sp.addEventListener("click", async () => {
+      const d = { antwort: k.dataset.antwort || "", notiz: t.value.trim(), wann: new Date().toISOString() };
+      sp.disabled = true; st.textContent = "Wird gespeichert …";
+      try {
+        if (db) await db.doc("antworten/" + k.dataset.f).set(d); else lokal(k.dataset.f, d);
+        st.textContent = db ? "Gespeichert ✓" : "Nur in diesem Browser gespeichert";
+      } catch (e) { sp.disabled = false; st.textContent = "Nicht gespeichert, bitte noch einmal tippen"; st.classList.add("fehler"); }
+    });
+    zeigen(k, lokal(k.dataset.f));
+  });
+  if (window.claude && claude.use) claude.use("db").then((d) => {
+    if (!d) return; db = d;
+    karten.forEach((k) => db.doc("antworten/" + k.dataset.f).get().then((x) => { const v = x && (x.data ? (typeof x.data === "function" ? x.data() : x.data) : x); if (v && v.antwort !== undefined) zeigen(k, v); }).catch(() => {}));
+  }).catch(() => {});
+})();
+</script>

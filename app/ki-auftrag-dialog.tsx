@@ -1,7 +1,7 @@
 import { workspaceName, workspaceStorage } from "../lib/demo-workspace.ts";
 import { useEffect, useMemo, useState } from "react";
 import { Copy, ExternalLink, FileText, Sparkles, Undo2, Upload, X } from "lucide-react";
-import { DictationButton, InfoPopover } from "./ui-controls";
+import { DictationButton, InfoPopover, SuchFeld } from "./ui-controls";
 import { loadPdfJs, pdfText } from "./file-viewer";
 import { ocrZeilen } from "./wfpdf-kern";
 import { inventoryTextHint, type LocalDocument } from "./local-vault";
@@ -155,7 +155,7 @@ export function KiAuftragDialog({ seiteId, seite, initialRequest, documents, nam
     <label><span>{art === "app" ? "Was soll an der App geändert werden?" : "Was soll mit der Unterlage passieren?"}</span><div className="dictation-field"><textarea rows={4} value={wunsch} onChange={(event) => setWunsch(event.target.value)} placeholder={art === "app" ? "Zum Beispiel: Ergänze im Bereich Fahrzeuge einen Unterpunkt für TÜV-Termine." : "Zum Beispiel: Schreibe eine höfliche Antwort auf dieses Schreiben und bitte um Fristverlängerung."}/><DictationButton value={wunsch} onChange={setWunsch} label="Wunsch"/></div></label>
 
     {art === "dokument" && <div className="ki-dokumente">
-      <div className="ki-zeile"><input className="ki-suche" value={suche} onChange={(event) => setSuche(event.target.value)} placeholder="Unterlage suchen …" aria-label="Unterlage suchen"/>
+      <div className="ki-zeile"><SuchFeld className="ki-suche-feld" lupe value={suche} onChange={setSuche} placeholder="Unterlage suchen …" ariaLabel="Unterlage suchen" speechLabel="Unterlagensuche" inputProps={{ className: "ki-suche" }}/>
         <label className="button secondary ki-datei"><Upload size={16}/> Datei wählen<input type="file" hidden accept=".pdf,.txt,.eml,.docx,.doc,.msg,text/*,image/*" onChange={(event) => { const f = event.target.files?.[0]; if (f) void hinzu(`datei:${f.name}:${f.size}`, f.name, async () => f); event.target.value = ""; }}/></label></div>
       <ul className="ki-liste" aria-label="Unterlagen der Akte">{treffer.map((d) => { const an = gewaehlt.some((g) => g.key === d.id); return <li key={d.id}><label><input type="checkbox" checked={an} disabled={lade} onChange={() => void hinzu(d.id, d.originalName, () => readDocument(d.id))}/> <span>{d.originalName}</span><small>{d.category}{d.documentDate ? ` · ${d.documentDate}` : ""}</small></label></li>; })}
         {!treffer.length && <li className="fine-print">Keine Unterlage gefunden.</li>}</ul>

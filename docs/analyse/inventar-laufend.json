@@ -2,11 +2,11 @@
  {
   "ort": "Startseite",
   "umgebung": "desktop",
-  "anzahl": 103,
+  "anzahl": 108,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -48,7 +48,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -57,6 +57,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -158,6 +164,12 @@
     "text": "Überspringen",
     "disabled": false,
     "cls": "text-link erste-schritte-weg"
+   },
+   {
+    "art": "Knopf",
+    "text": "Jetzt sichern ›",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
@@ -275,7 +287,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 19.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -293,7 +305,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 6.",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 7.",
     "disabled": false,
     "cls": ""
    },
@@ -353,7 +365,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Fotofunktion öffnen Eine oder mehrere Seiten als PDF prüfen",
+    "text": "Fotofunktion öffnen",
     "disabled": false,
     "cls": "intake-source"
    },
@@ -365,7 +377,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Ordner auswählen Nur den ausdrücklich ausgewählten lokalen Ordner",
+    "text": "Ordner auswählen",
     "disabled": false,
     "cls": "intake-source"
    },
@@ -383,13 +395,19 @@
    },
    {
     "art": "Knopf",
-    "text": "Erinnerungsprotokoll erklären",
+    "text": "Tagebuch erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
    {
     "art": "Knopf",
-    "text": "Erinnerung: Diktat starten",
+    "text": "Zum Tagebuch",
+    "disabled": false,
+    "cls": "text-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch: Diktat starten",
     "disabled": true,
     "cls": "dictation-button "
    },
@@ -401,27 +419,45 @@
    },
    {
     "art": "Knopf",
-    "text": "Fotos oder Videos",
+    "text": "Foto",
     "disabled": false,
-    "cls": "button secondary"
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch erklären",
+    "text": "Stimmung schlecht",
     "disabled": false,
-    "cls": "start-info-trigger"
+    "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch öffnen",
+    "text": "Stimmung eher schlecht",
     "disabled": false,
-    "cls": "button secondary"
+    "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nächste Eingabe",
-    "disabled": true,
-    "cls": "button secondary"
+    "text": "Stimmung mittel",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Stimmung gut",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Stimmung sehr gut",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Auswahlliste",
+    "text": "Person oder Organisation verknüpfen",
+    "disabled": false,
+    "cls": "tagebuch-person"
    },
    {
     "art": "Knopf",
@@ -431,15 +467,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Unbehandelte Erinnerungen: 0 Zurzeit wartet kein Entwurf",
+    "text": "Noch einen erfassen",
     "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Offene Memory-Fragen: 1 Bereits gespeicherte Einträge mit Klärungsbedarf",
-    "disabled": false,
-    "cls": ""
+    "cls": "text-link"
    },
    {
     "art": "Knopf",
@@ -509,7 +539,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -625,11 +655,11 @@
  {
   "ort": "ASSISTENZ › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 64,
+  "anzahl": 65,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -671,7 +701,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -680,6 +710,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -898,7 +934,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -1014,11 +1050,11 @@
  {
   "ort": "ASSISTENZ › Assistenzzentrale",
   "umgebung": "desktop",
-  "anzahl": 64,
+  "anzahl": 65,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -1060,7 +1096,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -1069,6 +1105,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -1287,7 +1329,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -1403,11 +1445,11 @@
  {
   "ort": "ASSISTENZ › Anfragen & Antworten",
   "umgebung": "desktop",
-  "anzahl": 57,
+  "anzahl": 58,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -1449,7 +1491,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -1458,6 +1500,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -1634,7 +1682,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -1750,11 +1798,11 @@
  {
   "ort": "TERMINE & AUFGABEN › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 125,
+  "anzahl": 126,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -1796,7 +1844,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -1805,6 +1853,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -1951,7 +2005,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 19.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -1969,7 +2023,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 6.",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 7.",
     "disabled": false,
     "cls": ""
    },
@@ -2023,7 +2077,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 06.11.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 07.11.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -2041,7 +2095,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 11.11.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 12.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -2059,7 +2113,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 13.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 14.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -2077,7 +2131,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 14.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 15.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -2095,7 +2149,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 19.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 20.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -2113,7 +2167,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 22.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 23.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -2131,7 +2185,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokumente, Memories und Vorgänge erklären",
+    "text": "Dokumente, Tagebuch-Einträge und Vorgänge erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
@@ -2257,25 +2311,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 8.11.2026 Nächste Aufgabe: Beim Arb",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 9.11.2026 Nächste Aufgabe: Beim Arb",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 8.11.2026 Nächste Au",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 9.11.2026 Nächste Au",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 8.11.2026 Nächste Aufgabe: Zä",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 9.11.2026 Nächste Aufgabe: Zä",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 8.11.2026 Nächste Aufgabe: ",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 9.11.2026 Nächste Aufgabe: ",
     "disabled": false,
     "cls": ""
    },
@@ -2317,13 +2371,13 @@
    },
    {
     "art": "Knopf",
-    "text": "Offene Memory-Punkte erklären",
+    "text": "Rückfragen zu gespeicherten Einträgen erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
    {
     "art": "Knopf",
-    "text": "Alle Erinnerungen",
+    "text": "Ganzes Tagebuch",
     "disabled": false,
     "cls": "text-link"
    },
@@ -2347,19 +2401,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 08.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 09.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 08.11.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 09.11.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 08.11.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 09.11.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -2371,7 +2425,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 08.11.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 09.11.",
     "disabled": false,
     "cls": ""
    },
@@ -2389,7 +2443,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -2505,11 +2559,11 @@
  {
   "ort": "TERMINE & AUFGABEN › Cockpit",
   "umgebung": "desktop",
-  "anzahl": 125,
+  "anzahl": 126,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -2551,7 +2605,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -2560,6 +2614,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -2706,7 +2766,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 19.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -2724,7 +2784,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 6.",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 7.",
     "disabled": false,
     "cls": ""
    },
@@ -2778,7 +2838,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 06.11.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 07.11.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -2796,7 +2856,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 11.11.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 12.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -2814,7 +2874,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 13.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 14.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -2832,7 +2892,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 14.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 15.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -2850,7 +2910,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 19.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 20.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -2868,7 +2928,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 22.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 23.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -2886,7 +2946,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokumente, Memories und Vorgänge erklären",
+    "text": "Dokumente, Tagebuch-Einträge und Vorgänge erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
@@ -3012,25 +3072,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 8.11.2026 Nächste Aufgabe: Beim Arb",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 9.11.2026 Nächste Aufgabe: Beim Arb",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 8.11.2026 Nächste Au",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 9.11.2026 Nächste Au",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 8.11.2026 Nächste Aufgabe: Zä",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 9.11.2026 Nächste Aufgabe: Zä",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 8.11.2026 Nächste Aufgabe: ",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 9.11.2026 Nächste Aufgabe: ",
     "disabled": false,
     "cls": ""
    },
@@ -3072,13 +3132,13 @@
    },
    {
     "art": "Knopf",
-    "text": "Offene Memory-Punkte erklären",
+    "text": "Rückfragen zu gespeicherten Einträgen erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
    {
     "art": "Knopf",
-    "text": "Alle Erinnerungen",
+    "text": "Ganzes Tagebuch",
     "disabled": false,
     "cls": "text-link"
    },
@@ -3102,19 +3162,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 08.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 09.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 08.11.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 09.11.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 08.11.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 09.11.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -3126,7 +3186,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 08.11.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 09.11.",
     "disabled": false,
     "cls": ""
    },
@@ -3144,7 +3204,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -3260,11 +3320,11 @@
  {
   "ort": "TERMINE & AUFGABEN › Fristen und Aufgaben",
   "umgebung": "desktop",
-  "anzahl": 203,
+  "anzahl": 205,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -3306,7 +3366,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -3315,6 +3375,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -3443,7 +3509,7 @@
    },
    {
     "art": "Knopf",
-    "text": "App-Glocke an · nächste Di., 09:00",
+    "text": "App-Glocke an · nächste Mi., 09:00",
     "disabled": false,
     "cls": "button primary glocken-schalter"
    },
@@ -3503,13 +3569,13 @@
    },
    {
     "art": "Knopf",
-    "text": "6 1",
+    "text": "6",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "7",
+    "text": "7 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -3517,35 +3583,35 @@
     "art": "Knopf",
     "text": "8",
     "disabled": false,
+    "cls": "mk-tag  "
+   },
+   {
+    "art": "Knopf",
+    "text": "9",
+    "disabled": false,
     "cls": "mk-tag gewaehlt heute"
    },
    {
     "art": "Knopf",
-    "text": "9 1",
+    "text": "10 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "10",
+    "text": "11",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "11 1",
+    "text": "12 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "12",
-    "disabled": false,
-    "cls": "mk-tag  "
-   },
-   {
-    "art": "Knopf",
-    "text": "13 1",
+    "text": "13",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -3557,7 +3623,7 @@
    },
    {
     "art": "Knopf",
-    "text": "15",
+    "text": "15 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -3581,13 +3647,13 @@
    },
    {
     "art": "Knopf",
-    "text": "19 1",
+    "text": "19",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "20",
+    "text": "20 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -3599,25 +3665,25 @@
    },
    {
     "art": "Knopf",
-    "text": "22 1",
+    "text": "22",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "23",
+    "text": "23 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "24 1",
+    "text": "24",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "25",
+    "text": "25 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -3641,13 +3707,13 @@
    },
    {
     "art": "Knopf",
-    "text": "29 1",
+    "text": "29",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "30",
+    "text": "30 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -3863,7 +3929,7 @@
    },
    {
     "art": "Auswahlliste",
-    "text": "Kein Dokument Kontoauszug_Familienkonto.pdf · 24.10.2026 Fahrzeugschein_Brummwer",
+    "text": "Kein Dokument Kontoauszug_Familienkonto.pdf · 25.10.2026 Fahrzeugschein_Brummwer",
     "disabled": false,
     "cls": ""
    },
@@ -3998,6 +4064,12 @@
     "text": "Offene Fristen und Aufgaben erklären",
     "disabled": false,
     "cls": "start-info-trigger"
+   },
+   {
+    "art": "Knopf",
+    "text": "Fristensuche: Diktat starten",
+    "disabled": true,
+    "cls": "dictation-button "
    },
    {
     "art": "Knopf",
@@ -4367,7 +4439,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -4483,11 +4555,11 @@
  {
   "ort": "TERMINE & AUFGABEN › Mein Kalender",
   "umgebung": "desktop",
-  "anzahl": 204,
+  "anzahl": 206,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -4529,7 +4601,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -4538,6 +4610,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -4672,7 +4750,7 @@
    },
    {
     "art": "Knopf",
-    "text": "App-Glocke an · nächste Di., 09:00",
+    "text": "App-Glocke an · nächste Mi., 09:00",
     "disabled": false,
     "cls": "button primary glocken-schalter"
    },
@@ -4732,13 +4810,13 @@
    },
    {
     "art": "Knopf",
-    "text": "6 1",
+    "text": "6",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "7",
+    "text": "7 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -4746,35 +4824,35 @@
     "art": "Knopf",
     "text": "8",
     "disabled": false,
+    "cls": "mk-tag  "
+   },
+   {
+    "art": "Knopf",
+    "text": "9",
+    "disabled": false,
     "cls": "mk-tag gewaehlt heute"
    },
    {
     "art": "Knopf",
-    "text": "9 1",
+    "text": "10 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "10",
+    "text": "11",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "11 1",
+    "text": "12 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "12",
-    "disabled": false,
-    "cls": "mk-tag  "
-   },
-   {
-    "art": "Knopf",
-    "text": "13 1",
+    "text": "13",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -4786,7 +4864,7 @@
    },
    {
     "art": "Knopf",
-    "text": "15",
+    "text": "15 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -4810,13 +4888,13 @@
    },
    {
     "art": "Knopf",
-    "text": "19 1",
+    "text": "19",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "20",
+    "text": "20 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -4828,25 +4906,25 @@
    },
    {
     "art": "Knopf",
-    "text": "22 1",
+    "text": "22",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "23",
+    "text": "23 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "24 1",
+    "text": "24",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "25",
+    "text": "25 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -4870,13 +4948,13 @@
    },
    {
     "art": "Knopf",
-    "text": "29 1",
+    "text": "29",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "30",
+    "text": "30 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -5092,7 +5170,7 @@
    },
    {
     "art": "Auswahlliste",
-    "text": "Kein Dokument Kontoauszug_Familienkonto.pdf · 24.10.2026 Fahrzeugschein_Brummwer",
+    "text": "Kein Dokument Kontoauszug_Familienkonto.pdf · 25.10.2026 Fahrzeugschein_Brummwer",
     "disabled": false,
     "cls": ""
    },
@@ -5227,6 +5305,12 @@
     "text": "Offene Fristen und Aufgaben erklären",
     "disabled": false,
     "cls": "start-info-trigger"
+   },
+   {
+    "art": "Knopf",
+    "text": "Fristensuche: Diktat starten",
+    "disabled": true,
+    "cls": "dictation-button "
    },
    {
     "art": "Knopf",
@@ -5596,7 +5680,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -5710,13 +5794,13 @@
   ]
  },
  {
-  "ort": "TERMINE & AUFGABEN › Tagebuch & Erinnerungen",
+  "ort": "TERMINE & AUFGABEN › Tagebuch",
   "umgebung": "desktop",
-  "anzahl": 96,
+  "anzahl": 95,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -5758,7 +5842,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -5767,6 +5851,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -5877,19 +5967,19 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen erklären",
+    "text": "Tagebuch erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
    {
     "art": "Knopf",
-    "text": "Erinnerungsprotokoll erklären",
+    "text": "Tagebuch erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
    {
     "art": "Knopf",
-    "text": "Erinnerung: Diktat starten",
+    "text": "Tagebuch: Diktat starten",
     "disabled": true,
     "cls": "dictation-button "
    },
@@ -5901,27 +5991,45 @@
    },
    {
     "art": "Knopf",
-    "text": "Fotos oder Videos",
+    "text": "Foto",
     "disabled": false,
-    "cls": "button secondary"
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch erklären",
+    "text": "Stimmung schlecht",
     "disabled": false,
-    "cls": "start-info-trigger"
+    "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch öffnen",
+    "text": "Stimmung eher schlecht",
     "disabled": false,
-    "cls": "button secondary"
+    "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nächste Eingabe",
-    "disabled": true,
-    "cls": "button secondary"
+    "text": "Stimmung mittel",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Stimmung gut",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Stimmung sehr gut",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Auswahlliste",
+    "text": "Person oder Organisation verknüpfen",
+    "disabled": false,
+    "cls": "tagebuch-person"
    },
    {
     "art": "Knopf",
@@ -5931,27 +6039,15 @@
    },
    {
     "art": "Knopf",
-    "text": "Unbehandelte Erinnerungen: 0 Zurzeit wartet kein Entwurf",
+    "text": "Noch einen erfassen",
     "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Offene Memory-Fragen: 1 Bereits gespeicherte Einträge mit Klärungsbedarf",
-    "disabled": false,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Unbehandelte Memory-Ereignisse erklären",
-    "disabled": false,
-    "cls": "start-info-trigger"
-   },
-   {
-    "art": "Knopf",
-    "text": "Älteste zuerst",
-    "disabled": false,
     "cls": "text-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "1 Rückfragen zu gespeicherten Einträgen",
+    "disabled": false,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -5961,25 +6057,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zwei getrennte Arbeitslisten erklären",
-    "disabled": false,
-    "cls": "start-info-trigger"
-   },
-   {
-    "art": "Knopf",
-    "text": "Unbehandelte Erinnerungen: 0 noch prüfen und endgültig speichern",
-    "disabled": false,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Offene Memory-Fragen: 1 gehören zu bereits gespeicherten Einträgen",
-    "disabled": false,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Offene Memory-Punkte erklären",
+    "text": "Rückfragen zu gespeicherten Einträgen erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
@@ -6009,7 +6087,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 02.11.2026, 19:00 · Reis",
+    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 03.11.2026, 19:00 · Reis",
     "disabled": false,
     "cls": "active"
    },
@@ -6033,7 +6111,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 30.10.2026, 19:00 · Technik, Ge",
+    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 31.10.2026, 19:00 · Technik, Ge",
     "disabled": false,
     "cls": ""
    },
@@ -6057,7 +6135,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 27.10.2026, 19:00 ·",
+    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 28.10.2026, 19:00 ·",
     "disabled": false,
     "cls": ""
    },
@@ -6081,7 +6159,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 09.09.202",
+    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 10.09.202",
     "disabled": false,
     "cls": ""
    },
@@ -6105,7 +6183,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 03.10.2025, 19:00 · Haus & Wohnu",
+    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 04.10.2025, 19:00 · Haus & Wohnu",
     "disabled": false,
     "cls": ""
    },
@@ -6135,13 +6213,13 @@
    },
    {
     "art": "Knopf",
-    "text": "Person Ella Lindqvist-Arenberg",
+    "text": "PERSON Ella Lindqvist-Arenberg",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Vorgang Schulausflug Klasse 4 zum Wolkensee",
+    "text": "VORGANG Schulausflug Klasse 4 zum Wolkensee",
     "disabled": false,
     "cls": ""
    },
@@ -6159,13 +6237,13 @@
    },
    {
     "art": "Knopf",
-    "text": "Memory bearbeiten",
+    "text": "Eintrag ändern",
     "disabled": false,
     "cls": "button secondary"
    },
    {
     "art": "Knopf",
-    "text": "Memory löschen",
+    "text": "Eintrag löschen",
     "disabled": false,
     "cls": "button secondary danger-link"
    },
@@ -6177,7 +6255,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -6293,11 +6371,11 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 55,
+  "anzahl": 57,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -6339,7 +6417,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -6348,6 +6426,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -6506,13 +6590,19 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Regeln für die Gesundheitsakte ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Cockpit",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -6628,11 +6718,11 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Diagnosen, AU & ICD-Codes",
   "umgebung": "desktop",
-  "anzahl": 66,
+  "anzahl": 67,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -6674,7 +6764,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -6683,6 +6773,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -6913,7 +7009,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -7029,11 +7125,11 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Krankenkasse & Leistungen",
   "umgebung": "desktop",
-  "anzahl": 56,
+  "anzahl": 57,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -7075,7 +7171,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -7084,6 +7180,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -7254,7 +7356,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -7370,11 +7472,11 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Arbeit & Arbeitgeber",
   "umgebung": "desktop",
-  "anzahl": 57,
+  "anzahl": 59,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -7416,7 +7518,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -7425,6 +7527,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -7565,6 +7673,12 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Wichtige Abgrenzung ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Arbeitsverlauf erklären",
     "disabled": false,
     "cls": "start-info-trigger"
@@ -7601,7 +7715,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -7717,11 +7831,11 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Anträge & Bescheide",
   "umgebung": "desktop",
-  "anzahl": 60,
+  "anzahl": 62,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -7763,7 +7877,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -7772,6 +7886,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -7912,6 +8032,12 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Ein gesundheitliches Gesamtbild – getrennte Quellen ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Mietvertrag_Pustelblumenweg_7.pdf",
     "disabled": false,
     "cls": ""
@@ -7966,7 +8092,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -8082,11 +8208,11 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Anfragen & Antworten",
   "umgebung": "desktop",
-  "anzahl": 57,
+  "anzahl": 58,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -8128,7 +8254,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -8137,6 +8263,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -8313,7 +8445,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -8429,11 +8561,11 @@
  {
   "ort": "FAMILIE & PERSONEN › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 109,
+  "anzahl": 110,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -8475,7 +8607,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -8484,6 +8616,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -8972,7 +9110,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -9088,11 +9226,11 @@
  {
   "ort": "FAMILIE & PERSONEN › Familienübersicht",
   "umgebung": "desktop",
-  "anzahl": 109,
+  "anzahl": 110,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -9134,7 +9272,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -9143,6 +9281,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -9631,7 +9775,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -9747,11 +9891,11 @@
  {
   "ort": "FAMILIE & PERSONEN › Personen",
   "umgebung": "desktop",
-  "anzahl": 109,
+  "anzahl": 110,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -9793,7 +9937,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -9802,6 +9946,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -10290,7 +10440,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -10406,11 +10556,11 @@
  {
   "ort": "FAMILIE & PERSONEN › Vollmachten & Vorsorge",
   "umgebung": "desktop",
-  "anzahl": 61,
+  "anzahl": 63,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -10452,7 +10602,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -10461,6 +10611,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -10583,15 +10739,15 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokumentensuche: Diktat starten",
-    "disabled": true,
-    "cls": "dictation-button "
+    "text": "Dokumentensuche löschen",
+    "disabled": false,
+    "cls": "search-clear"
    },
    {
     "art": "Knopf",
-    "text": "Dokumentensuche löschen",
-    "disabled": false,
-    "cls": ""
+    "text": "Dokumentensuche: Diktat starten",
+    "disabled": true,
+    "cls": "dictation-button "
    },
    {
     "art": "Knopf",
@@ -10604,6 +10760,12 @@
     "text": "Neue Unterlage",
     "disabled": false,
     "cls": "button primary"
+   },
+   {
+    "art": "Knopf",
+    "text": "INFO Datensparsame Dokumentvorschau ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
    },
    {
     "art": "Knopf",
@@ -10661,7 +10823,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -10777,11 +10939,11 @@
  {
   "ort": "FAMILIE & PERSONEN › Versicherungen & Verträge",
   "umgebung": "desktop",
-  "anzahl": 79,
+  "anzahl": 81,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -10823,7 +10985,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -10832,6 +10994,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -10954,15 +11122,15 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokumentensuche: Diktat starten",
-    "disabled": true,
-    "cls": "dictation-button "
+    "text": "Dokumentensuche löschen",
+    "disabled": false,
+    "cls": "search-clear"
    },
    {
     "art": "Knopf",
-    "text": "Dokumentensuche löschen",
-    "disabled": false,
-    "cls": ""
+    "text": "Dokumentensuche: Diktat starten",
+    "disabled": true,
+    "cls": "dictation-button "
    },
    {
     "art": "Knopf",
@@ -10975,6 +11143,12 @@
     "text": "Neue Unterlage",
     "disabled": false,
     "cls": "button primary"
+   },
+   {
+    "art": "Knopf",
+    "text": "INFO Datensparsame Dokumentvorschau ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
    },
    {
     "art": "Knopf",
@@ -11140,7 +11314,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -11256,11 +11430,11 @@
  {
   "ort": "WOHNEN › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 56,
+  "anzahl": 59,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -11302,7 +11476,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -11311,6 +11485,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -11421,6 +11601,12 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Bereich für die schrittweise Befüllung vorbereitet ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Dokumente Unterlagen zu Haus und Wohnung",
     "disabled": false,
     "cls": ""
@@ -11475,13 +11661,19 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Angaben für eine verknüpfte Objektakte ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Cockpit",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -11597,11 +11789,11 @@
  {
   "ort": "WOHNEN › Miet- & Vermieterunterlagen",
   "umgebung": "desktop",
-  "anzahl": 56,
+  "anzahl": 59,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -11643,7 +11835,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -11652,6 +11844,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -11762,6 +11960,12 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Bereich für die schrittweise Befüllung vorbereitet ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Dokumente Unterlagen zu Haus und Wohnung",
     "disabled": false,
     "cls": ""
@@ -11816,13 +12020,19 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Angaben für eine verknüpfte Objektakte ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Cockpit",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -11938,11 +12148,11 @@
  {
   "ort": "WOHNEN › Nebenkosten & Zahlungen",
   "umgebung": "desktop",
-  "anzahl": 56,
+  "anzahl": 59,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -11984,7 +12194,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -11993,6 +12203,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -12103,6 +12319,12 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Bereich für die schrittweise Befüllung vorbereitet ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Dokumente Unterlagen zu Haus und Wohnung",
     "disabled": false,
     "cls": ""
@@ -12157,13 +12379,19 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Angaben für eine verknüpfte Objektakte ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Cockpit",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -12279,11 +12507,11 @@
  {
   "ort": "WOHNEN › Mängel & Reparaturen",
   "umgebung": "desktop",
-  "anzahl": 56,
+  "anzahl": 59,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -12325,7 +12553,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -12334,6 +12562,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -12444,6 +12678,12 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Bereich für die schrittweise Befüllung vorbereitet ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Dokumente Unterlagen zu Haus und Wohnung",
     "disabled": false,
     "cls": ""
@@ -12498,13 +12738,19 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Angaben für eine verknüpfte Objektakte ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Cockpit",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -12620,11 +12866,11 @@
  {
   "ort": "FAHRZEUGE › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 56,
+  "anzahl": 59,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -12666,7 +12912,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -12675,6 +12921,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -12785,6 +13037,12 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Bereich für die schrittweise Befüllung vorbereitet ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Dokumente Fahrzeug- und Motorradunterlagen",
     "disabled": false,
     "cls": ""
@@ -12839,13 +13097,19 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Angaben für eine verknüpfte Objektakte ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Cockpit",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -12961,11 +13225,11 @@
  {
   "ort": "FAHRZEUGE › Fahrzeugpapiere",
   "umgebung": "desktop",
-  "anzahl": 56,
+  "anzahl": 59,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -13007,7 +13271,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -13016,6 +13280,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -13126,6 +13396,12 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Bereich für die schrittweise Befüllung vorbereitet ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Dokumente Fahrzeug- und Motorradunterlagen",
     "disabled": false,
     "cls": ""
@@ -13180,13 +13456,19 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Angaben für eine verknüpfte Objektakte ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Cockpit",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -13302,11 +13584,11 @@
  {
   "ort": "FAHRZEUGE › Werkstatt & Wartung",
   "umgebung": "desktop",
-  "anzahl": 56,
+  "anzahl": 59,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -13348,7 +13630,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -13357,6 +13639,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -13467,6 +13755,12 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Bereich für die schrittweise Befüllung vorbereitet ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Dokumente Fahrzeug- und Motorradunterlagen",
     "disabled": false,
     "cls": ""
@@ -13521,13 +13815,19 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Angaben für eine verknüpfte Objektakte ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Cockpit",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -13643,11 +13943,11 @@
  {
   "ort": "FAHRZEUGE › TÜV & Versicherung",
   "umgebung": "desktop",
-  "anzahl": 56,
+  "anzahl": 59,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -13689,7 +13989,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -13698,6 +13998,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -13808,6 +14114,12 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Bereich für die schrittweise Befüllung vorbereitet ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Dokumente Fahrzeug- und Motorradunterlagen",
     "disabled": false,
     "cls": ""
@@ -13862,13 +14174,19 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Angaben für eine verknüpfte Objektakte ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Cockpit",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -13984,11 +14302,11 @@
  {
   "ort": "KÄUFE & GARANTIEN › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 56,
+  "anzahl": 59,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -14030,7 +14348,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -14039,6 +14357,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -14149,6 +14473,12 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Bereich für die schrittweise Befüllung vorbereitet ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Dokumente Rechnungen, Garantien und Geräteunterlagen",
     "disabled": false,
     "cls": ""
@@ -14203,13 +14533,19 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Angaben für eine verknüpfte Objektakte ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Cockpit",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -14325,11 +14661,11 @@
  {
   "ort": "KÄUFE & GARANTIEN › Käufe & Rechnungen",
   "umgebung": "desktop",
-  "anzahl": 56,
+  "anzahl": 59,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -14371,7 +14707,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -14380,6 +14716,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -14490,6 +14832,12 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Bereich für die schrittweise Befüllung vorbereitet ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Dokumente Rechnungen, Garantien und Geräteunterlagen",
     "disabled": false,
     "cls": ""
@@ -14544,13 +14892,19 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Angaben für eine verknüpfte Objektakte ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Cockpit",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -14666,11 +15020,11 @@
  {
   "ort": "KÄUFE & GARANTIEN › Garantie & Reparatur",
   "umgebung": "desktop",
-  "anzahl": 56,
+  "anzahl": 59,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -14712,7 +15066,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -14721,6 +15075,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -14831,6 +15191,12 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Bereich für die schrittweise Befüllung vorbereitet ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Dokumente Rechnungen, Garantien und Geräteunterlagen",
     "disabled": false,
     "cls": ""
@@ -14885,13 +15251,19 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Angaben für eine verknüpfte Objektakte ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Cockpit",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -15007,11 +15379,11 @@
  {
   "ort": "KÄUFE & GARANTIEN › Geräte & Technik",
   "umgebung": "desktop",
-  "anzahl": 56,
+  "anzahl": 59,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -15053,7 +15425,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -15062,6 +15434,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -15172,6 +15550,12 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Bereich für die schrittweise Befüllung vorbereitet ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Dokumente Rechnungen, Garantien und Geräteunterlagen",
     "disabled": false,
     "cls": ""
@@ -15226,13 +15610,19 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Angaben für eine verknüpfte Objektakte ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Cockpit",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -15348,11 +15738,11 @@
  {
   "ort": "DOKUMENTE › Bereich öffnen",
   "umgebung": "desktop",
-  "anzahl": 144,
+  "anzahl": 146,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -15394,7 +15784,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -15403,6 +15793,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -15534,6 +15930,12 @@
     "text": "Neue Unterlage",
     "disabled": false,
     "cls": "button primary"
+   },
+   {
+    "art": "Knopf",
+    "text": "INFO Datensparsame Dokumentvorschau ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
    },
    {
     "art": "Knopf",
@@ -16101,7 +16503,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -16217,11 +16619,11 @@
  {
   "ort": "DOKUMENTE › Dokumentenbibliothek",
   "umgebung": "desktop",
-  "anzahl": 144,
+  "anzahl": 146,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -16263,7 +16665,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -16272,6 +16674,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -16403,6 +16811,12 @@
     "text": "Neue Unterlage",
     "disabled": false,
     "cls": "button primary"
+   },
+   {
+    "art": "Knopf",
+    "text": "INFO Datensparsame Dokumentvorschau ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
    },
    {
     "art": "Knopf",
@@ -16970,7 +17384,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -17086,11 +17500,11 @@
  {
   "ort": "DOKUMENTE › Bestand prüfen",
   "umgebung": "desktop",
-  "anzahl": 52,
+  "anzahl": 53,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -17132,7 +17546,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -17141,6 +17555,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -17287,7 +17707,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -17403,11 +17823,11 @@
  {
   "ort": "DOKUMENTE › Eingangszentrale",
   "umgebung": "desktop",
-  "anzahl": 115,
+  "anzahl": 117,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -17449,7 +17869,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -17458,6 +17878,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -17622,15 +18048,21 @@
    },
    {
     "art": "Knopf",
-    "text": "Eingangsordner auswählen Nur den bewusst ausgewählten Ordner",
+    "text": "Eingangsordner auswählen",
     "disabled": false,
     "cls": "intake-source"
    },
    {
     "art": "Knopf",
-    "text": "OneDrive-Familienordner prüfen Keine Dauerüberwachung · zuerst im Sicherheitscen",
+    "text": "OneDrive-Familienordner prüfen Noch nicht verbunden",
     "disabled": false,
     "cls": "intake-source"
+   },
+   {
+    "art": "Knopf",
+    "text": "INFO Keine Überwachung im Hintergrund ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
    },
    {
     "art": "Knopf",
@@ -17982,7 +18414,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -18098,11 +18530,11 @@
  {
   "ort": "DOKUMENTE › Workflow PDF",
   "umgebung": "desktop",
-  "anzahl": 48,
+  "anzahl": 49,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -18144,7 +18576,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -18153,6 +18585,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -18275,7 +18713,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -18391,11 +18829,11 @@
  {
   "ort": "DOKUMENTE › Stapel (noch einordnen)",
   "umgebung": "desktop",
-  "anzahl": 53,
+  "anzahl": 54,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -18437,7 +18875,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -18446,6 +18884,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -18598,7 +19042,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -18714,11 +19158,11 @@
  {
   "ort": "DOKUMENTE › Sicherheit & lokaler Tresor",
   "umgebung": "desktop",
-  "anzahl": 71,
+  "anzahl": 78,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -18760,7 +19204,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -18769,6 +19213,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -18999,6 +19449,42 @@
    },
    {
     "art": "Knopf",
+    "text": "Jetzt sichern ›",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Festplatte vorbereiten …",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Vorhandene Festplatte verbinden …",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Paket erstellen …",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Paket einlesen …",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Datei-Eingang",
+    "text": ".fav,application/octet-stream",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Export erklären",
     "disabled": false,
     "cls": "start-info-trigger"
@@ -19029,7 +19515,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -19145,11 +19631,11 @@
  {
   "ort": "DOKUMENTE › Netz (Mycel)",
   "umgebung": "desktop",
-  "anzahl": 50,
+  "anzahl": 51,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -19191,7 +19677,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -19200,6 +19686,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -19334,7 +19826,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -19450,11 +19942,11 @@
  {
   "ort": "DOKUMENTE › Unterlagen & Quellen",
   "umgebung": "desktop",
-  "anzahl": 63,
+  "anzahl": 65,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -19496,7 +19988,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -19505,6 +19997,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -19711,13 +20209,19 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Umgang mit Quellen ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Cockpit",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -19833,11 +20337,11 @@
  {
   "ort": "DOKUMENTE › Gesamtes Verzeichnis",
   "umgebung": "desktop",
-  "anzahl": 95,
+  "anzahl": 96,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -19879,7 +20383,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -19888,6 +20392,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -20046,7 +20556,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen Ereignisse, Beobachtungen und offene Punkte festhalten",
+    "text": "Tagebuch Ereignisse, Beobachtungen und offene Punkte festhalten",
     "disabled": false,
     "cls": ""
    },
@@ -20292,7 +20802,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -20412,7 +20922,7 @@
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -20454,7 +20964,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -20463,6 +20973,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -20603,43 +21119,43 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokumente finden Bibliothek durchsuchen und filtern",
+    "text": "Dokumente finden",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Bestand prüfen Testordner analysieren und bewerten",
+    "text": "Bestand prüfen",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Dokument ablegen lokal auf PC oder USB-Stick",
+    "text": "Dokument ablegen",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Erinnerung festhalten diktieren, prüfen und lokal speichern",
+    "text": "Tagebuch schreiben",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Datentresor öffnen verbinden, prüfen oder sperren",
+    "text": "Datentresor öffnen",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Systemprüfung prüfen, Bericht öffnen oder sicher reparieren",
+    "text": "Systemprüfung",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Was gibt’s Neues? Neue Inhalte und wichtige Veränderungen",
+    "text": "Was gibt’s Neues?",
     "disabled": false,
     "cls": ""
    },
@@ -21707,12 +22223,6 @@
    },
    {
     "art": "Knopf",
-    "text": "",
-    "disabled": false,
-    "cls": "hilfe-sprung"
-   },
-   {
-    "art": "Knopf",
     "text": "Bild der Stelle in der App zeigen",
     "disabled": false,
     "cls": "hv-knopf"
@@ -22007,7 +22517,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -22127,7 +22637,7 @@
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -22169,7 +22679,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -22178,6 +22688,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -22318,43 +22834,43 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokumente finden Bibliothek durchsuchen und filtern",
+    "text": "Dokumente finden",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Bestand prüfen Testordner analysieren und bewerten",
+    "text": "Bestand prüfen",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Dokument ablegen lokal auf PC oder USB-Stick",
+    "text": "Dokument ablegen",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Erinnerung festhalten diktieren, prüfen und lokal speichern",
+    "text": "Tagebuch schreiben",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Datentresor öffnen verbinden, prüfen oder sperren",
+    "text": "Datentresor öffnen",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Systemprüfung prüfen, Bericht öffnen oder sicher reparieren",
+    "text": "Systemprüfung",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Was gibt’s Neues? Neue Inhalte und wichtige Veränderungen",
+    "text": "Was gibt’s Neues?",
     "disabled": false,
     "cls": ""
    },
@@ -23422,12 +23938,6 @@
    },
    {
     "art": "Knopf",
-    "text": "",
-    "disabled": false,
-    "cls": "hilfe-sprung"
-   },
-   {
-    "art": "Knopf",
     "text": "Bild der Stelle in der App zeigen",
     "disabled": false,
     "cls": "hv-knopf"
@@ -23722,7 +24232,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -23838,11 +24348,11 @@
  {
   "ort": "HILFE › Systemprüfung",
   "umgebung": "desktop",
-  "anzahl": 112,
+  "anzahl": 113,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -23884,7 +24394,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -23893,6 +24403,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -24399,7 +24915,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -24515,11 +25031,11 @@
  {
   "ort": "HILFE › Was gibt’s Neues?",
   "umgebung": "desktop",
-  "anzahl": 202,
+  "anzahl": 203,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -24561,7 +25077,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -24570,6 +25086,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -25616,7 +26138,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -25732,11 +26254,11 @@
  {
   "ort": "HILFE › Versionshistorie",
   "umgebung": "desktop",
-  "anzahl": 48,
+  "anzahl": 49,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -25778,7 +26300,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -25787,6 +26309,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -25909,7 +26437,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -26025,11 +26553,11 @@
  {
   "ort": "HILFE › Sicherheit & lokaler Tresor",
   "umgebung": "desktop",
-  "anzahl": 71,
+  "anzahl": 78,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -26071,7 +26599,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -26080,6 +26608,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -26310,6 +26844,42 @@
    },
    {
     "art": "Knopf",
+    "text": "Jetzt sichern ›",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Festplatte vorbereiten …",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Vorhandene Festplatte verbinden …",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Paket erstellen …",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Paket einlesen …",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Datei-Eingang",
+    "text": ".fav,application/octet-stream",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Export erklären",
     "disabled": false,
     "cls": "start-info-trigger"
@@ -26340,7 +26910,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -26456,11 +27026,11 @@
  {
   "ort": "Fußzeile › Cockpit",
   "umgebung": "desktop",
-  "anzahl": 125,
+  "anzahl": 126,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -26502,7 +27072,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -26511,6 +27081,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -26657,7 +27233,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 19.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -26675,7 +27251,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 6.",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 7.",
     "disabled": false,
     "cls": ""
    },
@@ -26729,7 +27305,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 06.11.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 07.11.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -26747,7 +27323,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 11.11.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 12.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -26765,7 +27341,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 13.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 14.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -26783,7 +27359,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 14.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 15.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -26801,7 +27377,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 19.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 20.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -26819,7 +27395,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 22.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 23.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -26837,7 +27413,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokumente, Memories und Vorgänge erklären",
+    "text": "Dokumente, Tagebuch-Einträge und Vorgänge erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
@@ -26963,25 +27539,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 8.11.2026 Nächste Aufgabe: Beim Arb",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 9.11.2026 Nächste Aufgabe: Beim Arb",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 8.11.2026 Nächste Au",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 9.11.2026 Nächste Au",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 8.11.2026 Nächste Aufgabe: Zä",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 9.11.2026 Nächste Aufgabe: Zä",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 8.11.2026 Nächste Aufgabe: ",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 9.11.2026 Nächste Aufgabe: ",
     "disabled": false,
     "cls": ""
    },
@@ -27023,13 +27599,13 @@
    },
    {
     "art": "Knopf",
-    "text": "Offene Memory-Punkte erklären",
+    "text": "Rückfragen zu gespeicherten Einträgen erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
    {
     "art": "Knopf",
-    "text": "Alle Erinnerungen",
+    "text": "Ganzes Tagebuch",
     "disabled": false,
     "cls": "text-link"
    },
@@ -27053,19 +27629,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 08.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 09.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 08.11.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 09.11.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 08.11.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 09.11.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -27077,7 +27653,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 08.11.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 09.11.",
     "disabled": false,
     "cls": ""
    },
@@ -27095,7 +27671,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -27209,13 +27785,13 @@
   ]
  },
  {
-  "ort": "Fußzeile › Tagebuch & Erinnerungen",
+  "ort": "Fußzeile › Tagebuch",
   "umgebung": "desktop",
-  "anzahl": 96,
+  "anzahl": 95,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -27257,7 +27833,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -27266,6 +27842,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -27376,19 +27958,19 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen erklären",
+    "text": "Tagebuch erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
    {
     "art": "Knopf",
-    "text": "Erinnerungsprotokoll erklären",
+    "text": "Tagebuch erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
    {
     "art": "Knopf",
-    "text": "Erinnerung: Diktat starten",
+    "text": "Tagebuch: Diktat starten",
     "disabled": true,
     "cls": "dictation-button "
    },
@@ -27400,27 +27982,45 @@
    },
    {
     "art": "Knopf",
-    "text": "Fotos oder Videos",
+    "text": "Foto",
     "disabled": false,
-    "cls": "button secondary"
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch erklären",
+    "text": "Stimmung schlecht",
     "disabled": false,
-    "cls": "start-info-trigger"
+    "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch öffnen",
+    "text": "Stimmung eher schlecht",
     "disabled": false,
-    "cls": "button secondary"
+    "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nächste Eingabe",
-    "disabled": true,
-    "cls": "button secondary"
+    "text": "Stimmung mittel",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Stimmung gut",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Stimmung sehr gut",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Auswahlliste",
+    "text": "Person oder Organisation verknüpfen",
+    "disabled": false,
+    "cls": "tagebuch-person"
    },
    {
     "art": "Knopf",
@@ -27430,27 +28030,15 @@
    },
    {
     "art": "Knopf",
-    "text": "Unbehandelte Erinnerungen: 0 Zurzeit wartet kein Entwurf",
+    "text": "Noch einen erfassen",
     "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Offene Memory-Fragen: 1 Bereits gespeicherte Einträge mit Klärungsbedarf",
-    "disabled": false,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Unbehandelte Memory-Ereignisse erklären",
-    "disabled": false,
-    "cls": "start-info-trigger"
-   },
-   {
-    "art": "Knopf",
-    "text": "Älteste zuerst",
-    "disabled": false,
     "cls": "text-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "1 Rückfragen zu gespeicherten Einträgen",
+    "disabled": false,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -27460,25 +28048,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zwei getrennte Arbeitslisten erklären",
-    "disabled": false,
-    "cls": "start-info-trigger"
-   },
-   {
-    "art": "Knopf",
-    "text": "Unbehandelte Erinnerungen: 0 noch prüfen und endgültig speichern",
-    "disabled": false,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Offene Memory-Fragen: 1 gehören zu bereits gespeicherten Einträgen",
-    "disabled": false,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Offene Memory-Punkte erklären",
+    "text": "Rückfragen zu gespeicherten Einträgen erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
@@ -27508,7 +28078,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 02.11.2026, 19:00 · Reis",
+    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 03.11.2026, 19:00 · Reis",
     "disabled": false,
     "cls": "active"
    },
@@ -27532,7 +28102,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 30.10.2026, 19:00 · Technik, Ge",
+    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 31.10.2026, 19:00 · Technik, Ge",
     "disabled": false,
     "cls": ""
    },
@@ -27556,7 +28126,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 27.10.2026, 19:00 ·",
+    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 28.10.2026, 19:00 ·",
     "disabled": false,
     "cls": ""
    },
@@ -27580,7 +28150,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 09.09.202",
+    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 10.09.202",
     "disabled": false,
     "cls": ""
    },
@@ -27604,7 +28174,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 03.10.2025, 19:00 · Haus & Wohnu",
+    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 04.10.2025, 19:00 · Haus & Wohnu",
     "disabled": false,
     "cls": ""
    },
@@ -27634,13 +28204,13 @@
    },
    {
     "art": "Knopf",
-    "text": "Person Ella Lindqvist-Arenberg",
+    "text": "PERSON Ella Lindqvist-Arenberg",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Vorgang Schulausflug Klasse 4 zum Wolkensee",
+    "text": "VORGANG Schulausflug Klasse 4 zum Wolkensee",
     "disabled": false,
     "cls": ""
    },
@@ -27658,13 +28228,13 @@
    },
    {
     "art": "Knopf",
-    "text": "Memory bearbeiten",
+    "text": "Eintrag ändern",
     "disabled": false,
     "cls": "button secondary"
    },
    {
     "art": "Knopf",
-    "text": "Memory löschen",
+    "text": "Eintrag löschen",
     "disabled": false,
     "cls": "button secondary danger-link"
    },
@@ -27676,7 +28246,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -27792,11 +28362,11 @@
  {
   "ort": "Fußzeile › Fristen und Aufgaben",
   "umgebung": "desktop",
-  "anzahl": 203,
+  "anzahl": 205,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -27838,7 +28408,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -27847,6 +28417,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -27975,7 +28551,7 @@
    },
    {
     "art": "Knopf",
-    "text": "App-Glocke an · nächste Di., 09:00",
+    "text": "App-Glocke an · nächste Mi., 09:00",
     "disabled": false,
     "cls": "button primary glocken-schalter"
    },
@@ -28035,13 +28611,13 @@
    },
    {
     "art": "Knopf",
-    "text": "6 1",
+    "text": "6",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "7",
+    "text": "7 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -28049,35 +28625,35 @@
     "art": "Knopf",
     "text": "8",
     "disabled": false,
+    "cls": "mk-tag  "
+   },
+   {
+    "art": "Knopf",
+    "text": "9",
+    "disabled": false,
     "cls": "mk-tag gewaehlt heute"
    },
    {
     "art": "Knopf",
-    "text": "9 1",
+    "text": "10 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "10",
+    "text": "11",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "11 1",
+    "text": "12 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "12",
-    "disabled": false,
-    "cls": "mk-tag  "
-   },
-   {
-    "art": "Knopf",
-    "text": "13 1",
+    "text": "13",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -28089,7 +28665,7 @@
    },
    {
     "art": "Knopf",
-    "text": "15",
+    "text": "15 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -28113,13 +28689,13 @@
    },
    {
     "art": "Knopf",
-    "text": "19 1",
+    "text": "19",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "20",
+    "text": "20 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -28131,25 +28707,25 @@
    },
    {
     "art": "Knopf",
-    "text": "22 1",
+    "text": "22",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "23",
+    "text": "23 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "24 1",
+    "text": "24",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "25",
+    "text": "25 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -28173,13 +28749,13 @@
    },
    {
     "art": "Knopf",
-    "text": "29 1",
+    "text": "29",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "30",
+    "text": "30 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -28395,7 +28971,7 @@
    },
    {
     "art": "Auswahlliste",
-    "text": "Kein Dokument Kontoauszug_Familienkonto.pdf · 24.10.2026 Fahrzeugschein_Brummwer",
+    "text": "Kein Dokument Kontoauszug_Familienkonto.pdf · 25.10.2026 Fahrzeugschein_Brummwer",
     "disabled": false,
     "cls": ""
    },
@@ -28530,6 +29106,12 @@
     "text": "Offene Fristen und Aufgaben erklären",
     "disabled": false,
     "cls": "start-info-trigger"
+   },
+   {
+    "art": "Knopf",
+    "text": "Fristensuche: Diktat starten",
+    "disabled": true,
+    "cls": "dictation-button "
    },
    {
     "art": "Knopf",
@@ -28899,7 +29481,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -29015,11 +29597,11 @@
  {
   "ort": "Fußzeile › Gesamtes Verzeichnis",
   "umgebung": "desktop",
-  "anzahl": 95,
+  "anzahl": 96,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -29061,7 +29643,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -29070,6 +29652,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -29228,7 +29816,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen Ereignisse, Beobachtungen und offene Punkte festhalten",
+    "text": "Tagebuch Ereignisse, Beobachtungen und offene Punkte festhalten",
     "disabled": false,
     "cls": ""
    },
@@ -29474,7 +30062,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -29590,11 +30178,11 @@
  {
   "ort": "Fußzeile › Lebensbereiche",
   "umgebung": "desktop",
-  "anzahl": 105,
+  "anzahl": 110,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -29636,7 +30224,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -29645,6 +30233,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -29758,6 +30352,12 @@
     "text": "Überspringen",
     "disabled": false,
     "cls": "text-link erste-schritte-weg"
+   },
+   {
+    "art": "Knopf",
+    "text": "Jetzt sichern ›",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
@@ -29875,7 +30475,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 19.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -29893,7 +30493,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 6.",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 7.",
     "disabled": false,
     "cls": ""
    },
@@ -29953,7 +30553,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Fotofunktion öffnen Eine oder mehrere Seiten als PDF prüfen",
+    "text": "Fotofunktion öffnen",
     "disabled": false,
     "cls": "intake-source"
    },
@@ -29965,7 +30565,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Ordner auswählen Nur den ausdrücklich ausgewählten lokalen Ordner",
+    "text": "Ordner auswählen",
     "disabled": false,
     "cls": "intake-source"
    },
@@ -29983,13 +30583,19 @@
    },
    {
     "art": "Knopf",
-    "text": "Erinnerungsprotokoll erklären",
+    "text": "Tagebuch erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
    {
     "art": "Knopf",
-    "text": "Erinnerung: Diktat starten",
+    "text": "Zum Tagebuch",
+    "disabled": false,
+    "cls": "text-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch: Diktat starten",
     "disabled": true,
     "cls": "dictation-button "
    },
@@ -30001,27 +30607,45 @@
    },
    {
     "art": "Knopf",
-    "text": "Fotos oder Videos",
+    "text": "Foto",
     "disabled": false,
-    "cls": "button secondary"
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch erklären",
+    "text": "Stimmung schlecht",
     "disabled": false,
-    "cls": "start-info-trigger"
+    "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch öffnen",
+    "text": "Stimmung eher schlecht",
     "disabled": false,
-    "cls": "button secondary"
+    "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nächste Eingabe",
-    "disabled": true,
-    "cls": "button secondary"
+    "text": "Stimmung mittel",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Stimmung gut",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Stimmung sehr gut",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Auswahlliste",
+    "text": "Person oder Organisation verknüpfen",
+    "disabled": false,
+    "cls": "tagebuch-person"
    },
    {
     "art": "Knopf",
@@ -30031,15 +30655,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Unbehandelte Erinnerungen: 0 Zurzeit wartet kein Entwurf",
+    "text": "Noch einen erfassen",
     "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Offene Memory-Fragen: 1 Bereits gespeicherte Einträge mit Klärungsbedarf",
-    "disabled": false,
-    "cls": ""
+    "cls": "text-link"
    },
    {
     "art": "Knopf",
@@ -30109,7 +30727,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -30225,11 +30843,11 @@
  {
   "ort": "Fußzeile › Dokumentenbibliothek",
   "umgebung": "desktop",
-  "anzahl": 144,
+  "anzahl": 146,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -30271,7 +30889,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -30280,6 +30898,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -30411,6 +31035,12 @@
     "text": "Neue Unterlage",
     "disabled": false,
     "cls": "button primary"
+   },
+   {
+    "art": "Knopf",
+    "text": "INFO Datensparsame Dokumentvorschau ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
    },
    {
     "art": "Knopf",
@@ -30978,7 +31608,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -31094,11 +31724,11 @@
  {
   "ort": "Fußzeile › Eingangszentrale",
   "umgebung": "desktop",
-  "anzahl": 115,
+  "anzahl": 117,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -31140,7 +31770,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -31149,6 +31779,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -31313,15 +31949,21 @@
    },
    {
     "art": "Knopf",
-    "text": "Eingangsordner auswählen Nur den bewusst ausgewählten Ordner",
+    "text": "Eingangsordner auswählen",
     "disabled": false,
     "cls": "intake-source"
    },
    {
     "art": "Knopf",
-    "text": "OneDrive-Familienordner prüfen Keine Dauerüberwachung · zuerst im Sicherheitscen",
+    "text": "OneDrive-Familienordner prüfen Noch nicht verbunden",
     "disabled": false,
     "cls": "intake-source"
+   },
+   {
+    "art": "Knopf",
+    "text": "INFO Keine Überwachung im Hintergrund ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
    },
    {
     "art": "Knopf",
@@ -31673,7 +32315,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -31789,11 +32431,11 @@
  {
   "ort": "Fußzeile › Bestand prüfen",
   "umgebung": "desktop",
-  "anzahl": 52,
+  "anzahl": 53,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -31835,7 +32477,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -31844,6 +32486,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -31990,7 +32638,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -32106,11 +32754,11 @@
  {
   "ort": "Fußzeile › Was gibt’s Neues?",
   "umgebung": "desktop",
-  "anzahl": 202,
+  "anzahl": 203,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -32152,7 +32800,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -32161,6 +32809,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -33207,7 +33861,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -33327,7 +33981,7 @@
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -33369,7 +34023,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -33378,6 +34032,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -33518,43 +34178,43 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokumente finden Bibliothek durchsuchen und filtern",
+    "text": "Dokumente finden",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Bestand prüfen Testordner analysieren und bewerten",
+    "text": "Bestand prüfen",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Dokument ablegen lokal auf PC oder USB-Stick",
+    "text": "Dokument ablegen",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Erinnerung festhalten diktieren, prüfen und lokal speichern",
+    "text": "Tagebuch schreiben",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Datentresor öffnen verbinden, prüfen oder sperren",
+    "text": "Datentresor öffnen",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Systemprüfung prüfen, Bericht öffnen oder sicher reparieren",
+    "text": "Systemprüfung",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Was gibt’s Neues? Neue Inhalte und wichtige Veränderungen",
+    "text": "Was gibt’s Neues?",
     "disabled": false,
     "cls": ""
    },
@@ -34622,12 +35282,6 @@
    },
    {
     "art": "Knopf",
-    "text": "",
-    "disabled": false,
-    "cls": "hilfe-sprung"
-   },
-   {
-    "art": "Knopf",
     "text": "Bild der Stelle in der App zeigen",
     "disabled": false,
     "cls": "hv-knopf"
@@ -34922,7 +35576,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -35038,11 +35692,11 @@
  {
   "ort": "Fußzeile › Systemprüfung",
   "umgebung": "desktop",
-  "anzahl": 112,
+  "anzahl": 113,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -35084,7 +35738,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -35093,6 +35747,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -35599,7 +36259,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -35715,11 +36375,11 @@
  {
   "ort": "Fußzeile › Prüfberichte",
   "umgebung": "desktop",
-  "anzahl": 112,
+  "anzahl": 113,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -35761,7 +36421,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -35770,6 +36430,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -36276,7 +36942,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -36392,11 +37058,11 @@
  {
   "ort": "Fußzeile › Sicherheitscenter",
   "umgebung": "desktop",
-  "anzahl": 71,
+  "anzahl": 78,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -36438,7 +37104,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -36447,6 +37113,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -36677,6 +37349,42 @@
    },
    {
     "art": "Knopf",
+    "text": "Jetzt sichern ›",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Festplatte vorbereiten …",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Vorhandene Festplatte verbinden …",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Paket erstellen …",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Paket einlesen …",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Datei-Eingang",
+    "text": ".fav,application/octet-stream",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Export erklären",
     "disabled": false,
     "cls": "start-info-trigger"
@@ -36707,7 +37415,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -36823,11 +37531,11 @@
  {
   "ort": "Fußzeile › Versionshistorie",
   "umgebung": "desktop",
-  "anzahl": 48,
+  "anzahl": 49,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -36869,7 +37577,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -36878,6 +37586,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -37000,7 +37714,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -37116,11 +37830,11 @@
  {
   "ort": "Dialog › Mit KI arbeiten",
   "umgebung": "desktop",
-  "anzahl": 59,
+  "anzahl": 60,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -37162,7 +37876,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -37171,6 +37885,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -37293,7 +38013,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -37475,11 +38195,11 @@
  {
   "ort": "Dialog › Familienakte exportieren",
   "umgebung": "desktop",
-  "anzahl": 64,
+  "anzahl": 65,
   "elemente": [
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -37521,7 +38241,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -37530,6 +38250,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Link",
@@ -37664,7 +38390,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -37864,7 +38590,7 @@
  {
   "ort": "Startseite",
   "umgebung": "handy",
-  "anzahl": 93,
+  "anzahl": 98,
   "elemente": [
    {
     "art": "Knopf",
@@ -37874,7 +38600,7 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -37916,7 +38642,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -37925,6 +38651,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Knopf",
@@ -37961,6 +38693,12 @@
     "text": "Überspringen",
     "disabled": false,
     "cls": "text-link erste-schritte-weg"
+   },
+   {
+    "art": "Knopf",
+    "text": "Jetzt sichern ›",
+    "disabled": false,
+    "cls": "button secondary"
    },
    {
     "art": "Knopf",
@@ -38078,7 +38816,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 19.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -38096,7 +38834,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 6.",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 7.",
     "disabled": false,
     "cls": ""
    },
@@ -38156,7 +38894,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Fotofunktion öffnen Eine oder mehrere Seiten als PDF prüfen",
+    "text": "Fotofunktion öffnen",
     "disabled": false,
     "cls": "intake-source"
    },
@@ -38168,7 +38906,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Ordner auswählen Nur den ausdrücklich ausgewählten lokalen Ordner",
+    "text": "Ordner auswählen",
     "disabled": false,
     "cls": "intake-source"
    },
@@ -38186,13 +38924,19 @@
    },
    {
     "art": "Knopf",
-    "text": "Erinnerungsprotokoll erklären",
+    "text": "Tagebuch erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
    {
     "art": "Knopf",
-    "text": "Erinnerung: Diktat starten",
+    "text": "Zum Tagebuch",
+    "disabled": false,
+    "cls": "text-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch: Diktat starten",
     "disabled": true,
     "cls": "dictation-button "
    },
@@ -38204,27 +38948,45 @@
    },
    {
     "art": "Knopf",
-    "text": "Fotos oder Videos",
+    "text": "Foto",
     "disabled": false,
-    "cls": "button secondary"
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch erklären",
+    "text": "Stimmung schlecht",
     "disabled": false,
-    "cls": "start-info-trigger"
+    "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch öffnen",
+    "text": "Stimmung eher schlecht",
     "disabled": false,
-    "cls": "button secondary"
+    "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nächste Eingabe",
-    "disabled": true,
-    "cls": "button secondary"
+    "text": "Stimmung mittel",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Stimmung gut",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Stimmung sehr gut",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Auswahlliste",
+    "text": "Person oder Organisation verknüpfen",
+    "disabled": false,
+    "cls": "tagebuch-person"
    },
    {
     "art": "Knopf",
@@ -38234,15 +38996,9 @@
    },
    {
     "art": "Knopf",
-    "text": "Unbehandelte Erinnerungen: 0 Zurzeit wartet kein Entwurf",
+    "text": "Noch einen erfassen",
     "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Offene Memory-Fragen: 1 Bereits gespeicherte Einträge mit Klärungsbedarf",
-    "disabled": false,
-    "cls": ""
+    "cls": "text-link"
    },
    {
     "art": "Knopf",
@@ -38312,7 +39068,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -38428,7 +39184,7 @@
  {
   "ort": "ASSISTENZ › Assistenzzentrale",
   "umgebung": "handy",
-  "anzahl": 53,
+  "anzahl": 54,
   "elemente": [
    {
     "art": "Knopf",
@@ -38438,7 +39194,7 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -38480,7 +39236,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -38489,6 +39245,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Knopf",
@@ -38636,7 +39398,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -38752,7 +39514,7 @@
  {
   "ort": "TERMINE & AUFGABEN › Cockpit",
   "umgebung": "handy",
-  "anzahl": 114,
+  "anzahl": 115,
   "elemente": [
    {
     "art": "Knopf",
@@ -38762,7 +39524,7 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -38804,7 +39566,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -38813,6 +39575,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Knopf",
@@ -38888,7 +39656,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 19.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -38906,7 +39674,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 6.",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 7.",
     "disabled": false,
     "cls": ""
    },
@@ -38960,7 +39728,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 06.11.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 07.11.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -38978,7 +39746,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 11.11.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 12.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -38996,7 +39764,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 13.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 14.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -39014,7 +39782,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 14.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 15.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -39032,7 +39800,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 19.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 20.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -39050,7 +39818,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 22.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 23.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -39068,7 +39836,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokumente, Memories und Vorgänge erklären",
+    "text": "Dokumente, Tagebuch-Einträge und Vorgänge erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
@@ -39194,25 +39962,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 8.11.2026 Nächste Aufgabe: Beim Arb",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 9.11.2026 Nächste Aufgabe: Beim Arb",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 8.11.2026 Nächste Au",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 9.11.2026 Nächste Au",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 8.11.2026 Nächste Aufgabe: Zä",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 9.11.2026 Nächste Aufgabe: Zä",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 8.11.2026 Nächste Aufgabe: ",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 9.11.2026 Nächste Aufgabe: ",
     "disabled": false,
     "cls": ""
    },
@@ -39254,13 +40022,13 @@
    },
    {
     "art": "Knopf",
-    "text": "Offene Memory-Punkte erklären",
+    "text": "Rückfragen zu gespeicherten Einträgen erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
    {
     "art": "Knopf",
-    "text": "Alle Erinnerungen",
+    "text": "Ganzes Tagebuch",
     "disabled": false,
     "cls": "text-link"
    },
@@ -39284,19 +40052,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 08.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 09.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 08.11.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 09.11.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 08.11.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 09.11.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -39308,7 +40076,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 08.11.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 09.11.",
     "disabled": false,
     "cls": ""
    },
@@ -39326,7 +40094,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -39442,7 +40210,7 @@
  {
   "ort": "GESUNDHEIT & ARBEIT › Diagnosen, AU & ICD-Codes",
   "umgebung": "handy",
-  "anzahl": 55,
+  "anzahl": 56,
   "elemente": [
    {
     "art": "Knopf",
@@ -39452,7 +40220,7 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -39494,7 +40262,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -39503,6 +40271,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Knopf",
@@ -39662,7 +40436,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -39778,7 +40552,7 @@
  {
   "ort": "FAMILIE & PERSONEN › Familienübersicht",
   "umgebung": "handy",
-  "anzahl": 98,
+  "anzahl": 99,
   "elemente": [
    {
     "art": "Knopf",
@@ -39788,7 +40562,7 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -39830,7 +40604,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -39839,6 +40613,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Knopf",
@@ -40256,7 +41036,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -40372,7 +41152,7 @@
  {
   "ort": "WOHNEN › Miet- & Vermieterunterlagen",
   "umgebung": "handy",
-  "anzahl": 45,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
@@ -40382,7 +41162,7 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -40424,7 +41204,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -40433,6 +41213,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Knopf",
@@ -40469,6 +41255,12 @@
     "text": "Haus, Wohnung und Vermieter erklären",
     "disabled": false,
     "cls": "start-info-trigger"
+   },
+   {
+    "art": "Knopf",
+    "text": "INFO Bereich für die schrittweise Befüllung vorbereitet ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
    },
    {
     "art": "Knopf",
@@ -40526,13 +41318,19 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Angaben für eine verknüpfte Objektakte ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Cockpit",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -40648,7 +41446,7 @@
  {
   "ort": "FAHRZEUGE › Fahrzeugpapiere",
   "umgebung": "handy",
-  "anzahl": 45,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
@@ -40658,7 +41456,7 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -40700,7 +41498,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -40709,6 +41507,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Knopf",
@@ -40745,6 +41549,12 @@
     "text": "Fahrzeuge erklären",
     "disabled": false,
     "cls": "start-info-trigger"
+   },
+   {
+    "art": "Knopf",
+    "text": "INFO Bereich für die schrittweise Befüllung vorbereitet ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
    },
    {
     "art": "Knopf",
@@ -40802,13 +41612,19 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Angaben für eine verknüpfte Objektakte ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Cockpit",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -40924,7 +41740,7 @@
  {
   "ort": "KÄUFE & GARANTIEN › Käufe & Rechnungen",
   "umgebung": "handy",
-  "anzahl": 45,
+  "anzahl": 48,
   "elemente": [
    {
     "art": "Knopf",
@@ -40934,7 +41750,7 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -40976,7 +41792,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -40985,6 +41801,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Knopf",
@@ -41021,6 +41843,12 @@
     "text": "Käufe, Garantien und Geräte erklären",
     "disabled": false,
     "cls": "start-info-trigger"
+   },
+   {
+    "art": "Knopf",
+    "text": "INFO Bereich für die schrittweise Befüllung vorbereitet ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
    },
    {
     "art": "Knopf",
@@ -41078,13 +41906,19 @@
    },
    {
     "art": "Knopf",
+    "text": "INFO Angaben für eine verknüpfte Objektakte ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
+   },
+   {
+    "art": "Knopf",
     "text": "Cockpit",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -41200,7 +42034,7 @@
  {
   "ort": "DOKUMENTE › Dokumentenbibliothek",
   "umgebung": "handy",
-  "anzahl": 109,
+  "anzahl": 111,
   "elemente": [
    {
     "art": "Knopf",
@@ -41210,7 +42044,7 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -41252,7 +42086,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -41261,6 +42095,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Knopf",
@@ -41321,6 +42161,12 @@
     "text": "Neue Unterlage",
     "disabled": false,
     "cls": "button primary"
+   },
+   {
+    "art": "Knopf",
+    "text": "INFO Datensparsame Dokumentvorschau ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
    },
    {
     "art": "Knopf",
@@ -41744,7 +42590,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -41860,7 +42706,7 @@
  {
   "ort": "Fußzeile › Cockpit",
   "umgebung": "handy",
-  "anzahl": 114,
+  "anzahl": 115,
   "elemente": [
    {
     "art": "Knopf",
@@ -41870,7 +42716,7 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -41912,7 +42758,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -41921,6 +42767,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Knopf",
@@ -41996,7 +42848,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 19.10.2026",
+    "text": "Antrag auf Teilzeit überfällig · Termin · überfällig · 20.10.2026",
     "disabled": false,
     "cls": ""
    },
@@ -42014,7 +42866,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 6.",
+    "text": "Zählerstände an die Hausverwaltung melden überfällig · Aufgabe · überfällig · 7.",
     "disabled": false,
     "cls": ""
    },
@@ -42068,7 +42920,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zählerstände an die Hausverwaltung melden Fällig: 06.11.2026 · Priorität hoch Ob",
+    "text": "Zählerstände an die Hausverwaltung melden Fällig: 07.11.2026 · Priorität hoch Ob",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -42086,7 +42938,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 11.11.2026 · Priorität mittel",
+    "text": "Beim Arbeitgeber wegen Teilzeit nachfragen Fällig: 12.11.2026 · Priorität mittel",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -42104,7 +42956,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 13.11.2026 · P",
+    "text": "Reparaturtermin Waschmaschine – jemand muss zu Hause sein Fällig: 14.11.2026 · P",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -42122,7 +42974,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 14.11.2026 · Priorität mit",
+    "text": "Nebenkostenabrechnung mit Vorjahr vergleichen Fällig: 15.11.2026 · Priorität mit",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -42140,7 +42992,7 @@
    },
    {
     "art": "Knopf",
-    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 19.11.2026 · Priorität norm",
+    "text": "12 € Fahrtgeld für den Schulausflug mitgeben Fällig: 20.11.2026 · Priorität norm",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -42158,7 +43010,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 22.11.2026 · Priorität normal Person",
+    "text": "Vorsorgetermin für Ella vereinbaren Fällig: 23.11.2026 · Priorität normal Person",
     "disabled": false,
     "cls": "cockpit-todo-main"
    },
@@ -42176,7 +43028,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokumente, Memories und Vorgänge erklären",
+    "text": "Dokumente, Tagebuch-Einträge und Vorgänge erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
@@ -42302,25 +43154,25 @@
    },
    {
     "art": "Knopf",
-    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 8.11.2026 Nächste Aufgabe: Beim Arb",
+    "text": "Teilzeitantrag Jonna Status: offen · zuletzt 9.11.2026 Nächste Aufgabe: Beim Arb",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 8.11.2026 Nächste Au",
+    "text": "Schulausflug Klasse 4 zum Wolkensee Status: offen · zuletzt 9.11.2026 Nächste Au",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 8.11.2026 Nächste Aufgabe: Zä",
+    "text": "Nebenkostenabrechnung 2025 Status: offen · zuletzt 9.11.2026 Nächste Aufgabe: Zä",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 8.11.2026 Nächste Aufgabe: ",
+    "text": "Waschmaschine – Garantiefall Status: offen · zuletzt 9.11.2026 Nächste Aufgabe: ",
     "disabled": false,
     "cls": ""
    },
@@ -42362,13 +43214,13 @@
    },
    {
     "art": "Knopf",
-    "text": "Offene Memory-Punkte erklären",
+    "text": "Rückfragen zu gespeicherten Einträgen erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
    {
     "art": "Knopf",
-    "text": "Alle Erinnerungen",
+    "text": "Ganzes Tagebuch",
     "disabled": false,
     "cls": "text-link"
    },
@@ -42392,19 +43244,19 @@
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Antrag auf Teilzeit 08.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
+    "text": "EREIGNISSE Antrag auf Teilzeit 09.11.2026 · Das Ereignis „Antrag auf Teilzeit“ w",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 08.11.2026 · Einzelheiten nu",
+    "text": "GESUNDHEIT & PERSÖNLICHES Neuer geschützter Eintrag 09.11.2026 · Einzelheiten nu",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 08.11.2026 · D",
+    "text": "EREIGNISSE Garantiefall Waschmaschine Schleuderling Waschwunder 7 09.11.2026 · D",
     "disabled": false,
     "cls": ""
    },
@@ -42416,7 +43268,7 @@
    },
    {
     "art": "Knopf",
-    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 08.11.",
+    "text": "REISEN & FREIZEIT Ella freut sich sehr auf den Schulausflug zum Wolkensee 09.11.",
     "disabled": false,
     "cls": ""
    },
@@ -42434,7 +43286,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -42550,7 +43402,7 @@
  {
   "ort": "Fußzeile › Dokumentenbibliothek",
   "umgebung": "handy",
-  "anzahl": 109,
+  "anzahl": 111,
   "elemente": [
    {
     "art": "Knopf",
@@ -42560,7 +43412,7 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -42602,7 +43454,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -42611,6 +43463,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Knopf",
@@ -42671,6 +43529,12 @@
     "text": "Neue Unterlage",
     "disabled": false,
     "cls": "button primary"
+   },
+   {
+    "art": "Knopf",
+    "text": "INFO Datensparsame Dokumentvorschau ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
    },
    {
     "art": "Knopf",
@@ -43094,7 +43958,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -43210,7 +44074,7 @@
  {
   "ort": "Fußzeile › Eingangszentrale",
   "umgebung": "handy",
-  "anzahl": 104,
+  "anzahl": 106,
   "elemente": [
    {
     "art": "Knopf",
@@ -43220,7 +44084,7 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -43262,7 +44126,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -43271,6 +44135,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Knopf",
@@ -43364,15 +44234,21 @@
    },
    {
     "art": "Knopf",
-    "text": "Eingangsordner auswählen Nur den bewusst ausgewählten Ordner",
+    "text": "Eingangsordner auswählen",
     "disabled": false,
     "cls": "intake-source"
    },
    {
     "art": "Knopf",
-    "text": "OneDrive-Familienordner prüfen Keine Dauerüberwachung · zuerst im Sicherheitscen",
+    "text": "OneDrive-Familienordner prüfen Noch nicht verbunden",
     "disabled": false,
     "cls": "intake-source"
+   },
+   {
+    "art": "Knopf",
+    "text": "INFO Keine Überwachung im Hintergrund ▾",
+    "disabled": false,
+    "cls": "info-zeile-kopf"
    },
    {
     "art": "Knopf",
@@ -43724,7 +44600,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -43840,7 +44716,7 @@
  {
   "ort": "Fußzeile › Sicherheitscenter",
   "umgebung": "handy",
-  "anzahl": 60,
+  "anzahl": 67,
   "elemente": [
    {
     "art": "Knopf",
@@ -43850,7 +44726,7 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -43892,7 +44768,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -43901,6 +44777,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Knopf",
@@ -44060,6 +44942,42 @@
    },
    {
     "art": "Knopf",
+    "text": "Jetzt sichern ›",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Festplatte vorbereiten …",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Vorhandene Festplatte verbinden …",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Paket erstellen …",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Knopf",
+    "text": "Paket einlesen …",
+    "disabled": false,
+    "cls": "button secondary"
+   },
+   {
+    "art": "Datei-Eingang",
+    "text": ".fav,application/octet-stream",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
     "text": "Export erklären",
     "disabled": false,
     "cls": "start-info-trigger"
@@ -44090,7 +45008,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -44206,7 +45124,7 @@
  {
   "ort": "Fußzeile › Fristen und Aufgaben",
   "umgebung": "handy",
-  "anzahl": 132,
+  "anzahl": 134,
   "elemente": [
    {
     "art": "Knopf",
@@ -44216,7 +45134,7 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -44258,7 +45176,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -44267,6 +45185,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Knopf",
@@ -44324,7 +45248,7 @@
    },
    {
     "art": "Knopf",
-    "text": "App-Glocke an · nächste Di., 09:00",
+    "text": "App-Glocke an · nächste Mi., 09:00",
     "disabled": false,
     "cls": "button primary glocken-schalter"
    },
@@ -44384,13 +45308,13 @@
    },
    {
     "art": "Knopf",
-    "text": "6 1",
+    "text": "6",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "7",
+    "text": "7 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -44398,35 +45322,35 @@
     "art": "Knopf",
     "text": "8",
     "disabled": false,
+    "cls": "mk-tag  "
+   },
+   {
+    "art": "Knopf",
+    "text": "9",
+    "disabled": false,
     "cls": "mk-tag gewaehlt heute"
    },
    {
     "art": "Knopf",
-    "text": "9 1",
+    "text": "10 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "10",
+    "text": "11",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "11 1",
+    "text": "12 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "12",
-    "disabled": false,
-    "cls": "mk-tag  "
-   },
-   {
-    "art": "Knopf",
-    "text": "13 1",
+    "text": "13",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -44438,7 +45362,7 @@
    },
    {
     "art": "Knopf",
-    "text": "15",
+    "text": "15 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -44462,13 +45386,13 @@
    },
    {
     "art": "Knopf",
-    "text": "19 1",
+    "text": "19",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "20",
+    "text": "20 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -44480,25 +45404,25 @@
    },
    {
     "art": "Knopf",
-    "text": "22 1",
+    "text": "22",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "23",
+    "text": "23 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "24 1",
+    "text": "24",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "25",
+    "text": "25 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -44522,13 +45446,13 @@
    },
    {
     "art": "Knopf",
-    "text": "29 1",
+    "text": "29",
     "disabled": false,
     "cls": "mk-tag  "
    },
    {
     "art": "Knopf",
-    "text": "30",
+    "text": "30 1",
     "disabled": false,
     "cls": "mk-tag  "
    },
@@ -44636,7 +45560,7 @@
    },
    {
     "art": "Auswahlliste",
-    "text": "Kein Dokument Kontoauszug_Familienkonto.pdf · 24.10.2026 Fahrzeugschein_Brummwer",
+    "text": "Kein Dokument Kontoauszug_Familienkonto.pdf · 25.10.2026 Fahrzeugschein_Brummwer",
     "disabled": false,
     "cls": ""
    },
@@ -44774,6 +45698,12 @@
    },
    {
     "art": "Knopf",
+    "text": "Fristensuche: Diktat starten",
+    "disabled": true,
+    "cls": "dictation-button "
+   },
+   {
+    "art": "Knopf",
     "text": "Offen (14)",
     "disabled": false,
     "cls": "active"
@@ -44888,7 +45818,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -45002,9 +45932,9 @@
   ]
  },
  {
-  "ort": "Fußzeile › Tagebuch & Erinnerungen",
+  "ort": "Fußzeile › Tagebuch",
   "umgebung": "handy",
-  "anzahl": 75,
+  "anzahl": 74,
   "elemente": [
    {
     "art": "Knopf",
@@ -45014,7 +45944,7 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -45056,7 +45986,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -45065,6 +45995,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Knopf",
@@ -45104,19 +46040,19 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen erklären",
+    "text": "Tagebuch erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
    {
     "art": "Knopf",
-    "text": "Erinnerungsprotokoll erklären",
+    "text": "Tagebuch erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
    {
     "art": "Knopf",
-    "text": "Erinnerung: Diktat starten",
+    "text": "Tagebuch: Diktat starten",
     "disabled": true,
     "cls": "dictation-button "
    },
@@ -45128,27 +46064,45 @@
    },
    {
     "art": "Knopf",
-    "text": "Fotos oder Videos",
+    "text": "Foto",
     "disabled": false,
-    "cls": "button secondary"
+    "cls": "button secondary compact-button"
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch erklären",
+    "text": "Stimmung schlecht",
     "disabled": false,
-    "cls": "start-info-trigger"
+    "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch öffnen",
+    "text": "Stimmung eher schlecht",
     "disabled": false,
-    "cls": "button secondary"
+    "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Nächste Eingabe",
-    "disabled": true,
-    "cls": "button secondary"
+    "text": "Stimmung mittel",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Stimmung gut",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Knopf",
+    "text": "Stimmung sehr gut",
+    "disabled": false,
+    "cls": ""
+   },
+   {
+    "art": "Auswahlliste",
+    "text": "Person oder Organisation verknüpfen",
+    "disabled": false,
+    "cls": "tagebuch-person"
    },
    {
     "art": "Knopf",
@@ -45158,27 +46112,15 @@
    },
    {
     "art": "Knopf",
-    "text": "Unbehandelte Erinnerungen: 0 Zurzeit wartet kein Entwurf",
+    "text": "Noch einen erfassen",
     "disabled": true,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Offene Memory-Fragen: 1 Bereits gespeicherte Einträge mit Klärungsbedarf",
-    "disabled": false,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Unbehandelte Memory-Ereignisse erklären",
-    "disabled": false,
-    "cls": "start-info-trigger"
-   },
-   {
-    "art": "Knopf",
-    "text": "Älteste zuerst",
-    "disabled": false,
     "cls": "text-link"
+   },
+   {
+    "art": "Knopf",
+    "text": "1 Rückfragen zu gespeicherten Einträgen",
+    "disabled": false,
+    "cls": ""
    },
    {
     "art": "Knopf",
@@ -45188,25 +46130,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Zwei getrennte Arbeitslisten erklären",
-    "disabled": false,
-    "cls": "start-info-trigger"
-   },
-   {
-    "art": "Knopf",
-    "text": "Unbehandelte Erinnerungen: 0 noch prüfen und endgültig speichern",
-    "disabled": false,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Offene Memory-Fragen: 1 gehören zu bereits gespeicherten Einträgen",
-    "disabled": false,
-    "cls": ""
-   },
-   {
-    "art": "Knopf",
-    "text": "Offene Memory-Punkte erklären",
+    "text": "Rückfragen zu gespeicherten Einträgen erklären",
     "disabled": false,
     "cls": "start-info-trigger"
    },
@@ -45236,7 +46160,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 02.11.2026, 19:00 · Reis",
+    "text": "Ella freut sich sehr auf den Schulausflug zum Wolkensee 03.11.2026, 19:00 · Reis",
     "disabled": false,
     "cls": "active"
    },
@@ -45248,7 +46172,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 30.10.2026, 19:00 · Technik, Ge",
+    "text": "Die Waschmaschine pumpt das Wasser nicht mehr ab 31.10.2026, 19:00 · Technik, Ge",
     "disabled": false,
     "cls": ""
    },
@@ -45260,7 +46184,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 27.10.2026, 19:00 ·",
+    "text": "Nebenkostenabrechnung 2025 ist gekommen: 84,17 € Nachzahlung 28.10.2026, 19:00 ·",
     "disabled": false,
     "cls": ""
    },
@@ -45272,7 +46196,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 09.09.202",
+    "text": "Fiete ist heute zum ersten Mal ohne Stützräder mit dem neuen Kinderra… 10.09.202",
     "disabled": false,
     "cls": ""
    },
@@ -45284,7 +46208,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 03.10.2025, 19:00 · Haus & Wohnu",
+    "text": "Erster Abend in der neuen Wohnung in Wolkenhain 04.10.2025, 19:00 · Haus & Wohnu",
     "disabled": false,
     "cls": ""
    },
@@ -45302,13 +46226,13 @@
    },
    {
     "art": "Knopf",
-    "text": "Person Ella Lindqvist-Arenberg",
+    "text": "PERSON Ella Lindqvist-Arenberg",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Vorgang Schulausflug Klasse 4 zum Wolkensee",
+    "text": "VORGANG Schulausflug Klasse 4 zum Wolkensee",
     "disabled": false,
     "cls": ""
    },
@@ -45326,13 +46250,13 @@
    },
    {
     "art": "Knopf",
-    "text": "Memory bearbeiten",
+    "text": "Eintrag ändern",
     "disabled": false,
     "cls": "button secondary"
    },
    {
     "art": "Knopf",
-    "text": "Memory löschen",
+    "text": "Eintrag löschen",
     "disabled": false,
     "cls": "button secondary danger-link"
    },
@@ -45344,7 +46268,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -45470,7 +46394,7 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -45512,7 +46436,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -45521,6 +46445,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Knopf",
@@ -45590,43 +46520,43 @@
    },
    {
     "art": "Knopf",
-    "text": "Dokumente finden Bibliothek durchsuchen und filtern",
+    "text": "Dokumente finden",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Bestand prüfen Testordner analysieren und bewerten",
+    "text": "Bestand prüfen",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Dokument ablegen lokal auf PC oder USB-Stick",
+    "text": "Dokument ablegen",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Erinnerung festhalten diktieren, prüfen und lokal speichern",
+    "text": "Tagebuch schreiben",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Datentresor öffnen verbinden, prüfen oder sperren",
+    "text": "Datentresor öffnen",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Systemprüfung prüfen, Bericht öffnen oder sicher reparieren",
+    "text": "Systemprüfung",
     "disabled": false,
     "cls": ""
    },
    {
     "art": "Knopf",
-    "text": "Was gibt’s Neues? Neue Inhalte und wichtige Veränderungen",
+    "text": "Was gibt’s Neues?",
     "disabled": false,
     "cls": ""
    },
@@ -46694,12 +47624,6 @@
    },
    {
     "art": "Knopf",
-    "text": "",
-    "disabled": false,
-    "cls": "hilfe-sprung"
-   },
-   {
-    "art": "Knopf",
     "text": "Bild der Stelle in der App zeigen",
     "disabled": false,
     "cls": "hv-knopf"
@@ -46994,7 +47918,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },
@@ -47110,7 +48034,7 @@
  {
   "ort": "Fußzeile › Systemprüfung",
   "umgebung": "handy",
-  "anzahl": 101,
+  "anzahl": 102,
   "elemente": [
    {
     "art": "Knopf",
@@ -47120,7 +48044,7 @@
    },
    {
     "art": "Knopf",
-    "text": "FAMILIENAKTE Basic Version 2.28.39",
+    "text": "FAMILIENAKTE Basic Version 2.28.48",
     "disabled": false,
     "cls": "site-brand"
    },
@@ -47162,7 +48086,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Notiz",
+    "text": "Erinnerung",
     "disabled": false,
     "cls": "icon-button notiz-knopf-schalter"
    },
@@ -47171,6 +48095,12 @@
     "text": "Mein Kalender",
     "disabled": false,
     "cls": "icon-button kalender-knopf-schalter"
+   },
+   {
+    "art": "Knopf",
+    "text": "Tagebuch",
+    "disabled": false,
+    "cls": "icon-button tagebuch-knopf-schalter"
    },
    {
     "art": "Knopf",
@@ -47606,7 +48536,7 @@
    },
    {
     "art": "Knopf",
-    "text": "Tagebuch & Erinnerungen",
+    "text": "Tagebuch",
     "disabled": false,
     "cls": ""
    },

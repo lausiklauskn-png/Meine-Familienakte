@@ -5,7 +5,7 @@ import { getVaultSummary } from "./local-vault";
 import { MeaningRuntime, MEANING_MODELS, MODEL_STAGES, browserModelleEinhaengen, deviceModelName, modelDevice, modelImBrowser, modelPlugin, type DeviceMeasurement, type ModelStage, type NativeModelsState } from "./private-meaning-runtime";
 import { browserModelle, browserModelleMoeglich } from "./browser-modelle";
 import type { SectionId } from "./portal-types";
-import { InfoPopover } from "./ui-controls";
+import { InfoPopover, SuchFeld } from "./ui-controls";
 
 const mb = (bytes: number) => (bytes / 1048576).toLocaleString("de-DE", { maximumFractionDigits: 1 }) + " MiB";
 function errorText(error: unknown) {
@@ -31,7 +31,10 @@ export function PrivateMeaningPanel({ handle, query = "", onOpen }: { handle: Fi
   // Stufe G: Web-App ohne native Hülle – Modelle im Browser-Speicher, dieselben Knöpfe.
   if (!modelPlugin() && browserModelleMoeglich()) browserModelleEinhaengen(browserModelle);
   useEffect(() => { currentHandle.current = handle; return () => { operation.current?.abort(); runtime.current.stop(); }; }, [handle]);
-  useEffect(() => { setQuestion(query); setHits([]); }, [query, handle]);
+  // Getippter Text bleibt, wenn der Speicher erst nach dem Tippen bereitsteht (Demo, Windows-App): die Frage folgt nur der
+  // Suchanfrage von außen, ein Speicherwechsel leert nur die Treffer.
+  useEffect(() => { setQuestion(query); }, [query]);
+  useEffect(() => { setHits([]); }, [handle]);
   const refresh = async () => { const next = await modelPlugin()?.getState(); if (next) setState(next); };
   useEffect(() => {
     if (!expanded) return;
@@ -115,7 +118,7 @@ export function PrivateMeaningPanel({ handle, query = "", onOpen }: { handle: Fi
         </div>
         <span className="ui-heading-help"><strong>Suchindex</strong><InfoPopover label="Suchindex erklären" text="Der Suchindex wird aus deinen Unterlagen und dem gewählten Modell gebaut. Wechselst du das Modell, wird er neu gebaut; ein abgebrochener Wechsel lässt den bisherigen nutzbar. Gescannte Seiten ohne Textebene: der beim Eingang erkannte Text zählt mit; fehlt er, liest die Texterkennung beim Aufbau einmal auf diesem Gerät (auch Gesundheitsunterlagen – nur für den Index, nichts verlässt das Gerät)."/></span>
         <div className="button-row"><button className="button primary" disabled={busy || !handle || !selected?.installed || Boolean(downloading)} onClick={build}>Index aufbauen / fortsetzen</button><button className="button secondary" disabled={busy || !handle} onClick={clear}>Privaten Index löschen</button></div>
-        <span className="ui-heading-help"><label>Wonach suchst du? <input value={question} maxLength={500} onChange={e => setQuestion(e.target.value)} placeholder="z. B. Garantie Waschmaschine"/></label><InfoPopover label="Bedeutungssuche: wo wird gesucht?" text="Gesucht wird in deiner Familienakte, also in allen Unterlagen, die du hier gespeichert hast (in der Demo im Demo-Bestand). Du kannst in eigenen Worten fragen; die Treffer sind Vorschläge, das Original bitte selbst prüfen."/></span>
+        <span className="ui-heading-help"><label htmlFor="bedeutung-frage">Wonach suchst du?</label> <SuchFeld value={question} onChange={setQuestion} placeholder="z. B. Garantie Waschmaschine" ariaLabel="Wonach suchst du?" speechLabel="Bedeutungssuche" inputProps={{ maxLength: 500, id: "bedeutung-frage" }}/><InfoPopover label="Bedeutungssuche: wo wird gesucht?" text="Gesucht wird in deiner Familienakte, also in allen Unterlagen, die du hier gespeichert hast (in der Demo im Demo-Bestand). Du kannst in eigenen Worten fragen; die Treffer sind Vorschläge, das Original bitte selbst prüfen."/></span>
         <div className="button-row"><button className="button primary" disabled={busy || !handle || !question.trim()} onClick={search}>Nach Bedeutung suchen</button></div>
       </>}
       {busy && <button className="button secondary" onClick={() => { operation.current?.abort(); runtime.current.stop(); }}>Suche / Index anhalten</button>}

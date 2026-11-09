@@ -78,11 +78,15 @@ try {
     const t = await status.innerText();
     return t === "Anderer Tresor verbunden – bitte den Ordner wählen, in dem tresorordner.json liegt." && (await panel.innerText()).includes("erfundener-tresor-1");
   });
-  await step("Ausloggen sperrt den Pro-Tresor und lädt neu (vorher blieb er in der App offen)", async () => {
+  await step("Ausloggen sperrt den Pro-Tresor und schließt die App (vorher lud es nur neu)", async () => {
     await page.evaluate(() => { window.__proStand = { status: 'offen', id: 'erfundener-tresor-1', ort: 'content://erfundene-sdkarte/Pro-Tresor' }; const alt = window.Capacitor.Plugins.FamilienakteTresor.sperren; window.Capacitor.Plugins.FamilienakteTresor.sperren = async () => { sessionStorage.setItem('probe-gesperrt', '1'); return alt(); }; });
+    // Klaus 09.11.: Ausloggen = Tresor sperren und die App schließen (Android: FamilienakteApp.beenden, hier gestellt).
+    await page.evaluate(() => { window.Capacitor.Plugins.FamilienakteApp = { beenden: async () => { sessionStorage.setItem('probe-beendet', '1'); return { beendet: true }; } }; });
     await page.locator(".logout-button").click();
-    await page.waitForLoadState("load"); await ready(page);
-    return (await page.evaluate(() => sessionStorage.getItem('probe-gesperrt'))) === '1';
+    await page.waitForFunction(() => sessionStorage.getItem('probe-beendet') === '1', null, { timeout: 5000 });
+    const gesperrt = await page.evaluate(() => sessionStorage.getItem('probe-gesperrt'));
+    await page.evaluate(() => { delete window.Capacitor.Plugins.FamilienakteApp; });
+    return gesperrt === '1';
   });
   await step("Nach dem Ausloggen zeigt der Knopf „Einloggen“ und entsperrt den Tresor", async () => {
     await page.evaluate(() => { window.__proStand = { status: 'gesperrt', id: 'erfundener-tresor-1', ort: 'content://erfundene-sdkarte/Pro-Tresor' }; window.dispatchEvent(new Event('familienakte:pro-tresor')); });

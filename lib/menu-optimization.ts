@@ -5,7 +5,7 @@ export const MENU_OPTIMIZATION_VERSION = 1 as const;
 // Entscheidung 08.11.2026 (2.28.39): interne Angaben aus der Oberfläche – kein mitgelieferter Prüfbericht vom 13.10., keine Fassung 2.28.1 auf der Startseite.
 // Klaus 08.11.2026 (Vorschau neugestaltung-2.28.39, Punkte 1 und 4): „So fängst du an“ ganz oben; ein Name „Cockpit“ statt „Objekt-Cockpit“.
 // 2.28.39 Navigation (U6, U10, U11): Punkte im Cockpit-Kasten und in „Zuletzt wichtig“ öffnen genau diesen Punkt.
-export const START_PAGE_REFERENCE_SHA256 = "cdefceadf2739015da6c6317895a1d6ca6f5ea21d5c61a92d8d64a6ac984bdf2";
+export const START_PAGE_REFERENCE_SHA256 = "a609295f368bc4942489062a3dec5a61dc1358054c1b63c669d76412c265a08d";
 
 export type MenuSection =
   | "documents" | "inbox" | "medical" | "benefits" | "work" | "assessment"

@@ -100,6 +100,7 @@ try {
   const aufgabe = (await register(page)).find((x) => x.data?.title === "Probe Zuordnung Aufklappen");
   await footer(page, "Cockpit");
   await page.locator(".cockpit-todo-main", { hasText: "Probe Zuordnung Aufklappen" }).first().click();
+  await page.locator("[data-termin-akte]").click(); // A5 (09.11.): Tipp öffnet die Bearbeitung, die ganze Akte liegt einen Tipp weiter
   const d = page.locator("#cockpit-dossier"); await d.waitFor();
   await step("Detail (A): Aufgabe zeigt alle ihre Erinnerungen mit Zeit", async () => {
     const zeiten = await d.locator(`[data-termin-erinnerungen="${aufgabe.id}"] [data-erinnerung-zeit]`).count();

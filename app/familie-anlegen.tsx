@@ -48,17 +48,7 @@ export function FamilieStamm({ records, vaultHandle, onRefresh, onOpen, onSaveCo
     finally { setArbeit(false); }
   };
 
-  const formular = bearbeitung && (() => { const b = STAMM_BESCHRIFTUNG[bearbeitung.typ]; const record = bearbeitung.id ? records.find((r) => r.id === bearbeitung.id) : undefined; return <div className="stamm-formular" data-stamm-formular={bearbeitung.typ}>
-    <div className="stamm-formular-kopf"><strong>{bearbeitung.id ? `${b.einzahl} ändern` : `Neu: ${b.einzahl}`}</strong><button type="button" className="icon-button" onClick={schliessen} aria-label="Abbrechen"><X size={17}/></button></div>
-    <div className="form-grid">
-      <label><span>Name</span><VoiceInput value={werte.name} onValueChange={(v) => setWerte({ ...werte, name: v })} placeholder={b.beispielName} speechLabel="Name" data-stamm-feld="name" autoComplete="off"/></label>
-      <label><span>{b.art}, optional</span><VoiceInput value={werte.art} onValueChange={(v) => setWerte({ ...werte, art: v })} placeholder={b.beispielArt} speechLabel={b.art} data-stamm-feld="art" autoComplete="off"/></label>
-    </div>
-    <label><span>Notiz, optional</span><VoiceTextarea rows={2} value={werte.notiz} onValueChange={(v) => setWerte({ ...werte, notiz: v })} speechLabel="Notiz" data-stamm-feld="notiz"/></label>
-    {fehler.length > 0 && <p className="form-error" role="alert" data-stamm-fehler>{fehler.join(" ")}</p>}
-    <div className="button-row"><button type="button" className="button primary" disabled={arbeit} onClick={() => void speichern()} data-stamm-speichern><Check size={17}/> {arbeit ? "Wird gespeichert …" : "Speichern"}</button><button type="button" className="button secondary" disabled={arbeit} onClick={schliessen}>Abbrechen</button></div>
-    {record && bearbeitung.typ === "person" && onSaveContact && <PersonKontaktKasten daten={(record.data || {}) as Record<string, unknown>} onSpeichern={(k) => onSaveContact(record.id, k)}/>}
-  </div>; })();
+  const formular = bearbeitung && <StammFormular typ={bearbeitung.typ} record={bearbeitung.id ? records.find((r) => r.id === bearbeitung.id) : undefined} werte={werte} setWerte={setWerte} fehler={fehler} arbeit={arbeit} onSpeichern={() => void speichern()} onAbbrechen={schliessen} onSaveContact={onSaveContact}/>;
 
   return <section className="card stamm-karte" id="familie-stamm" data-stamm-anzahl={anzahl}>
     <div className="card-heading"><div><h2>Personen, Organisationen, Objekte und Vorgänge</h2><p>Selbst anlegen, damit du Dokumente, Fristen und Aufgaben zuordnen kannst.</p></div>
@@ -78,4 +68,50 @@ export function FamilieStamm({ records, vaultHandle, onRefresh, onOpen, onSaveCo
       </div>)}
     </div>)}
   </section>;
+}
+
+/** Formular Name · Art · Notiz (A5, 09.11.: eigener Baustein, damit das Cockpit dieselbe Bearbeitung direkt öffnet). */
+export function StammFormular({ typ, record, werte, setWerte, fehler, arbeit, onSpeichern, onAbbrechen, onSaveContact }: {
+  typ: StammArt; record?: FamilyRecordUnion; werte: StammAngaben; setWerte: (w: StammAngaben) => void; fehler: string[]; arbeit: boolean;
+  onSpeichern: () => void; onAbbrechen: () => void; onSaveContact?: (id: string, kontakt: PersonKontakt) => Promise<boolean>;
+}) {
+  const b = STAMM_BESCHRIFTUNG[typ];
+  return <div className="stamm-formular" data-stamm-formular={typ}>
+    <div className="stamm-formular-kopf"><strong>{record ? `${b.einzahl} ändern` : `Neu: ${b.einzahl}`}</strong><button type="button" className="icon-button" onClick={onAbbrechen} aria-label="Abbrechen"><X size={17}/></button></div>
+    <div className="form-grid">
+      <label><span>Name</span><VoiceInput value={werte.name} onValueChange={(v) => setWerte({ ...werte, name: v })} placeholder={b.beispielName} speechLabel="Name" data-stamm-feld="name" autoComplete="off"/></label>
+      <label><span>{b.art}, optional</span><VoiceInput value={werte.art} onValueChange={(v) => setWerte({ ...werte, art: v })} placeholder={b.beispielArt} speechLabel={b.art} data-stamm-feld="art" autoComplete="off"/></label>
+    </div>
+    <label><span>Notiz, optional</span><VoiceTextarea rows={2} value={werte.notiz} onValueChange={(v) => setWerte({ ...werte, notiz: v })} speechLabel="Notiz" data-stamm-feld="notiz"/></label>
+    {fehler.length > 0 && <p className="form-error" role="alert" data-stamm-fehler>{fehler.join(" ")}</p>}
+    <div className="button-row"><button type="button" className="button primary" disabled={arbeit} onClick={onSpeichern} data-stamm-speichern><Check size={17}/> {arbeit ? "Wird gespeichert …" : "Speichern"}</button><button type="button" className="button secondary" disabled={arbeit} onClick={onAbbrechen}>Abbrechen</button></div>
+    {record && typ === "person" && onSaveContact && <PersonKontaktKasten daten={(record.data || {}) as Record<string, unknown>} onSpeichern={(k) => onSaveContact(record.id, k)}/>}
+  </div>;
+}
+
+/** Ist dieser Datensatz eine Stammakte (Person, Organisation, Objekt, Vorgang), die man mit Name · Art · Notiz ändert? */
+export const istStamm = (r: FamilyRecordUnion | null | undefined): boolean => Boolean(r && (STAMM_ARTEN as readonly string[]).includes(r.recordType));
+
+/** A5: Bearbeitung als Fenster – öffnet direkt aus Listen (Cockpit), Schließen lässt die Stelle darunter unverändert. */
+export function StammBearbeitenFenster({ record, records, vaultHandle, onZu, onGespeichert, onAkte, onSaveContact }: {
+  record: FamilyRecordUnion; records: FamilyRecordUnion[]; vaultHandle: FileSystemDirectoryHandle; onZu: () => void;
+  onGespeichert: (text: string) => Promise<void> | void; onAkte?: () => void; onSaveContact?: (id: string, kontakt: PersonKontakt) => Promise<boolean>;
+}) {
+  const typ = record.recordType as StammArt;
+  const [werte, setWerte] = useState<StammAngaben>(() => stammLesen(record));
+  const [fehler, setFehler] = useState<string[]>([]);
+  const [arbeit, setArbeit] = useState(false);
+  const speichern = async () => {
+    const pruef = stammPruefen(typ, werte, records, record.id); setFehler(pruef); if (pruef.length) return;
+    setArbeit(true);
+    try { await saveLocalStammRecord(vaultHandle, { recordType: typ, id: record.id, angaben: werte }); await onGespeichert(`Gespeichert ✓ ${STAMM_BESCHRIFTUNG[typ].einzahl} „${werte.name.trim()}“.`); onZu(); }
+    catch (reason) { setFehler([reason instanceof Error ? reason.message : "Der Eintrag konnte nicht gespeichert werden."]); }
+    finally { setArbeit(false); }
+  };
+  return <div className="modal-backdrop" role="presentation" onMouseDown={(e) => { if (e.target === e.currentTarget && !arbeit) onZu(); }}>
+    <section className="modal stamm-fenster" role="dialog" aria-modal="true" aria-label={`${STAMM_BESCHRIFTUNG[typ].einzahl} ändern`} data-stamm-fenster={record.id}>
+      <StammFormular typ={typ} record={record} werte={werte} setWerte={setWerte} fehler={fehler} arbeit={arbeit} onSpeichern={() => void speichern()} onAbbrechen={onZu} onSaveContact={onSaveContact}/>
+      {onAkte && <button type="button" className="text-link" onClick={() => { onZu(); onAkte(); }} data-stamm-akte>Ganze Akte ansehen ›</button>}
+    </section>
+  </div>;
 }

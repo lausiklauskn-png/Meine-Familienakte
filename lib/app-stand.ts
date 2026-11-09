@@ -9,6 +9,10 @@ import type { KartenStand } from "../app/landkarte";
 export type StandEintrag = { stand: KartenStand; seit?: string; selbst?: "datentresor" | "fristen-kalender" | "app-glocke" };
 
 export const APP_STAND: Readonly<Record<string, StandEintrag>> = {
+  // Rückmeldung 09.11. (2.28.49): Tagebuch mit Buch-Knopf, „Erinnerung“ statt „Notiz“, Brief beantworten verdeckt.
+  "tagebuch": { stand: "fertig", seit: "2.28.49" },
+  "notiz": { stand: "fertig", seit: "2.28.49" },
+  "aus-antwort": { stand: "fertig", seit: "2.28.49" },
   // E-Mail (Plan Sitzung 3, nicht gebaut)
   "mail-ms": { stand: "geplant", seit: "2.28.35" },
   "mail-imap": { stand: "geplant", seit: "2.28.35" },

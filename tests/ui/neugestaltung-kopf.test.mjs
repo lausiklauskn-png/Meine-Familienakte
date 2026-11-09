@@ -112,7 +112,7 @@ try {
     await page.locator(".main-navigation .nav-cluster > button").nth(1).click({ force: true });
     const eintraege = await page.locator(".mega-menu .mega-group button strong").allInnerTexts();
     await page.locator(".main-navigation .nav-cluster > button").nth(1).click({ force: true });
-    return soll(/Termine & Aufgaben/i.test(gruppen[1]) && eintraege.join("|") === "Cockpit|Fristen und Aufgaben|Mein Kalender|Tagebuch & Erinnerungen" && !gruppen.join("|").includes("Interaktives"), { gruppen, eintraege });
+    return soll(/Termine & Aufgaben/i.test(gruppen[1]) && eintraege.join("|") === "Cockpit|Fristen und Aufgaben|Mein Kalender|Tagebuch" && !gruppen.join("|").includes("Interaktives"), { gruppen, eintraege });
   });
   await step("„Familie & Personen“ behält Familienübersicht, Personen, Vollmachten, Versicherungen; kein zweiter Cockpit-Eintrag mehr", async () => {
     await page.locator(".main-navigation .nav-cluster > button").nth(3).click({ force: true });

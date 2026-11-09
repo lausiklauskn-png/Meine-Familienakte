@@ -43,7 +43,7 @@ await footer(desktop, "Dokumentenbibliothek");
 await shot(desktop, `${out}03-dokumentenbibliothek.png`);
 await footer(desktop, "Fristen und Aufgaben");
 await shot(desktop, `${out}04-fristen-und-aufgaben.png`);
-await footer(desktop, "Tagebuch & Erinnerungen");
+await footer(desktop, "Tagebuch");
 await shot(desktop, `${out}05-tagebuch.png`);
 await openMenu(desktop, 0, "Assistenzzentrale");
 await shot(desktop, `${out}06-assistenz.png`);

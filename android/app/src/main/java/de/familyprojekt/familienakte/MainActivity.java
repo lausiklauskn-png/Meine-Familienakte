@@ -34,6 +34,7 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(FamilienakteDevicePlugin.class);
         registerPlugin(FamilienakteModelsPlugin.class);
         registerPlugin(FamilienakteDruckPlugin.class);
+        registerPlugin(FamilienakteAppPlugin.class);
         registerPlugin(FamilienakteKalenderPlugin.class);
         registerPlugin(FamilienakteGlockePlugin.class);
         registerPlugin(FamilienakteOrdnerPlugin.class);

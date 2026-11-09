@@ -48,7 +48,7 @@ try {
   });
   await step("Assistenz: Schreiben vorbereiten → „Kopieren“ legt Betreff + Entwurf in die Zwischenablage", async () => {
     await openMenu(page, 0, "Assistenzzentrale");
-    await page.locator("button", { hasText: "Schreiben oder E-Mail erstellen" }).first().click();
+    await page.locator("button.assistant-mode-action", { hasText: "Vorgang oder Termin vorbereiten" }).first().click(); // D (09.11.): drei Wege
     await page.locator("textarea").first().fill("Bitte um Belegeinsicht zur Nebenkostenabrechnung 2025.");
     await page.locator("button", { hasText: "Familienakte prüfen und Vorschlag vorbereiten" }).click(); await page.waitForTimeout(600);
     await page.locator("button", { hasText: "Schreiben vorbereiten" }).click(); await page.waitForTimeout(400);

@@ -1,8 +1,9 @@
-import { useEffect, useId, useLayoutEffect, useRef, useState, type ComponentPropsWithoutRef, type CSSProperties } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState, type ComponentPropsWithoutRef, type CSSProperties, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { CircleHelp, Mic, MicOff, X } from "lucide-react";
+import { CircleHelp, Mic, MicOff, Search, X } from "lucide-react";
 import { createDictationSession, microphoneBlockedReason, speechConstructor, type SpeechBrowser } from "../lib/browser-dictation";
 import { useActivity } from "./ui-activity";
+import { fettStuecke, hinweisTeile } from "../lib/hinweis-text.ts";
 
 /** Abstand des Hinweisfensters zum Bildschirmrand und zum Fragezeichen (px). */
 const INFO_RAND = 12, INFO_ABSTAND = 8, INFO_BREITE = 560;
@@ -13,7 +14,17 @@ const INFO_RAND = 12, INFO_ABSTAND = 8, INFO_BREITE = 560;
  * (Portal am <body>), folgt dem Fragezeichen beim Rollen und öffnet unterhalb oder, wenn dort kein Platz ist, oberhalb.
  * Ein zweiter Tipp auf dasselbe Fragezeichen schließt es.
  */
-export function InfoPopover({ text, label = "Weitere Informationen" }: { text: string; label?: string }) {
+/** B5: Text eines „?“ in der gemeinsamen Form – Kern fett, darunter Punkte. */
+export function HinweisText({ text }: { text: string }) {
+  const { kern, punkte } = hinweisTeile(text);
+  const fett = (t: string) => fettStuecke(t).map((stueck, i) => i % 2 ? <b key={i}>{stueck}</b> : stueck);
+  return <span className="hinweis-text" data-hinweis-text>
+    {kern && <b className="hinweis-kern">{kern.replaceAll("**", "")}</b>}
+    {punkte.length > 0 && <ul className="hinweis-punkte">{punkte.map((p, i) => <li key={i}>{fett(p)}</li>)}</ul>}
+  </span>;
+}
+
+export function InfoPopover({ text, label = "Weitere Informationen", ziel }: { text: string; label?: string; /** B5: „Hingehen ›“ zur Stelle, um die es geht. */ ziel?: { text?: string; los: () => void } }) {
   const id = useId();
   const rootRef = useRef<HTMLSpanElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -55,7 +66,7 @@ export function InfoPopover({ text, label = "Weitere Informationen" }: { text: s
     window.addEventListener("resize", spaeter);
     return () => { if (rahmen) cancelAnimationFrame(rahmen); window.removeEventListener("scroll", spaeter, true); window.removeEventListener("resize", spaeter); };
   }, [open, text]);
-  const fenster = open ? <span ref={panelRef} id={`${id}-panel`} className="start-info-panel info-angeheftet" role="note" style={lage}><strong>Hinweis</strong><span>{text}</span><button type="button" className="info-close" aria-label="Hinweis schließen" onClick={(event) => { event.stopPropagation(); setOpen(false); triggerRef.current?.focus(); }}><X size={16}/></button></span> : null;
+  const fenster = open ? <span ref={panelRef} id={`${id}-panel`} className="start-info-panel info-angeheftet" role="note" style={lage}><strong>Hinweis</strong><HinweisText text={text}/>{ziel && <button type="button" className="text-link hinweis-ziel" onClick={(event) => { event.stopPropagation(); setOpen(false); ziel.los(); }} data-hinweis-ziel>{ziel.text || "Hingehen"} ›</button>}<button type="button" className="info-close" aria-label="Hinweis schließen" onClick={(event) => { event.stopPropagation(); setOpen(false); triggerRef.current?.focus(); }}><X size={16}/></button></span> : null;
   return <span ref={rootRef} className={`start-info-popover ${open ? "open" : ""}`}>
     <button ref={triggerRef} type="button" className="start-info-trigger" aria-label={label} title={label} aria-expanded={open} aria-controls={`${id}-panel`} onClick={(event) => { event.stopPropagation(); if (!open) window.dispatchEvent(new CustomEvent("family-info-open", { detail: id })); setOpen(!open); }}><CircleHelp size={18}/></button>
     {fenster && (typeof document !== "undefined" ? createPortal(fenster, document.body) : fenster)}
@@ -117,3 +128,30 @@ export function VoiceTextarea({ value, onValueChange, speechLabel, disabled, rea
   return <span className="voice-field voice-textarea"><textarea {...props} disabled={disabled} readOnly={readOnly} value={value} onChange={(event) => { stopForTyping(); onValueChange(event.currentTarget.value); }}/>{!disabled && !readOnly && <DictationButton value={value} onChange={onValueChange} label={speechLabel}/>}</span>;
 }
 
+
+/**
+ * B2 (Rückmeldung 09.11.): Info-Zeile statt festem Info-Kasten. Eine Zeile „Info · Titel“; ein Tipp klappt den Text darunter
+ * auf, ein zweiter zu. Kein Fragezeichen – der Text ist die Information selbst.
+ */
+export function InfoZeile({ title, children, className = "" }: { title: string; children: ReactNode; className?: string }) {
+  const id = useId();
+  const [auf, setAuf] = useState(false);
+  return <section className={`info-zeile ${auf ? "auf" : ""} ${className}`.trim()} data-info-zeile={title}>
+    <button type="button" className="info-zeile-kopf" aria-expanded={auf} aria-controls={`${id}-text`} onClick={() => setAuf(!auf)}><span className="info-label">Info</span><span className="info-zeile-titel">{title}</span><span className="info-zeile-pfeil" aria-hidden="true">{auf ? "▴" : "▾"}</span></button>
+    {auf && <div className="info-zeile-text" id={`${id}-text`}>{children}</div>}
+  </section>;
+}
+
+/**
+ * B3 (Rückmeldung 09.11.): ein Suchfeld für die ganze App, wie „In der Familienakte suchen“: Eingabefeld, daneben das
+ * Mikrofon als eigener Knopf. Eine Lupe im Feld nur, wenn sonst nichts sagt, dass hier gesucht wird (lupe).
+ */
+export function SuchFeld({ value, onChange, placeholder, ariaLabel, speechLabel, lupe = false, className = "", clearLabel = "Suche löschen", inputProps }: {
+  value: string; onChange: (value: string) => void; placeholder?: string; ariaLabel: string; speechLabel: string; lupe?: boolean; className?: string; clearLabel?: string;
+  inputProps?: Omit<ComponentPropsWithoutRef<"input">, "value" | "onChange" | "defaultValue">;
+}) {
+  return <span className={`such-feld ${className}`.trim()} data-such-feld>
+    <span className="such-eingabe">{lupe && <Search size={17} aria-hidden="true"/>}<input {...inputProps} value={value} placeholder={placeholder} aria-label={ariaLabel} onChange={(event) => { stopForTyping(); onChange(event.currentTarget.value); }}/>{value && <button type="button" className="search-clear" onClick={() => onChange("")} aria-label={clearLabel}><X size={16}/></button>}</span>
+    <DictationButton value={value} onChange={onChange} label={speechLabel} append={false}/>
+  </span>;
+}

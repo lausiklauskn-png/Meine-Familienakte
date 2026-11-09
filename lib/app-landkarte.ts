@@ -40,7 +40,8 @@ export const APP_GRUPPEN: Gruppe[] = [
     { id: "scan-formular", titel: "Formular scannen", wo: "Formular scannen › Ausfüllen", nach: "ausfuellen", seite: "inbox" },
   ] },
   { id: "g-selbst", titel: "Selbst erfassen", wo: "ohne Datei", spalte: 0, chips: [
-    { id: "notiz", titel: "Notiz", wo: "Kopf › Notiz", nach: "direkt", mehr: "Schreiben, sprechen (Mikrofon nur auf Tipp), Fotos mit der Kamera. Ein erkanntes Datum wird nur nach Ja zur Erinnerung." },
+    { id: "notiz", titel: "Erinnerung", wo: "Kopf › Erinnerung", nach: "direkt", mehr: "Schreiben, sprechen (Mikrofon nur auf Tipp), Fotos mit der Kamera. Ein erkanntes Datum wird nur nach Ja zur Erinnerung mit Glocke." },
+    { id: "tagebuch", titel: "Tagebuch", wo: "Kopf › Buch", nach: "direkt", seite: "memory", mehr: "Was ist heute passiert? Schreiben oder einsprechen, Foto, Stimmung, Person oder Organisation. Keine Glocke, keine Frist; beim nächsten Termin mit der Person steht der Eintrag wieder da." },
     { id: "eintrag", titel: "Eintrag anlegen", wo: "in jedem Bereich (Person, Vertrag, Fahrzeug …)", nach: "direkt", seite: "directory" },
     { id: "frist-neu", titel: "Frist oder Aufgabe", wo: "Fristen und Aufgaben · Mein Kalender › + Eintrag", nach: "direkt", seite: "reminders" },
   ] },
@@ -51,7 +52,7 @@ export const APP_GRUPPEN: Gruppe[] = [
     { id: "tresor-einschritt", titel: "Tresor einrichten in einem Schritt", wo: "nur Speicher wählen · Android-App", beide: true, seite: "security", mehr: "Hauptordner finden oder anlegen, ein Passwort, Lies-mich. In der Android-App: Sicherheit › Pro-Tresor › „Tresor einrichten – nur Speicher wählen“. In der Web-App gibt es keinen Pro-Tresor." },
   ] },
   { id: "g-aus", titel: "Ausgabe", wo: "von der Akte aus", spalte: 6, chips: [
-    { id: "aus-antwort", titel: "Antwort schreiben", wo: "Assistenz › Schreiben / E-Mail", seite: "assistant", mehr: "Entwurf, Prüf-Haken, „Als versendet speichern“. Die App verschickt heute nie selbst." },
+    { id: "aus-antwort", titel: "Brief beantworten", wo: "Assistenz › Brief oder E-Mail beantworten", seite: "assistant", mehr: "Namen, Anschriften, Nummern und Beträge werden verdeckt; in die eigene KI kopieren, per Link öffnen oder mit eigenem Schlüssel (Mistral, EU) senden; die Antwort bekommt die echten Angaben zurück. Als Entwurf speichern oder in Workflow PDF öffnen. Die App verschickt nie selbst." },
     { id: "aus-fristen", titel: "Fristen und Erinnerungen", wo: "Fristen und Aufgaben · Mein Kalender", seite: "reminders" },
     { id: "aus-sicherung", titel: "Vollsicherung", wo: "Sicherheit › sichern und testen", seite: "security", mehr: "Verschlüsselt mit Passwort und Notfallblatt oder lesbar; mit Prüfsummen; Android legt die APK bei, Windows einen Lies-mich mit Download." },
     { id: "aus-demo", titel: "Demo als Kopie", wo: "Hilfe › Demo starten", seite: "help", mehr: "Probieren an einer Kopie der eigenen Daten; das Original bleibt unverändert." },

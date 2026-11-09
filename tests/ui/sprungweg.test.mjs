@@ -71,9 +71,9 @@ try {
       return soll(m.hash === "#reminders" && m.imBild && zeile.includes(titel.slice(0, 12)), { m, titel });
     });
 
-    await step(`${geraet}: U4 Startseite „Offene Memory-Fragen“ → Abschnitt „Offene Memory-Punkte“ im Bild, markiert`, async () => {
-      await start();
-      const knopf = page.locator("main button").filter({ hasText: "Offene Memory-Fragen" }).first();
+    await step(`${geraet}: U4 Tagebuch „Rückfragen zu gespeicherten Einträgen“ → Abschnitt im Bild, markiert`, async () => {
+      await footer(page, "Tagebuch"); // C (09.11.): Zähler nur noch auf der Tagebuch-Seite
+      const knopf = page.locator("main [data-zaehler-rueckfragen]").first();
       const m = await springe(page, knopf, "#memory-open-points");
       return soll(m.hash === "#memory" && m.imBild && m.markiert && ohneHochRunter(m), m);
     });
@@ -86,8 +86,8 @@ try {
 
     await step(`${geraet}: Cockpit → Vorgang: Detail direkt im Bild und markiert, kein Zwischenstopp oben`, async () => {
       await footer(page, "Cockpit");
-      const vorgang = page.locator("#cockpit-cases .cockpit-case-list button").first();
-      const m = await springe(page, vorgang, "#cockpit-dossier");
+      await page.locator("#cockpit-cases .cockpit-case-list button").first().click(); // A5: öffnet die Bearbeitung
+      const m = await springe(page, page.locator("[data-stamm-akte]"), "#cockpit-dossier");
       return soll(m.imBild && m.markiert && ohneHochRunter(m), m);
     });
 

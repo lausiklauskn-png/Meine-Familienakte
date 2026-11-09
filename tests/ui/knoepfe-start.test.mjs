@@ -1,6 +1,6 @@
 // Startseite, Kopf- und Fußzeile: Suche, Diktat, Drucken, Ausloggen, Objekt-Cockpit, Erinnerung erfassen,
 // Dokumenteneingang-Kacheln, Beispieldaten entfernen/laden.
-import { startApp, launchBrowser, DESKTOP, ready, check, step, summary, collectErrors, footer } from "./_harness.mjs";
+import { startApp, launchBrowser, DESKTOP, ready, check, step, soll, summary, collectErrors, footer } from "./_harness.mjs";
 import { demoUmschalten } from "./_demo.mjs";
 import { speechStub, windowStub, directoryPickerStub, schliesseDialoge, bekannt, verdecktVon } from "./_stubs.mjs";
 
@@ -31,10 +31,14 @@ try {
     await footer(page, "Hilfe"); await page.locator(".site-brand").click();
     return page.url().endsWith("#startseite") && (await page.locator(".breadcrumb .pfad > button").allTextContents()).join("") === "Startseite";
   });
-  await step("Ausloggen lädt die Seite neu (kein Konto, nur Neustart)", async () => {
+  // Klaus 09.11.: Ausloggen = App schließen. Im Browser darf die Seite ihren Tab nicht schließen – Abmeldeseite statt Neuladen.
+  await step("Ausloggen im Browser zeigt die Abmeldeseite; „Wieder öffnen“ lädt neu", async () => {
     await page.locator(".logout-button").click();
+    const seite = page.locator("[data-abgemeldet]"); await seite.waitFor({ timeout: 5000 });
+    const text = await seite.innerText();
+    await seite.locator("[data-wieder-oeffnen]").click();
     await page.waitForLoadState("load"); await ready(page);
-    return (await page.evaluate(() => window.__gedruckt)) === 0; // frisches Fenster-Objekt = neu geladen
+    return soll(/Abgemeldet/.test(text) && (await page.evaluate(() => window.__gedruckt)) === 0, text); // frisches Fenster-Objekt = neu geladen
   });
 
   // --- Suche ---
@@ -160,11 +164,12 @@ try {
     await page.locator('.memory-text .dictation-button').click().catch(() => {});
     return true;
   });
-  await step("Erinnerung: „Nächste Eingabe“ legt einen Entwurf in die Warteschlange", async () => {
+  await step("Tagebuch: „Noch einen erfassen“ legt einen Entwurf zur Seite und leert das Feld", async () => {
     await page.locator(".memory-text textarea").fill("Der Elektriker war heute da. Die zweite Lampe flackert weiterhin.");
-    await page.locator("button", { hasText: "Nächste Eingabe" }).click();
-    await page.waitForTimeout(500);
-    return (await page.locator("button", { hasText: /Unbehandelte Erinnerungen: 1/ }).count()) > 0;
+    await page.locator("button", { hasText: "Noch einen erfassen" }).click();
+    await page.waitForFunction(() => (document.querySelector(".memory-text textarea") || {}).value === "", null, { timeout: 5000 });
+    // C (09.11.): der Zähler steht nur noch auf der Tagebuch-Seite.
+    return (await page.locator("main [data-zaehler-entwuerfe]").count()) === 0;
   });
   await step("Erinnerung: „Eintrag prüfen“ bei mehreren Entwürfen führt zur Warteschlange im Tagebuch", async () => {
     await page.locator(".memory-text textarea").fill("Fiete hat heute seine Hausaufgaben allein gemacht.");
@@ -219,10 +224,10 @@ try {
   });
   await step("Erinnerung: „Fotos oder Videos“ öffnet die Dateiauswahl", async () => {
     await schliesseDialoge(page); await page.locator(".site-brand").click();
-    const [chooser] = await Promise.all([page.waitForEvent("filechooser", { timeout: 4000 }), page.locator("button", { hasText: "Fotos oder Videos" }).first().click()]);
+    const [chooser] = await Promise.all([page.waitForEvent("filechooser", { timeout: 4000 }), page.locator("[data-tagebuch-foto]").first().click()]);
     return !!chooser;
   });
-  await step("„Tagebuch öffnen“ führt zum Tagebuch", async () => { await page.locator("button", { hasText: "Tagebuch öffnen" }).first().click(); return (await page.locator(".breadcrumb").innerText()).includes("Tagebuch"); });
+  await step("„Zum Tagebuch“ führt zum Tagebuch", async () => { await page.locator("[data-zum-tagebuch]").first().click(); return (await page.locator(".breadcrumb").innerText()).includes("Tagebuch"); });
   await page.locator(".site-brand").click();
 
   // --- Beispieldaten ---
@@ -248,7 +253,7 @@ try {
     return (await page.locator("text=Beispieldaten entfernt").count()) > 0 || (await page.locator(".sample-data-notice").count()) === 0;
   });
   await step("Eigene Erinnerung bleibt nach dem Entfernen erhalten", async () => {
-    await footer(page, "Tagebuch & Erinnerungen");
+    await footer(page, "Tagebuch");
     return (await page.locator("text=Elektriker war heute da").count()) > 0 || (await page.locator("text=Hausaufgaben allein").count()) > 0;
   });
   // P7 (Klaus 07.11.): Hier liegen eigene Einträge in der Akte; dann arbeitet die Demo an einer Kopie davon.

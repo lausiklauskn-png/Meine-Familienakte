@@ -27,6 +27,8 @@ export async function step(name, fn) {
   try { const r = await fn(); if (r === false) fail(name); else ok(name, typeof r === "string" ? r : ""); return r; }
   catch (e) { fail(name, String(e?.message || e).split("\n")[0].slice(0, 200)); return false; }
 }
+/** Zusicherung für step(): step() wertet einen zurückgegebenen Text als grün, darum scheitert soll() mit einer Ausnahme. */
+export const soll = (ok, info) => { if (!ok) throw new Error(typeof info === "string" ? info : JSON.stringify(info)); return true; };
 export function summary(title) {
   console.log(`${title}: ${gruen} grün · ${rot} rot${rot ? ` (${rote.join(" | ")})` : ""}`);
   return rot ? 1 : 0;

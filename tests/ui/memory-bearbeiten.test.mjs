@@ -21,11 +21,11 @@ try {
   await fenster.locator("[data-notiz-speichern]").click(); await fenster.locator("[data-notiz-liste] li").first().waitFor();
   await fenster.locator("[data-notiz-fertig]").click(); await fenster.waitFor({ state: "detached" });
 
-  await footer(page, "Tagebuch & Erinnerungen");
+  await footer(page, "Tagebuch");
   const dialog = page.locator("[data-memory-bearbeiten]");
   await step("„Memory bearbeiten“ öffnet ein Fenster mit Lebensbereich, Tag, Uhrzeit, Einordnung und „Erinnern lassen“", async () => {
     await page.locator("button", { hasText: "ich erwarte einen Anruf" }).first().click();
-    await page.locator("button", { hasText: "Memory bearbeiten" }).click();
+    await page.locator("button", { hasText: "Eintrag ändern" }).click();
     await dialog.waitFor();
     return (await dialog.locator("[data-mb-bereich]").count()) === 1 && (await dialog.locator("[data-mb-tag]").count()) === 1 && (await dialog.locator("[data-mb-einordnung]").count()) === 1 && (await dialog.locator("[data-memory-erinnern]").count()) === 1;
   });
@@ -46,7 +46,7 @@ try {
     return ok ? true : (console.log("   ↳", JSON.stringify(ev?.data).slice(0, 300), JSON.stringify(task?.data)), false);
   });
   await step("Erinnerung später ändern: Uhrzeit 16:30 im zweiten Bearbeiten", async () => {
-    await page.locator("button", { hasText: "Memory bearbeiten" }).click(); await dialog.waitFor();
+    await page.locator("button", { hasText: "Eintrag ändern" }).click(); await dialog.waitFor();
     await dialog.locator("[data-mb-termin-uhr]").fill("16:30");
     await dialog.locator("[data-mb-speichern]").click(); await dialog.waitFor({ state: "detached", timeout: 10000 });
     const r = await register(page);

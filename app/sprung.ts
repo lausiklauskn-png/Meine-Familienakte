@@ -107,7 +107,7 @@ export function gleichZumZiel(selektor: string, optionen?: { nurWennNoetig?: boo
 export function sprungFolgen(ziel: Sprungziel, { gefunden, nachSeitenwechsel = false }: { gefunden?: () => void; nachSeitenwechsel?: boolean } = {}): () => void {
   let fertig = false, getroffen: HTMLElement | null = null, ruhig = 0, letzte = -1, frame = 0;
   const start = performance.now();
-  // Nach einem Seitenwechsel bleibt der Inhalt kurz unsichtbar, bis das Ziel gezeichnet ist (höchstens 600 ms) –
+  // Nach einem Seitenwechsel bleibt der Inhalt kurz unsichtbar, bis das Ziel gezeichnet ist (höchstens 250 ms; A1 09.11.: länger wirkte am Handy wie eine weiße Fläche) –
   // so sieht man nie erst den Seitenanfang und dann den Sprung nach unten.
   const html = document.documentElement;
   const zeigen = () => html.classList.remove("sprung-wartet");
@@ -121,7 +121,7 @@ export function sprungFolgen(ziel: Sprungziel, { gefunden, nachSeitenwechsel = f
     if (fertig) return;
     const vergangen = performance.now() - start;
     if (vergangen > 2500) { stop(); return; }
-    if (html.classList.contains("sprung-wartet") && vergangen > 600) { window.scrollTo({ left: 0, top: 0, behavior: "instant" as ScrollBehavior }); zeigen(); }
+    if (html.classList.contains("sprung-wartet") && vergangen > 250) { window.scrollTo({ left: 0, top: 0, behavior: "instant" as ScrollBehavior }); zeigen(); }
     if (typeof ziel === "function") {
       if (ziel()) { zeigen(); gefunden?.(); stop(); return; }
     } else if (!getroffen) {
