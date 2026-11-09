@@ -64,7 +64,13 @@ try {
  report.checks.push('Production Worker, actual pinned model and private IndexedDB activate the sample index');
  await page.reload();await openDemoFixture(page);
  await page.locator('.footer-directory button',{hasText:'Sicherheitscenter'}).click();await panel.getByRole('button',{name:'Gerät, Modelle und Suchindex',exact:true}).click();
- await panel.getByLabel('Wonach suchst du?').fill('Waschautomat');await panel.getByRole('button',{name:'Nach Bedeutung suchen',exact:true}).click();await panel.locator('.search-results button').first().waitFor({timeout:120000});
+ // Nach dem Neuladen öffnet die Demo-Akte asynchron; „Privaten Index löschen“ ist erst mit geöffneter Akte frei (wie „Nach Bedeutung suchen“).
+ // Vorher tippte die Probe sofort und fand den Suchknopf in der CI gelegentlich 30 s lang gesperrt (09.11.: zweimal auf PR #144).
+ await page.waitForFunction(()=>{const b=[...document.querySelectorAll('.private-meaning button')].find(x=>x.textContent.trim()==='Privaten Index löschen');return b&&!b.disabled;},null,{timeout:120000});
+ await panel.getByLabel('Wonach suchst du?').fill('Waschautomat');
+ const suchen=panel.getByRole('button',{name:'Nach Bedeutung suchen',exact:true});
+ await page.waitForFunction(()=>{const b=[...document.querySelectorAll('.private-meaning button')].find(x=>x.textContent.trim()==='Nach Bedeutung suchen');return b&&!b.disabled;},null,{timeout:60000}).catch(async(e)=>{report.suchknopf=await page.evaluate(()=>({frage:document.querySelector('#bedeutung-frage')?.value,knoepfe:[...document.querySelectorAll('.private-meaning button')].map(b=>`${b.textContent.trim()}:${b.disabled?'aus':'an'}`),meldung:document.querySelector('.private-meaning [role=status]')?.textContent}));throw e;});
+ await suchen.click();await panel.locator('.search-results button').first().waitFor({timeout:120000});
  assert.equal(await page.getAttribute('.netz-schalter','data-netz'),'aus');
  assert.equal((await asset('model/not-pinned.json')).status,404);
  report.checks.push('Offline search after reload, local missing asset fails closed');
