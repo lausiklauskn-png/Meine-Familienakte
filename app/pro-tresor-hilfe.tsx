@@ -25,7 +25,7 @@ export function ProTresorWoLiegtWas({ open = false, onVerbinden, onDokumente, st
   return <details data-pro-tresor-hilfe open={open} className="wo-liegt-was">
     <summary><FolderOpen/> Wo liegt was?</summary>
     <OrdnerBaum label="Aufbau des gemeinsamen Tresors" wurzel={{
-      titel: "Speicher", unter: stand?.ort ? `Gewählt: ${stand.ort.replace(/^content:\/\/[^/]+\/(tree\/)?/, "")}` : "SD-Karte, Gerät, USB-Stick oder Laufwerk",
+      titel: "Speicher", unter: stand?.ort ? `Gewählt: ${stand.ort.replace(/^content:\/\/[^/]+\/(tree\/)?/, "")}` : "SD-Karte, Gerät, USB-Stick, Laufwerk – oder ein eigener Ordner im Gerät",
       kinder: [{
         titel: lage ? `Tresor-Hauptordner · ${lage}` : "Tresor-Hauptordner", unter: "Name frei, z. B. „Family-Projekt“ · erkennbar an tresorordner.json · diesen Ordner wählen", art: hauptArt, ziel: verbinden,
         kinder: [
