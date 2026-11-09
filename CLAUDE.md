@@ -5,10 +5,16 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 `docs/briefe-archiv/` (Klaus 2026-11-04: archivieren statt löschen); die Veröffentlichungsnachweise in
 `docs/VEROEFFENTLICHUNG-<fassung>.json`.
 
-## Aktueller Stand (09.11.2026, nach 2.28.51)
+## Aktueller Stand (10.11.2026, nach 2.28.52)
 
+- **Fassung 2.28.52** (#148 mit #147; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.52.json`; Brief
+  `BRIEF_ABSCHLUSS_2026-11-10_VERBUND-OHNE-ORANGE.md`): **Tresor-Leser** in „Wo liegt was?“ (`app/tresor-leser-knopf.tsx`, Datei
+  byte-gleich aus Workflow PDF Pro unter `public/tresor-leser/`, Pin im `check:herkunft`; Probe `tresor-leser`), **Update-Fähnchen ohne
+  Tipp** (`stillPruefenEinrichten`, Probe `update-fahne-auto`), **Pro-Verbund-Karte ohne Orange** (BookLedgerPro a705ed5). Zugleich
+  ausgegeben mit derselben Karte: BookLedgerPro 0.1.14, Private Brain Pro 1.0.48, Workflow PDF Pro 1.0.16. Nächster Brief:
+  `BRIEF_SITZUNG_2026-11-10_VERBUND-GEPLANTE-PUNKTE.md` (graue/rote Wege der Karte).
 - **Fassung 2.28.51** (#144, Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.51.json`; Brief
-  `BRIEF_ABSCHLUSS_2026-11-09_AUSGABE-2.28.51.md`): Gerätetest Galaxy S21 – Tresor einrichten in einem eigenen Ordner im Gerätespeicher
+  `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-09_AUSGABE-2.28.51.md`): Gerätetest Galaxy S21 – Tresor einrichten in einem eigenen Ordner im Gerätespeicher
   (Ordner mit Fachnamen wie „Familienakte“ direkt im Gerät, ohne Tresorspuren, gilt als Speicher; darin entsteht „Family-Projekt“;
   SD/USB und tiefere Ordner weiter abgewiesen; `ProTresorAdapter`, `Hauptordner.java` unverändert), Meldung unter dem Zustand,
   „Wo liegt was?“ hinter dem „?“. **Hilfekarten live** (`lib/live-zustand.ts`, `app/live-zustand.ts`; Vorschau
@@ -19,7 +25,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   E-Mail-Anlagen beliebig tief, im eigenen Netz antworten (ab Werk aus). Windows-Datei 2.28.50 kam nicht auf family-projekt.de
   (Server-Job nie angelegt), mit 2.28.51 überholt.
 - **Pro-App-Verbund (Vorschau)** (#146): Hilfe-Thema mit der Karte `public/pro-verbund/pro-verbund.html`, byte-gleich aus
-  BookLedgerPro (Pin `pro-verbund.herkunft.json`, Commit d6dcacd; `check:herkunft`). **Karte nie hier ändern, nur in BookLedgerPro pflegen.**
+  BookLedgerPro (Pin `pro-verbund.herkunft.json`, Commit a705ed5; `check:herkunft`). **Karte nie hier ändern, nur in BookLedgerPro pflegen.**
 
 - **Plan Rückmeldung** `docs/PLAN_2026-11-09_GERAETETEST-RUECKMELDUNG.md` (Klaus 09.11., Bilder vom Handy mit 2.28.37): **A–D gebaut**
   (#142, Fassung **2.28.49**; Brief `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-09_RUECKMELDUNG-A-D.md`; Vorschau C/D `docs/vorschau/tagebuch-assistenz-2.28.49.html`,
@@ -67,9 +73,9 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   (2.28.35, `docs/landkarte/`), Landkarte der App mit **Stand je Kasten in `lib/app-stand.ts` – bei jeder Fassung eintragen** (2.28.36),
   Hilfe-Themen als Bild, Vorschaufenster (2.28.37), Listenzeilen mit `KnopfLeiste`, Kopfleiste (2.28.38).
   Proben-Hinweise: `step()` wertet einen zurückgegebenen Text als grün, deshalb `soll()`; Seitentitel sind keine Sprungziele.
-- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
+- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
   (2.28.50 ausgegeben, aber ohne eigenen Nachweis; 2.28.40–2.28.47 waren Zwischenstände). Keine davon erneut ausgeben;
-  **nächste freie Fassung 2.28.52**. Klaus 2026-11-06: neue Funktionen immer gleich als APK, PWA und Windows ausgeben.
+  **nächste freie Fassung 2.28.53**. Klaus 2026-11-06: neue Funktionen immer gleich als APK, PWA und Windows ausgeben.
   Neue Fassung oben in `lib/fassungen.ts` eintragen. Die Versionszeile zeigt die technische Fassung aus `package.json`;
   `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
 - **Kalender:** Kern `lib/kalender.ts`, Glocke `lib/glocke.ts`, Oberfläche `app/kalender-karte.tsx`, `app/mein-kalender.tsx`,
@@ -89,24 +95,22 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   finden/anlegen, ein Passwort, Lies-mich, Speichern in den Tresor gesperrt). Das Paket liegt byte-gleich in Familienakte,
   BookLedgerPro, Private Brain Pro. Ein-Schritt-Weg verdrahtet in Familienakte #92 (`ProTresorAdapter.einrichten`,
   `FamilienakteTresorPlugin.einrichten`) und BookLedgerPro #454, beide auf main, nicht veröffentlicht; Private Brain Pro #130 auf main (Klaus' Freibrief 05.11.), nicht veröffentlicht.
-  Tresor-Leser (HTML auf der Karte, ohne Installation, nur lesend) Workflow-PDF-Pro #68 auf main, in keiner App verdrahtet.
+  Tresor-Leser (HTML auf der Karte, ohne Installation, nur lesend) Workflow-PDF-Pro #68, seit 2.28.52 in der Familienakte eingebaut.
   Geschenkbox mit den veröffentlichten Downloads: `docs/geschenk/geschenkbox-pro.html` (https://claude.ai/artifact/XeUMGuSZ49FzsJYjwQznM7). Klaus will danach alle Pro-Apps neu installieren
   und frische Tresorräume anlegen.
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
-  - `BRIEF_ABSCHLUSS_2026-11-09_AUSGABE-2.28.51.md` (jüngster Abschluss: Zusammenführen #144/#146, Ausgabe 2.28.51; Startauftrag Gerätetest)
-  - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-09_RUECKMELDUNG-A-D.md` (Rückmeldung A–D, Fassung 2.28.49)
+  - `BRIEF_ABSCHLUSS_2026-11-10_VERBUND-OHNE-ORANGE.md` (jüngster Abschluss: Karte ohne Orange, vier Apps ausgegeben)
+  - `BRIEF_SITZUNG_2026-11-10_VERBUND-GEPLANTE-PUNKTE.md` (Startbrief: graue/rote Wege der Pro-Verbund-Karte)
+  - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-09_AUSGABE-2.28.51.md` (Ausgabe 2.28.51; Startauftrag Gerätetest)
   - `BRIEF_CODEX_2026-11-04_NACH-2.28.24.md` (Abstimmung mit Codex: welche Dateien Claude gehören)
   - `BRIEF_ABSCHLUSS_2026-11-04_PDF-ARBEITSRAUM.md`, `BRIEF_ABSCHLUSS_2026-11-04_PDF-FUNKTIONSABGLEICH.md` (Codex)
 
 ## Offen
 
-- **Update-Fähnchen ohne Tipp (Klaus 09.11.) gebaut, nicht ausgegeben** (auf Zweig `ccr-5d961255-13yxub`, PR #147): Die Hüllen
-  fragten nur beim Kaltstart, nach „Internet an“ und alle 6 h; beim Zurückholen der App aus dem Hintergrund (am Handy der Normalfall)
-  nie, Fehlversuche ohne Wiederholung. Jetzt gemeinsamer Ablauf `stillPruefenEinrichten` in `public/native/familienakte-app.js`
-  (Start, Internet an, Rückkehr höchstens alle 10 min, stündlich, nach Fehlversuch bis 3× nach 2 min), Probe `update-fahne-auto`
-  (Gegenprobe alter Code: 5 rot). Wirkt erst ab der Fassung, die es enthält (nächste: 2.28.52).
+- **2.28.52 am Gerät ungeprüft:** Tresor-Leser mit echtem Tresor auf SD/USB (Ordnerwahl, Öffnen im Handy-Browser), Update-Fähnchen
+  beim Zurückholen der App, Zusammenspiel der Pro-Apps im selben Tresor (alle gelben Wege der Karte). BookLedger Basic hat noch die alte Karte.
 - **2.28.51 am Gerät ungeprüft:** Tresor im Ordner „Familienakte“ (SAF-Freigabe), Live-Zustände der Karten (alles nur gestellt).
 - **Baustand hinter Schalter (Klaus 09.11.):** Der Rahmen „Baustand“ bleibt sichtbar, solange intern getestet wird; danach hinter einen
   versteckten Schalter bzw. eine Eingabe nur für Entwickler.
@@ -147,7 +151,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - 2.28.34 am Gerät ungeprüft: Android-Ordnerdialog (SAF) und APK beilegen, Windows-Ordnerdialog (Swing) und Lies-mich, Verkleinern
   an echten Kamerafotos, Einlesen nach Neuinstallation, Demo-Kopie mit großem Bestand. Einlesen in eine volle Akte (Zusammenführen)
   und Erinnerung „lange nicht gesichert“ gibt es nicht (siehe `docs/SICHERUNG-VERGLEICH.md`).
-- PWA-Updates nach Codex #89, Ein-Schritt-Tresor in Private Brain Pro, Tresor-Leser.
+- PWA-Updates nach Codex #89.
 
 ## Veröffentlichen
 
