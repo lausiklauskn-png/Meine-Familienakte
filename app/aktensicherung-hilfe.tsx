@@ -41,7 +41,7 @@ const ORTE: Ort[] = [
       { titel: "Register und Manifest", unter: "mit Prüfsumme jeder Datei" },
       { titel: "Programm daneben", unter: "Android: APK · Windows: Lies-mich mit Download und SHA-256" },
     ] },
-    { titel: "Lesbar, nicht verschlüsselt", unter: "nur auf eigenen Speicher legen" },
+    { titel: "Verschlüsselt (empfohlen) oder lesbar", unter: "Passwort ≥ 10 Zeichen und Notfallblatt · lesbar nur für Speicher, der zu Hause bleibt" },
   ] },
   { titel: "Testordner", unter: "leer, nur für die Probe · holt nichts in die Akte", ziel: "vollsicherung", punkte: [
     { id: "test", titel: "Wiederherstellung getestet", unter: "„Wiederherstellung testen“" },

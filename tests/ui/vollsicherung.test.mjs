@@ -3,7 +3,7 @@
 import { vaultFixture } from "./_vault-fixture.mjs";
 import { capacitorStub } from "./_capacitor-stub.mjs";
 import { ordnerStub } from "./_ordner-stub.mjs";
-import { startApp, launchBrowser, DESKTOP, ready, footer, step, fail, summary, collectErrors } from "./_harness.mjs";
+import { startApp, launchBrowser, DESKTOP, ready, footer, step, fail, summary, collectErrors, vollsicherungStarten } from "./_harness.mjs";
 
 const app = await startApp();
 const browser = await launchBrowser();
@@ -39,7 +39,7 @@ try {
   await step("Android: Sicherheitscenter öffnet, Vollsicherung ist möglich", async () => { await footer(a.page, "Sicherheitscenter"); await a.page.locator("button", { hasText: "Vollständige Sicherung erstellen" }).waitFor(); return !(await a.page.locator("button", { hasText: "Vollständige Sicherung erstellen" }).isDisabled()); });
   await step("Android: Abbrechen im Ordnerdialog schreibt nichts und meldet keinen Fehler", async () => {
     await a.page.evaluate(() => { window.__ordner.abbrechen = true; });
-    await a.page.locator("button", { hasText: "Vollständige Sicherung erstellen" }).click();
+    await vollsicherungStarten(a.page);
     await a.page.waitForTimeout(800);
     const n = await a.page.evaluate(() => window.__ordner.dateien.size);
     await a.page.evaluate(() => { window.__ordner.abbrechen = false; });
@@ -47,7 +47,7 @@ try {
     if (/konnte nicht/.test(await meldung(a.page))) throw new Error(await meldung(a.page));
   });
   await step("Android: Vollsicherung in den gewählten Ordner (SD-Karte), mit Register, Manifest, allen Dateien und der APK", async () => {
-    await a.page.locator("button", { hasText: "Vollständige Sicherung erstellen" }).click();
+    await vollsicherungStarten(a.page);
     await a.page.waitForFunction(() => /Installationsdatei/.test(document.body.innerText), null, { timeout: 60000 }).catch(async () => { throw new Error((await meldung(a.page)).slice(0, 300) + " · " + JSON.stringify(await a.page.evaluate(() => [...window.__ordner.dateien.keys()].slice(0, 5)))); });
     const r = await pruefeSicherung(a.page);
     if (r.fehler) throw new Error(r.fehler);
@@ -63,7 +63,7 @@ try {
   const w = await geraet("windows");
   await step("Windows: Vollsicherung in den gewählten Ordner mit Lies-mich (Download und SHA-256)", async () => {
     await footer(w.page, "Sicherheitscenter");
-    await w.page.locator("button", { hasText: "Vollständige Sicherung erstellen" }).click();
+    await vollsicherungStarten(w.page);
     await w.page.waitForFunction(() => /Lies-mich/.test(document.body.innerText), null, { timeout: 60000 });
     const r = await pruefeSicherung(w.page);
     if (r.fehler || !r.regOk || r.ok !== r.dateien) throw new Error(JSON.stringify(r));

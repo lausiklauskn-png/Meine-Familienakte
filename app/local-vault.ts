@@ -3,6 +3,7 @@ import { aktuelleGrenze, mbText } from "../lib/geraete-grenze.ts";
 import { istNativerOrdner, nativenOrdnerWaehlen, ordnerPlugin } from "./nativer-ordner.ts";
 import { DEMO_PRAEFIX, eigeneDatenDa, wasAendertSich, type DemoQuelle } from "../lib/demo-kopie.ts";
 import { erinnerungenUmziehen } from "../lib/erinnerung-umzug.ts";
+import { KOPF_DATEI, dateiEntschluesseln, dateiVerschluesseln, geheimerName, textEntschluesseln, textVerschluesseln, tresorAnlegen, tresorOeffnen, type SicherungsKopf, type Tresor } from "../lib/sicherung-krypto.ts";
 import { abgleichAnwenden, abgleichPlanen, type Akte as AbgleichAkte, type Konflikt as AbgleichKonflikt, type Seite as AbgleichSeite, type Zeile as AbgleichZeile } from "../lib/abgleich.ts";
 import { ERINNERUNG_VORGABE, erinnerungAusDatum, erinnerungenOrdnen, erinnerungenVerschieben, gueltigeUhrzeit, tageZwischen, zuordnungSetzen, type ErinnerungsWahl, type KalenderAnbieter, type KalenderFelder, type KalenderZuordnung } from "../lib/kalender.ts";
 import { workspaceStorage } from "../lib/demo-workspace.ts";
@@ -155,6 +156,8 @@ export type LocalVaultData = {
   linkDecisions: ContextLinkDecision[];
   inventoryItems: InventoryItem[];
   auditLog: VaultAuditEntry[];
+  /** Stufe B: Zeitpunkt der letzten Vollsicherung aus dieser Akte (für die Erinnerung nach 7 Tagen); null = nie. */
+  letzteVollsicherung: string | null;
 };
 
 export type LocalArchiveWriteResult = {
@@ -2843,6 +2846,33 @@ export async function dokumenteAussortieren(handle: FileSystemDirectoryHandle, i
   return ergebnis;
 }
 
+/** Stufe B (Entscheidung 6, „Papierkorb leeren“): aussortierte Dokumente endgültig löschen – nur von Hand, nur Aussortiertes.
+ *  Erst das Register (ohne die Einträge), dann die Dateien; was sich nicht entfernen lässt (Pro-Tresor), bleibt liegen und wird genannt. */
+export type LoeschErgebnis = { geloescht: number; dateienEntfernt: number; dateiBlieb: string[]; fehler: string[] };
+export async function dokumenteEndgueltigLoeschen(handle: FileSystemDirectoryHandle, ids: string[]): Promise<LoeschErgebnis> {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  if (demoActive()) throw new Error("In der Demo wird nichts endgültig gelöscht.");
+  const index = await readIndex(handle);
+  const am = new Date().toISOString();
+  const ergebnis: LoeschErgebnis = { geloescht: 0, dateienEntfernt: 0, dateiBlieb: [], fehler: [] };
+  const weg = index.documents.filter((d) => ids.includes(d.id) && d.aussortiert);
+  if (!weg.length) return ergebnis;
+  const wegIds = new Set(weg.map((d) => d.id));
+  index.documents = index.documents.filter((d) => !wegIds.has(d.id));
+  index.relations = index.relations.filter((r) => !((r.fromType === "document" && wegIds.has(r.fromId)) || (r.toType === "document" && wegIds.has(r.toId))));
+  for (const d of weg) index.auditLog.unshift({ id: crypto.randomUUID(), at: am, action: "Endgültig gelöscht", recordId: d.id, details: `„${d.titel || d.originalName}“ aus dem Papierkorb (Aussortiert) nach Rückfrage endgültig gelöscht.` });
+  await writeIndex(handle, index);
+  ergebnis.geloescht = weg.length;
+  const basis = await root(handle);
+  for (const d of weg) {
+    const titel = d.titel || d.originalName;
+    if (istProOriginal(d.storedPath)) { ergebnis.dateiBlieb.push(`${titel} (Pro-Tresor)`); continue; }
+    try { if (await removeFileByRelativePath(basis, d.storedPath, true)) ergebnis.dateienEntfernt++; else ergebnis.dateiBlieb.push(titel); }
+    catch (error) { ergebnis.fehler.push(`${titel}: ${error instanceof Error ? error.message : "Datei nicht entfernt"}`); }
+  }
+  return ergebnis;
+}
+
 /** „Zurückholen“: das Dokument steht wieder in der Akte; eine verschobene Datei kehrt in den Bereichsordner zurück. */
 export async function dokumenteZurueckholen(handle: FileSystemDirectoryHandle, ids: string[]): Promise<AussortierErgebnis> {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
@@ -2953,6 +2983,7 @@ export async function readLocalVaultData(handle: FileSystemDirectoryHandle): Pro
     linkDecisions: structuredClone(index.linkDecisions),
     inventoryItems: structuredClone(index.inventoryItems),
     auditLog: structuredClone(index.auditLog),
+    letzteVollsicherung: typeof index.letzteVollsicherung === "string" ? index.letzteVollsicherung : null,
   };
 }
 
@@ -3033,27 +3064,46 @@ type FullBackupResult = {
   folderName: string;
   manifest: FamilyBackupManifest;
   verification?: ReturnType<typeof verifyFamilyBackupRestore>;
+  /** Stufe B: Notfallschlüssel der verschlüsselten Sicherung – nur im Arbeitsspeicher, gehört aufs Notfallblatt. */
+  notfall?: string;
 };
 
-async function copyDirectoryWithChecksums(source: FileSystemDirectoryHandle, target: FileSystemDirectoryHandle, prefix: string, files: FamilyBackupFile[]) {
+/** Schreibweg einer Vollsicherung: lesbar (Datei unter ihrem Pfad) oder verschlüsselt (Dateien/00001.fav …, Pfad nur im
+ *  verschlüsselten Manifest). Jede geschriebene Datei wird zurückgelesen und per Prüfsumme bestätigt. */
+type SicherungsSchreiber = { dataDirectory: FileSystemDirectoryHandle; files: FamilyBackupFile[]; tresor: Tresor | null; nr: number };
+async function sicherungsDateiSchreiben(w: SicherungsSchreiber, relativePath: string, sourceFile: File) {
+  const sourceChecksum = await fileChecksum(sourceFile);
+  if (!w.tresor) {
+    const parts = relativePath.split("/"); const name = parts.pop()!;
+    let ziel = w.dataDirectory; for (const part of parts) ziel = await ziel.getDirectoryHandle(part, { create: true });
+    try { await ziel.getFileHandle(name); throw new Error(`Die Sicherung würde die vorhandene Datei „${relativePath}“ überschreiben.`); }
+    catch (error) { if (!isNotFoundError(error)) throw error; }
+    const destination = await ziel.getFileHandle(name, { create: true });
+    const writable = await destination.createWritable(); await writable.write(sourceFile); await writable.close();
+    const copied = await destination.getFile();
+    if (sourceFile.size !== copied.size || sourceChecksum !== await fileChecksum(copied)) throw new Error(`Die Kopie von „${relativePath}“ konnte nicht per Prüfsumme bestätigt werden.`);
+    w.files.push({ path: relativePath, sizeBytes: copied.size, checksum: sourceChecksum });
+    return;
+  }
+  const geheim = geheimerName(++w.nr);
+  const destination = await w.dataDirectory.getFileHandle(geheim, { create: true });
+  const writable = await destination.createWritable();
+  try { await dateiVerschluesseln(w.tresor.daten, sourceFile, (teil) => writable.write(teil as unknown as ArrayBuffer)); await writable.close(); }
+  catch (error) { await writable.abort?.().catch(() => undefined); throw error; }
+  // Zurücklesen, entschlüsseln und die Prüfsumme des Klartexts vergleichen – wie bei der lesbaren Kopie.
+  const teile: Uint8Array[] = [];
+  await dateiEntschluesseln(w.tresor.daten, await destination.getFile(), async (teil) => { teile.push(teil); });
+  const klar = new Blob(teile as BlobPart[]);
+  if (klar.size !== sourceFile.size || await fileChecksum(klar) !== sourceChecksum) throw new Error(`Die verschlüsselte Kopie von „${relativePath}“ konnte nicht per Prüfsumme bestätigt werden.`);
+  w.files.push({ path: relativePath, sizeBytes: sourceFile.size, checksum: sourceChecksum, datei: geheim });
+}
+
+async function copyDirectoryWithChecksums(source: FileSystemDirectoryHandle, w: SicherungsSchreiber, prefix: string) {
   const iterable = source as DirectoryWithEntries;
   for await (const entry of iterable.values()) {
     const relativePath = prefix ? `${prefix}/${entry.name}` : entry.name;
-    if (entry.kind === "directory") {
-      const destination = await target.getDirectoryHandle(entry.name, { create: true });
-      await copyDirectoryWithChecksums(entry as FileSystemDirectoryHandle, destination, relativePath, files);
-      continue;
-    }
-    const sourceFile = await (entry as FileSystemFileHandle).getFile();
-    const sourceChecksum = await fileChecksum(sourceFile);
-    const destination = await target.getFileHandle(entry.name, { create: true });
-    const writable = await destination.createWritable();
-    await writable.write(sourceFile);
-    await writable.close();
-    const copied = await destination.getFile();
-    const copiedChecksum = await fileChecksum(copied);
-    if (sourceFile.size !== copied.size || sourceChecksum !== copiedChecksum) throw new Error(`Die Kopie von „${relativePath}“ konnte nicht per Prüfsumme bestätigt werden.`);
-    files.push({ path: relativePath, sizeBytes: copied.size, checksum: copiedChecksum });
+    if (entry.kind === "directory") { await copyDirectoryWithChecksums(entry as FileSystemDirectoryHandle, w, relativePath); continue; }
+    await sicherungsDateiSchreiben(w, relativePath, await (entry as FileSystemFileHandle).getFile());
   }
 }
 
@@ -3103,21 +3153,24 @@ export async function writeFullFamilyBackup(input: {
   source: FileSystemDirectoryHandle;
   appVersion: string;
   createdAt?: string;
+  /** Stufe B: Passwort (≥ 10 Zeichen) → verschlüsselte Sicherung; ohne Passwort lesbar (bewusst gewählt). */
+  passwort?: string | null;
 }): Promise<FullBackupResult> {
   if (!(await requestVaultPermission(input.source)) || !(await requestVaultPermission(input.destination))) throw new Error("Quell- und Sicherungsordner müssen ausdrücklich freigegeben sein.");
   // Ein nativer Ordner (Android/Windows, P5) ist nie derselbe wie der Browser-Datentresor; der Browser lehnt den Vergleich dann ab.
   if (!istNativerOrdner(input.destination) && await (input.source as ComparableHandle).isSameEntry?.(input.destination)) throw new Error("Die vollständige Sicherung benötigt einen getrennten Zielordner.");
   const index = await readIndex(input.source);
   const createdAt = input.createdAt || new Date().toISOString();
-  const backup = await uniqueDirectory(input.destination, `Familienakte_Vollsicherung_${createdAt.replace(/[:.]/g, "-")}`);
+  const tresor = input.passwort ? await tresorAnlegen(input.passwort, { appVersion: input.appVersion, createdAt }) : null;
+  const backup = await uniqueDirectory(input.destination, `Familienakte_Vollsicherung_${createdAt.replace(/[:.]/g, "-")}${tresor ? "_verschluesselt" : ""}`);
   const dataDirectory = await backup.handle.getDirectoryHandle("Dateien", { create: true });
   const sourceRoot = await root(input.source);
-  const files: FamilyBackupFile[] = [];
+  const w: SicherungsSchreiber = { dataDirectory, files: [], tresor, nr: 0 };
+  const files = w.files;
   for (const folderName of ["01_Dokumente", "02_Online-Bestand_gesichert", "03_Erinnerungsmedien"]) {
     try {
       const sourceDirectory = await sourceRoot.getDirectoryHandle(folderName);
-      const targetDirectory = await dataDirectory.getDirectoryHandle(folderName, { create: true });
-      await copyDirectoryWithChecksums(sourceDirectory, targetDirectory, folderName, files);
+      await copyDirectoryWithChecksums(sourceDirectory, w, folderName);
     } catch (error) {
       if (!isNotFoundError(error)) throw error;
     }
@@ -3128,7 +3181,7 @@ export async function writeFullFamilyBackup(input: {
     if (!istProOriginal(document.storedPath)) continue;
     const original = await documentFile(input.source, document);
     const relative = `01_Dokumente/Pro-Tresor/${clean(document.id)}_${clean(original.name)}`;
-    await writeBackupOriginal(dataDirectory, relative, original, files);
+    await sicherungsDateiSchreiben(w, relative, original);
     document.storedPath = `${ROOT}/${relative}`; document.relativePath = document.storedPath;
     document.storageType = "local"; document.oneDrivePath = null;
     document.source = "Sicherung aus gemeinsamem Pro-Tresor";
@@ -3138,7 +3191,7 @@ export async function writeFullFamilyBackup(input: {
       const scanPath = `01_Dokumente/Pro-Tresor/Scan-Originale/${clean(document.id)}`;
       for (const [n, pfad] of document.proScanOriginals.entries()) {
         const bild = await proOriginalLesen(pfad);
-        await writeBackupOriginal(dataDirectory, `${scanPath}/${n + 1}_${clean(bild.name)}`, bild, files);
+        await sicherungsDateiSchreiben(w, `${scanPath}/${n + 1}_${clean(bild.name)}`, bild);
       }
       document.scanOriginalsPath = `${ROOT}/${scanPath}`;
       delete document.proScanOriginals;
@@ -3148,24 +3201,24 @@ export async function writeFullFamilyBackup(input: {
   const registerText = JSON.stringify(index, null, 2);
   const registerChecksum = await fileChecksum(new Blob([registerText], { type: "application/json" }));
   const manifest = createFamilyBackupManifest({ appVersion: input.appVersion, createdAt, registerChecksum, register: index, files });
-  await writeTextFile(backup.handle, "Familienakte_Register.json", registerText);
-  await writeTextFile(backup.handle, "Vollsicherung_Manifest.json", JSON.stringify(manifest, null, 2));
-  return { folderName: backup.name, manifest };
+  if (tresor) {
+    manifest.safeguards.push("Verschlüsselt (AES-GCM-256, PBKDF2-SHA256), Passwort oder Notfallschlüssel nötig");
+    await writeBlobFile(backup.handle, "Familienakte_Register.fav", await textVerschluesseln(tresor.daten, registerText));
+    await writeBlobFile(backup.handle, "Vollsicherung_Manifest.fav", await textVerschluesseln(tresor.daten, JSON.stringify(manifest, null, 2)));
+    const kopf: SicherungsKopf = { ...tresor.kopf, dateien: files.length };
+    await writeTextFile(backup.handle, KOPF_DATEI, JSON.stringify(kopf, null, 2));
+  } else {
+    await writeTextFile(backup.handle, "Familienakte_Register.json", registerText);
+    await writeTextFile(backup.handle, "Vollsicherung_Manifest.json", JSON.stringify(manifest, null, 2));
+  }
+  // Stufe B (Entscheidung 7): Zeitpunkt der letzten Vollsicherung im Register merken, für die Erinnerung nach 7 Tagen.
+  try { const aktuell = await readIndex(input.source); aktuell.letzteVollsicherung = createdAt; aktuell.letzteVollsicherungVerschluesselt = Boolean(tresor); await writeIndex(input.source, aktuell, { preserveTimestamp: true }); }
+  catch { /* die Sicherung selbst ist fertig; der Merker ist nur für die Erinnerung */ }
+  return { folderName: backup.name, manifest, notfall: tresor?.notfall };
 }
-
-async function writeBackupOriginal(directory: FileSystemDirectoryHandle, relative: string, file: File, files: FamilyBackupFile[]) {
-  const parts = relative.split("/"); const name = parts.pop()!;
-  let ziel = directory;
-  for (const part of parts) ziel = await ziel.getDirectoryHandle(part, { create: true });
-  // Ein Sicherungslauf hat ein neues Ziel; unerwartete fremde Dateien niemals überschreiben.
-  try { await ziel.getFileHandle(name); throw new Error("Die Pro-Tresor-Sicherung würde eine vorhandene Datei überschreiben."); }
-  catch (error) { if (!isNotFoundError(error)) throw error; }
-  const handle = await ziel.getFileHandle(name, { create: true });
-  const writer = await handle.createWritable(); await writer.write(file); await writer.close();
-  const written = await handle.getFile();
-  const checksum = await fileChecksum(file);
-  if (written.size !== file.size || await fileChecksum(written) !== checksum) throw new Error("Die Pro-Tresor-Sicherung stimmt nach dem Wiedereinlesen nicht überein.");
-  files.push({ path: relative, sizeBytes: file.size, checksum });
+async function writeBlobFile(directory: FileSystemDirectoryHandle, name: string, contents: Blob) {
+  const file = await directory.getFileHandle(name, { create: true });
+  const writable = await file.createWritable(); await writable.write(contents); await writable.close();
 }
 
 async function assertEmptyRestoreTarget(target: FileSystemDirectoryHandle) {
@@ -3197,6 +3250,9 @@ export async function restoreFullFamilyBackup(input: {
   const resolveTarget = input.refreshTarget || (async () => input.emptyTarget);
   const initialBackup = await resolveBackup();
   const initialTarget = await resolveTarget();
+  // Stufe B: eine verschlüsselte Sicherung (auch als jüngster Unterordner des gewählten Ordners) hat keinen Wiederherstellungstest.
+  const fund = await sicherungFinden(initialBackup).catch(() => null);
+  if (fund?.verschluesselt) throw new Error("Diese Sicherung ist verschlüsselt. „Wiederherstellung testen“ gibt es dafür nicht; die Probe in „Sicherung einlesen“ prüft mit dem Passwort jede Datei, ohne etwas zu schreiben.");
   const targetPath = input.diagnosticRelativeTargetPath || initialTarget.name;
   input.trace?.({ step: "Wiederherstellung vorbereiten", operation: "Sicherungs- und Zielordner frisch auflösen", relativePath: targetPath, result: "success", permission: await queriedDirectoryPermission(initialTarget), parentExists: true, targetExists: true });
   if (!(await requestVaultPermission(initialBackup)) || !(await requestVaultPermission(initialTarget))) throw new Error("Sicherungs- und Testordner müssen ausdrücklich freigegeben sein.");
@@ -3217,7 +3273,7 @@ export async function restoreFullFamilyBackup(input: {
     const backupData = await (await resolveBackup()).getDirectoryHandle("Dateien");
     const restoredRoot = await (await resolveTarget()).getDirectoryHandle(ROOT, { create: true });
     const attemptFiles: FamilyBackupFile[] = [];
-    await copyDirectoryWithChecksums(backupData, restoredRoot, "", attemptFiles);
+    await copyDirectoryWithChecksums(backupData, { dataDirectory: restoredRoot, files: attemptFiles, tresor: null, nr: 0 }, "");
     restoredFiles.splice(0, restoredFiles.length, ...attemptFiles);
   });
   input.trace?.({ step: "Sicherungsdateien kopieren und prüfen", operation: "Kopierte Dateien per Prüfsumme bestätigen", relativePath: `${targetPath}/${ROOT}`, result: "success", permission: await queriedDirectoryPermission(await resolveTarget()), parentExists: true, targetExists: true });
@@ -3254,48 +3310,87 @@ export type EinleseProbe = {
   ordner: string; hinweis: string; erstellt: string; appVersion: string;
   dateien: number; bytes: number; zaehlung: FamilyBackupManifest["counts"];
   fehler: string[]; warnungen: string[]; akteLeer: boolean; akteZaehlung: { dokumente: number; eintraege: number }; ok: boolean;
+  /** Stufe B: die Sicherung war verschlüsselt und wurde mit Passwort oder Notfallschlüssel geöffnet. */
+  verschluesselt?: boolean;
   /** Stufe A (Plan 08.11.): ist die Akte nicht leer, wird zusammengeführt. Plan ohne Schreiben. */
   zusammen?: { liste: AbgleichZeile[]; konflikte: AbgleichKonflikt[]; zaehlung: { neu: number; uebernommen: number; konflikte: number; gleich: number; nurHier: number }; revision: number };
 };
 const SICHERUNGS_PRAEFIX = "Familienakte_Vollsicherung_";
-async function sicherungFinden(gewaehlt: FileSystemDirectoryHandle): Promise<{ handle: FileSystemDirectoryHandle; name: string; hinweis: string }> {
-  try { await gewaehlt.getFileHandle("Vollsicherung_Manifest.json"); return { handle: gewaehlt, name: gewaehlt.name, hinweis: "" }; }
-  catch (error) { if (!isNotFoundError(error) && (error as DOMException)?.name !== "TypeMismatchError") throw error; }
+async function dateiVorhanden(ordner: FileSystemDirectoryHandle, name: string) {
+  try { await ordner.getFileHandle(name); return true; }
+  catch (error) { if (!isNotFoundError(error) && (error as DOMException)?.name !== "TypeMismatchError") throw error; return false; }
+}
+async function sicherungFinden(gewaehlt: FileSystemDirectoryHandle): Promise<{ handle: FileSystemDirectoryHandle; name: string; hinweis: string; verschluesselt: boolean }> {
+  if (await dateiVorhanden(gewaehlt, "Vollsicherung_Manifest.json")) return { handle: gewaehlt, name: gewaehlt.name, hinweis: "", verschluesselt: false };
+  if (await dateiVorhanden(gewaehlt, KOPF_DATEI)) return { handle: gewaehlt, name: gewaehlt.name, hinweis: "", verschluesselt: true };
   const kandidaten: string[] = [];
   for await (const entry of (gewaehlt as DirectoryWithEntries).values()) if (entry.kind === "directory" && entry.name.startsWith(SICHERUNGS_PRAEFIX)) kandidaten.push(entry.name);
-  if (!kandidaten.length) throw new Error("In diesem Ordner liegt keine Vollsicherung (Vollsicherung_Manifest.json fehlt). Bitte den Ordner „Familienakte_Vollsicherung_…“ wählen.");
+  if (!kandidaten.length) throw new Error("In diesem Ordner liegt keine Vollsicherung (Vollsicherung_Manifest.json oder Vollsicherung_Verschluesselt.json fehlt). Bitte den Ordner „Familienakte_Vollsicherung_…“ wählen.");
   kandidaten.sort();
   const name = kandidaten[kandidaten.length - 1];
-  return { handle: await gewaehlt.getDirectoryHandle(name), name, hinweis: kandidaten.length > 1 ? `${kandidaten.length} Sicherungen gefunden, die jüngste wird verwendet.` : "" };
+  const handle = await gewaehlt.getDirectoryHandle(name);
+  const hinweis = kandidaten.length > 1 ? `${kandidaten.length} Sicherungen gefunden, die jüngste wird verwendet.` : "";
+  if (await dateiVorhanden(handle, "Vollsicherung_Manifest.json")) return { handle, name, hinweis, verschluesselt: false };
+  if (await dateiVorhanden(handle, KOPF_DATEI)) return { handle, name, hinweis, verschluesselt: true };
+  throw new Error(`Im Ordner „${name}“ fehlen Manifest und Kopfdatei. Die Sicherung ist unvollständig.`);
 }
+/** Stufe B: Art der gewählten Sicherung, damit die Oberfläche bei einer verschlüsselten erst nach dem Passwort fragt. */
+export async function sicherungArt(gewaehlt: FileSystemDirectoryHandle): Promise<{ name: string; verschluesselt: boolean; erstellt: string | null }> {
+  const fund = await sicherungFinden(gewaehlt);
+  let erstellt: string | null = null;
+  if (fund.verschluesselt) { try { erstellt = (await readJsonFile<SicherungsKopf>(fund.handle, KOPF_DATEI)).createdAt; } catch { /* Probe meldet es */ } }
+  return { name: fund.name, verschluesselt: fund.verschluesselt, erstellt };
+}
+export type SicherungsZugang = { passwort?: string; notfall?: string };
 const akteIstLeer = (index: VaultIndex) => !index.documents.length && !index.records.length && !index.relations.length && !index.memoryDrafts.length && !index.inventoryItems.length;
-async function dateiAusSicherung(dateien: FileSystemDirectoryHandle, pfad: string) {
-  const teile = pfad.split("/"); const name = teile.pop()!; let ordner = dateien;
-  for (const teil of teile) ordner = await ordner.getDirectoryHandle(teil);
-  return (await ordner.getFileHandle(name)).getFile();
+/** Lesender Zugriff auf eine Sicherung, lesbar oder verschlüsselt; liefert immer Klartext-Dateien. */
+type SicherungsQuelle = { name: string; hinweis: string; verschluesselt: boolean; manifest: FamilyBackupManifest; registerText: string; dateienOrdner: FileSystemDirectoryHandle | null; datei: (eintrag: FamilyBackupFile) => Promise<File> };
+async function sicherungOeffnen(gewaehlt: FileSystemDirectoryHandle, zugang: SicherungsZugang | undefined, fehler: string[]): Promise<SicherungsQuelle> {
+  const fund = await sicherungFinden(gewaehlt);
+  let dateienOrdner: FileSystemDirectoryHandle | null = null;
+  try { dateienOrdner = await fund.handle.getDirectoryHandle("Dateien"); } catch (error) { if (!isNotFoundError(error)) throw error; }
+  if (!fund.verschluesselt) {
+    const manifest = await readJsonFile<FamilyBackupManifest>(fund.handle, "Vollsicherung_Manifest.json");
+    const registerText = await (await (await fund.handle.getFileHandle("Familienakte_Register.json")).getFile()).text();
+    if (!dateienOrdner && manifest.files.length) fehler.push("Der Ordner „Dateien“ fehlt.");
+    return { ...fund, manifest, registerText, dateienOrdner, datei: async (eintrag) => {
+      const teile = eintrag.path.split("/"); const name = teile.pop()!; let ordner = dateienOrdner!;
+      for (const teil of teile) ordner = await ordner.getDirectoryHandle(teil);
+      return (await ordner.getFileHandle(name)).getFile();
+    } };
+  }
+  const kopf = await readJsonFile<SicherungsKopf>(fund.handle, KOPF_DATEI);
+  const daten = await tresorOeffnen(kopf, zugang || {});
+  const lesen = async (name: string) => textEntschluesseln(daten, await (await fund.handle.getFileHandle(name)).getFile());
+  const manifest = JSON.parse(await lesen("Vollsicherung_Manifest.fav")) as FamilyBackupManifest;
+  const registerText = await lesen("Familienakte_Register.fav");
+  if (!dateienOrdner && manifest.files.length) fehler.push("Der Ordner „Dateien“ fehlt.");
+  return { ...fund, manifest, registerText, dateienOrdner, datei: async (eintrag) => {
+    if (!eintrag.datei) throw new Error(`Für „${eintrag.path}“ fehlt der Name der Geheimdatei im Manifest.`);
+    const geheim = await (await dateienOrdner!.getFileHandle(eintrag.datei)).getFile();
+    const teile: Uint8Array[] = []; await dateiEntschluesseln(daten, geheim, async (t) => { teile.push(t); });
+    return new File(teile as BlobPart[], eintrag.path.split("/").pop() || eintrag.datei);
+  } };
 }
 
-async function sicherungPruefen(gewaehlt: FileSystemDirectoryHandle, aktiv: FileSystemDirectoryHandle) {
-  const fund = await sicherungFinden(gewaehlt);
+async function sicherungPruefen(gewaehlt: FileSystemDirectoryHandle, aktiv: FileSystemDirectoryHandle, zugang?: SicherungsZugang) {
   const fehler: string[] = [], warnungen: string[] = [];
-  const manifest = await readJsonFile<FamilyBackupManifest>(fund.handle, "Vollsicherung_Manifest.json");
-  const registerText = await (await (await fund.handle.getFileHandle("Familienakte_Register.json")).getFile()).text();
+  const quelle = await sicherungOeffnen(gewaehlt, zugang, fehler);
+  const { manifest, registerText } = quelle;
   if (await fileChecksum(new Blob([registerText], { type: "application/json" })) !== manifest.registerChecksum) fehler.push("Die Prüfsumme des Registers stimmt nicht.");
   let index: VaultIndex | null = null;
   try { index = parseIndex(registerText); } catch { fehler.push("Das Register der Sicherung ist nicht lesbar."); }
-  let dateienOrdner: FileSystemDirectoryHandle | null = null;
-  try { dateienOrdner = await fund.handle.getDirectoryHandle("Dateien"); } catch (error) { if (!isNotFoundError(error)) throw error; if (manifest.files.length) fehler.push("Der Ordner „Dateien“ fehlt."); }
   let bytes = 0;
   const bekannt = new Set<string>();
   for (const eintrag of manifest.files) {
     bekannt.add(eintrag.path);
-    if (!dateienOrdner) break;
+    if (!quelle.dateienOrdner) break;
     if (eintrag.path.split("/").some((teil) => !teil || teil === "." || teil === "..")) { fehler.push(`Ungültiger Pfad: ${eintrag.path}`); continue; }
     try {
-      const datei = await dateiAusSicherung(dateienOrdner, eintrag.path);
+      const datei = await quelle.datei(eintrag);
       if (datei.size !== eintrag.sizeBytes || await fileChecksum(datei) !== eintrag.checksum) fehler.push(`Prüfsumme stimmt nicht: ${eintrag.path}`);
       else bytes += datei.size;
-    } catch (error) { if (isNotFoundError(error)) fehler.push(`Datei fehlt: ${eintrag.path}`); else throw error; }
+    } catch (error) { if (isNotFoundError(error)) fehler.push(`Datei fehlt: ${eintrag.path}`); else if (quelle.verschluesselt && error instanceof Error) fehler.push(`${eintrag.path}: ${error.message}`); else throw error; }
   }
   if (index) for (const dokument of index.documents) {
     const pfad = (dokument.storedPath || "").split("/").filter(Boolean);
@@ -3305,31 +3400,32 @@ async function sicherungPruefen(gewaehlt: FileSystemDirectoryHandle, aktiv: File
   }
   const aktuell = await readIndex(aktiv);
   const probe: EinleseProbe = {
-    ordner: fund.name, hinweis: fund.hinweis, erstellt: manifest.createdAt, appVersion: manifest.appVersion,
+    ordner: quelle.name, hinweis: quelle.hinweis, erstellt: manifest.createdAt, appVersion: manifest.appVersion,
     dateien: manifest.files.length, bytes, zaehlung: manifest.counts, fehler, warnungen,
     akteLeer: akteIstLeer(aktuell), akteZaehlung: { dokumente: aktuell.documents.length, eintraege: aktuell.records.length },
-    ok: !fehler.length,
+    ok: !fehler.length, verschluesselt: quelle.verschluesselt,
   };
   if (index && !probe.akteLeer) {
     const plan = abgleichPlanen(aktuell as unknown as AbgleichAkte, index as unknown as AbgleichAkte);
     probe.zusammen = { liste: plan.liste, konflikte: plan.konflikte, zaehlung: plan.zaehlung, revision: aktuell.revision ?? 0 };
   }
-  return { probe, fund, manifest, index, dateienOrdner };
+  return { probe, quelle, manifest, index };
 }
 
-/** Probe ohne Schreiben: liest Manifest, Register und jede Datei und vergleicht die Prüfsummen. */
-export async function sicherungProben(gewaehlt: FileSystemDirectoryHandle, aktiv: FileSystemDirectoryHandle): Promise<EinleseProbe> {
-  return (await sicherungPruefen(gewaehlt, aktiv)).probe;
+/** Probe ohne Schreiben: liest Manifest, Register und jede Datei (bei Verschlüsselung entschlüsselt) und vergleicht die Prüfsummen.
+ *  Verschlüsselt ohne passenden Zugang → Error("PASSWORT_FALSCH") bzw. ("PASSWORT_FEHLT"). */
+export async function sicherungProben(gewaehlt: FileSystemDirectoryHandle, aktiv: FileSystemDirectoryHandle, zugang?: SicherungsZugang): Promise<EinleseProbe> {
+  return (await sicherungPruefen(gewaehlt, aktiv, zugang)).probe;
 }
 
 /** Liest eine geprüfte Vollsicherung in die laufende Akte. Leere Akte: alles kopieren. Volle Akte: zusammenführen (Stufe A,
  *  Plan 08.11.) mit der Wahl je Konflikt. Überschreibt nie eine vorhandene Datei; bricht vor dem ersten Schreiben ab. */
-export async function sicherungEinlesen(gewaehlt: FileSystemDirectoryHandle, aktiv: FileSystemDirectoryHandle, wahl: Record<string, AbgleichSeite> = {}, erwarteteRevision?: number): Promise<EinleseProbe & { kopiert: number; zusammengefuehrt?: { neu: number; uebernommen: number; konflikteDort: number; dateienVorhanden: number } }> {
+export async function sicherungEinlesen(gewaehlt: FileSystemDirectoryHandle, aktiv: FileSystemDirectoryHandle, wahl: Record<string, AbgleichSeite> = {}, erwarteteRevision?: number, zugang?: SicherungsZugang): Promise<EinleseProbe & { kopiert: number; zusammengefuehrt?: { neu: number; uebernommen: number; konflikteDort: number; dateienVorhanden: number } }> {
   if (demoActive()) throw new Error("In der Demo wird keine Sicherung eingelesen. Bitte zuerst die Demo verlassen.");
   if (!(await requestVaultPermission(aktiv))) throw new Error("Der Datentresor wurde nicht freigegeben.");
-  const { probe, manifest, index, dateienOrdner } = await sicherungPruefen(gewaehlt, aktiv);
+  const { probe, manifest, index, quelle } = await sicherungPruefen(gewaehlt, aktiv, zugang);
   if (!probe.ok || !index) throw new Error(`Die Sicherung hat die Probe nicht bestanden: ${probe.fehler.slice(0, 3).join(" · ")}`);
-  if (!probe.akteLeer) return sicherungZusammenfuehren(aktiv, probe, manifest, index, dateienOrdner, wahl, erwarteteRevision);
+  if (!probe.akteLeer) return sicherungZusammenfuehren(aktiv, probe, manifest, index, quelle, wahl, erwarteteRevision);
   const ziel = await root(aktiv);
   // Erst prüfen, dass keine Zieldatei schon da ist; dann erst schreiben.
   const zielOrdner = async (pfad: string, anlegen: boolean) => { const teile = pfad.split("/"); const name = teile.pop()!; let o = ziel; for (const t of teile) o = await o.getDirectoryHandle(t, { create: anlegen }); return { o, name }; };
@@ -3339,10 +3435,10 @@ export async function sicherungEinlesen(gewaehlt: FileSystemDirectoryHandle, akt
   }
   const kopiert: FamilyBackupFile[] = [];
   for (const eintrag of manifest.files) {
-    const quelle = await dateiAusSicherung(dateienOrdner!, eintrag.path);
+    const datei = await quelle.datei(eintrag);
     const { o, name } = await zielOrdner(eintrag.path, true);
     const handle = await o.getFileHandle(name, { create: true });
-    const w = await handle.createWritable(); await w.write(quelle); await w.close();
+    const w = await handle.createWritable(); await w.write(datei); await w.close();
     const geschrieben = await handle.getFile();
     const summe = await fileChecksum(geschrieben);
     if (geschrieben.size !== eintrag.sizeBytes || summe !== eintrag.checksum) throw new Error(`Die Kopie von „${eintrag.path}“ stimmt nicht mit der Sicherung überein.`);
@@ -3352,7 +3448,7 @@ export async function sicherungEinlesen(gewaehlt: FileSystemDirectoryHandle, akt
   if (!akteIstLeer(aktuell)) throw new Error("Die Akte wurde während des Einlesens verändert. Das Register wurde nicht ersetzt.");
   index.proTresorId = null;
   index.revision = aktuell.revision ?? 0;
-  index.auditLog.unshift({ id: crypto.randomUUID(), at: new Date().toISOString(), action: "Vollsicherung eingelesen", details: `Sicherung „${probe.ordner}“ vom ${probe.erstellt.slice(0, 10)} (Fassung ${probe.appVersion}) in die leere Akte eingelesen: ${kopiert.length} Dateien per Prüfsumme bestätigt.` });
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: new Date().toISOString(), action: "Vollsicherung eingelesen", details: `Sicherung „${probe.ordner}“ vom ${probe.erstellt.slice(0, 10)} (Fassung ${probe.appVersion}${probe.verschluesselt ? ", verschlüsselt" : ""}) in die leere Akte eingelesen: ${kopiert.length} Dateien per Prüfsumme bestätigt.` });
   await writeIndex(aktiv, index, { preserveTimestamp: true });
   const nachher = await readIndex(aktiv);
   if (nachher.documents.length !== manifest.counts.documents || nachher.records.length !== manifest.counts.records) throw new Error("Nach dem Einlesen stimmen die Zahlen nicht mit der Sicherung überein.");
@@ -3361,7 +3457,7 @@ export async function sicherungEinlesen(gewaehlt: FileSystemDirectoryHandle, akt
 
 /** Stufe A: Vollsicherung in eine volle Akte zusammenführen. Dateien, die schon da sind, bleiben unberührt; neue werden kopiert
  *  und per Prüfsumme bestätigt. Das bisherige Register sichert writeIndex vorher (00_Register/Sicherungen). */
-async function sicherungZusammenfuehren(aktiv: FileSystemDirectoryHandle, probe: EinleseProbe, manifest: FamilyBackupManifest, index: VaultIndex, dateienOrdner: FileSystemDirectoryHandle | null, wahl: Record<string, AbgleichSeite>, erwarteteRevision?: number) {
+async function sicherungZusammenfuehren(aktiv: FileSystemDirectoryHandle, probe: EinleseProbe, manifest: FamilyBackupManifest, index: VaultIndex, quelle: SicherungsQuelle, wahl: Record<string, AbgleichSeite>, erwarteteRevision?: number) {
   const vorher = await readIndex(aktiv);
   if (erwarteteRevision !== undefined && (vorher.revision ?? 0) !== erwarteteRevision) throw new Error("Die Akte wurde seit der Probe geändert. Bitte die Probe neu starten; es wurde nichts geschrieben.");
   const ziel = await root(aktiv);
@@ -3373,9 +3469,9 @@ async function sicherungZusammenfuehren(aktiv: FileSystemDirectoryHandle, probe:
     try { for (const t of teile) o = await o.getDirectoryHandle(t); da = await (await o.getFileHandle(name)).getFile(); }
     catch (error) { if (!isNotFoundError(error)) throw error; }
     if (da) { dateienVorhanden++; if (da.size !== eintrag.sizeBytes || await fileChecksum(da) !== eintrag.checksum) warnungen.push(`„${eintrag.path}“ liegt in der Akte schon in anderer Fassung und wurde nicht ersetzt.`); continue; }
-    const quelle = await dateiAusSicherung(dateienOrdner!, eintrag.path);
+    const datei = await quelle.datei(eintrag);
     o = ziel; for (const t of teile) o = await o.getDirectoryHandle(t, { create: true });
-    const h = await o.getFileHandle(name, { create: true }); const w = await h.createWritable(); await w.write(quelle); await w.close();
+    const h = await o.getFileHandle(name, { create: true }); const w = await h.createWritable(); await w.write(datei); await w.close();
     const geschrieben = await h.getFile();
     if (geschrieben.size !== eintrag.sizeBytes || await fileChecksum(geschrieben) !== eintrag.checksum) throw new Error(`Die Kopie von „${eintrag.path}“ stimmt nicht mit der Sicherung überein. Das Register wurde nicht geändert.`);
     kopiert++;
@@ -3386,7 +3482,7 @@ async function sicherungZusammenfuehren(aktiv: FileSystemDirectoryHandle, probe:
   const { akte } = abgleichAnwenden(plan, wahl);
   const neu = { ...aktuell, ...akte } as unknown as VaultIndex;
   const konflikteDort = plan.konflikte.filter((k) => wahl[k.schluessel] === "dort").length;
-  neu.auditLog = [{ id: crypto.randomUUID(), at: new Date().toISOString(), action: "Vollsicherung zusammengeführt", details: `Sicherung „${probe.ordner}“ vom ${probe.erstellt.slice(0, 10)} zusammengeführt: ${plan.zaehlung.neu} neu, ${plan.zaehlung.konflikte} Unterschiede (${konflikteDort} aus der Sicherung übernommen), ${kopiert} Dateien kopiert. Nichts wurde gelöscht; das vorige Register liegt unter 00_Register/Sicherungen.` }, ...(neu.auditLog || [])];
+  neu.auditLog = [{ id: crypto.randomUUID(), at: new Date().toISOString(), action: "Vollsicherung zusammengeführt", details: `Sicherung „${probe.ordner}“ vom ${probe.erstellt.slice(0, 10)}${probe.verschluesselt ? " (verschlüsselt)" : ""} zusammengeführt: ${plan.zaehlung.neu} neu, ${plan.zaehlung.konflikte} Unterschiede (${konflikteDort} aus der Sicherung übernommen), ${kopiert} Dateien kopiert. Nichts wurde gelöscht; das vorige Register liegt unter 00_Register/Sicherungen.` }, ...(neu.auditLog || [])];
   await writeIndex(aktiv, neu);
   return { ...probe, warnungen, kopiert, zusammengefuehrt: { neu: plan.zaehlung.neu, uebernommen: plan.zaehlung.uebernommen, konflikteDort, dateienVorhanden } };
 }
@@ -3411,7 +3507,7 @@ export async function demoKopieAnlegen(quelle: FileSystemDirectoryHandle): Promi
   const quellRoot = await root(quelle);
   for await (const eintrag of (quellRoot as DirectoryWithEntries).values()) {
     if (eintrag.kind !== "directory" || eintrag.name === "00_Register") continue;
-    await copyDirectoryWithChecksums(eintrag as FileSystemDirectoryHandle, await zielRoot.getDirectoryHandle(eintrag.name, { create: true }), eintrag.name, dateien);
+    await copyDirectoryWithChecksums(eintrag as FileSystemDirectoryHandle, { dataDirectory: zielRoot, files: dateien, tresor: null, nr: 0 }, eintrag.name);
   }
   // In der Demo geht nichts nach außen: kein Pro-Tresor (Verweise bleiben nur lesbar, wo eine Kopie existiert).
   const proVerweise = index.documents.filter((d) => istProOriginal(d.storedPath)).length;
@@ -4323,7 +4419,7 @@ export async function copyMissingDocuments(source: FileSystemDirectoryHandle, ta
       for (const [n, pfad] of document.proScanOriginals.entries()) {
         const bild = await proOriginalLesen(pfad);
         if (targetProId) scans.push(await proOriginalSpeichern(targetProId, bild, await fileChecksum(bild)));
-        else await writeBackupOriginal(await root(target), `${scanFolder}/${n + 1}_${clean(bild.name)}`, bild, []);
+        else await sicherungsDateiSchreiben({ dataDirectory: await root(target), files: [], tresor: null, nr: 0 }, `${scanFolder}/${n + 1}_${clean(bild.name)}`, bild);
       }
       if (targetProId) { item.proScanOriginals = scans; item.scanOriginalsPath = null; }
       else { delete item.proScanOriginals; item.scanOriginalsPath = `${ROOT}/${scanFolder}`; }

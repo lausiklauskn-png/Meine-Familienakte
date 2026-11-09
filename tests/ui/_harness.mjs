@@ -112,3 +112,13 @@ export function collectErrors(page) {
   page.on("console", (m) => { if (m.type() === "error") errors.push(`console: ${m.text()}`); });
   return errors;
 }
+
+/** Stufe B: „Vollständige Sicherung erstellen“ öffnet erst die Wahl verschlüsselt/lesbar. Klickt den Knopf und wählt. */
+export async function vollsicherungStarten(page, art = "lesbar", passwort = "") {
+  await page.locator("button", { hasText: "Vollständige Sicherung erstellen" }).click();
+  const dialog = page.locator("[data-sicherung-anlegen]");
+  await dialog.waitFor({ timeout: 10000 });
+  await dialog.locator(`[data-sicherung-art="${art}"] input`).check();
+  if (art === "verschluesselt") { await dialog.locator("[data-passwort]").fill(passwort); await dialog.locator("[data-passwort-wieder]").fill(passwort); }
+  await dialog.locator("[data-sicherung-los]").click();
+}

@@ -5,8 +5,9 @@ Ersetzt Punkt 10 in `docs/PLAN_2026-11-07.md` und die offenen Fragen u–z in `d
 
 **Freibrief (Klaus 08.11.2026):** Der Plan wird ohne weitere Rückfrage umgesetzt, Sitzung für Sitzung. Auftauchende Fragen
 entscheidet die Sitzung selbst, nach Logik und Benutzerfreundlichkeit. Vorschauen dienen der Nachvollziehbarkeit, der Bau wartet
-nicht darauf. Ausgabe: nach jeder Stufe mindestens die PWA (schnell, wenig Aufwand); APK und Windows, sobald native Teile
-geändert sind oder spätestens jede zweite Stufe. So gibt es bei einem Abbruch immer eine frische Fassung.
+nicht darauf. **Ausgabe (Klaus 08.11., später am Tag):** Die Sitzungen folgen selbstständig aufeinander; APK, Windows und PWA werden
+erst **am Ende der letzten Stufe** ausgegeben. Die PWA geht ohne Mehraufwand mit jedem Zusammenführen auf `main` über Pages hinaus.
+Jede Stufe landet als eigener PR auf `main`, damit bei einem Abbruch nichts verloren ist.
 
 ## Entscheidungen
 
@@ -66,4 +67,4 @@ Fassungsnummern sind Richtwerte; vor jeder Ausgabe die tatsächlichen Releases p
 
 ## Stand
 
-- [x] A (2.28.40, #131, PWA) · [ ] B · [ ] C · [ ] D · [ ] E · [ ] F · [ ] G · [ ] H · [ ] I
+- [x] A (2.28.40, #131) · [x] B (2.28.41) · [ ] C · [ ] D · [ ] E · [ ] F · [ ] G · [ ] H · [ ] I

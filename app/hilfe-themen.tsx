@@ -46,6 +46,7 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
   { id: "loeschen", titel: "Löschen mit dem Mülleimer", symbol: <Trash2/>, weg: "an Erinnerungen und Notizen", ablauf: [{ titel: "Mülleimer" }, { titel: "Archiviert", unter: "aus den Listen, bleibt im Register", art: "gut" }, { titel: "Kalender-Eintrag", unter: "wird mit entfernt" }], merk: [<><b>Löschen heißt archivieren:</b> der Eintrag verschwindet aus den Listen, bleibt aber im Register und in der Sicherung.</>, <><b>Zurückholen</b> in der App geht noch nicht.</>], punkte: [
     "Gilt für Erinnerungen und Notizen mit Mülleimer: Der Eintrag verschwindet aus den Listen, bleibt aber als „archiviert“ im Register und kommt mit der Vollsicherung mit.",
     "Eine Ansicht zum Ansehen oder Zurückholen archivierter Einträge gibt es noch nicht.",
+    "Aussortierte Dokumente: Bibliothek › „Aussortiert“ › Haken › „Zurückholen“ oder „Endgültig löschen …“ (Papierkorb leeren, nur nach Rückfrage; nicht rückgängig).",
     "Ein verbundener Kalender-Eintrag wird dabei entfernt.",
     "Dokumente haben keinen Mülleimer; ihre Originale werden nie gelöscht.",
   ] },
@@ -98,6 +99,9 @@ export const NEUE_HILFE_THEMEN: HilfeThema[] = [
   { id: "umzug", titel: "Auf ein neues Gerät umziehen", symbol: <Smartphone/>, weg: "Sicherheit › Familienakte vollständig sichern und testen › Sicherung einlesen", ablauf: ablaufUmzug, merk: [<><b>Ganze Akte:</b> Vollsicherung, dann auf dem neuen Gerät „Sicherung einlesen“. Ist die Akte schon benutzt, wird zusammengeführt.</>, <><b>Weg frei wählbar:</b> USB-Stick, SD-Karte oder Ordner.</>, <><b>Zwei benutzte Geräte:</b> Sicherung einlesen führt zusammen, gelöscht wird nichts.</>], punkte: [
     "Die ganze Akte von einem Gerät auf ein anderes bringen: auf dem alten Gerät „Vollständige Sicherung erstellen“, den Sicherungsordner über einen frei gewählten Weg (USB-Stick, SD-Karte, Ordner) mitnehmen, auf dem neuen Gerät „Sicherung einlesen“.",
     "In eine leere Akte wird alles eingelesen. In eine benutzte Akte wird zusammengeführt: Neues kommt dazu, bei Unterschieden wählst du die Fassung (vorgewählt die jüngere), gelöscht wird nichts.",
+    "Verschlüsselt (empfohlen): Passwort mit mindestens 10 Zeichen; danach ein Notfallblatt mit einem Schlüssel, der die Sicherung auch ohne Passwort öffnet – ausdrucken, zu den Papieren legen, nie auf dieselbe Festplatte. Ohne Passwort und Blatt sind die Daten unlesbar.",
+    "Lesbar bleibt wählbar: dann kann jeder mit dem Ordner alle Unterlagen öffnen – nur für einen Speicher, der zu Hause bleibt.",
+    "Nach 7 Tagen ohne Vollsicherung erinnert die App auf der Startseite und im Sicherheitscenter.",
     "Sichern und Einlesen brauchen eine Ordnerwahl: in der Android- oder Windows-App oder am PC in Chrome oder Edge. Die Web-App am Handy oder Tablet kann das nicht.",
     "Nur eine einzelne Unterlage? Sicherheit › „Eine Unterlage an ein anderes Gerät geben“. Einträge, Fristen und Erinnerungen gehen dort nicht mit.",
     "Zwei benutzte Geräte abgleichen: auf dem einen sichern, auf dem anderen „Sicherung einlesen“ – das führt zusammen. Automatisch über Festplatte und WLAN: geplant.",
