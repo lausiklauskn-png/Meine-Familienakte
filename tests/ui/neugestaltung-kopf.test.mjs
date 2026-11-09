@@ -73,7 +73,9 @@ try {
       { name: "Ablegen-Probe-Brief.txt", mimeType: "text/plain", buffer: Buffer.from("Brief Beispielamt, erfunden") },
     ]);
     // In der CI (langsamer Rechner) brauchte die Prüfung der zwei Dateien mehr als 15 s; bei Zeitablauf den Stand der Seite nennen.
-    await page.waitForFunction(() => document.body.innerText.includes("Ablegen-Probe-Rechnung") && document.body.innerText.includes("Ablegen-Probe-Brief"), null, { timeout: 45000 }).catch(async (e) => {
+    // Nach der Analyse zeigt die Eingangszentrale den erkannten Titel („Ablegen Probe Rechnung“, Bindestriche zu Leerzeichen) statt des
+    // Dateinamens; auf einem schnellen Rechner ist der Platzhalter mit dem Dateinamen vor dem ersten Blick weg – beide Schreibweisen gelten.
+    await page.waitForFunction(() => /Ablegen[- ]Probe[- ]Rechnung/.test(document.body.innerText) && /Ablegen[- ]Probe[- ]Brief/.test(document.body.innerText), null, { timeout: 45000 }).catch(async (e) => {
       const stand = await page.evaluate(() => ({ crumb: document.querySelector(".breadcrumb")?.textContent || "", auswahl: !!document.querySelector("[data-ablegen-auswahl]"), text: document.body.innerText.replace(/\s+/g, " ").slice(0, 600) }));
       throw new Error(`${e.message.split("\n")[0]} · ${JSON.stringify(stand)}`);
     });
