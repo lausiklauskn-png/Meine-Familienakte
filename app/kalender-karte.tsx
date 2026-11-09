@@ -7,7 +7,9 @@ import { abgleichPlan, ALLE_ERINNERUNGEN, KURZ_ERINNERUNGEN, ERINNERUNG_VORGABE,
 import type { FamilyRecordUnion, FamilyRelation } from "../lib/family-data-model";
 import { ANBIETER, kalenderNeuAnmelden, plattform, type KalenderInfo } from "./kalender-anbieter";
 import { kalenderAbgleichen, kalenderDateiAusgeben, kalenderEinstLesen, kalenderEinstSchreiben, type KalenderEinst } from "./kalender-abgleich";
-import { updateLocalScheduleKalender } from "./local-vault";
+import { einlesenAusfuehren, einlesenVorbereiten, einleseText, exklusiv, type EinleseVorschau } from "./kalender-einlesen";
+import { X } from "lucide-react";
+import { readLocalVaultData, updateLocalScheduleKalender } from "./local-vault";
 import { Ablaufbild, zurStelle } from "./ablaufbild";
 import { InfoPopover } from "./ui-controls";
 import { DatumFeld } from "./datum-feld";
@@ -133,12 +135,35 @@ export function useKalenderAutoAbgleich(vaultHandle: FileSystemDirectoryHandle |
     if (!anbieter.zustand().bereit || !anbieter.verbunden()) return;
     if (!offeneSchritte(records, relations, einst)) return;
     laeuft.current = true;
-    void kalenderAbgleichen(vaultHandle, records, relations, einst)
+    void exklusiv(() => kalenderAbgleichen(vaultHandle, records, relations, einst))
       .then(async (r) => { if (r.angelegt + r.geaendert + r.entfernt) await aktualisieren(); if (r.fehler.length) melden({ kind: "error", text: `Kalender: ${r.fehler[0]}` }); })
       .catch((g) => melden({ kind: "error", text: `Kalender: ${g instanceof Error ? g.message : String(g)}` }))
       .finally(() => { laeuft.current = false; });
     // Bewusst ohne letzterFehler/letzterAbgleich: ein Fehler wiederholt sich nicht von selbst, erst nach einer Änderung.
   }, [vaultHandle, records, relations, einst?.anbieter, einst?.kalenderId, einst?.erinnerungen?.join(), bereit]);
+  // Stufe D: Termine aus dem Kalender holen – beim Start und alle 15 Minuten, nur ohne Frage; Fragen wartet die Karte ab.
+  const zuletztGeholt = useRef(0);
+  const aktuell = useRef({ records, aktualisieren, melden }); aktuell.current = { records, aktualisieren, melden };
+  useEffect(() => {
+    if (!vaultHandle || !einst?.einlesen?.an || einst.anbieter === "ics") return;
+    const holen = async () => {
+      const a = ANBIETER[einst.anbieter];
+      if (laeuft.current || !a.zustand().bereit || !a.verbunden() || Date.now() - zuletztGeholt.current < 15 * 60000) return;
+      laeuft.current = true; zuletztGeholt.current = Date.now();
+      try {
+        await exklusiv(async () => {
+          const v = await einlesenVorbereiten((await readLocalVaultData(vaultHandle)).records, einst);
+          if (v.zaehlung.konflikte) { aktuell.current.melden({ kind: "info", text: `Kalender: ${v.zaehlung.konflikte} Termine wurden hier und im Kalender geändert – in „Kalender verbinden“ › „Termine holen“ entscheiden.` }); return; }
+          if (v.zaehlung.anlegen + v.zaehlung.aendern + v.zaehlung.archivieren) { const z = await einlesenAusfuehren(vaultHandle, einst, v); await aktuell.current.aktualisieren(); aktuell.current.melden({ kind: "success", text: `Kalender geholt: ${einleseText(z)}` }); }
+          else if (v.fehler.length) aktuell.current.melden({ kind: "error", text: `Kalender holen: ${v.fehler[0]}` });
+        });
+      } catch (g) { aktuell.current.melden({ kind: "error", text: `Kalender holen: ${g instanceof Error ? g.message : String(g)}` }); }
+      finally { laeuft.current = false; }
+    };
+    void holen();
+    const takt = window.setInterval(() => { if (document.visibilityState === "visible") void holen(); }, 60000);
+    return () => window.clearInterval(takt);
+  }, [vaultHandle, einst?.anbieter, einst?.einlesen?.an, einst?.einlesen?.kalender?.map((k) => k.id).join(), bereit]);
 }
 
 // ---------- Hinweis „neu anmelden“ ----------
@@ -187,6 +212,9 @@ export function KalenderVerbinden({ vaultHandle, records, relations, onRefresh, 
   const [busy, setBusy] = useState("");
   const [fehler, setFehler] = useState("");
   const [, setTakt] = useState(0);
+  // Stufe D: Termine aus dem Kalender holen
+  const [holListe, setHolListe] = useState<KalenderInfo[] | null>(null);
+  const [holVorschau, setHolVorschau] = useState<EinleseVorschau | null>(null);
   const pl = plattform();
   const offen = records.filter((r) => istTermin(r) && !["erledigt", "zurückgestellt", "archiviert"].includes(r.status) && r.data.dueAt);
   const ohneHaken = offen.filter((r) => kalenderFelder(r).kalenderEintragen === undefined);
@@ -247,11 +275,51 @@ export function KalenderVerbinden({ vaultHandle, records, relations, onRefresh, 
     }
     const a = ANBIETER[einst.anbieter];
     if (!a.verbunden()) await a.verbinden();
-    const r = await kalenderAbgleichen(vaultHandle, records, relations, einst);
+    // Frisch aus dem Register lesen: ein Knopfdruck soll den tatsächlichen Stand hinausschreiben, nicht den zuletzt gezeigten.
+    const { r, geholt } = await exklusiv(async () => {
+      const frisch = await readLocalVaultData(vaultHandle);
+      const r = await kalenderAbgleichen(vaultHandle, frisch.records, frisch.relations, einst);
+      let geholt = "";
+      if (einst.einlesen?.an && einst.einlesen.kalender.length) {
+        const v = await einlesenVorbereiten((await readLocalVaultData(vaultHandle)).records, einst);
+        if (v.zaehlung.konflikte) setHolVorschau(v);
+        else if (v.schritte.length) { const z = await einlesenAusfuehren(vaultHandle, einst, v); geholt = ` Geholt: ${einleseText(z)}`; }
+      }
+      return { r, geholt };
+    });
     await onRefresh();
     if (r.fehler.length) throw new Error(r.fehler[0]);
-    onNotice({ kind: "success", text: `Kalender abgeglichen: ${r.angelegt} neu, ${r.geaendert} geändert, ${r.entfernt} entfernt.` });
+    onNotice({ kind: "success", text: `Kalender abgeglichen: ${r.angelegt} neu, ${r.geaendert} geändert, ${r.entfernt} entfernt.${geholt}` });
   });
+
+  const holenAn = (an: boolean) => tun("holen", async () => {
+    if (!einst || einst.anbieter === "ics") return;
+    if (!an) { kalenderEinstSchreiben({ ...einst, einlesen: { ...(einst.einlesen || { kalender: [], staende: {} }), an: false } }); return; }
+    // Erst die Einstellung (Haken springt sofort um; vorgewählt ist der verbundene Kalender), dann die Liste der Kalender holen.
+    const vorher = einst.einlesen?.kalender?.length ? einst.einlesen.kalender : [{ id: einst.kalenderId, name: einst.kalenderName }];
+    kalenderEinstSchreiben({ ...einst, einlesen: { an: true, kalender: vorher, staende: einst.einlesen?.staende || {} } });
+    const a = ANBIETER[einst.anbieter]; if (!a.verbunden()) await a.verbinden();
+    setHolListe(await a.kalender());
+  });
+  const holKalenderListe = () => tun("holen", async () => { if (!einst || einst.anbieter === "ics") return; const a = ANBIETER[einst.anbieter]; if (!a.verbunden()) await a.verbinden(); setHolListe(await a.kalender()); });
+  const holKalenderWaehlen = (k: KalenderInfo, an: boolean) => {
+    if (!einst?.einlesen) return;
+    const liste = einst.einlesen.kalender.filter((x) => x.id !== k.id);
+    kalenderEinstSchreiben({ ...einst, einlesen: { ...einst.einlesen, kalender: an ? [...liste, { id: k.id, name: k.name }] : liste } });
+  };
+  const jetztHolen = () => tun("holen", () => exklusiv(async () => {
+    if (!einst || !vaultHandle || !einst.einlesen?.an) return;
+    const v = await einlesenVorbereiten((await readLocalVaultData(vaultHandle)).records, einst);
+    if (v.fehler.length && !v.schritte.length) throw new Error(v.fehler[0]);
+    if (v.zaehlung.konflikte) { setHolVorschau(v); return; }
+    const z = await einlesenAusfuehren(vaultHandle, einst, v); await onRefresh();
+    onNotice({ kind: "success", text: `Termine geholt: ${einleseText(z)}${v.fehler.length ? ` ${v.fehler[0]}` : ""}` });
+  }));
+  const holenEntscheiden = (wahl: Record<string, "hier" | "dort">) => tun("holen", () => exklusiv(async () => {
+    if (!einst || !vaultHandle || !holVorschau) return;
+    const z = await einlesenAusfuehren(vaultHandle, einst, holVorschau, wahl); setHolVorschau(null); await onRefresh();
+    onNotice({ kind: "success", text: `Termine geholt: ${einleseText(z)}` });
+  }));
 
   const trennen = () => tun("trennen", async () => {
     if (!einst) return;
@@ -301,6 +369,19 @@ export function KalenderVerbinden({ vaultHandle, records, relations, onRefresh, 
       <button type="button" className="button secondary" disabled={!ohneHaken.length || !vaultHandle || Boolean(busy)} onClick={() => void vorhandeneUebernehmen()} data-kalender-uebernehmen>Einmal alle offenen eintragen</button>
     </div>
 
+    {verbunden && einst!.anbieter !== "ics" && <div id="kalender-schritt-holen" className="kalender-schritt" tabIndex={-1} data-kalender-holen={einst!.einlesen?.an ? "an" : "aus"}>
+      <h3>5 · Termine aus dem Kalender holen</h3>
+      <label className="checkbox-row"><input type="checkbox" checked={Boolean(einst!.einlesen?.an)} disabled={Boolean(busy)} onChange={(e) => void holenAn(e.target.checked)} data-kalender-holen-schalter/> Termine aus dem Kalender als Fristen in die Akte holen</label>
+      {einst!.einlesen?.an && <>
+        <p className="fine-print">Welche Kalender? Neue Termine werden angelegt, Änderungen übernommen, im Kalender Gelöschtes wird in der Akte archiviert. Wurde ein Termin hier und im Kalender geändert, fragt die App. Eigene Einträge der Akte werden nicht noch einmal geholt.</p>
+        {holListe ? <ul className="kalender-hol-liste" data-kalender-hol-liste>{holListe.map((k) => <li key={k.id}><label className="checkbox-row"><input type="checkbox" checked={einst!.einlesen!.kalender.some((x) => x.id === k.id)} disabled={Boolean(busy)} onChange={(e) => holKalenderWaehlen(k, e.target.checked)} data-kalender-hol={k.id}/> {k.name}{k.konto ? <small> · {k.konto}</small> : null}</label></li>)}</ul>
+          : <p className="fine-print" data-kalender-hol-gewaehlt>Gewählt: {einst!.einlesen!.kalender.map((k) => k.name).join(", ") || "keiner"}. <button type="button" className="text-link" disabled={Boolean(busy)} onClick={() => void holKalenderListe()}>Kalender wählen …</button></p>}
+        <div className="button-row"><button type="button" className="button secondary" disabled={Boolean(busy) || !vaultHandle || !einst!.einlesen!.kalender.length} onClick={() => void jetztHolen()} data-kalender-jetzt-holen><Download size={16}/> Jetzt holen</button>{einst!.einlesen?.zuletzt && <small className="fine-print">zuletzt {new Date(einst!.einlesen.zuletzt).toLocaleString("de-DE", { dateStyle: "short", timeStyle: "short" })}</small>}</div>
+        {einst!.einlesen?.fehler && <p className="form-error">{einst!.einlesen.fehler}</p>}
+      </>}
+    </div>}
+    {holVorschau && <HolKonflikte vorschau={holVorschau} busy={Boolean(busy)} onEntscheiden={(w) => void holenEntscheiden(w)} onClose={() => setHolVorschau(null)}/>}
+
     <div className="kalender-schritt">
       <h3>4 · Stand</h3>
       {!verbunden && <p className="fine-print">Noch kein Kalender verbunden.</p>}
@@ -314,4 +395,25 @@ export function KalenderVerbinden({ vaultHandle, records, relations, onRefresh, 
       {busy && <p className="fine-print" aria-live="polite">Bitte warten …</p>}
     </div>
   </details>;
+}
+
+/** Stufe D: Termin hier und im Kalender geändert – welche Fassung bleibt? Vorgewählt ist die jüngere Änderung. */
+function HolKonflikte({ vorschau, busy, onEntscheiden, onClose }: { vorschau: EinleseVorschau; busy: boolean; onEntscheiden: (wahl: Record<string, "hier" | "dort">) => void; onClose: () => void }) {
+  const konflikte = vorschau.schritte.filter((s): s is Extract<EinleseVorschau["schritte"][number], { art: "konflikt" }> => s.art === "konflikt");
+  const [wahl, setWahl] = useState<Record<string, "hier" | "dort">>(() => Object.fromEntries(konflikte.map((k) => [k.recordId, k.vorschlag])));
+  const zeit = (z: string | null) => { if (!z) return "ohne Zeit"; const d = new Date(z); return Number.isNaN(d.getTime()) ? z : d.toLocaleString("de-DE", { dateStyle: "short", timeStyle: "short" }); };
+  const alle = (s: "hier" | "dort") => setWahl(Object.fromEntries(konflikte.map((k) => [k.recordId, s])));
+  return <div className="modal-backdrop" role="presentation" onMouseDown={(e) => e.target === e.currentTarget && !busy && onClose()}>
+    <div className="modal" role="dialog" aria-modal="true" aria-labelledby="kalender-hol-titel" data-kalender-hol-konflikte>
+      <div className="modal-head"><div><span className="badge warning">Kalender</span><h2 id="kalender-hol-titel">{konflikte.length === 1 ? "Ein Termin wurde" : `${konflikte.length} Termine wurden`} hier und im Kalender geändert</h2></div><button className="icon-button" onClick={onClose} disabled={busy} aria-label="Fenster schließen"><X/></button></div>
+      <p className="fine-print">Dazu kommen {vorschau.zaehlung.anlegen} neue, {vorschau.zaehlung.aendern} geänderte und {vorschau.zaehlung.archivieren} archivierte Termine ohne Frage. Vorgewählt ist jeweils die jüngere Änderung.</p>
+      <div className="button-row"><button type="button" className="button secondary" onClick={() => alle("hier")} data-kalender-hol-alle-hier>Alle: meine</button><button type="button" className="button secondary" onClick={() => alle("dort")} data-kalender-hol-alle-dort>Alle: aus dem Kalender</button></div>
+      <ul className="einlesen-konflikte">{konflikte.map((k) => <li key={k.recordId} data-kalender-hol-konflikt={k.recordId}>
+        <span>{k.hier.title} ({k.hier.dueAt}{k.hier.dueTime ? ` ${k.hier.dueTime}` : ""}) ⟷ {k.felder.title} ({k.felder.dueAt}{k.felder.dueTime ? ` ${k.felder.dueTime}` : ""})</span>
+        <label><input type="radio" name={`hol-${k.recordId}`} checked={wahl[k.recordId] === "hier"} onChange={() => setWahl({ ...wahl, [k.recordId]: "hier" })}/> meine ({zeit(k.hierZeit)})</label>
+        <label><input type="radio" name={`hol-${k.recordId}`} checked={wahl[k.recordId] === "dort"} onChange={() => setWahl({ ...wahl, [k.recordId]: "dort" })}/> aus dem Kalender ({zeit(k.dortZeit)})</label>
+      </li>)}</ul>
+      <div className="modal-actions"><button className="button secondary" onClick={onClose} disabled={busy}>Abbrechen</button><button className="button primary" disabled={busy} onClick={() => onEntscheiden(wahl)} data-kalender-hol-los>{busy ? "Läuft …" : "Übernehmen"}</button></div>
+    </div>
+  </div>;
 }

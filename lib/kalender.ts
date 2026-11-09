@@ -103,8 +103,13 @@ export type KalenderZuordnung = {
   am: string;
 };
 
+/** Stufe D: der Eintrag stammt aus dem Kalender (eingelesen). stand = Fingerabdruck beim Anbieter, standLokal = Fingerabdruck der
+ *  Felder in der Akte beim letzten Einlesen; weichen sie ab, hat die jeweilige Seite geändert. */
+export type KalenderQuelle = { anbieter: KalenderAnbieter; kalenderId: string; eintragId: string; stand: string; standLokal: string; am: string; kalenderName?: string | null };
+
 export type KalenderFelder = {
   dueTime?: string;
+  kalenderQuelle?: KalenderQuelle | null;
   erinnerungen?: ErinnerungsWahl[];
   /** true = in den Kalender eintragen (Haken im Formular oder „Vorhandene übernehmen“); fehlt = nie still eintragen. */
   kalenderEintragen?: boolean;
@@ -126,6 +131,9 @@ export type KalenderEintrag = {
   geschuetzt: boolean;
   sequenz: number;
   stand: string;
+  /** Stufe D: eingelesener Termin, der in der Akte geändert wurde – beim Anbieter nur Titel und Zeit anpassen, nicht
+   *  Beschreibung oder Erinnerungen des Nutzers. */
+  quelle?: boolean;
 };
 
 type Termin = Extract<FamilyRecordUnion, { recordType: "deadline" | "task" }>;
@@ -240,6 +248,18 @@ export function abgleichPlan(records: FamilyRecordUnion[], ziel: { anbieter: Kal
   const plan: AbgleichSchritt[] = [];
   for (const record of records) {
     if (!istTermin(record)) continue;
+    // Stufe D: ein aus dem Kalender eingelesener Termin gehört dem Nutzer im Kalender. Erledigt oder archiviert in der Akte
+    // löscht ihn dort nie; nur eine Änderung von Titel oder Zeit in der Akte geht zurück (Titel und Zeit, sonst nichts).
+    const quelle = kalenderFelder(record).kalenderQuelle;
+    if (quelle && quelle.anbieter === ziel.anbieter) {
+      const zuordnung = (kalenderFelder(record).kalender || []).find((z) => z.anbieter === ziel.anbieter && z.eintragId === quelle.eintragId);
+      const felder = record.data as { title?: string; dueAt?: string; dueTime?: string | null };
+      const lokal = kurzHash(JSON.stringify({ t: (felder.title || "").trim(), d: felder.dueAt || "", u: felder.dueTime || null }));
+      const eintrag = lokal !== quelle.standLokal && soll(record) ? kalenderEintrag(record, { vorgabe: opt.vorgabe, relations: opt.relations, records, geschuetzt: opt.geschuetzt?.(record) }) : null;
+      if (eintrag && zuordnung) plan.push({ art: "aendern", recordId: record.id, kalenderId: quelle.kalenderId, eintrag: { ...eintrag, quelle: true }, zuordnung });
+      else plan.push({ art: "gleich", recordId: record.id, kalenderId: quelle.kalenderId });
+      continue;
+    }
     const kalenderId = zielKalenderId(record, ziel);
     const beimAnbieter = (kalenderFelder(record).kalender || []).filter((z) => z.anbieter === ziel.anbieter);
     const zuordnung = beimAnbieter.find((z) => z.kalenderId === kalenderId);
@@ -295,6 +315,7 @@ export function icsDatei(eintraege: KalenderEintrag[], opt: { jetzt?: Date; abge
 // ---------- Nutzlast je Anbieter ----------
 
 export function googleEreignis(e: KalenderEintrag) {
+  if (e.quelle) return { summary: e.titel, start: { dateTime: e.beginn }, end: { dateTime: e.ende } };
   return {
     summary: e.titel, description: e.beschreibung, visibility: "private", transparency: "transparent",
     start: { dateTime: e.beginn }, end: { dateTime: e.ende },
@@ -306,6 +327,7 @@ export function googleEreignis(e: KalenderEintrag) {
 /** Microsoft Graph kennt eine Erinnerung je Termin: die früheste gewählte. */
 export function graphEreignis(e: KalenderEintrag) {
   const utc = (iso: string) => iso.replace(/Z$/, "").replace(/\.\d{3}$/, "");
+  if (e.quelle) return { subject: e.titel, start: { dateTime: utc(e.beginn), timeZone: "UTC" }, end: { dateTime: utc(e.ende), timeZone: "UTC" } };
   return {
     subject: e.titel, body: { contentType: "text", content: e.beschreibung }, sensitivity: "private", showAs: "free",
     start: { dateTime: utc(e.beginn), timeZone: "UTC" }, end: { dateTime: utc(e.ende), timeZone: "UTC" },
@@ -315,5 +337,6 @@ export function graphEreignis(e: KalenderEintrag) {
 }
 
 export function geraetEreignis(e: KalenderEintrag, zeitzone: string) {
+  if (e.quelle) return { titel: e.titel, beginn: Date.parse(e.beginn), ende: Date.parse(e.ende), zeitzone };
   return { titel: e.titel, beschreibung: e.beschreibung, beginn: Date.parse(e.beginn), ende: Date.parse(e.ende), zeitzone, erinnerungen: e.erinnerungen, uid: e.uid };
 }

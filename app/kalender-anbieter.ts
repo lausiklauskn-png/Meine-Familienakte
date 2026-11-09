@@ -3,6 +3,7 @@
 // Speicher des Programms), nie im Register, in der Sicherung oder im localStorage. Ohne Client-ID: „noch nicht eingerichtet“.
 import { KALENDER_KONTEN } from "../lib/kalender-konten";
 import { geraetEreignis, googleEreignis, graphEreignis, type KalenderAnbieter, type KalenderEintrag } from "../lib/kalender";
+import type { FremdTermin } from "../lib/kalender-einlesen";
 
 export type KalenderInfo = { id: string; name: string; konto?: string; haupt?: boolean };
 export type AnbieterZustand = { bereit: true } | { bereit: false; grund: string; art: "einrichtung" | "plattform" | "internet" };
@@ -59,6 +60,13 @@ export interface Anbieter {
   trennen(): Promise<void>;
   /** Nach dem Neustart: ohne Rückfrage feststellen, ob der Zugang noch gilt (Gerät: Recht noch erteilt). */
   wiederaufnehmen?(): Promise<boolean>;
+  /** Stufe D: Termine eines Kalenders lesen. `stand` ist der Merker des letzten Lesens (Google syncToken, Microsoft deltaLink);
+   *  ohne Merker oder wenn er abgelaufen ist, kommt das ganze Fenster (30 Tage zurück, 365 voraus) und `voll: true`. */
+  lesen?(kalenderId: string, stand?: string | null): Promise<{ termine: FremdTermin[]; stand: string | null; voll: boolean }>;
+}
+export const LESE_FENSTER = { zurueckTage: 30, vorausTage: 365 };
+export function leseFenster(jetzt = Date.now()) {
+  return { von: new Date(jetzt - LESE_FENSTER.zurueckTage * 86400000), bis: new Date(jetzt + LESE_FENSTER.vorausTage * 86400000) };
 }
 
 // ---------- Gerät (Android) ----------
@@ -95,6 +103,19 @@ const geraet: Anbieter = {
     const r = await geraetPlugin()?.zustand().catch(() => null) as { erlaubt?: boolean } | null;
     geraetErlaubt = Boolean(r?.erlaubt);
     return geraetErlaubt;
+  },
+  async lesen(kalenderId) {
+    const p = geraetPlugin() as { lesen?: (a: { kalenderId: string; von: number; bis: number }) => Promise<{ termine?: Array<{ eintragId: string; titel?: string; beginn: number; ende?: number; ganztags?: boolean; beschreibung?: string; uid?: string; geaendert?: number }> }> } | null;
+    if (!p?.lesen) throw new KalenderFehler("plattform", "Diese Android-App kann den Gerätekalender noch nicht lesen (Fassung aktualisieren).");
+    const f = leseFenster();
+    const r = await p.lesen({ kalenderId, von: f.von.getTime(), bis: f.bis.getTime() }).catch((g) => { throw alsFehler(g, fehlerText.FA_KALENDER_LESEN); });
+    const termine: FremdTermin[] = (r?.termine || []).map((t) => ({
+      eintragId: String(t.eintragId), kalenderId, titel: t.titel || "", ganztags: Boolean(t.ganztags),
+      beginn: t.ganztags ? new Date(t.beginn).toISOString().slice(0, 10) : new Date(t.beginn).toISOString(),
+      ende: t.ende ? (t.ganztags ? new Date(t.ende).toISOString().slice(0, 10) : new Date(t.ende).toISOString()) : null,
+      beschreibung: t.beschreibung || null, uid: t.uid || null, geaendert: t.geaendert ? new Date(t.geaendert).toISOString() : null,
+    }));
+    return { termine, stand: null, voll: true };
   },
 };
 
@@ -259,6 +280,35 @@ const google: Anbieter = {
     const r = await loeschen("google", url, async () => { const g = await api("google", url); return g.status === 404 || g.status === 410 || (g.ok && ((await g.json()) as { status?: string }).status === "cancelled"); });
     if (r && !r.ok && r.status !== 404 && r.status !== 410) throw new KalenderFehler(`http-${r.status}`, `Der Kalender hat abgelehnt (${r.status}).`);
   },
+  async lesen(kalenderId, stand) {
+    const basis = `${GOOGLE}/calendars/${encodeURIComponent(kalenderId)}/events`;
+    const f = leseFenster();
+    type Item = { id: string; status?: string; summary?: string; description?: string; updated?: string; iCalUID?: string; start?: { date?: string; dateTime?: string }; end?: { date?: string; dateTime?: string }; extendedProperties?: { private?: Record<string, string> } };
+    const lesen = async (mitStand: string | null) => {
+      const termine: FremdTermin[] = []; let seite: string | null = null, neuerStand: string | null = null;
+      do {
+        const q = new URLSearchParams({ maxResults: "250", singleEvents: "true", showDeleted: "true" });
+        if (mitStand) q.set("syncToken", mitStand); else { q.set("timeMin", f.von.toISOString()); q.set("timeMax", f.bis.toISOString()); }
+        if (seite) q.set("pageToken", seite);
+        const r = await api("google", `${basis}?${q}`);
+        if (r.status === 410) return null; // Merker abgelaufen → ganz neu lesen
+        if (!r.ok) throw new KalenderFehler(`http-${r.status}`, `Der Kalender hat abgelehnt (${r.status}).`);
+        const j = (await r.json()) as { items?: Item[]; nextPageToken?: string; nextSyncToken?: string };
+        for (const e of j.items || []) {
+          const ganztags = Boolean(e.start?.date);
+          termine.push({ eintragId: e.id, kalenderId, titel: e.summary || "", ganztags, beginn: e.start?.date || e.start?.dateTime || "", ende: e.end?.date || e.end?.dateTime || null,
+            beschreibung: e.description || null, uid: e.iCalUID || null, geaendert: e.updated || null, geloescht: e.status === "cancelled", familienakte: e.extendedProperties?.private?.familienakte || null });
+        }
+        seite = j.nextPageToken || null; neuerStand = j.nextSyncToken || neuerStand;
+      } while (seite);
+      return { termine, stand: neuerStand };
+    };
+    const erst = await lesen(stand || null);
+    if (erst) return { ...erst, voll: !stand };
+    const voll = await lesen(null);
+    if (!voll) throw new KalenderFehler("http-410", "Der Kalender verlangt ein neues Lesen und hat es zugleich abgelehnt.");
+    return { ...voll, voll: true };
+  },
   async trennen() {
     const t = zugaenge.google?.token; delete zugaenge.google;
     if (plattform() === "windows") await windowsAufruf({ aktion: "abmelden", anbieter: "google" }).catch(() => undefined);
@@ -288,6 +338,33 @@ const microsoft: Anbieter = {
     const url = `${GRAPH}/me/events/${encodeURIComponent(eintragId)}`;
     const r = await loeschen("microsoft", url, async () => (await api("microsoft", `${url}?$select=id`)).status === 404);
     if (r && !r.ok && r.status !== 404) throw new KalenderFehler(`http-${r.status}`, `Der Kalender hat abgelehnt (${r.status}).`);
+  },
+  async lesen(kalenderId, stand) {
+    const f = leseFenster();
+    type Item = { id: string; "@removed"?: unknown; subject?: string; bodyPreview?: string; lastModifiedDateTime?: string; iCalUId?: string; isAllDay?: boolean; start?: { dateTime?: string; timeZone?: string }; end?: { dateTime?: string; timeZone?: string } };
+    const utc = (x?: { dateTime?: string }) => x?.dateTime ? new Date(x.dateTime.replace(/(\.\d{3})\d*$/, "$1") + (/Z$/.test(x.dateTime) ? "" : "Z")).toISOString() : "";
+    const lesen = async (adresse: string) => {
+      const termine: FremdTermin[] = []; let url: string | null = adresse, delta: string | null = null;
+      while (url) {
+        const r = await api("microsoft", url, { headers: { Prefer: 'outlook.timezone="UTC"' } });
+        if (r.status === 410 || r.status === 400) return null;
+        if (!r.ok) throw new KalenderFehler(`http-${r.status}`, `Der Kalender hat abgelehnt (${r.status}).`);
+        const j = (await r.json()) as { value?: Item[]; "@odata.nextLink"?: string; "@odata.deltaLink"?: string };
+        for (const e of j.value || []) {
+          if (e["@removed"]) { termine.push({ eintragId: e.id, kalenderId, titel: "", beginn: "", ganztags: false, geloescht: true }); continue; }
+          termine.push({ eintragId: e.id, kalenderId, titel: e.subject || "", ganztags: Boolean(e.isAllDay), beginn: e.isAllDay ? utc(e.start).slice(0, 10) : utc(e.start), ende: e.isAllDay ? utc(e.end).slice(0, 10) : utc(e.end) || null,
+            beschreibung: e.bodyPreview || null, uid: e.iCalUId || null, geaendert: e.lastModifiedDateTime || null });
+        }
+        url = j["@odata.nextLink"] || null; delta = j["@odata.deltaLink"] || delta;
+      }
+      return { termine, stand: delta };
+    };
+    const voll = `${GRAPH}/me/calendars/${encodeURIComponent(kalenderId)}/calendarView/delta?startDateTime=${encodeURIComponent(f.von.toISOString())}&endDateTime=${encodeURIComponent(f.bis.toISOString())}`;
+    const erst = await lesen(stand || voll);
+    if (erst) return { ...erst, voll: !stand };
+    const neu = await lesen(voll);
+    if (!neu) throw new KalenderFehler("http-410", "Der Kalender verlangt ein neues Lesen und hat es zugleich abgelehnt.");
+    return { ...neu, voll: true };
   },
   async trennen() { delete zugaenge.microsoft; if (plattform() === "windows") await windowsAufruf({ aktion: "abmelden", anbieter: "microsoft" }).catch(() => undefined); },
 };

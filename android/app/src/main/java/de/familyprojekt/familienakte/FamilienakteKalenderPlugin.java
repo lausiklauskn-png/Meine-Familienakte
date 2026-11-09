@@ -21,8 +21,9 @@ import org.json.JSONArray;
 /**
  * Fristen in einen Kalender auf dem Gerät (Klaus 2026-11-05): Samsung-Kalender, Google-Konten und Outlook-Konten, die das
  * Gerät führt. Schreibt über CalendarContract Termin und Erinnerungen; den Abgleich mit Google oder Samsung macht das Gerät
- * selbst. Die Rechte „Kalender“ werden erst beim Verbinden erfragt. Gelesen werden nur die Liste der Kalender und eigene
- * Einträge (über ihre Nummer); fremde Termine werden nie gelesen oder verändert.
+ * selbst. Die Rechte „Kalender“ werden erst beim Verbinden erfragt. Gelesen werden die Liste der Kalender, eigene Einträge
+ * (über ihre Nummer) und – seit Stufe D, nur auf ausdrücklichen Wunsch je Kalender – die Termine des gewählten Kalenders,
+ * damit sie als Fristen in der Akte stehen. Fremde Termine werden dabei nie verändert oder gelöscht.
  */
 @CapacitorPlugin(name = "FamilienakteKalender", permissions = {
     @Permission(alias = "kalender", strings = { Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR })
@@ -69,29 +70,34 @@ public class FamilienakteKalenderPlugin extends Plugin {
         ContentValues werte = new ContentValues();
         werte.put(CalendarContract.Events.CALENDAR_ID, Long.parseLong(kalenderId));
         werte.put(CalendarContract.Events.TITLE, titel);
-        werte.put(CalendarContract.Events.DESCRIPTION, call.getString("beschreibung", ""));
         werte.put(CalendarContract.Events.DTSTART, beginn);
         werte.put(CalendarContract.Events.DTEND, ende);
         werte.put(CalendarContract.Events.EVENT_TIMEZONE, call.getString("zeitzone", java.util.TimeZone.getDefault().getID()));
-        werte.put(CalendarContract.Events.ACCESS_LEVEL, CalendarContract.Events.ACCESS_PRIVATE);
-        werte.put(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_FREE);
-        String uid = call.getString("uid", "");
-        if (!uid.isEmpty() && uid.length() <= 200) werte.put(CalendarContract.Events.UID_2445, uid);
+        // Stufe D: ein eingelesener Termin des Nutzers (ohne „beschreibung“ im Aufruf) bekommt nur Titel und Zeit; Beschreibung,
+        // Sichtbarkeit, Erinnerungen und UID bleiben seine eigenen.
+        boolean eigener = call.getData().has("beschreibung");
         JSONArray erinnerungen = call.getArray("erinnerungen", new JSArray());
-        werte.put(CalendarContract.Events.HAS_ALARM, erinnerungen.length() > 0 ? 1 : 0);
+        if (eigener) {
+            werte.put(CalendarContract.Events.DESCRIPTION, call.getString("beschreibung", ""));
+            werte.put(CalendarContract.Events.ACCESS_LEVEL, CalendarContract.Events.ACCESS_PRIVATE);
+            werte.put(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_FREE);
+            String uid = call.getString("uid", "");
+            if (!uid.isEmpty() && uid.length() <= 200) werte.put(CalendarContract.Events.UID_2445, uid);
+            werte.put(CalendarContract.Events.HAS_ALARM, erinnerungen.length() > 0 ? 1 : 0);
+        }
         try {
             long id = -1;
             String alt = call.getString("eintragId", "");
             if (alt.matches("\\d{1,18}") && vorhanden(cr, Long.parseLong(alt))) {
                 id = Long.parseLong(alt);
                 cr.update(ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, id), werte, null, null);
-                cr.delete(CalendarContract.Reminders.CONTENT_URI, CalendarContract.Reminders.EVENT_ID + " = ?", new String[] { String.valueOf(id) });
+                if (eigener) cr.delete(CalendarContract.Reminders.CONTENT_URI, CalendarContract.Reminders.EVENT_ID + " = ?", new String[] { String.valueOf(id) });
             } else {
                 Uri neu = cr.insert(CalendarContract.Events.CONTENT_URI, werte);
                 if (neu == null) { call.reject("FA_KALENDER_SCHREIBEN"); return; }
                 id = ContentUris.parseId(neu);
             }
-            for (int i = 0; i < Math.min(erinnerungen.length(), MAX_ERINNERUNGEN); i++) {
+            for (int i = 0; eigener && i < Math.min(erinnerungen.length(), MAX_ERINNERUNGEN); i++) {
                 int minuten = erinnerungen.optInt(i, -1);
                 if (minuten < 0 || minuten > 40320) continue;
                 ContentValues r = new ContentValues();
@@ -102,6 +108,29 @@ public class FamilienakteKalenderPlugin extends Plugin {
             }
             call.resolve(new JSObject().put("eintragId", String.valueOf(id)));
         } catch (Exception fehler) { call.reject("FA_KALENDER_SCHREIBEN"); }
+    }
+
+    /** Stufe D: Termine eines Kalenders im Zeitfenster lesen (Instanzen, also auch Wiederholungen aufgelöst). Nur dieser Kalender. */
+    @PluginMethod public void lesen(PluginCall call) {
+        if (!erlaubt()) { call.reject("FA_KALENDER_KEIN_RECHT"); return; }
+        String kalenderId = call.getString("kalenderId", "");
+        Long von = call.getLong("von"), bis = call.getLong("bis");
+        if (!kalenderId.matches("\\d{1,18}") || von == null || bis == null || bis <= von) { call.reject("INVALID_INPUT"); return; }
+        Uri.Builder b = CalendarContract.Instances.CONTENT_URI.buildUpon();
+        ContentUris.appendId(b, von); ContentUris.appendId(b, bis);
+        String[] spalten = { CalendarContract.Instances.EVENT_ID, CalendarContract.Instances.TITLE, CalendarContract.Instances.BEGIN, CalendarContract.Instances.END,
+            CalendarContract.Instances.ALL_DAY, CalendarContract.Instances.DESCRIPTION, CalendarContract.Instances.UID_2445 };
+        JSArray termine = new JSArray();
+        try (Cursor c = getContext().getContentResolver().query(b.build(), spalten, CalendarContract.Instances.CALENDAR_ID + " = ?", new String[] { kalenderId }, CalendarContract.Instances.BEGIN + " ASC")) {
+            int n = 0;
+            while (c != null && c.moveToNext() && n++ < 2000) {
+                JSObject t = new JSObject();
+                t.put("eintragId", String.valueOf(c.getLong(0))).put("titel", text(c, 1)).put("beginn", c.getLong(2)).put("ende", c.getLong(3))
+                    .put("ganztags", c.getInt(4) == 1).put("beschreibung", text(c, 5)).put("uid", text(c, 6));
+                termine.put(t);
+            }
+            call.resolve(new JSObject().put("termine", termine));
+        } catch (Exception fehler) { call.reject("FA_KALENDER_LESEN"); }
     }
 
     @PluginMethod public void entfernen(PluginCall call) {

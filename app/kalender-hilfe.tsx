@@ -10,6 +10,7 @@ export function KalenderHilfe({ zurKarte }: { zurKarte: () => void }) {
         { titel: "Kalender verbinden", unter: "Fristen und Aufgaben → Kalender verbinden", ziel: zurKarte, art: "hervor" },
         { titel: "Frist anlegen", unter: "Haken „In den Kalender eintragen“, Erinnerung wählen" },
         { titel: "Im Kalender", unter: "mit Erinnerung; erledigte werden entfernt", art: "gut" },
+        { titel: "Termine holen (Schritt 5)", unter: "Termine des Kalenders werden Fristen; Gelöschtes wird archiviert, bei Unterschieden fragt die App" },
       ]}/>
       <ul className="kalender-hilfe-punkte">
         <li><strong>Android-App:</strong> „Kalender auf diesem Gerät“ – Samsung-, Google- und Outlook-Kalender des Geräts. Einmal „Kalender“ erlauben. Den Abgleich mit Google oder Samsung macht das Gerät.</li>

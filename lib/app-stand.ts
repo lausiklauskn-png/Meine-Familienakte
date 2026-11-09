@@ -23,7 +23,8 @@ export const APP_STAND: Readonly<Record<string, StandEintrag>> = {
   "datei-pro": { stand: "aktivieren" },
   "datentresor": { stand: "aktivieren", selbst: "datentresor" },
   "protresor": { stand: "aktivieren" },
-  "kalender": { stand: "aktivieren", selbst: "fristen-kalender" },
+  // Stufe D: Termine aus dem Kalender holen (beidseitig).
+  "kalender": { stand: "aktivieren", selbst: "fristen-kalender", seit: "2.28.43" },
   "glocke": { stand: "aktivieren", selbst: "app-glocke" },
   // Abgleich zwischen Geräten (Plan Punkt 10): die Übergabe einer Unterlage ist fertig, der Abgleich steht im Kastentext als geplant.
   // Stufe C: gemeinsame Festplatte – vorbereiten, verbinden, abgleichen; erkannt an der Kennung.
