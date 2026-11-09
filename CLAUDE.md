@@ -5,8 +5,14 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 `docs/briefe-archiv/` (Klaus 2026-11-04: archivieren statt löschen); die Veröffentlichungsnachweise in
 `docs/VEROEFFENTLICHUNG-<fassung>.json`.
 
-## Aktueller Stand (08.11.2026)
+## Aktueller Stand (09.11.2026)
 
+- **Plan Rückmeldung** `docs/PLAN_2026-11-09_GERAETETEST-RUECKMELDUNG.md` (Klaus 09.11., Bilder vom Handy mit 2.28.37): fünf Fehler
+  (A), sieben App-weite Muster (B: Schlagwort oben links, Info-Zeile, Suchfelder wie „In der Familienakte suchen“, Erklärtexte ins
+  „?“, „?“-Texte mit fetten Hauptpunkten, keine Doppelung beim Aufklappen, keine Kennnummern), Trennung Tagebuch/Erinnerung/Memory
+  mit Buch-Knopf oben (C, Vorschau zuerst), **Assistenz neu durchdenken als nächster Bauschritt vor der E-Mail-Abstimmung** (D,
+  Anonymisieren wie im E-Mail-Generator von Private Brain Pro, Vorschau zuerst). Nichts davon gebaut. Startauftrag im Nachtrag
+  des Briefs vom 09.11.
 - **Plan Abgleich** `docs/PLAN_2026-11-08_ABGLEICH.md` (Klaus 08.11., **Freibrief**: ohne Rückfrage umsetzen, Fragen selbst nach
   Logik und Benutzerfreundlichkeit entscheiden). **Alle Stufen A–I gebaut und auf main** (Sitzung 7, 08./09.11.): A Zusammenführen
   (2.28.40, #131) · B verschlüsselte Vollsicherung mit Notfallblatt, Papierkorb leeren, Erinnerung nach 7 Tagen (2.28.41, #132) ·
@@ -91,13 +97,15 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
-  - `BRIEF_ABSCHLUSS_2026-11-09_ABGLEICH-B-I.md` (jüngster Abschluss: Stufen B–I, Fassung 2.28.48 auf allen drei Wegen; Startauftrag Gerätetest)
+  - `BRIEF_ABSCHLUSS_2026-11-09_ABGLEICH-B-I.md` (jüngster Abschluss: Stufen B–I, Fassung 2.28.48 auf allen drei Wegen; Nachtrag
+    mit Klaus' Rückmeldung vom 09.11. und Startauftrag für die nächste Bausitzung)
   - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-08_ABGLEICH-A.md` (Prüfbericht, Plan Abgleich, Stufe A)
   - `BRIEF_CODEX_2026-11-04_NACH-2.28.24.md` (Abstimmung mit Codex: welche Dateien Claude gehören)
   - `BRIEF_ABSCHLUSS_2026-11-04_PDF-ARBEITSRAUM.md`, `BRIEF_ABSCHLUSS_2026-11-04_PDF-FUNKTIONSABGLEICH.md` (Codex)
 
 ## Offen
 
+- **Plan Rückmeldung 09.11.** (A–D) komplett offen, siehe oben; Reihenfolge A → B → C → D, dann Gerätetest 2.28.48.
 - **2.28.48 am Gerät ungeprüft (alle Stufen B–I):** verschlüsselte Vollsicherung und Notfallblatt am Handy (PBKDF2 ein bis zwei
   Sekunden), gemeinsame Festplatte (Android-SAF-Freigabe, Windows-Laufwerkssuche, Erkennen an der Kennung), Kalender holen (Google,
   Microsoft, Gerätekalender), Eingangsordner mit Android-Dauer-Meldung, Netz-Abgleich im echten WLAN/LAN/USB (Port 48200/48201),
