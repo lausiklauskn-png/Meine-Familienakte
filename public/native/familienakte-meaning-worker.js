@@ -13,12 +13,23 @@ self.onmessage = event => {
       const origin = location.origin === 'https://tauri.localhost' ? 'https://familienakte-model.localhost' : location.origin;
       const base = new URL('/_fa_models/' + stage + '/', origin).href;
       const originalFetch = self.fetch.bind(self);
-      self.fetch = (input, options) => {
+      // Stufe G (Plan 08.11.): Web-App ohne native Hülle – Modell und Bibliothek liegen im Browser-Speicher (OPFS,
+      // Familienakte-Modelle/<Stufe>/model/… und Familienakte-Modelle/lib/…), geprüft beim Laden durch den Browser-Lader.
+      const browserDatei = async (rest) => {
+        const root = await navigator.storage.getDirectory();
+        const teile = rest.split('/').filter(Boolean);
+        let dir = await root.getDirectoryHandle('Familienakte-Modelle');
+        if (teile[0] === 'lib') dir = await dir.getDirectoryHandle('lib'); else { dir = await dir.getDirectoryHandle(stage); for (const t of teile.slice(0, -1)) dir = await dir.getDirectoryHandle(t); }
+        if (teile[0] === 'lib') for (const t of teile.slice(1, -1)) dir = await dir.getDirectoryHandle(t);
+        return (await dir.getFileHandle(teile[teile.length - 1])).getFile();
+      };
+      self.fetch = async (input, options) => {
         const url = new URL(input instanceof Request ? input.url : input, location.href);
         if (!url.href.startsWith(base)) throw Error('MODEL_REMOTE_DISABLED');
+        if (request.browser) { const f = await browserDatei(url.href.slice(base.length)); return new Response(f, { status: 200, headers: { 'Content-Type': f.name.endsWith('.json') ? 'application/json' : 'application/octet-stream', 'Content-Length': String(f.size) } }); }
         return originalFetch(input, options);
       };
-      const library = await import(base + 'lib/transformers.min.js');
+      const library = request.browser ? await import(URL.createObjectURL(await browserDatei('lib/transformers.min.js'))) : await import(base + 'lib/transformers.min.js');
       library.env.allowRemoteModels = false;
       library.env.allowLocalModels = true;
       library.env.useBrowserCache = false;

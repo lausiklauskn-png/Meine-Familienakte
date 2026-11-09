@@ -24,23 +24,31 @@ async function pdfLayer(file: File, check: () => void) {
   } finally { await pdf.destroy(); }
 }
 
-/** Read only after the user's search/index command. No stored plaintext copy,
- * OCR, external extraction service or automatic scan of unrelated folders. */
-export async function readMeaningCorpus(handle: FileSystemDirectoryHandle, check: () => void): Promise<MeaningCorpus> {
+/** Read only after the user's search/index command. No stored plaintext copy, no external extraction service, no automatic
+ * scan of unrelated folders. OCR (Stufe G) only on request of the index build, on this device, for documents without text. */
+/** Text eines Dokuments für den Index: Angaben plus gelesener oder erkannter Inhalt. */
+export function indexText(document: { originalName: string; category: string; documentDate: string | null; notes: string | null; titel?: string | null; textAuszug?: string | null }, gelesen: string) {
+  return [document.titel, document.originalName, document.category, document.documentDate, document.notes, gelesen.trim() || document.textAuszug || ""].filter(Boolean).join("\n");
+}
+export async function readMeaningCorpus(handle: FileSystemDirectoryHandle, check: () => void, opt: { ocr?: (file: File) => Promise<string> } = {}): Promise<MeaningCorpus> {
   check(); const scope = (await getVaultSummary(handle)).vaultId, data = await readLocalVaultData(handle); check();
   const documents: MeaningDocument[] = [], targets = new Map<string, MeaningTarget>(); let metadataOnly = 0, partial = 0;
   for (const document of data.documents) {
     check(); const file = await readLocalDocumentFile(handle, document.id); check();
     let text = "", limited = false;
     if (file.type === "application/pdf" || /\.pdf$/i.test(file.name)) {
-      const result = await pdfLayer(file, check); text = result.text; limited = result.partial;
+      try { const result = await pdfLayer(file, check); text = result.text; limited = result.partial; } catch { text = ""; }
     } else {
       const result = await inventoryTextHint(file); text = result.textHint;
       limited = result.contentStatus === "teilweise_gelesen" || text.length >= 300000;
     }
+    // Stufe G (Entscheidung 10): gescannte Seiten – der beim Eingang erkannte Text (textAuszug) zählt mit; fehlt er (z. B.
+    // Gesundheitsunterlagen, dort wird er nicht gespeichert), liest die Texterkennung hier einmal für den Index auf dem Gerät.
+    if (!text.trim() && document.textAuszug) text = document.textAuszug;
+    if (!text.trim() && opt.ocr && (file.type === "application/pdf" || /\.(pdf|png|jpe?g|webp)$/i.test(file.name))) { try { text = (await opt.ocr(file)).slice(0, 300000); } catch { text = ""; } }
     check(); if (!text.trim()) metadataOnly++; if (limited) partial++;
     const id = "d:" + document.id;
-    documents.push({ id, text: [document.originalName, document.category, document.documentDate, document.notes, text].filter(Boolean).join("\n") });
+    documents.push({ id, text: indexText(document, text) });
     const sensitive = isSensitiveHealthText(document.originalName, document.category, document.notes);
     targets.set(id, { targetId: document.id, section: sensitive ? "health" : "documents", title: protectedFamilyLabel({ label: document.originalName, category: document.category, notes: document.notes }) });
   }
