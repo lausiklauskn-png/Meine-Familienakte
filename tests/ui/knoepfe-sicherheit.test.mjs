@@ -76,10 +76,11 @@ try {
   await step("„Vollständige Sicherung erstellen“ schreibt eine Sicherung in den gewählten Ordner", async () => {
     await page.evaluate(() => { window.__naechsterOrdner = "Sicherung-Probe"; });
     await vollsicherungStarten(page);
-    await page.waitForFunction(() => /Sicherung/.test([...document.querySelectorAll("[aria-live]")].map((e) => e.innerText).join(" ")), null, { timeout: 15000 }).catch(() => {});
+    // Nicht die Meldung „Sicherung läuft“ nehmen (CI-Wettlauf): warten, bis die Sicherung fertig gemeldet ist und der Ordner Inhalt hat.
+    await page.waitForFunction(async () => { const t = [...document.querySelectorAll("[aria-live], .notice")].map((e) => e.innerText).join(" "); if (!/wurde .*erstellt|Erfolgreich/.test(t)) return false; try { const r = await navigator.storage.getDirectory(); const d = await r.getDirectoryHandle("Sicherung-Probe"); for await (const _ of d.entries()) return true; } catch { /* noch nicht da */ } return false; }, null, { timeout: 150000 }).catch(() => {});
     const m = await meldung(page);
     const dateien = await page.evaluate(async () => { const r = await navigator.storage.getDirectory(); const d = await r.getDirectoryHandle("Sicherung-Probe"); const out = []; for await (const [n] of d.entries()) out.push(n); return out; });
-    return dateien.length > 0 && /Sicherung/.test(m) ? `Ordner: ${dateien.join(", ")}; ${m.slice(0, 90)}` : (console.log("   ↳", m.slice(0, 300)), false);
+    return dateien.length > 0 && /Sicherung/.test(m) ? `Ordner: ${dateien.join(", ")}; ${m.slice(0, 90)}` : (console.log("   ↳", JSON.stringify(dateien), m.slice(0, 300)), false);
   });
   await step("„Wiederherstellung testen“ (Sicherung → leerer Ordner) läuft durch", async () => {
     const sicherung = await page.evaluate(async () => { const r = await navigator.storage.getDirectory(); const d = await r.getDirectoryHandle("Sicherung-Probe"); for await (const [n] of d.entries()) return n; });
