@@ -44,6 +44,17 @@ try {
   check(!(await page.locator("#sbkim-rdv-btn").isVisible().catch(() => false)), "Kein schwebender Kanon-Knopf");
   check(await page.locator(".fa-netz-hinweis", { hasText: "Internet für die App ist aus" }).count() === 1, "Internet aus: Hinweis zum Einschalten");
 
+  await step("„Im eigenen Netz antworten“: ab Werk aus, im öffentlichen Netz verweigert, keine Verbindung", async () => {
+    const schalter = page.locator("[data-netz-antwort] [data-netz-antworten]");
+    if (await schalter.isChecked()) throw new Error("ab Werk an");
+    if (await page.locator("[data-netz-ausschnitt]").isChecked() || await page.locator("[data-netz-gesundheit]").isChecked()) throw new Error("Ausschnitt/Gesundheit ab Werk an");
+    if (await page.locator("[data-netz-nur-eigen]").count() !== 1) throw new Error("Hinweis „nur im eigenen Netz“ fehlt");
+    await schalter.check({ force: true }).catch(() => {});
+    await page.locator("[data-netz-antwort-text]", { hasText: "nur im eigenen Netz" }).waitFor({ timeout: 5000 });
+    const an = await schalter.isChecked(), ws = await page.evaluate(() => window.__ws.length);
+    const antwortet = await page.evaluate(() => !!window.SbkimRendezvous?._meta?.answering);
+    return !an && ws === 0 && !antwortet ? "aus geblieben, 0 Verbindungen" : false;
+  });
   await step("Gerätename wird gemerkt", async () => {
     await page.locator("[data-netz-seite] [data-sbkim-geraetename]").fill("Tablet Küche");
     return (await page.evaluate(() => localStorage.getItem("sbkim_geraetename"))) === "Tablet Küche";
