@@ -84,22 +84,37 @@ Sitzung 7 begann nach dem Ende von Sitzung 6 (18:15 UTC, 08.11.); erster Commit 
 
 Gesamt: **ca. 8 h 15 min** (18:15–02:30 UTC, Obergrenze; davon lief die Sitzung ab der Freigabe des Plans weitgehend ohne Klaus’ Zutun; lange Wartezeiten auf CI-Läufe sind enthalten).
 
+## Nachtrag 09.11.2026 – Rückmeldung von Klaus (Handy, Fassung 2.28.37)
+
+Nach dem Abschluss hat Klaus 14 Beobachtungen und Entscheidungen durchgegeben (Bilder vom Handy). Sie stehen vollständig in
+`docs/PLAN_2026-11-09_GERAETETEST-RUECKMELDUNG.md`: fünf Fehler (weiße Fläche beim Scrollen, „Zuordnung prüfen“ und
+„Tagebuch öffnen“ ohne Wirkung, Textüberlauf in der Assistenz, kein Weg vom Cockpit in die Bearbeitung), sieben Muster für die
+ganze App (Schlagwort oben links, Info-Zeile, Suchfelder einheitlich, Erklärtexte ins „?“, „?“-Texte mit fetten Hauptpunkten,
+keine Doppelung beim Aufklappen, keine Kennnummern), die Trennung Tagebuch/Erinnerung/Memory mit Buch-Knopf oben, und die
+Assistenz als nächster Bauschritt vor der E-Mail-Abstimmung (Anonymisieren wie im E-Mail-Generator von Private Brain Pro).
+Spanne der Aufnahme, gemessen: 02:58 UTC (letzte Meldung vor Klaus’ erster Notiz) bis 09:17 UTC (Commit des Plans), also
+**6 h 19 min Obergrenze**; Klaus’ Nachrichten kamen mit langen Pausen dazwischen, die nicht abgezogen sind, weil sie keine Spur
+hinterlassen. Nichts davon ist gebaut.
+
 ## Startauftrag zum Einfügen
 
 ```
-Familienakte – Gerätetest 2.28.48 und Nacharbeit zum Plan Abgleich, Brief vom 09.11.2026.
+Familienakte – Rückmeldung 09.11. umsetzen und Gerätetest 2.28.48, Brief vom 09.11.2026.
 Repo lausiklauskn-png/Meine-Familienakte, frisch von origin/main, Zweig wie für die Sitzung vorgegeben.
-Zuerst lesen: CLAUDE.md, docs/PLAN_2026-11-08_ABGLEICH.md, BRIEF_ABSCHLUSS_2026-11-09_ABGLEICH-B-I.md,
+Zuerst lesen: CLAUDE.md, docs/PLAN_2026-11-09_GERAETETEST-RUECKMELDUNG.md, BRIEF_ABSCHLUSS_2026-11-09_ABGLEICH-B-I.md,
 docs/VEROEFFENTLICHUNG-2.28.48.json. Erst die tatsächlichen Releases prüfen; nächste freie Fassung 2.28.49.
 
-Klaus prüft 2.28.48 am Gerät (Galaxy S21, Tab S6, Windows-PC); seine Rückmeldungen Punkt für Punkt abarbeiten:
-- Vollsicherung verschlüsselt + Notfallblatt; Einlesen mit Passwort und mit Notfallschlüssel.
-- Gemeinsame Festplatte: SD/USB vorbereiten, am zweiten Gerät verbinden, Abgleich beim Anstecken, Konfliktfrage.
-- Netz-Abgleich: Gastgeber am PC, Koppeln am Handy im selben WLAN; danach LAN-/USB-Kabel.
-- Kalender holen (Google-Konto), Eingangsordner mit 50+ PDFs (Blöcke, Dauer-Meldung), Bedeutungssuche in Chrome mit echtem Modell,
-  Teilen einer Unterlage, Glocke nach Neustart, Paket per Teilen zwischen Handy und PC.
-Fehler als eigene Pakete beheben, je Paket ein PR, Proben ergänzen (soll()), keine Prüfung abschalten.
+Reihenfolge (Freibrief vom 08.11. gilt: Fragen selbst nach Logik und Benutzerfreundlichkeit entscheiden):
+1. Plan Abschnitt A: die fünf Fehler beheben (je ein PR, Proben mit soll()).
+2. Plan Abschnitt B: die sieben Muster einmal über die ganze App ziehen (gemeinsame Bausteine, nicht Einzelstellen).
+3. Plan Abschnitt C: Tagebuch/Erinnerung/Memory trennen, Buch-Knopf oben – zuerst HTML-Vorschau an Klaus, dann bauen.
+4. Plan Abschnitt D: Assistenz neu durchdenken – zuerst HTML-Vorschau, Anonymisier-Weg aus Private Brain Pro übernehmen
+   (Repo lausiklauskn-png/Private-Brain-Pro dazuholen, E-Mail-Generator lesen), dann bauen. Erst danach die E-Mail-Anbindung.
+5. Rückmeldungen von Klaus zum Gerätetest 2.28.48 (Plan Abschnitt E) Punkt für Punkt abarbeiten.
+Am Ende der letzten Stufe APK, Windows und PWA ausgeben (Nachweis docs/VEROEFFENTLICHUNG-<fassung>.json), am Ende jeder Antwort den
+Fortschritt in Prozent nennen.
 
-Regeln: Lint vor dem Push; Oberfläche nur mit Klaus' Ja je sichtbarer Änderung; keine Schlüssel in Dateien oder Chat; Forschung
-nur in KimHub. Am Ende Abschlussbrief mit Stundennachweis und Startauftrag; Briefe archivieren, CLAUDE.md kürzen.
+Regeln: Lint vor dem Push; Oberfläche nur mit Klaus' Ja je sichtbarer Änderung (Vorschau zuerst); keine Schlüssel in Dateien
+oder Chat; Forschung nur in KimHub. Am Ende Abschlussbrief mit Stundennachweis und Startauftrag; Briefe archivieren,
+CLAUDE.md kürzen.
 ```
