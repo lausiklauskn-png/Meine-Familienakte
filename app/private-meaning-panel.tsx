@@ -31,7 +31,10 @@ export function PrivateMeaningPanel({ handle, query = "", onOpen }: { handle: Fi
   // Stufe G: Web-App ohne native Hülle – Modelle im Browser-Speicher, dieselben Knöpfe.
   if (!modelPlugin() && browserModelleMoeglich()) browserModelleEinhaengen(browserModelle);
   useEffect(() => { currentHandle.current = handle; return () => { operation.current?.abort(); runtime.current.stop(); }; }, [handle]);
-  useEffect(() => { setQuestion(query); setHits([]); }, [query, handle]);
+  // Getippter Text bleibt, wenn der Speicher erst nach dem Tippen bereitsteht (Demo, Windows-App): die Frage folgt nur der
+  // Suchanfrage von außen, ein Speicherwechsel leert nur die Treffer.
+  useEffect(() => { setQuestion(query); }, [query]);
+  useEffect(() => { setHits([]); }, [handle]);
   const refresh = async () => { const next = await modelPlugin()?.getState(); if (next) setState(next); };
   useEffect(() => {
     if (!expanded) return;
