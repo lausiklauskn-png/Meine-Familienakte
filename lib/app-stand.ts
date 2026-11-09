@@ -3,7 +3,7 @@ import type { KartenStand } from "../app/landkarte";
 /**
  * Stand je Kasten der Landkarte (Klaus 07.11.2026, Sitzung 4; wie status.json im Sage-Protokoll).
  * Was hier nicht steht, ist fertig. Jede Bausitzung trägt hier ein, was sich mit ihrer Fassung ändert; die Hilfe umrahmt
- * Geändertes golden, bis man den Kasten antippt (höchstens 14 Tage).
+ * Geändertes mit blauem Punkt „neu“, bis man den Kasten antippt (höchstens 14 Tage; bis 09.11. golden).
  * „selbst“: rot (einschalten) wird grün, sobald es auf diesem Gerät eingerichtet ist (Kennung wie in hilfeEingerichtet).
  */
 export type StandEintrag = { stand: KartenStand; seit?: string; selbst?: "datentresor" | "fristen-kalender" | "app-glocke" };

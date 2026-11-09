@@ -2834,15 +2834,35 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 
 /* Live-Zustand dieses Geräts (Klaus 09.11.: Karten immer live; grün eingerichtet, rot fehlt, gelb gesperrt/veraltet, grau freiwillig).
    Fläche = Zustand, Rahmen = Baustand (s-*). */
-.lk-chip.l-gruen, .lk-kasten.l-gruen { background: #d9f0e1; border-color: #2f8a4f; border-style: solid; }
-.lk-chip.l-rot, .lk-kasten.l-rot { background: #f9d9d5; border-color: #c0392b; border-style: solid; }
-.lk-chip.l-gelb, .lk-kasten.l-gelb { background: #fff0c2; border-color: #c58a00; border-style: solid; }
-.lk-chip.l-grau, .lk-kasten.l-grau { background: #e6eaed; border-color: #9aa5ad; color: #3f4b53; }
+.lk-chip.l-gruen, .lk-kasten.l-gruen { background: #d9f0e1; }
+.lk-chip.l-rot, .lk-kasten.l-rot { background: #f9d9d5; }
+.lk-chip.l-gelb, .lk-kasten.l-gelb { background: #fff0c2; }
+.lk-chip.l-grau, .lk-kasten.l-grau { background: #e6eaed; color: #3f4b53; }
 .l-gruen > .lk-punkt { background: #2f8a4f; } .l-rot > .lk-punkt { background: #c0392b; } .l-gelb > .lk-punkt { background: #c58a00; } .l-grau > .lk-punkt { background: #9aa5ad; }
 .lk-marke.l-gruen { background: #d9f0e1; color: #23683b; } .lk-marke.l-rot { background: #f9d9d5; color: #9b2c22; } .lk-marke.l-gelb { background: #fff0c2; color: #7a5600; } .lk-marke.l-grau { background: #e6eaed; color: #4f5b63; }
-.lk-muster.l-gruen { border: 2px solid #2f8a4f; background: #d9f0e1; } .lk-muster.l-rot { border: 2px solid #c0392b; background: #f9d9d5; } .lk-muster.l-gelb { border: 2px solid #c58a00; background: #fff0c2; } .lk-muster.l-grau { border: 2px solid #9aa5ad; background: #e6eaed; }
+.lk-muster.l-gruen { border: 1px solid #b9c9d3; background: #d9f0e1; } .lk-muster.l-rot { border: 1px solid #b9c9d3; background: #f9d9d5; } .lk-muster.l-gelb { border: 1px solid #b9c9d3; background: #fff0c2; } .lk-muster.l-grau { border: 1px solid #b9c9d3; background: #e6eaed; }
 .lk-legende-live { display: inline-flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
 .ablauf-knoten.art-gelb { border-color: #c58a00; background: #fff6dc; }
 .aktensicherung-legende .chip-gelb { border-color: #c58a00; background: #fff6dc; color: #7a5600; }
 .demo-band { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; justify-content: space-between; border: 2px solid #c0392b; background: #fdecea; color: #4a1712; border-radius: 10px; padding: 8px 12px; font-weight: 600; margin: 6px 0; }
 .demo-band-marke { background: #c0392b; color: #fff; border-radius: 6px; padding: 1px 8px; font-size: .8rem; letter-spacing: .04em; }
+
+/* Klaus 09.11.: Rahmen = Baustand in eigenen Farben (blau fertig, lila gestrichelt im Bau, grau gestrichelt geplant), damit Rot und
+   Gelb nur noch den Zustand des Geräts meinen. „Muss eingeschaltet werden“ zeigt die Fläche (live), der Rahmen ist dann blau. */
+.lk-chip.s-fertig, .lk-kasten.s-fertig, .lk-chip.s-aktivieren, .lk-kasten.s-aktivieren { border: 2px solid #1d5b94; background: #f7fafc; }
+.lk-chip.s-imbau, .lk-kasten.s-imbau { border: 2px dashed #7b3fa0; background: #f6effa; }
+.lk-chip.s-geplant, .lk-kasten.s-geplant { border: 2px dashed #9aa5ad; background: #f7f8f9; }
+.lk-chip.l-gruen, .lk-kasten.l-gruen { background: #d9f0e1; } .lk-chip.l-rot, .lk-kasten.l-rot { background: #f9d9d5; }
+.lk-chip.l-gelb, .lk-kasten.l-gelb { background: #fff0c2; } .lk-chip.l-grau, .lk-kasten.l-grau { background: #e6eaed; }
+.s-fertig > .lk-punkt, .s-aktivieren > .lk-punkt { background: #1d5b94; } .s-imbau > .lk-punkt { background: #7b3fa0; } .s-geplant > .lk-punkt { background: #9aa5ad; }
+.l-gruen > .lk-punkt { background: #2f8a4f; } .l-rot > .lk-punkt { background: #c0392b; } .l-gelb > .lk-punkt { background: #c58a00; } .l-grau > .lk-punkt { background: #7d8a93; }
+.lk-muster.s-fertig { border: 2px solid #1d5b94; background: #f7fafc; } .lk-muster.s-imbau { border: 2px dashed #7b3fa0; background: #f6effa; } .lk-muster.s-geplant { border: 2px dashed #9aa5ad; background: #f7f8f9; }
+.lk-marke.s-fertig { background: #e3edf7; color: #1d5b94; } .lk-marke.s-imbau { background: #efe3f6; color: #5e2d7c; }
+/* Geändert seit dem letzten Öffnen: blauer Punkt „neu“ statt Goldrand (sah aus wie Gelb). */
+.lk-chip.frisch, .lk-kasten.frisch { box-shadow: none; }
+.lk-chip.frisch::after, .lk-kasten.frisch::after { content: "neu"; position: absolute; top: -8px; right: -6px; background: #1d5b94; color: #fff; font-size: .62rem; font-weight: 700; line-height: 1; border-radius: 999px; padding: 3px 6px; box-shadow: 0 0 0 2px #fff; }
+.lk-chip.frisch.an, .lk-kasten.frisch.an { box-shadow: 0 0 0 3px #1f4e79; }
+.lk-muster.frisch { box-shadow: none; position: relative; } .lk-muster.frisch::after { content: ""; position: absolute; top: -4px; right: -4px; width: 9px; height: 9px; border-radius: 50%; background: #1d5b94; }
+.lk-gold { border-color: #1d5b94 !important; color: #fff !important; background: #1d5b94; }
+.lk-chip.s-aktivieren:not([data-live]), .lk-kasten.s-aktivieren:not([data-live]) { background: #f9d9d5; }
+.s-aktivieren:not([data-live]) > .lk-punkt { background: #c0392b; }

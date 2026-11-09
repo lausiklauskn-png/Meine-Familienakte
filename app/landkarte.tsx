@@ -6,7 +6,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode }
  * diese Richtung, Pfeil an beiden Enden = hin und zurück. Ein Tipp hebt die Äste eines Kastens hervor und nennt darunter,
  * woher Daten kommen, wohin sie gehen und wo der Kasten in der App liegt.
  * Live: der Stand kommt aus den Daten (in der App lib/app-stand.ts, wie status.json im Sage-Protokoll). Was sich seit dem letzten
- * Öffnen geändert hat, trägt einen Goldrahmen, bis man den Kasten antippt, höchstens 14 Tage (Klaus 07.11., gemerkt je Gerät).
+ * Öffnen geändert hat, trägt einen blauen Punkt „neu“ (bis 09.11. Goldrahmen), bis man den Kasten antippt, höchstens 14 Tage (Klaus 07.11., gemerkt je Gerät).
  * Immer als Karte, auch am Handy (Klaus 08.11.2026: die Liste sagt ohne die Wege wenig; die Karte wischt man seitlich).
  */
 export type KartenStand = "fertig" | "imbau" | "aktivieren" | "geplant";
@@ -192,8 +192,8 @@ export function KartenLegende({ live = false }: { live?: boolean }) {
       <b>Baustand (Rahmen):</b></span>}
     <span><i className="lk-muster s-fertig" aria-hidden="true"/> fertig</span>
     <span><i className="lk-muster s-imbau" aria-hidden="true"/> im Bau, bald fertig</span>
-    <span><i className="lk-muster s-aktivieren" aria-hidden="true"/> muss eingeschaltet werden</span>
+    {!live && <span><i className="lk-muster s-aktivieren l-rot" aria-hidden="true"/> muss eingeschaltet werden</span>}
     <span><i className="lk-muster s-geplant" aria-hidden="true"/> geplant, abzusprechen</span>
-    <span>⚠ Vorsicht</span><span>→ Daten nur in eine Richtung</span><span>⇄ hin und zurück</span><span><i className="lk-muster frisch" aria-hidden="true"/> seit dem letzten Öffnen geändert</span>
+    <span>⚠ Vorsicht</span><span>→ Daten nur in eine Richtung</span><span>⇄ hin und zurück</span><span><i className="lk-muster frisch" aria-hidden="true"/> neu seit dem letzten Öffnen</span>
   </p>;
 }
