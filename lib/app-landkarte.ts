@@ -74,7 +74,7 @@ export const APP_KNOTEN: Array<KartenKnoten & KartenSeite> = [
   { id: "kalender", titel: "Kalender", wo: "Fristen › Kalender verbinden", unter: "Google, Microsoft, Gerät, .ics", spalte: 7, seite: "reminders", mehr: "Einmal verbinden. Fristen gehen hinaus; auf Wunsch kommen die Termine des Kalenders als Fristen herein (Schritt 5). Gesundheitsfristen mit echtem Titel, Notizen nie." },
   { id: "glocke", titel: "App-Glocke", wo: "Mein Kalender › App-Glocke", unter: "ab Werk an ohne Kalender · Android meldet auch bei geschlossener App", spalte: 7, seite: "reminders" },
   { id: "sicherungsordner", titel: "Sicherungsordner", wo: "frei gewählt, getrennt vom Datentresor", unter: "sichern · einlesen · gemeinsame Festplatte", spalte: 7, seite: "security" },
-  { id: "anderes-geraet", titel: "Anderes Gerät", wo: "Sicherheit › Unterlage an ein anderes Gerät geben", unter: "gemeinsame Festplatte mit Kennung · Unterlage als Paket · WLAN geplant", spalte: 7, seite: "security", mehr: "Heute geht eine einzelne Datei als Paket (ohne Einträge und Fristen) oder die ganze Akte per Vollsicherung in eine leere Akte. Einträge zwischen zwei benutzten Geräten abgleichen: geplant." },
+  { id: "anderes-geraet", titel: "Anderes Gerät", wo: "Sicherheit › Unterlage an ein anderes Gerät geben", unter: "gemeinsame Festplatte mit Kennung · im eigenen Netz (WLAN, Kabel) · Unterlage als Paket", spalte: 7, seite: "security", mehr: "Heute geht eine einzelne Datei als Paket (ohne Einträge und Fristen) oder die ganze Akte per Vollsicherung in eine leere Akte. Einträge zwischen zwei benutzten Geräten abgleichen: geplant." },
 ];
 
 export const APP_KANTEN: KartenKante[] = [

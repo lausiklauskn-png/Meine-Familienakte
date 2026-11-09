@@ -7,7 +7,9 @@ import { HardDrive, RefreshCw, X } from "lucide-react";
 import type { Seite } from "../lib/abgleich";
 import { PASSWORT_MINDESTLAENGE, passwortPruefen } from "../lib/sicherung-krypto";
 import { chooseExportDestination } from "./local-vault";
-import { abgleichAusfuehren, abgleichVorbereiten, angeschlosseneLaufwerke, gemerkteLaufwerke, gemerktenOrdnerOeffnen, geraetKennung, laufwerkKopfLesen, laufwerkMerken, laufwerkMoeglich, laufwerkOeffnen, laufwerkVergessen, laufwerkVorbereiten, ortMerken, schluesselMerkbar, type AbgleichVorschau, type Fund, type GemerktesLaufwerk } from "./laufwerk";
+import { abgleichAusfuehren, abgleichVorbereiten, angeschlosseneLaufwerke, gastKoppeln, gastgeberEinrichten, gemerkteLaufwerke, gemerktenOrdnerOeffnen, geraetKennung, laufwerkKopfLesen, laufwerkMerken, laufwerkMoeglich, laufwerkOeffnen, laufwerkVergessen, laufwerkVorbereiten, netzMoeglich, netzSuchen, ortMerken, schluesselMerkbar, type AbgleichVorschau, type Fund, type GemerktesLaufwerk } from "./laufwerk";
+import { codeAnzeige, neuerCode, netzPlugin as netzPluginDa } from "./netz-laufwerk";
+import { Wifi } from "lucide-react";
 import { NotfallblattDialog, SicherungPasswortDialog } from "./sicherung-dialoge";
 
 const zeit = (z: string | null | undefined) => { if (!z) return "–"; const d = new Date(z); return Number.isNaN(d.getTime()) ? z : d.toLocaleString("de-DE", { dateStyle: "medium", timeStyle: "short" }); };
@@ -26,6 +28,10 @@ export function LaufwerkKarte({ aktiv, appVersion, busy, onBusy, onNotice, onRef
   const [passwort, setPasswort] = useState<{ handle: FileSystemDirectoryHandle; name: string; kennung: string; fehler: string; laeuft: boolean; merken: boolean; nachher: "verbinden" | "abgleichen" } | null>(null);
   const [offen, setOffen] = useState<Offen | null>(null);
   const [laeuft, setLaeuft] = useState("");
+  // Stufe F: Abgleich im eigenen Netz
+  const [gastgeber, setGastgeber] = useState(false);
+  const [gast, setGast] = useState(false);
+  const [codeZeigen, setCodeZeigen] = useState<string | null>(null);
   const zuletztAuto = useRef<Record<string, number>>({});
   // Rückrufe des Elternteils ändern bei jedem Neuzeichnen ihre Identität; über einen Ref bleiben die eigenen Abläufe stabil.
   const cb = useRef({ onBusy, onNotice, onRefresh }); cb.current = { onBusy, onNotice, onRefresh };
@@ -147,7 +153,30 @@ export function LaufwerkKarte({ aktiv, appVersion, busy, onBusy, onNotice, onRef
       try { await cb.current.onRefresh(); await laden(); } catch (error) { console.warn("Auffrischen nach dem Abgleich", error); }
     } finally { setLaeuft(""); onBusy(false); sperre.current = false; }
   };
-  const vergessen = async (g: GemerktesLaufwerk) => { await laufwerkVergessen(g.kennung); await laden(); onNotice({ kind: "info", text: `„${g.name}“ wird auf diesem Gerät nicht mehr gemerkt. Die Daten auf der Festplatte bleiben.` }); };
+  const vergessen = async (g: GemerktesLaufwerk) => {
+    if (g.netz?.rolle === "gastgeber") await netzPluginDa()?.stop().catch(() => undefined);
+    await laufwerkVergessen(g.kennung); await laden();
+    onNotice({ kind: "info", text: g.netz ? `„${g.name}“ (Netz) wird auf diesem Gerät nicht mehr gemerkt.${g.netz.rolle === "gastgeber" ? " Der Dienst ist aus; der Abgleich-Ordner bleibt in der App." : ""}` : `„${g.name}“ wird auf diesem Gerät nicht mehr gemerkt. Die Daten auf der Festplatte bleiben.` });
+  };
+  const gastgeberLos = async (name: string, code: string) => {
+    setGastgeber(false); onBusy(true);
+    try {
+      const r = await gastgeberEinrichten(name, code, appVersion);
+      await laden();
+      onNotice({ kind: "success", text: `Dieses Gerät ist jetzt Gastgeber „${r.gemerkt.name}“ (Port ${r.zustand.port}${r.zustand.adressen.length ? `, ${r.zustand.adressen.join(", ")}` : ""}). Am anderen Gerät „Mit Gastgeber koppeln“ und den Code eingeben.` });
+      setNotfall({ notfall: r.notfall, ordner: r.gemerkt.name, erstellt: r.gemerkt.angelegt, danach: { fund: r.fund, daten: r.daten } });
+    } catch (error) { onNotice({ kind: "error", text: error instanceof Error ? error.message : "Der Gastgeber konnte nicht eingerichtet werden." }); }
+    finally { onBusy(false); }
+  };
+  const gastLos = async (treffer: { kennung: string; name: string; port: number; adresse: string }, code: string) => {
+    onBusy(true);
+    try {
+      const r = await gastKoppeln(treffer, code);
+      setGast(false); await laden();
+      await abgleichStarten(r.fund, r.daten, false);
+    } catch (error) { onBusy(false); throw error; }
+    finally { onBusy(false); }
+  };
 
   if (!laufwerkMoeglich()) return <article className="card security-action-card" data-laufwerk-karte="nicht-moeglich"><div className="security-card-heading"><h2><HardDrive size={18}/> Gemeinsame Festplatte</h2></div><p className="sync-message warning">Hier nicht möglich: Die Web-App kann auf diesem Gerät keinen Ordner wählen. Der Abgleich über eine Festplatte geht in der Android- oder Windows-App oder am PC in Chrome oder Edge.</p></article>;
   const geraet = geraetKennung();
@@ -157,15 +186,22 @@ export function LaufwerkKarte({ aktiv, appVersion, busy, onBusy, onNotice, onRef
       <p className="fine-print">Eine SD-Karte, USB-Platte oder ein Netzordner, den Handy, Tablet und PC abwechselnd bekommen. Jedes Gerät erkennt die Platte an ihrer Kennung und gleicht ab: Neues kommt dazu, bei Unterschieden fragt die App, gelöscht wird nichts. Dieses Gerät heißt „{geraet.name}“.</p>
       {gemerkt.length > 0 && <ul className="laufwerk-liste">{gemerkt.map((g) => { const da = Boolean(daOrte[g.kennung]); return <li key={g.kennung} data-laufwerk={g.kennung} data-laufwerk-da={da ? "ja" : "nein"}>
         <span className={`badge ${da ? "success" : ""}`}>{da ? "angeschlossen" : "nicht angeschlossen"}</span>
-        <strong>{g.name}</strong>
+        <strong>{g.netz ? <Wifi size={15}/> : null} {g.name}{g.netz ? ` · ${g.netz.rolle === "gastgeber" ? "dieses Gerät ist Gastgeber" : `Gast${g.netz.adresse ? ` bei ${g.netz.adresse}` : ""}`}` : ""}</strong>
         <small>zuletzt abgeglichen: {zeit(g.letzterAbgleich)}{g.schluessel ? " · Schlüssel gemerkt" : " · fragt nach dem Passwort"}</small>
-        <span className="button-row"><button className="button primary" disabled={busy} onClick={() => void jetztAbgleichen(g)} data-laufwerk-abgleichen><RefreshCw size={15}/> Jetzt abgleichen</button><button className="button secondary" disabled={busy} onClick={() => void vergessen(g)} data-laufwerk-vergessen>Vergessen</button></span>
+        <span className="button-row"><button className="button primary" disabled={busy} onClick={() => void jetztAbgleichen(g)} data-laufwerk-abgleichen><RefreshCw size={15}/> Jetzt abgleichen</button>{g.netz?.rolle === "gastgeber" && g.netz.code && <button className="button secondary" disabled={busy} onClick={() => setCodeZeigen(codeZeigen === g.kennung ? null : g.kennung)} data-laufwerk-code-zeigen>{codeZeigen === g.kennung ? "Code verbergen" : "Kopplungscode zeigen"}</button>}<button className="button secondary" disabled={busy} onClick={() => void vergessen(g)} data-laufwerk-vergessen>Vergessen</button></span>
+        {codeZeigen === g.kennung && g.netz?.code && <p className="notfall-schluessel" data-laufwerk-code>{codeAnzeige(g.netz.code)}</p>}
       </li>; })}</ul>}
       {laeuft && <p className="notiz-gespeichert" role="status" data-laufwerk-laeuft>{laeuft}</p>}
       <div className="button-row"><button className="button secondary" disabled={busy || !aktiv} onClick={() => setVorbereiten(true)} data-laufwerk-vorbereiten>Festplatte vorbereiten …</button><button className="button secondary" disabled={busy || !aktiv} onClick={() => void verbinden()} data-laufwerk-verbinden>Vorhandene Festplatte verbinden …</button></div>
+      {netzMoeglich() ? <>
+        <p className="fine-print" data-laufwerk-netz="ja"><Wifi size={14}/> <strong>Ohne Platte, im eigenen Netz</strong> (WLAN, LAN-Kabel oder USB-Kabel mit Netzfreigabe): Ein Gerät ist Gastgeber, die anderen koppeln einmal mit einem Code und gleichen danach von selbst ab, sobald sie den Gastgeber im Netz sehen. Kein Internet, kein fremder Server.</p>
+        <div className="button-row"><button className="button secondary" disabled={busy || !aktiv} onClick={() => setGastgeber(true)} data-laufwerk-gastgeber>Dieses Gerät als Gastgeber …</button><button className="button secondary" disabled={busy || !aktiv} onClick={() => setGast(true)} data-laufwerk-gast>Mit Gastgeber koppeln …</button></div>
+      </> : <p className="fine-print" data-laufwerk-netz="nein">Der Abgleich im eigenen Netz (WLAN, Kabel) geht in der Android- und der Windows-App – die Web-App im Browser darf im Heimnetz keine andere Geräte ansprechen.</p>}
       <p className="fine-print">Gemerkt wird der Schlüssel nur im eigenen Speicher dieser App auf diesem Gerät, nie auf der Festplatte. Wer das entsperrte Gerät hat, kann abgleichen; sonst hilft „Vergessen“.</p>
     </article>
     {vorbereiten && <VorbereitenDialog onStart={(name, pw) => void vorbereitenLos(name, pw)} onClose={() => setVorbereiten(false)}/>}
+    {gastgeber && <GastgeberDialog onStart={(name, code) => void gastgeberLos(name, code)} onClose={() => setGastgeber(false)}/>}
+    {gast && <GastDialog onKoppeln={gastLos} onClose={() => setGast(false)}/>}
     {notfall && <NotfallblattDialog notfall={notfall.notfall} ordner={notfall.ordner} erstellt={notfall.erstellt} appVersion={appVersion} onDrucken={onDrucken} onClose={() => { const d = notfall.danach; setNotfall(null); if (d) void abgleichStarten(d.fund, d.daten, false); }}/>}
     {passwort && <SicherungPasswortDialog ordner={passwort.name} fehler={passwort.fehler} laeuft={passwort.laeuft} onZugang={(z) => void zugang(z)} onClose={() => setPasswort(null)}
       extra={<label className="checkbox-row" data-laufwerk-merken><input type="checkbox" checked={passwort.merken} onChange={(e) => setPasswort({ ...passwort, merken: e.target.checked })}/> Schlüssel auf diesem Gerät merken (dann gleicht die App beim Anstecken von selbst ab)</label>}/>}
@@ -222,6 +258,55 @@ function AbgleichDialog({ offen, laeuft, onAbgleichen, onClose }: { offen: Offen
       {fehler && <p className="form-error">{fehler}</p>}
       <p className="fine-print">Gelöscht wird nichts. Das bisherige Register wird vorher gesichert.</p>
       <div className="modal-actions"><button className="button secondary" onClick={onClose} disabled={Boolean(laeuft)}>{nichts ? "Schließen" : "Abbrechen"}</button>{!nichts && <button className="button primary" disabled={Boolean(laeuft)} onClick={() => void los()} data-laufwerk-los-abgleich>{laeuft ? "Läuft …" : "Abgleichen"}</button>}</div>
+    </div>
+  </div>;
+}
+
+/** Stufe F: Gastgeber – Name und ein frischer Kopplungscode (9 Ziffern), den man am anderen Gerät eintippt. */
+function GastgeberDialog({ onStart, onClose }: { onStart: (name: string, code: string) => void; onClose: () => void }) {
+  const [name, setName] = useState(`Netz-Abgleich ${geraetKennung().name}`); const [code] = useState(neuerCode);
+  return <div className="modal-backdrop" role="presentation" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
+    <div className="modal" role="dialog" aria-modal="true" aria-labelledby="gastgeber-titel" data-laufwerk-gastgeber-dialog>
+      <div className="modal-head"><div><span className="badge">Im eigenen Netz</span><h2 id="gastgeber-titel">Dieses Gerät als Gastgeber</h2></div><button className="icon-button" onClick={onClose} aria-label="Fenster schließen"><X/></button></div>
+      <ul className="fine-print"><li>Der Gastgeber hält den gemeinsamen Stand in seinem eigenen App-Speicher (verschlüsselt) und bietet ihn im Netz an, solange die App offen ist.</li><li>Andere Geräte koppeln einmal mit diesem Code; danach gleichen sie von selbst ab, wenn sie den Gastgeber sehen.</li><li>Der Code ist zugleich das Passwort; dazu kommt ein Notfallblatt.</li></ul>
+      <div className="form-grid">
+        <label>Name<input value={name} onChange={(e) => setName(e.target.value)} data-gastgeber-name/></label>
+        <div><span className="fine-print">Kopplungscode (am anderen Gerät eingeben)</span><p className="notfall-schluessel" data-gastgeber-code>{codeAnzeige(code)}</p></div>
+      </div>
+      <div className="modal-actions"><button className="button secondary" onClick={onClose}>Abbrechen</button><button className="button primary" onClick={() => onStart(name, code)} data-gastgeber-los>Gastgeber werden</button></div>
+    </div>
+  </div>;
+}
+
+/** Stufe F: Gast – Gastgeber im Netz suchen, einen wählen, Code eingeben. */
+function GastDialog({ onKoppeln, onClose }: { onKoppeln: (t: { kennung: string; name: string; port: number; adresse: string }, code: string) => Promise<void>; onClose: () => void }) {
+  const [treffer, setTreffer] = useState<Array<{ kennung: string; name: string; port: number; adresse: string }> | null>(null);
+  const [wahl, setWahl] = useState<string>(""); const [code, setCode] = useState(""); const [fehler, setFehler] = useState(""); const [laeuft, setLaeuft] = useState(false);
+  const [adresse, setAdresse] = useState(""); const [port, setPort] = useState("48200");
+  const suchen = useCallback(async () => { setLaeuft(true); try { const t = await netzSuchen(2500); setTreffer(t); if (t.length === 1) setWahl(t[0].kennung); } finally { setLaeuft(false); } }, []);
+  useEffect(() => { void suchen(); }, [suchen]);
+  const los = async () => {
+    setFehler("");
+    const t = treffer?.find((x) => x.kennung === wahl) || (adresse.trim() ? { kennung: "", name: adresse.trim(), port: Number(port) || 48200, adresse: adresse.trim() } : null);
+    if (!t) { setFehler("Bitte einen Gastgeber wählen oder seine Adresse eingeben."); return; }
+    if (code.replace(/\D/g, "").length !== 9) { setFehler("Der Kopplungscode hat 9 Ziffern."); return; }
+    setLaeuft(true);
+    try {
+      // Ohne Kennung (Adresse von Hand): der Gastgeber nennt sie im Kopf – Token braucht die Kennung, darum erst anfragen.
+      if (!t.kennung) { const gefunden = (await netzSuchen(1500)).find((x) => x.adresse === t.adresse); if (!gefunden) throw new Error("Unter dieser Adresse meldet sich kein Gastgeber. Ist dort die Familienakte offen und Gastgeber?"); await onKoppeln(gefunden, code); }
+      else await onKoppeln(t, code);
+    } catch (e) { const text = e instanceof Error ? e.message : ""; setFehler(text === "PASSWORT_FALSCH" ? "Der Code passt nicht zu diesem Gastgeber." : text || "Koppeln nicht möglich."); setLaeuft(false); }
+  };
+  return <div className="modal-backdrop" role="presentation" onMouseDown={(e) => e.target === e.currentTarget && !laeuft && onClose()}>
+    <div className="modal" role="dialog" aria-modal="true" aria-labelledby="gast-titel" data-laufwerk-gast-dialog>
+      <div className="modal-head"><div><span className="badge">Im eigenen Netz</span><h2 id="gast-titel">Mit Gastgeber koppeln</h2></div><button className="icon-button" onClick={onClose} disabled={laeuft} aria-label="Fenster schließen"><X/></button></div>
+      <p className="fine-print">Am Gastgeber muss die Familienakte offen sein. Beide Geräte im selben Netz (WLAN, LAN- oder USB-Kabel).</p>
+      {treffer === null ? <p data-gast-suche>Suche im Netz …</p> : treffer.length ? <ul className="kalender-hol-liste" data-gast-treffer>{treffer.map((t) => <li key={`${t.kennung}|${t.adresse}`}><label className="checkbox-row"><input type="radio" name="gast-wahl" checked={wahl === t.kennung} onChange={() => setWahl(t.kennung)} data-gast-wahl={t.kennung}/> {t.name} <small>· {t.adresse}:{t.port}</small></label></li>)}</ul>
+        : <p className="sync-message warning" data-gast-keiner>Kein Gastgeber gefunden. <button type="button" className="text-link" onClick={() => void suchen()} disabled={laeuft}>Noch einmal suchen</button> – oder die Adresse eingeben, die der Gastgeber anzeigt.</p>}
+      {treffer !== null && !treffer.length && <div className="form-grid"><label>Adresse des Gastgebers<input value={adresse} onChange={(e) => setAdresse(e.target.value)} placeholder="192.168.…" data-gast-adresse/></label><label>Port<input value={port} onChange={(e) => setPort(e.target.value)} data-gast-port/></label></div>}
+      <label>Kopplungscode (9 Ziffern)<input inputMode="numeric" value={code} onChange={(e) => setCode(e.target.value)} data-gast-code/></label>
+      {fehler && <p className="form-error" data-gast-fehler>{fehler}</p>}
+      <div className="modal-actions"><button className="button secondary" onClick={onClose} disabled={laeuft}>Abbrechen</button><button className="button primary" disabled={laeuft} onClick={() => void los()} data-gast-los>{laeuft ? "Wird gekoppelt …" : "Koppeln und abgleichen"}</button></div>
     </div>
   </div>;
 }

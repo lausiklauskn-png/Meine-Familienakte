@@ -29,6 +29,7 @@ export const ordnerStub = (plattform = "android") => `(() => {
     async dateiFertig({ id, size }) { const s = offen.get(id); if (!s || size !== s.size) throw fehler('FA_STUECK_UNGUELTIG'); const u = new Uint8Array(s.size); let o = 0; for (const t of s.teile) { u.set(t, o); o += t.length; } S.dateien.set(s.key, u); S.selbst.add(s.key); offen.delete(id); return { size: s.size, sha256: await hex(u) }; },
     async dateiVerwerfen({ id }) { offen.delete(id); return { ok: true }; },
     // Stufe C: Ort merken/öffnen und Laufwerke absuchen; S.angesteckt = false stellt eine abgezogene Festplatte dar.
+    async ordnerIntern({ name }) { const t = 'INTERN-' + name; S.ordner.add(k(t, '')); return { token: t, name, pfad: '/data/' + name }; },
     async ordnerMerken({ token }) { if (!S.ordner.has(k(token, ''))) throw fehler('FA_ORDNER_NICHT_ERREICHBAR'); S.gemerkt.add('ORT:' + S.naechsterName); return { ort: 'ORT:' + S.naechsterName }; },
     async ordnerOeffnen({ ort }) { if (!S.angesteckt || !String(ort).startsWith('ORT:')) return { erreichbar: false, grund: 'FA_ORDNER_NICHT_ERREICHBAR' }; const t = S.festerToken || 'T' + (++S.n); S.ordner.add(k(t, '')); return { erreichbar: true, token: t, name: ort.slice(4) }; },
     async laufwerkeSuchen({ datei }) { const u = S.angesteckt ? S.dateien.get(k('R', datei)) : null; return { treffer: u ? [{ ort: 'ORT:' + S.naechsterName, name: S.naechsterName, inhalt: new TextDecoder().decode(u) }] : [] }; },

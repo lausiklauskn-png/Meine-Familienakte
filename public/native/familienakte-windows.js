@@ -31,12 +31,15 @@
   window.Capacitor.Plugins.FamilyOutput = { save: options => invoke('fa_pro_tresor', { anfrage: { ...options, aktion: 'dateiExportieren' } }) };
   // P4/P5 (Plan 07.11.): frei gewählter Ordner für die Vollsicherung und stückweise Ausgabe bis 100 MB, dieselben Aktionen wie Android.
   window.Capacitor.Plugins.FamilyFolders = Object.fromEntries(
-    ['ordnerWaehlen', 'ordnerListe', 'ordnerAnlegen', 'dateiInfo', 'dateiLesen', 'eigeneDateiEntfernen', 'dateiBeginn', 'dateiAnhaengen', 'dateiFertig', 'dateiVerwerfen', 'ordnerMerken', 'ordnerOeffnen', 'laufwerkeSuchen',
+    ['ordnerWaehlen', 'ordnerListe', 'ordnerAnlegen', 'dateiInfo', 'dateiLesen', 'eigeneDateiEntfernen', 'dateiBeginn', 'dateiAnhaengen', 'dateiFertig', 'dateiVerwerfen', 'ordnerMerken', 'ordnerOeffnen', 'laufwerkeSuchen', 'ordnerIntern',
       'ausgabeBeginn', 'ausgabeAnhaengen', 'ausgabeFertig', 'ausgabeSpeichern', 'ausgabeVerwerfen'].map((aktion) =>
       [aktion, (daten = {}) => invoke('fa_pro_tresor', { anfrage: { ...daten, aktion } })])
   );
   // Lies-mich der Vollsicherung: Download-Adresse und SHA-256 genau dieser Fassung aus dem unterschriebenen Update-Feed.
   window.Capacitor.Plugins.FamilyFolders.setupAngaben = () => invoke('fa_setup_angaben');
+  // Stufe F: Abgleich im eigenen Netz (Gastgeber-Dienst in der Java-Engine, Gast-Anfragen über eigenen Socket).
+  window.Capacitor.Plugins.FamilienakteNetz = Object.fromEntries([['start', 'netzStart'], ['stop', 'netzStop'], ['zustand', 'netzZustand'], ['suchen', 'netzSuchen'], ['anfrage', 'netzAnfrage']].map(([name, aktion]) =>
+    [name, (daten = {}) => invoke('fa_pro_tresor', { anfrage: { ...daten, aktion } })]));
   window.Capacitor.Plugins.FamilyModels = Object.fromEntries(['getState', 'install', 'cancel', 'remove'].map(method =>
     [method, (options = {}) => invoke('fa_modelle', { anfrage: { ...options, method } })]));
 

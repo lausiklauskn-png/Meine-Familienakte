@@ -25,7 +25,9 @@ fn aktion_erlaubt(request: &Value) -> bool {
             // P4/P5: frei gewählter Sicherungsordner und stückweise Ausgabe bis 100 MB (FamilyFolders.java)
             | "ordnerWaehlen" | "ordnerListe" | "ordnerAnlegen" | "dateiInfo" | "dateiLesen" | "eigeneDateiEntfernen"
             // Stufe C (Plan 08.11.): gemeinsame Festplatte – Ort merken, wieder öffnen, Laufwerke nach der Kennung absuchen
-            | "ordnerMerken" | "ordnerOeffnen" | "laufwerkeSuchen"
+            | "ordnerMerken" | "ordnerOeffnen" | "laufwerkeSuchen" | "ordnerIntern"
+            // Stufe F: Abgleich im eigenen Netz – Gastgeber-Dienst und Gast-Anfragen (NetzDienst.java)
+            | "netzStart" | "netzStop" | "netzZustand" | "netzSuchen" | "netzAnfrage"
             | "dateiBeginn" | "dateiAnhaengen" | "dateiFertig" | "dateiVerwerfen"
             | "ausgabeBeginn" | "ausgabeAnhaengen" | "ausgabeFertig" | "ausgabeSpeichern" | "ausgabeVerwerfen"))
 }
@@ -105,7 +107,7 @@ mod tests {
             assert!(aktion_erlaubt(&json!({"aktion": aktion})));
         }
         // P5: Sicherungsordner-Aktionen; ein allgemeines Löschen gibt es weiterhin nicht.
-        for aktion in ["ordnerWaehlen", "dateiBeginn", "dateiAnhaengen", "dateiFertig", "eigeneDateiEntfernen", "ausgabeBeginn", "ausgabeSpeichern", "ordnerMerken", "ordnerOeffnen", "laufwerkeSuchen"] {
+        for aktion in ["ordnerWaehlen", "dateiBeginn", "dateiAnhaengen", "dateiFertig", "eigeneDateiEntfernen", "ausgabeBeginn", "ausgabeSpeichern", "ordnerMerken", "ordnerOeffnen", "laufwerkeSuchen", "ordnerIntern", "netzStart", "netzAnfrage"] {
             assert!(aktion_erlaubt(&json!({"aktion": aktion})));
         }
         for bad in [json!({}), json!({"aktion": "shell"}), json!({"aktion": "dateiLoeschen"})] {

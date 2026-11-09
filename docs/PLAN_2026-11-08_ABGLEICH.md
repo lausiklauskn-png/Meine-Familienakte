@@ -51,7 +51,7 @@ Jede Stufe landet als eigener PR auf `main`, damit bei einem Abbruch nichts verl
 | C | Gemeinsame Festplatte: „Festplatte vorbereiten“ (Kennung `Familienakte-Laufwerk.json`), dauerhaft gemerkte Freigabe (Android `takePersistableUriPermission`, Windows Suche über alle Laufwerke nach der Kennung), Abgleich-Ordner verschlüsselt, Änderungsliste je Gerät, Abgleich beim Anstecken bzw. App-Start, Originale stückweise | 2.28.42 | PWA, APK, Windows |
 | D | Kalender beidseitig: Einlesen aus Google (`syncToken`), Microsoft (`delta`), Android-Gerätekalender; Auswahl der Kalender je Konto; Konflikte wie im Kern | 2.28.43 | PWA, APK, Windows |
 | E | Eingangsordner mit Blöcken zu 20, gespeicherte Warteschlange, Speicherprüfung (`navigator.storage.estimate/persist`), Analyse nacheinander statt alle zugleich; Android-Hintergrunddienst mit Meldung | 2.28.44 | PWA, APK, Windows |
-| F | WLAN/LAN/USB-Kabel: Koppeln per QR-Code (gemeinsamer Schlüssel), kleiner Dienst in der Windows-App und in der Android-App (Gastgeber), Übertragung verschlüsselt und stückweise, automatischer Abgleich im selben Netz | 2.28.45 | PWA, APK, Windows |
+| F | WLAN/LAN/USB-Kabel: Koppeln per Code mit 9 Ziffern (statt QR – keine QR-Bibliothek im Repo, der Code ist auf jedem Gerät tippbar), kleiner Dienst in der Windows-App und in der Android-App (Gastgeber), Suche im Netz per UDP-Signal, Übertragung im Festplatten-Format (verschlüsselt, stückweise) über HTTP mit Token, automatischer Abgleich im selben Netz. **Grenze:** die Web-App im Browser darf im Heimnetz keine anderen Geräte ansprechen (gemischte Inhalte) – dort nur Festplatte oder Sicherung | 2.28.45 | PWA, APK, Windows |
 | G | Bedeutungssuche in der PWA (Modell im Browser-Speicher), Ladebalken in Prozent, OCR-Text und Gesundheitstext (nur Index, auf dem Gerät) | 2.28.46 | PWA, APK, Windows |
 | H | Scan: Original-Foto im Stapel behalten, Vermerk „bearbeitet“; Teilen-Knopf an Dokumenten; Glocke nach Geräte-Neustart (Boot-Empfänger) | 2.28.47 | PWA, APK, Windows |
 | I | Paket per Teilen (10b): nur Änderungen seit dem letzten Abgleich mit diesem Gerät, immer verschlüsselt | 2.28.48 | PWA, APK, Windows |
@@ -67,4 +67,4 @@ Fassungsnummern sind Richtwerte; vor jeder Ausgabe die tatsächlichen Releases p
 
 ## Stand
 
-- [x] A (2.28.40, #131) · [x] B (2.28.41) · [x] C (2.28.42) · [x] D (2.28.43) · [x] E (2.28.44) · [ ] F · [ ] G · [ ] H · [ ] I
+- [x] A (2.28.40, #131) · [x] B (2.28.41) · [x] C (2.28.42) · [x] D (2.28.43) · [x] E (2.28.44) · [x] F (2.28.45) · [ ] G · [ ] H · [ ] I

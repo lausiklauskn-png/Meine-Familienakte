@@ -20,6 +20,7 @@ public final class ProTresorEngine implements Closeable {
         default Path sicherungsordner(String titel) throws IOException { throw new IOException("FA_ORDNER_DIALOG"); }
     }
     private final FamilyFolders ordnerWege = new FamilyFolders();
+    private FamilyNetz netz;
     private final Path einstellungen;
     private final Dialoge dialoge;
     private Path ort;
@@ -28,6 +29,7 @@ public final class ProTresorEngine implements Closeable {
     private boolean konfigurationBeschaedigt;
 
     public ProTresorEngine(Path einstellungen, Dialoge dialoge) throws IOException {
+        FamilyFolders.datenOrdner(einstellungen.toAbsolutePath().getParent());
         this.einstellungen = einstellungen.toAbsolutePath().normalize(); this.dialoge = dialoge;
         if (Files.exists(einstellungen)) {
             try {
@@ -121,6 +123,7 @@ public final class ProTresorEngine implements Closeable {
     public synchronized Object aufruf(Map<String, Object> m) throws IOException {
         String aktion = Json.text(m, "aktion");
         if (FamilyFolders.aktion(aktion)) return ordnerWege.aufruf(m, dialoge);
+        if (FamilyNetz.aktion(aktion)) { if (netz == null) netz = new FamilyNetz(FamilyFolders.datenOrdner()); return netz.aufruf(m); }
         switch (aktion) {
             case "dateiExportieren": return FamilyFileOutput.save(m, dialoge);
             case "zustand": return zustand();

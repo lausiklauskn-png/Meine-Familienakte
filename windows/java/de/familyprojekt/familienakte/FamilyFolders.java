@@ -14,6 +14,10 @@ final class FamilyFolders {
     static final int STUECK = 1024 * 1024;
     static final long MAX_DATEI = 100L * 1024 * 1024 + 8192 + 12;
     private final Map<String, Path> ordner = new HashMap<>();
+    /** Stufe F: app-eigener Datenordner (neben der Konfigurationsdatei der Engine) für den Gastgeber des Netz-Abgleichs. */
+    private static Path daten = Path.of(System.getProperty("user.home"), ".familienakte");
+    static void datenOrdner(Path p) { if (p != null) daten = p; }
+    static Path datenOrdner() { return daten; }
     private final Map<String, Schreiben> offen = new HashMap<>();
     private final Set<Path> selbstAngelegt = new HashSet<>();
     private static final class Schreiben { Path ziel, teil; long groesse; MessageDigest sha; boolean ausgabe; boolean fertig; String name; }
@@ -34,6 +38,14 @@ final class FamilyFolders {
                 return Map.of("token", token, "name", p.getFileName() == null ? p.toString() : p.getFileName().toString());
             }
             // Stufe C (Plan 08.11.): Ort merken und wieder öffnen; Laufwerke nach einer Kennungsdatei absuchen (anderer Buchstabe egal).
+            case "ordnerIntern": {
+                String name = Json.textOder(m, "name", "");
+                if (!name.matches("[A-Za-z0-9_-]{1,64}")) throw new IOException("FA_PFAD_UNGUELTIG");
+                Path p = daten.resolve(name).toAbsolutePath().normalize();
+                if (!Files.isDirectory(p)) Files.createDirectories(p);
+                String token = UUID.randomUUID().toString(); ordner.put(token, p);
+                return Map.of("token", token, "name", name, "pfad", p.toString());
+            }
             case "ordnerMerken": {
                 Path p = ordner.get(Json.text(m, "token"));
                 if (p == null) throw new IOException("FA_ORDNER_NICHT_ERREICHBAR");

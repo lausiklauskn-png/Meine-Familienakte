@@ -15,6 +15,7 @@ import { dateiEntschluesseln, dateiVerschluesseln, schluesselExportieren, schlue
 import { workspaceStorage } from "../lib/demo-workspace";
 import { akteFuerAbgleich, akteNachAbgleichSchreiben, dokumentDateiAblegen, dokumentDateiOderNull, fileChecksum, folderPickerSupported, type LocalDocument } from "./local-vault";
 import { NativerOrdner, nativePlattform, ordnerPlugin } from "./nativer-ordner";
+import { gastgeberPruefen, netzOrdner, netzPlugin, tokenAusCode, type NetzZustand } from "./netz-laufwerk";
 
 export const LAUFWERK_ORDNER = "Familienakte-Abgleich";
 export const LAUFWERK_KOPF = "Familienakte-Laufwerk.json";
@@ -27,7 +28,12 @@ export type Stand = { zeit: string; geraet: Geraet; fassung: string; akte: Akte;
 type Zeiger = { datei: "stand-a.fav" | "stand-b.fav"; zeit: string; geraet: Geraet };
 
 /** Was dieses Gerät sich je Platte merkt (eigener App-Speicher, nie auf der Platte). */
-export type GemerktesLaufwerk = { kennung: string; name: string; ort: string | null; schluessel: string | null; basis: Basis; letzterAbgleich: string | null; angelegt: string };
+export type GemerktesLaufwerk = { kennung: string; name: string; ort: string | null; schluessel: string | null; basis: Basis; letzterAbgleich: string | null; angelegt: string;
+  /** Stufe F: Abgleich im eigenen Netz. Gastgeber bietet seinen Abgleich-Ordner an (Code für weitere Geräte gemerkt), Gast kennt Token und zuletzt gesehene Adresse. */
+  netz?: { rolle: "gastgeber" | "gast"; token: string; code?: string | null; adresse?: string | null; port?: number | null } };
+export const NETZ_ORDNER = "netz-laufwerk";
+/** Passwort des Netz-Abgleichs aus dem Kopplungscode (so bleibt die Technik der Festplatte unverändert). */
+export const netzPasswort = (code: string) => `netz-${code.replace(/\D/g, "")}`;
 
 // ---------- Gerät ----------
 const GERAET_SCHLUESSEL = "familienakte-geraet-v1";
@@ -88,11 +94,11 @@ async function textSchreiben(ordner: FileSystemDirectoryHandle, name: string, in
 }
 
 /** Festplatte vorbereiten: Kennung, Passwort, Notfallschlüssel. Lehnt eine schon vorbereitete Platte ab. */
-export async function laufwerkVorbereiten(handle: FileSystemDirectoryHandle, name: string, passwort: string, appVersion: string) {
+export async function laufwerkVorbereiten(handle: FileSystemDirectoryHandle, name: string, passwort: string, appVersion: string, kennung = crypto.randomUUID()) {
   if (await laufwerkKopfLesen(handle)) throw new Error("Diese Festplatte ist schon für die Familienakte vorbereitet. Bitte „Vorhandene Festplatte verbinden“ wählen.");
   const angelegt = new Date().toISOString();
   const tresor = await tresorAnlegen(passwort, { appVersion, createdAt: angelegt });
-  const kopf: LaufwerkKopf = { ...tresor.kopf, hinweis: "Gemeinsame Festplatte der Familienakte. Ordner und Dateien darunter nicht von Hand ändern; zum Lesen braucht es die Familienakte und das Passwort oder das Notfallblatt.", laufwerk: { format: FORMAT_LAUFWERK, kennung: crypto.randomUUID(), name: name.trim().slice(0, 60) || "Familienakte-Platte", angelegt } };
+  const kopf: LaufwerkKopf = { ...tresor.kopf, hinweis: "Gemeinsame Festplatte der Familienakte. Ordner und Dateien darunter nicht von Hand ändern; zum Lesen braucht es die Familienakte und das Passwort oder das Notfallblatt.", laufwerk: { format: FORMAT_LAUFWERK, kennung, name: name.trim().slice(0, 60) || "Familienakte-Platte", angelegt } };
   const ordner = (await unterordner(handle, LAUFWERK_ORDNER, true))!;
   await unterordner(ordner, "Stand", true); await unterordner(ordner, "Dateien", true);
   await textSchreiben(ordner, LAUFWERK_KOPF, JSON.stringify(kopf, null, 2));
@@ -223,10 +229,18 @@ export async function angeschlosseneLaufwerke(): Promise<Fund[]> {
   const gemerkt = await gemerkteLaufwerke();
   if (!gemerkt.length) return [];
   const funde: Fund[] = [];
+  // Stufe F: Netz-Einträge – Gastgeber hält seinen Dienst am Laufen und arbeitet auf dem eigenen Ordner, Gäste suchen den Gastgeber im Netz.
+  const netzEintraege = gemerkt.filter((g) => g.netz);
+  if (netzEintraege.length) {
+    const treffer = netzEintraege.some((g) => g.netz!.rolle === "gast") ? await netzSuchen() : [];
+    for (const g of netzEintraege) { const f = await netzFund(g, treffer).catch(() => null); if (f) funde.push(f); }
+  }
+  const nurPlatten = gemerkt.filter((g) => !g.netz);
+  if (!nurPlatten.length) return funde;
   const p = ordnerPlugin() as (ReturnType<typeof ordnerPlugin> & { ordnerOeffnen?: (a: { ort: string }) => Promise<{ erreichbar: boolean; token?: string; name?: string }>; laufwerkeSuchen?: (a: { datei: string }) => Promise<{ treffer: Array<{ ort: string; name: string; inhalt: string }> }> }) | null;
   if (p?.ordnerOeffnen) {
     const treffer = p.laufwerkeSuchen ? (await p.laufwerkeSuchen({ datei: LAUFWERK_KOPF_PFAD }).catch(() => ({ treffer: [] }))).treffer : [];
-    for (const g of gemerkt) {
+    for (const g of nurPlatten) {
       const orte = [g.ort, ...treffer.filter((t) => { try { return kopfPruefen(t.inhalt).laufwerk.kennung === g.kennung; } catch { return false; } }).map((t) => t.ort)].filter((o): o is string => Boolean(o));
       for (const ort of [...new Set(orte)]) {
         const r: { erreichbar: boolean; token?: string; name?: string } = await p.ordnerOeffnen({ ort }).catch(() => ({ erreichbar: false }));
@@ -239,7 +253,7 @@ export async function angeschlosseneLaufwerke(): Promise<Fund[]> {
     return funde;
   }
   if (folderPickerSupported()) {
-    for (const g of gemerkt) {
+    for (const g of nurPlatten) {
       const handle = await handleLesen(g.kennung); if (!handle) continue;
       const erlaubnis = await (handle as FileSystemDirectoryHandle & { queryPermission?: (o: { mode: string }) => Promise<string> }).queryPermission?.({ mode: "readwrite" });
       if (erlaubnis !== "granted") continue;
@@ -264,3 +278,68 @@ export async function gemerktenOrdnerOeffnen(kennung: string): Promise<FileSyste
   return handle;
 }
 export const laufwerkMoeglich = () => Boolean(ordnerPlugin()) || folderPickerSupported();
+
+// ---------- Stufe F: Abgleich im eigenen Netz (WLAN, LAN-Kabel, USB-Kabel) ----------
+export const netzMoeglich = () => Boolean(netzPlugin() && ordnerPlugin());
+type OrdnerPluginIntern = NonNullable<ReturnType<typeof ordnerPlugin>> & { ordnerIntern?: (a: { name: string }) => Promise<{ token: string; name: string }> };
+/** Der app-eigene Abgleich-Ordner des Gastgebers als Handle. */
+async function internerOrdner(): Promise<FileSystemDirectoryHandle> {
+  const p = ordnerPlugin() as OrdnerPluginIntern | null;
+  if (!p?.ordnerIntern) throw new Error("Diese App-Fassung kann noch keinen Gastgeber-Ordner anlegen (Fassung aktualisieren).");
+  const r = await p.ordnerIntern({ name: NETZ_ORDNER });
+  return new NativerOrdner(p, r.token, "", "Netz-Abgleich") as unknown as FileSystemDirectoryHandle;
+}
+export async function netzSuchen(ms = 2500) {
+  const p = netzPlugin(); if (!p) return [];
+  return (await p.suchen({ ms }).catch(() => ({ treffer: [] }))).treffer;
+}
+export async function netzZustand(): Promise<NetzZustand | null> { const p = netzPlugin(); return p ? p.zustand().catch(() => null) : null; }
+/** Gastgeber: Dienst sicherstellen, eigener Ordner öffnen. Gast: Gastgeber im Netz finden (zuletzt gesehene Adresse zuerst). */
+async function netzFund(g: GemerktesLaufwerk, treffer: Array<{ kennung: string; name: string; port: number; adresse: string }>): Promise<Fund | null> {
+  const p = netzPlugin(); if (!p || !g.netz) return null;
+  if (g.netz.rolle === "gastgeber") {
+    const z = await p.zustand().catch(() => null);
+    if (!z?.laeuft) await p.start({ ordner: NETZ_ORDNER, token: g.netz.token, kennung: g.kennung, name: `${g.name} (${geraetKennung().name})`, port: g.netz.port || undefined });
+    const handle = await internerOrdner();
+    const fund = await laufwerkKopfLesen(handle);
+    return fund && fund.kopf.laufwerk.kennung === g.kennung ? { gemerkt: g, handle, ordner: fund.ordner, kopf: fund.kopf } : null;
+  }
+  const kandidaten = [...treffer.filter((t) => t.kennung === g.kennung).map((t) => ({ adresse: t.adresse, port: t.port })), ...(g.netz.adresse && g.netz.port ? [{ adresse: g.netz.adresse, port: g.netz.port }] : [])];
+  for (const k of kandidaten) {
+    const ziel = { ...k, token: g.netz.token };
+    const kopf = await gastgeberPruefen(ziel); if (!kopf || kopf.kennung !== g.kennung) continue;
+    const handle = netzOrdner(ziel, g.name);
+    const fund = await laufwerkKopfLesen(handle).catch(() => null);
+    if (!fund || fund.kopf.laufwerk.kennung !== g.kennung) continue;
+    if (k.adresse !== g.netz.adresse || k.port !== g.netz.port) await laufwerkMerken({ ...g, netz: { ...g.netz, adresse: k.adresse, port: k.port } });
+    return { gemerkt: { ...g, netz: { ...g.netz, adresse: k.adresse, port: k.port } }, handle, ordner: fund.ordner, kopf: fund.kopf };
+  }
+  return null;
+}
+/** Dieses Gerät wird Gastgeber: eigener Abgleich-Ordner wie eine Festplatte vorbereitet (Passwort aus dem Code), Dienst gestartet. */
+export async function gastgeberEinrichten(name: string, code: string, appVersion: string) {
+  const p = netzPlugin(); if (!p) throw new Error("Der Abgleich im Netz braucht die Android- oder Windows-App.");
+  const alle = await gemerkteLaufwerke();
+  if (alle.some((g) => g.netz?.rolle === "gastgeber")) throw new Error("Dieses Gerät ist schon Gastgeber. Erst „Vergessen“, dann neu einrichten.");
+  const handle = await internerOrdner();
+  const kennung = crypto.randomUUID();
+  const r = await laufwerkVorbereiten(handle, name, netzPasswort(code), appVersion, kennung);
+  const token = await tokenAusCode(code, kennung);
+  const zustand = await p.start({ ordner: NETZ_ORDNER, token, kennung, name: `${r.kopf.laufwerk.name} (${geraetKennung().name})` });
+  const g: GemerktesLaufwerk = { kennung, name: r.kopf.laufwerk.name, ort: null, schluessel: await schluesselExportieren(r.daten), basis: {}, letzterAbgleich: null, angelegt: r.kopf.laufwerk.angelegt, netz: { rolle: "gastgeber", token, code: code.replace(/\D/g, ""), port: zustand.port } };
+  await laufwerkMerken(g);
+  return { gemerkt: g, fund: { gemerkt: g, handle, ordner: r.ordner, kopf: r.kopf } as Fund, daten: r.daten, notfall: r.notfall, zustand };
+}
+/** Gast: mit einem gefundenen Gastgeber koppeln – Code prüfen, Kopf lesen, merken. */
+export async function gastKoppeln(treffer: { kennung: string; name: string; port: number; adresse: string }, code: string) {
+  const token = await tokenAusCode(code, treffer.kennung);
+  const ziel = { adresse: treffer.adresse, port: treffer.port, token };
+  const kopf = await gastgeberPruefen(ziel);
+  if (!kopf) throw new Error("PASSWORT_FALSCH");
+  const handle = netzOrdner(ziel, treffer.name);
+  const r = await laufwerkOeffnen(handle, { passwort: netzPasswort(code) });
+  const alt = (await gemerkteLaufwerke()).find((g) => g.kennung === r.kopf.laufwerk.kennung);
+  const g: GemerktesLaufwerk = { kennung: r.kopf.laufwerk.kennung, name: r.kopf.laufwerk.name, ort: null, schluessel: await schluesselExportieren(r.daten), basis: alt?.basis || {}, letzterAbgleich: alt?.letzterAbgleich || null, angelegt: r.kopf.laufwerk.angelegt, netz: { rolle: "gast", token, adresse: treffer.adresse, port: treffer.port } };
+  await laufwerkMerken(g);
+  return { gemerkt: g, fund: { gemerkt: g, handle, ordner: r.ordner, kopf: r.kopf } as Fund, daten: r.daten };
+}

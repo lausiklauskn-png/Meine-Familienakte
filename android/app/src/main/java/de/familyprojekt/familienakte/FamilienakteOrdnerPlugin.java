@@ -36,12 +36,12 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
     static final int STUECK = 1024 * 1024;
     static final long MAX_DATEI = 100L * 1024 * 1024 + 8192 + 12;
     private final ExecutorService worker = Executors.newSingleThreadExecutor();
-    private final Map<String, SafAblage> ordner = new HashMap<>();
+    private final Map<String, Ablage> ordner = new HashMap<>();
     /** Stufe C: Baum-Uri je Kennung, damit eine Freigabe dauerhaft gemerkt werden kann (gemeinsame Festplatte). */
     private final Map<String, Uri> baeume = new HashMap<>();
     private final Map<String, Schreiben> offen = new HashMap<>();
     private final java.util.Set<String> selbstAngelegt = new java.util.HashSet<>();
-    private static final class Schreiben { SafAblage ablage; String token; String pfad; OutputStream out; long groesse; MessageDigest sha; }
+    private static final class Schreiben { Ablage ablage; String token; String pfad; OutputStream out; long groesse; MessageDigest sha; }
     private interface Arbeit { JSObject run() throws Exception; }
 
     private void arbeit(PluginCall call, Arbeit a) {
@@ -53,8 +53,8 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
             }
         });
     }
-    private SafAblage ablage(PluginCall call) throws IOException {
-        SafAblage a = ordner.get(call.getString("token", ""));
+    private Ablage ablage(PluginCall call) throws IOException {
+        Ablage a = ordner.get(call.getString("token", ""));
         if (a == null) throw new IOException("FA_ORDNER_NICHT_ERREICHBAR");
         return a;
     }
@@ -127,9 +127,20 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
             return new JSObject().put("treffer", treffer);
         });
     }
+    /** Stufe F: app-eigener Ordner (Gastgeber des Netz-Abgleichs) als Ordner-Kennung, dieselben Aktionen wie ein gewählter Ordner. */
+    @PluginMethod public void ordnerIntern(PluginCall call) {
+        arbeit(call, () -> {
+            String name = call.getString("name", "");
+            if (!name.matches("[A-Za-z0-9_-]{1,64}")) throw new IOException("FA_PFAD_UNGUELTIG");
+            java.io.File wurzel = new java.io.File(getContext().getFilesDir(), name);
+            if (!wurzel.isDirectory() && !wurzel.mkdirs()) throw new IOException("FA_ORDNER_NICHT_ERREICHBAR");
+            String token = UUID.randomUUID().toString(); ordner.put(token, new de.familyprojekt.tresor.DateiAblage(wurzel));
+            return new JSObject().put("token", token).put("name", name).put("pfad", wurzel.getAbsolutePath());
+        });
+    }
     @PluginMethod public void ordnerListe(PluginCall call) {
         arbeit(call, () -> {
-            SafAblage a = ablage(call); String p = pfad(call);
+            Ablage a = ablage(call); String p = pfad(call);
             if (!a.istOrdner(p)) throw new IOException("FA_NICHT_GEFUNDEN");
             JSArray liste = new JSArray();
             for (String name : a.liste(p)) {
@@ -142,12 +153,12 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
         });
     }
     @PluginMethod public void ordnerAnlegen(PluginCall call) {
-        arbeit(call, () -> { SafAblage a = ablage(call); String p = pfad(call); if (p.isEmpty()) throw new IOException("FA_PFAD_UNGUELTIG");
+        arbeit(call, () -> { Ablage a = ablage(call); String p = pfad(call); if (p.isEmpty()) throw new IOException("FA_PFAD_UNGUELTIG");
             if (a.gibtEs(p) && !a.istOrdner(p)) throw new IOException("FA_ART_FALSCH"); a.ordner(p); return new JSObject().put("ok", true); });
     }
     @PluginMethod public void dateiInfo(PluginCall call) {
         arbeit(call, () -> {
-            SafAblage a = ablage(call); String p = pfad(call);
+            Ablage a = ablage(call); String p = pfad(call);
             if (!a.gibtEs(p)) throw new IOException("FA_NICHT_GEFUNDEN");
             boolean dir = a.istOrdner(p);
             return new JSObject().put("art", dir ? "ordner" : "datei").put("groesse", dir ? 0 : a.groesse(p));
@@ -155,7 +166,7 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
     }
     @PluginMethod public void dateiLesen(PluginCall call) {
         arbeit(call, () -> {
-            SafAblage a = ablage(call); String p = pfad(call);
+            Ablage a = ablage(call); String p = pfad(call);
             long von = Math.max(0, call.getLong("offset", 0L)); int laenge = (int) Math.min(STUECK, Math.max(0, call.getLong("laenge", 0L)));
             if (!a.gibtEs(p) || a.istOrdner(p)) throw new IOException("FA_NICHT_GEFUNDEN");
             Ablage.Kanal k = a.kanal(p);
@@ -170,7 +181,7 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
     /** Nur Dateien, die diese Sitzung selbst angelegt hat (z. B. die Schreibprobe); kein allgemeines Löschen. */
     @PluginMethod public void eigeneDateiEntfernen(PluginCall call) {
         arbeit(call, () -> {
-            SafAblage a = ablage(call); String p = pfad(call);
+            Ablage a = ablage(call); String p = pfad(call);
             String schluessel = call.getString("token", "") + "|" + p;
             if (!selbstAngelegt.contains(schluessel) || !a.gibtEs(p) || a.istOrdner(p)) throw new IOException("FA_NICHT_ERLAUBT");
             a.loeschen(p); selbstAngelegt.remove(schluessel); return new JSObject().put("ok", true);
@@ -178,7 +189,7 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
     }
     @PluginMethod public void dateiBeginn(PluginCall call) {
         arbeit(call, () -> {
-            SafAblage a = ablage(call); String p = pfad(call);
+            Ablage a = ablage(call); String p = pfad(call);
             if (p.isEmpty() || a.istOrdner(p)) throw new IOException("FA_ORDNER_UNGUELTIG");
             if (a.gibtEs(p)) a.loeschen(p);
             Schreiben s = new Schreiben(); s.ablage = a; s.token = call.getString("token", ""); s.pfad = p; s.out = a.neu(p); s.sha = MessageDigest.getInstance("SHA-256");
@@ -218,7 +229,7 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
     /** Frage s: die eigene Installationsdatei (APK) neben die Sicherung legen, damit sie ohne Internet neu installiert werden kann. */
     @PluginMethod public void programmBeilegen(PluginCall call) {
         arbeit(call, () -> {
-            SafAblage a = ablage(call); String ordnerPfad = pfad(call);
+            Ablage a = ablage(call); String ordnerPfad = pfad(call);
             PackageInfo info = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
             String name = "Familienakte-Pro-" + info.versionName.replaceAll("[^0-9A-Za-z.\\-]", "_") + ".apk";
             String ziel = ordnerPfad.isEmpty() ? name : ordnerPfad + "/" + name;
@@ -233,7 +244,7 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
             return new JSObject().put("name", name).put("groesse", n).put("sha256", sha).put("fassung", info.versionName);
         });
     }
-    private static String hash(SafAblage a, String p) throws Exception {
+    private static String hash(Ablage a, String p) throws Exception {
         MessageDigest d = MessageDigest.getInstance("SHA-256");
         Ablage.Kanal k = a.kanal(p);
         try {
