@@ -49,7 +49,7 @@ try {
       await p.locator("main button", { hasText: "Arbeitsübersicht öffnen" }).first().click(); await p.waitForTimeout(700);
       const a = await lage(p); soll(gleich(a.pfad, "Startseite › Termine & Aufgaben › Cockpit"), a);
       const akte = p.locator("#cockpit-cases .cockpit-case-list button").first(); const titel = (await akte.locator("strong").innerText()).trim();
-      await akte.click(); await p.waitForTimeout(900);
+      await akte.click(); await p.locator("[data-stamm-akte]").click(); await p.waitForTimeout(900); // A5: über das Bearbeiten-Fenster
       const b = await lage(p);
       return pruefe(b, `Startseite › Termine & Aufgaben › Cockpit › ${titel}`, b.pfadImBild);
     });

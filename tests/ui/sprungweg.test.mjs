@@ -86,8 +86,8 @@ try {
 
     await step(`${geraet}: Cockpit → Vorgang: Detail direkt im Bild und markiert, kein Zwischenstopp oben`, async () => {
       await footer(page, "Cockpit");
-      const vorgang = page.locator("#cockpit-cases .cockpit-case-list button").first();
-      const m = await springe(page, vorgang, "#cockpit-dossier");
+      await page.locator("#cockpit-cases .cockpit-case-list button").first().click(); // A5: öffnet die Bearbeitung
+      const m = await springe(page, page.locator("[data-stamm-akte]"), "#cockpit-dossier");
       return soll(m.imBild && m.markiert && ohneHochRunter(m), m);
     });
 

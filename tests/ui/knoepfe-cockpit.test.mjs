@@ -50,6 +50,7 @@ try {
   await step("Cockpit: Dossier öffnen und „Notiz nach Bestätigung ergänzen“", async () => {
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.locator("#cockpit-cases button:not(.start-info-trigger)").first().click();
+    await page.locator("[data-stamm-akte]").click(); // A5 (09.11.): Tipp öffnet die Bearbeitung, „Ganze Akte ansehen ›“ die Detailansicht
     await page.waitForSelector("#cockpit-dossier");
     const feld = page.locator("#cockpit-dossier textarea").first();
     if (!(await feld.count())) return "kein Notizfeld im Dossier";

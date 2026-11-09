@@ -14,7 +14,7 @@ import { VoiceInput } from "./ui-controls";
  * ohne zwischen Seiten hin und her zu springen): Titel, Tag, Uhrzeit, Erinnerungen, Kalender. Gespeichert wird erst auf
  * „Speichern“; der Kalender-Abgleich zieht nach.
  */
-export function TerminBearbeiten({ record, vaultHandle, onZu, onGespeichert }: { record: FamilyRecordUnion; vaultHandle: FileSystemDirectoryHandle; onZu: () => void; onGespeichert: (text: string) => Promise<void> | void }) {
+export function TerminBearbeiten({ record, vaultHandle, onZu, onGespeichert, onAkte }: { record: FamilyRecordUnion; vaultHandle: FileSystemDirectoryHandle; onZu: () => void; onGespeichert: (text: string) => Promise<void> | void; /** A5: aus dem Cockpit geöffnet – Weg zur ganzen Detailansicht. */ onAkte?: () => void }) {
   const kalender = useKalenderEinst();
   // Reine Erinnerung (Klaus 2026-11-08): nur Titel, Tag und Uhrzeit; Kalender und Vorlauf gehören zur Frist dahinter.
   const nurErinnerung = record.recordType === "reminder";
@@ -63,6 +63,7 @@ export function TerminBearbeiten({ record, vaultHandle, onZu, onGespeichert }: {
         <ErinnerungsChips wert={wahl} onChange={setWahl} schnell={[...KURZ_ERINNERUNGEN, "1d", "7d"]} name="Erinnern"/></>}
       </div>
       {fehler && <p className="form-error" role="alert">{fehler}</p>}
+      {onAkte && <button type="button" className="text-link" onClick={() => { onZu(); onAkte(); }} data-termin-akte>Ganze Akte ansehen ›</button>}
       <div className="modal-actions"><ErinnerungLoeschen id={record.id} titel={titel || d.title} vaultHandle={vaultHandle} mitText onGeloescht={async (t) => { await onGespeichert(t); onZu(); }}/><button type="button" className="button secondary" onClick={onZu} disabled={busy}>Abbrechen</button><button type="button" className="button primary" onClick={() => void speichern()} disabled={busy || !titel.trim() || !datum} data-tb-speichern>{busy ? "Wird gespeichert …" : "✓ Speichern"}</button></div>
     </section>
   </div>;
