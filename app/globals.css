@@ -826,6 +826,7 @@ button.object-card:hover { transform: translateY(-2px); border-color: #8fb2c9; b
 .zuordnung-stand { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex: none; }
 .zuordnung-stimmt { margin: 0; padding: 4px 8px; border: 1px solid #9db8c8; border-radius: 8px; background: white; font-size: .84rem; white-space: nowrap; }
 .zuordnung-stimmt input { width: 18px; height: 18px; }
+.zuordnung-stimmt-text { font-weight: 700; color: var(--navy); }
 .intake-analysis-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
 .intake-analysis-head span, .intake-analysis-head strong { display: block; }
 .intake-analysis-head > div > span { color: var(--teal); font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; }
