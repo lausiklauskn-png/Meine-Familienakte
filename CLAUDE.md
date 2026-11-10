@@ -5,8 +5,14 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 `docs/briefe-archiv/` (Klaus 2026-11-04: archivieren statt löschen); die Veröffentlichungsnachweise in
 `docs/VEROEFFENTLICHUNG-<fassung>.json`.
 
-## Aktueller Stand (10.11.2026, nach 2.28.55)
+## Aktueller Stand (10.11.2026, nach 2.28.56)
 
+- **Fassung 2.28.56** (#155; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.56.json`; Brief
+  `BRIEF_ABSCHLUSS_2026-11-10_NUR-LAUFWERK-2.28.56.md`): **Tresor einrichten – nur Laufwerk wählen** (Ordnerwahl öffnet am gemerkten Tresor
+  oder oben auf dem Gerätespeicher, `EXTRA_INITIAL_URI`; kein Namensfenster, „Family-Projekt“, bei Belegung „Family-Projekt 2…9“; nur
+  `FamilienakteTresorPlugin.java`). Alle Pro-Apps finden den Tresor am Inhalt (`tresorordner.json`), nicht am Namen. **Adresse
+  `?ansicht=landkarte`** öffnet die Landkarte der App direkt (Merker in `sessionStorage` übersteht das Neuladen beim ersten Besuch); die
+  Geschenkbox nutzt sie. Geschenkbox mit Knopf „Als eine Datei speichern“ (Download-Freigabe; kein Chat-Anhang, der wird als ZIP verpackt).
 - **Fassung 2.28.55** (#153; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.55.json`; Brief
   `BRIEF_ABSCHLUSS_2026-11-10_GERAETETEST-2.28.53.md`): **Meldungen klarer** – info heißt „Hinweis“, Zwischenstände (`laeuft: true`)
   weichen der nächsten Meldung (`lib/ui-activity.ts`); Ordnerfehler übersetzt (`app/nativer-ordner.ts` `uebersetzt`/`ordnerFehlerText`).
@@ -92,9 +98,9 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   (2.28.35, `docs/landkarte/`), Landkarte der App mit **Stand je Kasten in `lib/app-stand.ts` – bei jeder Fassung eintragen** (2.28.36),
   Hilfe-Themen als Bild, Vorschaufenster (2.28.37), Listenzeilen mit `KnopfLeiste`, Kopfleiste (2.28.38).
   Proben-Hinweise: `step()` wertet einen zurückgegebenen Text als grün, deshalb `soll()`; Seitentitel sind keine Sprungziele.
-- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
+- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
   (2.28.50 ausgegeben, aber ohne eigenen Nachweis; 2.28.40–2.28.47 waren Zwischenstände). Keine davon erneut ausgeben;
-  **nächste freie Fassung 2.28.56**. Klaus 2026-11-06: neue Funktionen immer gleich als APK, PWA und Windows ausgeben.
+  **nächste freie Fassung 2.28.57**. Klaus 2026-11-06: neue Funktionen immer gleich als APK, PWA und Windows ausgeben.
   Neue Fassung oben in `lib/fassungen.ts` eintragen. Die Versionszeile zeigt die technische Fassung aus `package.json`;
   `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
 - **Kalender:** Kern `lib/kalender.ts`, Glocke `lib/glocke.ts`, Oberfläche `app/kalender-karte.tsx`, `app/mein-kalender.tsx`,
@@ -120,9 +126,10 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
-  - `BRIEF_ABSCHLUSS_2026-11-10_GERAETETEST-2.28.53.md` (jüngster Abschluss: Gerätetest 10.11., Fassungen 2.28.53 und 2.28.54, Geschenkbox)
+  - `BRIEF_ABSCHLUSS_2026-11-10_NUR-LAUFWERK-2.28.56.md` (jüngster Abschluss: nur Laufwerk wählen, Landkarte per Adresse, Geschenkbox-Download)
+  - `BRIEF_ABSCHLUSS_2026-11-10_GERAETETEST-2.28.53.md` (Abschluss Vormittag: Gerätetest 10.11., Fassungen 2.28.53 und 2.28.54, Geschenkbox)
   - `BRIEF_ABSCHLUSS_2026-11-10_VERBUND-OHNE-ORANGE.md` (Abschluss der Nacht: Karte ohne Orange, vier Apps ausgegeben)
-  - `BRIEF_SITZUNG_2026-11-11_FAMILIENAKTE-WEITER.md` (Startbrief Familienakte: nur Laufwerk wählen, Sicherheitsseite kürzer, Wettlauf, Basic-Karte)
+  - `BRIEF_SITZUNG_2026-11-11_FAMILIENAKTE-WEITER.md` (Startbrief Familienakte: Sicherheitsseite kürzer, Wettlauf, Basic-Karte, Landkarten-HTML, Vollsicherungsordner)
   - `BRIEF_SITZUNG_2026-11-10_VERBUND-GEPLANTE-PUNKTE.md` (Startbrief: graue/rote Wege der Pro-Verbund-Karte und offene Punkte aus 2.28.53)
   - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-09_AUSGABE-2.28.51.md` (Ausgabe 2.28.51; Startauftrag Gerätetest)
   - `BRIEF_CODEX_2026-11-04_NACH-2.28.24.md` (Abstimmung mit Codex: welche Dateien Claude gehören)
@@ -130,6 +137,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Offen
 
+- **2.28.56 am Gerät ungeprüft:** Ordnerwahl mit Startort, „Family-Projekt 2“, Pro-Apps im selben Tresor, Direktlink zur Landkarte.
 - **2.28.55 am Gerät ungeprüft:** Meldungen oben (Hinweis, verschwindet), kurze Tresor-Karte, „Mehr“.
 - **2.28.54 am Gerät ungeprüft:** Fäden der Landkarte am Tablet mit großer Schrift, Legenden-Knöpfe.
 - **2.28.53 am Gerät ungeprüft:** Papierkorb (Löschen → Zurückholen → endgültig), Glocken-Probe mit gewähltem Ton, Haken
