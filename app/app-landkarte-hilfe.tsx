@@ -13,7 +13,7 @@ import { InfoPopover } from "./ui-controls";
  * die „Interaktive Landkarte der App“ auf: die ganze App als Karte (auch am Handy, seitlich wischbar), Stand je Kasten aus
  * lib/app-stand.ts, Geändertes golden bis zum Antippen. „Hingehen ›“ springt zur Seite.
  */
-const KARTE_HILFE = "• Die ganze App auf einer Karte: von den Wegen hinein bis zu Speicher und Ausgabe.\n• Tipp auf einen Kasten zeigt seine Wege; „Hingehen ›“ führt an die Stelle.\n• **Fläche = dieses Gerät:** grün eingerichtet, rot fehlt, gelb gesperrt oder veraltet, grau freiwillig oder nicht hier. Rot und gelb: antippen, „Beheben ›“.\n• Rahmen = Baustand: blau fertig, lila gestrichelt im Bau, grau gestrichelt geplant. Blauer Punkt „neu“ = seit dem letzten Besuch geändert.\n• Gestrichelter Weg: einer der beiden Kästen ist noch nicht da.";
+const KARTE_HILFE = "• Die ganze App auf einer Karte: von den Wegen hinein bis zu Speicher und Ausgabe.\n• Tipp auf einen Kasten zeigt seine Wege; „Hingehen ›“ führt an die Stelle.\n• **Fläche = dieses Gerät:** grün eingerichtet, rot fehlt, gelb gesperrt oder veraltet, grau freiwillig oder nicht hier. Rot und gelb: antippen, „Beheben ›“.\n• Rahmen = Baustand: blau fertig, lila gestrichelt im Bau, grau gestrichelt geplant. Blauer Punkt „neu“ = seit dem letzten Besuch geändert.\n• Gestrichelter Weg: einer der beiden Kästen ist noch nicht da.\n• Tipp auf ein Feld der Legende hebt alle Kästen und Wege dieser Art hervor (z. B. alle roten); nochmal tippen hebt auf.";
 
 /** Zustand beim „Hingehen ›“: beim nächsten Aufbau der Hilfe (Zurück) ist die Karte wieder offen und der Kasten gewählt. */
 let beimHingehen: { kasten: string } | null = null;
@@ -51,7 +51,7 @@ export function AppLandkarteHilfe({ onGo, eingerichtet, demo, live = {}, aktenSi
     <div id="hilfe-oben-karte" className="hilfe-oben-karte" hidden={!offen} data-app-landkarte-inhalt>
       <div className="hilfe-oben-karte-kopf"><KartenSymbol size={18}/><h3>Interaktive Landkarte der App</h3><InfoPopover label="Landkarte erklären" text={KARTE_HILFE}/></div>
       <DemoBand/>
-      <KartenLegende live/>
+      <KartenLegende live fuer="app"/>
       <Landkarte id="app" label="Landkarte der ganzen App: von den Wegen hinein über Eingangszentrale und Akte bis zu Speicher und Ausgabe"
         gruppen={gruppen} knoten={knoten} kanten={APP_KANTEN} breiten={APP_BREITEN} spalten={APP_SPALTEN} onFrisch={zaehlen} startAktiv={start?.kasten}/>
     </div>

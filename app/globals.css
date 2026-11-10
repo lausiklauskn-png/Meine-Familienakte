@@ -2891,3 +2891,11 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .papierkorb-text strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .papierkorb-text small { color: var(--muted); }
 .button.gefahr { border-color: #b45d4c; color: #a33b2b; }
+/* Legende als Knöpfe (Klaus 10.11.): Tipp hebt alle Kästen und Wege dieser Art hervor, der Rest tritt zurück. */
+.lk-legende .lk-filter { display: inline-flex; align-items: center; gap: 6px; font: inherit; color: inherit; background: #fff; border: 1px solid #c8d9e2; border-radius: 999px; padding: 4px 10px 4px 6px; cursor: pointer; min-height: 32px; }
+.lk-legende .lk-filter:hover { border-color: #1d5b94; }
+.lk-legende .lk-filter.an { border-color: #1d5b94; background: #e8f1f9; box-shadow: 0 0 0 2px #1d5b94 inset; font-weight: 600; }
+.landkarte.lk-gefiltert .lk-chip:not(.treffer), .landkarte.lk-gefiltert .lk-kasten:not(.treffer) { opacity: .28; }
+.landkarte.lk-gefiltert .lk-chip.treffer, .landkarte.lk-gefiltert .lk-kasten.treffer { box-shadow: 0 0 0 3px #1d5b94; }
+.landkarte.lk-gefiltert .lk-ast:not(.treffer) { opacity: .12; }
+.landkarte.lk-gefiltert .lk-ast.treffer { stroke: #1d5b94; stroke-width: 3; opacity: 1; }

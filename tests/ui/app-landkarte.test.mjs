@@ -54,6 +54,21 @@ try {
         return { geprueft, falsch }; });
       return soll(r.geprueft >= 30 && r.falsch.length === 0, r);
     });
+    // Klaus 10.11.: die Farbfelder der Legende sind Knöpfe – ein Tipp hebt alle Kästen und Wege dieser Art hervor, ein zweiter hebt auf.
+    await step(`${name}: Legende als Knöpfe – Tipp auf „geplant“ hebt genau die geplanten Kästen und ihre Wege hervor, nochmal hebt auf`, async () => {
+      const leg = karte.locator('[data-lk-legende="app"]');
+      const zahl = await leg.locator("button[data-lk-filter]").count();
+      await leg.locator('[data-lk-filter="s-geplant"]').click(); await page.waitForTimeout(200);
+      const an = await karte.evaluate((k) => { const d = k.querySelector("[data-landkarte]"); const t = [...d.querySelectorAll(".treffer[data-karte-id]")];
+        return { gefiltert: d.getAttribute("data-lk-gefiltert"), treffer: t.length, alleGeplant: t.every((e) => e.classList.contains("s-geplant")),
+          geplantGesamt: d.querySelectorAll(".s-geplant[data-karte-id]").length, wege: d.querySelectorAll("path.lk-ast.treffer").length,
+          blass: getComputedStyle(d.querySelector(".lk-chip:not(.treffer), .lk-kasten:not(.treffer)")).opacity,
+          gedrueckt: k.querySelector('[data-lk-filter="s-geplant"]').getAttribute("aria-pressed"), info: k.querySelector("[data-lk-treffer]")?.textContent || "" }; });
+      await leg.locator('[data-lk-filter="s-geplant"]').click(); await page.waitForTimeout(200);
+      const aus = await karte.evaluate((k) => ({ gefiltert: k.querySelector("[data-landkarte]").hasAttribute("data-lk-gefiltert"), treffer: k.querySelectorAll(".treffer").length }));
+      return soll(zahl >= 10 && an.gefiltert === "s-geplant" && an.treffer > 0 && an.alleGeplant && an.treffer === an.geplantGesamt && an.wege > 0 && Number(an.blass) < 0.5
+        && an.gedrueckt === "true" && /hervorgehoben/.test(an.info) && !aus.gefiltert && aus.treffer === 0, { zahl, an, aus });
+    });
     await step(`${name}: Tipp auf Eingangszentrale nennt Wege, „Hingehen ›“ führt hin`, async () => {
       await karte.locator('[data-karte-id="eingang"]').click();
       const text = await karte.locator(".lk-info").textContent();
