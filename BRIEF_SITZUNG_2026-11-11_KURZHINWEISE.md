@@ -163,7 +163,8 @@ Zuerst: Landkarte der App als eigene Datei mit Funktion (Tipp, Wege, Legende) in
 Auftrag: Klaus' Befund „Kurzhinweise an Knöpfen anzeigen funktioniert nicht“ (Tablet, APK 2.28.56, wohl mit Maus/DeX) klären und beheben.
 Vermutungen im Brief (WebView zeigt title nie; Maus wird übersprungen; Knöpfe nur mit aria-label). Erst Ursache im Code belegen,
 dann HTML-Vorschau der Lösung an Klaus, nach seinem Ja bauen, Probe + Gegenprobe, als 2.28.57 (APK, Windows, PWA) ausgeben,
-Nachweis, Geschenkbox nachziehen.
+Nachweis, Geschenkbox nachziehen. Klein gleich mit: Trefferliste unter der Landkarte streichen; „Neu“ › „E-Mail in der Hilfe“
+› „Zur Hilfe“ auf die E-Mail-Karte richten (ziel "hilfe" in app/neu-knopf.tsx) und alle Neu-Knöpfe prüfen.
 Dann (wichtig): Abgleich mit einem Cloud-Ordner (OneDrive für Jens, Google-Ordner für Klaus) prüfen, allgemein machen und als
 Kasten in der Landkarte und als Hilfe-Thema zeigen (Abschnitt im Brief; Android-Grenze am Gerät klären).
 Danach: rote und graue Kästen der „Landkarte der App“ (Abschnitt im Brief): rote am Gerät nachstellen (Fehler im Live-Zustand
