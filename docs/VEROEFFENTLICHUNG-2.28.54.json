@@ -1,0 +1,57 @@
+{
+ "version": "2.28.54",
+ "source": "d08d118c9f253ddab450935e5e37a450edca4f30",
+ "pullRequest": [
+  151
+ ],
+ "recordedUtc": "2026-11-10T11:02:00Z",
+ "freigabe": "Klaus 10.11.2026: Landkarten-Fäden und Legende als Knöpfe; „Gib Bescheid, wenn 2.28.54 draußen ist“, „Trag 2.28.54 dann gleich in die Geschenkbox ein“.",
+ "inhalt": "Landkarte der App: Fäden beginnen und enden an ihrem Kasten (Chip-Lage relativ zur Gruppe, Neurechnen bei jeder Größenänderung); Legende als Knöpfe, die alle Kästen und Wege einer Art hervorheben.",
+ "ciAmPrStand": "PR #151 auf 73f73dd: pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) – success.",
+ "releases": [
+  {
+   "tag": "android-v2.28.54",
+   "run": 42802097322,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-android-v2.28.54.apk",
+     "bytes": 20070807,
+     "sha256": "08c1a46cb5dab83f494054df7f75e03f3bb27f7ac53e396ab03f1195c0785da6",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true,
+     "versionInside": "2.28.54 (assets/public/version.json, commit d08d118)",
+     "karteInside": "eb857a6a… (= BookLedgerPro a705ed5)"
+    },
+    {
+     "name": "Familienakte-Einzeldatei-2.28.54.html",
+     "bytes": 3914197,
+     "sha256": "55bf097f9ac653dbd4225824e01e8f06785445bbd04b5bcd4df6d730c30bd588",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true
+    }
+   ]
+  },
+  {
+   "tag": "windows-v2.28.54",
+   "run": 42802102300,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-Windows-2.28.54-x64-setup.exe",
+     "bytes": 34218342,
+     "sha256": "0ec64ae7b781620ea0076fee4459caeb7e589dc146accbfe93eb991b86ae82e7",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true
+    }
+   ]
+  }
+ ],
+ "pwa": "Pages auf d08d118 (Job veroeffentlichen); Seite aus dem Behälter nicht erreichbar, nicht geprüft.",
+ "notChecked": [
+  "Kein Gerät: Fäden am Tablet mit großer Schrift, Legenden-Knöpfe",
+  "family-projekt.de aus dem Behälter nicht erreichbar; der Freigabelauf prüft den Server selbst"
+ ]
+}

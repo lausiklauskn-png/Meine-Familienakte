@@ -29,9 +29,23 @@ bitte für die danach folgende Sitzung … einen Sitzungsbrief“). Vorherige Si
 - Workflow PDF Pro **Android 1.0.15 gibt es nicht** (nur Windows 1.0.15); Android ging von 1.0.14 direkt auf 1.0.16. Nicht nachholen.
 - Nach jedem gebauten Punkt die Karte in BookLedgerPro umfärben (grau → orange → nach Ausgabe gelb) und in alle Pro-Apps kopieren.
 
+## Offen aus 2.28.53/2.28.54 (Vormittag 10.11.)
+
+- **Rot/kaputt:** Probe `kalender-einlesen` hat einen Wettlauf (`sync:"tok1"`, einmal rot, Wiederholung grün; #149). Warten auf das
+  gespeicherte Token mit einer Bedingung statt einer Frist.
+- **BookLedger Basic** trägt die alte Karte (siehe oben) – erster kleiner Schritt.
+- **Landkarte als HTML** `docs/landkarte/Familienakte-Landkarte.html` stammt vom 07.11. (alte Farben); bei Bedarf aus der App neu
+  erzeugen, bevor sie weitergegeben wird.
+- **Gerätetest ausstehend (gelb):** Papierkorb (Löschen → Zurückholen → endgültig), Glocke „Probe hören“ mit dem in Android gewählten
+  Ton, Haken „Zuordnung stimmt“ und Kartenfarbe; aus 2.28.54 Fäden und Legenden-Knöpfe der Landkarte am Tablet, Verbund-Karte aus
+  der Geschenkbox öffnet in eigenem Fenster; aus 2.28.52 Tresor-Leser mit echtem Tresor, Update-Fähnchen beim Zurückholen der
+  App, alle gelben Wege der Karte im selben Tresor.
+- **Geschenkbox** ist eine Vorversion (Klaus); Weitergabe an Jens erst auf sein Wort.
+- **Lehre aus #150:** vor dem Push die ganze UI-Reihe fahren oder `tests/ui` nach geänderten Selektoren/Texten durchsuchen.
+
 ## Regeln, die gelten
 
-- Kein Release ohne Klaus' Wort; veröffentlichte Fassungen nie erneut ausgeben (nächste freie: FA 2.28.53, BLP 0.1.15, PB 1.0.49, WPP 1.0.17).
+- Kein Release ohne Klaus' Wort; veröffentlichte Fassungen nie erneut ausgeben (nächste freie: FA 2.28.55, BLP 0.1.15, PB 1.0.49, WPP 1.0.17).
 - Byte-gleiche Bausteine nie von Hand ändern (Karte, Tresor-Paket, Tresor-Leser, Pro-Bedienung).
 - Codex-Prüfungen auslassen. Keine Forschungseinträge hier (nur KimHub).
 - Jede Sitzung endet mit Abschlussbrief samt Stundennachweis und Startauftrag.
@@ -40,7 +54,7 @@ bitte für die danach folgende Sitzung … einen Sitzungsbrief“). Vorherige Si
 
 ```
 Repo lausiklauskn-png/Meine-Familienakte (dazu je nach Punkt BookLedgerPro, Privat-Brain-Pro, Workflow-PDF-Pro mit add_repo).
-Zuerst lesen: CLAUDE.md, BRIEF_SITZUNG_2026-11-10_VERBUND-GEPLANTE-PUNKTE.md, BRIEF_ABSCHLUSS_2026-11-10_VERBUND-OHNE-ORANGE.md,
+Zuerst lesen: CLAUDE.md, BRIEF_SITZUNG_2026-11-10_VERBUND-GEPLANTE-PUNKTE.md, BRIEF_ABSCHLUSS_2026-11-10_GERAETETEST-2.28.53.md,
 Karte public/pro-verbund/pro-verbund.html (Quelle BookLedgerPro assets/pro-verbund.html).
 Auftrag: die grauen/roten Wege der Pro-Verbund-Karte in der Reihenfolge des Briefs angehen. Vor jedem Punkt die Frage aus
 Spalte „Vorher klären“ an Klaus stellen; neue Oberfläche erst als HTML-Vorschau. Je Punkt eigener Zweig und PR, Proben + Gegenprobe,
