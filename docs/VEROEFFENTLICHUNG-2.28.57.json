@@ -1,0 +1,59 @@
+{
+ "version": "2.28.57",
+ "source": "1707263b84fef97512601d99b238fc004ab06ebb",
+ "pullRequest": [
+  158
+ ],
+ "recordedUtc": "2026-11-10T19:50:00Z",
+ "freigabe": "Klaus 10.11.2026: „Ich möchte gern, dass es Tooltips sind … nicht mit langem Drücken“; Zahlen in die Kästchen der Legende; „Inkrementell“ übersetzen; Startauftrag: als 2.28.57 (APK, Windows, PWA) ausgeben. Klaus 2026-11-06: neue Funktionen immer als APK, PWA und Windows.",
+ "inhalt": "Tooltips mit der Maus (auch in der Android-App), kein langer Druck; Landkarte: Zahlen in der Legende, keine Trefferliste, eigene Datei für die Geschenkbox; „Nur Neues prüfen“; „Neu“ › E-Mail springt zur E-Mail-Karte.",
+ "ciAmPrStand": "PR #158 auf 426cd9a: pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) – success.",
+ "releases": [
+  {
+   "tag": "android-v2.28.57",
+   "run": 42885345389,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-android-v2.28.57.apk",
+     "bytes": 20070807,
+     "sha256": "5f1ede9c67f9888c476c79408e7413ab4c7873bdb7fa96ab3a5063e83ffd8e47",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true,
+     "versionInside": "2.28.57 (assets/public/version.json, commit 1707263)",
+     "karteInside": "eb857a6a… (= BookLedgerPro a705ed5)",
+     "tooltipsInside": "„Tooltips an Knöpfen anzeigen“ im App-Skript"
+    },
+    {
+     "name": "Familienakte-Einzeldatei-2.28.57.html",
+     "bytes": 3919072,
+     "sha256": "75346a93878521c9399be6b101644a9f7944d959bedce5960a26f7490a138122",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true
+    }
+   ]
+  },
+  {
+   "tag": "windows-v2.28.57",
+   "run": 42885350416,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-Windows-2.28.57-x64-setup.exe",
+     "bytes": 34217660,
+     "sha256": "64219d1057c13f018928fb96b91b361e95e06f3e058f0df23287a41bad42a5ea",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true
+    }
+   ]
+  }
+ ],
+ "pwa": "Pages auf 1707263 (Job beim Merge); Seite aus dem Behälter nicht geprüft.",
+ "notChecked": [
+  "Kein Gerät: Tooltips mit Maus in der echten Android-WebView (DeX/Freiform) und in WebView2",
+  "Zahlen in der Legende am Tablet mit großer Schrift",
+  "family-projekt.de aus dem Behälter nicht erreichbar; der Freigabelauf prüft den Server selbst"
+ ]
+}
