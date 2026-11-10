@@ -5,8 +5,21 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 `docs/briefe-archiv/` (Klaus 2026-11-04: archivieren statt löschen); die Veröffentlichungsnachweise in
 `docs/VEROEFFENTLICHUNG-<fassung>.json`.
 
-## Aktueller Stand (10.11.2026, nach 2.28.56)
+## Aktueller Stand (10.11.2026, nach 2.28.57)
 
+- **Fassung 2.28.57** (#158; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.57.json`): **Tooltips** (Klaus 10.11.:
+  „einfach nur Tooltips“): Maus/Stift über einem Knopf zeigt nach 0,5 s eine eigene Blase (`app/kurzhinweise.ts`), auch in der
+  Android-WebView (zeigt `title` nie – Ursache des Befunds); kein langer Druck mehr, Finger-Tipp löst sofort aus; nur wo der Hinweis
+  mehr sagt als die Beschriftung. Haken „Tooltips an Knöpfen anzeigen“ mit „?“ (ein-/ausschaltbar). **Landkarte**: Zahl in jedem
+  Legenden-Kästchen, keine Trefferliste; eigene Datei `docs/landkarte/Familienakte-Landkarte.html` (`node tools/landkarte-datei.mjs`,
+  Einstieg `app/landkarte-allein.tsx`), in der Geschenkbox als `familienakte-landkarte.html` neben `pro-verbund.html` (beim
+  Neuveröffentlichen mitgeben; `tools/geschenkbox-datei.mjs` nimmt beide). „Nur Neues prüfen“ statt „Inkrementell“; „Neu“ › E-Mail
+  öffnet die E-Mail-Karte (Probe `neu-knopf-ziele`). Vorschau `docs/vorschau/kurzhinweise-2.28.57.html`.
+- **Cloud-Ordner (Befund 10.11., nichts gebaut):** „OneDrive verbinden“ legt die ganze Akte in den OneDrive-Ordner (`chooseVaultFor`,
+  nur `showDirectoryPicker`) – geht nur im Browser am PC (Chrome/Edge), **nicht in der APK**, Windows-App unklar; „OneDrive prüfen“ liest
+  nur `00_Posteingang`; Sicherung OneDrive→PC ist Einweg. Nativ auf allen Fassungen gehen Eingangsordner (`chooseInboxFolder`) und
+  gemeinsame Festplatte (`app/laufwerk.ts`, Zwei-Wege, verschlüsselt) – Vorschlag: Cloud-Ordner darauf aufbauen. Offen bei Klaus:
+  Name des Google-Speichers; Jens einmal einlesen oder dauerhaft abgleichen.
 - **Fassung 2.28.56** (#155; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.56.json`; Brief
   `BRIEF_ABSCHLUSS_2026-11-10_NUR-LAUFWERK-2.28.56.md`): **Tresor einrichten – nur Laufwerk wählen** (Ordnerwahl öffnet am gemerkten Tresor
   oder oben auf dem Gerätespeicher, `EXTRA_INITIAL_URI`; kein Namensfenster, „Family-Projekt“, bei Belegung „Family-Projekt 2…9“; nur
@@ -98,9 +111,9 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   (2.28.35, `docs/landkarte/`), Landkarte der App mit **Stand je Kasten in `lib/app-stand.ts` – bei jeder Fassung eintragen** (2.28.36),
   Hilfe-Themen als Bild, Vorschaufenster (2.28.37), Listenzeilen mit `KnopfLeiste`, Kopfleiste (2.28.38).
   Proben-Hinweise: `step()` wertet einen zurückgegebenen Text als grün, deshalb `soll()`; Seitentitel sind keine Sprungziele.
-- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
+- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.57, 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
   (2.28.50 ausgegeben, aber ohne eigenen Nachweis; 2.28.40–2.28.47 waren Zwischenstände). Keine davon erneut ausgeben;
-  **nächste freie Fassung 2.28.57**. Klaus 2026-11-06: neue Funktionen immer gleich als APK, PWA und Windows ausgeben.
+  **nächste freie Fassung 2.28.58**. Klaus 2026-11-06: neue Funktionen immer gleich als APK, PWA und Windows ausgeben.
   Neue Fassung oben in `lib/fassungen.ts` eintragen. Die Versionszeile zeigt die technische Fassung aus `package.json`;
   `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
 - **Kalender:** Kern `lib/kalender.ts`, Glocke `lib/glocke.ts`, Oberfläche `app/kalender-karte.tsx`, `app/mein-kalender.tsx`,
@@ -138,7 +151,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Offen
 
-- **Kurzhinweise an Knöpfen wirken am Tablet nicht** (Klaus 10.11., APK 2.28.56): Brief `BRIEF_SITZUNG_2026-11-11_KURZHINWEISE.md`.
+- **2.28.57 am Gerät ungeprüft:** Tooltips mit Maus am Tablet (DeX/Fenster) und unter Windows, Zahlen in der Legende.
 - **2.28.56 am Gerät ungeprüft:** Ordnerwahl mit Startort, „Family-Projekt 2“, Pro-Apps im selben Tresor, Direktlink zur Landkarte.
 - **2.28.55 am Gerät ungeprüft:** Meldungen oben (Hinweis, verschwindet), kurze Tresor-Karte, „Mehr“.
 - **2.28.54 am Gerät ungeprüft:** Fäden der Landkarte am Tablet mit großer Schrift, Legenden-Knöpfe.

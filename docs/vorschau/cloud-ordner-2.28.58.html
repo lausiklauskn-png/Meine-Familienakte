@@ -1,0 +1,125 @@
+<title>Cloud-Ordner OneDrive</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: eine Spalte – heute/neu, Karte in der Eingangszentrale, Kasten der Landkarte, Hilfe-Thema als Schritte, Fassungen, Fragen. */
+:root { --bg:#f4f7f9; --fg:#17262f; --muted:#4f6472; --line:#c8d9e2; --card:#fff; --blau:#1d5b94; --navy:#0b3154; --navyfg:#fff; --rot:#c0392b; --rotbg:#fdecea; --gruen:#2f8a4f; --gruenbg:#eaf7f0; --gelb:#8a5b08; --gelbbg:#fff4dc; --grau:#f3f5f7; --code:#eef3f7; --lila:#7b4fb0; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#10171c; --fg:#e6edf2; --muted:#9fb2bf; --line:#2c3b45; --card:#18222a; --blau:#7fb3e6; --navy:#dfe9f3; --navyfg:#0b3154; --rotbg:#3a1d1a; --gruenbg:#173323; --gelb:#f0c66b; --gelbbg:#3a2e14; --grau:#1f2a32; --code:#1f2a32; --lila:#c3a2ec; color-scheme:dark; } }
+:root[data-theme="dark"] { --bg:#10171c; --fg:#e6edf2; --muted:#9fb2bf; --line:#2c3b45; --card:#18222a; --blau:#7fb3e6; --navy:#dfe9f3; --navyfg:#0b3154; --rotbg:#3a1d1a; --gruenbg:#173323; --gelb:#f0c66b; --gelbbg:#3a2e14; --grau:#1f2a32; --code:#1f2a32; --lila:#c3a2ec; color-scheme:dark; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.45 system-ui, sans-serif; padding-block:16px 40px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
+main { max-width:900px; display:grid; gap:18px; }
+h1 { font-size:1.25rem; margin:0; text-wrap:balance; } h2 { font-size:1rem; margin:0 0 8px; color:var(--blau); } h3 { margin:0; font-size:1rem; }
+p { margin:0; } .lead, .leise { color:var(--muted); }
+.karte { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; display:grid; gap:8px; min-width:0; }
+ul, ol { margin:0; padding-left:1.25em; display:grid; gap:6px; }
+code { background:var(--code); padding:1px 5px; border-radius:5px; font-size:.88em; overflow-wrap:anywhere; }
+.paar { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px; }
+.etikett { font-size:.8rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:700; }
+.app { border:1px solid var(--line); border-radius:12px; padding:12px; display:grid; gap:8px; background:var(--grau); }
+.app .titel { display:flex; align-items:center; gap:8px; font-weight:700; color:var(--blau); }
+.frage { display:inline-grid; place-items:center; width:20px; height:20px; border:1.5px solid currentColor; border-radius:50%; font-size:.75rem; font-weight:700; }
+.zustand { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.punkt { width:10px; height:10px; border-radius:50%; background:var(--gruen); flex:none; }
+.knoepfe { display:flex; flex-wrap:wrap; gap:8px; }
+.knopf { border-radius:10px; padding:8px 12px; font-weight:600; border:1px solid var(--line); background:var(--card); }
+.knopf.haupt { background:var(--navy); color:var(--navyfg); border-color:var(--navy); }
+.kasten { border:2px dashed var(--lila); background:var(--card); border-radius:10px; padding:8px 10px; display:grid; gap:2px; max-width:240px; }
+.kasten small { color:var(--muted); }
+.schritte { counter-reset:s; list-style:none; padding:0; display:grid; gap:8px; }
+.schritte li { counter-increment:s; display:grid; grid-template-columns:28px 1fr; gap:8px; align-items:start; }
+.schritte li::before { content:counter(s); display:grid; place-items:center; width:26px; height:26px; border-radius:50%; background:var(--navy); color:var(--navyfg); font-weight:700; font-size:.85rem; }
+.tabelle { overflow-x:auto; }
+table { border-collapse:collapse; width:100%; min-width:520px; font-size:.93rem; }
+th, td { text-align:left; padding:7px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+th { color:var(--muted); font-size:.8rem; text-transform:uppercase; letter-spacing:.04em; }
+.ja { color:var(--gruen); font-weight:700; } .nein { color:var(--rot); font-weight:700; } .offen { color:var(--gelb); font-weight:700; }
+.nichts { border-left:4px solid var(--rot); background:var(--rotbg); padding:8px 10px; border-radius:8px; }
+.gut { border-left:4px solid var(--gruen); background:var(--gruenbg); padding:8px 10px; border-radius:8px; }
+.fragen b { color:var(--blau); }
+</style>
+
+<main>
+ <header style="display:grid;gap:4px">
+  <h1>Cloud-Ordner: Unterlagen aus OneDrive dauerhaft in der Akte</h1>
+  <p class="lead">Vorschau zur Abstimmung (10.11., Fassung 2.28.58). Für Jens' OneDrive; Google Drive bleibt vorerst außen vor.</p>
+ </header>
+
+ <section class="paar">
+  <div class="karte">
+   <p class="etikett">Heute</p>
+   <ul>
+    <li>„OneDrive verbinden“ legt die <b>ganze Akte</b> in den OneDrive-Ordner.</li>
+    <li>Neues liest sie nur aus dem Unterordner „00_Posteingang“, nicht aus Jens' eigenen Ordnern.</li>
+    <li>Geht nur im Browser am PC (Chrome, Edge).</li>
+   </ul>
+   <p class="nichts">In der Android-App gar nicht, in der Windows-App ungeprüft.</p>
+  </div>
+  <div class="karte">
+   <p class="etikett">Neu (Vorschlag)</p>
+   <ul>
+    <li>Jens wählt <b>seinen</b> OneDrive-Ordner, so wie er ist, mit allen Unterordnern.</li>
+    <li>Die Akte schaut regelmäßig nach. Neues und Geändertes kommt in die Eingangszentrale zum Prüfen.</li>
+    <li>Im OneDrive-Ordner ändert die App nichts. Sie liest nur.</li>
+    <li>Der Unterordner wird zur Herkunft, z. B. „OneDrive › Auto › Versicherung“.</li>
+   </ul>
+   <p class="gut">Baut auf dem Eingangsordner auf, der in allen drei Fassungen schon läuft.</p>
+  </div>
+ </section>
+
+ <section class="karte">
+  <h2>So sähe es in der Eingangszentrale aus</h2>
+  <div class="app">
+   <div class="titel">Cloud-Ordner <span class="frage" aria-hidden="true">?</span></div>
+   <div class="zustand"><span class="punkt" aria-hidden="true"></span><span><b>OneDrive › Familie</b> · zuletzt geprüft 19:42 · 3 neu</span></div>
+   <div class="knoepfe"><span class="knopf haupt">Jetzt nachsehen</span><span class="knopf">Anderen Ordner wählen …</span><span class="knopf">Trennen</span></div>
+  </div>
+  <p class="leise">Hinter dem „?“: • Ordner, den OneDrive auf diesem Gerät hält, mit allen Unterordnern. • Nur lesen, im Ordner wird nichts geändert. • Neues und Geändertes kommt zum Prüfen in die Eingangszentrale; was schon da war, wird wiedererkannt.</p>
+ </section>
+
+ <section class="paar">
+  <div class="karte">
+   <h2>Neuer Kasten in der Landkarte</h2>
+   <p class="leise">Gruppe „Datei einfügen“, Weg in die Eingangszentrale, Rahmen „im Bau“:</p>
+   <div class="kasten"><strong>Cloud-Ordner (OneDrive)</strong><small>Ordner, den OneDrive auf dem Gerät hält · nur lesen</small></div>
+  </div>
+  <div class="karte">
+   <h2>Hilfe-Thema als Bild</h2>
+   <h3>Unterlagen aus OneDrive holen</h3>
+   <ol class="schritte">
+    <li><span>Am PC: OneDrive-Programm hält den Ordner auf der Platte (meist schon so).</span></li>
+    <li><span>Eingangszentrale › Cloud-Ordner › Ordner wählen.</span></li>
+    <li><span>Neues erscheint von selbst zum Prüfen.</span></li>
+   </ol>
+  </div>
+ </section>
+
+ <section class="karte">
+  <h2>Was je Fassung gehen kann</h2>
+  <div class="tabelle"><table>
+   <thead><tr><th>Fassung</th><th>OneDrive-Ordner wählen</th><th>Was dafür nötig ist</th></tr></thead>
+   <tbody>
+    <tr><td>Windows-App</td><td class="ja">ja</td><td>OneDrive für Windows, Ordner liegt z. B. unter „OneDrive“ im Benutzerordner.</td></tr>
+    <tr><td>Browser am PC (Chrome, Edge)</td><td class="ja">ja</td><td>Wie oben; der Browser fragt einmal nach Erlaubnis.</td></tr>
+    <tr><td>Android-App</td><td class="offen">am Gerät klären</td><td>Die OneDrive-App für Android hält keine Ordner auf dem Gerät und bietet in der Ordnerwahl wohl keinen ganzen Ordner an. Ausweg: eine Sync-App, die OneDrive in einen Geräteordner spiegelt; diesen Ordner wählt man dann.</td></tr>
+    <tr><td>Browser am Handy, Firefox, Safari</td><td class="nein">nein</td><td>Keine Ordnerwahl im Browser.</td></tr>
+   </tbody>
+  </table></div>
+ </section>
+
+ <section class="karte fragen">
+  <h2>Fragen (bitte je Ja oder Nein)</h2>
+  <ol>
+   <li><b>Richtung – mit Jens klären</b> (Klaus 10.11.: wenn es geht, beide Richtungen):
+    <ul>
+     <li><b>Weg A, beide Richtungen</b> (wie der ursprüngliche Bau): Die ganze Akte liegt im OneDrive-Ordner; das OneDrive-Programm gleicht sie auf jedem PC selbst ab. Dafür bauen wir die Ordnerwahl auch in die Windows-App ein. In der Android-App geht das nicht, weil OneDrive dort keinen Ordner auf dem Gerät hält.</li>
+     <li><b>Weg B, nur hinein</b> (oben gezeigt): Jens' eigene OneDrive-Ordner bleiben, wie sie sind; Neues kommt zum Prüfen in die Akte.</li>
+     <li>Beides zusammen geht auch: Akte im OneDrive (A) und dazu Jens' übrige Ordner lesen (B).</li>
+    </ul></li>
+   <li><b>Prüfen statt still ablegen:</b> Neues kommt in die Eingangszentrale und wird dort bestätigt, wie alle anderen Eingänge.</li>
+   <li><b>Geänderte Datei</b> (gleicher Name, neuer Inhalt) kommt als neue Fassung zum Prüfen; die alte bleibt in der Akte.</li>
+   <li><b>Name:</b> Karte und Kasten heißen „Cloud-Ordner“, der gewählte Ordner steht darunter (z. B. „OneDrive › Familie“).</li>
+   <li><b>Das alte „OneDrive verbinden“</b> (= Weg A) bleibt, bis Jens entschieden hat. Ist A gewünscht, heißt es künftig „Akte in OneDrive ablegen“ und steht neben dem Cloud-Ordner.</li>
+  </ol>
+  <p class="lead">Und: Mit welchem Gerät arbeitet Jens – Windows-PC, Browser am PC oder Android?</p>
+ </section>
+</main>
