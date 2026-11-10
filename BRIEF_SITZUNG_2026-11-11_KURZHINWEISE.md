@@ -3,6 +3,22 @@
 Klaus 10.11.2026, Bild vom Tablet (Familienakte Pro 2.28.56, Hilfe, Fenster mit Kopfleiste wie bei Samsung DeX bzw. Freiform-Fenster):
 „Kurzhinweise an Knöpfen anzeigen funktioniert nicht.“ Der Haken ist gesetzt, trotzdem sieht er an den Knöpfen keinen Hinweis.
 
+## Zuerst (Klaus 10.11., letzter Wunsch der Sitzung): Landkarte der Familienakte als Datei in der Geschenkbox
+
+- Klaus: „Karte trotzdem gleich mit exportieren“, „beide angezeigten Karten im Geschenkbox“, „natürlich die entsprechende Funktion mit dabei“.
+- Ziel: In der Geschenkbox öffnen **beide** Karten direkt, ohne Umweg:
+  - die Pro-Verbund-Karte (schon als `pro-verbund.html`);
+  - **neu die „Landkarte der App“** als eigene Datei, mit Funktion: Kästen antippen zeigt die Wege, Legende als Knöpfe, „Mehr“-Texte.
+  - Der Link `?ansicht=landkarte` bleibt als zweiter Weg.
+- Bau:
+  - Ein Werkzeug `tools/landkarte-datei.mjs` erzeugt `docs/landkarte/Familienakte-Landkarte.html` aus `lib/app-landkarte.ts` und `lib/app-stand.ts`. Die Datei vom 07.11. ist veraltet.
+  - Vorschlag: ein eigener kleiner Einstieg (`app/landkarte-allein.tsx` mit Vite-Eintrag oder `vite build` in eine Datei) rendert `Landkarte` aus `app/landkarte.tsx` ohne App drumherum.
+  - Ohne Gerätezustand: Fläche nur nach Baustand, kein Rot.
+  - In `tools/geschenkbox-datei.mjs` als zweite Seite einbinden, wie `#verbund-karte`.
+  - In der Geschenkbox ein Knopf „Karte öffnen“ auf die Datei, mit `files` beim Veröffentlichen mitgeben.
+- Erkundet am 10.11.: Die Karte im DOM hat etwa 29 KB, die Bühne ist 1398×1913 px groß, 10 Kästen tragen Gerätezustand (`data-live`). Ein bloßes DOM-Abbild wäre ohne Funktion, darum der eigene Einstieg.
+- Probe: Datei öffnet ohne Netz, Tipp auf einen Kasten zeigt die Wege, die Legende filtert. Gegenprobe dazu.
+
 ## Wie es heute gebaut ist
 
 - `app/kurzhinweise.ts` (seit 2026-11-04), Haken in `app/kurzhinweise-schalter.tsx`, Probe `tests/ui/kurzhinweise.test.mjs`.
@@ -136,6 +152,8 @@ Ausgabe als APK, Windows, PWA; Geschenkbox nachziehen. Codex auslassen; Forschun
 
 ```
 Repo lausiklauskn-png/Meine-Familienakte. Zuerst lesen: CLAUDE.md, BRIEF_SITZUNG_2026-11-11_KURZHINWEISE.md.
+Zuerst: Landkarte der App als eigene Datei mit Funktion (Tipp, Wege, Legende) in die Geschenkbox, neben die Verbund-Karte
+(Abschnitt „Zuerst“ im Brief; tools/landkarte-datei.mjs, tools/geschenkbox-datei.mjs, Artefakt XeUMGuSZ49FzsJYjwQznM7).
 Auftrag: Klaus' Befund „Kurzhinweise an Knöpfen anzeigen funktioniert nicht“ (Tablet, APK 2.28.56, wohl mit Maus/DeX) klären und beheben.
 Vermutungen im Brief (WebView zeigt title nie; Maus wird übersprungen; Knöpfe nur mit aria-label). Erst Ursache im Code belegen,
 dann HTML-Vorschau der Lösung an Klaus, nach seinem Ja bauen, Probe + Gegenprobe, als 2.28.57 (APK, Windows, PWA) ausgeben,
