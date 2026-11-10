@@ -44,3 +44,23 @@ Vorher: `BRIEF_ABSCHLUSS_2026-11-10_GERAETETEST-2.28.53.md` (2.28.53–2.28.55, 
 | Letzte Spur | 10.11.2026 Ausgabe 2.28.56, Geschenkbox, Briefe, KimHub (Zeit im KimHub-Eintrag) |
 | Blöcke | 14:20–14:56 Bau Tresor-Auswahl, Proben · 14:56–15:23 Geschenkbox-Download, Direktlink Landkarte, Proben, Gegenprobe · 15:23–16:02 CI #155 · 16:02– Ausgabe 2.28.56, Nachweis, Geschenkbox, Briefe |
 | Obergrenze | gemessen am Zeitraum; Pausen nicht abgezogen |
+
+## Nachtrag Abend (Klaus' Gerätetest mit 2.28.56, nur Befunde, nichts gebaut)
+
+Alle Befunde stehen in `BRIEF_SITZUNG_2026-11-11_KURZHINWEISE.md`:
+- Kurzhinweise an Knöpfen wirken am Tablet nicht.
+- Die Systemprüfung zeigt veraltete Berichte und „Familienakte 2.28.1 · Website 40“; alte Berichte gelten als abgedeckt.
+- OneDrive- bzw. Cloud-Ordner-Abgleich: wichtig, prüfen und sichtbar machen.
+- FaWoGa und Memory erklärt.
+- Die Trefferliste unter der Landkarte streichen.
+- Die Landkarte der App als Datei mit Funktion in die Geschenkbox.
+
+Bestätigt: Der Geschenkbox-Knopf „Landkarte öffnen“ nutzt `?ansicht=landkarte`. Klaus' Bild zeigte noch die alte Datei von 16:00.
+
+- „Neu“ › „E-Mail in der Hilfe“ › „Zur Hilfe“ springt nicht zur E-Mail-Karte.
+
+- Texte im Gesprächston und lange Erklärungen hinter „?“ (erste Funde im Startbrief).
+
+- Alte Bestände und Versionsbezüge suchen; Rechtstexte (Impressum, Datenschutz, Haftungsausschluss) über Family-Projekt – Datenschutz sagt noch „liest keine Termine“.
+
+Stundennachweis, Nachtrag: 16:30–17:30 UTC Befunde aufnehmen, Brief, PR #157 (Obergrenze, Pausen nicht abgezogen).
