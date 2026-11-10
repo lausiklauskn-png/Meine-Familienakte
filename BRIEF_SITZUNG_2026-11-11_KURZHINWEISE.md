@@ -58,6 +58,13 @@ bei Klaus wäre es ein Google-Ordner (Google Drive oder ein anderer Google-Speic
 
 Erst Vorschau (Kasten, Hilfe-Thema, Wortlaut) mit Klaus' Ja, dann bauen, Probe + Gegenprobe, Fassung, Ausgabe.
 
+## Klein, gleich mitnehmen: Trefferliste unter der Landkarte streichen (Klaus 10.11.)
+
+- Nach einem Tipp auf ein Feld der Legende steht unter der Karte eine lange Zeile: „36 hervorgehoben: Workflow PDF, Stapel-Liste, … · Nochmal auf die Legende tippen hebt auf.“
+- Klaus: „Diese Information kann auch raus … bevor man den durchgelesen hat, hat man sich oben schon durch die Felder geklickt und gezählt.“
+- Bau: Liste entfernen (`[data-lk-treffer]` in `app/landkarte.tsx`). Höchstens die Zahl am gedrückten Legenden-Knopf zeigen, z. B. „blau · 36“; der Satz „Nochmal tippen hebt auf“ gehört hinter das „?“ der Karte.
+- Probe `app-landkarte` (Legende) anpassen; vor dem Push `grep -rn "lk-treffer\|hervorgehoben" tests/ui`.
+
 ## Danach: rote und graue Kästen der „Landkarte der App“ (Klaus 10.11.)
 
 Klaus will die roten und die grauen Kästen der Landkarte (Hilfe › Landkarte der App) abarbeiten. Stand der Kästen: `lib/app-stand.ts`,
