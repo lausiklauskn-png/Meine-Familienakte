@@ -1,0 +1,25 @@
+{
+ "version": "2.28.53",
+ "source": "93f7eb4815881aea5ad8cf081a2bae677707eca4",
+ "pullRequest": [150],
+ "recordedUtc": "2026-11-10T10:05:00Z",
+ "freigabe": "Klaus 10.11.2026: Gerätetest-Befunde (Zuordnung prüfen, Papierkorb, Glocken-Ton) beheben; „Gib Bescheid, wenn 2.28.53 draußen ist“; Klaus 2026-11-06: neue Funktionen immer als APK, PWA und Windows.",
+ "inhalt": "Zuordnung prüfen folgt der eigenen Wahl, Haken „Zuordnung stimmt“, Hinweis statt leerer Vorgangsliste; Papierkorb für Erinnerungen, Aufgaben, Fristen und Notizen; Glocke „Probe hören“ über den Android-Kanal mit gewähltem Ton.",
+ "ciAmPrStand": "PR #150 auf 0a6d593: pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) – success (erster Lauf auf 17dd90f mit 2 roten UI-Proben, behoben).",
+ "releases": [
+  {"tag": "android-v2.28.53", "run": 42792885539, "conclusion": "success", "updateServer": "server=ja",
+   "downloadProof": [
+    {"name": "Familienakte-android-v2.28.53.apk", "bytes": 20070807, "sha256": "5882bea450c435d8f473dc4f54cf72edca92771820a9813073c3cb7644e04d65", "anonymousDownload": true, "matchesSHA256SUMS": true,
+     "versionInside": "2.28.53 (assets/public/version.json, commit 93f7eb4)", "karteInside": "eb857a6a… (= BookLedgerPro a705ed5)"},
+    {"name": "Familienakte-Einzeldatei-2.28.53.html", "bytes": 3911788, "sha256": "b214155ad628f2f1f8412fe06c97d1020dbd2d0ef5bc10bbba5f8d12a37d8edf", "anonymousDownload": true, "matchesSHA256SUMS": true}]},
+  {"tag": "windows-v2.28.53", "run": 42792889787, "conclusion": "success", "updateServer": "server=ja",
+   "downloadProof": [
+    {"name": "Familienakte-Windows-2.28.53-x64-setup.exe", "bytes": 34212164, "sha256": "6f5202fef1233907ca1068710c458a43983fc77686fd30f14d1753dda1b000c8", "anonymousDownload": true, "matchesSHA256SUMS": true}]}
+ ],
+ "pwa": "Pages auf 93f7eb4 (Job veroeffentlichen); Seite aus dem Behälter nicht erreichbar, nicht geprüft.",
+ "notChecked": [
+  "Kein Gerät: Papierkorb, Glocken-Probe mit Kanalton, Haken „Zuordnung stimmt“",
+  "family-projekt.de aus dem Behälter nicht erreichbar; der Freigabelauf prüft den Server selbst",
+  "Fäden der Landkarte saßen um die Kopfhöhe der Gruppen zu hoch (Klaus 10.11.) – behoben erst in der nächsten Fassung"
+ ]
+}
