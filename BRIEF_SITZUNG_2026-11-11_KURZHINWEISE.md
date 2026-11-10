@@ -181,12 +181,19 @@ Klaus: „Das soll in allen Apps, die hier im Projekt verbunden sind, die ganzen
 Text, dieselbe rechtliche Grundlage … nach bestem Wissen und Gewissen … dieselbe E-Mail-Adresse … so dass wir langsam an eine
 Veröffentlichung denken können.“
 
-**Umfang:**
-- Familienakte (Basic/PWA und Pro)
+**Umfang (Klaus' Liste, je Android, Windows und Basic/PWA, soweit vorhanden):**
+- Familienakte Pro und Basic
 - BookLedgerPro und BookLedger Basic
-- Private Brain Pro und die Basic- bzw. V3-Fassung
-- Workflow PDF Pro und Workflow PDF
-- Tools mit eigenem Impressum, z. B. Kimboard und Kimseek in Private Brain Pro
+- Private Brain Pro und Basic (V3)
+- Workflow PDF Pro und Workflow PDF (Basic)
+- Workflow Calculate (Angebotsplaner) und Workflow Needs (Bedarfsanalyse)
+
+Von Claude ergänzt, bitte bestätigen:
+- der **Tresor-Leser** (HTML-Datei aus Workflow PDF Pro, liegt in der Familienakte);
+- die Werkzeuge **Kimboard** und **Kimseek** mit eigenem `impressum.html` in Private Brain Pro;
+- die **Geschenkbox** (Artefakt und Download-Datei) mit einem Link auf das Impressum.
+
+Klaus: „family-projekt“ ist auch der Name des Repos. Die gemeinsame Quelle bietet sich dort an; vorher mit `list_repos` prüfen, ob es in der Sitzung erreichbar ist.
 
 **Inhalt:**
 - **Eine Quelle, byte-gleich verteilt** wie die Pro-Verbund-Karte.
