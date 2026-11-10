@@ -81,7 +81,11 @@ export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, onFrisc
       const pos: Lage["pos"] = {}, groesse: Record<string, { w: number; h: number }> = {};
       b.querySelectorAll<HTMLElement>("[data-karte-gruppe], [data-karte-knoten]").forEach((e) => { groesse[e.dataset.karteGruppe || e.dataset.karteKnoten!] = { w: e.offsetWidth, h: e.offsetHeight }; });
       const chipIn: Record<string, Rechteck & { g: string }> = {};
-      b.querySelectorAll<HTMLElement>("[data-karte-chip]").forEach((e) => { const g = e.closest<HTMLElement>("[data-karte-gruppe]")!; chipIn[e.dataset.karteChip!] = { l: e.offsetLeft, t: e.offsetTop, w: e.offsetWidth, h: e.offsetHeight, g: g.dataset.karteGruppe! }; });
+      // Lage des Chips relativ zur GRUPPE messen, nicht zu seinem offsetParent (.lk-chips ist positioniert und liegt unter
+      // Titel und Untertitel der Gruppe) – sonst sitzen die Fäden um die Kopfhöhe zu hoch (Gerätetest 10.11.: 50–90 px am Tablet).
+      b.querySelectorAll<HTMLElement>("[data-karte-chip]").forEach((e) => { const g = e.closest<HTMLElement>("[data-karte-gruppe]")!;
+        let l = 0, t = 0; for (let n: HTMLElement | null = e; n && n !== g; n = n.offsetParent as HTMLElement | null) { l += n.offsetLeft; t += n.offsetTop; }
+        chipIn[e.dataset.karteChip!] = { l, t, w: e.offsetWidth, h: e.offsetHeight, g: g.dataset.karteGruppe! }; });
       const rect = (pid: string): Rechteck | null => {
         const c = chipIn[pid];
         if (c) { const g = pos[c.g]; return g ? { l: g.x + c.l, t: g.y + c.t, w: c.w, h: c.h } : null; }
@@ -122,11 +126,15 @@ export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, onFrisc
       setLage({ pos, breite, hoehe: hoehe + RAND + 50, aeste: linien });
     };
     rechnen();
-    let tot = false, breiteAlt = b.offsetWidth;
-    document.fonts?.ready.then(() => { if (!tot) rechnen(); });
-    // In einem zugeklappten Thema haben die Kästen noch keine Größe: beim Aufklappen neu rechnen.
-    const beob = typeof ResizeObserver === "function" ? new ResizeObserver(() => { const w = b.querySelector<HTMLElement>("[data-karte-gruppe], [data-karte-knoten]")?.offsetWidth || 0; if (!tot && w !== breiteAlt) { breiteAlt = w; rechnen(); } }) : null;
-    const erster = b.querySelector<HTMLElement>("[data-karte-gruppe], [data-karte-knoten]"); if (erster && beob) { breiteAlt = erster.offsetWidth; beob.observe(erster); }
+    let tot = false;
+    // Neu rechnen, sobald sich die Größe eines Kastens oder Chips ändert – nicht nur die Breite des ersten:
+    // Live-Texte, Schriften und aufgeklappte Themen machen Chips später höher, sonst sitzen die Fäden zu hoch.
+    const masse = () => Array.from(b.querySelectorAll<HTMLElement>("[data-karte-gruppe], [data-karte-knoten], [data-karte-chip]"))
+      .map((e) => `${e.offsetWidth}x${e.offsetHeight}@${e.offsetTop}`).join("|");
+    let masseAlt = masse();
+    document.fonts?.ready.then(() => { if (!tot) { masseAlt = masse(); rechnen(); } });
+    const beob = typeof ResizeObserver === "function" ? new ResizeObserver(() => { const m = masse(); if (!tot && m !== masseAlt) { masseAlt = m; rechnen(); } }) : null;
+    if (beob) b.querySelectorAll<HTMLElement>("[data-karte-gruppe], [data-karte-knoten], [data-karte-chip]").forEach((e) => beob.observe(e));
     return () => { tot = true; beob?.disconnect(); };
   }, [gruppen, knoten, aeste, breiten]);
 

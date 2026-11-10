@@ -39,6 +39,21 @@ try {
     check(lage.trifft, `${name}: Ast endet am Kasten, auch nach dem Aufklappen`);
     check(lage.geplant, `${name}: Stand aus der Liste – Prüfung der Anlagen „geplant“`);
     check(lage.quer, `${name}: die Seite läuft nicht quer`);
+    // Gerätetest 10.11. (Tablet, große Schrift): Fäden saßen 50–90 px über ihren Kästen, weil nur die Breite des ersten Kastens
+    // beobachtet wurde. Kästen werden später höher → jeder Faden muss danach noch an seinem Kasten beginnen.
+    await step(`${name}: Fäden beginnen an ihrem Kasten, auch wenn Kästen später höher werden`, async () => {
+      await page.addStyleTag({ content: ".lk-chip small, .lk-kasten small { font-size: 1.15rem !important; line-height: 1.6 !important; }" });
+      await page.waitForTimeout(600);
+      const r = await karte.evaluate((k) => { const d = k.querySelector(".lk-buehne"), svg = d?.querySelector("svg.lk-aeste")?.getBoundingClientRect(); const falsch = []; let geprueft = 0;
+        d.querySelectorAll("path[data-ast]").forEach((p) => { const [von] = p.getAttribute("data-ast").split(">"); const e = d.querySelector(`[data-karte-id="${von}"]`); if (!e || !svg) return;
+          const m = p.getAttribute("d").trim().match(/^M\s*([\d.-]+)[ ,]+([\d.-]+)/); if (!m) return; const b = e.getBoundingClientRect(), y = Number(m[2]) + svg.top; geprueft++;
+          if (y < b.top - 2 || y > b.bottom + 2) falsch.push(`${von}: ${Math.round(y - b.top)} von ${Math.round(b.height)}`);
+          const nach = p.getAttribute("data-ast").split(">")[1], z = d.querySelector(`[data-karte-id="${nach}"]`) || d.querySelector(`[data-karte-gruppe="${nach}"]`);
+          const zahlen = p.getAttribute("d").trim().split(/[ CM,]+/).filter(Boolean).map(Number), ye = zahlen[zahlen.length - 1] + svg.top;
+          if (z) { const zb = z.getBoundingClientRect(); if (ye < zb.top - 4 || ye > zb.bottom + 4) falsch.push(`→${nach}: ${Math.round(ye - zb.top)} von ${Math.round(zb.height)}`); } });
+        return { geprueft, falsch }; });
+      return soll(r.geprueft >= 30 && r.falsch.length === 0, r);
+    });
     await step(`${name}: Tipp auf Eingangszentrale nennt Wege, „Hingehen ›“ führt hin`, async () => {
       await karte.locator('[data-karte-id="eingang"]').click();
       const text = await karte.locator(".lk-info").textContent();
