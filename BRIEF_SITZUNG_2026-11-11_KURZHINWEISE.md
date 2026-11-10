@@ -81,6 +81,12 @@ Erst Vorschau (Kasten, Hilfe-Thema, Wortlaut) mit Klaus' Ja, dann bauen, Probe +
 - Bau: Liste entfernen (`[data-lk-treffer]` in `app/landkarte.tsx`). Höchstens die Zahl am gedrückten Legenden-Knopf zeigen, z. B. „blau · 36“; der Satz „Nochmal tippen hebt auf“ gehört hinter das „?“ der Karte.
 - Probe `app-landkarte` (Legende) anpassen; vor dem Push `grep -rn "lk-treffer\|hervorgehoben" tests/ui`.
 
+## Klein, gleich mitnehmen: „Neu“ › „E-Mail in der Hilfe“ springt nicht zur Karte (Klaus 10.11.)
+
+- Im Fenster „Was ist neu“ führt „Zur Hilfe“ bei „E-Mail in der Hilfe“ nur auf die Hilfe. Erwartet wird das Thema mit der E-Mail-Karte, aufgeklappt.
+- Eintrag `email-2026-11-07` in `app/neu-knopf.tsx`: Das `knopf`-Ziel nachsehen und auf das Hilfe-Thema der E-Mail-Karte richten, aufgeklappt (Weg wie bei `hilfe-landkarte`, über `go("help", …, { ziel })`).
+- Gleich alle Einträge in „Was ist neu“ durchgehen: Führt jeder Knopf an die genannte Stelle? Dazu eine Probe je Knopf.
+
 ## Danach: rote und graue Kästen der „Landkarte der App“ (Klaus 10.11.)
 
 Klaus will die roten und die grauen Kästen der Landkarte (Hilfe › Landkarte der App) abarbeiten. Stand der Kästen: `lib/app-stand.ts`,

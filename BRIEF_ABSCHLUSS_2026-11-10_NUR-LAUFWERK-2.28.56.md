@@ -57,4 +57,6 @@ Alle Befunde stehen in `BRIEF_SITZUNG_2026-11-11_KURZHINWEISE.md`:
 
 Bestätigt: Der Geschenkbox-Knopf „Landkarte öffnen“ nutzt `?ansicht=landkarte`. Klaus' Bild zeigte noch die alte Datei von 16:00.
 
+- „Neu“ › „E-Mail in der Hilfe“ › „Zur Hilfe“ springt nicht zur E-Mail-Karte.
+
 Stundennachweis, Nachtrag: 16:30–17:30 UTC Befunde aufnehmen, Brief, PR #157 (Obergrenze, Pausen nicht abgezogen).
