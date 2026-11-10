@@ -780,6 +780,8 @@ button.object-card:hover { transform: translateY(-2px); border-color: #8fb2c9; b
 .intake-modal .intake-analysis-head { gap: 8px; }
 .intake-modal .intake-analysis-head > div { min-width: 0; }
 .intake-modal .intake-analysis-head > div > strong { overflow-wrap: anywhere; line-height: 1.25; }
+.kontext-ohne-vorgang { margin: 0; padding: 8px 10px; border: 1px dashed #9db8c8; border-radius: 10px; color: var(--muted); font-size: .86rem; line-height: 1.4; }
+.kontext-ohne-vorgang strong { color: var(--navy); }
 .intake-modal .intake-analysis-head > div > small { display: block; margin-top: 3px; color: var(--muted); font-size: .7rem; }
 .intake-modal .intake-analysis dl { grid-template-columns: repeat(4,minmax(0,1fr)); gap: 6px; margin: 8px 0; }
 .intake-modal .intake-analysis dl > div { padding: 7px 34px 7px 9px; }
@@ -820,6 +822,10 @@ button.object-card:hover { transform: translateY(-2px); border-color: #8fb2c9; b
 .intake-analysis { margin: 13px 0; border: 1px solid #b7cad7; border-left: 5px solid #d09a32; border-radius: 11px; padding: 13px; background: #fbfdfe; }
 .intake-analysis.confidence-eindeutig { border-left-color: var(--green); }
 .intake-analysis.confidence-unklar { border-left-color: #b45d4c; }
+.intake-analysis.confidence-angepasst { border-left-color: var(--green); }
+.zuordnung-stand { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex: none; }
+.zuordnung-stimmt { margin: 0; padding: 4px 8px; border: 1px solid #9db8c8; border-radius: 8px; background: white; font-size: .84rem; white-space: nowrap; }
+.zuordnung-stimmt input { width: 18px; height: 18px; }
 .intake-analysis-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
 .intake-analysis-head span, .intake-analysis-head strong { display: block; }
 .intake-analysis-head > div > span { color: var(--teal); font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; }
