@@ -201,10 +201,11 @@ Klaus: „family-projekt“ ist auch der Name des Repos. Die gemeinsame Quelle b
 - Je App ein kurzer **app-eigener Datenschutz-Abschnitt** (was diese App verarbeitet), im selben Aufbau.
 - **Anbieter:** Family-Projekt, family-projekt.de; bis zur Übertragung „Inhaber Klaus Nitzsche“ mit der Anschrift aus dem vorhandenen Impressum.
 - **Kontakt einheitlich `info@family-projekt.de`**: mit Bindestrich, so steht es heute in allen Impressen (12 Treffer), und so heißt auch der Update-Server.
-  - Klaus sagte „familyprojekt.de“; vor dem Bau bestätigen lassen, dass die Schreibweise mit Bindestrich gemeint ist.
+  - Klaus hat am 10.11. bestätigt: die Schreibweise mit Bindestrich ist gemeint.
 - **Quelle für Anbieterangaben ist die Internetseite family-projekt.de** (Klaus 10.11.): Name, Anschrift, Kontakt und vorhandene Rechtstexte dort abgleichen.
   - Aus dem Sitzungsbehälter war family-projekt.de bisher nicht erreichbar; dann WebFetch versuchen oder Klaus um den Text bitten.
-- Erreichbar in jeder App: Fußzeile und Einstellungen/Hilfe; in den nativen Apps ohne Netz, die Seite liegt im Paket.
+- **Ort (Klaus 10.11.): „Impressum“ und „Datenschutz“ ganz unten auf jeder Seite, wie üblich.** Die Fußzeile bleibt unten, auch auf kurzen Seiten mit wenig Inhalt, und wird nicht nach oben gezogen: Seite als Spalte mit `min-height: 100dvh`, Inhalt `flex: 1`, Fußzeile am Ende. Probe: kurze Seite, Fußzeile am unteren Rand.
+- Zusätzlich erreichbar über Einstellungen/Hilfe; in den nativen Apps ohne Netz, die Seite liegt im Paket.
 - Vorab je App nachsehen, wo heute ein Impressum steht, und alte Texte ersetzen, nicht doppeln.
 
 **Reihenfolge:**
