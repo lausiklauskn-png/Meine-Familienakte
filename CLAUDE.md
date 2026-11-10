@@ -129,6 +129,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   - `BRIEF_ABSCHLUSS_2026-11-10_NUR-LAUFWERK-2.28.56.md` (jüngster Abschluss: nur Laufwerk wählen, Landkarte per Adresse, Geschenkbox-Download)
   - `BRIEF_ABSCHLUSS_2026-11-10_GERAETETEST-2.28.53.md` (Abschluss Vormittag: Gerätetest 10.11., Fassungen 2.28.53 und 2.28.54, Geschenkbox)
   - `BRIEF_ABSCHLUSS_2026-11-10_VERBUND-OHNE-ORANGE.md` (Abschluss der Nacht: Karte ohne Orange, vier Apps ausgegeben)
+  - `BRIEF_SITZUNG_2026-11-11_KURZHINWEISE.md` (Startbrief zuerst: „Kurzhinweise an Knöpfen“ wirkt am Tablet nicht, Gerätetest 2.28.56)
   - `BRIEF_SITZUNG_2026-11-11_FAMILIENAKTE-WEITER.md` (Startbrief Familienakte: Sicherheitsseite kürzer, Wettlauf, Basic-Karte, Landkarten-HTML, Vollsicherungsordner)
   - `BRIEF_SITZUNG_2026-11-10_VERBUND-GEPLANTE-PUNKTE.md` (Startbrief: graue/rote Wege der Pro-Verbund-Karte und offene Punkte aus 2.28.53)
   - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-09_AUSGABE-2.28.51.md` (Ausgabe 2.28.51; Startauftrag Gerätetest)
@@ -137,6 +138,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Offen
 
+- **Kurzhinweise an Knöpfen wirken am Tablet nicht** (Klaus 10.11., APK 2.28.56): Brief `BRIEF_SITZUNG_2026-11-11_KURZHINWEISE.md`.
 - **2.28.56 am Gerät ungeprüft:** Ordnerwahl mit Startort, „Family-Projekt 2“, Pro-Apps im selben Tresor, Direktlink zur Landkarte.
 - **2.28.55 am Gerät ungeprüft:** Meldungen oben (Hinweis, verschwindet), kurze Tresor-Karte, „Mehr“.
 - **2.28.54 am Gerät ungeprüft:** Fäden der Landkarte am Tablet mit großer Schrift, Legenden-Knöpfe.
