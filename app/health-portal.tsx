@@ -9,6 +9,7 @@ import { BLOCK, blockText, dateiSchluessel, gesehenMerken, inBloecke, mbText as 
 import { arbeitDienst } from "./arbeit-dienst";
 import { eingangOrdnerLeserSetzen } from "./eingang-ablage";
 import { dateiAusEingangsordner } from "./local-vault";
+import { ordnerFehlerText } from "./nativer-ordner";
 import { DemoUebernahmeDialog, DEMO_NEU_MERKER, DEMO_UEBERNAHME_MERKER } from "./demo-uebernahme";
 import { DEMO_QUELLE_SCHLUESSEL, demoQuelleLesen } from "../lib/demo-kopie";
 import { resetDemoStorage } from "../lib/demo-workspace.ts";
@@ -151,7 +152,7 @@ import { removeSampleFamily, SAMPLE_FAMILY_NAME, SAMPLE_NOTICE, sampleDataPresen
 // in der Android- und der Windows-App „Pro“, im Browser (PWA) „Basic“ — wie BookLedgerPro / BookLedger Basic.
 const APP_VARIANTE: "Pro" | "Basic" = typeof window !== "undefined" && ((window as unknown as { Capacitor?: { isNativePlatform?: () => boolean } }).Capacitor?.isNativePlatform?.() || "__TAURI__" in window) ? "Pro" : "Basic";
 
-type Notice = { kind: "success" | "error" | "info"; text: string; issue?: string } | null;
+type Notice = { kind: "success" | "error" | "info"; text: string; issue?: string; laeuft?: boolean } | null;
 type ActionKey = "vault" | "upload" | "compare" | "update" | "chatgpt";
 type ActionState = "pending" | "success" | "failed";
 type DocumentLibraryRequest = { key: number; focusId: string | null; area: string; query: string };
@@ -637,7 +638,7 @@ function HealthPortalContent() {
       const data = await readLocalVaultData(vaultHandle);
       if (sampleDataPresent(data)) await removeSampleFamily(vaultHandle);
       // P7: Sind eigene Daten da, arbeitet die Demo an einer Kopie davon; sonst Beispielfamilie. Der Demo-Bereich wird vorher geleert.
-      setNotice({ kind: "info", text: "Demo wird vorbereitet: eigene Daten werden in den getrennten Demo-Bereich kopiert. Das Original bleibt unverändert." });
+      setNotice({ kind: "info", laeuft: true, text: "Demo wird vorbereitet: eigene Daten werden in den getrennten Demo-Bereich kopiert. Das Original bleibt unverändert." });
       // Eine passende Demo läuft weiter (mit ihren Testimporten); sonst neu: Kopie oder Beispielfamilie.
       if (await demoNochPassend(vaultHandle, demoQuelleLesen(localStorage))) { switchDemo(true); return; }
       await resetDemoStorage();
@@ -768,7 +769,7 @@ function HealthPortalContent() {
           const stand = await navigator.storage?.estimate?.().catch(() => null);
           const platz = speicherReicht(stand ?? null, bytes);
           if (!platz.ok) { abbruch = `Zu wenig freier Speicher für ${blockText(bi + 1, bloecke.length, block.length)}: ${mbBlock(platz.frei || 0)} frei, ${mbBlock(platz.noetig)} nötig. Bitte Platz schaffen (Papierkorb leeren, Sicherung auf eine Festplatte) und erneut prüfen.`; break; }
-          if (bloecke.length > 1) { setNotice({ kind: "info", text: `Eingang: ${blockText(bi + 1, bloecke.length, block.length)} wird gelesen …` }); await arbeitDienst.update(`${blockText(bi + 1, bloecke.length, block.length)}`, bi, bloecke.length); }
+          if (bloecke.length > 1) { setNotice({ kind: "info", laeuft: true, text: `Eingang: ${blockText(bi + 1, bloecke.length, block.length)} wird gelesen …` }); await arbeitDienst.update(`${blockText(bi + 1, bloecke.length, block.length)}`, bi, bloecke.length); }
           const analyzedBlock: CentralIntakeAnalysis[] = [];
           for (const item of block) { const file = await eingangDatei(item); analyzedBlock.push(await analyzeCentralIntakeFile({ file, source: item.source, documents: [...localDocuments, ...documents], records: familyRecords, gelesenerText: await textEbene(file) })); }
           const grouped = groupCentralIntakeAnalyses(analyzedBlock);
@@ -1065,7 +1066,7 @@ function HealthPortalContent() {
     setVaultBusy(true);
     try {
       const destination = await chooseExportDestination("Ordner für die Vollsicherung wählen (getrennt vom Pro-Tresor)");
-      setNotice({ kind: "info", text: passwort ? "Sicherung läuft: jede Datei wird verschlüsselt, zurückgelesen und per Prüfsumme bestätigt." : "Sicherung läuft: jede Datei wird kopiert und per Prüfsumme bestätigt." });
+      setNotice({ kind: "info", laeuft: true, text: passwort ? "Sicherung läuft: jede Datei wird verschlüsselt, zurückgelesen und per Prüfsumme bestätigt." : "Sicherung läuft: jede Datei wird kopiert und per Prüfsumme bestätigt." });
       const result = await writeFullFamilyBackup({ destination, source: vaultHandle, appVersion: APP_VERSION, passwort });
       // Frage s: Programm dazu, getrennt von den Daten. Android legt die eigene APK bei, Windows einen Lies-mich mit Download und SHA-256.
       let programm = "";
@@ -1074,7 +1075,7 @@ function HealthPortalContent() {
       await refreshLocal();
       setNotice({ kind: "success", text: `Die vollständige Familienakten-Sicherung „${result.folderName}“ wurde ${passwort ? "verschlüsselt " : ""}mit Register, Verknüpfungen, Tagebuch-Einträge, Medien und Prüfsummen erstellt.${programm}${passwort ? "" : " Für die endgültige Bestätigung folgt die Wiederherstellung in einem leeren Testordner."}` });
       if (result.notfall) setNotfallblatt({ notfall: result.notfall, ordner: result.folderName, erstellt: result.manifest.createdAt });
-    } catch (error) { if ((error as DOMException)?.name !== "AbortError") setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die vollständige Sicherung konnte nicht erstellt werden." }); else setNotice(null); }
+    } catch (error) { if ((error as DOMException)?.name !== "AbortError") setNotice({ kind: "error", text: `Vollsicherung nicht erstellt: ${error instanceof Error ? ordnerFehlerText(error) : "unbekannter Fehler."}` }); else setNotice(null); }
     finally { setVaultBusy(false); }
   };
   // P6: Sicherung einlesen – Probe ohne Schreiben; leere Akte ganz, volle Akte zusammengeführt (Stufe A).
@@ -1085,7 +1086,7 @@ function HealthPortalContent() {
       const gewaehlt = await chooseExportDestination("Vollsicherung zum Einlesen wählen");
       const art = await sicherungArt(gewaehlt);
       if (art.verschluesselt) { setPasswortDialog({ gewaehlt, name: art.name, fehler: "", laeuft: false }); return; }
-      setNotice({ kind: "info", text: "Probe läuft: Register und jede Datei werden per Prüfsumme gelesen. Es wird nichts geschrieben." });
+      setNotice({ kind: "info", laeuft: true, text: "Probe läuft: Register und jede Datei werden per Prüfsumme gelesen. Es wird nichts geschrieben." });
       setEinlesen({ gewaehlt, probe: await sicherungProben(gewaehlt, vaultHandle) });
       setNotice(null);
     } catch (error) { if ((error as DOMException)?.name !== "AbortError") setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die Sicherung konnte nicht geprüft werden." }); }

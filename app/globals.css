@@ -2899,3 +2899,5 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .landkarte.lk-gefiltert .lk-chip.treffer, .landkarte.lk-gefiltert .lk-kasten.treffer { box-shadow: 0 0 0 3px #1d5b94; }
 .landkarte.lk-gefiltert .lk-ast:not(.treffer) { opacity: .12; }
 .landkarte.lk-gefiltert .lk-ast.treffer { stroke: #1d5b94; stroke-width: 3; opacity: 1; }
+/* Abbruch der Tresorwahl: ruhiger Hinweis statt Fehlerfarbe (Gerätetest 10.11.). */
+.pro-tresor-hinweis { border-left: 4px solid #9aa5ad; background: #f3f5f7; color: #3c4d58; padding: 6px 10px; border-radius: 8px; }

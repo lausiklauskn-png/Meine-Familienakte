@@ -15,6 +15,7 @@ export function ProTresorAnschluss({ aktenHandle = null, onChange, onDokumente }
   const [stand, setStand] = useState<ProTresorZustand>({ status: "getrennt" });
   const [busy, setBusy] = useState(false);
   const [meldung, setMeldung] = useState("");
+  const [abgebrochen, setAbgebrochen] = useState(false);
   const [bestaetigung, setBestaetigung] = useState("");
   const [zuordnung, setZuordnung] = useState<{ handle: FileSystemDirectoryHandle | null; id: string | null }>({ handle: null, id: null });
   const ziel = zuordnung.handle === aktenHandle ? zuordnung.id : null;
@@ -56,7 +57,7 @@ export function ProTresorAnschluss({ aktenHandle = null, onChange, onDokumente }
     finally { setBusy(false); onChange?.(); }
   }
   async function ausfuehren(aktion: "verbinden" | "einrichten" | "entsperren" | "sperren") {
-    setBusy(true); setMeldung(""); setBestaetigung("");
+    setBusy(true); setMeldung(""); setBestaetigung(""); setAbgebrochen(false);
     try {
       const antwort = await proTresor[aktion]() as ProTresorZustand | void;
       // Bestätigung erst nach erneutem Lesen des GEMERKTEN Zustands: gewählt, gespeichert, erreichbar, offen/gesperrt.
@@ -65,12 +66,14 @@ export function ProTresorAnschluss({ aktenHandle = null, onChange, onDokumente }
         const erwartet = antwort && typeof antwort === "object" ? antwort.id : undefined;
         const neuAngelegt = Boolean(antwort && typeof antwort === "object" && antwort.angelegt);
         if (neu.id && (!erwartet || neu.id === erwartet) && (neu.status === "offen" || neu.status === "gesperrt"))
-          setBestaetigung(`${neuAngelegt ? "Neuer Tresor angelegt" : "Gewählt"} und gespeichert: ${neu.ort || "gewählter Ordner"} · erreichbar · ${neu.status === "offen" ? "entsperrt" : "gesperrt"} · Tresorkennung ${neu.id}. Die App merkt sich diesen Ort; nach einem Neustart wird höchstens das Passwort erneut gefragt.${neuAngelegt ? " Im Hauptordner liegt jetzt LIES-MICH.txt." : ""}`);
+          // Klaus 10.11.: kurz bestätigen; Ort und Kennung stehen schon in der Zustandszeile bzw. hinter „Mehr“.
+          setBestaetigung(neuAngelegt ? "✓ Tresor eingerichtet" : aktion === "einrichten" ? "✓ Vorhandenen Tresor gefunden" : "✓ Tresor verbunden");
         else setMeldung(`Die Auswahl wurde nicht bestätigt: ${proTresorMeldung(neu.code || "") || "Der gemerkte Zustand passt nicht zur Auswahl."} Bitte den Ordner erneut wählen.`);
       }
     }
     catch (e) {
-      const grund = proTresorMeldung(proTresorCode(e));
+      const code = proTresorCode(e); setAbgebrochen(code === "FA_TRESOR_ABGEBROCHEN");
+      const grund = proTresorMeldung(code);
       setMeldung(grund || "Der Pro-Tresor wurde nicht verbunden. Vorhandene Dateien bleiben erhalten. Bitte Ordnerfreigabe und Passwort prüfen.");
     }
     finally { setBusy(false); onChange?.(); window.dispatchEvent(new Event("familienakte:pro-tresor")); }
@@ -81,14 +84,15 @@ export function ProTresorAnschluss({ aktenHandle = null, onChange, onDokumente }
   const empfehlen = Boolean(aktenHandle && stand.status === "offen" && stand.id && ziel !== stand.id);
   return <section className="card" data-pro-tresor>
     <span className="ui-heading-help"><h3>Gemeinsamer Pro-Tresor</h3><InfoPopover label="Gemeinsamer Pro-Tresor erklären" text={ERKLAERUNG} mehr={<ProTresorWoLiegtWas open stand={verfuegbar ? stand : undefined} zahlen={zahlen} onDokumente={onDokumente}/>}/></span>
-    <p role="status" data-pro-tresor-status>{statusText}</p>
-    {meldung && <p role="alert" className="pro-tresor-meldung" data-pro-tresor-meldung>{meldung}</p>}
+    <p role="status" data-pro-tresor-status><span data-pro-tresor-zustand>{statusText}</span>{stand.ort && stand.status !== "getrennt" && <span className="pro-tresor-ort" style={{ overflowWrap: "anywhere" }}> · {stand.ort}</span>}</p>
+    {/* Gerätetest 10.11.: ein Abbruch ist kein Fehler – nicht rot, sondern ein ruhiger Hinweis. */}
+    {meldung && (abgebrochen
+      ? <p role="status" className="pro-tresor-hinweis" data-pro-tresor-meldung data-abgebrochen>{meldung}</p>
+      : <p role="alert" className="pro-tresor-meldung" data-pro-tresor-meldung>{meldung}</p>)}
     {stand.status === "nicht_erreichbar" && stand.ort && <p>Der gemerkte Ort bleibt gespeichert. Es wird kein anderer Speicher verwendet, bis du selbst einen anderen Tresor wählst.</p>}
     {bestaetigung && <p role="status" data-pro-tresor-bestaetigung>{bestaetigung}</p>}
     {stand.code === "FA_TRESOR_ZUSTAND_BESCHAEDIGT" && <p>Die gemerkte Verbindung ist beschädigt. Bitte den vorhandenen Pro-Tresor neu wählen. Die Tresordateien wurden nicht verändert.</p>}
-    {stand.ort && <p style={{ overflowWrap: "anywhere" }}>Gewählter Ort: {stand.ort}</p>}
-    {stand.id && <p>Tresorkennung: {stand.id}</p>}
-    <p data-pro-ablage>{ziel ? `Neue Originale: verschlüsselt im Pro-Tresor ${ziel}.` : "Neue Originale: im bisherigen Aktenordner."}</p>
+    <p data-pro-ablage data-tresor-id={ziel || undefined}>{ziel ? (ziel === stand.id ? "Neue Originale: verschlüsselt im Tresor." : "Neue Originale: verschlüsselt in einem anderen Pro-Tresor (siehe „Mehr“).") : "Neue Originale: im bisherigen Aktenordner."}</p>
     {ziel && (!verfuegbar || stand.id !== ziel || stand.status !== "offen") && <p>Für neue Originale und vorhandene Pro-Dateien bitte den zugeordneten Pro-Tresor in der Android- oder Windows-App verbinden und entsperren. Ohne ihn wird kein Ersatzbestand angelegt.</p>}
     {verfuegbar && <div className="button-row">
       {einrichtenMoeglich
@@ -99,7 +103,14 @@ export function ProTresorAnschluss({ aktenHandle = null, onChange, onDokumente }
       {empfehlen && <button className="button primary" type="button" disabled={busy} onClick={() => void zielAendern(stand.id!)}>Neue Originale in diesem Pro-Tresor ablegen</button>}
     </div>}
     {empfehlen && <p data-pro-ablage-empfehlung><strong>Empfohlen:</strong> Neue Originale verschlüsselt im Ordner „{PRO_TRESOR_FACH}“ dieses Pro-Tresors ablegen. Vorhandene Akten bleiben, wo sie sind; du kannst jederzeit zurückwechseln.</p>}
-    {aktenHandle && ziel && <button className="button secondary" type="button" disabled={busy} onClick={() => void zielAendern(null)}>Neue Originale wieder im bisherigen Aktenordner ablegen</button>}
+    {/* Klaus 10.11.: Technisches und Seltenes hinter „Mehr“ – die Kennung ist kein Schlüssel, gehört aber nicht in jeden Bildschirmfoto. */}
+    {(stand.id || (aktenHandle && ziel)) && <details className="pro-tresor-mehr" data-pro-tresor-mehr>
+      <summary>Mehr</summary>
+      {stand.id && <p data-tresor-kennung>Tresorkennung: {stand.id}</p>}
+      {ziel && ziel !== stand.id && <p>Neue Originale gehen in den Pro-Tresor {ziel}.</p>}
+      {stand.id && <p>Die App merkt sich diesen Ort; nach einem Neustart wird höchstens das Passwort gefragt. Im Hauptordner liegt LIES-MICH.txt.</p>}
+      {aktenHandle && ziel && <button className="button secondary" type="button" disabled={busy} onClick={() => void zielAendern(null)}>Neue Originale wieder im bisherigen Aktenordner ablegen</button>}
+    </details>}
     <ProVerbundAnschluss stand={stand}/>
     {einrichtenMoeglich && !stand.id && <p data-pro-tresor-einrichten-hinweis>Nur SD-Karte oder Gerätespeicher antippen. Die App findet einen vorhandenen Tresor selbst oder legt den Ordner „Family-Projekt“ an.</p>}
   </section>;

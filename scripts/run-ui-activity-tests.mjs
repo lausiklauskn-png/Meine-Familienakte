@@ -23,7 +23,17 @@ report({ kind: "error", text: "Zweite echte Rückmeldung" });
 report({ kind: "info", text: "Dritte echte Rückmeldung" });
 check("Genau zwei Ergebnisse, neuestes oben; ältestes verdrängt", () => { assert.equal(entries.length, 2); assert.match(entries[0].text, /Dritte/); assert.match(entries[1].text, /Zweite/); });
 check("Erfolg, Fehler und Offenstatus werden nicht verwechselt", () => { assert.equal(entries[0].kind, "warning"); assert.equal(entries[1].kind, "error"); assert.equal(activityEntry({ kind: "success", text: "Archivkopie geprüft" }, 10).kind, "success"); });
-check("Status bleibt ohne Farbwahrnehmung verständlich", () => { assert.match(entries[0].text, /^Prüfung erforderlich:/); assert.match(entries[1].text, /^Fehlgeschlagen:/); });
+check("Status bleibt ohne Farbwahrnehmung verständlich", () => { assert.match(entries[0].text, /^Hinweis:/); assert.match(entries[1].text, /^Fehlgeschlagen:/); assert.match(activityEntry({ kind: "warning", text: "Bitte prüfen" }, 12).text, /^Prüfung erforderlich:/); });
+// Gerätetest 10.11.: eine Zwischenmeldung („Sicherung läuft“) ist kein Prüfauftrag und weicht der nächsten Meldung.
+check("Zwischenmeldung heißt „Hinweis“ und verschwindet mit der nächsten Meldung", () => {
+  const laeuft = activityEntry({ kind: "info", laeuft: true, text: "Sicherung läuft" }, 13), fehler = activityEntry({ kind: "error", text: "Ordner nicht beschreibbar" }, 14);
+  assert.match(laeuft.text, /^Hinweis: Sicherung läuft/); assert.doesNotMatch(laeuft.text, /Prüfung erforderlich/);
+  assert.deepEqual(appendActivity([laeuft], fehler).map((e) => e.id), [14]);
+  const warnung = activityEntry({ kind: "warning", text: "Bitte prüfen" }, 15);
+  assert.deepEqual(appendActivity([warnung], fehler).map((e) => e.id), [14, 15]);
+  const hinweis = activityEntry({ kind: "info", text: "Export vorbereitet" }, 16);
+  assert.deepEqual(appendActivity([hinweis], fehler).map((e) => e.id), [14, 16]); assert.match(hinweis.text, /^Hinweis:/);
+});
 check("Gesundheitsdiagnosen werden nicht in globale Zeilen übernommen", () => { const entry = activityEntry({ kind: "error", text: "Ärztlicher_Bericht_Erkältung.pdf nicht lesbar" }, 11); assert.doesNotMatch(entry.text, /Erkältung|Ärztlicher/); assert.equal(entry.kind, "error"); });
 
 const copied = [];
