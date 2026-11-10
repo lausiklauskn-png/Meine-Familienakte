@@ -12,7 +12,7 @@ const ziel = "docs/geschenk/Geschenkbox-Pro-Apps.html";
 
 if (!box.includes('href="pro-verbund.html"')) { console.error("ABBRUCH: Link auf pro-verbund.html in der Geschenkbox nicht gefunden."); process.exit(2); }
 const attr = (t) => t.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
-const titel = (box.match(/<title>([^<]*)<\/title>/) || [, "Geschenkbox Pro-Apps"])[1];
+const titel = box.match(/<title>([^<]*)<\/title>/)?.[1] || "Geschenkbox Pro-Apps";
 const rumpf = box.replace(/<title>[^<]*<\/title>\s*/, "").replace('href="pro-verbund.html" target="_blank" rel="noopener"', 'href="#verbund-karte"');
 
 const seite = `<!doctype html>
