@@ -188,7 +188,7 @@ Veröffentlichung denken können.“
 - Workflow PDF Pro und Workflow PDF (Basic)
 - Workflow Calculate (Angebotsplaner) und Workflow Needs (Bedarfsanalyse)
 
-Von Claude ergänzt, bitte bestätigen:
+Von Claude ergänzt, **von Klaus am 10.11. bestätigt**:
 - der **Tresor-Leser** (HTML-Datei aus Workflow PDF Pro, liegt in der Familienakte);
 - die Werkzeuge **Kimboard** und **Kimseek** mit eigenem `impressum.html` in Private Brain Pro;
 - die **Geschenkbox** (Artefakt und Download-Datei) mit einem Link auf das Impressum.
