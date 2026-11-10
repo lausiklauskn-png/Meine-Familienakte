@@ -9,6 +9,7 @@ import { BLOCK, blockText, dateiSchluessel, gesehenMerken, inBloecke, mbText as 
 import { arbeitDienst } from "./arbeit-dienst";
 import { eingangOrdnerLeserSetzen } from "./eingang-ablage";
 import { dateiAusEingangsordner } from "./local-vault";
+import { ordnerFehlerText } from "./nativer-ordner";
 import { DemoUebernahmeDialog, DEMO_NEU_MERKER, DEMO_UEBERNAHME_MERKER } from "./demo-uebernahme";
 import { DEMO_QUELLE_SCHLUESSEL, demoQuelleLesen } from "../lib/demo-kopie";
 import { resetDemoStorage } from "../lib/demo-workspace.ts";
@@ -1074,7 +1075,7 @@ function HealthPortalContent() {
       await refreshLocal();
       setNotice({ kind: "success", text: `Die vollständige Familienakten-Sicherung „${result.folderName}“ wurde ${passwort ? "verschlüsselt " : ""}mit Register, Verknüpfungen, Tagebuch-Einträge, Medien und Prüfsummen erstellt.${programm}${passwort ? "" : " Für die endgültige Bestätigung folgt die Wiederherstellung in einem leeren Testordner."}` });
       if (result.notfall) setNotfallblatt({ notfall: result.notfall, ordner: result.folderName, erstellt: result.manifest.createdAt });
-    } catch (error) { if ((error as DOMException)?.name !== "AbortError") setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die vollständige Sicherung konnte nicht erstellt werden." }); else setNotice(null); }
+    } catch (error) { if ((error as DOMException)?.name !== "AbortError") setNotice({ kind: "error", text: `Vollsicherung nicht erstellt: ${error instanceof Error ? ordnerFehlerText(error) : "unbekannter Fehler."}` }); else setNotice(null); }
     finally { setVaultBusy(false); }
   };
   // P6: Sicherung einlesen – Probe ohne Schreiben; leere Akte ganz, volle Akte zusammengeführt (Stufe A).

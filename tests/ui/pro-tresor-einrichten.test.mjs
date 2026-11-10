@@ -30,7 +30,9 @@ try {
     await step(`Einrichten: ${code} wird verständlich gemeldet, nichts verbunden`, async () => {
       await page.evaluate((c) => { window.__proFehlerCode = c; }, code);
       await panel.getByRole("button", { name: "Tresor einrichten – nur Speicher wählen …", exact: true }).click();
-      const alert = panel.getByRole("alert"); await alert.waitFor();
+      // Gerätetest 10.11.: ein Abbruch ist kein Fehler – er steht als ruhiger Hinweis (role=status, data-abgebrochen), nicht als Alarm.
+      const alert = code === "FA_TRESOR_ABGEBROCHEN" ? panel.locator("[data-pro-tresor-meldung][data-abgebrochen]") : panel.getByRole("alert"); await alert.waitFor();
+      if (code === "FA_TRESOR_ABGEBROCHEN" && await panel.getByRole("alert").count()) return false;
       const t = await alert.innerText(); await page.evaluate(() => { window.__proFehlerCode = null; });
       return erwartet.test(t) && !(await panel.locator("[data-pro-tresor-bestaetigung]").count()) ? t.slice(0, 90) : (console.log("   ↳", t), false);
     });

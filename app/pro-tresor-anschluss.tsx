@@ -15,6 +15,7 @@ export function ProTresorAnschluss({ aktenHandle = null, onChange, onDokumente }
   const [stand, setStand] = useState<ProTresorZustand>({ status: "getrennt" });
   const [busy, setBusy] = useState(false);
   const [meldung, setMeldung] = useState("");
+  const [abgebrochen, setAbgebrochen] = useState(false);
   const [bestaetigung, setBestaetigung] = useState("");
   const [zuordnung, setZuordnung] = useState<{ handle: FileSystemDirectoryHandle | null; id: string | null }>({ handle: null, id: null });
   const ziel = zuordnung.handle === aktenHandle ? zuordnung.id : null;
@@ -56,7 +57,7 @@ export function ProTresorAnschluss({ aktenHandle = null, onChange, onDokumente }
     finally { setBusy(false); onChange?.(); }
   }
   async function ausfuehren(aktion: "verbinden" | "einrichten" | "entsperren" | "sperren") {
-    setBusy(true); setMeldung(""); setBestaetigung("");
+    setBusy(true); setMeldung(""); setBestaetigung(""); setAbgebrochen(false);
     try {
       const antwort = await proTresor[aktion]() as ProTresorZustand | void;
       // Bestätigung erst nach erneutem Lesen des GEMERKTEN Zustands: gewählt, gespeichert, erreichbar, offen/gesperrt.
@@ -70,7 +71,8 @@ export function ProTresorAnschluss({ aktenHandle = null, onChange, onDokumente }
       }
     }
     catch (e) {
-      const grund = proTresorMeldung(proTresorCode(e));
+      const code = proTresorCode(e); setAbgebrochen(code === "FA_TRESOR_ABGEBROCHEN");
+      const grund = proTresorMeldung(code);
       setMeldung(grund || "Der Pro-Tresor wurde nicht verbunden. Vorhandene Dateien bleiben erhalten. Bitte Ordnerfreigabe und Passwort prüfen.");
     }
     finally { setBusy(false); onChange?.(); window.dispatchEvent(new Event("familienakte:pro-tresor")); }
@@ -82,7 +84,10 @@ export function ProTresorAnschluss({ aktenHandle = null, onChange, onDokumente }
   return <section className="card" data-pro-tresor>
     <span className="ui-heading-help"><h3>Gemeinsamer Pro-Tresor</h3><InfoPopover label="Gemeinsamer Pro-Tresor erklären" text={ERKLAERUNG} mehr={<ProTresorWoLiegtWas open stand={verfuegbar ? stand : undefined} zahlen={zahlen} onDokumente={onDokumente}/>}/></span>
     <p role="status" data-pro-tresor-status>{statusText}</p>
-    {meldung && <p role="alert" className="pro-tresor-meldung" data-pro-tresor-meldung>{meldung}</p>}
+    {/* Gerätetest 10.11.: ein Abbruch ist kein Fehler – nicht rot, sondern ein ruhiger Hinweis. */}
+    {meldung && (abgebrochen
+      ? <p role="status" className="pro-tresor-hinweis" data-pro-tresor-meldung data-abgebrochen>{meldung}</p>
+      : <p role="alert" className="pro-tresor-meldung" data-pro-tresor-meldung>{meldung}</p>)}
     {stand.status === "nicht_erreichbar" && stand.ort && <p>Der gemerkte Ort bleibt gespeichert. Es wird kein anderer Speicher verwendet, bis du selbst einen anderen Tresor wählst.</p>}
     {bestaetigung && <p role="status" data-pro-tresor-bestaetigung>{bestaetigung}</p>}
     {stand.code === "FA_TRESOR_ZUSTAND_BESCHAEDIGT" && <p>Die gemerkte Verbindung ist beschädigt. Bitte den vorhandenen Pro-Tresor neu wählen. Die Tresordateien wurden nicht verändert.</p>}
