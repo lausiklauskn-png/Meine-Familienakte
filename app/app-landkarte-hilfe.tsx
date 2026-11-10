@@ -18,14 +18,20 @@ const KARTE_HILFE = "• Die ganze App auf einer Karte: von den Wegen hinein bis
 /** Zustand beim „Hingehen ›“: beim nächsten Aufbau der Hilfe (Zurück) ist die Karte wieder offen und der Kasten gewählt. */
 let beimHingehen: { kasten: string } | null = null;
 /** „Neu“ › „Landkarte öffnen“ (Klaus 09.11.): beim nächsten Aufbau der Hilfe ist die Karte aufgeklappt. */
-export function landkarteAufmachen() { beimHingehen = { kasten: "" }; }
+const AUF_MERKER = "familienakte-landkarte-auf";
+export function landkarteAufmachen(ueberNeuladen = false) { beimHingehen = { kasten: "" }; if (ueberNeuladen) { try { sessionStorage.setItem(AUF_MERKER, "1"); } catch { /* ohne Speicher */ } } }
 
 export function AppLandkarteHilfe({ onGo, eingerichtet, demo, live = {}, aktenSichern }: { onGo: GehMitZiel; eingerichtet: ReadonlySet<string>; demo?: ReactNode; live?: LiveZustand;
   /** Zweites Symbol oben (Klaus 09.11.): springt zu „Akten sichern“ und klappt es auf. */ aktenSichern?: () => void }) {
   const [frisch, setFrisch] = useState(0);
-  const [start] = useState(() => beimHingehen);
+  const [start] = useState(() => { if (beimHingehen) return beimHingehen;
+    // Adresse ?ansicht=landkarte: die App lädt beim ersten Besuch womöglich einmal neu (Service Worker) – der Wunsch übersteht das in der Sitzung.
+    try { if (sessionStorage.getItem(AUF_MERKER)) return { kasten: "" }; } catch { /* ohne Speicher */ }
+    return null; });
   const [offen, setOffen] = useState(Boolean(start));
   useEffect(() => { beimHingehen = null; }, []);
+  // Den Merker erst nach ein paar Sekunden löschen: das Neuladen beim ersten Besuch kommt erst nach dem ersten Aufbau.
+  useEffect(() => { const t = window.setTimeout(() => { try { sessionStorage.removeItem(AUF_MERKER); } catch { /* ohne Speicher */ } }, 5000); return () => window.clearTimeout(t); }, []);
   const geh = useRef(onGo); geh.current = onGo;
   const { gruppen, knoten } = useMemo(() => {
     const mach = <T extends KartenPunkt & KartenSeite>(p: T): T => {

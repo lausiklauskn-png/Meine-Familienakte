@@ -50,7 +50,7 @@ export function proTresorMeldung(code: string): string {
     case "FA_TRESOR_UNTERORDNER": return `Der gewählte Ordner heißt wie ein Ordner im Tresor („Tresorordner“, „Familienakte“, „Eingang-…“). Bitte eine Ebene höher wählen – am einfachsten die SD-Karte oder den Gerätespeicher selbst; die App legt „Family-Projekt“ dann selbst an. Es wurde nichts verändert.`;
     case "FA_TRESOR_MEHRERE": return "In diesem Speicher liegen mehrere Tresore. Bitte direkt den gewünschten Tresor-Ordner wählen. Es wurde nichts verändert.";
     case "TRESOR_NAME_UNGUELTIG": return "Dieser Ordnername geht nicht (keine Zeichen wie / \\ : * ? \" < > |, nicht der Name eines Fachs). Es wurde nichts angelegt.";
-    case "TRESOR_NAME_BELEGT": return "Ein Ordner mit diesem Namen liegt dort schon und hat Inhalt. Bitte einen anderen Namen wählen. Es wurde nichts angelegt.";
+    case "TRESOR_NAME_BELEGT": return "„Family-Projekt“ (bis „Family-Projekt 9“) liegt dort schon und hat Inhalt. Bitte einen leeren Ordner wählen. Es wurde nichts angelegt.";
     case "TRESOR_PASSWORT_KURZ": return "Das Passwort ist zu kurz (mindestens 10 Zeichen). Es wurde nichts angelegt.";
     case "FA_TRESOR_ABGEBROCHEN": return "Wahl abgebrochen – nichts geändert, der bisherige Tresor bleibt verbunden.";
     case "FA_TRESOR_FREIGABE_FEHLT": return "Das Gerät hat keine dauerhafte Lese- und Schreibfreigabe für diesen Ordner erteilt. Bitte den Ordner erneut wählen und den Zugriff erlauben.";
