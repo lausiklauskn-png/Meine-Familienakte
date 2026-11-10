@@ -1,7 +1,7 @@
 // „Mein Kalender“ und App-Glocke (Klaus 2026-11-05): Monat und Tagesliste in der App, Eintrag an einem Tag anlegen und ändern,
 // Notiz mit Erinnerung springt in den Kalender, Fristenliste zeigt Uhrzeit und „Ändern“ ohne Seitenwechsel, die Glocke läutet
 // (abschaltbar, ab Werk an, solange kein Kalender verbunden ist). Die Uhr ist gestellt.
-import { startApp, launchBrowser, DESKTOP, HANDY, ready, check, step, summary, collectErrors, internetAn, footer } from "./_harness.mjs";
+import { startApp, launchBrowser, DESKTOP, HANDY, ready, check, step, summary, collectErrors, internetAn, footer, soll } from "./_harness.mjs";
 import { speechStub } from "./_stubs.mjs";
 import { vaultFixture } from "./_vault-fixture.mjs";
 
@@ -80,6 +80,26 @@ try {
     const inListe = await page.locator(`#termin-${id}`).count();
     return sicher === "sicher" && t?.status === "archiviert" && inListe === 0 ? true : (console.log("   ↳", sicher, t?.status, inListe), false);
   });
+  await step("Papierkorb (Klaus 10.11.): die gelöschte Erinnerung liegt sichtbar im Papierkorb; „Wiederherstellen“ holt sie mit Status zurück", async () => {
+    const korb = page.locator("[data-papierkorb]").first(); await korb.locator("summary").click();
+    const zeile = korb.locator("[data-papierkorb-eintrag]", { hasText: "Zahnarzt anrufen" }); await zeile.waitFor({ timeout: 8000 });
+    const kopf = await korb.locator("summary").innerText();
+    await zeile.locator("[data-papierkorb-zurueck]").click();
+    await page.waitForFunction(() => Array.from(document.querySelectorAll("[data-mk-eintrag]")).some((e) => /Zahnarzt anrufen/.test(e.textContent || "")), null, { timeout: 8000 });
+    const t = (await register(page)).find((r) => /Zahnarzt anrufen/.test(r.data?.title || ""));
+    const nochImKorb = await korb.locator("[data-papierkorb-eintrag]", { hasText: "Zahnarzt anrufen" }).count();
+    return soll(/Papierkorb \(1\)/.test(kopf) && t?.status === "offen" && !t.data.geloeschtAm && nochImKorb === 0, { kopf, status: t?.status, nochImKorb });
+  });
+  await step("Papierkorb: nochmal löschen, dann „Endgültig löschen“ erst beim zweiten Tipp; danach leer", async () => {
+    const zeile = kal.locator("[data-mk-eintrag]", { hasText: "Zahnarzt anrufen" }).first();
+    if ((await zeile.locator("[data-mk-offen]").count()) === 0) await zeile.locator("[data-mk-auge]").click();
+    await zeile.locator("[data-erinnerung-loeschen]").click(); await zeile.locator("[data-erinnerung-loeschen=sicher]").click();
+    const korb = page.locator("[data-papierkorb]").first();
+    const e = korb.locator("[data-papierkorb-eintrag]", { hasText: "Zahnarzt anrufen" }); await e.waitFor({ timeout: 8000 });
+    await e.locator("[data-papierkorb-weg]").click(); const nachEinem = await e.count();
+    await e.locator("[data-papierkorb-weg=sicher]").click(); await e.waitFor({ state: "detached", timeout: 8000 });
+    return soll(nachEinem === 1 && (await korb.locator("[data-papierkorb-leer]").count()) === 1, { nachEinem });
+  });
   await step("Notiz mit Erinnerung: in der Liste steht, wohin sie ging; Kalender-Knopf springt zu „Mein Kalender“ am Tag", async () => {
     await page.locator("[data-notiz-knopf]").click();
     const f = page.locator("[data-notiz-fenster]"); await f.waitFor();
@@ -149,8 +169,16 @@ try {
   // Gestellter Android-Baustein: nur die Glocke (Klaus 2026-11-06: Benachrichtigung auch bei geschlossener App).
   await p3.addInitScript(() => { window.__glocke = { erlauben: 0, plaene: [] }; window.Capacitor = { isNativePlatform: () => false, Plugins: { FamilienakteGlocke: {
     erlauben: async () => { window.__glocke.erlauben++; return { erlaubt: true }; },
+    probe: async () => { window.__glocke.probe = (window.__glocke.probe || 0) + 1; return { gezeigt: true, erlaubt: true }; },
     planen: async ({ glocken }) => { window.__glocke.plaene.push(glocken); return { geplant: glocken.length, erlaubt: true }; } } } }; });
   await p3.goto(app.base, { waitUntil: "networkidle" }); await ready(p3); await internetAn(p3);
+  await step("Probe hören (Android): eine Probe-Benachrichtigung über den Kanal „Erinnerungen“, damit der in Android gewählte Ton klingt", async () => {
+    await p3.locator("[data-mein-kalender-knopf]").click(); const k3 = p3.locator("[data-mein-kalender]"); await k3.waitFor();
+    await k3.locator("[data-glocken-einstellung] summary").click(); await k3.locator("[data-glocke-probe]").click(); await p3.waitForTimeout(200);
+    const n = await p3.evaluate(() => window.__glocke.probe || 0); await p3.keyboard.press("Escape").catch(() => {});
+    await p3.goto(app.base, { waitUntil: "networkidle" }); await ready(p3); await internetAn(p3);
+    return n === 1 ? true : (console.log("   ↳ probe", n), false);
+  });
   await step("Notiz: Uhrzeit aus dem Text, App-Glocke ist ohne Kalender schon an; sie läutet ohne verbundenen Kalender", async () => {
     await p3.locator("[data-notiz-knopf]").click();
     const f = p3.locator("[data-notiz-fenster]"); await f.waitFor();

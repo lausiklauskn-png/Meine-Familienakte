@@ -4015,8 +4015,11 @@ export async function deleteLocalScheduleRecord(handle: FileSystemDirectoryHandl
   if (!record) throw new Error("Die Frist, Aufgabe oder Erinnerung wurde nicht gefunden.");
   const now = new Date().toISOString();
   const weg = new Set([id, ...index.relations.filter((r) => r.toId === id && r.fromType === "reminder").map((r) => r.fromId)]);
-  for (const r of index.records) if (weg.has(r.id)) { r.status = "archiviert"; r.updatedAt = now; (r.data as Record<string, unknown>).geloeschtAm = now; }
+  const statusVorher: Record<string, string> = {};
+  for (const r of index.records) if (weg.has(r.id)) { statusVorher[r.id] = r.status; r.status = "archiviert"; r.updatedAt = now; (r.data as Record<string, unknown>).geloeschtAm = now; }
+  const verbindungen = index.relations.filter((r) => weg.has(r.fromId) || weg.has(r.toId));
   index.relations = index.relations.filter((r) => !weg.has(r.fromId) && !weg.has(r.toId));
+  papierkorbAblegen(index, { id: crypto.randomUUID(), art: "termin", titel: String((record.data as { title?: string }).title || id), recordType: record.recordType, geloeschtAm: now, recordIds: [...weg], statusVorher, records: [], relations: verbindungen, linkDecisions: [] });
   index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Erinnerung gelöscht", recordId: id, details: `${id} auf Befehl gelöscht (ausgeblendet; Kalendereintrag wird beim nächsten Abgleich entfernt).` });
   await writeIndex(handle, index);
   return record;
@@ -4429,18 +4432,20 @@ export async function deleteLocalMemoryRecord(handle: FileSystemDirectoryHandle,
       if (r && imKalender) { r.status = "archiviert"; r.updatedAt = new Date().toISOString(); archiviert.add(id); } else removedRecordIds.add(id);
     }
   }
+  const now = new Date().toISOString();
+  // Papierkorb (Klaus 10.11.2026: „wie in jedem E-Mail-Programm“): alles Entfernte bleibt wiederherstellbar.
+  const statusVorher: Record<string, string> = {};
+  for (const id of archiviert) { const r = index.records.find((x) => x.id === id); if (r) { statusVorher[id] = "offen"; (r.data as Record<string, unknown>).geloeschtAm = now; } }
+  papierkorbAblegen(index, { id: crypto.randomUUID(), art: "notiz", titel: String((event.data as { title?: string }).title || eventId), recordType: event.recordType, geloeschtAm: now,
+    recordIds: [...archiviert], statusVorher, records: index.records.filter((record) => removedRecordIds.has(record.id)).map((record) => structuredClone(record)),
+    relations: index.relations.filter((relation) => removedRecordIds.has(relation.fromId) || removedRecordIds.has(relation.toId) || archiviert.has(relation.fromId) || archiviert.has(relation.toId)),
+    linkDecisions: index.linkDecisions.filter((decision) => decision.sourceId === eventId), medienId: eventId });
   index.records = index.records.filter((record) => !removedRecordIds.has(record.id));
   index.relations = index.relations.filter((relation) => !removedRecordIds.has(relation.fromId) && !removedRecordIds.has(relation.toId) && !archiviert.has(relation.fromId) && !archiviert.has(relation.toId));
   index.linkDecisions = index.linkDecisions.filter((decision) => decision.sourceId !== eventId);
-  const now = new Date().toISOString();
-  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Tagebuch-Eintrag gelöscht", recordId: eventId, details: `${eventId} wurde nach ausdrücklicher Bestätigung gelöscht. ${options.keepLinkedSchedules ? "Verknüpfte Aufgaben und Fristen blieben als eigenständige Datensätze erhalten." : `${linkedScheduleIds.size} verbundene Aufgaben/Fristen wurden nach gesonderter Auswahl mit entfernt.`} Gemeinsam verwendete Personen, Organisationen, Objekte, Vorgänge und Dokumente blieben erhalten.` });
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Tagebuch-Eintrag gelöscht", recordId: eventId, details: `${eventId} wurde nach ausdrücklicher Bestätigung in den Papierkorb gelegt. ${options.keepLinkedSchedules ? "Verknüpfte Aufgaben und Fristen blieben als eigenständige Datensätze erhalten." : `${linkedScheduleIds.size} verbundene Aufgaben/Fristen wurden nach gesonderter Auswahl mit entfernt.`} Gemeinsam verwendete Personen, Organisationen, Objekte, Vorgänge und Dokumente blieben erhalten.` });
   await writeIndex(handle, index);
-  try {
-    const mediaRoot = await (await root(handle)).getDirectoryHandle("03_Erinnerungsmedien");
-    await mediaRoot.removeEntry(eventId, { recursive: true });
-  } catch {
-    // Fehlende lokale Medien ändern die erfolgreich bestätigte Registerbereinigung nicht.
-  }
+  // Medien (Fotos, Aufnahmen) bleiben bis „Endgültig löschen“ im Papierkorb liegen.
   return { eventId, removedScheduleCount: options.keepLinkedSchedules ? 0 : linkedScheduleIds.size, keptScheduleCount: options.keepLinkedSchedules ? linkedScheduleIds.size : 0 };
 }
 
@@ -4804,4 +4809,61 @@ export async function saveLocalPdfEdit(handle: FileSystemDirectoryHandle, quelle
     try { aufraeumenOffen = await pdfAufraeumen(handle, index); } catch { /* committed document remains valid; journal is retained */ }
     return { dokument, quelle: { ...quelle, checksum, storedPath: neuPfad }, aufraeumenOffen };
   });
+}
+
+
+// ---------- Papierkorb für Erinnerungen, Aufgaben, Fristen und Tagebuch-Notizen (Klaus 10.11.2026) ----------
+/** Ein gelöschter Eintrag mit allem, was zum Zurückholen nötig ist. Termine bleiben archiviert im Register (der Kalender-Abgleich
+ *  braucht sie zum Entfernen); Notizen liegen als Schnappschuss hier. Höchstens PAPIERKORB_MAX Einträge, die ältesten fallen heraus. */
+export type PapierkorbEintrag = {
+  id: string; art: "termin" | "notiz"; titel: string; recordType: string; geloeschtAm: string;
+  recordIds: string[]; statusVorher: Record<string, string>; records: FamilyRecordUnion[]; relations: FamilyRelation[]; linkDecisions: ContextLinkDecision[]; medienId?: string;
+};
+export const PAPIERKORB_MAX = 200;
+function papierkorbListe(index: VaultIndex): PapierkorbEintrag[] { return Array.isArray(index.papierkorb) ? index.papierkorb as PapierkorbEintrag[] : []; }
+function papierkorbAblegen(index: VaultIndex, eintrag: PapierkorbEintrag) { index.papierkorb = [eintrag, ...papierkorbListe(index)].slice(0, PAPIERKORB_MAX); }
+
+export async function papierkorbLesen(handle: FileSystemDirectoryHandle): Promise<PapierkorbEintrag[]> {
+  return papierkorbListe(await readIndex(handle));
+}
+
+/** Zurückholen: Status von vorher, Verbindungen und Notiz wieder da. Was es inzwischen nicht mehr gibt, wird übersprungen. */
+export async function papierkorbWiederherstellen(handle: FileSystemDirectoryHandle, eintragId: string) {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  const index = await readIndex(handle);
+  const liste = papierkorbListe(index);
+  const e = liste.find((x) => x.id === eintragId);
+  if (!e) throw new Error("Der Eintrag liegt nicht mehr im Papierkorb.");
+  const now = new Date().toISOString();
+  for (const r of e.records) if (!index.records.some((x) => x.id === r.id)) index.records.push({ ...r, updatedAt: now } as FamilyRecordUnion);
+  for (const id of e.recordIds) {
+    const r = index.records.find((x) => x.id === id);
+    if (!r) continue;
+    const data = r.data as Record<string, unknown>;
+    if (r.status === "archiviert" && data.geloeschtAm) { r.status = (e.statusVorher[id] || "offen") as typeof r.status; delete data.geloeschtAm; r.updatedAt = now; }
+  }
+  const da = new Set(index.records.map((r) => r.id));
+  const schluessel = (v: FamilyRelation) => `${v.fromId}|${v.toId}|${v.relationType}`;
+  const vorhanden = new Set(index.relations.map(schluessel));
+  for (const v of e.relations) if (da.has(v.fromId) && da.has(v.toId) && !vorhanden.has(schluessel(v))) { index.relations.push(v); vorhanden.add(schluessel(v)); }
+  for (const d of e.linkDecisions) if (!index.linkDecisions.some((x) => x === d || JSON.stringify(x) === JSON.stringify(d))) index.linkDecisions.push(d);
+  index.papierkorb = liste.filter((x) => x.id !== eintragId);
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Aus dem Papierkorb wiederhergestellt", recordId: e.recordIds[0] || e.records[0]?.id, details: `„${e.titel}“ wiederhergestellt (${e.art}).` });
+  await writeIndex(handle, index);
+  return e;
+}
+
+/** Endgültig löschen: der Eintrag verlässt den Papierkorb; Notiz-Medien werden jetzt entfernt. Termine bleiben archiviert im Register. */
+export async function papierkorbEndgueltig(handle: FileSystemDirectoryHandle, eintragIds: string[]) {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  const index = await readIndex(handle);
+  const weg = papierkorbListe(index).filter((x) => eintragIds.includes(x.id));
+  if (!weg.length) return 0;
+  index.papierkorb = papierkorbListe(index).filter((x) => !eintragIds.includes(x.id));
+  index.auditLog.unshift({ id: crypto.randomUUID(), at: new Date().toISOString(), action: "Papierkorb geleert", details: `${weg.length} Eintr${weg.length === 1 ? "ag" : "äge"} endgültig gelöscht.` });
+  await writeIndex(handle, index);
+  for (const e of weg) if (e.medienId) {
+    try { const mediaRoot = await (await root(handle)).getDirectoryHandle("03_Erinnerungsmedien"); await mediaRoot.removeEntry(e.medienId, { recursive: true }); } catch { /* keine Medien */ }
+  }
+  return weg.length;
 }

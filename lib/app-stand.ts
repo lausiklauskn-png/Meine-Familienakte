@@ -34,7 +34,7 @@ export const APP_STAND: Readonly<Record<string, StandEintrag>> = {
   // Stufe D: Termine aus dem Kalender holen (beidseitig).
   "kalender": { stand: "aktivieren", selbst: "fristen-kalender", seit: "2.28.43" },
   // Stufe H: Glocken überstehen den Neustart des Geräts (Android plant sie von selbst neu).
-  "glocke": { stand: "aktivieren", selbst: "app-glocke", seit: "2.28.47" },
+  "glocke": { stand: "aktivieren", selbst: "app-glocke", seit: "2.28.53" },
   // Abgleich zwischen Geräten (Plan Punkt 10): die Übergabe einer Unterlage ist fertig, der Abgleich steht im Kastentext als geplant.
   // Stufe C: gemeinsame Festplatte – vorbereiten, verbinden, abgleichen; erkannt an der Kennung.
   // Stufe I: Paket per Teilen (verschlüsselte Datei mit den Änderungen seit dem letzten Paket).

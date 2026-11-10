@@ -13,7 +13,7 @@ export function ErinnerungLoeschen({ id, titel, vaultHandle, onGeloescht, mitTex
   const tippen = async () => {
     if (!sicher) { setSicher(true); return; }
     setBusy(true);
-    try { await deleteLocalScheduleRecord(vaultHandle, id); await onGeloescht(`Gelöscht: ${titel}`); }
+    try { await deleteLocalScheduleRecord(vaultHandle, id); await onGeloescht(`Gelöscht: ${titel} – liegt im Papierkorb und lässt sich zurückholen.`); }
     finally { setBusy(false); setSicher(false); }
   };
   return <button type="button" className={`loesch-knopf${sicher ? " sicher" : ""}${mitText ? " mit-text" : ""}`} onClick={() => void tippen()} disabled={busy}
@@ -30,7 +30,7 @@ export function NotizLoeschen({ id, titel, vaultHandle, onGeloescht }: { id: str
   const tippen = async () => {
     if (!sicher) { setSicher(true); return; }
     setBusy(true);
-    try { await deleteLocalMemoryRecord(vaultHandle, id, { keepLinkedSchedules: false }); await onGeloescht(`Notiz gelöscht: ${titel}`); }
+    try { await deleteLocalMemoryRecord(vaultHandle, id, { keepLinkedSchedules: false }); await onGeloescht(`Notiz gelöscht: ${titel} – liegt im Papierkorb und lässt sich zurückholen.`); }
     finally { setBusy(false); setSicher(false); }
   };
   return <button type="button" className={`loesch-knopf${sicher ? " sicher" : ""}`} onClick={() => void tippen()} disabled={busy}
