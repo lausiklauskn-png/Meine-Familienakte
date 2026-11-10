@@ -29,11 +29,14 @@ try {
     await panel.getByRole("button", { name: "Vorhandenen Pro-Tresor verbinden …", exact: true }).click();
     await panel.getByText("Entsperrt", { exact: true }).waitFor();
     await page.locator('.global-activity-text', { hasText: "Bitte zuerst den gewünschten Pro-Tresor" }).waitFor({ state: "detached" });
-    return (await panel.innerText()).includes("erfundener-tresor-1") && (await panel.innerText()).includes("content://erfundene-sdkarte");
+    return (await panel.textContent()).includes("erfundener-tresor-1") && (await panel.textContent()).includes("content://erfundene-sdkarte");
   });
   await step("Pro-Tresor: sofortige Bestätigung nach der Ordnerwahl (gewählt, gespeichert, erreichbar, entsperrt, Ort)", async () => {
     const t = await panel.locator("[data-pro-tresor-bestaetigung]").innerText();
-    return /Gewählt und gespeichert: content:\/\/erfundene-sdkarte\/Pro-Tresor · erreichbar · entsperrt · Tresorkennung erfundener-tresor-1/.test(t) ? t.slice(0, 120) : (console.log("   ↳", t), false);
+    // Klaus 10.11.: kurze Bestätigung; Ort steht in der Zustandszeile, die Kennung hinter „Mehr“.
+    const zeile = await panel.locator("[data-pro-tresor-status]").innerText(), kennung = await panel.locator("[data-tresor-kennung]").textContent();
+    return t === "✓ Tresor verbunden" && /^Entsperrt · content:\/\/erfundene-sdkarte\/Pro-Tresor$/.test(zeile) && /erfundener-tresor-1/.test(kennung || "")
+      && !(await panel.locator("[data-tresor-kennung]").isVisible()) ? t : (console.log("   ↳", t, zeile), false);
   });
   await step("Pro-Tresor: nach dem Verbinden ist „Neue Originale in diesem Pro-Tresor ablegen“ als Empfehlung (Ordner „Familienakte“) sichtbar", async () => {
     const t = await panel.locator("[data-pro-ablage-empfehlung]").innerText();
@@ -52,7 +55,7 @@ try {
       await panel.getByRole("button", { name: "Anderen Pro-Tresor wählen …", exact: true }).click();
       const alert = panel.getByRole("alert"); await alert.waitFor();
       const t = await alert.innerText(); await page.evaluate(() => { window.__proFehlerCode = null; });
-      return erwartet.test(t) && (await panel.innerText()).includes("erfundener-tresor-1") && !(await panel.locator("[data-pro-tresor-bestaetigung]").count()) ? t.slice(0, 100) : (console.log("   ↳", t), false);
+      return erwartet.test(t) && (await panel.textContent()).includes("erfundener-tresor-1") && !(await panel.locator("[data-pro-tresor-bestaetigung]").count()) ? t.slice(0, 100) : (console.log("   ↳", t), false);
     });
   }
   await step("Pro-Tresor: Sperren und bewusstes Entsperren", async () => {
@@ -65,19 +68,19 @@ try {
     await page.evaluate(() => { window.__proFehler = true; });
     await panel.getByRole("button", { name: "Anderen Pro-Tresor wählen …", exact: true }).click();
     await panel.getByRole("alert").waitFor();
-    return (await panel.innerText()).includes("erfundener-tresor-1");
+    return (await panel.textContent()).includes("erfundener-tresor-1");
   });
   await step("Pro-Tresor: entfernte SD-Karte bleibt sichtbar, kein Ersatz", async () => {
     await page.evaluate(() => { window.__proStand.status = 'nicht_erreichbar'; document.dispatchEvent(new Event('visibilitychange')); });
     await panel.getByText(/Nicht erreichbar/).waitFor();
-    return (await panel.innerText()).includes("erfundener-tresor-1") && (await panel.innerText()).includes("Der gemerkte Ort bleibt gespeichert");
+    return (await panel.textContent()).includes("erfundener-tresor-1") && (await panel.textContent()).includes("Der gemerkte Ort bleibt gespeichert");
   });
   await step("Pro-Tresor: fremde Kennung am gemerkten Ort heißt „Anderer Tresor verbunden …“ statt „Nicht erreichbar“", async () => {
     await page.evaluate(() => { window.__proStand = { ...window.__proStand, status: 'nicht_erreichbar', code: 'FA_TRESOR_FREMDE_KENNUNG' }; document.dispatchEvent(new Event('visibilitychange')); });
     const status = panel.locator("[data-pro-tresor-status]");
     await status.filter({ hasText: "Anderer Tresor verbunden" }).waitFor();
-    const t = await status.innerText();
-    return t === "Anderer Tresor verbunden – bitte den Ordner wählen, in dem tresorordner.json liegt." && (await panel.innerText()).includes("erfundener-tresor-1");
+    const t = await panel.locator("[data-pro-tresor-zustand]").innerText();
+    return t === "Anderer Tresor verbunden – bitte den Ordner wählen, in dem tresorordner.json liegt." && (await panel.textContent()).includes("erfundener-tresor-1");
   });
   await step("Ausloggen sperrt den Pro-Tresor und schließt die App (vorher lud es nur neu)", async () => {
     await page.evaluate(() => { window.__proStand = { status: 'offen', id: 'erfundener-tresor-1', ort: 'content://erfundene-sdkarte/Pro-Tresor' }; const alt = window.Capacitor.Plugins.FamilienakteTresor.sperren; window.Capacitor.Plugins.FamilienakteTresor.sperren = async () => { sessionStorage.setItem('probe-gesperrt', '1'); return alt(); }; });
@@ -110,7 +113,7 @@ try {
   await step("Windows: bewusst verbinden, Ort/Kennung sehen, sperren und entsperren", async () => {
     await winPanel.getByRole("button", { name: "Vorhandenen Pro-Tresor verbinden …", exact: true }).click();
     await winPanel.getByText("Entsperrt", { exact: true }).waitFor();
-    check((await winPanel.innerText()).includes("erfundener-windows-tresor"), "Windows: eigene Tresorkennung");
+    check((await winPanel.textContent()).includes("erfundener-windows-tresor"), "Windows: eigene Tresorkennung");
     await winPanel.getByRole("button", { name: "Pro-Tresor sperren", exact: true }).click();
     await winPanel.getByText("Gesperrt", { exact: true }).waitFor();
     await winPanel.getByRole("button", { name: "Pro-Tresor entsperren …", exact: true }).click();

@@ -34,9 +34,15 @@ function uebersetzt(e: unknown): unknown {
   if (code.includes("FA_NICHT_GEFUNDEN") || code.includes("TRESOR_DATEI_FEHLT")) return fehler("NotFoundError", "Nicht gefunden.");
   if (code.includes("FA_ART_FALSCH")) return fehler("TypeMismatchError", "Falsche Art.");
   if (code.includes("FA_NICHT_ERLAUBT")) return fehler("NotAllowedError", "Im gewählten Ordner entfernt die App nur Dateien, die sie gerade selbst angelegt hat.");
-  if (code.includes("FA_ORDNER_NICHT_ERREICHBAR")) return new Error("Der gewählte Ordner ist nicht mehr erreichbar. Bitte erneut wählen.");
+  if (code.includes("FA_ORDNER_NICHT_ERREICHBAR")) return new Error("Der gewählte Ordner ist nicht mehr erreichbar oder lässt sich nicht beschreiben (z. B. Freigabe abgelaufen, Speicher voll, SD-Karte entfernt). Bitte den Ordner erneut wählen – am besten einen eigenen Ordner außerhalb des Pro-Tresors.");
+  if (code.includes("FA_ORDNER_UNGUELTIG") || code.includes("FA_PFAD_UNGUELTIG")) return new Error("In diesem Ordner darf die App nicht schreiben. Bitte einen anderen Ordner wählen (nicht den Pro-Tresor und keinen Systemordner).");
+  if (code.includes("FA_AUSGABE_ZU_GROSS")) return new Error("Eine Datei ist zu groß für diesen Weg (über 100 MB).");
+  if (code.includes("FA_AUSGABE_PRUEFSUMME") || code.includes("FA_STUECK_UNGUELTIG")) return new Error("Eine Datei kam beim Zurücklesen nicht unverändert an. Es wurde nichts als fertig gemeldet; bitte erneut versuchen.");
+  // Rohe Android-Meldung ohne bekannten Code: nie „Ordnerzugriff fehlgeschlagen“ allein stehen lassen (Gerätetest 10.11.).
+  if (/Ordnerzugriff fehlgeschlagen/.test(String((e as Error)?.message || ""))) return new Error(`Der gewählte Ordner ließ sich nicht lesen oder beschreiben${/^[A-Z0-9_]+$/.test(code) ? ` (${code})` : ""}. Bitte den Ordner erneut wählen.`);
   return e;
 }
+export const ordnerFehlerText = (e: unknown) => { const u = uebersetzt(e); return u instanceof Error ? u.message : String(u); };
 const b64 = (bytes: Uint8Array) => { let t = ""; for (let i = 0; i < bytes.length; i += 8192) t += String.fromCharCode(...bytes.subarray(i, i + 8192)); return btoa(t); };
 const unb64 = (text: string) => { const s = atob(text), out = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) out[i] = s.charCodeAt(i); return out; };
 const pfadVon = (eltern: string, name: string) => {
@@ -53,7 +59,7 @@ class NativeDatei {
     try { info = await this.p.dateiInfo({ token: this.token, pfad: this.pfad }); } catch (e) { throw uebersetzt(e); }
     const teile: BlobPart[] = [];
     for (let offset = 0; offset < info.groesse; offset += STUECK) {
-      const { data } = await this.p.dateiLesen({ token: this.token, pfad: this.pfad, offset, laenge: Math.min(STUECK, info.groesse - offset) });
+      let data: string; try { ({ data } = await this.p.dateiLesen({ token: this.token, pfad: this.pfad, offset, laenge: Math.min(STUECK, info.groesse - offset) })); } catch (e) { throw uebersetzt(e); }
       const u = unb64(data); if (!u.length) break; teile.push(u as BlobPart);
     }
     const file = new File(teile, this.name);
@@ -62,12 +68,12 @@ class NativeDatei {
   }
   async createWritable() {
     const p = this.p; let id = ""; let offset = 0;
-    const beginnen = async () => { if (!id) id = (await p.dateiBeginn({ token: this.token, pfad: this.pfad })).id; };
+    const beginnen = async () => { if (!id) try { id = (await p.dateiBeginn({ token: this.token, pfad: this.pfad })).id; } catch (e) { throw uebersetzt(e); } };
     const schreiben = async (bytes: Uint8Array) => {
       await beginnen();
       for (let i = 0; i < bytes.length; i += STUECK) {
         const teil = bytes.subarray(i, i + STUECK);
-        const r = await p.dateiAnhaengen({ id, offset, data: b64(teil) }); offset += teil.length;
+        let r: { size: number }; try { r = await p.dateiAnhaengen({ id, offset, data: b64(teil) }); } catch (e) { throw uebersetzt(e); } offset += teil.length;
         if (r.size !== offset) throw new Error("Die Datei wurde nicht vollständig geschrieben.");
       }
     };
@@ -77,7 +83,7 @@ class NativeDatei {
         if (daten instanceof Blob) { await beginnen(); for (let i = 0; i < daten.size; i += STUECK) await schreiben(new Uint8Array(await daten.slice(i, i + STUECK).arrayBuffer())); return; }
         return schreiben(daten instanceof ArrayBuffer ? new Uint8Array(daten) : new Uint8Array(daten.buffer, daten.byteOffset, daten.byteLength));
       },
-      async close() { await beginnen(); const r = await p.dateiFertig({ id, size: offset }); if (r.size !== offset) throw new Error("Die Datei wurde nicht vollständig geschrieben."); id = ""; },
+      async close() { await beginnen(); let r: { size: number }; try { r = await p.dateiFertig({ id, size: offset }); } catch (e) { throw uebersetzt(e); } if (r.size !== offset) throw new Error("Die Datei wurde nicht vollständig geschrieben."); id = ""; },
       async abort() { if (id) await p.dateiVerwerfen({ id }).catch(() => {}); id = ""; },
     };
   }

@@ -52,7 +52,7 @@ export function proTresorMeldung(code: string): string {
     case "TRESOR_NAME_UNGUELTIG": return "Dieser Ordnername geht nicht (keine Zeichen wie / \\ : * ? \" < > |, nicht der Name eines Fachs). Es wurde nichts angelegt.";
     case "TRESOR_NAME_BELEGT": return "Ein Ordner mit diesem Namen liegt dort schon und hat Inhalt. Bitte einen anderen Namen wählen. Es wurde nichts angelegt.";
     case "TRESOR_PASSWORT_KURZ": return "Das Passwort ist zu kurz (mindestens 10 Zeichen). Es wurde nichts angelegt.";
-    case "FA_TRESOR_ABGEBROCHEN": return "Ordnerwahl oder Passwort abgebrochen. Es wurde nichts geändert; die bisherige Verbindung bleibt.";
+    case "FA_TRESOR_ABGEBROCHEN": return "Wahl abgebrochen – nichts geändert, der bisherige Tresor bleibt verbunden.";
     case "FA_TRESOR_FREIGABE_FEHLT": return "Das Gerät hat keine dauerhafte Lese- und Schreibfreigabe für diesen Ordner erteilt. Bitte den Ordner erneut wählen und den Zugriff erlauben.";
     case "TRESOR_PASSWORT_FALSCH": return "Das Passwort passt nicht zu diesem Tresor. Es wurde nichts verändert.";
     case "FA_TRESOR_UMGEZOGEN": return "Dieser Tresor wurde an einen neuen Ort umgezogen. Bitte den neuen Ort wählen.";

@@ -57,7 +57,7 @@ try {
     await panel.getByText("Entsperrt", { exact: true }).waitFor();
     assert.match(await panel.locator("[data-pro-ablage]").innerText(), /bisherigen Aktenordner/);
     await panel.getByRole("button", { name: "Neue Originale in diesem Pro-Tresor ablegen", exact: true }).click();
-    await panel.locator("[data-pro-ablage]", { hasText: "erfundener-tresor-a" }).waitFor();
+    await panel.locator('[data-pro-ablage][data-tresor-id="erfundener-tresor-a"]').waitFor();
   });
   async function hochladen(name, inhalt) {
     await footer(page, "Dokumentenbibliothek");
@@ -107,8 +107,8 @@ try {
   await probe("Pro-Dokumente: Neustart behält Zuordnung, Original nach Entsperren wieder lesbar", async () => {
     await page.reload({ waitUntil: "networkidle" }); await page.locator(".site-brand-version").first().waitFor(); await footer(page, "Sicherheitscenter");
     await panel.getByText("Gesperrt", { exact: true }).waitFor();
-    await panel.locator("[data-pro-ablage]", { hasText: "erfundener-tresor-a" }).waitFor();
-    assert.match(await panel.locator("[data-pro-ablage]").innerText(), /erfundener-tresor-a/);
+    await panel.locator('[data-pro-ablage][data-tresor-id="erfundener-tresor-a"]').waitFor();
+    assert.equal(await panel.locator("[data-pro-ablage]").getAttribute("data-tresor-id"), "erfundener-tresor-a");
     await panel.getByRole("button", { name: "Pro-Tresor entsperren …", exact: true }).click();
     await panel.getByText("Entsperrt", { exact: true }).waitFor();
     await footer(page, "Dokumentenbibliothek");

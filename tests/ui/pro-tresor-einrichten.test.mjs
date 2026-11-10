@@ -30,7 +30,9 @@ try {
     await step(`Einrichten: ${code} wird verständlich gemeldet, nichts verbunden`, async () => {
       await page.evaluate((c) => { window.__proFehlerCode = c; }, code);
       await panel.getByRole("button", { name: "Tresor einrichten – nur Speicher wählen …", exact: true }).click();
-      const alert = panel.getByRole("alert"); await alert.waitFor();
+      // Gerätetest 10.11.: ein Abbruch ist kein Fehler – er steht als ruhiger Hinweis (role=status, data-abgebrochen), nicht als Alarm.
+      const alert = code === "FA_TRESOR_ABGEBROCHEN" ? panel.locator("[data-pro-tresor-meldung][data-abgebrochen]") : panel.getByRole("alert"); await alert.waitFor();
+      if (code === "FA_TRESOR_ABGEBROCHEN" && await panel.getByRole("alert").count()) return false;
       const t = await alert.innerText(); await page.evaluate(() => { window.__proFehlerCode = null; });
       return erwartet.test(t) && !(await panel.locator("[data-pro-tresor-bestaetigung]").count()) ? t.slice(0, 90) : (console.log("   ↳", t), false);
     });
@@ -56,13 +58,24 @@ try {
     await page.waitForTimeout(400);
     return soll(await page.locator("[data-pro-tresor-einrichten].hilfe-ziel-rahmen").count() === 1, "Sprung erreicht den Einrichten-Knopf nicht");
   });
-  await step("Einrichten: neuer Tresor – Bestätigung nennt Ort, Kennung und LIES-MICH", async () => {
+  await step("Einrichten: neuer Tresor – kurze Bestätigung, Ort in der Zustandszeile, Kennung und LIES-MICH hinter „Mehr“", async () => {
     await panel.getByRole("button", { name: "Tresor einrichten – nur Speicher wählen …", exact: true }).click();
     const t = await panel.locator("[data-pro-tresor-bestaetigung]").innerText();
-    return /^Neuer Tresor angelegt und gespeichert: SD\/USB \(1234-5678\)\/Family-Projekt · erreichbar · entsperrt · Tresorkennung erfundener-neuer-tresor/.test(t) && t.includes("LIES-MICH.txt") ? t.slice(0, 100) : (console.log("   ↳", t), false);
+    // Klaus 10.11.: „✓ Tresor eingerichtet“; Ort in der Zustandszeile, Kennung und LIES-MICH hinter „Mehr“.
+    const zeile = await panel.locator("[data-pro-tresor-status]").innerText(), mehr = await panel.locator("[data-pro-tresor-mehr]").textContent();
+    return t === "✓ Tresor eingerichtet" && zeile === "Entsperrt · SD/USB (1234-5678)/Family-Projekt" && /erfundener-neuer-tresor/.test(mehr || "") && (mehr || "").includes("LIES-MICH.txt") ? t : (console.log("   ↳", t, zeile), false);
   });
   await step("Einrichten: danach heißt der Knopf „Anderen Speicher wählen …“, Hinweis weg", async () =>
     await panel.getByRole("button", { name: "Anderen Speicher wählen …", exact: true }).isVisible() && await panel.locator("[data-pro-tresor-einrichten-hinweis]").count() === 0);
+  // Klaus 10.11.: färbt sich die Hilfe nach dem Einrichten von selbst grün? Ohne Neuladen, ohne Handgriff.
+  await step("Einrichten: die Landkarte in der Hilfe zeigt den Pro-Tresor danach von selbst grün (ohne Neuladen)", async () => {
+    await footer(page, "Hilfe");
+    const karte = page.locator("[data-app-landkarte]");
+    if (await karte.getAttribute("data-app-landkarte") !== "offen") await karte.locator("[data-app-landkarte-knopf]").click();
+    const kasten = page.locator('[data-landkarte="app"] [data-karte-id="protresor"]').first(); await kasten.waitFor();
+    const live = await kasten.getAttribute("data-live");
+    return soll(live === "gruen", { live });
+  });
   check(errors.length === 0, "Einrichten: keine Seitenfehler", errors.join(" | "));
 } finally { await browser.close(); await app.stop(); }
 process.exit(summary("Pro-Tresor einrichten"));
