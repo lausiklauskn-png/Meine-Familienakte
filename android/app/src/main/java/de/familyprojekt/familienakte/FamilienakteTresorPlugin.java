@@ -162,7 +162,27 @@ public class FamilienakteTresorPlugin extends Plugin {
     @PluginMethod public void einrichten(PluginCall call) {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
             .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION | Intent.FLAG_GRANT_PREFIX_URI_PERMISSION);
+        // Klaus 10.11.: „nur das Laufwerk wählen“ – die Auswahl öffnet gleich am gemerkten Tresor, sonst oben auf dem Gerätespeicher.
+        // Android ab 11 lässt die oberste Ebene eines Laufwerks nicht wählen; dort tippt man „Family-Projekt“ an oder legt ihn mit
+        // „Neuer Ordner“ an. Ein leerer Ordner wird selbst zum Tresor (Hauptordner.ANLEGEN_HIER), ein vorhandener wird am Inhalt erkannt.
+        Uri start = startOrt();
+        if (start != null && android.os.Build.VERSION.SDK_INT >= 26) intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, start);
         startActivityForResult(call, intent, "einrichtenGewaehlt");
+    }
+    private Uri startOrt() {
+        try {
+            String gemerkt = prefs().getString("uri", "");
+            if (!gemerkt.isEmpty()) { Uri baum = Uri.parse(gemerkt); return DocumentsContract.buildDocumentUriUsingTree(baum, DocumentsContract.getTreeDocumentId(baum)); }
+            return DocumentsContract.buildDocumentUri("com.android.externalstorage.documents", "primary:");
+        } catch (Exception e) { return null; }
+    }
+    /** Klaus 10.11.: kein Namensfenster mehr – „Family-Projekt“, bei Belegung „Family-Projekt 2“ … 9. Hintergrund-Thread. */
+    static String freierName(SafAblage s) throws IOException {
+        for (int i = 1; i <= 9; i++) {
+            String n = i == 1 ? Hauptordner.VORSCHLAG : Hauptordner.VORSCHLAG + " " + i;
+            if (!s.gibtEs(n) || (s.istOrdner(n) && s.liste(n).isEmpty())) return n;
+        }
+        throw new IOException("TRESOR_NAME_BELEGT");
     }
     @ActivityCallback private void einrichtenGewaehlt(PluginCall call, ActivityResult result) {
         if (call == null) return;
@@ -180,7 +200,7 @@ public class FamilienakteTresorPlugin extends Plugin {
             try {
                 SafAblage s = ablage(uri);
                 Hauptordner.Ergebnis e = ProTresorAdapter.einrichtenPruefen(s, ortName(uri));
-                if (Hauptordner.ANLEGEN_DARIN.equals(e.art)) getActivity().runOnUiThread(() -> einrichtenName(call, uri, s, e, false));
+                if (Hauptordner.ANLEGEN_DARIN.equals(e.art)) { String n = freierName(s); getActivity().runOnUiThread(() -> einrichtenPasswort(call, uri, s, e, n)); }
                 else getActivity().runOnUiThread(() -> einrichtenPasswort(call, uri, s, e, null));
             } catch (Exception e) { ungenutztFreigeben(uri); fehler(call, e); }
         });
@@ -191,32 +211,6 @@ public class FamilienakteTresorPlugin extends Plugin {
         return box;
     }
     private void abbruch(PluginCall call, String uri) { ungenutztFreigeben(uri); call.reject("Abgebrochen", "FA_TRESOR_ABGEBROCHEN"); }
-    /** Name des neuen Hauptordners, nur wenn im Speicher schon anderes liegt. UI-Thread. */
-    private void einrichtenName(PluginCall call, String uri, SafAblage s, Hauptordner.Ergebnis e, boolean falsch) {
-        LinearLayout box = kasten();
-        TextView hilfe = new TextView(getContext());
-        hilfe.setText("Im gewählten Speicher entsteht ein Ordner für alle Pro-Apps. Name frei wählbar:"); box.addView(hilfe);
-        EditText feld = new EditText(getContext()); feld.setSingleLine(true); feld.setText(Hauptordner.VORSCHLAG); feld.selectAll(); box.addView(feld);
-        TextView status = new TextView(getContext());
-        if (falsch) status.setText("Dieser Name geht nicht (keine Zeichen wie / \\ : * ? \" < > |, nicht der Name eines Fachs, kein Ordner mit Inhalt). Bitte anderen Namen.");
-        box.addView(status);
-        AlertDialog d = new AlertDialog.Builder(getActivity()).setTitle("Neuer Tresor-Hauptordner").setView(box)
-            .setNegativeButton("Abbrechen", (x, w) -> abbruch(call, uri)).setPositiveButton("Weiter", null).create();
-        d.setOnCancelListener(x -> abbruch(call, uri));
-        d.setOnShowListener(x -> d.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
-            String n;
-            try { n = Hauptordner.name(feld.getText().toString()); }
-            catch (IOException ungueltig) { status.setText("Dieser Name geht nicht (keine Zeichen wie / \\ : * ? \" < > |, nicht der Name eines Fachs). Bitte anderen Namen."); return; }
-            d.dismiss();
-            worker.execute(() -> {
-                try {
-                    boolean belegt = s.gibtEs(n) && (!s.istOrdner(n) || !s.liste(n).isEmpty());
-                    getActivity().runOnUiThread(() -> { if (belegt) einrichtenName(call, uri, s, e, true); else einrichtenPasswort(call, uri, s, e, n); });
-                } catch (Exception f) { ungenutztFreigeben(uri); fehler(call, f); }
-            });
-        }));
-        d.show(); feld.requestFocus();
-    }
     /** EIN Passwort-Fenster. Gefunden: das Passwort des Tresors (falsch → neu versuchen). Neu: zweimal + Bestätigung. UI-Thread. */
     private void einrichtenPasswort(PluginCall call, String uri, SafAblage s, Hauptordner.Ergebnis e, String name) {
         boolean neu = !e.gefunden();
