@@ -1,4 +1,4 @@
-# Sitzungsbrief: „Kurzhinweise an Knöpfen anzeigen“ wirkt nicht (Gerätetest 2.28.56)
+# Sitzungsbrief: Kurzhinweise, rote und graue Kästen der Landkarte, restliche Punkte (nach 2.28.56)
 
 Klaus 10.11.2026, Bild vom Tablet (Familienakte Pro 2.28.56, Hilfe, Fenster mit Kopfleiste wie bei Samsung DeX bzw. Freiform-Fenster):
 „Kurzhinweise an Knöpfen anzeigen funktioniert nicht.“ Der Haken ist gesetzt, trotzdem sieht er an den Knöpfen keinen Hinweis.
@@ -29,6 +29,39 @@ Klaus 10.11.2026, Bild vom Tablet (Familienakte Pro 2.28.56, Hilfe, Fenster mit 
 - Knöpfe ohne `title`, aber mit `aria-label`: den Text der Blase aus `aria-label` nehmen.
 - Probe erweitern: Maus-Darüberfahren zeigt die Blase. Und eine Gegenprobe: mit dem alten Code rot. Ein HANDY-Kontext mit langem Druck läuft schon in der Probe.
 
+## Danach: rote und graue Kästen der „Landkarte der App“ (Klaus 10.11.)
+
+Klaus will die roten und die grauen Kästen der Landkarte (Hilfe › Landkarte der App) abarbeiten. Stand der Kästen: `lib/app-stand.ts`,
+Texte: `lib/app-landkarte.ts`, Gerätezustand: `lib/live-zustand.ts` / `app/live-zustand.ts`.
+
+**Rot = auf diesem Gerät nicht eingerichtet** (`stand: "aktivieren"`): `datentresor`, `protresor`, `datei-pro`, `kalender`, `glocke`.
+- Zuerst klären: Ist ein Kasten rot, obwohl er auf Klaus' Gerät eingerichtet ist? Dann ist das ein Fehler im Live-Zustand.
+  Beispiel: Pro-Tresor eingerichtet, Kasten trotzdem rot. Klaus nach einem Bild der Karte fragen und je Kasten nachstellen.
+- Ist er wirklich nicht eingerichtet, braucht der Kasten einen klaren Weg „Beheben ›“, der direkt zur Stelle führt.
+- Prüfen, ob es diesen Weg je Kasten gibt und ob er dort ankommt.
+
+**Grau gestrichelt = geplant, nicht gebaut** (alle seit 2.28.35, E-Mail-Plan; Karte `docs/landkarte/`):
+- Mail herein: `mail-ms` (Microsoft-Postfach abholen/senden), `mail-imap` (GMX · WEB.DE · T-Online mit App-Passwort), `mail-gmail` (Gmail direkt).
+- Prüfung: `pruefung` (Prüfung der Anlagen in der Eingangszentrale) und `befund` (Befund: ablegen ohne Vorschau oder weglassen).
+- Mail hinaus: `echt`, `programm`, `mailapp` (Mail-App des Geräts vorbereitet öffnen), `mssend` (Microsoft-Postfach senden).
+
+Reihenfolge laut Plan in `CLAUDE.md` (Abschnitt Offen):
+1. Anhang-Prüfung (`pruefung`/`befund`), dazu echtes PDF mit einem Tipp und Mail-App öffnen (`echt`, `programm`, `mailapp`).
+2. Danach Microsoft mit den Entra-Rechten Mail.Read/Mail.Send (`mail-ms`, `mssend`).
+3. Gmail-Abholen auslassen; IMAP über die Technik aus Private Brain Pro.
+
+Offen ist noch die **Entscheidung von Klaus und Jens** aus der E-Mail-Karte. Vor dem Bau eine HTML-Vorschau mit Ja/Nein je Kasten.
+Je fertigem Kasten `lib/app-stand.ts` auf „fertig“ mit `seit` setzen.
+
+## Danach: übrige Punkte
+
+Aus `BRIEF_SITZUNG_2026-11-11_FAMILIENAKTE-WEITER.md` die Punkte 2–6:
+- 2: Sicherheitsseite kürzer.
+- 3: Wettlauf in `kalender-einlesen`.
+- 4: Basic-Verbund-Karte.
+- 5: Landkarten-HTML für die Geschenkbox.
+- 6: Vollsicherungsordner.
+
 ## Regeln
 
 Nächste freie Fassung **2.28.57**. Neue Oberfläche erst als Vorschau. Vor dem Push ganze UI-Reihe oder `grep -rn` in `tests/ui`.
@@ -41,6 +74,9 @@ Repo lausiklauskn-png/Meine-Familienakte. Zuerst lesen: CLAUDE.md, BRIEF_SITZUNG
 Auftrag: Klaus' Befund „Kurzhinweise an Knöpfen anzeigen funktioniert nicht“ (Tablet, APK 2.28.56, wohl mit Maus/DeX) klären und beheben.
 Vermutungen im Brief (WebView zeigt title nie; Maus wird übersprungen; Knöpfe nur mit aria-label). Erst Ursache im Code belegen,
 dann HTML-Vorschau der Lösung an Klaus, nach seinem Ja bauen, Probe + Gegenprobe, als 2.28.57 (APK, Windows, PWA) ausgeben,
-Nachweis, Geschenkbox nachziehen. Danach weiter mit BRIEF_SITZUNG_2026-11-11_FAMILIENAKTE-WEITER.md.
+Nachweis, Geschenkbox nachziehen.
+Danach: rote und graue Kästen der „Landkarte der App“ (Abschnitt im Brief): rote am Gerät nachstellen (Fehler im Live-Zustand
+oder fehlender Weg „Beheben ›“), graue E-Mail-Kästen nach Plan – erst Klaus' und Jens' Entscheidung und eine HTML-Vorschau.
+Dann die Punkte 2–6 aus BRIEF_SITZUNG_2026-11-11_FAMILIENAKTE-WEITER.md. Je Stück eigener Zweig, PR, Fassung, Ausgabe.
 Nicht: veröffentlichte Fassungen erneut ausgeben, byte-gleiche Bausteine von Hand ändern, Codex anstoßen.
 ```
