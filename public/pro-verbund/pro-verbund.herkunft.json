@@ -2,7 +2,7 @@
   "_": "Byte-gleich aus BookLedgerPro übernommen. Nie hier abwandeln; dort pflegen (tools/verbund-nachziehen.mjs) und neu kopieren. npm run check:herkunft prüft die SHA-256.",
   "quelle": "lausiklauskn-png/BookLedgerPro",
   "datei": "assets/pro-verbund.html",
-  "commit": "PR #464 (Zweig claude/verbund-karte-ohne-orange)",
+  "commit": "a705ed5a618a756d193f958472a6ccca04cc780e",
   "sha256": "eb857a6a5bd7143183d1bb5e98d9b78f8340b43685a52c89671f0796762b6cc0",
   "stand": "2026-11-10"
 }
