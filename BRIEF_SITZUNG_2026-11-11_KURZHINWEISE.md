@@ -67,7 +67,7 @@ Je fertigem Kasten `lib/app-stand.ts` auf „fertig“ mit `seit` setzen.
     - Die Eingangszentrale hat den Knopf „OneDrive-Familienordner prüfen“ (`checkOneDriveInbox`, `lib/fawoga-inventory.ts`).
     - Er liest einen **lokal synchronisierten** OneDrive-Ordner, der im Sicherheitscenter verbunden wird. Eine Anmeldung bei Microsoft gibt es dafür nicht.
     - Prüfen, ob das in der APK und unter Windows noch geht, und den Prüfbereich dazu aktuell halten.
-  - „FaWoGa“: Wort aus Jens' Anfangsstand, im Repo nirgends erklärt. In sichtbaren Texten durch einen verständlichen Namen ersetzen (z. B. „Bestandsprüfung“); die Bedeutung bei Jens erfragen.
+  - „FaWoGa“: Wort aus Jens' Anfangsstand, im Repo nirgends erklärt; Klaus vermutet „Familie, Wohnung, Garage“ (o. ä.). In sichtbaren Texten durch einen verständlichen Namen ersetzen (z. B. „Bestandsprüfung“); die Bedeutung bei Jens erfragen.
   - „Memory“ war der alte Name von „Tagebuch“ (bis 2.28.49). In Prüfbereichen „Tagebuch“ schreiben.
   - Eigene, auf dem Gerät gespeicherte Prüfberichte bleiben.
 - Prüfen, ob die Systemprüfung selbst (Knopf „Systemprüfung“) noch Bereiche mit alten Namen prüft.
