@@ -29,6 +29,35 @@ Klaus 10.11.2026, Bild vom Tablet (Familienakte Pro 2.28.56, Hilfe, Fenster mit 
 - Knöpfe ohne `title`, aber mit `aria-label`: den Text der Blase aus `aria-label` nehmen.
 - Probe erweitern: Maus-Darüberfahren zeigt die Blase. Und eine Gegenprobe: mit dem alten Code rot. Ein HANDY-Kontext mit langem Druck läuft schon in der Probe.
 
+## Wichtig, direkt nach den Kurzhinweisen: Abgleich mit einem Cloud-Ordner (OneDrive, Google Drive) – Klaus 10.11.
+
+Klaus: „Der Datenabgleich mit OneDrive … ist ganz, ganz wichtig. Der ist nicht ohne Grund da.“ Für Jens ist OneDrive entscheidend;
+bei Klaus wäre es ein Google-Ordner (Google Drive oder ein anderer Google-Speicher, Name noch offen – bei Klaus erfragen).
+
+**Was es heute gibt (nicht am Gerät geprüft):**
+- Eingangszentrale → „OneDrive-Familienordner prüfen“ (`checkOneDriveInbox` in `app/health-portal.tsx`, `scanOneDriveInbox`,
+  Bestandsprüfung `lib/fawoga-inventory.ts`, Speicherart `onedrive` in `app/local-vault.ts`).
+- Der Ordner wird im Sicherheitscenter verbunden: der **lokal synchronisierte** OneDrive-Ordner, keine Anmeldung bei Microsoft.
+- Gelesen wird nur, die Originale bleiben.
+
+**Auftrag:**
+1. Prüfen, ob der Weg in allen drei Fassungen funktioniert, mit Probe:
+   - PWA: Ordnerwahl im Browser.
+   - Windows: OneDrive-Ordner auf der Platte, Google Drive für Desktop als Laufwerk.
+   - APK: Android-Ordnerwahl.
+2. Allgemein machen: nicht nur OneDrive, sondern **„Cloud-Ordner“**, also jeder Ordner, den ein Sync-Programm auf dem Gerät hält. Name und Herkunft zeigen.
+3. **Grenze Android prüfen und ehrlich sagen:**
+   - Die Google-Drive-App bietet in der Android-Ordnerwahl womöglich keine ganzen Ordner an, nur einzelne Dateien. OneDrive teils ebenso.
+   - Am Gerät nachsehen (Klaus' Tablet).
+   - Notfalls einen Weg über „Teilen“ oder einen Sync-Ordner im Gerätespeicher (z. B. Autosync-Apps) nennen.
+4. **Sichtbar machen:**
+   - Eigener Kasten in der „Landkarte der App“ (Weg hinein: „Cloud-Ordner (OneDrive, Google Drive)“ → Eingangszentrale), mit Stand in `lib/app-stand.ts`.
+   - Ein Hilfe-Thema „Unterlagen aus OneDrive oder Google Drive holen“ als Bild mit Schritten.
+   - Der Weg im Bereich „Wie funktioniert die App“.
+5. Den Prüfbereich der Systemprüfung dazu behalten, unter neuem Namen (z. B. „Cloud-Ordner-Abgleich“).
+
+Erst Vorschau (Kasten, Hilfe-Thema, Wortlaut) mit Klaus' Ja, dann bauen, Probe + Gegenprobe, Fassung, Ausgabe.
+
 ## Danach: rote und graue Kästen der „Landkarte der App“ (Klaus 10.11.)
 
 Klaus will die roten und die grauen Kästen der Landkarte (Hilfe › Landkarte der App) abarbeiten. Stand der Kästen: `lib/app-stand.ts`,
@@ -104,6 +133,8 @@ Auftrag: Klaus' Befund „Kurzhinweise an Knöpfen anzeigen funktioniert nicht�
 Vermutungen im Brief (WebView zeigt title nie; Maus wird übersprungen; Knöpfe nur mit aria-label). Erst Ursache im Code belegen,
 dann HTML-Vorschau der Lösung an Klaus, nach seinem Ja bauen, Probe + Gegenprobe, als 2.28.57 (APK, Windows, PWA) ausgeben,
 Nachweis, Geschenkbox nachziehen.
+Dann (wichtig): Abgleich mit einem Cloud-Ordner (OneDrive für Jens, Google-Ordner für Klaus) prüfen, allgemein machen und als
+Kasten in der Landkarte und als Hilfe-Thema zeigen (Abschnitt im Brief; Android-Grenze am Gerät klären).
 Danach: rote und graue Kästen der „Landkarte der App“ (Abschnitt im Brief): rote am Gerät nachstellen (Fehler im Live-Zustand
 oder fehlender Weg „Beheben ›“), graue E-Mail-Kästen nach Plan – erst Klaus' und Jens' Entscheidung und eine HTML-Vorschau.
 Dann Systemprüfung mit veralteten Berichten (Abschnitt im Brief), danach die Punkte 2–6 aus BRIEF_SITZUNG_2026-11-11_FAMILIENAKTE-WEITER.md. Je Stück eigener Zweig, PR, Fassung, Ausgabe.
