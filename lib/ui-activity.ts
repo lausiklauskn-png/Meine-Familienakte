@@ -2,8 +2,8 @@ import { isSensitiveHealthText } from "./family-privacy.ts";
 
 // Presentation only: no register, chronology, file access or durable event store.
 export type ActivityKind = "success" | "error" | "info" | "warning";
-export type ActivityFeedback = { kind: ActivityKind; text: string; issue?: string };
-// vorlaeufig: eine Zwischenmeldung („… läuft“). Sie heißt „Hinweis“, nicht „Prüfung erforderlich“, und weicht der nächsten Meldung
+export type ActivityFeedback = { kind: ActivityKind; text: string; issue?: string; laeuft?: boolean };
+// info heißt „Hinweis“, nicht „Prüfung erforderlich“. vorlaeufig (laeuft: true): eine Zwischenmeldung („… läuft“), die der nächsten Meldung weicht
 // (Gerätetest 10.11.: „Sicherung läuft“ stand nach dem Fehlschlag als „Prüfung erforderlich“ stehen und sah aus wie eine Aufgabe).
 export type ActivityEntry = { id: number; kind: "success" | "error" | "warning"; text: string; issue?: string; vorlaeufig?: boolean };
 
@@ -17,7 +17,7 @@ export function activityEntry(feedback: ActivityFeedback, id: number): ActivityE
       ? "Gesundheitsbezogene Aktion ausgeführt. Einzelheiten bleiben im geschützten Gesundheitsbereich."
       : "Gesundheitsbezogene Aktion erfordert Prüfung. Einzelheiten bleiben im geschützten Gesundheitsbereich."
     : message;
-  return { id, kind, text: `${prefix}: ${safeMessage}`, ...(feedback.issue ? { issue: feedback.issue } : {}), ...(feedback.kind === "info" ? { vorlaeufig: true } : {}) };
+  return { id, kind, text: `${prefix}: ${safeMessage}`, ...(feedback.issue ? { issue: feedback.issue } : {}), ...(feedback.laeuft ? { vorlaeufig: true } : {}) };
 }
 
 export function appendActivity(current: ActivityEntry[], entry: ActivityEntry | null): ActivityEntry[] {

@@ -1,7 +1,7 @@
 {
   "name": "familienakte-windows",
   "private": true,
-  "version": "2.28.54",
+  "version": "2.28.55",
   "type": "module",
   "scripts": {
     "tauri": "tauri"
