@@ -175,6 +175,36 @@ Dafür gibt es schon Beispiele … mach mal gleich über Family Project. family-
    - Hinweis an Klaus: Rechtstexte vor der Veröffentlichung von einer Fachperson prüfen lassen. Claude liefert einen Entwurf, keine Rechtsberatung.
 6. Keine weiteren persönlichen Daten in Dateien als die, die Klaus selbst für das Impressum freigibt.
 
+### Rechtstexte in **allen** Apps gleich (Klaus 10.11., Nachtrag)
+
+Klaus: „Das soll in allen Apps, die hier im Projekt verbunden sind, die ganzen Pro-Apps, auch die Basic-Apps, integriert sein. Derselbe
+Text, dieselbe rechtliche Grundlage … nach bestem Wissen und Gewissen … dieselbe E-Mail-Adresse … so dass wir langsam an eine
+Veröffentlichung denken können.“
+
+**Umfang:**
+- Familienakte (Basic/PWA und Pro)
+- BookLedgerPro und BookLedger Basic
+- Private Brain Pro und die Basic- bzw. V3-Fassung
+- Workflow PDF Pro und Workflow PDF
+- Tools mit eigenem Impressum, z. B. Kimboard und Kimseek in Private Brain Pro
+
+**Inhalt:**
+- **Eine Quelle, byte-gleich verteilt** wie die Pro-Verbund-Karte.
+- Ein Rechtstext-Paket (`impressum.html`, darin Impressum, Datenschutz-Grundteil, Haftungsausschluss) in **einem** Repo pflegen und mit Pin und Prüfung (`check:herkunft`-Art) in alle Apps kopieren. Vorschlag: in BookLedgerPro, wie die Karte, oder in der Familienakte.
+- Je App ein kurzer **app-eigener Datenschutz-Abschnitt** (was diese App verarbeitet), im selben Aufbau.
+- **Anbieter:** Family-Projekt, family-projekt.de; bis zur Übertragung „Inhaber Klaus Nitzsche“ mit der Anschrift aus dem vorhandenen Impressum.
+- **Kontakt einheitlich `info@family-projekt.de`**: mit Bindestrich, so steht es heute in allen Impressen (12 Treffer), und so heißt auch der Update-Server.
+  - Klaus sagte „familyprojekt.de“; vor dem Bau bestätigen lassen, dass die Schreibweise mit Bindestrich gemeint ist.
+- Erreichbar in jeder App: Fußzeile und Einstellungen/Hilfe; in den nativen Apps ohne Netz, die Seite liegt im Paket.
+- Vorab je App nachsehen, wo heute ein Impressum steht, und alte Texte ersetzen, nicht doppeln.
+
+**Reihenfolge:**
+1. Vorschau des gemeinsamen Textes an Klaus.
+2. Familienakte zuerst, dann die anderen Repos (je eigener PR, `add_repo`).
+3. Je App eine neue Fassung ausgeben, Geschenkbox nachziehen.
+
+Kein Wort „rechtssicher“; im Brief und in der Antwort an Klaus sagen, dass eine Fachperson vor der breiten Veröffentlichung drüberschauen sollte.
+
 ## Danach: rote und graue Kästen der „Landkarte der App“ (Klaus 10.11.)
 
 Klaus will die roten und die grauen Kästen der Landkarte (Hilfe › Landkarte der App) abarbeiten. Stand der Kästen: `lib/app-stand.ts`,
@@ -259,6 +289,6 @@ Danach: rote und graue Kästen der „Landkarte der App“ (Abschnitt im Brief):
 oder fehlender Weg „Beheben ›“), graue E-Mail-Kästen nach Plan – erst Klaus' und Jens' Entscheidung und eine HTML-Vorschau.
 Dann Texte durchsehen (kein Gesprächston, lange Erklärungen hinter „?“; Abschnitt im Brief, erst Vorschau-Tabelle),
 dann alte Bestände/Versionsbezüge suchen (mit der Textdurchsicht), Rechtstexte (Impressum, Datenschutz, Haftungsausschluss;
-Anbieter Family-Projekt, family-projekt.de; veraltete Kalender-Aussage), dann Systemprüfung mit veralteten Berichten (Abschnitt im Brief), danach die Punkte 2–6 aus BRIEF_SITZUNG_2026-11-11_FAMILIENAKTE-WEITER.md. Je Stück eigener Zweig, PR, Fassung, Ausgabe.
+Anbieter Family-Projekt, info@family-projekt.de; eine Quelle, byte-gleich in ALLE Pro- und Basic-Apps; veraltete Kalender-Aussage), dann Systemprüfung mit veralteten Berichten (Abschnitt im Brief), danach die Punkte 2–6 aus BRIEF_SITZUNG_2026-11-11_FAMILIENAKTE-WEITER.md. Je Stück eigener Zweig, PR, Fassung, Ausgabe.
 Nicht: veröffentlichte Fassungen erneut ausgeben, byte-gleiche Bausteine von Hand ändern, Codex anstoßen.
 ```
