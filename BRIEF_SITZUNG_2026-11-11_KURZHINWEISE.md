@@ -63,7 +63,12 @@ Je fertigem Kasten `lib/app-stand.ts` auf „fertig“ mit `seit` setzen.
   - Den fest eingebauten Altbericht nicht mehr als aktuellen Stand zeigen.
   - Stattdessen die Prüfung der laufenden Fassung zeigen, aus `lib/fassungen.ts`, den Nachweisen und der CI.
   - Alternativ als „Archiv“ zugeklappt mit Datum.
-  - Bereiche, die es nicht mehr gibt (FaWoGa, OneDrive, „Memory“), streichen.
+  - **OneDrive bleibt** (Klaus 10.11.: Jens nimmt seine Daten aus OneDrive; das war der ursprüngliche Wunsch).
+    - Die Eingangszentrale hat den Knopf „OneDrive-Familienordner prüfen“ (`checkOneDriveInbox`, `lib/fawoga-inventory.ts`).
+    - Er liest einen **lokal synchronisierten** OneDrive-Ordner, der im Sicherheitscenter verbunden wird. Eine Anmeldung bei Microsoft gibt es dafür nicht.
+    - Prüfen, ob das in der APK und unter Windows noch geht, und den Prüfbereich dazu aktuell halten.
+  - „FaWoGa“: Wort aus Jens' Anfangsstand, im Repo nirgends erklärt. In sichtbaren Texten durch einen verständlichen Namen ersetzen (z. B. „Bestandsprüfung“); die Bedeutung bei Jens erfragen.
+  - „Memory“ war der alte Name von „Tagebuch“ (bis 2.28.49). In Prüfbereichen „Tagebuch“ schreiben.
   - Eigene, auf dem Gerät gespeicherte Prüfberichte bleiben.
 - Prüfen, ob die Systemprüfung selbst (Knopf „Systemprüfung“) noch Bereiche mit alten Namen prüft.
 - **Falsche Versionsnummer in der praktischen Abnahme** (Klaus 10.11., zweites Bild):
