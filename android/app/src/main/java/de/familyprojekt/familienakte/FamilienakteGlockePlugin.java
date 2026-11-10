@@ -61,6 +61,16 @@ public class FamilienakteGlockePlugin extends Plugin {
         try { ctx.startActivity(i); call.resolve(); } catch (Exception fehler) { call.reject("FA_GLOCKE_EINSTELLUNG"); }
     }
 
+    /** Probe hören (Klaus 10.11.2026): eine echte Benachrichtigung über den Kanal „Erinnerungen“, damit der in Android gewählte Ton
+     *  zu hören ist (der eingebaute Ton der App folgt der Android-Einstellung nicht). Nichts wird geplant oder gespeichert. */
+    @PluginMethod public void probe(PluginCall call) {
+        if (!erlaubt()) { call.resolve(new JSObject().put("gezeigt", false).put("erlaubt", false)); return; }
+        Intent i = new Intent(getContext(), GlockeEmpfaenger.class);
+        i.putExtra("nr", MAX); i.putExtra("titel", "Probe: so klingt eine Erinnerung"); i.putExtra("text", "Ton und Vibration stellst du in Android ein.");
+        new GlockeEmpfaenger().onReceive(getContext(), i);
+        call.resolve(new JSObject().put("gezeigt", true).put("erlaubt", true));
+    }
+
     /** Ersetzt alle geplanten Glocken durch die übergebene Liste [{ nr, titel, text, um }]; leere Liste = alle aus. */
     @PluginMethod public void planen(PluginCall call) {
         Context ctx = getContext();

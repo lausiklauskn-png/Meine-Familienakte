@@ -19,7 +19,7 @@ const START = Date.now();
 function glockeLesen(): GlockeStand { try { const s = JSON.parse(workspaceStorage.getItem(GLOCKE_KEY) || "null"); if (s && typeof s.an === "boolean") return { an: s.an, seit: Number(s.seit) || 0, geläutet: Array.isArray(s.geläutet) ? s.geläutet.slice(-200) : [], dauer: ["einmal", "30s", "bisOk"].includes(s.dauer) ? s.dauer : "einmal" }; } catch { /* leer */ } return { an: !kalenderEinstLesen(), seit: START, geläutet: [] }; }
 function glockeSchreiben(s: GlockeStand) { try { workspaceStorage.setItem(GLOCKE_KEY, JSON.stringify(s)); } catch { /* ohne Speicher geht es weiter */ } window.dispatchEvent(new Event(GLOCKE_KEY)); }
 /** Android: eigener Baustein plant die Glocken als Benachrichtigung, auch bei geschlossener App (Klaus 2026-11-06). */
-type GlockePlugin = { einstellungen?: () => Promise<void>; erlauben: () => Promise<{ erlaubt: boolean }>; planen: (o: { glocken: Array<{ titel: string; text: string; um: number }>; aus?: boolean }) => Promise<{ geplant: number; erlaubt: boolean }> };
+type GlockePlugin = { einstellungen?: () => Promise<void>; probe?: () => Promise<{ gezeigt: boolean; erlaubt: boolean }>; erlauben: () => Promise<{ erlaubt: boolean }>; planen: (o: { glocken: Array<{ titel: string; text: string; um: number }>; aus?: boolean }) => Promise<{ geplant: number; erlaubt: boolean }> };
 function glockePlugin(): GlockePlugin | null {
   // Nur die Android-Hülle registriert den Baustein; im Browser und unter Windows fehlt er.
   return (window as unknown as { Capacitor?: { Plugins?: { FamilienakteGlocke?: GlockePlugin } } }).Capacitor?.Plugins?.FamilienakteGlocke || null;
@@ -131,6 +131,16 @@ function vorherText(min: number) {
   return `${Math.round(min / 60)} Std. vorher`;
 }
 
+/** Probe hören: in der Android-App über den Kanal „Erinnerungen“ (dort gewählter Ton), sonst der eingebaute Ton (Klaus 10.11.2026). */
+async function probeHoeren(plugin: GlockePlugin | null) {
+  if (!plugin?.probe) { ton(); return; }
+  try {
+    let r = await plugin.probe();
+    if (!r.erlaubt && (await plugin.erlauben()).erlaubt) r = await plugin.probe();
+    if (!r.gezeigt) ton();
+  } catch { ton(); }
+}
+
 /** Ton und Dauer (Klaus 2026-11-06): Dauer in der App wählbar; Ton und Vibration der Handy-Benachrichtigung legt Android fest. */
 export function GlockenEinstellung() {
   const s = useGlocke();
@@ -141,7 +151,7 @@ export function GlockenEinstellung() {
     <label><span>Läuten in der App</span><select value={s.dauer || "einmal"} onChange={(e) => setDauer(e.target.value as Dauer)} data-glocke-dauer>
       <option value="einmal">einmal</option><option value="30s">30 Sekunden</option><option value="bisOk">bis „OK“ (höchstens 2 Minuten)</option>
     </select></label>
-    <button type="button" className="button secondary" onClick={() => ton()} data-glocke-probe>Probe hören</button>
+    <button type="button" className="button secondary" onClick={() => void probeHoeren(plugin)} data-glocke-probe>Probe hören</button>
     {plugin?.einstellungen && <button type="button" className="button secondary" onClick={() => void plugin.einstellungen?.().catch(() => undefined)} data-glocke-handy>Ton am Handy einstellen</button>}
     <small className="muted">{plugin ? "Ton, Vibration und Lautstärke der Benachrichtigung stellt Android ein (Kanal „Erinnerungen“)." : "Die Lautstärke folgt dem Gerät."}</small>
   </details>;
