@@ -53,6 +53,20 @@ Reihenfolge laut Plan in `CLAUDE.md` (Abschnitt Offen):
 Offen ist noch die **Entscheidung von Klaus und Jens** aus der E-Mail-Karte. Vor dem Bau eine HTML-Vorschau mit Ja/Nein je Kasten.
 Je fertigem Kasten `lib/app-stand.ts` auf „fertig“ mit `seit` setzen.
 
+## Danach: Systemprüfung zeigt veraltete Berichte (Klaus 10.11., Bild Hilfe › Systemprüfung)
+
+- „Vollständige Systemprüfung“ steht auf **13.10.2026, Version 2.28.1**, gelb, mit Bereichen wie „FaWoGa-OneDrive-Integration“.
+  Darunter ein Eintrag vom 07.11. mit „5/15 bestanden“. Klaus: „Das ist auch überholt.“
+- Quelle: `lib/release-system-check-report.json` (fest eingebaut, Prüf-ID `test-2.28.1-final-readiness-20261013`), angezeigt über
+  `app/health-portal.tsx` (Import Zeile ~142, Karte `#pruefberichte` ~3577); `APP_VERSION` 2.28.1 ist laut `CLAUDE.md` der interne Prüfstand.
+- Vorschlag (Vorschau, Klaus' Ja):
+  - Den fest eingebauten Altbericht nicht mehr als aktuellen Stand zeigen.
+  - Stattdessen die Prüfung der laufenden Fassung zeigen, aus `lib/fassungen.ts`, den Nachweisen und der CI.
+  - Alternativ als „Archiv“ zugeklappt mit Datum.
+  - Bereiche, die es nicht mehr gibt (FaWoGa, OneDrive, „Memory“), streichen.
+  - Eigene, auf dem Gerät gespeicherte Prüfberichte bleiben.
+- Prüfen, ob die Systemprüfung selbst (Knopf „Systemprüfung“) noch Bereiche mit alten Namen prüft.
+
 ## Danach: übrige Punkte
 
 Aus `BRIEF_SITZUNG_2026-11-11_FAMILIENAKTE-WEITER.md` die Punkte 2–6:
@@ -77,6 +91,6 @@ dann HTML-Vorschau der Lösung an Klaus, nach seinem Ja bauen, Probe + Gegenprob
 Nachweis, Geschenkbox nachziehen.
 Danach: rote und graue Kästen der „Landkarte der App“ (Abschnitt im Brief): rote am Gerät nachstellen (Fehler im Live-Zustand
 oder fehlender Weg „Beheben ›“), graue E-Mail-Kästen nach Plan – erst Klaus' und Jens' Entscheidung und eine HTML-Vorschau.
-Dann die Punkte 2–6 aus BRIEF_SITZUNG_2026-11-11_FAMILIENAKTE-WEITER.md. Je Stück eigener Zweig, PR, Fassung, Ausgabe.
+Dann Systemprüfung mit veralteten Berichten (Abschnitt im Brief), danach die Punkte 2–6 aus BRIEF_SITZUNG_2026-11-11_FAMILIENAKTE-WEITER.md. Je Stück eigener Zweig, PR, Fassung, Ausgabe.
 Nicht: veröffentlichte Fassungen erneut ausgeben, byte-gleiche Bausteine von Hand ändern, Codex anstoßen.
 ```
