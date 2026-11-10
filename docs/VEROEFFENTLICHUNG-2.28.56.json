@@ -1,0 +1,58 @@
+{
+ "version": "2.28.56",
+ "source": "fa20304f5f30443192bb4b3096e9277032314b31",
+ "pullRequest": [
+  155
+ ],
+ "recordedUtc": "2026-11-10T16:30:00Z",
+ "freigabe": "Klaus 10.11.2026: „Ja zu ‚nur Laufwerk wählen‘, bau das gleich“; Geschenkbox-Landkarte direkt öffnen; Klaus 2026-11-06: neue Funktionen immer als APK, PWA und Windows.",
+ "inhalt": "Tresor einrichten: Ordnerwahl öffnet am gemerkten Tresor bzw. oben auf dem Gerätespeicher, kein Namensfenster (Family-Projekt, sonst Family-Projekt 2…9); Adresse ?ansicht=landkarte öffnet die Landkarte der App direkt.",
+ "ciAmPrStand": "PR #155 auf 91232d9: pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) – success.",
+ "releases": [
+  {
+   "tag": "android-v2.28.56",
+   "run": 42850558293,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-android-v2.28.56.apk",
+     "bytes": 20070807,
+     "sha256": "8aa39243d622ded24862df27b442bc8f8501f5e6ab8f02c975dd4db348898949",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true,
+     "versionInside": "2.28.56 (assets/public/version.json, commit fa20304)",
+     "karteInside": "eb857a6a… (= BookLedgerPro a705ed5)"
+    },
+    {
+     "name": "Familienakte-Einzeldatei-2.28.56.html",
+     "bytes": 3917801,
+     "sha256": "a04ab934332741107bb7a14b06ca2bd7d38d0a6f21b353f14fe86051f6505dd9",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true
+    }
+   ]
+  },
+  {
+   "tag": "windows-v2.28.56",
+   "run": 42850565192,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-Windows-2.28.56-x64-setup.exe",
+     "bytes": 34236400,
+     "sha256": "cecaf7a17b3429203482378a380f85f0c1b99e209ea40f60a21cbca6ecdecf6b",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true
+    }
+   ]
+  }
+ ],
+ "pwa": "Pages auf fa20304 (Job veroeffentlichen beim Merge); Seite aus dem Behälter nicht erreichbar, nicht geprüft.",
+ "notChecked": [
+  "Kein Gerät: Ordnerwahl mit Startort, „Family-Projekt 2“, Pro-Apps im selben Tresor",
+  "Direktlink ?ansicht=landkarte auf github.io nur in der Probe (Vorschau-Server), nicht am Tablet",
+  "family-projekt.de aus dem Behälter nicht erreichbar; der Freigabelauf prüft den Server selbst"
+ ]
+}
