@@ -66,6 +66,12 @@ Je fertigem Kasten `lib/app-stand.ts` auf „fertig“ mit `seit` setzen.
   - Bereiche, die es nicht mehr gibt (FaWoGa, OneDrive, „Memory“), streichen.
   - Eigene, auf dem Gerät gespeicherte Prüfberichte bleiben.
 - Prüfen, ob die Systemprüfung selbst (Knopf „Systemprüfung“) noch Bereiche mit alten Namen prüft.
+- **Falsche Versionsnummer in der praktischen Abnahme** (Klaus 10.11., zweites Bild):
+  - Bei Einträgen wie „Mikrofonstatus: Klappt“ steht „Website 40 · Familienakte 2.28.1“, obwohl die App 2.28.56 ist.
+  - Ursache im Code: `app/health-portal.tsx` übergibt `websiteVersion="40" familyVersion={APP_VERSION}`; `APP_VERSION` ist 2.28.1, der interne Stand. Die Zeilen liegen bei ~3548.
+  - Feste Werte „40“ stehen auch bei ~2549 und ~3451 („40 · private Testfassung 2.28.1“).
+  - Künftig die technische Fassung aus `package.json` nehmen, wie die Versionszeile im Kopf; „Website 40“ streichen oder ersetzen.
+  - Schon gespeicherte Antworten behalten ihre alte Angabe. Die Anzeige sagt dazu „aus Fassung …“, damit klar ist, dass sie älter sind.
 
 ## Danach: übrige Punkte
 
