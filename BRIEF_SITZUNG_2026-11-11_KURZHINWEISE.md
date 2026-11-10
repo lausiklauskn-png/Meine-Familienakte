@@ -71,6 +71,10 @@ Je fertigem Kasten `lib/app-stand.ts` auf „fertig“ mit `seit` setzen.
   - „Memory“ war der alte Name von „Tagebuch“ (bis 2.28.49). In Prüfbereichen „Tagebuch“ schreiben.
   - Eigene, auf dem Gerät gespeicherte Prüfberichte bleiben.
 - Prüfen, ob die Systemprüfung selbst (Knopf „Systemprüfung“) noch Bereiche mit alten Namen prüft.
+- **Klaus 10.11.: alte Prüfberichte sind durch die neuen abgedeckt**, weil die Technik dahinter aktualisiert und neu aufgebaut ist.
+  - Daraus folgt: Der fest eingebaute Bericht 2.28.1 kommt **aus der App**; er ist kein Nutzerbestand.
+  - Alte, auf dem Gerät gespeicherte Antworten der praktischen Abnahme (Website 40 / 2.28.1) nicht still löschen. Sie wandern zugeklappt in „Ältere Prüfungen (vor 2.28.56)“, mit einem Knopf „Ältere Prüfungen löschen“.
+  - Oben steht nur der Stand der laufenden Fassung: was die Proben der CI für diese Fassung geprüft haben (aus dem Nachweis) und was am Gerät noch offen ist.
 - **Falsche Versionsnummer in der praktischen Abnahme** (Klaus 10.11., zweites Bild):
   - Bei Einträgen wie „Mikrofonstatus: Klappt“ steht „Website 40 · Familienakte 2.28.1“, obwohl die App 2.28.56 ist.
   - Ursache im Code: `app/health-portal.tsx` übergibt `websiteVersion="40" familyVersion={APP_VERSION}`; `APP_VERSION` ist 2.28.1, der interne Stand. Die Zeilen liegen bei ~3548.
