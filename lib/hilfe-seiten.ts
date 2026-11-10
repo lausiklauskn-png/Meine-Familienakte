@@ -8,7 +8,7 @@ import type { SectionId } from "../app/portal-types";
  */
 export const SEITEN_KARTEN: Partial<Record<SectionId, string[]>> = {
   overview: ["Cockpit", "Zuletzt wichtig", "Datentresor und Sicherung", "Dokumenteneingang", "Was ist heute passiert?", "Lebensbereiche", "Systemprüfung"],
-  inventory: ["Inkrementell prüfen"],
+  inventory: ["Nur Neues prüfen"],
   cockpit: ["Was ist jetzt wichtig?", "To-do-Liste", "Dokumente, Tagebuch-Einträge und Vorgänge", "Offene Vorgänge", "Objektakten", "Neu hinzugekommen"],
   memory: ["Was ist heute passiert?", "Heute im Überblick", "Chronologie"],
   reminders: ["Mein Kalender", "Frist oder Aufgabe anlegen", "Offene Fristen und Aufgaben"],

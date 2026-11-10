@@ -24,6 +24,16 @@ try {
       const r = await page.evaluate(() => ({ kaesten: document.querySelectorAll("[data-karte-id]").length, rot: document.querySelectorAll(".s-aktivieren, [data-live]").length }));
       return soll(r.kaesten >= 40 && r.rot === 0, r);
     });
+    // Klaus 10.11.: die Zahl steht immer im Kästchen der Legende, ohne Tippen.
+    await step(`${name}: Legende zeigt ohne Tippen je Feld die Zahl, sie stimmt mit den Kästen überein`, async () => {
+      const r = await page.evaluate(() => {
+        const zahl = (f) => document.querySelector(`[data-lk-filter="${f}"] [data-lk-treffer]`)?.getAttribute("data-lk-treffer");
+        return { geplant: zahl("s-geplant"), geplantKaesten: String(document.querySelectorAll(".s-geplant[data-karte-id]").length),
+          fertig: zahl("s-fertig"), fertigKaesten: String(document.querySelectorAll(".s-fertig[data-karte-id]").length),
+          beide: zahl("beide"), beideWege: String(document.querySelectorAll('path.lk-ast[data-richtung="beide"]').length) };
+      });
+      return soll(r.geplant === r.geplantKaesten && Number(r.geplant) > 0 && r.fertig === r.fertigKaesten && r.beide === r.beideWege, r);
+    });
     await step(`${name}: Tipp auf Eingangszentrale hebt ihre Wege hervor und nennt sie`, async () => {
       await page.locator('[data-karte-id="eingang"]').click();
       const r = await page.evaluate(() => ({ an: document.querySelectorAll("path.lk-ast.an").length, info: document.querySelector("[data-karte-info]")?.getAttribute("data-karte-info"),

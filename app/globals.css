@@ -2413,7 +2413,8 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .lk-marke.s-imbau { background: #fff3cc; color: #7a5600; } .lk-marke.s-aktivieren { background: #fbe5e3; color: #9b2c22; } .lk-marke.s-geplant { background: #e6e9eb; color: #4f5b63; }
 .lk-legende { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-size: .84rem; margin: 0; }
 .lk-legende span { display: inline-flex; align-items: center; gap: 6px; }
-.lk-muster { display: inline-block; width: 24px; height: 15px; border: 1px solid #c8d9e2; border-radius: 4px; background: #f7fafc; }
+.lk-muster { display: inline-grid; place-items: center; min-width: 24px; height: 17px; padding: 0 4px; border: 1px solid #c8d9e2; border-radius: 4px; background: #f7fafc; font: 700 .72rem/1 system-ui, sans-serif; font-style: normal; color: #2b3a44; font-variant-numeric: tabular-nums; }
+.lk-muster-leer { background: #fff; }
 .lk-muster.s-fertig { border: 2px solid #2f8a4f; background: #eef8f1; } .lk-muster.s-imbau { border: 2px dashed #c58a00; background: #fff8e6; } .lk-muster.s-aktivieren { border: 2px solid #c0392b; background: #fdf3f3; } .lk-muster.s-geplant { border: 2px dashed #9aa5ad; background: #f1f3f4; } .lk-muster.frisch { box-shadow: 0 0 0 2px #b8860b; }
 
 .app-landkarte-hilfe > summary .lk-gold { margin-left: 8px; font-size: .78rem; font-weight: 600; border: 1.5px solid #b8860b; color: #8a6508; border-radius: 999px; padding: 0 9px; }

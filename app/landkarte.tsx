@@ -143,25 +143,29 @@ export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, onFrisc
     return () => { tot = true; beob?.disconnect(); };
   }, [gruppen, knoten, aeste, breiten]);
 
-  const punktTrifft = (p: KartenPunkt | undefined): boolean => {
-    if (!p || !filter) return false;
-    if (filter.startsWith("l-")) return p.live?.farbe === filter.slice(2);
-    if (filter.startsWith("s-")) return (p.stand || "fertig") === filter.slice(2);
-    if (filter === "warn") return Boolean(p.warn);
-    if (filter === "frisch") return frisch.has(p.id);
+  const punktTrifftF = (p: KartenPunkt | undefined, f: KartenFilter | null): boolean => {
+    if (!p || !f) return false;
+    if (f.startsWith("l-")) return p.live?.farbe === f.slice(2);
+    if (f.startsWith("s-")) return (p.stand || "fertig") === f.slice(2);
+    if (f === "warn") return Boolean(p.warn);
+    if (f === "frisch") return frisch.has(p.id);
     return false;
   };
-  const astTrifft = (k: KartenKante): boolean => {
-    if (!filter) return false;
-    if (filter === "hin") return !k.beide; if (filter === "beide") return Boolean(k.beide);
+  const astTrifftF = (k: KartenKante, f: KartenFilter | null): boolean => {
+    if (!f) return false;
+    if (f === "hin") return !k.beide; if (f === "beide") return Boolean(k.beide);
     // Ein Weg gehört zu einer Farbe, wenn einer seiner Kästen sie hat (gelbe/rote Wege = Wege zu gelben/roten Kästen).
-    return punktTrifft(alle.get(k.von)) || punktTrifft(alle.get(k.nach));
+    return punktTrifftF(alle.get(k.von), f) || punktTrifftF(alle.get(k.nach), f);
   };
+  const punktTrifft = (p: KartenPunkt | undefined) => punktTrifftF(p, filter);
+  const astTrifft = (k: KartenKante) => astTrifftF(k, filter);
   const treffer = filter ? [...alle.values()].filter((p) => filter === "hin" || filter === "beide" ? aeste.some((k) => astTrifft(k) && (k.von === p.id || k.nach === p.id)) : punktTrifft(p)) : [];
   const trefferIds = new Set(treffer.map((p) => p.id));
-  // Klaus 10.11.: keine Liste der Treffer unter der Karte; die Zahl steht am gedrückten Legenden-Knopf.
-  const trefferZahl = filter ? treffer.length : null;
-  useEffect(() => { window.dispatchEvent(new CustomEvent(TREFFER_EREIGNIS, { detail: { karte: id, anzahl: trefferZahl } })); }, [id, trefferZahl]);
+  // Klaus 10.11.: keine Liste der Treffer unter der Karte; jede Legende zeigt immer ihre Zahl (Kästen, bei Pfeilen Wege).
+  const zahlen: Partial<Record<KartenFilter, number>> = {};
+  ALLE_FILTER.forEach((f) => { zahlen[f] = f === "hin" || f === "beide" ? aeste.filter((k) => astTrifftF(k, f)).length : [...alle.values()].filter((p) => punktTrifftF(p, f)).length; });
+  const zahlenText = JSON.stringify(zahlen);
+  useEffect(() => { const z = JSON.parse(zahlenText); LETZTE_ZAHLEN.set(id, z); window.dispatchEvent(new CustomEvent(TREFFER_EREIGNIS, { detail: { karte: id, zahlen: z } })); }, [id, zahlenText]);
   const nachbarn = aktiv ? aeste.filter((k) => k.von === aktiv || k.nach === aktiv) : [];
   const an = new Set(nachbarn.flatMap((k) => [k.von, k.nach]));
   const gewaehlt = aktiv ? alle.get(aktiv) : null;
@@ -219,11 +223,14 @@ export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, onFrisc
 export type KartenFilter = "l-gruen" | "l-rot" | "l-gelb" | "l-grau" | "s-fertig" | "s-imbau" | "s-aktivieren" | "s-geplant" | "warn" | "hin" | "beide" | "frisch";
 const FILTER_EREIGNIS = "fa-landkarte-filter";
 const TREFFER_EREIGNIS = "fa-landkarte-treffer";
+const ALLE_FILTER: KartenFilter[] = ["l-gruen", "l-rot", "l-gelb", "l-grau", "s-fertig", "s-imbau", "s-aktivieren", "s-geplant", "warn", "hin", "beide", "frisch"];
+/** Letzte Zahlen je Karte, falls die Legende erst nach der Karte erscheint. */
+const LETZTE_ZAHLEN = new Map<string, Partial<Record<KartenFilter, number>>>();
 export function KartenLegende({ live = false, fuer, ohneGeraet = false }: { live?: boolean; fuer: string; /** Datei ohne App: kein „muss eingeschaltet werden“. */ ohneGeraet?: boolean }) {
   const [wahl, setWahl] = useState<KartenFilter | null>(null);
-  const [zahl, setZahl] = useState<number | null>(null);
+  const [zahlen, setZahlen] = useState<Partial<Record<KartenFilter, number>>>(() => LETZTE_ZAHLEN.get(fuer) || {});
   useEffect(() => {
-    const h = (e: Event) => { const d = (e as CustomEvent<{ karte: string; anzahl: number | null }>).detail; if (d.karte === fuer) setZahl(d.anzahl); };
+    const h = (e: Event) => { const d = (e as CustomEvent<{ karte: string; zahlen: Partial<Record<KartenFilter, number>> }>).detail; if (d.karte === fuer) setZahlen(d.zahlen); };
     window.addEventListener(TREFFER_EREIGNIS, h); return () => window.removeEventListener(TREFFER_EREIGNIS, h);
   }, [fuer]);
   useEffect(() => {
@@ -231,20 +238,25 @@ export function KartenLegende({ live = false, fuer, ohneGeraet = false }: { live
     window.addEventListener(FILTER_EREIGNIS, h); return () => window.removeEventListener(FILTER_EREIGNIS, h);
   }, [fuer]);
   const tipp = (f: KartenFilter) => window.dispatchEvent(new CustomEvent(FILTER_EREIGNIS, { detail: { karte: fuer, filter: wahl === f ? null : f } }));
-  const k = (f: KartenFilter, inhalt: ReactNode) => <button type="button" className={`lk-filter${wahl === f ? " an" : ""}`} data-lk-filter={f} aria-pressed={wahl === f}
-    title={wahl === f ? "Nochmal tippen hebt die Hervorhebung auf" : "Zeigt alle Kästen und Wege dieser Art in der Karte"} onClick={() => tipp(f)}>{inhalt}{wahl === f && zahl !== null && <span className="lk-filter-zahl" data-lk-treffer={zahl}> · {zahl}</span>}</button>;
+  /** Zahl immer sichtbar (Klaus 10.11.): im Farbkästchen, sonst als kleines Kästchen vor dem Wort. */
+  const k = (f: KartenFilter, muster: string | null, text: ReactNode) => { const n = zahlen[f];
+    const zahl = n === undefined ? null : n;
+    return <button type="button" className={`lk-filter${wahl === f ? " an" : ""}`} data-lk-filter={f} aria-pressed={wahl === f}
+      title={wahl === f ? "Nochmal tippen hebt die Hervorhebung auf" : "Zeigt alle Kästen und Wege dieser Art in der Karte"} onClick={() => tipp(f)}>
+      <i className={`lk-muster${muster ? ` ${muster}` : " lk-muster-leer"}`} data-lk-treffer={zahl ?? undefined} aria-hidden="true">{zahl}</i>
+      {text}{zahl !== null && <span className="sr-only"> ({zahl})</span>}</button>; };
   return <p className="lk-legende" data-lk-legende={fuer}>
     {live && <span className="lk-legende-live" data-live-legende><b>Dieses Gerät (Fläche):</b>
-      {k("l-gruen", <><i className="lk-muster l-gruen" aria-hidden="true"/> eingerichtet</>)}
-      {k("l-rot", <><i className="lk-muster l-rot" aria-hidden="true"/> fehlt – antippen, beheben</>)}
-      {k("l-gelb", <><i className="lk-muster l-gelb" aria-hidden="true"/> gesperrt oder veraltet</>)}
-      {k("l-grau", <><i className="lk-muster l-grau" aria-hidden="true"/> freiwillig oder nicht hier</>)}
+      {k("l-gruen", "l-gruen", " eingerichtet")}
+      {k("l-rot", "l-rot", " fehlt – antippen, beheben")}
+      {k("l-gelb", "l-gelb", " gesperrt oder veraltet")}
+      {k("l-grau", "l-grau", " freiwillig oder nicht hier")}
       <b>Baustand (Rahmen):</b></span>}
-    {k("s-fertig", <><i className="lk-muster s-fertig" aria-hidden="true"/> fertig</>)}
-    {k("s-imbau", <><i className="lk-muster s-imbau" aria-hidden="true"/> im Bau, bald fertig</>)}
-    {!live && !ohneGeraet && k("s-aktivieren", <><i className="lk-muster s-aktivieren l-rot" aria-hidden="true"/> muss eingeschaltet werden</>)}
-    {k("s-geplant", <><i className="lk-muster s-geplant" aria-hidden="true"/> geplant, abzusprechen</>)}
-    {k("warn", <>⚠ Vorsicht</>)}{k("hin", <>→ Daten nur in eine Richtung</>)}{k("beide", <>⇄ hin und zurück</>)}
-    {k("frisch", <><i className="lk-muster frisch" aria-hidden="true"/> neu seit dem letzten Öffnen</>)}
+    {k("s-fertig", "s-fertig", " fertig")}
+    {k("s-imbau", "s-imbau", " im Bau, bald fertig")}
+    {!live && !ohneGeraet && k("s-aktivieren", "s-aktivieren l-rot", " muss eingeschaltet werden")}
+    {k("s-geplant", "s-geplant", " geplant, abzusprechen")}
+    {k("warn", null, " ⚠ Vorsicht")}{k("hin", null, " → Daten nur in eine Richtung")}{k("beide", null, " ⇄ hin und zurück")}
+    {k("frisch", "frisch", " neu seit dem letzten Öffnen")}
   </p>;
 }

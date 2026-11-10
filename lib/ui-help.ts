@@ -18,7 +18,7 @@ export const UI_HELP: Readonly<Record<string, string>> = {
   "Chronologie": "Neueste Ereignisse zuerst.",
   "Zuordnung prüfen und bestätigen": "Die Familienakte schlägt Werte vor. Du kannst vorhandene Einträge wählen oder einen neuen Vorschlag erfassen.",
   "Testakte für Weiterentwicklung": "Vorhandenen Testordner auf PC, Festplatte oder USB-Stick auswählen, automatisch erkennen, prüfen und für weitere Entwicklungsschritte verwenden.",
-  "Inkrementell prüfen": "Die ursprüngliche Ordnerstruktur bleibt als Herkunft erhalten. Unveränderte Dateien werden wiedererkannt und nicht unnötig erneut analysiert.",
+  "Nur Neues prüfen": "• Beim ersten Mal wird der ganze Ordner gelesen.\n• Danach nur, was neu dazugekommen oder geändert ist; Bekanntes wird wiedererkannt und übersprungen.\n• Die Ordner bleiben, wie sie sind; die Akte merkt sich, woher jede Datei kommt.",
   "Was möchtest du tun?": "Wähle einen passenden Einstieg. Dabei wird nichts automatisch gelöscht oder an einen externen Dienst übertragen.",
   "Wie suche ich etwas?": "Du kannst einfache Wörter oder eine vollständige Frage eingeben. Die lokale interaktive Suche erkennt häufige Alltagssätze und ordnet sie einem passenden Bereich zu.",
   "Technische Änderungen": "Die vollständige Versionshistorie bleibt getrennt von dieser inhaltlichen Übersicht.",
