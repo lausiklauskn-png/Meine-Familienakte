@@ -14,7 +14,7 @@ export const UI_HELP_ZIEL: Readonly<Record<string, SectionId>> = {
   "Offene Vorgänge": "cockpit", "Objektakten": "cockpit", "Neu hinzugekommen": "cockpit",
   "Vorhandene Datensätze verknüpfen": "memory", "Erkannte Aussagen prüfen": "memory", "Nur nach Bestätigung anlegen": "memory",
   "Noch zu prüfende Tagebuch-Einträge": "memory", "Rückfragen zu gespeicherten Einträgen": "memory", "Chronologie": "memory",
-  "Zuordnung prüfen und bestätigen": "inventory", "Testakte für Weiterentwicklung": "inventory", "Inkrementell prüfen": "inventory",
+  "Zuordnung prüfen und bestätigen": "inventory", "Testakte für Weiterentwicklung": "inventory", "Nur Neues prüfen": "inventory",
   "Was möchtest du tun?": "help", "Wie suche ich etwas?": "help", "Technische Änderungen": "changelog",
   "Andere Lebensbereiche": "family", "Neue Unterlage": "home",
   "Alle ansehen": "documents", "Lokale Unterlagen": "inbox", "Online-Altbestand": "inbox",

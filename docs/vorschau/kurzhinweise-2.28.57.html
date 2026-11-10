@@ -1,0 +1,133 @@
+<title>Kurzhinweise an Knöpfen</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: eine Spalte, oben Befund, Mitte Probierfläche heute/neu, unten Fragen zum Abhaken. Stil wie die übrigen Vorschauen. */
+:root { --bg:#f4f7f9; --fg:#17262f; --muted:#4f6472; --line:#c8d9e2; --card:#fff; --blau:#1d5b94; --navy:#0d2f52; --navyfg:#fff; --rot:#c0392b; --rotbg:#fdecea; --gruen:#2f8a4f; --gruenbg:#eaf7f0; --grau:#f3f5f7; --code:#eef3f7; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#10171c; --fg:#e6edf2; --muted:#9fb2bf; --line:#2c3b45; --card:#18222a; --blau:#7fb3e6; --navy:#dfe9f3; --navyfg:#0d2f52; --rotbg:#3a1d1a; --gruenbg:#173323; --grau:#1f2a32; --code:#1f2a32; color-scheme:dark; } }
+:root[data-theme="dark"] { --bg:#10171c; --fg:#e6edf2; --muted:#9fb2bf; --line:#2c3b45; --card:#18222a; --blau:#7fb3e6; --navy:#dfe9f3; --navyfg:#0d2f52; --rotbg:#3a1d1a; --gruenbg:#173323; --grau:#1f2a32; --code:#1f2a32; color-scheme:dark; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.45 system-ui, sans-serif; padding-block:16px 40px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
+main { max-width:900px; display:grid; gap:18px; }
+h1 { font-size:1.25rem; margin:0; text-wrap:balance; } h2 { font-size:1rem; margin:0 0 8px; color:var(--blau); }
+p { margin:0; } .lead { color:var(--muted); }
+.karte { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; display:grid; gap:8px; min-width:0; }
+ul, ol { margin:0; padding-left:1.25em; display:grid; gap:6px; }
+code { background:var(--code); padding:1px 5px; border-radius:5px; font-size:.88em; overflow-wrap:anywhere; }
+.paar { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px; }
+.etikett { font-size:.8rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:700; }
+.leiste { display:flex; flex-wrap:wrap; gap:10px; padding:12px; border:1px dashed var(--line); border-radius:12px; background:var(--grau); }
+.leiste button { min-width:46px; min-height:46px; border-radius:12px; border:1px solid var(--line); background:var(--card); color:var(--fg); font:600 .9rem system-ui, sans-serif; display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:0 12px; cursor:pointer; -webkit-touch-callout:none; user-select:none; }
+.leiste button:focus-visible { outline:3px solid var(--blau); outline-offset:2px; }
+.leiste svg { width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.zustand { font-size:.9rem; color:var(--muted); min-height:1.4em; }
+.blase { position:fixed; z-index:20; max-width:min(280px, calc(100vw - 16px)); padding:7px 10px; border-radius:8px; background:var(--navy); color:var(--navyfg); font-size:.85rem; line-height:1.35; box-shadow:0 6px 18px rgba(0,0,0,.25); pointer-events:none; }
+.nichts { border-left:4px solid var(--rot); background:var(--rotbg); padding:8px 10px; border-radius:8px; }
+.gut { border-left:4px solid var(--gruen); background:var(--gruenbg); padding:8px 10px; border-radius:8px; }
+.haken { display:grid; gap:4px; } .haken label { display:flex; gap:8px; align-items:center; font-weight:700; } .haken input { width:20px; height:20px; } .haken small { color:var(--muted); padding-left:28px; }
+.fragen li { padding:4px 0; }
+.fragen b { color:var(--blau); }
+@media (prefers-reduced-motion: reduce) { * { transition:none !important; } }
+</style>
+
+<main>
+ <header style="display:grid;gap:4px">
+  <h1>Kurzhinweise an Knöpfen – warum am Tablet nichts kommt</h1>
+  <p class="lead">Vorschau zur Abstimmung (10.11., Fassung 2.28.57). Oben die Ursache, in der Mitte zum Ausprobieren heute und neu, unten die Fragen.</p>
+ </header>
+
+ <section class="karte">
+  <h2>Ursache (im Code nachgesehen)</h2>
+  <ul>
+   <li><b>Mit Maus oder Trackpad</b> (DeX, Fenster mit Kopfleiste): Die App zeigt selbst nichts an und überlässt es dem Browser (<code>app/kurzhinweise.ts</code>: <code>if (!aktiv || e.pointerType === "mouse") return;</code>). Der Browser in der Android-App zeigt solche Hinweise <b>nie</b>. Ergebnis: mit Maus am Tablet gar kein Hinweis. Das passt zum Bild mit der Fensterleiste.</li>
+   <li><b>Mit dem Finger</b>: Nur ein langer Druck von 0,5 s zeigt die Blase. Das steht nirgends; ein kurzer Tipp löst den Knopf aus.</li>
+   <li><b>Knöpfe ohne Hinweistext</b>: gemessen auf Start (101 Knöpfe, 32 mit Hinweis) und Hilfe (451, 132 mit Hinweis). Kein Symbol-Knopf ist ganz ohne Text – das ist nicht die Ursache.</li>
+   <li><b>Die Probe</b> prüft nur am PC-Browser, dass der Hinweis im Knopf steht, und den langen Druck. Maus in der Android-App prüft sie nicht.</li>
+  </ul>
+ </section>
+
+ <section class="paar">
+  <div class="karte">
+   <p class="etikett">Heute (2.28.56, in der Android-App)</p>
+   <div class="leiste" data-art="heute">
+    <button type="button" data-hinweis="Neue Unterlage ablegen: fotografieren, Datei oder Ordner" aria-label="Ablegen"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+    <button type="button" data-hinweis="Mein Kalender" aria-label="Kalender"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></button>
+    <button type="button" data-hinweis="Tagebuch: Was ist heute passiert?" aria-label="Tagebuch"><svg viewBox="0 0 24 24"><path d="M4 5h7a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H4zM20 5h-7a2 2 0 0 0-2 2v12a2 2 0 0 1 2-2h7z"/></svg></button>
+   </div>
+   <p class="zustand" data-zustand="heute">Maus darüberhalten oder Finger lang drücken.</p>
+   <p class="nichts">Maus: nichts. Finger: nur nach 0,5 s, ohne Hinweis, dass es das gibt.</p>
+  </div>
+  <div class="karte">
+   <p class="etikett">Neu (Vorschlag)</p>
+   <div class="leiste" data-art="neu">
+    <button type="button" data-hinweis="Neue Unterlage ablegen: fotografieren, Datei oder Ordner" aria-label="Ablegen"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+    <button type="button" data-hinweis="Mein Kalender" aria-label="Kalender"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></button>
+    <button type="button" data-hinweis="Tagebuch: Was ist heute passiert?" aria-label="Tagebuch"><svg viewBox="0 0 24 24"><path d="M4 5h7a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H4zM20 5h-7a2 2 0 0 0-2 2v12a2 2 0 0 1 2-2h7z"/></svg></button>
+   </div>
+   <p class="zustand" data-zustand="neu">Maus darüberhalten oder Finger lang drücken.</p>
+   <p class="gut">Maus: Blase nach gut einer halben Sekunde, verschwindet beim Wegfahren. Finger: Blase nach 0,4 s, der Knopf löst dann nicht aus.</p>
+  </div>
+ </section>
+
+ <section class="paar">
+  <div class="karte">
+   <p class="etikett">Haken in der Hilfe – heute</p>
+   <div class="haken"><label><input type="checkbox" id="h1" checked> Kurzhinweise an Knöpfen anzeigen</label></div>
+  </div>
+  <div class="karte">
+   <p class="etikett">Haken in der Hilfe – neu</p>
+   <div class="haken"><label><input type="checkbox" id="h2" checked> Kurzhinweise an Knöpfen anzeigen</label><small>Maus: kurz über dem Knopf halten · Finger: Knopf lang drücken.</small></div>
+  </div>
+ </section>
+
+ <section class="karte fragen">
+  <h2>Fragen (bitte je Ja oder Nein)</h2>
+  <ol>
+   <li><b>Blase auch für die Maus:</b> Die App zeigt ihre eigene Blase beim Darüberhalten, in der Android-App, unter Windows und im Browser gleich. Der kleine graue Hinweis des Browsers entfällt dafür, damit nichts doppelt erscheint.</li>
+   <li><b>Finger schneller:</b> Der lange Druck zeigt die Blase schon nach 0,4 s statt 0,5 s; auch Androids eigenes „lange gedrückt“ zeigt sie. Der Knopf löst danach nicht aus.</li>
+   <li><b>Eine Zeile unter dem Haken:</b> „Maus: kurz über dem Knopf halten · Finger: Knopf lang drücken.“</li>
+   <li><b>Absicherung:</b> Hat ein Knopf keinen Hinweis, aber einen Vorlese-Namen, zeigt die Blase den Namen. Heute betrifft das keinen Knopf.</li>
+  </ol>
+  <p class="lead">Danach: Probe mit Maus und Finger, Gegenprobe gegen den alten Stand, Ausgabe als 2.28.57 (Android, Windows, Browser) zusammen mit der gestrichenen Trefferliste der Landkarte und dem Sprung „Neu › E-Mail in der Hilfe“.</p>
+ </section>
+</main>
+
+<script>
+(function () {
+  var blase = null, uhr = 0, schlucken = false, startX = 0, startY = 0;
+  function weg() { if (blase) { blase.remove(); blase = null; } }
+  function zeigen(el, text) {
+    weg();
+    var r = el.getBoundingClientRect();
+    blase = document.createElement("div"); blase.className = "blase"; blase.setAttribute("role", "tooltip"); blase.textContent = text;
+    document.body.appendChild(blase);
+    var b = blase.getBoundingClientRect();
+    var links = Math.max(8, Math.min(r.left + r.width / 2 - b.width / 2, innerWidth - b.width - 8));
+    var oben = r.top - b.height - 8 >= 8 ? r.top - b.height - 8 : r.bottom + 8;
+    blase.style.left = links + "px"; blase.style.top = oben + "px";
+  }
+  function zustand(art, text) { var z = document.querySelector('[data-zustand="' + art + '"]'); if (z) z.textContent = text; }
+  document.querySelectorAll(".leiste button").forEach(function (el) {
+    var art = el.closest(".leiste").dataset.art, text = el.dataset.hinweis;
+    el.addEventListener("pointerenter", function (e) {
+      if (e.pointerType !== "mouse") return;
+      if (art === "heute") { zustand(art, "Maus über „" + el.getAttribute("aria-label") + "“: in der Android-App erscheint nichts."); return; }
+      clearTimeout(uhr); uhr = setTimeout(function () { zeigen(el, text); }, 600);
+    });
+    el.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") { clearTimeout(uhr); weg(); } });
+    el.addEventListener("pointerdown", function (e) {
+      weg(); startX = e.clientX; startY = e.clientY;
+      if (e.pointerType === "mouse") { clearTimeout(uhr); return; }
+      var ms = art === "heute" ? 500 : 400;
+      uhr = setTimeout(function () { zeigen(el, text); schlucken = true; setTimeout(weg, 4000); }, ms);
+    });
+    el.addEventListener("contextmenu", function (e) { e.preventDefault(); if (art === "neu" && !blase) { zeigen(el, text); schlucken = true; setTimeout(weg, 4000); } });
+    el.addEventListener("click", function (e) {
+      if (schlucken) { schlucken = false; e.preventDefault(); return; }
+      zustand(art, "„" + el.getAttribute("aria-label") + "“ ausgelöst (kurzer Tipp).");
+    });
+  });
+  ["pointerup", "pointercancel"].forEach(function (n) { document.addEventListener(n, function (e) { if (e.pointerType !== "mouse") clearTimeout(uhr); }, true); });
+  document.addEventListener("pointermove", function (e) { if (e.pointerType !== "mouse" && Math.hypot(e.clientX - startX, e.clientY - startY) > 10) clearTimeout(uhr); }, true);
+  addEventListener("scroll", weg, { passive: true });
+})();
+</script>
