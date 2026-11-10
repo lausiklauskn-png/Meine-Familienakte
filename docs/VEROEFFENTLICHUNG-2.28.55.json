@@ -1,0 +1,57 @@
+{
+ "version": "2.28.55",
+ "source": "c95d3870b583e74b0c1c2653b6ea4a09bd94940a",
+ "pullRequest": [
+  153
+ ],
+ "recordedUtc": "2026-11-10T14:00:00Z",
+ "freigabe": "Klaus 10.11.2026: Gerätetest Sicherheitsseite; Vorschau Tresor-Karte „Deine Vorschläge haben soweit gepasst“; Klaus 2026-11-06: neue Funktionen immer als APK, PWA und Windows.",
+ "inhalt": "Meldungen klarer (Hinweis statt „Prüfung erforderlich“, Zwischenstände weichen, Ordnerfehler übersetzt); Pro-Tresor-Karte kürzer, Kennung hinter „Mehr“, Abbruch als ruhiger Hinweis.",
+ "ciAmPrStand": "PR #153 auf 62560d0: pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) – success.",
+ "releases": [
+  {
+   "tag": "android-v2.28.55",
+   "run": 42827023576,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-android-v2.28.55.apk",
+     "bytes": 20070807,
+     "sha256": "420fcdceb823cb8890cb79fd492a6f8872b85952d590e30b2c81cae960000836",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true,
+     "versionInside": "2.28.55 (assets/public/version.json, commit c95d387)",
+     "karteInside": "eb857a6a… (= BookLedgerPro a705ed5)"
+    },
+    {
+     "name": "Familienakte-Einzeldatei-2.28.55.html",
+     "bytes": 3916449,
+     "sha256": "a578eb6757f26800cb608f93cf555ac013ab63fcd38d32278aa9a028b2245f16",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true
+    }
+   ]
+  },
+  {
+   "tag": "windows-v2.28.55",
+   "run": 42827029189,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-Windows-2.28.55-x64-setup.exe",
+     "bytes": 34215807,
+     "sha256": "4529ef85eb2ca3009a4f0e8823297b1d582975de4e2683714d9d1ecd4467e3b8",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true
+    }
+   ]
+  }
+ ],
+ "pwa": "Pages auf c95d387 (Job veroeffentlichen); Seite aus dem Behälter nicht erreichbar, nicht geprüft.",
+ "notChecked": [
+  "Kein Gerät: Meldungen oben, kurze Tresor-Karte, „Mehr“",
+  "family-projekt.de aus dem Behälter nicht erreichbar; der Freigabelauf prüft den Server selbst"
+ ]
+}

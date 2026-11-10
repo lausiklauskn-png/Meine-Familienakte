@@ -1,4 +1,4 @@
-# Abschluss 10.11.2026 (Vormittag): Gerätetest 2.28.52 → Fassungen 2.28.53 und 2.28.54, Geschenkbox
+# Abschluss 10.11.2026: Gerätetest 2.28.52 → Fassungen 2.28.53, 2.28.54 und 2.28.55, Geschenkbox
 
 Fortsetzung derselben Sitzung wie `BRIEF_ABSCHLUSS_2026-11-10_VERBUND-OHNE-ORANGE.md` (Nacht 09./10.11.). Klaus hat 2.28.52 am
 Tablet geprüft und Bilder geschickt; daraus wurde 2.28.53.
@@ -28,10 +28,24 @@ Artefakt https://claude.ai/artifact/XeUMGuSZ49FzsJYjwQznM7, nach der Ausgabe auf
 Probe `app-landkarte` 52 grün (neu: Fäden beginnen/enden an ihrem Kasten nach Höhenänderung, Gegenprobe alter Code 2 rot; Legende).
 Eigener Fehler beim Bau: die neue Probe maß zuerst gegen das falsche SVG (Symbol im Kopf); erst eine Messung von Hand zeigte es.
 
+## Danach: Seite „Sicherheit & lokaler Tresor“ (Klaus' Bilder 2.28.54, ca. 12:00 UTC) → 2.28.55
+
+| Befund | Ursache | Behoben |
+|---|---|---|
+| Tresor angelegt, oben trotzdem „Fehlgeschlagen: Ordnerzugriff fehlgeschlagen“ | stammt von einer Vollsicherung: rohe Android-Meldung, Schreiben/Lesen im nativen Ordner lief nicht durch die Übersetzung | übersetzt, „Vollsicherung nicht erstellt: …“ mit Grund und nächstem Schritt |
+| gelb „Prüfung erforderlich: Sicherung läuft …“ blieb stehen | jede info-Meldung hieß „Prüfung erforderlich“ und blieb | „Hinweis“; Zwischenstände weichen der nächsten Meldung |
+| rot „Ordnerwahl oder Passwort abgebrochen“ unter „Entsperrt“ | Abbruch als Alarm | ruhiger Hinweis |
+| Tresorkennung dreimal im Blick, viel Text | lange Bestätigungen | Karte kürzer, Kennung hinter „Mehr“ (Vorschau, Klaus: Ja) |
+| „Wird die Hilfe nach dem Anlegen von selbst grün?“ | ungeprüft | ja – neue Probe zeigt es ohne Neuladen |
+| „Nur das Laufwerk wählen, Ordner automatisch“ | Android ab 11 lässt die oberste Ebene von Gerätespeicher/SD nicht wählen | Vorschlag im Startbrief `BRIEF_SITZUNG_2026-11-11_FAMILIENAKTE-WEITER.md`, nicht gebaut |
+
+Die Hilfe-Tresorkarte brauchte keine Änderung: sie zeigt keine Kennung und färbt sich über den Live-Zustand von selbst.
+
 ## Ausgabe
 
 Familienakte **2.28.53** Android, Windows, PWA (Läufe 42792885539 / 42792889787, `server=ja`), Nachweis `docs/VEROEFFENTLICHUNG-2.28.53.json`.
 Familienakte **2.28.54** Android, Windows, PWA (`server=ja`), Nachweis `docs/VEROEFFENTLICHUNG-2.28.54.json`.
+Familienakte **2.28.55** Android, Windows, PWA (`server=ja`), Nachweis `docs/VEROEFFENTLICHUNG-2.28.55.json`.
 
 ## Geprüft
 
@@ -53,19 +67,19 @@ Familienakte **2.28.54** Android, Windows, PWA (`server=ja`), Nachweis `docs/VER
 | | |
 |---|---|
 | Erste Spur | 10.11.2026 07:42 UTC (Klaus' Bilder vom Gerätetest) |
-| Letzte Spur | 10.11.2026 ca. 11:15 UTC (Ausgabe 2.28.54, Nachweis, Briefe, KimHub) |
-| Blöcke | 07:42–08:15 Befunde, Bau, Proben, Gegenproben · 08:15–08:25 Geschenkbox · 08:25–09:40 CI, Fund, Wiederholung · 09:40–09:58 Ausgabe 2.28.53, Briefe · 09:48–10:05 Landkarte bauen, Proben · 10:05–10:47 CI #151, Geschenkbox · 10:47–11:15 Ausgabe 2.28.54, Briefe, KimHub |
-| Obergrenze | gut 3½ h; die Nacht davor (21:34–ca. 01:00 UTC) steht im anderen Abschlussbrief |
+| Letzte Spur | 10.11.2026 ca. 14:15 UTC (Ausgabe 2.28.55, Geschenkbox-Datei, Briefe, KimHub) |
+| Blöcke | 07:42–08:15 Befunde, Bau, Proben, Gegenproben · 08:15–08:25 Geschenkbox · 08:25–09:40 CI, Fund, Wiederholung · 09:40–09:58 Ausgabe 2.28.53, Briefe · 09:48–10:05 Landkarte bauen, Proben · 10:05–10:47 CI #151, Geschenkbox · 10:47–11:15 Ausgabe 2.28.54, Briefe, KimHub · 11:45–12:30 Befunde Sicherheitsseite, Vorschau, Bau 2.28.55 · 12:30–13:42 Proben, CI #153, Geschenkbox-Datei · 13:42–14:15 Ausgabe 2.28.55, Briefe, KimHub |
+| Obergrenze | gut 6½ h mit Pausen ohne Nachrichten (ca. 11:15–11:45); die Nacht davor (21:34–ca. 01:00 UTC) steht im anderen Abschlussbrief |
 
 ## Startauftrag zum Einfügen
 
 ```
 Repo lausiklauskn-png/Meine-Familienakte (dazu je nach Punkt BookLedgerPro, Privat-Brain-Pro, Workflow-PDF-Pro, BookLedger-Basic mit add_repo).
-Zuerst lesen: CLAUDE.md, BRIEF_SITZUNG_2026-11-10_VERBUND-GEPLANTE-PUNKTE.md (Punkte + Abschnitt „Offen aus 2.28.53“),
+Zuerst lesen: CLAUDE.md, BRIEF_SITZUNG_2026-11-11_FAMILIENAKTE-WEITER.md, BRIEF_SITZUNG_2026-11-10_VERBUND-GEPLANTE-PUNKTE.md,
 BRIEF_ABSCHLUSS_2026-11-10_GERAETETEST-2.28.53.md, Karte public/pro-verbund/pro-verbund.html (Quelle BookLedgerPro assets/pro-verbund.html).
 Zuerst klein: BookLedger Basic auf die neue Karte ziehen; Wettlauf in tests/ui kalender-einlesen beheben.
 Dann die grauen/roten Wege der Karte in der Reihenfolge des Briefs; vor jedem Punkt die Frage aus „Vorher klären“ an Klaus,
 neue Oberfläche erst als HTML-Vorschau. Je Punkt eigener Zweig und PR, Proben + Gegenprobe, vor dem Push die ganze UI-Reihe
-oder grep nach geänderten Selektoren. Nächste freie Fassungen: FA 2.28.55, BLP 0.1.15, PB 1.0.49, WPP 1.0.17.
+oder grep nach geänderten Selektoren. Nächste freie Fassungen: FA 2.28.56, BLP 0.1.15, PB 1.0.49, WPP 1.0.17.
 Nicht: veröffentlichte Fassungen erneut ausgeben, byte-gleiche Bausteine von Hand ändern, Codex anstoßen, Forschung hier ablegen.
 ```

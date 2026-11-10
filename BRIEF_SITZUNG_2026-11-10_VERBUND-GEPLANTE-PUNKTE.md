@@ -45,7 +45,7 @@ bitte für die danach folgende Sitzung … einen Sitzungsbrief“). Vorherige Si
 
 ## Regeln, die gelten
 
-- Kein Release ohne Klaus' Wort; veröffentlichte Fassungen nie erneut ausgeben (nächste freie: FA 2.28.55, BLP 0.1.15, PB 1.0.49, WPP 1.0.17).
+- Kein Release ohne Klaus' Wort; veröffentlichte Fassungen nie erneut ausgeben (nächste freie: FA 2.28.56, BLP 0.1.15, PB 1.0.49, WPP 1.0.17).
 - Byte-gleiche Bausteine nie von Hand ändern (Karte, Tresor-Paket, Tresor-Leser, Pro-Bedienung).
 - Codex-Prüfungen auslassen. Keine Forschungseinträge hier (nur KimHub).
 - Jede Sitzung endet mit Abschlussbrief samt Stundennachweis und Startauftrag.
