@@ -114,6 +114,67 @@ gerade erfüllt hast … Oder lange Erklärtexte, die nicht auf die Hauptpunkte 
 2. Klaus' Ja je Gruppe einholen, dann umbauen.
 3. Proben, die Texte suchen, vorher mit `grep -rn` in `tests/ui` finden.
 
+## Alte Bestände und alte Versionsbezüge suchen (Klaus 10.11.)
+
+Klaus: „Es soll unbedingt nochmal geprüft werden, ob irgendwo noch alte Bestände sind oder alte Aussagen auf alte Versionen Bezug
+nehmen … auch in der Hilfe und in den beschreibenden Texten.“
+
+Das gehört zusammen mit „Texte durchsehen“ (Abschnitt oben) in **eine** Durchsicht mit Vorschau-Tabelle. Erste Funde vom 10.11.:
+- Fußzeile und weitere Stellen tragen noch den alten Namen **„Me, Myself and I – Meine Familienakte“**: 7 Treffer in `app/`, `lib/`, `public/`.
+- `APP_VERSION` 2.28.1 erscheint sichtbar in der Systemprüfung und der Abnahme (eigener Abschnitt oben).
+- Weitere Altlasten:
+  - `lib/release-system-check-report.json` (2.28.1);
+  - FaWoGa, Memory;
+  - „seit 2.28.46“ in der Suchhilfe;
+  - `lib/fassungen.ts` in Bau-Sprache.
+- Suchen nach:
+  - `2\.28\.[0-9]+` in sichtbaren Texten;
+  - „Me, Myself“, „MMI“, „Memory“, „FaWoGa“, „Online-Bestand“, „Website 40“;
+  - alten Menünamen (vor den neun Hauptbereichen);
+  - alten Kastennamen der Landkarte.
+
+## Rechtstexte: Impressum, Datenschutz, Haftungsausschluss (Klaus 10.11.)
+
+Klaus: „Du kannst jetzt schon anfangen, ein Impressum zu machen und eine Datenschutzerklärung, genauso einen Haftungsausschluss …
+Dafür gibt es schon Beispiele … mach mal gleich über Family Project. family-projekt.de, so wie das in den Apps schon größtenteils ist.“
+
+**Stand:**
+- `public/datenschutz.html` gibt es seit 05.11. (#100): Impressum nach § 5 DDG mit Klaus als Anbieter, Kontakt info@family-projekt.de.
+- Darin die Datenschutzerklärung mit den Abschnitten Verantwortlicher, Bereitstellung (GitHub Pages, Update-Server), lokale Verarbeitung, Kalender, Internet, Spracheingabe.
+- **Ein Haftungsausschluss fehlt.**
+- In der App verlinkt? Prüfen; die Fußzeile ist der Ort.
+- Vorbild in den anderen Apps: `privat-brain-pro/impressum.html` (Impressum & Datenschutz, „Kurz gesagt“, Daten je Ort).
+
+**Veraltet und rechtlich wichtig:**
+- Dort steht „Die App liest keine bestehenden Termine“. Seit 2.28.43 holt die App auf Wunsch Termine aus dem Kalender (beidseitig, `lib/kalender-einlesen.ts`).
+  Die Erklärung stimmt also nicht mehr; anpassen, ebenso die genannten Berechtigungen (Google, Microsoft, Gerätekalender lesen).
+- Nicht erwähnt, aber vorhanden:
+  - Pro-Tresor (verschlüsselt, gemeinsam mit anderen Pro-Apps);
+  - Teilen zwischen Pro-Apps;
+  - Netz-Abgleich im eigenen WLAN (Ports 48200/48201);
+  - Paket per Teilen;
+  - Bedeutungssuche mit Modell-Download (Quelle des Modells nennen);
+  - Brief beantworten über Mistral (EU, nur verdeckter Text, nur mit Schlüssel des Nutzers);
+  - Cloud-Ordner (OneDrive/Google, nur lokal synchronisierter Ordner);
+  - Update-Fähnchen prüft still den Update-Server (seit 2.28.52, nicht mehr nur auf Tipp!);
+  - Demo.
+
+**Auftrag:**
+1. **Anbieter „Family-Projekt“, family-projekt.de**, wie in den anderen Apps.
+   - Ein Impressum braucht eine verantwortliche Person bzw. Rechtsform. Bis zur Übertragung also „Family-Projekt, Inhaber Klaus Nitzsche“ mit der vorhandenen Anschrift.
+   - Keine Rechtsform erfinden; Klaus fragen, ob es schon eine gibt (GbR, UG o. ä.).
+2. Datenschutzerklärung auf den Stand 2.28.57 bringen (Liste oben), Abschnitt je Funktion, oben „Kurz gesagt“ in Punkten.
+3. **Haftungsausschluss** neu, als eigener Abschnitt bzw. eigene Seite:
+   - Inhalte und Hinweise der App ersetzen keine Rechts-, Steuer- oder Medizinberatung;
+   - Fristen und Vorschläge ohne Gewähr;
+   - Sicherung liegt beim Nutzer;
+   - Haftung für Links (Downloads, Geschenkbox);
+   - Testfassungen (Android-APK als Vorabversion, Windows-Setup unsigniert).
+4. Gleiche Texte in allen Fassungen (PWA, Android, Windows): in der App erreichbar aus Fußzeile und Hilfe; die Pro-Apps verlinken auf dieselbe Seite.
+5. Vorschau an Klaus.
+   - Hinweis an Klaus: Rechtstexte vor der Veröffentlichung von einer Fachperson prüfen lassen. Claude liefert einen Entwurf, keine Rechtsberatung.
+6. Keine weiteren persönlichen Daten in Dateien als die, die Klaus selbst für das Impressum freigibt.
+
 ## Danach: rote und graue Kästen der „Landkarte der App“ (Klaus 10.11.)
 
 Klaus will die roten und die grauen Kästen der Landkarte (Hilfe › Landkarte der App) abarbeiten. Stand der Kästen: `lib/app-stand.ts`,
@@ -197,6 +258,7 @@ Kasten in der Landkarte und als Hilfe-Thema zeigen (Abschnitt im Brief; Android-
 Danach: rote und graue Kästen der „Landkarte der App“ (Abschnitt im Brief): rote am Gerät nachstellen (Fehler im Live-Zustand
 oder fehlender Weg „Beheben ›“), graue E-Mail-Kästen nach Plan – erst Klaus' und Jens' Entscheidung und eine HTML-Vorschau.
 Dann Texte durchsehen (kein Gesprächston, lange Erklärungen hinter „?“; Abschnitt im Brief, erst Vorschau-Tabelle),
-dann Systemprüfung mit veralteten Berichten (Abschnitt im Brief), danach die Punkte 2–6 aus BRIEF_SITZUNG_2026-11-11_FAMILIENAKTE-WEITER.md. Je Stück eigener Zweig, PR, Fassung, Ausgabe.
+dann alte Bestände/Versionsbezüge suchen (mit der Textdurchsicht), Rechtstexte (Impressum, Datenschutz, Haftungsausschluss;
+Anbieter Family-Projekt, family-projekt.de; veraltete Kalender-Aussage), dann Systemprüfung mit veralteten Berichten (Abschnitt im Brief), danach die Punkte 2–6 aus BRIEF_SITZUNG_2026-11-11_FAMILIENAKTE-WEITER.md. Je Stück eigener Zweig, PR, Fassung, Ausgabe.
 Nicht: veröffentlichte Fassungen erneut ausgeben, byte-gleiche Bausteine von Hand ändern, Codex anstoßen.
 ```

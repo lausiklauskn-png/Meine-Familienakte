@@ -61,4 +61,6 @@ Bestätigt: Der Geschenkbox-Knopf „Landkarte öffnen“ nutzt `?ansicht=landka
 
 - Texte im Gesprächston und lange Erklärungen hinter „?“ (erste Funde im Startbrief).
 
+- Alte Bestände und Versionsbezüge suchen; Rechtstexte (Impressum, Datenschutz, Haftungsausschluss) über Family-Projekt – Datenschutz sagt noch „liest keine Termine“.
+
 Stundennachweis, Nachtrag: 16:30–17:30 UTC Befunde aufnehmen, Brief, PR #157 (Obergrenze, Pausen nicht abgezogen).
