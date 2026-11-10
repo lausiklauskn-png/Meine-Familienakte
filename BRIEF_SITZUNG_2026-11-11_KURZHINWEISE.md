@@ -87,6 +87,33 @@ Erst Vorschau (Kasten, Hilfe-Thema, Wortlaut) mit Klaus' Ja, dann bauen, Probe +
 - Eintrag `email-2026-11-07` in `app/neu-knopf.tsx`: Das `knopf`-Ziel nachsehen und auf das Hilfe-Thema der E-Mail-Karte richten, aufgeklappt (Weg wie bei `hilfe-landkarte`, über `go("help", …, { ziel })`).
 - Gleich alle Einträge in „Was ist neu“ durchgehen: Führt jeder Knopf an die genannte Stelle? Dazu eine Probe je Knopf.
 
+## Texte durchsehen: kein Gesprächston, lange Erklärungen hinter „?“ (Klaus 10.11.)
+
+Klaus: „Such bitte überall nach Texten, die aussehen, als würden wir uns unterhalten, als müsstest du mir erklären, welche Aufgabe du
+gerade erfüllt hast … Oder lange Erklärtexte, die nicht auf die Hauptpunkte gekürzt sind. Das soll alles unter Fragezeichen verschwinden.“
+
+**Regel:**
+- Sichtbar bleibt nur, was man zum Bedienen braucht: Zustand, Knopf, ein kurzer Satz.
+- Alles Erklärende kommt in Punkten hinter das „?“ (`HinweisText`/`InfoPopover`).
+- Keine Sätze, die vom Bau berichten: „zeigt jetzt“, „klappt jetzt auch“, „seit 2.28.46“, „neu: …“, „wurde ergänzt“.
+
+**Erste Funde (Suche am 10.11., nicht vollständig):**
+- `app/health-portal.tsx`: zehn sichtbare Absätze mit über 350 Zeichen, z. B. die Suchhilfe (Zeile ~2927, „… seit 2.28.46 auch in der Web-App …“).
+  Liste: `grep -rnoE "<p>[^<]{350,}</p>" app --include=*.tsx`.
+- `app/private-meaning-panel.tsx`: ein langer Absatz.
+- `app/neu-knopf.tsx` („Was ist neu“):
+  - Die Karten erzählen, was gebaut wurde („zeigen jetzt …“), in 5–7 Zeilen.
+  - Kürzen auf einen Satz plus Knopf; der Rest hinter „?“.
+  - Alte Einträge (älter als zwei Fassungen) ausblenden.
+- `lib/fassungen.ts` (Changelog „Was gibt's Neues?“): Bau-Sprache („Gerätetest: … klappt jetzt auch …“). Für Nutzer umschreiben: was man jetzt tun kann, in Punkten.
+- `app/hilfe-themen.tsx`: lange Themen-Texte auf Hauptpunkte prüfen (Welle 1 ist schon als Bild mit drei Merkpunkten).
+- Die Trefferliste unter der Landkarte (eigener Punkt oben).
+
+**Vorgehen:**
+1. Alle sichtbaren Texte über 200 Zeichen sammeln (Skript über `app/*.tsx`, JSX-Text und `text:`-Felder) und als Tabelle in eine HTML-Vorschau stellen: vorher, nachher, was hinter das „?“ geht.
+2. Klaus' Ja je Gruppe einholen, dann umbauen.
+3. Proben, die Texte suchen, vorher mit `grep -rn` in `tests/ui` finden.
+
 ## Danach: rote und graue Kästen der „Landkarte der App“ (Klaus 10.11.)
 
 Klaus will die roten und die grauen Kästen der Landkarte (Hilfe › Landkarte der App) abarbeiten. Stand der Kästen: `lib/app-stand.ts`,
@@ -169,6 +196,7 @@ Dann (wichtig): Abgleich mit einem Cloud-Ordner (OneDrive für Jens, Google-Ordn
 Kasten in der Landkarte und als Hilfe-Thema zeigen (Abschnitt im Brief; Android-Grenze am Gerät klären).
 Danach: rote und graue Kästen der „Landkarte der App“ (Abschnitt im Brief): rote am Gerät nachstellen (Fehler im Live-Zustand
 oder fehlender Weg „Beheben ›“), graue E-Mail-Kästen nach Plan – erst Klaus' und Jens' Entscheidung und eine HTML-Vorschau.
-Dann Systemprüfung mit veralteten Berichten (Abschnitt im Brief), danach die Punkte 2–6 aus BRIEF_SITZUNG_2026-11-11_FAMILIENAKTE-WEITER.md. Je Stück eigener Zweig, PR, Fassung, Ausgabe.
+Dann Texte durchsehen (kein Gesprächston, lange Erklärungen hinter „?“; Abschnitt im Brief, erst Vorschau-Tabelle),
+dann Systemprüfung mit veralteten Berichten (Abschnitt im Brief), danach die Punkte 2–6 aus BRIEF_SITZUNG_2026-11-11_FAMILIENAKTE-WEITER.md. Je Stück eigener Zweig, PR, Fassung, Ausgabe.
 Nicht: veröffentlichte Fassungen erneut ausgeben, byte-gleiche Bausteine von Hand ändern, Codex anstoßen.
 ```

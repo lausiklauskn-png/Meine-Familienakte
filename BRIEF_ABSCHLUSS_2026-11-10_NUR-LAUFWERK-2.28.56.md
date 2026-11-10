@@ -59,4 +59,6 @@ Bestätigt: Der Geschenkbox-Knopf „Landkarte öffnen“ nutzt `?ansicht=landka
 
 - „Neu“ › „E-Mail in der Hilfe“ › „Zur Hilfe“ springt nicht zur E-Mail-Karte.
 
+- Texte im Gesprächston und lange Erklärungen hinter „?“ (erste Funde im Startbrief).
+
 Stundennachweis, Nachtrag: 16:30–17:30 UTC Befunde aufnehmen, Brief, PR #157 (Obergrenze, Pausen nicht abgezogen).
