@@ -159,6 +159,9 @@ export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, onFrisc
   };
   const treffer = filter ? [...alle.values()].filter((p) => filter === "hin" || filter === "beide" ? aeste.some((k) => astTrifft(k) && (k.von === p.id || k.nach === p.id)) : punktTrifft(p)) : [];
   const trefferIds = new Set(treffer.map((p) => p.id));
+  // Klaus 10.11.: keine Liste der Treffer unter der Karte; die Zahl steht am gedrückten Legenden-Knopf.
+  const trefferZahl = filter ? treffer.length : null;
+  useEffect(() => { window.dispatchEvent(new CustomEvent(TREFFER_EREIGNIS, { detail: { karte: id, anzahl: trefferZahl } })); }, [id, trefferZahl]);
   const nachbarn = aktiv ? aeste.filter((k) => k.von === aktiv || k.nach === aktiv) : [];
   const an = new Set(nachbarn.flatMap((k) => [k.von, k.nach]));
   const gewaehlt = aktiv ? alle.get(aktiv) : null;
@@ -206,7 +209,7 @@ export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, onFrisc
         {nachbarn.some((k) => k.nach === aktiv) && <p className="lk-richtung">← kommt von: {nachbarn.filter((k) => k.nach === aktiv).map((k) => `${k.beide ? "⇄ " : ""}${titel(k.von)}`).join(", ")}</p>}
         {nachbarn.some((k) => k.von === aktiv) && <p className="lk-richtung">→ geht zu: {nachbarn.filter((k) => k.von === aktiv).map((k) => `${k.beide ? "⇄ " : ""}${titel(k.nach)}`).join(", ")}</p>}
         {gewaehlt.ziel && <button type="button" className={gewaehlt.live?.los ? "button primary" : "button secondary"} data-live-los={gewaehlt.live?.los || undefined} onClick={gewaehlt.ziel}>{gewaehlt.zielText || "Hingehen"} ›</button>}
-      </> : filter ? <span className="lk-tipp" data-lk-treffer={treffer.length}>{treffer.length ? `${treffer.length} hervorgehoben: ${treffer.map((p) => p.titel).join(", ")}` : "Auf diesem Gerät gibt es davon gerade keinen Kasten."} · Nochmal auf die Legende tippen hebt auf.</span>
+      </> : filter && !treffer.length ? <span className="lk-tipp" data-lk-leer>Auf diesem Gerät gibt es davon gerade keinen Kasten.</span>
       : <span className="lk-tipp">Tipp auf einen Kasten zeigt, woher Daten kommen, wohin sie gehen und wo er in der App liegt.</span>}
     </div>
   </div>;
@@ -215,15 +218,21 @@ export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, onFrisc
 /** Legende als Knöpfe (Klaus 10.11.): ein Tipp auf eine Farbe hebt alle Kästen und Wege dieser Art in der Karte hervor, ein zweiter Tipp hebt auf. */
 export type KartenFilter = "l-gruen" | "l-rot" | "l-gelb" | "l-grau" | "s-fertig" | "s-imbau" | "s-aktivieren" | "s-geplant" | "warn" | "hin" | "beide" | "frisch";
 const FILTER_EREIGNIS = "fa-landkarte-filter";
-export function KartenLegende({ live = false, fuer }: { live?: boolean; fuer: string }) {
+const TREFFER_EREIGNIS = "fa-landkarte-treffer";
+export function KartenLegende({ live = false, fuer, ohneGeraet = false }: { live?: boolean; fuer: string; /** Datei ohne App: kein „muss eingeschaltet werden“. */ ohneGeraet?: boolean }) {
   const [wahl, setWahl] = useState<KartenFilter | null>(null);
+  const [zahl, setZahl] = useState<number | null>(null);
+  useEffect(() => {
+    const h = (e: Event) => { const d = (e as CustomEvent<{ karte: string; anzahl: number | null }>).detail; if (d.karte === fuer) setZahl(d.anzahl); };
+    window.addEventListener(TREFFER_EREIGNIS, h); return () => window.removeEventListener(TREFFER_EREIGNIS, h);
+  }, [fuer]);
   useEffect(() => {
     const h = (e: Event) => { const d = (e as CustomEvent<{ karte: string; filter: KartenFilter | null }>).detail; if (d.karte === fuer) setWahl(d.filter); };
     window.addEventListener(FILTER_EREIGNIS, h); return () => window.removeEventListener(FILTER_EREIGNIS, h);
   }, [fuer]);
   const tipp = (f: KartenFilter) => window.dispatchEvent(new CustomEvent(FILTER_EREIGNIS, { detail: { karte: fuer, filter: wahl === f ? null : f } }));
   const k = (f: KartenFilter, inhalt: ReactNode) => <button type="button" className={`lk-filter${wahl === f ? " an" : ""}`} data-lk-filter={f} aria-pressed={wahl === f}
-    title="Zeigt alle Kästen und Wege dieser Art in der Karte" onClick={() => tipp(f)}>{inhalt}</button>;
+    title={wahl === f ? "Nochmal tippen hebt die Hervorhebung auf" : "Zeigt alle Kästen und Wege dieser Art in der Karte"} onClick={() => tipp(f)}>{inhalt}{wahl === f && zahl !== null && <span className="lk-filter-zahl" data-lk-treffer={zahl}> · {zahl}</span>}</button>;
   return <p className="lk-legende" data-lk-legende={fuer}>
     {live && <span className="lk-legende-live" data-live-legende><b>Dieses Gerät (Fläche):</b>
       {k("l-gruen", <><i className="lk-muster l-gruen" aria-hidden="true"/> eingerichtet</>)}
@@ -233,7 +242,7 @@ export function KartenLegende({ live = false, fuer }: { live?: boolean; fuer: st
       <b>Baustand (Rahmen):</b></span>}
     {k("s-fertig", <><i className="lk-muster s-fertig" aria-hidden="true"/> fertig</>)}
     {k("s-imbau", <><i className="lk-muster s-imbau" aria-hidden="true"/> im Bau, bald fertig</>)}
-    {!live && k("s-aktivieren", <><i className="lk-muster s-aktivieren l-rot" aria-hidden="true"/> muss eingeschaltet werden</>)}
+    {!live && !ohneGeraet && k("s-aktivieren", <><i className="lk-muster s-aktivieren l-rot" aria-hidden="true"/> muss eingeschaltet werden</>)}
     {k("s-geplant", <><i className="lk-muster s-geplant" aria-hidden="true"/> geplant, abzusprechen</>)}
     {k("warn", <>⚠ Vorsicht</>)}{k("hin", <>→ Daten nur in eine Richtung</>)}{k("beide", <>⇄ hin und zurück</>)}
     {k("frisch", <><i className="lk-muster frisch" aria-hidden="true"/> neu seit dem letzten Öffnen</>)}
