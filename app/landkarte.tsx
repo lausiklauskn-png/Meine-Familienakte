@@ -45,6 +45,11 @@ export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, onFrisc
   // Rücksprung (W12): nach „Hingehen ›“ und Zurück steht derselbe Kasten wieder gewählt, damit die Marke ihn findet.
   const [aktiv, setAktiv] = useState<string | null>(startAktiv);
   const [frisch, setFrisch] = useState<Set<string>>(new Set());
+  const [filter, setFilter] = useState<KartenFilter | null>(null);
+  useEffect(() => {
+    const h = (e: Event) => { const d = (e as CustomEvent<{ karte: string; filter: KartenFilter | null }>).detail; if (d.karte === id) setFilter(d.filter); };
+    window.addEventListener(FILTER_EREIGNIS, h); return () => window.removeEventListener(FILTER_EREIGNIS, h);
+  }, [id]);
 
   const alle = useMemo(() => {
     const m = new Map<string, KartenPunkt & { gruppe?: KartenGruppe }>();
@@ -81,7 +86,11 @@ export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, onFrisc
       const pos: Lage["pos"] = {}, groesse: Record<string, { w: number; h: number }> = {};
       b.querySelectorAll<HTMLElement>("[data-karte-gruppe], [data-karte-knoten]").forEach((e) => { groesse[e.dataset.karteGruppe || e.dataset.karteKnoten!] = { w: e.offsetWidth, h: e.offsetHeight }; });
       const chipIn: Record<string, Rechteck & { g: string }> = {};
-      b.querySelectorAll<HTMLElement>("[data-karte-chip]").forEach((e) => { const g = e.closest<HTMLElement>("[data-karte-gruppe]")!; chipIn[e.dataset.karteChip!] = { l: e.offsetLeft, t: e.offsetTop, w: e.offsetWidth, h: e.offsetHeight, g: g.dataset.karteGruppe! }; });
+      // Lage des Chips relativ zur GRUPPE messen, nicht zu seinem offsetParent (.lk-chips ist positioniert und liegt unter
+      // Titel und Untertitel der Gruppe) – sonst sitzen die Fäden um die Kopfhöhe zu hoch (Gerätetest 10.11.: 50–90 px am Tablet).
+      b.querySelectorAll<HTMLElement>("[data-karte-chip]").forEach((e) => { const g = e.closest<HTMLElement>("[data-karte-gruppe]")!;
+        let l = 0, t = 0; for (let n: HTMLElement | null = e; n && n !== g; n = n.offsetParent as HTMLElement | null) { l += n.offsetLeft; t += n.offsetTop; }
+        chipIn[e.dataset.karteChip!] = { l, t, w: e.offsetWidth, h: e.offsetHeight, g: g.dataset.karteGruppe! }; });
       const rect = (pid: string): Rechteck | null => {
         const c = chipIn[pid];
         if (c) { const g = pos[c.g]; return g ? { l: g.x + c.l, t: g.y + c.t, w: c.w, h: c.h } : null; }
@@ -122,26 +131,46 @@ export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, onFrisc
       setLage({ pos, breite, hoehe: hoehe + RAND + 50, aeste: linien });
     };
     rechnen();
-    let tot = false, breiteAlt = b.offsetWidth;
-    document.fonts?.ready.then(() => { if (!tot) rechnen(); });
-    // In einem zugeklappten Thema haben die Kästen noch keine Größe: beim Aufklappen neu rechnen.
-    const beob = typeof ResizeObserver === "function" ? new ResizeObserver(() => { const w = b.querySelector<HTMLElement>("[data-karte-gruppe], [data-karte-knoten]")?.offsetWidth || 0; if (!tot && w !== breiteAlt) { breiteAlt = w; rechnen(); } }) : null;
-    const erster = b.querySelector<HTMLElement>("[data-karte-gruppe], [data-karte-knoten]"); if (erster && beob) { breiteAlt = erster.offsetWidth; beob.observe(erster); }
+    let tot = false;
+    // Neu rechnen, sobald sich die Größe eines Kastens oder Chips ändert – nicht nur die Breite des ersten:
+    // Live-Texte, Schriften und aufgeklappte Themen machen Chips später höher, sonst sitzen die Fäden zu hoch.
+    const masse = () => Array.from(b.querySelectorAll<HTMLElement>("[data-karte-gruppe], [data-karte-knoten], [data-karte-chip]"))
+      .map((e) => `${e.offsetWidth}x${e.offsetHeight}@${e.offsetTop}`).join("|");
+    let masseAlt = masse();
+    document.fonts?.ready.then(() => { if (!tot) { masseAlt = masse(); rechnen(); } });
+    const beob = typeof ResizeObserver === "function" ? new ResizeObserver(() => { const m = masse(); if (!tot && m !== masseAlt) { masseAlt = m; rechnen(); } }) : null;
+    if (beob) b.querySelectorAll<HTMLElement>("[data-karte-gruppe], [data-karte-knoten], [data-karte-chip]").forEach((e) => beob.observe(e));
     return () => { tot = true; beob?.disconnect(); };
   }, [gruppen, knoten, aeste, breiten]);
 
+  const punktTrifft = (p: KartenPunkt | undefined): boolean => {
+    if (!p || !filter) return false;
+    if (filter.startsWith("l-")) return p.live?.farbe === filter.slice(2);
+    if (filter.startsWith("s-")) return (p.stand || "fertig") === filter.slice(2);
+    if (filter === "warn") return Boolean(p.warn);
+    if (filter === "frisch") return frisch.has(p.id);
+    return false;
+  };
+  const astTrifft = (k: KartenKante): boolean => {
+    if (!filter) return false;
+    if (filter === "hin") return !k.beide; if (filter === "beide") return Boolean(k.beide);
+    // Ein Weg gehört zu einer Farbe, wenn einer seiner Kästen sie hat (gelbe/rote Wege = Wege zu gelben/roten Kästen).
+    return punktTrifft(alle.get(k.von)) || punktTrifft(alle.get(k.nach));
+  };
+  const treffer = filter ? [...alle.values()].filter((p) => filter === "hin" || filter === "beide" ? aeste.some((k) => astTrifft(k) && (k.von === p.id || k.nach === p.id)) : punktTrifft(p)) : [];
+  const trefferIds = new Set(treffer.map((p) => p.id));
   const nachbarn = aktiv ? aeste.filter((k) => k.von === aktiv || k.nach === aktiv) : [];
   const an = new Set(nachbarn.flatMap((k) => [k.von, k.nach]));
   const gewaehlt = aktiv ? alle.get(aktiv) : null;
   const wahl = (pid: string) => { gesehen(pid); setAktiv((alt) => alt === pid ? null : pid); };
-  const klasse = (p: KartenPunkt, art: string) => [art, `s-${p.stand || "fertig"}`, p.live && `l-${p.live.farbe}`, p.warn && "warn", p.mitte && "mitte", an.has(p.id) && "an", frisch.has(p.id) && "frisch"].filter(Boolean).join(" ");
+  const klasse = (p: KartenPunkt, art: string) => [art, `s-${p.stand || "fertig"}`, p.live && `l-${p.live.farbe}`, p.warn && "warn", p.mitte && "mitte", trefferIds.has(p.id) && "treffer", an.has(p.id) && "an", frisch.has(p.id) && "frisch"].filter(Boolean).join(" ");
   const inhalt = (p: KartenPunkt, mitUnter: boolean): ReactNode => <><span className="lk-punkt" aria-hidden="true"/><strong>{p.warn ? "⚠ " : ""}{p.titel}</strong><small>{p.live ? p.live.text : mitUnter ? [p.wo, p.unter].filter(Boolean).join(" · ") : p.wo}</small></>;
   const knopf = (p: KartenPunkt, art: "lk-chip" | "lk-kasten", data: Record<string, string>) =>
     <button type="button" key={p.id} className={klasse(p, art)} {...data} aria-pressed={aktiv === p.id} data-live={p.live?.farbe}
       aria-label={`${p.titel} (${p.live ? `${LIVE_WORT[p.live.farbe]}: ${p.live.text}` : WORT[p.stand || "fertig"]}) – Verbindungen zeigen`} onClick={() => wahl(p.id)}>{inhalt(p, art === "lk-kasten")}</button>;
   const titel = (pid: string) => alle.get(pid)?.titel || pid;
 
-  return <div className="landkarte" data-landkarte={id} data-ansicht="karte">
+  return <div className={`landkarte${filter ? " lk-gefiltert" : ""}`} data-landkarte={id} data-ansicht="karte" data-lk-gefiltert={filter || undefined}>
     <div className="lk-rahmen">
       <div className="lk-buehne" ref={buehne} role="group" aria-label={label} style={lage ? { width: lage.breite, height: lage.hoehe } : { visibility: "hidden" }}>
         <svg className="lk-aeste" aria-hidden="true" width={lage?.breite || 0} height={lage?.hoehe || 0}>
@@ -154,7 +183,7 @@ export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, onFrisc
           {lage?.aeste.map(({ k, d }) => {
             const hervor = aktiv === k.von || aktiv === k.nach, z = hervor ? "-an" : "";
             const geplant = [k.von, k.nach].some((pid) => nochNichtDa(alle.get(pid)));
-            return <path key={`${k.von}>${k.nach}`} d={d} className={`lk-ast${hervor ? " an" : ""}${geplant ? " geplant" : ""}`} data-ast={`${k.von}>${k.nach}`} data-richtung={k.beide ? "beide" : "hin"}
+            return <path key={`${k.von}>${k.nach}`} d={d} className={`lk-ast${hervor ? " an" : ""}${geplant ? " geplant" : ""}${astTrifft(k) ? " treffer" : ""}`} data-ast={`${k.von}>${k.nach}`} data-richtung={k.beide ? "beide" : "hin"}
               markerEnd={`url(#lk-${id}-spitze${z})`} markerStart={k.beide ? `url(#lk-${id}-anfang${z})` : undefined}/>;
           })}
         </svg>
@@ -177,23 +206,36 @@ export function Landkarte({ id, label, gruppen, knoten, kanten, breiten, onFrisc
         {nachbarn.some((k) => k.nach === aktiv) && <p className="lk-richtung">← kommt von: {nachbarn.filter((k) => k.nach === aktiv).map((k) => `${k.beide ? "⇄ " : ""}${titel(k.von)}`).join(", ")}</p>}
         {nachbarn.some((k) => k.von === aktiv) && <p className="lk-richtung">→ geht zu: {nachbarn.filter((k) => k.von === aktiv).map((k) => `${k.beide ? "⇄ " : ""}${titel(k.nach)}`).join(", ")}</p>}
         {gewaehlt.ziel && <button type="button" className={gewaehlt.live?.los ? "button primary" : "button secondary"} data-live-los={gewaehlt.live?.los || undefined} onClick={gewaehlt.ziel}>{gewaehlt.zielText || "Hingehen"} ›</button>}
-      </> : <span className="lk-tipp">Tipp auf einen Kasten zeigt, woher Daten kommen, wohin sie gehen und wo er in der App liegt.</span>}
+      </> : filter ? <span className="lk-tipp" data-lk-treffer={treffer.length}>{treffer.length ? `${treffer.length} hervorgehoben: ${treffer.map((p) => p.titel).join(", ")}` : "Auf diesem Gerät gibt es davon gerade keinen Kasten."} · Nochmal auf die Legende tippen hebt auf.</span>
+      : <span className="lk-tipp">Tipp auf einen Kasten zeigt, woher Daten kommen, wohin sie gehen und wo er in der App liegt.</span>}
     </div>
   </div>;
 }
 
-export function KartenLegende({ live = false }: { live?: boolean }) {
-  return <p className="lk-legende">
+/** Legende als Knöpfe (Klaus 10.11.): ein Tipp auf eine Farbe hebt alle Kästen und Wege dieser Art in der Karte hervor, ein zweiter Tipp hebt auf. */
+export type KartenFilter = "l-gruen" | "l-rot" | "l-gelb" | "l-grau" | "s-fertig" | "s-imbau" | "s-aktivieren" | "s-geplant" | "warn" | "hin" | "beide" | "frisch";
+const FILTER_EREIGNIS = "fa-landkarte-filter";
+export function KartenLegende({ live = false, fuer }: { live?: boolean; fuer: string }) {
+  const [wahl, setWahl] = useState<KartenFilter | null>(null);
+  useEffect(() => {
+    const h = (e: Event) => { const d = (e as CustomEvent<{ karte: string; filter: KartenFilter | null }>).detail; if (d.karte === fuer) setWahl(d.filter); };
+    window.addEventListener(FILTER_EREIGNIS, h); return () => window.removeEventListener(FILTER_EREIGNIS, h);
+  }, [fuer]);
+  const tipp = (f: KartenFilter) => window.dispatchEvent(new CustomEvent(FILTER_EREIGNIS, { detail: { karte: fuer, filter: wahl === f ? null : f } }));
+  const k = (f: KartenFilter, inhalt: ReactNode) => <button type="button" className={`lk-filter${wahl === f ? " an" : ""}`} data-lk-filter={f} aria-pressed={wahl === f}
+    title="Zeigt alle Kästen und Wege dieser Art in der Karte" onClick={() => tipp(f)}>{inhalt}</button>;
+  return <p className="lk-legende" data-lk-legende={fuer}>
     {live && <span className="lk-legende-live" data-live-legende><b>Dieses Gerät (Fläche):</b>
-      <span><i className="lk-muster l-gruen" aria-hidden="true"/> eingerichtet</span>
-      <span><i className="lk-muster l-rot" aria-hidden="true"/> fehlt – antippen, beheben</span>
-      <span><i className="lk-muster l-gelb" aria-hidden="true"/> gesperrt oder veraltet</span>
-      <span><i className="lk-muster l-grau" aria-hidden="true"/> freiwillig oder nicht hier</span>
+      {k("l-gruen", <><i className="lk-muster l-gruen" aria-hidden="true"/> eingerichtet</>)}
+      {k("l-rot", <><i className="lk-muster l-rot" aria-hidden="true"/> fehlt – antippen, beheben</>)}
+      {k("l-gelb", <><i className="lk-muster l-gelb" aria-hidden="true"/> gesperrt oder veraltet</>)}
+      {k("l-grau", <><i className="lk-muster l-grau" aria-hidden="true"/> freiwillig oder nicht hier</>)}
       <b>Baustand (Rahmen):</b></span>}
-    <span><i className="lk-muster s-fertig" aria-hidden="true"/> fertig</span>
-    <span><i className="lk-muster s-imbau" aria-hidden="true"/> im Bau, bald fertig</span>
-    {!live && <span><i className="lk-muster s-aktivieren l-rot" aria-hidden="true"/> muss eingeschaltet werden</span>}
-    <span><i className="lk-muster s-geplant" aria-hidden="true"/> geplant, abzusprechen</span>
-    <span>⚠ Vorsicht</span><span>→ Daten nur in eine Richtung</span><span>⇄ hin und zurück</span><span><i className="lk-muster frisch" aria-hidden="true"/> neu seit dem letzten Öffnen</span>
+    {k("s-fertig", <><i className="lk-muster s-fertig" aria-hidden="true"/> fertig</>)}
+    {k("s-imbau", <><i className="lk-muster s-imbau" aria-hidden="true"/> im Bau, bald fertig</>)}
+    {!live && k("s-aktivieren", <><i className="lk-muster s-aktivieren l-rot" aria-hidden="true"/> muss eingeschaltet werden</>)}
+    {k("s-geplant", <><i className="lk-muster s-geplant" aria-hidden="true"/> geplant, abzusprechen</>)}
+    {k("warn", <>⚠ Vorsicht</>)}{k("hin", <>→ Daten nur in eine Richtung</>)}{k("beide", <>⇄ hin und zurück</>)}
+    {k("frisch", <><i className="lk-muster frisch" aria-hidden="true"/> neu seit dem letzten Öffnen</>)}
   </p>;
 }
