@@ -105,5 +105,19 @@ try {
     check(errors.length === 0, `${name}: keine Fehler in der Konsole`, errors.join(" | "));
     await context.close();
   }
+  // Klaus 10.11.: aus der Geschenkbox „?ansicht=landkarte“ – die App öffnet gleich die Hilfe mit aufgeklappter Landkarte im Blick.
+  {
+    const context = await browser.newContext(HANDY); const page = await context.newPage();
+    // Erst die Beispielakte anlegen (ready() lädt danach neu), dann die Adresse aus der Geschenkbox aufrufen.
+    await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page);
+    await page.goto(app.base + "?ansicht=landkarte", { waitUntil: "networkidle" });
+    await step("Adresse ?ansicht=landkarte öffnet die Landkarte sofort (aufgeklappt, im Blick, Adresse wieder sauber)", async () => {
+      const karte = page.locator("[data-app-landkarte]"); await karte.waitFor();
+      await page.locator('[data-app-landkarte="offen"] [data-landkarte="app"]').waitFor({ timeout: 8000 });
+      const r = await page.evaluate(() => { const k = document.querySelector("[data-landkarte='app']").getBoundingClientRect(); return { oben: k.top, hoehe: innerHeight, adresse: location.search }; });
+      return soll(r.oben < r.hoehe && !/ansicht=/.test(r.adresse), r);
+    });
+    await context.close();
+  }
 } finally { await browser.close(); await app.stop(); }
 process.exit(summary("Landkarte der App"));

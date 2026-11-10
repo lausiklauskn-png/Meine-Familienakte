@@ -1379,6 +1379,15 @@ function HealthPortalContent() {
   }, []);
   // Kalender-Knopf in „Erinnern lassen“: zu Fristen und Aufgaben, Karte „Kalender verbinden“ auf.
   const goRef = useRef(go); goRef.current = go;
+  // Klaus 10.11.: Adresse „?ansicht=landkarte“ (Geschenkbox) öffnet gleich die Landkarte der App – ohne Umweg über die Startseite.
+  useEffect(() => {
+    let ziel = "";
+    try { ziel = new URLSearchParams(window.location.search).get("ansicht") || ""; } catch { /* ohne Adresse */ }
+    if (ziel !== "landkarte") return;
+    try { const u = new URL(window.location.href); u.searchParams.delete("ansicht"); window.history.replaceState(window.history.state, "", u.toString()); } catch { /* nur Komfort */ }
+    const t = window.setTimeout(() => { landkarteAufmachen(true); goRef.current("help", undefined, { ziel: "[data-app-landkarte]" }); }, 0);
+    return () => window.clearTimeout(t);
+  }, []);
   useEffect(() => {
     const oeffnen = () => goRef.current("reminders", undefined, { ziel: "#kalender-verbinden" });
     window.addEventListener(KALENDER_OEFFNEN, oeffnen);
