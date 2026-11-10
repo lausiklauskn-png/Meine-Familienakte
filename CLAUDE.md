@@ -5,8 +5,15 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 `docs/briefe-archiv/` (Klaus 2026-11-04: archivieren statt löschen); die Veröffentlichungsnachweise in
 `docs/VEROEFFENTLICHUNG-<fassung>.json`.
 
-## Aktueller Stand (10.11.2026, nach 2.28.52)
+## Aktueller Stand (10.11.2026, nach 2.28.53)
 
+- **Fassung 2.28.53** (#150; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.53.json`; Brief
+  `BRIEF_ABSCHLUSS_2026-11-10_GERAETETEST-2.28.53.md`), aus Klaus' Gerätetest 10.11.: **Zuordnung prüfen** folgt der eigenen Wahl
+  (Kartenfarbe, Titel, Marke „bestätigt/von dir angepasst/bitte prüfen“), Haken **„Zuordnung stimmt“** übernimmt alle Vorschläge,
+  ohne Vorgänge Hinweis statt leerer Liste (`app/health-portal.tsx`, Probe `zuordnung-pruefen`). **Papierkorb** für Erinnerungen,
+  Aufgaben, Fristen und Notizen mit Zurückholen (`app/local-vault.ts` `index.papierkorb`, `app/papierkorb-karte.tsx`; höchstens 200).
+  **Glocke „Probe hören“** nutzt in der APK den Android-Kanal mit dem gewählten Ton (`FamilienakteGlockePlugin.probe`).
+  Geschenkbox `docs/geschenk/geschenkbox-pro.html` mit Abschnitt „Landkarten“ (Artefakt XeUMGuSZ49FzsJYjwQznM7).
 - **Fassung 2.28.52** (#148 mit #147; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.52.json`; Brief
   `BRIEF_ABSCHLUSS_2026-11-10_VERBUND-OHNE-ORANGE.md`): **Tresor-Leser** in „Wo liegt was?“ (`app/tresor-leser-knopf.tsx`, Datei
   byte-gleich aus Workflow PDF Pro unter `public/tresor-leser/`, Pin im `check:herkunft`; Probe `tresor-leser`), **Update-Fähnchen ohne
@@ -73,9 +80,9 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   (2.28.35, `docs/landkarte/`), Landkarte der App mit **Stand je Kasten in `lib/app-stand.ts` – bei jeder Fassung eintragen** (2.28.36),
   Hilfe-Themen als Bild, Vorschaufenster (2.28.37), Listenzeilen mit `KnopfLeiste`, Kopfleiste (2.28.38).
   Proben-Hinweise: `step()` wertet einen zurückgegebenen Text als grün, deshalb `soll()`; Seitentitel sind keine Sprungziele.
-- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
+- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
   (2.28.50 ausgegeben, aber ohne eigenen Nachweis; 2.28.40–2.28.47 waren Zwischenstände). Keine davon erneut ausgeben;
-  **nächste freie Fassung 2.28.53**. Klaus 2026-11-06: neue Funktionen immer gleich als APK, PWA und Windows ausgeben.
+  **nächste freie Fassung 2.28.54**. Klaus 2026-11-06: neue Funktionen immer gleich als APK, PWA und Windows ausgeben.
   Neue Fassung oben in `lib/fassungen.ts` eintragen. Die Versionszeile zeigt die technische Fassung aus `package.json`;
   `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
 - **Kalender:** Kern `lib/kalender.ts`, Glocke `lib/glocke.ts`, Oberfläche `app/kalender-karte.tsx`, `app/mein-kalender.tsx`,
@@ -101,14 +108,17 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
-  - `BRIEF_ABSCHLUSS_2026-11-10_VERBUND-OHNE-ORANGE.md` (jüngster Abschluss: Karte ohne Orange, vier Apps ausgegeben)
-  - `BRIEF_SITZUNG_2026-11-10_VERBUND-GEPLANTE-PUNKTE.md` (Startbrief: graue/rote Wege der Pro-Verbund-Karte)
+  - `BRIEF_ABSCHLUSS_2026-11-10_GERAETETEST-2.28.53.md` (jüngster Abschluss: Gerätetest 10.11., Fassung 2.28.53, Geschenkbox)
+  - `BRIEF_ABSCHLUSS_2026-11-10_VERBUND-OHNE-ORANGE.md` (Abschluss der Nacht: Karte ohne Orange, vier Apps ausgegeben)
+  - `BRIEF_SITZUNG_2026-11-10_VERBUND-GEPLANTE-PUNKTE.md` (Startbrief: graue/rote Wege der Pro-Verbund-Karte und offene Punkte aus 2.28.53)
   - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-09_AUSGABE-2.28.51.md` (Ausgabe 2.28.51; Startauftrag Gerätetest)
   - `BRIEF_CODEX_2026-11-04_NACH-2.28.24.md` (Abstimmung mit Codex: welche Dateien Claude gehören)
   - `BRIEF_ABSCHLUSS_2026-11-04_PDF-ARBEITSRAUM.md`, `BRIEF_ABSCHLUSS_2026-11-04_PDF-FUNKTIONSABGLEICH.md` (Codex)
 
 ## Offen
 
+- **2.28.53 am Gerät ungeprüft:** Papierkorb (Löschen → Zurückholen → endgültig), Glocken-Probe mit gewähltem Ton, Haken
+  „Zuordnung stimmt“ und Kartenfarbe nach eigener Wahl.
 - **2.28.52 am Gerät ungeprüft:** Tresor-Leser mit echtem Tresor auf SD/USB (Ordnerwahl, Öffnen im Handy-Browser), Update-Fähnchen
   beim Zurückholen der App, Zusammenspiel der Pro-Apps im selben Tresor (alle gelben Wege der Karte). BookLedger Basic hat noch die alte Karte.
 - **2.28.51 am Gerät ungeprüft:** Tresor im Ordner „Familienakte“ (SAF-Freigabe), Live-Zustände der Karten (alles nur gestellt).
