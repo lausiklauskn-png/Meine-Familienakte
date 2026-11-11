@@ -629,16 +629,16 @@ function HealthPortalContent() {
     if (!vaultHandle) return;
     if (fragen && !await askConfirm("Alle Beispieldaten entfernen?\n\nEntfernt werden nur die erfundenen Beispieleinträge und Beispieldokumente. Deine eigenen Unterlagen und Einträge bleiben erhalten.")) return;
     setSampleBusy(true);
-    try { const result = await removeSampleFamily(vaultHandle); await refreshLocal(vaultHandle); setNotice({ kind: "success", text: `Bsp.-Akten entfernt: ${result.removedEntries} Einträge, ${result.removedFiles} Unterlagen.` }); }
+    try { const result = await removeSampleFamily(vaultHandle); await refreshLocal(vaultHandle); setNotice({ kind: "success", text: `Bsp. entfernt: ${result.removedEntries} Einträge, ${result.removedFiles} Unterlagen.` }); }
     catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die Beispieldaten konnten nicht entfernt werden." }); }
     finally { setSampleBusy(false); }
   };
-  // Klaus 11.11.: „+ Bsp.-Akten“ legt die erfundene Beispielfamilie in die eigene Akte (gespeichert), „− Bsp.-Akten“ nimmt nur sie heraus.
+  // Klaus 11.11.: „+ Bsp.“ legt die erfundene Beispielfamilie in die eigene Akte (gespeichert), „− Bsp.“ nimmt nur sie heraus.
   const addSampleData = async () => {
     if (!vaultHandle || demoActive()) return;
     setSampleBusy(true);
-    try { await seedSampleFamily(vaultHandle, { force: true }); await refreshLocal(vaultHandle); setNotice({ kind: "success", text: "Bsp.-Akten angelegt: erfundene Beispielfamilie in allen Bereichen, mit rotem Dreieck markiert." }); }
-    catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die Bsp.-Akten konnten nicht angelegt werden." }); }
+    try { await seedSampleFamily(vaultHandle, { force: true }); await refreshLocal(vaultHandle); setNotice({ kind: "success", text: "Bsp. angelegt: erfundene Beispielfamilie in allen Bereichen, mit rotem Dreieck markiert." }); }
+    catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die Bsp. konnten nicht angelegt werden." }); }
     finally { setSampleBusy(false); }
   };
   const loadSampleData = async () => {
@@ -1078,8 +1078,8 @@ function HealthPortalContent() {
     try {
       const destination = await chooseExportDestination("Ordner für die Vollsicherung wählen (getrennt vom Pro-Tresor)");
       setNotice({ kind: "info", laeuft: true, text: passwort ? "Sicherung läuft: jede Datei wird verschlüsselt, zurückgelesen und per Prüfsumme bestätigt." : "Sicherung läuft: jede Datei wird kopiert und per Prüfsumme bestätigt." });
-      // Bsp.-Akten (Klaus 11.11.): nicht mitsichern – die Vorlage steckt in der App.
-      // Besteht die Akte nur aus Bsp.-Akten, wird sie normal gesichert – sonst wäre die Sicherung leer.
+      // Bsp. (Klaus 11.11.): nicht mitsichern – die Vorlage steckt in der App.
+      // Besteht die Akte nur aus Bsp., wird sie normal gesichert – sonst wäre die Sicherung leer.
       const bestand = samplePresent ? await readLocalVaultData(vaultHandle) : null;
       const bspIdsSicherung = bestand ? beispielIdsVon(bestand) : null;
       const eigeneDa = Boolean(bestand && bspIdsSicherung && [...bestand.documents, ...bestand.records].some((x) => !bspIdsSicherung.has(x.id)));
@@ -1090,7 +1090,7 @@ function HealthPortalContent() {
       try { programm = await programmBeilegen(destination, result.folderName, APP_FASSUNG); }
       catch (error) { programm = ` Das Programm konnte nicht beigelegt werden (${error instanceof Error ? error.message : "unbekannt"}).`; }
       await refreshLocal();
-      setNotice({ kind: "success", text: `Die vollständige Familienakten-Sicherung „${result.folderName}“ wurde ${passwort ? "verschlüsselt " : ""}mit Register, Verknüpfungen, Tagebuch-Einträge, Medien und Prüfsummen erstellt.${result.ausgelassen ? " Bsp.-Akten nicht mitgesichert." : ""}${programm}${passwort ? "" : " Für die endgültige Bestätigung folgt die Wiederherstellung in einem leeren Testordner."}` });
+      setNotice({ kind: "success", text: `Die vollständige Familienakten-Sicherung „${result.folderName}“ wurde ${passwort ? "verschlüsselt " : ""}mit Register, Verknüpfungen, Tagebuch-Einträge, Medien und Prüfsummen erstellt.${result.ausgelassen ? " Bsp. nicht mitgesichert." : ""}${programm}${passwort ? "" : " Für die endgültige Bestätigung folgt die Wiederherstellung in einem leeren Testordner."}` });
       if (result.notfall) setNotfallblatt({ notfall: result.notfall, ordner: result.folderName, erstellt: result.manifest.createdAt });
     } catch (error) { if ((error as DOMException)?.name !== "AbortError") setNotice({ kind: "error", text: `Vollsicherung nicht erstellt: ${error instanceof Error ? ordnerFehlerText(error) : "unbekannter Fehler."}` }); else setNotice(null); }
     finally { setVaultBusy(false); }
@@ -1269,7 +1269,7 @@ function HealthPortalContent() {
 
   // Feste Beispielangaben (health-data.json) nur in der Demo bzw. solange die Beispielfamilie im Bestand ist.
   const searchBeispiele = demoActive() || samplePresent;
-  // Bsp.-Akten (Klaus 11.11.): Kennungen für das rote Dreieck; in der Demo nicht nötig, dort ist alles Beispiel.
+  // Bsp. (Klaus 11.11.): Kennungen für das rote Dreieck; in der Demo nicht nötig, dort ist alles Beispiel.
   const bspIds = useMemo<ReadonlySet<string>>(() => demoActive() || !samplePresent ? new Set() : new Set([...beispielIdsVon({ documents: localDocuments, records: familyRecords, relations: familyRelations }), ...documents.map((d) => d.id)]),
     [samplePresent, localDocuments, familyRecords, familyRelations, documents]);
   const searchResults = useMemo(() => buildSearchResults(query, documents, aktenDokumente, familyRecords, familyRelations, { beispiele: searchBeispiele }), [query, documents, aktenDokumente, familyRecords, familyRelations, searchBeispiele]);
@@ -1605,7 +1605,7 @@ function HealthPortalContent() {
         </section>
         <ActivityLines/>
         {sampleBusy && !samplePresent && <section className="info-notice sample-data-notice" aria-live="polite"><span>Info</span><div><strong>Beispieldaten werden vorbereitet …</strong><div>Die Demo legt eine frei erfundene Beispielfamilie im getrennten Demobestand an. Das dauert nur wenige Sekunden.</div></div></section>}
-        {samplePresent && !demoActive() && <section className="info-notice sample-data-notice" aria-label="Hinweis zu Beispieldaten"><span>Info</span><div><strong>Bsp.-Akten in deiner Akte</strong></div><button type="button" className="button secondary" disabled={sampleBusy} onClick={() => void removeSampleData(false)} data-bsp-weg>− Bsp.-Akten</button></section>}
+        {samplePresent && !demoActive() && <section className="info-notice sample-data-notice" aria-label="Hinweis zu Beispieldaten"><span>Info</span><div><strong>Bsp. in deiner Akte</strong></div><button type="button" className="button secondary" disabled={sampleBusy} onClick={() => void removeSampleData(false)} data-bsp-weg>− Bsp.</button></section>}
         <div className="breadcrumb">
           {(navigation.canBack || navigation.canForward) && <span className="navigation-history" aria-label="Ansichtsverlauf">
             <button type="button" onClick={navigation.back} disabled={!navigation.canBack} aria-label="Zur vorherigen Ansicht" title="Zurück (Strg+Z)"><ArrowLeft size={15}/><span>Zurück</span></button>

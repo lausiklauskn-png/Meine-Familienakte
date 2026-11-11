@@ -38,7 +38,8 @@ export const APP_STAND: Readonly<Record<string, StandEintrag>> = {
   // Abgleich zwischen Geräten (Plan Punkt 10): die Übergabe einer Unterlage ist fertig, der Abgleich steht im Kastentext als geplant.
   // Stufe C: gemeinsame Festplatte – vorbereiten, verbinden, abgleichen; erkannt an der Kennung.
   // Stufe I: Paket per Teilen (verschlüsselte Datei mit den Änderungen seit dem letzten Paket).
-  "anderes-geraet": { stand: "fertig", seit: "2.28.48" },
+  // 2.28.61: „Meine Geräte“ – dieses Gerät per Knopf benennen, andere erscheinen von selbst; alte Einzelübergabe ausgeblendet.
+  "anderes-geraet": { stand: "fertig", seit: "2.28.61" },
   // Stufe A (Plan 08.11.): Sicherung einlesen führt in eine benutzte Akte zusammen.
   // Stufe B: verschlüsselte Vollsicherung mit Notfallblatt, Erinnerung nach 7 Tagen, Papierkorb leeren.
   "sicherungsordner": { stand: "fertig", seit: "2.28.42" },

@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 
 /**
- * Bsp.-Akten (Klaus 11.11.2026): jede Beispielakte trägt oben rechts ein deutliches rotes Dreieck – in der Liste und dort, wo sie
+ * Bsp. (Klaus 11.11.2026): jede Beispielakte trägt oben rechts ein deutliches rotes Dreieck – in der Liste und dort, wo sie
  * geöffnet wird –, damit sie niemand mit einer echten Akte verwechselt. Welche Einträge Beispiele sind, entscheidet dieselbe Regel
  * wie beim Entfernen (beispielIdsVon in app/sample-family.ts). In der Demo ist alles Beispiel; dort kein Dreieck.
  */
