@@ -1,0 +1,106 @@
+<title>Textdurchsicht der Familienakte</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: eine Spalte, je Gruppe eine Karte mit Tabelle heute → neu, unten die Fragen. Farben wie die übrigen Vorschauen der Akte. */
+:root { --bg:#f4f7f9; --fg:#17262f; --muted:#4f6472; --line:#c8d9e2; --card:#fff; --blau:#1d5b94; --rot:#a8322a; --rotbg:#fdecea; --gruen:#2f7d4a; --gruenbg:#eaf7f0; --code:#eef3f7;
+  --body:"Inter", system-ui, sans-serif; --kopf:"Space Grotesk", "Inter", system-ui, sans-serif; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#10171c; --fg:#e6edf2; --muted:#9fb2bf; --line:#2c3b45; --card:#18222a; --blau:#7fb3e6; --rot:#f08c82; --rotbg:#3a1d1a; --gruen:#7fd39b; --gruenbg:#173323; --code:#1f2a32; color-scheme:dark; } }
+:root[data-theme="dark"] { --bg:#10171c; --fg:#e6edf2; --muted:#9fb2bf; --line:#2c3b45; --card:#18222a; --blau:#7fb3e6; --rot:#f08c82; --rotbg:#3a1d1a; --gruen:#7fd39b; --gruenbg:#173323; --code:#1f2a32; color-scheme:dark; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.45 var(--body); padding-block:16px 40px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
+main { max-width:960px; display:grid; gap:16px; }
+h1, h2 { font-family:var(--kopf); text-wrap:balance; margin:0; } h1 { font-size:1.3rem; } h2 { font-size:1.05rem; color:var(--blau); }
+p { margin:0; } .lead, .leise { color:var(--muted); }
+.karte { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; display:grid; gap:10px; min-width:0; }
+.tab { overflow-x:auto; } table { border-collapse:collapse; width:100%; min-width:620px; font-size:.92rem; }
+th, td { text-align:left; padding:7px 8px; border-bottom:1px solid var(--line); vertical-align:top; } th { color:var(--muted); font-size:.75rem; text-transform:uppercase; letter-spacing:.05em; }
+td.alt { color:var(--rot); } td.neu { color:var(--gruen); }
+.ort { font-family:ui-monospace, Menlo, Consolas, monospace; font-size:.78rem; color:var(--muted); white-space:nowrap; }
+.regel { border-left:4px solid var(--blau); padding:8px 10px; background:var(--code); border-radius:8px; }
+ol { margin:0; padding-left:1.3em; display:grid; gap:6px; } .fragen b { color:var(--blau); }
+</style>
+
+<main>
+ <header style="display:grid;gap:4px">
+  <h1>Textdurchsicht: alte Namen, veraltete Sätze, lange Texte</h1>
+  <p class="lead">Vorschau zur Abstimmung (11.11.). Gesucht in allen Bildschirmen der App: 105 lange Texte, 42 alte Bezüge. Gebaut wird erst nach deinem Ja je Gruppe, gesammelt in einer Fassung.</p>
+  <p class="regel">Regel: Sichtbar bleibt Zustand, Knopf, ein kurzer Satz. Alles Erklärende kommt in Punkten hinter das „?“. Keine Sätze, die vom Bau erzählen („zeigt jetzt“, „seit 2.28.46“).</p>
+ </header>
+
+ <section class="karte">
+  <h2>A · Alte Namen</h2>
+  <div class="tab"><table>
+   <thead><tr><th>Wo</th><th>Heute</th><th>Neu</th></tr></thead>
+   <tbody>
+    <tr><td class="ort">Fußzeile</td><td class="alt">Me, Myself and I – Meine Familienakte</td><td class="neu">Familienakte</td></tr>
+    <tr><td class="ort">Erinnerung prüfen</td><td class="alt">Memory 1 von 3</td><td class="neu">Erinnerung 1 von 3</td></tr>
+    <tr><td class="ort">Bestand prüfen, Hilfe</td><td class="alt">FaWoGa-Bestandsanalyse, FaWoGa-OneDrive-Prüfung, „Wie lernt FaWoGa …“</td><td class="neu">Ordnungshilfe („Wie lernt die Ordnungshilfe …“)</td></tr>
+   </tbody>
+  </table></div>
+ </section>
+
+ <section class="karte">
+  <h2>B · Veraltete Aussagen</h2>
+  <div class="tab"><table>
+   <thead><tr><th>Wo</th><th>Heute</th><th>Neu</th></tr></thead>
+   <tbody>
+    <tr><td class="ort">Pro-Tresor einrichten</td><td class="alt">„Dort den Ordner Family-Projekt antippen – gibt es ihn noch nicht, mit Neuer Ordner anlegen …“ (galt bis 2.28.55)</td><td class="neu">„Nur das Laufwerk wählen (Gerät oder SD-Karte). Die App findet den Tresor oder legt Family-Projekt selbst an.“</td></tr>
+    <tr><td class="ort">Suchhilfe</td><td class="alt">„… seit 2.28.46 auch in der Web-App …“</td><td class="neu">ohne Fassungsnummer</td></tr>
+    <tr><td class="ort">Gesundheit, Sicherheit</td><td class="alt">„Die Website stellt keine Diagnose …“, „Gesundheitsübersicht der Website … später in den Tresor verlagern“</td><td class="neu">„Die App stellt keine Diagnose …“; der Satz zur Website entfällt</td></tr>
+    <tr><td class="ort">Bestand prüfen</td><td class="alt">Testumgebung mit „FAMILIENAKTE_TESTBESTAND“, „FaWoGa_Test_2.28.1“, Testarchiv, „Assistenzfreigabe wird blau …“</td><td class="neu">ganzer Testbereich hinter den Entwickler-Schalter (wie der Baustand); Nutzer sehen nur „Ordner prüfen“</td></tr>
+   </tbody>
+  </table></div>
+ </section>
+
+ <section class="karte">
+  <h2>C · Lange Texte hinter das „?“</h2>
+  <p class="leise">Sichtbar bleibt ein Satz; der Rest wird zu Punkten im „?“.</p>
+  <div class="tab"><table>
+   <thead><tr><th>Wo</th><th>Heute sichtbar</th><th>Neu sichtbar</th></tr></thead>
+   <tbody>
+    <tr><td class="ort">Startseite</td><td class="alt">„Eine sichere Familienakte, die nicht nur dokumentiert und ordnet, sondern auch unterstützt, erinnert und mitdenkt – bei Unterlagen, Fragen, E-Mails …“ (244 Zeichen)</td><td class="neu">„Alles Wichtige an einem Ort“, ohne Unterzeile</td></tr>
+    <tr><td class="ort">Akten sichern (Hilfe)</td><td class="alt">888 Zeichen: Kästen, Farben, Abhaken, zwei Knöpfe, Neues Gerät</td><td class="neu">„Kästen mit › führen zur Stelle.“ Rest hinter „?“</td></tr>
+    <tr><td class="ort">Kalender (Hilfe)</td><td class="alt">950 Zeichen je Gerät und Anbieter</td><td class="neu">je Gerät eine Zeile, Einzelheiten hinter „?“</td></tr>
+    <tr><td class="ort">E-Mail (Hilfe)</td><td class="alt">465 Zeichen unter der Karte</td><td class="neu">„Nichts geht still hinaus.“ Rest hinter „?“</td></tr>
+    <tr><td class="ort">Netz-Seite</td><td class="alt">323 Zeichen, was ins Netz geht</td><td class="neu">„Beim Öffnen geht nichts ins Netz.“ Rest hinter „?“</td></tr>
+    <tr><td class="ort">Prüfzettel, Pro-Verbund, Tresor-Leser, Unterschrift</td><td class="alt">je 220–450 Zeichen</td><td class="neu">je ein Satz, Rest hinter „?“</td></tr>
+    <tr><td class="ort">Festplatte vorbereiten, Gastgeber (Fenster)</td><td class="alt">drei Absätze über den Feldern</td><td class="neu">ein Satz, Rest hinter „?“ im Fensterkopf</td></tr>
+   </tbody>
+  </table></div>
+  <p class="leise">Unverändert: die Texte unter „Ausführlich“ in der Hilfe (71 Stück) – sie sind schon eingeklappt; nur die alten Namen aus A und B werden dort ersetzt.</p>
+ </section>
+
+ <section class="karte">
+  <h2>D · „Neu“ und „Was gibt’s Neues?“</h2>
+  <div class="tab"><table>
+   <thead><tr><th>Wo</th><th>Heute</th><th>Neu</th></tr></thead>
+   <tbody>
+    <tr><td class="ort">Knopf „Neu“</td><td class="alt">6 Karten bis 09.11., in Bau-Sprache („zeigen jetzt …“), 5–7 Zeilen; Neues seit 2.28.53 fehlt</td><td class="neu">nur die letzten zwei Fassungen, je ein Satz + Knopf: Bsp.-Akten, Meine Geräte, Dateiort, Landkarte in Farben</td></tr>
+    <tr><td class="ort">Was gibt’s Neues?</td><td class="alt">„Gerätetest: … klappt jetzt auch …“, „Größe -1 statt 0“</td><td class="neu">was man jetzt tun kann, in Punkten („Vollsicherung auf SD-Karte geht wieder.“)</td></tr>
+    <tr><td class="ort">Technische Änderungen</td><td class="alt">lange Liste 2.13 bis 2.28.1 mit FaWoGa, MMI, Register-Commit</td><td class="neu">eingeklappt: „Ältere Fassungen (bis 2.28.1)“</td></tr>
+   </tbody>
+  </table></div>
+ </section>
+
+ <section class="karte">
+  <h2>E · Meldungen kürzer</h2>
+  <div class="tab"><table>
+   <thead><tr><th>Heute</th><th>Neu</th></tr></thead>
+   <tbody>
+    <tr><td class="alt">Erfolgreich: Bsp. angelegt: erfundene Beispielfamilie in allen Bereichen, mit rotem Dreieck markiert.</td><td class="neu">Bsp.-Akten angelegt.</td></tr>
+    <tr><td class="alt">Bsp. entfernt: 42 Einträge, 16 Unterlagen.</td><td class="neu">Bsp.-Akten entfernt.</td></tr>
+   </tbody>
+  </table></div>
+ </section>
+
+ <section class="karte fragen">
+  <h2>Fragen (bitte je Ja oder Nein)</h2>
+  <ol>
+   <li><b>A</b> Alte Namen ersetzen (Fußzeile, Memory, FaWoGa → Ordnungshilfe).</li>
+   <li><b>B</b> Veraltete Aussagen berichtigen, Testbereich von „Bestand prüfen“ hinter den Entwickler-Schalter.</li>
+   <li><b>C</b> Lange Texte auf einen Satz, Rest hinter „?“.</li>
+   <li><b>D</b> „Neu“ nur mit den letzten zwei Fassungen, „Was gibt’s Neues?“ in Nutzer-Sprache, alte technische Liste eingeklappt.</li>
+   <li><b>E</b> Meldungen auf einen kurzen Satz.</li>
+  </ol>
+ </section>
+</main>
