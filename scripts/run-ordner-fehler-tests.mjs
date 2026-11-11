@@ -12,4 +12,7 @@ const java = readFileSync(new URL("../android/app/src/main/java/de/familyprojekt
 assert.ok(java.includes("pruefenMitGeduld(s.ablage, s.pfad, s.groesse, sha)"), "dateiFertig prüft nicht mit eigener Längenmessung");
 assert.ok(!/s\.ablage\.groesse\(s\.pfad\) != s\.groesse/.test(java), "dateiFertig verlässt sich noch auf die von Android gemeldete Größe");
 assert.ok(java.includes('text.indexOf(" [")'), "Grund wird nicht an die App weitergegeben");
-console.log("🟢 Ordnerfehler: Grund in der Meldung, Prüfung misst selbst (4 Prüfungen)");
+// 11.11. (2.28.58 am Tablet: „Größe -1 statt 0“): Capacitors getLong nimmt keine Integer – Zahlen nur über zahl().
+assert.ok(!/call\.getLong\(/.test(java), "FamilienakteOrdnerPlugin liest Zahlen noch mit getLong (Integer → Ersatzwert)");
+assert.ok(/static long zahl\(Object wert, long ersatz\)/.test(java), "zahl() fehlt");
+console.log("🟢 Ordnerfehler: Grund in der Meldung, Prüfung misst selbst (6 Prüfungen)");
