@@ -1,0 +1,58 @@
+{
+ "version": "2.28.58",
+ "source": "848cb2919d73ab5b8b418df8d63deb78e1076cb2",
+ "pullRequest": [
+  160
+ ],
+ "recordedUtc": "2026-11-11T08:32:00Z",
+ "freigabe": "Klaus 11.11.2026: „Ja, gleich als 2.28.58 ausgeben“ (Vollsicherung auf SD-Karte).",
+ "inhalt": "Vollsicherung in einen Ordner auf der SD-Karte: die Prüfung nach dem Schreiben misst Größe und SHA-256 selbst und wartet bei Abweichung kurz (vorher Abbruch bei veralteter COLUMN_SIZE); Meldung nennt Datei und Grund.",
+ "ciAmPrStand": "PR #160 auf 52e720c: pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) – success.",
+ "releases": [
+  {
+   "tag": "android-v2.28.58",
+   "run": 42985275557,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-android-v2.28.58.apk",
+     "bytes": 20070807,
+     "sha256": "86ec0f89fa98165742d12aa7828874a543f420496c2d4ee1879dcb9f7d997903",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true,
+     "versionInside": "2.28.58 (assets/public/version.json, commit 848cb29)",
+     "fixInside": "pruefenMitGeduld im Android-Code (classes.dex)"
+    },
+    {
+     "name": "Familienakte-Einzeldatei-2.28.58.html",
+     "bytes": 3919554,
+     "sha256": "01493a18e97dfb25477e83ecb5a55bdfb916ee3792b84493f56401f37b17eacc",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true
+    }
+   ]
+  },
+  {
+   "tag": "windows-v2.28.58",
+   "run": 42985279663,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-Windows-2.28.58-x64-setup.exe",
+     "bytes": 34206123,
+     "sha256": "c2a3d8efcf941b759409fc49e70b7f2ee9e572b41d15e1a196898fb3b84e8ef2",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true
+    }
+   ]
+  }
+ ],
+ "pwa": "Pages auf 848cb29 (Job beim Merge); Seite aus dem Behälter nicht geprüft.",
+ "notChecked": [
+  "Vollsicherung auf SD-Karte am Tablet (ob die gemeldete Größe die Ursache war)",
+  "Windows-Teil unverändert (FamilyFolders.java), dort keine Änderung",
+  "family-projekt.de aus dem Behälter nicht erreichbar; der Freigabelauf prüft den Server selbst"
+ ]
+}
