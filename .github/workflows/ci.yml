@@ -17,7 +17,7 @@ concurrency:
 jobs:
   pruefung:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -51,7 +51,16 @@ jobs:
       - name: Build und Einzeldatei
         run: npm run build:single
       - name: Browser für die Oberflächenproben
-        run: npx playwright install --with-deps chromium
+        # Der Ubuntu-Paketserver ist auf den GitHub-Rechnern zeitweise nicht erreichbar (DNS). Dann ohne Systempakete:
+        # die Bibliotheken für Chromium bringt das Rechner-Abbild schon mit, es fehlen höchstens Zusatzschriften.
+        run: |
+          if timeout 240 npx playwright install --with-deps chromium; then exit 0; fi
+          echo "Systempakete nicht erreichbar – Chromium ohne Systempakete"
+          for versuch in 1 2 3; do
+            if npx playwright install chromium; then exit 0; fi
+            sleep 20
+          done
+          exit 1
       - name: Privaten Index mit wirklicher IndexedDB prüfen
         run: node tools/native/test-private-index.mjs
       - name: Diagnose der Pro-Ablage nach Neustart

@@ -28,10 +28,15 @@ try {
         legende: k.querySelector("[data-live-legende]")?.textContent || "" }));
       return soll(r.ansicht === "karte" && r.aeste >= 40 && /eingerichtet/.test(r.legende) && /fehlt/.test(r.legende) && /gesperrt/.test(r.legende) && /freiwillig/.test(r.legende), r);
     });
-    await step(`${name}: Pro-Tresor gesperrt = gelb, kein Datentresor = rot, Kalender = grau, Demo aus = grau`, async () => {
+    await step(`${name}: Pro-Tresor gesperrt = gelb, Datentresor (gesperrt bzw. nur im App-Speicher) = gelb statt rot, Kalender = grau, Demo aus = grau`, async () => {
       const farbe = (id) => karte.locator(`[data-karte-id="${id}"]`).first().getAttribute("data-live");
       const r = { pro: await farbe("protresor"), daten: await farbe("datentresor"), kalender: await farbe("kalender"), demo: await farbe("aus-demo") };
-      return soll(r.pro === "gelb" && r.daten === "rot" && r.kalender === "grau" && r.demo === "grau", r);
+      // 2.28.63 (rote Kästen Fall 1/2): eingerichtet, aber gesperrt bzw. nur in der App – nichts fehlt, darum gelb mit einem Weg.
+      await karte.locator('[data-karte-id="datentresor"]').first().click();
+      const marke = await karte.locator("[data-live-marke]").innerText();
+      const los = await karte.locator("[data-live-los]").getAttribute("data-live-los");
+      r.marke = marke; r.los = los;
+      return soll(r.pro === "gelb" && r.daten === "gelb" && /gesperrt|Speicher der App/.test(marke) && /Entsperren|Tresor einrichten/.test(los || "") && r.kalender === "grau" && r.demo === "grau", r);
     });
     await step(`${name}: Weg zum gelben Pro-Tresor ist gestrichelt`, async () =>
       soll(await karte.locator('path[data-ast="akte>protresor"]').evaluate((p) => p.classList.contains("geplant")), "Ast nicht gestrichelt"));
@@ -58,10 +63,10 @@ try {
       const ok = await page.waitForFunction(() => { const d = document.querySelector("[data-aktensicherung]"); if (!d) return false; const r = d.getBoundingClientRect(); return d.open && r.top >= 0 && r.top < innerHeight; }, null, { timeout: 5000 }).then(() => true, () => false);
       return soll(ok, await page.locator("[data-aktensicherung]").evaluate((d) => ({ open: d.open, top: Math.round(d.getBoundingClientRect().top), h: innerHeight })));
     });
-    await step(`${name}: „Neu“ › „Zustand deines Geräts auf einen Blick“ › „Landkarte öffnen“ öffnet die Hilfe mit aufgeklappter Karte`, async () => {
+    await step(`${name}: „Neu“ › „Landkarte zeigt, was zu tun ist“ › „Landkarte öffnen“ öffnet die Hilfe mit aufgeklappter Karte`, async () => {
       await page.evaluate(() => window.scrollTo(0, 0));
       await page.locator(".neu-knopf-schalter").click();
-      await page.locator('[data-neu="live-karten-2026-11-09"]').getByRole("button", { name: "Landkarte öffnen", exact: true }).click();
+      await page.locator('[data-neu="landkarte-farben-2026-11-11"]').getByRole("button", { name: "Landkarte öffnen", exact: true }).click();
       await page.locator('[data-app-landkarte="offen"]').waitFor({ timeout: 5000 });
       return soll(await page.locator('[data-app-landkarte="offen"] [data-karte-id="protresor"]').first().isVisible(), "Karte nicht offen");
     });
@@ -77,8 +82,18 @@ try {
   const karte = await oeffnen(page);
   await step("Demo an: rotes Band über der Landkarte, Kasten „Demo als Kopie“ rot", async () =>
     soll(await karte.locator("[data-demo-band]").isVisible() && await karte.locator('[data-karte-id="aus-demo"]').first().getAttribute("data-live") === "rot", "Band oder Farbe fehlt"));
+  await step("Demo an: Tipp auf den roten Demo-Kasten zeigt „Demo verlassen ›“ (2.28.63, vorher ohne Knopf)", async () => {
+    await karte.locator('[data-karte-id="aus-demo"]').first().click();
+    return soll(await karte.locator('[data-live-los="Demo verlassen"]').count() === 1, "Knopf fehlt am Demo-Kasten");
+  });
+  await step("Demo an: „Demo verlassen ›“ am Kasten beendet die Demo", async () => {
+    await Promise.all([page.waitForURL((u) => !u.searchParams.has("demo")), karte.locator('[data-live-los="Demo verlassen"]').click()]);
+    return soll(!new URL(page.url()).searchParams.has("demo"), page.url());
+  });
+  await demoUmschalten(page, true);
+  const karte2 = await oeffnen(page);
   await step("Demo an: „Demo verlassen ›“ im Band beendet die Demo", async () => {
-    await Promise.all([page.waitForURL((u) => !u.searchParams.has("demo")), karte.locator("[data-demo-band-verlassen]").click()]);
+    await Promise.all([page.waitForURL((u) => !u.searchParams.has("demo")), karte2.locator("[data-demo-band-verlassen]").click()]);
     return soll(!new URL(page.url()).searchParams.has("demo"), page.url());
   });
   check(errors.length === 0, "Demo: keine Seitenfehler", errors.join(" | "));

@@ -1,5 +1,5 @@
 // Live-Zustand der Hilfekarten (Klaus 09.11., l1–l5): grün eingerichtet · rot nötig und fehlt · gelb gesperrt/veraltet · grau freiwillig.
-const { liveBerechnen, SICHERUNG_TAGE } = await import("../lib/live-zustand.ts");
+const { liveBerechnen, SICHERUNG_TAGE, DEMO_VERLASSEN } = await import("../lib/live-zustand.ts");
 let fehler = 0;
 const pruefe = (ok, text) => { console.log(`${ok ? "✓" : "✗"} ${text}`); if (!ok) fehler++; };
 const jetzt = Date.parse("2026-11-09T12:00:00Z");
@@ -19,6 +19,21 @@ pruefe(sich(tage(SICHERUNG_TAGE)) === "gruen" && sich(tage(SICHERUNG_TAGE + 1)) 
 pruefe(liveBerechnen({ ...basis, kalender: false, glocke: false, laufwerke: 0 }).kalender.farbe === "grau", "Kalender nicht verbunden: grau, nicht rot");
 const demo = liveBerechnen({ ...basis, demo: true, datentresor: undefined });
 pruefe(demo["aus-demo"].farbe === "rot" && demo.datentresor.farbe === "grau" && demo.protresor.farbe === "grau" && !demo.datentresor.los, "Demo an: rot; Datentresor und Pro-Tresor grau ohne Beheben (l4)");
-pruefe(Object.values(liveBerechnen({ ...basis, datentresor: undefined, pro: { status: "gesperrt" }, letzteSicherung: null })).filter((l) => l.farbe === "rot" || l.farbe === "gelb").every((l) => l.los && l.seite), "jedes Rot und Gelb hat einen Weg zum Beheben");
+pruefe(Object.values(liveBerechnen({ ...basis, datentresor: undefined, pro: { status: "gesperrt" }, letzteSicherung: null })).filter((l) => l.farbe === "rot" || l.farbe === "gelb").every((l) => l.los && (l.seite || l.aktion)), "jedes Rot und Gelb hat einen Weg zum Beheben");
+// 2.28.63 (Klaus 11.11., rote Kästen 1–3 Ja)
+const ohne = { ...basis, datentresor: undefined };
+const g = liveBerechnen({ ...ohne, speicher: "pro-gesperrt" }).datentresor;
+pruefe(g.farbe === "gelb" && g.los === "Entsperren" && g.ziel === "[data-pro-tresor]" && /gesperrt/.test(g.text), "Fall 1: Pro-Tresor gewählt, aber gesperrt → gelb „Entsperren“, nicht rot „kein Speicher“");
+const a1 = liveBerechnen({ ...ohne, speicher: "app", nativ: true }).datentresor;
+pruefe(a1.farbe === "gelb" && a1.los === "Tresor einrichten" && a1.ziel === "[data-pro-tresor]", "Fall 2 (App): nur im Speicher der App → gelb „Tresor einrichten“");
+const a2 = liveBerechnen({ ...ohne, speicher: "app", nativ: false, ordnerWahl: true }).datentresor;
+pruefe(a2.farbe === "gelb" && a2.los === "Ordner wählen" && a2.ziel === '[data-hilfe-ziel="datentresor"]', "Fall 2 (Browser am PC): gelb „Ordner wählen“");
+const a3 = liveBerechnen({ ...ohne, speicher: "app", nativ: false, ordnerWahl: false }).datentresor;
+pruefe(a3.farbe === "gelb" && !a3.los, "Fall 2 (Browser am Handy): gelb ohne Knopf, der dort nichts ausrichten kann");
+pruefe(liveBerechnen(ohne).datentresor.farbe === "rot", "Gegenprobe: wirklich kein Speicher bleibt rot");
+pruefe(liveBerechnen({ ...ohne, speicher: "app", demo: true }).datentresor.farbe === "grau", "Gegenprobe: in der Demo bleibt der Datentresor grau");
+const d = liveBerechnen({ ...basis, demo: true })["aus-demo"];
+pruefe(d.farbe === "rot" && d.los === "Demo verlassen" && d.aktion === DEMO_VERLASSEN, "Fall 3: Demo-Kasten rot mit „Demo verlassen“");
+pruefe(!liveBerechnen(basis)["aus-demo"].los, "Gegenprobe: Demo aus → kein Knopf");
 console.log(fehler ? `Live-Zustand: ${fehler} rot` : "Live-Zustand: alles grün");
 process.exit(fehler ? 1 : 0);

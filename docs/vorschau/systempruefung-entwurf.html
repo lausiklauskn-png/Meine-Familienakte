@@ -1,0 +1,86 @@
+<title>Systemprüfung neu</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: eine Spalte – heute/neu als Paar je Punkt, Bildschirm-Skizze der neuen Seite, unten die Fragen. Farben wie die übrigen Vorschauen. */
+:root { --bg:#f4f7f9; --fg:#17262f; --muted:#4f6472; --line:#c8d9e2; --card:#fff; --blau:#1d5b94; --navy:#0b3154; --gruen:#2f7d4a; --gruenbg:#eaf7f0; --gelb:#7a5a08; --gelbbg:#fff4dc; --rot:#a8322a; --rotbg:#fdecea; --grau:#f3f5f7;
+  --body:"Inter", system-ui, sans-serif; --kopf:"Space Grotesk", "Inter", system-ui, sans-serif; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#10171c; --fg:#e6edf2; --muted:#9fb2bf; --line:#2c3b45; --card:#18222a; --blau:#7fb3e6; --navy:#dfe9f3; --gruen:#7fd39b; --gruenbg:#173323; --gelb:#f0cf7a; --gelbbg:#33290f; --rot:#f08c82; --rotbg:#3a1d1a; --grau:#1f2a32; color-scheme:dark; } }
+:root[data-theme="dark"] { --bg:#10171c; --fg:#e6edf2; --muted:#9fb2bf; --line:#2c3b45; --card:#18222a; --blau:#7fb3e6; --navy:#dfe9f3; --gruen:#7fd39b; --gruenbg:#173323; --gelb:#f0cf7a; --gelbbg:#33290f; --rot:#f08c82; --rotbg:#3a1d1a; --grau:#1f2a32; color-scheme:dark; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.45 var(--body); padding-block:16px 40px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
+main { max-width:900px; display:grid; gap:16px; }
+h1, h2, h3 { font-family:var(--kopf); text-wrap:balance; margin:0; } h1 { font-size:1.3rem; } h2 { font-size:1.05rem; color:var(--blau); } h3 { font-size:.95rem; }
+p { margin:0; } .lead, .leise { color:var(--muted); }
+ul, ol { margin:0; padding-left:1.25em; display:grid; gap:5px; }
+.karte { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; display:grid; gap:10px; min-width:0; }
+.paar { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:12px; }
+.etikett { font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); font-weight:700; }
+.alt { background:var(--rotbg); border-radius:10px; padding:10px; display:grid; gap:4px; }
+.neu { background:var(--gruenbg); border-radius:10px; padding:10px; display:grid; gap:4px; }
+.app { border:1px solid var(--line); border-radius:12px; padding:12px; background:var(--grau); display:grid; gap:8px; }
+.zeile { display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; border-bottom:1px solid var(--line); padding:5px 0; }
+.zeile:last-child { border-bottom:0; }
+.ok { color:var(--gruen); font-weight:700; } .offen { color:var(--gelb); font-weight:700; }
+.klappe { border:1px dashed var(--line); border-radius:10px; padding:8px 10px; color:var(--muted); }
+.fragen b { color:var(--blau); }
+</style>
+
+<main>
+ <header style="display:grid;gap:4px">
+  <h1>Systemprüfung: nur der Stand der laufenden Fassung</h1>
+  <p class="lead">Vorschau zur Abstimmung (11.11.). Einbau nach 2.28.63, erst nach deinem Ja.</p>
+ </header>
+
+ <section class="karte">
+  <h2>1 · Oben: Stand dieser Fassung</h2>
+  <div class="paar">
+   <div class="alt"><span class="etikett">Heute</span><p>„Vollständige Systemprüfung“ vom 13.10.2026, Version 2.28.1, gelb, mit Bereichen wie „FaWoGa-OneDrive-Integration“. Darunter „5/15 bestanden“ vom 07.11.</p></div>
+   <div class="neu"><span class="etikett">Neu</span><p>Was die Proben für die laufende Fassung geprüft haben (aus dem Veröffentlichungsnachweis) und was am Gerät noch offen ist.</p></div>
+  </div>
+  <div class="app">
+   <strong>Fassung 2.28.63 · geprüft am 11.11.2026</strong>
+   <div class="zeile"><span>Oberflächenproben (Browser)</span><span class="ok">alle grün</span></div>
+   <div class="zeile"><span>Android-App (Emulator, zwei Geräte)</span><span class="ok">grün</span></div>
+   <div class="zeile"><span>Windows-App (Bau und Modellprobe)</span><span class="ok">grün</span></div>
+   <div class="zeile"><span>Downloads per Prüfsumme</span><span class="ok">stimmen</span></div>
+   <div class="zeile"><span>Am Gerät noch offen</span><span class="offen">Meine Geräte, Dateiort, Bsp.-Akten, Landkarten-Farben ›</span></div>
+  </div>
+  <p class="leise">Die Zahlen kommen aus dem Nachweis der Fassung; die App erfindet keine. Der Knopf „Systemprüfung starten“ bleibt für eine eigene Prüfung auf dem Gerät.</p>
+ </section>
+
+ <section class="karte">
+  <h2>2 · Alter eingebauter Bericht 2.28.1</h2>
+  <div class="paar">
+   <div class="alt"><span class="etikett">Heute</span><p>Steht als aktueller Stand oben, obwohl er vom 13.10. ist.</p></div>
+   <div class="neu"><span class="etikett">Neu</span><p>Fällt weg. Er kam mit der App, er ist kein Bestand von dir; die Proben der neuen Fassungen decken ihn ab.</p></div>
+  </div>
+ </section>
+
+ <section class="karte">
+  <h2>3 · Praktische Abnahme (Prüfzettel)</h2>
+  <div class="paar">
+   <div class="alt"><span class="etikett">Heute</span><p>„Mikrofonstatus: Klappt · Website 40 · Familienakte 2.28.1“, obwohl die App 2.28.63 ist.</p></div>
+   <div class="neu"><span class="etikett">Neu</span><p>Neue Antworten tragen die echte Fassung („2.28.63“). „Website 40“ fällt weg.</p></div>
+  </div>
+  <div class="klappe">▸ Ältere Prüfungen (aus Fassung 2.28.1) · 12 Antworten · <u>Ältere Prüfungen löschen</u></div>
+  <p class="leise">Deine gespeicherten alten Antworten werden nicht still gelöscht, sondern zugeklappt; löschen nur mit dem Knopf.</p>
+ </section>
+
+ <section class="karte">
+  <h2>4 · Alte Namen in den Prüfbereichen</h2>
+  <ul>
+   <li>„FaWoGa-…“ → „Ordnungshilfe …“, „Memory“ → „Tagebuch“, wie in der Textdurchsicht.</li>
+   <li>Der Prüfbereich OneDrive bleibt (Jens' Daten). Er prüft den lokal gehaltenen OneDrive-Ordner; das geht im Browser am PC, in der APK nicht.</li>
+  </ul>
+ </section>
+
+ <section class="karte fragen">
+  <h2>Fragen (bitte je Ja oder Nein)</h2>
+  <ol>
+   <li><b>Oben</b> nur der Stand der laufenden Fassung aus dem Nachweis, mit „am Gerät offen“.</li>
+   <li><b>Alter Bericht 2.28.1</b> fällt weg.</li>
+   <li><b>Prüfzettel</b> mit der echten Fassung; alte Antworten zugeklappt mit „Ältere Prüfungen löschen“.</li>
+   <li><b>Prüfbereiche</b> mit den neuen Namen, OneDrive bleibt.</li>
+  </ol>
+ </section>
+</main>

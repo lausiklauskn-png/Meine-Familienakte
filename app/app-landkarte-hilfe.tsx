@@ -36,7 +36,8 @@ export function AppLandkarteHilfe({ onGo, eingerichtet, demo, live = {}, aktenSi
   const { gruppen, knoten } = useMemo(() => {
     const mach = <T extends KartenPunkt & KartenSeite>(p: T): T => {
       const l = live[p.id];
-      const beheben = l?.los && l.seite ? { ziel: () => { beimHingehen = { kasten: p.id }; geh.current(l.seite!, undefined, l.ziel ? { ziel: l.ziel } : undefined); }, zielText: l.los } : null;
+      const beheben = l?.los && l.aktion ? { ziel: () => { window.dispatchEvent(new Event(l.aktion!)); }, zielText: l.los }
+        : l?.los && l.seite ? { ziel: () => { beimHingehen = { kasten: p.id }; geh.current(l.seite!, undefined, l.ziel ? { ziel: l.ziel } : undefined); }, zielText: l.los } : null;
       return { ...p, stand: standVon(p.id, eingerichtet), ...(l ? { live: l } : {}),
         ...(beheben || (p.seite ? { ziel: () => { beimHingehen = { kasten: p.id }; geh.current(p.seite!); }, zielText: "Hingehen" } : {})) };
     };

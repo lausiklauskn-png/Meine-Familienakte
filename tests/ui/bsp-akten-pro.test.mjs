@@ -1,4 +1,4 @@
-// Bsp. bei eingeschaltetem Pro-Tresor (Klaus 11.11.2026: am Tablet „Neue Originale: verschlüsselt im Tresor“):
+// Bsp.-Akten bei eingeschaltetem Pro-Tresor (Klaus 11.11.2026: am Tablet „Neue Originale: verschlüsselt im Tresor“):
 // Beispiel-PDFs dürfen nie in den gemeinsamen Pro-Tresor – dort blieben sie beim Entfernen liegen (Originale im Tresor werden nie
 // gelöscht). Nachgestellter Tresor zählt jeden Schreibversuch.
 import { startApp, launchBrowser, DESKTOP, ready, step, soll, summary, footer, collectErrors } from "./_harness.mjs";
@@ -26,7 +26,7 @@ try {
     const id = await page.evaluate(async () => { const f = window.__vaultFixture; return f.readProDocumentVault(await f.browserVault()); });
     return soll(id === "erfundener-tresor-bsp", `Pro-Ziel: ${id}`);
   });
-  await step("+ Bsp.: alle Beispiel-PDFs im eigenen Aktenordner, kein Schreibversuch in den Pro-Tresor", async () => {
+  await step("+ Bsp.-Akten: alle Beispiel-PDFs im eigenen Aktenordner, kein Schreibversuch in den Pro-Tresor", async () => {
     await page.reload({ waitUntil: "networkidle" }); await page.waitForSelector(".site-brand-version");
     await footer(page, "Hilfe");
     await page.locator("[data-bsp-akten]").click();
@@ -37,7 +37,7 @@ try {
       return { anzahl: bsp.length, fremd: bsp.filter((x) => !String(x.storedPath || "").startsWith("Me_Myself_and_I_Familienakte/")).length, writes: window.__proDok.writes }; });
     return soll(r.anzahl >= 10 && r.fremd === 0 && r.writes === 0, r);
   });
-  await step("− Bsp. entfernt sie wieder vollständig", async () => {
+  await step("− Bsp.-Akten entfernt sie wieder vollständig", async () => {
     await page.locator("[data-bsp-akten]").click();
     await page.waitForSelector('[data-bsp-akten="fehlt"]', { timeout: 60000 });
     await vaultFixture(page);
@@ -46,4 +46,4 @@ try {
   });
   await step("Keine Seitenfehler", async () => soll(errors.length === 0, errors));
 } finally { await browser.close(); await app.stop(); }
-summary("Bsp. bei Pro-Tresor");
+summary("Bsp.-Akten bei Pro-Tresor");

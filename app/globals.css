@@ -2515,7 +2515,10 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
   .masthead { position: relative; }
   .header-actions > .kopf-pfeil-auf { display: inline-grid; place-items: center; order: 99; }
   .header-actions.kopf-auf { position: absolute; top: 0; bottom: 0; right: 0; z-index: 5; justify-content: flex-end; padding: 0 12px 0 0; background: var(--paper, #fff); box-shadow: -10px 0 18px rgba(9, 38, 63, .16); }
-  .header-actions.kopf-auf > :not(.drucken-knopf):not(.logout-button):not(.login-button):not(.familienakte-install):not(.kopf-pfeil-zu) { display: none !important; }
+  .header-actions.kopf-auf > :not(.drucken-knopf):not(.logout-button):not(.login-button):not(.familienakte-install):not(.kopf-pfeil-zu):not(.fa-schrift) { display: none !important; }
+  /* Schriftgröße „A··A“ (11.11.): am Handy hinter dem Pfeil in der Aufklappleiste. */
+  .header-actions > .fa-schrift { display: none !important; }
+  .header-actions.kopf-auf > .fa-schrift { display: inline-flex !important; align-items: center; }
   .header-actions.kopf-auf > .kopf-pfeil-zu { display: inline-grid; place-items: center; order: -1; }
   .header-actions.kopf-auf > .drucken-knopf, .header-actions.kopf-auf > .logout-button, .header-actions.kopf-auf > .login-button { display: inline-flex !important; align-items: center; justify-content: center; }
   .header-actions.kopf-auf > .familienakte-install:not([hidden]) { display: inline-flex !important; }
@@ -2914,3 +2917,6 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .bsp-ecke { position: absolute; top: 0; right: 0; width: 0; height: 0; border-top: 26px solid #d0021b; border-left: 26px solid transparent; pointer-events: none; z-index: 3; }
 :has(> .bsp-ecke) { position: relative; }
 .bsp-akten-knopf { min-height: 40px; }
+
+/* Schriftgröße „A··A“ (Klaus 11.11.): Knopf und Regler aus public/native/pro-bedienung.css. */
+.fa-schrift { display: inline-flex; align-items: center; }

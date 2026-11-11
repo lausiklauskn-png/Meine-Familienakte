@@ -15,5 +15,5 @@ export const SEITEN_KARTEN: Partial<Record<SectionId, string[]>> = {
   inbox: ["Neue Unterlagen erfassen", "Eingänge prüfen", "Lokale Unterlagen", "Online-Altbestand"],
   security: ["Datentresor prüfen", "Vollständige Sicherung", "Export", "OneDrive auf PC oder USB sichern", "Meine Geräte", "Private Bedeutungssuche"],
   changelog: ["Was gibt’s Neues in der Familienakte?", "Technische Änderungen"],
-  systemcheck: ["Praktische Benutzerabnahme", "Freigabeprüfung", "Gesamtergebnis", "Warnungen und Fehler", "Geprüfte Bereiche", "Prüfberichte"],
+  systemcheck: ["Praktische Benutzerabnahme", "Stand der Fassung", "Freigabeprüfung", "Prüfberichte"],
 };

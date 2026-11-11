@@ -6,10 +6,10 @@ import { gemerkteLaufwerke } from "./laufwerk";
 import { proTresor, proTresorVerfuegbar, type ProTresorZustand } from "./pro-tresor";
 import { liveBerechnen, type LiveZustand } from "../lib/live-zustand";
 
-export { liveBerechnen, SICHERUNG_TAGE, type Live, type LiveEingaben, type LiveFarbe, type LiveZustand } from "../lib/live-zustand";
+export { DEMO_VERLASSEN, liveBerechnen, SICHERUNG_TAGE, type Live, type LiveEingaben, type LiveFarbe, type LiveZustand } from "../lib/live-zustand";
 
 /** Liest den Zustand dieses Geräts und hält ihn aktuell (Pro-Tresor, Sichtbarkeit, Tresor- und Laufwerkereignisse). */
-export function useLiveZustand(datentresor?: string, letzteSicherung?: string | null): LiveZustand {
+export function useLiveZustand(datentresor?: string, letzteSicherung?: string | null, speicher?: "pro-gesperrt" | "app", ordnerWahl = false): LiveZustand {
   const [pro, setPro] = useState<ProTresorZustand | null>(null);
   const [laufwerke, setLaufwerke] = useState(0);
   // Neu zeichnen nach jedem Lesen, damit Kalender und Glocke frisch gelesen werden.
@@ -33,6 +33,6 @@ export function useLiveZustand(datentresor?: string, letzteSicherung?: string | 
   try { kalender = Boolean(kalenderEinstLesen()); glocke = glockeIstAn(); } catch { /* ohne Speicher: nicht eingerichtet */ }
   const demo = demoActive();
   // Festes Objekt, solange sich nichts ändert: die Landkarte rechnet ihre Lage nur bei neuen Kästen neu.
-  return useMemo(() => liveBerechnen({ datentresor, letzteSicherung, pro, nativ, kalender, glocke, laufwerke, demo }),
-    [datentresor, letzteSicherung, pro, nativ, kalender, glocke, laufwerke, demo]);
+  return useMemo(() => liveBerechnen({ datentresor, speicher, ordnerWahl, letzteSicherung, pro, nativ, kalender, glocke, laufwerke, demo }),
+    [datentresor, speicher, ordnerWahl, letzteSicherung, pro, nativ, kalender, glocke, laufwerke, demo]);
 }

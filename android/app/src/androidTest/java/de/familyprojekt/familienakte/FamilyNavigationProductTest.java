@@ -31,7 +31,32 @@ public final class FamilyNavigationProductTest {
             Thread.sleep(100);
         }
     }
-    private void back(){InstrumentationRegistry.getInstrumentation().sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);}
+    // Android 15 may show its one-time full-screen hint late, above the app; it then swallows the probe's tap or Back.
+    // A user confirms it once, so the probe confirms it before every real input.
+    private boolean hinweisWeg(){
+        UiDevice device=UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        UiObject2 hint=device.findObject(By.pkg("android").res("android:id/ok"));
+        if(hint==null)return false;
+        android.util.Log.w("FamilyNavigation","Confirm Android full-screen hint");hint.click();device.wait(Until.gone(By.pkg("android").res("android:id/ok")),5000);
+        return true;
+    }
+    // Back that a late system hint swallowed is sent once more, and only then: a second Back without a hint would skip a view.
+    private void zurueckBis(ActivityScenario<MainActivity> app,String js)throws Exception{
+        back();
+        long bis=System.nanoTime()+TimeUnit.SECONDS.toNanos(10);
+        while(System.nanoTime()<bis&&!"true".equals(eval(app,js)))Thread.sleep(100);
+        if(!"true".equals(eval(app,js))&&hinweisWeg())back();
+        until(app,js);
+    }
+    private void back(){hinweisWeg();InstrumentationRegistry.getInstrumentation().sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);}
+    private void tippen(ActivityScenario<MainActivity> app)throws Exception{
+        int[] point=new int[2];app.onActivity(a->{a.getBridge().getWebView().getLocationOnScreen(point);point[0]+=4;point[1]+=a.getBridge().getWebView().getHeight()/2;});
+        long tap=SystemClock.uptimeMillis();
+        for(int action:new int[]{MotionEvent.ACTION_DOWN,MotionEvent.ACTION_UP}){
+            MotionEvent event=MotionEvent.obtain(tap,SystemClock.uptimeMillis(),action,point[0],point[1],0);
+            InstrumentationRegistry.getInstrumentation().sendPointerSync(event);event.recycle();
+        }
+    }
     private void focus(ActivityScenario<MainActivity> app)throws Exception{
         UiDevice device=UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         AtomicBoolean focused=new AtomicBoolean();long end=System.nanoTime()+TimeUnit.SECONDS.toNanos(15);
@@ -67,19 +92,19 @@ public final class FamilyNavigationProductTest {
             focus(app);
             // Android/WebView guards history traversal before the first trusted
             // input. A real tap must precede a programmatically prepared route.
-            int[] point=new int[2];app.onActivity(a->{a.getBridge().getWebView().getLocationOnScreen(point);point[0]+=4;point[1]+=a.getBridge().getWebView().getHeight()/2;});
-            long tap=SystemClock.uptimeMillis();
-            for(int action:new int[]{MotionEvent.ACTION_DOWN,MotionEvent.ACTION_UP}){
-                MotionEvent event=MotionEvent.obtain(tap,SystemClock.uptimeMillis(),action,point[0],point[1],0);
-                InstrumentationRegistry.getInstrumentation().sendPointerSync(event);event.recycle();
+            // A tap that lands on a late system hint does not reach the page: confirm the hint and tap again (at most three times).
+            for(int versuch=0;versuch<3&&!"true".equals(eval(app,"navigator.userActivation.hasBeenActive"));versuch++){
+                hinweisWeg();focus(app);tippen(app);
+                long bis=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);
+                while(System.nanoTime()<bis&&!"true".equals(eval(app,"navigator.userActivation.hasBeenActive")))Thread.sleep(100);
             }
             until(app,"navigator.userActivation.hasBeenActive");
             String initial=eval(app,"location.href");
             eval(app,"window.__backMemory='ERFUNDENE-PROBE-017';[...document.querySelectorAll('.footer-directory button')].find(b=>b.textContent.trim()==='Dokumentenbibliothek').click();true");
             until(app,"location.hash==='#documents'");
             eval(app,"[...document.querySelectorAll('.footer-directory button')].find(b=>b.textContent.trim()==='Hilfe').click();true");
-            until(app,"location.hash==='#help'");back();until(app,"location.hash==='#documents'");
-            back();until(app,"location.href==="+initial);
+            until(app,"location.hash==='#help'");zurueckBis(app,"location.hash==='#documents'");
+            zurueckBis(app,"location.href==="+initial);
             for(int i=0;i<10;i++)back();
             InstrumentationRegistry.getInstrumentation().waitForIdleSync();
             assertEquals("Back at the beginning must not background the APK",Lifecycle.State.RESUMED,app.getState());

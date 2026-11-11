@@ -162,6 +162,20 @@
       "sha256": "a7d959aabb68940109d2092c291ef97b0fde9db50c6c6d39ae95b34d426162c0",
       "zweck": "Gemeinsamer Pro-Tresor, kanonisches Java-Paket und Originalprobe"
     },
+    "public/native/pro-bedienung.js": {
+      "repo": "lausiklauskn-png/Privat-Brain-Pro",
+      "pfad": "native/pro-bedienung.js",
+      "commit": "97d3cd3e96e7e60e2e6f30df8d2640ca7d46c0f8",
+      "sha256": "32f9221fb62d4f2263dcb564d5c3d376f0492d9f016dce50c687541520bb7a01",
+      "zweck": "Schriftgröße „A··A“ wie in Workflow PDF Pro (Leitfaden § 1.8, 85–150 %, gemerkt); gemeinsame Bedien-Bausteine Fassung 7"
+    },
+    "public/native/pro-bedienung.css": {
+      "repo": "lausiklauskn-png/Privat-Brain-Pro",
+      "pfad": "native/pro-bedienung.css",
+      "commit": "97d3cd3e96e7e60e2e6f30df8d2640ca7d46c0f8",
+      "sha256": "cd2b3e6307a3c68fdc828f59d5e950085268678463a027ced64562100e2b67d5",
+      "zweck": "Form der gemeinsamen Bedien-Bausteine (Schriftgröße-Knopf)"
+    },
     "public/native/pro-geraet.js": {
       "repo": "lausiklauskn-png/Privat-Brain-Pro",
       "pfad": "native/pro-geraet.js",

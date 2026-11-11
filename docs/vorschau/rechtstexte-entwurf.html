@@ -1,0 +1,112 @@
+<title>Rechtstexte Family-Projekt</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: eine Spalte wie ein Schriftstück – oben Hinweis und Fragen, dann der Entwurf (Kurz gesagt, Impressum, Datenschutz je Funktion, Haftung), unten wo er in der App steht. */
+:root { --bg:#f2f6f8; --fg:#15283a; --muted:#56697a; --line:#d6e1e8; --card:#fff; --navy:#0b3154; --blau:#1d5b94; --gelbbg:#fff6dc; --gelb:#7a5a08; --code:#eef3f7;
+  --body:"Inter", system-ui, sans-serif; --kopf:"Space Grotesk", "Inter", system-ui, sans-serif; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#0e161d; --fg:#e2eaf0; --muted:#9db0be; --line:#2f4352; --card:#16222c; --navy:#cfe3f2; --blau:#7fb3e6; --gelbbg:#33290f; --gelb:#f0cf7a; --code:#1f2a32; color-scheme:dark; } }
+:root[data-theme="dark"] { --bg:#0e161d; --fg:#e2eaf0; --muted:#9db0be; --line:#2f4352; --card:#16222c; --navy:#cfe3f2; --blau:#7fb3e6; --gelbbg:#33290f; --gelb:#f0cf7a; --code:#1f2a32; color-scheme:dark; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.55 var(--body); padding-block:16px 40px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
+main { max-width:780px; display:grid; gap:16px; }
+h1, h2, h3 { font-family:var(--kopf); text-wrap:balance; margin:0; color:var(--navy); } h1 { font-size:1.35rem; } h2 { font-size:1.1rem; } h3 { font-size:.98rem; margin-top:.6em; }
+p, li { margin:0; overflow-wrap:anywhere; } ul, ol { margin:0; padding-left:1.25em; display:grid; gap:5px; }
+.karte { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; display:grid; gap:9px; min-width:0; }
+.entwurf { border-top:5px solid var(--navy); }
+.achtung { background:var(--gelbbg); color:var(--gelb); border-radius:10px; padding:10px 12px; }
+.leise { color:var(--muted); font-size:.92rem; }
+code { background:var(--code); padding:1px 5px; border-radius:5px; font-size:.88em; }
+.fragen b { color:var(--blau); }
+</style>
+
+<main>
+ <header style="display:grid;gap:6px">
+  <h1>Rechtstexte: Impressum, Datenschutz, Haftung</h1>
+  <p class="leise">Entwurf zur Abstimmung (11.11.) für die Familienakte (Basic, Pro Android, Pro Windows). Danach dieselbe Grundlage in allen Apps des Projekts. Einbau erst nach deinem Ja, in einer späteren Fassung.</p>
+  <p class="achtung">Das ist ein Entwurf nach bestem Wissen, keine Rechtsberatung. Vor einer breiten Veröffentlichung sollte eine Fachperson drüberschauen.</p>
+ </header>
+
+ <section class="karte fragen">
+  <h2>Fragen vorab</h2>
+  <ol>
+   <li><b>Rechtsform:</b> Gibt es für Family-Projekt schon eine (z. B. GbR, UG)? Sonst steht im Impressum „Family-Projekt, Inhaber Klaus Nitzsche“ mit der bisherigen Anschrift.</li>
+   <li><b>Anschrift:</b> Bleibt die Anschrift aus dem heutigen Impressum?</li>
+   <li><b>Ort in der App:</b> „Impressum“ und „Datenschutz“ ganz unten auf jeder Seite (Fußzeile bleibt unten, auch auf kurzen Seiten) und zusätzlich in der Hilfe. In den Apps liegt die Seite im Paket, ohne Internet.</li>
+   <li><b>Text so übernehmen?</b> (je Abschnitt Ja/Nein oder Änderung)</li>
+  </ol>
+ </section>
+
+ <article class="karte entwurf">
+  <h2>Kurz gesagt</h2>
+  <ul>
+   <li>Deine Akte bleibt bei dir: auf dem Gerät, im gewählten Ordner oder im eigenen Tresor. Family-Projekt bekommt keine Inhalte.</li>
+   <li>Ins Internet geht die App nur, wenn du das Internet für die App einschaltest und eine Funktion selbst auslöst. Ausnahme: die stille Prüfung auf eine neue Fassung.</li>
+   <li>Was in einen Kalender oder an eine KI geht, wählst du einzeln aus.</li>
+   <li>Kein Konto, keine Werbung, keine Auswertung deines Verhaltens.</li>
+  </ul>
+
+  <h2>Impressum</h2>
+  <p>Angaben gemäß § 5 DDG</p>
+  <p>Family-Projekt<br>Inhaber: Klaus Nitzsche<br>[Anschrift wie im heutigen Impressum]<br>Deutschland</p>
+  <p>E-Mail: info@family-projekt.de<br>Internet: family-projekt.de</p>
+  <p>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV: Klaus Nitzsche, Anschrift wie oben.</p>
+
+  <h2>Datenschutz</h2>
+  <h3>1. Verantwortlicher</h3>
+  <p>Family-Projekt, Inhaber Klaus Nitzsche, Anschrift wie oben, info@family-projekt.de.</p>
+  <h3>2. Bereitstellung und Updates</h3>
+  <ul>
+   <li>Die Web-App kommt über GitHub Pages; beim Aufruf erhält GitHub technische Daten (IP-Adresse, Browserangaben).</li>
+   <li>Downloads der Apps liegen bei GitHub (Releases) und auf family-projekt.de.</li>
+   <li>Die Apps für Android und Windows fragen family-projekt.de regelmäßig, ob es eine neue Fassung gibt (etwa stündlich, wenn die App offen ist). Dabei gehen nur technische Daten mit, keine Inhalte der Akte.</li>
+  </ul>
+  <h3>3. Deine Akte</h3>
+  <ul>
+   <li>Unterlagen, Fristen, Aufgaben, Tagebuch und alle Einträge liegen im Browser (IndexedDB), im Speicher der App oder in einem von dir gewählten Ordner.</li>
+   <li><b>Pro-Tresor:</b> auf Wunsch verschlüsselt in einem Ordner deiner Wahl (Gerät, SD-Karte, Laufwerk), gemeinsam mit den anderen Pro-Apps des Projekts. Das Passwort wird nicht gespeichert.</li>
+   <li><b>Vollsicherung, gemeinsame Festplatte, Paket per Teilen:</b> verschlüsselt oder auf Wunsch lesbar, an einem Ort, den du wählst. Wohin ein Paket geht (Mail, Messenger, Stick), bestimmst du.</li>
+   <li><b>Abgleich im eigenen Netz:</b> nur zwischen deinen Geräten im selben WLAN oder Kabelnetz (Ports 48200 und 48201), verschlüsselt, ohne Server.</li>
+   <li><b>Cloud-Ordner (z. B. OneDrive):</b> die App liest nur den Ordner, den das Programm des Anbieters auf dem Gerät hält. Für die Übertragung zum Anbieter gelten dessen Bedingungen.</li>
+   <li><b>Demo und Bsp.-Akten:</b> erfundene Daten, nur auf dem Gerät.</li>
+  </ul>
+  <h3>4. Kalender (freiwillig)</h3>
+  <ul>
+   <li>Nur nach „Kalender verbinden“ und nur für Fristen, die du zum Eintragen anhakst: Titel, Datum, Uhrzeit, Erinnerungen und ein Vermerk „Aus der Familienakte“. Notizen und Dokumente nie.</li>
+   <li>„Termine holen“ liest auf deinen Wunsch die Termine des gewählten Kalenders und legt daraus Fristen in der Akte an.</li>
+   <li>Anbieter: Gerätekalender (Android), Google (Calendar API, Rechte <code>calendar.events</code>, <code>calendar.calendarlist.readonly</code>), Microsoft (Graph, <code>Calendars.ReadWrite</code>) oder eine Kalenderdatei (.ics). Google und Microsoft sitzen in den USA (Drittland).</li>
+   <li>Anmeldedaten bleiben nur im Arbeitsspeicher. Trennen geht jederzeit in der App, Widerruf zusätzlich im Konto. Die Nutzung von Google-Daten folgt der Google API Services User Data Policy (Limited Use).</li>
+  </ul>
+  <h3>5. Internet für die App</h3>
+  <ul>
+   <li>Eigener Schalter, ab Werk aus.</li>
+   <li><b>Bedeutungssuche:</b> das Suchmodell lädst du einmal bewusst, zuerst von family-projekt.de, sonst von Hugging Face; die Bibliothek von jsDelivr, sonst unpkg. Gesucht wird danach nur auf dem Gerät.</li>
+   <li><b>Brief beantworten mit KI:</b> nur mit deinem eigenen Schlüssel bei Mistral (Rechenzentrum in der EU) und nur der Text, den du freigibst; Namen und Anschriften werden vorher verdeckt.</li>
+   <li><b>SBKIM-Netz:</b> nur nach „Verbinden …“ über den Vermittler relay.family-projekt.de. Hinaus geht die Visitenkarte (Name, Lebensbereiche); Unterlagen nur, wenn „Im eigenen Netz antworten“ an ist, und dann nur Titel, Bereich und Datum.</li>
+   <li><b>Spracheingabe:</b> nur nach Tipp aufs Mikrofon; in Chrome geht die Aufnahme dafür an Google, unter Android und Windows erkennt das Gerät.</li>
+  </ul>
+  <h3>6. Eingebaute PDF-Werkzeuge</h3>
+  <p>Für Workflow PDF gelten ergänzend dessen Hinweise. Abrufe dort ebenfalls nur auf deine Wahl.</p>
+  <h3>7. Speicherdauer und Rechte</h3>
+  <p>Wie lange Daten bleiben, bestimmst du; löschen geht in der App oder über die Browserdaten. Du hast die Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung, Widerspruch und Datenübertragbarkeit sowie auf Beschwerde bei einer Aufsichtsbehörde.</p>
+
+  <h2>Haftungsausschluss</h2>
+  <ul>
+   <li><b>Keine Beratung:</b> Hinweise, Vorschläge und Zuordnungen der App ersetzen keine Rechts-, Steuer- oder medizinische Beratung.</li>
+   <li><b>Fristen ohne Gewähr:</b> erkannte Daten, Fristen und Erinnerungen sind Hilfen; maßgeblich bleibt das Original-Schreiben.</li>
+   <li><b>Sicherung:</b> für Sicherungen deiner Daten bist du selbst verantwortlich; die App hilft dabei, ersetzt sie aber nicht.</li>
+   <li><b>Testfassungen:</b> die Android-App ist eine Vorabversion außerhalb des Play Store, der Windows-Installer ist nicht von einer Zertifizierungsstelle signiert.</li>
+   <li><b>Links:</b> für Inhalte fremder Seiten (z. B. Kalender-Anbieter, Download-Seiten) sind deren Betreiber verantwortlich.</li>
+   <li>Die Haftung für Vorsatz und grobe Fahrlässigkeit sowie für Schäden an Leben, Körper und Gesundheit bleibt unberührt.</li>
+  </ul>
+ </article>
+
+ <section class="karte">
+  <h2>Was gegenüber heute neu ist</h2>
+  <ul>
+   <li>Anbieter „Family-Projekt“ statt nur Name; Abschnitt „Kurz gesagt“ oben.</li>
+   <li>Berichtigt: die Apps prüfen still auf Updates (nicht nur auf Tipp); „Termine holen“ liest Termine (bisher stand dort „liest keine Termine“).</li>
+   <li>Neu erwähnt: Pro-Tresor, Sicherung, Festplatte, Paket, eigenes Netz, Cloud-Ordner, Bedeutungssuche mit Quellen, Mistral, SBKIM-Relais, Demo und Bsp.-Akten.</li>
+   <li>Neu: Haftungsausschluss.</li>
+  </ul>
+ </section>
+</main>
