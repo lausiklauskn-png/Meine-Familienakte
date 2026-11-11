@@ -100,12 +100,16 @@ Hilfe-Thema „E-Mail“); die entscheidenden Punkte bleiben eine **Wahl des Nut
 - **E-Mail-Programm direkt in der Familienakte (Weg H, IMAP aus Brain übernehmen):** eigener späterer Bauschritt. Jetzt nur
   vorbereiten (Schnittstelle, Platz in der Wahl, Kasten in der Landkarte „geplant“); nicht in den Vordergrund stellen.
 - Verschlüsselung beim Mailversand gibt es nicht – im „?“ ehrlich sagen.
-- **Notfalls, nur wenn nötig (Klaus 11.11.): Private Brain als 1:1-Klon in die Familienakte**, genau wie Workflow PDF
-  (`public/apps/workflow-pdf/` mit Brücke `public/apps/fa-wfpdf-bruecke.js`, eigene DB, Pins in `public/apps/HERKUNFT.json`,
-  Nachziehen per Werkzeug, nie von Hand ändern). Dann ein Knopf „E-Mail“ oben im Kopf: Mails direkt in der Familienakte empfangen,
-  Anhänge hineinziehen, ablegen, speichern, zuordnen über die Eingangszentrale. „Nötig“ heißt: die interne Übergabe über das
-  Tresor-Fach gelingt nicht verlässlich, oder ein Nutzer hat Private Brain nicht installiert (z. B. nur die Web-App). Die Entscheidung
-  mit Grund im Abschlussbrief festhalten.
+- **Notfalls, nur wenn nötig (Klaus 11.11., mit Claudes Verbesserung): eigener Mail-Empfang in der Familienakte.** Klaus' Idee war
+  Private Brain als 1:1-Klon wie Workflow PDF. Befund: Mail holt Private Brain **nicht im Web-Teil**, sondern nativ in Java
+  (Android `MailEngine.java`, `MailAccount.java`, `MailProvider.java`, `ProMailPlugin.java`, `GmailMessages.java`,
+  `GmailTokenCache.java`, rund 1 000 Zeilen; Windows im Java-Dienst `windows/engine/src/DesktopService.java`). Ein Klon des Web-Teils
+  allein könnte also keine Mail empfangen. Deshalb statt des ganzen Klons: **nur den Mail-Kern byte-gleich übernehmen** (wie
+  `NetzDienst.java`, Pin in `native/HERKUNFT.json`, `check:herkunft`, nie von Hand ändern) = Weg H. Dazu ein Knopf **„E-Mail“ oben
+  im Kopf**: empfangen, Anhänge in die Eingangszentrale, ablegen, speichern, zuordnen. Zugänge nur im Keystore bzw. Windows-Schutz,
+  nie im Tresor oder im Browser. Die Web-App (PWA) kann kein IMAP; dort bleiben Teilen (A), Mail-App (B) und Microsoft (C).
+  „Nötig“ heißt: die Übergabe über das Tresor-Fach klappt nicht verlässlich, oder ein Nutzer hat Private Brain nicht. Entscheidung mit
+  Grund im Abschlussbrief.
 
 ## Zum Schluss (bevor ausgegeben wird)
 
