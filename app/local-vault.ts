@@ -2738,11 +2738,11 @@ export async function getVaultSummary(handle: FileSystemDirectoryHandle): Promis
   return { vaultId: identity.vaultId, vaultName: identity.vaultName, updatedAt: index.updatedAt, documentCount: index.documents.length };
 }
 
-export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file: File, data: { category: string; documentDate: string | null; notes: string | null; migration?: boolean; allowDuplicate?: boolean; assignmentLinks?: Array<{ toType: FamilyRecordType; toId: string; relationType: string }>; scanPageCount?: number; scanOriginals?: File[]; proUebergabe?: ProUebergabe; proBezug?: string; titel?: string | null; textAuszug?: string | null }) {
+export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file: File, data: { category: string; documentDate: string | null; notes: string | null; migration?: boolean; ohneProTresor?: boolean; allowDuplicate?: boolean; assignmentLinks?: Array<{ toType: FamilyRecordType; toId: string; relationType: string }>; scanPageCount?: number; scanOriginals?: File[]; proUebergabe?: ProUebergabe; proBezug?: string; titel?: string | null; textAuszug?: string | null }) {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   const index = await readIndex(handle);
   // P4: Grenze aus der Geräteprüfung; der gemeinsame Pro-Tresor bleibt bei höchstens 20 MB.
-  const grenze = aktuelleGrenze(!!proZiel(index));
+  const grenze = aktuelleGrenze(!data.ohneProTresor && !!proZiel(index));
   if (file.size > grenze.bytes) throw new Error(`Die Datei hat ${mbText(file.size)}. Dieses Gerät schafft sicher ${mbText(grenze.bytes)}.`);
   const checksum = await fileChecksum(file);
   if (data.proUebergabe && (data.proUebergabe.sha256 !== checksum || data.proUebergabe.groesse !== file.size)) throw new Error("Die Übergabe-Herkunft passt nicht zur Originaldatei.");
@@ -2750,7 +2750,8 @@ export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file:
   if (possibleDuplicate && !data.allowDuplicate) throw new Error(`Mögliche Dublette: „${possibleDuplicate.titel || possibleDuplicate.originalName}“ ist schon abgelegt. Bitte das vorhandene Dokument zuerst ansehen oder die bewusste Übernahme bestätigen.`);
   const id = crypto.randomUUID();
   const storedName = `${data.documentDate || new Date().toISOString().slice(0, 10)}_${id.slice(0, 8)}_${clean(file.name)}`;
-  const proId = proZiel(index);
+  // Bsp.-Akten (11.11.): erfundene Beispiel-Unterlagen nie in den gemeinsamen Pro-Tresor – dort würden sie beim Entfernen bleiben.
+  const proId = data.ohneProTresor ? null : proZiel(index);
   let folder: FileSystemDirectoryHandle | null = null;
   let storedPath: string;
   if (proId) {

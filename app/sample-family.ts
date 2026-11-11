@@ -213,7 +213,7 @@ async function seedOnce(handle: FileSystemDirectoryHandle, options: { force?: bo
     const lifeAreaTag = ["Familie & persönliche Dokumente", "Rente, Arbeit & Sozialversicherung"].includes(spec.lifeArea) ? [] : [`FaWoGa: ${spec.lifeArea}`];
     const notes = [`${SAMPLE_SOURCE}: ${spec.title}`, ...lifeAreaTag, `Dokumentart: ${spec.documentType}`, `Datenschutz: ${spec.privacy}`, "Eingang: Dateiauswahl", "Intelligenter Vorschlag übernommen"].join(" · ");
     const saved = await saveLocalDocument(handle, file, {
-      category: spec.category, documentDate: date, notes, allowDuplicate: true,
+      category: spec.category, documentDate: date, notes, allowDuplicate: true, ohneProTresor: true,
       assignmentLinks: spec.links.map((item) => ({ toType: typeOf.get(item.to)!, toId: ids.get(item.to)!, relationType: item.relationType })),
     });
     ids.set(spec.key, saved.id); typeOf.set(spec.key, "document");
