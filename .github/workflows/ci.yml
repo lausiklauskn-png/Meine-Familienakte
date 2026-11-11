@@ -17,7 +17,7 @@ concurrency:
 jobs:
   pruefung:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -51,7 +51,14 @@ jobs:
       - name: Build und Einzeldatei
         run: npm run build:single
       - name: Browser für die Oberflächenproben
-        run: npx playwright install --with-deps chromium
+        # Der Paketserver von Ubuntu ist auf den GitHub-Rechnern zeitweise nicht auflösbar (DNS); dann bis zu dreimal neu versuchen.
+        run: |
+          for versuch in 1 2 3; do
+            if timeout 300 npx playwright install --with-deps chromium; then exit 0; fi
+            echo "Browser-Einrichtung fehlgeschlagen (Versuch $versuch), neuer Versuch in 30 s"; sleep 30
+            sudo apt-get update || true
+          done
+          exit 1
       - name: Privaten Index mit wirklicher IndexedDB prüfen
         run: node tools/native/test-private-index.mjs
       - name: Diagnose der Pro-Ablage nach Neustart
