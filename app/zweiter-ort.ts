@@ -25,6 +25,7 @@ export type ZweiterOrt = {
   geraet: { letzte: Letzte } | null;
 };
 const SCHLUESSEL = "zweiter-ort-einstellung";
+let sitzungsHandle: FileSystemDirectoryHandle | null = null;
 const HANDLE = "zweiter-ort";
 
 export const zweiterOrtLesen = async (): Promise<ZweiterOrt | null> => (await laufwerkTx<ZweiterOrt | undefined>("handles", "readonly", (s) => s.get(SCHLUESSEL)).catch(() => undefined)) || null;
@@ -63,7 +64,7 @@ export async function zweiterOrtEinrichten(a: { handle: FileSystemDirectoryHandl
     kopf = t.kopf; notfall = t.notfall;
     schluessel = await schluesselExportieren(await tresorOeffnen(t.kopf, { passwort: a.passwort! }, true));
   }
-  const ort = await ortMerken(a.handle, HANDLE);
+  const ort = await ortMerken(a.handle, HANDLE); sitzungsHandle = istNativerOrdner(a.handle) ? null : a.handle;
   const z: ZweiterOrt = { kennung, name: a.handle.name, ort, angelegt: new Date().toISOString(), verschluesselt, modus: a.modus, kopf, schluessel,
     laufwerkKennung: null, letzte: null, letzteGelungen: null, geraet: alt?.geraet || null };
   let synchronHinweis = "";
@@ -119,6 +120,8 @@ export async function ortOeffnen(z: ZweiterOrt, mitTipp: boolean): Promise<FileS
     const r = await p.ordnerOeffnen({ ort: z.ort }).catch(() => ({ erreichbar: false } as { erreichbar: boolean; token?: string; name?: string }));
     return r.erreichbar && r.token ? new NativerOrdner(p, r.token, "", r.name || z.name) as unknown as FileSystemDirectoryHandle : null;
   }
+  // In dieser Sitzung gewählt: direkt nutzen (die Erlaubnis gilt noch). Sonst den gemerkten Handle aus dem App-Speicher.
+  if (sitzungsHandle) return sitzungsHandle;
   const h = await laufwerkTx<FileSystemDirectoryHandle | undefined>("handles", "readonly", (s) => s.get(HANDLE)).catch(() => undefined);
   if (!h) return null;
   const ph = h as FileSystemDirectoryHandle & { queryPermission?: (o: { mode: string }) => Promise<string>; requestPermission?: (o: { mode: string }) => Promise<string> };
@@ -212,6 +215,7 @@ export async function zweiterOrtSichern(akte: FileSystemDirectoryHandle, appVers
 
 /** Zweiten Ort beenden: die Sicherungen dort bleiben liegen; nur dieses Gerät vergisst Ort und Schlüssel. */
 export async function zweiterOrtBeenden() {
+  sitzungsHandle = null;
   const z = await zweiterOrtLesen();
   if (z?.laufwerkKennung) await laufwerkVergessen(z.laufwerkKennung).catch(() => undefined);
   await laufwerkTx("handles", "readwrite", (s) => s.delete(SCHLUESSEL));

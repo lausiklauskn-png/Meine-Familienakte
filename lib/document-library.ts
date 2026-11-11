@@ -176,7 +176,7 @@ function referencesFor(document: FamilyCockpitDocument, records: FamilyRecordUni
 
 // Sichtbare Beschreibung ohne interne Kürzel (Prüfbericht Neuling: „Was ist FaWoGa, file-picker?“). Die Notiz selbst bleibt
 // unverändert, denn readIntakeMetadata liest die Marken „FaWoGa:“ und „Dokumentart:“ daraus.
-const EINGANG_NAMEN: Record<string, string> = { "file-picker": "Dateiauswahl", "drag-drop": "Hineingezogen", "local-inbox": "Lokaler Eingangsordner", "onedrive-inbox": "OneDrive-Familienordner", "camera-scan": "Foto oder Scan" };
+const EINGANG_NAMEN: Record<string, string> = { "file-picker": "Dateiauswahl", "drag-drop": "Hineingezogen", "local-inbox": "Lokaler Eingangsordner", "onedrive-inbox": "OneDrive- oder Cloud-Ordner", "camera-scan": "Foto oder Scan" };
 export function lesbareNotiz(notes: string) {
   return notes
     .replace(/FaWoGa:\s*/g, "Lebensbereich: ")
