@@ -62,6 +62,8 @@ try {
       { id: "g-eltern", summary: "Elternabend", start: { dateTime: "2026-11-25T17:00:00Z" }, end: { dateTime: "2026-11-25T18:30:00Z" }, updated: "2026-11-08T10:00:00Z" },
       { id: "g-urlaub", summary: "Urlaub", start: { date: "2026-12-24" }, end: { date: "2026-12-27" } },
     ], nextSyncToken: "tok1" };
+    // Wettlauf (#149): nach dem ersten Lauf kann die App von selbst noch einmal mit dem Merker holen; geprüft wird der erste Lauf.
+    const vorher = google.laeufe.length;
     await karte.locator("[data-kalender-jetzt-holen]").click();
     await warteMeldung(page, /Termine geholt/);
     const regs = await register();
@@ -69,7 +71,7 @@ try {
     soll(eltern && urlaub && !regs.some((r) => r.data.title === "Antwort Krankenkasse"), regs.map((r) => r.data.title));
     soll(eltern.data.dueAt === "2026-11-25" && eltern.data.dueTime === "18:00" && eltern.data.kalenderQuelle?.eintragId === "g-eltern" && eltern.data.kalenderEintragen === true && /Kalender: Familie/.test(eltern.source), eltern);
     soll(urlaub.data.dueAt === "2026-12-24" && !urlaub.data.dueTime, urlaub.data);
-    const lauf = google.laeufe.at(-1); soll(lauf.kalender === "primary" && !lauf.sync && lauf.timeMin, lauf);
+    const lauf = google.laeufe[vorher]; soll(lauf && lauf.kalender === "primary" && !lauf.sync && lauf.timeMin, google.laeufe.slice(vorher));
     return `${regs.length} Fristen · Elternabend 25.11. 18:00 · Urlaub ganztägig`;
   });
   await step("Zweiter Lauf nutzt den Merker; Änderung im Kalender wird übernommen", async () => {
