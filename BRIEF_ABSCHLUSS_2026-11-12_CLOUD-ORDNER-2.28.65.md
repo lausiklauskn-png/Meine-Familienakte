@@ -32,10 +32,24 @@ durchgehend arbeiten, Fragen selbst entscheiden, Entscheidungen hier festhalten.
 9. **Microsoft:** Kalender und Mail in **einer** Anmeldung (sonst überschreibt unter Windows der Mail-Zugang den Kalender-Zugang). Anlagen über Microsoft je Datei bis 3 MB; größer → ehrlicher Hinweis auf die Mail-App.
 10. **Windows (e4):** Mail-App öffnet ohne Anlagen; Text in der Zwischenablage, Anlagen gespeichert, mit Satz.
 11. **Altes „OneDrive verbinden“** bleibt unverändert, nichts umgezogen. Frage an Klaus: wegfallen lassen oder „Akte liegt in OneDrive (alt)“ nennen?
+12. **Korrespondenz:** Anlagen und Hinweise stehen **vor** dem Haken „geprüft“, der Sende-Knopf danach (erst wählen, dann bestätigen).
+13. **„Neu“** zeigt nach Klaus' Regel nur die letzten zwei Fassungen: drei Einträge für 2.28.65, einer für 2.28.64.
+14. **Sicht-Wörter neu** (ohne Vorschau, Klaus: „Es braucht keine Vorschau“): „Sicherung an einem zweiten Ort“, „Wo liegt die zweite
+    Sicherung?“, „Verschlüsselt oder lesbar?“, „Nur sichern oder synchron halten?“, „Cloud-Ordner hereinholen“, „Jetzt nachsehen“,
+    „Trennen“, „E-Mail“, „Wie kommen Mails herein?“, „Wie gehen Mails hinaus?“, „In der Mail-App öffnen“, „Über Microsoft senden …“,
+    „Hast du die E-Mail in der Mail-App abgeschickt?“.
 
 ## Proben
 
-STAND_PROBEN
+- Neu: `run-zweiter-ort-tests` (8 Gruppen), `run-cloud-ordner-tests` (6), `run-mail-wege-tests` (6), in `build` und `check`;
+  UI `zweiter-ort` (11, mit Gegenproben Abbruch/fremde Ordner/falsches Passwort), `cloud-ordner` (9, mit Gegenprobe kaputtes Paket),
+  `email-wege` (6, Gegenprobe Tresor zu); JUnit `SicherungEntfernenTest` (eigene/fremde Namen).
+- `npm run build`, `npm run check`, `eslint`, `check:herkunft` grün. UI lokal in vier Strängen 111/114; danach behoben: `knoepfe-assistenz`
+  (Anlagen nach dem Prüf-Haken), `neu-knopf`, `neu-knopf-ziele` (Sprung zu den E-Mail-Wegen wartet auf die Eingangszentrale);
+  `pro-dokumente` lokal bekannt rot, in der CI grün.
+- CI auf e8f3f8e grün: pruefung 113/114 im ersten Lauf (Zeitlimit Briefweg `rueckmeldung-d`, lokal 9/9) → zweiter Lauf grün; webview
+  erst am Emulator-Download gescheitert → zweiter Lauf grün; windows auf 5322b8b einmal rot (Bedeutungssuche-Knopf 60 s gesperrt,
+  bekannte Stelle), auf e8f3f8e grün; android, product 31/35, transport grün.
 
 ## Nicht geprüft
 
@@ -50,14 +64,35 @@ STAND_PROBEN
 - Gemeinsame Rechtstexte `family-project/rechtstexte` (#376) um E-Mail/zweiten Ort ergänzen und verteilen (hier nur `public/datenschutz.html`).
 - Weiter offen aus dem Startbrief: graue Wege der Landkarte, Baustand hinter Entwickler-Schalter, Testament-Bildschirmfoto, Gesundheitsschutz je Nutzer, Gerätetests 2.28.48–2.28.65.
 
-AUSGABE
+## Ausgabe 2.28.65
+
+- #171 auf main zusammengeführt (4d7c6f2). Releases `android-v2.28.65` (Lauf 43099796658) und `windows-v2.28.65` (43099801328), beide
+  `server=ja`, Pages 43099769444 – alle grün. Downloads anonym geladen, SHA-256 gleich `SHA256SUMS` (APK `9b03bd44…`, Einzeldatei
+  `720e45df…`, Windows-Setup `4becbb58…`), APK enthält 2.28.65 aus 4d7c6f2. Nachweis `docs/VEROEFFENTLICHUNG-2.28.65.json`.
+- Geschenkbox (Artefakt XeUMGuSZ49FzsJYjwQznM7) Version 21: Familienakte-Links 2.28.65, Landkarte und Einzeldatei neu gebaut.
+- Private Brain Pro: keine neue Fassung nötig.
 
 ## Stundennachweis
 
-STUNDEN
+| Zeit (UTC, 11.11.) | Arbeit |
+|---|---|
+| 18:25–18:35 | Startbrief, Stand 2.28.64 geprüft, Vollsicherung, Eingangsordner und Laufwerk gelesen |
+| 18:35–18:45 | zweiter Ort: Logik, nativer Löschbefehl, Karte, Proben, Synchron halten |
+| 18:45–18:55 | Cloud-Ordner, Handy-Schleife, Absturz des Test-Chromiums eingekreist |
+| 18:55–19:00 | E-Mail-Wege (Brain-Befund, Mail-App, Microsoft, Versand), Proben |
+| 19:00–19:05 | Landkarte, Hilfe, „Neu“, Datenschutz, Entra-Schritte, Fassung 2.28.65 |
+| 19:05–21:00 | lokale Proben in vier Strängen, drei Korrekturen, CI mit zwei Neustarts (Wartezeit) |
+| 21:00–21:25 | Zusammenführen, Ausgabe, Downloads geprüft, Nachweis, Geschenkbox, Brief, KimHub |
+
+Summe rund 3 Stunden (Hamburger Zeit 19:25–22:25), davon knapp 2 Stunden Warten auf Proben und CI.
 
 ## Startauftrag
 
 ```
-STARTAUFTRAG
+Familienakte (lausiklauskn-png/Meine-Familienakte). CLAUDE.md und BRIEF_ABSCHLUSS_2026-11-12_CLOUD-ORDNER-2.28.65.md lesen.
+2.28.65 ist ausgegeben (APK, Windows, PWA). Nächste freie Fassung 2.28.66; sammeln, nicht nach jedem Umbau ausgeben.
+Zuerst Klaus' Rückmeldung zum Gerätetest 2.28.65 aufnehmen (zweiter Ort auf Stick/SD/OneDrive, Cloud-Ordner unter Windows,
+Paket vom Handy über OneDrive, Mail-App mit Anlagen, Private Brain → Familienakte). Offen bei Klaus: altes „OneDrive verbinden“
+(weg oder „alt“), Rechte Mail.Read/Mail.Send in Entra. Danach: gemeinsame Rechtstexte (family-project #376) um E-Mail und
+zweiten Ort ergänzen und verteilen.
 ```

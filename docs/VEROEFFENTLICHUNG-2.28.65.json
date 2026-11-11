@@ -1,0 +1,61 @@
+{
+ "version": "2.28.65",
+ "source": "4d7c6f20de4327ac3f214708edff7eb9ca51bf55",
+ "pullRequest": [
+  171,
+  170
+ ],
+ "recordedUtc": "2026-11-11T21:20:00Z",
+ "freigabe": "Klaus 11.11.2026 (Freibrief, Startbrief BRIEF_SITZUNG_2026-11-11_CLOUD-ORDNER-2.28.65.md): 2.28.65 einmal als APK, Windows und PWA ausgeben, wenn die Proben grün sind.",
+ "inhalt": "Sicherung an einem zweiten Ort (selbsttätig, verschlüsselt oder lesbar, dort 1, auf dem Gerät 2, erst prüfen dann löschen, nur eigene), „Nur sichern“/„Synchron halten“, Cloud-Ordner hereinholen (Kopie in die Eingangszentrale, Herkunft, neue Fassung, Trennen) mit Paketen vom Handy, E-Mail-Wege als Wahl (Private Brain Pro als Empfang mit selbsttätigem Abholen, Mail-App mit Anlagen, Microsoft-Postfach, eigenes Mail-Programm vorbereitet).",
+ "ciAmPrStand": "PR #171 auf e8f3f8e: pruefung (zweiter Lauf; erster: Zeitlimit im Briefweg von rueckmeldung-d, lokal grün), android, windows, webview (zweiter Lauf; erster: Emulator-Download „unknown archive“), product (31, pixel_c), product (35, pixel_2), transport – success.",
+ "releases": [
+  {
+   "tag": "android-v2.28.65",
+   "run": 43099796658,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-android-v2.28.65.apk",
+     "bytes": 20107838,
+     "sha256": "9b03bd44a6e79275a3b812ae9a6b85b8da1d2d6204f1c64803679fbf64f1d39b",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true,
+     "versionInside": "2.28.65 (assets/public/version.json, commit 4d7c6f2)"
+    },
+    {
+     "name": "Familienakte-Einzeldatei-2.28.65.html",
+     "bytes": 3995797,
+     "sha256": "720e45df07e3d2730e370ccc36db51cd02632fc558b8736ccc9ff8a24dda7c9a",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true
+    }
+   ]
+  },
+  {
+   "tag": "windows-v2.28.65",
+   "run": 43099801328,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-Windows-2.28.65-x64-setup.exe",
+     "bytes": 34238990,
+     "sha256": "4becbb58a6d496f492a4669bd1af2bc7ea2d43f9fcc2e84e1bab7fe5707b37e2",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true,
+     "latestJson": "version 2.28.65"
+    }
+   ]
+  }
+ ],
+ "pwa": "Pages-Lauf 43099769444 auf 4d7c6f2 success; Seite aus dem Behälter nicht erreichbar (Proxy), nicht selbst geprüft.",
+ "geschenkbox": "Artefakt XeUMGuSZ49FzsJYjwQznM7: Familienakte-Links 2.28.64 → 2.28.65, Landkarte (Fassung 2.28.65) und Geschenkbox-Pro-Apps.html neu gebaut.",
+ "privateBrain": "Keine neue Fassung: „An Familienakte teilen“ steckt schon in 1.0.48.",
+ "notChecked": [
+  "Alles am Gerät: zweiter Ort (OneDrive-Ordner, Stick, SD), nativer Löschbefehl, Cloud-Ordner mit OneDrive-Platzhaltern, Paket vom Handy über die OneDrive-App, Mail-App mit Anlagen, Private Brain → Familienakte mit echtem Tresor",
+  "Microsoft-Mail gegen Microsoft (Rechte Mail.Read/Mail.Send in Entra fehlen noch)",
+  "family-projekt.de aus dem Behälter nicht erreichbar; der Freigabelauf prüft den Server selbst"
+ ]
+}
