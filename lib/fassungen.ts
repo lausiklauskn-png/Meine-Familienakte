@@ -6,6 +6,7 @@
 export type Fassung = { fassung: string; datum: string; inhalt: string };
 
 export const FASSUNGEN: Fassung[] = [
+  { fassung: "2.28.59", datum: "11.11.2026", inhalt: "Android-App: Schreiben und Lesen in einem gewählten Ordner (Vollsicherung, gemeinsame Festplatte, Eingangsordner) brach ab, weil Zahlen falsch ankamen („Größe -1 statt 0“). Jetzt behoben." },
   { fassung: "2.28.58", datum: "11.11.2026", inhalt: "Vollsicherung auf der SD-Karte: die Prüfung nach dem Schreiben misst Größe und Inhalt selbst und wartet bei Abweichung kurz (vorher brach sie ab, wenn Android die Größe noch nicht kannte); schlägt sie fehl, nennt die Meldung Datei und Grund." },
   { fassung: "2.28.57", datum: "10.11.2026", inhalt: "Tooltips: mit der Maus über einem Knopf ohne Beschriftung erscheint sein Hinweis, auch in der Android-App (z. B. mit Maus am Tablet); kein langes Drücken mehr, ein- und ausschalten in der Hilfe. Landkarte: jede Legende zeigt ihre Zahl im Kästchen (z. B. geplant 7), keine lange Liste mehr unter der Karte. „Bestand prüfen“: „Nur Neues prüfen“ statt „Inkrementell“. „Was ist neu“ › „E-Mail in der Hilfe“ öffnet die E-Mail-Karte." },
   { fassung: "2.28.56", datum: "10.11.2026", inhalt: "Tresor einrichten: die Ordnerwahl öffnet gleich am gemerkten Tresor bzw. oben auf dem Gerätespeicher; den Ordner „Family-Projekt“ antippen oder mit „Neuer Ordner“ anlegen – ein leerer Ordner wird selbst zum Tresor. Kein Namensfenster mehr: der Hauptordner heißt immer „Family-Projekt“ (bei Belegung „Family-Projekt 2“ …). Alle Pro-Apps finden denselben Tresor am Inhalt." },

@@ -171,7 +171,7 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
     @PluginMethod public void dateiLesen(PluginCall call) {
         arbeit(call, () -> {
             Ablage a = ablage(call); String p = pfad(call);
-            long von = Math.max(0, call.getLong("offset", 0L)); int laenge = (int) Math.min(STUECK, Math.max(0, call.getLong("laenge", 0L)));
+            long von = Math.max(0, zahl(call, "offset", 0L)); int laenge = (int) Math.min(STUECK, Math.max(0, zahl(call, "laenge", 0L)));
             if (!a.gibtEs(p) || a.istOrdner(p)) throw new IOException("FA_NICHT_GEFUNDEN");
             Ablage.Kanal k = a.kanal(p);
             try {
@@ -206,7 +206,7 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
             Schreiben s = offen.get(call.getString("id", ""));
             String data = call.getString("data", "");
             if (s == null) throw new IOException("FA_STUECK_UNGUELTIG [Schreibvorgang unbekannt]");
-            if (call.getLong("offset", -1L) != s.groesse) throw new IOException("FA_STUECK_UNGUELTIG [Versatz " + call.getLong("offset", -1L) + " statt " + s.groesse + " · " + s.pfad + "]");
+            if (zahl(call, "offset", -1L) != s.groesse) throw new IOException("FA_STUECK_UNGUELTIG [Versatz " + zahl(call, "offset", -1L) + " statt " + s.groesse + " · " + s.pfad + "]");
             if (data.length() > ((STUECK + 2) / 3) * 4) throw new IOException("FA_STUECK_UNGUELTIG [Stück zu groß · " + s.pfad + "]");
             byte[] b = Base64.decode(data, Base64.NO_WRAP);
             if (s.groesse + b.length > MAX_DATEI) throw new IOException("FA_AUSGABE_ZU_GROSS");
@@ -218,7 +218,7 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
         arbeit(call, () -> {
             String id = call.getString("id", ""); Schreiben s = offen.get(id);
             if (s == null) throw new IOException("FA_STUECK_UNGUELTIG [Schreibvorgang unbekannt]");
-            if (call.getLong("size", -1L) != s.groesse) throw new IOException("FA_STUECK_UNGUELTIG [Größe " + call.getLong("size", -1L) + " statt " + s.groesse + " · " + s.pfad + "]");
+            if (zahl(call, "size", -1L) != s.groesse) throw new IOException("FA_STUECK_UNGUELTIG [Größe " + zahl(call, "size", -1L) + " statt " + s.groesse + " · " + s.pfad + "]");
             s.out.flush(); s.out.close(); offen.remove(id);
             String sha = hex(s.sha.digest());
             // Gerätetest 11.11. (SD-Karte): die von Android gemeldete Größe (COLUMN_SIZE) kann direkt nach dem Schreiben veraltet sein.
@@ -255,6 +255,13 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
             return new JSObject().put("name", name).put("groesse", n).put("sha256", sha).put("fassung", info.versionName);
         });
     }
+    /**
+     * Zahl aus dem Aufruf (Gerätetest 11.11.2026): Capacitors getLong liefert nur echte Long-Werte; kleine Zahlen kommen aus
+     * dem JSON aber als Integer an – dann gab getLong den Ersatzwert (-1 bzw. 0) zurück und jedes Schreiben/Lesen über die
+     * Ordnerwahl scheiterte („Größe -1 statt 0“). Darum jede Zahl annehmen.
+     */
+    static long zahl(Object wert, long ersatz) { return wert instanceof Number ? ((Number) wert).longValue() : ersatz; }
+    private static long zahl(PluginCall call, String name, long ersatz) { return zahl(call.getData().opt(name), ersatz); }
     /** null = Datei stimmt; sonst der Grund. Liest die Datei selbst (Länge und SHA-256), bis zu vier Versuche mit kurzer Pause. */
     private static String pruefenMitGeduld(Ablage a, String p, long soll, String sha) throws Exception {
         String grund = null;
