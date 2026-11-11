@@ -67,7 +67,7 @@ try {
   });
   await step("Leere Akte: Systemprüfung läuft und meldet ein Ergebnis", async () => {
     await footer(page, "Systemprüfung");
-    await page.locator("button", { hasText: "Abschlussprüfung 2.28.1 starten" }).click();
+    await page.locator("button", { hasText: "Systemprüfung starten" }).click();
     await page.waitForFunction(() => /offene Prüfpunkte/.test(document.body.innerText), null, { timeout: 25000 }).catch(() => {});
     const erg = (await page.locator("[aria-live]").allInnerTexts()).join(" ").match(/Systemprüfung abgeschlossen[^.]*\./);
     return erg ? erg[0].slice(0, 100) : false;

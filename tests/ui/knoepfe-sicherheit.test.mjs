@@ -208,8 +208,8 @@ try {
 
   // ---------- Systemprüfung ----------
   await footer(page, "Systemprüfung");
-  await step("Systemprüfung: „Abschlussprüfung 2.28.1 starten“ liefert ein Gesamtergebnis", async () => {
-    await page.locator("button", { hasText: "Abschlussprüfung 2.28.1 starten" }).click();
+  await step("Systemprüfung: „Systemprüfung starten“ liefert ein Gesamtergebnis", async () => {
+    await page.locator("button", { hasText: "Systemprüfung starten" }).click();
     await page.waitForFunction(() => /offene Prüfpunkte/.test(document.body.innerText), null, { timeout: 25000 }).catch(() => {});
     const text = await page.locator("main").innerText();
     const erg = (await page.locator("[aria-live]").allInnerTexts()).join(" ").match(/Systemprüfung abgeschlossen[^.]*\./);

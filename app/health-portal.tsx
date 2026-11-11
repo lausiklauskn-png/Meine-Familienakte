@@ -87,7 +87,7 @@ import { FASSUNGEN } from "../lib/fassungen";
 import { BenutzerabnahmeHilfe } from "./benutzerabnahme-hilfe";
 import { UI_HELP_ZIEL } from "../lib/ui-help-ziele";
 import { Seitenleiste } from "./seitenleiste";
-import { latestUserAcceptance, latestUserResult } from "../lib/practical-acceptance";
+import { isUserAcceptanceRun, latestUserAcceptance, latestUserResult } from "../lib/practical-acceptance";
 import { KlappLeiste, klappOeffnen } from "./klapp";
 import { AugeKnopf, FlachText, KnopfLeiste, StiftKnopf, useEinzeilig } from "./flach-zeile";
 import { ErinnerungLoeschen, NotizLoeschen } from "./loesch-knopf";
@@ -427,13 +427,29 @@ function readSystemCheckReports(): SystemCheckReport[] {
     const stored = JSON.parse(workspaceStorage.getItem(SYSTEM_CHECK_REPORTS_KEY) || "[]") as StoredSystemCheck[];
     const builtIn = normalizeSystemReport(releaseSystemCheckReport as StoredSystemCheck);
     const reports = stored.map((item) => normalizeSystemReport(item)).filter((item): item is SystemCheckReport => !!item);
-    if (builtIn && !reports.some((item) => item.id === builtIn.id)) reports.push(builtIn);
+    // Klaus 11.11.: der mitgelieferte Bericht 2.28.1 ist kein Stand dieser Fassung mehr und wird nicht mehr gezeigt.
+    void builtIn;
     if (reports.length) return reports.sort((a, b) => new Date(b.checkedAt).getTime() - new Date(a.checkedAt).getTime());
     const legacy = normalizeSystemReport(JSON.parse(workspaceStorage.getItem(SYSTEM_CHECK_STORAGE_KEY) || "null") as StoredSystemCheck | null);
     return legacy ? [legacy] : [];
   } catch { return []; }
 }
 
+/** Klaus 11.11.: Prüfzettel früherer Fassungen zugeklappt, nicht still gelöscht. */
+function alterZettel(item: SystemCheckReport) { return item.kind === "acceptance" && isUserAcceptanceRun(item.userAcceptance) && item.userAcceptance?.familyVersion !== APP_FASSUNG; }
+function aeltereZettelLoeschen(): SystemCheckReport[] {
+  const rest = readSystemCheckReports().filter((item) => !alterZettel(item));
+  workspaceStorage.setItem(SYSTEM_CHECK_REPORTS_KEY, JSON.stringify(rest));
+  return rest;
+}
+/** Stand der laufenden Fassung (Klaus 11.11.): was vor der Ausgabe geprüft wurde – Einzelheiten im Veröffentlichungsnachweis. */
+function FassungStand() {
+  const f = FASSUNGEN.find((x) => x.fassung === APP_FASSUNG);
+  return <section className="card fassung-stand" data-fassung-stand>
+    <span className="ui-heading-help"><h2>Fassung {APP_FASSUNG}{f ? ` · ${f.datum}` : ""}</h2><InfoPopover label="Stand der Fassung erklären" text={"Vor jeder Ausgabe geprüft\n• Oberflächenproben im Browser, Android-App im Emulator auf zwei Geräten, Windows-App.\n• Ausgegeben wird nur, wenn alles grün ist; danach werden die Downloads per Prüfsumme nachgeprüft.\n• Am Gerät selbst prüfst du mit dem Prüfzettel unten."}/></span>
+    <ul className="fassung-stand-liste"><li><span>Oberflächenproben, Android, Windows</span><strong className="ok">vor der Ausgabe grün</strong></li><li><span>Am Gerät noch offen</span><strong>{f ? f.inhalt.split(/[.;:] /)[0] : "siehe Prüfzettel"}</strong></li></ul>
+  </section>;
+}
 function saveSystemCheckReport(report: SystemCheckReport, makeCurrent = report.kind === "check") {
   const existing = readSystemCheckReports();
   const reports = [report, ...existing.filter((item) => item.id !== report.id)]
@@ -573,7 +589,7 @@ function HealthPortalContent() {
     } catch { return true; }
   });
   const [lastSystemReport, setLastSystemReport] = useState<SystemCheckReport | null>(() =>
-    readSystemCheckReports().find((item) => item.kind === "check") || normalizeSystemReport(releaseSystemCheckReport as unknown as StoredSystemCheck),
+    readSystemCheckReports().find((item) => item.kind === "check") || null,
   );
   // Kein Online-Speicher mehr (B3): die frühere Cloudflare-Liste ist dauerhaft leer; die Anzeige bleibt unverändert.
   const documents: UploadedDocument[] = useMemo(() => [], []);
@@ -2814,7 +2830,7 @@ function seiteDrucken() {
 
 /** Stand der Benutzerabnahme für das Bild in der Hilfe (nur lesen). */
 function abnahmeErgebnisse() {
-  const run = latestUserAcceptance(readSystemCheckReports(), APP_VERSION);
+  const run = latestUserAcceptance(readSystemCheckReports(), APP_FASSUNG);
   return Object.fromEntries(Object.entries(run?.answers || {}).map(([id, antwort]) => [id, latestUserResult(antwort)?.result]));
 }
 function HelpCenter({ onGo, onSearch, demo, datentresor, herkunft, letzteSicherung = null, speicher, ordnerWahl = false }: { onGo: GehMitZiel; onSearch: (value: string) => void; demo?: React.ReactNode; datentresor?: string; herkunft?: SectionId; letzteSicherung?: string | null; speicher?: "pro-gesperrt" | "app"; ordnerWahl?: boolean }) {
@@ -2977,7 +2993,7 @@ function SystemCheck({ documents, localDocuments, vaultHandle, onCompleted }: {
   onCompleted: (report: SystemCheckReport) => void;
 }) {
   const [report, setReport] = useState<SystemCheckReport | null>(() => {
-    return readSystemCheckReports().find((item) => item.kind === "check") || normalizeSystemReport(releaseSystemCheckReport as unknown as StoredSystemCheck);
+    return readSystemCheckReports().find((item) => item.kind === "check") || null;
   });
   const [reports, setReports] = useState<SystemCheckReport[]>(() => readSystemCheckReports());
   const [running, setRunning] = useState<"full" | "changes" | "repair" | "verification" | null>(null);
@@ -3078,7 +3094,7 @@ function SystemCheck({ documents, localDocuments, vaultHandle, onCompleted }: {
         summary: documentIntakeReady ? "Alle Eingangswege verwenden dieselbe lokale Verarbeitung, Zuordnung und Dokumentquelle." : "Die gemeinsame Verarbeitung oder mindestens ein praktischer Eingangstest ist unvollständig.",
         details: documentIntakeReady ? [
           "Drag & Drop, Dateiauswahl, Dokumentenfoto, lokaler Eingangsordner und lokaler OneDrive-Posteingang führen in dieselbe Pipeline.",
-          "Dokumentenbibliothek, gemeinsame Suche, FaWoGa-Zuordnung, Cockpit, Neuigkeiten, Vorgangschronologie und Gesundheitsakte werden wiederverwendet.",
+          "Dokumentenbibliothek, gemeinsame Suche, Ordnungshilfe-Zuordnung, Cockpit, Neuigkeiten, Vorgangschronologie und Gesundheitsakte werden wiederverwendet.",
           "Bestehende Kennungen werden zuerst geprüft; unsichere Zuordnungen und mögliche Dubletten benötigen eine bewusste Bestätigung.",
           "Ordner werden nur auf Benutzerbefehl geprüft. Originaldateien werden nicht automatisch verschoben, umbenannt, gelöscht oder überschrieben.",
           `${documentIntakeTests.length} von ${documentIntakeTests.length} Dokumenteneingangs-Praxistests bestanden.`,
@@ -3118,7 +3134,7 @@ function SystemCheck({ documents, localDocuments, vaultHandle, onCompleted }: {
         && local.assistantReleasedInventoryCount > 0);
       addArea({
         id: "fawogainventory",
-        label: "FaWoGa-Bestandsanalyse und Archivintegrität",
+        label: "Ordnungshilfe-Bestandsanalyse und Archivintegrität",
         level: !fawogaInventoryTechnicalReady ? "red" : fawogaPilotComplete ? "green" : "yellow",
         summary: !fawogaInventoryTechnicalReady
           ? "Die Bestandsanalyse oder mindestens eine technische Schutzprüfung ist unvollständig."
@@ -3178,7 +3194,7 @@ function SystemCheck({ documents, localDocuments, vaultHandle, onCompleted }: {
         && archiveAndReleaseComplete;
       addArea({
         id: "fawogaonedrive",
-        label: "FaWoGa-OneDrive-Integration und intelligente Bestandszuordnung",
+        label: "Ordnungshilfe-OneDrive-Integration und intelligente Bestandszuordnung",
         level: !fawogaOneDriveTechnicalReady ? "red" : fawogaOneDrivePilotComplete ? "green" : "yellow",
         summary: !fawogaOneDriveTechnicalReady
           ? "Die inkrementelle OneDrive-Bestandslogik oder eine technische Schutzprüfung ist unvollständig."
@@ -3186,7 +3202,7 @@ function SystemCheck({ documents, localDocuments, vaultHandle, onCompleted }: {
             ? "Technik und vollständiger Abschlusslauf mit dem verbundenen Testbestand wurden bestätigt."
             : "Die technische Umsetzung ist geprüft; mindestens ein praktischer Schritt der Abschlussprüfung steht noch aus.",
         details: [
-          `${fawogaOneDriveTests.filter((test) => test.passed).length} von ${fawogaOneDriveTests.length} technischen FaWoGa-OneDrive-Prüfungen bestanden.`,
+          `${fawogaOneDriveTests.filter((test) => test.passed).length} von ${fawogaOneDriveTests.length} technischen Ordnungshilfe-OneDrive-Prüfungen bestanden.`,
           `${fawogaLearningTests.filter((test) => test.passed).length} von ${fawogaLearningTests.length} Prüfungen der lernfähigen, bestätigungspflichtigen Zuordnung bestanden.`,
           `${inventoryPreviewTests.filter((test) => test.passed).length} von ${inventoryPreviewTests.length} Vorschau- und Datenschutzwegen bestanden.`,
           `${inventoryTextDecodingTests.filter((test) => test.passed).length} von ${inventoryTextDecodingTests.length} Prüfungen für Zeichencodierung, Binärschutz und unlesbare Inhalte bestanden.`,
@@ -3219,7 +3235,7 @@ function SystemCheck({ documents, localDocuments, vaultHandle, onCompleted }: {
           "Die Kamera beziehungsweise Fotoauswahl startet nur nach einer bewussten Benutzeraktion.",
           "Seiten können geöffnet, neu aufgenommen, gedreht, behutsam zugeschnitten, verbessert, entfernt und neu sortiert werden.",
           "Eine oder mehrere Seiten werden zu genau einer PDF zusammengeführt; die Scan-Fotos werden nicht als eigene Dokumente registriert.",
-          "Die PDF verwendet anschließend dieselbe Dubletten-, Zuordnungs-, Vorgangs-, Memory-, Such- und Gesundheitslogik wie andere Dokumente.",
+          "Die PDF verwendet anschließend dieselbe Dubletten-, Zuordnungs-, Vorgangs-, Tagebuch-, Such- und Gesundheitslogik wie andere Dokumente.",
           "Originalaufnahmen werden nur nach ausdrücklicher Auswahl als Anlagen derselben PDF behalten.",
           `${documentScanTests.length} von ${documentScanTests.length} Scan-/PDF-Praxistests bestanden.`,
         ] : documentScanTests.filter((test) => !test.passed).map((test) => `${test.label}: ${test.summary}`),
@@ -3236,8 +3252,8 @@ function SystemCheck({ documents, localDocuments, vaultHandle, onCompleted }: {
         && systemCheckManifest.memoryReuse.length >= 7
         && systemCheckManifest.memorySafety.length >= 7;
       addArea({
-        id: "memory", label: "Memory & Erinnerungsprotokoll", level: memoryReady ? "green" : "red",
-        summary: memoryReady ? "Erinnerungen werden lokal erfasst, strukturiert und über vorhandene Datensätze sicher verknüpft." : "Der Memory-Ablauf oder mindestens ein praktischer Test ist unvollständig.",
+        id: "memory", label: "Tagebuch & Erinnerungsprotokoll", level: memoryReady ? "green" : "red",
+        summary: memoryReady ? "Erinnerungen werden lokal erfasst, strukturiert und über vorhandene Datensätze sicher verknüpft." : "Der Tagebuch-Ablauf oder mindestens ein praktischer Test ist unvollständig.",
         details: memoryReady ? [
           "Text, Dauerdiktat, Fotos und Videos führen in dieselbe bestätigungspflichtige Erfassung.",
           "Originaltext, Tatsachen, Beobachtungen und Einschätzungen bleiben nachvollziehbar getrennt.",
@@ -3245,7 +3261,7 @@ function SystemCheck({ documents, localDocuments, vaultHandle, onCompleted }: {
           "Mehrere Eingaben bleiben als getrennte lokale Entwürfe erhalten; Medien, Reihenfolge und Bearbeitungsstatus sind eindeutig zugeordnet.",
           "Erst Bestätigt speichern überführt genau einen Entwurf in die vorhandene Chronologie; unbehandelte Entwürfe und Rückfragen zu gespeicherten Einträgen bleiben getrennt.",
           "Gesundheitsbezüge bleiben außerhalb des geschützten Bereichs datensparsam; lokale Medien werden nicht an einen externen KI-Dienst übertragen.",
-          `${memoryTests.length} von ${memoryTests.length} Memory-Praxistests bestanden, davon ${memoryQueueTests.length} Mehrfacherfassungstests.`,
+          `${memoryTests.length} von ${memoryTests.length} Tagebuch-Praxistests bestanden, davon ${memoryQueueTests.length} Mehrfacherfassungstests.`,
         ] : memoryTests.filter((test) => !test.passed).map((test) => `${test.label}: ${test.summary}`),
       });
 
@@ -3256,7 +3272,7 @@ function SystemCheck({ documents, localDocuments, vaultHandle, onCompleted }: {
         && systemCheckManifest.contextLinkingReuse.length >= 7
         && systemCheckManifest.contextLinkingSafety.length >= 8;
       addArea({
-        id: "contextlinking", label: "Dokument-Memory-Vorgangsverknüpfung", level: contextLinkingReady ? "green" : "red",
+        id: "contextlinking", label: "Dokument-Tagebuch-Vorgangsverknüpfung", level: contextLinkingReady ? "green" : "red",
         summary: contextLinkingReady ? "Dokumente, Tagebuch-Einträge und offene Punkte werden über vorhandene Vorgänge nachvollziehbar verbunden." : "Die Kontextverknüpfung oder mindestens ein praktischer Test ist unvollständig.",
         details: contextLinkingReady ? [
           "Dokumenteneingang, Memory, Relationsmodell, Suche, Cockpit und Vorgangschronologie werden gemeinsam wiederverwendet.",
@@ -3274,7 +3290,7 @@ function SystemCheck({ documents, localDocuments, vaultHandle, onCompleted }: {
         && systemCheckManifest.leadingDataAuthority === "Lokales Familienakten-Register";
       addArea({
         id: "coreconsolidation", label: "Kernlogik und Datensicherheit 2.27.1", level: coreConsolidationReady ? "green" : "red",
-        summary: coreConsolidationReady ? "Registerschutz, vollständige Sicherung, Datenschutz, Relationen, Kategorien und Memory-Lebenszyklus wurden gemeinsam geprüft." : "Mindestens eine verpflichtende Konsolidierungsprüfung ist fehlgeschlagen.",
+        summary: coreConsolidationReady ? "Registerschutz, vollständige Sicherung, Datenschutz, Relationen, Kategorien und Tagebuch-Lebenszyklus wurden gemeinsam geprüft." : "Mindestens eine verpflichtende Konsolidierungsprüfung ist fehlgeschlagen.",
         details: consolidationTests.map((test) => `${test.label}: ${test.passed ? "bestanden" : "fehlgeschlagen"} – ${test.summary}`),
       });
 
@@ -3568,17 +3584,18 @@ function SystemCheck({ documents, localDocuments, vaultHandle, onCompleted }: {
 
   return <>
     <PageTitle icon={<ShieldCheck/>} title="Systemprüfung" text="Prüfstatus, Freigabe und gespeicherte Berichte."/>
-    <Suspense fallback={null}>    <PracticalAcceptance reports={reports} onSave={saveUserAcceptance} websiteVersion="40" familyVersion={APP_VERSION}/></Suspense>
+    <FassungStand/>
+    <Suspense fallback={null}>    <PracticalAcceptance reports={reports} onSave={saveUserAcceptance} websiteVersion={APP_FASSUNG} familyVersion={APP_FASSUNG}/></Suspense>
     <section className="system-check-facts" aria-label="Stand der Systemprüfung">
-      <article className="card"><small>Aktuelle Version</small><strong>{APP_VERSION}</strong></article>
+      <article className="card"><small>Aktuelle Fassung</small><strong>{APP_FASSUNG}</strong></article>
       <article className="card"><small>Letzte Systemprüfung</small><strong>{lastCheck ? new Intl.DateTimeFormat("de-DE", { dateStyle: "medium", timeStyle: "short" }).format(new Date(lastCheck.checkedAt)) : "Noch nicht durchgeführt"}</strong></article>
       <article className="card"><small>Gespeicherte Prüfberichte</small><strong>{reports.length}</strong></article>
     </section>
     <section className="system-check-control-grid">
       <article className="card system-check-control-card">
-        <div className="system-check-card-title"><div><span className="badge success">Version 2.28.1</span><h2>Vollständige Freigabeprüfung</h2></div><InfoPopover label="Freigabeprüfung erklären" text="Prüft den vorhandenen Testbestand, Vorschau, Zuordnungen, Lernfunktion, Dubletten, Archivierung, Assistenzfreigabe, Suche, Datenschutz und die technischen Regressionstests. Persönliche Originaldateien werden dabei nicht verändert."/></div>
+        <div className="system-check-card-title"><div><h2>Systemprüfung auf diesem Gerät</h2></div><InfoPopover label="Freigabeprüfung erklären" text="Prüft den vorhandenen Testbestand, Vorschau, Zuordnungen, Lernfunktion, Dubletten, Archivierung, Assistenzfreigabe, Suche, Datenschutz und die technischen Regressionstests. Persönliche Originaldateien werden dabei nicht verändert."/></div>
         <div className="system-check-button-row">
-          <button className="button primary" disabled={!!running} onClick={() => runCheck("full")}><ShieldCheck size={17}/>{running === "full" ? "Prüfung läuft …" : "Abschlussprüfung 2.28.1 starten"}</button>
+          <button className="button primary" disabled={!!running} onClick={() => runCheck("full")}><ShieldCheck size={17}/>{running === "full" ? "Prüfung läuft …" : "Systemprüfung starten"}</button>
           <button className="button primary" disabled={!!running} onClick={() => runCheck("changes")}><History size={17}/>{running === "changes" ? "Prüfung läuft …" : "Änderungen prüfen"}</button>
           <details className="final-test-scope"><summary>Prüfumfang anzeigen</summary><ol><li>Bestehenden Testbestand verwenden</li><li>Bestandsabgleich einschließlich Unterordner</li><li>Dokumentvorschau und Original öffnen</li><li>Vollständige bestätigte Zuordnung</li><li>Lernfähige Vorschläge</li><li>Sammelprüfung</li><li>Dubletten und Versionen</li><li>Kontrollierte Archivierung</li><li>Assistenzfreigabe</li><li>Suche und Zusammenhänge</li><li>Unterbrechung und Fortsetzung</li><li>Erneuter inkrementeller Abgleich</li><li>Datenschutz und Originalschutz</li><li>System- und Regressionstests</li><li>Gespeicherter Abschlussbericht</li></ol></details>
         </div>
@@ -3597,7 +3614,8 @@ function SystemCheck({ documents, localDocuments, vaultHandle, onCompleted }: {
       </section>
       <section className="check-area-section"><div className="system-check-section-heading"><h2>Geprüfte Bereiche</h2><InfoPopover label="Geprüfte Bereiche erklären" text="Jede Karte steht für einen geprüften Funktionsbereich. Das Fragezeichen in der jeweiligen Karte zeigt Zusammenfassung und Einzelheiten, ohne die Übersicht dauerhaft zu verlängern."/></div><div className="check-area-grid">{report.areas.map((area) => <article className={`card check-area level-${area.level}`} key={area.id}><div className="check-area-head"><span className="check-symbol" aria-hidden="true">{levelSymbol[area.level]}</span><div><h3>{area.label}</h3><span className={`badge check-${area.level}`}>{systemCheckLevelLabel[area.level]}</span></div><InfoPopover label={`${area.label} erklären`} text={`${area.summary} ${area.details.join(" ")}`}/></div></article>)}</div></section>
     </>}
-      <section className="card check-reports" id="pruefberichte"><div className="system-check-card-title"><div><span className="eyebrow dark">Prüfberichte</span><h2>Gespeicherte Ergebnisse</h2></div><div className="system-check-title-actions"><span className="version-badge">{reports.length} Bericht{reports.length === 1 ? "" : "e"}</span><InfoPopover label="Prüfberichte erklären" text="Frühere Prüf- und Reparaturberichte bleiben erhalten. Der neueste Bericht steht oben und kann bei Bedarf aufgeklappt werden."/></div></div>{reports.length ? <div className="check-report-list">{reports.map((item) => item.kind === "acceptance" ? <StoredUserAcceptance key={item.id} report={item}/> : <details key={item.id}><summary><span>{levelSymbol[item.overall]}</span><div><strong>{item.kind === "repair" ? `Reparaturdurchlauf ${item.attempt || 1}` : item.mode === "changes" ? "Änderungsprüfung" : "Vollständige Systemprüfung"}</strong><small>{new Intl.DateTimeFormat("de-DE", { dateStyle: "medium", timeStyle: "short" }).format(new Date(item.checkedAt))} · Version {item.version}</small></div><span className={`badge check-${item.overall}`}>{systemCheckLevelLabel[item.overall]}</span></summary><div className="check-report-body"><p><strong>Prüf-ID:</strong> {item.id}</p><p><strong>Gesamtergebnis:</strong> {systemCheckOverallLabel[item.overall]}</p><p><strong>Freigabestatus:</strong> {item.releaseStatus === "freigegeben" ? "Freigegeben" : item.releaseStatus === "prüfung_empfohlen" ? "Prüfung empfohlen" : "Nicht freigegeben"}</p>{item.releaseSummary && <><p><strong>Website-Version:</strong> {item.releaseSummary.websiteVersion}</p><p><strong>Quellstand:</strong> {item.releaseSummary.sourceReference}</p><p><strong>Bestand:</strong> {item.releaseSummary.analyzedFiles} analysiert · {item.releaseSummary.newFiles} neu · {item.releaseSummary.unchangedFiles} unverändert · {item.releaseSummary.changedFiles} geändert · {item.releaseSummary.movedFiles} verschoben · {item.releaseSummary.unavailableFiles} nicht erreichbar</p><p><strong>Bewertung:</strong> {item.releaseSummary.recommendedFiles} empfohlen · {item.releaseSummary.reviewFiles} noch zu prüfen · {item.releaseSummary.duplicateFiles} Dubletten · {item.releaseSummary.versionFiles} Versionen</p><p><strong>Freigaben:</strong> {item.releaseSummary.archivedFiles} archiviert · {item.releaseSummary.assistantReleasedFiles} assistenzfreigegeben</p><p><strong>Funktionsstatus:</strong> Lernfunktion {item.releaseSummary.learningStatus} · Vorschau {item.releaseSummary.previewStatus} · Relationen {item.releaseSummary.relationStatus} · Datenschutz {item.releaseSummary.privacyStatus} · Originalschutz {item.releaseSummary.originalProtection} · Build {item.releaseSummary.buildStatus}</p></>}<p><strong>Geprüfte Bereiche:</strong> {item.areas.map((area) => area.label).join(", ")}</p><p><strong>Grüne Prüfpunkte:</strong> {item.greenPoints.length ? item.greenPoints.map((point) => point.areaLabel).join(", ") : "Keine."}</p><p><strong>Praktische Testfälle:</strong> {item.testCases.length ? item.testCases.map((test) => `${test.label}: ${test.status}`).join(" · ") : "In diesem älteren Bericht noch nicht enthalten."}</p><p><strong>Warnungen und Fehler:</strong> {item.openProblems.length ? item.openProblems.map((problem) => `${problem.areaLabel}: ${problem.summary}`).join(" · ") : "Keine."}</p><p><strong>Durchgeführte Reparaturen:</strong> {item.repairs.length ? item.repairs.join(" · ") : "Keine Reparatur in diesem Lauf."}</p><p><strong>Weiterhin offen:</strong> {item.openProblems.length ? item.openProblems.map((problem) => `${problem.areaLabel} – ${problem.nextStep}`).join(" · ") : "Keine offenen Punkte."}</p><p><strong>VERSION 2.28.1 FÜR PRODUKTIVÜBERNAHME FREIGEGEBEN:</strong> {item.overall === "green" ? "JA" : "NEIN"}</p>{item.kind === "repair" && <p><strong>Sicherung:</strong> {item.backupCreated ? "Prüfzustand wurde vor der Reparatur gesichert." : "Keine Sicherung vermerkt."} {item.improved === false ? "Ohne messbare Verbesserung wurde die automatische Wiederholung beendet." : item.improved ? "Die anschließende Prüfung bestätigte eine Verbesserung." : ""}</p>}</div></details>)}</div> : <div className="empty-state"><FileClock size={30}/><strong>Noch keine Prüfberichte</strong></div>}</section>
+      <section className="card check-reports" id="pruefberichte"><div className="system-check-card-title"><div><span className="eyebrow dark">Prüfberichte</span><h2>Gespeicherte Ergebnisse</h2></div><div className="system-check-title-actions"><span className="version-badge">{reports.length} Bericht{reports.length === 1 ? "" : "e"}</span><InfoPopover label="Prüfberichte erklären" text="Frühere Prüf- und Reparaturberichte bleiben erhalten. Der neueste Bericht steht oben und kann bei Bedarf aufgeklappt werden."/></div></div>{reports.length ? <div className="check-report-list">{reports.filter((item) => !alterZettel(item)).map((item) => item.kind === "acceptance" ? <StoredUserAcceptance key={item.id} report={item}/> : <details key={item.id}><summary><span>{levelSymbol[item.overall]}</span><div><strong>{item.kind === "repair" ? `Reparaturdurchlauf ${item.attempt || 1}` : item.mode === "changes" ? "Änderungsprüfung" : "Vollständige Systemprüfung"}</strong><small>{new Intl.DateTimeFormat("de-DE", { dateStyle: "medium", timeStyle: "short" }).format(new Date(item.checkedAt))} · Version {item.version}</small></div><span className={`badge check-${item.overall}`}>{systemCheckLevelLabel[item.overall]}</span></summary><div className="check-report-body"><p><strong>Prüf-ID:</strong> {item.id}</p><p><strong>Gesamtergebnis:</strong> {systemCheckOverallLabel[item.overall]}</p><p><strong>Freigabestatus:</strong> {item.releaseStatus === "freigegeben" ? "Freigegeben" : item.releaseStatus === "prüfung_empfohlen" ? "Prüfung empfohlen" : "Nicht freigegeben"}</p>{item.releaseSummary && <><p><strong>Website-Version:</strong> {item.releaseSummary.websiteVersion}</p><p><strong>Quellstand:</strong> {item.releaseSummary.sourceReference}</p><p><strong>Bestand:</strong> {item.releaseSummary.analyzedFiles} analysiert · {item.releaseSummary.newFiles} neu · {item.releaseSummary.unchangedFiles} unverändert · {item.releaseSummary.changedFiles} geändert · {item.releaseSummary.movedFiles} verschoben · {item.releaseSummary.unavailableFiles} nicht erreichbar</p><p><strong>Bewertung:</strong> {item.releaseSummary.recommendedFiles} empfohlen · {item.releaseSummary.reviewFiles} noch zu prüfen · {item.releaseSummary.duplicateFiles} Dubletten · {item.releaseSummary.versionFiles} Versionen</p><p><strong>Freigaben:</strong> {item.releaseSummary.archivedFiles} archiviert · {item.releaseSummary.assistantReleasedFiles} assistenzfreigegeben</p><p><strong>Funktionsstatus:</strong> Lernfunktion {item.releaseSummary.learningStatus} · Vorschau {item.releaseSummary.previewStatus} · Relationen {item.releaseSummary.relationStatus} · Datenschutz {item.releaseSummary.privacyStatus} · Originalschutz {item.releaseSummary.originalProtection} · Build {item.releaseSummary.buildStatus}</p></>}<p><strong>Geprüfte Bereiche:</strong> {item.areas.map((area) => area.label).join(", ")}</p><p><strong>Grüne Prüfpunkte:</strong> {item.greenPoints.length ? item.greenPoints.map((point) => point.areaLabel).join(", ") : "Keine."}</p><p><strong>Praktische Testfälle:</strong> {item.testCases.length ? item.testCases.map((test) => `${test.label}: ${test.status}`).join(" · ") : "In diesem älteren Bericht noch nicht enthalten."}</p><p><strong>Warnungen und Fehler:</strong> {item.openProblems.length ? item.openProblems.map((problem) => `${problem.areaLabel}: ${problem.summary}`).join(" · ") : "Keine."}</p><p><strong>Durchgeführte Reparaturen:</strong> {item.repairs.length ? item.repairs.join(" · ") : "Keine Reparatur in diesem Lauf."}</p><p><strong>Weiterhin offen:</strong> {item.openProblems.length ? item.openProblems.map((problem) => `${problem.areaLabel} – ${problem.nextStep}`).join(" · ") : "Keine offenen Punkte."}</p><p><strong>VERSION 2.28.1 FÜR PRODUKTIVÜBERNAHME FREIGEGEBEN:</strong> {item.overall === "green" ? "JA" : "NEIN"}</p>{item.kind === "repair" && <p><strong>Sicherung:</strong> {item.backupCreated ? "Prüfzustand wurde vor der Reparatur gesichert." : "Keine Sicherung vermerkt."} {item.improved === false ? "Ohne messbare Verbesserung wurde die automatische Wiederholung beendet." : item.improved ? "Die anschließende Prüfung bestätigte eine Verbesserung." : ""}</p>}</div></details>)}</div> : <div className="empty-state"><FileClock size={30}/><strong>Noch keine Prüfberichte</strong></div>}
+        {reports.some(alterZettel) && <details className="aeltere-pruefungen" data-aeltere-pruefungen><summary>Ältere Prüfungen (aus früheren Fassungen) · {reports.filter(alterZettel).length}</summary><div className="check-report-list">{reports.filter(alterZettel).map((item) => <StoredUserAcceptance key={item.id} report={item}/>)}</div><button type="button" className="button secondary" onClick={() => setReports(aeltereZettelLoeschen())} data-aeltere-loeschen>Ältere Prüfungen löschen</button></details>}</section>
   </>;
 }
 
