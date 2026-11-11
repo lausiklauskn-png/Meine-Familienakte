@@ -61,7 +61,7 @@ import {
   FileText, Folder, FolderHeart, HeartPulse, Home, Landmark, Menu, PackageCheck,
   Network, Plus, Printer, RefreshCw, Search, ShieldCheck, ShoppingBag, Upload, UserRound,
   Users, X, HardDrive, LockKeyhole, Usb, HelpCircle, History, Cloud, LifeBuoy, Mic,
-  Copy, ExternalLink, BookHeart, Camera, Video, NotebookPen, Trash2, CircleHelp, Tags, FolderSearch, Eye, ListChecks, Save, Bot, Sparkles,
+  Copy, ExternalLink, BookHeart, Camera, Video, NotebookPen, CircleHelp, Tags, FolderSearch, Eye, ListChecks, Save, Bot, Sparkles,
   PenLine, CalendarDays, Check, Pencil, Share2,
 } from "lucide-react";
 import { DictationButton, InfoPopover, InfoZeile, SuchFeld, VoiceInput, VoiceTextarea } from "./ui-controls";
@@ -146,7 +146,7 @@ const AssistantCenter = lazy(() => import("./assistant-center").then((m) => ({ d
 import { runFamilyAssistantSelfTests, type CorrespondenceKind } from "@/lib/family-assistant";
 import { createLocalCorrespondenceBundle } from "./local-vault";
 import { isBrowserVault, browserStorageKind, folderPickerSupported } from "./local-vault";
-import { beispielIdsVon, removeSampleFamily, SAMPLE_FAMILY_NAME, SAMPLE_NOTICE, sampleDataPresent, seedSampleFamily } from "./sample-family";
+import { beispielIdsVon, removeSampleFamily, SAMPLE_NOTICE, sampleDataPresent, seedSampleFamily } from "./sample-family";
 import { BspEcke, BspProvider } from "./bsp-ecke";
 
 // Welche Fassung läuft (Klaus 2026-10-31: „damit ich nicht nur am Icon erkenne, was es für eine Version ist“):
