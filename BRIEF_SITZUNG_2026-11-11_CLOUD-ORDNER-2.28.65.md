@@ -71,6 +71,21 @@ Legt heute die ganze Akte unverschlüsselt in den OneDrive-Ordner (`chooseVaultF
 „Synchron halten“ steht; dann prüfen, ob es jemand nutzt (Jens), und mit Klaus klären, ob es wegfällt oder „Akte liegt in OneDrive (alt)“ heißt.
 **Nichts an bestehenden Akten still umziehen.**
 
+## Gestaltung (Klaus 11.11., gilt für App und PC-Ansicht)
+
+- **In Blöcken, je Entscheidung ein Block.** Man soll auf einen Blick sehen: dieser Block gehört zu dieser Entscheidung.
+  Keine Reihe von Knöpfen untereinander, bei der man nicht mehr weiß, welchen man drücken soll.
+- Vorschlag für die Blöcke (je ein eigener, deutlich abgesetzter Kasten mit Überschrift, Zustand in einer Zeile, nur seine Knöpfe):
+  1. **Wo liegt die zweite Sicherung?** – Ordner wählen / ändern.
+  2. **Verschlüsselt oder lesbar?** – eine Wahl.
+  3. **Nur sichern oder synchron halten?** – eine Wahl.
+  4. **Cloud-Ordner hereinholen** – eigener Kasten, getrennt von der Sicherung (Ordner, zuletzt geprüft, „Jetzt nachsehen“, „Trennen“).
+- Wahlen als zwei deutlich getrennte Felder (Auswahlfelder/Kacheln), nicht als zwei gleich aussehende Knöpfe nebeneinander.
+- Je Block höchstens ein Hauptknopf; Seltenes hinter „Mehr“.
+- **Erklärtexte, die wichtig sind, hinter das „?“** (in Punkten, als Frage formuliert, z. B. „Was passiert mit älteren
+  Sicherungen?“), sichtbar bleibt nur ein Satz.
+- Am Handy untereinander, am PC nebeneinander oder in zwei Spalten – die Blöcke bleiben dieselben.
+
 ## Dazu
 
 - Landkarte: Kästen „Sicherung an einem zweiten Ort“ und „Cloud-Ordner“, Stand in `lib/app-stand.ts` eintragen.
