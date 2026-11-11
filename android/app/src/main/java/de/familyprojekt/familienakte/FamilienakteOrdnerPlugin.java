@@ -48,8 +48,12 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
         worker.execute(() -> {
             try { call.resolve(a.run()); }
             catch (Exception e) {
-                String code = e.getMessage();
-                call.reject("Ordnerzugriff fehlgeschlagen", code != null && code.matches("[A-Z0-9_]+") ? code : "FA_ORDNER_NICHT_ERREICHBAR");
+                // „CODE [Grund]“: der Code steuert die Meldung in der App, der Grund wird angehängt (Gerätetest 11.11.).
+                String text = e.getMessage() == null ? "" : e.getMessage();
+                int klammer = text.indexOf(" [");
+                String code = klammer > 0 ? text.substring(0, klammer) : text;
+                String grund = klammer > 0 && text.endsWith("]") ? text.substring(klammer + 2, text.length() - 1) : "";
+                call.reject(grund.isEmpty() ? "Ordnerzugriff fehlgeschlagen" : grund, code.matches("[A-Z0-9_]+") ? code : "FA_ORDNER_NICHT_ERREICHBAR");
             }
         });
     }
@@ -167,7 +171,7 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
     @PluginMethod public void dateiLesen(PluginCall call) {
         arbeit(call, () -> {
             Ablage a = ablage(call); String p = pfad(call);
-            long von = Math.max(0, call.getLong("offset", 0L)); int laenge = (int) Math.min(STUECK, Math.max(0, call.getLong("laenge", 0L)));
+            long von = Math.max(0, zahl(call, "offset", 0L)); int laenge = (int) Math.min(STUECK, Math.max(0, zahl(call, "laenge", 0L)));
             if (!a.gibtEs(p) || a.istOrdner(p)) throw new IOException("FA_NICHT_GEFUNDEN");
             Ablage.Kanal k = a.kanal(p);
             try {
@@ -201,7 +205,9 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
         arbeit(call, () -> {
             Schreiben s = offen.get(call.getString("id", ""));
             String data = call.getString("data", "");
-            if (s == null || call.getLong("offset", -1L) != s.groesse || data.length() > ((STUECK + 2) / 3) * 4) throw new IOException("FA_STUECK_UNGUELTIG");
+            if (s == null) throw new IOException("FA_STUECK_UNGUELTIG [Schreibvorgang unbekannt]");
+            if (zahl(call, "offset", -1L) != s.groesse) throw new IOException("FA_STUECK_UNGUELTIG [Versatz " + zahl(call, "offset", -1L) + " statt " + s.groesse + " · " + s.pfad + "]");
+            if (data.length() > ((STUECK + 2) / 3) * 4) throw new IOException("FA_STUECK_UNGUELTIG [Stück zu groß · " + s.pfad + "]");
             byte[] b = Base64.decode(data, Base64.NO_WRAP);
             if (s.groesse + b.length > MAX_DATEI) throw new IOException("FA_AUSGABE_ZU_GROSS");
             s.out.write(b); s.sha.update(b); s.groesse += b.length;
@@ -211,10 +217,14 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
     @PluginMethod public void dateiFertig(PluginCall call) {
         arbeit(call, () -> {
             String id = call.getString("id", ""); Schreiben s = offen.get(id);
-            if (s == null || call.getLong("size", -1L) != s.groesse) throw new IOException("FA_STUECK_UNGUELTIG");
+            if (s == null) throw new IOException("FA_STUECK_UNGUELTIG [Schreibvorgang unbekannt]");
+            if (zahl(call, "size", -1L) != s.groesse) throw new IOException("FA_STUECK_UNGUELTIG [Größe " + zahl(call, "size", -1L) + " statt " + s.groesse + " · " + s.pfad + "]");
             s.out.flush(); s.out.close(); offen.remove(id);
             String sha = hex(s.sha.digest());
-            if (s.ablage.groesse(s.pfad) != s.groesse || !sha.equals(hash(s.ablage, s.pfad))) { s.ablage.loeschen(s.pfad); throw new IOException("FA_AUSGABE_PRUEFSUMME"); }
+            // Gerätetest 11.11. (SD-Karte): die von Android gemeldete Größe (COLUMN_SIZE) kann direkt nach dem Schreiben veraltet sein.
+            // Darum Größe und Prüfsumme beim Zurücklesen selbst bestimmen und bei Abweichung kurz warten und erneut lesen.
+            String grund = pruefenMitGeduld(s.ablage, s.pfad, s.groesse, sha);
+            if (grund != null) { s.ablage.loeschen(s.pfad); throw new IOException("FA_AUSGABE_PRUEFSUMME [" + grund + " · " + s.pfad + "]"); }
             selbstAngelegt.add(s.token + "|" + s.pfad);
             return new JSObject().put("size", s.groesse).put("sha256", sha);
         });
@@ -240,9 +250,38 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
                 while ((r = in.read(b)) > 0) { out.write(b, 0, r); d.update(b, 0, r); n += r; }
             }
             String sha = hex(d.digest());
-            if (a.groesse(ziel) != n || !sha.equals(hash(a, ziel))) { a.loeschen(ziel); throw new IOException("FA_AUSGABE_PRUEFSUMME"); }
+            String grund = pruefenMitGeduld(a, ziel, n, sha);
+            if (grund != null) { a.loeschen(ziel); throw new IOException("FA_AUSGABE_PRUEFSUMME [" + grund + " · " + ziel + "]"); }
             return new JSObject().put("name", name).put("groesse", n).put("sha256", sha).put("fassung", info.versionName);
         });
+    }
+    /**
+     * Zahl aus dem Aufruf (Gerätetest 11.11.2026): Capacitors getLong liefert nur echte Long-Werte; kleine Zahlen kommen aus
+     * dem JSON aber als Integer an – dann gab getLong den Ersatzwert (-1 bzw. 0) zurück und jedes Schreiben/Lesen über die
+     * Ordnerwahl scheiterte („Größe -1 statt 0“). Darum jede Zahl annehmen.
+     */
+    static long zahl(Object wert, long ersatz) { return wert instanceof Number ? ((Number) wert).longValue() : ersatz; }
+    private static long zahl(PluginCall call, String name, long ersatz) { return zahl(call.getData().opt(name), ersatz); }
+    /** null = Datei stimmt; sonst der Grund. Liest die Datei selbst (Länge und SHA-256), bis zu vier Versuche mit kurzer Pause. */
+    private static String pruefenMitGeduld(Ablage a, String p, long soll, String sha) throws Exception {
+        String grund = null;
+        for (int versuch = 0; versuch < 4; versuch++) {
+            if (versuch > 0) Thread.sleep(250L * versuch);
+            String[] gelesen = hashUndLaenge(a, p);
+            long ist = Long.parseLong(gelesen[1]);
+            if (ist == soll && sha.equals(gelesen[0])) return null;
+            grund = ist != soll ? "Größe " + ist + " statt " + soll + " Bytes" : "Inhalt weicht ab";
+        }
+        return grund;
+    }
+    private static String[] hashUndLaenge(Ablage a, String p) throws Exception {
+        MessageDigest d = MessageDigest.getInstance("SHA-256"); long n = 0;
+        Ablage.Kanal k = a.kanal(p);
+        try {
+            ByteBuffer b = ByteBuffer.allocate(65536); int r;
+            while ((r = k.kanal.read(b)) != -1) { n += r; b.flip(); d.update(b); b.clear(); }
+        } finally { zu(k); }
+        return new String[] { hex(d.digest()), Long.toString(n) };
     }
     private static String hash(Ablage a, String p) throws Exception {
         MessageDigest d = MessageDigest.getInstance("SHA-256");

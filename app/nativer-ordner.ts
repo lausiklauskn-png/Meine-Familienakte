@@ -37,7 +37,12 @@ function uebersetzt(e: unknown): unknown {
   if (code.includes("FA_ORDNER_NICHT_ERREICHBAR")) return new Error("Der gewählte Ordner ist nicht mehr erreichbar oder lässt sich nicht beschreiben (z. B. Freigabe abgelaufen, Speicher voll, SD-Karte entfernt). Bitte den Ordner erneut wählen – am besten einen eigenen Ordner außerhalb des Pro-Tresors.");
   if (code.includes("FA_ORDNER_UNGUELTIG") || code.includes("FA_PFAD_UNGUELTIG")) return new Error("In diesem Ordner darf die App nicht schreiben. Bitte einen anderen Ordner wählen (nicht den Pro-Tresor und keinen Systemordner).");
   if (code.includes("FA_AUSGABE_ZU_GROSS")) return new Error("Eine Datei ist zu groß für diesen Weg (über 100 MB).");
-  if (code.includes("FA_AUSGABE_PRUEFSUMME") || code.includes("FA_STUECK_UNGUELTIG")) return new Error("Eine Datei kam beim Zurücklesen nicht unverändert an. Es wurde nichts als fertig gemeldet; bitte erneut versuchen.");
+  if (code.includes("FA_AUSGABE_PRUEFSUMME") || code.includes("FA_STUECK_UNGUELTIG")) {
+    // Grund aus der App-Hülle (seit 2.28.58), z. B. „Größe 0 statt 1234 Bytes · Dateien/…“ – hilft beim Nachstellen am Gerät.
+    const grund = String((e as Error)?.message || "");
+    const dazu = grund && !/Ordnerzugriff fehlgeschlagen/.test(grund) && grund !== code ? ` (${grund})` : "";
+    return new Error(`Eine Datei kam beim Zurücklesen nicht unverändert an${dazu}. Es wurde nichts als fertig gemeldet; bitte erneut versuchen.`);
+  }
   // Rohe Android-Meldung ohne bekannten Code: nie „Ordnerzugriff fehlgeschlagen“ allein stehen lassen (Gerätetest 10.11.).
   if (/Ordnerzugriff fehlgeschlagen/.test(String((e as Error)?.message || ""))) return new Error(`Der gewählte Ordner ließ sich nicht lesen oder beschreiben${/^[A-Z0-9_]+$/.test(code) ? ` (${code})` : ""}. Bitte den Ordner erneut wählen.`);
   return e;
