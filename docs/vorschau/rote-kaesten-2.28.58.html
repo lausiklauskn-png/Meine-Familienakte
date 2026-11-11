@@ -1,0 +1,80 @@
+<title>Rote Kästen der Landkarte</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: je Fall eine Zeile heute/neu mit Kasten wie in der Landkarte, unten die Fragen. Farben wie die Live-Kästen der App. */
+:root { --bg:#f4f7f9; --fg:#17262f; --muted:#4f6472; --line:#c8d9e2; --card:#fff; --blau:#1d5b94; --rand:#2f6f9f;
+  --rotf:#f9d9d5; --gelbf:#fff0c2; --gruenf:#d9f0e1; --grauf:#e6eaed; --code:#eef3f7; --knopf:#0b3154; --knopffg:#fff; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#10171c; --fg:#e6edf2; --muted:#9fb2bf; --line:#2c3b45; --card:#18222a; --blau:#7fb3e6; --rand:#7fb3e6;
+  --rotf:#4a2522; --gelbf:#4a3d16; --gruenf:#1d3a28; --grauf:#27323a; --code:#1f2a32; --knopf:#dfe9f3; --knopffg:#0b3154; color-scheme:dark; } }
+:root[data-theme="dark"] { --bg:#10171c; --fg:#e6edf2; --muted:#9fb2bf; --line:#2c3b45; --card:#18222a; --blau:#7fb3e6; --rand:#7fb3e6;
+  --rotf:#4a2522; --gelbf:#4a3d16; --gruenf:#1d3a28; --grauf:#27323a; --code:#1f2a32; --knopf:#dfe9f3; --knopffg:#0b3154; color-scheme:dark; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.45 system-ui, sans-serif; padding-block:16px 40px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
+main { max-width:900px; display:grid; gap:16px; }
+h1 { font-size:1.25rem; margin:0; text-wrap:balance; } h2 { font-size:1rem; margin:0; color:var(--blau); }
+p { margin:0; } .lead, .leise { color:var(--muted); }
+.fall { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; display:grid; gap:10px; min-width:0; }
+.paar { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:12px; }
+.etikett { font-size:.78rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:700; }
+.kasten { border:2px solid var(--rand); border-radius:10px; padding:8px 10px; display:grid; gap:4px; }
+.kasten.rot { background:var(--rotf); } .kasten.gelb { background:var(--gelbf); } .kasten.gruen { background:var(--gruenf); } .kasten.grau { background:var(--grauf); }
+.kasten small { color:var(--muted); }
+.knopf { justify-self:start; background:var(--knopf); color:var(--knopffg); border-radius:8px; padding:5px 10px; font-weight:600; font-size:.88rem; }
+.ohne { font-size:.85rem; color:var(--muted); font-style:italic; }
+code { background:var(--code); padding:1px 5px; border-radius:5px; font-size:.88em; }
+ol { margin:0; padding-left:1.25em; display:grid; gap:6px; } .fragen b { color:var(--blau); }
+</style>
+
+<main>
+ <header style="display:grid;gap:4px">
+  <h1>Rote Kästen der Landkarte – was falsch rot ist</h1>
+  <p class="lead">Vorschau zur Abstimmung (11.11., Fassung 2.28.58). Rot heißt „fehlt“. In drei Fällen ist der Kasten rot, obwohl nichts fehlt, oder er hat keinen Knopf.</p>
+ </header>
+
+ <section class="fall">
+  <h2>1 · Pro-Tresor eingerichtet, aber gesperrt</h2>
+  <p class="leise">Heute zeigt der Kasten „Datentresor“ dann „noch kein Speicher gewählt“. Ursache: Die Hilfe gibt bei gesperrtem Tresor gar keinen Speicher weiter.</p>
+  <div class="paar">
+   <div><p class="etikett">Heute</p><div class="kasten rot"><strong>Datentresor</strong><small>noch kein Speicher gewählt</small><span class="knopf">Wählen ›</span></div></div>
+   <div><p class="etikett">Neu</p><div class="kasten gelb"><strong>Datentresor</strong><small>Pro-Tresor · gesperrt</small><span class="knopf">Entsperren ›</span></div></div>
+  </div>
+ </section>
+
+ <section class="fall">
+  <h2>2 · Akte im Speicher der App (ohne gewählten Ordner)</h2>
+  <p class="leise">Die Akte ist gespeichert, aber nur in der App bzw. im Browser – beim Löschen der App oder der Browserdaten wäre sie weg. Heute rot, und „Wählen ›“ macht ihn in der Android-App nie grün.</p>
+  <div class="paar">
+   <div><p class="etikett">Heute</p><div class="kasten rot"><strong>Datentresor</strong><small>noch kein Speicher gewählt</small><span class="knopf">Wählen ›</span></div></div>
+   <div><p class="etikett">Neu</p><div class="kasten gelb"><strong>Datentresor</strong><small>nur im Speicher der App · Tresor empfohlen</small><span class="knopf">Tresor einrichten ›</span></div>
+    <p class="leise" style="margin-top:6px">Im Browser am PC heißt der Knopf „Ordner wählen ›“.</p></div>
+  </div>
+ </section>
+
+ <section class="fall">
+  <h2>3 · Demo läuft</h2>
+  <p class="leise">Der Kasten „Demo als Kopie“ ist rot, hat aber keinen Knopf.</p>
+  <div class="paar">
+   <div><p class="etikett">Heute</p><div class="kasten rot"><strong>Demo als Kopie</strong><small>an · du arbeitest an einer Kopie</small><span class="ohne">kein Knopf</span></div></div>
+   <div><p class="etikett">Neu</p><div class="kasten rot"><strong>Demo als Kopie</strong><small>an · du arbeitest an einer Kopie</small><span class="knopf">Demo verlassen ›</span></div></div>
+  </div>
+ </section>
+
+ <section class="fall">
+  <h2>Bleiben rot, wie gewollt</h2>
+  <div class="paar">
+   <div class="kasten rot"><strong>Vollsicherung</strong><small>noch nie gesichert</small><span class="knopf">Sichern ›</span></div>
+   <div class="kasten rot"><strong>Pro-Tresor</strong><small>nicht erreichbar · Speicher einstecken oder neu wählen</small><span class="knopf">Prüfen ›</span></div>
+   <div class="kasten rot"><strong>Datentresor</strong><small>wirklich keiner (z. B. Browser ohne Speicher)</small><span class="knopf">Wählen ›</span></div>
+  </div>
+ </section>
+
+ <section class="fall fragen">
+  <h2>Fragen (bitte je Ja oder Nein)</h2>
+  <ol>
+   <li><b>Fall 1:</b> Gesperrter Pro-Tresor wird gelb mit „Entsperren ›“.</li>
+   <li><b>Fall 2:</b> Akte nur im Speicher der App wird gelb mit „Tresor einrichten ›“ (Android, Windows) bzw. „Ordner wählen ›“ (Browser am PC).</li>
+   <li><b>Fall 3:</b> „Demo verlassen ›“ am Demo-Kasten.</li>
+  </ol>
+  <p class="lead">Danach: Probe je Fall mit Gegenprobe, Fassung 2.28.58. Ein Bild der Landkarte vom Tablet hilft, falls dort noch ein anderer Kasten falsch rot ist.</p>
+ </section>
+</main>
