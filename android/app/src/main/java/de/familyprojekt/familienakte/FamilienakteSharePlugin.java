@@ -128,6 +128,44 @@ public class FamilienakteSharePlugin extends Plugin {
             call.resolve(new JSObject().put("geteilt", true));
         } catch (Exception fehler) { quelle.delete(); call.reject("FA_TEILEN_FENSTER"); }
     }
+    /**
+     * 2.28.65 (E-Mail Weg B, e1–e4): Mail-App mit Empfänger, Betreff, Text und Anlagen öffnen. Die Anlagen kamen vorher mit
+     * teilenStueck in den Cache. Die Auswahl zeigt nur Mail-Apps (Selector mailto:). Abschicken tut der Nutzer in der Mail-App;
+     * die Familienakte erfährt nicht, ob gesendet wurde, und fragt danach.
+     */
+    @PluginMethod public void mailOeffnen(PluginCall call) {
+        String an = call.getString("an", ""), betreff = call.getString("betreff", ""), text = call.getString("text", "");
+        JSArray anlagen = call.getArray("anlagen", new JSArray());
+        if (an.length() > 500 || betreff.length() > 500 || text.length() > 200_000 || an.matches(".*[\\r\\n].*")) { call.reject("FA_MAIL_EINGABE"); return; }
+        try {
+            ArrayList<Uri> uris = new ArrayList<>();
+            ClipData clip = null;
+            for (int i = 0; i < anlagen.length(); i++) {
+                org.json.JSONObject a = anlagen.getJSONObject(i);
+                String id = a.optString("id", ""), name = ShareInbox.safeName(a.optString("name", ""), "Anlage");
+                if (!kennungOk(id)) { call.reject("FA_TEILEN_KENNUNG"); return; }
+                File quelle = new File(ausgang(), id); if (!quelle.isFile()) { call.reject("FA_TEILEN_LEER"); return; }
+                File ordner = new File(ausgang(), id + ".d"); ordner.mkdirs();
+                File ziel = new File(ordner, name); if (ziel.exists()) ziel.delete(); if (!quelle.renameTo(ziel)) throw new java.io.IOException("rename");
+                Uri uri = androidx.core.content.FileProvider.getUriForFile(getContext(), getContext().getPackageName() + ".fileprovider", ziel);
+                uris.add(uri);
+                if (clip == null) clip = ClipData.newRawUri(name, uri); else clip.addItem(new ClipData.Item(uri));
+            }
+            Intent mail;
+            if (uris.isEmpty()) mail = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"));
+            else {
+                mail = new Intent(uris.size() == 1 ? Intent.ACTION_SEND : Intent.ACTION_SEND_MULTIPLE).setType("message/rfc822");
+                if (uris.size() == 1) mail.putExtra(Intent.EXTRA_STREAM, uris.get(0)); else mail.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+                mail.setClipData(clip); mail.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                mail.setSelector(new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:")));
+            }
+            if (!an.isEmpty()) mail.putExtra(Intent.EXTRA_EMAIL, an.split("\\s*[,;]\\s*"));
+            mail.putExtra(Intent.EXTRA_SUBJECT, betreff).putExtra(Intent.EXTRA_TEXT, text);
+            getContext().startActivity(Intent.createChooser(mail, "E-Mail schreiben mit …").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            call.resolve(new JSObject().put("geoeffnet", true));
+        } catch (android.content.ActivityNotFoundException keine) { call.reject("FA_MAIL_KEINE_APP"); }
+        catch (Exception fehler) { call.reject("FA_MAIL_FENSTER"); }
+    }
     /** Ältere Ausgänge (über eine Stunde) entfernen – die Ziel-App hat die Datei längst gelesen. */
     private void aufraeumen(File behalten) {
         File[] alle = ausgang().listFiles(); if (alle == null) return;

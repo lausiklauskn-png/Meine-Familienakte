@@ -13,8 +13,9 @@ export const MAIL_WEGE: Array<KartenChip & KartenSeite> = [
   { id: "mail-anhang", titel: "Anhang teilen", wo: "Anhang antippen › Teilen", nach: "eingang", mehr: "Der übliche Weg für Briefe als PDF." },
   { id: "mail-pdf", titel: "Mail als PDF", wo: "Drucken › Als PDF › Teilen", nach: "eingang", mehr: "Geht mit jeder Mail-App." },
   { id: "mail-eml", titel: "Mail als Datei (.eml)", wo: "am Rechner hineinziehen", nach: "eingang", mehr: "Gmail oder Outlook im Browser: „Herunterladen“; Thunderbird: „Speichern unter“. Outlook-Dateien (.msg) werden angenommen, ihre Anhänge noch nicht herausgelöst." },
-  { id: "mail-ms", titel: "Microsoft-Postfach", wo: "abholen und senden", nach: "eingang", beide: true, mehr: "Gleiche Anmeldung wie beim Kalender. Abholen nur auf Tipp; im Postfach wird nichts gelöscht oder verschoben." },
-  { id: "mail-imap", titel: "GMX · WEB.DE · T-Online", wo: "mit App-Passwort", nach: "eingang", mehr: "Die Technik liegt in Private Brain Pro. Das Passwort bliebe verschlüsselt auf dem Gerät." },
+  { id: "mail-brain", titel: "Private Brain Pro", wo: "dort „An Familienakte teilen“ · über den Pro-Tresor", nach: "eingang", seite: "inbox", mehr: "Hauptweg: in Private Brain Pro einmal am Postfach anmelden (GMX, WEB.DE, T-Online, Gmail …). Die Mail geht mit allen Anhängen über das Fach „Eingang-Familienakte“ im Pro-Tresor; die Familienakte holt sie von selbst ab, sobald der Tresor offen ist (Eingangszentrale › E-Mail)." },
+  { id: "mail-ms", titel: "Microsoft-Postfach", wo: "Eingangszentrale › E-Mail › Mails holen", nach: "eingang", beide: true, seite: "inbox", mehr: "Gleiche Anmeldung wie beim Kalender. Abholen nur auf Tipp, die letzten 30 Tage; im Postfach wird nichts gelöscht oder verschoben. Microsoft muss die Rechte Mail.Read/Mail.Send für die App freigeben – fehlt das, sagt es die App." },
+  { id: "mail-imap", titel: "Eigenes Mail-Programm", wo: "Postfach direkt in der Familienakte", nach: "eingang", mehr: "Geplant: der Mail-Kern aus Private Brain Pro (GMX, WEB.DE, T-Online, Gmail) unverändert übernommen. Bis dahin über Private Brain Pro." },
   { id: "mail-gmail", titel: "Gmail direkt", wo: "Google-Prüfung kostet jährlich", nach: "eingang", mehr: "Bis zu einer Entscheidung: Anhang teilen oder Mail als PDF." },
 ];
 
@@ -30,6 +31,7 @@ export const APP_GRUPPEN: Gruppe[] = [
     { id: "datei-ziehen", titel: "Hineinziehen", wo: "am Rechner mit der Maus", nach: "eingang", seite: "inbox" },
     { id: "datei-teilen", titel: "Teilen aus anderer App", wo: "Galerie, Dateien › Teilen", nach: "eingang" },
     { id: "datei-oeffnen", titel: "Öffnen mit", wo: "Windows: Rechtsklick › Öffnen mit", nach: "eingang" },
+    { id: "cloud-ordner", titel: "Cloud-Ordner hereinholen", wo: "Sicherheit › Cloud-Ordner · Windows-App, Chrome/Edge am PC", nach: "eingang", seite: "security", mehr: "Liest einen Ordner (z. B. OneDrive) mit Unterordnern, ändert dort nichts. Neues und Geändertes kommt als Kopie in die Eingangszentrale, der Unterordner steht als Herkunft dabei. Pakete vom Handy werden hier gefunden und zusammengeführt." },
     { id: "datei-pro", titel: "Aus anderen Pro-Apps", wo: "gemeinsames Fach im Pro-Tresor", nach: "eingang", seite: "security", mehr: "Braucht einen eingerichteten Pro-Tresor (z. B. mit Private Brain Pro, BookLedgerPro); nur in den Apps." },
   ] },
   { id: "g-scan", titel: "Dokumente scannen", wo: "Papier wird PDF", spalte: 0, chips: [
@@ -55,6 +57,7 @@ export const APP_GRUPPEN: Gruppe[] = [
     { id: "aus-antwort", titel: "Brief beantworten", wo: "Assistenz › Brief oder E-Mail beantworten", seite: "assistant", mehr: "Namen, Anschriften, Nummern und Beträge werden verdeckt; in die eigene KI kopieren, per Link öffnen oder mit eigenem Schlüssel (Mistral, EU) senden; die Antwort bekommt die echten Angaben zurück. Als Entwurf speichern oder in Workflow PDF öffnen. Die App verschickt nie selbst." },
     { id: "aus-fristen", titel: "Fristen und Erinnerungen", wo: "Fristen und Aufgaben · Mein Kalender", seite: "reminders" },
     { id: "aus-sicherung", titel: "Vollsicherung", wo: "Sicherheit › sichern und testen", seite: "security", mehr: "Verschlüsselt mit Passwort und Notfallblatt oder lesbar; mit Prüfsummen; Android legt die APK bei, Windows einen Lies-mich mit Download." },
+    { id: "aus-zweiter-ort", titel: "Sicherung an einem zweiten Ort", wo: "Sicherheit › zweiter Ort", seite: "security", mehr: "Von selbst, wenn sich etwas geändert hat (höchstens einmal am Tag), und auf Knopf. Verschlüsselt oder lesbar; dort eine, auf dem Gerät zwei. Erst geprüft, dann alt gelöscht. Auf Wunsch „Synchron halten“ über die gemeinsame Festplatte im selben Ordner." },
     { id: "aus-demo", titel: "Demo als Kopie", wo: "Hilfe › Demo starten", seite: "help", mehr: "Probieren an einer Kopie der eigenen Daten; das Original bleibt unverändert." },
     { id: "aus-drucken", titel: "Drucken", wo: "Menü › Seite drucken · am PC Strg+P" },
   ] },
@@ -86,6 +89,7 @@ export const APP_KANTEN: KartenKante[] = [
   { von: "akte", nach: "aus-antwort" }, { von: "akte", nach: "aus-fristen" }, { von: "akte", nach: "aus-sicherung" }, { von: "akte", nach: "aus-demo" }, { von: "akte", nach: "aus-drucken" },
   { von: "aus-antwort", nach: "mailapp" }, { von: "aus-antwort", nach: "mssend" }, { von: "aus-fristen", nach: "kalender", beide: true }, { von: "aus-fristen", nach: "glocke" },
   { von: "aus-sicherung", nach: "sicherungsordner", beide: true }, { von: "akte", nach: "anderes-geraet" },
+  { von: "akte", nach: "aus-zweiter-ort" }, { von: "aus-zweiter-ort", nach: "sicherungsordner" },
   // Heutiger Weg ohne die geplante Anlagen-Prüfung (U13): direkt zu „Lesen und Vorschlag“.
   { von: "eingang", nach: "vorschlag", unten: true },
 ];

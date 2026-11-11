@@ -16,16 +16,22 @@ export const APP_STAND: Readonly<Record<string, StandEintrag>> = {
   "tagebuch": { stand: "fertig", seit: "2.28.49" },
   "notiz": { stand: "fertig", seit: "2.28.49" },
   "aus-antwort": { stand: "fertig", seit: "2.28.49" },
+  // 2.28.65: Sicherung an einem zweiten Ort, Cloud-Ordner hereinholen, E-Mail-Wege (Private Brain als Empfang, Mail-App, Microsoft).
+  "aus-zweiter-ort": { stand: "fertig", seit: "2.28.65" },
+  "cloud-ordner": { stand: "fertig", seit: "2.28.65" },
+  "mail-brain": { stand: "fertig", seit: "2.28.65" },
+  // Microsoft: gebaut; braucht die Rechte Mail.Read/Mail.Send in Entra (e10) – bis dahin „einrichten“.
+  "mail-ms": { stand: "aktivieren", seit: "2.28.65" },
+  "mssend": { stand: "aktivieren", seit: "2.28.65" },
+  "mailapp": { stand: "fertig", seit: "2.28.65" },
+  // Eigenes Mail-Programm (Weg H): nur vorbereitet.
+  "mail-imap": { stand: "geplant", seit: "2.28.65" },
   // E-Mail (Plan Sitzung 3, nicht gebaut)
-  "mail-ms": { stand: "geplant", seit: "2.28.35" },
-  "mail-imap": { stand: "geplant", seit: "2.28.35" },
   "mail-gmail": { stand: "geplant", seit: "2.28.35" },
   "pruefung": { stand: "geplant", seit: "2.28.35" },
   "befund": { stand: "geplant", seit: "2.28.35" },
   "echt": { stand: "geplant", seit: "2.28.35" },
   "programm": { stand: "geplant", seit: "2.28.35" },
-  "mailapp": { stand: "geplant", seit: "2.28.35" },
-  "mssend": { stand: "geplant", seit: "2.28.35" },
   // Einrichten
   "datei-pro": { stand: "aktivieren" },
   "datentresor": { stand: "aktivieren", selbst: "datentresor" },
@@ -42,14 +48,14 @@ export const APP_STAND: Readonly<Record<string, StandEintrag>> = {
   "anderes-geraet": { stand: "fertig", seit: "2.28.61" },
   // Stufe A (Plan 08.11.): Sicherung einlesen führt in eine benutzte Akte zusammen.
   // Stufe B: verschlüsselte Vollsicherung mit Notfallblatt, Erinnerung nach 7 Tagen, Papierkorb leeren.
-  "sicherungsordner": { stand: "fertig", seit: "2.28.42" },
+  "sicherungsordner": { stand: "fertig", seit: "2.28.65" },
   "aus-sicherung": { stand: "fertig", seit: "2.28.41" },
   // Neugestaltung 2.28.39 (Punkt 2): ein Einstieg zum Ablegen im Kopf; Drucken nur noch über das Menü.
   "kopf-ablegen": { stand: "fertig", seit: "2.28.39" },
   // Ablaufprüfung 2.28.39: geänderte Wege golden markieren (Eingang mit Titel/Text/Sammelbestätigung, Frist mit Erinnerung
   // als Teil der Aufgabe, Suche nach Inhalt und Alltagswörtern, Personen anlegen, Glocke grün).
   // Stufe E: Eingangsordner in Blöcken zu 20, von selbst, ohne Zweitkopie, Speicherprüfung.
-  "eingang": { stand: "fertig", seit: "2.28.44" },
+  "eingang": { stand: "fertig", seit: "2.28.65" },
   "vorschlag": { stand: "fertig", seit: "2.28.39" },
   // Stufe H: Original-Foto bleibt im Stapel erhalten; „Teilen“ an der Unterlage.
   "scan-stapel": { stand: "fertig", seit: "2.28.47" },

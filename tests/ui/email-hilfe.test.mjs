@@ -30,7 +30,7 @@ try {
     check(lage.offen && lage.kaesten >= 17 && lage.aeste >= 15, `${name}: Landkarte aufgeklappt (${lage.kaesten} Kästen, ${lage.aeste} Äste)`);
     check(lage.beide === "beide" && lage.beideAnfang && lage.hin === "hin", `${name}: Pfeile auf den Ästen – Microsoft ⇄, Anhang teilen → (${lage.beide}/${lage.hin})`);
     check(lage.trifft, `${name}: der Ast endet direkt am Kasten der Eingangszentrale`);
-    check(lage.geplant >= 7, `${name}: Geplantes ist als geplant gekennzeichnet (${lage.geplant})`);
+    check(lage.geplant >= 6, `${name}: Geplantes ist als geplant gekennzeichnet (${lage.geplant})`);
     check(lage.breiteSeite, `${name}: die Seite läuft nicht quer (die Karte rollt in ihrem Rahmen)`);
     await step(`${name}: Tipp auf „Echtes PDF, ohne Befund“ hebt seine Äste hervor und nennt woher und wohin`, async () => {
       await thema.locator('[data-karte-id="echt"]').click();

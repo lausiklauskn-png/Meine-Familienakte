@@ -268,6 +268,13 @@ function PaketKarte({ aktiv, appVersion, busy, onBusy, onNotice, onRefresh, onDr
     } catch (error) { onNotice({ kind: "error", text: error instanceof Error ? error.message : "Das Paket konnte nicht gelesen werden." }); }
     finally { onBusy(false); }
   };
+  // 2.28.65 (Handy-Schleife): Paket aus dem Cloud-Ordner – derselbe Weg wie „Paket einlesen …“.
+  const einlesenRef = useRef(einlesen); einlesenRef.current = einlesen;
+  useEffect(() => {
+    const f = (e: Event) => { const file = (e as CustomEvent<{ file?: File }>).detail?.file; if (file) void einlesenRef.current(file); };
+    window.addEventListener("familienakte:paket-datei", f);
+    return () => window.removeEventListener("familienakte:paket-datei", f);
+  }, []);
   const vorschau = async (kopf: PaketKopf, inhalt: PaketInhalt, schluessel: string, p: PaketPartner | null) => {
     if (!aktiv) return;
     const v = await paketVorbereiten(aktiv, inhalt, p);

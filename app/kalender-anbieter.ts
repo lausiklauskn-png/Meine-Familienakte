@@ -170,9 +170,9 @@ async function windowsAufruf(anfrage: Record<string, unknown>) {
 /** Erneut anmelden (Klaus 2026-11-05: „1 Tipp“): ohne Kontoauswahl; Google/Microsoft nehmen das angemeldete Konto. */
 export async function kalenderNeuAnmelden(art: "google" | "microsoft") { zugaenge[art] = await anmelden(art, true); }
 
-async function anmelden(art: "google" | "microsoft", erneut = false): Promise<Zugang> {
+async function anmelden(art: "google" | "microsoft", erneut = false, scopeUeber?: string): Promise<Zugang> {
   const k = konten();
-  const scope = art === "google" ? KALENDER_KONTEN.google.scope : KALENDER_KONTEN.microsoft.scope;
+  const scope = scopeUeber || (art === "google" ? KALENDER_KONTEN.google.scope : KALENDER_KONTEN.microsoft.scope);
   const state = `fa-kal-${zufall(16)}`;
   if (plattform() === "windows") {
     const { verifier, challenge } = await pkce();
@@ -382,3 +382,28 @@ const ics: Anbieter = {
 };
 
 export const ANBIETER: Record<KalenderAnbieter, Anbieter> = { geraet, google, microsoft, ics };
+
+
+// ---------- 2.28.65: Microsoft-Postfach (E-Mail Weg C) mit derselben Anmeldung wie der Kalender ----------
+/** Kalender und Mail in einer Anmeldung: so überschreibt der Mail-Zugang den Kalender-Zugang unter Windows nicht. Nur für
+ *  die laufende Sitzung (e6); kein Passwort in der App. Ohne die Rechte in Entra (e10) lehnt Microsoft ab – das wird gesagt. */
+export const MAIL_SCOPE = `${KALENDER_KONTEN.microsoft.scope} https://graph.microsoft.com/Mail.Read https://graph.microsoft.com/Mail.Send`;
+let mailZugang: Zugang | null = null;
+export const microsoftMailAngemeldet = () => Boolean(mailZugang && mailZugang.bis > Date.now());
+export async function microsoftMailAnmelden() {
+  if (!konten().microsoft) throw new KalenderFehler("einrichtung", "Microsoft ist für diese App noch nicht eingerichtet.");
+  mailZugang = await anmelden("microsoft", false, MAIL_SCOPE);
+  zugaenge.microsoft = mailZugang;
+}
+export async function microsoftMailAbruf(url: string, init: RequestInit = {}): Promise<Response> {
+  if (!mailZugang || mailZugang.bis <= Date.now()) {
+    if (mailZugang && plattform() === "windows") {
+      try { const r = await windowsAufruf({ aktion: "erneuern", anbieter: "microsoft", clientId: konten().microsoft, scope: MAIL_SCOPE }); if (r.zugang) mailZugang = { token: r.zugang, bis: Date.now() + (Number(r.gueltigSek) || 3600) * 1000 - 60000 }; }
+      catch { mailZugang = null; }
+    } else mailZugang = null;
+    if (!mailZugang) throw new KalenderFehler("KALENDER_NEU_ANMELDEN", "Bitte zuerst beim Microsoft-Postfach anmelden.");
+  }
+  try { return await fetch(url, { ...init, headers: { Authorization: `Bearer ${mailZugang.token}`, ...(init.body && typeof init.body === "string" ? { "Content-Type": "application/json" } : {}), ...(init.headers || {}) } }); }
+  catch { throw new KalenderFehler("netz", internetAus() ? "Internet für die App ist aus. Oben im Kopf einschalten." : "Microsoft ist gerade nicht erreichbar."); }
+}
+export const microsoftMailAbmelden = () => { mailZugang = null; };
