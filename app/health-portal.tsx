@@ -40,7 +40,7 @@ import { ProTresorWoLiegtWas } from "./pro-tresor-hilfe";
 import { AktensicherungHilfe } from "./aktensicherung-hilfe";
 import { EmailHilfe } from "./email-hilfe";
 import { AppLandkarteHilfe, landkarteAufmachen } from "./app-landkarte-hilfe";
-import { useLiveZustand } from "./live-zustand";
+import { DEMO_VERLASSEN, useLiveZustand } from "./live-zustand";
 import { ProVerbundHilfe } from "./pro-verbund-hilfe";
 import type { Vorschau } from "./hilfe-vorschau";
 import { SEITEN_KARTEN } from "../lib/hilfe-seiten";
@@ -1761,7 +1761,7 @@ function HealthPortalContent() {
         {!query && active === "vehicles" && <PreparedArea kind="vehicles" onUpload={openLocalUpload} onGo={go} onDocuments={openDocumentLibrary}/>}
         {!query && active === "purchases" && <PreparedArea kind="purchases" onUpload={openLocalUpload} onGo={go} onDocuments={openDocumentLibrary}/>}
         {!query && active === "directory" && <Directory onGo={go}/>} 
-        {!query && active === "help" && <HelpCenter onGo={go} herkunft={navigation.vorher} letzteSicherung={letzteSicherung} datentresor={demoActive() ? undefined : (proDestination ? (proDestination.ready ? "Pro-Tresor" : "") : oneDriveReachable ? (oneDriveName || "OneDrive") : localVaultReachable && !browserStorage ? localVaultName : "") || undefined} onSearch={(value) => { setQuery(value); window.scrollTo({ top: 0, behavior: "smooth" }); }} demo={<DemoStarten aktiv={demoActive()} gesperrt={demoGesperrt} grund={!vaultHandle ? "Zuerst im Sicherheitscenter einen Datentresor wählen, dann lässt sich die Demo starten." : undefined} starten={() => void loadSampleData()} bsp={{ da: samplePresent, busy: sampleBusy, umschalten: () => void (samplePresent ? removeSampleData(false) : addSampleData()) }}/>}/>} 
+        {!query && active === "help" && <HelpCenter onGo={go} herkunft={navigation.vorher} letzteSicherung={letzteSicherung} speicher={demoActive() ? undefined : proDestination ? (proDestination.ready ? undefined : "pro-gesperrt") : !oneDriveReachable && localVaultReachable && browserStorage ? "app" : undefined} ordnerWahl={folderPickerSupported()} datentresor={demoActive() ? undefined : (proDestination ? (proDestination.ready ? "Pro-Tresor" : "") : oneDriveReachable ? (oneDriveName || "OneDrive") : localVaultReachable && !browserStorage ? localVaultName : "") || undefined} onSearch={(value) => { setQuery(value); window.scrollTo({ top: 0, behavior: "smooth" }); }} demo={<DemoStarten aktiv={demoActive()} gesperrt={demoGesperrt} grund={!vaultHandle ? "Zuerst im Sicherheitscenter einen Datentresor wählen, dann lässt sich die Demo starten." : undefined} starten={() => void loadSampleData()} bsp={{ da: samplePresent, busy: sampleBusy, umschalten: () => void (samplePresent ? removeSampleData(false) : addSampleData()) }}/>}/>} 
         {!query && active === "systemcheck" && <SystemCheck
           documents={documents}
           localDocuments={localDocuments}
@@ -2817,10 +2817,12 @@ function abnahmeErgebnisse() {
   const run = latestUserAcceptance(readSystemCheckReports(), APP_VERSION);
   return Object.fromEntries(Object.entries(run?.answers || {}).map(([id, antwort]) => [id, latestUserResult(antwort)?.result]));
 }
-function HelpCenter({ onGo, onSearch, demo, datentresor, herkunft, letzteSicherung = null }: { onGo: GehMitZiel; onSearch: (value: string) => void; demo?: React.ReactNode; datentresor?: string; herkunft?: SectionId; letzteSicherung?: string | null }) {
+function HelpCenter({ onGo, onSearch, demo, datentresor, herkunft, letzteSicherung = null, speicher, ordnerWahl = false }: { onGo: GehMitZiel; onSearch: (value: string) => void; demo?: React.ReactNode; datentresor?: string; herkunft?: SectionId; letzteSicherung?: string | null; speicher?: "pro-gesperrt" | "app"; ordnerWahl?: boolean }) {
   const eingerichtet = useMemo(() => hilfeEingerichtet(datentresor), [datentresor]);
   // Klaus 09.11.: Landkarte und „Akten sichern“ zeigen den Zustand dieses Geräts (grün, rot, gelb, grau) mit „Beheben ›“.
-  const live = useLiveZustand(datentresor, letzteSicherung);
+  const live = useLiveZustand(datentresor, letzteSicherung, speicher, ordnerWahl);
+  // 2.28.62: „Demo verlassen ›“ am Demo-Kasten der Landkarte – wie der Eintrag im DEMO-Menü.
+  useEffect(() => { const verlassen = () => switchDemo(false); window.addEventListener(DEMO_VERLASSEN, verlassen); return () => window.removeEventListener(DEMO_VERLASSEN, verlassen); }, []);
   // Vorschaufenster (Sitzung 4): Skizze der Zielseite aus den echten Kartentiteln, Sprung mit rotem Rahmen.
   const vs = (seite: SectionId, karte?: string): Vorschau => ({ seite, karte, titel: sectionLabels[seite],
     karten: SEITEN_KARTEN[seite] || [], hin: sprung(onGo, seite, karte) });
