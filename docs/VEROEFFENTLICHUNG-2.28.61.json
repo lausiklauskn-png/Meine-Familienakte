@@ -1,0 +1,57 @@
+{
+ "version": "2.28.61",
+ "source": "cf13ccff20d38d08a7bb932209e73727a06d78d5",
+ "pullRequest": [
+  164
+ ],
+ "recordedUtc": "2026-11-11T13:52:00Z",
+ "freigabe": "Klaus 11.11.2026: „Ja zu allen vier, bau das als 2.28.61“ (Meine Geräte, alte Einzelübergabe weg, Pfad an jeder Unterlage, Umbenennen nur in der App); „so kurz wie möglich“ für den Bsp.-Knopf.",
+ "inhalt": "Meine Geräte (dieses Gerät per Knopf benennen, andere erscheinen von selbst), Paket an ein neues Gerät ohne Namensfeld, alte Einzelübergabe ausgeblendet, Dateiort an jeder Unterlage mit „Pfad kopieren“ (Windows: „Im Explorer zeigen“, fa_ordner_zeigen), Erklärungen hinter dem „?“, Knopf „+ Bsp.“ / „− Bsp.“.",
+ "ciAmPrStand": "PR #164 auf 8c0ed2a: pruefung, android, windows, webview, transport, product (31, pixel_c), product (35, pixel_2) success. Vorher product rot (FamilyTransportProductTest suchte die ausgeblendete Karte) – Probe schaltet sie über den Schalter ein.",
+ "releases": [
+  {
+   "tag": "android-v2.28.61",
+   "run": 43030387518,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-android-v2.28.61.apk",
+     "bytes": 20074903,
+     "sha256": "248277c9fbdb8e83113d0e725046a6e3877c2c0528a6962f5e01f208d949c275",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true,
+     "versionInside": "2.28.61 (assets/public/version.json, commit cf13ccf)"
+    },
+    {
+     "name": "Familienakte-Einzeldatei-2.28.61.html",
+     "bytes": 3929367,
+     "sha256": "c85a5390c5d630b29b47c0902de1d6c2c6940b0b6b8df07d0cc56671ea3877f0",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true
+    }
+   ]
+  },
+  {
+   "tag": "windows-v2.28.61",
+   "run": 43030392579,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-Windows-2.28.61-x64-setup.exe",
+     "bytes": 34239898,
+     "sha256": "199d161ea8e0401b794692c2b0513041ede00b338476f9e9214fdb911077437d",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true
+    }
+   ]
+  }
+ ],
+ "pwa": "Pages auf cf13ccf (Job beim Merge); Seite aus dem Behälter nicht geprüft.",
+ "notChecked": [
+  "Meine Geräte und Paket ohne Namen zwischen zwei echten Geräten",
+  "Dateiort und „Im Explorer zeigen“ unter Windows",
+  "family-projekt.de aus dem Behälter nicht erreichbar; der Freigabelauf prüft den Server selbst"
+ ]
+}
