@@ -1,9 +1,19 @@
-# Startbrief 11.11.2026: Cloud-Ordner und Sicherung an einem zweiten Ort (Fassung 2.28.65)
+# Startbrief 11.11.2026: Cloud-Ordner, Sicherung an einem zweiten Ort und E-Mail (Fassung 2.28.65)
 
 Vorgänger: `BRIEF_ABSCHLUSS_2026-11-11_GESAMMELT-2.28.64.md`. Abgestimmt mit Klaus im Chat am 11.11. abends.
 **Klaus' Wort: „Es braucht keine Vorschau“** – die Entscheidungen unten gelten als sein Ja für diesen Bau. Neue sichtbare
 Wörter darüber hinaus trotzdem kurz nennen. Jens' Antwort wird **nicht** abgewartet: alles, was er entscheiden würde, wird eine
 Wahl in der App, die jeder Nutzer selbst trifft.
+
+## Arbeitsweise (Klaus 11.11. abends, Freibrief für diese Sitzung)
+
+- **Durchgehend arbeiten, Fragen selbst beantworten, nicht nachhaken.** Entscheiden nach Logik und Nutzerfreundlichkeit; die
+  Entscheidung kurz im Abschlussbrief festhalten. Ziel: **bis morgen früh (12.11.) fertig.**
+- **Fertig heißt:** 2.28.65 einmal als **APK, Windows und PWA** ausgegeben (`server=ja`, Downloads per SHA-256 geprüft, Nachweis
+  `docs/VEROEFFENTLICHUNG-2.28.65.json`) und die **Geschenkbox** (HTML, Artefakt XeUMGuSZ49FzsJYjwQznM7, `tools/geschenkbox-datei.mjs`)
+  mit den neuen Downloads aktualisiert. Das ist für Klaus das Zeichen, dass die Aufgabe erledigt ist. Diese Ausgabe ist von Klaus
+  freigegeben (sein Wort vom 11.11.); vorher alle Proben grün, nie eine schon ausgegebene Fassung erneut.
+- Inhalt dieser Sitzung: nur **OneDrive/Cloud-Ordner mit Sicherung** (Punkte 1–5) und **E-Mail** (Punkt 6). Nichts anderes anfangen.
 
 ## Vor dem Start
 
@@ -71,6 +81,43 @@ Legt heute die ganze Akte unverschlüsselt in den OneDrive-Ordner (`chooseVaultF
 „Synchron halten“ steht; dann prüfen, ob es jemand nutzt (Jens), und mit Klaus klären, ob es wegfällt oder „Akte liegt in OneDrive (alt)“ heißt.
 **Nichts an bestehenden Akten still umziehen.**
 
+### 6 · E-Mail: alle Wege offen, wie in der Landkarte geplant
+
+Klaus 11.11.: „genauso wie mit OneDrive, alle Wege offen lassen“ – es gibt sehr verschiedene Nutzer. Gebaut wird, was in den
+Kästen der E-Mail-Karte steht (`docs/landkarte/Familienakte-E-Mail-Karte.html`, Plan `docs/landkarte/Familienakte-E-Mail-Plan.html`,
+Hilfe-Thema „E-Mail“); die entscheidenden Punkte bleiben eine **Wahl des Nutzers** in der App, in Blöcken wie oben.
+
+- Die Fragen e1–e10 aus dem Plan gelten **mit dem Vorschlag in Klammern** als entschieden (alle „ja“). Was nur Klaus tun kann,
+  bleibt beim Gerätetest offen und wird nicht behauptet: e10 (Rechte `Mail.Send`/`Mail.Read` in Entra; den Microsoft-Weg C trotzdem
+  bauen, er meldet ehrlich, wenn die Rechte fehlen), e7 (Gmail senden erst nach Googles Zustimmung; bis dahin Weg B).
+- **Private Brain als Empfangsmodul (Weg F, e9) – Klaus' Hauptweg:** Private Brain Pro holt die Mails (IMAP/SMTP, Google-Anmeldung
+  gibt es dort schon, Zugänge im Android-Keystore bzw. Windows geschützt). Dort „An Familienakte“: Mail mit Anhängen wird **intern**
+  übergeben, über das gemeinsame Fach `eingang-familienakte` im Pro-Tresor (Brain kennt das Fach schon: `Fach.java`,
+  `native/pro-ueberall.js`). Die Familienakte holt es in die Eingangszentrale zum Prüfen. Einrichten für den Nutzer: einmal im
+  Brain am Postfach anmelden, fertig. Repo `lausiklauskn-png/Privat-Brain-Pro` per `add_repo` holen; dortige Regeln (CLAUDE.md,
+  byte-gleiche Bausteine) beachten; Brain mit eigener nächster Fassung ausgeben, wenn sich dort etwas ändert.
+- Daneben bleiben: Weg A (Teilen → Familienakte, gibt es), Weg B (Mail-App öffnen mit Anlage), Weg C (Microsoft direkt).
+- **E-Mail-Programm direkt in der Familienakte (Weg H, IMAP aus Brain übernehmen):** eigener späterer Bauschritt. Jetzt nur
+  vorbereiten (Schnittstelle, Platz in der Wahl, Kasten in der Landkarte „geplant“); nicht in den Vordergrund stellen.
+- Verschlüsselung beim Mailversand gibt es nicht – im „?“ ehrlich sagen.
+- **Notfalls, nur wenn nötig (Klaus 11.11.): Private Brain als 1:1-Klon in die Familienakte**, genau wie Workflow PDF
+  (`public/apps/workflow-pdf/` mit Brücke `public/apps/fa-wfpdf-bruecke.js`, eigene DB, Pins in `public/apps/HERKUNFT.json`,
+  Nachziehen per Werkzeug, nie von Hand ändern). Dann ein Knopf „E-Mail“ oben im Kopf: Mails direkt in der Familienakte empfangen,
+  Anhänge hineinziehen, ablegen, speichern, zuordnen über die Eingangszentrale. „Nötig“ heißt: die interne Übergabe über das
+  Tresor-Fach gelingt nicht verlässlich, oder ein Nutzer hat Private Brain nicht installiert (z. B. nur die Web-App). Die Entscheidung
+  mit Grund im Abschlussbrief festhalten.
+
+## Zum Schluss (bevor ausgegeben wird)
+
+- **Abgleich Hilfe ↔ Landkarte:** jeden neuen oder geänderten Weg in der Landkarte der App (Kästen, Fäden, Stand in `lib/app-stand.ts`,
+  Rahmen fertig/im Bau/geplant), in der E-Mail-Karte und in den Hilfe-Themen nachziehen; die eigene Datei
+  `docs/landkarte/Familienakte-Landkarte.html` mit `node tools/landkarte-datei.mjs` neu bauen.
+- **Texte nachziehen, wo die neue Fassung etwas ändert:** Dokumentation (`docs/`, `CLAUDE.md`), Erklärungen hinter den „?“,
+  „Neu“-Knopf, „Was gibt’s Neues?“ (`lib/fassungen.ts`), Hilfe › Akten sichern, Datenschutz (`public/datenschutz.html`:
+  neue Übertragungen wie Sicherung in OneDrive, Mail über Brain/Microsoft) – bei Bedarf auch die gemeinsame Quelle
+  `family-project/rechtstexte/rechtstexte.html` (#376) und mit `rechtstexte/verteilen.mjs` kopieren.
+- Abschlussbrief mit Stundennachweis und Startauftrag; KimHub-Eintrag zur Sitzung.
+
 ## Gestaltung (Klaus 11.11., gilt für App und PC-Ansicht)
 
 - **In Blöcken, je Entscheidung ein Block.** Man soll auf einen Blick sehen: dieser Block gehört zu dieser Entscheidung.
@@ -96,16 +143,19 @@ Legt heute die ganze Akte unverschlüsselt in den OneDrive-Ordner (`chooseVaultF
 
 ## Weiter offen (nicht in diesem Bau)
 
-Rechtstexte in die einzelnen Apps (family-project #376, je App ein PR) · E-Mail e1–e10 · graue Wege der Landkarte ·
+Rechtstexte in die einzelnen Apps (family-project #376, je App ein PR) · graue Wege der Landkarte ·
 Baustand hinter Entwickler-Schalter · Testament-Bildschirmfoto · Gesundheitsschutz je Nutzer · Gerätetests 2.28.48–2.28.64
 (Liste „Offen“ in `CLAUDE.md`) · KimHub-Eintrag zur Sitzung 11.11.
 
 ## Startauftrag
 
 ```
-Familienakte, Startbrief BRIEF_SITZUNG_2026-11-11_CLOUD-ORDNER-2.28.65.md lesen (liegt auf main bzw. im Zweig
-claude/cloud-ordner-plan). Zuerst prüfen, ob 2.28.64 ausgegeben ist (Releases, Nachweis); wenn nicht und #165 grün, ausgeben,
-sonst Klaus fragen. Dann Fassung 2.28.65 bauen: Sicherung an einem zweiten Ort (selbsttätig, verschlüsselt/lesbar, 1 Sicherung
-dort, 2 auf dem Gerät, erst schreiben und prüfen, dann löschen), Wahl „Nur sichern“/„Synchron halten“, Cloud-Ordner hereinholen
-(kopieren, prüfen, Trennen), Handy-Schleife per Paket. Klaus: keine Vorschau nötig. Sammeln, Proben grün, dann mit Klaus' Wort ausgeben.
+Familienakte, Startbrief BRIEF_SITZUNG_2026-11-11_CLOUD-ORDNER-2.28.65.md lesen (main bzw. Zweig claude/cloud-ordner-plan).
+Freibrief: durchgehend arbeiten, Fragen selbst nach Logik und Nutzerfreundlichkeit entscheiden, nicht nachfragen, bis 12.11. früh fertig.
+Zuerst prüfen, ob 2.28.64 ausgegeben ist. Dann Fassung 2.28.65: Sicherung an einem zweiten Ort (selbsttätig, verschlüsselt/lesbar,
+1 dort, 2 auf dem Gerät), Wahl „Nur sichern“/„Synchron halten“, Cloud-Ordner hereinholen (kopieren, prüfen, Trennen), Handy-Schleife,
+E-Mail mit allen Wegen der E-Mail-Karte als Wahl, Private Brain als Empfang mit interner Übergabe an die Familienakte, eigenes
+Mail-Programm nur vorbereitet. Gestaltung in Blöcken je Entscheidung, Erklärungen hinter „?“. Zum Schluss Hilfe und Landkarten
+abgleichen, Texte nachziehen, dann 2.28.65 als APK, Windows und PWA ausgeben (Klaus' Wort liegt vor), Downloads prüfen,
+Geschenkbox aktualisieren, Abschlussbrief.
 ```
