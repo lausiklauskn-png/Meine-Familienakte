@@ -27,7 +27,7 @@ export const UI_HELP: Readonly<Record<string, string>> = {
   "Alle ansehen": "Die Filter verändern keine Dokumente.",
   "Lokale Unterlagen": "Neueste Einträge stehen oben. Die Dateiliste stammt aus der lokalen Registerdatei.",
   "Online-Altbestand": "Diese Dateien stammen aus der bisherigen Online-Ablage. Sie bleiben bis zur geprüften lokalen Sicherung unverändert.",
-  "OneDrive auf PC oder USB sichern": "Der Abgleich läuft nur in eine Richtung: vom verbundenen OneDrive-Ordner zur PC-/USB-Sicherung. Es werden nur fehlende registrierte Dokumente kopiert.",
+  "OneDrive auf PC oder USB sichern": "Der Abgleich läuft nur in eine Richtung: vom verbundenen OneDrive-Ordner zur PC-/USB-Sicherung. Es werden nur fehlende registrierte Dokumente kopiert. Keine Datei wird gelöscht oder überschrieben; bei widersprüchlichen Registereinträgen stoppt die Übernahme für diese Datei.",
   "Was ist jetzt wichtig?": "Rot steht für überfällig, Gelb für heute oder bald fällig, Grün für ausreichend Zeit.",
   "To-do-Liste": "Statusänderungen werden erst nach deiner Bestätigung gespeichert.",
   "Dokumente, Tagebuch-Einträge und Vorgänge": "Nur Vorschläge mit nachvollziehbaren Kriterien. Du entscheidest.",
