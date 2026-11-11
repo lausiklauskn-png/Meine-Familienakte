@@ -1,0 +1,59 @@
+{
+ "version": "2.28.64",
+ "source": "b02ba9c347b2c0e3dafef90cd259ae9323fd058e",
+ "pullRequest": [
+  165
+ ],
+ "recordedUtc": "2026-11-11T18:40:00Z",
+ "freigabe": "Klaus 11.11.2026: „bei grün ohne Rückfrage ausgeben“; nach rotem Android-Test „Erst Test sicher machen“, dann ausgeben. 2.28.62 und 2.28.63 nie ausgegeben, in 2.28.64 aufgegangen.",
+ "inhalt": "Schriftgröße „A··A“ im Kopf (pro-bedienung.js byte-gleich aus Private Brain Pro), Textdurchsicht A–E, Rechtstexte, Systemprüfung (Stand der Fassung), Sicherheitsseite kürzer, Startfläche ohne Logo, rote Kästen der Landkarte (Entsperren, Tresor einrichten/Ordner wählen, Demo verlassen), „+ Bsp.-Akten“.",
+ "ciAmPrStand": "PR #165 auf 058ce09: pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) success. Vorher auf d03df4a FamilyNavigationProductTest (API 35) in einem Zweitlauf zweimal rot (Probe-Tipp kam nicht an / Zurück blieb auf #help); vermutete Ursache später Vollbild-Hinweis von Android 15, nicht belegt. Probe bestätigt den Hinweis jetzt vor jedem Tipp und Zurück; Zusicherungen unverändert.",
+ "releases": [
+  {
+   "tag": "android-v2.28.64",
+   "run": 43074658987,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-android-v2.28.64.apk",
+     "bytes": 20083262,
+     "sha256": "d1b2c1771cfd2909d72e82f56e22e8ef2f4eed11142246e4207ee98986a55443",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true,
+     "versionInside": "2.28.64 (assets/public/version.json, commit b02ba9c)"
+    },
+    {
+     "name": "Familienakte-Einzeldatei-2.28.64.html",
+     "bytes": 3929422,
+     "sha256": "20818dc8668643793694ee856d76f0cb034463c749313fb626f8acd9bace9ddc",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true
+    }
+   ]
+  },
+  {
+   "tag": "windows-v2.28.64",
+   "run": 43074665063,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-Windows-2.28.64-x64-setup.exe",
+     "bytes": 34236511,
+     "sha256": "3af6c99151bb09bac6bfcc755668b202ef5aabeab5485ce92d2ec954ae0cb733",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true
+    }
+   ]
+  }
+ ],
+ "pwa": "Pages auf b02ba9c (Job beim Merge); Seite aus dem Behälter nicht geprüft.",
+ "geschenkbox": "Artefakt XeUMGuSZ49FzsJYjwQznM7 Version 20: Familienakte-Links 2.28.59 → 2.28.64, Landkarte (Fassung 2.28.64) und Geschenkbox-Pro-Apps.html neu gebaut.",
+ "marktplaetze": "Klaus 11.11.: Familienakte nicht auf family-projekt.de-Marktplatz und PWA Toolpoint; nur bestehende Update-Dateien ersetzt.",
+ "notChecked": [
+  "Schriftgröße A··A am Handy in der Aufklappleiste",
+  "Rote/gelbe Kästen der Landkarte mit echtem Tresor",
+  "family-projekt.de aus dem Behälter nicht erreichbar; der Freigabelauf prüft den Server selbst"
+ ]
+}
