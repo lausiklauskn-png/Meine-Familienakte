@@ -5,8 +5,20 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 `docs/briefe-archiv/` (Klaus 2026-11-04: archivieren statt löschen); die Veröffentlichungsnachweise in
 `docs/VEROEFFENTLICHUNG-<fassung>.json`.
 
-## Aktueller Stand (11.11.2026, nach 2.28.64)
+## Aktueller Stand (11.11.2026 abends, nach 2.28.65)
 
+- **Fassung 2.28.65** (#171 mit #170; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.65.json`; Brief
+  `BRIEF_ABSCHLUSS_2026-11-12_CLOUD-ORDNER-2.28.65.md`): **Sicherung an einem zweiten Ort** (`app/zweiter-ort*.ts(x)`, `lib/zweiter-ort.ts`;
+  selbsttätig bei Änderung höchstens einmal am Tag, verschlüsselt/lesbar, dort 1, auf dem Gerät 2 im App-Ordner `sicherungen`; erst
+  schreiben und `sicherungNachpruefen`, dann alte eigene entfernen – nur mit Kennungsdatei `Zweiter_Ort.json`; nativ nur über
+  `sicherungEntfernen`, Android/Windows/Rust, JUnit `SicherungEntfernenTest`), **„Synchron halten“** (Festplatte im selben Ordner mit
+  demselben Kopf, `laufwerkVorbereiten(…, kopfVorhanden)`), **Cloud-Ordner hereinholen** (`app/cloud-ordner*.ts(x)`, `lib/cloud-ordner.ts`;
+  Kopie statt Verweis, Herkunft, neue Fassung, Trennen, Pakete vom Handy → `familienakte:paket-datei`), **E-Mail-Wege** (Kasten in der
+  Eingangszentrale `app/email-wege-karte.tsx`; Private Brain Pro holt die Familienakte von selbst aus `eingang-familienakte`; Mail-App
+  mit Anlagen `FamilienakteShare.mailOeffnen`; Microsoft-Postfach mit derselben Anmeldung wie der Kalender plus `Mail.Read`/`Mail.Send`;
+  Versand in der Korrespondenz `app/mail-versand.tsx`; eigenes Mail-Programm nur vorbereitet). Altes „OneDrive verbinden“ unverändert.
+  **Proben-Hinweis:** Test-Chromium stürzt bei `queryPermission` an einem aus IndexedDB geholten OPFS-Ordner ab – die App hält den
+  gewählten Ordner darum zusätzlich für die Sitzung.
 - **Fassung 2.28.61** (#164; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.61.json`): **Meine Geräte**
   (`app/meine-geraete.tsx`: dieses Gerät per Knopf Handy/Tablet/PC/Laptop benennen, andere erscheinen von selbst), Paket an ein neues
   Gerät ohne Namensfeld, alte Einzelübergabe nur bei gespeicherten Übergaben (Proben-Schalter `familienakte-alte-einzeluebergabe`),
@@ -36,11 +48,8 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Einstieg `app/landkarte-allein.tsx`), in der Geschenkbox als `familienakte-landkarte.html` neben `pro-verbund.html` (beim
   Neuveröffentlichen mitgeben; `tools/geschenkbox-datei.mjs` nimmt beide). „Nur Neues prüfen“ statt „Inkrementell“; „Neu“ › E-Mail
   öffnet die E-Mail-Karte (Probe `neu-knopf-ziele`). Vorschau `docs/vorschau/kurzhinweise-2.28.57.html`.
-- **Cloud-Ordner (Befund 10.11., nichts gebaut):** „OneDrive verbinden“ legt die ganze Akte in den OneDrive-Ordner (`chooseVaultFor`,
-  nur `showDirectoryPicker`) – geht nur im Browser am PC (Chrome/Edge), **nicht in der APK**, Windows-App unklar; „OneDrive prüfen“ liest
-  nur `00_Posteingang`; Sicherung OneDrive→PC ist Einweg. Nativ auf allen Fassungen gehen Eingangsordner (`chooseInboxFolder`) und
-  gemeinsame Festplatte (`app/laufwerk.ts`, Zwei-Wege, verschlüsselt) – Vorschlag: Cloud-Ordner darauf aufbauen. Offen bei Klaus:
-  Name des Google-Speichers; Jens einmal einlesen oder dauerhaft abgleichen.
+- **Cloud-Ordner:** gebaut in 2.28.65 (siehe oben). Offen bei Klaus: altes „OneDrive verbinden“ wegfallen lassen oder „Akte liegt in
+  OneDrive (alt)“ nennen; Rechte `Mail.Read`/`Mail.Send` in Entra (`docs/KALENDER-EINRICHTUNG.md` Schritt 6).
 - **Fassung 2.28.56** (#155; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.56.json`; Brief
   `BRIEF_ABSCHLUSS_2026-11-10_NUR-LAUFWERK-2.28.56.md`): **Tresor einrichten – nur Laufwerk wählen** (Ordnerwahl öffnet am gemerkten Tresor
   oder oben auf dem Gerätespeicher, `EXTRA_INITIAL_URI`; kein Namensfenster, „Family-Projekt“, bei Belegung „Family-Projekt 2…9“; nur
@@ -132,9 +141,9 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   (2.28.35, `docs/landkarte/`), Landkarte der App mit **Stand je Kasten in `lib/app-stand.ts` – bei jeder Fassung eintragen** (2.28.36),
   Hilfe-Themen als Bild, Vorschaufenster (2.28.37), Listenzeilen mit `KnopfLeiste`, Kopfleiste (2.28.38).
   Proben-Hinweise: `step()` wertet einen zurückgegebenen Text als grün, deshalb `soll()`; Seitentitel sind keine Sprungziele.
-- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.64, 2.28.61, 2.28.60, 2.28.59, 2.28.58, 2.28.57, 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
+- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.65, 2.28.64, 2.28.61, 2.28.60, 2.28.59, 2.28.58, 2.28.57, 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
   (2.28.50 ausgegeben, aber ohne eigenen Nachweis; 2.28.40–2.28.47 waren Zwischenstände). Keine davon erneut ausgeben;
-  **nächste freie Fassung 2.28.65** (2.28.62 und 2.28.63 nie ausgegeben). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
+  **nächste freie Fassung 2.28.66** (2.28.62 und 2.28.63 nie ausgegeben). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
   sammeln, Proben laufen lassen, gesammelt als eine Fassung ausgeben (ersetzt „jede neue Funktion gleich ausgeben“ vom 06.11.).
   Neue Fassung oben in `lib/fassungen.ts` eintragen. Die Versionszeile zeigt die technische Fassung aus `package.json`;
   `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
@@ -162,13 +171,16 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
   - `BRIEF_SITZUNG_2026-11-11_CLOUD-ORDNER-2.28.65.md` (nächster Bau: Sicherung an einem zweiten Ort, Nur sichern/Synchron halten, Cloud-Ordner hereinholen; Klaus: keine Vorschau nötig)
-  - `BRIEF_ABSCHLUSS_2026-11-11_GESAMMELT-2.28.64.md` (jüngster Abschluss: 2.28.57 bis 2.28.64, Startauftrag; die Briefe vom 10./11.11. liegen im Archiv)
-  - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-09_AUSGABE-2.28.51.md` (Ausgabe 2.28.51; Startauftrag Gerätetest)
+  - `BRIEF_ABSCHLUSS_2026-11-12_CLOUD-ORDNER-2.28.65.md` (jüngster Abschluss: 2.28.65, Entscheidungen, Startauftrag)
+  - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-11_GESAMMELT-2.28.64.md` (2.28.57 bis 2.28.64)
   - `BRIEF_CODEX_2026-11-04_NACH-2.28.24.md` (Abstimmung mit Codex: welche Dateien Claude gehören)
   - `BRIEF_ABSCHLUSS_2026-11-04_PDF-ARBEITSRAUM.md`, `BRIEF_ABSCHLUSS_2026-11-04_PDF-FUNKTIONSABGLEICH.md` (Codex)
 
 ## Offen
 
+- **2.28.65 am Gerät ungeprüft:** zweiter Ort auf OneDrive-Ordner/Stick/SD (Freigabe nach Neustart, Löschen alter Sicherungen auf SD),
+  Cloud-Ordner unter Windows mit OneDrive-Platzhaltern, Paket vom Handy über die OneDrive-App bis zum PC, Mail-App mit Anlagen am Handy,
+  Private Brain → Familienakte mit echtem Tresor, Microsoft-Mail (erst nach den Rechten in Entra).
 - **2.28.59 am Gerät ungeprüft:** Vollsicherung auf SD-Karte/USB, Eingangsordner, gemeinsame Festplatte in der APK.
 - **2.28.57 am Gerät ungeprüft:** Tooltips mit Maus am Tablet (DeX/Fenster) und unter Windows, Zahlen in der Legende.
 - **2.28.56 am Gerät ungeprüft:** Ordnerwahl mit Startort, „Family-Projekt 2“, Pro-Apps im selben Tresor, Direktlink zur Landkarte.
