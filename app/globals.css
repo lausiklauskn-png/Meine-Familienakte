@@ -2902,3 +2902,8 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .landkarte.lk-gefiltert .lk-ast.treffer { stroke: #1d5b94; stroke-width: 3; opacity: 1; }
 /* Abbruch der Tresorwahl: ruhiger Hinweis statt Fehlerfarbe (Gerätetest 10.11.). */
 .pro-tresor-hinweis { border-left: 4px solid #9aa5ad; background: #f3f5f7; color: #3c4d58; padding: 6px 10px; border-radius: 8px; }
+
+/* Bsp.-Akten (Klaus 11.11.2026): rotes Dreieck oben rechts an jeder Beispielakte, in der Liste und geöffnet. */
+.bsp-ecke { position: absolute; top: 0; right: 0; width: 0; height: 0; border-top: 26px solid #d0021b; border-left: 26px solid transparent; pointer-events: none; z-index: 3; }
+:has(> .bsp-ecke) { position: relative; }
+.bsp-akten-knopf { min-height: 40px; }

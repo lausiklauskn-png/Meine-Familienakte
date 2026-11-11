@@ -231,26 +231,17 @@ try {
   await page.locator(".site-brand").click();
 
   // --- Beispieldaten ---
-  await step("„Beispieldaten entfernen“ fragt im Seiten-Dialog nach; „Abbrechen“ behält alles", async () => {
+  // Klaus 11.11.: „− Bsp.-Akten“ entfernt ohne Rückfrage (nur Beispiele, nie eigene Einträge).
+  await step("„− Bsp.-Akten“ oben ist mit der Maus erreichbar und entfernt die Beispielfamilie ohne Rückfrage", async () => {
     await schliesseDialoge(page); await page.locator(".site-brand").click();
     await page.evaluate(() => window.scrollTo(0, 0));
-    const knopf = page.locator("button", { hasText: "Beispieldaten entfernen" });
+    const knopf = page.locator("[data-bsp-weg]");
     const darueber = await verdecktVon(page, knopf);
-    if (!darueber.startsWith("button")) bekannt("„Beispieldaten entfernen“ ist mit der Maus nicht erreichbar", `darüber liegt ${darueber} (Zierkreis .family-hero:after); Tastatur (Tab + Enter) geht`);
+    if (!darueber.startsWith("button")) bekannt("„− Bsp.-Akten“ ist mit der Maus nicht erreichbar", `darüber liegt ${darueber} (Zierkreis .family-hero:after); Tastatur (Tab + Enter) geht`);
     await knopf.focus(); await page.keyboard.press("Enter");
-    await page.waitForSelector(".page-dialog");
-    const text = await page.locator(".page-dialog").innerText();
-    await page.locator(".page-dialog button", { hasText: "Abbrechen" }).click();
-    return text.includes("Beispieldaten") && (await page.locator(".sample-data-notice").count()) === 1;
-  });
-  await step("„Beispieldaten entfernen“ + „Ja, fortfahren“ entfernt die Beispielfamilie", async () => {
-    await page.evaluate(() => window.scrollTo(0, 0));
-    const knopf = page.locator("button", { hasText: "Beispieldaten entfernen" });
-    await knopf.focus(); await page.keyboard.press("Enter");
-    await page.locator(".page-dialog button", { hasText: "Ja, fortfahren" }).click();
     await page.waitForSelector(".sample-data-notice", { state: "detached", timeout: 30000 });
     await page.waitForTimeout(500);
-    return (await page.locator("text=Beispieldaten entfernt").count()) > 0 || (await page.locator(".sample-data-notice").count()) === 0;
+    return (await page.locator("text=Bsp.-Akten entfernt").count()) > 0 || (await page.locator(".sample-data-notice").count()) === 0;
   });
   await step("Eigene Erinnerung bleibt nach dem Entfernen erhalten", async () => {
     await footer(page, "Tagebuch");

@@ -1,6 +1,7 @@
 // Punkt 8 der Neugestaltung 2.28.39: In der Familienübersicht Personen, Organisationen, Objekte (Auto, Gerät …) und
 // Vorgänge selbst anlegen und ändern. „+ Neu“ → Art wählen → Name, Art, Notiz → „✓ Speichern“ → „Gespeichert ✓“ an derselben
 // Stelle. Danach stehen die Einträge in allen Auswahllisten (Fristformular, Zuordnung im Prüfdialog). Die Kennnummer bleibt intern.
+import { BspEcke } from "./bsp-ecke";
 import { useMemo, useState } from "react";
 import { Check, ChevronRight, Pencil, Plus, X } from "lucide-react";
 import type { FamilyRecordUnion } from "../lib/family-data-model";
@@ -60,7 +61,7 @@ export function FamilieStamm({ records, vaultHandle, onRefresh, onOpen, onSaveCo
     {anzahl === 0 ? <p className="stamm-leer">Noch keine Einträge. Mit „+ Neu“ legst du den ersten an.</p> : gruppen.filter((g) => g.items.length).map((g) => <div className="stamm-gruppe" key={g.typ} data-stamm-gruppe={g.typ}>
       <h3 className="eyebrow dark">{GRUPPE[g.typ]} · {g.items.length}</h3>
       {g.items.map((item) => <div key={item.record.id}>
-        <div className={`stamm-zeile ${gespeichert?.id === item.record.id ? "hervorgehoben" : ""}`} data-stamm-zeile={item.name}>
+        <div className={`stamm-zeile ${gespeichert?.id === item.record.id ? "hervorgehoben" : ""}`} data-stamm-zeile={item.name}><BspEcke id={item.record.id}/>
           <button type="button" className="stamm-oeffnen" onClick={() => onOpen(item.record.id)}><strong>{item.name || "Ohne Namen"}</strong>{item.art && <small>{item.art}</small>}<ChevronRight size={16}/></button>
           {vaultHandle && <button type="button" className="icon-button" disabled={arbeit} onClick={() => starten(g.typ, item.record)} aria-label={`${item.name || "Eintrag"} ändern`} data-stamm-aendern={item.name}><Pencil size={16}/></button>}
         </div>
@@ -109,7 +110,7 @@ export function StammBearbeitenFenster({ record, records, vaultHandle, onZu, onG
     finally { setArbeit(false); }
   };
   return <div className="modal-backdrop" role="presentation" onMouseDown={(e) => { if (e.target === e.currentTarget && !arbeit) onZu(); }}>
-    <section className="modal stamm-fenster" role="dialog" aria-modal="true" aria-label={`${STAMM_BESCHRIFTUNG[typ].einzahl} ändern`} data-stamm-fenster={record.id}>
+    <section className="modal stamm-fenster" role="dialog" aria-modal="true" aria-label={`${STAMM_BESCHRIFTUNG[typ].einzahl} ändern`} data-stamm-fenster={record.id}><BspEcke id={record.id}/>
       <StammFormular typ={typ} record={record} werte={werte} setWerte={setWerte} fehler={fehler} arbeit={arbeit} onSpeichern={() => void speichern()} onAbbrechen={onZu} onSaveContact={onSaveContact}/>
       {onAkte && <button type="button" className="text-link" onClick={() => { onZu(); onAkte(); }} data-stamm-akte>Ganze Akte ansehen ›</button>}
     </section>
