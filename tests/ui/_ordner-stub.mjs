@@ -5,7 +5,8 @@ export const ordnerStub = (plattform = "android") => `(() => {
   const offen = new Map();
   const fehler = (code) => Object.assign(new Error(code), { code });
   // Wie am Gerät: jede Wahl zeigt auf denselben Speicher (SD-Karte); nur die Kennung ist neu.
-  const k = (t, p) => 'R|' + p;
+  // 2.28.65: der App-Ordner „sicherungen“ (Sicherungen auf dem Gerät) ist ein eigener Speicher „G“.
+  const k = (t, p) => (t === 'INTERN-sicherungen' ? 'G|' : 'R|') + p;
   const eltern = (p) => p.includes('/') ? p.slice(0, p.lastIndexOf('/')) : '';
   const pruefe = (p) => { if (p && p.split('/').some((x) => !x || x === '.' || x === '..' || /[\\\\:]/.test(x))) throw fehler('FA_PFAD_UNGUELTIG'); };
   const b64 = (u) => { let s = ''; for (let i = 0; i < u.length; i += 8192) s += String.fromCharCode(...u.subarray(i, i + 8192)); return btoa(s); };
@@ -26,7 +27,17 @@ export const ordnerStub = (plattform = "android") => `(() => {
     async eigeneDateiEntfernen({ token, pfad }) { const key = k(token, pfad); if (!S.selbst.has(key) || !S.dateien.has(key)) throw fehler('FA_NICHT_ERLAUBT'); S.dateien.delete(key); S.selbst.delete(key); return { ok: true }; },
     async dateiBeginn({ token, pfad }) { pruefe(pfad); if (!S.ordner.has(k(token, eltern(pfad)))) throw fehler('FA_ORDNER_UNGUELTIG'); const id = 'S' + Math.random().toString(36).slice(2); offen.set(id, { key: k(token, pfad), teile: [], size: 0 }); return { id }; },
     async dateiAnhaengen({ id, offset, data }) { const s = offen.get(id); if (!s || offset !== s.size) throw fehler('FA_STUECK_UNGUELTIG'); const u = unb64(data); if (u.length > 1048576) throw fehler('FA_STUECK_UNGUELTIG'); s.teile.push(u); s.size += u.length; return { size: s.size }; },
-    async dateiFertig({ id, size }) { const s = offen.get(id); if (!s || size !== s.size) throw fehler('FA_STUECK_UNGUELTIG'); const u = new Uint8Array(s.size); let o = 0; for (const t of s.teile) { u.set(t, o); o += t.length; } S.dateien.set(s.key, u); S.selbst.add(s.key); offen.delete(id); return { size: s.size, sha256: await hex(u) }; },
+    async dateiFertig({ id, size }) { const s = offen.get(id); if (!s || size !== s.size) throw fehler('FA_STUECK_UNGUELTIG'); if (S.fertigScheitert && s.key.startsWith(S.fertigScheitert)) { offen.delete(id); throw Object.assign(new Error('Größe 0 statt ' + s.size + ' Bytes'), { code: 'FA_AUSGABE_PRUEFSUMME' }); } const u = new Uint8Array(s.size); let o = 0; for (const t of s.teile) { u.set(t, o); o += t.length; } S.dateien.set(s.key, u); S.selbst.add(s.key); offen.delete(id); return { size: s.size, sha256: await hex(u) }; },
+    // 2.28.65: wie FamilienakteOrdnerPlugin.sicherungEntfernen – nur eigener Sicherungsordner mit Kennungsdatei und passender Kennung.
+    async sicherungEntfernen({ token, pfad, kennung }) {
+      if (!/^Familienakte_Vollsicherung_[0-9TZ-]{10,40}(_verschluesselt)?(_[0-9]{1,3})?$/.test(pfad) || !/^[A-Za-z0-9-]{8,80}$/.test(kennung) || !S.ordner.has(k(token, pfad))) throw fehler('FA_NICHT_ERLAUBT');
+      const m = S.dateien.get(k(token, pfad + '/Zweiter_Ort.json')); const t = m ? new TextDecoder().decode(m) : '';
+      if (!t.includes('"familienakte-zweiter-ort"') || !t.includes('"' + kennung + '"')) throw fehler('FA_NICHT_ERLAUBT');
+      const vor = k(token, pfad); let n = 0;
+      for (const d of [...S.dateien.keys()]) if (d === vor || d.startsWith(vor + '/')) { S.dateien.delete(d); n++; }
+      for (const o of [...S.ordner]) if (o === vor || o.startsWith(vor + '/')) { S.ordner.delete(o); n++; }
+      S.entfernt = (S.entfernt || 0) + 1; return { ok: true, entfernt: n };
+    },
     async dateiVerwerfen({ id }) { offen.delete(id); return { ok: true }; },
     // Stufe C: Ort merken/öffnen und Laufwerke absuchen; S.angesteckt = false stellt eine abgezogene Festplatte dar.
     async ordnerIntern({ name }) { const t = 'INTERN-' + name; S.ordner.add(k(t, '')); return { token: t, name, pfad: '/data/' + name }; },

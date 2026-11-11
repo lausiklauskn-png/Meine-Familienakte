@@ -2920,3 +2920,15 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 
 /* Schriftgröße „A··A“ (Klaus 11.11.): Knopf und Regler aus public/native/pro-bedienung.css. */
 .fa-schrift { display: inline-flex; align-items: center; }
+
+/* 2.28.65: je Entscheidung ein Block (Klaus 11.11.) – am Handy untereinander, am PC nebeneinander. */
+.entscheid-bloecke { display: grid; gap: 12px; margin-top: 10px; }
+@media (min-width: 900px) { .entscheid-bloecke { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); align-items: start; } }
+.entscheid-block { border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; display: grid; gap: 8px; background: color-mix(in srgb, var(--surface, #fff) 92%, var(--accent, #2563eb) 3%); }
+.entscheid-block h3 { display: flex; align-items: center; gap: 6px; margin: 0; font-size: 1rem; }
+.entscheid-zustand { margin: 0; font-weight: 600; }
+.entscheid-zustand.gut { color: var(--success, #15803d); }
+.entscheid-zustand.warnung { color: var(--danger, #b91c1c); }
+.wahl-felder { margin: 0; }
+.wahl-felder .sicherung-art { grid-template-columns: auto auto 1fr; }
+.wahl-felder .sicherung-art input:disabled + svg { opacity: .6; }

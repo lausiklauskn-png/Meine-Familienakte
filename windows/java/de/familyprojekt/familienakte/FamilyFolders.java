@@ -23,7 +23,7 @@ final class FamilyFolders {
     private static final class Schreiben { Path ziel, teil; long groesse; MessageDigest sha; boolean ausgabe; boolean fertig; String name; }
 
     static boolean aktion(String a) {
-        return a.startsWith("ordner") || a.startsWith("datei") && !a.equals("dateiExportieren") || a.startsWith("ausgabe") || a.equals("eigeneDateiEntfernen") || a.equals("laufwerkeSuchen");
+        return a.startsWith("ordner") || a.startsWith("datei") && !a.equals("dateiExportieren") || a.startsWith("ausgabe") || a.equals("eigeneDateiEntfernen") || a.equals("sicherungEntfernen") || a.equals("laufwerkeSuchen");
     }
 
     Object aufruf(Map<String, Object> m, ProTresorEngine.Dialoge dialoge) throws IOException {
@@ -119,6 +119,23 @@ final class FamilyFolders {
                 Files.delete(p); selbstAngelegt.remove(p);
                 return Map.of("ok", true);
             }
+            case "sicherungEntfernen": {
+                // 2.28.65: nur eine eigene Sicherung (Name, Kennungsdatei Zweiter_Ort.json mit passender Kennung), direkt im gewählten Ordner.
+                String rel = Json.textOder(m, "pfad", ""), kennung = Json.textOder(m, "kennung", "");
+                if (!SICHERUNG_NAME.matcher(rel).matches() || !kennung.matches("[A-Za-z0-9-]{8,80}")) throw new IOException("FA_NICHT_ERLAUBT");
+                Path p = pfad(m, false);
+                if (!Files.isDirectory(p, LinkOption.NOFOLLOW_LINKS)) throw new IOException("FA_NICHT_ERLAUBT");
+                Path marke = p.resolve(MARKE);
+                if (!Files.isRegularFile(marke, LinkOption.NOFOLLOW_LINKS) || Files.size(marke) > 65536) throw new IOException("FA_NICHT_ERLAUBT");
+                String inhalt = Files.readString(marke);
+                if (!inhalt.contains("\"familienakte-zweiter-ort\"") || !inhalt.contains("\"" + kennung + "\"")) throw new IOException("FA_NICHT_ERLAUBT");
+                final int[] n = {0};
+                Files.walkFileTree(p, new SimpleFileVisitor<>() {
+                    @Override public FileVisitResult visitFile(Path f, BasicFileAttributes at) throws IOException { Files.delete(f); n[0]++; return FileVisitResult.CONTINUE; }
+                    @Override public FileVisitResult postVisitDirectory(Path d, IOException e) throws IOException { if (e != null) throw e; Files.delete(d); n[0]++; return FileVisitResult.CONTINUE; }
+                });
+                return Map.of("ok", true, "entfernt", n[0]);
+            }
             case "dateiBeginn": {
                 Path ziel = pfad(m, false), eltern = ziel.getParent();
                 if (eltern == null || !Files.isDirectory(eltern) || Files.isDirectory(ziel)) throw new IOException("FA_ORDNER_UNGUELTIG");
@@ -177,6 +194,9 @@ final class FamilyFolders {
             default: throw new IOException("FA_TRESOR_AKTION_UNGUELTIG");
         }
     }
+
+    static final java.util.regex.Pattern SICHERUNG_NAME = java.util.regex.Pattern.compile("Familienakte_Vollsicherung_[0-9TZ-]{10,40}(_verschluesselt)?(_[0-9]{1,3})?");
+    static final String MARKE = "Zweiter_Ort.json";
 
     private Map<String, Object> beginnen(Path ziel, Path teil, boolean ausgabe, String name) throws IOException {
         Schreiben s = new Schreiben(); s.ziel = ziel; s.teil = teil; s.ausgabe = ausgabe; s.name = name;

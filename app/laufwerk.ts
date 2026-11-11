@@ -96,10 +96,11 @@ async function textSchreiben(ordner: FileSystemDirectoryHandle, name: string, in
 }
 
 /** Festplatte vorbereiten: Kennung, Passwort, Notfallschlüssel. Lehnt eine schon vorbereitete Platte ab. */
-export async function laufwerkVorbereiten(handle: FileSystemDirectoryHandle, name: string, passwort: string, appVersion: string, kennung = crypto.randomUUID()) {
+export async function laufwerkVorbereiten(handle: FileSystemDirectoryHandle, name: string, passwort: string, appVersion: string, kennung = crypto.randomUUID(), kopfVorhanden?: SicherungsKopf) {
   if (await laufwerkKopfLesen(handle)) throw new Error("Diese Festplatte ist schon für die Familienakte vorbereitet. Bitte „Vorhandene Festplatte verbinden“ wählen.");
   const angelegt = new Date().toISOString();
-  const tresor = await tresorAnlegen(passwort, { appVersion, createdAt: angelegt });
+  // 2.28.65 („Synchron halten“ am zweiten Ort): derselbe Kopf wie die Sicherung dort – ein Passwort, ein Notfallblatt.
+  const tresor = kopfVorhanden ? { kopf: kopfVorhanden, notfall: "" } : await tresorAnlegen(passwort, { appVersion, createdAt: angelegt });
   const kopf: LaufwerkKopf = { ...tresor.kopf, hinweis: "Gemeinsame Festplatte der Familienakte. Ordner und Dateien darunter nicht von Hand ändern; zum Lesen braucht es die Familienakte und das Passwort oder das Notfallblatt.", laufwerk: { format: FORMAT_LAUFWERK, kennung, name: name.trim().slice(0, 60) || "Familienakte-Platte", angelegt } };
   const ordner = (await unterordner(handle, LAUFWERK_ORDNER, true))!;
   await unterordner(ordner, "Stand", true); await unterordner(ordner, "Dateien", true);

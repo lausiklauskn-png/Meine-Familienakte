@@ -7,6 +7,7 @@ import { programmBeilegen } from "./sicherung-programm";
 import { SicherungEinlesenDialog } from "./sicherung-einlesen";
 import { NotfallblattDialog, PapierkorbLeerenDialog, SicherungAnlegenDialog, SicherungErinnerung, SicherungPasswortDialog } from "./sicherung-dialoge";
 import { LaufwerkKarte } from "./laufwerk-karte";
+import { ZweiterOrtKarte, useZweiterOrtAuto } from "./zweiter-ort-karte";
 import { BLOCK, blockText, dateiSchluessel, gesehenMerken, inBloecke, mbText as mbBlock, neueImOrdner, speicherReicht } from "../lib/eingang-bloecke";
 import { arbeitDienst } from "./arbeit-dienst";
 import { eingangOrdnerLeserSetzen } from "./eingang-ablage";
@@ -1083,6 +1084,13 @@ function HealthPortalContent() {
     } catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die Sicherung konnte nicht abgeschlossen werden." }); }
     finally { setVaultBusy(false); }
   };
+  // 2.28.65: Bsp.-Akten auch bei der Sicherung am zweiten Ort weglassen, sobald eigene Einträge da sind (wie bei der Vollsicherung).
+  const bspOhne = async (): Promise<ReadonlySet<string> | undefined> => {
+    if (!vaultHandle || !samplePresent) return undefined;
+    const bestand = await readLocalVaultData(vaultHandle); const ids = beispielIdsVon(bestand);
+    return ids && [...bestand.documents, ...bestand.records].some((x) => !ids.has(x.id)) ? ids : undefined;
+  };
+  useZweiterOrtAuto(vaultHandle, APP_FASSUNG, (n) => { if (n) reportActivity({ kind: n.kind === "error" ? "error" : "info", text: n.text }); }, bspOhne);
   const runFullBackup = () => {
     if (!vaultHandle) { go("security"); setNotice({ kind: "error", text: "Bitte zuerst den führenden lokalen Familienakten-Tresor verbinden." }); return; }
     setSicherungWahl(true);
@@ -1727,6 +1735,7 @@ function HealthPortalContent() {
           onConnectOneDrive={connectOneDrive} onConnectLocal={connectLocalVault}
           onLockOneDrive={lockOneDrive} onLockLocal={lockLocalVault} onMigrate={migrateOnline} onHelp={() => go("help")}
           onCompare={startVaultInventoryComparison} onCheckSync={checkBackupSync} onRunSync={runBackupSync} onExport={() => { setExportOpen(true); reportActivity({ kind: "info", text: "Exportvorbereitung geöffnet. Noch keine Datei geschrieben; Umfang und Zielordner bitte prüfen." }); }} onFullBackup={runFullBackup} onRestoreTest={runRestoreTest} onEinlesen={runEinlesenProbe} letzteSicherung={letzteSicherung} hatDaten={localDocuments.length + familyRecords.length > 0}
+          zweiterOrtKarte={<ZweiterOrtKarte akte={vaultHandle} appVersion={APP_FASSUNG} busy={vaultBusy} onBusy={setVaultBusy} onNotice={setNotice} onDrucken={seiteDrucken} ohne={bspOhne}/>}
           laufwerkKarte={<LaufwerkKarte aktiv={vaultHandle} appVersion={APP_FASSUNG} busy={vaultBusy} onBusy={setVaultBusy} onNotice={setNotice} onRefresh={() => refreshLocal()} onDrucken={seiteDrucken}/>}
           ordnerWahl={sicherungsOrdnerWaehlbar()} onEingang={() => go("inbox")}
         />}
@@ -4053,13 +4062,13 @@ function Inbox({ documents, localDocuments, loading, onUpload, onOpenDocument, o
   </>;
 }
 
-function SecurityCenter({ aktenHandle, onDokumente, onMeaningOpen, onProChange, proDestination = null, browserStorage = false, folderSelectionSupported = true, oneDriveConnected, oneDriveName, oneDriveSummary, localConnected, localVaultName, localVaultSummary, supported, onlineCount, localCount, busy, syncPreview, syncResult, onConnectOneDrive, onConnectLocal, onLockOneDrive, onLockLocal, onMigrate, onHelp, onCompare, onCheckSync, onRunSync, onExport, onFullBackup, onRestoreTest, onEinlesen, ordnerWahl = true, onEingang, letzteSicherung = null, hatDaten = false, laufwerkKarte = null }: {
+function SecurityCenter({ aktenHandle, onDokumente, onMeaningOpen, onProChange, proDestination = null, browserStorage = false, folderSelectionSupported = true, oneDriveConnected, oneDriveName, oneDriveSummary, localConnected, localVaultName, localVaultSummary, supported, onlineCount, localCount, busy, syncPreview, syncResult, onConnectOneDrive, onConnectLocal, onLockOneDrive, onLockLocal, onMigrate, onHelp, onCompare, onCheckSync, onRunSync, onExport, onFullBackup, onRestoreTest, onEinlesen, ordnerWahl = true, onEingang, letzteSicherung = null, hatDaten = false, laufwerkKarte = null, zweiterOrtKarte = null }: {
   aktenHandle: FileSystemDirectoryHandle | null; onDokumente?: () => void;
   onMeaningOpen: (section: SectionId, targetId?: string) => void;
   onProChange?: () => void; proDestination?: ProDestination | null; browserStorage?: boolean; folderSelectionSupported?: boolean;
   oneDriveConnected: boolean; oneDriveName: string; oneDriveSummary: VaultSummary | null; localConnected: boolean; localVaultName: string; localVaultSummary: VaultSummary | null; supported: boolean; onlineCount: number; localCount: number; busy: boolean;
   syncPreview: VaultSyncPreview | null; syncResult: VaultSyncResult | null;
-  onConnectOneDrive: () => void; onConnectLocal: () => void; onLockOneDrive: () => void; onLockLocal: () => void; onMigrate: () => void; onHelp: () => void; onCompare: () => void; onCheckSync: () => void; onRunSync: () => void; onExport: () => void; onFullBackup: () => void; onRestoreTest: () => void; onEinlesen: () => void; letzteSicherung?: string | null; hatDaten?: boolean; laufwerkKarte?: ReactNode;
+  onConnectOneDrive: () => void; onConnectLocal: () => void; onLockOneDrive: () => void; onLockLocal: () => void; onMigrate: () => void; onHelp: () => void; onCompare: () => void; onCheckSync: () => void; onRunSync: () => void; onExport: () => void; onFullBackup: () => void; onRestoreTest: () => void; onEinlesen: () => void; letzteSicherung?: string | null; hatDaten?: boolean; laufwerkKarte?: ReactNode; zweiterOrtKarte?: ReactNode;
   /** Ordner wählbar (native App oder Chrome/Edge am PC); sonst sind Sichern, Testen, Einlesen und Export hier nicht möglich (U2). */
   ordnerWahl?: boolean; onEingang?: () => void;
 }) {
@@ -4085,6 +4094,7 @@ function SecurityCenter({ aktenHandle, onDokumente, onMeaningOpen, onProChange, 
     </>}
     <section className="security-grid security-grid-two security-action-grid">
       <article className="card security-action-card" data-hilfe-ziel="vollsicherung"><div className="security-card-heading"><h2>Familienakte vollständig sichern und testen</h2><InfoPopover label="Vollständige Sicherung erklären" text="Erstellt nach deinem ausdrücklichen Befehl eine vollständige Sicherung von Register, Datensätzen, Verknüpfungen, Tagebuch-Einträge, Medien, Aufgaben, Fristen und freigegebenen Originaldateien in einem frei gewählten Ordner – verschlüsselt mit Passwort und Notfallblatt (empfohlen) oder lesbar. Zwei Wege zurück: „Wiederherstellung testen“ ist nur eine Probe in einen leeren Testordner und holt nichts in die Akte. „Sicherung einlesen“ holt eine Sicherung zurück: in eine leere Akte ganz, in eine benutzte Akte zusammengeführt – Neues kommt dazu, bei Unterschieden wählst du, gelöscht wird nichts."/></div><div className="button-row"><button className="button primary" disabled={!supported || !ordnerWahl || busy || (!oneDriveConnected && !localConnected)} onClick={onFullBackup}><Usb size={17}/> Vollständige Sicherung erstellen</button><button className="button primary" disabled={!supported || !ordnerWahl || busy} onClick={onRestoreTest}><ClipboardCheck size={17}/> Wiederherstellung testen</button><button className="button secondary" data-sicherung-einlesen-knopf disabled={!supported || !ordnerWahl || busy} onClick={onEinlesen}><Download size={17}/> Sicherung einlesen</button></div><SicherungErinnerung letzte={letzteSicherung} hatDaten={hatDaten} onSichern={onFullBackup} kompakt/>{letzteSicherung && <p className="fine-print" data-letzte-sicherung>Letzte Vollsicherung: {new Date(letzteSicherung).toLocaleString("de-DE", { dateStyle: "medium", timeStyle: "short" })}.</p>}{ordnerWahl ? <p className="fine-print ui-heading-help" data-zwei-wege>Testen prüft nur, Einlesen holt zurück. <InfoPopover label="Testen und Einlesen erklären" text={"Zwei Knöpfe, zwei Aufgaben\n• „Wiederherstellung testen“ prüft die Sicherung in einem leeren Testordner und holt nichts in die Akte.\n• „Sicherung einlesen“ holt die Akte zurück oder führt sie mit deiner zusammen."}/></p> : <p className="sync-message warning" data-sicherung-nicht-hier>Hier nicht möglich: Die Web-App kann auf diesem Gerät keinen Ordner wählen. Sichern, Testen und Einlesen gehen in der Pro-App (Android, Windows) oder am PC in Chrome oder Edge.</p>}</article>
+      {zweiterOrtKarte}
       {laufwerkKarte}
       <article className="card security-action-card"><div className="security-card-heading"><h2>Familienakte exportieren</h2><InfoPopover label="Export erklären" text="Bereitet die vorhandene Exportfunktion vor. Du wählst Bereiche und Zielordner bewusst aus und siehst vor dem Start Umfang, Originaldateien und Speicherstatus. Es wird kein Export vorgetäuscht oder automatisch gestartet."/></div><button className="button primary" disabled={!supported || !ordnerWahl || busy} onClick={onExport}><Download size={17}/> Export vorbereiten</button>{!ordnerWahl && <p className="sync-message warning" data-export-nicht-hier>Hier nicht möglich: Exportieren geht in der Pro-App oder am PC in Chrome oder Edge.</p>}</article>
     </section>

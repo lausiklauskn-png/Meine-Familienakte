@@ -3190,6 +3190,10 @@ export async function writeFullFamilyBackup(input: {
   passwort?: string | null;
   /** Bsp.-Akten (Klaus 11.11.): Kennungen, die nicht mitgesichert werden – die Vorlage steckt in der App. */
   ohne?: ReadonlySet<string>;
+  /** 2.28.65 (zweiter Ort): fester Kopf und Datenschlüssel – jede selbsttätige Sicherung öffnet mit demselben Passwort und Notfallblatt. */
+  tresorFest?: { kopf: SicherungsKopf; daten: CryptoKey } | null;
+  /** 2.28.65: Kennungsdatei (Zweiter_Ort.json), zuerst geschrieben; `fertig` ersetzt sie am Ende. */
+  marke?: { name: string; anfang: string; fertig: string } | null;
 }): Promise<FullBackupResult & { ausgelassen: number }> {
   if (!(await requestVaultPermission(input.source)) || !(await requestVaultPermission(input.destination))) throw new Error("Quell- und Sicherungsordner müssen ausdrücklich freigegeben sein.");
   // Ein nativer Ordner (Android/Windows, P5) ist nie derselbe wie der Browser-Datentresor; der Browser lehnt den Vergleich dann ab.
@@ -3212,8 +3216,10 @@ export async function writeFullFamilyBackup(input: {
     ausgelassen = vorher - index.documents.length - index.records.length;
   }
   const createdAt = input.createdAt || new Date().toISOString();
-  const tresor = input.passwort ? await tresorAnlegen(input.passwort, { appVersion: input.appVersion, createdAt }) : null;
+  const tresor: Tresor | null = input.tresorFest ? { kopf: input.tresorFest.kopf, daten: input.tresorFest.daten, notfall: "" }
+    : input.passwort ? await tresorAnlegen(input.passwort, { appVersion: input.appVersion, createdAt }) : null;
   const backup = await uniqueDirectory(input.destination, `Familienakte_Vollsicherung_${createdAt.replace(/[:.]/g, "-")}${tresor ? "_verschluesselt" : ""}`);
+  if (input.marke) await writeTextFile(backup.handle, input.marke.name, input.marke.anfang);
   const dataDirectory = await backup.handle.getDirectoryHandle("Dateien", { create: true });
   const sourceRoot = await root(input.source);
   const w: SicherungsSchreiber = { dataDirectory, files: [], tresor, nr: 0, ueberspringen };
@@ -3262,10 +3268,11 @@ export async function writeFullFamilyBackup(input: {
     await writeTextFile(backup.handle, "Familienakte_Register.json", registerText);
     await writeTextFile(backup.handle, "Vollsicherung_Manifest.json", JSON.stringify(manifest, null, 2));
   }
+  if (input.marke) await writeTextFile(backup.handle, input.marke.name, input.marke.fertig);
   // Stufe B (Entscheidung 7): Zeitpunkt der letzten Vollsicherung im Register merken, für die Erinnerung nach 7 Tagen.
   try { const aktuell = await readIndex(input.source); aktuell.letzteVollsicherung = createdAt; aktuell.letzteVollsicherungVerschluesselt = Boolean(tresor); await writeIndex(input.source, aktuell, { preserveTimestamp: true }); }
   catch { /* die Sicherung selbst ist fertig; der Merker ist nur für die Erinnerung */ }
-  return { folderName: backup.name, manifest, notfall: tresor?.notfall, ausgelassen };
+  return { folderName: backup.name, manifest, notfall: tresor?.notfall || undefined, ausgelassen };
 }
 async function writeBlobFile(directory: FileSystemDirectoryHandle, name: string, contents: Blob) {
   const file = await directory.getFileHandle(name, { create: true });
@@ -3384,6 +3391,33 @@ async function sicherungFinden(gewaehlt: FileSystemDirectoryHandle): Promise<{ h
   if (await dateiVorhanden(handle, "Vollsicherung_Manifest.json")) return { handle, name, hinweis, verschluesselt: false };
   if (await dateiVorhanden(handle, KOPF_DATEI)) return { handle, name, hinweis, verschluesselt: true };
   throw new Error(`Im Ordner „${name}“ fehlen Manifest und Kopfdatei. Die Sicherung ist unvollständig.`);
+}
+/** 2.28.65 (zweiter Ort): eine gerade geschriebene Sicherung zurücklesen, bevor eine ältere entfernt wird. Register per
+ *  Prüfsumme, jede Datei des Manifests vorhanden und gleich groß (verschlüsselt: Geheimdatei da und nicht kleiner als der
+ *  Klartext). Jede einzelne Datei wurde schon beim Schreiben per SHA-256 bestätigt. Wirft bei der ersten Abweichung. */
+export async function sicherungNachpruefen(ziel: FileSystemDirectoryHandle, ordnerName: string, daten: CryptoKey | null): Promise<{ dateien: number }> {
+  const ordner = await ziel.getDirectoryHandle(ordnerName);
+  let manifest: FamilyBackupManifest; let registerText: string;
+  if (daten) {
+    const kopf = await readJsonFile<SicherungsKopf>(ordner, KOPF_DATEI);
+    if (kopf.format !== "familienakte-vollsicherung-verschluesselt") throw new Error("Kopfdatei der Sicherung unlesbar.");
+    manifest = JSON.parse(await textEntschluesseln(daten, await (await ordner.getFileHandle("Vollsicherung_Manifest.fav")).getFile()));
+    registerText = await textEntschluesseln(daten, await (await ordner.getFileHandle("Familienakte_Register.fav")).getFile());
+  } else {
+    manifest = await readJsonFile<FamilyBackupManifest>(ordner, "Vollsicherung_Manifest.json");
+    registerText = await (await (await ordner.getFileHandle("Familienakte_Register.json")).getFile()).text();
+  }
+  if (await fileChecksum(new Blob([registerText], { type: "application/json" })) !== manifest.registerChecksum) throw new Error("Das Register der neuen Sicherung stimmt nicht mit seiner Prüfsumme überein.");
+  const dateien = await ordner.getDirectoryHandle("Dateien");
+  for (const f of manifest.files) {
+    let datei: File;
+    try {
+      if (f.datei) datei = await (await dateien.getFileHandle(f.datei)).getFile();
+      else { const teile = f.path.split("/"); const name = teile.pop()!; let o = dateien; for (const t of teile) o = await o.getDirectoryHandle(t); datei = await (await o.getFileHandle(name)).getFile(); }
+    } catch { throw new Error(`In der neuen Sicherung fehlt „${f.path}“.`); }
+    if (f.datei ? datei.size < f.sizeBytes + 8 : datei.size !== f.sizeBytes) throw new Error(`„${f.path}“ hat in der neuen Sicherung die falsche Größe.`);
+  }
+  return { dateien: manifest.files.length };
 }
 /** Stufe B: Art der gewählten Sicherung, damit die Oberfläche bei einer verschlüsselten erst nach dem Passwort fragt. */
 export async function sicherungArt(gewaehlt: FileSystemDirectoryHandle): Promise<{ name: string; verschluesselt: boolean; erstellt: string | null }> {

@@ -191,6 +191,30 @@ public final class FamilienakteOrdnerPlugin extends Plugin {
             a.loeschen(p); selbstAngelegt.remove(schluessel); return new JSObject().put("ok", true);
         });
     }
+    /** 2.28.65 (Sicherung an einem zweiten Ort): eine eigene, ältere Sicherung entfernen. Nur ein Ordner direkt im gewählten
+     *  Ordner, Name „Familienakte_Vollsicherung_…“, mit der Kennungsdatei „Zweiter_Ort.json“ (Format familienakte-zweiter-ort)
+     *  und der passenden Kennung. Fremde Ordner und Dateien bleiben unberührt; gelöscht wird von innen nach außen. */
+    @PluginMethod public void sicherungEntfernen(PluginCall call) {
+        arbeit(call, () -> {
+            Ablage a = ablage(call); String p = pfad(call); String kennung = call.getString("kennung", "");
+            if (!SICHERUNG_NAME.matcher(p).matches() || !kennung.matches("[A-Za-z0-9-]{8,80}") || !a.istOrdner(p)) throw new IOException("FA_NICHT_ERLAUBT");
+            String marke = p + "/" + MARKE;
+            if (!a.gibtEs(marke) || a.istOrdner(marke)) throw new IOException("FA_NICHT_ERLAUBT");
+            String inhalt = new String(a.lesen(marke, 65536), java.nio.charset.StandardCharsets.UTF_8);
+            if (!inhalt.contains("\"familienakte-zweiter-ort\"") || !inhalt.contains("\"" + kennung + "\"")) throw new IOException("FA_NICHT_ERLAUBT");
+            int n = baumLoeschen(a, p, 0);
+            return new JSObject().put("ok", true).put("entfernt", n);
+        });
+    }
+    static final java.util.regex.Pattern SICHERUNG_NAME = java.util.regex.Pattern.compile("Familienakte_Vollsicherung_[0-9TZ-]{10,40}(_verschluesselt)?(_[0-9]{1,3})?");
+    static final String MARKE = "Zweiter_Ort.json";
+    private static int baumLoeschen(Ablage a, String pfad, int tiefe) throws IOException {
+        if (tiefe > 12) throw new IOException("FA_NICHT_ERLAUBT");
+        int n = 0;
+        if (a.istOrdner(pfad)) for (String name : a.liste(pfad)) n += baumLoeschen(a, pfad + "/" + name, tiefe + 1);
+        a.loeschen(pfad);
+        return n + 1;
+    }
     @PluginMethod public void dateiBeginn(PluginCall call) {
         arbeit(call, () -> {
             Ablage a = ablage(call); String p = pfad(call);
