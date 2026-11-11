@@ -18,6 +18,8 @@ import {
   type CorrespondenceTone,
 } from "@/lib/family-assistant";
 
+import { MailVersand } from "./mail-versand";
+
 type Notice = { kind: "success" | "error" | "info"; text: string } | null;
 
 // D (Rückmeldung 09.11., Klaus d1): drei ehrliche Wege statt fünf. „Frage“ und „Beratung“ waren beide Aktensuche, „Schreiben“,
@@ -34,7 +36,9 @@ function labelOf(record: FamilyRecordUnion) {
   return String(data.title || data.displayName || data.name || record.notes || record.id);
 }
 
-export function AssistantCenter({ records, relations, documents, initialCaseId, vaultReady, onOpenRecord, onOpenDocument, onOpenInventory, onSaveCorrespondence, onNotice, namen = [], onWorkflowPdf }: {
+export function AssistantCenter({ records, relations, documents, initialCaseId, vaultReady, onOpenRecord, onOpenDocument, onOpenInventory, onSaveCorrespondence, onNotice, namen = [], onWorkflowPdf, onDateiLaden }: {
+  /** 2.28.65: Anlagen für den Mailversand (Original aus der Akte). */
+  onDateiLaden?: (id: string) => Promise<File>;
   /** D: Namen aus der Akte, die beim Briefweg immer verdeckt werden. */
   namen?: string[];
   /** D (Klaus d4): Antwortbrief als PDF in Workflow PDF öffnen. */
@@ -153,6 +157,8 @@ export function AssistantCenter({ records, relations, documents, initialCaseId, 
         <div className="button-row assistant-edit-buttons"><button className="button secondary" onClick={() => setBody(reviseCorrespondenceText(body, "kurz"))}>Kürzer</button><button className="button secondary" onClick={() => setBody(reviseCorrespondenceText(body, "freundlich"))}>Freundlicher</button><button className="button secondary" onClick={() => setBody(reviseCorrespondenceText(body, "bestimmt"))}>Bestimmter</button><button className="button secondary" onClick={() => setBody(reviseCorrespondenceText(body, "sachlich"))}>Sachlicher</button><button className="button secondary" onClick={copyDraft}><Copy size={17}/> Kopieren</button></div>
         <div className="assistant-source-summary"><strong>Grundlage dieser Antwort</strong><span>{analysis.archiveFacts.length} Aktenhinweise · {analysis.research.sources.length} externe Quellen · {analysis.assessment.missing.length} ungeklärte Punkte</span></div>
         <label className="check-row"><input type="checkbox" checked={confirmed} onChange={(event) => setConfirmed(event.target.checked)}/><span><strong>Ich habe Empfänger, Inhalt, Vorgang und Anlagen geprüft.</strong><small>Erst danach darf der Entwurf gespeichert oder als versendet dokumentiert werden.</small></span></label>
+        {kind === "E-Mail" && <MailVersand an={recipient} betreff={subject} text={body} bestaetigt={confirmed && !busy} onDateiLaden={onDateiLaden} onNotice={onNotice} onGesendet={() => save("Versendet")}
+          dokumente={analysis.sourceDocumentIds.map((id) => ({ id, title: documents.find((d) => d.id === id)?.title || "Unterlage" }))}/>}
         <div className="button-row"><button className="button secondary" disabled={busy || !confirmed} onClick={() => void save("Entwurf")}>Als Entwurf speichern</button><button className="button secondary" disabled={busy || !confirmed} onClick={() => void save("Versandbereit")}>Als versandbereit speichern</button><button className="button primary" disabled={busy || !confirmed} onClick={() => void save("Versendet")}><CheckCircle2 size={17}/> Als versendet speichern</button></div>
       </section>
       </>}

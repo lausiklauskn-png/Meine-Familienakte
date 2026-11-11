@@ -10,6 +10,7 @@ import { LaufwerkKarte } from "./laufwerk-karte";
 import { ZweiterOrtKarte, useZweiterOrtAuto } from "./zweiter-ort-karte";
 import { CloudOrdnerKarte, useCloudOrdnerAuto } from "./cloud-ordner-karte";
 import type { Hereinholen } from "./cloud-ordner";
+import { EmailWegeKarte, useMailBrainAuto } from "./email-wege-karte";
 import { BLOCK, blockText, dateiSchluessel, gesehenMerken, inBloecke, mbText as mbBlock, neueImOrdner, speicherReicht } from "../lib/eingang-bloecke";
 import { arbeitDienst } from "./arbeit-dienst";
 import { eingangOrdnerLeserSetzen } from "./eingang-ablage";
@@ -1096,6 +1097,7 @@ function HealthPortalContent() {
   };
   const cloudHereinholen: Hereinholen = async (dateien) => queueCentralIntakeFiles(dateien.map((d) => d.file), "onedrive-inbox", null, [], new Map(dateien.map((d) => [d.file, { vorschlag: d.vorschlag, hinweis: d.hinweis }])));
   useCloudOrdnerAuto(Boolean(vaultHandle), localDocuments, cloudHereinholen, (n) => { if (n) reportActivity({ kind: n.kind === "error" ? "error" : "info", text: n.text }); });
+  useMailBrainAuto(Boolean(vaultHandle), (n) => { if (n) reportActivity({ kind: "info", text: n.text }); });
   useZweiterOrtAuto(vaultHandle, APP_FASSUNG, (n) => { if (n) reportActivity({ kind: n.kind === "error" ? "error" : "info", text: n.text }); }, bspOhne);
   const runFullBackup = () => {
     if (!vaultHandle) { go("security"); setNotice({ kind: "error", text: "Bitte zuerst den führenden lokalen Familienakten-Tresor verbinden." }); return; }
@@ -1716,7 +1718,7 @@ function HealthPortalContent() {
           onSelectInbox={selectInboxFolder} onScanInbox={() => void scanSelectedInbox()} onScanOneDrive={checkOneDriveInbox}
           onReview={reviewCentralIntake} onExtractAttachments={(id) => void extractCentralEmailAttachments(id)} onToggle={toggleCentralIntake} onSetStatus={setCentralIntakeStatus} onSammelAblegen={sammelAblegen} onLoeschen={eingaengeLoeschen} grenzeBytes={aktuelleGrenze().bytes}
           onGo={(id, targetId) => go(id, targetId)}
-        /></Suspense><Inbox compact documents={documents} localDocuments={localDocuments.filter((d) => !d.aussortiert)} loading={loadingDocs} onUpload={openLocalUpload} onOpenDocument={openDocument} onFill={setFillDocId} onWfpdf={(id) => void inWorkflowPdf(id)} onRefresh={async () => { await loadDocuments(); await refreshLocal(); }} onLocalStatus={async (id, status) => { if (!vaultHandle) return; await updateLocalStatus(vaultHandle, id, status); await refreshLocal(vaultHandle); }} onStatus={async (id, status) => {
+        /></Suspense><EmailWegeKarte aktiv={!!vaultHandle} onNotice={setNotice} onDateien={(files) => queueCentralIntakeFiles(files, "file-picker")} onSchreiben={() => go("assistant")}/><Inbox compact documents={documents} localDocuments={localDocuments.filter((d) => !d.aussortiert)} loading={loadingDocs} onUpload={openLocalUpload} onOpenDocument={openDocument} onFill={setFillDocId} onWfpdf={(id) => void inWorkflowPdf(id)} onRefresh={async () => { await loadDocuments(); await refreshLocal(); }} onLocalStatus={async (id, status) => { if (!vaultHandle) return; await updateLocalStatus(vaultHandle, id, status); await refreshLocal(vaultHandle); }} onStatus={async (id, status) => {
           setBusy(true);
           try { await changeStatus(id, status); await loadDocuments(); setNotice({ kind: "success", text: `Bearbeitungsstand: ${statusLabel[status]}.` }); }
           catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Speichern nicht möglich." }); }
@@ -1769,6 +1771,7 @@ function HealthPortalContent() {
           onOpenInventory={() => go("inventory")}
           onSaveCorrespondence={saveAssistantCorrespondence}
           onNotice={setNotice}
+          onDateiLaden={vaultHandle ? (id) => readLocalDocumentFile(vaultHandle, id) : undefined}
           namen={kiNamen}
           onWorkflowPdf={demoActive() ? undefined : (file) => { setWfpdfSitzung(null); setWfpdfOeffnen([file]); setWfpdfScan(false); setWfpdfStart((n) => n + 1); go("workflowpdf"); }}
         /></Suspense>}
