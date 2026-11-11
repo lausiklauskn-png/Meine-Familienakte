@@ -6,7 +6,7 @@
 export type Fassung = { fassung: string; datum: string; inhalt: string };
 
 export const FASSUNGEN: Fassung[] = [
-  { fassung: "2.28.62", datum: "11.11.2026", inhalt: "Landkarte: Rot nur noch, wo wirklich etwas fehlt. Gesperrter Pro-Tresor zeigt beim Datentresor gelb „Entsperren“, eine Akte nur im Speicher der App gelb „Tresor einrichten“ (Browser am PC: „Ordner wählen“); der Demo-Kasten hat „Demo verlassen“." },
+  { fassung: "2.28.63", datum: "11.11.2026", inhalt: "Landkarte: Rot nur noch, wo wirklich etwas fehlt. Gesperrter Pro-Tresor zeigt beim Datentresor gelb „Entsperren“, eine Akte nur im Speicher der App gelb „Tresor einrichten“ (Browser am PC: „Ordner wählen“); der Demo-Kasten hat „Demo verlassen“. Beispielakten-Knopf wieder lesbar: „+ Bsp.-Akten“ / „− Bsp.-Akten“." },
   { fassung: "2.28.61", datum: "11.11.2026", inhalt: "Meine Geräte: dieses Gerät einmal per Knopf benennen (Handy, Tablet, PC, Laptop), andere Geräte erscheinen von selbst; das erste Paket an ein neues Gerät braucht nur ein Passwort. An jeder Unterlage steht, wo die Datei liegt, mit „Pfad kopieren“ (Windows: „Im Explorer zeigen“). Alte Einzelübergabe ausgeblendet, Erklärungen hinter dem „?“, Knopf „+ Bsp.“ / „− Bsp.“." },
   { fassung: "2.28.60", datum: "11.11.2026", inhalt: "Bsp.-Akten: in der Hilfe holt „+ Bsp.-Akten“ eine erfundene Beispielfamilie in alle Bereiche der eigenen Akte (gespeichert), „− Bsp.-Akten“ nimmt nur sie wieder heraus; jede Beispielakte trägt oben rechts ein rotes Dreieck." },
   { fassung: "2.28.59", datum: "11.11.2026", inhalt: "Android-App: Schreiben und Lesen in einem gewählten Ordner (Vollsicherung, gemeinsame Festplatte, Eingangsordner) brach ab, weil Zahlen falsch ankamen („Größe -1 statt 0“). Jetzt behoben." },

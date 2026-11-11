@@ -85,7 +85,7 @@ export const ready = async (page) => {
     });
     if (seeded) await page.reload({ waitUntil: "networkidle" });
   }
-  const notice = new URL(page.url()).searchParams.get("demo") === "1" ? "Alle Daten" : "Bsp. in deiner Akte";
+  const notice = new URL(page.url()).searchParams.get("demo") === "1" ? "Alle Daten" : "Bsp.-Akten in deiner Akte";
   await page.waitForSelector(`.sample-data-notice strong:has-text("${notice}")`, { timeout: 120000 });
 };
 /** Hauptmenü (Index 0 = Assistenz, 1 = Termine & Aufgaben … 8 = Hilfe) und Eintrag im Mega-Menü. */

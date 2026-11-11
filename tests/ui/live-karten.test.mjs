@@ -31,7 +31,7 @@ try {
     await step(`${name}: Pro-Tresor gesperrt = gelb, Datentresor (gesperrt bzw. nur im App-Speicher) = gelb statt rot, Kalender = grau, Demo aus = grau`, async () => {
       const farbe = (id) => karte.locator(`[data-karte-id="${id}"]`).first().getAttribute("data-live");
       const r = { pro: await farbe("protresor"), daten: await farbe("datentresor"), kalender: await farbe("kalender"), demo: await farbe("aus-demo") };
-      // 2.28.62 (rote Kästen Fall 1/2): eingerichtet, aber gesperrt bzw. nur in der App – nichts fehlt, darum gelb mit einem Weg.
+      // 2.28.63 (rote Kästen Fall 1/2): eingerichtet, aber gesperrt bzw. nur in der App – nichts fehlt, darum gelb mit einem Weg.
       await karte.locator('[data-karte-id="datentresor"]').first().click();
       const marke = await karte.locator("[data-live-marke]").innerText();
       const los = await karte.locator("[data-live-los]").getAttribute("data-live-los");
@@ -82,7 +82,7 @@ try {
   const karte = await oeffnen(page);
   await step("Demo an: rotes Band über der Landkarte, Kasten „Demo als Kopie“ rot", async () =>
     soll(await karte.locator("[data-demo-band]").isVisible() && await karte.locator('[data-karte-id="aus-demo"]').first().getAttribute("data-live") === "rot", "Band oder Farbe fehlt"));
-  await step("Demo an: Tipp auf den roten Demo-Kasten zeigt „Demo verlassen ›“ (2.28.62, vorher ohne Knopf)", async () => {
+  await step("Demo an: Tipp auf den roten Demo-Kasten zeigt „Demo verlassen ›“ (2.28.63, vorher ohne Knopf)", async () => {
     await karte.locator('[data-karte-id="aus-demo"]').first().click();
     return soll(await karte.locator('[data-live-los="Demo verlassen"]').count() === 1, "Knopf fehlt am Demo-Kasten");
   });

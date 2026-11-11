@@ -17,7 +17,7 @@ export type LiveZustand = Readonly<Record<string, Live>>;
 export const SICHERUNG_TAGE = 7;
 const TAG = 86400000;
 
-/** speicher (2.28.62, rote Kästen): „pro-gesperrt“ = Pro-Tresor gewählt, aber gesperrt; „app“ = Akte nur im Speicher der App bzw. des Browsers.
+/** speicher (2.28.63, rote Kästen): „pro-gesperrt“ = Pro-Tresor gewählt, aber gesperrt; „app“ = Akte nur im Speicher der App bzw. des Browsers.
  *  ordnerWahl: der Browser kann einen Ordner wählen (Chrome/Edge am PC). */
 export type LiveEingaben = { datentresor?: string; speicher?: "pro-gesperrt" | "app"; ordnerWahl?: boolean; letzteSicherung?: string | null; pro: { status: "getrennt" | "offen" | "gesperrt" | "nicht_erreichbar"; ort?: string } | null; nativ: boolean;
   kalender: boolean; glocke: boolean; laufwerke: number; demo: boolean; jetzt?: number };

@@ -20,7 +20,7 @@ pruefe(liveBerechnen({ ...basis, kalender: false, glocke: false, laufwerke: 0 })
 const demo = liveBerechnen({ ...basis, demo: true, datentresor: undefined });
 pruefe(demo["aus-demo"].farbe === "rot" && demo.datentresor.farbe === "grau" && demo.protresor.farbe === "grau" && !demo.datentresor.los, "Demo an: rot; Datentresor und Pro-Tresor grau ohne Beheben (l4)");
 pruefe(Object.values(liveBerechnen({ ...basis, datentresor: undefined, pro: { status: "gesperrt" }, letzteSicherung: null })).filter((l) => l.farbe === "rot" || l.farbe === "gelb").every((l) => l.los && (l.seite || l.aktion)), "jedes Rot und Gelb hat einen Weg zum Beheben");
-// 2.28.62 (Klaus 11.11., rote Kästen 1–3 Ja)
+// 2.28.63 (Klaus 11.11., rote Kästen 1–3 Ja)
 const ohne = { ...basis, datentresor: undefined };
 const g = liveBerechnen({ ...ohne, speicher: "pro-gesperrt" }).datentresor;
 pruefe(g.farbe === "gelb" && g.los === "Entsperren" && g.ziel === "[data-pro-tresor]" && /gesperrt/.test(g.text), "Fall 1: Pro-Tresor gewählt, aber gesperrt → gelb „Entsperren“, nicht rot „kein Speicher“");
