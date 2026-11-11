@@ -213,7 +213,7 @@ async function seedOnce(handle: FileSystemDirectoryHandle, options: { force?: bo
     const lifeAreaTag = ["Familie & persönliche Dokumente", "Rente, Arbeit & Sozialversicherung"].includes(spec.lifeArea) ? [] : [`FaWoGa: ${spec.lifeArea}`];
     const notes = [`${SAMPLE_SOURCE}: ${spec.title}`, ...lifeAreaTag, `Dokumentart: ${spec.documentType}`, `Datenschutz: ${spec.privacy}`, "Eingang: Dateiauswahl", "Intelligenter Vorschlag übernommen"].join(" · ");
     const saved = await saveLocalDocument(handle, file, {
-      category: spec.category, documentDate: date, notes, allowDuplicate: true,
+      category: spec.category, documentDate: date, notes, allowDuplicate: true, ohneProTresor: true,
       assignmentLinks: spec.links.map((item) => ({ toType: typeOf.get(item.to)!, toId: ids.get(item.to)!, relationType: item.relationType })),
     });
     ids.set(spec.key, saved.id); typeOf.set(spec.key, "document");
@@ -292,11 +292,11 @@ async function seedOnce(handle: FileSystemDirectoryHandle, options: { force?: bo
 }
 
 /** Entfernt nur die Beispieldaten – eigene Unterlagen und Einträge bleiben erhalten. */
-export async function removeSampleFamily(handle: FileSystemDirectoryHandle) {
+/** Kennungen aller Beispiel-Einträge (Dokumente, Einträge, Bezüge) – dieselbe Regel für Entfernen und das rote Dreieck (Klaus 11.11.). */
+export function beispielIdsVon(data: Pick<Awaited<ReturnType<typeof readLocalVaultData>>, "documents" | "records" | "relations">): Set<string> {
   // Alte SAMPLE_IDS können eigene Kennungen enthalten (erneutes Laden vor 2.28.19).
   // Deshalb sind sie kein Löschbeleg. Nur eindeutige Herkunft im Register zählt.
   const ids = new Set<string>();
-  const data = await readLocalVaultData(handle);
   for (const item of data.documents) if (item.notes?.startsWith(SAMPLE_SOURCE)) ids.add(item.id);
   for (const item of data.records) if (item.source === SAMPLE_SOURCE) ids.add(item.id);
   // Vor 2.28.19 hatten erzeugte Erinnerungen/Briefe noch allgemeine Quellen.
@@ -312,6 +312,11 @@ export async function removeSampleFamily(handle: FileSystemDirectoryHandle) {
   }
   for (const item of data.records) if (item.source && ids.has(item.source)) ids.add(item.id);
   for (const item of data.relations) if (item.source === SAMPLE_SOURCE) ids.add(item.id);
+  return ids;
+}
+
+export async function removeSampleFamily(handle: FileSystemDirectoryHandle) {
+  const ids = beispielIdsVon(await readLocalVaultData(handle));
   const result = await removeVaultEntries(handle, ids);
   markSampleDataRemoved();
   try { workspaceStorage.removeItem(SAMPLE_IDS); } catch { /* optional */ }

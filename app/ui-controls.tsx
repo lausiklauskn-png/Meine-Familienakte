@@ -37,11 +37,14 @@ export function InfoPopover({ text, label = "Weitere Informationen", ziel, mehr 
       if (open && !rootRef.current?.contains(ziel) && !panelRef.current?.contains(ziel)) setOpen(false);
     };
     const escape = (event: KeyboardEvent) => { if (event.key === "Escape") setOpen(false); };
+    // Sprung aus dem Bild (z. B. „Wo liegt was?“): Blase zu, sonst liegt sie über der Stelle, auf die sie zeigt.
+    const sprung = (event: MouseEvent) => { const ziel = event.target as HTMLElement | null; if (open && ziel?.closest?.(".ablauf-link") && panelRef.current?.contains(ziel)) setOpen(false); };
     const another = (event: Event) => { if ((event as CustomEvent<string>).detail !== id) setOpen(false); };
     document.addEventListener("pointerdown", outside);
     document.addEventListener("keydown", escape);
+    document.addEventListener("click", sprung);
     window.addEventListener("family-info-open", another);
-    return () => { document.removeEventListener("pointerdown", outside); document.removeEventListener("keydown", escape); window.removeEventListener("family-info-open", another); };
+    return () => { document.removeEventListener("pointerdown", outside); document.removeEventListener("keydown", escape); document.removeEventListener("click", sprung); window.removeEventListener("family-info-open", another); };
   }, [open, id]);
   useLayoutEffect(() => {
     if (!open) { setLage({ visibility: "hidden" }); return; }

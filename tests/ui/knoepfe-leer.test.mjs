@@ -12,8 +12,7 @@ try {
   await step("Start und Beispieldaten entfernen", async () => {
     await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page);
     await page.evaluate(() => window.scrollTo(0, 0));
-    const k = page.locator("button", { hasText: "Beispieldaten entfernen" }); await k.focus(); await page.keyboard.press("Enter");
-    await page.locator(".page-dialog button", { hasText: "Ja, fortfahren" }).click();
+    const k = page.locator("[data-bsp-weg]"); await k.focus(); await page.keyboard.press("Enter");
     await page.waitForSelector(".sample-data-notice", { state: "detached", timeout: 30000 });
     return true;
   });

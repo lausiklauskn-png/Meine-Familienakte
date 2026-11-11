@@ -74,12 +74,11 @@ try {
     for (let i = sequence.length - 1; i >= 0; i--) { await page.goBack(); await page.waitForURL(urls[i]); }
     assert.equal(await search.inputValue(), "Garantie");
   });
-  await step("Beispieldaten entfernen: Hinweis verschwindet, Erfolg wird danach platzsparend ausgeblendet", async () => {
+  await step("− Bsp.-Akten: Hinweis verschwindet, Erfolg wird danach platzsparend ausgeblendet", async () => {
     await page.evaluate(() => window.scrollTo(0, 0));
-    await page.getByRole("button", { name: "Beispieldaten entfernen", exact: true }).click();
-    await page.locator('.page-dialog button', { hasText: "Ja, fortfahren" }).click();
+    await page.locator("[data-bsp-weg]").click();
     await page.locator('.sample-data-notice').waitFor({ state: "detached" });
-    await page.locator('.global-activity-text', { hasText: "Beispieldaten entfernt" }).waitFor();
+    await page.locator('.global-activity-text', { hasText: "Bsp.-Akten entfernt" }).waitFor();
     await page.locator('.global-activity-lines').waitFor({ state: "detached", timeout: 12000 });
     assert.equal(await page.locator('.activity-empty').count(), 0);
   });
