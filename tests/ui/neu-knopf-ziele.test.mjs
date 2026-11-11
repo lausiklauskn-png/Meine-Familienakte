@@ -3,12 +3,10 @@
 import { startApp, launchBrowser, DESKTOP, HANDY, ready, step, soll, summary, collectErrors } from "./_harness.mjs";
 
 const ZIELE = {
-  "live-karten-2026-11-09": '[data-app-landkarte="offen"]',
-  "email-2026-11-07": '[data-hilfe-id="email"] > details[open] [data-landkarte="email"]',
-  "daten-2026-11-07": "details.aktensicherung[open]",
-  "hilfe-2026-11-07": "[data-app-landkarte]",
-  "kalender-2026-11": "#kalender-verbinden",
-  "akten-sichern-2026-11": "details.aktensicherung[open]",
+  "bsp-akten-2026-11-11": "[data-bsp-akten]",
+  "meine-geraete-2026-11-11": "[data-meine-geraete]",
+  "dateiort-2026-11-11": ".document-library, [data-bibliothek-zeile], .library-area-grid, main h1",
+  "landkarte-farben-2026-11-11": '[data-app-landkarte="offen"]',
 };
 const app = await startApp();
 const browser = await launchBrowser();

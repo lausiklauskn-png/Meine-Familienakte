@@ -112,6 +112,6 @@ export function ProTresorAnschluss({ aktenHandle = null, onChange, onDokumente }
       {aktenHandle && ziel && <button className="button secondary" type="button" disabled={busy} onClick={() => void zielAendern(null)}>Neue Originale wieder im bisherigen Aktenordner ablegen</button>}
     </details>}
     <ProVerbundAnschluss stand={stand}/>
-    {einrichtenMoeglich && !stand.id && <p data-pro-tresor-einrichten-hinweis>Die Auswahl öffnet auf dem Gerätespeicher (links im Menü auch SD-Karte). Dort den Ordner „Family-Projekt“ antippen – gibt es ihn noch nicht, mit „Neuer Ordner“ anlegen – und „Diesen Ordner verwenden“. Die App findet einen vorhandenen Tresor selbst; alle Pro-Apps nutzen denselben.</p>}
+    {einrichtenMoeglich && !stand.id && <p data-pro-tresor-einrichten-hinweis>Nur das Laufwerk wählen (Gerät oder SD-Karte). Die App findet den Tresor oder legt „Family-Projekt“ selbst an; alle Pro-Apps nutzen denselben.</p>}
   </section>;
 }

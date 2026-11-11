@@ -3,6 +3,7 @@ import { HardDrive } from "lucide-react";
 import { workspaceStorage } from "../lib/demo-workspace.ts";
 import { Ablaufbild, Pfad, zurStelle } from "./ablaufbild";
 import { DemoBand } from "./demo-band";
+import { InfoPopover } from "./ui-controls";
 import type { LiveFarbe, LiveZustand } from "./live-zustand";
 
 /**
@@ -103,7 +104,7 @@ export function AktensicherungHilfe({ onSicherheit, onDokumente, datentresor, li
   return <details data-aktensicherung className="wo-liegt-was aktensicherung">
     <summary><HardDrive/> Akten sichern – Plan zum Abhaken</summary>
     <div>
-      <p>Kästen mit › führen an die Stelle in der App. Wiederherstellbar ist die Akte erst, wenn eine Vollsicherung an einem zweiten Ort liegt und einmal in einen leeren Ordner zurückgeholt wurde.</p>
+      <p className="ui-heading-help">Kästen mit › führen an die Stelle in der App. <InfoPopover label="Akten sichern erklären" text={"Wann ist die Akte sicher?\n• Erst, wenn eine Vollsicherung an einem zweiten Ort liegt.\n• Und wenn sie einmal in einen leeren Ordner zurückgeholt wurde (Wiederherstellung testen)."}/></p>
       <DemoBand/>
       <p className="aktensicherung-legende" data-live-legende>Die Orte zeigen den Zustand dieses Geräts: <span className="chip-gruen">eingerichtet</span><span className="chip-rot">fehlt</span><span className="chip-gelb">gesperrt oder veraltet</span><span className="chip-grau">freiwillig oder nicht hier</span>. Die Punkte darunter hakst du selbst ab:</p>
       <p className="aktensicherung-legende"><span className="chip-rot">zu tun</span><span className="chip-gruen">✓ erledigt</span><span className="chip-grau">nicht nötig</span><span data-sicherung-stand>{offen} zu tun · {erledigt} erledigt</span></p>
@@ -121,7 +122,7 @@ export function AktensicherungHilfe({ onSicherheit, onDokumente, datentresor, li
           <ul className="ordnerbaum aktensicherung-baum"><li className="baum-wurzel-leer"><ul>{o.punkte.map(zweig)}</ul></li></ul>
         </section>)}
       </div>
-      <p className="pfad-titel"><strong>Neues Gerät oder App neu installiert</strong> (am Gerät noch nicht durchgespielt):</p>
+      <p className="pfad-titel"><strong>Neues Gerät oder App neu installiert</strong>:</p>
       <Ablaufbild label="Akte aus der Vollsicherung wiederherstellen" knoten={[
         { titel: "App installieren" },
         { titel: "Speicher wählen", unter: "falls gewünscht eigener Datentresor; die Akte bleibt leer" },
@@ -129,7 +130,7 @@ export function AktensicherungHilfe({ onSicherheit, onDokumente, datentresor, li
         { titel: "Pro-Tresor verbinden", unter: "falls genutzt, gleiches Passwort" },
         { titel: "Nachsehen", unter: "Unterlagen, Fristen, Fotos da?", art: "gut" },
       ]}/>
-      <p><strong>Zwei Knöpfe, zwei Aufgaben:</strong> „Wiederherstellung testen“ prüft die Sicherung nur in einem leeren Testordner und holt nichts in die Akte. „Sicherung einlesen“ holt sie in die Akte zurück – in eine benutzte Akte zusammengeführt.</p>
+      <p className="ui-heading-help"><strong>Testen oder einlesen?</strong> <InfoPopover label="Testen und Einlesen erklären" text={"Zwei Knöpfe, zwei Aufgaben\n• „Wiederherstellung testen“ prüft die Sicherung in einem leeren Testordner und holt nichts in die Akte.\n• „Sicherung einlesen“ holt sie in die Akte zurück; eine benutzte Akte wird zusammengeführt."}/></p>
       <ul className="merkpunkte">
         <li><strong>Nicht</strong> in den Datentresor sichern – immer ein getrennter Ordner.</li>
         <li><strong>Nichts umbenennen</strong> in der Sicherung – sonst passen die Prüfsummen nicht.</li>

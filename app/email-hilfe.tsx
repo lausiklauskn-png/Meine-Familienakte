@@ -46,13 +46,13 @@ export function EmailHilfe({ onEingang, onSchreiben }: { onEingang: () => void; 
   return <details data-email-hilfe className="wo-liegt-was email-hilfe">
     <summary><Mail/> E-Mail in die Familienakte</summary>
     <div>
-      <p>Links die Wege hinein, dann Eingangszentrale und Prüfung, rechts Akte und Antworten. Grüner Rahmen: fertig. Grau gestrichelt: geplant, wird vor dem Bau besprochen.</p>
+      <p>Links die Wege hinein, rechts Akte und Antworten.</p>
       <KartenLegende fuer="email"/>
       <Landkarte id="email" label="Wie E-Mails und Anhänge in die Akte kommen und wie man antwortet" gruppen={gruppen} knoten={knoten} kanten={kanten}
         breiten={[236, 176, 176, 176, 176, 236, 176]}/>
       <ul className="merkpunkte">
         <li><strong>Nichts geht still hinaus.</strong> Gesendet wird nur auf deinen Befehl.</li>
-        <li><strong>Keine Virenprüfung.</strong> Die App öffnet keine Anlage von selbst. Warnen bei Auffälligem ist geplant (Prüfung jeder Anlage); heute prüft nur der Stapel auf Wahl.</li>
+        <li><strong>Keine Virenprüfung.</strong> Die App öffnet keine Anlage von selbst. Prüfen kann der Stapel auf Wahl.</li>
         <li><strong>Gesundheit im Betreff</strong> lieber neutral halten; E-Mails sind unterwegs nicht verschlüsselt.</li>
       </ul>
     </div>

@@ -7,14 +7,13 @@ import { workspaceStorage } from "../lib/demo-workspace.ts";
  * Ungelesenes da ist; jeder Eintrag verschwindet mit ×, gemerkt je Gerät (Demo getrennt). Die Liste steht hier im Code,
  * neue Einträge bekommen eine neue Kennung. Keine Personennamen.
  */
-export type Neuigkeit = { id: string; titel: string; text: string; knopf?: { text: string; ziel: "kalender" | "hilfe-sichern" | "hilfe" | "hilfe-landkarte" | "hilfe-email" } };
+export type Neuigkeit = { id: string; titel: string; text: string; knopf?: { text: string; ziel: "kalender" | "hilfe-sichern" | "hilfe" | "hilfe-landkarte" | "hilfe-email" | "sicherheit-geraete" | "dokumente" } };
+/** Klaus 11.11. (Textdurchsicht D): nur Neues der letzten zwei Fassungen, je ein Satz und ein Knopf. */
 export const NEUIGKEITEN: Neuigkeit[] = [
-  { id: "live-karten-2026-11-09", titel: "Zustand deines Geräts auf einen Blick", text: "Die Landkarte der App und „Akten sichern“ in der Hilfe zeigen jetzt, was auf diesem Gerät eingerichtet ist: grün eingerichtet, rot fehlt, gelb gesperrt oder veraltet, grau freiwillig. Rot und Gelb antippen, „Beheben ›“ führt an die Stelle. Den Tresor kannst du jetzt auch in einem eigenen Ordner im Gerät einrichten.", knopf: { text: "Landkarte öffnen", ziel: "hilfe-landkarte" } },
-  { id: "email-2026-11-07", titel: "E-Mail in der Hilfe", text: "Neues Hilfe-Thema als Karte: wie Mails und ihre Anhänge in die Akte kommen, was schon geht und was geplant ist. Ein Tipp auf einen Kasten zeigt die Verbindungen.", knopf: { text: "Zur Hilfe", ziel: "hilfe-email" } },
-  { id: "daten-2026-11-07", titel: "Sichern auch am Handy", text: "Vollsicherung in einen frei gewählten Ordner (SD-Karte, USB), mit Programm daneben. Sicherung einlesen nach Neuinstallation. Zu große Fotos lassen sich verkleinern. Die Demo arbeitet an einer Kopie deiner Daten.", knopf: { text: "Akten sichern", ziel: "hilfe-sichern" } },
-  { id: "hilfe-2026-11-07", titel: "Hilfe auf neuem Stand", text: "Oben „Wie kann ich dir helfen?“, Themen nach Schritten geordnet, Sprünge mit rotem Rahmen. Neu am rechten Rand: Seitenleiste mit alle zu, nach oben, zurück.", knopf: { text: "Zur Hilfe", ziel: "hilfe" } },
-  { id: "kalender-2026-11", titel: "Fristen im Kalender", text: "Termine und Fristen landen mit Erinnerung in deinem Kalender.", knopf: { text: "Kalender verbinden", ziel: "kalender" } },
-  { id: "akten-sichern-2026-11", titel: "Akten sichern", text: "Plan zum Abhaken in der Hilfe.", knopf: { text: "Zur Hilfe", ziel: "hilfe-sichern" } },
+  { id: "bsp-akten-2026-11-11", titel: "Bsp.-Akten zum Ausprobieren", text: "Unter Hilfe › Demo „+ Bsp.-Akten“; jede trägt ein rotes Dreieck.", knopf: { text: "Zur Hilfe", ziel: "hilfe" } },
+  { id: "meine-geraete-2026-11-11", titel: "Meine Geräte", text: "Dieses Gerät einmal benennen, die anderen erscheinen von selbst.", knopf: { text: "Meine Geräte", ziel: "sicherheit-geraete" } },
+  { id: "dateiort-2026-11-11", titel: "Wo die Datei liegt", text: "An jeder Unterlage „Gespeichert in:“ mit „Pfad kopieren“.", knopf: { text: "Zu den Dokumenten", ziel: "dokumente" } },
+  { id: "landkarte-farben-2026-11-11", titel: "Landkarte zeigt, was zu tun ist", text: "Rot nur, wo etwas fehlt; Gelb mit dem nächsten Schritt.", knopf: { text: "Landkarte öffnen", ziel: "hilfe-landkarte" } },
 ];
 export const NEU_GELESEN_SCHLUESSEL = "familienakte-neu-gelesen-v1";
 

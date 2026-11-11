@@ -21,7 +21,7 @@ export function BenutzerabnahmeHilfe({ ergebnisse, zurAbnahme }: { ergebnisse: R
   return <details data-benutzerabnahme-hilfe className="wo-liegt-was aktensicherung">
     <summary><ClipboardCheck/> Praktische Benutzerabnahme (für Prüfer)</summary>
     <div>
-      <p>Ein Prüfzettel: Du probierst die App aus wie ein neuer Nutzer und hältst je Frage fest, ob es klappt. Er ändert nichts an deinen Daten und gibt die App nicht frei.</p>
+      <p>Ein Prüfzettel: je Frage festhalten, ob es klappt. Deine Daten bleiben unverändert.</p>
       <Pfad teile={[{ text: "Hilfe" }, { text: "Systemprüfung" }, { text: "Praktische Benutzerabnahme", ziel: () => zurAbnahme() }]}/>
       <p className="aktensicherung-legende"><span className="chip-gruen">✓ Klappt</span><span className="chip-rot">Klappt nicht · Noch nicht probiert</span><span className="chip-grau">⊘ Gilt hier nicht</span><span data-abnahme-stand>{alle.klappt} klappt · {alle.offen} offen · {alle.nicht} gilt nicht</span></p>
       <div className="aktensicherung-orte">
