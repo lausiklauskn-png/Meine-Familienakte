@@ -8,7 +8,8 @@ import { inMailAppOeffnen, mailWahl, microsoftMailSenden } from "./mail-wege";
 import { microsoftMailAngemeldet, microsoftMailAnmelden } from "./kalender-anbieter";
 
 type Notice = { kind: "success" | "error" | "info"; text: string } | null;
-export function MailVersand({ an, betreff, text, dokumente, bestaetigt, onDateiLaden, onGesendet, onNotice }: {
+/** Zwei Teile: `vorher` (Anlagen, Hinweise) steht über dem Prüf-Haken, `nachher` (Senden, Rückfrage) darunter. */
+export function useMailVersand({ an, betreff, text, dokumente, bestaetigt, onDateiLaden, onGesendet, onNotice }: {
   an: string; betreff: string; text: string; dokumente: Array<{ id: string; title: string }>; bestaetigt: boolean;
   onDateiLaden?: (id: string) => Promise<File>; onGesendet: () => Promise<void>; onNotice: (n: Notice) => void;
 }) {
@@ -46,10 +47,12 @@ export function MailVersand({ an, betreff, text, dokumente, bestaetigt, onDateiL
     catch (e) { setBestaetigen(null); onNotice({ kind: "error", text: e instanceof Error ? e.message : "Nicht gesendet." }); }
     finally { setLaeuft(false); }
   };
-  return <div className="mail-versand" data-mail-versand>
+  const vorher = <div className="mail-versand" data-mail-versand>
     {dokumente.length > 0 && <fieldset className="mail-anlagen" data-mail-anlagen><legend>Anlagen aus dem Vorgang</legend>{dokumente.map((d) => <label key={d.id} className="checkbox-row"><input type="checkbox" checked={!aus.has(d.id)} onChange={(e) => { const s = new Set(aus); if (e.target.checked) s.delete(d.id); else s.add(d.id); setAus(s); }}/> {d.title}{groessen[d.id] ? ` · ${(groessen[d.id] / 1048576).toFixed(1).replace(".", ",")} MB` : ""}</label>)}</fieldset>}
     {wort && <p className="sync-message warning" data-mail-gesundheit>Im Betreff steht ein Gesundheitswort („{wort}“). E-Mails sind unterwegs nicht Ende-zu-Ende verschlüsselt – Betreff neutral halten? Du entscheidest.</p>}
     {!pruefung.ok && <p className="sync-message warning" data-mail-zu-gross>{pruefung.satz}</p>}
+  </div>;
+  const nachher = <div className="mail-versand" data-mail-versand-knopf>
     <div className="button-row"><button className="button primary" disabled={!bestaetigt || laeuft} onClick={() => void los()} data-mail-senden>{weg === "microsoft" ? <><Mail size={17}/> Über Microsoft senden …</> : <><Send size={17}/> In der Mail-App öffnen</>}</button></div>
     {frage && <div className="sync-message info" role="status" data-mail-frage><strong>Hast du die E-Mail in der Mail-App abgeschickt?</strong>
       <div className="button-row"><button className="button primary" onClick={() => { setFrage(false); void onGesendet(); }} data-mail-frage-ja>Ja, als versendet speichern</button><button className="button secondary" onClick={() => setFrage(false)} data-mail-frage-nein>Nein, Entwurf bleibt</button></div></div>}
@@ -61,4 +64,5 @@ export function MailVersand({ an, betreff, text, dokumente, bestaetigt, onDateiL
       </div>
     </div>}
   </div>;
+  return { vorher, nachher };
 }
