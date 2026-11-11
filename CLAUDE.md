@@ -27,7 +27,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   verschlüsselte Vollsicherung auf SD-Karte brach ab („kam beim Zurücklesen nicht unverändert an“, Ordner leer). `FamilienakteOrdnerPlugin`
   prüft jetzt Länge und SHA-256 selbst (`pruefenMitGeduld`, bis zu vier Versuche) statt `COLUMN_SIZE`; Fehler tragen einen Grund
   („Größe … statt …“), `app/nativer-ordner.ts` zeigt ihn. Probe `scripts/run-ordner-fehler-tests.mjs`. Am Tablet ungeprüft.
-- **Offen:** Cloud-Ordner (Vorschau `docs/vorschau/cloud-ordner-2.28.58.html`, Jens' Antwort offen).
+- **Cloud-Ordner:** entschieden (Klaus 11.11.), Bau in 2.28.65 nach `BRIEF_SITZUNG_2026-11-11_CLOUD-ORDNER-2.28.65.md`; Jens' Antwort nicht mehr nötig (alles als Wahl in der App).
 - **Fassung 2.28.57** (#158; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.57.json`): **Tooltips** (Klaus 10.11.:
   „einfach nur Tooltips“): Maus/Stift über einem Knopf zeigt nach 0,5 s eine eigene Blase (`app/kurzhinweise.ts`), auch in der
   Android-WebView (zeigt `title` nie – Ursache des Befunds); kein langer Druck mehr, Finger-Tipp löst sofort aus; nur wo der Hinweis
@@ -161,6 +161,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
+  - `BRIEF_SITZUNG_2026-11-11_CLOUD-ORDNER-2.28.65.md` (nächster Bau: Sicherung an einem zweiten Ort, Nur sichern/Synchron halten, Cloud-Ordner hereinholen; Klaus: keine Vorschau nötig)
   - `BRIEF_ABSCHLUSS_2026-11-11_GESAMMELT-2.28.64.md` (jüngster Abschluss: 2.28.57 bis 2.28.64, Startauftrag; die Briefe vom 10./11.11. liegen im Archiv)
   - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-09_AUSGABE-2.28.51.md` (Ausgabe 2.28.51; Startauftrag Gerätetest)
   - `BRIEF_CODEX_2026-11-04_NACH-2.28.24.md` (Abstimmung mit Codex: welche Dateien Claude gehören)
