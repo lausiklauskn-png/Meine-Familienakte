@@ -13,7 +13,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   **Dateiort** an jeder Unterlage (`app/datei-ort.tsx`, `lib/datei-ort.ts`, Windows `fa_ordner_zeigen`), Erklärungen hinter dem „?“.
 - **Fassung 2.28.60** (#161; Nachweis `docs/VEROEFFENTLICHUNG-2.28.60.json`): **Bsp.-Akten** in der Hilfe unter „Demo“ (rotes Dreieck
   `app/bsp-ecke.tsx`, nie in den Pro-Tresor, Vollsicherung ohne sie, sobald eigene Einträge da sind). Hinweisblase schließt beim Sprung.
-- **In Arbeit: 2.28.63** (#165, 2.28.62 nie ausgegeben und darin aufgegangen): rote Kästen der Landkarte (Klaus Ja 1–3: gesperrter
+- **In Arbeit: 2.28.64** (#165; 2.28.62 und 2.28.63 nie ausgegeben und darin aufgegangen): Schriftgröße „A··A“ im Kopf (`app/schrift-knopf.tsx` auf `public/native/pro-bedienung.js`, byte-gleich aus Private Brain Pro), Textdurchsicht A–E, Rechtstexte (`public/datenschutz.html`), Systemprüfung (Stand der Fassung), Sicherheitsseite kürzer, Startfläche ohne Logo, rote Kästen der Landkarte (Klaus Ja 1–3: gesperrter
   Pro-Tresor gelb „Entsperren“, Akte nur im App-Speicher gelb „Tresor einrichten“/„Ordner wählen“, „Demo verlassen“ am Demo-Kasten),
   Knopf wieder „+ Bsp.-Akten“/„− Bsp.-Akten“ (Klaus: „Bsp.“ allein ist nicht zu erraten). Klaus 11.11.: bei grün ohne Rückfrage ausgeben.
 
@@ -134,7 +134,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Proben-Hinweise: `step()` wertet einen zurückgegebenen Text als grün, deshalb `soll()`; Seitentitel sind keine Sprungziele.
 - **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.61, 2.28.60, 2.28.59, 2.28.58, 2.28.57, 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
   (2.28.50 ausgegeben, aber ohne eigenen Nachweis; 2.28.40–2.28.47 waren Zwischenstände). Keine davon erneut ausgeben;
-  **nächste freie Fassung 2.28.63** (2.28.62 übersprungen). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
+  **nächste freie Fassung 2.28.64** (2.28.62 und 2.28.63 übersprungen). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
   sammeln, Proben laufen lassen, gesammelt als eine Fassung ausgeben (ersetzt „jede neue Funktion gleich ausgeben“ vom 06.11.).
   Neue Fassung oben in `lib/fassungen.ts` eintragen. Die Versionszeile zeigt die technische Fassung aus `package.json`;
   `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
@@ -161,12 +161,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
-  - `BRIEF_ABSCHLUSS_2026-11-10_NUR-LAUFWERK-2.28.56.md` (jüngster Abschluss: nur Laufwerk wählen, Landkarte per Adresse, Geschenkbox-Download)
-  - `BRIEF_ABSCHLUSS_2026-11-10_GERAETETEST-2.28.53.md` (Abschluss Vormittag: Gerätetest 10.11., Fassungen 2.28.53 und 2.28.54, Geschenkbox)
-  - `BRIEF_ABSCHLUSS_2026-11-10_VERBUND-OHNE-ORANGE.md` (Abschluss der Nacht: Karte ohne Orange, vier Apps ausgegeben)
-  - `BRIEF_SITZUNG_2026-11-11_KURZHINWEISE.md` (Startbrief zuerst: Landkarte der App als Datei in die Geschenkbox, Kurzhinweise am Tablet, Cloud-Ordner-Abgleich (OneDrive/Google), rote und graue Kästen der Landkarte, veraltete Systemprüfung, danach die übrigen Punkte)
-  - `BRIEF_SITZUNG_2026-11-11_FAMILIENAKTE-WEITER.md` (Startbrief Familienakte: Sicherheitsseite kürzer, Wettlauf, Basic-Karte, Landkarten-HTML, Vollsicherungsordner)
-  - `BRIEF_SITZUNG_2026-11-10_VERBUND-GEPLANTE-PUNKTE.md` (Startbrief: graue/rote Wege der Pro-Verbund-Karte und offene Punkte aus 2.28.53)
+  - `BRIEF_ABSCHLUSS_2026-11-11_GESAMMELT-2.28.64.md` (jüngster Abschluss: 2.28.57 bis 2.28.64, Startauftrag; die Briefe vom 10./11.11. liegen im Archiv)
   - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-09_AUSGABE-2.28.51.md` (Ausgabe 2.28.51; Startauftrag Gerätetest)
   - `BRIEF_CODEX_2026-11-04_NACH-2.28.24.md` (Abstimmung mit Codex: welche Dateien Claude gehören)
   - `BRIEF_ABSCHLUSS_2026-11-04_PDF-ARBEITSRAUM.md`, `BRIEF_ABSCHLUSS_2026-11-04_PDF-FUNKTIONSABGLEICH.md` (Codex)
@@ -181,7 +176,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **2.28.53 am Gerät ungeprüft:** Papierkorb (Löschen → Zurückholen → endgültig), Glocken-Probe mit gewähltem Ton, Haken
   „Zuordnung stimmt“ und Kartenfarbe nach eigener Wahl.
 - **2.28.52 am Gerät ungeprüft:** Tresor-Leser mit echtem Tresor auf SD/USB (Ordnerwahl, Öffnen im Handy-Browser), Update-Fähnchen
-  beim Zurückholen der App, Zusammenspiel der Pro-Apps im selben Tresor (alle gelben Wege der Karte). BookLedger Basic hat noch die alte Karte.
+  beim Zurückholen der App, Zusammenspiel der Pro-Apps im selben Tresor (alle gelben Wege der Karte). BookLedger Basic seit 11.11. mit der neuen Karte (#45).
 - **2.28.51 am Gerät ungeprüft:** Tresor im Ordner „Familienakte“ (SAF-Freigabe), Live-Zustände der Karten (alles nur gestellt).
 - **Baustand hinter Schalter (Klaus 09.11.):** Der Rahmen „Baustand“ bleibt sichtbar, solange intern getestet wird; danach hinter einen
   versteckten Schalter bzw. eine Eingabe nur für Entwickler.

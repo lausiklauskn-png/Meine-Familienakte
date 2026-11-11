@@ -1,4 +1,4 @@
-# Abschlussbrief 11.11.2026: Fassungen 2.28.57 bis 2.28.63, zuletzt gesammelt
+# Abschlussbrief 11.11.2026: Fassungen 2.28.57 bis 2.28.64, zuletzt gesammelt
 
 Startbriefe dieser Sitzung: `BRIEF_SITZUNG_2026-11-11_KURZHINWEISE.md` und `BRIEF_SITZUNG_2026-11-11_FAMILIENAKTE-WEITER.md`
 (jetzt in `docs/briefe-archiv/`). Neue feste Regel (Klaus 11.11.): **nicht nach jedem Umbau veröffentlichen** – sammeln, Proben
@@ -14,12 +14,13 @@ laufen lassen, gesammelt ausgeben; bei grün ohne Rückfrage ausgeben, wenn Klau
 | 2.28.60 | #161 | Bsp.-Akten unter Hilfe › Demo, rotes Dreieck, nie in den Pro-Tresor, Vollsicherung ohne sie |
 | 2.28.61 | #164 | Meine Geräte, Paket ohne Namensfeld, alte Einzelübergabe ausgeblendet, Dateiort mit „Pfad kopieren“ / „Im Explorer zeigen“ |
 | 2.28.62 | – | nie ausgegeben, in 2.28.63 aufgegangen |
-| 2.28.63 | #165 | rote Kästen (gesperrt → gelb „Entsperren“, App-Speicher → gelb „Tresor einrichten“, „Demo verlassen“), „+ Bsp.-Akten“ wieder lesbar, Textdurchsicht A–E (alte Namen, veraltete Sätze, lange Texte hinter „?“, „Neu“ nur letzte zwei Fassungen, kurze Meldungen), Rechtstexte (Impressum Family-Projekt, Datenschutz je Funktion, Haftungsausschluss), Systemprüfung (Stand dieser Fassung, Bericht 2.28.1 weg, Prüfzettel mit echter Fassung, ältere zugeklappt), Startfläche ohne altes „MMI“-Logo |
+| 2.28.63 | – | nie ausgegeben, in 2.28.64 aufgegangen |
+| 2.28.64 | #165 | Schriftgröße „A··A“ (Baustein `public/native/pro-bedienung.js` byte-gleich aus Private Brain Pro), Sicherheitsseite kürzer, rote Kästen (gesperrt → gelb „Entsperren“, App-Speicher → gelb „Tresor einrichten“, „Demo verlassen“), „+ Bsp.-Akten“ wieder lesbar, Textdurchsicht A–E (alte Namen, veraltete Sätze, lange Texte hinter „?“, „Neu“ nur letzte zwei Fassungen, kurze Meldungen), Rechtstexte (Impressum Family-Projekt, Datenschutz je Funktion, Haftungsausschluss), Systemprüfung (Stand dieser Fassung, Bericht 2.28.1 weg, Prüfzettel mit echter Fassung, ältere zugeklappt), Startfläche ohne altes „MMI“-Logo |
 
-Nachweise `docs/VEROEFFENTLICHUNG-2.28.57.json` … `-2.28.61.json` (Downloads anonym, SHA-256 stimmen); 2.28.63 siehe dort.
+Nachweise `docs/VEROEFFENTLICHUNG-2.28.57.json` … `-2.28.61.json` (Downloads anonym, SHA-256 stimmen); 2.28.64 siehe dort.
 Außerdem: **BookLedger Basic #45** – Pro nachgezogen auf `a705ed5`, Verbund-Karte jetzt byte-gleich (`eb857a6…`), PWA über Pages.
 
-Nach 2.28.63 bereit (nicht ausgegeben): **#169** Sicherheitsseite kürzer, Probe `kalender-einlesen` ohne Wettlauf.
+Probe `kalender-einlesen` ohne Wettlauf (ersten Lauf prüfen).
 
 ## Befunde für den Bau
 
@@ -47,18 +48,17 @@ Nach 2.28.63 bereit (nicht ausgegeben): **#169** Sicherheitsseite kürzer, Probe
 | | |
 |---|---|
 | Erste Spur | 10.11.2026 ca. 17:00 UTC (Startbriefe) |
-| Letzte Spur | 11.11.2026, Ausgabe 2.28.63 und dieser Brief (Zeit im KimHub-Eintrag) |
-| Blöcke | 10.11. abends: 2.28.57 · 11.11. 07:20–10:50 Gerätetest SD-Sicherung, 2.28.58/2.28.59 · 07:40–12:50 Bsp.-Akten 2.28.60 · 11:00–13:50 Meine Geräte 2.28.61 · 13:20–16:30 rote Kästen, Textdurchsicht, Rechtstexte, Systemprüfung → 2.28.63; dazwischen BookLedger Basic, übrige Punkte |
+| Letzte Spur | 11.11.2026, Ausgabe 2.28.64 und dieser Brief (Zeit im KimHub-Eintrag) |
+| Blöcke | 10.11. abends: 2.28.57 · 11.11. 07:20–10:50 Gerätetest SD-Sicherung, 2.28.58/2.28.59 · 07:40–12:50 Bsp.-Akten 2.28.60 · 11:00–13:50 Meine Geräte 2.28.61 · 13:20–16:30 rote Kästen, Textdurchsicht, Rechtstexte, Systemprüfung → 2.28.64 (mit Schriftgröße); dazwischen BookLedger Basic, übrige Punkte |
 | Obergrenze | gemessen am Zeitraum; Pausen und Wartezeiten der CI nicht abgezogen |
 
 ## Startauftrag
 
 ```
-Familienakte, Fortsetzung nach 2.28.63 (11.11.2026). Lies CLAUDE.md und BRIEF_ABSCHLUSS_2026-11-11_GESAMMELT-2.28.63.md.
+Familienakte, Fortsetzung nach 2.28.64 (11.11.2026). Lies CLAUDE.md und BRIEF_ABSCHLUSS_2026-11-11_GESAMMELT-2.28.64.md.
 Regel: nicht nach jedem Umbau veröffentlichen – sammeln, Proben laufen lassen, gesammelt ausgeben (nur mit Klaus' Wort).
-1. Gerätetest 2.28.63 von Klaus aufnehmen (Bsp.-Akten, Meine Geräte, Dateiort, gelbe Kästen, Systemprüfung, Startfläche, Rechtstexte).
-2. PR #169 (Sicherheitsseite kürzer, Kalender-Probe) in die nächste gesammelte Fassung.
-3. Rechtstexte: Rechtsform klären, dann eine gemeinsame Quelle für alle Pro- und Basic-Apps (Vorschau, Klaus' Ja, je Repo ein PR).
-4. Cloud-Ordner nach Jens' Antwort; E-Mail nach e1–e10; graue Kästen; Baustand-Schalter.
+1. Gerätetest 2.28.64 von Klaus aufnehmen (Bsp.-Akten, Meine Geräte, Dateiort, gelbe Kästen, Systemprüfung, Startfläche, Rechtstexte, Schriftgröße).
+2. Rechtstexte: Rechtsform klären, dann eine gemeinsame Quelle für alle Pro- und Basic-Apps (Vorschau, Klaus' Ja, je Repo ein PR).
+3. Cloud-Ordner nach Jens' Antwort; E-Mail nach e1–e10; graue Kästen; Baustand-Schalter.
 Nicht: veröffentlichte Fassungen erneut ausgeben, byte-gleiche Bausteine von Hand ändern, Codex anstoßen. Forschung nur in KimHub.
 ```
