@@ -12,6 +12,8 @@ function dialog(destination='') {return new Promise((ok,no)=>{const p=spawn('pow
 try {
  page=browser.contexts().flatMap(c=>c.pages()).find(p=>/^https:\/\/tauri\.localhost\//.test(p.url()));assert.ok(page);
  await page.reload();await openDemoFixture(page);
+ // 2.28.61: alte Einzelübergabe ist ohne gespeicherte Übergaben ausgeblendet; die Probe schaltet sie ein.
+ await page.evaluate(()=>localStorage.setItem('familienakte-alte-einzeluebergabe','an'));
  await page.locator('.footer-directory button',{hasText:'Sicherheitscenter'}).click();const panel=page.locator('.pro-geraetetransport');await panel.locator('select option').nth(1).waitFor({state:'attached'});
  await panel.locator('select').selectOption(await panel.locator('select option').nth(1).getAttribute('value'));await panel.getByLabel('Empfänger oder Zielgerät').fill('Erfundenes anderes Gerät');
  await Promise.all([dialog(),panel.getByRole('button',{name:'Übergabepaket speichern',exact:true}).click()]);await panel.getByRole('status').filter({hasText:'abgebrochen'}).waitFor();report.checks.push('Actual save dialog cancellation leaves pending outgoing');
