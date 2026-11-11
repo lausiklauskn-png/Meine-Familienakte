@@ -1,0 +1,67 @@
+<title>Gerät wählen statt tippen</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: eine Spalte – 1 alte Karte weg, 2 Gerät wählen mit Knöpfen (heute/neu), 3 veralteter Satz, Fragen. Stil wie die übrigen Vorschauen. */
+:root { --bg:#f4f7f9; --fg:#17262f; --muted:#4f6472; --line:#c8d9e2; --card:#fff; --blau:#1d5b94; --navy:#0b3154; --navyfg:#fff; --rot:#c0392b; --rotbg:#fdecea; --gruen:#2f8a4f; --gruenbg:#eaf7f0; --grau:#f3f5f7; --gelbbg:#fffbe8; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#10171c; --fg:#e6edf2; --muted:#9fb2bf; --line:#2c3b45; --card:#18222a; --blau:#7fb3e6; --navy:#dfe9f3; --navyfg:#0b3154; --rotbg:#3a1d1a; --gruenbg:#173323; --grau:#1f2a32; --gelbbg:#2e2a18; color-scheme:dark; } }
+:root[data-theme="dark"] { --bg:#10171c; --fg:#e6edf2; --muted:#9fb2bf; --line:#2c3b45; --card:#18222a; --blau:#7fb3e6; --navy:#dfe9f3; --navyfg:#0b3154; --rotbg:#3a1d1a; --gruenbg:#173323; --grau:#1f2a32; --gelbbg:#2e2a18; color-scheme:dark; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.45 system-ui, sans-serif; padding-block:16px 40px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
+main { max-width:900px; display:grid; gap:16px; }
+h1 { font-size:1.25rem; margin:0; text-wrap:balance; } h2 { font-size:1rem; margin:0; color:var(--blau); }
+p { margin:0; } .lead, .leise { color:var(--muted); }
+.karte { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; display:grid; gap:10px; min-width:0; }
+.paar { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:12px; }
+.etikett { font-size:.78rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:700; }
+.app { border:1px solid var(--line); border-radius:12px; padding:12px; background:var(--grau); display:grid; gap:8px; }
+.feld { border:1px solid var(--line); border-radius:8px; padding:8px 10px; background:var(--gelbbg); color:var(--muted); }
+.wahl { display:flex; flex-wrap:wrap; gap:8px; }
+.wahl span { border:1px solid var(--line); border-radius:999px; padding:7px 14px; background:var(--card); font-weight:600; }
+.wahl span.an { background:var(--navy); color:var(--navyfg); border-color:var(--navy); }
+.weg { text-decoration:line-through; color:var(--muted); }
+.nichts { border-left:4px solid var(--rot); background:var(--rotbg); padding:8px 10px; border-radius:8px; }
+.gut { border-left:4px solid var(--gruen); background:var(--gruenbg); padding:8px 10px; border-radius:8px; }
+ol { margin:0; padding-left:1.25em; display:grid; gap:6px; } .fragen b { color:var(--blau); }
+</style>
+
+<main>
+ <header style="display:grid;gap:4px">
+  <h1>Gerät wählen statt tippen</h1>
+  <p class="lead">Vorschau zur Abstimmung (11.11., Fassung 2.28.61). Sicherheitsseite: Unterlage bzw. Paket an ein anderes Gerät.</p>
+ </header>
+
+ <section class="karte">
+  <h2>1 · Alte Karte „Eine Unterlage an ein anderes Gerät geben“ kommt weg</h2>
+  <div class="paar">
+   <div><p class="etikett">Heute</p><div class="app"><strong>Eine Unterlage an ein anderes Gerät geben</strong><p class="leise">Nur eine Datei … ein Abgleich zwischen deinen Geräten ist geplant, noch nicht gebaut.</p><div class="feld">Für welches Gerät?</div><p class="leise">sechs Schritte, Freitext, Quittung zurückschicken</p></div></div>
+   <div><p class="etikett">Neu</p><div class="gut">Die Karte entfällt. Eine einzelne Unterlage gibt man mit <b>„Teilen“</b> an der Unterlage weiter (seit 2.28.47); alles Übrige mit <b>„Paket per Teilen“</b>, <b>gemeinsamer Festplatte</b> oder <b>im eigenen Netz</b>.</div>
+    <p class="leise" style="margin-top:6px">Schon gespeicherte Übergaben bleiben lesbar; nichts wird gelöscht.</p></div>
+  </div>
+ </section>
+
+ <section class="karte">
+  <h2>2 · „Paket per Teilen“ beim ersten Mal: Gerät antippen statt Namen tippen</h2>
+  <div class="paar">
+   <div><p class="etikett">Heute</p><div class="app"><span>Für welches Gerät? <b>Neues Gerät …</b></span><span>Name des Geräts</span><div class="feld">z. B. Tablet, PC im Büro</div></div>
+    <p class="nichts" style="margin-top:6px">Freitext – „Föhn“ wäre genauso möglich.</p></div>
+   <div><p class="etikett">Neu</p><div class="app"><span>Für welches Gerät?</span>
+     <div class="wahl"><span>Handy</span><span class="an">Tablet</span><span>PC</span><span>Laptop</span></div>
+     <span class="leise">Zusatz, nur wenn es zwei gleiche gibt (freiwillig):</span><div class="feld">z. B. „von Jens“</div></div>
+    <p class="gut" style="margin-top:6px">Ein Tipp genügt. Gekoppelte Geräte stehen danach mit Namen in der Liste („Tablet“, „Handy von Jens“).</p></div>
+  </div>
+ </section>
+
+ <section class="karte">
+  <h2>3 · Veralteter Satz</h2>
+  <p><span class="weg">„ein Abgleich zwischen deinen Geräten ist geplant, aber noch nicht gebaut“</span> – fällt weg (gibt es seit 2.28.42 bis 2.28.48).</p>
+ </section>
+
+ <section class="karte fragen">
+  <h2>Fragen (bitte je Ja oder Nein)</h2>
+  <ol>
+   <li><b>Alte Karte weg</b>, einzelne Unterlagen über „Teilen“ an der Unterlage.</li>
+   <li><b>Knöpfe Handy · Tablet · PC · Laptop</b> beim ersten Paket, Zusatz freiwillig.</li>
+   <li><b>Veralteten Satz streichen.</b></li>
+  </ol>
+ </section>
+</main>
