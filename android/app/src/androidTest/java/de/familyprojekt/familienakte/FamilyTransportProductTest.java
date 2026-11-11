@@ -34,6 +34,8 @@ public final class FamilyTransportProductTest {
     }
     private void panel(ActivityScenario<MainActivity> app) throws Exception {
         FamilyDemoFixture.open(app);
+        // 2.28.61: die alte Einzelübergabe ist ohne gespeicherte Übergaben ausgeblendet; die Probe schaltet sie ein.
+        eval(app,"localStorage.setItem('familienakte-alte-einzeluebergabe','an');true");
         eval(app,"[...document.querySelectorAll('.footer-directory button')].find(b=>b.textContent.includes('Sicherheitscenter')).click();true");
         until(app,"document.querySelectorAll('.pro-geraetetransport select option').length>1");
     }

@@ -1,0 +1,99 @@
+<title>Meine Geräte und Dateipfad</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: eine Spalte – A Meine Geräte (ein Name je Gerät, andere kommen von selbst), B Speicher sind keine Geräte, C alte Karte weg, D Dateipfad an jeder Unterlage, Fragen. */
+:root { --bg:#f4f7f9; --fg:#17262f; --muted:#4f6472; --line:#c8d9e2; --card:#fff; --blau:#1d5b94; --navy:#0b3154; --navyfg:#fff; --rot:#c0392b; --rotbg:#fdecea; --gruen:#2f8a4f; --gruenbg:#eaf7f0; --grau:#f3f5f7; --gelbbg:#fffbe8; --code:#eef3f7; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#10171c; --fg:#e6edf2; --muted:#9fb2bf; --line:#2c3b45; --card:#18222a; --blau:#7fb3e6; --navy:#dfe9f3; --navyfg:#0b3154; --rotbg:#3a1d1a; --gruenbg:#173323; --grau:#1f2a32; --gelbbg:#2e2a18; --code:#1f2a32; color-scheme:dark; } }
+:root[data-theme="dark"] { --bg:#10171c; --fg:#e6edf2; --muted:#9fb2bf; --line:#2c3b45; --card:#18222a; --blau:#7fb3e6; --navy:#dfe9f3; --navyfg:#0b3154; --rotbg:#3a1d1a; --gruenbg:#173323; --grau:#1f2a32; --gelbbg:#2e2a18; --code:#1f2a32; color-scheme:dark; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.45 system-ui, sans-serif; padding-block:16px 40px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
+main { max-width:900px; display:grid; gap:16px; }
+h1 { font-size:1.25rem; margin:0; text-wrap:balance; } h2 { font-size:1rem; margin:0; color:var(--blau); }
+p { margin:0; } .lead, .leise { color:var(--muted); }
+.karte { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; display:grid; gap:10px; min-width:0; }
+.paar { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:12px; }
+.etikett { font-size:.78rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:700; }
+.app { border:1px solid var(--line); border-radius:12px; padding:12px; background:var(--grau); display:grid; gap:8px; min-width:0; }
+.wahl { display:flex; flex-wrap:wrap; gap:8px; }
+.wahl span { border:1px solid var(--line); border-radius:999px; padding:7px 14px; background:var(--card); font-weight:600; }
+.wahl span.an { background:var(--navy); color:var(--navyfg); border-color:var(--navy); }
+.feld { border:1px solid var(--line); border-radius:8px; padding:8px 10px; background:var(--gelbbg); color:var(--muted); }
+.zeile { display:flex; justify-content:space-between; gap:10px; align-items:center; border-bottom:1px solid var(--line); padding:6px 0; flex-wrap:wrap; }
+.zeile:last-child { border-bottom:0; }
+.leise small, small { color:var(--muted); }
+.pfad { font-family:ui-monospace, Menlo, Consolas, monospace; font-size:.85rem; background:var(--code); padding:4px 8px; border-radius:6px; overflow-wrap:anywhere; }
+.knopf { border:1px solid var(--line); border-radius:8px; padding:5px 10px; font-weight:600; background:var(--card); font-size:.88rem; }
+.tab { overflow-x:auto; } table { border-collapse:collapse; width:100%; min-width:520px; font-size:.93rem; }
+th, td { text-align:left; padding:7px 8px; border-bottom:1px solid var(--line); vertical-align:top; } th { color:var(--muted); font-size:.8rem; text-transform:uppercase; }
+.ja { color:var(--gruen); font-weight:700; } .nein { color:var(--rot); font-weight:700; }
+.gut { border-left:4px solid var(--gruen); background:var(--gruenbg); padding:8px 10px; border-radius:8px; }
+.nichts { border-left:4px solid var(--rot); background:var(--rotbg); padding:8px 10px; border-radius:8px; }
+.weg { text-decoration:line-through; color:var(--muted); }
+ol { margin:0; padding-left:1.25em; display:grid; gap:6px; } .fragen b { color:var(--blau); }
+</style>
+
+<main>
+ <header style="display:grid;gap:4px">
+  <h1>Meine Geräte – und wo jede Datei liegt</h1>
+  <p class="lead">Vorschau zur Abstimmung (11.11., Fassung 2.28.61). Ersetzt die erste Fassung „Gerät wählen statt tippen“.</p>
+ </header>
+
+ <section class="karte">
+  <h2>A · Meine Geräte: einmal benennen, überall gleich</h2>
+  <div class="paar">
+   <div><p class="etikett">Einmal: dieses Gerät</p><div class="app"><strong>Wie heißt dieses Gerät?</strong>
+     <div class="wahl"><span>Handy</span><span class="an">Tablet</span><span>PC</span><span>Laptop</span></div>
+     <span class="leise">Zusatz, falls es zwei gleiche gibt (freiwillig):</span><div class="feld">z. B. „von Jens“</div></div></div>
+   <div><p class="etikett">Liste „Meine Geräte“</p><div class="app">
+     <div class="zeile"><span><b>Tablet</b> <small>· dieses Gerät</small></span></div>
+     <div class="zeile"><span><b>PC von Jens</b> <small>· zuletzt: Paket, 10.11.</small></span></div>
+     <div class="zeile"><span><b>Handy</b> <small>· zuletzt: im eigenen Netz, heute</small></span></div>
+     <p class="leise">Andere Geräte trägt man nie selbst ein – sie erscheinen von allein mit ihrem eigenen Namen beim ersten Paket, Festplatten-Abgleich oder Netz-Koppeln.</p></div></div>
+  </div>
+  <p class="gut">Gilt für alle drei Wege: Paket per Teilen, gemeinsame Festplatte, im eigenen Netz. Beim allerersten Paket nur „Neues Gerät“ + Passwort – kein Name nötig.</p>
+ </section>
+
+ <section class="karte">
+  <h2>B · Speicher sind keine Geräte</h2>
+  <p>SD-Karte, USB-Stick, externe Festplatte: darauf läuft keine App – sie sind Treffpunkt bzw. Ablage. Sie stehen nicht in „Meine Geräte“, sondern bei „Gemeinsame Festplatte“ bzw. beim Speicherort, erkannt an ihrer eigenen Kennung, ohne Namen eintippen.</p>
+ </section>
+
+ <section class="karte">
+  <h2>C · Aufräumen</h2>
+  <ul style="margin:0;padding-left:1.2em;display:grid;gap:6px">
+   <li>Alte Karte „Eine Unterlage an ein anderes Gerät geben“ (Freitext „Für welches Gerät?“) entfällt; eine einzelne Unterlage über „Teilen“ an der Unterlage. Gespeicherte Übergaben bleiben lesbar.</li>
+   <li><span class="weg">„ein Abgleich zwischen deinen Geräten ist geplant, noch nicht gebaut“</span> – gestrichen.</li>
+  </ul>
+ </section>
+
+ <section class="karte">
+  <h2>D · An jeder Unterlage: wo die Datei liegt</h2>
+  <div class="app">
+   <strong>Rechnung Waschmaschine</strong>
+   <span class="leise">Gespeichert in:</span>
+   <span class="pfad">SD-Karte › Family_Projekt_de › Tresorordner (verschlüsselt)</span>
+   <div class="wahl"><span class="knopf">Pfad kopieren</span><span class="knopf">Im Explorer zeigen ›</span></div>
+   <span class="leise">Beispiel ohne Tresor (Windows):</span>
+   <span class="pfad">D:\Familienakte\Me_Myself_and_I_Familienakte\01_Dokumente\Haushalt\2026-11-03_a1b2c3d4_Rechnung.pdf</span>
+  </div>
+  <div class="tab"><table>
+   <thead><tr><th>Fassung</th><th>Pfad sehen + kopieren</th><th>Ordner öffnen</th></tr></thead>
+   <tbody>
+    <tr><td>Windows-App</td><td class="ja">ja, vollständig</td><td class="ja">ja – Explorer öffnet mit der Datei markiert</td></tr>
+    <tr><td>Android-App</td><td class="ja">ja (z. B. SD-Karte › Ordner › Datei)</td><td class="nein">nein – Android erlaubt das nicht zuverlässig; Pfad kopieren und in „Eigene Dateien“ suchen</td></tr>
+    <tr><td>Browser</td><td class="ja">nur ab dem gewählten Ordner</td><td class="nein">nein – der Browser verrät den vollen Pfad nicht</td></tr>
+   </tbody>
+  </table></div>
+  <p class="nichts"><b>Umbenennen nur in der App</b> („Titel ändern“). Wer die Datei draußen umbenennt oder verschiebt, trennt sie von der Akte; im Pro-Tresor tragen die Dateien ohnehin verschlüsselte Geheimnamen. Die App zeigt das „?“ dazu: „Ordner ansehen ja – umbenennen oder verschieben bitte nur in der App“.</p>
+ </section>
+
+ <section class="karte fragen">
+  <h2>Fragen (bitte je Ja oder Nein)</h2>
+  <ol>
+   <li><b>Meine Geräte</b>: dieses Gerät einmal per Knopf benennen, andere erscheinen von selbst; gilt für Paket, Festplatte und Netz.</li>
+   <li><b>Alte Einzelübergabe-Karte weg</b> und veralteten Satz streichen.</li>
+   <li><b>Pfad an jeder Unterlage</b> mit „Pfad kopieren“, unter Windows zusätzlich „Im Explorer zeigen ›“.</li>
+   <li><b>Umbenennen nur in der App</b> (Hinweis hinter dem „?“).</li>
+  </ol>
+ </section>
+</main>

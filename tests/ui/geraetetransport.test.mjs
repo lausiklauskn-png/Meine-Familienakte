@@ -22,6 +22,13 @@ async function start(i){
  });
  page.on('request',r=>{if(/^https?:/.test(r.url())&&!r.url().startsWith(app.base))external.push(r.url());});
  await page.goto(app.base);await ready(page);await footer(page,'Sicherheitscenter');
+ // 2.28.61: ohne gespeicherte Übergaben ist die alte Karte weg (Gegenprobe); die Probe schaltet sie für den Rest ein.
+ await page.locator('[data-meine-geraete]').waitFor();await page.waitForTimeout(500);
+ if(!await page.evaluate(()=>localStorage.getItem('familienakte-alte-einzeluebergabe'))){
+  assert.equal(await page.locator('.pro-geraetetransport').count(),0,'alte Einzelübergabe sichtbar ohne gespeicherte Übergaben');
+  await page.evaluate(()=>localStorage.setItem('familienakte-alte-einzeluebergabe','an'));
+  await page.reload();await ready(page);await footer(page,'Sicherheitscenter');
+ }
  await page.locator('.pro-geraetetransport select option').nth(1).waitFor({state:'attached'});
 }
 const panel=i=>pages[i].locator('.pro-geraetetransport');

@@ -13,7 +13,7 @@ export const SEITEN_KARTEN: Partial<Record<SectionId, string[]>> = {
   memory: ["Was ist heute passiert?", "Heute im Überblick", "Chronologie"],
   reminders: ["Mein Kalender", "Frist oder Aufgabe anlegen", "Offene Fristen und Aufgaben"],
   inbox: ["Neue Unterlagen erfassen", "Eingänge prüfen", "Lokale Unterlagen", "Online-Altbestand"],
-  security: ["Datentresor prüfen", "Vollständige Sicherung", "Export", "OneDrive auf PC oder USB sichern", "Unterlage an ein anderes Gerät geben", "Private Bedeutungssuche"],
+  security: ["Datentresor prüfen", "Vollständige Sicherung", "Export", "OneDrive auf PC oder USB sichern", "Meine Geräte", "Private Bedeutungssuche"],
   changelog: ["Was gibt’s Neues in der Familienakte?", "Technische Änderungen"],
   systemcheck: ["Praktische Benutzerabnahme", "Freigabeprüfung", "Gesamtergebnis", "Warnungen und Fehler", "Geprüfte Bereiche", "Prüfberichte"],
 };

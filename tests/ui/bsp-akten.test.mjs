@@ -1,5 +1,5 @@
-// Bsp.-Akten (Klaus 11.11.2026): in der Hilfe „+ Bsp.-Akten“ holt die erfundene Beispielfamilie in die eigene Akte (gespeichert),
-// danach „− Bsp.-Akten“ nimmt nur sie wieder heraus. Jede Beispielakte trägt oben rechts ein rotes Dreieck (Liste und geöffnet);
+// Bsp. (Klaus 11.11.2026): in der Hilfe „+ Bsp.“ holt die erfundene Beispielfamilie in die eigene Akte (gespeichert),
+// danach „− Bsp.“ nimmt nur sie wieder heraus. Jede Beispielakte trägt oben rechts ein rotes Dreieck (Liste und geöffnet);
 // eigene Einträge haben keins und bleiben beim Entfernen erhalten.
 import { vaultFixture } from "./_vault-fixture.mjs";
 import { startApp, launchBrowser, DESKTOP, ready, step, soll, summary, footer, collectErrors } from "./_harness.mjs";
@@ -25,16 +25,16 @@ try {
     await page.reload({ waitUntil: "networkidle" }); await page.waitForSelector(".site-brand-version");
     return soll(await page.locator(".sample-data-notice").count() === 0, "Hinweis noch da");
   });
-  await step("Hilfe: Knopf heißt „+ Bsp.-Akten“, ohne Erklärtext daneben", async () => {
+  await step("Hilfe: Knopf heißt „+ Bsp.“, ohne Erklärtext daneben", async () => {
     await footer(page, "Hilfe");
     const r = { text: (await knopf().innerText()).trim(), stand: await knopf().getAttribute("data-bsp-akten") };
-    return soll(r.text === "+ Bsp.-Akten" && r.stand === "fehlt", r);
+    return soll(r.text === "+ Bsp." && r.stand === "fehlt", r);
   });
-  await step("Tipp auf „+ Bsp.-Akten“: Beispielfamilie da, Knopf wird „− Bsp.-Akten“, Hinweis oben kurz", async () => {
+  await step("Tipp auf „+ Bsp.“: Beispielfamilie da, Knopf wird „− Bsp.“, Hinweis oben kurz", async () => {
     await knopf().click();
     await page.waitForSelector('[data-bsp-akten="da"]', { timeout: 60000 });
     const r = { text: (await knopf().innerText()).trim(), hinweis: (await page.locator(".sample-data-notice").innerText()).replace(/\s+/g, " ").trim() };
-    return soll(r.text === "− Bsp.-Akten" && /Bsp\.-Akten in deiner Akte/.test(r.hinweis) && r.hinweis.length < 60, r);
+    return soll(r.text === "− Bsp." && /Bsp\. in deiner Akte/.test(r.hinweis) && r.hinweis.length < 60, r);
   });
   await step("Personen: Beispielpersonen mit rotem Dreieck oben rechts, eigene Person ohne", async () => {
     await zurFamilie(page);
@@ -55,8 +55,8 @@ try {
     const r = await page.evaluate(() => ({ zeilen: document.querySelectorAll("[data-bibliothek-zeile]").length, mit: document.querySelectorAll("[data-bibliothek-zeile] [data-bsp-ecke]").length }));
     return soll(r.zeilen > 0 && r.mit > 0, r);
   });
-  // Klaus 11.11.: die Vollsicherung lässt Bsp.-Akten weg – die Vorlage steckt in der App.
-  await step("Vollsicherung mit Bsp.-Akten in der Akte: Register und Dateien ohne Beispiele, eigene Person dabei", async () => {
+  // Klaus 11.11.: die Vollsicherung lässt Bsp. weg – die Vorlage steckt in der App.
+  await step("Vollsicherung mit Bsp. in der Akte: Register und Dateien ohne Beispiele, eigene Person dabei", async () => {
     await vaultFixture(page);
     const r = await page.evaluate(async () => {
       const f = window.__vaultFixture; const quelle = await f.browserVault();
@@ -73,11 +73,11 @@ try {
     });
     return soll(r.ausgelassen > 10 && r.bspDok === 0 && r.bspEin === 0 && r.eigen && r.dateien === 0 && r.vorherBsp > 10, r);
   });
-  await step("Nach Neuladen bleiben die Bsp.-Akten (gespeichert)", async () => {
+  await step("Nach Neuladen bleiben die Bsp. (gespeichert)", async () => {
     await page.reload({ waitUntil: "networkidle" }); await page.waitForSelector(".site-brand-version");
     return soll(await page.locator(".sample-data-notice").count() === 1, "Hinweis fehlt nach Neuladen");
   });
-  await step("„− Bsp.-Akten“ in der Hilfe: Beispiele weg, ohne Rückfrage; eigene Person bleibt", async () => {
+  await step("„− Bsp.“ in der Hilfe: Beispiele weg, ohne Rückfrage; eigene Person bleibt", async () => {
     await footer(page, "Hilfe");
     await knopf().click();
     await page.waitForSelector('[data-bsp-akten="fehlt"]', { timeout: 60000 });
@@ -88,4 +88,4 @@ try {
   });
   await step("Keine Seitenfehler", async () => soll(errors.length === 0, errors));
 } finally { await browser.close(); await app.stop(); }
-summary("Bsp.-Akten");
+summary("Bsp.");

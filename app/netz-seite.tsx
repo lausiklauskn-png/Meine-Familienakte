@@ -65,7 +65,7 @@ export function NetzSeite({ kopf, vaultHandle }: { kopf: React.ReactNode; vaultH
     {kopf}
     <section className="card fa-netz" data-netz-seite>
       <div className="card-heading"><div><span className="ui-heading-help"><h2>Im SBKIM-Netz sichtbar werden</h2><InfoPopover label="Wörter auf dieser Seite erklären" text={WOERTER}/></span></div></div>
-      <p className="fa-netz-satz" data-netz-kein-abgleich><strong>Kein Abgleich deiner Daten:</strong> Unterlagen, Einträge, Fristen und Erinnerungen gehen hier nicht auf ein anderes Gerät. Ein Abgleich zwischen deinen Geräten ist geplant, noch nicht gebaut. Eine einzelne Unterlage gibst du unter Sicherheit › „Eine Unterlage an ein anderes Gerät geben“ weiter.</p>
+      <p className="fa-netz-satz" data-netz-kein-abgleich><strong>Kein Abgleich deiner Daten:</strong> Unterlagen, Einträge, Fristen und Erinnerungen gehen hier nicht auf ein anderes Gerät. Deine Geräte gleichst du unter Sicherheit › „Meine Geräte“ ab.</p>
       <p className="fa-netz-satz">Beim Öffnen der Akte geht nichts ins Netz. Verbunden wird nur, wenn du unten „Verbinden …“ antippst und im Fenster selbst verbindest. Hinaus geht dann nur die Visitenkarte (Name und die Liste der Lebensbereiche) – Unterlagen nur, wenn du unten „Im eigenen Netz antworten“ einschaltest, und dann nur Titel · Bereich · Datum.</p>
       {fehler && <p className="fa-netz-fehler" role="alert">{fehler}</p>}
       <div className="fa-netz-zustand" data-netz-zustand>

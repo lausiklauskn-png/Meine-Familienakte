@@ -1,3 +1,4 @@
+import { DateiOrt, akteOrtSetzen } from "./datei-ort";
 import { demoActive, switchDemo } from "../lib/demo-workspace.ts";
 import { aktuelleGrenze, grenzeMessen, mbText } from "../lib/geraete-grenze";
 import { verkleinerbar } from "./verkleinern";
@@ -619,6 +620,7 @@ function HealthPortalContent() {
     vault: "pending", upload: "pending", compare: "pending", update: "pending", chatgpt: "pending",
   });
   const vaultHandle = oneDriveHandle || localVaultHandle;
+  akteOrtSetzen(vaultHandle);
   const [sampleBusy, setSampleBusy] = useState(false);
   const samplePresent = useMemo(() => sampleDataPresent({ documents: localDocuments, records: familyRecords }), [localDocuments, familyRecords]);
   // „Aus der Akte nehmen“ (2.28.39): aussortierte Dokumente fehlen in Suche, Assistenz, Cockpit und Bibliotheksliste.
@@ -627,16 +629,16 @@ function HealthPortalContent() {
     if (!vaultHandle) return;
     if (fragen && !await askConfirm("Alle Beispieldaten entfernen?\n\nEntfernt werden nur die erfundenen Beispieleinträge und Beispieldokumente. Deine eigenen Unterlagen und Einträge bleiben erhalten.")) return;
     setSampleBusy(true);
-    try { const result = await removeSampleFamily(vaultHandle); await refreshLocal(vaultHandle); setNotice({ kind: "success", text: `Bsp.-Akten entfernt: ${result.removedEntries} Einträge, ${result.removedFiles} Unterlagen.` }); }
+    try { const result = await removeSampleFamily(vaultHandle); await refreshLocal(vaultHandle); setNotice({ kind: "success", text: `Bsp. entfernt: ${result.removedEntries} Einträge, ${result.removedFiles} Unterlagen.` }); }
     catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die Beispieldaten konnten nicht entfernt werden." }); }
     finally { setSampleBusy(false); }
   };
-  // Klaus 11.11.: „+ Bsp.-Akten“ legt die erfundene Beispielfamilie in die eigene Akte (gespeichert), „− Bsp.-Akten“ nimmt nur sie heraus.
+  // Klaus 11.11.: „+ Bsp.“ legt die erfundene Beispielfamilie in die eigene Akte (gespeichert), „− Bsp.“ nimmt nur sie heraus.
   const addSampleData = async () => {
     if (!vaultHandle || demoActive()) return;
     setSampleBusy(true);
-    try { await seedSampleFamily(vaultHandle, { force: true }); await refreshLocal(vaultHandle); setNotice({ kind: "success", text: "Bsp.-Akten angelegt: erfundene Beispielfamilie in allen Bereichen, mit rotem Dreieck markiert." }); }
-    catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die Bsp.-Akten konnten nicht angelegt werden." }); }
+    try { await seedSampleFamily(vaultHandle, { force: true }); await refreshLocal(vaultHandle); setNotice({ kind: "success", text: "Bsp. angelegt: erfundene Beispielfamilie in allen Bereichen, mit rotem Dreieck markiert." }); }
+    catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die Bsp. konnten nicht angelegt werden." }); }
     finally { setSampleBusy(false); }
   };
   const loadSampleData = async () => {
@@ -1076,8 +1078,8 @@ function HealthPortalContent() {
     try {
       const destination = await chooseExportDestination("Ordner für die Vollsicherung wählen (getrennt vom Pro-Tresor)");
       setNotice({ kind: "info", laeuft: true, text: passwort ? "Sicherung läuft: jede Datei wird verschlüsselt, zurückgelesen und per Prüfsumme bestätigt." : "Sicherung läuft: jede Datei wird kopiert und per Prüfsumme bestätigt." });
-      // Bsp.-Akten (Klaus 11.11.): nicht mitsichern – die Vorlage steckt in der App.
-      // Besteht die Akte nur aus Bsp.-Akten, wird sie normal gesichert – sonst wäre die Sicherung leer.
+      // Bsp. (Klaus 11.11.): nicht mitsichern – die Vorlage steckt in der App.
+      // Besteht die Akte nur aus Bsp., wird sie normal gesichert – sonst wäre die Sicherung leer.
       const bestand = samplePresent ? await readLocalVaultData(vaultHandle) : null;
       const bspIdsSicherung = bestand ? beispielIdsVon(bestand) : null;
       const eigeneDa = Boolean(bestand && bspIdsSicherung && [...bestand.documents, ...bestand.records].some((x) => !bspIdsSicherung.has(x.id)));
@@ -1088,7 +1090,7 @@ function HealthPortalContent() {
       try { programm = await programmBeilegen(destination, result.folderName, APP_FASSUNG); }
       catch (error) { programm = ` Das Programm konnte nicht beigelegt werden (${error instanceof Error ? error.message : "unbekannt"}).`; }
       await refreshLocal();
-      setNotice({ kind: "success", text: `Die vollständige Familienakten-Sicherung „${result.folderName}“ wurde ${passwort ? "verschlüsselt " : ""}mit Register, Verknüpfungen, Tagebuch-Einträge, Medien und Prüfsummen erstellt.${result.ausgelassen ? " Bsp.-Akten nicht mitgesichert." : ""}${programm}${passwort ? "" : " Für die endgültige Bestätigung folgt die Wiederherstellung in einem leeren Testordner."}` });
+      setNotice({ kind: "success", text: `Die vollständige Familienakten-Sicherung „${result.folderName}“ wurde ${passwort ? "verschlüsselt " : ""}mit Register, Verknüpfungen, Tagebuch-Einträge, Medien und Prüfsummen erstellt.${result.ausgelassen ? " Bsp. nicht mitgesichert." : ""}${programm}${passwort ? "" : " Für die endgültige Bestätigung folgt die Wiederherstellung in einem leeren Testordner."}` });
       if (result.notfall) setNotfallblatt({ notfall: result.notfall, ordner: result.folderName, erstellt: result.manifest.createdAt });
     } catch (error) { if ((error as DOMException)?.name !== "AbortError") setNotice({ kind: "error", text: `Vollsicherung nicht erstellt: ${error instanceof Error ? ordnerFehlerText(error) : "unbekannter Fehler."}` }); else setNotice(null); }
     finally { setVaultBusy(false); }
@@ -1267,7 +1269,7 @@ function HealthPortalContent() {
 
   // Feste Beispielangaben (health-data.json) nur in der Demo bzw. solange die Beispielfamilie im Bestand ist.
   const searchBeispiele = demoActive() || samplePresent;
-  // Bsp.-Akten (Klaus 11.11.): Kennungen für das rote Dreieck; in der Demo nicht nötig, dort ist alles Beispiel.
+  // Bsp. (Klaus 11.11.): Kennungen für das rote Dreieck; in der Demo nicht nötig, dort ist alles Beispiel.
   const bspIds = useMemo<ReadonlySet<string>>(() => demoActive() || !samplePresent ? new Set() : new Set([...beispielIdsVon({ documents: localDocuments, records: familyRecords, relations: familyRelations }), ...documents.map((d) => d.id)]),
     [samplePresent, localDocuments, familyRecords, familyRelations, documents]);
   const searchResults = useMemo(() => buildSearchResults(query, documents, aktenDokumente, familyRecords, familyRelations, { beispiele: searchBeispiele }), [query, documents, aktenDokumente, familyRecords, familyRelations, searchBeispiele]);
@@ -1603,7 +1605,7 @@ function HealthPortalContent() {
         </section>
         <ActivityLines/>
         {sampleBusy && !samplePresent && <section className="info-notice sample-data-notice" aria-live="polite"><span>Info</span><div><strong>Beispieldaten werden vorbereitet …</strong><div>Die Demo legt eine frei erfundene Beispielfamilie im getrennten Demobestand an. Das dauert nur wenige Sekunden.</div></div></section>}
-        {samplePresent && !demoActive() && <section className="info-notice sample-data-notice" aria-label="Hinweis zu Beispieldaten"><span>Info</span><div><strong>Bsp.-Akten in deiner Akte</strong></div><button type="button" className="button secondary" disabled={sampleBusy} onClick={() => void removeSampleData(false)} data-bsp-weg>− Bsp.-Akten</button></section>}
+        {samplePresent && !demoActive() && <section className="info-notice sample-data-notice" aria-label="Hinweis zu Beispieldaten"><span>Info</span><div><strong>Bsp. in deiner Akte</strong></div><button type="button" className="button secondary" disabled={sampleBusy} onClick={() => void removeSampleData(false)} data-bsp-weg>− Bsp.</button></section>}
         <div className="breadcrumb">
           {(navigation.canBack || navigation.canForward) && <span className="navigation-history" aria-label="Ansichtsverlauf">
             <button type="button" onClick={navigation.back} disabled={!navigation.canBack} aria-label="Zur vorherigen Ansicht" title="Zurück (Strg+Z)"><ArrowLeft size={15}/><span>Zurück</span></button>
@@ -2934,7 +2936,7 @@ function HelpCenter({ onGo, onSearch, demo, datentresor, herkunft, letzteSicheru
       ausfuehrlich={<><p>Verbinde zuerst den lokalen OneDrive-Ordner und danach einen PC- oder USB-Ordner. Öffne anschließend das Sicherheitscenter und wähle „Fehlende Dateien suchen“. Das geht nur am PC in Chrome oder Edge. Die Familienakte zeigt dir zuerst, wie viele registrierte Dokumente noch fehlen. Erst mit „Fehlende Dateien jetzt sichern“ beginnt das Kopieren.</p><p>Die Suche läuft nur nach deinem Klick. Er kopiert ausschließlich fehlende Dateien von OneDrive zur Sicherung. Es wird nichts gelöscht und keine vorhandene Datei überschrieben.</p></>}/> },
     { id: "noch-nicht", titel: "Was funktioniert noch nicht vollständig?", el: <BildThema id="noch-nicht" symbol={<HelpCircle/>} titel="Was funktioniert noch nicht vollständig?" bild={<KastenReihe label="Was noch fehlt" knoten={[{ titel: "E-Mail abholen und senden", unter: "geplant", art: "warnung", ziel: () => zurStelle('[data-hilfe-id="email"] > details') }, { titel: "Einlesen in volle Akte", unter: "noch nicht, nur in leere", art: "warnung" }, { titel: "Abgleich zwischen Geräten", unter: "geplant", art: "warnung" }, { titel: "Automatisch sortieren", unter: "bewusst nicht" }]}/>}
       merk={[<><b>Bis dahin:</b> Anhang oder Mail aus der Mail-App teilen.</>, <><b>Die App tut nur, was du bestätigst.</b></>]}
-      ausfuehrlich={<><ul className="kalender-hilfe-punkte"><li>E-Mails direkt aus einem Postfach abholen oder senden: geplant, siehe „E-Mail in die Familienakte“. Bis dahin: Anhang oder Mail aus der Mail-App an die Familienakte teilen.</li><li>Eine Sicherung in eine schon gefüllte Akte einlesen (zusammenführen): noch nicht, nur in eine leere Akte.</li><li>Einträge, Fristen und Erinnerungen zwischen zwei benutzten Geräten abgleichen: geplant. Heute gehen eine einzelne Unterlage (Sicherheit › „Eine Unterlage an ein anderes Gerät geben“) oder die ganze Akte in eine leere Akte (Vollsicherung, „Sicherung einlesen“).</li><li>Sichern, Einlesen und Exportieren in der Web-App am Handy oder Tablet: geht dort nicht (keine Ordnerwahl). Dafür die Pro-App oder Chrome bzw. Edge am PC.</li><li>Archivierte Erinnerungen und Notizen ansehen oder zurückholen: noch nicht.</li><li>E-Mail-Anlagen automatisch prüfen, die Mail-App mit Entwurf öffnen, über Microsoft senden: geplant.</li><li>Aktuelle Recherche im Internet für die Assistenz: noch nicht eingerichtet.</li><li>Bewusst nicht: automatische Dateisortierung und ein Abgleich im Hintergrund. Die App tut nur, was du bestätigst.</li></ul></>}/> },
+      ausfuehrlich={<><ul className="kalender-hilfe-punkte"><li>E-Mails direkt aus einem Postfach abholen oder senden: geplant, siehe „E-Mail in die Familienakte“. Bis dahin: Anhang oder Mail aus der Mail-App an die Familienakte teilen.</li><li>Eine Sicherung in eine schon gefüllte Akte einlesen (zusammenführen): noch nicht, nur in eine leere Akte.</li><li>Einträge, Fristen und Erinnerungen zwischen zwei benutzten Geräten abgleichen: geplant. Eine einzelne Unterlage gibst du über „Teilen“ an der Unterlage weiter; die ganze Akte gleichst du unter Sicherheit › „Meine Geräte“ ab.</li><li>Sichern, Einlesen und Exportieren in der Web-App am Handy oder Tablet: geht dort nicht (keine Ordnerwahl). Dafür die Pro-App oder Chrome bzw. Edge am PC.</li><li>Archivierte Erinnerungen und Notizen ansehen oder zurückholen: noch nicht.</li><li>E-Mail-Anlagen automatisch prüfen, die Mail-App mit Entwurf öffnen, über Microsoft senden: geplant.</li><li>Aktuelle Recherche im Internet für die Assistenz: noch nicht eingerichtet.</li><li>Bewusst nicht: automatische Dateisortierung und ein Abgleich im Hintergrund. Die App tut nur, was du bestätigst.</li></ul></>}/> },
     { id: "persoenliche-daten", titel: "Wie werden persönliche Daten geschützt?", el: <BildThema id="persoenliche-daten" symbol={<HelpCircle/>} titel="Wie werden persönliche Daten geschützt?" bild={<KastenReihe label="Wohin deine Daten gehen" knoten={[{ titel: "Akte und Originale", unter: "auf deinem Gerät oder im gewählten Ordner", art: "gut" }, { titel: "Kalender", unter: "nur Titel, Zeit, Erinnerung" }, { titel: "KI und Dienste", unter: "nichts automatisch" }]}/>}
       merk={[<><b>Notizen</b> gehen nie in einen Kalender.</>, <><b>Passwörter und Einmalcodes</b> speichert die App nicht.</>]}
       ausfuehrlich={<><ul className="kalender-hilfe-punkte"><li>Deine Akte und die Originale bleiben auf deinem Gerät oder in dem Ordner, den du gewählt hast.</li><li>In einen verbundenen Kalender gehen nur Titel, Zeit und Erinnerung von Fristen, die du angehakt hast. Notizen nie.</li><li>Passwörter und Einmalcodes werden nicht in der Familienakte gespeichert.</li><li>Nichts geht automatisch an eine KI oder einen anderen Dienst.</li></ul></>}/> },
@@ -3840,6 +3842,7 @@ function DocumentLibraryCard({ item, fill, onFill, onWfpdf, onPro, onUebergabe, 
       {item.source.dateiname && !item.protectedHealth && <small className="library-dateiname" data-dateiname>Datei: {item.source.dateiname}</small>}
       <div className="library-document-meta"><button onClick={onDate}>{item.date ? fmtDate(item.date) : "Ohne Dokumentdatum"}</button><button onClick={onOpen}>{statusLabel[item.status as keyof typeof statusLabel] || item.status}</button></div>
       <p>{item.description}</p>
+      {item.source.storedPath && <DateiOrt storedPath={item.source.storedPath} ohneDateiname={item.protectedHealth}/>}
       {onPro && <ProDokumentKnopf onUebernehmen={onPro}/>}
       {onTeilen && !item.protectedHealth && <TeilenKnopf onTeilen={onTeilen}/>}
       {onUebergabe && !item.sensitive && <ProUebergabeKnopf onSenden={onUebergabe}/>}

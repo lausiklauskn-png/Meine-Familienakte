@@ -231,17 +231,17 @@ try {
   await page.locator(".site-brand").click();
 
   // --- Beispieldaten ---
-  // Klaus 11.11.: „− Bsp.-Akten“ entfernt ohne Rückfrage (nur Beispiele, nie eigene Einträge).
-  await step("„− Bsp.-Akten“ oben ist mit der Maus erreichbar und entfernt die Beispielfamilie ohne Rückfrage", async () => {
+  // Klaus 11.11.: „− Bsp.“ entfernt ohne Rückfrage (nur Beispiele, nie eigene Einträge).
+  await step("„− Bsp.“ oben ist mit der Maus erreichbar und entfernt die Beispielfamilie ohne Rückfrage", async () => {
     await schliesseDialoge(page); await page.locator(".site-brand").click();
     await page.evaluate(() => window.scrollTo(0, 0));
     const knopf = page.locator("[data-bsp-weg]");
     const darueber = await verdecktVon(page, knopf);
-    if (!darueber.startsWith("button")) bekannt("„− Bsp.-Akten“ ist mit der Maus nicht erreichbar", `darüber liegt ${darueber} (Zierkreis .family-hero:after); Tastatur (Tab + Enter) geht`);
+    if (!darueber.startsWith("button")) bekannt("„− Bsp.“ ist mit der Maus nicht erreichbar", `darüber liegt ${darueber} (Zierkreis .family-hero:after); Tastatur (Tab + Enter) geht`);
     await knopf.focus(); await page.keyboard.press("Enter");
     await page.waitForSelector(".sample-data-notice", { state: "detached", timeout: 30000 });
     await page.waitForTimeout(500);
-    return (await page.locator("text=Bsp.-Akten entfernt").count()) > 0 || (await page.locator(".sample-data-notice").count()) === 0;
+    return (await page.locator("text=Bsp. entfernt").count()) > 0 || (await page.locator(".sample-data-notice").count()) === 0;
   });
   await step("Eigene Erinnerung bleibt nach dem Entfernen erhalten", async () => {
     await footer(page, "Tagebuch");

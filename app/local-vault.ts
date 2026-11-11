@@ -2750,7 +2750,7 @@ export async function saveLocalDocument(handle: FileSystemDirectoryHandle, file:
   if (possibleDuplicate && !data.allowDuplicate) throw new Error(`Mögliche Dublette: „${possibleDuplicate.titel || possibleDuplicate.originalName}“ ist schon abgelegt. Bitte das vorhandene Dokument zuerst ansehen oder die bewusste Übernahme bestätigen.`);
   const id = crypto.randomUUID();
   const storedName = `${data.documentDate || new Date().toISOString().slice(0, 10)}_${id.slice(0, 8)}_${clean(file.name)}`;
-  // Bsp.-Akten (11.11.): erfundene Beispiel-Unterlagen nie in den gemeinsamen Pro-Tresor – dort würden sie beim Entfernen bleiben.
+  // Bsp. (11.11.): erfundene Beispiel-Unterlagen nie in den gemeinsamen Pro-Tresor – dort würden sie beim Entfernen bleiben.
   const proId = data.ohneProTresor ? null : proZiel(index);
   let folder: FileSystemDirectoryHandle | null = null;
   let storedPath: string;
@@ -3188,14 +3188,14 @@ export async function writeFullFamilyBackup(input: {
   createdAt?: string;
   /** Stufe B: Passwort (≥ 10 Zeichen) → verschlüsselte Sicherung; ohne Passwort lesbar (bewusst gewählt). */
   passwort?: string | null;
-  /** Bsp.-Akten (Klaus 11.11.): Kennungen, die nicht mitgesichert werden – die Vorlage steckt in der App. */
+  /** Bsp. (Klaus 11.11.): Kennungen, die nicht mitgesichert werden – die Vorlage steckt in der App. */
   ohne?: ReadonlySet<string>;
 }): Promise<FullBackupResult & { ausgelassen: number }> {
   if (!(await requestVaultPermission(input.source)) || !(await requestVaultPermission(input.destination))) throw new Error("Quell- und Sicherungsordner müssen ausdrücklich freigegeben sein.");
   // Ein nativer Ordner (Android/Windows, P5) ist nie derselbe wie der Browser-Datentresor; der Browser lehnt den Vergleich dann ab.
   if (!istNativerOrdner(input.destination) && await (input.source as ComparableHandle).isSameEntry?.(input.destination)) throw new Error("Die vollständige Sicherung benötigt einen getrennten Zielordner.");
   const index = await readIndex(input.source);
-  // Bsp.-Akten weglassen: Einträge, Bezüge und Dokumente samt ihrer Dateien.
+  // Bsp. weglassen: Einträge, Bezüge und Dokumente samt ihrer Dateien.
   const ohne = input.ohne && input.ohne.size ? input.ohne : null;
   const ueberspringen = new Set<string>();
   let ausgelassen = 0;

@@ -1,0 +1,57 @@
+{
+ "version": "2.28.60",
+ "source": "deac58e57fae34659d3e47305b709a47cfad47ef",
+ "pullRequest": [
+  161
+ ],
+ "recordedUtc": "2026-11-11T13:00:00Z",
+ "freigabe": "Klaus 11.11.2026: „Ja zu den Bsp.-Akten, als 2.28.60 ausgeben“.",
+ "inhalt": "Bsp.-Akten: in der Hilfe holt „+ Bsp.-Akten“ die erfundene Beispielfamilie in die eigene Akte (gespeichert, nie in den Pro-Tresor), „− Bsp.-Akten“ nimmt nur sie heraus; rotes Dreieck an jeder Beispielakte; Vollsicherung lässt sie aus, sobald eigene Einträge da sind. Hinweisblase schließt sich beim Sprung aus dem Bild.",
+ "ciAmPrStand": "PR #161 auf 37247af: pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) success. Vorher pruefung 107/109 (pro-tresor-einrichten: Blase über dem Knopf – behoben; kalender-einlesen einmalig, lokal grün).",
+ "releases": [
+  {
+   "tag": "android-v2.28.60",
+   "run": 43022200772,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-android-v2.28.60.apk",
+     "bytes": 20074903,
+     "sha256": "24c2175bbfabbacfe1402faba3aea7e0923427c9defea3577199fa7e6f357043",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true,
+     "versionInside": "2.28.60 (assets/public/version.json, commit deac58e)"
+    },
+    {
+     "name": "Familienakte-Einzeldatei-2.28.60.html",
+     "bytes": 3922339,
+     "sha256": "7ed4b6822f2ff84001ac7a0ef03283c0fb6424abdc90c5d6e84469161b0d86a8",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true
+    }
+   ]
+  },
+  {
+   "tag": "windows-v2.28.60",
+   "run": 43022205319,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-Windows-2.28.60-x64-setup.exe",
+     "bytes": 34215800,
+     "sha256": "aabcc65fcbd8744dc0d5ae08780778bc5e65289d4c99674e5f70871d07ee8f32",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true
+    }
+   ]
+  }
+ ],
+ "pwa": "Pages auf deac58e (Job beim Merge); Seite aus dem Behälter nicht geprüft.",
+ "notChecked": [
+  "+ Bsp.-Akten / − Bsp.-Akten und rotes Dreieck am Gerät",
+  "Vollsicherung ohne Bsp.-Akten am Gerät",
+  "family-projekt.de aus dem Behälter nicht erreichbar; der Freigabelauf prüft den Server selbst"
+ ]
+}

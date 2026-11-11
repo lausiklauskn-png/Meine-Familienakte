@@ -5,13 +5,16 @@ import { dateiAusgeben } from "./dateiausgabe";
 import { InfoPopover } from "./ui-controls";
 import { isSensitiveHealthText } from "../lib/family-privacy";
 
-const ERKLAERUNG = "Gibt genau eine Datei weiter. Einträge, Fristen, Erinnerungen und Notizen gehen nicht mit; ein Abgleich zwischen deinen Geräten ist geplant, aber noch nicht gebaut. Die ganze Akte bringst du mit der Vollsicherung und „Sicherung einlesen“ auf ein neues Gerät. Gesundheitsunterlagen stehen hier nicht zur Wahl, weil das Paket nicht verschlüsselt ist. Speichere ein Paket und schicke es auf einem Weg deiner Wahl zum anderen Gerät, zum Beispiel über Datei-Post, Mail oder USB-Stick. Die empfangende Familienakte öffnet das Paket hier und gibt eine Empfangsdatei zurück. Das Paket enthält die lesbare Originaldatei und ist selbst nicht verschlüsselt: Datei-Post verschlüsselt beim Senden, Mail und USB-Stick nicht. Wähle für jedes Paket genau einen Empfänger; für weitere Empfänger ein eigenes Paket. Die Empfangsdatei bestätigt dieses Paket, keine geprüfte Identität.";
+const ERKLAERUNG = "Gibt genau eine Datei weiter. Einträge, Fristen, Erinnerungen und Notizen gehen nicht mit; die ganze Akte gleichst du unter „Meine Geräte“ per Paket, Festplatte oder eigenem Netz ab. Gesundheitsunterlagen stehen hier nicht zur Wahl, weil das Paket nicht verschlüsselt ist. Speichere ein Paket und schicke es auf einem Weg deiner Wahl zum anderen Gerät, zum Beispiel über Datei-Post, Mail oder USB-Stick. Die empfangende Familienakte öffnet das Paket hier und gibt eine Empfangsdatei zurück. Das Paket enthält die lesbare Originaldatei und ist selbst nicht verschlüsselt: Datei-Post verschlüsselt beim Senden, Mail und USB-Stick nicht. Wähle für jedes Paket genau einen Empfänger; für weitere Empfänger ein eigenes Paket. Die Empfangsdatei bestätigt dieses Paket, keine geprüfte Identität.";
 import { geraeteAusgaenge, geraeteAusgangVorbereiten, geraeteEingaenge, geraetePaket, geraetePaketAnnehmen, geraetePaketLesen, geraeteQuittung, geraeteQuittungAnnehmen, type GeraeteAusgang, type GeraeteEingang } from "./pro-geraetetransport";
 
 type State = { handle: FileSystemDirectoryHandle | null; vaultId: string; documents: LocalDocument[]; outgoing: GeraeteAusgang[]; incoming: GeraeteEingang[] };
 /** Gesundheitsunterlagen gehen nicht unverschlüsselt hinaus (U3), wie bei „An Pro-App geben“; erst mit dem Passwort-Paket (Plan 10b). */
 export const fuerUebergabe = (d: LocalDocument) => !isSensitiveHealthText(d.category, d.originalName, d.notes);
 
+/** 2.28.61 (Klaus 11.11.): die alte Einzelübergabe ist ersetzt (Paket per Teilen). Die Karte erscheint nur noch,
+ *  solange gespeicherte Übergaben da sind – oder für die Proben mit dem Schalter „familienakte-alte-einzeluebergabe“. */
+export function alteEinzeluebergabeErzwungen() { try { return localStorage.getItem("familienakte-alte-einzeluebergabe") === "an"; } catch { return false; } }
 export function ProGeraetetransportPanel({ handle, onEingang }: { handle: FileSystemDirectoryHandle | null; onEingang?: () => void }) {
   const [state, setState] = useState<State | null>(null), [selected, setSelected] = useState(""), [recipient, setRecipient] = useState("");
   const [message, setMessage] = useState(""), [busy, setBusy] = useState(false);
@@ -61,9 +64,10 @@ export function ProGeraetetransportPanel({ handle, onEingang }: { handle: FileSy
       <legend><span className="ablauf-nr" aria-hidden="true">{nr}</span><strong>{titel}</strong><span className="uebergabe-ort">{wo === "hier" ? "Dieses Gerät" : "Anderes Gerät"}</span></legend>
       <div className="uebergabe-inhalt">{inhalt}</div>
     </fieldset></li>;
+  if (!alteEinzeluebergabeErzwungen() && (!visible || (!visible.outgoing.length && !visible.incoming.length))) return null;
   return <section className="card pro-geraetetransport" aria-label="Übergabe zwischen Geräten">
     <span className="ui-heading-help"><h2>Eine Unterlage an ein anderes Gerät geben</h2><InfoPopover label="Unterlage an ein anderes Gerät geben erklären" text={ERKLAERUNG}/></span>
-    <p className="uebergabe-hinweis" data-uebergabe-grenze>Nur eine Datei. Einträge, Fristen und Erinnerungen gehen nicht mit; ein Abgleich zwischen deinen Geräten ist geplant, noch nicht gebaut.{ausgeblendet > 0 && <> {ausgeblendet} Gesundheitsunterlage{ausgeblendet === 1 ? " ist" : "n sind"} ausgeblendet: das Paket ist nicht verschlüsselt.</>}</p>
+    <p className="uebergabe-hinweis" data-uebergabe-grenze>Nur eine Datei. Einträge, Fristen und Erinnerungen gehen nicht mit.{ausgeblendet > 0 && <> {ausgeblendet} Gesundheitsunterlage{ausgeblendet === 1 ? " ist" : "n sind"} ausgeblendet: das Paket ist nicht verschlüsselt.</>}</p>
     {!handle && <p>Zum Senden und zum Prüfen einer Rückbestätigung bitte die zugehörige Akte öffnen.</p>}
     <ol className="uebergabe-ablauf" aria-label="So geht die Übergabe">
       {schritt(1, "Unterlage wählen", "hier", <label className="uebergabe-feld"><span className="sr-only">Unterlage für das andere Gerät</span><select value={selected} onChange={e => setSelected(e.target.value)}><option value="">Unterlage wählen …</option>{waehlbar.map(d => <option key={d.id} value={d.id}>{d.originalName}</option>)}</select></label>, busy || !visible?.vaultId)}

@@ -14,6 +14,8 @@ import { NotfallblattDialog, SicherungPasswortDialog } from "./sicherung-dialoge
 import { paketAnwenden, paketErstellen, paketKopfLesen, paketOeffnen, paketPartnerAlle, paketPartnerVergessen, paketVorbereiten, partnerFuer, type PaketInhalt, type PaketKopf, type PaketPartner, type PaketVorschau } from "./paket";
 import { dateiTeilen, teilenText } from "./teilen";
 import { Package } from "lucide-react";
+import { InfoPopover } from "./ui-controls";
+import { MeineGeraete } from "./meine-geraete";
 
 const zeit = (z: string | null | undefined) => { if (!z) return "–"; const d = new Date(z); return Number.isNaN(d.getTime()) ? z : d.toLocaleString("de-DE", { dateStyle: "medium", timeStyle: "short" }); };
 const AUTO_ABSTAND = 5 * 60 * 1000;
@@ -182,12 +184,11 @@ export function LaufwerkKarte({ aktiv, appVersion, busy, onBusy, onNotice, onRef
   };
 
   // Ohne Ordnerwahl (Web-App am Handy) bleibt das Paket per Teilen möglich – es braucht nur eine Datei.
-  if (!laufwerkMoeglich()) return <><article className="card security-action-card" data-laufwerk-karte="nicht-moeglich"><div className="security-card-heading"><h2><HardDrive size={18}/> Gemeinsame Festplatte</h2></div><p className="sync-message warning">Hier nicht möglich: Die Web-App kann auf diesem Gerät keinen Ordner wählen. Der Abgleich über eine Festplatte geht in der Android- oder Windows-App oder am PC in Chrome oder Edge.</p></article><PaketKarte aktiv={aktiv} appVersion={appVersion} busy={busy} onBusy={onBusy} onNotice={onNotice} onRefresh={onRefresh} onDrucken={onDrucken}/></>;
-  const geraet = geraetKennung();
+  if (!laufwerkMoeglich()) return <><MeineGeraete busy={busy}/><article className="card security-action-card" data-laufwerk-karte="nicht-moeglich"><div className="security-card-heading"><h2><HardDrive size={18}/> Gemeinsame Festplatte</h2></div><p className="sync-message warning">Hier nicht möglich: Die Web-App kann auf diesem Gerät keinen Ordner wählen. Der Abgleich über eine Festplatte geht in der Android- oder Windows-App oder am PC in Chrome oder Edge.</p></article><PaketKarte aktiv={aktiv} appVersion={appVersion} busy={busy} onBusy={onBusy} onNotice={onNotice} onRefresh={onRefresh} onDrucken={onDrucken}/></>;
   return <>
+    <MeineGeraete busy={busy}/>
     <article className="card security-action-card" data-hilfe-ziel="laufwerk" data-laufwerk-karte={gemerkt.length}>
-      <div className="security-card-heading"><h2><HardDrive size={18}/> Gemeinsame Festplatte</h2></div>
-      <p className="fine-print">Eine SD-Karte, USB-Platte oder ein Netzordner, den Handy, Tablet und PC abwechselnd bekommen. Jedes Gerät erkennt die Platte an ihrer Kennung und gleicht ab: Neues kommt dazu, bei Unterschieden fragt die App, gelöscht wird nichts. Dieses Gerät heißt „{geraet.name}“.</p>
+      <div className="security-card-heading"><span className="ui-heading-help"><h2><HardDrive size={18}/> Gemeinsame Festplatte</h2><InfoPopover label="Gemeinsame Festplatte erklären" text={FESTPLATTE_HILFE}/></span></div>
       {gemerkt.length > 0 && <ul className="laufwerk-liste">{gemerkt.map((g) => { const da = Boolean(daOrte[g.kennung]); return <li key={g.kennung} data-laufwerk={g.kennung} data-laufwerk-da={da ? "ja" : "nein"}>
         <span className={`badge ${da ? "success" : ""}`}>{da ? "angeschlossen" : "nicht angeschlossen"}</span>
         <strong>{g.netz ? <Wifi size={15}/> : null} {g.name}{g.netz ? ` · ${g.netz.rolle === "gastgeber" ? "dieses Gerät ist Gastgeber" : `Gast${g.netz.adresse ? ` bei ${g.netz.adresse}` : ""}`}` : ""}</strong>
@@ -198,10 +199,9 @@ export function LaufwerkKarte({ aktiv, appVersion, busy, onBusy, onNotice, onRef
       {laeuft && <p className="notiz-gespeichert" role="status" data-laufwerk-laeuft>{laeuft}</p>}
       <div className="button-row"><button className="button secondary" disabled={busy || !aktiv} onClick={() => setVorbereiten(true)} data-laufwerk-vorbereiten>Festplatte vorbereiten …</button><button className="button secondary" disabled={busy || !aktiv} onClick={() => void verbinden()} data-laufwerk-verbinden>Vorhandene Festplatte verbinden …</button></div>
       {netzMoeglich() ? <>
-        <p className="fine-print" data-laufwerk-netz="ja"><Wifi size={14}/> <strong>Ohne Platte, im eigenen Netz</strong> (WLAN, LAN-Kabel oder USB-Kabel mit Netzfreigabe): Ein Gerät ist Gastgeber, die anderen koppeln einmal mit einem Code und gleichen danach von selbst ab, sobald sie den Gastgeber im Netz sehen. Kein Internet, kein fremder Server.</p>
+        <p className="laufwerk-netz-titel" data-laufwerk-netz="ja"><span className="ui-heading-help"><strong><Wifi size={14}/> Im eigenen Netz</strong><InfoPopover label="Abgleich im eigenen Netz erklären" text={NETZ_HILFE}/></span></p>
         <div className="button-row"><button className="button secondary" disabled={busy || !aktiv} onClick={() => setGastgeber(true)} data-laufwerk-gastgeber>Dieses Gerät als Gastgeber …</button><button className="button secondary" disabled={busy || !aktiv} onClick={() => setGast(true)} data-laufwerk-gast>Mit Gastgeber koppeln …</button></div>
-      </> : <p className="fine-print" data-laufwerk-netz="nein">Der Abgleich im eigenen Netz (WLAN, Kabel) geht in der Android- und der Windows-App – die Web-App im Browser darf im Heimnetz keine andere Geräte ansprechen.</p>}
-      <p className="fine-print">Gemerkt wird der Schlüssel nur im eigenen Speicher dieser App auf diesem Gerät, nie auf der Festplatte. Wer das entsperrte Gerät hat, kann abgleichen; sonst hilft „Vergessen“.</p>
+      </> : <p className="fine-print" data-laufwerk-netz="nein">Im eigenen Netz: nur in der Android- und Windows-App.</p>}
     </article>
     {vorbereiten && <VorbereitenDialog onStart={(name, pw) => void vorbereitenLos(name, pw)} onClose={() => setVorbereiten(false)}/>}
     {gastgeber && <GastgeberDialog onStart={(name, code) => void gastgeberLos(name, code)} onClose={() => setGastgeber(false)}/>}
@@ -215,6 +215,12 @@ export function LaufwerkKarte({ aktiv, appVersion, busy, onBusy, onNotice, onRef
 }
 
 /* ---------- Stufe I: Paket per Teilen ---------- */
+/** 2.28.61: beim ersten Paket kein Name – das andere Gerät meldet seinen eigenen Namen mit dem ersten Rückpaket. */
+export const NEUES_GERAET = "Neues Gerät";
+const FESTPLATTE_HILFE = "Eine Platte für alle Geräte\n• SD-Karte, USB-Platte oder Netzordner, den Handy, Tablet und PC abwechselnd bekommen.\n• Jedes Gerät erkennt die Platte an ihrer Kennung und gleicht ab: Neues kommt dazu, bei Unterschieden fragt die App, gelöscht wird nichts.\n• Der Schlüssel wird nur in dieser App auf diesem Gerät gemerkt, nie auf der Platte. Sonst hilft „Vergessen“.";
+const NETZ_HILFE = "Ohne Platte, im eigenen Netz\n• WLAN, LAN-Kabel oder USB-Kabel mit Netzfreigabe.\n• Ein Gerät ist Gastgeber, die anderen koppeln einmal mit einem Code und gleichen danach von selbst ab, sobald sie den Gastgeber sehen.\n• Kein Internet, kein fremder Server.";
+const PAKET_HILFE = "Ohne Platte und ohne gemeinsames Netz\n• Die App packt deine Änderungen seit dem letzten Paket in **eine verschlüsselte Datei** und gibt sie an Mail, Messenger oder einen Stick.\n• Am anderen Gerät „Paket einlesen“: Neues kommt dazu, bei Unterschieden fragt die App, gelöscht wird nichts.\n• Beim ersten Mal ein Passwort, danach kennt jedes Gerät den Schlüssel.";
+const PAKET_NEU_HILFE = "Erstes Paket an ein neues Gerät\n• Nur ein Passwort, kein Name: Das andere Gerät erscheint mit seinem eigenen Namen, sobald ein Paket von ihm zurückkommt.\n• Danach kommt ein Notfallblatt. Am anderen Gerät einmal das Passwort eingeben, dann merken sich beide den Schlüssel.\n• Die Datei geht an die App, die du wählst (Mail, Messenger, Dateien). Die Akte verschickt nichts von selbst.";
 type PaketOffen = { kopf: PaketKopf; inhalt: PaketInhalt; schluessel: string; vorschau: PaketVorschau; partner: PaketPartner | null };
 function PaketKarte({ aktiv, appVersion, busy, onBusy, onNotice, onRefresh, onDrucken }: {
   aktiv: FileSystemDirectoryHandle | null; appVersion: string; busy: boolean; onBusy: (b: boolean) => void;
@@ -286,8 +292,7 @@ function PaketKarte({ aktiv, appVersion, busy, onBusy, onNotice, onRefresh, onDr
   const vergessen = async (p: PaketPartner) => { await paketPartnerVergessen(p.geraetId); await laden(); onNotice({ kind: "info", text: `„${p.name}“ wird für Pakete nicht mehr gemerkt. Das nächste Paket braucht wieder ein Passwort.` }); };
   return <>
     <article className="card security-action-card" data-hilfe-ziel="paket" data-paket-karte={partner.length}>
-      <div className="security-card-heading"><h2><Package size={18}/> Paket per Teilen</h2></div>
-      <p className="fine-print">Ohne Platte und ohne gemeinsames Netz: Die App packt deine Änderungen seit dem letzten Paket an dieses Gerät in <strong>eine verschlüsselte Datei</strong> und gibt sie an Mail, Messenger oder einen Stick. Am anderen Gerät „Paket einlesen“ – Neues kommt dazu, bei Unterschieden fragt die App, gelöscht wird nichts. Beim ersten Mal ein Passwort, danach kennt jedes Gerät den Schlüssel.</p>
+      <div className="security-card-heading"><span className="ui-heading-help"><h2><Package size={18}/> Paket per Teilen</h2><InfoPopover label="Paket per Teilen erklären" text={PAKET_HILFE}/></span></div>
       {partner.length > 0 && <ul className="laufwerk-liste">{partner.map((p) => <li key={p.geraetId} data-paket-partner={p.geraetId}>
         <strong>{p.name}</strong>
         <small>letztes Paket gesendet: {zeit(p.letztesPaket)} · empfangen: {zeit(p.letzterEmpfang)}{p.schluessel ? " · Schlüssel gemerkt" : ""}</small>
@@ -305,20 +310,19 @@ function PaketKarte({ aktiv, appVersion, busy, onBusy, onNotice, onRefresh, onDr
 }
 
 function PaketDialog({ partner, onStart, onClose }: { partner: PaketPartner[]; onStart: (ziel: PaketPartner | { name: string; passwort: string }, wahl: { originale: boolean; alles: boolean }) => void; onClose: () => void }) {
-  const [ziel, setZiel] = useState(partner[0]?.geraetId || "neu"); const [name, setName] = useState(""); const [pw, setPw] = useState(""); const [pw2, setPw2] = useState(""); const [zeigen, setZeigen] = useState(false);
+  const [ziel, setZiel] = useState(partner[0]?.geraetId || "neu"); const [pw, setPw] = useState(""); const [pw2, setPw2] = useState(""); const [zeigen, setZeigen] = useState(false);
   const [originale, setOriginale] = useState(true); const [alles, setAlles] = useState(false); const [fehler, setFehler] = useState("");
   const neu = ziel === "neu"; const p = partner.find((x) => x.geraetId === ziel);
   const los = () => {
-    if (neu) { if (!name.trim()) { setFehler("Bitte das andere Gerät benennen (z. B. „Tablet“)."); return; } const f = passwortPruefen(pw); if (f) { setFehler(f); return; } if (pw !== pw2) { setFehler("Die beiden Eingaben stimmen nicht überein."); return; } onStart({ name: name.trim(), passwort: pw }, { originale, alles: true }); }
+    if (neu) { const f = passwortPruefen(pw); if (f) { setFehler(f); return; } if (pw !== pw2) { setFehler("Die beiden Eingaben stimmen nicht überein."); return; } onStart({ name: NEUES_GERAET, passwort: pw }, { originale, alles: true }); }
     else if (p) onStart(p, { originale, alles });
   };
   return <div className="modal-backdrop" role="presentation" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
     <div className="modal" role="dialog" aria-modal="true" aria-labelledby="paket-titel" data-paket-dialog>
-      <div className="modal-head"><div><span className="badge">Paket per Teilen</span><h2 id="paket-titel">Paket erstellen</h2></div><button className="icon-button" onClick={onClose} aria-label="Fenster schließen"><X/></button></div>
+      <div className="modal-head"><div><span className="badge">Paket per Teilen</span><span className="ui-heading-help"><h2 id="paket-titel">Paket erstellen</h2><InfoPopover label="Paket erstellen erklären" text={neu ? PAKET_NEU_HILFE : `• Verschlüsselt mit dem gemerkten Schlüssel für „${p?.name}“; am anderen Gerät ohne Passwort einlesbar.\n• Die Datei geht an die App, die du wählst (Mail, Messenger, Dateien). Die Akte verschickt nichts von selbst.`}/></span></div><button className="icon-button" onClick={onClose} aria-label="Fenster schließen"><X/></button></div>
       <div className="form-grid">
-        <label>Für welches Gerät?<select value={ziel} onChange={(e) => { setZiel(e.target.value); setFehler(""); }} data-paket-ziel>{partner.map((x) => <option key={x.geraetId} value={x.geraetId}>{x.name}</option>)}<option value="neu">Neues Gerät …</option></select></label>
+        <label>Für welches Gerät?<select value={ziel} onChange={(e) => { setZiel(e.target.value); setFehler(""); }} data-paket-ziel>{partner.map((x) => <option key={x.geraetId} value={x.geraetId}>{x.name}</option>)}<option value="neu">{NEUES_GERAET} …</option></select></label>
         {neu && <>
-          <label>Name des Geräts<input value={name} onChange={(e) => setName(e.target.value)} placeholder="z. B. Tablet, PC im Büro" data-paket-name/></label>
           <label>Passwort für das Paket (mindestens {PASSWORT_MINDESTLAENGE} Zeichen)<input type={zeigen ? "text" : "password"} value={pw} autoComplete="new-password" onChange={(e) => { setPw(e.target.value); setFehler(""); }} data-passwort/></label>
           <label>Passwort wiederholen<input type={zeigen ? "text" : "password"} value={pw2} autoComplete="new-password" onChange={(e) => { setPw2(e.target.value); setFehler(""); }} data-passwort-wieder/></label>
           <label className="checkbox-row"><input type="checkbox" checked={zeigen} onChange={(e) => setZeigen(e.target.checked)}/> Passwort anzeigen</label>
@@ -326,7 +330,6 @@ function PaketDialog({ partner, onStart, onClose }: { partner: PaketPartner[]; o
         <label className="checkbox-row"><input type="checkbox" checked={originale} onChange={(e) => setOriginale(e.target.checked)} data-paket-originale/> Originaldateien beilegen (bis 100 MB; sonst nur Einträge und Notizen)</label>
         {!neu && <label className="checkbox-row"><input type="checkbox" checked={alles} onChange={(e) => setAlles(e.target.checked)} data-paket-alles-haken/> Alles senden, nicht nur Änderungen (wenn ein Paket verloren ging)</label>}
       </div>
-      <ul className="fine-print"><li>{neu ? "Das erste Paket legt den Schlüssel fest; danach kommt ein Notfallblatt. Am anderen Gerät einmal das Passwort eingeben, dann merken sich beide den Schlüssel." : `Verschlüsselt mit dem gemerkten Schlüssel für „${p?.name}“; am anderen Gerät ohne Passwort einlesbar.`}</li><li>Die Datei geht an die App, die du wählst (Mail, Messenger, Dateien). Die Akte verschickt nichts von selbst.</li></ul>
       {fehler && <p className="form-error" data-paket-fehler>{fehler}</p>}
       <div className="modal-actions"><button className="button secondary" onClick={onClose}>Abbrechen</button><button className="button primary" onClick={los} data-paket-los>Paket packen und teilen</button></div>
     </div>
