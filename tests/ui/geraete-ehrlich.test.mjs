@@ -29,12 +29,12 @@ try {
     const main = await page.locator("main").innerText();
     return soll(!/OneDrive-Ordner verbinden|OneDrive auf PC oder USB sichern|Online-Altbestand lokal sichern|Neue Ausbaustufe/.test(main), main.match(/OneDrive[^\n]*|Online-Altbestand[^\n]*/)?.[0] || "");
   });
-  await step("Übergabe: Grenze genannt, Gesundheitsunterlagen nicht zur Wahl (Paket unverschlüsselt)", async () => {
-    const grenze = await page.locator("[data-uebergabe-grenze]").innerText();
-    const optionen = await page.locator(".pro-geraetetransport select option").allInnerTexts();
-    soll(/Abgleich/.test(grenze) && /geplant/.test(grenze) && /ausgeblendet/.test(grenze), grenze);
-    soll(optionen.length > 3 && !optionen.some((o) => /Impfpass|Brille/.test(o)), optionen.join(", "));
-    return `${optionen.length - 1} Unterlagen wählbar · ${grenze}`;
+  await step("Meine Geräte statt alter Einzelübergabe: Karte da, alte Karte weg, nirgends „geplant, noch nicht gebaut“", async () => {
+    await page.locator("[data-meine-geraete]").waitFor();
+    soll(await page.locator(".pro-geraetetransport").count() === 0, "alte Einzelübergabe noch sichtbar");
+    const text = await page.locator("main").innerText();
+    soll(!/geplant, (aber )?noch nicht gebaut/.test(text), "veralteter Satz noch da");
+    return true;
   });
   await step("Datentresor prüfen: Karte heißt nicht mehr „Abgleich“ und meldet „nicht verbunden“ bei Browserspeicher", async () => {
     const karte = await page.locator(".security-compare-card").innerText();

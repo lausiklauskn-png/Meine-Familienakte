@@ -2902,3 +2902,10 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .landkarte.lk-gefiltert .lk-ast.treffer { stroke: #1d5b94; stroke-width: 3; opacity: 1; }
 /* Abbruch der Tresorwahl: ruhiger Hinweis statt Fehlerfarbe (Gerätetest 10.11.). */
 .pro-tresor-hinweis { border-left: 4px solid #9aa5ad; background: #f3f5f7; color: #3c4d58; padding: 6px 10px; border-radius: 8px; }
+/* 2.28.61 Meine Geräte: Art per Knopf, Dateiort an der Unterlage */
+.geraet-benennen { display: grid; gap: 8px; }
+.chip-reihe { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 1px solid var(--line, #c8d9e2); border-radius: 999px; padding: 7px 14px; background: var(--card, #fff); color: inherit; font-weight: 700; cursor: pointer; }
+.chip.aktiv { background: #0b3154; color: #fff; border-color: #0b3154; }
+.datei-ort { display: grid; gap: 4px; }
+.datei-ort-pfad { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .82rem; background: rgba(127,127,127,.12); padding: 4px 8px; border-radius: 6px; overflow-wrap: anywhere; }

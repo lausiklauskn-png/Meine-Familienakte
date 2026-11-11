@@ -73,6 +73,21 @@ fn fa_adresse_oeffnen(url: String) -> Result<(), String> {
     { Err("OPEN_UNSUPPORTED".into()) }
 }
 
+/// „Im Explorer zeigen ›“ (2.28.61): öffnet einen vorhandenen Ordner auf diesem PC im Explorer. Nur absolute Windows-Pfade,
+/// keine Netzfreigaben, keine Programme – der Pfad muss ein vorhandener Ordner sein.
+#[tauri::command]
+fn fa_ordner_zeigen(pfad: String) -> Result<(), String> {
+    let p = std::path::Path::new(&pfad);
+    let gueltig = pfad.len() <= 1000 && pfad.as_bytes().get(1) == Some(&b':') && pfad.as_bytes().first().map_or(false, |c| c.is_ascii_alphabetic())
+        && !pfad.contains('"') && !pfad.starts_with("\\\\");
+    if !gueltig { return Err("INVALID_INPUT".into()); }
+    if !p.is_dir() { return Err("NOT_FOUND".into()); }
+    #[cfg(windows)]
+    { std::process::Command::new("explorer.exe").arg(p).spawn().map_err(|_| "OPEN_FAILED".to_string())?; Ok(()) }
+    #[cfg(not(windows))]
+    { Err("OPEN_UNSUPPORTED".into()) }
+}
+
 /// „Auf Updates prüfen“ (Versionszeile): Feed von family-projekt.de, nur mit gültiger Unterschrift, nur eine neuere Fassung.
 #[tauri::command]
 async fn fa_update_pruefen(state: tauri::State<'_, Geprueft>) -> Result<Value, String> {
@@ -126,7 +141,7 @@ fn main() {
         .manage(modelle::ModelState::default())
         .manage(kalender::KalenderState::default())
         .manage(Startdateien(Mutex::new(dateiargumente(&std::env::args().collect::<Vec<_>>()))))
-        .invoke_handler(tauri::generate_handler![fa_diktat, fa_diktat_abbrechen, fa_plattform, fa_startdateien, fa_adresse_oeffnen, fa_update_pruefen, fa_update_installieren, fa_setup_angaben, pro_tresor::fa_pro_tresor, modelle::fa_modelle, kalender::fa_kalender])
+        .invoke_handler(tauri::generate_handler![fa_diktat, fa_diktat_abbrechen, fa_plattform, fa_startdateien, fa_adresse_oeffnen, fa_ordner_zeigen, fa_update_pruefen, fa_update_installieren, fa_setup_angaben, pro_tresor::fa_pro_tresor, modelle::fa_modelle, kalender::fa_kalender])
         .setup(|app| {
             // An unavailable optional model route does not disable the family app.
             // ModelState reports this and refuses downloads until it is available.

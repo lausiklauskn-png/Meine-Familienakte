@@ -435,7 +435,7 @@ export async function runCentralIntakeSelfTests() {
 
 /** Übergabepaket oder Empfangsdatei einer anderen Familienakte (U5): nicht hier ablegen, sondern im Sicherheitscenter öffnen. */
 export function uebergabeHinweis(name: string): string | null {
-  if (/\.familienakte-paket$/i.test(name)) return "Das ist ein Übergabepaket einer anderen Familienakte, keine Unterlage. Bitte nicht hier ablegen, sondern unter Sicherheit › „Eine Unterlage an ein anderes Gerät geben“ › „Übergabepaket öffnen“ annehmen.";
-  if (/\.familienakte-quittung$/i.test(name)) return "Das ist eine Empfangsdatei zu einem Übergabepaket, keine Unterlage. Bitte unter Sicherheit › „Eine Unterlage an ein anderes Gerät geben“ › „Empfangsdatei prüfen“ öffnen.";
+  if (/\.familienakte-paket$/i.test(name)) return "Das ist ein Übergabepaket einer anderen Familienakte, keine Unterlage. Diese ältere Einzelübergabe gibt es nicht mehr: Bitte am anderen Gerät neu als Paket schicken (Sicherheit › „Paket per Teilen“).";
+  if (/\.familienakte-quittung$/i.test(name)) return "Das ist eine Empfangsdatei zu einem Übergabepaket, keine Unterlage. Sie gehört zur älteren Einzelübergabe und wird nicht mehr gebraucht.";
   return null;
 }

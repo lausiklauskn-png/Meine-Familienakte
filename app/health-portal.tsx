@@ -1,3 +1,4 @@
+import { DateiOrt, akteOrtSetzen } from "./datei-ort";
 import { demoActive, switchDemo } from "../lib/demo-workspace.ts";
 import { aktuelleGrenze, grenzeMessen, mbText } from "../lib/geraete-grenze";
 import { verkleinerbar } from "./verkleinern";
@@ -618,6 +619,7 @@ function HealthPortalContent() {
     vault: "pending", upload: "pending", compare: "pending", update: "pending", chatgpt: "pending",
   });
   const vaultHandle = oneDriveHandle || localVaultHandle;
+  akteOrtSetzen(vaultHandle);
   const [sampleBusy, setSampleBusy] = useState(false);
   const samplePresent = useMemo(() => sampleDataPresent({ documents: localDocuments, records: familyRecords }), [localDocuments, familyRecords]);
   // „Aus der Akte nehmen“ (2.28.39): aussortierte Dokumente fehlen in Suche, Assistenz, Cockpit und Bibliotheksliste.
@@ -3821,6 +3823,7 @@ function DocumentLibraryCard({ item, fill, onFill, onWfpdf, onPro, onUebergabe, 
       {item.source.dateiname && !item.protectedHealth && <small className="library-dateiname" data-dateiname>Datei: {item.source.dateiname}</small>}
       <div className="library-document-meta"><button onClick={onDate}>{item.date ? fmtDate(item.date) : "Ohne Dokumentdatum"}</button><button onClick={onOpen}>{statusLabel[item.status as keyof typeof statusLabel] || item.status}</button></div>
       <p>{item.description}</p>
+      {item.source.storedPath && <DateiOrt storedPath={item.source.storedPath} ohneDateiname={item.protectedHealth}/>}
       {onPro && <ProDokumentKnopf onUebernehmen={onPro}/>}
       {onTeilen && !item.protectedHealth && <TeilenKnopf onTeilen={onTeilen}/>}
       {onUebergabe && !item.sensitive && <ProUebergabeKnopf onSenden={onUebergabe}/>}
