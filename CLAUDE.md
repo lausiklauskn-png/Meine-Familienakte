@@ -5,7 +5,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 `docs/briefe-archiv/` (Klaus 2026-11-04: archivieren statt löschen); die Veröffentlichungsnachweise in
 `docs/VEROEFFENTLICHUNG-<fassung>.json`.
 
-## Aktueller Stand (11.11.2026, nach 2.28.61)
+## Aktueller Stand (11.11.2026, nach 2.28.64)
 
 - **Fassung 2.28.61** (#164; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.61.json`): **Meine Geräte**
   (`app/meine-geraete.tsx`: dieses Gerät per Knopf Handy/Tablet/PC/Laptop benennen, andere erscheinen von selbst), Paket an ein neues
@@ -13,9 +13,9 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   **Dateiort** an jeder Unterlage (`app/datei-ort.tsx`, `lib/datei-ort.ts`, Windows `fa_ordner_zeigen`), Erklärungen hinter dem „?“.
 - **Fassung 2.28.60** (#161; Nachweis `docs/VEROEFFENTLICHUNG-2.28.60.json`): **Bsp.-Akten** in der Hilfe unter „Demo“ (rotes Dreieck
   `app/bsp-ecke.tsx`, nie in den Pro-Tresor, Vollsicherung ohne sie, sobald eigene Einträge da sind). Hinweisblase schließt beim Sprung.
-- **In Arbeit: 2.28.64** (#165; 2.28.62 und 2.28.63 nie ausgegeben und darin aufgegangen): Schriftgröße „A··A“ im Kopf (`app/schrift-knopf.tsx` auf `public/native/pro-bedienung.js`, byte-gleich aus Private Brain Pro), Textdurchsicht A–E, Rechtstexte (`public/datenschutz.html`), Systemprüfung (Stand der Fassung), Sicherheitsseite kürzer, Startfläche ohne Logo, rote Kästen der Landkarte (Klaus Ja 1–3: gesperrter
+- **Fassung 2.28.64** (#165; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.64.json`; 2.28.62 und 2.28.63 nie ausgegeben und darin aufgegangen): Schriftgröße „A··A“ im Kopf (`app/schrift-knopf.tsx` auf `public/native/pro-bedienung.js`, byte-gleich aus Private Brain Pro), Textdurchsicht A–E, Rechtstexte (`public/datenschutz.html`), Systemprüfung (Stand der Fassung), Sicherheitsseite kürzer, Startfläche ohne Logo, rote Kästen der Landkarte (Klaus Ja 1–3: gesperrter
   Pro-Tresor gelb „Entsperren“, Akte nur im App-Speicher gelb „Tresor einrichten“/„Ordner wählen“, „Demo verlassen“ am Demo-Kasten),
-  Knopf wieder „+ Bsp.-Akten“/„− Bsp.-Akten“ (Klaus: „Bsp.“ allein ist nicht zu erraten). Klaus 11.11.: bei grün ohne Rückfrage ausgeben.
+  Knopf wieder „+ Bsp.-Akten“/„− Bsp.-Akten“ (Klaus: „Bsp.“ allein ist nicht zu erraten). Ausgegeben 11.11.; Geschenkbox Version 20. Nächster Bau: 2.28.65 nach dem Startbrief Cloud-Ordner.
 
 - **Fassung 2.28.59** (#163; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.59.json`): **Android-Ordner** – Capacitors
   `PluginCall.getLong` nimmt nur `Long`, kleine Zahlen kommen als `Integer` → Ersatzwert. `FamilienakteOrdnerPlugin` las so
@@ -27,7 +27,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   verschlüsselte Vollsicherung auf SD-Karte brach ab („kam beim Zurücklesen nicht unverändert an“, Ordner leer). `FamilienakteOrdnerPlugin`
   prüft jetzt Länge und SHA-256 selbst (`pruefenMitGeduld`, bis zu vier Versuche) statt `COLUMN_SIZE`; Fehler tragen einen Grund
   („Größe … statt …“), `app/nativer-ordner.ts` zeigt ihn. Probe `scripts/run-ordner-fehler-tests.mjs`. Am Tablet ungeprüft.
-- **Offen:** Cloud-Ordner (Vorschau `docs/vorschau/cloud-ordner-2.28.58.html`, Jens' Antwort offen).
+- **Cloud-Ordner:** entschieden (Klaus 11.11.), Bau in 2.28.65 nach `BRIEF_SITZUNG_2026-11-11_CLOUD-ORDNER-2.28.65.md`; Jens' Antwort nicht mehr nötig (alles als Wahl in der App).
 - **Fassung 2.28.57** (#158; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.57.json`): **Tooltips** (Klaus 10.11.:
   „einfach nur Tooltips“): Maus/Stift über einem Knopf zeigt nach 0,5 s eine eigene Blase (`app/kurzhinweise.ts`), auch in der
   Android-WebView (zeigt `title` nie – Ursache des Befunds); kein langer Druck mehr, Finger-Tipp löst sofort aus; nur wo der Hinweis
@@ -132,9 +132,9 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   (2.28.35, `docs/landkarte/`), Landkarte der App mit **Stand je Kasten in `lib/app-stand.ts` – bei jeder Fassung eintragen** (2.28.36),
   Hilfe-Themen als Bild, Vorschaufenster (2.28.37), Listenzeilen mit `KnopfLeiste`, Kopfleiste (2.28.38).
   Proben-Hinweise: `step()` wertet einen zurückgegebenen Text als grün, deshalb `soll()`; Seitentitel sind keine Sprungziele.
-- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.61, 2.28.60, 2.28.59, 2.28.58, 2.28.57, 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
+- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.64, 2.28.61, 2.28.60, 2.28.59, 2.28.58, 2.28.57, 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
   (2.28.50 ausgegeben, aber ohne eigenen Nachweis; 2.28.40–2.28.47 waren Zwischenstände). Keine davon erneut ausgeben;
-  **nächste freie Fassung 2.28.64** (2.28.62 und 2.28.63 übersprungen). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
+  **nächste freie Fassung 2.28.65** (2.28.62 und 2.28.63 nie ausgegeben). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
   sammeln, Proben laufen lassen, gesammelt als eine Fassung ausgeben (ersetzt „jede neue Funktion gleich ausgeben“ vom 06.11.).
   Neue Fassung oben in `lib/fassungen.ts` eintragen. Die Versionszeile zeigt die technische Fassung aus `package.json`;
   `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
@@ -161,6 +161,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
+  - `BRIEF_SITZUNG_2026-11-11_CLOUD-ORDNER-2.28.65.md` (nächster Bau: Sicherung an einem zweiten Ort, Nur sichern/Synchron halten, Cloud-Ordner hereinholen; Klaus: keine Vorschau nötig)
   - `BRIEF_ABSCHLUSS_2026-11-11_GESAMMELT-2.28.64.md` (jüngster Abschluss: 2.28.57 bis 2.28.64, Startauftrag; die Briefe vom 10./11.11. liegen im Archiv)
   - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-09_AUSGABE-2.28.51.md` (Ausgabe 2.28.51; Startauftrag Gerätetest)
   - `BRIEF_CODEX_2026-11-04_NACH-2.28.24.md` (Abstimmung mit Codex: welche Dateien Claude gehören)
