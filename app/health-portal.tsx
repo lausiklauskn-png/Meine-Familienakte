@@ -1076,13 +1076,19 @@ function HealthPortalContent() {
     try {
       const destination = await chooseExportDestination("Ordner für die Vollsicherung wählen (getrennt vom Pro-Tresor)");
       setNotice({ kind: "info", laeuft: true, text: passwort ? "Sicherung läuft: jede Datei wird verschlüsselt, zurückgelesen und per Prüfsumme bestätigt." : "Sicherung läuft: jede Datei wird kopiert und per Prüfsumme bestätigt." });
-      const result = await writeFullFamilyBackup({ destination, source: vaultHandle, appVersion: APP_VERSION, passwort });
+      // Bsp.-Akten (Klaus 11.11.): nicht mitsichern – die Vorlage steckt in der App.
+      // Besteht die Akte nur aus Bsp.-Akten, wird sie normal gesichert – sonst wäre die Sicherung leer.
+      const bestand = samplePresent ? await readLocalVaultData(vaultHandle) : null;
+      const bspIdsSicherung = bestand ? beispielIdsVon(bestand) : null;
+      const eigeneDa = Boolean(bestand && bspIdsSicherung && [...bestand.documents, ...bestand.records].some((x) => !bspIdsSicherung.has(x.id)));
+      const ohne = eigeneDa ? bspIdsSicherung! : undefined;
+      const result = await writeFullFamilyBackup({ destination, source: vaultHandle, appVersion: APP_VERSION, passwort, ohne });
       // Frage s: Programm dazu, getrennt von den Daten. Android legt die eigene APK bei, Windows einen Lies-mich mit Download und SHA-256.
       let programm = "";
       try { programm = await programmBeilegen(destination, result.folderName, APP_FASSUNG); }
       catch (error) { programm = ` Das Programm konnte nicht beigelegt werden (${error instanceof Error ? error.message : "unbekannt"}).`; }
       await refreshLocal();
-      setNotice({ kind: "success", text: `Die vollständige Familienakten-Sicherung „${result.folderName}“ wurde ${passwort ? "verschlüsselt " : ""}mit Register, Verknüpfungen, Tagebuch-Einträge, Medien und Prüfsummen erstellt.${programm}${passwort ? "" : " Für die endgültige Bestätigung folgt die Wiederherstellung in einem leeren Testordner."}` });
+      setNotice({ kind: "success", text: `Die vollständige Familienakten-Sicherung „${result.folderName}“ wurde ${passwort ? "verschlüsselt " : ""}mit Register, Verknüpfungen, Tagebuch-Einträge, Medien und Prüfsummen erstellt.${result.ausgelassen ? " Bsp.-Akten nicht mitgesichert." : ""}${programm}${passwort ? "" : " Für die endgültige Bestätigung folgt die Wiederherstellung in einem leeren Testordner."}` });
       if (result.notfall) setNotfallblatt({ notfall: result.notfall, ordner: result.folderName, erstellt: result.manifest.createdAt });
     } catch (error) { if ((error as DOMException)?.name !== "AbortError") setNotice({ kind: "error", text: `Vollsicherung nicht erstellt: ${error instanceof Error ? ordnerFehlerText(error) : "unbekannter Fehler."}` }); else setNotice(null); }
     finally { setVaultBusy(false); }

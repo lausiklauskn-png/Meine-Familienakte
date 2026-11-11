@@ -3102,7 +3102,7 @@ type FullBackupResult = {
 
 /** Schreibweg einer Vollsicherung: lesbar (Datei unter ihrem Pfad) oder verschlüsselt (Dateien/00001.fav …, Pfad nur im
  *  verschlüsselten Manifest). Jede geschriebene Datei wird zurückgelesen und per Prüfsumme bestätigt. */
-type SicherungsSchreiber = { dataDirectory: FileSystemDirectoryHandle; files: FamilyBackupFile[]; tresor: Tresor | null; nr: number };
+type SicherungsSchreiber = { dataDirectory: FileSystemDirectoryHandle; files: FamilyBackupFile[]; tresor: Tresor | null; nr: number; ueberspringen?: ReadonlySet<string> };
 async function sicherungsDateiSchreiben(w: SicherungsSchreiber, relativePath: string, sourceFile: File) {
   const sourceChecksum = await fileChecksum(sourceFile);
   if (!w.tresor) {
@@ -3135,6 +3135,7 @@ async function copyDirectoryWithChecksums(source: FileSystemDirectoryHandle, w: 
   for await (const entry of iterable.values()) {
     const relativePath = prefix ? `${prefix}/${entry.name}` : entry.name;
     if (entry.kind === "directory") { await copyDirectoryWithChecksums(entry as FileSystemDirectoryHandle, w, relativePath); continue; }
+    if (w.ueberspringen?.has(relativePath) || w.ueberspringen?.has(`#name:${entry.name}`)) continue;
     await sicherungsDateiSchreiben(w, relativePath, await (entry as FileSystemFileHandle).getFile());
   }
 }
@@ -3187,17 +3188,35 @@ export async function writeFullFamilyBackup(input: {
   createdAt?: string;
   /** Stufe B: Passwort (≥ 10 Zeichen) → verschlüsselte Sicherung; ohne Passwort lesbar (bewusst gewählt). */
   passwort?: string | null;
-}): Promise<FullBackupResult> {
+  /** Bsp.-Akten (Klaus 11.11.): Kennungen, die nicht mitgesichert werden – die Vorlage steckt in der App. */
+  ohne?: ReadonlySet<string>;
+}): Promise<FullBackupResult & { ausgelassen: number }> {
   if (!(await requestVaultPermission(input.source)) || !(await requestVaultPermission(input.destination))) throw new Error("Quell- und Sicherungsordner müssen ausdrücklich freigegeben sein.");
   // Ein nativer Ordner (Android/Windows, P5) ist nie derselbe wie der Browser-Datentresor; der Browser lehnt den Vergleich dann ab.
   if (!istNativerOrdner(input.destination) && await (input.source as ComparableHandle).isSameEntry?.(input.destination)) throw new Error("Die vollständige Sicherung benötigt einen getrennten Zielordner.");
   const index = await readIndex(input.source);
+  // Bsp.-Akten weglassen: Einträge, Bezüge und Dokumente samt ihrer Dateien.
+  const ohne = input.ohne && input.ohne.size ? input.ohne : null;
+  const ueberspringen = new Set<string>();
+  let ausgelassen = 0;
+  if (ohne) {
+    // Pfad und Dateiname (enthält die Dokumentkennung, also eindeutig) – ein Schrägstrich im Kategorienamen verschiebt sonst den Ort.
+    for (const d of index.documents) if (ohne.has(d.id) && d.storedPath) {
+      if (d.storedPath.startsWith(`${ROOT}/`)) ueberspringen.add(d.storedPath.slice(ROOT.length + 1));
+      const name = d.storedPath.split("/").pop(); if (name && name.includes(d.id.slice(0, 8))) ueberspringen.add(`#name:${name}`);
+    }
+    const vorher = index.documents.length + index.records.length;
+    index.documents = index.documents.filter((d) => !ohne.has(d.id));
+    index.records = index.records.filter((r) => !ohne.has(r.id));
+    index.relations = index.relations.filter((r) => !ohne.has(r.id) && !ohne.has(r.fromId) && !ohne.has(r.toId));
+    ausgelassen = vorher - index.documents.length - index.records.length;
+  }
   const createdAt = input.createdAt || new Date().toISOString();
   const tresor = input.passwort ? await tresorAnlegen(input.passwort, { appVersion: input.appVersion, createdAt }) : null;
   const backup = await uniqueDirectory(input.destination, `Familienakte_Vollsicherung_${createdAt.replace(/[:.]/g, "-")}${tresor ? "_verschluesselt" : ""}`);
   const dataDirectory = await backup.handle.getDirectoryHandle("Dateien", { create: true });
   const sourceRoot = await root(input.source);
-  const w: SicherungsSchreiber = { dataDirectory, files: [], tresor, nr: 0 };
+  const w: SicherungsSchreiber = { dataDirectory, files: [], tresor, nr: 0, ueberspringen };
   const files = w.files;
   for (const folderName of ["01_Dokumente", "02_Online-Bestand_gesichert", "03_Erinnerungsmedien"]) {
     try {
@@ -3246,7 +3265,7 @@ export async function writeFullFamilyBackup(input: {
   // Stufe B (Entscheidung 7): Zeitpunkt der letzten Vollsicherung im Register merken, für die Erinnerung nach 7 Tagen.
   try { const aktuell = await readIndex(input.source); aktuell.letzteVollsicherung = createdAt; aktuell.letzteVollsicherungVerschluesselt = Boolean(tresor); await writeIndex(input.source, aktuell, { preserveTimestamp: true }); }
   catch { /* die Sicherung selbst ist fertig; der Merker ist nur für die Erinnerung */ }
-  return { folderName: backup.name, manifest, notfall: tresor?.notfall };
+  return { folderName: backup.name, manifest, notfall: tresor?.notfall, ausgelassen };
 }
 async function writeBlobFile(directory: FileSystemDirectoryHandle, name: string, contents: Blob) {
   const file = await directory.getFileHandle(name, { create: true });

@@ -55,6 +55,24 @@ try {
     const r = await page.evaluate(() => ({ zeilen: document.querySelectorAll("[data-bibliothek-zeile]").length, mit: document.querySelectorAll("[data-bibliothek-zeile] [data-bsp-ecke]").length }));
     return soll(r.zeilen > 0 && r.mit > 0, r);
   });
+  // Klaus 11.11.: die Vollsicherung lässt Bsp.-Akten weg – die Vorlage steckt in der App.
+  await step("Vollsicherung mit Bsp.-Akten in der Akte: Register und Dateien ohne Beispiele, eigene Person dabei", async () => {
+    await vaultFixture(page);
+    const r = await page.evaluate(async () => {
+      const f = window.__vaultFixture; const quelle = await f.browserVault();
+      const ziel = await (await navigator.storage.getDirectory()).getDirectoryHandle("bsp-sicherung-" + Date.now(), { create: true });
+      const daten = await f.readLocalVaultData(quelle);
+      const ohne = f.beispielIdsVon(daten);
+      const res = await f.writeFullFamilyBackup({ destination: ziel, source: quelle, appVersion: "probe", passwort: null, ohne });
+      const ordner = await ziel.getDirectoryHandle(res.folderName);
+      const reg = JSON.parse(await (await (await ordner.getFileHandle("Familienakte_Register.json")).getFile()).text());
+      const bspDok = reg.documents.filter((d) => d.notes?.startsWith("Beispieldaten – frei erfunden")).length;
+      const bspEin = reg.records.filter((x) => x.source === "Beispieldaten – frei erfunden").length;
+      const eigen = reg.records.some((x) => x.data?.displayName === "Eigene Probeperson");
+      return { ausgelassen: res.ausgelassen, bspDok, bspEin, eigen, dateien: res.manifest.files.length, pfade: res.manifest.files.map((x) => x.path), vorherBsp: ohne.size };
+    });
+    return soll(r.ausgelassen > 10 && r.bspDok === 0 && r.bspEin === 0 && r.eigen && r.dateien === 0 && r.vorherBsp > 10, r);
+  });
   await step("Nach Neuladen bleiben die Bsp.-Akten (gespeichert)", async () => {
     await page.reload({ waitUntil: "networkidle" }); await page.waitForSelector(".site-brand-version");
     return soll(await page.locator(".sample-data-notice").count() === 1, "Hinweis fehlt nach Neuladen");
