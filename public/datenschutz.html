@@ -46,6 +46,8 @@ a{color:var(--akzent)}p,li{overflow-wrap:anywhere}small{color:var(--leise)}
 <li><strong>Vollsicherung, gemeinsame Festplatte, Paket per Teilen:</strong> verschlüsselt oder auf Wunsch lesbar, an einem Ort, den der Nutzer wählt. Wohin ein Paket geht (Mail, Messenger, Stick), bestimmt der Nutzer.</li>
 <li><strong>Abgleich im eigenen Netz:</strong> nur zwischen den Geräten des Nutzers im selben WLAN oder Kabelnetz (Ports 48200 und 48201), verschlüsselt, ohne Server.</li>
 <li><strong>Ordner eines Cloud-Anbieters (z. B. OneDrive):</strong> die App liest nur den Ordner, den das Programm des Anbieters auf dem Gerät hält; für die Übertragung zum Anbieter gelten dessen Bedingungen.</li>
+<li><strong>Sicherung an einem zweiten Ort:</strong> auf Wunsch sichert die App selbsttätig in einen Ordner nach Wahl (z. B. OneDrive-Ordner, USB-Stick, SD-Karte) – verschlüsselt (Vorgabe) oder lesbar – und behält zwei Sicherungen im eigenen Speicher der App. Liegt der Ordner bei einem Cloud-Anbieter, überträgt dessen Programm die Dateien nach dessen Bedingungen; bei einer lesbaren Sicherung sind die Unterlagen dort unverschlüsselt. Der Schlüssel der Sicherung bleibt nur auf dem Gerät.</li>
+<li><strong>Cloud-Ordner hereinholen:</strong> die App liest einen gewählten Ordner mit Unterordnern und legt neue Dateien als Kopie in die Eingangszentrale; im Ordner ändert sie nichts.</li>
 <li><strong>Demo und Bsp.-Akten:</strong> erfundene Daten, nur auf dem Gerät.</li>
 </ul>
 
@@ -61,29 +63,38 @@ a{color:var(--akzent)}p,li{overflow-wrap:anywhere}small{color:var(--leise)}
 <p><strong>Zugang:</strong> Die Anmeldedaten (Zugangs-Token) werden nur im Arbeitsspeicher der laufenden App gehalten, nicht gespeichert und nie an den Betreiber übertragen. Nach Neuladen bzw. Programmende ist eine neue Anmeldung nötig. Der Nutzer kann die Verbindung in der App jederzeit trennen und den Zugriff zusätzlich in seinem Konto widerrufen (Google: <a href="https://myaccount.google.com/permissions" rel="noopener" target="_blank">myaccount.google.com/permissions</a>; Microsoft: <a href="https://account.live.com/consent/Manage" rel="noopener" target="_blank">account.live.com/consent/Manage</a>).</p>
 <p>Die Nutzung von Daten aus Google-APIs hält sich an die <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener" target="_blank">Google API Services User Data Policy</a> einschließlich der Anforderungen zur eingeschränkten Nutzung (Limited Use). Daten aus Google-Konten werden nur zum Eintragen, Ändern und Entfernen der vom Nutzer gewählten Termine verwendet, nicht an Dritte weitergegeben und nicht für Werbung genutzt.</p>
 
-<h2>5. Internet für die App</h2>
+<h2>5. E-Mail (freiwillig)</h2>
+<p>Die Familienakte verschickt nie selbst und still. Wege, die der Nutzer wählt:</p>
+<ul>
+<li><strong>Über Private Brain Pro:</strong> die Mail wird in Private Brain Pro abgeholt; „An Familienakte teilen“ legt sie mit ihren Anhängen in den gemeinsamen Pro-Tresor des Nutzers. Die Familienakte liest sie von dort; ein Server ist nicht beteiligt.</li>
+<li><strong>Teilen aus der Mail-App / Mail-App öffnen:</strong> die Mail-App des Geräts übergibt bzw. übernimmt Empfänger, Betreff, Text und Anlagen; abgeschickt wird dort, nach den Bedingungen des Mail-Anbieters.</li>
+<li><strong>Microsoft-Postfach:</strong> nach Anmeldung mit dem Microsoft-Konto liest die App auf Tipp Mails der letzten 30 Tage und sendet nach Bestätigung über Microsoft Graph (<code>Mail.Read</code>, <code>Mail.Send</code>). Gewählte Mails gehen als Datei in die Eingangszentrale; im Postfach wird nichts gelöscht, verschoben oder als gelesen markiert. Der Zugang liegt nur im Arbeitsspeicher der laufenden App. Microsoft Corp. sitzt in den USA (Drittland).</li>
+<li>E-Mails sind unterwegs nicht Ende-zu-Ende verschlüsselt. Gesundheitsangaben im Betreff meldet die App als Hinweis.</li>
+</ul>
+
+<h2>6. Internet für die App</h2>
 <p>Die App hat einen eigenen Internetschalter, ab Werk aus. Abrufe nach draußen finden nur statt, wenn der Nutzer das Internet für die App einschaltet und die jeweilige Funktion selbst auslöst:</p>
 <ul>
 <li><strong>Bedeutungssuche:</strong> das Suchmodell lädt der Nutzer einmal bewusst, zuerst von family-projekt.de, sonst von Hugging Face; die Bibliothek von jsDelivr, sonst unpkg. Gesucht wird danach nur auf dem Gerät.</li>
 <li><strong>Brief beantworten mit KI:</strong> nur mit dem eigenen Schlüssel des Nutzers bei Mistral (Rechenzentrum in der EU) und nur der freigegebene Text; Namen und Anschriften werden vorher verdeckt.</li>
 <li><strong>SBKIM-Netz:</strong> nur nach „Verbinden …“ über den Vermittler relay.family-projekt.de. Hinaus geht die Visitenkarte (Name, Lebensbereiche); Unterlagen nur, wenn „Im eigenen Netz antworten“ an ist, und dann nur Titel, Bereich und Datum.</li>
-<li><strong>Kalender-Konten</strong> wie unter 4.</li>
+<li><strong>Kalender-Konten</strong> wie unter 4, <strong>Microsoft-Postfach</strong> wie unter 5.</li>
 </ul>
 
-<h2>6. Spracheingabe (freiwillig)</h2>
+<h2>7. Spracheingabe (freiwillig)</h2>
 <p>Tippt der Nutzer auf ein Mikrofon, erkennt der Browser bzw. das Gerät die Sprache. In Chrome wird die Aufnahme dazu an Google geschickt; unter Android erledigt das Sprachfenster des Geräts, unter Windows die Spracherkennung von Windows. Ohne diesen Tipp wird nichts aufgenommen.</p>
 
-<h2>7. Eingebaute PDF-Werkzeuge</h2>
+<h2>8. Eingebaute PDF-Werkzeuge</h2>
 <p>Für die eingebauten PDF-Werkzeuge (Workflow PDF) gelten ergänzend deren Hinweise: <a href="./apps/workflow-pdf/impressum.html">Impressum &amp; Datenschutz von Workflow PDF</a>. Alle Abrufe dort (z. B. KI mit eigenem Schlüssel) finden ebenfalls nur auf ausdrückliche Wahl des Nutzers statt.</p>
 
-<h2>8. Speicherdauer und Rechte</h2>
+<h2>9. Speicherdauer und Rechte</h2>
 <p>Die Daten liegen auf dem Gerät bzw. im gewählten Ordner des Nutzers; er bestimmt selbst, wie lange sie bleiben, und kann sie jederzeit in der App oder über die Browserdaten löschen. In einen Kalender eingetragene Termine löscht die App, wenn die Frist erledigt wird oder der Nutzer beim Trennen das Löschen wählt; im Übrigen über den Kalender selbst. Es bestehen die gesetzlichen Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung, Widerspruch und Datenübertragbarkeit sowie ein Beschwerderecht bei einer Aufsichtsbehörde, zum Beispiel beim Hamburgischen Beauftragten für Datenschutz und Informationsfreiheit.</p>
 
-<h2>9. Rechtsgrundlagen</h2>
+<h2>10. Rechtsgrundlagen</h2>
 <p>Die App setzt keine Cookies zu Werbe- oder Analysezwecken und verfolgt niemanden. Die Auslieferung der App beruht auf Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse, die App technisch bereitzustellen). Das Speichern auf dem Gerät ist für die Funktion unbedingt erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Alle Übertragungen nach draußen, auch an Kalender, finden nur statt, wenn der Nutzer sie selbst auslöst; Rechtsgrundlage ist dann Art. 6 Abs. 1 lit. b DSGVO.</p>
 
-<h2>10. Änderungen</h2>
-<p>Diese Erklärung wird angepasst, wenn sich die App technisch ändert. <small>Stand: 11.11.2026.</small></p>
+<h2>11. Änderungen</h2>
+<p>Diese Erklärung wird angepasst, wenn sich die App technisch ändert. <small>Stand: 12.11.2026.</small></p>
 
 <h1 id="haftung">Haftungsausschluss</h1>
 <ul>

@@ -7,7 +7,7 @@ import { KartenLegende, Landkarte, type KartenGruppe, type KartenKante, type Kar
 /**
  * Hilfe „E-Mail in die Familienakte“ (Klaus 07.11.2026, Sitzung 3) im Stil der Landkarte (Vorbild Sage-Modul-Topologie):
  * links die Wege hinein als kleine Knöpfe im Container „Mail einfügen“, in der Mitte Eingangszentrale und Prüfung, rechts Akte
- * und Antworten. Was noch nicht gebaut ist, steht gestrichelt mit „geplant“ – der E-Mail-Plan wird erst besprochen.
+ * und Antworten. Was noch nicht gebaut ist, steht gestrichelt mit „geplant“ (2.28.65: Private Brain, Mail-App und Microsoft gebaut).
  * Wege hinein und Stand kommen aus lib/app-landkarte.ts und lib/app-stand.ts (eine Liste für alle Karten).
  * Die Prüfung soll den Prüfkern aus Workflow PDF nutzen (dateiPruefen in app/wfpdf-kern.ts), keine zweite Fassung.
  */
@@ -16,7 +16,7 @@ export function EmailHilfe({ onEingang, onSchreiben }: { onEingang: () => void; 
     const gruppen: KartenGruppe[] = [
       { id: "mail", titel: "Mail einfügen", wo: "aus der Mail-App oder dem Postfach", spalte: 0, chips: MAIL_WEGE },
       { id: "antwort", titel: "Antworten", wo: "Assistenz › Schreiben / E-Mail", spalte: 5, chips: [
-        { id: "antwort-entwurf", titel: "Entwurf schreiben und prüfen", wo: "Korrespondenzzentrale", ziel: onSchreiben, zielText: "Zur Korrespondenzzentrale", mehr: "Heute: Entwurf, Prüf-Haken, „Als versendet speichern“. Die App verschickt nie still." },
+        { id: "antwort-entwurf", titel: "Entwurf schreiben und prüfen", wo: "Korrespondenzzentrale", ziel: onSchreiben, zielText: "Zur Korrespondenzzentrale", mehr: "Entwurf, Prüf-Haken, dann „In der Mail-App öffnen“ oder „Über Microsoft senden“ (Wahl unter Eingangszentrale › E-Mail). Die App verschickt nie still." },
       ] },
     ];
     const knoten: KartenKnoten[] = [
@@ -53,7 +53,8 @@ export function EmailHilfe({ onEingang, onSchreiben }: { onEingang: () => void; 
       <ul className="merkpunkte">
         <li><strong>Nichts geht still hinaus.</strong> Gesendet wird nur auf deinen Befehl.</li>
         <li><strong>Keine Virenprüfung.</strong> Die App öffnet keine Anlage von selbst. Prüfen kann der Stapel auf Wahl.</li>
-        <li><strong>Gesundheit im Betreff</strong> lieber neutral halten; E-Mails sind unterwegs nicht verschlüsselt.</li>
+        <li><strong>Gesundheit im Betreff</strong> lieber neutral halten; E-Mails sind unterwegs nicht verschlüsselt – die App meldet solche Wörter.</li>
+        <li><strong>Wege wählen</strong> unter Eingangszentrale › E-Mail: Private Brain Pro (empfohlen), Teilen, Microsoft; hinaus über die Mail-App oder Microsoft.</li>
       </ul>
     </div>
   </details>;

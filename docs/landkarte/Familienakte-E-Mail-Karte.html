@@ -149,7 +149,7 @@ ul.punkte, ol.punkte { margin: 0; padding-left: 1.2em; display: grid; gap: 3px; 
     <ul id="notizen-liste"></ul>
   </div>
 
-  <p class="stand">Aus der Familienakte, Fassung 2.28.34. Zahl am Kasten = Empfehlung von Claude; eure Entscheidung mit ✎.</p>
+  <p class="stand">Aus der Familienakte, Stand Fassung 2.28.65 (12.11.2026): gebaut sind Private Brain als Empfang, Mail-App mit Anlagen, Microsoft (Rechte in Entra offen), Wahl in der Eingangszentrale. Zahl am Kasten = Empfehlung von Claude; eure Entscheidung mit ✎.</p>
 </main>
 
 <script type="application/json" id="notizen-daten">{}</script>
@@ -164,19 +164,19 @@ ul.punkte, ol.punkte { margin: 0; padding-left: 1.2em; display: grid; gap: 3px; 
         { id: "als-pdf", titel: "Mail als PDF", wo: "Drucken › PDF › Teilen", nach: "eingang" },
         { id: "eml", titel: "Mail-Datei .eml", wo: "am Rechner hineinziehen", nach: "eingang", mehr: "Anhänge werden herausgelöst." },
         { id: "msg", titel: "Outlook-Datei .msg", wo: "wird angenommen", nach: "msg-loesen", mehr: "Anhänge darin werden noch nicht herausgelöst." } ] },
-      { id: "g-abholen", titel: "Postfach abholen · geplant", wo: "die App holt selbst", spalte: 0, chips: [
-        { id: "ms-abholen", titel: "Microsoft", wo: "Outlook, Hotmail", nach: "ms-anmeldung", stand: "geplant", empf: "danach", mehr: "Gleiche Anmeldung wie beim Kalender." },
-        { id: "imap", titel: "GMX · WEB.DE · T-Online", wo: "App-Passwort", nach: "abholliste", stand: "geplant", empf: "spaeter", mehr: "Technik aus Private Brain Pro; eigene Sitzung." },
+      { id: "g-abholen", titel: "Postfach abholen", wo: "Eingangszentrale › E-Mail (Wahl)", spalte: 0, chips: [
+        { id: "ms-abholen", titel: "Microsoft", wo: "Outlook, Hotmail", nach: "ms-anmeldung", stand: "aktivieren", mehr: "Gebaut 2.28.65: gleiche Anmeldung wie beim Kalender. Braucht die Rechte in Entra (e10) – fehlen sie, sagt es die App." },
+        { id: "imap", titel: "Eigenes Mail-Programm", wo: "GMX · WEB.DE · T-Online · Gmail", nach: "abholliste", stand: "geplant", empf: "spaeter", mehr: "Vorbereitet 2.28.65 (Schnittstelle, Platz in der Wahl): Mail-Kern aus Private Brain Pro byte-gleich, nur wenn nötig. Bis dahin über Private Brain Pro." },
         { id: "gmail-lesen", titel: "Gmail", wo: "Google-Prüfung jährlich bezahlt", nach: "abholliste", stand: "geplant", empf: "auslassen", mehr: "Laufende Kosten. Ersatz: Anhang teilen, Mail als PDF." },
-        { id: "brain", titel: "Private Brain Pro", wo: "über das gemeinsame Fach", nach: "eingang", stand: "geplant", empf: "spaeter", mehr: "Arbeit im Brain-Repo: „An Familienakte“ wie „An BookLedgerPro“." } ] },
+        { id: "brain", titel: "Private Brain Pro", wo: "über das gemeinsame Fach", nach: "eingang", mehr: "Hauptweg (2.28.65): in Brain „An Familienakte teilen“ (seit Brain 1.0.48); die Familienakte holt die Mail mit Anhängen von selbst aus „Eingang-Familienakte“, sobald der Pro-Tresor offen ist." } ] },
       { id: "g-antwort", titel: "Antworten", wo: "Assistenz › Schreiben / E-Mail", spalte: 7, chips: [
         { id: "entwurf", titel: "Entwurf + Prüf-Haken", wo: "heute", mehr: "„Als versendet speichern“ hält nur fest. Die App verschickt nie still." },
-        { id: "anlagen-wahl", titel: "Anlagen aus dem Vorgang", wo: "über 20 MB: Verkleinern", stand: "geplant", empf: "zuerst" },
-        { id: "betreff-hinweis", titel: "Hinweis Gesundheit im Betreff", wo: "nur Hinweis", stand: "geplant", empf: "zuerst" } ] }
+        { id: "anlagen-wahl", titel: "Anlagen aus dem Vorgang", wo: "einzeln abwählbar · über 20 MB: Ansage", mehr: "Gebaut 2.28.65." },
+        { id: "betreff-hinweis", titel: "Hinweis Gesundheit im Betreff", wo: "nur Hinweis", mehr: "Gebaut 2.28.65." } ] }
     ],
     knoten: [
       { id: "ms-anmeldung", titel: "Microsoft-Anmeldung", wo: "Rechte Mail.Read, Mail.Send", spalte: 1, stand: "aktivieren", empf: "danach", mehr: "In Entra bei der App „Familienakte“ zwei Rechte dazu. Kein neues Geheimnis." },
-      { id: "abholliste", titel: "Abholen-Liste", wo: "letzte 30 Tage · auswählen", spalte: 1, stand: "geplant", empf: "danach", mehr: "Nur auf Tipp. Im Postfach wird nichts gelöscht, verschoben oder als gelesen markiert." },
+      { id: "abholliste", titel: "Abholen-Liste", wo: "letzte 30 Tage · auswählen", spalte: 1, mehr: "Nur auf Tipp. Im Postfach wird nichts gelöscht, verschoben oder als gelesen markiert." },
       { id: "msg-loesen", titel: ".msg-Anhänge lösen", wo: "Outlook-Format lesen", spalte: 1, stand: "geplant", empf: "besprechen", mehr: "Nur nötig, wenn Outlook am PC genutzt wird." },
       { id: "eingang", titel: "Eingangszentrale", wo: "Mail zerlegen", unter: "Text · Absender · Anhänge", spalte: 2, mitte: true, mehr: "Original bleibt unverändert. Mail nur als Text: kein Skript, keine Bilder aus dem Netz, kein Link öffnet sich." },
       { id: "absender", titel: "Absender bestätigt?", wo: "Hinweis aus dem Mail-Kopf", spalte: 3, stand: "geplant", empf: "besprechen", mehr: "Der Anbieter vermerkt, ob der Absender echt ist. Nur Hinweis „nicht bestätigt“." },
@@ -191,9 +191,9 @@ ul.punkte, ol.punkte { margin: 0; padding-left: 1.2em; display: grid; gap: 3px; 
       { id: "sammel", titel: "Alle übernehmen", wo: "Sammelbestätigung", spalte: 5, stand: "geplant", empf: "besprechen" },
       { id: "akte", titel: "In der Akte", wo: "Mail + Anhänge verknüpft", spalte: 6, mitte: true, mehr: "Speicher wie gewählt (Gerät, SD-Karte, Laufwerk, Pro-Tresor)." },
       { id: "erinnerung", titel: "Frist → Erinnerung", wo: "nur nach Ja · Kalender", spalte: 7 },
-      { id: "mailapp", titel: "Mail-App öffnen", wo: "Android · Web-App", spalte: 8, stand: "geplant", empf: "zuerst", mehr: "Vorbereitet mit Empfänger, Betreff, Text, Anlagen. Danach Frage „abgeschickt?“." },
-      { id: "win-teilen", titel: "Windows-Teilen", wo: "neues Outlook unsicher", spalte: 8, stand: "geplant", empf: "besprechen" },
-      { id: "ms-senden", titel: "Über Microsoft senden", wo: "nach „Jetzt senden?“", spalte: 8, stand: "geplant", empf: "danach" },
+      { id: "mailapp", titel: "Mail-App öffnen", wo: "Android · Web-App", spalte: 8, mehr: "Vorbereitet mit Empfänger, Betreff, Text, Anlagen. Danach Frage „abgeschickt?“." },
+      { id: "win-teilen", titel: "Windows: Text kopiert, Anlagen gespeichert", wo: "e4", spalte: 8, mehr: "Gebaut 2.28.65: Mail-App öffnet ohne Anlagen, Text in der Zwischenablage, Anlagen gespeichert." },
+      { id: "ms-senden", titel: "Über Microsoft senden", wo: "nach „Jetzt senden?“", spalte: 8, stand: "aktivieren", mehr: "Gebaut 2.28.65; Anlagen bis 3 MB je Datei. Braucht die Rechte in Entra (e10)." },
       { id: "gmail-senden", titel: "Über Gmail senden", wo: "Google-Prüfvideo", spalte: 8, stand: "geplant", empf: "spaeter" }
     ],
     kanten: [

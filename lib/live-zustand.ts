@@ -20,7 +20,9 @@ const TAG = 86400000;
 /** speicher (2.28.63, rote Kästen): „pro-gesperrt“ = Pro-Tresor gewählt, aber gesperrt; „app“ = Akte nur im Speicher der App bzw. des Browsers.
  *  ordnerWahl: der Browser kann einen Ordner wählen (Chrome/Edge am PC). */
 export type LiveEingaben = { datentresor?: string; speicher?: "pro-gesperrt" | "app"; ordnerWahl?: boolean; letzteSicherung?: string | null; pro: { status: "getrennt" | "offen" | "gesperrt" | "nicht_erreichbar"; ort?: string } | null; nativ: boolean;
-  kalender: boolean; glocke: boolean; laufwerke: number; demo: boolean; jetzt?: number };
+  kalender: boolean; glocke: boolean; laufwerke: number; demo: boolean; jetzt?: number;
+  /** 2.28.65: Sicherung an einem zweiten Ort – Name, letzte gelungene Sicherung, Fehler der letzten. */
+  zweiterOrt?: { name: string; letzteGelungen: string | null; fehler: string | null } | null; cloudOrdner?: string | null };
 
 const SICHERHEIT: SectionId = "security";
 const PRO_ZIEL = "[data-pro-tresor]";
@@ -60,6 +62,16 @@ export function liveBerechnen(e: LiveEingaben): LiveZustand {
   z.glocke = e.glocke ? { farbe: "gruen", text: "an" } : { farbe: "grau", text: "aus", los: "Einschalten", seite: "reminders", ziel: "#mein-kalender" };
   z["anderes-geraet"] = e.laufwerke > 0 ? { farbe: "gruen", text: `${e.laufwerke} ${e.laufwerke === 1 ? "Weg" : "Wege"} eingerichtet` }
     : { farbe: "grau", text: "freiwillig · noch kein Weg eingerichtet", los: "Einrichten", seite: SICHERHEIT, ziel: '[data-hilfe-ziel="laufwerk"]' };
+  const zo = e.zweiterOrt;
+  const zoTage = zo?.letzteGelungen ? Math.max(0, Math.floor((jetzt - Date.parse(zo.letzteGelungen)) / TAG)) : null;
+  z["aus-zweiter-ort"] = e.demo ? { farbe: "grau", text: "in der Demo nicht eingerichtet" }
+    : !zo ? { farbe: "grau", text: "freiwillig · noch kein zweiter Ort", los: "Einrichten", seite: SICHERHEIT, ziel: "[data-zweiter-ort]" }
+    : zo.fehler ? { farbe: "gelb", text: `„${zo.name}“ · letzte nicht gelungen`, los: "Jetzt sichern", seite: SICHERHEIT, ziel: "[data-zweiter-ort]" }
+    : zoTage === null ? { farbe: "gelb", text: `„${zo.name}“ · noch keine Sicherung dort`, los: "Jetzt sichern", seite: SICHERHEIT, ziel: "[data-zweiter-ort]" }
+    : zoTage <= SICHERUNG_TAGE ? { farbe: "gruen", text: `„${zo.name}“ · ${zoTage === 0 ? "heute" : `vor ${zoTage} Tag${zoTage === 1 ? "" : "en"}`} gesichert` }
+    : { farbe: "gelb", text: `„${zo.name}“ · letzte vor ${zoTage} Tagen`, los: "Jetzt sichern", seite: SICHERHEIT, ziel: "[data-zweiter-ort]" };
+  z["cloud-ordner"] = e.demo ? { farbe: "grau", text: "in der Demo nicht verbunden" } : e.cloudOrdner ? { farbe: "gruen", text: `verbunden · ${e.cloudOrdner}` }
+    : { farbe: "grau", text: "freiwillig · nicht verbunden", los: "Ordner wählen", seite: SICHERHEIT, ziel: "[data-cloud-ordner]" };
   z["aus-demo"] = e.demo ? { farbe: "rot", text: "an · du arbeitest an einer Kopie", los: "Demo verlassen", aktion: DEMO_VERLASSEN } : { farbe: "grau", text: "aus" };
   return z;
 }

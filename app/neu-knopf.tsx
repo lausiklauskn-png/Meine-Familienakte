@@ -7,9 +7,12 @@ import { workspaceStorage } from "../lib/demo-workspace.ts";
  * Ungelesenes da ist; jeder Eintrag verschwindet mit ×, gemerkt je Gerät (Demo getrennt). Die Liste steht hier im Code,
  * neue Einträge bekommen eine neue Kennung. Keine Personennamen.
  */
-export type Neuigkeit = { id: string; titel: string; text: string; knopf?: { text: string; ziel: "kalender" | "hilfe-sichern" | "hilfe" | "hilfe-landkarte" | "hilfe-email" | "sicherheit-geraete" | "dokumente" } };
+export type Neuigkeit = { id: string; titel: string; text: string; knopf?: { text: string; ziel: "kalender" | "hilfe-sichern" | "hilfe" | "hilfe-landkarte" | "hilfe-email" | "sicherheit-geraete" | "dokumente" | "sicherheit-zweiter-ort" | "sicherheit-cloud" | "eingang-email" } };
 /** Klaus 11.11. (Textdurchsicht D): nur Neues der letzten zwei Fassungen, je ein Satz und ein Knopf. */
 export const NEUIGKEITEN: Neuigkeit[] = [
+  { id: "zweiter-ort-2026-11-12", titel: "Sicherung an einem zweiten Ort", text: "Einmal Ordner wählen (OneDrive, Stick, SD), dann sichert die App von selbst.", knopf: { text: "Einrichten", ziel: "sicherheit-zweiter-ort" } },
+  { id: "cloud-ordner-2026-11-12", titel: "Cloud-Ordner hereinholen", text: "Neue Dateien aus einem Ordner wie OneDrive kommen als Kopie in die Eingangszentrale.", knopf: { text: "Ordner wählen", ziel: "sicherheit-cloud" } },
+  { id: "email-wege-2026-11-12", titel: "E-Mail: Weg wählen", text: "Mails aus Private Brain Pro kommen von selbst; senden über die Mail-App oder Microsoft.", knopf: { text: "Zu den E-Mail-Wegen", ziel: "eingang-email" } },
   { id: "bsp-akten-2026-11-11", titel: "Bsp.-Akten zum Ausprobieren", text: "Unter Hilfe › Demo „+ Bsp.-Akten“; jede trägt ein rotes Dreieck.", knopf: { text: "Zur Hilfe", ziel: "hilfe" } },
   { id: "meine-geraete-2026-11-11", titel: "Meine Geräte", text: "Dieses Gerät einmal benennen, die anderen erscheinen von selbst.", knopf: { text: "Meine Geräte", ziel: "sicherheit-geraete" } },
   { id: "dateiort-2026-11-11", titel: "Wo die Datei liegt", text: "An jeder Unterlage „Gespeichert in:“ mit „Pfad kopieren“.", knopf: { text: "Zu den Dokumenten", ziel: "dokumente" } },

@@ -69,6 +69,12 @@ nicht selbst zustimmen; das muss ihr Administrator. Private Konten (Outlook.com,
    (dazu sind `openid`, `profile`, `offline_access` und `User.Read` schon da oder werden ergänzt). Keine Administrator-
    zustimmung nötig.
 5. **Übersicht**: die **Anwendungs-ID (Client-ID)** notieren. Ein Geheimnis wird **nicht** angelegt.
+6. **E-Mail (Weg C, ab 2.28.65, Frage e10):** in derselben App **API-Berechtigungen → Berechtigung hinzufügen → Microsoft Graph →
+   Delegierte Berechtigungen** zusätzlich `Mail.Read` und `Mail.Send` anhaken, Speichern. Keine Administratorzustimmung nötig,
+   kein neues Geheimnis. Die Familienakte fragt Kalender und Mail in **einer** Anmeldung an (Eingangszentrale › E-Mail ›
+   Microsoft-Postfach › „Mails holen …“). Solange die Rechte fehlen, meldet die App das ehrlich („noch nicht eingerichtet“).
+   Probe danach: Mails holen (letzte 30 Tage, im Postfach ändert sich nichts) und eine Mail an sich selbst senden
+   (Assistenz › Schreiben / E-Mail › Haken › „Über Microsoft senden …“), danach in „Gesendete Elemente“ nachsehen.
 
 ## Danach
 

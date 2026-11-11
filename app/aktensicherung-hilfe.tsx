@@ -19,7 +19,7 @@ const WORT: Record<Stand, string> = { offen: "zu tun", erledigt: "erledigt", unn
 const ART: Record<Stand, string> = { offen: "art-warnung", erledigt: "art-gut", unnoetig: "art-aus" };
 
 /** Ziel in der App: Akte (Dokumente) oder eine Karte im Sicherheitscenter. */
-type Ziel = "akte" | "datentresor" | "pro-tresor" | "vollsicherung";
+type Ziel = "akte" | "datentresor" | "pro-tresor" | "vollsicherung" | "zweiter-ort";
 type Punkt = { id?: string; titel: string; unter?: string; ziel?: Ziel; kinder?: Punkt[] };
 type Ort = { titel: string; unter: string; ziel: Ziel; punkte: Punkt[] };
 
@@ -55,10 +55,11 @@ const ORTE: Ort[] = [
     { titel: "Erst die Probe", unter: "liest jede Datei per Prüfsumme, schreibt nichts" },
     { titel: "Nur in eine leere Akte", unter: "z. B. nach Neuinstallation; nichts wird zusammengeführt" },
   ] },
-  { titel: "Zweiter Ort", unter: "USB-Stick, Rechner, zweites Laufwerk", ziel: "vollsicherung", punkte: [
-    { id: "kopie", titel: "Vollsicherung kopiert", unter: "ganzer Ordner, nichts umbenennen" },
-    { id: "app", titel: "App-Installationsdatei dabei", unter: "APK oder Windows-Setup" },
-    { id: "rhythmus", titel: "Rhythmus festgelegt", unter: "z. B. monatlich und nach großen Ablagen" },
+  { titel: "Zweiter Ort", unter: "Sicherheit › Sicherung an einem zweiten Ort · OneDrive-Ordner, USB-Stick, SD-Karte, Netzordner", ziel: "zweiter-ort", punkte: [
+    { id: "kopie", titel: "Zweiten Ort eingerichtet", unter: "sichert von selbst bei Änderungen, höchstens einmal am Tag, und auf Knopf" },
+    { titel: "Dort eine, auf dem Gerät zwei", unter: "neue erst geprüft, dann die alte entfernt · nur eigene Sicherungen" },
+    { id: "app", titel: "App-Installationsdatei dabei", unter: "Android legt die APK bei · Windows-Setup laden" },
+    { id: "rhythmus", titel: "Notfallblatt auf Papier", unter: "getrennt vom Gerät; im Notfall: App installieren, „Sicherung einlesen“" },
   ] },
   { titel: "Grenzen", unter: "vorher wissen", ziel: "vollsicherung", punkte: [
     { titel: "Größe je Datei nach Gerät", unter: "15–40 MB; Fotos lassen sich verkleinern (≥ 300 dpi)" },
@@ -73,11 +74,11 @@ function lesen(): Record<string, Stand> { try { return JSON.parse(workspaceStora
 function schreiben(wert: Record<string, Stand>) { try { workspaceStorage.setItem(KEY, JSON.stringify(wert)); } catch { /* ohne Speicher geht es weiter */ } }
 const alleIds = ORTE.flatMap((o) => o.punkte.flatMap((p) => [p, ...(p.kinder || [])])).map((p) => p.id).filter(Boolean) as string[];
 
-const SELEKTOR: Record<Exclude<Ziel, "akte">, string> = { datentresor: '[data-hilfe-ziel="datentresor"]', "pro-tresor": "[data-pro-tresor]", vollsicherung: '[data-hilfe-ziel="vollsicherung"]' };
+const SELEKTOR: Record<Exclude<Ziel, "akte">, string> = { datentresor: '[data-hilfe-ziel="datentresor"]', "pro-tresor": "[data-pro-tresor]", vollsicherung: '[data-hilfe-ziel="vollsicherung"]', "zweiter-ort": "[data-zweiter-ort]" };
 
 /** Live (Klaus 09.11.): Farbe eines Orts aus dem Zustand dieses Geräts. */
 const LIVE_ART: Record<LiveFarbe, string> = { gruen: "art-gut", rot: "art-warnung", gelb: "art-gelb", grau: "art-aus" };
-const LIVE_ID: Partial<Record<Ziel, string>> = { datentresor: "datentresor", "pro-tresor": "protresor" };
+const LIVE_ID: Partial<Record<Ziel, string>> = { datentresor: "datentresor", "pro-tresor": "protresor", "zweiter-ort": "aus-zweiter-ort" };
 const liveVon = (o: Ort, live: LiveZustand) => o.titel === "Sicherungsordner" ? live["aus-sicherung"] : LIVE_ID[o.ziel] ? live[LIVE_ID[o.ziel]!] : undefined;
 
 /**
@@ -87,7 +88,7 @@ const liveVon = (o: Ort, live: LiveZustand) => o.titel === "Sicherungsordner" ? 
 export function AktensicherungHilfe({ onSicherheit, onDokumente, datentresor, live = {} }: { onSicherheit: (ziel?: () => boolean) => void; onDokumente: () => void; datentresor?: string; live?: LiveZustand }) {
   // Gemeinsamer Sprungweg: Sicherheitscenter öffnen und nach dem Zeichnen einmal zur Stelle (kein Zeitgeber).
   const hin = (z: Ziel) => { if (z === "akte") { onDokumente(); return; } onSicherheit(() => zurStelle(SELEKTOR[z], { sofort: true })); };
-  const zielWort: Record<Ziel, string> = { akte: "zur Akte", datentresor: "Datentresor im Sicherheitscenter", "pro-tresor": "Pro-Tresor im Sicherheitscenter", vollsicherung: "Sicherung im Sicherheitscenter" };
+  const zielWort: Record<Ziel, string> = { akte: "zur Akte", datentresor: "Datentresor im Sicherheitscenter", "pro-tresor": "Pro-Tresor im Sicherheitscenter", vollsicherung: "Sicherung im Sicherheitscenter", "zweiter-ort": "Zweiter Ort im Sicherheitscenter" };
   const [stand, setStand] = useState<Record<string, Stand>>(lesen);
   const wechseln = (id: string) => setStand((alt) => { const neu = { ...alt, [id]: FOLGE[alt[id] || "offen"] }; schreiben(neu); return neu; });
   const offen = alleIds.filter((id) => (stand[id] || "offen") === "offen").length;
@@ -104,7 +105,7 @@ export function AktensicherungHilfe({ onSicherheit, onDokumente, datentresor, li
   return <details data-aktensicherung className="wo-liegt-was aktensicherung">
     <summary><HardDrive/> Akten sichern – Plan zum Abhaken</summary>
     <div>
-      <p className="ui-heading-help">Kästen mit › führen an die Stelle in der App. <InfoPopover label="Akten sichern erklären" text={"Wann ist die Akte sicher?\n• Erst, wenn eine Vollsicherung an einem zweiten Ort liegt.\n• Und wenn sie einmal in einen leeren Ordner zurückgeholt wurde (Wiederherstellung testen)."}/></p>
+      <p className="ui-heading-help">Kästen mit › führen an die Stelle in der App. <InfoPopover label="Akten sichern erklären" text={"Wann ist die Akte sicher?\n• Erst, wenn eine Sicherung an einem zweiten Ort liegt (Sicherheit › Sicherung an einem zweiten Ort, läuft dann von selbst).\n• Und wenn sie einmal in einen leeren Ordner zurückgeholt wurde (Wiederherstellung testen)."}/></p>
       <DemoBand/>
       <p className="aktensicherung-legende" data-live-legende>Die Orte zeigen den Zustand dieses Geräts: <span className="chip-gruen">eingerichtet</span><span className="chip-rot">fehlt</span><span className="chip-gelb">gesperrt oder veraltet</span><span className="chip-grau">freiwillig oder nicht hier</span>. Die Punkte darunter hakst du selbst ab:</p>
       <p className="aktensicherung-legende"><span className="chip-rot">zu tun</span><span className="chip-gruen">✓ erledigt</span><span className="chip-grau">nicht nötig</span><span data-sicherung-stand>{offen} zu tun · {erledigt} erledigt</span></p>
