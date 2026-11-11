@@ -34,13 +34,17 @@ export function DemoKnopf({ gesperrt, verlassen, zuruecksetzen, loeschen, kopie 
  * Demo im Kasten oben in der Hilfe (Klaus 2026-11-08): nur der blaue Knopf „Demo starten“, kein eigenes Wort „Demo“;
  * das „?“ steht oben rechts im Kasten und erklärt die Demo. Der Kasten selbst ist {@link AppLandkarteHilfe}.
  */
-const DEMO_HILFE = "• Hast du eigene Daten, arbeitet die Demo an einer Kopie davon. Du probierst aus, das Original bleibt unverändert.\n• Ohne eigene Daten zeigt sie eine erfundene Beispielfamilie.\n• Übernehmen (nur bei der Kopie): vorher kommt die Liste „Was ändert sich?“; das bisherige Register wird gesichert.\n• Während sie läuft, steht oben der rote Knopf „DEMO ▾“: verlassen · zurücksetzen · löschen.";
-export function DemoStarten({ aktiv, gesperrt, starten, grund }: { aktiv: boolean; gesperrt: boolean; starten: () => void; grund?: string }) {
+const DEMO_HILFE = "• Hast du eigene Daten, arbeitet die Demo an einer Kopie davon. Du probierst aus, das Original bleibt unverändert.\n• Ohne eigene Daten zeigt sie eine erfundene Beispielfamilie.\n• Übernehmen (nur bei der Kopie): vorher kommt die Liste „Was ändert sich?“; das bisherige Register wird gesichert.\n• Während sie läuft, steht oben der rote Knopf „DEMO ▾“: verlassen · zurücksetzen · löschen.\n• + Bsp.-Akten: erfundene Beispielakten in die eigene Akte, gespeichert, mit rotem Dreieck. − Bsp.-Akten nimmt nur sie wieder heraus.";
+/** Klaus 11.11.: ein Knopf „+ Bsp.-Akten“ holt die Beispielfamilie in die eigene Akte, danach „− Bsp.-Akten“ nimmt sie wieder heraus. */
+export type BspAkten = { da: boolean; busy: boolean; umschalten: () => void };
+export function DemoStarten({ aktiv, gesperrt, starten, grund, bsp }: { aktiv: boolean; gesperrt: boolean; starten: () => void; grund?: string; bsp?: BspAkten }) {
   return <>
     <span className="hilfe-oben-frage"><InfoPopover label="Demo erklären" text={DEMO_HILFE}/></span>
     {aktiv
       ? <span className="fine-print" data-demo-laeuft>Demo läuft – roter Knopf „DEMO“ oben</span>
       : <button type="button" className="button demo-start-knopf" data-demo-start disabled={gesperrt} onClick={starten}><Play size={16}/> Demo starten</button>}
+    {!aktiv && bsp && <button type="button" className="button secondary bsp-akten-knopf" data-bsp-akten={bsp.da ? "da" : "fehlt"} disabled={gesperrt || bsp.busy} onClick={bsp.umschalten}
+      title={bsp.da ? "Beispielakten aus der eigenen Akte entfernen" : "Erfundene Beispielakten in die eigene Akte holen"}>{bsp.da ? "− Bsp.-Akten" : "+ Bsp.-Akten"}</button>}
     {!aktiv && gesperrt && grund && <p className="fine-print hilfe-oben-grund" data-demo-grund>{grund}</p>}
   </>;
 }

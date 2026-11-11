@@ -1,0 +1,73 @@
+<title>Beispielakten in der eigenen Akte</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: eine Spalte – Knopf in der Hilfe, Rückfrage, Hinweis oben mit „Alle entfernen“, Inhalt, Fragen. Stil wie die übrigen Vorschauen. */
+:root { --bg:#f4f7f9; --fg:#17262f; --muted:#4f6472; --line:#c8d9e2; --card:#fff; --blau:#1d5b94; --navy:#0b3154; --navyfg:#fff; --demo:#1f6fd1; --gelbbg:#fff4dc; --gelb:#8a5b08; --grau:#f3f5f7; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#10171c; --fg:#e6edf2; --muted:#9fb2bf; --line:#2c3b45; --card:#18222a; --blau:#7fb3e6; --navy:#dfe9f3; --navyfg:#0b3154; --demo:#7fb3e6; --gelbbg:#3a2e14; --gelb:#f0c66b; --grau:#1f2a32; color-scheme:dark; } }
+:root[data-theme="dark"] { --bg:#10171c; --fg:#e6edf2; --muted:#9fb2bf; --line:#2c3b45; --card:#18222a; --blau:#7fb3e6; --navy:#dfe9f3; --navyfg:#0b3154; --demo:#7fb3e6; --gelbbg:#3a2e14; --gelb:#f0c66b; --grau:#1f2a32; color-scheme:dark; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.45 system-ui, sans-serif; padding-block:16px 40px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
+main { max-width:900px; display:grid; gap:16px; }
+h1 { font-size:1.25rem; margin:0; text-wrap:balance; } h2 { font-size:1rem; margin:0; color:var(--blau); }
+p { margin:0; } .lead, .leise { color:var(--muted); }
+.karte { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; display:grid; gap:10px; min-width:0; }
+.zeile { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+.knopf { border-radius:10px; padding:9px 14px; font-weight:600; border:1px solid var(--line); background:var(--card); }
+.knopf.demo { background:var(--demo); color:#fff; border-color:var(--demo); }
+.knopf.haupt { background:var(--navy); color:var(--navyfg); border-color:var(--navy); }
+.symbol { width:42px; height:42px; border:1px solid var(--line); border-radius:10px; display:grid; place-items:center; color:var(--muted); }
+.fenster { border:1px solid var(--line); border-radius:12px; padding:12px; background:var(--grau); display:grid; gap:8px; max-width:520px; }
+.hinweis { border-left:4px solid var(--gelb); background:var(--gelbbg); padding:10px 12px; border-radius:8px; display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; }
+.marke { display:inline-block; font-size:.75rem; font-weight:700; border-radius:999px; padding:1px 8px; background:var(--gelbbg); color:var(--gelb); border:1px solid var(--gelb); }
+ul, ol { margin:0; padding-left:1.25em; display:grid; gap:6px; } .fragen b { color:var(--blau); }
+.liste li { display:flex; gap:8px; align-items:baseline; flex-wrap:wrap; }
+</style>
+
+<main>
+ <header style="display:grid;gap:4px">
+  <h1>Beispielakten in der eigenen Akte – zum Durchspielen, mit einem Tipp wieder weg</h1>
+  <p class="lead">Vorschau zur Abstimmung (11.11.). Die Demo bleibt, wie sie ist; dies ist zusätzlich und speichert in der echten Akte.</p>
+ </header>
+
+ <section class="karte">
+  <h2>1 · Knopf in der Hilfe, neben „Demo starten“</h2>
+  <div class="zeile"><span class="knopf demo">Demo starten</span><span class="knopf">Beispielakten holen</span><span class="symbol" aria-hidden="true">▦</span><span class="symbol" aria-hidden="true">⛁</span></div>
+  <p class="leise">Hinter dem „?“: • Legt die erfundene Beispielfamilie in deine echte Akte. • Alles ist als „Beispiel“ gekennzeichnet. • „Alle Beispielakten entfernen“ nimmt nur diese wieder heraus, nie deine eigenen.</p>
+ </section>
+
+ <section class="karte">
+  <h2>2 · Rückfrage vor dem Holen</h2>
+  <div class="fenster">
+   <strong>Beispielakten in deine Akte holen?</strong>
+   <p>Rund 35 Einträge und 13 Beispiel-Unterlagen (PDF) kommen dazu. Deine eigenen Daten bleiben unverändert.</p>
+   <div class="zeile"><span class="knopf haupt">Beispielakten holen</span><span class="knopf">Abbrechen</span></div>
+  </div>
+ </section>
+
+ <section class="karte">
+  <h2>3 · Solange Beispiele drin sind: Hinweis oben auf der Startseite</h2>
+  <div class="hinweis"><span><b>Beispielakten in deiner Akte</b> · Familie Lindqvist-Arenberg (erfunden)</span><span class="knopf">Alle Beispielakten entfernen</span></div>
+  <p class="leise">Heute heißt der Hinweis „Alte Beispieldaten im eigenen Bestand“ – der Text wird angepasst, der Entfernen-Weg ist schon da und geprüft.</p>
+ </section>
+
+ <section class="karte">
+  <h2>4 · Was drin ist (wie in der Demo)</h2>
+  <ul class="liste">
+   <li>5 Personen, 11 Organisationen, 5 Objekte (Wohnung, Fahrzeug, Geräte) <span class="marke">Beispiel</span></li>
+   <li>Verträge, Garantien, Zahlungen, 6 Vorgänge – teils offen, teils erledigt</li>
+   <li>13 Unterlagen als echte PDF: Rechnung, Garantieanfrage, Mietvertrag, Nebenkosten, Impfpass-Kopie, Elternbrief …</li>
+   <li>Fristen und Termine (mit Erinnerung, teils erledigt), Tagebuch-Einträge, drei Briefe in der Assistenz</li>
+  </ul>
+  <p class="leise">Alle Namen, Orte und Nummern sind erfunden (PLZ 00xxx, ungültige Nummern), keine Ärzte, keine Diagnosen.</p>
+ </section>
+
+ <section class="karte fragen">
+  <h2>Fragen (bitte je Ja oder Nein)</h2>
+  <ol>
+   <li><b>Knopf „Beispielakten holen“</b> in der Hilfe neben „Demo starten“, mit Rückfrage.</li>
+   <li><b>Hinweis oben</b> „Beispielakten in deiner Akte“ mit „Alle Beispielakten entfernen“, solange welche drin sind.</li>
+   <li><b>Marke „Beispiel“</b> an jeder Beispielakte in Listen und Karten.</li>
+  </ol>
+  <p class="lead">Gilt für alle drei Fassungen. Danach Probe: holen, Bereiche prüfen, entfernen – eigene Einträge bleiben.</p>
+ </section>
+</main>

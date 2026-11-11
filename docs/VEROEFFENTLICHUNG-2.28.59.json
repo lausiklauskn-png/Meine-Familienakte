@@ -1,0 +1,57 @@
+{
+ "version": "2.28.59",
+ "source": "102bc5f1caddc5dd097bdf7505dccd67c29d1d9f",
+ "pullRequest": [
+  163
+ ],
+ "recordedUtc": "2026-11-11T10:52:00Z",
+ "freigabe": "Klaus 11.11.2026: „Ja, bitte ausgeben und testen“ (Ordner-Zahlen, Vollsicherung auf SD/USB).",
+ "inhalt": "Android: FamilienakteOrdnerPlugin las offset/laenge/size mit Capacitors getLong, das Integer verwirft (Ersatzwert -1/0) – jedes Schreiben/Lesen über die Ordnerwahl scheiterte („Größe -1 statt 0“). Jetzt zahl(): jede Zahl wird angenommen.",
+ "ciAmPrStand": "PR #163 auf 296c688: android (inkl. OrdnerZahlTest), windows, webview, product (31, pixel_c), product (35, pixel_2) success; pruefung im ersten Lauf 106/107 (eine wacklige Probe), Neulauf success.",
+ "releases": [
+  {
+   "tag": "android-v2.28.59",
+   "run": 43004914962,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-android-v2.28.59.apk",
+     "bytes": 20070807,
+     "sha256": "1e90b184d3c089ed23e656277949319be2a68b24a5ecab9ebff8f526f013b650",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true,
+     "versionInside": "2.28.59 (assets/public/version.json, commit 102bc5f)"
+    },
+    {
+     "name": "Familienakte-Einzeldatei-2.28.59.html",
+     "bytes": 3919797,
+     "sha256": "d3bf4bfff9a8720a3cdf21d9407c47d0d6bac26a46687c48b58a9fc98853b1c8",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true
+    }
+   ]
+  },
+  {
+   "tag": "windows-v2.28.59",
+   "run": 43004919609,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-Windows-2.28.59-x64-setup.exe",
+     "bytes": 34210092,
+     "sha256": "c186e6d5df5d38762b356336bd5caaa46cd1381dfedc2b8888638443485d0367",
+     "anonymousDownload": true,
+     "matchesSHA256SUMS": true
+    }
+   ]
+  }
+ ],
+ "pwa": "Pages auf 102bc5f (Job beim Merge); Seite aus dem Behälter nicht geprüft.",
+ "notChecked": [
+  "Vollsicherung auf SD-Karte und USB-Stick am Tablet mit 2.28.59",
+  "Eingangsordner und gemeinsame Festplatte in der APK",
+  "family-projekt.de aus dem Behälter nicht erreichbar; der Freigabelauf prüft den Server selbst"
+ ]
+}

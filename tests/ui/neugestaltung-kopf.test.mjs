@@ -13,12 +13,11 @@ try {
   await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page);
 
   // --- 1 · So fängst du an (in einer leeren Akte: Beispieldaten erst entfernen) ---
-  await step("Beispieldaten entfernen (leere Akte)", async () => {
+  await step("Bsp.-Akten entfernen (leere Akte)", async () => {
     await page.evaluate(() => window.scrollTo(0, 0));
-    const k = page.locator("button", { hasText: "Beispieldaten entfernen" });
+    const k = page.locator("[data-bsp-weg]");
     if (!(await k.count())) return "keine Beispieldaten";
     await k.focus(); await page.keyboard.press("Enter");
-    await page.locator(".page-dialog button", { hasText: "Ja, fortfahren" }).click();
     await page.waitForSelector(".sample-data-notice", { state: "detached", timeout: 30000 });
     await page.locator(".site-brand").click(); await page.waitForTimeout(400);
     return true;
