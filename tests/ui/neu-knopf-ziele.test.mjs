@@ -6,9 +6,6 @@ const ZIELE = {
   "zweiter-ort-2026-11-12": "[data-zweiter-ort]",
   "cloud-ordner-2026-11-12": "[data-cloud-ordner]",
   "email-wege-2026-11-12": "[data-email-wege]",
-  "bsp-akten-2026-11-11": "[data-bsp-akten]",
-  "meine-geraete-2026-11-11": "[data-meine-geraete]",
-  "dateiort-2026-11-11": ".document-library, [data-bibliothek-zeile], .library-area-grid, main h1",
   "landkarte-farben-2026-11-11": '[data-app-landkarte="offen"]',
 };
 const app = await startApp();
