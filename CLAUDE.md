@@ -7,6 +7,9 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Aktueller Stand (11.11.2026 abends, nach 2.28.65)
 
+- **Plan Bilder** `docs/PLAN_2026-11-12_BILDER.md` (Klaus 12.11.; Brief `BRIEF_ABSCHLUSS_2026-11-12_PLAN-BILDER.md`): Fotos als eigene Art mit
+  Metadaten (Aufnahme, Gerät, Einstellungen, Ort), Nacharbeit im Hintergrund (erst ablegen, dann OCR/Prüfung), Kennzeichen →
+  Fahrzeug, Barcodes mit Prüfung nur bei Code-Fund, Teilen ohne Ort. Nichts gebaut; Fragen F1–F8 an Klaus offen, dann Vorschau.
 - **Fassung 2.28.65** (#171 mit #170; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.65.json`; Brief
   `BRIEF_ABSCHLUSS_2026-11-12_CLOUD-ORDNER-2.28.65.md`): **Sicherung an einem zweiten Ort** (`app/zweiter-ort*.ts(x)`, `lib/zweiter-ort.ts`;
   selbsttätig bei Änderung höchstens einmal am Tag, verschlüsselt/lesbar, dort 1, auf dem Gerät 2 im App-Ordner `sicherungen`; erst
@@ -171,7 +174,8 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
   - `BRIEF_SITZUNG_2026-11-11_CLOUD-ORDNER-2.28.65.md` (nächster Bau: Sicherung an einem zweiten Ort, Nur sichern/Synchron halten, Cloud-Ordner hereinholen; Klaus: keine Vorschau nötig)
-  - `BRIEF_ABSCHLUSS_2026-11-12_CLOUD-ORDNER-2.28.65.md` (jüngster Abschluss: 2.28.65, Entscheidungen, Startauftrag)
+  - `BRIEF_ABSCHLUSS_2026-11-12_PLAN-BILDER.md` (Plan Bilder, Fragen F1–F8)
+  - `BRIEF_ABSCHLUSS_2026-11-12_CLOUD-ORDNER-2.28.65.md` (letzter Bau: 2.28.65, Entscheidungen, Startauftrag)
   - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-11_GESAMMELT-2.28.64.md` (2.28.57 bis 2.28.64)
   - `BRIEF_CODEX_2026-11-04_NACH-2.28.24.md` (Abstimmung mit Codex: welche Dateien Claude gehören)
   - `BRIEF_ABSCHLUSS_2026-11-04_PDF-ARBEITSRAUM.md`, `BRIEF_ABSCHLUSS_2026-11-04_PDF-FUNKTIONSABGLEICH.md` (Codex)
