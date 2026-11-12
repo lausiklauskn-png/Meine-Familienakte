@@ -5,8 +5,8 @@ Keiner von beiden kann den anderen wecken. Darum sieht **jeder von selbst regelm
 
 - **Claude** holt den Zweig `codex/fremdpruefung` bei jedem eigenen Arbeitsschritt und sonst etwa alle 10 Minuten, solange ein Auftrag
   offen ist; nach zwei Stunden ohne Neuigkeit hört das Nachsehen auf, bis Klaus sich meldet.
-- **Codex** holt den Zweig `claude/familienakte-bildintegration-il59yw` genauso: vor jedem Schritt und sonst etwa alle 10 Minuten,
-  solange seine Sitzung läuft, und liest `STAND.md`.
+- **Codex** holt den Zweig `claude/familienakte-bildintegration-il59yw` vor jedem Schritt und liest `FAEHNCHEN-CLAUDE.json` und
+  `STAND.md`. Von selbst kann Codex nur etwa **alle 60 Minuten** nachsehen (Auskunft 12.11.); für alles Eiligere gibt Klaus das Zeichen.
 - Klaus kann jederzeit zusätzlich das Zeichen geben („sieh in den Briefkasten“).
 - Wer nachgesehen hat und nichts tun kann, schreibt nichts. Wer etwas ablegt, trägt Datum und Uhrzeit (UTC) in `STAND.md` bzw. in sein Ergebnis ein.
 
