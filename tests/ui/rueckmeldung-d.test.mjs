@@ -36,10 +36,14 @@ try {
     return soll(/Aus meiner Familienakte/.test(t) && /Hinweise \(feste Regeln, keine KI\)/.test(t) && !/Praktische Einordnung/.test(t), "Kästen falsch");
   });
   await page.locator('[data-assistenz-weg="brief"] .assistant-mode-action').click();
+  // Erst warten, bis der Briefweg steht (Sprung/Scrollen nach dem Tipp), sonst kann die Eingabe in ein Feld gehen, das gleich neu gezeichnet wird.
+  await page.locator("[data-brief-antwort]").waitFor(); await page.waitForTimeout(400);
   const verdeckt = page.locator("[data-brief-verdeckt]");
   await step("Weg „Brief beantworten“: „Das sieht die KI“ zeigt nur Platzhalter", async () => {
     await page.locator("[data-brief-text]").fill(BRIEF);
     await page.locator("[data-brief-wunsch]").fill("Ratenzahlung anfragen");
+    try { await verdeckt.waitFor({ timeout: 10000 }); }
+    catch { return soll(false, { textLaenge: (await page.locator("[data-brief-text]").inputValue()).length, karten: await page.locator("[data-brief-antwort]").count(), baustein: await page.evaluate(() => Boolean(window.SbkimPseudonym)), fehler: await page.locator("[data-brief-antwort] .form-error").count() }); }
     const t = await verdeckt.innerText();
     return soll(KLAR.every((k) => !t.includes(k)) && /⟦NAME-\d+⟧/.test(t) && /⟦IBAN-1⟧/.test(t), t);
   });
