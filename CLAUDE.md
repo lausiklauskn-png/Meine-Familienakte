@@ -271,6 +271,9 @@ sondern nur KimHub.“
 - Keine Schlüssel, PINs, Passwörter oder Chefcodes in Dateien oder im Chat.
 - **Codex-Prüfungen auslassen (Klaus 09.11.):** Codex ist nicht mehr aktiv, der Zugang ist gesperrt. Kein „@codex review“ anstoßen,
   Codex-Kommentare (auch „Failed“/„usage limits“) nicht abwarten und nicht als Befund behandeln.
+- **Codex als unabhängiger Prüfer (Klaus 12.11.):** Codex ordnet Prüfstapel unabhängig ein und entwirft eigene Vorgehensweisen. Einzige
+  Verbindung ist der Briefkasten `docs/fremdpruefung/` (`VERBINDUNG.md`, `STAND.md`); Klaus gibt das Zeichen. Dort nie Lösungen oder
+  Messergebnisse ablegen. Das hebt den Punkt darüber nicht auf: kein „@codex review“ an Pull Requests.
 - Eigene Dateien und eigene Altbriefe bevorzugt erhalten; Beispiele nur nach belegter Herkunft bereinigen.
   Keine automatischen Beispiele im eigenen Bestand (Demo hat einen eigenen Bestand).
 - Byte-1:1-Bausteine nie von Hand ändern: Workflow PDF über `tools/wfpdf-nachziehen.mjs` (Pins `public/wfpdf/HERKUNFT.json`),
