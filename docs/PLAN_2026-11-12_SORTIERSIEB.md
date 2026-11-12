@@ -42,7 +42,14 @@ Arbeitsname „Sortiersieb“. Nur Plan, nichts gebaut. Wo das Werkzeug wohnt, i
   welches Auto, welcher Vertrag), weiß nur die Akte – diesen letzten Schritt macht sie beim Übernehmen.
 - Neu im Steckbrief: **Dringlichkeit** (Frist überschritten / diese Woche / später / keine; Mahnstufe aus „Mahnung“,
   „letzte Zahlungsaufforderung“).
-- Offen bleiben S3–S6 (Reihenfolge der Siebe, gründliche Prüfung, Sprachmodell auf Knopf, ein Klick je Stufe oder ganz durch).
+- **S3–S6 entschieden (Klaus, 12.11.2026: „so wie vorgeschlagen“):**
+  - **S3** Reihenfolge Art → Kopf → Kategorie/Nummern → Absender → Inhalt.
+  - **S4** Gründliche Prüfung nur für fremde Quellen und Barcode-Funde, im Hintergrund; die schnelle Strukturprüfung läuft bei
+    Stufe 1 für alle Dateien.
+  - **S5** Großes Sprachmodell für unklare Einzelfälle nur auf Knopf und nicht in der ersten Fassung; wenn, dann über den Weg aus
+    S11 (Server, Schlüssel, Pseudonymisierung).
+  - **S6** Beides: je Stufe ein Klick, dazu ein Knopf „ganz durchsieben“, der bei Unsicherem anhält; jede Stufe bleibt einzeln
+    sichtbar und rückgängig.
 - Bau: eigenes Repo nötig (Name und Anlage durch Klaus); der Kern `lib/sieb.ts` kann vorher hier entstehen und wird dann wie
   Workflow PDF byte-gleich mit Pin übernommen.
 
@@ -347,5 +354,5 @@ Abwägung:
 
 Plan fertig zur Durchsicht (12.11.2026). Entschieden: S1 eigene App, S2 ein Ordner mit Baum, S7 Übernahme in die Familienakte,
 S9 Lehrer = Claude (Haiku 5.5, Opus 5.5 für Schwieriges). S10 beantwortet (Hetzner-Server mit Claude Code und KimHub-Schicht). **S11 entschieden (Klaus, 12.11.2026): Weg A über den Server,
-mit Schlüssel (nicht Abo), Pseudonymisierung immer an, Gesundheitsunterlagen nur mit Freigabe je Lauf.** Offen: S3–S6, S8,
+mit Schlüssel (nicht Abo), Pseudonymisierung immer an, Gesundheitsunterlagen nur mit Freigabe je Lauf.** Offen: S8,
 Anthropics Bedingungen zu Speicherdauer/Training vor dem ersten echten Lauf nachsehen, eigenes Repo.

@@ -31,7 +31,7 @@ Nur Plan, nichts gebaut, nichts ausgegeben. Plan: `docs/PLAN_2026-11-12_BILDER.m
 
 ```
 Familienakte (lausiklauskn-png/Meine-Familienakte). CLAUDE.md, BRIEF_ABSCHLUSS_2026-11-12_CLOUD-ORDNER-2.28.65.md und
-docs/PLAN_2026-11-12_BILDER.md und docs/PLAN_2026-11-12_SORTIERSIEB.md lesen. Zuerst Klaus' Antworten auf F1–F8 und den offenen S-Fragen (S3–S6, S8; S11 entschieden: Weg A, Schlüssel, Pseudonymisierung)
+docs/PLAN_2026-11-12_BILDER.md und docs/PLAN_2026-11-12_SORTIERSIEB.md lesen. Zuerst Klaus' Antworten auf F1–F8 und den offenen S-Fragen (S8; S3–S6 und S11 entschieden)
 aufnehmen; Sortiersieb bekommt ein eigenes Repo (Klaus legt es an), dann Stufe A (HTML-Vorschau
 docs/vorschau/bilder-2.28.66.html) zeigen; nach Klaus' Ja Stufe B, dann C bauen (je Stufe ein PR auf main). Nächste freie
 Fassung 2.28.66, gesammelt ausgeben. Gerätetest 2.28.65 bleibt offen (siehe Cloud-Ordner-Brief).
