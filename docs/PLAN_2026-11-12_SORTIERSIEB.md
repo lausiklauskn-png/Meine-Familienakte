@@ -151,6 +151,7 @@ das Verschieben in echte Ordner mit Verlauf, die Sichten.
 - **S6 Ein Klick je Stufe** oder ein Knopf „ganz durchsieben“ mit Halt bei Unsicherem?
 - **S7 Format für andere Programme:** ein gemeinsames offenes Format (`sieb-index.json` + Begleittexte) für alle Pro-Apps, mit
   Abschnitten für Embedding-Modelle und Kurzfassung für Sprachmodelle? Vorschlag: ja, als Teil des Kerns, in jeder App gleich.
+- **S8 Archivnummer für Papieroriginale** (fortlaufende Nummer, die man auf das Papier schreibt bzw. klebt)?
 
 ## E-Mail-Anhänge (Klaus, 12.11.2026)
 
@@ -225,4 +226,3 @@ Rechnungen, Mahnungen, Bescheide, Termine, Verträge, Fotos), in jeder Fassung g
 - **Zeit** je Stufe und Datei am PC und am Handy.
 - **Handgriffe** bis alles bestätigt ist (Ziel: nur Unsicheres anfassen).
 
-- **S8 Archivnummer für Papieroriginale** (fortlaufende Nummer, die man auf das Papier schreibt bzw. klebt)?
