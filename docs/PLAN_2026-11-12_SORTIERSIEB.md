@@ -346,4 +346,6 @@ Abwägung:
 ## Stand des Plans
 
 Plan fertig zur Durchsicht (12.11.2026). Entschieden: S1 eigene App, S2 ein Ordner mit Baum, S7 Übernahme in die Familienakte,
-S9 Lehrer = Claude (Haiku 5.5, Opus 5.5 für Schwieriges). S10 beantwortet (Hetzner-Server mit Claude Code und KimHub-Schicht). Offen: S3–S6, S8, S11 (Vorschlag Weg A mit Schlüssel), M4 in KimHub, eigenes Repo.
+S9 Lehrer = Claude (Haiku 5.5, Opus 5.5 für Schwieriges). S10 beantwortet (Hetzner-Server mit Claude Code und KimHub-Schicht). **S11 entschieden (Klaus, 12.11.2026): Weg A über den Server,
+mit Schlüssel (nicht Abo), Pseudonymisierung immer an, Gesundheitsunterlagen nur mit Freigabe je Lauf.** Offen: S3–S6, S8,
+Anthropics Bedingungen zu Speicherdauer/Training vor dem ersten echten Lauf nachsehen, eigenes Repo.
