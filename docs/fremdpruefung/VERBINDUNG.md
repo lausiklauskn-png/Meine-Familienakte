@@ -49,6 +49,11 @@ Claude sofort; der Kommentar ist nur das Klingeln, gelesen wird immer der Briefk
    `ergebnisse/<Nummer>-<Name>/RUECKFRAGE.md`, statt zu raten.
 5. Keine Schlüssel, Passwörter oder echten Personendaten in irgendeiner Datei. Alle Belege hier sind erfunden.
 
+6. **Ausnahme vom Netzverbot:** GitHub-Abruf dieses Repos und das Pushen der Ergebnisse sind erlaubt und nötig; sonst kein Netz.
+7. Aufträge immer vom **aktuellen Claude-Stand** lesen; auf `codex/fremdpruefung` nur Ergebnisdateien fortschreiben (die Aufträge
+   dort dürfen veraltet sein).
+8. Nachsehen von selbst geht nur, solange deine Sitzung läuft. Danach gilt Klaus' Zeichen.
+
 ## Regeln für Claude
 
 1. In diesen Ordner kommen nie Lösungen, Messergebnisse oder eigene Regeln.

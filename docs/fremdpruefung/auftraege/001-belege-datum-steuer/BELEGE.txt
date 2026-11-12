@@ -1,0 +1,2736 @@
+######## BELEG 1 von 120 · Datei: CCF_001226.txt ########
+FREIE TANKE Kaltenborn
+Dorfstr. 1, 37300 Kaltenborn
+--------------------------------
+Datum 30.9.2026  Zeit 12:20
+ZP 5  Diesel
+Menge   44,05 Liter
+Preis   1,619 EUR/Liter
+Betrag  7,13 EUR
+Scheibenklar 5L  6,99 EUR
+--------------------------------
+SUMME        EUR 14,12
+darin 19% USt   2,25
+Nettobetrag     11,87
+Kartenzahlung  VISA ************0000
+Tankbeleg bitte aufbewahren
+
+######## BELEG 2 von 120 · Datei: CCF_001238.txt ########
+Clickmeadow Ads Ireland Ltd.
+1 Harbour Quay, Dublin 2, Ireland
+VAT IE0000000AA
+
+Bill to:
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+Germany
+
+INVOICE IE-ADS-004412077
+Invoice date: 31. Mai 2026
+Billing period: 1 May 2026 – 31 May 2026
+Customer VAT ID: DE000000000
+
+Description                               Qty      Amount
+Online advertising, campaign 'Muttertag     1       84,20
+Online advertising, campaign 'Hochzeit 2    1       51,75
+
+Subtotal EUR 135,95
+VAT 0 % (reverse charge) EUR 0,00
+Total due EUR 135,95
+
+Services subject to the reverse charge – VAT to be accounted for by the recipient
+(Steuerschuldnerschaft des Leistungsempfängers, § 13b UStG).
+
+Paid by card ending 0000.
+
+######## BELEG 3 von 120 · Datei: CCF_001258.txt ########
+DEKO-SPEICHER
+Filiale 0218 Niederaue
+Marktpassage 3
+03.11.26 17:52  Kasse 09  Beleg 68687
+========================================
+651623  Windlicht Glas klein x12
+                      1 Stk      23,88 A
+532611  Jutekordel 100m
+                      1 Stk       4,49 A
+314883  Deko-Moos 250g x4
+                      1 Stk      11,96 A
+721890  Holzsterne 24tlg x3
+                      1 Stk       8,97 A
+========================================
+Total                          49,30
+gegeb en EC                     49,30
+inkl. 19,00% MwSt (A) aus 49,30: 7,87
+
+######## BELEG 4 von 120 · Datei: CCF_001271.txt ########
+Blumenwerkstatt Harkort
+Schnittblumen · Hochzeits- und Trauerfloristik · Raumbegrünung
+Inh. Mareike Harkort · Kirchgasse 7 · 37299 Weidenrode
+Tel. 05000 000000 · post@blumenwerkstatt-harkort.example
+
+
+Seniorenresidenz Lindengarten gGmbH
+Verwaltung
+Parkstr. 20
+37299 Weidenrode
+
+
+RECHNUNG
+Nummer: 2026-0133
+Datum:  11.05.2026
+Liefertag: 09.05.2026
+
+1. Muttertagssträuße klein – 85 Stk zu je 6,50 € = 552,50 €
+2. Tischvasen-Füllung Speisesaal – 12 Stk zu je 9,80 € = 117,60 €
+3. Glasvasen 15 cm (Verkauf) – 12 Stk zu je 4,20 € = 50,40 €
+
+Netto: 720,50 €
+zuzüglich 19 % USt (auf 50,40 €): 9,58 €
+zuzüglich 7 % USt (auf 670,10 €): 46,91 €
+Zu zahlen: 776,99 €
+
+Zahlbar bis 25.05.2026.
+
+Steuernummer 00/000/00000 · USt-IdNr. DE000000000 · Sparkasse Weidenrode · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 5 von 120 · Datei: CCF_001287.txt ########
+Glanzwerk Gebäudeservice Dierksen
+Inh. Tomasz Dierksen
+Bahnhofstr. 51, 37299 Weidenrode
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+
+RECHNUNG
+Rechnungs-Nr.: 1126        Datum: 31.03.2026
+Leistungszeitraum: 01.03.2026 – 31.03.2026
+
+Pos  Bezeichnung                        Menge   Einzelpreis    Gesamt
+----------------------------------------------------------------------
+1    Unterhaltsreinigung Laden, 2x wöch     1 psch    185,00     185,00
+2    Grundreinigung Kühlraum             2,50 Std.     34,00      85,00
+----------------------------------------------------------------------
+                                             Nettobetrag       270,00
+                                          zzgl. 19 % USt        51,30
+                                     Rechnungsbetrag EUR       321,30
+
+Zahlbar sofort ohne Abzug.
+
+Steuernummer 00/000/00006, IBAN DE00 0000 0000 0000 0008 88
+
+######## BELEG 6 von 120 · Datei: CCF_001299.txt ########
+       WASCHSTRASSE BLITZBLANK        
+    Am Kreisel 5, 34000 Niederaue     
+
+--------------------------------------
+Programm 3 Transporter        15,90 A
+Unterbodenwäsche               3,00 A
+--------------------------------------
+SUMME EUR                     18,90
+girocard                      18,90
+
+MwSt%      Netto     MwSt    Brutto
+A 19%      15,88     3,02     18,90
+
+Datum: 06.03.2026   Uhrzeit: 16:02
+Bon-Nr. 9968  Kasse 1  Bed. 14
+
+######## BELEG 7 von 120 · Datei: CCF_001314.txt ########
+Malerbetrieb Rautenkranz
+Farbe · Tapete · Bodenbeläge
+Schulstr. 8 · 37291 Oberhollen
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+Rechnung  2026-103
+Rechnungsdatum 05.02.2026
+Leistungszeitraum 26.01.26 bis 28.01.26
+
+Wir berechnen Ihnen für die ausgeführten Arbeiten:
+
+01  Wand- und Deckenflächen Verkaufsraum streichen
+      16,50 Std. x 49,00 €                  808,50 €
+02  Dispersionsfarbe, Abdeckmaterial
+      1 psch x 214,00 €                  214,00 €
+03  Ausbessern Putzschaden Schaufensterlaibung
+      1 psch x 95,00 €                   95,00 €
+
+Zwischensurnme                      1.117,50 €
++ 19% Mehrwertsteuer                 212,33 €
+Endbetrag                          1.329,83 €
+
+Zahlungsziel: 19.02.2026
+
+St.-Nr. 00/000/00007 · IBAN DE00 0000 0000 0000 0011 11
+
+######## BELEG 8 von 120 · Datei: CCF_001330.txt ########
+druckbogen.example – Onlinedruckerei Pfeffer GmbH
+Maschinenweg 2, 97000 Unterried
+
+An
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+Rechnung Nr. DB-88213-26 vom 2026-04-16
+Auftragsdatum 2026-04-13 · Versand 2026-04-16
+
+1 Auftr. Flyer DIN lang, 135 g Bilderdruck, 4/4-farbig, Auflage 2.500 à 68,90 = 68,90
+1 Auftr. Visitenkarten 350 g matt, Auflage 500 à 21,90 = 21,90
+1 x Standardversand à 4,90 = 4,90
+
+Summe netto EUR 95,70
+MwSt. 19,0% EUR 18,18
+Gesamt brutto EUR 113,88
+
+Zahlung per Kreditkarte erfolgt.
+
+USt-IdNr. DE000000003
+
+######## BELEG 9 von 120 · Datei: CCF_001342.txt ########
+Blumenwerkstatt Harkort
+Schnittblumen · Hochzeits- und Trauerfloristik · Raumbegrünung
+Inh. Mareike Harkort · Kirchgasse 7 · 37299 Weidenrode
+Tel. 05000 000000 · post@blumenwerkstatt-harkort.example
+
+
+Hotel Seeblick Rütihorn AG
+Seestrasse 40
+CH-6000 Rütihorn
+Schweiz
+
+
+Rechnung Nr. 2026-0147                    Weidenrode, 14.05.2026
+Lieferdatum: 12.05.2026 (Übergabe an Spedition, Ausfuhrbegleitdokument MRN 26DE000000000000E0)
+
+Menge  Bezeichnung                              Einzelpreis   Gesamtpreis
+   12  Trockenblumenkranz 'Sommerwiese' Ø 40 cm      48,00        576,00
+   30  Trockenblumen-Gesteck Tischgröße              19,00        570,00
+    1  Exportverpackung und Fracht                   85,00         85,00
+
+                                               Summe netto     1.231,00
+                                           Rechnungsbetrag     1.231,00
+
+Steuerfreie Ausfuhrlieferung gemäß § 4 Nr. 1 Buchst. a i.V.m. § 6 UStG.
+
+Zahlbar bis 13.06.2026 in Euro ohne Abzug.
+
+Steuernummer 00/000/00000 · USt-IdNr. DE000000000 · Sparkasse Weidenrode · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 10 von 120 · Datei: CCF_001358.txt ########
+PayNord Zahlungssysteme GmbH                            Händlerabrechnung
+Händler-ID 0044120   Terminal-ID 60000417
+Blumenwerkstatt Harkort, Kirchgasse 7, 37299 Weidenrode
+Abrechnungsdatum 03.02.2026          Abrechnungsmonat Januar 2026
+Zeitraum 01.01.2026 – 31.01.2026
+
+Kartenumsätze girocard / Kreditkarte   214 Transaktionen       6.184,30
+Disagio 0,23 % vom Umsatz                                         14,22
+Transaktionsentgelt 214 x 0,07                                    14,98
+Summe Entgelte                                                    29,20 EUR
+Auszahlungsbetrag (Umsatz abzgl. Entgelte)                     6.155,10
+
+Die Entgelte sind als Finanzdienstleistung nach § 4 Nr. 8 d UStG
+umsatzsteuerfrei. Die Entgelte wurden mit den Auszahlungen verrechnet.
+
+######## BELEG 11 von 120 · Datei: CCF_001370.txt ########
+Eigenbeleg Privateinlage
+
+Betrieb:  Blumenwerkstatt Harkort
+Datum:    3. August 2026
+
+Ich habe heute aus privaten Mitteln (Sparbuch) einen Betrag von
+1.500,00 Euro in die Geschäftskasse eingelegt, um den Wechselgeld-
+bestand und die Vorfinanzierung der Herbstware zu sichern.
+
+Kein Darlehen, keine Rückzahlungsvereinbarnng.
+
+Mareike Harkort
+
+######## BELEG 12 von 120 · Datei: CCF_001381.txt ########
+Keramikwerkstatt Ohlendorf
+Töpferhof 2 | 37310 Lindenhagen
+Meisterbetrieb seit 1987
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+Rechnung  2026-057
+Rechnungsdatum 9.7.2026
+Lieferdatum 6.7.2026
+
+Wir lieferten Ihnen aus eigener Herstellung:
+
+01  Übertopf glasiert salbei, Ø 14
+      60 Stk x 4,20 €                  252,00 €
+02  Übertopf glasiert sand, Ø 18
+      40 Stk x 5,90 €                  236,00 €
+03  Schale flach anthrazit
+      20 Stk x 7,80 €                  156,00 €
+
+Zwischensumme                        644,00 €
++ 19% Mehrwertsteuer                 122,36 €
+Endbetrag                            766,36 €
+
+Zahlbar innerhalb 10 Tagen nach Rechnungsdatum.
+
+Steuernr. 00/000/00003 – IBAN DE00 0000 0000 0000 0003 33
+
+######## BELEG 13 von 120 · Datei: CCF_001395.txt ########
+Messehotel Dreikönig
+Betriebsgesellschaft Dreikönig mbH
+Uferstraße 44, 50000 Rheinmünde
+
+RECHNUNG  118-2026-00741
+Rechnungsdatum: 29. Januar 2026
+Frau Mareike Harkort · Blumenwerkstatt Harkort · Kirchgasse 7 · 37299 Weidenrode
+
+Anfenthalt vom 27.1.2026 bis 29.1.2026 (2 Nächte), Zimmer 508
+
+ 2 x Logis Komfort-Einzelzimmer à 129,00      258,00   7,0 %
+ 2 x Frühstücksbuffet à 19,00                  38,00  19,0 %
+ 1 x Parkhaus Tagespauschale                   18,00  19,0 %
+ Kulturförderabgabe (durchlaufend)              0,00
+
+ Summe                                        314,00 EUR
+ Netto 7 %  241,12   MwSt  16,88
+ Netto 19 %  47,06   MwSt   8,94
+ Zahlung VISA                                 314,00 EUR
+Besuch Internationale Pflanzenmesse
+
+######## BELEG 14 von 120 · Datei: CCF_001412.txt ########
+Bloemenhandel Van der Kroog B.V.
+Veilingweg 40 · 2600 AA Westerhaven · Nederland
+BTW-nr. NL000000000B00 · KvK 00000000
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+
+FACTUUR / RECHNUNG
+Rechnungs-Nr.: VK-2600731        Datum: 03-06-2026
+Leverdatum / Lieferdatum: 02-06-2026
+Uw BTW-nr. / Ihre USt-IdNr.: DE000000000
+
+Pos  Bezeichnung                        Menge   Einzelpreis    Gesamt
+----------------------------------------------------------------------
+1    Hortensia snij 'Verena' 60cm          40 st        2,15      86,00
+2    Delphinium blauw 80cm                 30 bos       6,40     192,00
+3    Alchemilla mollis                     25 bos       3,10      77,50
+4    Transportkosten Deense kar             1 x        38,00      38,00
+----------------------------------------------------------------------
+                                             Nettobetrag       393,50
+                                           BTW / USt 0 %         0,00
+                                     Rechnungsbetrag EUR       393,50
+
+Intracommunautaire levering, BTW verlegd.
+Steuerfreie innergemeinschaftliche Lieferung – Umsatzsteuer schuldet der Leistungsempfänger nicht in den Niederlanden.
+
+Betaling binnen 21 dagen / zahlbar bis 24-06-2026
+
+IBAN NL00 0000 0000 0000 00
+
+######## BELEG 15 von 120 · Datei: CCF_001430.txt ########
+Bloomdesk Software Inc.
+500 Mission Row, Suite 12, Wilmington, DE 19800, USA
+
+Bill to:
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+Germany
+
+INVOICE BD-2026-118207
+Invoice date: Mar 2, 2026
+Service period: Mar 2, 2026 – Apr 1, 2026
+Customer tax ID: DE000000000
+
+Description                               Qty      Amount
+Bloomdesk Order Manager – Pro plan, mont    1       29,00
+Extra user seat                             1        9,00
+
+Subtotal EUR 38,00
+VAT 0 % (reverse charge) EUR 0,00
+Total due EUR 38,00
+
+No VAT charged. Customer to self-assess VAT under the reverse-charge mechanism.
+
+Charged to card ending 0000 on Mar 2, 2026.
+
+######## BELEG 16 von 120 · Datei: CCF_001444.txt ########
+Gelbe Brief- und Paketgesellschaft mbH
+Filiale 0417 im Schreibwarenhaus Tegeler
+Kirchgasse 12, 37299 Weidenrode
+
+Quittung                      02.02.2026 09:14
+
+ 50 x Briefmarke Standardbrief  0,95      47,50 *
+ 10 x Briefmarke Großbrief      1,80      18,00 *
+  2 x Einschreiben Einwurf      2,35       4,70 *
+
+Summe                                     70,20 EUR
+* umsatzsteuerfrei nach § 4 Nr. 11b UStG (Universaldienst)
+Enthaltene MwSt                            0,00 EUR
+gegeben bar                               80,00
+zurück                                     9,80
+
+######## BELEG 17 von 120 · Datei: CCF_001460.txt ########
+Floristenbedarf Kettwiger GmbH
+Industriestr. 88 · 44000 Brackhausen
+Geschäftsführer: Holm Kettwiger · HRB 00000
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+
+RECHNUNG
+Rechnungs-Nr.: RE-260211        Datum: 27.01.2026
+Lieferschein LS-88120 vom 23.01.2026
+Zahlungsziel: 26.02.2026 netto, bis 06.02.2026 2 % Skonto
+
+Pos  Bezeichnung                        Menge   Einzelpreis    Gesamt
+----------------------------------------------------------------------
+1    Glasvase Zylinder 25 cm               48 Stk       3,45     165,60
+2    Steckschaum Ziegel nass                6 Kt       16,80     100,80
+3    Satinband 25 mm, 50 m Rolle           20 Rl        4,10      82,00
+4    Kranzunterlage Stroh 40 cm            15 Stk       2,85      42,75
+----------------------------------------------------------------------
+                                             Nettobetrag       391,15
+                                          zzgl. 19 % USt        74,32
+                                     Rechnungsbetrag EUR       465,47
+
+Floristenbedarf Kettwiger GmbH · USt-IdNr. DE000000000 · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 18 von 120 · Datei: CCF_001470.txt ########
+Café-Restaurant Orangerie im Schlosspark
+Schlossallee 1, 37000 Göttersen
+
+Rechnung 2410   Tisch 18   13.10.2026 12:55
+
+2 Tagessuppe                     13,80 B
+2 Flammkuchen                    25,80 B
+2 Stück Torte                     9,60 B
+2 Kännchen Kaffee                11,60 A
+1 Apfelschorle 0,4                4,50 A
+
+Rechnungsbetrag                  65,30 EUR
+B  7% Speisen  netto 45,98  MwSt 3,22
+A 19% Getränke netto 13,53  MwSt 2,57
+Zahlung: Kreditkarte
+
+Angaben zum Nachweis der Höhe und der betrieblichen Veranlassung
+von Bewirtungsaufwendungen (§ 4 Abs. 5 Nr. 2 EStG)
+Tag der Bewirtung: 13. Oktober 2026
+Bewirtete Personen: Fr. Ammermann (Hotel Lindenhof), M. Harkort
+Anlass: Planung Adventsdekoration Hotel Lindenhof
+Ort, Datum, Unterschrift: Weidenrode, M. Harkort
+
+######## BELEG 19 von 120 · Datei: CCF_001483.txt ########
+Blumenwerkstatt Harkort
+Schnittblumen · Hochzeits- und Trauerfloristik · Raumbegrünung
+Inh. Mareike Harkort · Kirchgasse 7 · 37299 Weidenrode
+Tel. 05000 000000 · post@blumenwerkstatt-harkort.example
+
+
+Kirchengemeinde St. Marien
+Pfarrbüro, Kirchplatz 1
+37299 Weidenrode
+
+
+Rechnung Nr. 2026-0102                    Weidenrode, 06.04.2026
+Liefernng am 3. April 2026
+
+Menge  Bezeichnung                              Einzelpreis   Gesamtpreis
+    2  Altarschmuck Ostern, 2 Gestecke               65,40        130,80
+    1  Osterkerzen-Kranz                             34,60         34,60
+   10  Schnittblumen lose, Bund                       8,90         89,00
+
+                                               Summe netto       254,40
+                                          Umsatzsteuer 7 %        17,81
+                                           Rechnungsbetrag       272,21
+
+Zahlbar bis 20.04.2026.
+
+Steuernummer 00/000/00000 · USt-IdNr. DE000000000 · Sparkasse Weidenrode · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 20 von 120 · Datei: CCF_001496.txt ########
+Nordhang Versicherung AG
+Direktion · Wallring 100 · 30000 Hohenlinden
+
+Blumenwerkstatt Harkort, Kirchgasse 7, 37299 Weidenrode    18. März 2026
+
+Nachtrag Nr. 2 zur Geschäftsinhaltsversicherung  GI 000.118.990-1
+Grund: Erhöhung Versicherungssurnme (Kühlzelle, Kassensystem) ab 01.04.2026
+
+Nachbeitrag für die Zeit vom 01.04.2026 bis 31.12.2026
+Nettobeitrag                                 96,30 EUR
+Versicherungsteuer 19 %                      18,30 EUR
+zu zahlen                                   114,60 EUR
+
+Fällig am 01.04.2026. Umsatzsteuerfrei gem. § 4 Nr. 10 UStG.
+
+######## BELEG 21 von 120 · Datei: Dokument (104).txt ########
+Kfz-Meisterwerkstatt Jeschonnek
+Reparatur aller Marken · HU/AU täglich
+Gewerbestr. 4, 37299 Weidenrode
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+
+RECHNUNG
+Rechnungs-Nr.: W-26-0391        Datum: 28.05.2026
+Kennzeichen: WDR-BH 207 · km-Stand 38.212
+Annahme 27.05.2026 · Fertigstellung 28.05.2026
+
+Pos  Bezeichnung                        Menge   Einzelpreis    Gesamt
+----------------------------------------------------------------------
+1    Inspektion nach Herstellervorgabe   1,80 Std.     89,00     160,20
+2    Motoröl 5W-30, 4,5 l                   1 Pos      67,50      67,50
+3    Ölfilter, Luftfilter, Innenraumfil     1 Satz     58,90      58,90
+4    Bremsbeläge vorn erneuern inkl. Ma     1 psch    149,00     149,00
+----------------------------------------------------------------------
+                                             Nettobetrag       435,60
+                                          zzgl. 19 % USt        82,76
+                                     Rechnungsbetrag EUR       518,36
+
+Betrag bei Abholung per EC-Karte bezahlt.
+
+St.-Nr. 00/000/00009
+
+######## BELEG 22 von 120 · Datei: Dokument (121).txt ########
+Hotel Speicherblick GmbH
+Kaispeicher 12 · 20000 Hansehafen
+
+Rechnung Nr. 26-03-1187                 Datum 09.03.2026
+Gast: Frau Jule Petermann
+Firma: Blumenwerkstatt Harkort, Kirchgasse 7, 37299 Weidenrode
+Anreise 07.03.2026   Abreise 09.03.2026   Zimmer 214
+
+07.03.26  Übernachtung Einzelzimmer        94,00  7%
+08.03.26  Übernachtung Einzelzimmer        94,00  7%
+07.03.26  Frühstück                        14,50  19%
+08.03.26  Frühstück                        14,50  19%
+
+Gesamtbetrag                              217,00 EUR
+darin  7 % MwSt aus 188,00:   12,30
+darin 19 % MwSt aus  29,00:    4,63
+Betrag dankend erhalten – Mastercard
+Anlass lt. Gast: Fachmesse Floristik Nord
+
+######## BELEG 23 von 120 · Datei: Dokument (132).txt ########
+Hinrich Mackensen
+Unter den Eschen 4
+37299 Weidenrode
+
+Frau Mareike Harkort, Blumenwerkstatt Harkort, Kirchgasse 7, 37299 Weidenrode
+
+                                                    Weidenrode, 15. Dezember 2025
+
+Dauermietrechnung 2026 – Lagerraum/Garage Hofgebäude Kirchgasse 9
+
+Mietzeitraum: 01.01.2026 bis 31.12.2026, monatlich im Voraus
+Monatliche Miete: 95,00 EUR
+
+Die Vermietung ist nach § 4 Nr. 12 UStG umsatzsteuerfrei; ein Steuerausweis
+erfolgt nicht. Diese Rechnung gilt in Verbindung mit dem Mietvertrag vom
+01.06.2022 als Dauerrechnung für alle Monate des Jahres 2026.
+
+Bankverbindung: IBAN DE00 0000 0000 0000 0006 66
+
+######## BELEG 24 von 120 · Datei: Dokument (144).txt ########
+Gasthaus Zur Alten Schmiede
+Fam. Uthoff · Schmiedegasse 1 · 37299 Weidenrode
+
+Rechnung 4340   Tisch 6   26.03.2026 13:48
+
+2 Mittagstisch Kalbsragout       37,80 B
+1 Vorspeisenteller               12,50 B
+2 Dessert des Tages              13,80 B
+1 Fl. Mineralwasser 0,75          6,90 A
+2 Espresso                        5,80 A
+
+Rechnungsbetrag                  76,80 EUR
+B  7% Speisen  netto 59,91  MwSt 4,19
+A 19% Getränke netto 10,67  MwSt 2,03
+Zahlung: Kreditkarte
+
+Angaben zum Nachweis der Höhe und der betrieblichen Veranlassung
+von Bewirtungsaufwendungen (§ 4 Abs. 5 Nr. 2 EStG)
+Tag der Bewirtung: 26. März 2026
+Bewirtete Personen: S. Lührmann (Brautmoden Lührmann), M. Harkort
+Anlass: Besprechung Hochzeitsmesse-Stand, Kooperation
+Ort, Datum, Unterschrift: Weidenrode, M. Harkort
+
+######## BELEG 25 von 120 · Datei: Dokument (156).txt ########
+Landkreis Werratal – Abfallwirtschaftsbetrieb
+Kreishaus, 37000 Göttersen
+
+ABFALLGEBÜHRENBESCHEID 2026                  Datum 22.01.2026
+Kassenzeichen 0441.2070.0026
+Blumenwerkstatt Harkort, Objekt Kirchgasse 7, 37299 Weidenrode
+
+Gewerbe-Restabfallbehälter 240 l, 14-tägl.       189,60
+Bioabfallbehälter 240 l, wöchentl. (Grünschnitt) 236,40
+Jahresgebühr                                     426,00 EUR
+
+Fälligkeiten: 15.02., 15.05., 15.08., 15.11. je 106,50 EUR
+Hoheitliche Gebühr – nicht umsatzsteuerbar.
+
+######## BELEG 26 von 120 · Datei: Dokument (166).txt ########
+Berufsmoden Hanneken
+Arbeits- und Berufsbekleidung
+Bahnhofstr. 12, 34000 Niederaue
+
+An
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+Rechnung Nr. 11877 vom 10.04.26
+gellefert am 10.04.26
+
+6 Stk Latzschürze oliv mit Stick 'Blumenwerkstatt' à 24,90 = 149,40
+3 Stk Softshell-Weste bestickt à 44,50 = 133,50
+1 x Stickprogramm einmalig à 35,00 = 35,00
+
+Summe netto EUR 317,90
+MwSt. 19,0% EUR 60,40
+Gesamt brutto EUR 378,30
+
+Zahlbar sofort netto.
+
+St.-Nr. 00/000/00012
+
+######## BELEG 27 von 120 · Datei: Dokument (180).txt ########
+Kfz-Meisterwerkstatt Jeschonnek
+Reparatur aller Marken · HU/AU täglich
+Gewerbestr. 4, 37299 Weidenrode
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+
+RECHNUNG
+Rechnungs-Nr.: W-26-0702        Datum: 29.10.2026
+Kennzeichen: WDR-BH 207
+Leistungsdatum 28.10.2026
+
+Pos  Bezeichnung                        Menge   Einzelpreis    Gesamt
+----------------------------------------------------------------------
+1    Winterreifen 205/65 R16 C, 4 Stück     4 Stk     118,00     472,00
+2    Montage, Wuchten, Einlagernng Somm     1 psch     98,00      98,00
+----------------------------------------------------------------------
+                                             Nettobetrag       570,00
+                                          zzgl. 19 % USt       108,30
+                                     Rechnungsbetrag EUR       678,30
+
+Zahlbar bis 12.11.2026.
+
+St.-Nr. 00/000/00009
+
+######## BELEG 28 von 120 · Datei: Dokument (190).txt ########
+Steuerkanzlei Wohlgemuth & Rahe
+Steuerberater in Partnerschaft
+Domhof 3 · 37000 Göttersen
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+Rechnung Nr. 2026/1187
+Datum: 08.04.2026      Mandant 10447
+Leistungszeitraum: 01.01.2026 – 31.03.2026
+
+Für unsere Tätigkeit berechnen wir nach der StBVV:
+
+Buchführung § 33 Abs. 1 StBVV, Jan–Mrz 2026                  384,00
+Umsatzsteuer-Voranmeldungen I/2026                             0,00
+Auslagenpauschale § 16 StBVV                                  20,00
+
+Nettohonorar                                                 404,00
+19,00 % Umsatzsteuer                                          76,76
+Rechnungsbetrag in EUR                                       480,76
+
+Wir buchen den Betrag am 18.04.2026 von Ihrem Konto ab.
+USt-IdNr. DE000000008
+
+######## BELEG 29 von 120 · Datei: Dokument (201).txt ########
+Tischlerei Sandvoss
+Innenausbau & Ladenbau
+Hinter der Bleiche 6, 37299 Weidenrode
+Tischlermeister Arne Sandvoss
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+Rechnung  R 26/041
+Rechnungsdatum 19. Mai 2026
+Ausführung am 13. Mai 2026
+
+Wir berechnen Ihnen für die ausgeführten Arbeiten:
+
+01  Bindetisch Buche massiv 240 x 90 cm, Wasserfeste Platte
+      1 Stk x 1.860,00 €                1.860,00 €
+02  Unterbau mit 6 Schubkästen
+      1 Stk x 740,00 €                  740,00 €
+03  Anlieferung und Montage vor Ort
+      4,00 Std. x 58,00 €                  232,00 €
+
+Zwischensumme                      2.832,00 €
++ 19% Mehrwertsteuer                 538,08 €
+Endbetrag                          3.370,08 €
+
+Zahlbar 8 Tage netto.
+
+St.Nr. 00/000/00004 · IBAN DE00 0000 0000 0000 0004 44
+
+######## BELEG 30 von 120 · Datei: Dokument (212).txt ########
+Steuerkanzlei Wohlgemuth & Rahe
+Steuerberater in Partnerschaft
+Domhof 3 · 37000 Göttersen
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+Rechnung Nr. 2026/3391
+Datum: 08.10.2026      Mandant 10447
+Leistungszeitraum: 01.07.2026 – 30.09.2026
+
+Für unsere Tätigkeit berechnen wir nach der StBVV:
+
+Buchführung § 33 Abs. 1 StBVV, Jul–Sep 2026                  398,00
+Lohnabrechnungen § 34 StBVV, 2 AN x 3 Monate                  96,00
+Auslagenpauschale § 16 StBVV                                  20,00
+
+Nettohonorar                                                 514,00
+19,00 % Umsatzsteuer                                          97,66
+Rechnungsbetrag in EUR                                       611,66
+
+Wir buchen den Betrag am 18.10.2026 von Ihrem Konto ab.
+USt-IdNr. DE000000008
+
+######## BELEG 31 von 120 · Datei: Dokument (227).txt ########
+Entgeltabrechnung für Juni 2026                               Blatt 1
+Arbeitgeber: Blumenwerkstatt Harkort, Kirchgasse 7, 37299 Weidenrode
+Pers.-Nr. 5   Kerstin Brodthage, Verkauf (Teilzeit)   St.-Kl. V   Eintritt 01.09.2021
+erstellt am 25.06.2026
+
+Lohnart                         Betrag
+Gehalt                         1.420,00
+Gesamtbrutto                   1.420,00
+
+Steuerliche Abzüge
+Lohnsteuer                       131,50
+Kirchensteuer                      0,00
+Solidaritätszuschlag               0,00
+Sozialversicherung (AN-Anteil)
+Krankenversicherung              121,41
+Rentenversicherung               132,06
+Arbeitslosenversicherung          18,46
+Pflegeversicherung                34,08
+
+Gesetzliches Netto               982,49
+Auszahlungsbetrag                982,49 EUR
+Überweisung auf IBAN DE00 0000 0000 0000 0007 05
+
+######## BELEG 32 von 120 · Datei: Dokument (237).txt ########
+Blumenwerkstatt Harkort
+Schnittblumen · Hochzeits- und Trauerfloristik · Raumbegrünung
+Inh. Mareike Harkort · Kirchgasse 7 · 37299 Weidenrode
+Tel. 05000 000000 · post@blumenwerkstatt-harkort.example
+
+
+Zahnarztpraxis Dr. Edda Löwenstein
+Marktplatz 6
+37299 Weidenrode
+
+
+RECHNUNG
+Nummer: 2026-0044
+Datum:  28. Februar 2026
+Leistungszeitraum: 01.02.2026 – 28.02.2026
+
+1. Blumen-Abo Empfang, wöchentlicher Strauß, Februar – 4 Stk zu je 27,10 € = 108,40 €
+
+Netto: 108,40 €
+zuzüglich 7 % USt (auf 108,40 €): 7,59 €
+Zu zahlen: 115,99 €
+
+Der Betrag wird per Lastschrift eingezogen.
+
+Steuernummer 00/000/00000 · USt-IdNr. DE000000000 · Sparkasse Weidenrode · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 33 von 120 · Datei: Dokument (247).txt ########
+Gärtnerei Tomschke
+Jungpflanzen und Topfkulturen
+Feldweg 3, 37291 Oberhollen
+Steuer-Nr. 00/000/00001
+
+An
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+Rechnung Nr. 2026/0471 vom 28. April 2026
+Lieferung frei Haus am 24.4.2026, Lieferschein 0977
+
+150 Stk Geranien stehend, 12er Topf à 1,35 = 202,50
+90 Stk Petunien hängend à 1,25 = 112,50
+80 Stk Küchenkräuter sortiert à 0,95 = 76,00
+
+Summe netto EUR 391,00
+MwSt. 7,0% EUR 27,37
+Gesamt brutto EUR 418,37
+
+Bitte überweisen Sie den Betrag bis zum 12.05.2026.
+
+IBAN DE00 0000 0000 0000 0001 11
+
+######## BELEG 34 von 120 · Datei: Dokument (258).txt ########
+Rolfsmeier Verpackungen e.K.
+Papier · Folien · Tragetaschen
+Hafenstraße 5, 32000 Lübberstedt
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+                                                Lübberstedt, den 14. April 2026
+
+1. MAHNUNG
+
+Sehr geehrte Frau Harkort,
+
+sicher ist es Ihrer Aufmerksarnkeit entgangen, dass unsere Rechnung Nr. 40318
+vom 03.03.2026 (fällig am 17.03.2026) noch nicht ausgeglichen ist.
+
+   Rechnungsbetrag inkl. 19 % USt      523,48 EUR
+   Mahngebühr                              5,00 EUR
+   offener Gesamtbetrag                528,48 EUR
+
+Bitte überweisen Sie den Gesamtbetrag bis spätestens 24.04.2026.
+Sollten Sie inzwischen gezahlt haben, betrachten Sie dieses Schreiben als gegenstandslos.
+
+Mit freundlichen Grüßen
+Rolfsmeier Verpackungen e.K. – Buchhaltung
+IBAN DE00 0000 0000 0000 0002 22
+
+######## BELEG 35 von 120 · Datei: Dokument (270).txt ########
+Autohof Rastplatz Leinetal
+BAB-Abfahrt 71 · 37100 Hohnsfeld
+Betreiber: Leinetal Tank & Rast GmbH
+--------------------------------
+Datum 16.06.26  Zeit 05:58
+ZP 4  Diesel B7
+Menge   39,66 Liter
+Preis   1,759 EUR/Liter
+Betrag  6,98 EUR
+--------------------------------
+SUMME        EUR 6,98
+darin 19% USt   1,11
+Nettobetrag     5,87
+Kartenzahlung  VISA ************0000
+Tankbeleg bitte aufbewahren
+
+######## BELEG 36 von 120 · Datei: Dokument (47).txt ########
+Industrie- und Handelskammer Werra-Leinebergland
+Weiterbildung · Kammerplatz 1, 37000 Göttersen
+
+Gebührenbescheid / Rechnung Nr. WB-26-00412              1.9.2026
+Teilnehmerin: Jule Petermann, entsandt durch Blumenwerkstatt Harkort
+
+Lehrgang "Ausbildung der Ausbilder (AEVO) – Kompakt"
+Lehrgangszeitraum 5.10.2026 bis 16.10.2026
+
+Lehrgangsentge1t                   590,00 EUR
+Prüfungsgebühr                     180,00 EUR
+Summe                              770,00 EUR
+Umsatzsteuerfrei nach § 4 Nr. 22 a) UStG.
+Zahlbar bis 21.9.2026.
+
+######## BELEG 37 von 120 · Datei: Dokument (55).txt ########
+Blumengroßmarkt Niederaue eG
+Halle 4, Stand 17–21 · Am Güterhof 2 · 34000 Niederaue
+Tel. 0500 000000
+
+Rechnungsempfänger: Blumenwerkstatt Harkort, Inh. Mareike Harkort, Kirchgasse 7, 37299 Weidenrode
+Kd-Nr. 11609   Beleg 26-104482   Belegdatum 12.01.2026
+Lieferdatum 12.01.26 (Selbstabholung)
+
+ArtNr    Artikel                      Mg   Einh   Preis    Betrag  St
+71548    Rosen 'Red Naomi' 60 cm, B    12 Bd      14,80    177,60  7
+24732    Tulpen gemischt, Bund à 50     8 Bd      11,50     92,00  7
+61489    Eukalyptus cinerea            10 Bd       4,20     42,00  7
+28462    Ranunkeln rosa                 6 Bd       8,90     53,40  7
+
+Warenwert netto                                           365,00
+USt 7,00 % auf 365,00               25,55
+Zahlbetrag EUR                                            390,55
+
+Zahlbar sofort netto Kasse. Bankeinzug zum 19.01.2026
+
+Blumengroßmarkt Niederaue eG · USt-IdNr. DE000000000 · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 38 von 120 · Datei: Dokument (70).txt ########
+Kältetechnik Wiborg GmbH
+Kühl- und Klimaanlagen
+Zum Steinbruch 9 · 37299 Weidenrode
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+Rechnung  2026-0312
+Rechnungsdatum 02.04.2026
+Leistungszeitraum 30.03.26 – 31.03.26
+Auftrag 0218 / Angebot A-1190
+
+Wir berechnen Ihnen für die ausgeführten Arbeiten:
+
+01  Blumenkühlzelle 2,10 x 1,80 m inkl. Aggregat
+      1 Stk x 6.480,00 €                6.480,00 €
+02  Regalsystem Edelstahl 4 Ebenen
+      1 Satz x 590,00 €                  590,00 €
+03  Lieferung, Aufbau, Inbetriebnahme
+      9,50 Std. x 68,00 €                  646,00 €
+
+Zwischensumme                      7.716,00 €
++ 19% Mehrwertsteuer               1.466,04 €
+Endbetrag                          9.182,04 €
+
+Zahlbar ohne Abzug bis 16.04.2026.
+
+Kältetechnik Wiborg GmbH · USt-IdNr. DE000000000 · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 39 von 120 · Datei: Dokument (82).txt ########
+Büroversand Kliemannek GmbH
+Lagerstr. 70 · 44000 Brackhausen
+
+Rechnungsempfänger: Blumenwerkstatt Harkort, Inh. Mareike Harkort, Kirchgasse 7, 37299 Weidenrode
+Kd-Nr. 44523   Beleg 4470012207   Belegdatum 21.05.2026
+Lieferdatum 20.05.2026  Zahlungsziel 04.06.2026
+
+ArtNr    Artikel                      Mg   Einh   Preis    Betrag  St
+54041    Toner schwarz LJ-340 XL        2 Stk     68,90    137,80  19
+48453    Kartenständer Acryl A6        10 Stk      3,45     34,50  19
+53822    Preisschild-Stecker 100er      3 Pck      7,80     23,40  19
+84959    Versandkostenanteil            1 x        4,95      4,95  19
+
+Warenwert netto                                           200,65
+USt 19,00 % auf 200,65               38,12
+Zahlbetrag EUR                                            238,77
+
+Büroversand Kliemannek GmbH · USt-IdNr. DE000000000 · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 40 von 120 · Datei: Dokument (92).txt ########
+Rundfunkbeitragsservice der Landesanstalten
+Beitragsnummer 000 441 207          04.05.2026
+
+Blumenwerkstatt Harkort, Betriebsstätte Kirchgasse 7, 37299 Weidenrode
+
+Zahlungsaufforderung Rundfunkbeitrag für Betriebsstätten
+Staffel 1 (0 bis 8 Beschäftigte): 1/3 Beitrag = 6,12 EUR monatlich
+Betriebliches Kfz: 1. Fahrzeug beitragsfrei
+Zeitraum 05.2026 – 07.2026
+Fälliger Betrag                    18,36 EUR
+Bitte zahlen Sie bis zum 15.05.2026. Der Rundfunkbeitrag enthält keine Umsatzsteuer.
+
+######## BELEG 41 von 120 · Datei: IMG_20260214_175448.txt ########
+Weidenroder Anzeiger Verlags-GmbH
+Anzeigenabteilung · Marktplatz 9 · 37299 Weidenrode
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+
+RECHNUNG
+Rechnungs-Nr.: AZ-2026-01877        Datum: 06.02.2026
+Erscheinungstermin: 07.02.2026
+Zahlbar bis: 20.02.2026
+
+Pos  Bezeichnung                        Menge   Einzelpreis    Gesamt
+----------------------------------------------------------------------
+1    Anzeige 2-spaltig/60 mm 'Valentins     1 x       148,00     148,00
+2    Farbzuschlag 4c                        1 x        32,00      32,00
+3    Online-Banner 1 Woche                  1 x        45,00      45,00
+----------------------------------------------------------------------
+                                             Nettobetrag       225,00
+                                          zzgl. 19 % USt        42,75
+                                     Rechnungsbetrag EUR       267,75
+
+Weidenroder Anzeiger Verlags-GmbH · USt-IdNr. DE000000000 · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 42 von 120 · Datei: IMG_20260307_130725.txt ########
+Mittelland Bahn AG                         Online-Ticket
+Auftragsnummer N95347X          Buchungsdatum 27.02.2026
+
+Fahrkarte Flexpreis, Einfache Fahrt, 2. Klasse, 1 Erwachsener
+Gültig am 07.03.2026
+Göttersen  ->  Hansehafen Hbf     IC 2312
+Reisende/r: Jule Petermann
+
+Preis                     54,90 EUR
+enthaltene MwSt 7 %        3,59 EUR  (Netto 51,31 EUR)
+Zahlung mit Kreditkarte   54,90 EUR
+
+Mittelland Bahn AG · Fernverkehr · USt-IdNr. DE000000004
+Diese Fahrkarte gilt als Rechnung im Sinne des UStG.
+
+######## BELEG 43 von 120 · Datei: IMG_20260307_140510.txt ########
+Blumenwerkstatt Harkort
+Schnittblumen · Hochzeits- und Trauerfloristik · Raumbegrünung
+Inh. Mareike Harkort · Kirchgasse 7 · 37299 Weidenrode
+Tel. 05000 000000 · post@blumenwerkstatt-harkort.example
+
+
+Autohaus Brenneke & Söhne GmbH
+Kasseler Landstr. 201
+34000 Niederaue
+
+
+Rechnung Nr. 2026-0066                    Weidenrode, 05.03.2026
+Leistungszeitraum: 01.02.2026 – 28.02.2026
+
+Menge  Bezeichnung                              Einzelpreis   Gesamtpreis
+    4  Raumbegrünung Showroom: Pflege-Service F      45,00        180,00
+    6  Hydrokultur-Gefäß 60 cm inkl. Bepflanzun      12,00         72,00
+
+                                               Summe netto       252,00
+                                         Umsatzsteuer 19 %        47,88
+                                           Rechnungsbetrag       299,88
+
+Zahlbar bis 19.03.2026.
+
+Steuernummer 00/000/00000 · USt-IdNr. DE000000000 · Sparkasse Weidenrode · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 44 von 120 · Datei: IMG_20260310_083040.txt ########
+Telnova Deutschland GmbH                                   Ihre Rechnung
+Kundennummer 4412070000   Rechnungsnummer 900 441 2070 03
+Rechnungsdatum 04.03.2026
+Blumenwerkstatt Harkort, Kirchgasse 7, 37299 Weidenrode
+
+Rechnung für März 2026
+Business Internet & Telefon 100 (Zeitraum 01.03.2026 – 31.03.2026)     33,53
+Verbindungen außerhalb Flatrate                            2,18
+Summe ohne Umsatzsteuer                                   35,71
+Umsatzsteuer 19 %                                          6,78
+Rechnungsbetrag                                           42,49 EUR
+
+Der Rechnungsbetrag wird frühestens am 11.03.2026 abgebucht.
+Telnova Deutschland GmbH · Sitz Rheinmünde · USt-IdNr. DE000000006
+
+######## BELEG 45 von 120 · Datei: IMG_20260311_120935.txt ########
+Industrie- und Handelskammer Werra-Leinebergland
+Körperschaft des öffentlichen Rechts
+Kammerplatz 1, 37000 Göttersen
+
+BEITRAGSBESCHEID 2026                    Bescheiddatum: 09.03.2026
+Mitgliedsnummer 000-441207   Aktenzeichen B/26/004412
+
+Mareike Harkort, Blumenwerkstatt Harkort, Kirchgasse 7, 37299 Weidenrode
+
+Vorläufige Veranlagung für das Beitragsjahr 2026
+Grundbeitrag                                   75,00 EUR
+Umlage 0,14 % vom Gewerbeertrag 31.500 EUR
+  (nach Freibetrag 15.340 EUR)                 22,62 EUR
+Festgesetzter Beitrag                          97,62 EUR
+
+Zahlbar bis zum 09.04.2026. Der Beitrag unterliegt nicht der Umsatzsteuer.
+Rechtsbehelfsbelehrung: Gegen diesen Bescheid kann innerhalb eines Monats ...
+
+######## BELEG 46 von 120 · Datei: IMG_20260315_121100.txt ########
+TECHNIKLAND Elektromarkt
+Niederaue-Süd
+Am Kreisel 1
+12.03.2026 11:07  Kasse 02  Beleg 25485
+========================================
+121355  Multifunktionsdrucker LJ-340
+                      1 Stk     329,00 A
+========================================
+Total                         329,00
+gegeben EC                    329,00
+inkl. 19,00% MwSt (A) aus 329,00: 52,53
+
+Garantie 24 Monate ab Kaufdatum.
+Rechnungsanschrift: Blumenwerkstatt Harkort, Kirchgasse 7, 37299 Weidenrode
+
+######## BELEG 47 von 120 · Datei: IMG_20260327_195745.txt ########
+Blumenwerkstatt Harkort
+Schnittblumen · Hochzeits- und Trauerfloristik · Raumbegrünung
+Inh. Mareike Harkort · Kirchgasse 7 · 37299 Weidenrode
+Tel. 05000 000000 · post@blumenwerkstatt-harkort.example
+
+
+Berghotel Kranzlerhof GmbH
+Dorfplatz 1
+A-6000 Hochfilzen am Joch
+Österreich
+UID: ATU00000000
+
+
+Rechnung Nr. 2026-0091                    Weidenrode, 19.03.2026
+Lieferdatum: 17.03.2026
+Unsere USt-IdNr.: DE000000000
+
+Menge  Bezeichnung                              Einzelpreis   Gesamtpreis
+   40  Tischgestecke Frühjahr, haltbar gearbeit      16,50        660,00
+   40  Glaszylinder mit Kunstkerze                    8,90        356,00
+    1  Versand Palette                               74,00         74,00
+
+                                               Summe netto     1.090,00
+                                           Rechnungsbetrag     1.090,00
+
+Steuerfreie innergemeinschaftliche Lieferung nach § 4 Nr. 1 Buchst. b i.V.m. § 6a UStG.
+
+Zahlbar bis 02.04.2026.
+
+Steuernummer 00/000/00000 · USt-IdNr. DE000000000 · Sparkasse Weidenrode · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 48 von 120 · Datei: IMG_20260509_093039.txt ########
+Blumengroßmarkt Niederaue eG
+Halle 4, Stand 17–21 · Am Güterhof 2 · 34000 Niederaue
+Tel. 0500 000000
+
+Rechnungsempfänger: Blumenwerkstatt Harkort, Inh. Mareike Harkort, Kirchgasse 7, 37299 Weidenrode
+Kd-Nr. 40382   Beleg 26-131655   Belegdatum 07.05.2026
+Lieferdatum 07.05.26 (Selbstabholung)
+
+ArtNr    Artikel                      Mg   Einh   Preis    Betrag  St
+28296    Pfingstrosen 'Sarah Bernha    20 Bd      16,50    330,00  7
+29320    Nelken gemischt               14 Bd       5,40     75,60  7
+14340    Gerbera Mini, Karton à 50      4 Kt      19,50     78,00  7
+96791    Steckschaum-Ziegel, 20er K     2 Kt      17,90     35,80  19
+
+Warenwert netto                                           519,40
+USt 19,00 % auf 35,80                6,80
+USt 7,00 % auf 483,60               33,85
+Zahlbetrag EUR                                            560,05
+
+Zahlbar sofort netto Kasse. Bankeinzug zum 14.05.2026
+
+Blumengroßmarkt Niederaue eG · USt-IdNr. DE000000000 · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 49 von 120 · Datei: IMG_20260604_121819.txt ########
+PayNord Zahlungssysteme GmbH                            Händlerabrechnung
+Händler-ID 0044120   Terminal-ID 60000417
+Blumenwerkstatt Harkort, Kirchgasse 7, 37299 Weidenrode
+Abrechnungsdatum 02.06.2026          Abrechnungsmonat Mai 2026
+Zeitraum 01.05.2026 – 31.05.2026
+
+Kartenumsätze girocard / Kreditkarte   398 Transaktionen      12.447,90
+Disagio 0,23 % vom Umsatz                                         28,63
+Transaktionsentgelt 398 x 0,07                                    27,86
+Summe Entgelte                                                    56,49 EUR
+Auszahlungsbetrag (Umsatz abzgl. Entgelte)                    12.391,41
+
+Die Entgelte sind als Finanzdienstleistnng nach § 4 Nr. 8 d UStG
+umsatzsteuerfrei. Die Entgelte wurden mit den Auszahlungen verrechnet.
+
+######## BELEG 50 von 120 · Datei: IMG_20260612_145843.txt ########
+Buchhandlung Lesezeichen
+Inh. Friederike Nottbohm
+Marktplatz 7, 37299 Weidenrode
+
+Q U I T T U N G
+Nr. 318     vom 05.06.2026, 15:18 Uhr
+
+  Trauerfloristik – Formen u. Symbolik ...... 39,90 EUR
+  Handbuch Schnittblumenpflege ...... 28,00 EUR
+
+Gesamtbetrag: 67,90 EUR
+Zahlungsart: EC-Karte
+enthaltene USt 7 %: 4,44 EUR (netto 63,46)
+
+######## BELEG 51 von 120 · Datei: IMG_20260624_182223.txt ########
+Blumenwerkstatt Harkort
+Schnittblumen · Hochzeits- und Trauerfloristik · Raumbegrünung
+Inh. Mareike Harkort · Kirchgasse 7 · 37299 Weidenrode
+Tel. 05000 000000 · post@blumenwerkstatt-harkort.example
+
+
+Eheleute Sophie und Jannik Reddehase
+Am Sonnenhang 8
+37291 Oberhollen
+
+
+Schlussrechnung Nr. 2026-0171                    Weidenrode, 15.06.2026
+Hochzeit / Lieferdatum: 13.06.2026
+Angebot vom 02.04.2026
+
+Menge  Bezeichnung                              Einzelpreis   Gesamtpreis
+    1  Brautstrauß Pfingstrose/Eukalyptus           121,50        121,50
+    4  Anstecker Bräutigam und Trauzeugen            11,20         44,80
+   14  Tischgestecke Festtafel                       28,00        392,00
+   10  Kirchenbankschmuck                            13,10        131,00
+    1  Leihgebühr Kerzenständer und Vasen            60,00         60,00
+
+                                               Summe netto       749,30
+                                         Umsatzsteuer 19 %        11,40
+                                          Umsatzsteuer 7 %        48,25
+                                abzgl. erhaltene Anzahlung      -300,00
+                                           Rechnungsbetrag       508,95
+
+Restbetrag zahlbar bis 29.06.2026.
+
+Steuernummer 00/000/00000 · USt-IdNr. DE000000000 · Sparkasse Weidenrode · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 52 von 120 · Datei: IMG_20260803_150113.txt ########
+Betriebsberatung Handwerk & Handel – Dipl.-Kfm. Ansgar Tiedtke
+Kontorhaus, Zimmer 3 · 34000 Niederaue
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+30. Juli 2026
+
+Rechnung T-26-055
+Beratungstermine: 08.07.2026 und 22.07.2026
+
+Sehr geehrte Frau Harkort,
+
+für meine Leistungen erlaube ich mir, wie folgt abzurechnen:
+
+- Beratung Preiskalkulation und Sortimentsanalyse (6,00 Std.): 570,00 Euro
+- Fahrtkosten 2 Termine (1 psch): 42,00 Euro
+
+Netto 612,00 Euro
+Umsatzsteuer 19 % 116,28 Euro
+Rechnungsbetrag 728,28 Euro
+
+Zahlbar innerhalb von 14 Tagen. IBAN DE00 0000 0000 0000 0016 16
+
+######## BELEG 53 von 120 · Datei: IMG_20260811_133219.txt ########
+Telnova Deutschland GmbH                                   Ihre Rechnung
+Kundennummer 4412070000   Rechnungsnummer 900 441 2070 08
+Rechnungsdatum 05.08.2026
+Blumenwerkstatt Harkort, Kirchgasse 7, 37299 Weidenrode
+
+Rechnung für August 2026
+Business Internet & Telefon 100 (Zeitraum 01.08.2026 – 31.08.2026)     33,53
+Verbindungen außerhalb Flatrate                            0,00
+Summe ohne Umsatzsteuer                                   33,53
+Umsatzsteuer 19 %                                          6,37
+Rechnungsbetrag                                           39,90 EUR
+
+Der Rechnungsbetrag wird frühestens am 12.08.2026 abgebucht.
+Telnova Deutschland GmbH · Sitz Rheinmünde · USt-IdNr. DE000000006
+
+######## BELEG 54 von 120 · Datei: IMG_20260827_100138.txt ########
+        FLORA-CASH Abholmarkt         
+   Gewerbering 11, 34000 Niederaue    
+       nur für Wiederverkäufer        
+
+--------------------------------------
+Chrysanthemen Deko 10er       24,90 B
+Sonnenblumen 20er             17,80 B
+Statice blau Bd               12,60 B
+Wickeldraht grün 100g          3,95 A
+Bindebast natur 500g           6,49 A
+Dahlien gemischt Bd x3        29,70 B
+--------------------------------------
+SUMME EUR                     95,44
+EC-Karte                      95,44
+
+MwSt%      Netto     MwSt    Brutto
+A 19%       8,77     1,67     10,44
+B  7%      79,44     5,56     85,00
+
+Datum: 18.08.2026   Uhrzeit: 06:41
+Bon-Nr. 1993  Kasse 2  Bed. 25
+
+Kundenkarte 000417 Harkort
+
+######## BELEG 55 von 120 · Datei: IMG_20260829_072421.txt ########
+Ladenkompass Akademie – Inh. Dr. Henrike Stöver
+Online-Seminare für den Einzelhandel
+Lindenallee 30, 04000 Pleißenau
+
+An
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+Rechnung Nr. LK-26-0871 vom 24.08.2026
+Zugang freigeschaltet am 24.08.2026, Laufzeit bis 24.11.2026
+
+1 Lizenz Online-Kurs 'Schaufenster & Warenpräsentation' (6 Module) à 249,00 = 249,00
+1 Stk Arbeitsheft PDF à 0,00 = 0,00
+
+Summe netto EUR 249,00
+MwSt. 19,0% EUR 47,31
+Gesamt brutto EUR 296,31
+
+Betrag per PayDirekt erhalten.
+
+USt-IdNr. DE000000007
+
+######## BELEG 56 von 120 · Datei: IMG_20260830_135537.txt ########
+Blumenwerkstatt Harkort
+Schnittblumen · Hochzeits- und Trauerfloristik · Raumbegrünung
+Inh. Mareike Harkort · Kirchgasse 7 · 37299 Weidenrode
+Tel. 05000 000000 · post@blumenwerkstatt-harkort.example
+
+
+Brautmoden Lührmann
+Inh. Svenja Lührmann
+Marktplatz 10
+37299 Weidenrode
+
+
+RECHNUNG
+Nummer: 2026-0244
+Datum:  26.08.2026
+Ausgeführt am 24.08.2026 und 25.08.2026
+
+1. Schaufensterdekoration Herbst: Entwurf und Aufbau – 6,50 Std. zu je 52,00 € = 338,00 €
+2. Kunstblumen-Girlande, Dekomaterial – 1 psch zu je 148,00 € = 148,00 €
+
+Netto: 486,00 €
+zuzüglich 19 % USt (auf 486,00 €): 92,34 €
+Zu zahlen: 578,34 €
+
+Zahlbar bis 09.09.2026.
+
+Steuernummer 00/000/00000 · USt-IdNr. DE000000000 · Sparkasse Weidenrode · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 57 von 120 · Datei: IMG_20260913_080947.txt ########
+Blumenwerkstatt Harkort
+Schnittblumen · Hochzeits- und Trauerfloristik · Raumbegrünung
+Inh. Mareike Harkort · Kirchgasse 7 · 37299 Weidenrode
+Tel. 05000 000000 · post@blumenwerkstatt-harkort.example
+
+
+Bloemisterij De Linde V.O.F.
+Dorpsstraat 77
+7500 AB Oosterbeekhuizen
+Nederland
+BTW: NL000000001B00
+
+
+RECHNUNG
+Nummer: 2026-0263
+Datum:  10.09.2026
+Lieferdatum: 09.09.2026 (Abholung durch Kunden, Gelangensbestätigung liegt vor)
+
+1. Trockenblumensträuße 'Heide', gebunden – 80 Stk zu je 12,50 € = 1.000,00 €
+2. Kranzrohlinge Weide Ø 30 – 60 Stk zu je 4,80 € = 288,00 €
+
+Netto: 1.288,00 €
+Zu zahlen: 1.288,00 €
+
+Innergemeinschaftliche Lieferung, steuerfrei (§ 4 Nr. 1b UStG). USt-IdNr. Lieferer DE000000000.
+
+Zahlbar bis 24.09.2026.
+
+Steuernummer 00/000/00000 · USt-IdNr. DE000000000 · Sparkasse Weidenrode · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 58 von 120 · Datei: IMG_20261112_082900.txt ########
+Blumenwerkstatt Harkort
+Schnittblumen · Hochzeits- und Trauerfloristik · Raumbegrünung
+Inh. Mareike Harkort · Kirchgasse 7 · 37299 Weidenrode
+Tel. 05000 000000 · post@blumenwerkstatt-harkort.example
+
+
+Volksbank Werratal eG
+Marketing
+Bankplatz 1
+37299 Weidenrode
+
+
+Rechnung Nr. 2026-0331                    Weidenrode, 11.11.2026
+Termine: 04.11.2026 und 05.11.2026
+
+Menge  Bezeichnung                              Einzelpreis   Gesamtpreis
+    2  Workshop 'Adventskranz binden' für Kunde     480,00        960,00
+    1  Anfahrt, Auf- und Abbau                       60,00         60,00
+
+                                               Summe netto     1.020,00
+                                         Umsatzsteuer 19 %       193,80
+                                           Rechnungsbetrag     1.213,80
+
+Zahlbar bis 25.11.2026.
+
+Steuernummer 00/000/00000 · USt-IdNr. DE000000000 · Sparkasse Weidenrode · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 59 von 120 · Datei: IMG_20261112_151324.txt ########
+Nordhang Versicherung AG
+Kraftfahrtversicherung
+
+Beitragsrechnung 2027 zum Kfz-Vertrag K 000.207.118-7       6. November 2026
+Kennzeichen WDR-BH 207 · Versicherungsjahr 01.01.2027 – 31.12.2027
+
+Kfz-Haftpflicht  SF 13                          398,10 EUR
+Vollkasko                                       461,30 EUR
+(Beiträge einschließlich 19 % Versicherungsteuer)
+Jahresbeitrag                                   859,40 EUR
+fällig zum 01.01.2027
+Kündigung zum Ablauf möglich bis 30.11.2026.
+
+######## BELEG 60 von 120 · Datei: IMG_20261114_145643.txt ########
+Gelbe Brief- und Paketgesellschaft mbH
+Filiale 0417 im Schreibwarenhaus Tegeler
+
+Quittung                      10.11.2026 16:40
+
+  1 x Paket 5 kg Inland                    7,49 A
+  1 x Päckchen M                           4,79 A
+ 20 x Briefmarke Standardbrief  0,95      19,00 *
+
+Summe                                     31,28 EUR
+A = 19 % MwSt  Netto 10,32  MwSt 1,96
+* umsatzsteuerfrei nach § 4 Nr. 11b UStG
+Kartenzahlung girocard
+
+######## BELEG 61 von 120 · Datei: SCN260122-8.txt ########
+Mittelland Bahn AG                         Online-Ticket
+Auftragsnummer N58165X          Buchungsdatum 19.01.2026
+
+Fahrkarte Flexpreis, Einfache Fahrt, 2. Klasse, 1 Erwachsener
+Gültig am 27.01.2026
+Göttersen  ->  Rheinmünde Messe/Deutz     IC 2438
+Reisende/r: Mareike Harkort
+
+Preis                     87,90 EUR
+enthaltene MwSt 7 %        5,75 EUR  (Netto 82,15 EUR)
+Zahlung mit Kreditkarte   87,90 EUR
+
+Mittelland Bahn AG · Fernverkehr · USt-IdNr. DE000000004
+Diese Fahrkarte gilt als Rechnung im Sinne des UStG.
+
+######## BELEG 62 von 120 · Datei: SCN260123-4.txt ########
+Fachverband Deutscher Blumenbinder e.V. – Landesgruppe Mitte
+Geschäftsstelle: Rosenweg 1, 34000 Niederaue
+
+Mitglied Nr. 2207 – Blumenwerkstatt Harkort                 15.1.2026
+
+Beitragsrechnung 2026
+Jahresmitgliedsbeitrag Betriebe bis 3 Beschäftigte        240,00 EUR
+Umlage Nachwuchswerbung                                    18,00 EUR
+Gesamt                                                    258,00 EUR
+
+Mitgliedsbeiträge sind nicht umsatzsteuerbar. Bitte überweisen Sie bis
+15.2.2026 auf IBAN DE00 0000 0000 0000 0012 12.
+
+######## BELEG 63 von 120 · Datei: SCN260216-3.txt ########
+Blumengroßmarkt Niederaue eG
+Halle 4, Stand 17–21 · Am Güterhof 2 · 34000 Niederaue
+Tel. 0500 000000
+
+Rechnungsempfänger: Blumenwerkstatt Harkort, Inh. Mareike Harkort, Kirchgasse 7, 37299 Weidenrode
+Kd-Nr. 99635   Beleg 26-109017   Belegdatum 11.02.2026
+Lieferdatum 11.02.26 (Selbstabho1ung)
+
+ArtNr    Artikel                      Mg   Einh   Preis    Betrag  St
+15671    Rosen rot 70 cm, Bund à 20    30 Bd      18,90    567,00  7
+28178    Schleierkraut                 15 Bd       5,60     84,00  7
+24738    Lisianthus weiß                8 Bd       9,90     79,20  7
+80151    Pistazie Schnittgrün          12 Bd       3,80     45,60  7
+
+Warenwert netto                                           775,80
+USt 7,00 % auf 775,80               54,31
+Zahlbetrag EUR                                            830,11
+
+Zahlbar sofort netto Kasse. Bankeinzug zum 18.02.2026
+
+Blumengroßmarkt Niederaue eG · USt-IdNr. DE000000000 · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 64 von 120 · Datei: SCN260226-5.txt ########
+Entgeltabrechnung für Februar 2026                               Blatt 1
+Arbeitgeber: Blumenwerkstatt Harkort, Kirchgasse 7, 37299 Weidenrode
+Pers.-Nr. 3   Jule Petermann, Floristin   St.-Kl. I   Eintritt 01.09.2021
+erstellt am 25.02.2026
+
+Lohnart                         Betrag
+Gehalt                         2.680,00
+Gesamtbrutto                   2.680,00
+
+Steuerliche Abzüge
+Lohnsteuer                       247,16
+Kirchensteuer                     22,24
+Solidaritätszuschlag               0,00
+Sozialversicherung (AN-Anteil)
+Krankenversicherung              229,14
+Rentenversicherung               249,24
+Arbeitslosenversicherung          34,84
+Pflegeversicherung                64,32
+
+Gesetzliches Netto             1.833,06
+Auszahlungsbetrag              1.833,06 EUR
+Überweisung auf IBAN DE00 0000 0000 0000 0007 03
+
+######## BELEG 65 von 120 · Datei: SCN260228-7.txt ########
+Autohaus Brenneke & Söhne GmbH
+Vertragshändler · Nutzfahrzeuge
+Kasseler Landstr. 201, 34000 Niederaue
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+
+FAHRZEUGRECHNUNG
+Rechnungs-Nr.: FZ-2026-00087        Datum: 20.02.2026
+Fahrgestell-Nr. W0000000000000000 · km-Stand 31.400
+Kaufvertrag vom 06.02.2026 · Übergabe am 20.02.2026
+
+Pos  Bezeichnung                        Menge   Einzelpreis    Gesamt
+----------------------------------------------------------------------
+1    Hochdachkombi 'Cargo L2' 1.5 Diese     1 Stk  18.900,00  18.900,00
+2    Zulassung und Kennzeichen              1 psch    129,00     129,00
+3    Ladeboden mit Zurrschienen, montie     1 Stk     345,00     345,00
+----------------------------------------------------------------------
+                                             Nettobetrag    19.374,00
+                                          zzgl. 19 % USt     3.681,06
+                                     Rechnungsbetrag EUR    23.055,06
+
+Betrag dankend per Überweisung erhalten am 19.02.2026.
+
+Autohaus Brenneke & Söhne GmbH · USt-IdNr. DE000000000 · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 66 von 120 · Datei: SCN260306-3.txt ########
+Blumenwerkstatt Harkort
+Schnittblumen · Hochzeits- und Trauerfloristik · Raumbegrünung
+Inh. Mareike Harkort · Kirchgasse 7 · 37299 Weidenrode
+Tel. 05000 000000 · post@blumenwerkstatt-harkort.example
+
+
+Eventhaus Sollingblick UG (haftungsbeschränkt)
+Am Forsthaus 3
+37100 Hohnsfeld
+                                               Weidenrode, 2. März 2026
+Zahlungserinnerung – 2. Mahnung
+
+Sehr geehrte Damen und Herren,
+
+unsere Rechnung Nr. 2025-0388 vom 01.12.2025 über Tisch- und Saalschmuck
+(Schnittblumen, 7 % USt) ist trotz Erinnerung vom 19.01.2026 noch offen.
+
+  Rechnungsbetrag                    237,55 EUR
+  Mahnkosten                           7,50 EUR
+  Verzugszinsen bis heute              4,95 EUR
+  Gesamtforderung                    250,00 EUR
+
+Wir bitten um Ausgleich bis zum 12.03.2026. Andernfalls übergeben wir
+die Angelegenheit unserer Rechtsanwältin.
+
+Mit freundlichen Grüßen
+Mareike Harkort
+
+Steuernummer 00/000/00000 · USt-IdNr. DE000000000 · Sparkasse Weidenrode · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 67 von 120 · Datei: SCN260326-3.txt ########
+Gärtnerei Tomschke
+Jungpflanzen und Topfkulturen
+Feldweg 3, 37291 Oberhollen
+Steuer-Nr. 00/000/00001
+
+An
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+Rechnung Nr. 2026/0188 vom 24. März 2026
+Lieferung frei Haus am 20.3.2026, Lieferschein 0412
+
+120 Stk Primeln im 9er Topf à 0,65 = 78,00
+200 Stk Hornveilchen im 9er Topf à 0,55 = 110,00
+60 Stk Narzissen 'Tete-a-Tete' getopft à 1,10 = 66,00
+
+Summe netto EUR 254,00
+MwSt. 7,0% EUR 17,78
+Gesamt brutto EUR 271,78
+
+Bitte überwelsen Sie den Betrag bis zum 07.04.2026.
+
+IBAN DE00 0000 0000 0000 0001 11
+
+######## BELEG 68 von 120 · Datei: SCN260403-8.txt ########
+Sparkasse Weidenrode                                Rechnungsabschluss
+Geschäftsgirokonto  IBAN DE00 0000 0000 0000 0000 00
+Kontoinhaber: Blumenwerkstatt Harkort
+Abschluss per 31.03.2026   Zeitraum 01.01.2026 – 31.03.2026    erstellt 01.04.2026
+
+Kontoführung Geschäftskonto 3 Monate x 9,90               29,70
+Buchungsposten beleglos 312 x 0,12                        37,44
+Bargeldeinzahlungen am Schalter 6 x 2,50                  15,00
+girocard Jahrespreis                                      12,00
+Sollzinsen 9,75 % p.a. (geduldete Überziehung)             3,18
+Abschlussbetrag zu Ihren Lasten                           97,32 EUR
+
+Kontoführungsentgelte sind umsatzsteuerfrei (§ 4 Nr. 8 UStG).
+Einwendungen gegen den Abschluss bitte innerhalb von sechs Wochen.
+
+######## BELEG 69 von 120 · Datei: SCN260407-9.txt ########
+        SCHOKOLADERIE Feinherb        
+      Kirchgasse 15 · Weidenrode      
+
+--------------------------------------
+Pralinenmischung 250g x4      51,60 B
+Geschenkband                   0,00 B
+--------------------------------------
+SUMME EUR                     51,60
+BAR                           51,60
+
+MwSt%      Netto     MwSt    Brutto
+B  7%      48,22     3,38     51,60
+
+Datum: 01.04.2026   Uhrzeit: 10:12
+Bon-Nr. 3947  Kasse 3  Bed. 19
+
+Notiz: Ostergruß an 4 Firrnenkunden (Abo-Kunden), je 12,90
+
+######## BELEG 70 von 120 · Datei: SCN260424-5.txt ########
+Berufsgenossenschaft Handel und Gartenbau
+Bezirksverwaltung Mitte
+
+Beitragsbescheid für das Jahr 2025       vom 20.04.2026
+Unternehmensnummer 0000 0441 2070 001
+Blumenwerkstatt Harkort, 37299 Weidenrode
+
+Gemeldete Entgeltsumme 2025        49.380 EUR   Gefahrklasse 2,31
+Beitrag zur Unfallversicherung                 386,15 EUR
+Anteil Lastenverteilung                         41,20 EUR
+Beitragsforderung                              427,35 EUR
+bereits gezahlte Vorschüsse                      0,00 EUR
+Zahlbetrag                                     427,35 EUR
+fällig am 15.05.2026
+
+######## BELEG 71 von 120 · Datei: SCN260429-8.txt ########
+Blumenwerkstatt Harkort
+Schnittblumen · Hochzeits- und Trauerfloristik · Raumbegrünung
+Inh. Mareike Harkort · Kirchgasse 7 · 37299 Weidenrode
+Tel. 05000 000000 · post@blumenwerkstatt-harkort.example
+
+
+Eheleute Sophie und Jannik Reddehase
+Am Sonnenhang 8
+37291 Oberhollen
+
+
+ABSCHLAGSRECHNUNG
+Nummer: 2026-0120
+Datum:  27.04.2026
+Auftragsbestätigung vom 20.04.2026
+Veranstaltungstermin: 13.06.2026
+
+1. Abschlag auf Dekorationsleistung Hochzeit 13.06.2026 (Aufbau, Traubogen-Verleih, Planung) lt. Auftragsbestätigung – 1 psch zu je 252,10 € = 252,10 €
+
+Netto: 252,10 €
+zuzüglich 19 % USt (auf 252,10 €): 47,90 €
+Zu zahlen: 300,00 €
+
+Fällig am 11.05.2026.
+
+Steuernummer 00/000/00000 · USt-IdNr. DE000000000 · Sparkasse Weidenrode · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 72 von 120 · Datei: SCN260505-3.txt ########
+PARKHAUS AM DOMHOF
+Parkraum Göttersen GmbH · USt-IdNr. DE000000005
+
+Parkschein 004471207
+Einfahrt  05.05.26 08:41
+Ausfahrt  05.05.26 15:07
+Parkdauer 6:26 Std.
+Entgelt          11,00 EUR
+inkl. 19% MwSt    1,76 EUR
+bezahlt Karte
+(Termin Steuerberater + Bank, M.H.)
+
+######## BELEG 73 von 120 · Datei: SCN260607-9.txt ########
+PaketExpress Mitte GmbH
+Geschäftskundenservice · Logistikpark 1 · 36000 Fuldabrück
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+
+RECHNUNG
+Rechnungs-Nr.: GK-0441207-0526        Datum: 02.06.2026
+Abrechnungszeitraum: 01.05.2026 – 31.05.2026
+Fälligkeit: 16.06.2026 (Lastschrift)
+
+Pos  Bezeichnung                        Menge   Einzelpreis    Gesamt
+----------------------------------------------------------------------
+1    Pakete bis 5 kg national (Trockenb    23 Stk       4,89     112,47
+2    Pakete bis 10 kg national              6 Stk       6,29      37,74
+3    Abholpauschale Mai                     1 x         9,50       9,50
+----------------------------------------------------------------------
+                                             Nettobetrag       159,71
+                                          zzgl. 19 % USt        30,34
+                                     Rechnungsbetrag EUR       190,05
+
+PaketExpress Mitte GmbH · USt-IdNr. DE000000000 · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 74 von 120 · Datei: SCN260708-2.txt ########
+Blumenwerkstatt Harkort
+Schnittblumen · Hochzeits- und Trauerfloristik · Raumbegrünung
+Inh. Mareike Harkort · Kirchgasse 7 · 37299 Weidenrode
+Tel. 05000 000000 · post@blumenwerkstatt-harkort.example
+
+
+Hotel Lindenhof – Ammermann KG
+Lindenplatz 1
+37299 Weidenrode
+
+
+Rechnung Nr. 2026-0188                    Weidenrode, 30.06.2026
+Leistungszeitraum 01.05.2026 – 30.06.2026
+
+Menge  Bezeichnung                              Einzelpreis   Gesamtpreis
+    8  Miet-Pflanzkübel Terrasse, Saison Mai–Ju      38,00        304,00
+11,00  Aufstellen, Gießdienst 2x wöchentlich         36,00        396,00
+    4  Schnittblumen Rezeption Juni                  32,00        128,00
+
+                                               Summe netto       828,00
+                                         Umsatzsteuer 19 %       133,00
+                                          Umsatzsteuer 7 %         8,96
+                                           Rechnungsbetrag       969,96
+
+Zahlbar bis 14.07.2026.
+
+Steuernummer 00/000/00000 · USt-IdNr. DE000000000 · Sparkasse Weidenrode · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 75 von 120 · Datei: SCN260708-9.txt ########
+Sparkasse Weidenrode                         Auftragsbestätigung Online-Banking
+----------------------------------------------------------------------
+Auftraggeber   Blumenwerkstatt Harkort, Geschäftsgirokonto
+               IBAN DE00 0000 0000 0000 0000 00
+Empfänger      Mareike Harkort (privat)
+               IBAN DE00 0000 0000 0000 0009 99
+Betrag         2.400,00 EUR
+Verwendung     Privatentnahme Juli 2026
+Ausführung     01.07.2026        erfasst 30.06.2026 21:14
+TAN-Verfahren  pushTAN        Status: ausgeführt
+
+######## BELEG 76 von 120 · Datei: SCN260718-7.txt ########
+Stadtwerke Weidenrode GmbH
+Am Wasserturm 1 · 37299 Weidenrode
+
+Blumenwerkstatt Harkort · Kirchgasse 7 · 37299 Weidenrode
+Kundennummer 400 118 207
+                                                   14.07.2026
+Gebührenabrechnung Wasser / Abwasser  1. Halbjahr 2026
+Ab1esung am 30.06.2026 – Zeitraum 01.01.2026 bis 30.06.2026
+
+Trinkwasser 74 m3 x 2,05                 151,70   USt 7 %
+Grundgebühr Wasserzähler 6 Mon.           42,00   USt 7 %
+Summe netto                              193,70
+Umsatzsteuer 7 %                          13,56
+Schmutzwasser 74 m3 x 2,40 (hoheitlich,  177,60   ohne USt
+  nicht steuerbar)
+Zahlbetrag                               384,86 EUR
+Fällig am 28.07.2026
+
+######## BELEG 77 von 120 · Datei: SCN260729-9.txt ########
+Ristorante Da Ettore
+Marktplatz 2, 34000 Niederaue
+Ettore Bellandi e.K.
+
+Rechnung 7167   Tisch 2   23.07.26 20:31
+
+Antipasti misti für 3            28,50 B
+3 Pasta/Pizza                    44,70 B
+1 Fl. Rotwein Montepulciano      38,00 A
+2 Fl. Wasser                     13,80 A
+3 Caffè                           8,70 A
+3 Grappa                         16,50 A
+
+Rechnungsbetrag                 150,20 EUR
+B  7% Speisen  netto 68,41  MwSt 4,79
+A 19% Getränke netto 64,71  MwSt 12,29
+Zahlung: Kreditkarte
+
+Angaben zum Nachweis der Höhe und der betrieblichen Veranlassung
+von Bewirtungsaufwendungen (§ 4 Abs. 5 Nr. 2 EStG)
+Tag der Bewirtung: 23. Juli 2026
+Bewlrtete Personen: H. Brackmeier, T. Sünkel (Blumengroßmarkt), M. Harkort
+Anlass: Jahresgespräch Lieferkonditionen Großmarkt
+Ort, Datum, Unterschrift: Weidenrode, M. Harkort
+
+######## BELEG 78 von 120 · Datei: SCN260907-8.txt ########
+Grundstücksverwaltung Achterberg GbR
+Lange Wand 12 · 37299 Weidenrode
+Steuernummer 00/000/00005
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+Mietrechnung Nr. M-26-09                               01.09.2026
+Objekt: Ladenlokal Kirchgasse 7, EG links, 86 qm
+Abrechnungsmonat: September 2026
+
+Grundmiete Gewerbe                           1.150,00
+Betriebskostenvorauszahlung                    210,00
+Zwischensumme netto                          1.360,00
+Umsatzsteuer 19 % (Option nach § 9 UStG)       258,40
+Gesamtbetrag                                 1.618,40 EUR
+
+Der Betrag wird am 3. Werktag des Monats per Daueranftrag erwartet.
+IBAN DE00 0000 0000 0000 0005 55
+
+######## BELEG 79 von 120 · Datei: SCN260910-6.txt ########
+Tischlerei Sandvoss
+Innenausbau & Ladenbau
+Hinter der Bleiche 6, 37299 Weidenrode
+Tischlermeister Arne Sandvoss
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+Rechnung  R 26/078
+Rechnungsdatum 3. September 2026
+Ausführung am 28. August 2026
+
+Wir berechnen Ihnen für die ausgeführten Arbeiten:
+
+01  Ladentheke Eiche furniert 180 cm mit Glasaufsatz
+      1 Stk x 2.420,00 €                2.420,00 €
+02  Wandregal 3-teilig passend
+      1 Satz x 960,00 €                  960,00 €
+03  Montage
+      3,50 Std. x 58,00 €                  203,00 €
+
+Zwischensumme                      3.583,00 €
++ 19% Mehrwertsteuer                 680,77 €
+Endbetrag                          4.263,77 €
+
+Zahlbar 8 Tage netto.
+
+St.Nr. 00/000/00004 · IBAN DE00 0000 0000 0000 0004 44
+
+######## BELEG 80 von 120 · Datei: SCN261021-3.txt ########
+TECHNIKLAND Elektromarkt
+Niederaue-Süd
+Am Kreisel 1
+20.10.2026 15:33  Kasse 07  Beleg 54765
+========================================
+308139  Tablet 11 Zoll 128GB
+                      1 Stk     449,00 A
+315930  Schutzhülle 11 Zoll
+                      1 Stk      24,99 A
+========================================
+Total                         473,99
+gegeben EC                    473,99
+inkl. 19,00% MwSt (A) aus 473,99: 75,68
+
+Garantie 24 Monate ab Kaufdatum.
+
+######## BELEG 81 von 120 · Datei: doc04454.txt ########
+Erdgas Leine-Werra Vertrieb GmbH
+Postfach 0000 · 37000 Göttersen               Rechnungsnummer 5500871120
+                                              Rechnungsdatum  2026-10-05
+Vertragspartner: Blumenwerkstatt Harkort
+Lieferstelle: Kirchgasse 7, 37299 Weidenrode
+
+Abschlagsrechnung Erdgas  –  Teilbetrag für Oktober 2026
+(Lieferzeitraum 2026-10-01 bis 2026-10-31)
+
+Abschlag netto        168,07 EUR
+USt 19 %               31,93 EUR
+Abschlag brutto       200,00 EUR
+
+Fälligkeit 2026-10-15 – Einzug per SEPA-Lastschrift, Mandat EG-000417
+Gläubiger-ID DE00ZZZ00000000000
+
+######## BELEG 82 von 120 · Datei: doc04559.txt ########
+Nordhang Versicherung AG
+Vertriebsservice · Wallring 100 · 30000 Hohenlinden
+
+Frau Mareike Harkort, Blumenwerkstatt Harkort                  25. September 2026
+
+Provisionsabrechnung "Kunden werben Kunden" / Tippgebervergütung
+Vorgang TG-2026-00417
+
+Für die Vermittlung des Vertrages GI 000.330.207-5 (Kunde: Brautmoden
+Lührmann, Vertragsbeginn 01.09.2026) vergüten wir Ihnen
+
+  Tippgeberprovision               75,00 EUR
+
+Die Vergütung ist als Vermittlung von Versicherungen nach § 4 Nr. 11 UStG
+umsatzsteuerfrei. Überweisung auf IBAN DE00 0000 0000 0000 0000 00 am 02.10.2026.
+
+######## BELEG 83 von 120 · Datei: doc04634.txt ########
+Nordhang Versicherung AG
+Direktion · Wallring 100 · 30000 Hohenlinden
+
+Frau Mareike Harkort / Blumenwerkstatt Harkort
+Kirchgasse 7, 37299 Weidenrode                         8. Dezember 2025
+
+Beitragsrechnung zur Betriebshaftpflichtversicherung
+Versicherungsschein-Nr. BH 000.441.207-3
+Versicherungszeitraum 01.01.2026 – 01.01.2027, jährliche Zahlweise
+
+Jahresnettobeitrag                          412,00 EUR
+Versicherungsteuer 19 %                      78,28 EUR
+Gesamtbeitrag                               490,28 EUR
+
+Der Beitrag ist am 01.01.2026 fällig und wird von Ihrem Konto
+DE00 0000 0000 0000 0000 00 abgebucht.
+Versicherungsleistungen sind umsatzsteuerfrei nach § 4 Nr. 10 UStG.
+Versicherungsteuernummer 000/V00/00000
+
+######## BELEG 84 von 120 · Datei: doc04748.txt ########
+funkwelle mobil GmbH
+Mobilfunk für Selbstständige
+
+Rechnung 26-1100447                     vom 2.11.2026
+Kunde: Mareike Harkort / Blumenwerkstatt Harkort
+Rufnummer 0100 0000001   Tarif Business S
+
+Abrechnungszeitraum 1.10.2026 - 31.10.2026
+Grundpreis Business S              16,80 €
+Datenoption +10 GB                  4,20 €
+Roaming Schweiz 17.10.2026            3,36 €
+Netto                              24,36 €
+USt (19%)                           4,63 €
+Zu zahlen                          28,99 €
+Lastschrift am 12.11.2026
+
+######## BELEG 85 von 120 · Datei: doc04890.txt ########
+Grünstil Fachverlag GmbH
+Leserservice · Verlagshaus am Kanal · 48000 Westerloh
+
+Rechnung Nr. A-2026-044120                      07.01.2026
+Abo-Nr. 207118 · Blumenwerkstatt Harkort, Kirchgasse 7, 37299 Weidenrode
+
+Jahresabonnement Fachmagazin "floristik aktuell"
+Bezugszeitraum 01/2026 – 12/2026 (12 Ausgaben)
+
+Bezugspreis netto                 112,15 EUR
+7 % MwSt                            7,85 EUR
+Rechnungsbetrag                   120,00 EUR
+(inkl. Versandkosten)
+Zahlbar innerhalb 14 Tagen, spätestens 21.01.2026.
+IBAN DE00 0000 0000 0000 0014 14
+
+######## BELEG 86 von 120 · Datei: doc04983.txt ########
+Weinkontor Steigerwald
+Marktplatz 4, 37299 Weidenrode
+Inh. C. Steigerwald
+
+Q U I T T U N G
+Nr. 958     vom 17.12.2025, 13:25 Uhr
+
+  Riesling trocken 0,75 l  x6 ...... 59,40 EUR
+  Geschenkkarton 1er  x6 ...... 9,00 EUR
+
+Gesamtbetrag: 68,40 EUR
+Zahlungsart: EC-Karte
+enthaltene USt 19 %: 10,92 EUR (netto 57,48)
+
+hs. Vermerk: Weihnachtspräsente für 6 Stammkunden
+(Hotel, Bestatter, Praxen), je 11,40 EUR
+
+######## BELEG 87 von 120 · Datei: doc05029.txt ########
+Stadtwerke Weidenrode GmbH
+Kundenservice · Am Wasserturm 1 · 37299 Weidenrode
+
+Blumenwerkstatt Harkort, Kirchgasse 7, 37299 Weidenrode
+Kundennummer 400 118 207            Vertragskonto 70 000 4412
+                                                Datum: 17.02.2026
+JAHRESRECHNUNG STROM – Gewerbe
+Abrechnungszeitraum 01.01.2025 – 31.12.2025
+Zähler 1 EHZ 000 441   Stand alt 48.112 kWh   Stand neu 56.930 kWh
+Verbrauch 8.818 kWh
+
+Arbeitspreis 8.818 kWh x 31,40 ct          2.768,85
+Grundpreis 12 Monate x 14,90                 178,80
+Nettobetrag                                2.947,65
+Umsatzsteuer 19 %                            560,05
+Bruttobetrag                               3.507,70
+abzüglich geleisteter Abschläge (brutto)   3.300,00
+Nachzahlung                                  207,70 EUR
+
+Die Nachzahlung buchen wir am 03.03.2026 von Ihrem Konto ab.
+Neuer monatlicher Abschlag ab 01.03.2026: 295,00 EUR
+
+######## BELEG 88 von 120 · Datei: doc05134.txt ########
+werkzeugkiste24 – Hartung Onlinehandel GmbH
+Postfach 00 00, 90000 Altenfurt
+
+An
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+Rechnung Nr. WK-7700412 vom 2026-06-22
+Beste1lung vom 2026-06-19, Versanddatum 2026-06-22
+
+1 Stk Akku-Heckenschere HS 520 Set à 201,60 = 201,60
+1 Stk Sackkarre klappbar 150 kg à 74,79 = 74,79
+1 x Versand à 0,00 = 0,00
+
+Summe netto EUR 276,39
+MwSt. 19,0% EUR 52,51
+Gesamt brutto EUR 328,90
+
+Bezahlt per Lastschrift.
+
+USt-IdNr. DE000000002
+
+######## BELEG 89 von 120 · Datei: doc05212.txt ########
+Blumenwerkstatt Harkort
+Schnittblumen · Hochzeits- und Trauerfloristik · Raumbegrünung
+Inh. Mareike Harkort · Kirchgasse 7 · 37299 Weidenrode
+Tel. 05000 000000 · post@blumenwerkstatt-harkort.example
+
+
+Bestattungshaus Grotefend
+Friedhofsweg 2
+37299 Weidenrode
+
+
+Rechnung Nr. 2026-0012                    Weidenrode, 30.01.2026
+Lieferdatum: 28.01.2026
+
+Menge  Bezeichnung                              Einzelpreis   Gesamtpreis
+    1  Sarggesteck weiß/grün, Trauerfeier Fam.      172,90        172,90
+    2  Trauerkranz mit Schleife, 80 cm              121,50        243,00
+    1  Urnenkränzchen                                51,40         51,40
+
+                                               Summe netto       467,30
+                                          Umsatzsteuer 7 %        32,71
+                                           Rechnungsbetrag       500,01
+
+Zahlbar bis 13.02.2026 ohne Abzug.
+
+Steuernummer 00/000/00000 · USt-IdNr. DE000000000 · Sparkasse Weidenrode · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 90 von 120 · Datei: doc05301.txt ########
+Blumenbote Vermittlungsring GmbH
+Partnerabrechnung · Ringstraße 1 · 60000 Mainhausen
+USt-IdNr. DE000000010
+
+Partner-Nr. 44120 – Blumenwerkstatt Harkort, 37299 Weidenrode
+GUTSCHRIFT (Abrechnung im Gutschriftverfahren) Nr. GP-2605-44120
+Abrechnungsdatum 05.06.2026   Abrechnungsmonat Mai 2026
+
+Vermittlungsprovision für angenommene und an Dritte weitergeleltete Aufträge:
+  22 vermittelte Aufträge Muttertag, 20 %        189,20
+  3 vermittelte Trauer-Aufträge, 15 %             29,25
+
+  Provision netto                                218,45
+  zzgl. 19 % Umsatzsteuer                         41,51
+  Gutschriftsbetrag                              259,96 EUR
+
+Der Betrag wird am 13.06.2026 auf Ihr Konto DE00 0000 0000 0000 0000 00 überwiesen.
+Der Gutschriftsempfänger schuldet die ausgewiesene Umsatzsteuer.
+
+######## BELEG 91 von 120 · Datei: doc05366.txt ########
+TANKPUNKT Weidenrode
+Inh. S. Öztoprak
+Niederauer Str. 60, 37299 Weidenrode
+St.Nr. 00/000/00010
+
+Beleg-Nr. 4446/841   09.04.2026 18:44
+Säule 4
+* Diesel
+  52,30 l x 1,689 EUR/l
+                              8,83 EUR A
+AdBlue 5 l Kanister          12,99 EUR A
+
+Gesamtbetrag                 21,82 EUR
+Netto                        18,34
+A: 19,00% MwSt                3,48
+
+Zahlung: girocard kontaktlos
+Vie1en Dank und gute Fahrt!
+
+######## BELEG 92 von 120 · Datei: doc05456.txt ########
+Blumenwerkstatt Harkort
+Schnittblumen · Hochzeits- und Trauerfloristik · Raumbegrünung
+Inh. Mareike Harkort · Kirchgasse 7 · 37299 Weidenrode
+Tel. 05000 000000 · post@blumenwerkstatt-harkort.example
+
+
+Stadt Weidenrode – Friedhofsverwaltung
+Rathausplatz 1
+37299 Weidenrode
+
+
+Rechnung Nr. 2026-0305                    Weidenrode, 30.10.2026
+Leistungsdatum: 27.10.2026 bis 28.10.2026
+Bestell-Nr. der Stadt: 67/2026-118
+
+Menge  Bezeichnung                              Einzelpreis   Gesamtpreis
+   18  Grabbepflanzung Herbst, Ehrengräber (Hei      34,50        621,00
+    4  Gestecke Volkstrauertag, Vorbestellung        56,00        224,00
+
+                                               Summe netto       845,00
+                                          Umsatzsteuer 7 %        59,15
+                                           Rechnungsbetrag       904,15
+
+Zahlbar innerhalb von 30 Tagen.
+
+Steuernummer 00/000/00000 · USt-IdNr. DE000000000 · Sparkasse Weidenrode · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 93 von 120 · Datei: doc05520.txt ########
+Schlüssel- und Schließdienst Hebbeler
+Kirchgasse 22, 37299 Weidenrode
+St.-Nr. 00/000/00008
+
+Q U I T T U N G
+Nr. 438     vom 09.06.2026, 09:40 Uhr
+
+  Schließzylinder Ladentür erneuert ...... 89,00 EUR
+  Montage vor Ort ...... 45,00 EUR
+  3 Nachschlüssel ...... 24,00 EUR
+
+Gesamtbetrag: 158,00 EUR
+Zahlungsart: bar erhalten
+enthaltene USt 19 %: 25,23 EUR (netto 132,77)
+
+######## BELEG 94 von 120 · Datei: doc05608.txt ########
+Elektro Vahlbruch GmbH & Co. KG
+Elektroinstallation · E-Check · Lichttechnik
+Gartenstr. 19, 37299 Weidenrode
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+1. ABSCHLAGSRECHNUNG   Nr. AR-2026-0044            Datum 10.08.2026
+Bauvorhaben: Erneuerung Ladenbeleuchtung und Unterverteilung, Kirchgasse 7
+Auftrag vom 21.07.2026 · Auftragssumme netto 4.650,00 EUR
+
+Gemäß Zahlungsplan berechnen wir nach Materiallieferung und Beginn der
+Arbeiten (Leistungsstand per 07.08.2026) einen Abschlag von:
+
+    Abschlag netto              1.800,00 EUR
+    zzgl. 19 % Umsatzsteuer       342,00 EUR
+    Abschlagsbetrag brutto      2.142,00 EUR
+
+Zahlbar bis 20.08.2026 ohne Abzug.
+Elektro Vahlbruch GmbH & Co. KG · USt-IdNr. DE000000000 · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 95 von 120 · Datei: doc05708.txt ########
+Blumenbote Vermittlungsring GmbH
+Partnerabrechnung · Ringstraße 1 · 60000 Mainhausen
+USt-IdNr. DE000000010
+
+Partner-Nr. 44120 – Blumenwerkstatt Harkort, 37299 Weidenrode
+GUTSCHRIFT (Abrechnung im Gutschriftverfahren) Nr. GP-2602-44120
+Abrechnungsdatum 06.03.2026   Abrechnungsmonat Februar 2026
+
+Vermittlungsprovision für angenommene und an Dritte weitergeleitete Aufträge:
+  14 vermittelte Aufträge Valentinstag, 20 %     114,80
+  5 vermittelte Aufträge sonstige, 20 %           33,50
+
+  Provision netto                                148,30
+  zzgl. 19 % Umsatzsteuer                         28,18
+  Gutschriftsbetrag                              176,48 EUR
+
+Der Betrag wird am 14.03.2026 auf Ihr Konto DE00 0000 0000 0000 0000 00 überwiesen.
+Der Gutschriftsempfänger schuldet die ausgewiesene Umsatzsteuer.
+
+######## BELEG 96 von 120 · Datei: doc05796.txt ########
+       Schreibwarenhaus Tegeler       
+   Kirchgasse 12 · 37299 Weidenrode   
+
+--------------------------------------
+Kassenbuch A4                  6,95 A
+Kugelschreiber 10er            4,99 A
+Tischkalender 2027             8,99 A
+Ratgeber 'Kasse richtig fü    14,80 B
+--------------------------------------
+SUMME EUR                     35,73
+EC-Karte                      35,73
+
+MwSt%      Netto     MwSt    Brutto
+A 19%      17,59     3,34     20,93
+B  7%      13,83     0,97     14,80
+
+Datum: 09.11.2026   Uhrzelt: 09:31
+Bon-Nr. 7490  Kasse 4  Bed. 31
+
+######## BELEG 97 von 120 · Datei: doc05877.txt ########
+TAXI  Funk-Taxi Rheinmünde eG
+Wagen 417     Konz.-Nr. 0417
+Ordnungsnr. 000417
+
+QUITTUNG
+Datum: 27.01.26   18:22
+Fahrt von: Hbf   nach: Uferstr. (Hotel)
+Fahrprels EUR 16,80
+inkl. 7% MwSt 1,10
+Betrag dankend erhalten
+Unterschrift Fahrer: (unleserlich)
+
+######## BELEG 98 von 120 · Datei: doc05969.txt ########
+Rolfsmeier Verpackungen e.K.
+Papier · Folien · Tragetaschen
+Hafenstraße 5, 32000 Lübberstedt
+
+An
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+Rechnung Nr. 40318 vom 03.03.26
+Liefertermin KW 9, versandt am 27.02.26
+
+6 Pck Blumenseide weiß 50x75, 5 kg à 23,90 = 143,40
+8 Rl Folienrolle klar 60 cm / 100 m à 11,75 = 94,00
+500 Stk Papiertragetasche bedruckt à 0,38 = 190,00
+1 x Fracht pauschal à 12,50 = 12,50
+
+Summe netto EUR 439,90
+MwSt. 19,0% EUR 83,58
+Gesamt brutto EUR 523,48
+
+Zahlbar bis 17.03.26 rein netto.
+
+USt-IdNr. DE000000001 · IBAN DE00 0000 0000 0000 0002 22
+
+######## BELEG 99 von 120 · Datei: doc06050.txt ########
+Prüfstelle Nordmitte GmbH
+Kfz-Prüfstelle Weidenrode · Gewerbestr. 6
+
+Quittung / Rechnung Nr. 0260-118-4471
+Datum 22.09.2026  14:10 Uhr        Prüfingenieur 0417
+
+Fahrzeug WDR-BH 207, Lkw bis 3,5 t
+Hauptuntersuchung § 29 StVZO inkl. AU         125,21
+Mehrwertsteuer 19 %                            23,79
+Gesamt EUR                                    149,00
+Zahlart: EC-Cash
+Nächste HU: 09/2028. Ohne festgestellte Mängel.
+
+######## BELEG 100 von 120 · Datei: doc06103.txt ########
+Floristmeisterschule Burg Hohnstedt gGmbH
+Burgweg 1 · 37100 Hohnstedt
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+Rechnung 2026-S-118                                   12.02.2026
+
+Seminar "Zeitgemäße Trauerfloristik – Kranz, Urne, Sargschmuck"
+Termin: 16.03.2026 – 17.03.2026   Teilnehmerin: Mareike Harkort
+
+Seminargebühr inkl. Werkstoffe              420,00 EUR
+Tagungsverpflegung 2 Tage                    38,00 EUR
+Rechnungsbetrag                             458,00 EUR
+
+Die Leistung ist gemäß § 4 Nr. 21 a) bb) UStG von der Umsatzsteuer befreit.
+Bitte überweisen Sie bis zum 02.03.2026. IBAN DE00 0000 0000 0000 0015 15
+
+######## BELEG 101 von 120 · Datei: scan_0213.txt ########
+REISEKOSTENABRECHNUNG Arbeitnehmer                 Blumenwerkstatt Harkort
+
+Name: Jule Petermann                    Abrechnung erstellt am 12.03.2026
+Reise: Fachmesse Floristik Nord, Hansehafen
+Beginn 07.03.2026 06:30 Uhr      Ende 09.03.2026 19:45 Uhr
+
+Verpflegungspauschalen
+  Anreisetag                         14,00
+  Zwischentag 24 Std.                28,00
+  Abreisetag                         14,00
+  Kürzung Frühstück 2 x 5,60        -11,20
+Fahrt mit privatem Pkw zum Bahnhof Göttersen und zurück
+  2 x 23 km x 0,30 EUR               13,80
+Öffentlicher Nahverkehr Hansehafen (Belege verloren, Eigenangabe)
+                                      7,40
+Erstattungsbetrag                    66,00 EUR
+
+Hotel und Bahnfahrt wurden vom Betrieb direkt bezahlt.
+Auszahlung mit Gehalt März.  Unterschrift AN: J. Petermann   genehmigt: M.H.
+
+######## BELEG 102 von 120 · Datei: scan_0227.txt ########
+Feinkost Almenräder
+Delikatessen · Präsentservice
+Am Markt 11, 37299 Weidenrode
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+
+RECHNUNG
+Rechnungs-Nr.: P-0412        Datum: 26.06.2026
+Lieferdatum: 27.06.2026
+Empfänger: Herr Wiborg, Kältetechnik Wiborg GmbH (zum 25-jährigen Firmenjubiläum)
+
+Pos  Bezeichnung                        Menge   Einzelpreis    Gesamt
+----------------------------------------------------------------------
+1    Präsentkorb 'Landpartie' groß          1 Stk     111,21     111,21
+2    Sekt brut 0,75 l im Korb               1 Stk      16,72      16,72
+3    Zustellung Stadtgebiet                 1 x         5,00       5,00
+----------------------------------------------------------------------
+                                             Nettobetrag       132,93
+                                          zzgl. 19 % USt         4,13
+                                           zzgl. 7 % USt         7,78
+                                     Rechnungsbetrag EUR       144,84
+
+Bar bezahlt.
+
+St.-Nr. 00/000/00011
+
+######## BELEG 103 von 120 · Datei: scan_0242.txt ########
+Paula Wittkugel – Grafik & Illustration
+Atelier im Hinterhof, Burgstr. 3, 37299 Weidenrode
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+8. September 2026
+
+Rechnung 2026-09
+
+Sehr geehrte Frau Harkort,
+
+für meine Leistungen erlaube ich mir, wie folgt abzurechnen:
+
+- Entwurf Plakat und Social-Media-Motive 'Herbstmarkt' (1 pauschal): 280,00 Euro
+- Anpassung Logo für Tragetaschen-Druck (1 pauschal): 90,00 Euro
+
+Rechnungsbetrag: 370,00 Euro
+
+Als Kleinunternehmerin im Sinne von § 19 Abs. 1 UStG weise ich keine Umsatzsteuer aus.
+Leistungszeitraum: August 2026
+
+Zahlbar bis 22. September 2026 auf IBAN DE00 0000 0000 0000 0013 13
+
+######## BELEG 104 von 120 · Datei: scan_0259.txt ########
+Sparkasse Weidenrode                         Einzahlungsquittung SB-Terminal
+Filiale Marktplatz · Gerät 0003
+
+Datum/Zeit     05.01.2026  08:52
+Gutschrift auf IBAN DE00 0000 0000 0000 0000 00
+Kontoinhaber   Blumenwerkstatt Harkort
+Einzahlung bar                      5.000,00 EUR
+Einzahler      M. Harkort
+Vermerk        Privateinlage – Anschaffung Kasse/Kühlung
+
+Bitte Beleg aufbewahren.
+
+######## BELEG 105 von 120 · Datei: scan_0273.txt ########
+TANKPUNKT Weidenrode
+Inh. S. Öztoprak
+Niederauer Str. 60, 37299 Weidenrode
+St.Nr. 00/000/00010
+
+Beleg-Nr. 7421/473   20.01.2026 07:12
+Säule 4
+* Diesel
+  48,12 l x 1,639 EUR/l
+                              7,89 EUR A
+
+Gesamtbetrag                  7,89 EUR
+Netto                         6,63
+A: 19,00% MwSt                1,26
+
+Zahlung: girocard kontaktlos
+Vielen Dank und gute Fahrt!
+
+######## BELEG 106 von 120 · Datei: scan_0289.txt ########
+Blumenwerkstatt Harkort
+Schnittblumen · Hochzeits- und Trauerfloristik · Raumbegrünung
+Inh. Mareike Harkort · Kirchgasse 7 · 37299 Weidenrode
+Tel. 05000 000000 · post@blumenwerkstatt-harkort.example
+
+
+Atelier Fleur & Fils Sàrl
+Rue du Marché 8
+CH-1200 Lac-Dessous
+Suisse
+
+
+RECHNUNG
+Nummer: 2026-0298
+Datum:  19. Oktober 2026
+Versand am: 17.10.2026, Zollanmeldung durch Spediteur
+
+1. Adventskranz gebunden, getrocknete Werkstoffe – 25 Stk zu je 36,00 € = 900,00 €
+2. Türkranz Hagebutte/Lärche – 20 Stk zu je 29,00 € = 580,00 €
+3. Fracht – 1 x zu je 98,00 € = 98,00 €
+
+Netto: 1.578,00 €
+Zu zahlen: 1.578,00 €
+
+Ausfuhrlieferung in ein Drittland – steuerfrei nach § 4 Nr. 1a UStG.
+
+Zahlung per Vorkasse erhalten.
+
+Steuernummer 00/000/00000 · USt-IdNr. DE000000000 · Sparkasse Weidenrode · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 107 von 120 · Datei: scan_0303.txt ########
+Floristenbedarf Kettwiger GmbH
+Industriestr. 88 · 44000 Brackhausen
+Geschäftsführer: Holm Kettwiger · HRB 00000
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+GUTSCHRIFT Nr. GS-260094                       Datum 09.02.2026
+zu Rechnung RE-260211 vom 27.01.2026
+
+Rücksendung wegen Transportschaden (Retourenschein vom 03.02.2026):
+
+ 9 Stk  Glasvase Zylinder 25 cm        à 3,45        31,05
+ 1 Kt   Steckschaum Ziegel nass        à 16,80       16,80
+                                     Netto           47,85
+                                     19 % USt         9,09
+                                     Gutschriftsbetrag  56,94 EUR
+
+Der Betrag wird Ihrem Konto in den nächsten Tagen überwiesen.
+
+Floristenbedarf Kettwiger GmbH · USt-IdNr. DE000000000 · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 108 von 120 · Datei: scan_0316.txt ########
+       Schreibwarenhaus Tegeler       
+   Kirchgasse 12 · 37299 Weidenrode   
+
+--------------------------------------
+Kopierpapier A4 5x500         24,95 A
+Bonrollen Thermo 80mm 10er    13,90 A
+Ordner breit grau x4          11,96 A
+Etiketten 70x36                8,49 A
+--------------------------------------
+SUMME EUR                     59,30
+BAR                           59,30
+
+MwSt%      Netto     MwSt    Brutto
+A 19%      49,83     9,47     59,30
+
+Datum: 14.01.2026   Uhrzeit: 12:03
+Bon-Nr. 4591  Kasse 4  Bed. 13
+
+######## BELEG 109 von 120 · Datei: scan_0331.txt ########
+Fensterputz Liesel Quade
+Am Anger 2a
+37299 Weidenrode
+Mobil 0100 0000000
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+Weidenrode, 8. Mai 2026
+
+Rechnung 14/2026
+
+Sehr geehrte Frau Harkort,
+
+für meine Leistungen erlaube ich mir, wie folgt abzurechnen:
+
+- Schaufensterreinigung innen und außen, 4 Termine im April (4 Termine): 112,00 Euro
+- Reinigung Glasvordach (1 mal): 35,00 Euro
+
+Rechnungsbetrag: 147,00 Euro
+
+Gemäß § 19 UStG wird keine Umsatzsteuer berechnet (Kleinunternehmerin).
+Leistungsmonat: April 2026
+
+Bitte innerhalb von 7 Tagen überweisen: IBAN DE00 0000 0000 0000 0010 10
+
+######## BELEG 110 von 120 · Datei: scan_0344.txt ########
+Rechtsanwälte Dr. Imholz & Kessebohm PartG mbB
+Wallstraße 14 · 37000 Göttersen
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+
+KOSTENNOTE
+Rechnungs-Nr.: 2026000318        Datum: 22.04.2026
+Az. 118/26 Harkort ./. Eventhaus Sollingblick UG (Forderung Hochzeitsdekoration)
+Leistungszeitraum: 10.03.2026 – 20.04.2026
+
+Pos  Bezeichnung                        Menge   Einzelpreis    Gesamt
+----------------------------------------------------------------------
+1    Geschäftsgebühr Nr. 2300 VV RVG, 1     1 x       327,60     327,60
+2    Post- und Telekommunikationspausch     1 x        20,00      20,00
+----------------------------------------------------------------------
+                                             Nettobetrag       347,60
+                                          zzgl. 19 % USt        66,04
+                                     Rechnungsbetrag EUR       413,64
+
+Zahlbar bis 06.05.2026.
+
+Rechtsanwälte Dr. Imholz & Kessebohm PartG mbB · USt-IdNr. DE000000000 · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 111 von 120 · Datei: scan_0362.txt ########
+Grundstücksverwaltung Achterberg GbR
+Lange Wand 12 · 37299 Weidenrode
+Steuernummer 00/000/00005
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+Mietrechnung Nr. M-26-01                               02.01.2026
+Objekt: Ladenlokal Kirchgasse 7, EG links, 86 qm
+Abrechnungsmonat: Januar 2026
+
+Grundmiete Gewerbe                           1.150,00
+Betriebskostenvorauszahlung                    210,00
+Zwischensumme netto                          1.360,00
+Umsatzsteuer 19 % (Option nach § 9 UStG)       258,40
+Gesamtbetrag                                 1.618,40 EUR
+
+Der Betrag wird am 3. Werktag des Monats per Dauerauftrag erwartet.
+IBAN DE00 0000 0000 0000 0005 55
+
+######## BELEG 112 von 120 · Datei: scan_0374.txt ########
+Steuerkanzlei Wohlgemuth & Rahe
+Steuerberater in Partnerschaft
+Domhof 3 · 37000 Göttersen
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+Rechnung Nr. 2026/2240
+Datum: 07.07.2026      Mandant 10447
+Leistungszeitraum: 01.04.2026 – 30.06.2026
+
+Für unsere Tätigkeit berechnen wir nach der StBVV:
+
+Buchführung § 33 Abs. 1 StBVV, Apr–Jun 2026                  412,00
+Lohnabrechnungen § 34 StBVV, 2 AN x 3 Monate                  96,00
+Auslagenpauschale § 16 StBVV                                  20,00
+
+Nettohonorar                                                 528,00
+19,00 % Umsatzsteuer                                         100,32
+Rechnungsbetrag in EUR                                       628,32
+
+Wir buchen den Betrag am 17.07.2026 von Ihrem Konto ab.
+USt-IdNr. DE000000008
+
+######## BELEG 113 von 120 · Datei: scan_0382.txt ########
+EIGENBELEG                                         Nr. 2026/03
+
+Blumenwerkstatt Harkort, Kirchgasse 7, 37299 Weidenrode
+
+Datum:        31.03.2026
+Betrag:       800,00 EUR  (in Worten: achthundert)
+Vorgang:      Barentnahme aus der Ladenkasse für private Zwecke
+              (Privatentnahme Inhaberin)
+Kassenbuch:   Seite 14, lfd. Nr. 212
+
+Weidenrode, 31.03.2026          gez. M. Harkort
+
+######## BELEG 114 von 120 · Datei: scan_0398.txt ########
+Kassenprofi Oelkers GmbH
+Kassensysteme · Waagen · Service
+Ringstraße 30, 34000 Niederaue
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+
+RECHNUNG
+Rechnungs-Nr.: KR-118204        Datum: 08.01.2026
+Leistungsdatum: 05.01.2026
+Fällig: 22.01.2026
+
+Pos  Bezeichnung                        Menge   Einzelpreis    Gesamt
+----------------------------------------------------------------------
+1    Touchkasse 'Tresa 15' mit TSE-Modu     1 Stk   1.290,00   1.290,00
+2    Bondrucker Thermo 80 mm                1 Stk     219,00     219,00
+3    Kassenlade Metall                      1 Stk      89,00      89,00
+4    Einrichtung Artikelstamm, Einweisu  3,00 Std.     79,00     237,00
+----------------------------------------------------------------------
+                                             Nettobetrag     1.835,00
+                                          zzgl. 19 % USt       348,65
+                                     Rechnungsbetrag EUR     2.183,65
+
+Kassenprofi Oelkers GmbH · USt-IdNr. DE000000000 · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 115 von 120 · Datei: scan_0415.txt ########
+PayNord Zahlungssysteme GmbH
+Rechnung R-26-0044120-Q3                               01.07.2026
+Blumenwerkstatt Harkort, Kirchgasse 7, 37299 Weidenrode
+
+Miete Kartenterminal "Move 5000" mobil
+Zeitraum 01.07.2026 – 30.09.2026 (3. Quartal, im Voraus)
+
+3 Monate x 14,90 EUR                    44,70
+Servicepauschale / SIM-Karte             9,00
+Netto                                   53,70
+Umsatzsteuer 19 %                       10,20
+Gesamtbetrag                            63,90 EUR
+Einzug per Lastschrift am 10.07.2026. USt-IdNr. DE000000009
+
+######## BELEG 116 von 120 · Datei: scan_0432.txt ########
+Blumenwerkstatt Harkort
+Schnittblumen · Hochzeits- und Trauerfloristik · Raumbegrünung
+Inh. Mareike Harkort · Kirchgasse 7 · 37299 Weidenrode
+Tel. 05000 000000 · post@blumenwerkstatt-harkort.example
+
+
+Zahnarztpraxis Dr. Edda Löwenstein
+Marktplatz 6
+37299 Weidenrode
+
+
+RECHNUNG
+Nummer: 2026-0219
+Datum:  31. Juli 2026
+Leistungszeitraum: 01.07.2026 – 31.07.2026
+
+1. Blumen-Abo Empfang, wöchentlicher Strauß, Juli – 5 Stk zu je 27,10 € = 135,50 €
+
+Netto: 135,50 €
+zuzüglich 7 % USt (auf 135,50 €): 9,49 €
+Zu zahlen: 144,99 €
+
+Der Betrag wird per Lastschrift eingezogen.
+
+Steuernummer 00/000/00000 · USt-IdNr. DE000000000 · Sparkasse Weidenrode · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 117 von 120 · Datei: scan_0446.txt ########
+Blumenwerkstatt Harkort
+Kirchgasse 7 · 37299 Weidenrode
+St.-Nr. 00/000/00000
+
+Z-BERICHT / TAGESABSCHLUSS          Z-Nr. 0131
+Datum 09.05.2026   Druck 09.05.2026 18:37   Kasse 1
+TSE-Seriennr. 0000…0417   Transaktionen 96
+
+Warengruppe Schnittblumen/Pflanzen   7%      613,80
+Warengruppe Deko/Keramik/Karten     19%       89,40
+Tagesumsatz brutto                           703,20
+
+Netto 7%   573,64   USt  40,16
+Netto 19%   75,13   USt  14,27
+
+davon bar          388,70
+davon Karte        314,50
+Stornos 1          -12,90 (bereits abgezogen)
+Kassenbestand Soll lt. Zählprotokol1 geprüft: M.H.
+
+######## BELEG 118 von 120 · Datei: scan_0464.txt ########
+Nordhang Versicherung AG
+Kraftfahrtversicherung · Wallring 100 · 30000 Hohenlinden
+
+Mareike Harkort, Kirchgasse 7, 37299 Weidenrode        23. Februar 2026
+
+Versicherungsschein / Erstbeitragsrechnung
+Kfz-Vertrag K 000.207.118-7     Amtl. Kennzeichen WDR-BH 207
+Beginn 20.02.2026, Hauptfälligkeit 01.01., Zahlweise jährlich
+
+Beitrag 20.02.2026 – 31.12.2026
+Kfz-Haftpflicht  SF 12                          358,40 EUR
+Vollkasko 500/150 SB                            412,75 EUR
+enthaltene Versicherungsteuer 19 %              123,12 EUR
+Rechnungsbetrag                                 771,15 EUR
+
+Abbuchung am 05.03.2026 per SEPA-Lastschrift.
+
+######## BELEG 119 von 120 · Datei: scan_0474.txt ########
+Staudenhof Ellerbrink GbR
+Am Mühlbach 14 – 37300 Kaltenborn
+Inh. J. u. R. Ellerbrink
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+
+RECHNUNG
+Rechnungs-Nr.: R-00619        Datum: 15.09.2026
+Lieferdatum: 11.09.2026
+Fällig am:   29.09.2026
+
+Pos  Bezeichnung                        Menge   Einzelpreis    Gesamt
+----------------------------------------------------------------------
+1    Heidekraut Calluna 'Gardengirls'     140 Stk       1,45     203,00
+2    Chrysanthemen-Büsche 19er Topf        45 Stk       3,90     175,50
+3    Zierkürbisse sortiert              25,00 kg        1,80      45,00
+----------------------------------------------------------------------
+                                             Nettobetrag       423,50
+                                           zzgl. 7 % USt        29,65
+                                     Rechnungsbetrag EUR       453,15
+
+Staudenhof Ellerbrink GbR · St.-Nr. 00/000/00002 · IBAN DE00 0000 0000 0000 0000 00
+
+######## BELEG 120 von 120 · Datei: scan_0487.txt ########
+Floristenbedarf Kettwiger GmbH
+Industriestr. 88 · 44000 Brackhausen
+Geschäftsführer: Holm Kettwiger · HRB 00000
+
+Blumenwerkstatt Harkort
+Inh. Mareike Harkort
+Kirchgasse 7
+37299 Weidenrode
+
+
+RECHNUNG
+Rechnungs-Nr.: RE-263904        Datum: 06.10.2026
+Lieferschein LS-91477 vom 02.10.2026
+Zahlungsziel: 05.11.2026 netto, bis 16.10.2026 2 % Skonto
+
+Pos  Bezeichnung                        Menge   Einzelpreis    Gesamt
+----------------------------------------------------------------------
+1    Grablicht rot mit Deckel, 20er        12 Kt       22,40     268,80
+2    Tannenzapfen gebleicht 1 kg           10 Btl       5,90      59,00
+3    Adventskranz-Rohling 30 cm            40 Stk       3,10     124,00
+4    Stabkerzen creme, 12er                25 Pck       4,80     120,00
+----------------------------------------------------------------------
+                                             Nettobetrag       571,80
+                                          zzgl. 19 % USt       108,64
+                                     Rechnungsbetrag EUR       680,44
+
+Floristenbedarf Kettwiger GmbH · USt-IdNr. DE000000000 · IBAN DE00 0000 0000 0000 0000 00

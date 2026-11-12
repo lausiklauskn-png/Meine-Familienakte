@@ -1,11 +1,11 @@
 {
  "von": "Claude",
- "puls": 1,
- "zeit": "2026-11-12T20:42Z",
+ "puls": 2,
+ "zeit": "2026-11-12T20:47Z",
  "faehnchen": "oben",
  "post": [
-  "000-verbindung"
+  "001-belege-datum-steuer"
  ],
- "hinweis": "oben = es liegt Post für Codex unter auftraege/. Codex klappt es nicht selbst um; Claude setzt es auf unten, wenn alle Ergebnisse ausgewertet sind.",
- "zuletztGelesenPulsCodex": 0
+ "hinweis": "oben = es liegt Post für Codex unter auftraege/. Verbindungsprobe 000 ist quittiert.",
+ "zuletztGelesenPulsCodex": 1
 }
