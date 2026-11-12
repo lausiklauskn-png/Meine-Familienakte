@@ -106,6 +106,53 @@ Was das Sieb dafür neben jede Datei legt (eine Begleitdatei bzw. ein Eintrag im
 - **Übernahme:** die Familienakte liest `sieb-index.json` im Eingang und übernimmt Steckbrief, Text und Vorschläge; andere
   Pro-Apps (Private Brain Pro, BookLedgerPro) über dasselbe Format.
 
+## Welche KI sortiert am besten? (Klaus, 12.11.2026)
+
+Klaus' Frage: Gibt es eine andere Art KI als ein Sprachmodell (LLM), die besser sortiert? Oder besser: alles anonymisieren, als
+Paket an Claude schicken und automatisch in die Familienakte einsortieren lassen? Ziel: nichts Neues erfinden.
+
+**Die drei Arten, die es gibt (alle frei verfügbar):**
+
+| Art | Wie sie liest | Stärke | Schwäche |
+|---|---|---|---|
+| **Regeln, Muster, Briefkopf-Leser** | feste Wörter, Nummernmuster, Lage auf dem Blatt | sofort, nachvollziehbar, nie „erfunden“ | kennt nur, was man ihr sagt |
+| **Kleine Lese-Modelle** (Encoder: Vektor-/Embedding-Modelle, Klassifizierer, die mit wenigen Beispielen lernen, Namens-Erkenner, Modelle, die Text **und** Lage auf der Seite lesen) | wandeln Text in Zahlen und vergleichen; lesen nicht „verstehend“ wie ein LLM | sehr schnell, auf dem Gerät, gleiches Ergebnis bei gleichem Text, lernen aus wenigen bestätigten Beispielen | bei ganz neuen, ungewöhnlichen Schreiben schwächer; brauchen eine feste Liste von Kategorien |
+| **Große Sprachmodelle** (Claude, Mistral, lokal über Ollama auf dem eigenen Server) | lesen und verstehen den ganzen Text | am besten bei Unbekanntem, erklären ihre Wahl, finden „wer ist gemeint, worum geht es“ | langsam und teuer je Dokument, Daten verlassen das Gerät (außer eigener Server), erfinden manchmal etwas |
+
+Das ist vermutlich die „andere KI“, von der Klaus gehört hat: die kleinen Lese-Modelle. Sie sind nicht klüger als ein LLM, aber
+für **feste** Sortieraufgaben (Art, Kategorie, Absender) oft genauso gut – und hundertfach schneller.
+
+**Bewährtes Muster (nichts Neues): Lehrer und Schüler**
+
+1. **Lehrer** = großes Sprachmodell, **einmal** auf einer Probe (z. B. 200 Dokumente des Altbestands), Texte vorher
+   **pseudonymisiert** mit Modul 25 (`lib/ki-auftrag.ts`, gibt es schon: Namen, Nummern, Adressen werden zu Platzhaltern wie
+   „Person_1“, „Org_3“, die Rückführung bleibt auf dem Gerät). Der Lehrer schlägt Art, Kategorie, „betrifft“ vor; Klaus bestätigt.
+2. **Schüler** = Regeln + kleines Lese-Modell auf dem Gerät lernen aus diesen bestätigten Beispielen und sortieren danach alles
+   Weitere schnell und ohne Netz.
+3. **Nur Unsicheres** geht später wieder an den Lehrer – einzeln, pseudonymisiert, auf Knopf (oder an das Modell auf dem eigenen
+   Server, dann ohne dass etwas hinausgeht).
+
+**Zum Vorschlag „alles anonymisiert als Paket an Claude Code“:**
+
+- **Für den Altbestand einmalig: ja, sinnvoll** – als Lehrer-Schritt oben. Claude würde besser einsortieren als jedes Regelprogramm,
+  gerade weil es Zusammenhänge versteht.
+- **Pseudonymisieren statt anonymisieren:** völlig anonym (alles geschwärzt) zerstört genau das, wonach sortiert wird (Absender,
+  Kundennummer, Person). Gleichbleibende Platzhalter erhalten die Ordnung („alles von Org_3 zusammen“), die echten Namen bleiben zu Hause.
+- **Grenzen:** Pseudonymisieren ist nie vollständig (Texterkennungsfehler, Namen an ungewöhnlichen Stellen, seltene Einzelheiten);
+  Gesundheitsunterlagen deshalb nur mit eigener Freigabe oder gar nicht, Vorschau „Das sieht die KI“ wie in BookLedgerPro.
+- **Claude Code ist ein Programmierwerkzeug, kein Sortierdienst.** Ein Paket von Hand in eine Sitzung zu geben geht einmalig;
+  für ein **automatisches** Einsortieren gehört ein Aufruf über eine Schnittstelle (API mit eigenem Schlüssel, z. B. Claude oder
+  Mistral EU – beides gibt es im Verbund schon als Weg) oder ein Modell auf dem eigenen Server in die App.
+- **Dauerhaft jedes Dokument an ein großes Modell** ist nicht nötig und widerspricht „alles auf dem Gerät“; das Sieb bleibt schnell,
+  das große Modell hilft beim Lernen und bei Ausnahmen.
+
+Fragen dazu:
+
+- **S9 Lehrer-Schritt:** Altbestand-Probe pseudonymisiert an ein großes Modell (welches: Claude über Schnittstelle, Mistral EU
+  oder das Modell auf dem eigenen Server)?
+- **S10 Eigener Server:** Welches Programm läuft dort (vermutlich Ollama?) und welches Modell? Dann kann das Sieb es als Lehrer und
+  für Unsicheres nutzen, ohne dass Daten das eigene Netz verlassen.
+
 ## Bausteine, die es schon gibt
 
 | Baustein | Wo | Rolle im Sieb |
