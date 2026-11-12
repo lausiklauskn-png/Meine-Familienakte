@@ -77,11 +77,22 @@ Am besten zuerst in der **Web-App** (https://lausiklauskn-png.github.io/Meine-Fa
 - **Gmail** (Google-Postfach) ist nicht Teil dieses Termins: Google verlangt dafür eine eigene Prüfung.
 - **Verschlüsselung:** Mails sind unterwegs nicht Ende-zu-Ende verschlüsselt; die App weist auf Gesundheitswörter im Betreff hin.
 
+## Gleich mit erledigen: Registrierung für Private Brain Pro
+
+Klaus 12.11.: Private Brain Pro soll Microsoft-Konten anmelden können. Dafür braucht es im **selben** Azure-Konto eine **zweite**
+Registrierung „Private Brain Pro“ (kostenlos). Die Familienakte-Registrierung wird dafür nicht verändert. Anleitung Schritt für
+Schritt (Teil A, etwa 15 Minuten): `Privat-Brain-Pro/docs/PLAN_2026-11-12_MICROSOFT-KONTEN.md`. Mitnehmen: die neue
+Anwendungs-ID und Fotos von Übersicht, Android-Plattform und Berechtigungen. Der Einbau in Private Brain (Teil B) ist danach
+eine eigene Bausitzung mit neuer Fassung von Private Brain, nur mit Klaus' Wort.
+
+**Reihenfolge am Termin:** erst die Familienakte (Schritte oben, Probe), dann die Registrierung für Private Brain.
+
 ## Startauftrag für Claude am Termin
 
 ```
 Familienakte: Microsoft-Postfach in Entra freischalten. Lies CLAUDE.md und docs/PLAN_2026-11-12_MICROSOFT-MAIL-ENTRA.md.
 Gib mir die Anleitung Schritt für Schritt (immer nur einen Schritt, warte auf mein „erledigt“ oder ein Bildschirmfoto).
-Danach die Probe in Web-App, Windows und einmal in der APK. Trag das Ergebnis in docs/KALENDER-EINRICHTUNG.md, CLAUDE.md
+Danach die Probe in Web-App, Windows und einmal in der APK. Danach Teil A aus
+Privat-Brain-Pro/docs/PLAN_2026-11-12_MICROSOFT-KONTEN.md (Registrierung „Private Brain Pro“), ebenfalls Schritt für Schritt. Trag das Ergebnis in docs/KALENDER-EINRICHTUNG.md, CLAUDE.md
 („Offen“) und lib/app-stand.ts ein. Keine neue Fassung ausgeben ohne mein Wort.
 ```
