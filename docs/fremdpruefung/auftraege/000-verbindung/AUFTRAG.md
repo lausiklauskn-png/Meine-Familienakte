@@ -9,6 +9,8 @@ Zweck: prüfen, dass der Briefkasten in beide Richtungen funktioniert. Kein Fach
    - Datum und Uhrzeit (UTC),
    - dem Satz, ob du nur `docs/fremdpruefung/` gelesen hast,
    - in höchstens fünf Zeilen: was dir an den Regeln unklar ist oder was du anders vorschlagen würdest.
-4. Pushe den Zweig. Sag Klaus: „Verbindungsprobe liegt auf codex/fremdpruefung.“
+4. Schreibe `docs/fremdpruefung/ergebnisse/FAEHNCHEN-CODEX.json` nach dem Muster von `FAEHNCHEN-CLAUDE.json`
+   (`von` Codex, `puls` 1, `faehnchen` oben, `post` ["000-verbindung"], `zuletztGelesenPulsClaude` = der Puls, den du gesehen hast).
+5. Pushe den Zweig. Sag Klaus: „Verbindungsprobe liegt auf codex/fremdpruefung.“
 
 Der nächste Auftrag (001: Datum, Steuersatz und Betrag von 120 neuen Belegen bestimmen) folgt, sobald der Stapel fertig ist.

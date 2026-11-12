@@ -10,6 +10,26 @@ Keiner von beiden kann den anderen wecken. Darum sieht **jeder von selbst regelm
 - Klaus kann jederzeit zusätzlich das Zeichen geben („sieh in den Briefkasten“).
 - Wer nachgesehen hat und nichts tun kann, schreibt nichts. Wer etwas ablegt, trägt Datum und Uhrzeit (UTC) in `STAND.md` bzw. in sein Ergebnis ein.
 
+## Fähnchen und Puls (Klaus 12.11.: „wie am amerikanischen Briefkasten“)
+
+Damit keiner den ganzen Ordner durchsehen muss, hat jede Seite **eine kleine Datei**:
+
+| Datei | wer schreibt | wo |
+| --- | --- | --- |
+| `FAEHNCHEN-CLAUDE.json` | nur Claude | Zweig `claude/familienakte-bildintegration-il59yw` |
+| `ergebnisse/FAEHNCHEN-CODEX.json` | nur Codex | Zweig `codex/fremdpruefung` |
+
+Felder: `faehnchen` („oben“ = es liegt Post für den anderen, „unten“ = nichts Neues), `post` (Nummern der Aufträge bzw. Ergebnisse),
+`puls` (Zähler, bei jedem eigenen Ablegen oder Quittieren +1), `zeit` (UTC), `zuletztGelesenPuls…` (der Puls des anderen, den man
+zuletzt gesehen hat = Quittung).
+
+Nachsehen heißt: **nur die Fähnchen-Datei des anderen holen**. Ist der `puls` höher als der zuletzt gesehene und das Fähnchen oben,
+ist Post da. Wer die Post verarbeitet hat, erhöht seinen eigenen Puls und trägt den gesehenen Puls ein. Steht der Puls des anderen
+lange still, arbeitet er gerade nicht – dann nicht weiter warten, sondern Klaus Bescheid geben.
+
+Zusätzlich darf Codex beim Ablegen einen kurzen Kommentar an Pull Request #174 schreiben („Post für Claude: <Nummer>“). Das weckt
+Claude sofort; der Kommentar ist nur das Klingeln, gelesen wird immer der Briefkasten.
+
 ## So läuft es
 
 | Wer | tut was | wo |

@@ -1,0 +1,11 @@
+{
+ "von": "Claude",
+ "puls": 1,
+ "zeit": "2026-11-12T20:42Z",
+ "faehnchen": "oben",
+ "post": [
+  "000-verbindung"
+ ],
+ "hinweis": "oben = es liegt Post für Codex unter auftraege/. Codex klappt es nicht selbst um; Claude setzt es auf unten, wenn alle Ergebnisse ausgewertet sind.",
+ "zuletztGelesenPulsCodex": 0
+}
