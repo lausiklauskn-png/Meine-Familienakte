@@ -325,6 +325,24 @@ wenige Megabyte Text. Die Originale bleiben im Sieb-Ordner zu Hause.
 - **S10 damit beantwortet:** auf dem Server läuft Claude Code + KimHub-Schicht. **S11 Vorschlag:** Weg A über KimHub `api.mjs`
   mit Schlüssel (nicht Abo), Paket rein / Antwort raus in einem Ordner auf dem Server, Start per SSH aus Termux.
 
+### Braucht es Pseudonymisierung, wenn es über den eigenen Server läuft? (Klaus, 12.11.2026)
+
+**Ja.** Das Claude-Modell läuft nicht auf dem Server. Der Server (Claude Code, KimHub-Schicht) ist nur der **Bote**: er schickt den
+Text an Anthropic, dort wird gerechnet, die Antwort kommt zurück. Der Text verlässt also das eigene Netz – egal ob über Schlüssel
+oder Abo. Was Anthropic mit den Daten tut (Speicherdauer, Nutzung zum Training), regeln deren Bedingungen und beim Abo die
+Datenschutz-Einstellungen im Konto; das vor dem ersten echten Lauf nachsehen (gehört zu M4 in KimHub).
+
+Abwägung:
+
+- **Dafür:** Gesundheitsunterlagen und Angaben über Dritte (Ärzte, Behörden, Angehörige) gehen nicht im Klartext hinaus; Modul 25
+  gibt es schon, der Aufwand ist klein.
+- **Dagegen fast nichts:** zum Sortieren braucht der Lehrer keine echten Namen – gleichbleibende Platzhalter („Org_3“, „Person_1“)
+  reichen, die Zuordnung zu echten Namen macht danach das Gerät.
+- **Wann es nicht nötig wäre:** nur mit einem **freien Modell, das wirklich auf dem Server rechnet** (z. B. über Ollama) – dann geht
+  nichts hinaus. Das wäre dann aber nicht Claude und sortiert schwächer.
+
+**Vorschlag:** Pseudonymisierung immer an; Gesundheitsunterlagen zusätzlich nur mit eigener Freigabe je Lauf.
+
 ## Stand des Plans
 
 Plan fertig zur Durchsicht (12.11.2026). Entschieden: S1 eigene App, S2 ein Ordner mit Baum, S7 Übernahme in die Familienakte,
