@@ -153,6 +153,19 @@ Fragen dazu:
 - **S10 Eigener Server:** Welches Programm läuft dort (vermutlich Ollama?) und welches Modell? Dann kann das Sieb es als Lehrer und
   für Unsicheres nutzen, ohne dass Daten das eigene Netz verlassen.
 
+**Entscheidung S9 (Klaus, 12.11.2026): Lehrer = Claude, „kleines Claude“.**
+
+- Claude-Modelle laufen **nicht** auf einem eigenen Server; es gibt sie nur über die Claude-Schnittstelle (API) bzw. über große
+  Cloud-Anbieter. „Kleines Claude“ = **Claude Haiku 5.5** (`claude-haiku-5-5`, günstigstes Modell, Stand 11/2026: 0,10 $ je
+  1 Mio. Eingabe-Token, 0,50 $ Ausgabe). Für schwierige Einzelfälle **Claude Opus 5.5** (`claude-opus-5-5`, 4 $ / 20 $).
+- Grobe Rechnung (vor Messung): 1 Dokument ≈ 2 000 Token Text → 1 000 Dokumente ≈ 2 Mio. Token ≈ 0,20 $ mit Haiku; über die
+  Stapel-Schnittstelle (Batches) die Hälfte. Der Lehrer-Schritt kostet also Cent, nicht Euro.
+- Antwort als **festes Format** (strukturierte Ausgabe mit vorgegebenen Kategorien), damit das Modell nur auswählt, nichts erfindet.
+- Die Texte gehen pseudonymisiert an Anthropic (verlassen also das eigene Netz). Ganz ohne Hinausgehen nur mit einem **freien
+  Modell auf dem eigenen Server** (z. B. über Ollama) – das ist dann nicht Claude.
+- **Rolle des eigenen Servers (S10):** Schlüssel für die Claude-Schnittstelle sicher dort ablegen und Aufrufe von dort schicken
+  (kein Schlüssel in der App), und/oder ein freies Modell für „nichts geht hinaus“. Offen: was dort heute läuft.
+
 ## Bausteine, die es schon gibt
 
 | Baustein | Wo | Rolle im Sieb |
