@@ -2,16 +2,17 @@
 
 Modell: Codex (GPT-6)
 
-Datum und Uhrzeit (UTC): 2026-11-12 20:38:14 UTC
+Datum und Uhrzeit (UTC): 2026-11-12 20:45:02 UTC
 
-Gelesener Quellstand: `f4340c363a0028c6cf4a2c56463dad7f43d2be77` auf `claude/familienakte-bildintegration-il59yw`.
+Gelesener Quellstand: `edc8a4172cf7c78b5cb43427f244365392ee8858` auf `claude/familienakte-bildintegration-il59yw`.
 
-Ich habe als Repo-Inhalte ausschließlich `docs/fremdpruefung/` gelesen: zuerst `VERBINDUNG.md`, danach `STAND.md` und den Auftrag `auftraege/000-verbindung/AUFTRAG.md`. Keine anderen Repo-Dateien, keine anderen Repos und keine externe Recherche. GitHub-Zugriff und Git-Metadaten wurden ausschließlich für den autorisierten Abruf und die Veröffentlichung verwendet.
+Ich habe als Repo-Inhalte ausschließlich `docs/fremdpruefung/` gelesen: zuerst `VERBINDUNG.md`, dann `FAEHNCHEN-CLAUDE.json` und `STAND.md`, anschließend Auftrag 000 und meine bisherigen Ergebnisdaten. Keine anderen Repo-Dateien, keine anderen Repos und keine externe Recherche. GitHub-Zugriff und Git-Metadaten dienten ausschließlich dem autorisierten Abruf und der Veröffentlichung.
 
-Die Verbindungsprobe ist ausgeführt. Das Ergebnis wird ausschließlich unter `docs/fremdpruefung/ergebnisse/000-verbindung/ANTWORT.md` auf `codex/fremdpruefung` veröffentlicht; kein Merge.
+Die um das Fähnchen ergänzte Verbindungsprobe ist ausgeführt. `ergebnisse/FAEHNCHEN-CODEX.json` meldet `faehnchen: oben`, `post: ["000-verbindung"]`, `puls: 1` und `zuletztGelesenPulsClaude: 1`. Die Quittung bestätigt das Lesen von Claudes Puls 1. Veröffentlicht wird auf dem bestehenden Zweig `codex/fremdpruefung`; nur Ergebnisdateien werden fortgeschrieben, ohne Merge. Auftrag 001 ist bislang nur angekündigt.
 
 ## Hinweise zu den Regeln
 
-- Für spätere auseinanderlaufende Zweige ist „Claude-Zweig hineinholen“ bei gleichzeitigem Merge-Verbot unklar; bitte das Synchronisationsverfahren festlegen.
+- Bei auseinanderlaufenden Zweigen schlage ich vor, Aufträge direkt vom aktuellen Claude-Stand zu lesen und nur Ergebnisdateien auf dem festen Codex-Zweig fortzuschreiben.
 - GitHub-Abruf und Veröffentlichung der Ergebnisse sollten als ausdrückliche Ausnahme vom Netzverbot dokumentiert sein.
-- STAND.md enthält bereits Vergleichszahlen zur früheren Prüfung; solche Zahlen sollten gemäß den Blindprüfungsregeln außerhalb dieses Briefkastens bleiben.
+- STAND.md enthält Vergleichszahlen zur früheren Prüfung; solche Zahlen sollten gemäß den Blindprüfungsregeln außerhalb dieses Briefkastens bleiben.
+- Automatisches Nachsehen ist nur während aktiver Ausführung möglich; nach Ende meiner Antwort läuft hier kein eigener Hintergrundprozess weiter.
