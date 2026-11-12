@@ -306,7 +306,26 @@ wenige Megabyte Text. Die Originale bleiben im Sieb-Ordner zu Hause.
 - **S11:** Weg A (Server) oder B (Ordner freigeben)? Was läuft auf dem Server (S10), und darf dort ein kleines Programm mit dem
   Claude-Schlüssel liegen?
 
+### Was auf dem Server schon da ist (nachgesehen in KimHub, 12.11.2026)
+
+- **Maschine:** Hetzner-Cloud-Server (Ubuntu 26.04, x86_64, Node 22). Dort ist die Claude-Code-Kommandozeile installiert
+  (2.1.278, am 21.09. gemessen) und mit dem **Abo** angemeldet (KimHub `docs/MESSEN_ABO_SERVER.md`, M1–M3 mit Ja beantwortet).
+  Auf dem Tablet in Termux läuft sie **nicht** (keine Android-Fassung) – Termux taugt nur als SSH-Zugang zum Server.
+- **Programm:** KimHub `schicht/` – `api.mjs` (der einzige Ort, der nach draußen spricht: `EchteApi` über das Anthropic-SDK mit
+  Schlüssel, `TrockenApi` für Proben ohne Kosten), `transport-cli.mjs` (derselbe Aufruf über `claude -p` aus dem Abo-Kontingent),
+  `kosten.mjs`, `kontingent.mjs`. Das ist der Baustein für Weg A – nichts Neues bauen, nur einen Auftrag „Lehrer“ daran hängen.
+- **Zwei Kassen, ein Unterschied, der zählt:**
+  - **Schlüssel (API):** festes Antwortformat wird vom Server **erzwungen** (`output_config.format`), Stapel-Schnittstelle zum halben
+    Preis, Haiku 5.5 wählbar → **Vorschlag für den Lehrer**.
+  - **Abo (`claude -p`):** kostet nichts extra, aber das Format ist nur **gebeten**, nicht erzwungen (KimHub-Grenze 1), und **M4 ist
+    offen**: ob Anthropics Bedingungen unbeaufsichtigten Abo-Betrieb erlauben, hat Klaus noch nicht nachgesehen. Bis dahin nicht
+    für einen automatischen Lehrer-Lauf nutzen.
+- Andere Apps des Verbunds (Familienprojekt `ClaudeBrain.kt`, Toolpoint `sbkim-match`, Private Brain) rufen Claude nach dem, was die
+  Suche zeigt, **aus der App** mit eigenem Schlüssel (BYOK) auf, nicht über den Server – ob eine davon den Server nutzt, ist ungeprüft.
+- **S10 damit beantwortet:** auf dem Server läuft Claude Code + KimHub-Schicht. **S11 Vorschlag:** Weg A über KimHub `api.mjs`
+  mit Schlüssel (nicht Abo), Paket rein / Antwort raus in einem Ordner auf dem Server, Start per SSH aus Termux.
+
 ## Stand des Plans
 
 Plan fertig zur Durchsicht (12.11.2026). Entschieden: S1 eigene App, S2 ein Ordner mit Baum, S7 Übernahme in die Familienakte,
-S9 Lehrer = Claude (Haiku 5.5, Opus 5.5 für Schwieriges). Offen: S3–S6, S8, S10, S11, eigenes Repo.
+S9 Lehrer = Claude (Haiku 5.5, Opus 5.5 für Schwieriges). S10 beantwortet (Hetzner-Server mit Claude Code und KimHub-Schicht). Offen: S3–S6, S8, S11 (Vorschlag Weg A mit Schlüssel), M4 in KimHub, eigenes Repo.
