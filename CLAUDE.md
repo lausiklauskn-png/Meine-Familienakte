@@ -12,7 +12,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Fahrzeug, Barcodes mit Prüfung nur bei Code-Fund, Teilen ohne Ort. Nichts gebaut; Fragen F1–F8 an Klaus offen, dann Vorschau.
 - **Plan Sortiersieb** `docs/PLAN_2026-11-12_SORTIERSIEB.md` (Klaus 12.11.): Prüf- und Sortierwerkzeug neben Auslieferungs- und Sende-Prüfer;
   Eingangsordner, dann Klick für Klick feiner (Art → Kopf → Kategorie/Nummern → Absender → Inhalt), nur Teile lesen, schnelle
-  Modelle statt Sprachmodell, lernt aus Korrekturen, Verlauf mit Rückgängig. Nichts gebaut; Fragen S1–S7 offen (S1: wo es wohnt); Zweck: Vorarbeit für andere Programme und KI (Steckbrief, Text, Abschnitte für Vektoren).
+  Modelle statt Sprachmodell, lernt aus Korrekturen, Verlauf mit Rückgängig. Klaus 12.11.: eigene App, alles in einem Ordner mit selbstsortierendem Baum (Sichten), Ordner wird in die Familienakte nur übernommen und dort automatisch zugeordnet. Nichts gebaut; S3–S6 offen, eigenes Repo nötig; Zweck: Vorarbeit für andere Programme und KI (Steckbrief, Text, Abschnitte für Vektoren).
 - **Fassung 2.28.65** (#171 mit #170; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.65.json`; Brief
   `BRIEF_ABSCHLUSS_2026-11-12_CLOUD-ORDNER-2.28.65.md`): **Sicherung an einem zweiten Ort** (`app/zweiter-ort*.ts(x)`, `lib/zweiter-ort.ts`;
   selbsttätig bei Änderung höchstens einmal am Tag, verschlüsselt/lesbar, dort 1, auf dem Gerät 2 im App-Ordner `sicherungen`; erst

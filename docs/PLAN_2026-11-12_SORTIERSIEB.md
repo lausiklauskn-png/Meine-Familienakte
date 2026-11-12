@@ -26,6 +26,26 @@ Arbeitsname „Sortiersieb“. Nur Plan, nichts gebaut. Wo das Werkzeug wohnt, i
   läuft im Hintergrund (gleicher Gedanke wie „erst ablegen, dann lesen“ im Plan Bilder, `docs/PLAN_2026-11-12_BILDER.md` Stufe C).
 - Ein Klick kann auch „alle Stufen“ heißen; die Stufen bleiben trotzdem einzeln sichtbar und rückgängig zu machen.
 
+## Entscheidungen (Klaus, 12.11.2026)
+
+- **S1: eigene App.** Zuerst für die Familienakte gemacht, später Vorarbeit für andere Werkzeuge. Kern gemeinsam (siehe unten).
+- **S2: alles in einem Ordner.** Keine echten Unterordner nötig. Die Dateien liegen in **einem** Ordner; das Sieb zeigt sie wie
+  ein Explorer als **Baum**, der sich selbst sortiert. Zweige wählbar: nach Datum, Art, Name/Absender, Ansprechpartner
+  (angesprochene Person), Termin, Dringlichkeit (Frist/Mahnstufe), Kundennummer, Auftrags-/Rechnungsnummer, Kategorie und
+  Unterkategorie, Inhalt (Wortsuche) und Bedeutung (Vektoren). Ein Baum ist nur eine Sicht auf `sieb-index.json` – nichts wird
+  verschoben oder kopiert. Damit entfällt das Verschieben aus Stufe D; der Verlauf hält nur Korrekturen fest.
+- **S7: kompatibel mit der Familienakte.** Der vorsortierte Ordner wird in der Familienakte nur noch **eingefügt/übernommen**
+  („Ordner übernehmen“ in der Eingangszentrale). Die Akte liest `sieb-index.json`, übernimmt Kategorie, Unterkategorie, Art,
+  Absender, Nummern, Fristen, Text und Abschnitte und ordnet automatisch zu (Personen, Organisationen, Fahrzeuge, Vorgänge über
+  Nummern und Namen). Zur Bestätigung bleibt nur, was unsicher ist – wenige Handgriffe. Dateien ohne Index nimmt die Akte wie heute.
+- **Geteilte Arbeit:** Das Sieb kennt Schriftstück, Absender und Nummern. Wer in **dieser** Familie gemeint ist (welche Person,
+  welches Auto, welcher Vertrag), weiß nur die Akte – diesen letzten Schritt macht sie beim Übernehmen.
+- Neu im Steckbrief: **Dringlichkeit** (Frist überschritten / diese Woche / später / keine; Mahnstufe aus „Mahnung“,
+  „letzte Zahlungsaufforderung“).
+- Offen bleiben S3–S6 (Reihenfolge der Siebe, gründliche Prüfung, Sprachmodell auf Knopf, ein Klick je Stufe oder ganz durch).
+- Bau: eigenes Repo nötig (Name und Anlage durch Klaus); der Kern `lib/sieb.ts` kann vorher hier entstehen und wird dann wie
+  Workflow PDF byte-gleich mit Pin übernommen.
+
 ## Die „schnellen KIs“
 
 Kein großes Sprachmodell. Drei Stufen von schnell nach klug, alle auf dem Gerät:
