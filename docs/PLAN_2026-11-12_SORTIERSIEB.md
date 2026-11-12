@@ -64,6 +64,28 @@ Die Sortierung erzeugt zwei Dinge:
   Empfänger, Datum, Nummern, Kategorie, Fristen, Prüfstand). Damit kann die Familienakte (und jede Pro-App) die Datei ohne
   erneutes Lesen übernehmen.
 
+## Zweck: Vorarbeit für Familienakte, andere Programme und KI (Klaus, Nachtrag 12.11.)
+
+Das Sieb ist **Vorbereitung**: alte Bestände, alte Dokumente und neue Dokumente bekommen eine Vorsortierung, damit sie die
+Familienakte und jedes andere Programm, das solche Daten braucht, jederzeit leicht zuordnen kann. Zugleich werden sie **leichter
+auffindbar für KI**: für Sprachmodelle (LLM) und für Embedding-Modelle (Vektorsuche).
+
+Was das Sieb dafür neben jede Datei legt (eine Begleitdatei bzw. ein Eintrag im `sieb-index.json`, offenes JSON mit Fassungsnummer):
+
+- **Steckbrief** in festen Feldern: Art des Schriftstücks, Absender, Empfänger/angesprochene Person, Datum, Betreff, Nummern,
+  Kategorie, Fristen, Beträge, Prüfstand, Herkunft (Scanner, Kamera, E-Mail, Altbestand), Fingerabdruck der Originaldatei.
+  Programme lesen diese Felder direkt, ohne die Datei erneut zu öffnen.
+- **Kurzfassung in einem Satz** und **gelesener Text** (Textebene oder Texterkennung) als reiner Text – das ist, was ein
+  Sprachmodell braucht, ohne das ganze PDF zu bekommen. Text aus Barcodes und fremden Quellen ist als Fremdtext markiert.
+- **Abschnitte für die Vektorsuche:** der Text in sinnvolle Stücke geteilt (Briefkopf, Betreff, Absätze), jedes Stück mit
+  Steckbrief-Feldern als Kopf, damit ein Embedding-Modell auch den Zusammenhang sieht („Rechnung · Stadtwerke · 03/2026 · …“).
+  Vektoren tragen Modellname und Textstand; Modelle werden nicht vermischt (Speicherwege-Regel). Die Vektoren selbst sind
+  ersetzbar, der Text bleibt die Quelle.
+- **Altbestände:** ganze Ordner in Blöcken (wie der Eingangsordner, `lib/eingang-bloecke.ts`), schon Gelesenes wird am
+  Fingerabdruck erkannt und nicht noch einmal gelesen. Originale bleiben, wo und wie sie sind, wenn nur vorbereitet werden soll.
+- **Übernahme:** die Familienakte liest `sieb-index.json` im Eingang und übernimmt Steckbrief, Text und Vorschläge; andere
+  Pro-Apps (Private Brain Pro, BookLedgerPro) über dasselbe Format.
+
 ## Bausteine, die es schon gibt
 
 | Baustein | Wo | Rolle im Sieb |
@@ -107,3 +129,5 @@ das Verschieben in echte Ordner mit Verlauf, die Sichten.
 - **S4 Gründliche Prüfung** nur für fremde Quellen und Barcode-Funde, im Hintergrund?
 - **S5 Großes Sprachmodell** für unklare Einzelfälle auf Knopf – später oder gar nicht?
 - **S6 Ein Klick je Stufe** oder ein Knopf „ganz durchsieben“ mit Halt bei Unsicherem?
+- **S7 Format für andere Programme:** ein gemeinsames offenes Format (`sieb-index.json` + Begleittexte) für alle Pro-Apps, mit
+  Abschnitten für Embedding-Modelle und Kurzfassung für Sprachmodelle? Vorschlag: ja, als Teil des Kerns, in jeder App gleich.
