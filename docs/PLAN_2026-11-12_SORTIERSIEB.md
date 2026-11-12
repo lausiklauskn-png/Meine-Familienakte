@@ -151,3 +151,78 @@ das Verschieben in echte Ordner mit Verlauf, die Sichten.
 - **S6 Ein Klick je Stufe** oder ein Knopf „ganz durchsieben“ mit Halt bei Unsicherem?
 - **S7 Format für andere Programme:** ein gemeinsames offenes Format (`sieb-index.json` + Begleittexte) für alle Pro-Apps, mit
   Abschnitten für Embedding-Modelle und Kurzfassung für Sprachmodelle? Vorschlag: ja, als Teil des Kerns, in jeder App gleich.
+
+## E-Mail-Anhänge (Klaus, 12.11.2026)
+
+- Einfachster Weg wie vorgeschlagen: im Mail-Programm „Anhang speichern unter“ → Download-Ordner → in den Sieb-Ordner schieben.
+- **Noch einfacher:** die ganze E-Mail in den Sieb-Ordner ziehen. Thunderbird legt dabei eine `.eml`-Datei an; die Familienakte
+  packt Anhänge aus `.eml` schon heute aus (`extractEmlAttachments`, beliebig tief). Absender, Datum und Betreff der Mail kommen
+  so gleich mit in den Steckbrief – beim Weg über „Speichern unter“ gehen sie verloren.
+- **Lücke:** Outlook (klassisch) zieht `.msg`-Dateien. Die werden erkannt („Outlook-E-Mail (.msg)“), aber ihre Anhänge werden
+  nicht ausgepackt. Für das Sieb nachrüsten (OLE-Format, nur lesen).
+- Android: „Teilen“ aus der Mail-App an Sieb bzw. Familienakte (gibt es für die Akte schon).
+- Automatisches Ablegen aller Anhänge (Thunderbird-Erweiterungen wie Attachment Extractor) ist laut Nutzerberichten bei neuen
+  Thunderbird-Fassungen unzuverlässig – nicht darauf bauen.
+
+## Vergleich mit vorhandenen Programmen (Stand 12.11.2026, aus Hersteller- und Nutzerquellen, nicht selbst getestet)
+
+| Programm | Art | Was es gut macht | Schwäche / was wir nicht übernehmen |
+|---|---|---|---|
+| **Paperless-ngx** (frei, Server/NAS) | Dokumentenarchiv | Eingangsordner („consume“), Texterkennung, Zuordnung von Absender, Dokumentart, Schlagworten, Ablagepfad; je Merkmal wählbar: genaues Wort, Regex, unscharf oder „Auto“ (lernt aus bisherigen Zuordnungen); Marke „Posteingang“ bis zur Durchsicht; Archivnummer (ASN) für Papieroriginale | braucht Server (Docker); „Auto“ braucht viele Beispiele und Gegenbeispiele; falsche Zuordnungen beim Massen-Import lernt es mit; Ablagepfad hängt an der Dokumentart – falsche Art = falscher Ort, spätere Änderungen gelten nur für neue Dateien; mehrere Treffer = keine Zuordnung; lernt nur etwa stündlich neu |
+| **Paperless-AI / paperless-gpt** (Zusätze) | Sprachmodell zum Einordnen | Einordnung und Texterkennung mit Sprachmodellen (lokal über Ollama, z. B. 8-Mrd.-Modelle) | schwerer Rechner nötig, langsam je Dokument; legt ungebremst neue Schlagworte an; besser gelöst bei „Paperless AIssist“: Modell wählt nur aus vorhandenen Werten |
+| **Docspell** (frei, Server) | Dokumentenarchiv | holt Mails per IMAP mit Anhängen; gleicht mit einem **Adressbuch** ab: Absender **und** „betrifft“ (Person oder Sache) | Server nötig; Bedienung technisch |
+| **Mayan EDMS** (frei, Server) | Unternehmens-DMS | starke Abläufe, Auto-Klassifizierung | schwer einzurichten, für Familien überdimensioniert |
+| **DEVONthink** (Mac, Kauf) | Wissens-Datenbank | „Smart Groups“ = gespeicherte Sichten ohne Verschieben; „Classify“ schlägt Gruppen vor, „Siehe auch“ ähnliche Dokumente | Nutzer berichten von unzuverlässigem Auto-Einordnen (seltsame Gruppen); verschiebt beim Auto-Einordnen selbst; nur Apple |
+| **fileee**, **Docutain** (Apps, DE) | Scan-Apps für Privatleute | erkennen Fristen, Beträge, Adressen; erinnern an Fristen; Docutain arbeitet auf dem Gerät | fileee mit Cloud; eigene Ablage, schwer in andere Programme zu übernehmen; Erkennung nicht unabhängig geprüft |
+| **Hazel** (Mac), **File Juggler**, **DropIt** (Windows) | Regel-Sortierer für Ordner | beobachten Ordner, verschieben/benennen nach Regeln; File Juggler auch nach Wörtern und Datum im Inhalt | nur Regeln, kein Verständnis, keine Sichten; DropIt liest den Inhalt nicht |
+
+### Was wir übernehmen
+
+1. **Marke „Eingang“ bis zur Durchsicht** (Paperless): jede Datei bleibt sichtbar „ungeprüft“, bis sie bestätigt ist.
+2. **Je Merkmal eine wählbare Regel** (Paperless): genaues Wort, Muster, unscharf, „lernt“ – Regeln zuerst, Lernen danach.
+3. **Absender und „betrifft“ getrennt** über das Adressbuch (Docspell) – bei uns Absender aus dem Briefkopf, „betrifft“ aus der
+   Familienakte (Personen, Fahrzeuge, Verträge) beim Übernehmen.
+4. **Sichten statt Verschieben** (DEVONthink Smart Groups) – entspricht S2.
+5. **Fristen, Beträge, Termine erkennen** (fileee, Docutain) – haben wir schon (`erkenneFristen`).
+6. **Sprachmodell nur mit fester Auswahl** (Paperless AIssist): wenn überhaupt, wählt es aus vorhandenen Kategorien, erfindet keine.
+7. **Archivnummer für Papier** (ASN): eine fortlaufende Nummer auf dem Papieroriginal, damit man den Ordner im Regal findet.
+   Frage S8.
+8. **Feldnamen anschlussfähig** an Paperless-ngx (Absender = correspondent, Art = document_type, Schlagworte = tags,
+   Datum = created, Archivnummer = ASN), damit ein Wechsel oder Export später möglich ist.
+
+### Was wir vermeiden (schlechte Muster)
+
+1. **Massen-Import lernt Fehler mit** (Paperless): Altbestand erst mit einer kleinen Probe (z. B. 50 Dateien) sieben, bestätigen,
+   dann den Rest. Das Sieb **lernt nur aus Bestätigtem**, nie aus eigenen Vorschlägen.
+2. **Ort hängt an einem einzigen Merkmal** (Paperless-Ablagepfad): bei uns liegt keine Datei wegen einer Einordnung woanders; Sichten
+   werden jedes Mal neu berechnet, eine Korrektur wirkt sofort auch auf alte Dateien.
+3. **Stilles Verschieben** (DEVONthink-Auto-Einordnen): nie. Jeder Vorschlag mit Sicherheit und **Grund** („Wort ‚Mahnung‘ im
+   Betreff“), Unsicheres bleibt im Eingang.
+4. **Mehrere Treffer = gar nichts** (Paperless): stattdessen die zwei besten Treffer zur Wahl zeigen.
+5. **Ungebremst neue Schlagworte** (LLM-Zusätze): feste Listen; Neues nur, wenn der Nutzer es anlegt.
+6. **Server-Pflicht** (Paperless, Docspell, Mayan): wir laufen auf dem Gerät (Windows, Android, Browser), ohne Docker.
+7. **Eigene geschlossene Ablage** (fileee): Dateien bleiben normale Dateien in einem normalen Ordner, der Index ist offenes JSON.
+
+### Wo wir schwächer sind (ehrlich)
+
+- **Kein Dauerbetrieb:** ein Server sortiert rund um die Uhr; das Sieb nur, solange die App offen ist (Android mit Dienst länger).
+  Ein Scanner, der direkt in einen Netzordner scannt, wird erst beim nächsten Öffnen gesiebt.
+- **Texterkennung:** Tesseract ist schwächer als kaufbare Texterkennung oder Bild-Sprachmodelle, besonders bei Fotos und Handschrift.
+- **Kleine Modelle** erkennen ungewöhnliche Schreiben schlechter als ein großes Sprachmodell – dafür schnell, ohne Netz, ohne Server.
+- **Neu und ungeprüft:** Paperless-ngx hat Jahre an Nutzung und eine große Gemeinschaft; wir fangen an.
+- **Zwei Programme** (Sieb und Familienakte): nur tragbar mit einem gemeinsamen Kern, sonst sortieren beide bald verschieden.
+- **Browser-Grenzen:** Ordnerzugriff im Browser nur in Chrome/Edge am PC; am Handy nur über die App.
+- **Index und Dateien können auseinanderlaufen**, wenn jemand außerhalb umbenennt oder verschiebt – deshalb Zuordnung am
+  Fingerabdruck (SHA-256), nicht am Dateinamen.
+
+### Messwerte, an denen wir uns messen
+
+Echte Zahlen der anderen gibt es nicht unabhängig geprüft. Deshalb eigene Messlatte mit erfundenen Probedateien (100 Stück:
+Rechnungen, Mahnungen, Bescheide, Termine, Verträge, Fotos), in jeder Fassung gleich:
+
+- Anteil richtig erkannter **Art** und **Absender** (Ziel vor dem Bau festlegen, z. B. ≥ 90 % bei Brief mit Textebene).
+- Anteil **„unsicher“** statt falsch – lieber unsicher als falsch.
+- **Zeit** je Stufe und Datei am PC und am Handy.
+- **Handgriffe** bis alles bestätigt ist (Ziel: nur Unsicheres anfassen).
+
+- **S8 Archivnummer für Papieroriginale** (fortlaufende Nummer, die man auf das Papier schreibt bzw. klebt)?
