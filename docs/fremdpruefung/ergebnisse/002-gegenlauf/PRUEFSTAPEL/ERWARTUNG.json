@@ -1,0 +1,605 @@
+{
+  "betrieb": "Töpferei Windkiesel",
+  "dateien": [
+    {
+      "datei": "P001.txt",
+      "konto": "3400",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P002.txt",
+      "konto": "4360",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P003.txt",
+      "konto": "3300",
+      "richtung": "einnahme"
+    },
+    {
+      "datei": "P004.txt",
+      "konto": "4600",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P005.txt",
+      "konto": "4650",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P006.txt",
+      "konto": "4660",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P007.txt",
+      "konto": "4670",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P008.txt",
+      "konto": "4950",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P009.txt",
+      "konto": "4360",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P010.txt",
+      "konto": "3400",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P011.txt",
+      "konto": "3400",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P012.txt",
+      "konto": "8125",
+      "richtung": "einnahme"
+    },
+    {
+      "datei": "P013.txt",
+      "konto": "4120",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P014.txt",
+      "konto": "4530",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P015.txt",
+      "konto": "1890",
+      "richtung": "einnahme"
+    },
+    {
+      "datei": "P016.txt",
+      "konto": "4630",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P017.txt",
+      "konto": "1800",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P018.txt",
+      "konto": "4635",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P019.txt",
+      "konto": "4650",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P020.txt",
+      "konto": "4940",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P021.txt",
+      "konto": "4670",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P022.txt",
+      "konto": "4945",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P023.txt",
+      "konto": "0400",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P024.txt",
+      "konto": "0400",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P025.txt",
+      "konto": "4980",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P026.txt",
+      "konto": "3400",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P027.txt",
+      "konto": "4940",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P028.txt",
+      "konto": "1800",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P029.txt",
+      "konto": "8400",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P030.txt",
+      "konto": "4380",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P031.txt",
+      "konto": "4210",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P032.txt",
+      "konto": "8300",
+      "richtung": "einnahme"
+    },
+    {
+      "datei": "P033.txt",
+      "konto": "0480",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P034.txt",
+      "konto": "0480",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P035.txt",
+      "konto": "4600",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P036.txt",
+      "konto": "4260",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P037.txt",
+      "konto": "4210",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P038.txt",
+      "konto": "4945",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P039.txt",
+      "konto": "4980",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P040.txt",
+      "konto": "4380",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P041.txt",
+      "konto": "1800",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P042.txt",
+      "konto": "4930",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P043.txt",
+      "konto": "8500",
+      "richtung": "einnahme"
+    },
+    {
+      "datei": "P044.txt",
+      "konto": "0400",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P045.txt",
+      "konto": "1890",
+      "richtung": "einnahme"
+    },
+    {
+      "datei": "P046.txt",
+      "konto": "8400",
+      "richtung": "einnahme"
+    },
+    {
+      "datei": "P047.txt",
+      "konto": "3400",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P048.txt",
+      "konto": "4970",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P049.txt",
+      "konto": "4530",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P050.txt",
+      "konto": "4260",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P051.txt",
+      "konto": "4540",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P052.txt",
+      "konto": "4910",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P053.txt",
+      "konto": "8400",
+      "richtung": "einnahme"
+    },
+    {
+      "datei": "P054.txt",
+      "konto": "4250",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P055.txt",
+      "konto": "4120",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P056.txt",
+      "konto": "4635",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P057.txt",
+      "konto": "4540",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P058.txt",
+      "konto": "4500",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P059.txt",
+      "konto": "4660",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P060.txt",
+      "konto": "4360",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P061.txt",
+      "konto": "3400",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P062.txt",
+      "konto": "4910",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P063.txt",
+      "konto": "8300",
+      "richtung": "einnahme"
+    },
+    {
+      "datei": "P064.txt",
+      "konto": "4600",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P065.txt",
+      "konto": "4600",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P066.txt",
+      "konto": "3400",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P067.txt",
+      "konto": "4920",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P068.txt",
+      "konto": "4930",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P069.txt",
+      "konto": "8500",
+      "richtung": "einnahme"
+    },
+    {
+      "datei": "P070.txt",
+      "konto": "0480",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P071.txt",
+      "konto": "4240",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P072.txt",
+      "konto": "4670",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P073.txt",
+      "konto": "3300",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P074.txt",
+      "konto": "4240",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P075.txt",
+      "konto": "4930",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P076.txt",
+      "konto": "8400",
+      "richtung": "einnahme"
+    },
+    {
+      "datei": "P077.txt",
+      "konto": "4250",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P078.txt",
+      "konto": "8125",
+      "richtung": "einnahme"
+    },
+    {
+      "datei": "P079.txt",
+      "konto": "8120",
+      "richtung": "einnahme"
+    },
+    {
+      "datei": "P080.txt",
+      "konto": "4240",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P081.txt",
+      "konto": "4650",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P082.txt",
+      "konto": "4530",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P083.txt",
+      "konto": "4955",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P084.txt",
+      "konto": "4240",
+      "richtung": "einnahme"
+    },
+    {
+      "datei": "P085.txt",
+      "konto": "4980",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P086.txt",
+      "konto": "1890",
+      "richtung": "einnahme"
+    },
+    {
+      "datei": "P087.txt",
+      "konto": "4970",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P088.txt",
+      "konto": "8500",
+      "richtung": "einnahme"
+    },
+    {
+      "datei": "P089.txt",
+      "konto": "1800",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P090.txt",
+      "konto": "4500",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P091.txt",
+      "konto": "4260",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P092.txt",
+      "konto": "4240",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P093.txt",
+      "konto": "4955",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P094.txt",
+      "konto": "4950",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P095.txt",
+      "konto": "4920",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P096.txt",
+      "konto": "4955",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P097.txt",
+      "konto": "4630",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P098.txt",
+      "konto": "8400",
+      "richtung": "einnahme"
+    },
+    {
+      "datei": "P099.txt",
+      "konto": "4970",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P100.txt",
+      "konto": "0410",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P101.txt",
+      "konto": "4530",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P102.txt",
+      "konto": "8400",
+      "richtung": "einnahme"
+    },
+    {
+      "datei": "P103.txt",
+      "konto": "8300",
+      "richtung": "einnahme"
+    },
+    {
+      "datei": "P104.txt",
+      "konto": "4210",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P105.txt",
+      "konto": "8120",
+      "richtung": "einnahme"
+    },
+    {
+      "datei": "P106.txt",
+      "konto": "4250",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P107.txt",
+      "konto": "3400",
+      "richtung": "einnahme"
+    },
+    {
+      "datei": "P108.txt",
+      "konto": "3300",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P109.txt",
+      "konto": "3400",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P110.txt",
+      "konto": "4920",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P111.txt",
+      "konto": "0320",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P112.txt",
+      "konto": "3300",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P113.txt",
+      "konto": "4120",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P114.txt",
+      "konto": "0410",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P115.txt",
+      "konto": "4210",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P116.txt",
+      "konto": "4660",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P117.txt",
+      "konto": "4910",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P118.txt",
+      "konto": "4120",
+      "richtung": "ausgabe"
+    },
+    {
+      "datei": "P119.txt",
+      "konto": "8400",
+      "richtung": "einnahme"
+    },
+    {
+      "datei": "P120.txt",
+      "konto": "4120",
+      "richtung": "ausgabe"
+    }
+  ]
+}

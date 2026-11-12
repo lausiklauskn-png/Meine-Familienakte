@@ -1,0 +1,1619 @@
+{
+  "agent": "Codex (GPT-6)",
+  "betrieb": "Linienfroh, Inhaberin Mira Telscher",
+  "gewerbe": "Büroservice mit Schreibwarenhandel und digitaler Gestaltung",
+  "dateien": [
+    {
+      "datei": "B001.txt",
+      "konto": "0320",
+      "richtung": "ausgabe",
+      "namen": [
+        "Autohaus Wellenried",
+        "Linienfroh",
+        "Mira Telscher"
+      ],
+      "text": "AUTOHAUS WELLENRIED\nRechnung W-26118 vom 12.01.2026\nVerkäufer: Autohaus Wellenried, Rendsburger Weg 84, Kiel\nKäufer: Linienfroh, Inhaberin Mira Telscher, Hafenstieg 12, Kiel\nGeliefert: neuer fünfsitziger Kombi, Benziner, Fahrgestellnr. WVR2648117, für Kundenbesuche und Warenfahrten. Übergabe mit zwei Schlüsseln am 12.01.2026.\nNettopreis 24.000,00 EUR; Umsatzsteuer 19 % 4.560,00 EUR; Gesamt 28.560,00 EUR. Überweisung binnen zehn Tagen. Eigentum geht nach vollständiger Zahlung über.",
+      "firmennamen": [
+        "Autohaus Wellenried",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B002.txt",
+      "konto": "0320",
+      "richtung": "ausgabe",
+      "namen": [
+        "Nordkurve Mobil",
+        "Linienfroh"
+      ],
+      "text": "Kaufabrechnung 2026/219 | 18.03.2026\nNordkurve Mobil, Eckernförder Straße 208, Kiel, an Linienfroh, Hafenstieg 12, Kiel.\nGebrauchter elektrischer Kleinwagen mit fünf Sitzen, Erstzulassung 2023, 28.400 km, FIN NKM2300642. Das Fahrzeug wird dauerhaft für Außentermine des Gestaltungsbüros übernommen; keine Finanzierung oder Leasingrate. Fahrzeugbrief und Ladekabel ausgehändigt.\nKaufpreis netto 16.800,00 EUR, zuzüglich 3.192,00 EUR USt (19 %), zahlbar 19.992,00 EUR. Zahlungseingang am 18.03.2026 bestätigt.",
+      "firmennamen": [
+        "Nordkurve Mobil",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B003.txt",
+      "konto": "0320",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fördewagen Handel",
+        "Linienfroh",
+        "Mira Telscher"
+      ],
+      "text": "Fördewagen Handel • Fahrzeugverkauf\nAbnehmer: Linienfroh / Mira Telscher, Hafenstieg 12, Kiel\nBeleg FW-370, Datum 06.05.2026\nEin neuer Hybrid-Kombi, fünf Sitzplätze, FIN FWH26001209, wird an die Inhaberin für den betrieblichen Kurierdienst geliefert. Kein Weiterverkauf vorgesehen. Zulassung auf den Betrieb ab heute, Kennzeichen KI-LF 63.\nVereinbarter Fahrzeugpreis 29.500,00 EUR netto. 19 % USt: 5.605,00 EUR. Rechnungsbetrag: 35.105,00 EUR. Bankzahlung bei Abholung; Übernahmeprotokoll liegt bei.",
+      "firmennamen": [
+        "Fördewagen Handel",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B004.txt",
+      "konto": "0400",
+      "richtung": "ausgabe",
+      "namen": [
+        "Falzwerk Technik",
+        "Linienfroh"
+      ],
+      "text": "Falzwerk Technik, Industriestraße 9, Neumünster\nAn Linienfroh, Hafenstieg 12, Kiel\nRECHNUNG FT-6021 • 09.02.2026\nElektrische Stapelschneidemaschine, Schnittbreite 480 mm, Seriennr. FT48-326, einschließlich Schutzhaube und festem Untergestell. Aufstellung im Produktionsraum des Kopier- und Gestaltungsservices; täglicher Einsatz für kundenspezifische Druckaufträge, voraussichtlich acht Jahre.\nMaschine einschließlich Anlieferung 3.450,00 EUR netto; 19 % USt 655,50 EUR. Endbetrag 4.105,50 EUR, fällig am 23.02.2026.",
+      "firmennamen": [
+        "Falzwerk Technik",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B005.txt",
+      "konto": "0400",
+      "richtung": "ausgabe",
+      "namen": [
+        "Bindestraße Maschinenbau",
+        "Linienfroh"
+      ],
+      "text": "Auftragsabschluss BM/441\nBindestraße Maschinenbau liefert an Linienfroh, Hafenstieg 12, Kiel.\nLeistungstag und Rechnungsdatum: 17.04.2026\nProfessionelle Klebebindemaschine B 200, Seriennummer 260041, zur Herstellung von Kundenbroschüren im eigenen Arbeitsraum. Fest installierter Anschluss, Einweisung abgeschlossen. Das Gerät bleibt dauerhaft im Betrieb; keine Ware für das Ladensortiment.\nGerät 4.600,00 EUR, Montage 200,00 EUR = 4.800,00 EUR netto. Umsatzsteuer 912,00 EUR (19 %). Gesamtforderung 5.712,00 EUR.",
+      "firmennamen": [
+        "Bindestraße Maschinenbau",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B006.txt",
+      "konto": "0400",
+      "richtung": "ausgabe",
+      "namen": [
+        "Weitformat Systeme",
+        "Linienfroh"
+      ],
+      "text": "Weitformat Systeme\nRechnung WS-881 vom 22.06.2026\nEmpfänger Linienfroh, Hafenstieg 12, Kiel\nPosition 1: Rollenplotter für großformatige Kundenausdrucke, Modell R90, Seriennr. 26R9027. Lieferung mit Standfuß und Erstinstallation am 22.06.2026 im Produktionsbereich. Kauf einer eigenen Maschine zur mehrjährigen Nutzung; kein Wartungsvertrag enthalten.\nEntgelt netto 5.200,00 EUR\nUSt 19 % 988,00 EUR\nZu zahlen 6.188,00 EUR bis 06.07.2026. Die Funktionsabnahme erfolgte ohne Beanstandungen.",
+      "firmennamen": [
+        "Weitformat Systeme",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B007.txt",
+      "konto": "0410",
+      "richtung": "ausgabe",
+      "namen": [
+        "Raumkante Einrichtung",
+        "Linienfroh"
+      ],
+      "text": "Raumkante Einrichtung, Werftstraße 43, Kiel\nFaktura RK-116 / 28.01.2026\nLieferadresse und Käufer: Linienfroh, Hafenstieg 12, Kiel\nKassentresen aus Holz mit abschließbarem Unterbau, Sondermaß 240 cm. Das Möbel wurde heute im Verkaufsraum aufgebaut und verbleibt dort dauerhaft zur Kundenbedienung. Keine Handelsware.\nTresen einschließlich Lieferung und Aufbau: netto 2.100,00 EUR. Umsatzsteuer 19 %: 399,00 EUR. Bruttosumme: 2.499,00 EUR. Zahlungsziel 14 Tage; Abnahme durch die Ladenleitung bestätigt.",
+      "firmennamen": [
+        "Raumkante Einrichtung",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B008.txt",
+      "konto": "0410",
+      "richtung": "ausgabe",
+      "namen": [
+        "Stellraum Möbelwerk",
+        "Linienfroh"
+      ],
+      "text": "Lieferschein mit Rechnung SM-804\nStellraum Möbelwerk an Linienfroh, Hafenstieg 12, Kiel\n11.03.2026, Lieferung vollständig erhalten\nEin wandmontiertes Verkaufsregalsystem, 5 m breit, mit sechs miteinander verbundenen Elementen und Befestigungssatz. Als feste Einrichtung zur Präsentation des Schreibwarensortiments im eigenen Laden vorgesehen. Montage enthalten.\nGesamtsystem 3.250,00 EUR netto, 617,50 EUR Steuer zu 19 %, zusammen 3.867,50 EUR. Zahlung per Überweisung bis 25.03.2026.",
+      "firmennamen": [
+        "Stellraum Möbelwerk",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B009.txt",
+      "konto": "0410",
+      "richtung": "ausgabe",
+      "namen": [
+        "Sitzwinkel Objektmöbel",
+        "Linienfroh"
+      ],
+      "text": "Sitzwinkel Objektmöbel | Rechnung SO-2627\nDatum: 08.07.2026\nKunde Linienfroh, Hafenstieg 12, Kiel\nGeliefert und aufgebaut: großer Besprechungstisch mit integriertem Kabelkanal, 280 x 110 cm. Verwendung im eigenen Beratungszimmer für Gestaltungsbesprechungen; geplante Nutzungsdauer zehn Jahre.\nTisch 1.750,00 EUR netto, Transport und Aufbau 150,00 EUR netto. Steuerbasis 1.900,00 EUR; 19 % USt 361,00 EUR. Gesamt 2.261,00 EUR. Zahlung innerhalb von zehn Tagen ohne Abzug.",
+      "firmennamen": [
+        "Sitzwinkel Objektmöbel",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B010.txt",
+      "konto": "0480",
+      "richtung": "ausgabe",
+      "namen": [
+        "Klickbogen Technik",
+        "Linienfroh"
+      ],
+      "text": "Klickbogen Technik, Marktpassage 7, Kiel\nKassenrechnung KBT-0901 vom 14.01.2026\nKäufer: Linienfroh, Hafenstieg 12, Kiel\nEin elektronischer Beschriftungsapparat mit eigener Tastatur und Netzteil. Er funktioniert ohne Rechner und wird im Laden für Regalbeschriftungen eingesetzt, nicht weiterverkauft. Anschaffung zur Nutzung über mehrere Jahre.\nPreis netto 219,00 EUR; Umsatzsteuer 19 % 41,61 EUR; Endpreis 260,61 EUR. Betrag vollständig mit Geschäftskarte bezahlt. Gerät mitgenommen; Zubehör im Kaufpreis enthalten.",
+      "firmennamen": [
+        "Klickbogen Technik",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B011.txt",
+      "konto": "0480",
+      "richtung": "ausgabe",
+      "namen": [
+        "Sicherfach Handel",
+        "Linienfroh"
+      ],
+      "text": "Rechnung SH-4410 | 03.04.2026\nSicherfach Handel, Kanalweg 18, Kiel\nAn Linienfroh, Hafenstieg 12, Kiel\nEin freistehender Aktenvernichter mit eigenem Auffangbehälter, Sicherheitsstufe P-5. Zur dauerhaften Nutzung im eigenen Büro bestellt; selbstständig betriebsbereit. Kein Teil einer größeren Anlage.\nWarenwert netto 385,00 EUR, 19 % Umsatzsteuer 73,15 EUR, zahlbar 458,15 EUR. Lieferung am Rechnungsdatum frei Haus. Seriennummer SH26A880. Überweisung bis zum 17.04.2026 erbeten.",
+      "firmennamen": [
+        "Sicherfach Handel",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B012.txt",
+      "konto": "0480",
+      "richtung": "ausgabe",
+      "namen": [
+        "Balance Werkstuhl",
+        "Linienfroh"
+      ],
+      "text": "Balance Werkstuhl\nVerkaufsbeleg BW-601 vom 19.08.2026\nRechnungsempfänger Linienfroh, Hafenstieg 12, Kiel\nEin ergonomischer Drehstuhl, blau, vollständig montiert mit Rollen und Armlehnen. Für den Arbeitsplatz im Gestaltungsbüro gekauft, voraussichtlich sechs Jahre in Nutzung. Der Stuhl ist einzeln verwendbar und gehört nicht zum Sortiment.\nNetto 640,00 EUR\nMehrwertsteuer 19 % 121,60 EUR\nGesamt 761,60 EUR\nBezahlung heute per Bankkarte. Übergabe ohne Mängel; Garantieunterlagen beiliegend.",
+      "firmennamen": [
+        "Balance Werkstuhl",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B013.txt",
+      "konto": "1800",
+      "richtung": "ausgabe",
+      "namen": [
+        "Linienfroh",
+        "Mira Telscher"
+      ],
+      "text": "Linienfroh • interner Kassenbeleg P-07\nKiel, 07.02.2026\nIch, Mira Telscher, habe heute 250,00 EUR bar aus der Geschäftskasse erhalten. Das Geld ist für den Wocheneinkauf meines privaten Haushalts bestimmt. Es besteht weder ein Zusammenhang mit Kundenaufträgen noch eine Verpflichtung des Betriebs gegenüber einem Lieferanten. Keine Auslagenerstattung und keine Vergütung für Mitarbeit.\nAusgezahlter Betrag: 250,00 EUR. Ohne Umsatzsteuerausweis.\nEmpfang eigenhändig bestätigt: Mira Telscher.",
+      "firmennamen": [
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B014.txt",
+      "konto": "1800",
+      "richtung": "ausgabe",
+      "namen": [
+        "Linienfroh",
+        "Mira Telscher"
+      ],
+      "text": "Kontoumsatznachweis, 16.05.2026\nAuftraggeber: Linienfroh, Inhaberin Mira Telscher\nEmpfängerin: Mira Telscher, persönliches Sparkonto\nBelastung des Geschäftskontos: 800,00 EUR\nVerwendungszweck: Rücklage für privaten Sommerurlaub.\nErgänzung der Inhaberin zum Beleg: Die Übertragung erfolgt ausschließlich für meinen persönlichen Bedarf. Es handelt sich nicht um eine geschäftliche Reise, einen Vorschuss an Beschäftigte oder eine Rechnung. Wertstellung 16.05.2026; keine Umsatzsteuer. Buchung ausgeführt.",
+      "firmennamen": [
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B015.txt",
+      "konto": "1800",
+      "richtung": "ausgabe",
+      "namen": [
+        "Linienfroh",
+        "Mira Telscher",
+        "Sportverein Meereslauf"
+      ],
+      "text": "Zahlungsbeleg vom 02.09.2026\nKontoinhaberin: Linienfroh / Mira Telscher\nEmpfänger: Sportverein Meereslauf\nAbgebuchter Betrag 96,00 EUR, Zweck: privater Jahresanteil für die Tochter der Inhaberin.\nBelegnotiz Mira Telscher: Die Abbuchung erfolgte versehentlich von meinem Geschäftskonto. Die Mitgliedschaft betrifft ausschließlich meine Familie; es gibt keine betriebliche Leistung und keine Werbevereinbarung. Der Betrag wird meinem persönlichen Bereich zugeordnet. Bankbuchung endgültig ausgeführt, keine Vorsteuer enthalten.",
+      "firmennamen": [
+        "Linienfroh",
+        "Sportverein Meereslauf"
+      ]
+    },
+    {
+      "datei": "B016.txt",
+      "konto": "1890",
+      "richtung": "einnahme",
+      "namen": [
+        "Linienfroh",
+        "Mira Telscher"
+      ],
+      "text": "Linienfroh, Hafenstieg 12, Kiel\nEinzahlungsbestätigung K-12 vom 10.02.2026\nMira Telscher legt 400,00 EUR aus ihrem persönlichen Bargeldbestand in die Geschäftskasse ein. Das Geld dient als Wechselgeldreserve für die bevorstehenden Verkaufstage. Es stammt weder aus einem Warenverkauf noch aus einem Darlehen einer anderen Person; ein Rückzahlungsanspruch eines Dritten entsteht nicht.\nEingezählt: 400,00 EUR. Umsatzsteuer entfällt.\nÜbergeben und Kassenbestand bestätigt: Mira Telscher, Inhaberin.",
+      "firmennamen": [
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B017.txt",
+      "konto": "1890",
+      "richtung": "einnahme",
+      "namen": [
+        "Linienfroh",
+        "Mira Telscher"
+      ],
+      "text": "Bankbestätigung • Gutschrift 23.04.2026\nEmpfängerkonto: Linienfroh, Inhaberin Mira Telscher\nAbsenderkonto: Mira Telscher, persönliche Ersparnisse\nBetrag: 3.000,00 EUR\nZahlungshinweis der Inhaberin: Eigene Mittel zur Finanzierung der neuen Bindemaschine. Dies ist kein Kundengeld und keine Gegenleistung für eine Lieferung. Die Einzahlung erfolgt ohne Zinsen und ohne Darlehensvertrag, sie erhöht meine im Einzelunternehmen eingesetzten eigenen Mittel.\nWertstellung 23.04.2026. Zahlungseingang vollständig gebucht.",
+      "firmennamen": [
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B018.txt",
+      "konto": "1890",
+      "richtung": "einnahme",
+      "namen": [
+        "Linienfroh",
+        "Mira Telscher"
+      ],
+      "text": "Beleg E-29 | Kiel, 15.10.2026\nLinienfroh bestätigt Eingang von 1.250,00 EUR auf dem betrieblichen Bankkonto. Überwiesen von der Inhaberin Mira Telscher aus ihrem persönlichen Tagesgeldkonto, Verwendungszweck: eigene Liquiditätszufuhr für das Herbstsortiment.\nEs wurde keine Rechnung gestellt; die Überweisung betrifft auch keinen offenen Kundenposten. Mira Telscher stellt das Geld aus ihrem Privatvermögen dauerhaft dem eigenen Betrieb zur Verfügung. Kein Fremdkapital, kein Umsatzsteuerausweis. Wertdatum 15.10.2026.",
+      "firmennamen": [
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B019.txt",
+      "konto": "3300",
+      "richtung": "ausgabe",
+      "namen": [
+        "Naschhafen Großhandel",
+        "Linienfroh"
+      ],
+      "text": "Naschhafen Großhandel\nRechnung NH-630 vom 04.02.2026\nAn Linienfroh, Hafenstieg 12, Kiel\nLieferung für den Wiederverkauf an der Ladenkasse: 120 einzeln verpackte Fruchtriegel à 0,80 EUR = 96,00 EUR netto. Ausschließlich Lebensmittel, keine Getränke oder Geschenksets. Mindesthaltbarkeit 11/2026; Lieferung heute erhalten.\nEntgelt 96,00 EUR, Umsatzsteuer 7 % 6,72 EUR, Rechnungsbetrag 102,72 EUR. Die Riegel gehören zum ergänzenden Handelssortiment; nicht zur Verpflegung des Personals. Zahlung in zehn Tagen.",
+      "firmennamen": [
+        "Naschhafen Großhandel",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B020.txt",
+      "konto": "3300",
+      "richtung": "ausgabe",
+      "namen": [
+        "Teeblatt Küstenhandel",
+        "Linienfroh"
+      ],
+      "text": "Teeblatt Küstenhandel • Lieferschlussrechnung TK-771\n12.05.2026 | Kunde Linienfroh, Hafenstieg 12, Kiel\n40 Packungen loser Kräutertee, jeweils 100 g, für die kleine Genusswaren-Auslage im Schreibwarenladen. Einkauf zum Weiterverkauf in ungeöffneten Packungen, kein Ausschank und kein Verbrauch im Büro.\n40 x 2,50 EUR = 100,00 EUR netto.\nSteuersatz 7 %, Steuerbetrag 7,00 EUR.\nGesamtbetrag 107,00 EUR. Frei Haus geliefert am 12.05.2026. Überweisung bis 26.05.2026 unter Angabe der Rechnungsnummer.",
+      "firmennamen": [
+        "Teeblatt Küstenhandel",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B021.txt",
+      "konto": "3300",
+      "richtung": "ausgabe",
+      "namen": [
+        "Kakaokai Vertrieb",
+        "Linienfroh"
+      ],
+      "text": "Kakaokai Vertrieb, Speicherweg 4, Lübeck\nRechnung KK-1008 vom 01.10.2026\nEmpfänger: Linienfroh, Hafenstieg 12, Kiel\n60 Tafeln Vollmilchschokolade, 100 g, einzeln versiegelt, à 1,20 EUR netto. Bestellt als ergänzendes Verkaufssortiment für den Ladentresen. Keine kostenlose Abgabe vorgesehen; die Ware wird unverändert an Kunden verkauft.\nZwischensumme 72,00 EUR; Mehrwertsteuer 7 % 5,04 EUR; fälliger Betrag 77,04 EUR. Lieferdatum 01.10.2026. Verpackung und Transport ohne gesonderte Berechnung.",
+      "firmennamen": [
+        "Kakaokai Vertrieb",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B022.txt",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "namen": [
+        "Papierlot Großvertrieb",
+        "Linienfroh"
+      ],
+      "text": "Papierlot Großvertrieb\nHandelsrechnung PL-2701 | 13.01.2026\nKunde Linienfroh, Hafenstieg 12, Kiel\n200 Spiralnotizblöcke A5 à 1,40 EUR netto, kariert, zur Aufnahme in das Ladensortiment. Ware zum unveränderten Verkauf an Endkunden, nicht für eigene Schreibarbeiten. Lieferschein 1289 vollständig abgezeichnet.\nWarenwert 280,00 EUR; 19 % Umsatzsteuer 53,20 EUR; Gesamt 333,20 EUR. Lieferung vom 13.01.2026, ohne Frachtzuschlag. Zahlung nach Rechnungseingang innerhalb von 14 Tagen.",
+      "firmennamen": [
+        "Papierlot Großvertrieb",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B023.txt",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "namen": [
+        "Stiftbogen Distribution",
+        "Linienfroh"
+      ],
+      "text": "Stiftbogen Distribution, Lagerstraße 19, Hamburg\nRechnung SD-892 / 24.04.2026\nAn Linienfroh in Kiel, Hafenstieg 12\nLieferung: 80 Textmarker-Sets mit je vier Farben zu 2,10 EUR netto = 168,00 EUR. Die Sets werden einzeln ausgepreist und im Schreibwarenladen weiterverkauft. Kein Material für interne Verwaltungsarbeiten.\nNettosumme 168,00 EUR. USt 19 % 31,92 EUR. Zahlbetrag 199,92 EUR.\nWare am 24.04.2026 frei Haus übergeben. Zahlung per Lastschrift vereinbart, Einzug nach Ablauf von sieben Tagen.",
+      "firmennamen": [
+        "Stiftbogen Distribution",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B024.txt",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "namen": [
+        "Ordnungskontor Fenn",
+        "Linienfroh"
+      ],
+      "text": "Ordnungskontor Fenn\nRechnung OF-5116, ausgestellt am 09.09.2026\nRechnung und Lieferung an Linienfroh, Hafenstieg 12, Kiel\n100 Dokumentenmappen mit Gummizug, gemischte Farben, Einkauf für den Warenbestand des Geschäfts. Alle Mappen sind zum Wiederverkauf bestimmt. Stückpreis 1,75 EUR netto; Packlistenmenge stimmt mit der Annahme überein.\nSumme netto 175,00 EUR, Umsatzsteuer 33,25 EUR bei 19 %, brutto 208,25 EUR. Fällig am 23.09.2026. Keine Zusatzleistungen oder weiteren Positionen berechnet.",
+      "firmennamen": [
+        "Ordnungskontor Fenn",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B025.txt",
+      "konto": "4120",
+      "richtung": "ausgabe",
+      "namen": [
+        "Linienfroh",
+        "Jona Rehfeld"
+      ],
+      "text": "Linienfroh • Entgeltabrechnung Januar 2026\nBeschäftigter: Jona Rehfeld, Personalnummer 03\nAbrechnungsdatum 31.01.2026; feste monatliche Vergütung als angestellter Mediengestalter, Arbeitsvertrag 35 Stunden je Woche.\nBruttobezug 2.800,00 EUR. Einbehaltene Lohnsteuer 247,20 EUR, Arbeitnehmeranteile Sozialversicherung 593,60 EUR, keine Kirchensteuer oder weiteren Abzüge. Nettoauszahlung 1.959,20 EUR auf das bekannte Konto am 31.01.2026.\nAbrechnung des Bruttobezugs; Arbeitgeberanteile werden gesondert erfasst.",
+      "firmennamen": [
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B026.txt",
+      "konto": "4120",
+      "richtung": "ausgabe",
+      "namen": [
+        "Linienfroh",
+        "Nele Birkau"
+      ],
+      "text": "Monatsabrechnung 06/2026\nArbeitgeber Linienfroh, Hafenstieg 12, Kiel\nNele Birkau • Personalnummer 07 • angestellte Kundenbetreuung\nVereinbarter fester Monatsbezug für Juni: 2.400,00 EUR brutto bei 30 Wochenstunden. Lohnsteuer 164,00 EUR; Arbeitnehmeranteile zur Sozialversicherung 508,80 EUR. Auszuzahlen 1.727,20 EUR. Keine Sachbezüge, Prämien oder Vorschüsse in diesem Monat.\nErstellt am 30.06.2026. Bankanweisung zum Monatsende. Die gesetzlichen Arbeitgeberanteile sind Gegenstand eines separaten Nachweises.",
+      "firmennamen": [
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B027.txt",
+      "konto": "4120",
+      "richtung": "ausgabe",
+      "namen": [
+        "Linienfroh",
+        "Mats Eichenau"
+      ],
+      "text": "Personalabrechnung Oktober 2026 / Nr. 10-09\nLinienfroh an Mats Eichenau, angestellter Büroorganisator\nZeitraum 01.10. bis 31.10.2026. Arbeitsvertrag mit festem Monatsbezug, keine Stundenabrechnung.\nBrutto 3.200,00 EUR\nLohnsteuerabzug 342,00 EUR\nSozialabgaben Arbeitnehmer 678,40 EUR\nNettoüberweisung 2.179,60 EUR\nKeine weiteren Abzüge. Auszahlung am 30.10.2026 an den Beschäftigten angewiesen. Der vorliegende Nachweis betrifft das Arbeitsentgelt; zusätzliche Arbeitgeberabgaben werden separat abgerechnet.",
+      "firmennamen": [
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B028.txt",
+      "konto": "4210",
+      "richtung": "ausgabe",
+      "namen": [
+        "Kontorhof Besitzgesellschaft",
+        "Linienfroh"
+      ],
+      "text": "Kontorhof Besitzgesellschaft\nDauerrechnung KH-26-01, ausgefertigt am 02.01.2026\nNutzer: Linienfroh, Hafenstieg 12, Kiel\nÜberlassung der Laden- und Büroräume im Erdgeschoss, 118 m², Zeitraum Januar 2026. Monatliches reines Raumüberlassungsentgelt laut Vertrag: 1.180,00 EUR netto; aufgrund ausgeübter Option 19 % USt 224,20 EUR. Gesamt 1.404,20 EUR, fällig am dritten Werktag.\nKeine Betriebskostenvorauszahlung in dieser Forderung enthalten. Vertrag besteht fort; Zahlung per Überweisung.",
+      "firmennamen": [
+        "Kontorhof Besitzgesellschaft",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B029.txt",
+      "konto": "4210",
+      "richtung": "ausgabe",
+      "namen": [
+        "Lagerhof Tiede",
+        "Linienfroh"
+      ],
+      "text": "Lagerhof Tiede, Dockweg 6, Kiel\nAbrechnung LT-2026-04 vom 01.04.2026\nAn Linienfroh, Hafenstieg 12, Kiel\nNutzungsentgelt für die ausschließlich überlassene Lagerbox 14, 24 m², im Zeitraum 01.04.–30.04.2026. Dort lagern die Verkaufswaren des Schreibwarenladens. Fest vereinbarte monatliche Raumüberlassung, keine Einlagerungsdienstleistung.\nNetto 240,00 EUR, 19 % Umsatzsteuer 45,60 EUR, Bruttobetrag 285,60 EUR. Lastschrifteinzug am 06.04.2026. Zugangskarte bleibt während der Vertragslaufzeit gültig.",
+      "firmennamen": [
+        "Lagerhof Tiede",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B030.txt",
+      "konto": "4210",
+      "richtung": "ausgabe",
+      "namen": [
+        "Atelierhof Nordring",
+        "Linienfroh"
+      ],
+      "text": "Atelierhof Nordring • Rechnung AN-0926\nLinienfroh, Hafenstieg 12, Kiel\nAusgestellt 01.09.2026\nFür die vertragliche Überlassung des zusätzlichen Gestaltungsraums A-3, Nordring 41, Kiel, berechnen wir für September 2026 das vereinbarte Nutzungsentgelt. Der Raum steht ausschließlich Ihrem Betrieb zur Verfügung; Einrichtung, Energie und Dienstleistungen sind nicht enthalten.\nEntgelt netto 420,00 EUR; Umsatzsteuer 19 % 79,80 EUR; Gesamtbetrag 499,80 EUR. Fälligkeit 05.09.2026, Zahlung auf das bekannte Geschäftskonto.",
+      "firmennamen": [
+        "Atelierhof Nordring",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B031.txt",
+      "konto": "4240",
+      "richtung": "ausgabe",
+      "namen": [
+        "Küstenfunke Energie",
+        "Linienfroh"
+      ],
+      "text": "Küstenfunke Energie\nVerbrauchsrechnung KE-4180 vom 12.02.2026\nAbnahmestelle: Linienfroh, Hafenstieg 12, Kiel; Zähler E-68102\nAbrechnungszeit Januar 2026. Elektrische Energie für Laden und Produktionsraum: 400 kWh zu 0,27 EUR = 108,00 EUR netto, Grundpreis 12,00 EUR netto. Keine weiteren Abschläge anzurechnen.\nSumme netto 120,00 EUR; 19 % USt 22,80 EUR; Rechnungsbetrag 142,80 EUR. Zählerstände 18.540 / 18.940 kWh abgelesen. Einzug am 25.02.2026 vom hinterlegten Konto.",
+      "firmennamen": [
+        "Küstenfunke Energie",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B032.txt",
+      "konto": "4240",
+      "richtung": "ausgabe",
+      "namen": [
+        "Wasserverband Fördequelle",
+        "Linienfroh"
+      ],
+      "text": "Wasserverband Fördequelle\nRechnung WQ-906, Datum 31.03.2026\nKunde Linienfroh, Hafenstieg 12, Kiel\nTrinkwasserlieferung vom 01.01. bis 31.03.2026 für die betrieblichen Räume. Hauptzähler 0721, Verbrauch 15 m³ à 2,40 EUR netto = 36,00 EUR; Grundpreis für drei Monate 24,00 EUR netto.\nNettoentgelt 60,00 EUR, Steuer 7 % 4,20 EUR, fällig 64,20 EUR. Keine Abwassergebühr in dieser Rechnung. Es wurden keine Vorauszahlungen erhoben. Bitte bis 14.04.2026 unter Angabe der Kundennummer 44091 zahlen.",
+      "firmennamen": [
+        "Wasserverband Fördequelle",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B033.txt",
+      "konto": "4240",
+      "richtung": "ausgabe",
+      "namen": [
+        "Wärmebogen Versorgung",
+        "Linienfroh"
+      ],
+      "text": "Wärmebogen Versorgung • Rechnung WV-2611\nAn Linienfroh, Hafenstieg 12, Kiel\nAusfertigung 05.11.2026, Verbrauchsmonat Oktober\nErdgas für die Heizungsanlage der ausschließlich geschäftlich genutzten Räume: 1.500 kWh, Arbeitspreis 0,09 EUR/kWh netto, dazu monatlicher Grundpreis 15,00 EUR netto. Zähler G-7738, abgerechnete Menge nach Umrechnungsfaktor.\nEntgelt 150,00 EUR; Umsatzsteuer 19 % 28,50 EUR; zu zahlen 178,50 EUR. Keine offenen Abschläge. Einzug laut Mandat am 20.11.2026.",
+      "firmennamen": [
+        "Wärmebogen Versorgung",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B034.txt",
+      "konto": "4250",
+      "richtung": "ausgabe",
+      "namen": [
+        "Blankdeck Service",
+        "Linienfroh"
+      ],
+      "text": "Blankdeck Service, Lilienweg 4, Kiel\nLeistungsrechnung BS-177 vom 31.01.2026\nAuftraggeber Linienfroh, Hafenstieg 12, Kiel\nUnterhaltsdienst in den Ladenräumen: acht Einsätze im Januar, Böden saugen und feucht wischen, Papierkörbe leeren, Sanitärflächen hygienisch pflegen. Keine Reparaturen oder baulichen Arbeiten. Zeitnachweise liegen bei.\n8 Einsätze à 35,00 EUR netto = 280,00 EUR. USt 19 % 53,20 EUR, Gesamtbetrag 333,20 EUR. Zahlbar binnen 14 Tagen. Alle vereinbarten Arbeiten wurden ausgeführt.",
+      "firmennamen": [
+        "Blankdeck Service",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B035.txt",
+      "konto": "4250",
+      "richtung": "ausgabe",
+      "namen": [
+        "Glasklar Fördeblick",
+        "Linienfroh"
+      ],
+      "text": "Glasklar Fördeblick\nRechnung GF-408 | 16.04.2026\nEmpfänger: Linienfroh, Hafenstieg 12, Kiel\nHeute ausgeführt: Pflege der Ladenfenster innen und außen, insgesamt 42 m² Glasfläche, Rahmen abwischen und Schaufensterbank entstauben. Auftrag betrifft den laufenden gepflegten Zustand der Geschäftsräume. Kein Austausch von Bauteilen.\nPauschale netto 126,00 EUR, darauf 19 % Umsatzsteuer 23,94 EUR. Gesamt 149,94 EUR. Leistung vom Kunden abgenommen; Überweisung bitte bis 30.04.2026.",
+      "firmennamen": [
+        "Glasklar Fördeblick",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B036.txt",
+      "konto": "4250",
+      "richtung": "ausgabe",
+      "namen": [
+        "Bodenfrisch Küste",
+        "Linienfroh"
+      ],
+      "text": "Arbeitsnachweis und Rechnung BK-962\nBodenfrisch Küste an Linienfroh, Hafenstieg 12, Kiel\n29.09.2026\nIntensivpflege des vorhandenen Teppichbodens im Besprechungszimmer: Flecken auswaschen, gesamte Fläche von 28 m² sprühextrahieren und trockensaugen. Ausführung nach Ladenschluss. Der alte Boden bleibt unverändert erhalten; kein neuer Belag geliefert.\nNetto 168,00 EUR. Mehrwertsteuer zu 19 % 31,92 EUR. Endbetrag 199,92 EUR. Zahlungsziel sieben Tage. Abnahmevermerk: Fläche sauber und trocken übergeben.",
+      "firmennamen": [
+        "Bodenfrisch Küste",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B037.txt",
+      "konto": "4260",
+      "richtung": "ausgabe",
+      "namen": [
+        "Rohrwerk Holm",
+        "Linienfroh"
+      ],
+      "text": "Rohrwerk Holm, Handwerksgasse 8, Kiel\nRechnung RH-220 vom 19.02.2026\nAn Linienfroh, Hafenstieg 12, Kiel\nReparatur des undichten Absperrventils am fest eingebauten Waschbecken im Personalraum. Defektes Ventil ersetzt, Anschluss abgedichtet und Funktion geprüft. Keine Erweiterung der Anlage; Wiederherstellung des bisherigen Zustands.\nMaterial 42,00 EUR, Arbeitszeit 88,00 EUR, Anfahrt 20,00 EUR; zusammen 150,00 EUR netto. USt 19 % 28,50 EUR, Gesamt 178,50 EUR. Leistungstag 18.02.2026, fällig in 14 Tagen.",
+      "firmennamen": [
+        "Rohrwerk Holm",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B038.txt",
+      "konto": "4260",
+      "richtung": "ausgabe",
+      "namen": [
+        "Türwerk Kappel",
+        "Linienfroh"
+      ],
+      "text": "Türwerk Kappel • Rechnung TK-1906\nKunde Linienfroh, Hafenstieg 12, Kiel\nDatum 19.06.2026, Einsatz am selben Tag\nVorhandene Ladeneingangstür instand gesetzt: klemmenden Türschließer ausgebaut, gleichwertigen Ersatz montiert und Schließweg justiert. Kein Umbau, keine Verbesserung gegenüber dem ursprünglichen Zustand. Das Bauteil gehört dauerhaft zum Gebäude.\nErsatzteil 95,00 EUR, Montage 85,00 EUR netto. Zwischensumme 180,00 EUR; 19 % USt 34,20 EUR. Brutto 214,20 EUR, zahlbar bis 03.07.2026.",
+      "firmennamen": [
+        "Türwerk Kappel",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B039.txt",
+      "konto": "4260",
+      "richtung": "ausgabe",
+      "namen": [
+        "Farbspur Ausbau",
+        "Linienfroh"
+      ],
+      "text": "Farbspur Ausbau\nSchlussrechnung FA-811 vom 14.08.2026\nLeistungsort und Empfänger: Linienfroh, Hafenstieg 12, Kiel\nIm vorhandenen Büroraum wurden beschädigte Wandstellen gespachtelt und die Wände nach starker Abnutzung erneut weiß gestrichen, 46 m². Nutzung und Raumaufteilung bleiben gleich. Material, Abdeckung und Arbeitszeit enthalten; Arbeiten am 12.–13.08.2026 ausgeführt.\nNettoentgelt 690,00 EUR. Umsatzsteuer 19 % 131,10 EUR. Gesamtforderung 821,10 EUR. Zahlung innerhalb von 14 Tagen erbeten.",
+      "firmennamen": [
+        "Farbspur Ausbau",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B040.txt",
+      "konto": "4360",
+      "richtung": "ausgabe",
+      "namen": [
+        "Konturschutz Assekuranz",
+        "Linienfroh"
+      ],
+      "text": "Konturschutz Assekuranz\nPrämienrechnung KS-26014 vom 02.01.2026\nVertragspartner Linienfroh, Hafenstieg 12, Kiel\nBetriebshaftpflicht für Büroservice, Schreibwarenverkauf und Gestaltung; Deckungszeit 01.01.–31.12.2026. Schutz bei Personen- und Sachschäden aus dem Geschäftsbetrieb. Kraftfahrzeuge ausdrücklich nicht Vertragsgegenstand.\nNettoprämie 240,00 EUR, Versicherungsteuer 19 % 45,60 EUR, Gesamt 285,60 EUR. Keine Umsatzsteuer. Jahresbetrag wird am 15.01.2026 per vereinbarter Lastschrift eingezogen.",
+      "firmennamen": [
+        "Konturschutz Assekuranz",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B041.txt",
+      "konto": "4360",
+      "richtung": "ausgabe",
+      "namen": [
+        "Speicherschirm Schutzverein",
+        "Linienfroh"
+      ],
+      "text": "Speicherschirm Schutzverein • Zahlungsanforderung SS-447\nAn Linienfroh, Hafenstieg 12, Kiel\nAusgestellt am 01.04.2026\nGeschäftsinhaltsdeckung für Waren, technische Geräte und Ladeneinrichtung am genannten Standort gegen Feuer, Einbruchdiebstahl und Leitungswasserschäden. Vertragsjahr 01.04.2026 bis 31.03.2027. Kein Fahrzeugschutz.\nJahresprämie 360,00 EUR zuzüglich 68,40 EUR Versicherungsteuer (19 %), fälliger Gesamtbetrag 428,40 EUR. Umsatzsteuer wird nicht erhoben. Abbuchung zum 10.04.2026.",
+      "firmennamen": [
+        "Speicherschirm Schutzverein",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B042.txt",
+      "konto": "4360",
+      "richtung": "ausgabe",
+      "namen": [
+        "Netzschirm Risikoschutz",
+        "Linienfroh"
+      ],
+      "text": "Netzschirm Risikoschutz\nVertragsrechnung NR-6903 / 03.07.2026\nVersicherungsnehmer: Linienfroh, Hafenstieg 12, Kiel\nCyberdeckung für das Gestaltungsbüro: finanzielle Folgen von Datenverlust und Wiederherstellung nach IT-Angriffen. Laufzeit 01.07.2026–30.06.2027, Selbstbehalt 500,00 EUR. Keine Softwarelieferung und kein Wartungsentgelt.\nPrämie netto 180,00 EUR, Versicherungsteuer 34,20 EUR, insgesamt 214,20 EUR. Der Betrag enthält keine Umsatzsteuer. Zahlung per Banküberweisung bis zum 17.07.2026.",
+      "firmennamen": [
+        "Netzschirm Risikoschutz",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B043.txt",
+      "konto": "4380",
+      "richtung": "ausgabe",
+      "namen": [
+        "Gewerbekammer Fördebezirk",
+        "Linienfroh"
+      ],
+      "text": "Gewerbekammer Fördebezirk\nBescheid GK-2026-882 vom 10.03.2026\nMitglied Linienfroh, Hafenstieg 12, Kiel\nFestsetzung des Mitgliedsbeitrags für das Kalenderjahr 2026 aufgrund Ihrer gewerblichen Tätigkeit. Grundbetrag 115,00 EUR und Umlage 37,00 EUR ergeben eine Forderung von 152,00 EUR. Keine Seminargebühr oder entgeltliche Beratungsleistung enthalten.\nDer Betrag ist nicht umsatzsteuerbar und bis 10.04.2026 unter der Mitgliedsnummer 882 zu überweisen. Rechtsgrundlage ist die gültige Beitragssatzung.",
+      "firmennamen": [
+        "Gewerbekammer Fördebezirk",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B044.txt",
+      "konto": "4380",
+      "richtung": "ausgabe",
+      "namen": [
+        "Handelsring Küstenläden",
+        "Linienfroh"
+      ],
+      "text": "Handelsring Küstenläden\nJahresanforderung HK-76 vom 15.01.2026\nAn das Mitglied Linienfroh, Hafenstieg 12, Kiel\nSatzungsmäßiger Jahresbeitrag 2026 für die Mitgliedschaft im örtlichen Berufsverband des Einzelhandels: 96,00 EUR. Er dient der gemeinsamen Interessenvertretung. Es werden dafür keine Anzeigen, Veranstaltungen oder sonstigen individuell zurechenbaren Leistungen berechnet.\nEchter Mitgliedsbeitrag ohne Umsatzsteuerausweis. Bitte bis zum 31.01.2026 zahlen und die Mitgliedsnummer 76 angeben.",
+      "firmennamen": [
+        "Handelsring Küstenläden",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B045.txt",
+      "konto": "4380",
+      "richtung": "ausgabe",
+      "namen": [
+        "Gestalterbund Nordufer",
+        "Linienfroh"
+      ],
+      "text": "Gestalterbund Nordufer • Beitragsbescheid GN-203\nDatum 02.06.2026\nMitglied: Linienfroh, Hafenstieg 12, Kiel\nOrdentliche Firmenmitgliedschaft im Berufsverband für Kommunikationsgestaltung, Zeitraum Juli 2026 bis Juni 2027. Gemäß Satzung beträgt der Jahresbeitrag 180,00 EUR. Kein Abonnement und kein Kursplatz sind damit erworben; die Zahlung finanziert ausschließlich die allgemeinen Verbandsaufgaben.\nFälliger Betrag 180,00 EUR, nicht umsatzsteuerbar. Einzug am 01.07.2026 unter der Mitgliedsnummer 203.",
+      "firmennamen": [
+        "Gestalterbund Nordufer",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B046.txt",
+      "konto": "4500",
+      "richtung": "ausgabe",
+      "namen": [
+        "Hauptzollamt Fördehafen",
+        "Linienfroh"
+      ],
+      "text": "Hauptzollamt Fördehafen\nKraftfahrzeugsteuerbescheid vom 20.01.2026\nHalter: Linienfroh, Hafenstieg 12, Kiel\nKennzeichen KI-LF 61, benzinbetriebener Kombi für betriebliche Auslieferungen. Festsetzung für den Zeitraum 12.01.2026 bis 11.01.2027: 136,00 EUR nach Hubraum und CO2-Ausstoß. Die Zahlung betrifft ausschließlich die staatliche Halterabgabe, keine Prämie oder Werkstattleistung.\nEinzug vom Geschäftskonto am 02.02.2026. Umsatzsteuer ist nicht enthalten. Bitte den Bescheid bei den Fahrzeugunterlagen aufbewahren.",
+      "firmennamen": [
+        "Hauptzollamt Fördehafen",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B047.txt",
+      "konto": "4500",
+      "richtung": "ausgabe",
+      "namen": [
+        "Hauptzollamt Fördehafen",
+        "Linienfroh"
+      ],
+      "text": "Festsetzungsbescheid 2026/630\nHauptzollamt Fördehafen an Linienfroh, Hafenstieg 12, Kiel\nErstellt 11.05.2026\nFür den neu zugelassenen Hybrid-Kombi KI-LF 63 wird die jährliche Kraftfahrzeugsteuer mit 92,00 EUR festgesetzt. Steuerzeitraum 06.05.2026–05.05.2027. Berechnungsgrundlagen sind die in den Zulassungsdaten ausgewiesenen Hubraum- und Emissionswerte.\nFälliger Gesamtbetrag 92,00 EUR, Lastschrift am 25.05.2026. Es handelt sich um eine öffentliche Abgabe ohne Umsatzsteuer; keine sonstigen Leistungen enthalten.",
+      "firmennamen": [
+        "Hauptzollamt Fördehafen",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B048.txt",
+      "konto": "4500",
+      "richtung": "ausgabe",
+      "namen": [
+        "Hauptzollamt Fördehafen",
+        "Linienfroh"
+      ],
+      "text": "Hauptzollamt Fördehafen • Jahresanforderung\nDatum 08.10.2026, Geschäftszeichen KF-5926\nZahlungspflichtig: Linienfroh, Hafenstieg 12, Kiel\nKraftfahrzeugsteuer für den bereits seit 2024 betrieblich genutzten Diesel-Kombi, Kennzeichen KI-LF 59. Nächster Jahreszeitraum 15.10.2026 bis 14.10.2027. Festgesetzte Halterabgabe 218,00 EUR; unveränderte Bemessungsgrundlagen laut vorliegendem Bescheid.\nDer Betrag wird zum 15.10.2026 vom Geschäftskonto eingezogen. Kein Umsatzsteuerausweis und keine fahrleistungsabhängige Abrechnung.",
+      "firmennamen": [
+        "Hauptzollamt Fördehafen",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B049.txt",
+      "konto": "4530",
+      "richtung": "ausgabe",
+      "namen": [
+        "Tankpunkt Möwenweg",
+        "Linienfroh"
+      ],
+      "text": "Tankpunkt Möwenweg, Möwenweg 31, Kiel\nKassenbeleg 7182 • 09.02.2026, 17:41 Uhr\nKunde: Linienfroh\nZapfsäule 3, Super E10, 40,00 Liter zu 1,799 EUR = 71,96 EUR brutto. Enthaltene Umsatzsteuer 19 %: 11,49 EUR; netto 60,47 EUR. Mit Geschäftskarte bezahlt.\nHandschriftlicher Vermerk: betrieblicher Kombi KI-LF 61, Kilometerstand 1.248; Kraftstoff nach der Auslieferungsrunde zu Firmenkunden. Keine Shopartikel gekauft. Zahlung vollständig erhalten, Beleg bitte für Rückfragen aufbewahren.",
+      "firmennamen": [
+        "Tankpunkt Möwenweg",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B050.txt",
+      "konto": "4530",
+      "richtung": "ausgabe",
+      "namen": [
+        "Ladesteg Mobilenergie",
+        "Linienfroh"
+      ],
+      "text": "Ladesteg Mobilenergie\nMonatsabrechnung LM-0626 vom 30.06.2026\nVertragspartner Linienfroh, Hafenstieg 12, Kiel\nÖffentliche Ladevorgänge für den betrieblichen Elektro-Kleinwagen KI-LF 62 im Juni: insgesamt 160 kWh zu 0,45 EUR netto. Die Ladekarte ist ausschließlich diesem Fahrzeug zugeordnet; Einzelnachweis mit Standorten beigefügt.\nNettoentgelt 72,00 EUR, Umsatzsteuer 19 % 13,68 EUR, Gesamt 85,68 EUR. Keine Grundgebühr oder anderen Positionen. Lastschrift erfolgt am 10.07.2026.",
+      "firmennamen": [
+        "Ladesteg Mobilenergie",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B051.txt",
+      "konto": "4530",
+      "richtung": "ausgabe",
+      "namen": [
+        "Waschkai Autopflege",
+        "Linienfroh"
+      ],
+      "text": "Waschkai Autopflege, Dockstraße 18, Kiel\nQuittung WA-4029 vom 21.09.2026\nAuftraggeber: Linienfroh, Hafenstieg 12, Kiel\nBetrieblicher Kombi KI-LF 63: Außenwäsche, Unterbodenwäsche und Innenraum aussaugen nach einer Warenlieferung. Keine Lackreparatur oder Ersatzteile. Das Fahrzeug wurde nach Abschluss sofort wieder für Auslieferungen eingesetzt.\nLeistung netto 30,00 EUR, Mehrwertsteuer 19 % 5,70 EUR, Gesamt 35,70 EUR. Betrag an der Kasse mit Geschäftskarte vollständig bezahlt.",
+      "firmennamen": [
+        "Waschkai Autopflege",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B052.txt",
+      "konto": "4540",
+      "richtung": "ausgabe",
+      "namen": [
+        "Radschirm Kraftfahrtschutz",
+        "Linienfroh"
+      ],
+      "text": "Radschirm Kraftfahrtschutz\nPrämienrechnung RK-610 vom 14.01.2026\nVertragspartner: Linienfroh, Hafenstieg 12, Kiel\nFahrzeug KI-LF 61, benzinbetriebener Kombi. Kraftfahrt-Haftpflicht und Teilkasko für 12.01.2026–11.01.2027. Das Fahrzeug gehört zum Betrieb; Schutz umfasst geschäftliche Kundenfahrten.\nJahresnettoprämie 500,00 EUR plus 95,00 EUR Versicherungsteuer (19 %). Zahlbetrag 595,00 EUR. Keine Umsatzsteuer enthalten. Einzug nach Mandat am 28.01.2026; Selbstbehalt Teilkasko 150,00 EUR.",
+      "firmennamen": [
+        "Radschirm Kraftfahrtschutz",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B053.txt",
+      "konto": "4540",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fahrbund Schutzkontor",
+        "Linienfroh"
+      ],
+      "text": "Fahrbund Schutzkontor • Vertragsabrechnung FS-228\nAn Linienfroh, Hafenstieg 12, Kiel\n20.03.2026\nVersicherter Wagen: Elektro-Kleinwagen KI-LF 62, Verwendung im Außendienst. Haftpflicht und Vollkasko mit 500,00 EUR Selbstbehalt, Zeitraum 18.03.2026 bis 17.03.2027. Keine Inspektions- oder Ladeleistungen enthalten.\nPrämie 680,00 EUR, Versicherungsteuer 19 % 129,20 EUR; Gesamt 809,20 EUR. Die Forderung enthält keine Umsatzsteuer. Bitte den Jahresbetrag bis 03.04.2026 auf das angegebene Vertragskonto überweisen.",
+      "firmennamen": [
+        "Fahrbund Schutzkontor",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B054.txt",
+      "konto": "4540",
+      "richtung": "ausgabe",
+      "namen": [
+        "Küstenrad Assekuranz",
+        "Linienfroh"
+      ],
+      "text": "Küstenrad Assekuranz\nZahlungsmitteilung KA-636 vom 07.05.2026\nAn Linienfroh, Hafenstieg 12, Kiel\nDeckung für den Hybrid-Kombi mit Kennzeichen KI-LF 63: Kraftfahrt-Haftpflicht und Vollkasko, gültig 06.05.2026–05.05.2027. Gewerbliche Nutzung ist vereinbart. Halterin und Vertragspartnerin ist das Einzelunternehmen.\nJahresentgelt vor Steuer 720,00 EUR, Versicherungsteuer 136,80 EUR (19 %). Zu zahlender Betrag 856,80 EUR. Kein Umsatzsteuerausweis. Bankeinzug am 21.05.2026 gemäß erteiltem Mandat.",
+      "firmennamen": [
+        "Küstenrad Assekuranz",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B055.txt",
+      "konto": "4600",
+      "richtung": "ausgabe",
+      "namen": [
+        "Küstenblatt Medienhaus",
+        "Linienfroh"
+      ],
+      "text": "Küstenblatt Medienhaus\nAnzeigenrechnung KM-315 vom 06.03.2026\nKunde Linienfroh, Hafenstieg 12, Kiel\nVeröffentlichung einer Viertelseitenanzeige für Ihren Schreibwarenladen und Gestaltungsservice in der Wochenendausgabe vom 05.03.2026. Motiv: neue Öffnungszeiten und Druckservice; Belegexemplar liegt bei. Keine redaktionelle Leistung für Ihre Kunden.\nAnzeigenpreis netto 320,00 EUR, Umsatzsteuer 19 % 60,80 EUR, Gesamtbetrag 380,80 EUR. Zahlung binnen zehn Tagen ohne Abzug auf unser Geschäftskonto.",
+      "firmennamen": [
+        "Küstenblatt Medienhaus",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B056.txt",
+      "konto": "4600",
+      "richtung": "ausgabe",
+      "namen": [
+        "Klickufer Kampagnen",
+        "Linienfroh"
+      ],
+      "text": "Klickufer Kampagnen • Rechnung KU-710\nDatum 30.06.2026\nAuftraggeber Linienfroh, Hafenstieg 12, Kiel\nRegionale Onlineanzeigen für den eigenen Büroservice, Laufzeit 01.06.–30.06.2026, Zielgebiet Kiel. Ausspielung der vom Auftraggeber freigegebenen Motive, 24.000 angezeigte Banner. Leistungsnachweis als Anlage. Keine Gestaltung eines weiterzuverkaufenden Kundenprojekts.\nKampagnenentgelt 450,00 EUR netto; 19 % USt 85,50 EUR; brutto 535,50 EUR. Zahlung per Lastschrift am 10.07.2026.",
+      "firmennamen": [
+        "Klickufer Kampagnen",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B057.txt",
+      "konto": "4600",
+      "richtung": "ausgabe",
+      "namen": [
+        "Flyerwelle Druckdienst",
+        "Linienfroh"
+      ],
+      "text": "Flyerwelle Druckdienst\nRechnung FD-1002 vom 08.10.2026\nLieferung an Linienfroh, Hafenstieg 12, Kiel\n2.000 Handzettel A6, beidseitig farbig, mit Ihrem eigenen Firmenlogo und Angeboten für Kopierarbeiten und Schreibwaren. Bestimmt zur kostenlosen Verteilung in der Nachbarschaft zur Kundengewinnung. Kein Kundenauftrag und keine Verkaufsware.\nDruck und Lieferung 180,00 EUR netto, Mehrwertsteuer 19 % 34,20 EUR, Gesamt 214,20 EUR. Geliefert am 08.10.2026. Überweisung bis 22.10.2026 erbeten.",
+      "firmennamen": [
+        "Flyerwelle Druckdienst",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B058.txt",
+      "konto": "4630",
+      "richtung": "ausgabe",
+      "namen": [
+        "Holzzeichen Manufaktur",
+        "Linienfroh",
+        "Silke Avenau"
+      ],
+      "text": "Holzzeichen Manufaktur • Rechnung HM-206\n18.02.2026, Käufer: Linienfroh, Hafenstieg 12, Kiel\nEin hochwertiger Brieföffner aus Holz, netto 28,00 EUR, USt 19 % 5,32 EUR, Gesamt 33,32 EUR. Mit Geschäftskarte bezahlt.\nVermerk zur Übergabe am 19.02.2026: unentgeltliche Aufmerksamkeit für die externe Geschäftskundin Silke Avenau zum Firmenjubiläum, ohne Gegenleistung. Sie ist keine Mitarbeiterin. Dies ist die einzige Zuwendung an diese Empfängerin im Jahr 2026; keine weitere vorgesehen. Empfang dokumentiert.",
+      "firmennamen": [
+        "Holzzeichen Manufaktur",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B059.txt",
+      "konto": "4630",
+      "richtung": "ausgabe",
+      "namen": [
+        "Flaschenpfad Handel",
+        "Linienfroh",
+        "Ruben Kelter"
+      ],
+      "text": "Flaschenpfad Handel\nKassenrechnung FH-319, 12.03.2026\nRechnungsempfänger Linienfroh, Hafenstieg 12, Kiel\nEine isolierte Trinkflasche aus Edelstahl: 32,00 EUR netto plus 6,08 EUR Mehrwertsteuer (19 %), bezahlt 38,08 EUR.\nBetrieblicher Zusatzbeleg: Am 13.03.2026 ohne Gegenleistung an den selbstständigen Kunden Ruben Kelter als Dank für die langjährige Zusammenarbeit übergeben. Kein Arbeitsverhältnis. Jahresgesamtwert aller Aufmerksamkeiten an ihn 32,00 EUR netto; weitere sind 2026 nicht geplant.",
+      "firmennamen": [
+        "Flaschenpfad Handel",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B060.txt",
+      "konto": "4630",
+      "richtung": "ausgabe",
+      "namen": [
+        "Schreibfeder Atelier",
+        "Linienfroh",
+        "Elena Wendtau"
+      ],
+      "text": "Schreibfeder Atelier, Inselgasse 5, Kiel\nRechnung SA-1011 vom 20.10.2026\nAn Linienfroh, Hafenstieg 12, Kiel\nEin Füllhalter im Etui, Einkaufspreis netto 39,00 EUR. Umsatzsteuer 19 % 7,41 EUR; Endsumme 46,41 EUR. Ware abgeholt und bezahlt.\nEmpfängernachweis: Elena Wendtau, externe Auftraggeberin, erhielt das Stück am 22.10.2026 anlässlich ihrer Geschäftseröffnung unentgeltlich. Keine Vergütung und keine Gegenleistung. Einzige Zuwendung an diese Person im gesamten Jahr 2026; keine Beschäftigte des Betriebs.",
+      "firmennamen": [
+        "Schreibfeder Atelier",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B061.txt",
+      "konto": "4635",
+      "richtung": "ausgabe",
+      "namen": [
+        "Lederbogen Werkstatt",
+        "Linienfroh",
+        "Hauke Riemann"
+      ],
+      "text": "Lederbogen Werkstatt\nRechnung LW-530 vom 14.05.2026\nBesteller Linienfroh, Hafenstieg 12, Kiel\nEine Konferenzmappe aus Leder, netto 110,00 EUR; Umsatzsteuer 19 % 20,90 EUR; zu zahlen 130,90 EUR. Zahlung bei Abholung erfolgt.\nÜbergabevermerk 15.05.2026: ohne Gegenleistung an den externen Geschäftspartner Hauke Riemann zum zehnjährigen Bestehen seines Büros überreicht. Kein Arbeitnehmer. Der Gegenstand ist allein für ihn bestimmt, wird nicht auf mehrere Empfänger aufgeteilt. Kein Kundenauftrag, kein Weiterverkauf.",
+      "firmennamen": [
+        "Lederbogen Werkstatt",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B062.txt",
+      "konto": "4635",
+      "richtung": "ausgabe",
+      "namen": [
+        "Klangsteg Elektronik",
+        "Linienfroh",
+        "Tessa Lindhof"
+      ],
+      "text": "Klangsteg Elektronik • Verkaufsrechnung KE-744\n09.07.2026\nKäufer: Linienfroh, Hafenstieg 12, Kiel\nEin tragbarer Bluetooth-Lautsprecher, Kaufpreis 89,00 EUR netto, 19 % USt 16,91 EUR, Gesamt 105,91 EUR. Geschäftskartenzahlung bestätigt.\nInterner Empfängerbeleg: Am 10.07.2026 der externen Kundin Tessa Lindhof zum runden Firmenjubiläum kostenlos übergeben. Die Kundin erbringt dafür keine Leistung und ist nicht angestellt. Persönliche Zuwendung an genau diese eine Person, nicht zur Nutzung im eigenen Betrieb.",
+      "firmennamen": [
+        "Klangsteg Elektronik",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B063.txt",
+      "konto": "4635",
+      "richtung": "ausgabe",
+      "namen": [
+        "Seidensteg Textil",
+        "Linienfroh",
+        "Oskar Fennert"
+      ],
+      "text": "Seidensteg Textil, Altmarkt 29, Kiel\nRechnung ST-921 vom 21.09.2026\nAn Linienfroh, Hafenstieg 12, Kiel\nEin Wollschal in Einzelverpackung, netto 95,00 EUR. Mehrwertsteuer 19 % 18,05 EUR. Bezahlt wurden 113,05 EUR.\nVerwendungsnachweis: Inhaberin übergab den Schal am 22.09.2026 unentgeltlich an Oskar Fennert, einen selbstständigen Geschäftskunden, zu dessen Geschäftsübergabe. Kein Beschäftigter und keine vertragliche Gegenleistung. Der volle Wert entfällt auf diesen Empfänger; keine Aufteilung oder Weiterberechnung.",
+      "firmennamen": [
+        "Seidensteg Textil",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B064.txt",
+      "konto": "4650",
+      "richtung": "ausgabe",
+      "namen": [
+        "Restaurant Ankerlicht",
+        "Linienfroh",
+        "Mira Telscher",
+        "Silke Avenau"
+      ],
+      "text": "Restaurant Ankerlicht, Hafenplatz 7, Kiel\nRechnung AL-208 • 24.02.2026, Tisch 6\nAn Linienfroh: zwei Mittagsgerichte netto 48,00 EUR, USt 7 % 3,36 EUR; Getränke netto 12,00 EUR, USt 19 % 2,28 EUR. Gesamt 65,64 EUR, kartengezahlt, kein Trinkgeld.\nAnlass: Gespräch über den Folgeauftrag zur Gestaltung von Veranstaltungsunterlagen. Teilnehmerinnen: Mira Telscher (Inhaberin) und Silke Avenau (externe Kundin). Ort und Tag entsprechen der Rechnung. Sachliche Richtigkeit und Teilnehmer bestätigt: Mira Telscher.",
+      "firmennamen": [
+        "Restaurant Ankerlicht",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B065.txt",
+      "konto": "4650",
+      "richtung": "ausgabe",
+      "namen": [
+        "Bistro Dünengarten",
+        "Linienfroh",
+        "Mira Telscher",
+        "Ruben Kelter",
+        "Tessa Lindhof"
+      ],
+      "text": "Bistro Dünengarten • Rechnung DG-641\n11.06.2026, 19:22 Uhr, Kiel\nKunde Linienfroh, Hafenstieg 12\nDrei Abendgerichte netto 80,00 EUR + 7 % USt 5,60 EUR. Getränke netto 20,00 EUR + 19 % USt 3,80 EUR. Summe 109,40 EUR, vollständig per Geschäftskarte bezahlt.\nTeilnehmer: Mira Telscher sowie die externen Auftraggeber Ruben Kelter und Tessa Lindhof. Geschäftlicher Anlass: Verhandlung eines gemeinsamen Druck- und Gestaltungspakets für eine Messe. Kein privater Anlass. Bestätigung der Gastgeberin Mira Telscher.",
+      "firmennamen": [
+        "Bistro Dünengarten",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B066.txt",
+      "konto": "4650",
+      "richtung": "ausgabe",
+      "namen": [
+        "Gaststube Wellenanker",
+        "Linienfroh",
+        "Mira Telscher",
+        "Elena Wendtau"
+      ],
+      "text": "Gaststube Wellenanker, Parkufer 3, Kiel\nBeleg WA-1105 vom 05.11.2026\nRechnung an Linienfroh\nZwei Hauptgerichte: netto 56,00 EUR, Steuer 7 % 3,92 EUR. Zwei Getränke: netto 16,00 EUR, Steuer 19 % 3,04 EUR. Endbetrag 78,96 EUR. Zahlung erhalten; kein Trinkgeld.\nZusatzangaben zum Geschäftsessen: Mira Telscher lud die externe Kundin Elena Wendtau zur Besprechung des Jahresauftrags für Geschäftsdrucksachen ein. Beide nahmen teil, keine Angehörigen oder weiteren Gäste. Datum, Anlass und Betrag bestätigt durch Mira Telscher.",
+      "firmennamen": [
+        "Gaststube Wellenanker",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B067.txt",
+      "konto": "4660",
+      "richtung": "ausgabe",
+      "namen": [
+        "Linienfroh",
+        "Jona Rehfeld",
+        "Küstenbahn Reiseverkehr"
+      ],
+      "text": "Linienfroh • Auslagenabrechnung AR-18 vom 18.03.2026\nMitarbeiter: Jona Rehfeld, angestellter Mediengestalter\nDienstfahrt am 17.03.2026 von Kiel nach Hamburg und zurück zur Druckabnahme beim Kunden. Fahrschein der Küstenbahn Reiseverkehr, 2. Klasse, liegt bei: Fahrpreis netto 100,00 EUR, 7 % USt 7,00 EUR, brutto 107,00 EUR.\nDer Beschäftigte hat privat bezahlt und beantragt Erstattung von genau 107,00 EUR. Kein Arbeitsweg, keine private Verlängerung. Zur Auszahlung an den Mitarbeiter freigegeben.",
+      "firmennamen": [
+        "Linienfroh",
+        "Küstenbahn Reiseverkehr"
+      ]
+    },
+    {
+      "datei": "B068.txt",
+      "konto": "4660",
+      "richtung": "ausgabe",
+      "namen": [
+        "Hotel Parklaterne",
+        "Linienfroh",
+        "Nele Birkau"
+      ],
+      "text": "Hotel Parklaterne, Gartenstraße 15, Hannover\nRechnung HP-580 vom 22.05.2026\nRechnungsempfänger: Linienfroh, Hafenstieg 12, Kiel\nGast Nele Birkau, angestellte Kundenbetreuerin des Auftraggebers. Eine Übernachtung 21./22.05.2026 während ihres dienstlichen Außentermins zur Einführung eines Büroablagesystems. Zimmer ohne Frühstück oder weitere Leistungen.\nNetto 90,00 EUR, Umsatzsteuer 7 % 6,30 EUR; Gesamt 96,30 EUR. Vom Betrieb per Überweisung binnen 14 Tagen zu begleichen. Keine private Begleitperson.",
+      "firmennamen": [
+        "Hotel Parklaterne",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B069.txt",
+      "konto": "4660",
+      "richtung": "ausgabe",
+      "namen": [
+        "Linienfroh",
+        "Mats Eichenau"
+      ],
+      "text": "Linienfroh, Hafenstieg 12, Kiel\nAbrechnung Dienstfahrt ME-09, erstellt 14.09.2026\nMats Eichenau, angestellter Büroorganisator, fuhr am 11.09.2026 mit seinem eigenen privaten Wagen zu einer Kundeneinweisung nach Rendsburg. Fahrt ab Betriebsstätte und zurück: nach Routenaufstellung 78 km. Der Weg zur regelmäßigen Arbeitsstätte ist nicht enthalten.\nErstattung vereinbarungsgemäß 78 km x 0,30 EUR = 23,40 EUR, ohne Umsatzsteuer. Kein Firmenwagen eingesetzt. Betrag zur Auszahlung an Mats Eichenau freigegeben.",
+      "firmennamen": [
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B070.txt",
+      "konto": "4670",
+      "richtung": "ausgabe",
+      "namen": [
+        "Linienfroh",
+        "Mira Telscher",
+        "Nordgleis Fernverkehr"
+      ],
+      "text": "Nordgleis Fernverkehr • Online-Fahrschein NG-28913\nBuchung 08.04.2026, Reise am 14.04.2026\nRechnungsempfänger Linienfroh, Hafenstieg 12, Kiel\nReisende Mira Telscher, Inhaberin des Einzelunternehmens. Kiel–Berlin und zurück, 2. Klasse, Geschäftsbesprechung mit einem Lieferanten des Schreibwarensortiments. Keine Beschäftigtenreise und keine private Anschlussfahrt.\nFahrpreis 150,00 EUR netto, Umsatzsteuer 7 % 10,50 EUR, Gesamt 160,50 EUR. Vom Geschäftskonto bezahlt. Persönlicher Fahrschein, nicht übertragbar.",
+      "firmennamen": [
+        "Linienfroh",
+        "Nordgleis Fernverkehr"
+      ]
+    },
+    {
+      "datei": "B071.txt",
+      "konto": "4670",
+      "richtung": "ausgabe",
+      "namen": [
+        "Hotel Stadtkiesel",
+        "Linienfroh",
+        "Mira Telscher"
+      ],
+      "text": "Hotel Stadtkiesel, Ringstraße 6, Leipzig\nRechnung SK-728 vom 09.07.2026\nAn Linienfroh, Hafenstieg 12, Kiel\nÜbernachtung der Inhaberin Mira Telscher vom 08.07. bis 09.07.2026 anlässlich einer geschäftlichen Lieferantenbesprechung. Einzelzimmer, ausschließlich Unterkunft ohne Frühstück, Wellness oder andere Zusatzleistungen. Kein Mitarbeiter und keine Begleitperson untergebracht.\nZimmerentgelt netto 110,00 EUR, USt 7 % 7,70 EUR, Gesamt 117,70 EUR. Zahlung per Geschäftskarte bei Abreise erhalten.",
+      "firmennamen": [
+        "Hotel Stadtkiesel",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B072.txt",
+      "konto": "4670",
+      "richtung": "ausgabe",
+      "namen": [
+        "Linienfroh",
+        "Mira Telscher"
+      ],
+      "text": "Linienfroh • Eigenbeleg Fahrt 10-16\nKiel, 16.10.2026\nMira Telscher, Inhaberin, fuhr mit ihrem zum Privatvermögen gehörenden Familienwagen von der Betriebsstätte in Kiel zu einer geschäftlichen Gestaltungspräsentation in Lübeck und zurück. Gesamte betrieblich gefahrene Strecke laut Aufzeichnung 172 km; keine privaten Umwege.\nAnsatz 172 km zu 0,30 EUR = 51,60 EUR. Umsatzsteuer wird nicht angesetzt. Die Fahrt betrifft ausschließlich die Unternehmerin; weder Firmenfahrzeug noch Erstattung an Beschäftigte. Bestätigt: Mira Telscher.",
+      "firmennamen": [
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B073.txt",
+      "konto": "4910",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fördebrief Universaldienst",
+        "Linienfroh"
+      ],
+      "text": "Fördebrief Universaldienst\nVerkaufsquittung FB-1202 vom 12.02.2026\nKunde Linienfroh, Hafenstieg 12, Kiel\n50 Briefmarken für Standardbriefe im Inland à 0,95 EUR, Gesamt 47,50 EUR. Ausschließlich Beförderungsentgelt im begünstigten postalischen Universaldienst, umsatzsteuerfrei nach § 4 Nr. 11b UStG. Keine Verpackungswaren oder Zusatzartikel.\nBetrag 47,50 EUR mit Geschäftskarte bezahlt. Marken dienen dem Versand eigener Kundenrechnungen und Vertragsunterlagen; nicht für den Weiterverkauf erworben.",
+      "firmennamen": [
+        "Fördebrief Universaldienst",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B074.txt",
+      "konto": "4910",
+      "richtung": "ausgabe",
+      "namen": [
+        "Briefsteg Zustellung",
+        "Linienfroh"
+      ],
+      "text": "Briefsteg Zustellung • Sammelabrechnung BZ-0526\nRechnungsdatum 31.05.2026\nAn Linienfroh, Hafenstieg 12, Kiel\nAbholung und Zustellung von 80 Geschäftssendungen aus Ihrer Verwaltung im Monat Mai, Einzelaufstellung beiliegend. Vertraglicher Brieftransport außerhalb einer Steuerbefreiung, Preis pro Sendung 0,75 EUR netto. Kein Materialverkauf und kein Druckauftrag.\nNetto 60,00 EUR, Umsatzsteuer 19 % 11,40 EUR; Gesamt 71,40 EUR. Fälligkeit 14.06.2026. Sendungsnummern und Zustellstatus sind dem Monatsnachweis zu entnehmen.",
+      "firmennamen": [
+        "Briefsteg Zustellung",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B075.txt",
+      "konto": "4910",
+      "richtung": "ausgabe",
+      "namen": [
+        "Paketbogen Transport",
+        "Linienfroh"
+      ],
+      "text": "Paketbogen Transport\nQuittung PT-881 am 27.08.2026, Annahmestelle Kiel\nVersender: Linienfroh, Hafenstieg 12, Kiel\nBeförderung einer versiegelten Sendung mit originalen Vertragsunterlagen an einen Geschäftskunden in Bremen, Sendungsgewicht 1,6 kg, Einlieferungsnummer PT2600881. Verpackung wurde vom Versender gestellt.\nTransportentgelt netto 8,00 EUR, Mehrwertsteuer 19 % 1,52 EUR, Endbetrag 9,52 EUR. Sofort per Karte bezahlt. Keine Nachnahme oder Transportversicherung zusätzlich berechnet.",
+      "firmennamen": [
+        "Paketbogen Transport",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B076.txt",
+      "konto": "4920",
+      "richtung": "ausgabe",
+      "namen": [
+        "Netzfaden Kommunikation",
+        "Linienfroh"
+      ],
+      "text": "Netzfaden Kommunikation\nVerbindungsrechnung NK-0126 vom 31.01.2026\nKunde Linienfroh, Hafenstieg 12, Kiel\nFestnetzanschluss für Laden und Büro, Abrechnungsmonat Januar. Grundpreis Sprachanschluss 29,00 EUR netto, Verbindungseinheiten 6,00 EUR netto. Anschlussnummer 0431 8927610, ausschließlich geschäftlich genutzt. Keine Geräte geliefert oder finanziert.\nNettoentgelt 35,00 EUR, Umsatzsteuer 19 % 6,65 EUR; zu zahlen 41,65 EUR. Einzug am 10.02.2026 gemäß Mandat. Einzelverbindungsübersicht liegt im Kundenpostfach.",
+      "firmennamen": [
+        "Netzfaden Kommunikation",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B077.txt",
+      "konto": "4920",
+      "richtung": "ausgabe",
+      "namen": [
+        "Mobilwoge Netzdienste",
+        "Linienfroh"
+      ],
+      "text": "Mobilwoge Netzdienste • Rechnung MN-630\nAusgestellt 30.06.2026 für Linienfroh, Hafenstieg 12, Kiel\nMobilfunkvertrag der betrieblichen SIM-Karte, Rufnummer 0157 86029114. Zeitraum 01.06.–30.06.2026: Sprach- und Datenflatrate 24,00 EUR netto, zusätzliche Auslandsgespräche mit Lieferanten 4,00 EUR netto. Kein Gerätekauf und keine private Nutzung.\nSumme netto 28,00 EUR; 19 % USt 5,32 EUR; Rechnungsbetrag 33,32 EUR. Wird am 09.07.2026 vom Geschäftskonto abgebucht. Vertragsnummer 740081.",
+      "firmennamen": [
+        "Mobilwoge Netzdienste",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B078.txt",
+      "konto": "4920",
+      "richtung": "ausgabe",
+      "namen": [
+        "Kabelufer Anschlussdienste",
+        "Linienfroh"
+      ],
+      "text": "Kabelufer Anschlussdienste\nRechnung KA-1026, Datum 01.10.2026\nAn Linienfroh, Hafenstieg 12, Kiel\nGlasfaseranschluss für das Gestaltungsbüro, Bandbreite 300 Mbit/s, monatliches Nutzungsentgelt Oktober 2026. Dient Datenübertragung und Kundenkommunikation am betrieblichen Standort. Bestehender Anschluss; keine Einrichtung und kein Endgerät berechnet.\nTarif netto 49,00 EUR, Umsatzsteuer 19 % 9,31 EUR, Gesamt 58,31 EUR. Abrechnungszeitraum 01.–31.10.2026. Lastschrift zum 12.10.2026 vereinbart.",
+      "firmennamen": [
+        "Kabelufer Anschlussdienste",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B079.txt",
+      "konto": "4930",
+      "richtung": "ausgabe",
+      "namen": [
+        "Papierpfad Direkt",
+        "Linienfroh"
+      ],
+      "text": "Papierpfad Direkt\nRechnung PD-319 vom 16.03.2026\nKäufer Linienfroh, Hafenstieg 12, Kiel\nZehn Packungen Kopierpapier A4, je 500 Blatt, zu 4,20 EUR netto. Die Lieferung ist ausdrücklich für Ausdrucke der eigenen Verwaltung bestimmt: Verträge, Ablagen und interne Listen. Keine Handelsware und kein Material für berechnete Kundendrucke.\nNetto 42,00 EUR, Umsatzsteuer 19 % 7,98 EUR, Gesamt 49,98 EUR. Frei Haus geliefert und am 16.03.2026 erhalten. Bitte innerhalb von zehn Tagen überweisen.",
+      "firmennamen": [
+        "Papierpfad Direkt",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B080.txt",
+      "konto": "4930",
+      "richtung": "ausgabe",
+      "namen": [
+        "Klammersteg Versand",
+        "Linienfroh"
+      ],
+      "text": "Klammersteg Versand • Rechnung KV-660\n07.06.2026\nLieferung an Linienfroh, Hafenstieg 12, Kiel\nFür den internen Verwaltungsplatz: 4 Rollen Klebefilm à 2,00 EUR, 2 Packungen Heftklammern à 1,50 EUR und 5 Ablagehefter à 1,80 EUR, jeweils netto. Kein Verkauf über das Ladensortiment; Verbrauch zur Bearbeitung der eigenen Unterlagen.\nWarenwert 20,00 EUR, Mehrwertsteuer 19 % 3,80 EUR, Gesamt 23,80 EUR. Versand kostenlos. Zahlung per Geschäftskarte abgeschlossen, Ware vollständig erhalten.",
+      "firmennamen": [
+        "Klammersteg Versand",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B081.txt",
+      "konto": "4930",
+      "richtung": "ausgabe",
+      "namen": [
+        "Schreibsteg Kontor",
+        "Linienfroh"
+      ],
+      "text": "Schreibsteg Kontor, Marktweg 21, Kiel\nKassenbeleg SC-2909 vom 29.09.2026\nRechnungsempfänger: Linienfroh, Hafenstieg 12, Kiel\n100 unbedruckte Briefumschläge für eigene Ausgangsrechnungen, 8,00 EUR netto; 6 Kugelschreiber für die internen Arbeitsplätze, 9,00 EUR netto. Verwendungsnotiz: ausschließlich Eigenverbrauch in der Verwaltung, keine Weitergabe als Verkaufsware.\nSumme netto 17,00 EUR; USt 19 % 3,23 EUR; Endsumme 20,23 EUR. Zahlung bar aus der Geschäftskasse. Keine weiteren Artikel enthalten.",
+      "firmennamen": [
+        "Schreibsteg Kontor",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B082.txt",
+      "konto": "4940",
+      "richtung": "ausgabe",
+      "namen": [
+        "Formwissen Verlag",
+        "Linienfroh"
+      ],
+      "text": "Formwissen Verlag\nRechnung FV-122 vom 20.01.2026\nAn Linienfroh, Hafenstieg 12, Kiel\nEin gedrucktes Fachbuch „Lesbare Typografie im Arbeitsalltag“, Ausgabe 2026, für die interne Fachbibliothek des Gestaltungsbüros. Keine Lizenz, Schulung oder Ware für den Wiederverkauf. Lieferung am Rechnungsdatum erfolgt.\nBuchpreis netto 40,00 EUR, Umsatzsteuer 7 % 2,80 EUR, Gesamt 42,80 EUR. Versand ohne Berechnung. Zahlung innerhalb von 14 Tagen erbeten. Das Werk dient der fachlichen Recherche für Kundenprojekte.",
+      "firmennamen": [
+        "Formwissen Verlag",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B083.txt",
+      "konto": "4940",
+      "richtung": "ausgabe",
+      "namen": [
+        "Layoutkunde Medien",
+        "Linienfroh"
+      ],
+      "text": "Layoutkunde Medien • Abonnementrechnung LM-261\nRechnungstag 04.02.2026\nEmpfänger Linienfroh, Hafenstieg 12, Kiel\nJahresbezug der gedruckten Fachzeitschrift „Gestaltungspraxis“, sechs Hefte von März 2026 bis Februar 2027. Nutzung durch das eigene Gestaltungsteam zur laufenden fachlichen Information. Keine Exemplare für den Handel oder für Kunden bestellt.\nAbonnement netto 72,00 EUR; Umsatzsteuer 7 % 5,04 EUR; Gesamtbetrag 77,04 EUR. Zustellung im Preis enthalten. Einzug vom Geschäftskonto am 18.02.2026.",
+      "firmennamen": [
+        "Layoutkunde Medien",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B084.txt",
+      "konto": "4940",
+      "richtung": "ausgabe",
+      "namen": [
+        "Bürowissen Fachverlag",
+        "Linienfroh"
+      ],
+      "text": "Bürowissen Fachverlag\nRechnung BF-826 / 26.08.2026\nKunde: Linienfroh, Hafenstieg 12, Kiel\nEin gedrucktes Nachschlagewerk „Datenschutz bei Büroabläufen“, aktuelle Auflage, zum Gebrauch im eigenen Büroservice. Enthält Erläuterungen und Fallbeispiele; keine laufende Beratungsleistung oder Software. Das Exemplar wird in der betrieblichen Fachsammlung aufbewahrt, nicht weiterverkauft.\nNetto 65,00 EUR, Steuer 7 % 4,55 EUR, Rechnungsbetrag 69,55 EUR. Versand enthalten. Lieferung heute, Zahlungsziel 14 Tage.",
+      "firmennamen": [
+        "Bürowissen Fachverlag",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B085.txt",
+      "konto": "4945",
+      "richtung": "ausgabe",
+      "namen": [
+        "Farbkurs Akademie",
+        "Linienfroh",
+        "Jona Rehfeld"
+      ],
+      "text": "Farbkurs Akademie\nTeilnahmerechnung FA-218 vom 02.03.2026\nAuftraggeber Linienfroh, Hafenstieg 12, Kiel\nTeilnehmer Jona Rehfeld, angestellter Mediengestalter. Zweitägiges Fachseminar „Barrierearme PDF-Gestaltung“ am 16. und 17.03.2026 in Kiel. Vermittelt Kenntnisse für bestehende Kundenprojekte; Unterricht einschließlich Übungsunterlagen. Keine Anreise, Unterkunft oder Verpflegung enthalten.\nKursgebühr netto 380,00 EUR, USt 19 % 72,20 EUR, Gesamt 452,20 EUR. Die Leistung ist steuerpflichtig; fällig vor Kursbeginn.",
+      "firmennamen": [
+        "Farbkurs Akademie",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B086.txt",
+      "konto": "4945",
+      "richtung": "ausgabe",
+      "namen": [
+        "Ablageklar Schulungshaus",
+        "Linienfroh",
+        "Nele Birkau"
+      ],
+      "text": "Ablageklar Schulungshaus • Rechnung AS-540\nDatum 06.05.2026\nAn Linienfroh, Hafenstieg 12, Kiel\nOnline-Workshop am 20.05.2026: digitale Aktenstrukturen für kleine Betriebe, ein Platz für Nele Birkau. Fachliche Weiterbildung der angestellten Kundenbetreuerin, Live-Unterricht mit praktischen Übungen. Keine dauerhafte Softwarelizenz und kein Abonnement.\nSeminarpreis 160,00 EUR netto plus 19 % Umsatzsteuer 30,40 EUR. Zahlbetrag 190,40 EUR. Teilnahmebestätigung wird nach Abschluss ausgestellt; Zahlung in zehn Tagen.",
+      "firmennamen": [
+        "Ablageklar Schulungshaus",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B087.txt",
+      "konto": "4945",
+      "richtung": "ausgabe",
+      "namen": [
+        "Gestaltungswerk Lernstudio",
+        "Linienfroh",
+        "Mira Telscher"
+      ],
+      "text": "Gestaltungswerk Lernstudio\nRechnung GL-924 vom 04.09.2026\nBesteller Linienfroh, Hafenstieg 12, Kiel\nInhaberin Mira Telscher besucht am 18.09.2026 den Tageskurs „Farbmanagement für Druckvorstufen“. Fachbezogene Vertiefung für den bestehenden Gestaltungsservice. Berechnet wird ausschließlich der Unterricht samt Arbeitsblättern; keine Fahrt- oder Übernachtungsleistungen.\nNettoentgelt 240,00 EUR, Umsatzsteuer 19 % 45,60 EUR, Brutto 285,60 EUR. Kursort Kiel. Zahlbar bis zum 14.09.2026 unter Angabe der Rechnungsnummer.",
+      "firmennamen": [
+        "Gestaltungswerk Lernstudio",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B088.txt",
+      "konto": "4950",
+      "richtung": "ausgabe",
+      "namen": [
+        "Kanzlei Fernau",
+        "Linienfroh",
+        "Dr. Livia Fernau"
+      ],
+      "text": "Kanzlei Fernau\nHonorarrechnung KF-26032 vom 11.02.2026\nDr. Livia Fernau, Rechtsanwältin, an Linienfroh, Hafenstieg 12, Kiel\nPrüfung des Entwurfs eines Rahmenvertrags für den Büroservice, insbesondere Haftungsgrenzen und Kündigungsfristen. Besprechung und schriftliche Änderungsvorschläge am 09.02.2026 erbracht. Keine steuerliche Betreuung oder laufende Verbuchung.\nHonorar laut Vereinbarung 420,00 EUR netto; Umsatzsteuer 19 % 79,80 EUR; fällig 499,80 EUR. Zahlung innerhalb von 14 Tagen unter Angabe der Rechnungsnummer.",
+      "firmennamen": [
+        "Kanzlei Fernau",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B089.txt",
+      "konto": "4950",
+      "richtung": "ausgabe",
+      "namen": [
+        "Klarspur Unternehmensberatung",
+        "Linienfroh"
+      ],
+      "text": "Klarspur Unternehmensberatung\nRechnung KU-471 vom 28.04.2026\nAuftraggeber: Linienfroh, Hafenstieg 12, Kiel\nIndividuelle betriebswirtschaftliche Analyse der Verkaufspreise für Gestaltungsleistungen und Büroservice. Zwei Beratungstermine im April und schriftliche Kalkulationsempfehlung geliefert. Kein Unterricht, keine Erstellung laufender Monatsabschlüsse.\n3 Beratungsstunden zu 120,00 EUR netto = 360,00 EUR. Umsatzsteuer 19 % 68,40 EUR; Gesamt 428,40 EUR. Leistung abgeschlossen, Überweisung bis 12.05.2026.",
+      "firmennamen": [
+        "Klarspur Unternehmensberatung",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B090.txt",
+      "konto": "4950",
+      "richtung": "ausgabe",
+      "namen": [
+        "Rechtskontor Uferfeld",
+        "Linienfroh",
+        "Bennet Uferfeld"
+      ],
+      "text": "Rechtskontor Uferfeld • Rechnung RU-803\nBennet Uferfeld, Rechtsanwalt\nAn Linienfroh, Hafenstieg 12, Kiel\nDatum 03.08.2026\nJuristische Prüfung einer Nutzungsrechtevereinbarung für ein Kundenlogo und Ausarbeitung zweier Vertragsklauseln. Mandat abgeschlossen am 31.07.2026. Keine Anmeldung einer Marke oder Erwerb eigener Verwertungsrechte, ausschließlich anwaltliche Dienstleistung.\nVereinbartes Honorar netto 280,00 EUR; Mehrwertsteuer 19 % 53,20 EUR; Rechnungsbetrag 333,20 EUR. Zahlbar innerhalb von zehn Tagen.",
+      "firmennamen": [
+        "Rechtskontor Uferfeld",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B091.txt",
+      "konto": "4955",
+      "richtung": "ausgabe",
+      "namen": [
+        "Zahlensteg Service",
+        "Linienfroh"
+      ],
+      "text": "Zahlensteg Service\nRechnung ZS-0226 vom 05.03.2026\nAn Linienfroh, Hafenstieg 12, Kiel\nLaufendes Kontieren und Erfassen Ihrer Geschäftsvorfälle für Februar 2026, Abstimmung der Bankbewegungen und Bereitstellung der monatlichen Auswertung. 186 Belege verarbeitet; keine Beratung zu Vertrags- oder Gestaltungsfragen.\nMonatspauschale netto 220,00 EUR. Umsatzsteuer 19 % 41,80 EUR. Gesamtbetrag 261,80 EUR. Leistung vollständig erbracht. Zahlung gemäß Vereinbarung per Lastschrift am 16.03.2026.",
+      "firmennamen": [
+        "Zahlensteg Service",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B092.txt",
+      "konto": "4955",
+      "richtung": "ausgabe",
+      "namen": [
+        "Rechenhafen Kanzleiservice",
+        "Linienfroh"
+      ],
+      "text": "Rechenhafen Kanzleiservice • Abrechnung RK-706\nDatum 06.07.2026\nMandant Linienfroh, Hafenstieg 12, Kiel\nFür Juni 2026: laufende Erfassung und Kontierung der Eingangs- und Ausgangsbelege einschließlich Kassenabgleich. Übergabe der Summen- und Saldenliste am 04.07.2026. Die Leistung betrifft die regelmäßige Verarbeitung des Rechnungswesens, keine einmalige Rechtsauskunft.\nHonorar 245,00 EUR netto; 19 % Umsatzsteuer 46,55 EUR; Endbetrag 291,55 EUR. Bitte bis 20.07.2026 ohne Abzug überweisen.",
+      "firmennamen": [
+        "Rechenhafen Kanzleiservice",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B093.txt",
+      "konto": "4955",
+      "richtung": "ausgabe",
+      "namen": [
+        "Kontenfaden Dienstleistung",
+        "Linienfroh"
+      ],
+      "text": "Kontenfaden Dienstleistung\nRechnung KD-1026 vom 05.11.2026\nKunde: Linienfroh, Hafenstieg 12, Kiel\nVerarbeitung der laufenden Geschäftsvorfälle im Oktober: Digitalisierung, Kontierung und Buchung von 204 Belegen, Bankabstimmung und monatlicher Ergebnisbericht. Die Originalunterlagen wurden vollständig zurückgegeben. Keine allgemeine Unternehmensberatung abgerechnet.\nPauschalpreis netto 260,00 EUR, Umsatzsteuer 19 % 49,40 EUR, Gesamt 309,40 EUR. Leistungszeit 01.–31.10.2026, Zahlung in 14 Tagen.",
+      "firmennamen": [
+        "Kontenfaden Dienstleistung",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B094.txt",
+      "konto": "4970",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fördebogen Bank",
+        "Linienfroh"
+      ],
+      "text": "Fördebogen Bank\nEntgeltabrechnung vom 31.03.2026\nKontoinhaber: Linienfroh, Hafenstieg 12, Kiel\nGeschäftskonto, Zeitraum 01.01.–31.03.2026. Kontoführung drei Monate à 8,00 EUR = 24,00 EUR; 40 ausgeführte Buchungsposten à 0,15 EUR = 6,00 EUR. Summe der Bankentgelte 30,00 EUR. Leistungen umsatzsteuerfrei, kein Steuerabzug möglich.\nBelastung des Kontos am 31.03.2026. Es sind keine Kreditzinsen, Rückzahlungen oder Kosten für Wertpapiergeschäfte in dieser Abrechnung enthalten.",
+      "firmennamen": [
+        "Fördebogen Bank",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B095.txt",
+      "konto": "4970",
+      "richtung": "ausgabe",
+      "namen": [
+        "Kartensteg Zahlungssysteme",
+        "Linienfroh"
+      ],
+      "text": "Kartensteg Zahlungssysteme • Abrechnung KZ-0626\n30.06.2026, Händler Linienfroh, Hafenstieg 12, Kiel\nAbwicklungsentgelt für Kartenzahlungen im Ladengeschäft im Monat Juni: 60,00 EUR netto. Es handelt sich ausschließlich um die technische Transaktionsabwicklung; kein Gerät geliefert und kein Warenbezug. Die Kundenzahlungen selbst sind separat dokumentiert.\nUmsatzsteuer 19 % 11,40 EUR, Gesamtentgelt 71,40 EUR. Rechnung wird gesondert vom Geschäftskonto eingezogen. Die ausgezahlten Verkaufserlöse bleiben davon ungekürzt.",
+      "firmennamen": [
+        "Kartensteg Zahlungssysteme",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B096.txt",
+      "konto": "4970",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fördebogen Bank",
+        "Linienfroh"
+      ],
+      "text": "Fördebogen Bank • Buchungsanzeige 18.09.2026\nKunde: Linienfroh, Hafenstieg 12, Kiel\nGebühr für die Ausführung einer betrieblichen Auslandsüberweisung nach Norwegen: 12,00 EUR. Bezug zur Zahlungsanweisung vom 17.09.2026; der überwiesene Hauptbetrag wird in einer eigenen Kontobuchung ausgewiesen und ist hier nicht enthalten.\nBelastung des Geschäftskontos 12,00 EUR, Wertstellung 18.09.2026. Bankdienstleistung ohne Umsatzsteuerausweis. Keine Wechselkursdifferenz oder Verzinsung in diesem Beleg.",
+      "firmennamen": [
+        "Fördebogen Bank",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B097.txt",
+      "konto": "4980",
+      "richtung": "ausgabe",
+      "namen": [
+        "Aktenende Sicherheitsdienst",
+        "Linienfroh"
+      ],
+      "text": "Aktenende Sicherheitsdienst\nRechnung AS-512 vom 13.05.2026\nAn Linienfroh, Hafenstieg 12, Kiel\nAbholung und datenschutzgerechte Vernichtung von 80 kg alten betrieblichen Papierakten nach Ablauf der Aufbewahrungsfristen. Behälter wurde vor Ort geleert; Vernichtungsnachweis 26-0512 beigefügt. Kein Gerät gekauft und keine Bearbeitung aktueller Geschäftsbelege.\nDienstleistung netto 64,00 EUR, Umsatzsteuer 19 % 12,16 EUR; Gesamt 76,16 EUR. Ausführung 12.05.2026. Zahlung innerhalb von 14 Tagen.",
+      "firmennamen": [
+        "Aktenende Sicherheitsdienst",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B098.txt",
+      "konto": "4980",
+      "richtung": "ausgabe",
+      "namen": [
+        "Schlüsselsteg Dienst",
+        "Linienfroh"
+      ],
+      "text": "Schlüsselsteg Dienst, Altstadtgasse 12, Kiel\nQuittung SD-707, ausgestellt 07.07.2026\nKunde Linienfroh, Hafenstieg 12, Kiel\nZwei zusätzliche Schlüssel für die vorhandene Ladenschließanlage nach Berechtigungskarte angefertigt. Sie werden neuen Beschäftigten für den Zugang zum Arbeitsplatz übergeben. Kein Defekt, kein Austausch des Schlosses und keine Arbeiten am Gebäude.\n2 Stück zu 14,00 EUR netto = 28,00 EUR, 19 % Umsatzsteuer 5,32 EUR, Gesamt 33,32 EUR. Barzahlung erhalten; Schlüssel vollständig ausgehändigt.",
+      "firmennamen": [
+        "Schlüsselsteg Dienst",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B099.txt",
+      "konto": "4980",
+      "richtung": "ausgabe",
+      "namen": [
+        "Gewerbeamt Kiel",
+        "Linienfroh",
+        "Mira Telscher"
+      ],
+      "text": "Gewerbeamt Kiel\nGebührenbescheid GA-260901 vom 01.09.2026\nAn Linienfroh, Inhaberin Mira Telscher, Hafenstieg 12, Kiel\nAuf Ihren Antrag wurde eine beglaubigte Zweitschrift der bestehenden Gewerbeanmeldung für die Teilnahme an einer geschäftlichen Ausschreibung erstellt. Keine neue Gewerbeanmeldung oder Änderung der Tätigkeit.\nVerwaltungsgebühr laut örtlichem Gebührenverzeichnis 18,00 EUR. Die hoheitliche Leistung unterliegt nicht der Umsatzsteuer. Bezahlt am Ausgabetag mit der Geschäftskarte, Vorgang abgeschlossen.",
+      "firmennamen": [
+        "Gewerbeamt Kiel",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B100.txt",
+      "konto": "8120",
+      "richtung": "einnahme",
+      "namen": [
+        "Linienfroh",
+        "Bergpunkt Bürohandel"
+      ],
+      "text": "Linienfroh, Hafenstieg 12, 24103 Kiel\nRechnung LF-26041 vom 14.04.2026\nAn Bergpunkt Bürohandel, Auenweg 8, 8004 Zürich, Schweiz\nGeliefert: 100 Dokumentenmappen à 3,00 EUR, Warenwert 300,00 EUR. Versand aus Kiel am 09.04.2026; Empfänger in Zürich bestätigte Erhalt am 13.04.2026. Zollrechtlicher Ausgang aus der EU nachgewiesen, elektronischer Ausgangsvermerk liegt bei.\nUSt 0,00 EUR gemäß § 4 Nr. 1a i. V. m. § 6 UStG. Rechnungsbetrag 300,00 EUR, zahlbar in 14 Tagen. Warenverkauf im eigenen Namen.",
+      "firmennamen": [
+        "Linienfroh",
+        "Bergpunkt Bürohandel"
+      ]
+    },
+    {
+      "datei": "B101.txt",
+      "konto": "8120",
+      "richtung": "einnahme",
+      "namen": [
+        "Linienfroh",
+        "Harbourleaf Office"
+      ],
+      "text": "Verkaufsrechnung LF-26068 • 18.06.2026\nLieferant: Linienfroh, Hafenstieg 12, Kiel\nKäufer: Harbourleaf Office, 27 Willow Lane, Bristol BS3 2QD, Vereinigtes Königreich\n80 Notizblöcke zu 4,50 EUR netto = 360,00 EUR. Ware am 10.06.2026 von Kiel nach Großbritannien versandt und dort am 16.06.2026 zugestellt. Elektronischer zollamtlicher Ausgangsnachweis ist der Lieferung zugeordnet.\nSteuerbefreiung nach § 4 Nr. 1a in Verbindung mit § 6 UStG, USt 0,00 EUR. Zu zahlen 360,00 EUR bis 02.07.2026.",
+      "firmennamen": [
+        "Linienfroh",
+        "Harbourleaf Office"
+      ]
+    },
+    {
+      "datei": "B102.txt",
+      "konto": "8120",
+      "richtung": "einnahme",
+      "namen": [
+        "Linienfroh",
+        "Fjordlinje Kontor"
+      ],
+      "text": "LINIENFROH • Rechnung LF-26104\nVerkäufer Linienfroh, Hafenstieg 12, Kiel\nDatum 05.10.2026\nAn Fjordlinje Kontor, Havnegate 16, 0150 Oslo, Norwegen\n60 Stifte-Sets à 8,00 EUR = 480,00 EUR. Physische Lieferung aus dem deutschen Warenlager nach Oslo, Versand 28.09.2026, Empfang 02.10.2026. Ausfuhranmeldung und zugehöriger Ausgangsvermerk sind archiviert.\nDeutsche USt 0,00 EUR aufgrund § 4 Nr. 1a i. V. m. § 6 UStG. Endbetrag 480,00 EUR. Kein digitaler Auftrag; Bezahlung per Überweisung innerhalb von 14 Tagen.",
+      "firmennamen": [
+        "Linienfroh",
+        "Fjordlinje Kontor"
+      ]
+    },
+    {
+      "datei": "B103.txt",
+      "konto": "8125",
+      "richtung": "einnahme",
+      "namen": [
+        "Linienfroh",
+        "Alpenbogen Kontor"
+      ],
+      "text": "Linienfroh, Hafenstieg 12, Kiel • USt-IdNr. DE351246782\nRechnung LF-26052, 12.05.2026\nAn Alpenbogen Kontor, Lerchenweg 22, 6020 Innsbruck, Österreich; USt-IdNr. ATU81245673\n50 Ringordner à 6,00 EUR = 300,00 EUR. Waren am 06.05. aus Kiel versandt, am 11.05. in Innsbruck übernommen; Gelangensbestätigung vorhanden. Käufer handelt als Unternehmer, seine USt-IdNr. wurde bestätigt.\nUSt 0,00 EUR nach § 4 Nr. 1b i. V. m. § 6a UStG; Erwerbsbesteuerung beim Abnehmer. Gesamt 300,00 EUR, zahlbar binnen 14 Tagen.",
+      "firmennamen": [
+        "Linienfroh",
+        "Alpenbogen Kontor"
+      ]
+    },
+    {
+      "datei": "B104.txt",
+      "konto": "8125",
+      "richtung": "einnahme",
+      "namen": [
+        "Linienfroh",
+        "Papierlijn Handel"
+      ],
+      "text": "Rechnung LF-26083 vom 03.08.2026\nLinienfroh, Hafenstieg 12, Kiel, USt-IdNr. DE351246782\nKäufer Papierlijn Handel, Kadeweg 14, 3511 AB Utrecht, Niederlande, USt-IdNr. NL862741395B01\n120 Notizhefte zu 2,50 EUR = 300,00 EUR. Transport der Ware von Kiel nach Utrecht am 28.–30.07.2026; unterzeichnete Empfangsbestätigung liegt vor. Unternehmerstatus und gültige USt-IdNr. des Käufers dokumentiert.\nSteuerbefreiung gemäß § 4 Nr. 1b und § 6a UStG, USt 0,00 EUR. Forderung 300,00 EUR; Zahlung bis 17.08.2026.",
+      "firmennamen": [
+        "Linienfroh",
+        "Papierlijn Handel"
+      ]
+    },
+    {
+      "datei": "B105.txt",
+      "konto": "8125",
+      "richtung": "einnahme",
+      "namen": [
+        "Linienfroh",
+        "Atelier Ligne Claire"
+      ],
+      "text": "Linienfroh • Ausgangsrechnung LF-26099\nHafenstieg 12, Kiel, USt-IdNr. DE351246782\n21.09.2026\nEmpfänger Atelier Ligne Claire, 18 rue des Saules, 67000 Strasbourg, Frankreich; USt-IdNr. FR57428651309\n40 Zeichenstift-Sets à 12,00 EUR = 480,00 EUR. Physisch aus Kiel nach Strasbourg befördert, dort am 18.09.2026 bestätigt übernommen. Gültige Käufer-USt-IdNr. geprüft, Lieferung für dessen Unternehmen.\nKeine deutsche USt nach § 4 Nr. 1b i. V. m. § 6a UStG; Steuerbetrag 0,00 EUR. Gesamt 480,00 EUR, fällig 05.10.2026.",
+      "firmennamen": [
+        "Linienfroh",
+        "Atelier Ligne Claire"
+      ]
+    },
+    {
+      "datei": "B106.txt",
+      "konto": "8300",
+      "richtung": "einnahme",
+      "namen": [
+        "Linienfroh",
+        "Plansteg Projektbüro"
+      ],
+      "text": "Linienfroh, Hafenstieg 12, Kiel\nRechnung LF-26023 vom 26.02.2026\nKäufer Plansteg Projektbüro, Rosenweg 5, Kiel\nVerkauft aus unserem ergänzenden Ladensortiment: 30 einzeln verpackte Fruchtriegel à 1,50 EUR netto, Abholung durch den Käufer am 26.02.2026. Reiner Verkauf verpackter Lebensmittel, kein Servieren, keine Getränke und keine anderen Artikel.\nWarenwert 45,00 EUR, Umsatzsteuer 7 % 3,15 EUR; Rechnungsbetrag 48,15 EUR. Zahlung per Karte im Laden erhalten. Rechnung ausgestellt im eigenen Namen.",
+      "firmennamen": [
+        "Linienfroh",
+        "Plansteg Projektbüro"
+      ]
+    },
+    {
+      "datei": "B107.txt",
+      "konto": "8300",
+      "richtung": "einnahme",
+      "namen": [
+        "Linienfroh",
+        "Raumspur Planung"
+      ],
+      "text": "Verkaufsbeleg LF-26061, 04.06.2026\nLinienfroh, Hafenstieg 12, Kiel\nAn Raumspur Planung, Buchenstraße 20, Kiel\nZehn verschlossene Packungen Kräutertee zu je 100 g aus der Genusswaren-Auslage. Stückpreis netto 4,00 EUR, zusammen 40,00 EUR. Der Kunde nimmt die Packungen mit; kein Aufbrühen oder Ausschank im Geschäft. Lieferung und Zahlung am Belegdatum.\nSteuersatz 7 %, Steuerbetrag 2,80 EUR, Endsumme 42,80 EUR. Bar erhalten. Keine Schreibwaren oder anderen Leistungen in diesem Verkauf enthalten.",
+      "firmennamen": [
+        "Linienfroh",
+        "Raumspur Planung"
+      ]
+    },
+    {
+      "datei": "B108.txt",
+      "konto": "8300",
+      "richtung": "einnahme",
+      "namen": [
+        "Linienfroh",
+        "Blickwinkel Teamservice"
+      ],
+      "text": "Linienfroh • Rechnung LF-26111 vom 29.10.2026\nVerkäufer: Hafenstieg 12, Kiel\nKäufer Blickwinkel Teamservice, Lindenstieg 3, Kiel\n24 versiegelte Tafeln Vollmilchschokolade zu 2,00 EUR netto, verkauft als Handelsware aus dem ergänzenden Tresensortiment. Der Käufer holte die Ware heute vollständig ab. Keine Speisen zubereitet und keine Getränke geliefert.\nNetto 48,00 EUR; Umsatzsteuer 7 % 3,36 EUR; Gesamt 51,36 EUR. Rechnungsbetrag per Geschäftskarte des Kunden bezahlt. Keine weiteren Positionen enthalten.",
+      "firmennamen": [
+        "Linienfroh",
+        "Blickwinkel Teamservice"
+      ]
+    },
+    {
+      "datei": "B109.txt",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "namen": [
+        "Linienfroh",
+        "Baukontur Planung"
+      ],
+      "text": "Linienfroh, Hafenstieg 12, Kiel\nRechnung LF-26018 vom 13.02.2026\nAn Baukontur Planung, Parkstraße 17, Kiel\nVerkauf von 50 Textmarker-Sets à 4,00 EUR netto aus eigenem Warenbestand. Die Ware wurde am 12.02.2026 vollständig im Laden abgeholt und geht in das Eigentum des Käufers über. Keine Vermittlung oder Auslage für einen Dritten.\nWarenwert 200,00 EUR, Umsatzsteuer 19 % 38,00 EUR, Rechnungsbetrag 238,00 EUR. Zahlung innerhalb von zehn Tagen unter Angabe der Rechnungsnummer erbeten.",
+      "firmennamen": [
+        "Linienfroh",
+        "Baukontur Planung"
+      ]
+    },
+    {
+      "datei": "B110.txt",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "namen": [
+        "Linienfroh",
+        "Sonnensteg Physiopraxis"
+      ],
+      "text": "Ausgangsrechnung LF-26072 • 02.07.2026\nLinienfroh, Hafenstieg 12, Kiel\nKunde Sonnensteg Physiopraxis, Eichenweg 4, Kiel\nDigitale Gestaltung eines sechsseitigen Informationsblatts nach Kundenbriefing, einschließlich zwei Korrekturrunden und Lieferung der fertigen Druckdatei am 30.06.2026. Rein gestalterische Dienstleistung, kein Druck enthalten.\nVereinbartes Honorar netto 600,00 EUR, Umsatzsteuer 19 % 114,00 EUR; zu zahlen 714,00 EUR bis 16.07.2026. Projekt freigegeben und vollständig abgeschlossen.",
+      "firmennamen": [
+        "Linienfroh",
+        "Sonnensteg Physiopraxis"
+      ]
+    },
+    {
+      "datei": "B111.txt",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "namen": [
+        "Linienfroh",
+        "Feldbogen Immobilien"
+      ],
+      "text": "Linienfroh • Leistungsrechnung LF-26097\n18.09.2026, Hafenstieg 12, Kiel\nAn Feldbogen Immobilien, Uferweg 32, Kiel\nBüroservice für September: Erfassen und Formatieren von 120 Adressdatensätzen sowie Vorbereitung eines Serienbriefs, fünf Arbeitsstunden à 38,00 EUR netto. Daten und fertige Briefvorlage am 17.09.2026 an den Kunden übergeben. Keine Postbeförderung berechnet.\nHonorar netto 190,00 EUR, USt 19 % 36,10 EUR, Gesamt 226,10 EUR. Zahlung per Überweisung in 14 Tagen, Leistung im Inland erbracht.",
+      "firmennamen": [
+        "Linienfroh",
+        "Feldbogen Immobilien"
+      ]
+    },
+    {
+      "datei": "B112.txt",
+      "konto": "8500",
+      "richtung": "einnahme",
+      "namen": [
+        "Linienfroh",
+        "Druckpfad Großformat"
+      ],
+      "text": "Linienfroh, Hafenstieg 12, Kiel\nRechnung LF-V14 vom 24.03.2026\nAn Druckpfad Großformat, Werkstraße 44, Hamburg\nVermittlungsvergütung gemäß Vereinbarung für den erfolgreich zugeführten Druckauftrag DP-204. Der Druckvertrag wurde ausschließlich zwischen Ihnen und dem Endkunden geschlossen. Linienfroh hat weder produziert noch die Ware verkauft; Auftrag abgeschlossen und bezahlt.\nBemessungsgrundlage 2.000,00 EUR netto, Provision 5 % = 100,00 EUR netto. USt 19 % 19,00 EUR. Forderung 119,00 EUR, fällig am 07.04.2026.",
+      "firmennamen": [
+        "Linienfroh",
+        "Druckpfad Großformat"
+      ]
+    },
+    {
+      "datei": "B113.txt",
+      "konto": "8500",
+      "richtung": "einnahme",
+      "namen": [
+        "Kopierbogen Technik",
+        "Linienfroh"
+      ],
+      "text": "Kopierbogen Technik • Abrechnungsgutschrift KG-613\nDatum 15.06.2026\nGutschriftsempfänger: Linienfroh, Hafenstieg 12, Kiel\nFür die Vermittlung eines abgeschlossenen Wartungsvertrags an einen neuen Gewerbekunden erhalten Sie die vereinbarte Abschlussvergütung. Vertragsausführung und Abrechnung gegenüber dem Kunden erfolgen allein durch Kopierbogen Technik. Keine eigene Wartungsleistung von Linienfroh.\nVergütung netto 150,00 EUR, Umsatzsteuer 19 % 28,50 EUR, Auszahlungsbetrag 178,50 EUR. Überweisung an Linienfroh am 20.06.2026.",
+      "firmennamen": [
+        "Kopierbogen Technik",
+        "Linienfroh"
+      ]
+    },
+    {
+      "datei": "B114.txt",
+      "konto": "8500",
+      "richtung": "einnahme",
+      "namen": [
+        "Linienfroh",
+        "Beschriftungssteg Montage"
+      ],
+      "text": "Rechnung LF-V31 vom 28.10.2026\nLinienfroh, Hafenstieg 12, Kiel\nAn Beschriftungssteg Montage, Gewerbepark 9, Kiel\nVergütung für die erfolgreiche Vermittlung des Kundenauftrags BM-888 zur Schaufensterbeschriftung. Vertrag, Herstellung und Montage wurden direkt von Ihnen übernommen; unser Betrieb stellte nur den Geschäftskontakt her. Vereinbarung: 8 % des bezahlten Auftragswerts von 2.500,00 EUR netto.\nVermittlungsbetrag 200,00 EUR netto, USt 19 % 38,00 EUR, Gesamt 238,00 EUR. Bitte in zehn Tagen überweisen.",
+      "firmennamen": [
+        "Linienfroh",
+        "Beschriftungssteg Montage"
+      ]
+    }
+  ]
+}

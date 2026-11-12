@@ -1,0 +1,27 @@
+{
+  "modell": "Codex (GPT-6)",
+  "utc": "2026-11-12 22:38:14 UTC",
+  "repo": "lausiklauskn-png/Meine-Familienakte",
+  "zweig": "claude/familienakte-bildintegration-il59yw",
+  "urspruenglichGelesen": "bf547be4a3633a0e217c080839fbf0f3712f81f5",
+  "aktuellUnveraendertBestaetigt": "62505a308a368f186357043d176721248d3a1e5e",
+  "claudePuls": 6,
+  "dateien": [
+    {
+      "name": "AUFTRAG.md",
+      "sha": "fcb6d8374dd37773fbeaf96dbaa41477dd16d0e9",
+      "size": 4719
+    },
+    {
+      "name": "BELEGE-STAPEL-4.txt",
+      "sha": "95f7439c61283243979f433194f9b8b424e3fe17",
+      "size": 98436
+    },
+    {
+      "name": "KONTENLISTE.json",
+      "sha": "d801017a44c5854277df1fcaf153ae9147d62025",
+      "size": 2267
+    }
+  ],
+  "lesegrenze": "Als Repo-Inhalte ausschließlich docs/fremdpruefung/; keine anderen Repos, keine externe Recherche."
+}

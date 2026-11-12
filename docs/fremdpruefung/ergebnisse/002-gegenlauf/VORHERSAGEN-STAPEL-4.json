@@ -1,0 +1,486 @@
+{
+  "system": "Codex TF-IDF-Zentroid 1.0",
+  "mitFirmenname": true,
+  "dateien": [
+    {
+      "datei": "2026-01-29 Scan 11.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "2026-03-12 Scan 51.txt",
+      "konto": "4360"
+    },
+    {
+      "datei": "2026-03-27 Scan 41.txt",
+      "konto": "4120"
+    },
+    {
+      "datei": "2026-03-31 Foto 25.txt",
+      "konto": "4250"
+    },
+    {
+      "datei": "2026-04-02 Scan 4.txt",
+      "konto": "8500"
+    },
+    {
+      "datei": "2026-04-06 Foto 7.txt",
+      "konto": "1800"
+    },
+    {
+      "datei": "2026-05-07 Scan 7.txt",
+      "konto": "4650"
+    },
+    {
+      "datei": "2026-07-08 Foto 28.txt",
+      "konto": "3400"
+    },
+    {
+      "datei": "2026-09-16 eingang 7.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "2026-10-05 Scan 59.txt",
+      "konto": "4920"
+    },
+    {
+      "datei": "Beleg (103).txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "Beleg (114).txt",
+      "konto": "4980"
+    },
+    {
+      "datei": "Beleg (124).txt",
+      "konto": "0400"
+    },
+    {
+      "datei": "Beleg (13).txt",
+      "konto": "4910"
+    },
+    {
+      "datei": "Beleg (130).txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "Beleg (14).txt",
+      "konto": "3400"
+    },
+    {
+      "datei": "Beleg (144).txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "Beleg (156).txt",
+      "konto": "8400"
+    },
+    {
+      "datei": "Beleg (163).txt",
+      "konto": "4380"
+    },
+    {
+      "datei": "Beleg (171).txt",
+      "konto": "4260"
+    },
+    {
+      "datei": "Beleg (185).txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "Beleg (188).txt",
+      "konto": "4500"
+    },
+    {
+      "datei": "Beleg (2).txt",
+      "konto": "8500"
+    },
+    {
+      "datei": "Beleg (3).txt",
+      "konto": "4360"
+    },
+    {
+      "datei": "Beleg (32).txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "Beleg (45).txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "Beleg (52).txt",
+      "konto": "0400"
+    },
+    {
+      "datei": "Beleg (72).txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "Beleg (79).txt",
+      "konto": "4380"
+    },
+    {
+      "datei": "Beleg (87).txt",
+      "konto": "4380"
+    },
+    {
+      "datei": "Beleg (95).txt",
+      "konto": "3300"
+    },
+    {
+      "datei": "CCF01052026_00020.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "CCF01112026_00017.txt",
+      "konto": "4970"
+    },
+    {
+      "datei": "CCF03032026_00010.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "CCF03112026_00016.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "CCF10122026_00002.txt",
+      "konto": "4635"
+    },
+    {
+      "datei": "CCF15042026_00037.txt",
+      "konto": "4240"
+    },
+    {
+      "datei": "CCF16022026_00036.txt",
+      "konto": "4500"
+    },
+    {
+      "datei": "CCF21102026_00002.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "CCF22012026_00016.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "CCF22032026_00018.txt",
+      "konto": "4670"
+    },
+    {
+      "datei": "CCF22092026_00039.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "CCF24022026_00027.txt",
+      "konto": "4250"
+    },
+    {
+      "datei": "CCF24032026_00024.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "CCF29062026_00001.txt",
+      "konto": "4120"
+    },
+    {
+      "datei": "IMG_20260219_140943.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "IMG_20260305_122242.txt",
+      "konto": "4240"
+    },
+    {
+      "datei": "IMG_20260430_123340.txt",
+      "konto": "1800"
+    },
+    {
+      "datei": "IMG_20260504_143345.txt",
+      "konto": "3400"
+    },
+    {
+      "datei": "IMG_20260622_104914.txt",
+      "konto": "4250"
+    },
+    {
+      "datei": "IMG_20260701_155224.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "IMG_20260702_185902.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "IMG_20260703_164353.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "IMG_20261105_192245.txt",
+      "konto": "0320"
+    },
+    {
+      "datei": "IMG_20261214_170202.txt",
+      "konto": "3300"
+    },
+    {
+      "datei": "SCN246981.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "SCN259695.txt",
+      "konto": "4240"
+    },
+    {
+      "datei": "SCN303523.txt",
+      "konto": "3300"
+    },
+    {
+      "datei": "SCN308683.txt",
+      "konto": "4955"
+    },
+    {
+      "datei": "SCN311983.txt",
+      "konto": "4945"
+    },
+    {
+      "datei": "SCN782505.txt",
+      "konto": "4970"
+    },
+    {
+      "datei": "SCN890701.txt",
+      "konto": "4360"
+    },
+    {
+      "datei": "SCN923520.txt",
+      "konto": "8120"
+    },
+    {
+      "datei": "SCN943159.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "Scan 02.11.26 15-18.txt",
+      "konto": "4250"
+    },
+    {
+      "datei": "Scan 03.06.26 08-15.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "Scan 08.04.26 08-14.txt",
+      "konto": "0320"
+    },
+    {
+      "datei": "Scan 09.06.26 17-59.txt",
+      "konto": "0400"
+    },
+    {
+      "datei": "Scan 10.02.26 08-45.txt",
+      "konto": "4240"
+    },
+    {
+      "datei": "Scan 15.10.26 10-41.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "Scan 18.03.26 16-03.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "Scan 26.01.26 08-08.txt",
+      "konto": "3300"
+    },
+    {
+      "datei": "Scan 27.08.26 16-20.txt",
+      "konto": "0400"
+    },
+    {
+      "datei": "doc11124301.txt",
+      "konto": "0410"
+    },
+    {
+      "datei": "doc25835540.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "doc48100639.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "doc52975890.txt",
+      "konto": "4600"
+    },
+    {
+      "datei": "doc53339667.txt",
+      "konto": "0410"
+    },
+    {
+      "datei": "doc58076029.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "doc62305359.txt",
+      "konto": "3400"
+    },
+    {
+      "datei": "doc63503388.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "doc71374891.txt",
+      "konto": "3400"
+    },
+    {
+      "datei": "doc73377501.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "doc75479160.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "doc96605443.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "mail-anhang-10655.txt",
+      "konto": "4970"
+    },
+    {
+      "datei": "mail-anhang-11940.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "mail-anhang-20385.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "mail-anhang-36069.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "mail-anhang-44966.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "mail-anhang-4572.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "mail-anhang-49957.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "mail-anhang-59333.txt",
+      "konto": "4670"
+    },
+    {
+      "datei": "mail-anhang-67480.txt",
+      "konto": "4250"
+    },
+    {
+      "datei": "mail-anhang-6799.txt",
+      "konto": "1890"
+    },
+    {
+      "datei": "mail-anhang-69613.txt",
+      "konto": "8120"
+    },
+    {
+      "datei": "mail-anhang-70841.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "mail-anhang-72356.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "mail-anhang-72736.txt",
+      "konto": "4970"
+    },
+    {
+      "datei": "mail-anhang-83322.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "mail-anhang-85623.txt",
+      "konto": "4530"
+    },
+    {
+      "datei": "mail-anhang-86474.txt",
+      "konto": "4910"
+    },
+    {
+      "datei": "mail-anhang-90290.txt",
+      "konto": "4360"
+    },
+    {
+      "datei": "scan_0192.txt",
+      "konto": "4540"
+    },
+    {
+      "datei": "scan_1818.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "scan_2238.txt",
+      "konto": "4660"
+    },
+    {
+      "datei": "scan_2429.txt",
+      "konto": "4955"
+    },
+    {
+      "datei": "scan_2894.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "scan_3506.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "scan_3636.txt",
+      "konto": "3400"
+    },
+    {
+      "datei": "scan_4338.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "scan_5168.txt",
+      "konto": "0410"
+    },
+    {
+      "datei": "scan_5630.txt",
+      "konto": "4360"
+    },
+    {
+      "datei": "scan_6585.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "scan_6723.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "scan_7240.txt",
+      "konto": "4530"
+    },
+    {
+      "datei": "scan_7986.txt",
+      "konto": "3400"
+    },
+    {
+      "datei": "scan_8008.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "scan_8601.txt",
+      "konto": "4120"
+    },
+    {
+      "datei": "scan_9367.txt",
+      "konto": "4920"
+    }
+  ]
+}

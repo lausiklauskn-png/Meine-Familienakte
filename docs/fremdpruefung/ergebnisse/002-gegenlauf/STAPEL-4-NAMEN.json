@@ -1,0 +1,848 @@
+{
+  "quelle": {
+    "repo": "lausiklauskn-png/Meine-Familienakte",
+    "commit": "bf547be4a3633a0e217c080839fbf0f3712f81f5",
+    "pfad": "docs/fremdpruefung/auftraege/002-gegenlauf/BELEGE-STAPEL-4.txt"
+  },
+  "modell": "Codex (GPT-6)",
+  "dateien": [
+    {
+      "datei": "2026-01-29 Scan 11.txt",
+      "firmennamen": [
+        "Kassenrolle24 Handels UG (haftungsbeschränkt)",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "2026-03-12 Scan 51.txt",
+      "firmennamen": [
+        "Altmark Sachversicherung a.G.",
+        "Agentur Tiedemann",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "2026-03-27 Scan 41.txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt",
+        "Bergland BKK"
+      ]
+    },
+    {
+      "datei": "2026-03-31 Foto 25.txt",
+      "firmennamen": [
+        "Glas- und Gebäudereinigung Kowalke",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "2026-04-02 Scan 4.txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt",
+        "Kartenkontor Ticketservice GmbH"
+      ]
+    },
+    {
+      "datei": "2026-04-06 Foto 7.txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "2026-05-07 Scan 7.txt",
+      "firmennamen": [
+        "Café Kornblume",
+        "Grundschule Am Rehwinkel"
+      ]
+    },
+    {
+      "datei": "2026-07-08 Foto 28.txt",
+      "firmennamen": [
+        "Landkartenhaus Petzold KG",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "2026-09-16 eingang 7.txt",
+      "firmennamen": [
+        "Barsortiment Hallweg & Brandis GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "2026-10-05 Scan 59.txt",
+      "firmennamen": [
+        "Wesernetz Telekommunikation GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "Beleg (103).txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "Beleg (114).txt",
+      "firmennamen": [
+        "Schlüssel- und Sicherheitsdienst Vahrenkamp",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "Beleg (124).txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt",
+        "Literaturkreis Wehrstedt e.V."
+      ]
+    },
+    {
+      "datei": "Beleg (13).txt",
+      "firmennamen": [
+        "Landespost AG"
+      ]
+    },
+    {
+      "datei": "Beleg (130).txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt",
+        "Tagblatt Medienhaus Wehrbergland GmbH & Co. KG"
+      ]
+    },
+    {
+      "datei": "Beleg (14).txt",
+      "firmennamen": [
+        "Fachbuchversand Paragraphenreiter",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "Beleg (144).txt",
+      "firmennamen": [
+        "BAUMARKT HAMMER & ZANGE"
+      ]
+    },
+    {
+      "datei": "Beleg (156).txt",
+      "firmennamen": [
+        "Schreibwaren Köhn",
+        "Buchhdlg. Lindenblatt"
+      ]
+    },
+    {
+      "datei": "Beleg (163).txt",
+      "firmennamen": [
+        "Industrie- und Handelskammer Wehrbergland",
+        "Buchhandlung Lindenblatt e.K."
+      ]
+    },
+    {
+      "datei": "Beleg (171).txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt",
+        "Kanzlei Dr. Brühne & Partner mbB"
+      ]
+    },
+    {
+      "datei": "Beleg (185).txt",
+      "firmennamen": [
+        "Ratskeller Wehrstedt",
+        "Silberfaden Verlag"
+      ]
+    },
+    {
+      "datei": "Beleg (188).txt",
+      "firmennamen": [
+        "PrüfRing Fahrzeugüberwachung GmbH",
+        "Autohaus Dörrenbach",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "Beleg (2).txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "Beleg (3).txt",
+      "firmennamen": [
+        "Nordische Feuer Versicherung AG",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "Beleg (32).txt",
+      "firmennamen": [
+        "edition kranichzug",
+        "buchhandlung lindenblatt"
+      ]
+    },
+    {
+      "datei": "Beleg (45).txt",
+      "firmennamen": [
+        "Fachverlag Buchhandelsbote GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "Beleg (52).txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt",
+        "Maschinenbau Tegtmeier GmbH"
+      ]
+    },
+    {
+      "datei": "Beleg (72).txt",
+      "firmennamen": [
+        "Schulbuchzentrum Ostfalen GmbH",
+        "Buchhandlung Lindenblatt",
+        "Grundschule Am Rehwinkel"
+      ]
+    },
+    {
+      "datei": "Beleg (79).txt",
+      "firmennamen": [
+        "Berufsgenossenschaft Handel und Verteilung",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "Beleg (87).txt",
+      "firmennamen": [
+        "Verband Unabhängiger Sortimentsbuchhandlungen e.V.",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "Beleg (95).txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "CCF01052026_00020.txt",
+      "firmennamen": [
+        "Boekstack B.V.",
+        "Buchhandlung Lindenblatt",
+        "Boekstack"
+      ]
+    },
+    {
+      "datei": "CCF01112026_00017.txt",
+      "firmennamen": [
+        "ZahlFix Europe S.à r.l.",
+        "buchhandlung-lindenblatt",
+        "R.C.S. Luxembourg"
+      ]
+    },
+    {
+      "datei": "CCF03032026_00010.txt",
+      "firmennamen": [
+        "TechnoMarkt Handels GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "CCF03112026_00016.txt",
+      "firmennamen": [
+        "Paketpunkt Logistik GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "CCF10122026_00002.txt",
+      "firmennamen": [
+        "Weinkontor Rebenstieg"
+      ]
+    },
+    {
+      "datei": "CCF15042026_00037.txt",
+      "firmennamen": [
+        "Stadtwerke Wehrstedt Eigenbetrieb",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "CCF16022026_00036.txt",
+      "firmennamen": [
+        "Rundfunk-Beitragsservice der Landesanstalten",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "CCF21102026_00002.txt",
+      "firmennamen": [
+        "Nordlicht Geschenkideen e.K.",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "CCF22012026_00016.txt",
+      "firmennamen": [
+        "Bürowelt Dreyer Versand GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "CCF22032026_00018.txt",
+      "firmennamen": [
+        "Pension Am Auwald",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "CCF22092026_00039.txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt",
+        "Universiteitsbibliotheek Lage Landen"
+      ]
+    },
+    {
+      "datei": "CCF24022026_00027.txt",
+      "firmennamen": [
+        "Malermeister Henning Ruschmeyer",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "CCF24032026_00024.txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "CCF29062026_00001.txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt",
+        "Minijob-Stelle"
+      ]
+    },
+    {
+      "datei": "IMG_20260219_140943.txt",
+      "firmennamen": [
+        "SILBERFADEN VERLAG GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "IMG_20260305_122242.txt",
+      "firmennamen": [
+        "Kinderbuchverlag Moosglöckchen",
+        "Buchhandlung Lindenblatt",
+        "Finanzamt Brackenhude"
+      ]
+    },
+    {
+      "datei": "IMG_20260430_123340.txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "IMG_20260504_143345.txt",
+      "firmennamen": [
+        "Sitzwerk Ergonomie-Studio",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "IMG_20260622_104914.txt",
+      "firmennamen": [
+        "Rechtsanwältin Dr. Katharina Voßkuhl",
+        "Buchhandlung Lindenblatt",
+        "Abmahnverein Fairer Wettbewerb e.V."
+      ]
+    },
+    {
+      "datei": "IMG_20260701_155224.txt",
+      "firmennamen": [
+        "Tagblatt Medienhaus Wehrbergland GmbH & Co. KG",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "IMG_20260702_185902.txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt",
+        "Hotel Zum Wehrturm"
+      ]
+    },
+    {
+      "datei": "IMG_20260703_164353.txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt",
+        "Paketpunkt Logistik GmbH"
+      ]
+    },
+    {
+      "datei": "IMG_20261105_192245.txt",
+      "firmennamen": [
+        "REIFEN QUAST",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "IMG_20261214_170202.txt",
+      "firmennamen": [
+        "FEINKOST BRUNCKHORST",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "SCN246981.txt",
+      "firmennamen": [
+        "PAPETERIE FEDERKIEL GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "SCN259695.txt",
+      "firmennamen": [
+        "Gasversorgung Oberwehr AG",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "SCN303523.txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt",
+        "Förderverein Heimatmuseum Wehrstedt e.V."
+      ]
+    },
+    {
+      "datei": "SCN308683.txt",
+      "firmennamen": [
+        "Grundstücksgemeinschaft Marktgasse 5-9 GbR",
+        "Hausverwaltung Seidenfaden",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "SCN311983.txt",
+      "firmennamen": [
+        "Akademie für Handelsmarketing Seebruch GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "SCN782505.txt",
+      "firmennamen": [
+        "Kalendermanufaktur Jahreslauf GmbH & Co. KG",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "SCN890701.txt",
+      "firmennamen": [
+        "Vitalis Krankenversicherung a.G."
+      ]
+    },
+    {
+      "datei": "SCN923520.txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "SCN943159.txt",
+      "firmennamen": [
+        "Kähler & Stuckenberg Steuerberater PartG mbB",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "Scan 02.11.26 15-18.txt",
+      "firmennamen": [
+        "Lichtblick Lesezubehör GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "Scan 03.06.26 08-15.txt",
+      "firmennamen": [
+        "Barsortiment Hallweg & Brandis GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "Scan 08.04.26 08-14.txt",
+      "firmennamen": [
+        "Autohaus Dörrenbach GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "Scan 09.06.26 17-59.txt",
+      "firmennamen": [
+        "Kassen-Systemhaus Ebbinghaus e.K.",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "Scan 10.02.26 08-45.txt",
+      "firmennamen": [
+        "Wehrbergland Energie GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "Scan 15.10.26 10-41.txt",
+      "firmennamen": [
+        "Autohaus Dörrenbach GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "Scan 18.03.26 16-03.txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt",
+        "buchhandlung-lindenblatt",
+        "Grundschule Am Rehwinkel"
+      ]
+    },
+    {
+      "datei": "Scan 26.01.26 08-08.txt",
+      "firmennamen": [
+        "Kreislauf Dual Verpackungssystem GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "Scan 27.08.26 16-20.txt",
+      "firmennamen": [
+        "Kalendermanufaktur Jahreslauf GmbH & Co. KG",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "doc11124301.txt",
+      "firmennamen": [
+        "Ladenbau Wittkugel GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "doc25835540.txt",
+      "firmennamen": [
+        "Sauberland Dienstleistungen GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "doc48100639.txt",
+      "firmennamen": [
+        "Kartenwerk Zahlungssysteme GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "doc52975890.txt",
+      "firmennamen": [
+        "Wehrstedter Wochenblatt Verlags-GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "doc53339667.txt",
+      "firmennamen": [
+        "Grundstücksgemeinschaft Marktgasse 5-9 GbR",
+        "Hausverwaltung Seidenfaden",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "doc58076029.txt",
+      "firmennamen": [
+        "Hotel Messeblick Frankfurt-Mainfeld",
+        "Betriebsgesellschaft Messeblick mbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "doc62305359.txt",
+      "firmennamen": [
+        "Barsortiment Hallweg & Brandis GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "doc63503388.txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt",
+        "Stadtbibliothek Wehrstedt"
+      ]
+    },
+    {
+      "datei": "doc71374891.txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt",
+        "Volkshochschule Wehrbergland"
+      ]
+    },
+    {
+      "datei": "doc73377501.txt",
+      "firmennamen": [
+        "Gasthaus Zur Alten Fähre",
+        "Literaturkreis"
+      ]
+    },
+    {
+      "datei": "doc75479160.txt",
+      "firmennamen": [
+        "Q-Star Autohof Leinetal",
+        "Autohof Leinetal Betriebs GmbH"
+      ]
+    },
+    {
+      "datei": "doc96605443.txt",
+      "firmennamen": [
+        "druckfalter.example Onlinedruck GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "mail-anhang-10655.txt",
+      "firmennamen": [
+        "Kartenwerk Zahlungssysteme GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "mail-anhang-11940.txt",
+      "firmennamen": [
+        "Funkwerk Mobil GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "mail-anhang-20385.txt",
+      "firmennamen": [
+        "Gärtnerei Immergrün",
+        "Papeterie Federkiel",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "mail-anhang-36069.txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt",
+        "Buchhandlung am Mönchstor GmbH"
+      ]
+    },
+    {
+      "datei": "mail-anhang-44966.txt",
+      "firmennamen": [
+        "TechnoMarkt Wehrstedt",
+        "TechnoMarkt Handels GmbH"
+      ]
+    },
+    {
+      "datei": "mail-anhang-4572.txt",
+      "firmennamen": [
+        "Lohnkontor Wehrbergland GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "mail-anhang-49957.txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "mail-anhang-59333.txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt",
+        "Antiquariatsring"
+      ]
+    },
+    {
+      "datei": "mail-anhang-67480.txt",
+      "firmennamen": [
+        "Werbetechnik Hasenkamp",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "mail-anhang-6799.txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "mail-anhang-69613.txt",
+      "firmennamen": [
+        "Bildungswerk des Sortimentsbuchhandels gGmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "mail-anhang-70841.txt",
+      "firmennamen": [
+        "Verlagsauslieferung Nordhafen GmbH",
+        "Buchhandlung Lindenblatt",
+        "Verlag Tintenfass",
+        "Verlag am Wehr",
+        "Reiseverlag Fernblick"
+      ]
+    },
+    {
+      "datei": "mail-anhang-72356.txt",
+      "firmennamen": [
+        "Kähler & Stuckenberg Steuerberater PartG mbB",
+        "Buchhandlung Lindenblatt",
+        "Antiquariats Weidenhof"
+      ]
+    },
+    {
+      "datei": "mail-anhang-72736.txt",
+      "firmennamen": [
+        "Volksbank Wehrbergland eG",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "mail-anhang-83322.txt",
+      "firmennamen": [
+        "Kassenrolle24 Handels UG (haftungsbeschränkt)",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "mail-anhang-85623.txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt",
+        "Lindenblatt-Team"
+      ]
+    },
+    {
+      "datei": "mail-anhang-86474.txt",
+      "firmennamen": [
+        "Lotto-Toto Kiosk Am Markt",
+        "Landespost AG",
+        "Landespost"
+      ]
+    },
+    {
+      "datei": "mail-anhang-90290.txt",
+      "firmennamen": [
+        "JuraSchutz Rechtsschutz-Versicherung AG",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "scan_0192.txt",
+      "firmennamen": [
+        "Nordische Feuer Versicherung AG",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "scan_1818.txt",
+      "firmennamen": [
+        "Mittelland Bahn AG"
+      ]
+    },
+    {
+      "datei": "scan_2238.txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "scan_2429.txt",
+      "firmennamen": [
+        "Kähler & Stuckenberg Steuerberater PartG mbB",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "scan_2894.txt",
+      "firmennamen": [
+        "WASCHPARK BLITZBLANK",
+        "Blitzblank Autowasch GmbH"
+      ]
+    },
+    {
+      "datei": "scan_3506.txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt",
+        "Kindertagesstätte Sonnenkäfer e.V."
+      ]
+    },
+    {
+      "datei": "scan_3636.txt",
+      "firmennamen": [
+        "Würfelturm Spielwaren-Großhandel e.K.",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "scan_4338.txt",
+      "firmennamen": [
+        "Drogeriemarkt Blütenweiß"
+      ]
+    },
+    {
+      "datei": "scan_5168.txt",
+      "firmennamen": [
+        "Büromöbel Tecklenborg GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "scan_5630.txt",
+      "firmennamen": [
+        "TANKSTELLE ROTECK"
+      ]
+    },
+    {
+      "datei": "scan_6585.txt",
+      "firmennamen": [
+        "Mittelland Bahn AG",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "scan_6723.txt",
+      "firmennamen": [
+        "Pinnwall Ads Ltd.",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "scan_7240.txt",
+      "firmennamen": [
+        "TankHof Wehrstedt",
+        "M. Öztürk e.K."
+      ]
+    },
+    {
+      "datei": "scan_7986.txt",
+      "firmennamen": [
+        "Autoteile Kessing"
+      ]
+    },
+    {
+      "datei": "scan_8008.txt",
+      "firmennamen": [
+        "Ladenbau Wittkugel GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "scan_8601.txt",
+      "firmennamen": [
+        "Buchhandlung Lindenblatt"
+      ]
+    },
+    {
+      "datei": "scan_9367.txt",
+      "firmennamen": [
+        "Wesernetz Telekommunikation GmbH",
+        "Buchhandlung Lindenblatt"
+      ]
+    }
+  ]
+}

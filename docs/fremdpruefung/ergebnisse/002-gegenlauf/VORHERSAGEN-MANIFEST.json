@@ -1,0 +1,16 @@
+{
+  "zeit": "2026-11-12T22:44:49.563Z",
+  "freeze": "acaa62f68ca6fbdaffce8238b8e36dc87dd85a690679fd685cc3b6a4e458c4b4",
+  "eingaben": {
+    "EIGENER-STAPEL": "34af7dca9174a37e9bf9e2dfb91e3425b679c213219bf7c4ba88dbe704ace7f3",
+    "STAPEL-4": "c9346a28dc3acf13fe48c6e43aeaa4d973972369564e0c5c54b35991e9bce9a5"
+  },
+  "ausgaben": {
+    "VORHERSAGEN-EIGENER-STAPEL.json": "dfaf41387fc026e042af19f4acd371e0302d4c742fd3f7f744a82a85d070da2a",
+    "VORHERSAGEN-EIGENER-STAPEL-OHNE-FIRMENNAME.json": "4630eb8761622b65fde0a261af66db1dca1a2520fe32bca304385120f34b84ae",
+    "VORHERSAGEN-STAPEL-4.json": "0865fe1229fd3a8f66e13f7ce41ecf13d5ee10acf16efbaa277e1f24c4c294ff",
+    "VORHERSAGEN-STAPEL-4-OHNE-FIRMENNAME.json": "ad6271358e4bebceae0c6cd3ddf69a1a9ef608e96c561f6ccc065c4d5bb19d4b"
+  },
+  "goldGelesen": false,
+  "hinweis": "Vorhersagen vor Auswertung erzeugt. ERWARTUNG.json wird erst im separaten evaluate-Schritt geöffnet."
+}

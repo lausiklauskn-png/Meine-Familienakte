@@ -1,0 +1,486 @@
+{
+  "system": "Codex TF-IDF-Zentroid 1.0",
+  "mitFirmenname": false,
+  "dateien": [
+    {
+      "datei": "P001.txt",
+      "konto": "3300"
+    },
+    {
+      "datei": "P002.txt",
+      "konto": "4360"
+    },
+    {
+      "datei": "P003.txt",
+      "konto": "8500"
+    },
+    {
+      "datei": "P004.txt",
+      "konto": "4600"
+    },
+    {
+      "datei": "P005.txt",
+      "konto": "4650"
+    },
+    {
+      "datei": "P006.txt",
+      "konto": "4660"
+    },
+    {
+      "datei": "P007.txt",
+      "konto": "4670"
+    },
+    {
+      "datei": "P008.txt",
+      "konto": "4950"
+    },
+    {
+      "datei": "P009.txt",
+      "konto": "4360"
+    },
+    {
+      "datei": "P010.txt",
+      "konto": "4260"
+    },
+    {
+      "datei": "P011.txt",
+      "konto": "3400"
+    },
+    {
+      "datei": "P012.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "P013.txt",
+      "konto": "4120"
+    },
+    {
+      "datei": "P014.txt",
+      "konto": "4530"
+    },
+    {
+      "datei": "P015.txt",
+      "konto": "1890"
+    },
+    {
+      "datei": "P016.txt",
+      "konto": "4635"
+    },
+    {
+      "datei": "P017.txt",
+      "konto": "1890"
+    },
+    {
+      "datei": "P018.txt",
+      "konto": "4635"
+    },
+    {
+      "datei": "P019.txt",
+      "konto": "4650"
+    },
+    {
+      "datei": "P020.txt",
+      "konto": "4940"
+    },
+    {
+      "datei": "P021.txt",
+      "konto": "4670"
+    },
+    {
+      "datei": "P022.txt",
+      "konto": "4945"
+    },
+    {
+      "datei": "P023.txt",
+      "konto": "0400"
+    },
+    {
+      "datei": "P024.txt",
+      "konto": "0400"
+    },
+    {
+      "datei": "P025.txt",
+      "konto": "8400"
+    },
+    {
+      "datei": "P026.txt",
+      "konto": "0480"
+    },
+    {
+      "datei": "P027.txt",
+      "konto": "4940"
+    },
+    {
+      "datei": "P028.txt",
+      "konto": "1890"
+    },
+    {
+      "datei": "P029.txt",
+      "konto": "4980"
+    },
+    {
+      "datei": "P030.txt",
+      "konto": "4380"
+    },
+    {
+      "datei": "P031.txt",
+      "konto": "0410"
+    },
+    {
+      "datei": "P032.txt",
+      "konto": "4940"
+    },
+    {
+      "datei": "P033.txt",
+      "konto": "0480"
+    },
+    {
+      "datei": "P034.txt",
+      "konto": "0480"
+    },
+    {
+      "datei": "P035.txt",
+      "konto": "4600"
+    },
+    {
+      "datei": "P036.txt",
+      "konto": "4260"
+    },
+    {
+      "datei": "P037.txt",
+      "konto": "4240"
+    },
+    {
+      "datei": "P038.txt",
+      "konto": "4945"
+    },
+    {
+      "datei": "P039.txt",
+      "konto": "4980"
+    },
+    {
+      "datei": "P040.txt",
+      "konto": "4380"
+    },
+    {
+      "datei": "P041.txt",
+      "konto": "4380"
+    },
+    {
+      "datei": "P042.txt",
+      "konto": "4930"
+    },
+    {
+      "datei": "P043.txt",
+      "konto": "8500"
+    },
+    {
+      "datei": "P044.txt",
+      "konto": "0410"
+    },
+    {
+      "datei": "P045.txt",
+      "konto": "1890"
+    },
+    {
+      "datei": "P046.txt",
+      "konto": "4945"
+    },
+    {
+      "datei": "P047.txt",
+      "konto": "3400"
+    },
+    {
+      "datei": "P048.txt",
+      "konto": "4970"
+    },
+    {
+      "datei": "P049.txt",
+      "konto": "4530"
+    },
+    {
+      "datei": "P050.txt",
+      "konto": "4260"
+    },
+    {
+      "datei": "P051.txt",
+      "konto": "4540"
+    },
+    {
+      "datei": "P052.txt",
+      "konto": "4910"
+    },
+    {
+      "datei": "P053.txt",
+      "konto": "8500"
+    },
+    {
+      "datei": "P054.txt",
+      "konto": "4250"
+    },
+    {
+      "datei": "P055.txt",
+      "konto": "4120"
+    },
+    {
+      "datei": "P056.txt",
+      "konto": "4635"
+    },
+    {
+      "datei": "P057.txt",
+      "konto": "4540"
+    },
+    {
+      "datei": "P058.txt",
+      "konto": "4500"
+    },
+    {
+      "datei": "P059.txt",
+      "konto": "4660"
+    },
+    {
+      "datei": "P060.txt",
+      "konto": "4540"
+    },
+    {
+      "datei": "P061.txt",
+      "konto": "3300"
+    },
+    {
+      "datei": "P062.txt",
+      "konto": "4910"
+    },
+    {
+      "datei": "P063.txt",
+      "konto": "8300"
+    },
+    {
+      "datei": "P064.txt",
+      "konto": "4600"
+    },
+    {
+      "datei": "P065.txt",
+      "konto": "4940"
+    },
+    {
+      "datei": "P066.txt",
+      "konto": "8500"
+    },
+    {
+      "datei": "P067.txt",
+      "konto": "4920"
+    },
+    {
+      "datei": "P068.txt",
+      "konto": "4980"
+    },
+    {
+      "datei": "P069.txt",
+      "konto": "8500"
+    },
+    {
+      "datei": "P070.txt",
+      "konto": "0480"
+    },
+    {
+      "datei": "P071.txt",
+      "konto": "4240"
+    },
+    {
+      "datei": "P072.txt",
+      "konto": "4670"
+    },
+    {
+      "datei": "P073.txt",
+      "konto": "4940"
+    },
+    {
+      "datei": "P074.txt",
+      "konto": "4240"
+    },
+    {
+      "datei": "P075.txt",
+      "konto": "0400"
+    },
+    {
+      "datei": "P076.txt",
+      "konto": "8400"
+    },
+    {
+      "datei": "P077.txt",
+      "konto": "4260"
+    },
+    {
+      "datei": "P078.txt",
+      "konto": "8125"
+    },
+    {
+      "datei": "P079.txt",
+      "konto": "8120"
+    },
+    {
+      "datei": "P080.txt",
+      "konto": "4240"
+    },
+    {
+      "datei": "P081.txt",
+      "konto": "4650"
+    },
+    {
+      "datei": "P082.txt",
+      "konto": "4500"
+    },
+    {
+      "datei": "P083.txt",
+      "konto": "4955"
+    },
+    {
+      "datei": "P084.txt",
+      "konto": "4240"
+    },
+    {
+      "datei": "P085.txt",
+      "konto": "3300"
+    },
+    {
+      "datei": "P086.txt",
+      "konto": "4635"
+    },
+    {
+      "datei": "P087.txt",
+      "konto": "4970"
+    },
+    {
+      "datei": "P088.txt",
+      "konto": "8500"
+    },
+    {
+      "datei": "P089.txt",
+      "konto": "1800"
+    },
+    {
+      "datei": "P090.txt",
+      "konto": "4500"
+    },
+    {
+      "datei": "P091.txt",
+      "konto": "4250"
+    },
+    {
+      "datei": "P092.txt",
+      "konto": "4240"
+    },
+    {
+      "datei": "P093.txt",
+      "konto": "4955"
+    },
+    {
+      "datei": "P094.txt",
+      "konto": "4950"
+    },
+    {
+      "datei": "P095.txt",
+      "konto": "4920"
+    },
+    {
+      "datei": "P096.txt",
+      "konto": "4955"
+    },
+    {
+      "datei": "P097.txt",
+      "konto": "8500"
+    },
+    {
+      "datei": "P098.txt",
+      "konto": "3400"
+    },
+    {
+      "datei": "P099.txt",
+      "konto": "4970"
+    },
+    {
+      "datei": "P100.txt",
+      "konto": "0410"
+    },
+    {
+      "datei": "P101.txt",
+      "konto": "4530"
+    },
+    {
+      "datei": "P102.txt",
+      "konto": "3400"
+    },
+    {
+      "datei": "P103.txt",
+      "konto": "8300"
+    },
+    {
+      "datei": "P104.txt",
+      "konto": "4980"
+    },
+    {
+      "datei": "P105.txt",
+      "konto": "8120"
+    },
+    {
+      "datei": "P106.txt",
+      "konto": "4250"
+    },
+    {
+      "datei": "P107.txt",
+      "konto": "3400"
+    },
+    {
+      "datei": "P108.txt",
+      "konto": "3300"
+    },
+    {
+      "datei": "P109.txt",
+      "konto": "3300"
+    },
+    {
+      "datei": "P110.txt",
+      "konto": "4920"
+    },
+    {
+      "datei": "P111.txt",
+      "konto": "0320"
+    },
+    {
+      "datei": "P112.txt",
+      "konto": "3300"
+    },
+    {
+      "datei": "P113.txt",
+      "konto": "4120"
+    },
+    {
+      "datei": "P114.txt",
+      "konto": "0410"
+    },
+    {
+      "datei": "P115.txt",
+      "konto": "4210"
+    },
+    {
+      "datei": "P116.txt",
+      "konto": "4660"
+    },
+    {
+      "datei": "P117.txt",
+      "konto": "4910"
+    },
+    {
+      "datei": "P118.txt",
+      "konto": "4660"
+    },
+    {
+      "datei": "P119.txt",
+      "konto": "8400"
+    },
+    {
+      "datei": "P120.txt",
+      "konto": "4120"
+    }
+  ]
+}

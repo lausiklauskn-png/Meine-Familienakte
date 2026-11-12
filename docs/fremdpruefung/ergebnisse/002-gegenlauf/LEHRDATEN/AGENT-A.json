@@ -1,0 +1,1611 @@
+{
+  "agent": "Codex (GPT-6)",
+  "betrieb": "Radspur Elmbach, Inhaberin Mira Feldkamp",
+  "gewerbe": "Fahrradwerkstatt mit Fahrrad- und Zubehörhandel sowie kleinem Getränke- und Snackverkauf",
+  "dateien": [
+    {
+      "datei": "A001.txt",
+      "text": "Autohaus Tannhöfe GmbH · Verkaufsrechnung V-126 · 14.01.2025\nKäufer: Radspur Elmbach, Ufergasse 12, 34127 Elmbach.\nGeliefert wurde ein gebrauchter fünftüriger Kombi, Baujahr 2021, Fahrgestellnummer WRE4K9M83N7261508, Kilometerstand 61.200. Das Fahrzeug dient ausschließlich der Abholung von Kundenrädern und betrieblichen Besorgungen. Kaufpreis netto 12.900,00 €, Umsatzsteuer 19 % 2.451,00 €, Zahlbetrag 15.351,00 €. Übergabe mit zwei Schlüsseln; Zahlung per Überweisung.",
+      "konto": "0320",
+      "richtung": "ausgabe",
+      "namen": [
+        "Autohaus Tannhöfe GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Autohaus Tannhöfe GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A002.txt",
+      "text": "Fahrzeugzentrum Waldkante KG\nRechnung E-88 vom 07.03.2025 an Radspur Elmbach.\nEin elektrischer Kleinwagen mit fünf Sitzplätzen, Erstzulassung 06/2022, wird laut Übergabeprotokoll in das Eigentum des Käufers übertragen. Nutzung für Kundentermine und Lieferfahrten des Werkstattbetriebs. Nettopreis 17.800,00 €; darauf 19 % USt 3.382,00 €; insgesamt 21.182,00 €. Kein Leasingvertrag und keine monatlichen Raten. Der vollständige Betrag wurde am Übergabetag vom Geschäftskonto bezahlt.",
+      "konto": "0320",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fahrzeugzentrum Waldkante KG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Fahrzeugzentrum Waldkante KG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A003.txt",
+      "text": "RECHNUNG 25-K71 | 19.06.2025\nVerkäufer: Mobilhof Birkenweg GmbH\nRechnungsempfänger: Radspur Elmbach, Ufergasse 12.\nGebrauchter siebensitziger Hochdachkombi, amtliche Fahrzeugart Personenkraftwagen, EZ 2019, 84.600 km. Für den neuen mobilen Fahrradservice gekauft und dauerhaft dem Betrieb zugeordnet. Fahrzeug netto 9.600,00 €, gesetzliche Umsatzsteuer 1.824,00 € (19 %), Endsumme 11.424,00 €. Fahrzeugbrief und Wagen am 19.06. ausgehändigt. Bankzahlung bestätigt.",
+      "konto": "0320",
+      "richtung": "ausgabe",
+      "namen": [
+        "Mobilhof Birkenweg GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Mobilhof Birkenweg GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A004.txt",
+      "text": "Heben & Halten Maschinenbau GmbH\nAuftrag 517, Rechnung vom 23.01.2025\nAn Radspur Elmbach: Eine hydraulische Arbeitsbühne für schwere Lastenräder, Traglast 350 kg, Seriennummer HH-5196. Im Werkstattraum aufgestellt und betriebsbereit übergeben; Verwendung für Reparaturarbeiten über mehrere Jahre. Warenwert einschließlich Anlieferung 2.290,00 € netto, 19 % USt 435,10 €, Gesamtbetrag 2.725,10 €. Fällig bis 06.02.2025 ohne Abzug. Unterschrift auf dem Lieferschein vorhanden.",
+      "konto": "0400",
+      "richtung": "ausgabe",
+      "namen": [
+        "Heben & Halten Maschinenbau GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Heben & Halten Maschinenbau GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A005.txt",
+      "text": "Druckluftservice Erlenbruch · Rechnung DL-209\nLeistungsdatum 11.02.2025, Kunde Radspur Elmbach.\nStationärer Werkstattkompressor mit 100-Liter-Behälter und festem Druckregler geliefert. Die Maschine versorgt die Reparaturplätze mit Druckluft und bleibt im Eigentum des Fahrradbetriebs. Einschließlich Erstinbetriebnahme: 1.280,00 € netto. Mehrwertsteuer 19 %: 243,20 €. Zu überweisen: 1.523,20 €. Zahlungsziel 14 Tage; Anschluss an die vorhandene Leitung ohne bauliche Erweiterung.",
+      "konto": "0400",
+      "richtung": "ausgabe",
+      "namen": [
+        "Druckluftservice Erlenbruch",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Druckluftservice Erlenbruch",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A006.txt",
+      "text": "Werktechnik Felsenau OHG\nBeleg WT-355, ausgestellt am 08.05.2025 für Radspur Elmbach.\nLieferumfang: eine stationäre Zentrier- und Prüfstation für Laufräder mit Messuhren und stabilem Maschinensockel. Einsatz in der eigenen Fahrradreparatur, keine Ware für den Weiterverkauf. Nettobetrag 1.840,00 €, Umsatzsteuer 19 % 349,60 €, Rechnungsbetrag 2.189,60 €. Abnahme am selben Tag, erwartete Nutzung acht Jahre. Zahlung auf das angegebene Lieferantenkonto bis 22.05.2025.",
+      "konto": "0400",
+      "richtung": "ausgabe",
+      "namen": [
+        "Werktechnik Felsenau OHG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Werktechnik Felsenau OHG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A007.txt",
+      "text": "Ladenbau Morgensteg GmbH | Rechnung L-144\nRadspur Elmbach, Ufergasse 12, 34127 Elmbach\nAm 17.02.2025 wurde eine freistehende Verkaufstheke mit abschließbaren Schubladen geliefert und im Kundenbereich montiert. Die Theke dient dauerhaft der Warenübergabe und Kassierung; sie ist nicht mit dem Gebäude verbunden. Gesamtpreis netto 1.850,00 €, zuzüglich 19 % Umsatzsteuer 351,50 €, brutto 2.201,50 €. Die Rechnung ist binnen zehn Tagen per Bank zu begleichen.",
+      "konto": "0410",
+      "richtung": "ausgabe",
+      "namen": [
+        "Ladenbau Morgensteg GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Ladenbau Morgensteg GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A008.txt",
+      "text": "Einrichtungshaus Riedwinkel KG\nLieferrechnung 25-688 vom 04.04.2025\nBesteller und Warenempfänger: Radspur Elmbach.\nEin zusammenhängendes, frei aufstellbares Präsentationsregal aus Metall für Fahrradhelme und Taschen, Breite 3,20 m, einschließlich Einlegeböden. Das Möbel verbleibt langfristig im Verkaufsraum. Netto 1.240,00 € plus 235,60 € Umsatzsteuer bei 19 %, zahlbar 1.475,60 €. Aufbau abgeschlossen, keine Änderungen an Wänden oder Elektrik. Zahlungseingang per Karte bestätigt.",
+      "konto": "0410",
+      "richtung": "ausgabe",
+      "namen": [
+        "Einrichtungshaus Riedwinkel KG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Einrichtungshaus Riedwinkel KG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A009.txt",
+      "text": "Kontorraum Westbogen GmbH\nRechnung B-309 / Lieferdatum 22.08.2025\nFür Radspur Elmbach wurde ein elektrisch höhenverstellbarer Schreibtisch mit fest zugehörigem Rückwandaufsatz geliefert. Standort ist das eigene Verwaltungsbüro hinter dem Laden. Anschaffung zur mehrjährigen Nutzung, kein Mietmöbel. Preis 1.100,00 € netto; Umsatzsteuer 19 % 209,00 €; Gesamt 1.309,00 €. Der komplette Tisch wurde am Lieferdatum funktionsfähig übergeben und aus dem Geschäftsbankkonto bezahlt.",
+      "konto": "0410",
+      "richtung": "ausgabe",
+      "namen": [
+        "Kontorraum Westbogen GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Kontorraum Westbogen GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A010.txt",
+      "text": "Büromöbel Kleeufer · Kassenrechnung 0378\nDatum: 29.01.2025, Käufer: Radspur Elmbach.\nEin ergonomischer Bürodrehstuhl, Modell Sitzwerk, mit Armlehnen und Rollen. Er ersetzt den defekten Stuhl im Werkstattbüro und kann unabhängig von anderen Anschaffungen genutzt werden. Stückpreis netto 289,00 €, Mehrwertsteuer 19 % 54,91 €, Kartenbetrag 343,91 €. Der Stuhl wurde sofort mitgenommen; vorgesehen ist eine mehrjährige Verwendung im Betrieb. Kein weiteres Zubehör berechnet.",
+      "konto": "0480",
+      "richtung": "ausgabe",
+      "namen": [
+        "Büromöbel Kleeufer",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Büromöbel Kleeufer",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A011.txt",
+      "text": "Saubergerät Haselborn GmbH\nRechnung SG-542 an Radspur Elmbach, 12.05.2025.\nGeliefert: ein fahrbarer Nass- und Trockensauger, 30 Liter, mit Motor, Schlauch und Düse als vollständiges Gerät. Für die tägliche Nutzung in der eigenen Fahrradwerkstatt bestimmt und ohne weitere Geräte einsatzfähig. Nettopreis 449,00 €, darauf 19 % Umsatzsteuer 85,31 €, Rechnungsbetrag 534,31 €. Die Zahlung erfolgte per Überweisung am 14.05.2025. Garantieunterlagen liegen dem Gerät bei.",
+      "konto": "0480",
+      "richtung": "ausgabe",
+      "namen": [
+        "Saubergerät Haselborn GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Saubergerät Haselborn GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A012.txt",
+      "text": "Werkzeugmarkt Sandrain OHG · Rechnung W-801\n18.09.2025 | Kunde: Radspur Elmbach\nEin Akku-Bohrschrauber im vollständigen Set mit einem Akku, Ladegerät und Koffer, zur eigenen Nutzung bei Montagearbeiten. Das einsatzbereite Set benötigt kein anderes Werkzeug als Grundgerät. Netto 249,00 €; Umsatzsteuer 19 % 47,31 €; bezahlt mit Geschäftskarte 296,31 €. Abholung am Rechnungstag. Es handelt sich um ein langlebiges Werkzeug, nicht um Ersatzteile oder Verbrauchsmaterial.",
+      "konto": "0480",
+      "richtung": "ausgabe",
+      "namen": [
+        "Werkzeugmarkt Sandrain OHG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Werkzeugmarkt Sandrain OHG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A013.txt",
+      "text": "Radspur Elmbach · Interner Zahlungsbeleg P-01\n03.02.2025\nInhaberin Mira Feldkamp hat 600,00 € vom Geschäftskonto auf ihr persönliches Girokonto überwiesen. Verwendungszweck des Bankauftrags: Anzahlung für die private Urlaubsreise mit der Familie. Der Reiseanbieter hat keine Leistung für die Fahrradwerkstatt erbracht. Betrag ohne Umsatzsteuer; keine betriebliche Rechnung liegt zugrunde. Auszahlung im Kontoauszug bestätigt und von der Inhaberin am selben Tag abgezeichnet.",
+      "konto": "1800",
+      "richtung": "ausgabe",
+      "namen": [
+        "Radspur Elmbach",
+        "Mira Feldkamp"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A014.txt",
+      "text": "Kassenquittung P-17, Radspur Elmbach\nAm 24.04.2025 entnahm Mira Feldkamp als alleinige Inhaberin 200,00 € Bargeld aus der Ladenkasse. Das Geld ist für den privaten Wocheneinkauf bestimmt und wird nicht für Beschaffungen des Betriebs verwendet. Ausgezählt: vier Scheine zu 50,00 €. Kein Wareneinkauf, keine Vergütung an Mitarbeitende und kein steuerpflichtiger Umsatz. Empfang des Bargelds persönlich bestätigt; Gegenzeichnung durch die Kassenverantwortliche am 24.04.2025.",
+      "konto": "1800",
+      "richtung": "ausgabe",
+      "namen": [
+        "Radspur Elmbach",
+        "Mira Feldkamp"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A015.txt",
+      "text": "Radspur Elmbach — Ergänzung zum Bankauszug vom 06.10.2025\nZahlung 150,00 € an den Energieversorger für die Privatwohnung der Inhaberin Mira Feldkamp, Wohnanschrift Rosenpfad 8. Der Abschlag wurde versehentlich vom Geschäftskonto eingezogen. Die Wohnung wird ausschließlich privat genutzt; sie enthält kein Arbeitszimmer und gehört nicht zu den Betriebsräumen. Die Inhaberin übernimmt den Betrag persönlich. Keine Erstattung durch einen Kunden, keine betriebliche Steuer geltend machen.",
+      "konto": "1800",
+      "richtung": "ausgabe",
+      "namen": [
+        "Radspur Elmbach",
+        "Mira Feldkamp"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A016.txt",
+      "text": "Radspur Elmbach · Bankbegleitbeleg E-02\n09.01.2025\nMira Feldkamp, alleinige Inhaberin, überwies 2.000,00 € von ihrem privaten Sparkonto auf das Geschäftskonto der Fahrradwerkstatt. Das Geld stammt aus persönlichen Ersparnissen und soll die Anfangsausgaben des Jahres finanzieren. Es besteht weder ein Darlehensvertrag noch eine Forderung eines Kunden. Keine Waren oder Dienstleistungen wurden dafür verkauft; Umsatzsteuer fällt nicht an. Wertstellung und Eingang laut Bank am 09.01.2025.",
+      "konto": "1890",
+      "richtung": "einnahme",
+      "namen": [
+        "Radspur Elmbach",
+        "Mira Feldkamp"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A017.txt",
+      "text": "Kassenbeleg E-11 vom 15.03.2025\nBetrieb: Radspur Elmbach\nDie Inhaberin Mira Feldkamp legt 300,00 € aus ihrem privaten Portemonnaie in die Ladenkasse ein, um genügend Wechselgeld für das Frühlingswochenende bereitzuhalten. Gezählt wurden zehn Scheine zu 20,00 € und zehn zu 10,00 €. Der Betrag ist eigenes Geld der Inhaberin, kein Tagesumsatz und keine Kundenanzahlung. Zugang in der Kasse bestätigt. Es entsteht keine Rückzahlungsverpflichtung gegenüber einer fremden Person.",
+      "konto": "1890",
+      "richtung": "einnahme",
+      "namen": [
+        "Radspur Elmbach",
+        "Mira Feldkamp"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A018.txt",
+      "text": "Zahlungsnachweis vom 28.07.2025 für Radspur Elmbach\nGutschrift auf dem Geschäftskonto: 4.500,00 €.\nAuftraggeberin Mira Feldkamp hat den Betrag aus dem privaten Verkauf ihres alten Segelboots überwiesen. Das Boot gehörte nie zum Fahrradbetrieb; die eingegangene Summe dient nun der Finanzierung betrieblicher Anschaffungen. Der Geldzufluss ist keine Bezahlung einer Rechnung und kein Kredit. Die Inhaberin bestätigt die Herkunft aus ihrem persönlichen Vermögen. Ohne Umsatzsteuerausweis.",
+      "konto": "1890",
+      "richtung": "einnahme",
+      "namen": [
+        "Radspur Elmbach",
+        "Mira Feldkamp"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A019.txt",
+      "text": "Backwarenvertrieb Kornwiese GmbH\nRechnung BK-118, 06.02.2025 an Radspur Elmbach.\nGeliefert für das Verkaufsregal am Werkstatttresen: 120 einzeln verpackte Haferkekse zu netto 0,70 €. Die ungeöffneten Packungen werden an Kundschaft weiterverkauft; kein Verzehr durch Beschäftigte. Warenwert 84,00 €, Umsatzsteuer für die Lebensmittel 7 % 5,88 €, Gesamt 89,88 €. Lieferung am 06.02., Zahlung per Bank innerhalb von sieben Tagen. Transport ist im Preis enthalten.",
+      "konto": "3300",
+      "richtung": "ausgabe",
+      "namen": [
+        "Backwarenvertrieb Kornwiese GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Backwarenvertrieb Kornwiese GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A020.txt",
+      "text": "Snackhandel Hainbogen e.K. | Lieferschein und Rechnung SH-402\nEmpfänger Radspur Elmbach, 13.05.2025.\n60 haltbare Fruchtriegel ohne Getränkeanteil, einzeln versiegelt, Einkaufspreis 0,80 € je Stück. Zur unveränderten Weiterveräußerung im kleinen Snackangebot der Fahrradwerkstatt eingelagert. Nettosumme 48,00 €; 7 % Mehrwertsteuer 3,36 €; zu zahlen 51,36 €. Die Lieferung wurde vollständig angenommen, MHD 12/2025. Überweisung am 16.05.2025, keine Personalverpflegung.",
+      "konto": "3300",
+      "richtung": "ausgabe",
+      "namen": [
+        "Snackhandel Hainbogen e.K.",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Snackhandel Hainbogen e.K.",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A021.txt",
+      "text": "Nusskontor Silberhain OHG\nRechnung N-729 vom 02.09.2025\nAn Radspur Elmbach wurden 40 Beutel geröstete Mandeln, je 100 g, geliefert. Preis pro Beutel netto 2,00 €, zusammen 80,00 €. Die Ware kommt ausschließlich in das Verkaufsregal für mitnehmbare Snacks. Umsatzsteuer 7 %: 5,60 €; Rechnungsendbetrag 85,60 €. Zahlung binnen 14 Tagen. Verpackung und Fracht sind enthalten, keine Rückgabe vereinbart. Wareneingang durch Ladenpersonal am Lieferdatum bestätigt.",
+      "konto": "3300",
+      "richtung": "ausgabe",
+      "namen": [
+        "Nusskontor Silberhain OHG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Nusskontor Silberhain OHG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A022.txt",
+      "text": "Zweiradteile Brückenfeld GmbH\nRechnung Z-261 vom 21.02.2025 an Radspur Elmbach.\n20 Fahrradreifen 28 Zoll, Tourenausführung, zu 14,00 € netto. Bestimmt für den Verkauf an Endkunden beziehungsweise den Einbau in deren Räder gegen Berechnung; nicht für eigene Fahrzeuge. Nettowarenwert 280,00 €, zuzüglich 19 % USt 53,20 €, Gesamtforderung 333,20 €. Lieferung vollständig, Versandkosten frei. Zahlungsziel 30 Tage auf das bekannte Lieferantenkonto.",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "namen": [
+        "Zweiradteile Brückenfeld GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Zweiradteile Brückenfeld GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A023.txt",
+      "text": "Getränkehandel Quellbogen KG · Rechnung GQ-571\nWarenempfänger: Radspur Elmbach, Datum 03.06.2025.\n48 Trinkpäckchen Apfelsaft, je 0,2 Liter, ohne Milchbestandteile, pfandfreie Verbundkartons. Nettostückpreis 0,75 €, Summe 36,00 €. Für den entgeltlichen Verkauf an wartende Fahrradkunden bestimmt. Umsatzsteuer auf Getränke 19 % 6,84 €, Gesamtbetrag 42,84 €. Keine Bewirtung auf Kosten des Hauses. Lieferung und Zahlung per Geschäftskarte erfolgten am selben Tag.",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "namen": [
+        "Getränkehandel Quellbogen KG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Getränkehandel Quellbogen KG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A024.txt",
+      "text": "Antrieb & Rad Großhandel GmbH\nRechnungsnummer AR-904 / 16.10.2025\nKunde: Radspur Elmbach\n18 Fahrradketten für Zehnfach-Schaltungen, Artikel K10, Einzelpreis netto 12,00 €. Lagerware zum Weiterverkauf und für Reparaturen an Kundenfahrrädern. Warenwert 216,00 €, Umsatzsteuer 19 % 41,04 €, brutto 257,04 €. Karton ungeöffnet und vollständig angeliefert. Rechnung zahlbar ohne Abzug bis 30.10.2025. Die Ware wird nicht im eigenen Anlagebestand eingesetzt.",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "namen": [
+        "Antrieb & Rad Großhandel GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Antrieb & Rad Großhandel GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A025.txt",
+      "text": "Radspur Elmbach — Abrechnung Januar 2025\nAngestellte: Nora Kessel, Personalnummer 07, Vollzeit im Verkauf und in der Auftragsannahme.\nVertraglich festes Monatsentgelt 2.800,00 € brutto. Abzüge: Lohnsteuer 300,00 €, Solidaritätszuschlag 0,00 €, Kirchensteuer 0,00 €, Arbeitnehmeranteile Sozialversicherung 525,60 €. Auszahlungsbetrag 1.974,40 €, überwiesen am 31.01.2025. Keine Stundenlohnabrechnung, kein Vorschuss und keine Reisekostenerstattung. Abrechnungszeitraum 01.01. bis 31.01.2025.",
+      "konto": "4120",
+      "richtung": "ausgabe",
+      "namen": [
+        "Radspur Elmbach",
+        "Nora Kessel"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A026.txt",
+      "text": "Monatsabrechnung 06/2025 · Radspur Elmbach\nBeschäftigter: Timo Ahrens, Werkstattleitung im Angestelltenverhältnis.\nFest vereinbarte Bruttovergütung für Juni: 3.200,00 €. Steuerabzüge 420,00 €, Arbeitnehmerbeiträge zur Sozialversicherung 654,40 €, weitere Abzüge 0,00 €. Somit 2.125,60 € netto, am 27.06.2025 auf das persönliche Gehaltskonto ausgezahlt. Die Vergütung deckt den regulären Beschäftigungsmonat ab. Arbeitgeberbeiträge werden auf dem gesonderten Beitragsnachweis geführt.",
+      "konto": "4120",
+      "richtung": "ausgabe",
+      "namen": [
+        "Radspur Elmbach",
+        "Timo Ahrens"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A027.txt",
+      "text": "Radspur Elmbach | Personalabrechnung September 2025\nLea Doren, kaufmännische Teilzeitangestellte, 25 Wochenstunden.\nMonatliches festes Bruttoentgelt laut Arbeitsvertrag: 1.900,00 €. Lohnsteuer 103,20 €, Arbeitnehmeranteile der Sozialversicherung 391,40 €, keine Kirchensteuer und kein Solidaritätszuschlag. Nettoauszahlung 1.405,40 € mit Wertstellung 30.09.2025. Zeitraum 01.–30.09.2025, keine Fehlzeiten und keine Sonderzahlung. Zahlungsfreigabe durch die Inhaberin dokumentiert.",
+      "konto": "4120",
+      "richtung": "ausgabe",
+      "namen": [
+        "Radspur Elmbach",
+        "Lea Doren"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A028.txt",
+      "text": "Immobilienverwaltung Uferbogen GmbH\nDauerrechnung U-12 für März 2025 an Radspur Elmbach.\nÜberlassung von Laden und Fahrradwerkstatt, Ufergasse 12, Erdgeschoss, 140 m², gemäß Vertrag vom 01.08.2023. Monatliches Entgelt ohne Betriebskostenvorauszahlungen 1.200,00 € netto. Aufgrund vereinbarter Umsatzsteueroption zuzüglich 19 % 228,00 €, fälliger Gesamtbetrag 1.428,00 € am 03.03.2025. Keine Kaution oder Kaufpreisrate enthalten. Betrag wird vom Geschäftskonto eingezogen.",
+      "konto": "4210",
+      "richtung": "ausgabe",
+      "namen": [
+        "Immobilienverwaltung Uferbogen GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Immobilienverwaltung Uferbogen GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A029.txt",
+      "text": "Helene Wendt · Zahlungsanforderung vom 28.04.2025\nAn Radspur Elmbach für den Zeitraum 01.05.–31.05.2025.\nNutzung der separat angemieteten Lagerhalle, Flurweg 6, zur Unterbringung von Saisonrädern. Vertraglicher Monatsbetrag 950,00 €, ohne Nebenkosten. Die Vermieterin hat nicht zur Umsatzsteuer optiert; daher wird keine Umsatzsteuer berechnet. Bitte bis zum dritten Werktag überweisen. Die Halle bleibt Eigentum der Vermieterin; die Zahlung ist keine Anzahlung auf einen Erwerb.",
+      "konto": "4210",
+      "richtung": "ausgabe",
+      "namen": [
+        "Helene Wendt",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A030.txt",
+      "text": "Raumwerk Nordkante KG\nRechnung RN-88, ausgestellt am 01.10.2025 für Radspur Elmbach.\nFür Oktober wird der abgetrennte Abstellraum Nr. 4 im Gewerbehof, 24 m², zur ausschließlichen betrieblichen Aufbewahrung von Versandkartons überlassen. Grundentgelt 300,00 € netto; 19 % Umsatzsteuer 57,00 €; Rechnungsbetrag 357,00 €. Es werden keine Verbrauchskosten oder Reparaturen abgerechnet. Zahlung bis 06.10.2025. Grundlage ist der unbefristete Nutzungsvertrag vom 15.07.2025.",
+      "konto": "4210",
+      "richtung": "ausgabe",
+      "namen": [
+        "Raumwerk Nordkante KG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Raumwerk Nordkante KG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A031.txt",
+      "text": "Energieversorgung Elmbach GmbH · Abschlagsmitteilung\nKundin: Radspur Elmbach, Betriebsstelle Ufergasse 12.\nFür die elektrische Versorgung von Verkaufsraum und Werkstatt wird am 15.02.2025 der vereinbarte Monatsabschlag abgebucht. Zähler E-72916, Abschlagsmonat Februar 2025. Netto 200,00 €, Umsatzsteuer 19 % 38,00 €, Gesamtbelastung 238,00 €. Der Zähler erfasst ausschließlich gewerblich genutzte Räume. Keine private Wohnung und kein Fahrzeugladevertrag sind Bestandteil dieses Abschlags.",
+      "konto": "4240",
+      "richtung": "ausgabe",
+      "namen": [
+        "Energieversorgung Elmbach GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Energieversorgung Elmbach GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A032.txt",
+      "text": "Wärmelieferung Talstrom AG\nVerbrauchsrechnung WT-37 vom 06.03.2025 an Radspur Elmbach.\nErdgas für die Heizung der gemieteten Fahrradwerkstatt, Abrechnungszeitraum Februar 2025. Gemessener Verbrauch laut Zähler G-6628: 1.600 kWh, Arbeitspreis einschließlich Grundanteil netto 160,00 €. Umsatzsteuer 19 % 30,40 €, Rechnungsbetrag 190,40 €. Fällig am 20.03.2025. Es handelt sich um die laufende Belieferung, nicht um eine Heizungsreparatur oder die Anschaffung einer Anlage.",
+      "konto": "4240",
+      "richtung": "ausgabe",
+      "namen": [
+        "Wärmelieferung Talstrom AG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Wärmelieferung Talstrom AG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A033.txt",
+      "text": "Wasserwerk Kiesental · Bescheid W-184\n18.07.2025, Anschlussnehmer Radspur Elmbach.\nAbgerechnet wird ausschließlich die Trinkwasserlieferung für das Betriebsgebäude Ufergasse 12 im zweiten Quartal 2025. Verbrauch und Grundpreis zusammen 80,00 € netto. Umsatzsteuer 7 % beträgt 5,60 €, zahlbar 85,60 €. Abwassergebühren werden gesondert erhoben und sind hier nicht enthalten. Einzug am 01.08.2025 vom Geschäftsbankkonto. Die Zählerablesung erfolgte zum 30.06.2025.",
+      "konto": "4240",
+      "richtung": "ausgabe",
+      "namen": [
+        "Wasserwerk Kiesental",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Wasserwerk Kiesental",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A034.txt",
+      "text": "Glanzspur Gebäudedienst GmbH\nRechnung GG-218 vom 31.03.2025 für Radspur Elmbach.\nAm 07., 14. und 28. März wurden Verkaufsboden und Kundentoilette gesäubert. Drei Einsätze zu jeweils 30,00 € netto, einschließlich eingesetzter Mittel. Gesamtleistung 90,00 €, Umsatzsteuer 19 % 17,10 €, brutto 107,10 €. Keine Wartungs- oder Reparaturarbeiten ausgeführt. Die Einsatznachweise sind vor Ort abgezeichnet. Bitte den Rechnungsbetrag bis 10.04.2025 überweisen.",
+      "konto": "4250",
+      "richtung": "ausgabe",
+      "namen": [
+        "Glanzspur Gebäudedienst GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Glanzspur Gebäudedienst GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A035.txt",
+      "text": "Hygienebedarf Auenfeld OHG · Rechnung HA-409\nKäufer: Radspur Elmbach, 23.06.2025.\nGeliefert für den eigenen Laden: 5 Liter Bodenreiniger 22,50 €, zwei Liter Sanitärreiniger 12,00 € und zehn Mikrofasertücher 14,00 €, jeweils netto. Die Mittel werden zum Säubern der Betriebsräume verbraucht, nicht weiterverkauft. Nettosumme 48,50 €, 19 % USt 9,22 €, Gesamtbetrag 57,72 €. Ware abgeholt und mit Geschäftskarte bezahlt. Es wurden keine langlebigen Maschinen geliefert.",
+      "konto": "4250",
+      "richtung": "ausgabe",
+      "namen": [
+        "Hygienebedarf Auenfeld OHG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Hygienebedarf Auenfeld OHG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A036.txt",
+      "text": "Fensterdienst Heller Steg\nRechnung FH-63 | Leistungsdatum 08.10.2025\nAuftraggeber: Radspur Elmbach, Ufergasse 12.\nSchaufensterscheiben beidseitig gewaschen, Rahmen feucht abgewischt und Eingangstürglas gereinigt. Vereinbarter Pauschalpreis netto 110,00 €, Umsatzsteuer 19 % 20,90 €, Endbetrag 130,90 €. Der Auftrag umfasst allein die Entfernung von Schmutz; keine Dichtungen oder Scheiben ersetzt. Zahlung per Überweisung, fällig 22.10.2025. Arbeitsausführung vom Ladenpersonal bestätigt.",
+      "konto": "4250",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fensterdienst Heller Steg",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Fensterdienst Heller Steg",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A037.txt",
+      "text": "Sanitärbetrieb Uhlenkamp GmbH\nRechnung S-83 vom 05.02.2025 an Radspur Elmbach.\nIm gemieteten Werkstattraum Ufergasse 12 wurde eine undichte vorhandene Wasserleitung geöffnet, das schadhafte Anschlussstück ersetzt und die Wandstelle wieder geschlossen. Ursprünglicher Zustand wiederhergestellt, keine Erweiterung. Material und Arbeitszeit netto 230,00 €, 19 % Umsatzsteuer 43,70 €, Gesamt 273,70 €. Die Reparatur trägt gemäß Vertrag der Ladenbetreiber. Zahlung bis 19.02.2025.",
+      "konto": "4260",
+      "richtung": "ausgabe",
+      "namen": [
+        "Sanitärbetrieb Uhlenkamp GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Sanitärbetrieb Uhlenkamp GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A038.txt",
+      "text": "Malerwerk Lindenfels · Schlussrechnung M-317\nRadspur Elmbach, Ausführung 12.–13.07.2025.\nDie durch den laufenden Werkstattbetrieb verschmutzten Innenwände wurden gereinigt und mit dem vorhandenen weißen Farbton neu gestrichen. Fläche 68 m²; keine neue Raumaufteilung und keine bauliche Aufwertung. Arbeiten einschließlich Material netto 680,00 €, Umsatzsteuer 19 % 129,20 €, Gesamtbetrag 809,20 €. Abnahme am 13.07. ohne Mängel, vereinbarte Zahlung nach Rechnungseingang binnen 14 Tagen.",
+      "konto": "4260",
+      "richtung": "ausgabe",
+      "namen": [
+        "Malerwerk Lindenfels",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Malerwerk Lindenfels",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A039.txt",
+      "text": "Türservice Buchenried KG | Rechnung TB-204\nAn Radspur Elmbach, 21.11.2025.\nVorhandene Eingangstür der Werkstatt klemmte. Beschläge nachgestellt, verschlissene Laufrolle gegen gleichwertiges Teil ausgetauscht und Tür geprüft. Der Auftrag stellt die bisherige Funktion wieder her; weder neue Tür noch Sicherheitsumbau. Netto für Material und Arbeit 175,00 €, Mehrwertsteuer 19 % 33,25 €, Rechnungsbetrag 208,25 €. Fällig 05.12.2025 per Banküberweisung, Leistungsort Ufergasse 12.",
+      "konto": "4260",
+      "richtung": "ausgabe",
+      "namen": [
+        "Türservice Buchenried KG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Türservice Buchenried KG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A040.txt",
+      "text": "Schutzbrief Eichenfurt AG\nPolice B-751 · Beitragsrechnung vom 02.01.2025\nVersicherungsnehmer: Radspur Elmbach.\nDer Vertrag deckt die gesetzliche Haftpflicht aus Fahrradreparaturen und dem Ladenbetrieb für 01.01.–31.12.2025. Jahresprämie 500,00 €, Versicherungssteuer 95,00 €, Gesamtbeitrag 595,00 €. Einzug am 16.01.2025. Personenkraftwagen sind vom Vertrag nicht erfasst. Der ausgewiesene Steuerbetrag ist Versicherungssteuer; Umsatzsteuer wird nicht berechnet.",
+      "konto": "4360",
+      "richtung": "ausgabe",
+      "namen": [
+        "Schutzbrief Eichenfurt AG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Schutzbrief Eichenfurt AG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A041.txt",
+      "text": "Sachschutz Quellstein VVaG | Zahlungsmitteilung I-408\nAn Radspur Elmbach, 10.04.2025.\nFür den Schutz des Warenlagers und der Werkstatteinrichtung gegen Feuer, Leitungswasser und Einbruchdiebstahl beträgt die Prämie für 01.04.2025 bis 31.03.2026 netto 360,00 €. Hinzu kommen 68,40 € Versicherungssteuer, fällig sind 428,40 €. Risikoadresse Ufergasse 12. Die Abbuchung erfolgt am 24.04.2025. Enthalten sind ausschließlich bewegliche Sachen des Betriebs, keine privaten Hausratgegenstände.",
+      "konto": "4360",
+      "richtung": "ausgabe",
+      "namen": [
+        "Sachschutz Quellstein VVaG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Sachschutz Quellstein VVaG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A042.txt",
+      "text": "Rechtsschutzverbund Lindenbogen AG\nRechnung RS-84 vom 15.08.2025\nVertragspartner Radspur Elmbach, Inhaberin Mira Feldkamp.\nJahresschutz für arbeits- und vertragsrechtliche Streitigkeiten des Gewerbebetriebs, Laufzeit 01.09.2025 bis 31.08.2026. Beitrag 280,00 € zuzüglich Versicherungssteuer 53,20 €, insgesamt 333,20 €. Verkehrs- und privater Rechtsschutz sind nicht eingeschlossen. Bitte den Beitrag unter Angabe der Policennummer überweisen. Ein Umsatzsteuerausweis erfolgt nicht.",
+      "konto": "4360",
+      "richtung": "ausgabe",
+      "namen": [
+        "Rechtsschutzverbund Lindenbogen AG",
+        "Radspur Elmbach",
+        "Mira Feldkamp"
+      ],
+      "firmennamen": [
+        "Rechtsschutzverbund Lindenbogen AG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A043.txt",
+      "text": "Handwerkskammer Elmbacher Land\nBeitragsbescheid H-516 vom 17.02.2025\nMitgliedsbetrieb: Radspur Elmbach, Ufergasse 12.\nAufgrund der Eintragung als Fahrradmechanikerbetrieb wird für das Kalenderjahr 2025 ein Grundbeitrag von 180,00 € festgesetzt. Der Bescheid betrifft die gesetzliche Kammermitgliedschaft; Lehrgänge und sonstige Einzelleistungen sind nicht enthalten. Fälligkeit 17.03.2025, zahlbar auf das Kammerkonto. Der Gesamtbetrag enthält keine Umsatzsteuer.",
+      "konto": "4380",
+      "richtung": "ausgabe",
+      "namen": [
+        "Handwerkskammer Elmbacher Land",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Handwerkskammer Elmbacher Land",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A044.txt",
+      "text": "Zweiradinnung Auenkreis · Mitgliedsnummer Z-27\nJahresrechnung vom 03.03.2025 an Radspur Elmbach.\nFür die ordentliche Mitgliedschaft vom 01.01. bis 31.12.2025 sind gemäß Beitragsordnung 120,00 € zu zahlen. Der Betrag finanziert die allgemeine Interessenvertretung und ist keiner einzelnen Beratung oder Veranstaltung zugeordnet. Umsatzsteuer wird für diesen echten Mitgliedsbeitrag nicht erhoben. Bitte bis 24.03.2025 überweisen; die Mitgliedschaft besteht seit 2023.",
+      "konto": "4380",
+      "richtung": "ausgabe",
+      "namen": [
+        "Zweiradinnung Auenkreis",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Zweiradinnung Auenkreis",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A045.txt",
+      "text": "Gewerbeverein Uferquartier e.V.\nAn Radspur Elmbach · Zahlungsaufforderung GV-91\n08.09.2025\nDer satzungsmäßige Jahresbeitrag für gewerbliche Mitglieder beträgt 75,00 €. Er gilt für das Vereinsjahr 2025 und dient der allgemeinen Arbeit der örtlichen Gewerbevertretung. Keine Werbung, Standmiete oder Teilnahmegebühr ist Bestandteil dieser Forderung. Gesamtbetrag ohne Umsatzsteuer: 75,00 €. Laut erteilter Einzugsermächtigung erfolgt die Abbuchung am 22.09.2025.",
+      "konto": "4380",
+      "richtung": "ausgabe",
+      "namen": [
+        "Gewerbeverein Uferquartier e.V.",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Gewerbeverein Uferquartier e.V.",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A046.txt",
+      "text": "Hauptzollamt Elmbach\nBescheid vom 20.01.2025, Halterin Radspur Elmbach.\nFür das betrieblich genutzte Fahrzeug mit Kennzeichen EB-RF 216 wird die Kraftfahrzeugsteuer für 20.01.2025 bis 19.01.2026 auf 142,00 € festgesetzt. Der Betrag wird zum Fälligkeitstag vom angegebenen Geschäftskonto eingezogen. Grundlage sind Hubraum und CO₂-Ausstoß laut Fahrzeugregister. Öffentlich-rechtliche Abgabe, keine Umsatzsteuer. Der Wagen gehört zum eigenen Fuhrpark der Fahrradwerkstatt.",
+      "konto": "4500",
+      "richtung": "ausgabe",
+      "namen": [
+        "Hauptzollamt Elmbach",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Hauptzollamt Elmbach",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A047.txt",
+      "text": "Prüfstelle Bergtor GmbH · Untersuchungsbericht und Rechnung P-638\nAn Radspur Elmbach, 18.06.2025.\nHauptuntersuchung einschließlich Abgasprüfung am betrieblichen Kombi EB-RF 216, Kilometerstand 68.310. Untersuchung ohne erhebliche Mängel; Plakette zugeteilt. Prüfleistung 79,00 € netto, 19 % Umsatzsteuer 15,01 €, Kartenzahlung 94,01 €. Es wurden keine Ersatzteile geliefert und keine Reparaturarbeiten vorgenommen. Nächster Prüftermin Juni 2027.",
+      "konto": "4500",
+      "richtung": "ausgabe",
+      "namen": [
+        "Prüfstelle Bergtor GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Prüfstelle Bergtor GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A048.txt",
+      "text": "Mobilmiete Sonnrain KG | Rechnung MS-268\nRadspur Elmbach, Mietzeit 12.–13.08.2025.\nEin Ersatz-Kombi wurde während des Werkstattaufenthalts des eigenen Betriebswagens für Kundenabholungen bereitgestellt. Zwei Tage zu je 49,00 € netto, insgesamt 98,00 €. Mehrwertsteuer 19 % 18,62 €, zu zahlen 116,62 €. Rückgabe am 13.08. um 18:00 Uhr, Kraftstoff separat vom Nutzer beschafft. Kein Eigentumsübergang, keine Kaution in diesem Rechnungsbetrag. Zahlung per Firmenkarte bestätigt.",
+      "konto": "4500",
+      "richtung": "ausgabe",
+      "namen": [
+        "Mobilmiete Sonnrain KG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Mobilmiete Sonnrain KG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A049.txt",
+      "text": "Tankpunkt Auenallee GmbH\nKassenbon T-883, 26.02.2025, 07:42 Uhr\nAbnehmer: Radspur Elmbach.\nSuper E10, Zapfsäule 3, 40,00 Liter zu 1,75 €: 70,00 € brutto. Darin Nettobetrag 58,82 € und Umsatzsteuer 19 % 11,18 €. Bezahlt mit Geschäftskarte. Auf dem Beleg ergänzt: getankt für Betriebswagen EB-RF 216, Kilometerstand 63.480, vor der Tour zur Abholung von Kundenfahrrädern. Keine weiteren Shopartikel gekauft; Kartentransaktion erfolgreich.",
+      "konto": "4530",
+      "richtung": "ausgabe",
+      "namen": [
+        "Tankpunkt Auenallee GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Tankpunkt Auenallee GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A050.txt",
+      "text": "Waschpark Kieselwiese · Quittung 529\n03.07.2025, Auftraggeber Radspur Elmbach.\nAußenwäsche des eigenen Firmenwagens EB-RF 216 nach einem schlammigen Auslieferungseinsatz. Programm mit Unterbodenwäsche, einmalige Nutzung: Gesamtpreis 15,00 €. Enthalten sind 12,61 € netto und 2,39 € Mehrwertsteuer (19 %). Betrag bar entrichtet, Leistung am selben Tag ausgeführt. Keine Aufbereitung zum Weiterverkauf und keine Reparatur. Der Bon wurde der betrieblichen Fahrzeugmappe zugeordnet.",
+      "konto": "4530",
+      "richtung": "ausgabe",
+      "namen": [
+        "Waschpark Kieselwiese",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Waschpark Kieselwiese",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A051.txt",
+      "text": "Autobedarf Rothang OHG\nKaufbeleg R-714 vom 09.10.2025\nKunde Radspur Elmbach: Zwei Liter Motoröl nach Herstellervorgabe für den eigenen Benzin-Kombi EB-RF 216, zum Nachfüllen zwischen den Inspektionen. Nettopreis gesamt 17,50 €, Umsatzsteuer 19 % 3,33 €, Zahlbetrag 20,83 €. Abholung und Zahlung per Karte am Rechnungstag. Das Öl wird im betrieblichen Fahrzeug verbraucht; es gehört nicht zum Sortiment für Fahrradkunden. Kein Einbau oder Werkstattlohn berechnet.",
+      "konto": "4530",
+      "richtung": "ausgabe",
+      "namen": [
+        "Autobedarf Rothang OHG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Autobedarf Rothang OHG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A052.txt",
+      "text": "Fahrerschutz Lindenhain AG\nBeitragsrechnung K-337 für Radspur Elmbach\nAusgestellt 14.01.2025, Kennzeichen EB-RF 216.\nHaftpflichtdeckung für den betrieblichen Kombi, Versicherungszeitraum 20.01.2025 bis 19.01.2026. Grundbeitrag 420,00 €, Versicherungssteuer 79,80 €, Gesamtforderung 499,80 €. Der Betrag enthält keine Umsatzsteuer. Lastschrift zum Versicherungsbeginn. Versichert sind Schäden aus dem Gebrauch dieses Kraftfahrzeugs; die allgemeine Betriebshaftpflicht ist nicht Bestandteil des Vertrags.",
+      "konto": "4540",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fahrerschutz Lindenhain AG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Fahrerschutz Lindenhain AG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A053.txt",
+      "text": "Mobilpolice Felsbach VVaG · Police EK-192\n07.03.2025 an Radspur Elmbach\nFür den elektrisch betriebenen Firmen-Kleinwagen EB-RF 217 wird für 07.03.2025 bis 06.03.2026 die Vollkaskodeckung mit 500,00 € Selbstbeteiligung berechnet. Prämie 280,00 €, zuzüglich Versicherungssteuer 53,20 €, Beitrag gesamt 333,20 €. Kein Umsatzsteuerausweis. Einzug vom Geschäftskonto am 21.03.2025. Das Fahrzeug dient ausschließlich den Fahrten der Werkstatt und wurde mit Kaufdatum angemeldet.",
+      "konto": "4540",
+      "richtung": "ausgabe",
+      "namen": [
+        "Mobilpolice Felsbach VVaG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Mobilpolice Felsbach VVaG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A054.txt",
+      "text": "Wegschutz Tannenrain AG\nZahlungsmitteilung vom 19.06.2025, Vertrag K-672\nVersicherungsnehmer Radspur Elmbach, Kennzeichen EB-RF 218.\nFür den neu erworbenen Hochdachkombi gilt ab 19.06.2025 die vereinbarte Haftpflicht einschließlich Teilkasko. Jahresprämie 300,00 €, Versicherungssteuer 57,00 €, insgesamt 357,00 €. Der Betrag wird zum 03.07.2025 fällig. Die Deckung betrifft allein das genannte Fahrzeug des mobilen Fahrradservices. Umsatzsteuer ist in diesem Beitrag nicht enthalten.",
+      "konto": "4540",
+      "richtung": "ausgabe",
+      "namen": [
+        "Wegschutz Tannenrain AG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Wegschutz Tannenrain AG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A055.txt",
+      "text": "Wochenblatt Uferblick Verlag GmbH\nRechnung WU-219 vom 14.03.2025 an Radspur Elmbach.\nIn Ausgabe 11 erschien eine Viertelseite mit dem Angebot „Frühjahrscheck für dein Fahrrad“ und der Ladenanschrift. Anzeigenraum einschließlich Satzarbeiten netto 180,00 €, zuzüglich 19 % USt 34,20 €, Rechnungsbetrag 214,20 €. Erscheinungsgebiet Elmbach und Nachbarorte, Belegexemplar beigefügt. Die Veröffentlichung dient der Gewinnung von Werkstattkunden. Zahlung binnen 14 Tagen ohne Skonto.",
+      "konto": "4600",
+      "richtung": "ausgabe",
+      "namen": [
+        "Wochenblatt Uferblick Verlag GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Wochenblatt Uferblick Verlag GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A056.txt",
+      "text": "Pixelpfad Medien GmbH · Leistungsabrechnung PM-503\nKunde: Radspur Elmbach\nZeitraum 01.–30.06.2025: Ausspielung regionaler Bildanzeigen für den Sommerverkauf von Fahrradhelmen und Taschen, einschließlich Kampagnenbetreuung. Sitz des Anbieters in Deutschland. Nettopreis 280,00 €, Umsatzsteuer 19 % 53,20 €, Gesamt 333,20 €. Bericht über 38.420 Einblendungen liegt bei. Keine Softwarelizenz und kein Kauf einer Internetseite. Fällig am 14.07.2025, Rechnung vom 30.06.2025.",
+      "konto": "4600",
+      "richtung": "ausgabe",
+      "namen": [
+        "Pixelpfad Medien GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Pixelpfad Medien GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A057.txt",
+      "text": "Druckerei Blätterhain OHG\nRechnung DB-811, 05.09.2025\nAn Radspur Elmbach geliefert: 2.000 gefalzte Handzettel mit Werkstattangeboten, Öffnungszeiten und Einladung zum Herbst-Servicetag. Papier, Druck und Zuschnitt zusammen 145,00 € netto. Umsatzsteuer 19 % 27,55 €, Endbetrag 172,55 €. Die Zettel sind zur kostenlosen Verteilung im Stadtteil bestimmt. Abholung am 05.09., Kartenzahlung bestätigt. Gestaltung wurde vom Auftraggeber gestellt und hier nicht gesondert berechnet.",
+      "konto": "4600",
+      "richtung": "ausgabe",
+      "namen": [
+        "Druckerei Blätterhain OHG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Druckerei Blätterhain OHG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A058.txt",
+      "text": "Feinlicht Auenhof GmbH · Rechnung F-286\n02.04.2025 an Radspur Elmbach: eine Kerze im Glas, netto 30,00 €, Umsatzsteuer 19 % 5,70 €, gesamt 35,70 €.\nVermerk zur Übergabe am 03.04.: unentgeltliches Dankeschön an Kundin Elsa Grunow von Moorpfad Reisen GmbH für die langjährige Zusammenarbeit, ohne Gegenleistung. Die Empfängerin ist keine Mitarbeiterin. Im Kalenderjahr 2025 erhielt sie sonst keine Zuwendungen des Betriebs. Empfänger und Anlass wurden einzeln dokumentiert; Zahlung per Bank.",
+      "konto": "4630",
+      "richtung": "ausgabe",
+      "namen": [
+        "Feinlicht Auenhof GmbH",
+        "Radspur Elmbach",
+        "Elsa Grunow",
+        "Moorpfad Reisen GmbH"
+      ],
+      "firmennamen": [
+        "Feinlicht Auenhof GmbH",
+        "Radspur Elmbach",
+        "Moorpfad Reisen GmbH"
+      ]
+    },
+    {
+      "datei": "A059.txt",
+      "text": "Weinkontor Abendhang KG\nKassenrechnung WA-418 vom 16.06.2025\nKäufer Radspur Elmbach: eine Flasche Rotwein in Geschenkbox, 42,00 € netto plus 7,98 € Umsatzsteuer (19 %), bezahlt 49,98 €.\nDie Inhaberin überreicht die Flasche dem externen Geschäftspartner Ole Martens zum Firmenjubiläum. Keine Gegenleistung, keine Bewirtung und kein Personalgeschenk. Empfängerbezogene Aufzeichnung: gesamte Zuwendungen 2025 an diese Person netto 42,00 €. Übergabe am 18.06.2025 bestätigt.",
+      "konto": "4630",
+      "richtung": "ausgabe",
+      "namen": [
+        "Weinkontor Abendhang KG",
+        "Radspur Elmbach",
+        "Ole Martens"
+      ],
+      "firmennamen": [
+        "Weinkontor Abendhang KG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A060.txt",
+      "text": "Schreibwarenatelier Federsteg · Rechnung FS-903\nRadspur Elmbach, 02.12.2025\nEin Füllhalter im Etui, netto 49,50 €, Mehrwertsteuer 19 % 9,41 €, Gesamtbetrag 58,91 €, mit Geschäftskarte bezahlt.\nBeigefügter Vermerk: für Sina Merten, selbstständige Kundin, als freiwillige Aufmerksamkeit zum Jahresende. Übergabe persönlich am 05.12.; keinerlei Gegenleistung vereinbart. Keine weitere Zuwendung an dieselbe Empfängerin im Jahr 2025. Der Kauf wird mit Empfängername und Anlass gesondert erfasst.",
+      "konto": "4630",
+      "richtung": "ausgabe",
+      "namen": [
+        "Schreibwarenatelier Federsteg",
+        "Radspur Elmbach",
+        "Sina Merten"
+      ],
+      "firmennamen": [
+        "Schreibwarenatelier Federsteg",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A061.txt",
+      "text": "Kontor Federlux GmbH · Rechnung KF-173\n19.05.2025, Rechnungsempfänger Radspur Elmbach.\nEin hochwertiger Schreibstift mit Etui zu 85,00 € netto, zuzüglich Umsatzsteuer 19 % 16,15 €, insgesamt 101,15 €.\nEmpfangsvermerk: am 21.05.2025 ohne Gegenleistung an Geschäftskunden Jan Osen übergeben, als Dank für seine Empfehlungen. Kein Mitarbeiter und kein Werbeartikel zur allgemeinen Verteilung. Dies ist die einzige Zuwendung an den Empfänger in diesem Kalenderjahr; der Einzelwert beträgt netto 85,00 €.",
+      "konto": "4635",
+      "richtung": "ausgabe",
+      "namen": [
+        "Kontor Federlux GmbH",
+        "Radspur Elmbach",
+        "Jan Osen"
+      ],
+      "firmennamen": [
+        "Kontor Federlux GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A062.txt",
+      "text": "Weinhandel Sonnenhalde OHG\nRechnung WS-655 vom 23.09.2025 an Radspur Elmbach\nPräsentkassette mit drei ausgewählten Weinflaschen, Preis netto 90,00 €, 19 % Umsatzsteuer 17,10 €, zahlbar 107,10 €.\nAufzeichnung des Käufers: freiwillige Gabe zum zehnten Geschäftsjubiläum von Rabea Senger, Geschäftsführerin Senger Kurier GmbH. Persönlich überreicht am 25.09., keine geschuldete Leistung vergütet. Die Empfängerin steht nicht im Arbeitsverhältnis zum Fahrradbetrieb. Weitere Geschenke 2025: keine.",
+      "konto": "4635",
+      "richtung": "ausgabe",
+      "namen": [
+        "Weinhandel Sonnenhalde OHG",
+        "Radspur Elmbach",
+        "Rabea Senger",
+        "Senger Kurier GmbH"
+      ],
+      "firmennamen": [
+        "Weinhandel Sonnenhalde OHG",
+        "Radspur Elmbach",
+        "Senger Kurier GmbH"
+      ]
+    },
+    {
+      "datei": "A063.txt",
+      "text": "Taschenmanufaktur Uhlenried GmbH · Beleg TU-502\n11.12.2025, Kunde Radspur Elmbach\nEin Lederrucksack, netto 120,00 €, Umsatzsteuer 19 % 22,80 €, Gesamt 142,80 €, Zahlung per Überweisung.\nInterner Übergabevermerk vom 12.12.: Der Rucksack wurde dem externen Kunden Henrik Faber ohne Gegenleistung zum Abschluss der langjährigen Zusammenarbeit übergeben. Kein Eigenverbrauch der Inhaberin, keine Ware für den Verkauf. Der Jahresgesamtwert aller Zuwendungen an diesen Empfänger beträgt netto 120,00 €.",
+      "konto": "4635",
+      "richtung": "ausgabe",
+      "namen": [
+        "Taschenmanufaktur Uhlenried GmbH",
+        "Radspur Elmbach",
+        "Henrik Faber"
+      ],
+      "firmennamen": [
+        "Taschenmanufaktur Uhlenried GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A064.txt",
+      "text": "Gasthaus Kieselterrasse · Rechnung GK-164\n22.04.2025, 13:18 Uhr, Rechnung an Radspur Elmbach.\nZwei Mittagsgerichte und alkoholfreie Getränke, zusammen netto 80,00 €, Umsatzsteuer 19 % 15,20 €, bezahlt 95,20 €.\nTeilnehmende: Inhaberin Mira Feldkamp und Kundin Elsa Grunow von Moorpfad Reisen GmbH. Anlass: Besprechung des Wartungsvertrags für die Mietradflotte. Kein Trinkgeld. Ort und Datum entsprechen dem Restaurantbeleg; geschäftlichen Anlass und Teilnehmer hat die Inhaberin unterschriftlich bestätigt.",
+      "konto": "4650",
+      "richtung": "ausgabe",
+      "namen": [
+        "Gasthaus Kieselterrasse",
+        "Radspur Elmbach",
+        "Mira Feldkamp",
+        "Elsa Grunow",
+        "Moorpfad Reisen GmbH"
+      ],
+      "firmennamen": [
+        "Gasthaus Kieselterrasse",
+        "Radspur Elmbach",
+        "Moorpfad Reisen GmbH"
+      ]
+    },
+    {
+      "datei": "A065.txt",
+      "text": "Bistro Flussfenster GmbH | Tisch 6 | Bon BF-392\nAm 09.07.2025 wurden Radspur Elmbach zwei Hauptspeisen, Mineralwasser und Kaffee serviert. Nettobetrag 60,00 €, 19 % USt 11,40 €, Gesamtbetrag 71,40 €, Karte.\nErgänzung: Geschäftsessen von Mira Feldkamp mit Lieferant Ole Martens zur Abstimmung der Ersatzteilbelieferung im Winter. Beide sind namentlich erfasst; der Lieferant gehört nicht zur Belegschaft. Keine Begleitpersonen, kein Trinkgeld. Datum des Gesprächs 09.07.2025, von der Inhaberin bestätigt.",
+      "konto": "4650",
+      "richtung": "ausgabe",
+      "namen": [
+        "Bistro Flussfenster GmbH",
+        "Radspur Elmbach",
+        "Mira Feldkamp",
+        "Ole Martens"
+      ],
+      "firmennamen": [
+        "Bistro Flussfenster GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A066.txt",
+      "text": "Restaurant Am Erlensteg · Rechnung RE-807\n15.10.2025 an Radspur Elmbach\nDrei Menüs und Getränke, netto 132,00 €; Umsatzsteuer 19 % 25,08 €; Rechnungsbetrag 157,08 €. Mit Geschäftskarte bezahlt, Trinkgeld 0,00 €.\nTeilnehmerliste: Mira Feldkamp sowie die externen Firmenkunden Jan Osen und Sina Merten. Anlass war die konkrete Planung gemeinsamer Fahrrad-Serviceaktionen für deren Beschäftigte. Das Gespräch fand im Restaurant am Rechnungstag statt. Richtigkeit des Anlasses durch die Inhaberin bestätigt.",
+      "konto": "4650",
+      "richtung": "ausgabe",
+      "namen": [
+        "Restaurant Am Erlensteg",
+        "Radspur Elmbach",
+        "Mira Feldkamp",
+        "Jan Osen",
+        "Sina Merten"
+      ],
+      "firmennamen": [
+        "Restaurant Am Erlensteg",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A067.txt",
+      "text": "Regionalbahn Talbogen GmbH · Fahrkartenrechnung RB-62\nFahrt am 12.02.2025, Rechnung an Radspur Elmbach.\nHin- und Rückfahrt Elmbach–Auenstadt, 2. Klasse, für die angestellte Verkäuferin Nora Kessel. Sie besuchte im Auftrag des Betriebs den Lieferanten zur Bemusterung neuer Fahrradtaschen; keine private Teilstrecke. Fahrpreis netto 37,38 €, Umsatzsteuer 7 % 2,62 €, bezahlt 40,00 €. Die Fahrkarte wurde direkt vom Arbeitgeber gebucht. Dienstreisegenehmigung vom 07.02. liegt vor.",
+      "konto": "4660",
+      "richtung": "ausgabe",
+      "namen": [
+        "Regionalbahn Talbogen GmbH",
+        "Radspur Elmbach",
+        "Nora Kessel"
+      ],
+      "firmennamen": [
+        "Regionalbahn Talbogen GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A068.txt",
+      "text": "Hotel Hainwinkel GmbH\nRechnung HH-271 vom 20.05.2025 an Radspur Elmbach\nGast: Timo Ahrens, angestellter Werkstattleiter.\nEine Übernachtung vom 19. auf den 20.05. im Einzelzimmer zur betrieblich angeordneten Lieferantenabnahme in Hainstadt. Zimmer netto 100,00 €, Umsatzsteuer 7 % 7,00 €, insgesamt 107,00 €. Kein Frühstück, keine Minibar und keine weiteren Leistungen. Der Arbeitgeber hat den Betrag per Überweisung bezahlt; der Gast hat keinen privaten Aufenthalt angeschlossen.",
+      "konto": "4660",
+      "richtung": "ausgabe",
+      "namen": [
+        "Hotel Hainwinkel GmbH",
+        "Radspur Elmbach",
+        "Timo Ahrens"
+      ],
+      "firmennamen": [
+        "Hotel Hainwinkel GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A069.txt",
+      "text": "Radspur Elmbach · Abrechnung Dienstfahrt DF-28\nMitarbeiterin Lea Doren, 18.08.2025.\nFahrt mit dem eigenen privaten Pkw von der Werkstatt zum Lieferanten in Klingenau und zurück, insgesamt 146 km laut Fahrtnachweis. Zweck: Abholung dringend benötigter Bremsenteile im Arbeitgeberauftrag. Erstattung 146 km × 0,30 € = 43,80 €, ohne Umsatzsteuer. Keine Fahrten zwischen Wohnung und erster Tätigkeitsstätte enthalten. Auslagenabrechnung geprüft und am 20.08.2025 aus der Betriebskasse ausgezahlt.",
+      "konto": "4660",
+      "richtung": "ausgabe",
+      "namen": [
+        "Radspur Elmbach",
+        "Lea Doren"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A070.txt",
+      "text": "Fernbahn Wiesenlinie AG\nFahrkartenrechnung FW-392, ausgestellt am 04.03.2025\nRechnungsempfänger Radspur Elmbach; Reisende Mira Feldkamp, Inhaberin des Einzelunternehmens.\nBahnfahrt am 12.03.2025 von Elmbach nach Nordhafen und zurück, 2. Klasse, zum Einkaufsgespräch beim Fahrradgroßhandel. Nettofahrpreis 74,77 €, Umsatzsteuer 7 % 5,23 €, Gesamt 80,00 €. Bezahlt vom Geschäftskonto. Die Inhaberin reist selbst, kein Beschäftigter; private Reiseanteile sind nicht gebucht.",
+      "konto": "4670",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fernbahn Wiesenlinie AG",
+        "Radspur Elmbach",
+        "Mira Feldkamp"
+      ],
+      "firmennamen": [
+        "Fernbahn Wiesenlinie AG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A071.txt",
+      "text": "Stadthotel Uferkrone KG · Rechnung SU-548\nAbreise 18.06.2025, Empfänger Radspur Elmbach\nÜbernachtung 17.–18.06.2025 für Mira Feldkamp, alleinige Inhaberin, anlässlich ihres Besuchs der Fahrrad-Einkaufsmesse. Ein Zimmer ohne Frühstück: 120,00 € netto, Mehrwertsteuer 7 % 8,40 €, Endsumme 128,40 €. Zahlung mit Geschäftskarte. Keine Begleitperson und keine Verlängerungsnacht. Die Reise betrifft die eigene unternehmerische Tätigkeit der Inhaberin; sie ist nicht als Arbeitnehmerin angestellt.",
+      "konto": "4670",
+      "richtung": "ausgabe",
+      "namen": [
+        "Stadthotel Uferkrone KG",
+        "Radspur Elmbach",
+        "Mira Feldkamp"
+      ],
+      "firmennamen": [
+        "Stadthotel Uferkrone KG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A072.txt",
+      "text": "Radspur Elmbach — Eigenbeleg vom 26.09.2025\nMira Feldkamp, Betriebsinhaberin, war am 25.09.2025 von 06:30 bis 19:30 Uhr außerhalb ihrer Wohnung und Werkstatt. Eintägige Fahrt zur Verhandlung über neue Fahrradmodelle bei einem Großhändler in Bergstadt. Keine Übernachtung, keine vom Geschäftspartner gestellten Mahlzeiten. Für die Abwesenheit von 13 Stunden werden 14,00 € Verpflegungspauschale angesetzt; kein Umsatzsteuerausweis. Eigenbeleg von der Inhaberin unterschrieben, andere Reisekosten separat erfasst.",
+      "konto": "4670",
+      "richtung": "ausgabe",
+      "namen": [
+        "Radspur Elmbach",
+        "Mira Feldkamp"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A073.txt",
+      "text": "Briefnetz Tannenfurt AG · Filialquittung BN-367\n08.04.2025, Käufer Radspur Elmbach.\nZehn Freimachungen für inländische Standardbriefe zu je 0,95 €, Gesamtbetrag 9,50 €, bar bezahlt. Verwendung für den Versand von Werkstattrechnungen an Kunden. Als postalische Universaldienstleistung umsatzsteuerfrei; kein Steuerbetrag ausgewiesen. Die Sendungen wurden am Schalter eingeliefert, keine Umschläge oder sonstigen Waren gekauft. Anzahl der eingelieferten Briefe: zehn.",
+      "konto": "4910",
+      "richtung": "ausgabe",
+      "namen": [
+        "Briefnetz Tannenfurt AG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Briefnetz Tannenfurt AG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A074.txt",
+      "text": "Paketpost Auenlinie GmbH\nEinlieferungsbeleg PA-682 vom 17.07.2025\nAbsender und Rechnungsempfänger: Radspur Elmbach.\nEin bereits verkaufter Fahrradhelm wurde im eigenen Karton als Standardpaket innerhalb Deutschlands versandt. Beförderungsentgelt 6,19 €, Gesamtzahlung per Karte 6,19 €. Die Leistung gehört zum umsatzsteuerfreien Universaldienst; keine Vorsteuer enthalten. Sendungsnummer AL73928516. Verpackungsmaterial wurde nicht erworben. Einlieferung um 15:06 Uhr bestätigt.",
+      "konto": "4910",
+      "richtung": "ausgabe",
+      "namen": [
+        "Paketpost Auenlinie GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Paketpost Auenlinie GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A075.txt",
+      "text": "Stadtbrief Eichenweg GmbH · Monatsabrechnung SB-109\n30.09.2025, Kunde Radspur Elmbach\nIm September wurden 32 adressierte Geschäftsbriefe im Stadtgebiet abgeholt und zugestellt. Entgelt netto 24,00 €, zuzüglich 19 % Umsatzsteuer 4,56 €, Gesamtbetrag 28,56 €. Dieser regionale Zustelldienst rechnet steuerpflichtig ab. Die Sendungsliste ist Bestandteil der Rechnung; Druck und Kuvertierung hat der Kunde selbst ausgeführt. Lastschrifteinzug am 10.10.2025 vom Geschäftskonto.",
+      "konto": "4910",
+      "richtung": "ausgabe",
+      "namen": [
+        "Stadtbrief Eichenweg GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Stadtbrief Eichenweg GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A076.txt",
+      "text": "Telekontakt Bergwelle GmbH\nRechnung TB-218 für Radspur Elmbach, 03.02.2025\nAbrechnungsmonat Januar: Festnetzanschluss der Werkstatt Ufergasse 12, Rufnummer 0561 7291648. Grundpreis und Gespräche netto 29,00 €, Umsatzsteuer 19 % 5,51 €, Gesamt 34,51 €. Anschluss ausschließlich für Terminvereinbarungen mit Kunden und Lieferanten. Keine Endgeräte geliefert oder finanziert. Laut Vertrag wird der Rechnungsbetrag am 17.02.2025 vom betrieblichen Bankkonto abgebucht.",
+      "konto": "4920",
+      "richtung": "ausgabe",
+      "namen": [
+        "Telekontakt Bergwelle GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Telekontakt Bergwelle GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A077.txt",
+      "text": "Mobilfunk Auenstern AG | Kundennummer MA-761\nAn Radspur Elmbach, Rechnung vom 01.06.2025.\nFür Mai 2025 wird die dienstliche SIM-Karte im Werkstatthandy abgerechnet: Tarif 18,00 €, zusätzliche Gespräche 2,00 €, jeweils netto. Summe netto 20,00 €, Umsatzsteuer 19 % 3,80 €, zu zahlen 23,80 €. Die Karte dient der Erreichbarkeit bei Fahrradabholungen. Private Nutzung ist vertraglich ausgeschlossen. Das Telefon selbst wurde früher gekauft und ist kein Bestandteil dieser Monatsrechnung.",
+      "konto": "4920",
+      "richtung": "ausgabe",
+      "namen": [
+        "Mobilfunk Auenstern AG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Mobilfunk Auenstern AG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A078.txt",
+      "text": "Sprechleitung Nordquell KG\nLeistungsabrechnung SN-905, 30.11.2025\nRechnungsempfänger Radspur Elmbach.\nBereitstellung der zweiten betrieblichen Rufnummer für die Serviceannahme einschließlich Gesprächsminuten im November. Nettoentgelt 35,00 €, Umsatzsteuer 19 % 6,65 €, Rechnungsbetrag 41,65 €. Keine Werbeeinträge, Wartung von Geräten oder Hardware im Entgelt enthalten. Zahlung per Einzug zum 12.12.2025. Leistungsort ist der Geschäftssitz Ufergasse 12; Anschluss aktiv seit März 2024.",
+      "konto": "4920",
+      "richtung": "ausgabe",
+      "namen": [
+        "Sprechleitung Nordquell KG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Sprechleitung Nordquell KG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A079.txt",
+      "text": "Papierkontor Wiesenfurt GmbH · Rechnung PW-219\nDatum 11.02.2025, Kunde Radspur Elmbach.\nFünf Packungen Kopierpapier A4 zu 4,00 € netto sowie zwei Ordner zu je 3,50 € netto, für Rechnungsablage und Schriftverkehr im eigenen Büro. Nettosumme 27,00 €, Umsatzsteuer 19 % 5,13 €, Gesamtbetrag 32,13 €. Ware am Rechnungstag abgeholt und mit Firmenkarte bezahlt. Die Materialien werden nicht im Laden angeboten; es handelt sich ausschließlich um Verbrauchsmaterial für die Verwaltung.",
+      "konto": "4930",
+      "richtung": "ausgabe",
+      "namen": [
+        "Papierkontor Wiesenfurt GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Papierkontor Wiesenfurt GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A080.txt",
+      "text": "Druckbedarf Fichtenwinkel OHG\nVersandrechnung DF-611 vom 12.06.2025 an Radspur Elmbach.\nEine schwarze Tonerkartusche für den bereits vorhandenen Laserdrucker im Verwaltungsbüro, Artikel LT-26. Preis einschließlich Versand 69,00 € netto, Mehrwertsteuer 19 % 13,11 €, Rechnungsbetrag 82,11 €. Geliefert wurde nur die austauschbare Kartusche, kein Drucker. Sie wird zum Drucken von Kundenrechnungen und Auftragsunterlagen verwendet. Zahlungsziel bis 26.06.2025 ohne Abzug.",
+      "konto": "4930",
+      "richtung": "ausgabe",
+      "namen": [
+        "Druckbedarf Fichtenwinkel OHG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Druckbedarf Fichtenwinkel OHG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A081.txt",
+      "text": "Bürohandel Federau KG | Kassenbon B-804\nRadspur Elmbach, Einkauf vom 07.10.2025\nZehn Kugelschreiber 8,00 €, ein Karton Heftklammern 2,00 € und vier Haftnotizblöcke 6,00 €, jeweils netto. Verwendungsort: Schreibtisch der Auftragsannahme, nur eigener betrieblicher Verbrauch. Nettobetrag 16,00 €, darauf 19 % Umsatzsteuer 3,04 €, mit Geschäftskarte bezahlt 19,04 €. Kein Geschenk an Kunden und kein Handelsartikel. Sämtliche Positionen wurden vollständig mitgenommen.",
+      "konto": "4930",
+      "richtung": "ausgabe",
+      "namen": [
+        "Bürohandel Federau KG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Bürohandel Federau KG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A082.txt",
+      "text": "Fachverlag Kettenwissen GmbH\nRechnung FK-107 vom 27.01.2025 an Radspur Elmbach\nEin gedrucktes Handbuch „Hydraulische Fahrradbremsen warten“, aktuelle Auflage, für die betriebliche Fachbibliothek der Werkstatt. Es verbleibt als Nachschlagewerk bei den Mechanikern und wird nicht weiterverkauft. Buchpreis netto 56,00 €, Umsatzsteuer 7 % 3,92 €, Gesamt 59,92 €. Versand kostenfrei. Rechnung zahlbar innerhalb von 14 Tagen; der Band wurde am 29.01.2025 zugestellt.",
+      "konto": "4940",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fachverlag Kettenwissen GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Fachverlag Kettenwissen GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A083.txt",
+      "text": "Zweiradpraxis Medien KG · Bezugsrechnung ZM-43\nAn Radspur Elmbach, 18.03.2025.\nJahresabonnement der gedruckten Fachzeitschrift „Werkstatt und Speiche“, sechs Ausgaben von April 2025 bis März 2026. Die Hefte informieren das eigene Team über Reparaturverfahren und technische Änderungen. Netto 84,00 €, Mehrwertsteuer 7 % 5,88 €, Abonnementbetrag 89,88 €. Lieferung an die Werkstattadresse, keine Schulung und kein Online-Dienst enthalten. Einzug am 01.04.2025 vereinbart.",
+      "konto": "4940",
+      "richtung": "ausgabe",
+      "namen": [
+        "Zweiradpraxis Medien KG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Zweiradpraxis Medien KG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A084.txt",
+      "text": "Praxisverlag Bergfeder e.K.\nRechnung PB-592, 09.09.2025\nBestellt von Radspur Elmbach: ein gedruckter Ratgeber „Arbeitsrecht im kleinen Handwerksbetrieb“, Ausgabe 2025, Preis 49,00 € netto. Das Buch dient der Inhaberin für Personalfragen des eigenen Unternehmens. Umsatzsteuer 7 % 3,43 €, insgesamt 52,43 €. Kein Exemplar für den Verkauf und keine individuelle Rechtsberatung geliefert. Versand im Preis enthalten; per Bank bezahlt am 15.09.2025.",
+      "konto": "4940",
+      "richtung": "ausgabe",
+      "namen": [
+        "Praxisverlag Bergfeder e.K.",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Praxisverlag Bergfeder e.K.",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A085.txt",
+      "text": "Technikakademie Speichenhain GmbH\nRechnung TS-241 vom 14.04.2025 an Radspur Elmbach\nTeilnehmer Timo Ahrens: eintägiger Fachkurs am 11.04.2025 zur Fehlersuche an elektronischen Fahrradschaltungen, mit praktischen Übungen und Teilnahmebescheinigung. Kursentgelt einschließlich Arbeitsunterlagen netto 350,00 €, Umsatzsteuer 19 % 66,50 €, Gesamt 416,50 €. Fahrt, Unterkunft und Verpflegung sind nicht enthalten. Der Mitarbeiter wurde zum Erhalt seiner beruflichen Kenntnisse angemeldet.",
+      "konto": "4945",
+      "richtung": "ausgabe",
+      "namen": [
+        "Technikakademie Speichenhain GmbH",
+        "Radspur Elmbach",
+        "Timo Ahrens"
+      ],
+      "firmennamen": [
+        "Technikakademie Speichenhain GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A086.txt",
+      "text": "Weiterbildungswerk Waldquell KG · Rechnung WW-586\nRadspur Elmbach, 22.07.2025\nMira Feldkamp nahm am 18. und 19.07. am Seminar „Kalkulation von Werkstattaufträgen“ teil. Vermittelt wurden betriebliche Preisberechnung, Materialzuschläge und Planung von Reparaturzeiten. Teilnahmegebühr für zwei Tage 480,00 € netto; 19 % Umsatzsteuer 91,20 €; fälliger Betrag 571,20 €. Die Rechnung umfasst nur den Unterricht und Übungen. Seminar vollständig besucht, Zahlung bis 05.08.2025.",
+      "konto": "4945",
+      "richtung": "ausgabe",
+      "namen": [
+        "Weiterbildungswerk Waldquell KG",
+        "Radspur Elmbach",
+        "Mira Feldkamp"
+      ],
+      "firmennamen": [
+        "Weiterbildungswerk Waldquell KG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A087.txt",
+      "text": "Lernhaus Serviceblick GmbH\nTeilnahmerechnung LS-808 vom 17.10.2025\nAuftraggeber Radspur Elmbach, Teilnehmerin Nora Kessel.\nOnlinekurs „Reklamationsgespräche im Fahrradhandel“, vier betreute Unterrichtseinheiten am 14. und 16.10.2025. Berufliche Schulung im Umgang mit Werkstattkunden, kein Softwareabonnement. Entgelt netto 240,00 €, Mehrwertsteuer 19 % 45,60 €, Gesamtbetrag 285,60 €. Teilnahmebescheinigung digital bereitgestellt; vom Geschäftskonto am 21.10.2025 bezahlt.",
+      "konto": "4945",
+      "richtung": "ausgabe",
+      "namen": [
+        "Lernhaus Serviceblick GmbH",
+        "Radspur Elmbach",
+        "Nora Kessel"
+      ],
+      "firmennamen": [
+        "Lernhaus Serviceblick GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A088.txt",
+      "text": "Rechtsanwältin Alva Brenner\nHonorarrechnung AB-54 vom 12.03.2025 an Radspur Elmbach\nPrüfung und Überarbeitung der Vertragsbedingungen für die Annahme von Kundenfahrrädern, einschließlich eines einstündigen Beratungsgesprächs. Honorar nach Vereinbarung 350,00 € netto, Umsatzsteuer 19 % 66,50 €, Rechnungsbetrag 416,50 €. Leistung am 10.03.2025 abgeschlossen. Keine Gerichtskosten oder laufende Buchhaltung enthalten. Zahlung auf das Kanzleikonto innerhalb von 14 Tagen.",
+      "konto": "4950",
+      "richtung": "ausgabe",
+      "namen": [
+        "Alva Brenner",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A089.txt",
+      "text": "Unternehmensberatung Weitbogen GmbH\nRechnung UW-309, 05.06.2025\nKunde Radspur Elmbach.\nAnalyse der geplanten zweiten Reparaturannahme, Prüfung des Finanzierungsbedarfs und schriftliche Wirtschaftlichkeitsberechnung. Vereinbartes Honorar für die individuelle Beratung 600,00 € netto, zuzüglich Umsatzsteuer 19 % 114,00 €, insgesamt 714,00 €. Bericht am 04.06. ausgehändigt. Es wurden keine Unterrichtsveranstaltung, Buchungsarbeiten oder Steuererklärungen durchgeführt. Fällig 19.06.2025.",
+      "konto": "4950",
+      "richtung": "ausgabe",
+      "namen": [
+        "Unternehmensberatung Weitbogen GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Unternehmensberatung Weitbogen GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A090.txt",
+      "text": "Steuerberater Joris Dahlen\nRechnung JD-188 vom 27.08.2025, Auftraggeber Radspur Elmbach\nPersönliche steuerliche Beratung zur geplanten Anschaffung eines zusätzlichen Firmenfahrzeugs und zur Behandlung einer möglichen Privatnutzung. Zwei Beratungsstunden und schriftliche Stellungnahme: netto 280,00 €. Umsatzsteuer 19 % 53,20 €, Gesamtforderung 333,20 €. Keine Erfassung laufender Belege und keine Erstellung einer Steuererklärung Bestandteil des Auftrags. Beratung abgeschlossen am 25.08.2025.",
+      "konto": "4950",
+      "richtung": "ausgabe",
+      "namen": [
+        "Joris Dahlen",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A091.txt",
+      "text": "Kontenservice Auenblick GmbH\nRechnung KA-102 vom 05.02.2025 an Radspur Elmbach\nBearbeitung der laufenden Finanzunterlagen für Januar: 84 Eingangs- und Ausgangsbelege erfasst, Bankbewegungen zugeordnet, offene Posten abgeglichen. Entgelt netto 160,00 €, Umsatzsteuer 19 % 30,40 €, Rechnungsbetrag 190,40 €. Die Auswertung und Buchungsdaten wurden am 04.02. übermittelt. Keine Steuerberatung oder Jahresabschlusserstellung enthalten. Zahlung zum 19.02.2025 per Lastschrift.",
+      "konto": "4955",
+      "richtung": "ausgabe",
+      "namen": [
+        "Kontenservice Auenblick GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Kontenservice Auenblick GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A092.txt",
+      "text": "Personalabrechnung Eibensteg KG · Rechnung PE-417\n30.04.2025, Kunde Radspur Elmbach\nDienstleistung für April: laufende Entgeltabrechnung für drei angestellte Personen, Erstellung der Abrechnungen und Berechnung der Meldedaten anhand der gelieferten Stammangaben. Dienstleistungshonorar netto 80,00 €, Umsatzsteuer 19 % 15,20 €, Gesamt 95,20 €. Dieser Betrag wird an das Abrechnungsbüro gezahlt; er enthält weder Mitarbeitervergütungen noch Sozialversicherungsbeiträge. Fällig am 14.05.2025.",
+      "konto": "4955",
+      "richtung": "ausgabe",
+      "namen": [
+        "Personalabrechnung Eibensteg KG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Personalabrechnung Eibensteg KG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A093.txt",
+      "text": "Buchungsdienst Sonnenpfad e.K.\nLeistungsrechnung BS-792 vom 09.10.2025 an Radspur Elmbach\nNachbearbeitung der laufenden September-Buchungen: Kassenabgleich, Zuordnung von Kartenzahlungen und Korrektur doppelt erfasster Lieferantenbelege. Bearbeitungsumfang laut Tätigkeitsnachweis, Pauschale netto 170,00 €. Mehrwertsteuer 19 % 32,30 €, Rechnungsbetrag 202,30 €. Berichtigte Monatsauswertung am 08.10. geliefert. Keine Rechtsberatung, Seminare oder Abschlussarbeiten. Überweisung binnen zehn Tagen.",
+      "konto": "4955",
+      "richtung": "ausgabe",
+      "namen": [
+        "Buchungsdienst Sonnenpfad e.K.",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Buchungsdienst Sonnenpfad e.K.",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A094.txt",
+      "text": "Geschäftsbank Lindenbogen eG\nEntgeltabschluss vom 31.01.2025 für Radspur Elmbach\nGeschäftsgirokonto, Abrechnungszeitraum 01.–31.01.2025: monatlicher Kontoführungspreis 10,00 €, zusätzlich berechnete Buchungsposten 0,00 €. Gesamtbelastung 10,00 €, mit Valuta 31.01.2025 dem Konto belastet. Die Bankdienstleistung ist umsatzsteuerfrei. Kein Darlehenszins, keine Tilgung und keine Bareinzahlung in diesem Betrag enthalten. Vereinbartes Preismodell Geschäftskonto Basis.",
+      "konto": "4970",
+      "richtung": "ausgabe",
+      "namen": [
+        "Geschäftsbank Lindenbogen eG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Geschäftsbank Lindenbogen eG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A095.txt",
+      "text": "Zahlbank Uferpay AG · Händlerabrechnung ZU-441\nRadspur Elmbach, Abrechnungsdatum 30.06.2025\nFür die Abwicklung von Kartenzahlungen im Juni über insgesamt 400,00 € wird das vereinbarte umsatzsteuerfreie Transaktionsentgelt von 2,5 % erhoben: 10,00 €. Der Betrag wurde gesondert vom Geschäftskonto eingezogen. Die Kundenumsätze wurden bereits vollständig gutgeschrieben. Keine Terminalmiete, keine Softwarekosten und keine Korrektur des Warenverkaufs in dieser Belastung.",
+      "konto": "4970",
+      "richtung": "ausgabe",
+      "namen": [
+        "Zahlbank Uferpay AG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Zahlbank Uferpay AG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A096.txt",
+      "text": "Regionalbank Erlenquell AG\nBelastungsanzeige BA-671 vom 18.09.2025\nKontoinhaber Radspur Elmbach.\nFür die ausgeführte Fremdwährungsüberweisung an einen ausländischen Teilelieferanten wird eine Bankbearbeitungsgebühr von 8,00 € berechnet. Der Überweisungsbetrag selbst ist auf einer separaten Kontobuchung ausgewiesen. Gebührenbelastung 8,00 €, umsatzsteuerfreie Finanzdienstleistung. Keine Wechselkursdifferenz und keine Zinszahlung enthalten. Valuta 18.09.2025, Auftrag gemäß elektronischer Freigabe ausgeführt.",
+      "konto": "4970",
+      "richtung": "ausgabe",
+      "namen": [
+        "Regionalbank Erlenquell AG",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Regionalbank Erlenquell AG",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A097.txt",
+      "text": "Wertstoffdienst Tannenbruck GmbH\nRechnung WT-397, 29.04.2025 an Radspur Elmbach\nAbholung und fachgerechte Entsorgung von 85 kg verbrauchten Fahrradreifen und Schläuchen aus der Reparaturwerkstatt. Entsorgungsnachweis liegt bei. Pauschale einschließlich Transport netto 75,00 €, Umsatzsteuer 19 % 14,25 €, Gesamt 89,25 €. Die Materialien haben keinen Verkaufserlös erbracht. Keine Raumsäuberung und keine Bearbeitung von Kundenrädern durchgeführt. Zahlung bis 13.05.2025.",
+      "konto": "4980",
+      "richtung": "ausgabe",
+      "namen": [
+        "Wertstoffdienst Tannenbruck GmbH",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Wertstoffdienst Tannenbruck GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A098.txt",
+      "text": "Schlüsseldienst Fliedersteg · Kassenbeleg SF-209\n17.06.2025, Auftraggeber Radspur Elmbach.\nAnfertigung eines zusätzlichen einfachen Schlüssels für den bestehenden Mitarbeiterspind, nach vorgelegtem Muster. Kein neues Schloss und keine Änderung an der Schließanlage geliefert. Arbeits- und Materialpreis netto 12,00 €, Mehrwertsteuer 19 % 2,28 €, bar bezahlt 14,28 €. Der Schlüssel bleibt im Betrieb und wurde am selben Tag an die Werkstattleitung übergeben. Keine private Leistung enthalten.",
+      "konto": "4980",
+      "richtung": "ausgabe",
+      "namen": [
+        "Schlüsseldienst Fliedersteg",
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Schlüsseldienst Fliedersteg",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A099.txt",
+      "text": "Arbeitsmedizinische Praxis Kira Voss\nRechnung AV-73 vom 24.09.2025\nArbeitgeber und Kostenträger: Radspur Elmbach.\nArbeitsmedizinische Vorsorgeuntersuchung für Beschäftigten Timo Ahrens wegen der Tätigkeit in der Werkstatt, durchgeführt am 22.09.2025. Ärztliches Honorar 95,00 €, Gesamtbetrag 95,00 €, umsatzsteuerfreie Heilbehandlung nach § 4 Nr. 14 UStG. Es handelt sich nicht um eine Schulung oder Auszahlung an den Arbeitnehmer. Medizinische Einzelbefunde gehen ausschließlich an die untersuchte Person.",
+      "konto": "4980",
+      "richtung": "ausgabe",
+      "namen": [
+        "Arbeitsmedizinische Praxis Kira Voss",
+        "Kira Voss",
+        "Radspur Elmbach",
+        "Timo Ahrens"
+      ],
+      "firmennamen": [
+        "Arbeitsmedizinische Praxis Kira Voss",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A100.txt",
+      "text": "Radspur Elmbach · Ausgangsrechnung R-215\n14.04.2025 an Schaltpunkt Ufer AG, Hafenweg 9, 4057 Basel, Schweiz.\nEin Tourenfahrrad aus dem eigenen Warenbestand, Nettopreis 1.200,00 €, Rechnungsbetrag 1.200,00 €. Lieferung am 14.04. per Spedition von Elmbach nach Basel. Umsatzsteuerfreie Ausfuhrlieferung gemäß § 4 Nr. 1a in Verbindung mit § 6 UStG. Elektronischer Ausgangsvermerk zur MRN 25DE123456789012E7 liegt vor. Ware hat das EU-Gebiet verlassen. Zahlungseingang auf dem Geschäftskonto am 22.04.2025.",
+      "konto": "8120",
+      "richtung": "einnahme",
+      "namen": [
+        "Radspur Elmbach",
+        "Schaltpunkt Ufer AG"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach",
+        "Schaltpunkt Ufer AG"
+      ]
+    },
+    {
+      "datei": "A101.txt",
+      "text": "Rechnung R-608 vom 19.08.2025\nVerkäufer Radspur Elmbach, Ufergasse 12, Deutschland.\nKäufer Nordpfad Sykkel AS, Bryggegata 18, 5003 Bergen, Norwegen.\n20 Fahrradtaschen zum Stückpreis 37,00 €, insgesamt 740,00 €, keine Umsatzsteuer. Versand aus Deutschland unmittelbar an den norwegischen Betrieb; Ausfuhr und Empfang am Bestimmungsort dokumentiert. Steuerbefreiung nach § 4 Nr. 1a und § 6 UStG, Ausgangsvermerk in der Belegakte. Die Ware gehört zum Handelsbestand. 740,00 € per Bank erhalten.",
+      "konto": "8120",
+      "richtung": "einnahme",
+      "namen": [
+        "Radspur Elmbach",
+        "Nordpfad Sykkel AS"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach",
+        "Nordpfad Sykkel AS"
+      ]
+    },
+    {
+      "datei": "A102.txt",
+      "text": "Radspur Elmbach — Handelsrechnung R-793\n03.11.2025, Empfänger Hillbank Cycles Ltd, River Lane 24, Bristol BS1 6AB, Vereinigtes Königreich.\nZehn Laufradsätze zu 98,00 € netto, Warenwert und Zahlbetrag 980,00 €. Beförderung durch den Verkäufer von Elmbach nach Bristol, Lieferung am 06.11.2025. Für diese Ausfuhr ins Drittland wird gemäß § 4 Nr. 1a UStG keine deutsche Umsatzsteuer berechnet. Ausfuhranmeldung und elektronischer Ausgangsnachweis abgelegt. Zahlung am 10.11.2025 eingegangen.",
+      "konto": "8120",
+      "richtung": "einnahme",
+      "namen": [
+        "Radspur Elmbach",
+        "Hillbank Cycles Ltd"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach",
+        "Hillbank Cycles Ltd"
+      ]
+    },
+    {
+      "datei": "A103.txt",
+      "text": "Radspur Elmbach · Rechnung R-309 · 16.05.2025\nUSt-IdNr. DE847263519\nAn Alpenbogen Radhandel GmbH, Gassenweg 5, 5020 Salzburg, Österreich; USt-IdNr. ATU78241635.\nGeliefert: 30 Fahrradhelme zu 24,00 € netto, gesamt 720,00 €. Versand von Deutschland an den unternehmerischen Abnehmer in Österreich, Empfang bestätigt. Beide USt-IdNrn. geprüft und dokumentiert. Steuerfreie innergemeinschaftliche Lieferung nach § 4 Nr. 1b, § 6a UStG; Umsatzsteuer 0,00 €. Zahlungseingang 720,00 € am 23.05.2025.",
+      "konto": "8125",
+      "richtung": "einnahme",
+      "namen": [
+        "Radspur Elmbach",
+        "Alpenbogen Radhandel GmbH"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach",
+        "Alpenbogen Radhandel GmbH"
+      ]
+    },
+    {
+      "datei": "A104.txt",
+      "text": "Ausgangsrechnung R-522 vom 10.07.2025\nRadspur Elmbach, Deutschland, USt-IdNr. DE847263519\nRechnung und Lieferung an Polderrad Handel B.V., Kadeweg 7, 3511 Utrecht, Niederlande, USt-IdNr. NL859374261B01.\n40 Fahrradreifen, netto je 18,00 €, Gesamt 720,00 €. Ware aus dem eigenen Lager nach Utrecht versandt; Gelangensbestätigung vorhanden. Abnehmer handelt für sein Unternehmen, gültige USt-IdNr. bestätigt. Steuerfrei gemäß § 4 Nr. 1b in Verbindung mit § 6a UStG. Zahlung vollständig am 18.07.2025 erhalten.",
+      "konto": "8125",
+      "richtung": "einnahme",
+      "namen": [
+        "Radspur Elmbach",
+        "Polderrad Handel B.V."
+      ],
+      "firmennamen": [
+        "Radspur Elmbach",
+        "Polderrad Handel B.V."
+      ]
+    },
+    {
+      "datei": "A105.txt",
+      "text": "Radspur Elmbach | Verkaufsrechnung R-687 | 08.09.2025\nUnsere USt-IdNr.: DE847263519.\nKunde Vélo Rive SARL, Rue des Saules 16, 67000 Strasbourg, Frankreich, USt-IdNr. FR27845196302.\nLieferung von zwölf Fahrradkörben zu 25,00 € netto an den französischen Händler, Summe 300,00 €, ohne deutsche Umsatzsteuer nach § 4 Nr. 1b und § 6a UStG. Transport von Elmbach nach Strasbourg durch beauftragten Frachtführer. Geprüfte Umsatzsteuer-ID und Empfangsbestätigung liegen vor. Bankgutschrift 300,00 € am 15.09.2025.",
+      "konto": "8125",
+      "richtung": "einnahme",
+      "namen": [
+        "Radspur Elmbach",
+        "Vélo Rive SARL"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach",
+        "Vélo Rive SARL"
+      ]
+    },
+    {
+      "datei": "A106.txt",
+      "text": "Radspur Elmbach · Kassenbon RK-182\n08.03.2025, 10:26 Uhr\nVerkauf an einen Laufkunden: fünf originalverpackte Fruchtriegel zum Mitnehmen, Einzelpreis brutto 1,07 €, Gesamtbetrag 5,35 €. Darin Nettoumsatz 5,00 € und Umsatzsteuer 7 % 0,35 €. Bar erhalten 10,00 €, Rückgeld 4,65 €. Es wurden nur die Lebensmittel übergeben; keine Getränke und keine Bedienung am Tisch. Ware stammt aus dem Snackregal neben der Fahrradannahme. Zahlung und Warenausgabe abgeschlossen.",
+      "konto": "8300",
+      "richtung": "einnahme",
+      "namen": [
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A107.txt",
+      "text": "Verkaufsrechnung S-348, 18.06.2025\nLieferant: Radspur Elmbach\nKunde: Bergpfad Laufgruppe e.V.\n30 einzeln verpackte Haferkekse für die Mitnahme auf einer Vereinswanderung, netto je 1,00 €. Nettowarenwert 30,00 €, Umsatzsteuer 7 % 2,10 €, Rechnungsbetrag 32,10 €. Der Verein hat die ungeöffneten Packungen im Laden abgeholt; kein Catering und keine Getränke geliefert. Die Zahlung wurde mit der Vereinskarte am 18.06.2025 vorgenommen. Beleg dient als Quittung über den vollständigen Betrag.",
+      "konto": "8300",
+      "richtung": "einnahme",
+      "namen": [
+        "Radspur Elmbach",
+        "Bergpfad Laufgruppe e.V."
+      ],
+      "firmennamen": [
+        "Radspur Elmbach",
+        "Bergpfad Laufgruppe e.V."
+      ]
+    },
+    {
+      "datei": "A108.txt",
+      "text": "Radspur Elmbach, Ufergasse 12\nTagesverkaufsbeleg RK-791 vom 22.10.2025, 16:04 Uhr\nSechs verschlossene Mandelbeutel aus dem Snackangebot, Verkaufspreis je 3,21 € einschließlich 7 % Steuer. Endsumme 19,26 €, enthaltene Umsatzsteuer 1,26 €, Nettoerlös 18,00 €. Kartenzahlung erfolgreich. Die Packungen wurden vollständig zum Mitnehmen ausgehändigt, ohne zusätzliche Dienstleistung. Kein Getränk und keine Fahrradware Bestandteil dieses Bons. Kundenkopie nach Zahlung ausgegeben.",
+      "konto": "8300",
+      "richtung": "einnahme",
+      "namen": [
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A109.txt",
+      "text": "Radspur Elmbach · Rechnung R-149 vom 25.02.2025\nKunde: Yara Stein, Gartenweg 3, 34127 Elmbach.\nAm Kundenfahrrad wurden beide Bremsen eingestellt, die Schaltung justiert und eine Probefahrt vorgenommen. Berechnete Arbeitsleistung netto 60,00 €, Umsatzsteuer 19 % 11,40 €, Gesamtbetrag 71,40 €. Keine Ersatzteile verwendet. Die Kundin hat das reparierte Fahrrad am selben Tag übernommen und mit Karte bezahlt. Auftrag vom 21.02.2025 ist damit vollständig erfüllt; Rechnung zugleich Zahlungsquittung.",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "namen": [
+        "Radspur Elmbach",
+        "Yara Stein"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A110.txt",
+      "text": "Kaufbeleg R-477 | Radspur Elmbach\n09.07.2025, Käufer: Pascal Renken.\nVerkauft wurde ein neuer Fahrradhelm, Größe M, aus dem regulären Lagerbestand des Ladens. Warenpreis 79,00 € netto; zuzüglich 19 % Mehrwertsteuer 15,01 €; Gesamt 94,01 €. Der Kunde hat den Helm vor Ort anprobiert und mitgenommen. Zahlung per Geschäftsterminal bestätigt, keine Rückstände. In der Summe sind weder Reparaturarbeiten noch Lebensmittel enthalten. Gewährleistungsunterlagen zusammen mit dem Helm übergeben.",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "namen": [
+        "Radspur Elmbach",
+        "Pascal Renken"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A111.txt",
+      "text": "Radspur Elmbach · Bon RK-856\n14.11.2025, 14:32 Uhr\nVier frisch zubereitete schwarze Kaffees im Mitnahmebecher, ohne Milch, zum Einzelpreis von 3,00 € brutto verkauft. Gesamt 12,00 €, darin netto 10,08 € und Umsatzsteuer 19 % 1,92 €. Kundschaft zahlt bar passend. Die Getränke stammen aus dem kleinen Tresenverkauf der Fahrradwerkstatt; kein kostenloser Ausschank an Geschäftspartner. Keine Speisen oder anderen Artikel auf diesem Bon. Getränke unmittelbar nach Zahlung ausgegeben.",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "namen": [
+        "Radspur Elmbach"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A112.txt",
+      "text": "Pedalreise Wiesengrund GmbH\nGutschrift PG-326 vom 26.05.2025 an Radspur Elmbach\nFür die erfolgreich vermittelte Buchung einer Radreise durch Kundin Yara Stein erhalten Sie gemäß Partnervertrag ein Vermittlungsentgelt von 85,00 € netto. Umsatzsteuer 19 % 16,15 €, Auszahlungsbetrag 101,15 €. Die Reise wurde von uns veranstaltet und direkt mit der Kundin abgerechnet. Sie haben weder Fahrräder noch Reiseleistungen im eigenen Namen verkauft. Gutschrift vereinbart und am 28.05.2025 auf Ihr Geschäftskonto überwiesen.",
+      "konto": "8500",
+      "richtung": "einnahme",
+      "namen": [
+        "Pedalreise Wiesengrund GmbH",
+        "Radspur Elmbach",
+        "Yara Stein"
+      ],
+      "firmennamen": [
+        "Pedalreise Wiesengrund GmbH",
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A113.txt",
+      "text": "Radspur Elmbach · Abrechnung V-57 vom 18.07.2025\nAn Henrik Faber.\nIhr gebrauchtes Fahrrad wurde durch unsere Vermittlung für 450,00 € an einen Käufer verkauft; den Kaufpreis hat der Käufer unmittelbar an Sie gezahlt. Unser vereinbartes Vermittlungshonorar beträgt 10 % des Verkaufspreises, somit 45,00 € netto, plus 19 % Umsatzsteuer 8,55 €, Gesamt 53,55 €. Das Rad blieb bis zum Verkauf Ihr Eigentum und war nie unser Handelsbestand. Honorar am 18.07.2025 in bar erhalten, Betrag quittiert.",
+      "konto": "8500",
+      "richtung": "einnahme",
+      "namen": [
+        "Radspur Elmbach",
+        "Henrik Faber"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach"
+      ]
+    },
+    {
+      "datei": "A114.txt",
+      "text": "Vermittlungsrechnung V-94 · 06.10.2025\nAussteller: Radspur Elmbach\nEmpfänger: Mietfahrrad Nordsteg GmbH\nFür den über unseren Laden vermittelten und abgeschlossenen Jahresmietvertrag mit Kunde Fritz Neven berechnen wir die vereinbarte einmalige Erfolgsvergütung. Netto 120,00 €, Umsatzsteuer 19 % 22,80 €, Rechnungsbetrag 142,80 €. Vermieter und Eigentümer des Fahrrads bleibt der Rechnungsempfänger; wir schulden nur die Vermittlung. Zahlungseingang des Honorars am 13.10.2025 auf unserem Geschäftskonto bestätigt.",
+      "konto": "8500",
+      "richtung": "einnahme",
+      "namen": [
+        "Radspur Elmbach",
+        "Mietfahrrad Nordsteg GmbH",
+        "Fritz Neven"
+      ],
+      "firmennamen": [
+        "Radspur Elmbach",
+        "Mietfahrrad Nordsteg GmbH"
+      ]
+    }
+  ]
+}

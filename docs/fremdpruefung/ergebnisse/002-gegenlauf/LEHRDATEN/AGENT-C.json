@@ -1,0 +1,1612 @@
+{
+  "agent": "Codex (GPT-6)",
+  "betrieb": "Fennufer Feinkostküche, Inhaberin Rika Falkenau",
+  "gewerbe": "Feinkostküche mit Catering und Warenverkauf",
+  "dateien": [
+    {
+      "datei": "C001.txt",
+      "text": "Südquell Autohaus GmbH · Rechnung A-118 vom 09.01.2026\nKäufer: Fennufer Feinkostküche, Leipzig. Geliefert wurde ein neuer fünfsitziger Kombi, Benziner, Fahrgestellnr. WQS71K26B771, Erstzulassung heute. Kaufpreis 27.500,00 EUR zuzüglich 19 % USt 5.225,00 EUR, gesamt 32.725,00 EUR. Übergabe mit zwei Schlüsseln. Der Wagen wird dauerhaft für Kundenbesuche und Cateringfahrten genutzt. Kaufpreis per Überweisung beglichen.",
+      "konto": "0320",
+      "richtung": "ausgabe",
+      "namen": [
+        "Südquell Autohaus GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Südquell Autohaus GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C002.txt",
+      "text": "KAUFVERTRAG vom 18.02.2026\nWendelgrund Mobil GmbH verkauft an Fennufer Feinkostküche einen gebrauchten fünftürigen Personenwagen, Baujahr 2022, 41.600 km, fünf Sitzplätze. Übergabe am 20.02.2026; Eigentum geht nach Zahlung über. Netto 15.900,00 EUR, reguläre USt 19 % 3.021,00 EUR, Zahlung 18.921,00 EUR. Keine Differenzbesteuerung. Das Fahrzeug gehört zum betrieblichen Fuhrpark und ist für die nächsten Jahre vorgesehen.",
+      "konto": "0320",
+      "richtung": "ausgabe",
+      "namen": [
+        "Wendelgrund Mobil GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Wendelgrund Mobil GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C003.txt",
+      "text": "Auslieferungsrechnung N-77 / 06.03.2026\nNordfink Automobile KG an Fennufer Feinkostküche: 1 elektrischer Kleinwagen mit vier Sitzplätzen, Akku im Eigentum, Neufahrzeug. Nutzung für tägliche Wege zur Markthalle und zu Auftraggebern. Nettowert 22.800,00 EUR; Umsatzsteuer 19 % 4.332,00 EUR; Endbetrag 27.132,00 EUR. Zulassung auf den Betrieb, Fahrzeugbrief ausgehändigt. Keine laufende Rate, der vollständige Erwerbspreis ist am 06.03. überwiesen.",
+      "konto": "0320",
+      "richtung": "ausgabe",
+      "namen": [
+        "Nordfink Automobile KG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Nordfink Automobile KG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C004.txt",
+      "text": "Havelkranz Technik GmbH\nRechnung KT-531, 14.01.2026, an Fennufer Feinkostküche. Ein elektrischer Kombidämpfer, zehn Einschübe, Seriennr. HK9937, neu. Lieferung und Aufstellung in der Produktionsküche eingeschlossen. Nettopreis 8.600,00 EUR, 19 % USt 1.634,00 EUR, Gesamt 10.234,00 EUR. Gerät ab heute einsatzbereit; regelmäßige Herstellung warmer Cateringgerichte, erwartete Verwendung acht Jahre. Zahlbar binnen zehn Tagen.",
+      "konto": "0400",
+      "richtung": "ausgabe",
+      "namen": [
+        "Havelkranz Technik GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Havelkranz Technik GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C005.txt",
+      "text": "RECHNUNG 26/209 · 27.02.2026\nFennufer Feinkostküche erhielt von Kaltbogen Anlagenbau GmbH eine freistehende Kühlzelle, 6 m³, steckerfertig mit eigener Kälteeinheit. Keine Verbindung mit dem Gebäude; bei Umzug zerlegbar. Für Vorräte der gewerblichen Küche, auf Dauer erworben. Anlage einschließlich Aufbau 6.250,00 EUR netto, USt 19 % 1.187,50 EUR. Überweisungsbetrag 7.437,50 EUR. Inbetriebnahme und Abnahme am Liefertag bestätigt.",
+      "konto": "0400",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Kaltbogen Anlagenbau GmbH"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche",
+        "Kaltbogen Anlagenbau GmbH"
+      ]
+    },
+    {
+      "datei": "C006.txt",
+      "text": "Dornwick Werkgeräte KG / Lieferschein mit Faktura 88\nDatum 19.03.2026. Rechnungsempfänger: Fennufer Feinkostküche. Vakuumkammermaschine Typ V450, selbständig arbeitendes Tischgerät zum Verpacken der Feinkostprodukte, Kaufpreis netto 2.450,00 EUR. Zzgl. 465,50 EUR Umsatzsteuer (19 %), fällig 2.915,50 EUR. Keine Verbrauchsmaterialien enthalten. Das fabrikneue Gerät wurde übernommen und verbleibt dauerhaft im Herstellungsbereich.",
+      "konto": "0400",
+      "richtung": "ausgabe",
+      "namen": [
+        "Dornwick Werkgeräte KG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Dornwick Werkgeräte KG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C007.txt",
+      "text": "Birkenmaß Möbel GmbH · Rechnung BM-304\n02.04.2026, geliefert an das Verwaltungsbüro der Fennufer Feinkostküche. Ein elektrisch höhenverstellbarer Schreibtisch aus Massivholz, fertig montiert, zur mehrjährigen Nutzung für Auftragsplanung. Netto 1.280,00 EUR, Umsatzsteuer 19 % 243,20 EUR, brutto 1.523,20 EUR. Im Preis enthalten sind Anfahrt und Aufbau. Eigentumserwerb durch vollständige Zahlung, kein Leasing; bezahlt am 07.04.2026.",
+      "konto": "0410",
+      "richtung": "ausgabe",
+      "namen": [
+        "Birkenmaß Möbel GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Birkenmaß Möbel GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C008.txt",
+      "text": "Empfänger Fennufer Feinkostküche\nFalkried Innenbau KG, Faktura FI-91 vom 17.04.2026. Für den Empfang im Verkaufsraum: eine freistehende Kassentheke ohne Kühl- oder Kochfunktion, 240 cm, abschließbare Schubladen. Nettowert 2.100,00 EUR, Steuer 19 % 399,00 EUR, zu zahlen 2.499,00 EUR. Theke ist beweglich, kein Gebäudebestandteil. Lieferung erfolgt heute; vorgesehen als dauerhaftes Möbel für Kundenkontakt und Abrechnung.",
+      "konto": "0410",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Falkried Innenbau KG"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche",
+        "Falkried Innenbau KG"
+      ]
+    },
+    {
+      "datei": "C009.txt",
+      "text": "Möbelhaus Eichenlot GmbH\nAuftrag 604 abgeschlossen am 28.04.2026. Käuferin: Fennufer Feinkostküche. Ein verschließbarer Aktenschrank aus Stahl, 180 × 120 cm, für Verträge und Personalunterlagen im Büro. Kauf netto 940,00 EUR; 19 % USt 178,60 EUR; Rechnungsbetrag 1.118,60 EUR. Tragende Montage war nicht erforderlich. Möbel vollständig geliefert und aufgestellt, Nutzung über mehrere Jahre beabsichtigt. Zahlung per Firmenkarte quittiert.",
+      "konto": "0410",
+      "richtung": "ausgabe",
+      "namen": [
+        "Möbelhaus Eichenlot GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Möbelhaus Eichenlot GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C010.txt",
+      "text": "Küstenrad Elektrohandel GmbH\nKassenrechnung KE-715, 05.05.2026. An Fennufer Feinkostküche: ein eigenständig nutzbarer Nasssauger mit Behälter und Motor, kein Zubehör zu einer vorhandenen Maschine. Für tägliche Arbeiten im Betriebsflur, Nutzungsdauer über ein Jahr. Warenwert 245,00 EUR, Umsatzsteuer 19 % 46,55 EUR, Summe 291,55 EUR. Vollständig bezahlt über Firmenkarte. Seriennummer KRE562; Lieferung am Kaufdatum.",
+      "konto": "0480",
+      "richtung": "ausgabe",
+      "namen": [
+        "Küstenrad Elektrohandel GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Küstenrad Elektrohandel GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C011.txt",
+      "text": "Rechnung FL-62 vom 12.05.2026\nLichtnest Handel KG verkauft Fennufer Feinkostküche eine LED-Stehleuchte mit Netzanschluss für den Büroarbeitsplatz. Komplettgerät, ohne weitere Komponenten nutzbar, nicht zum Weiterverkauf. Anschaffung zur dauerhaften Verwendung. Netto 139,00 EUR, 26,41 EUR Umsatzsteuer zu 19 %, insgesamt 165,41 EUR. Abholung am selben Tag; Barzahlung vom Betrieb erhalten. Verpackung wurde beim Verkäufer zurückgelassen.",
+      "konto": "0480",
+      "richtung": "ausgabe",
+      "namen": [
+        "Lichtnest Handel KG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Lichtnest Handel KG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C012.txt",
+      "text": "Seidengrund Werkbedarf GmbH · Beleg 26-771\nEmpfänger: Fennufer Feinkostküche. 21.05.2026, Kauf einer kompletten Plattformwaage mit eigener Anzeige und Akku für die Warenannahme. Einzelpreis 620,00 EUR netto, 117,80 EUR USt (19 %), Gesamtbetrag 737,80 EUR. Die Waage arbeitet ohne Anschluss an andere Geräte und soll mehrere Jahre verwendet werden. Eichung bei Auslieferung gültig; Rechnung durch Banküberweisung bezahlt.",
+      "konto": "0480",
+      "richtung": "ausgabe",
+      "namen": [
+        "Seidengrund Werkbedarf GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Seidengrund Werkbedarf GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C013.txt",
+      "text": "Interner Kassenbeleg K-18 / 08.06.2026\nFennufer Feinkostküche. Rika Falkenau, alleinige Inhaberin, nimmt 250,00 EUR Bargeld aus der Ladenkasse für ihren privaten Wochenendeinkauf mit. Keine Ware entnommen und keine Leistung des Betriebs bezogen. Der Betrag mindert den betrieblichen Kassenbestand. Empfang und privaten Verwendungszweck bestätigt: Rika Falkenau. Dieser Geldabgang enthält keine Umsatzsteuer und wird nicht als geschäftlicher Einkauf behandelt.",
+      "konto": "1800",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Rika Falkenau"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C014.txt",
+      "text": "Auszug Geschäftsgiro · Wertstellung 15.06.2026\nKontoinhaber Fennufer Feinkostküche, Rika Falkenau. Belastung 680,00 EUR, Empfänger Sandhafen Reisen GmbH, Verwendungszweck Familienurlaub August, Buchung SF-208. Randnotiz der Inhaberin: irrtümlich vom Geschäftskonto bezahlt, betrifft ausschließlich meine Familie; kein geschäftlicher Anlass und keine Mitarbeitendenreise. Betrag bleibt mir persönlich belastet, keine Erstattung durch andere Personen.",
+      "konto": "1800",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Rika Falkenau",
+        "Sandhafen Reisen GmbH"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche",
+        "Sandhafen Reisen GmbH"
+      ]
+    },
+    {
+      "datei": "C015.txt",
+      "text": "Bankbeleg vom 30.06.2026\nFennufer Feinkostküche: ausgehende Überweisung 1.200,00 EUR auf das persönliche Girokonto der Inhaberin Rika Falkenau. Buchungstext: Lebenshaltung Juli. Die Inhaberin bestätigt, dass weder Arbeitsleistung noch eine betriebliche Rechnung vergütet werden. Auszahlung vorhandenen Geldes für private Zwecke; keine Warenbewegung, kein Umsatzsteuerbetrag. Freigabe am 30.06.2026 durch Rika Falkenau, Zahlung ausgeführt.",
+      "konto": "1800",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Rika Falkenau"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C016.txt",
+      "text": "Einzahlungsquittung der Ladenkasse, 03.07.2026\nFennufer Feinkostküche erhielt heute 350,00 EUR in bar von Inhaberin Rika Falkenau aus deren privater Geldbörse zur Erhöhung des Wechselgeldbestands. Das Geld stammt nicht aus Verkäufen und nicht aus einer Kundenzahlung. Kein Darlehensvertrag, kein Rückzahlungsanspruch eines Dritten. Kassenbestand um den vollen Betrag erhöht, steuerlicher Rechnungsbetrag entfällt. Übergeben und gezählt: Rika Falkenau.",
+      "konto": "1890",
+      "richtung": "einnahme",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Rika Falkenau"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C017.txt",
+      "text": "Geschäftskonto Fennufer Feinkostküche\nGutschrift am 10.07.2026: 4.500,00 EUR. Auftraggeberin Rika Falkenau, Zahlung von ihrem privaten Sparkonto. Verwendungszweck: eigene Ersparnisse für Liquidität des Einzelbetriebs. Schriftlicher Vermerk der Inhaberin: keine Kundenforderung, keine Lieferung und kein verzinsliches Darlehen; ich stelle dem Betrieb mein eigenes Geld zur Verfügung. Eingang in voller Höhe bestätigt, ohne Umsatzsteuer.",
+      "konto": "1890",
+      "richtung": "einnahme",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Rika Falkenau"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C018.txt",
+      "text": "Eigenbeleg E-46, 22.07.2026\nRika Falkenau überführt 900,00 EUR aus dem Verkauf ihres privaten Fahrrads in die Kasse der Fennufer Feinkostküche. Das Fahrrad gehörte nie zum Unternehmen; nur das bereits privat vereinnahmte Bargeld wird jetzt eingebracht. Die Inhaberin behält keinen Anspruch auf feste Rückzahlung. Eingang gezählt und mit Unterschrift bestätigt. Keine betriebliche Veräußerung, kein Leistungsentgelt, keine darin enthaltene Umsatzsteuer.",
+      "konto": "1890",
+      "richtung": "einnahme",
+      "namen": [
+        "Rika Falkenau",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C019.txt",
+      "text": "Mühlenried Lebensmittel KG · Rechnung ML-861\n04.08.2026 an Fennufer Feinkostküche. Geliefert: 40 kg Weizenmehl zu 1,20 EUR und 20 kg trockene Linsen zu 2,80 EUR. Für die Herstellung verkäuflicher Speisen; keine Bewirtungsleistung. Nettosumme 104,00 EUR, Umsatzsteuer 7 % 7,28 EUR, Rechnungsbetrag 111,28 EUR. Säcke vollständig angenommen, Lagerfach T2. Zahlung fällig am 18.08.2026, Transport bereits im Warenpreis enthalten.",
+      "konto": "3300",
+      "richtung": "ausgabe",
+      "namen": [
+        "Mühlenried Lebensmittel KG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Mühlenried Lebensmittel KG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C020.txt",
+      "text": "Frischehof Talweide GmbH\nLieferrechnung FT-90 vom 11.08.2026. Fennufer Feinkostküche bestellt zur Weiterverarbeitung in ihrem Verkaufsangebot: 25 kg Tomaten für 75,00 EUR, 15 kg Zucchini für 36,00 EUR und 10 kg Möhren für 18,00 EUR. Zusammen netto 129,00 EUR, 7 % USt 9,03 EUR, zu zahlen 138,03 EUR. Nur lose Lebensmittel, keine Bedienung oder Speisenausgabe. Anlieferung in Mehrwegkisten ohne Pfandberechnung.",
+      "konto": "3300",
+      "richtung": "ausgabe",
+      "namen": [
+        "Frischehof Talweide GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Frischehof Talweide GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C021.txt",
+      "text": "Auftragsbestätigung mit Rechnung Nr. 338 / 20.08.2026\nEmpfänger Fennufer Feinkostküche, Lieferant Salzwiese Delikatessen OHG. Zwölf Laibe Hartkäse, Gesamtgewicht 24 kg, zum Verkauf an der Frischetheke. Warenwert 312,00 EUR. Gesetzliche Steuer 7 %: 21,84 EUR. Gesamt 333,84 EUR, per Lastschrift eingezogen. Ware gekühlt übergeben; keine Teller, kein Verzehr vor Ort und keine Dienstleistung enthalten. Charge SW-2608 auf Lieferschein vermerkt.",
+      "konto": "3300",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Salzwiese Delikatessen OHG"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche",
+        "Salzwiese Delikatessen OHG"
+      ]
+    },
+    {
+      "datei": "C022.txt",
+      "text": "Brunnensteg Getränke GmbH\nRechnung BG-140, 03.09.2026, Kunde Fennufer Feinkostküche. 120 Flaschen stilles Mineralwasser, Einweg 0,75 l, für den Weiterverkauf im Laden. Warenwert 96,00 EUR, Einwegpfand 30,00 EUR, zusammen netto 126,00 EUR. Darauf 19 % Umsatzsteuer 23,94 EUR; Zahlung 149,94 EUR. Keine Eigenverpflegung des Personals. Vollständige Lieferung heute, Verkaufspreise im Betrieb werden gesondert kalkuliert.",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "namen": [
+        "Brunnensteg Getränke GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Brunnensteg Getränke GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C023.txt",
+      "text": "Kundenrechnung HB-466 · 10.09.2026\nHainbeere Handel KG liefert an Fennufer Feinkostküche 48 Flaschen Apfelsaft à 1 Liter aus Pressobst. Einkauf zur entgeltlichen Abgabe an Cateringkunden. Nettopreis je Flasche 1,75 EUR, Warenwert 84,00 EUR; 19 % USt 15,96 EUR; brutto 99,96 EUR. Pfandfreie Glasflaschen, Lieferung frei Haus. Kein Personalverbrauch. Lastschrift zum 17.09.2026 vereinbart, Ware mangelfrei angenommen.",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "namen": [
+        "Hainbeere Handel KG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Hainbeere Handel KG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C024.txt",
+      "text": "Winkelrebe Weinkontor GmbH · Faktura WR-71\nRechnungsdatum 18.09.2026. Lieferung an Fennufer Feinkostküche: 36 Flaschen Weißwein, 0,75 l, Jahrgang 2025, ausschließlich Handelsbestand für Kundenveranstaltungen. Nettowarenwert 216,00 EUR, Umsatzsteuer 19 % 41,04 EUR, Gesamtforderung 257,04 EUR. Verpackung ohne gesonderte Berechnung, kein Pfand. Bezahlung innerhalb vierzehn Tagen auf das Geschäftskonto des Lieferanten.",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "namen": [
+        "Winkelrebe Weinkontor GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Winkelrebe Weinkontor GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C025.txt",
+      "text": "Verdienstabrechnung Januar 2026 · erstellt 31.01.2026\nArbeitgeber Fennufer Feinkostküche; Angestellter Jorin Tannfeld, Küchenleitung, Personalnr. 11. Festes Monatsbrutto 3.200,00 EUR. Einbehaltene Lohnsteuer 310,00 EUR, Arbeitnehmeranteile zur Sozialversicherung 688,00 EUR. Auszahlung 2.202,00 EUR auf das hinterlegte Konto. Keine Reisekostenerstattung oder Sachbezüge enthalten. Reguläres Beschäftigungsverhältnis, Abrechnung durch Personalverwaltung freigegeben.",
+      "konto": "4120",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Jorin Tannfeld"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C026.txt",
+      "text": "Fennufer Feinkostküche / Personalabrechnung 02-2026\nBeschäftigte: Meike Uhlenhorst, kaufmännische Sachbearbeiterin in Teilzeit, keine freie Mitarbeiterin. Festbezug für Februar 2.400,00 EUR brutto; Lohnsteuerabzug 145,00 EUR, Sozialabgaben Arbeitnehmerin 516,00 EUR. Überweisung 1.739,00 EUR am 27.02.2026. Vertragliche Monatsvergütung ohne Auslagen oder Bonus. Abrechnungszeitraum 01.02. bis 28.02.2026, Zahlung für geleistete Verwaltungsarbeit bestätigt.",
+      "konto": "4120",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Meike Uhlenhorst"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C027.txt",
+      "text": "Monatliche Personalunterlage, März 2026\nFennufer Feinkostküche vergütet die fest angestellte Vertriebsmitarbeiterin Nela Wiesenort mit 2.850,00 EUR brutto für den ganzen Monat. Abzüge: Lohnsteuer 240,00 EUR und Arbeitnehmer-Sozialversicherung 612,75 EUR. Verbleibender Nettobetrag 1.997,25 EUR, am 31.03.2026 angewiesen. Keine selbständige Rechnung, kein Vorschuss und keine Vergütung an die Inhaberin. Personalnummer 17, Arbeitszeit gemäß bestehendem Vertrag.",
+      "konto": "4120",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Nela Wiesenort"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C028.txt",
+      "text": "Dauerrechnung NH-26/01 vom 01.01.2026\nNebelhang Immobilien GbR an Fennufer Feinkostküche: monatliches Nutzungsentgelt Januar für die gewerbliche Produktionsküche, Lindenpfad 8, Leipzig, 140 m². Netto 1.450,00 EUR, Umsatzsteuer aufgrund wirksamer Option 19 % 275,50 EUR, fällig 1.725,50 EUR am 05.01.2026. Ausschließlich Raumüberlassung; Energie und sonstige Leistungen werden separat abgerechnet. Eigentum am Gebäude verbleibt beim Überlassenden.",
+      "konto": "4210",
+      "richtung": "ausgabe",
+      "namen": [
+        "Nebelhang Immobilien GbR",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Nebelhang Immobilien GbR",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C029.txt",
+      "text": "Riedbogen Liegenschaften KG\nZahlungsanforderung L-52, 02.02.2026, an Fennufer Feinkostküche. Vertragsgemäßes Entgelt für die Nutzung eines abgeschlossenen Lagerraums, 45 m², im Februar. Keine Lagerdienstleistung, Schlüssel und alleinige Verfügung liegen beim Nutzer. Netto 390,00 EUR plus 19 % USt 74,10 EUR, Gesamtbetrag 464,10 EUR. Keine Kaution oder Vorauszahlung auf Erwerb. Überweisung bis zum fünften Werktag erbeten.",
+      "konto": "4210",
+      "richtung": "ausgabe",
+      "namen": [
+        "Riedbogen Liegenschaften KG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Riedbogen Liegenschaften KG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C030.txt",
+      "text": "Gewerberaumabrechnung März · 01.03.2026\nEigentümerin Torweide Verwaltung GmbH, Vertragspartner Fennufer Feinkostküche. Für das Ladenlokal am Uferwinkel 14 werden im März 820,00 EUR netto als Grundentgelt berechnet. Bei vereinbarter Steueroption 19 % Umsatzsteuer 155,80 EUR, zusammen 975,80 EUR. Der Vertrag umfasst nur die zeitweise Überlassung der Räume; Waren und Einrichtungen gehören dem Betrieb. Zahlung per Lastschrift am 03.03.2026.",
+      "konto": "4210",
+      "richtung": "ausgabe",
+      "namen": [
+        "Torweide Verwaltung GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Torweide Verwaltung GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C031.txt",
+      "text": "Elmbach Energie GmbH · Abschlagsbescheid E-628\n09.01.2026, Abnahmestelle Produktionsküche der Fennufer Feinkostküche, Zähler 673812. Monatlicher Abschlag für elektrische Energie zum Betrieb von Kühlzelle, Kochgeräten und Beleuchtung: netto 480,00 EUR, USt 19 % 91,20 EUR, Zahlbetrag 571,20 EUR. Einzug am 15.01.2026. Liefervertrag betrifft ausschließlich das Gewerbeobjekt; kein privater Haushalt angeschlossen. Endabrechnung erfolgt nach Zählerablesung.",
+      "konto": "4240",
+      "richtung": "ausgabe",
+      "namen": [
+        "Elmbach Energie GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Elmbach Energie GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C032.txt",
+      "text": "Versorgungsrechnung W-114 vom 12.02.2026\nQuellgarten Werke GmbH an Fennufer Feinkostküche. Trinkwasserlieferung Januar, Betriebsanschluss Lindenpfad 8, Zähler Q771: 44 m³ zu 2,50 EUR sowie Grundpreis 10,00 EUR. Nettobetrag 120,00 EUR; 7 % USt 8,40 EUR; Gesamt 128,40 EUR. Enthalten ist nur Frischwasser, keine Abwassergebühr. Verbrauch in der Küche und Spülzone, Ablesestände von 880 auf 924 m³ dokumentiert.",
+      "konto": "4240",
+      "richtung": "ausgabe",
+      "namen": [
+        "Quellgarten Werke GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Quellgarten Werke GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C033.txt",
+      "text": "Wärmekreis Versorgung KG\nJahresendabrechnung WG-206, 18.03.2026. Kunde Fennufer Feinkostküche, Lieferstelle gewerbliche Küche. Erdgas für Kochherde und Heizung, Zeitraum 01.01.–31.12.2025: nach Abzug aller geleisteten Abschläge verbleibt eine Nachforderung von 210,00 EUR netto und 39,90 EUR USt zu 19 %. Zu überweisen 249,90 EUR. Die aufgeführten Zählerdaten wurden vor Ort abgelesen; keine Versorgung privater Räume.",
+      "konto": "4240",
+      "richtung": "ausgabe",
+      "namen": [
+        "Wärmekreis Versorgung KG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Wärmekreis Versorgung KG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C034.txt",
+      "text": "Blankfeder Service GmbH\nRechnung BS-212, 07.04.2026, Fennufer Feinkostküche. Leistungen am 04.04.: Böden der Küche nass gescheuert, Fliesenwände entfettet, Abflüsse ausgespült. Acht Arbeitsstunden einschließlich Mittel und Geräte, netto 256,00 EUR. 19 % USt 48,64 EUR, gesamt 304,64 EUR. Regelmäßige hygienische Pflege ohne Reparaturen oder bauliche Arbeiten. Ausführung vom Schichtleiter bestätigt, Zahlung innerhalb einer Woche.",
+      "konto": "4250",
+      "richtung": "ausgabe",
+      "namen": [
+        "Blankfeder Service GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Blankfeder Service GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C035.txt",
+      "text": "Fensterklar Hohenrain KG · Beleg FH-67\nEmpfänger Fennufer Feinkostküche. Am 15.04.2026 wurden die Schaufensterscheiben im Laden innen und außen gewaschen, Rahmen abgewischt und Schlieren entfernt. Fläche 32 m², vereinbarter Pauschalpreis 112,00 EUR netto, USt 19 % 21,28 EUR, Rechnungsbetrag 133,28 EUR. Ausschließlich laufende Pflege, kein Glasaustausch. Arbeitszettel gegengezeichnet; Lastschrift am 22.04.2026 vorgesehen.",
+      "konto": "4250",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fensterklar Hohenrain KG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Fensterklar Hohenrain KG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C036.txt",
+      "text": "Klarhain Textilservice GmbH, Rechnung TX-351\n29.04.2026 an Fennufer Feinkostküche. Gewerblicher Waschdienst für 45 vorhandene Küchenschürzen und 60 Spültücher: Waschen, hygienische Aufbereitung, Trocknen und Falten. Keine Neuanschaffung oder Überlassung von Textilien. Entgelt netto 96,00 EUR, 19 % Umsatzsteuer 18,24 EUR, Gesamt 114,24 EUR. Gereinigte Wäsche am 28.04. zurückgeliefert; Eingang im Betrieb quittiert. Zahlung per Bank.",
+      "konto": "4250",
+      "richtung": "ausgabe",
+      "namen": [
+        "Klarhain Textilservice GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Klarhain Textilservice GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C037.txt",
+      "text": "Fugenwerk Rehfeld GmbH · Rechnung FR-40\n08.05.2026, Auftraggeber Fennufer Feinkostküche. Schadstelle an der Küchenwand: zwölf gerissene Fliesen entfernt und durch gleichartige ersetzt, Fugen geschlossen. Wiederherstellung des bisherigen Zustands ohne Erweiterung oder Wertverbesserung. Arbeit und Material netto 385,00 EUR, USt 19 % 73,15 EUR, Gesamt 458,15 EUR. Die Kosten trägt der Betrieb gemäß Nutzungsvertrag. Abnahme erfolgt.",
+      "konto": "4260",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fugenwerk Rehfeld GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Fugenwerk Rehfeld GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C038.txt",
+      "text": "Holzanker Bauhandwerk KG\nFaktura HA-113 vom 16.05.2026 an Fennufer Feinkostküche. Bestehende Eingangstür des Ladenlokals instand gesetzt: beschädigtes Scharnier ausgetauscht und Türblatt neu eingestellt. Kein neues Türelement, unveränderte Funktion und Abmessung. Netto 172,00 EUR zuzüglich 32,68 EUR Umsatzsteuer 19 %, Zahlbetrag 204,68 EUR. Eigentümer hat Arbeiten erlaubt, Auftrag und Zahlung liegen vertragsgemäß beim Nutzer.",
+      "konto": "4260",
+      "richtung": "ausgabe",
+      "namen": [
+        "Holzanker Bauhandwerk KG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Holzanker Bauhandwerk KG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C039.txt",
+      "text": "Malerbetrieb Abendroth GmbH, Abschlussrechnung MA-76\nDatum 27.05.2026; Empfänger Fennufer Feinkostküche. Verschlissenen Anstrich im Betriebsflur abgeschliffen und in gleichem Farbton erneuert, 48 m². Bestehende Räume bleiben in Größe und Nutzung unverändert. Keine Herstellung zusätzlicher Einrichtungen. Netto 640,00 EUR, Mehrwertsteuer 19 % 121,60 EUR, brutto 761,60 EUR. Material und Arbeitszeit enthalten. Ausführung am 25. und 26.05. bestätigt.",
+      "konto": "4260",
+      "richtung": "ausgabe",
+      "namen": [
+        "Malerbetrieb Abendroth GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Malerbetrieb Abendroth GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C040.txt",
+      "text": "Sicherhain Assekuranz AG · Prämienrechnung SH-218\n01.06.2026 an Fennufer Feinkostküche. Betriebshaftpflicht für Herstellung und Abgabe von Lebensmitteln einschließlich Cateringservice, Vertragsjahr 01.06.2026–31.05.2027. Grundprämie 420,00 EUR, Versicherungsteuer 19 % 79,80 EUR, fälliger Gesamtbetrag 499,80 EUR. Keine Umsatzsteuer enthalten. Schutz betrifft betriebliche Haftungsrisiken, keine Kraftfahrzeuge und keine privaten Policen. Einzug am 06.06.2026.",
+      "konto": "4360",
+      "richtung": "ausgabe",
+      "namen": [
+        "Sicherhain Assekuranz AG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Sicherhain Assekuranz AG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C041.txt",
+      "text": "Deckungsnachweis mit Zahlungsforderung, 10.06.2026\nFennufer Feinkostküche, Police WW-944 bei Wiesenwacht Schutz AG. Gewerblicher Inhaltsvertrag für Vorräte und bewegliche Einrichtung gegen Feuer, Leitungswasser und Einbruch. Jahresprämie einschließlich gesetzlicher Versicherungsteuer 357,00 EUR; umsatzsteuerfrei, kein Vorsteuerbetrag. Beginn 01.07.2026. Fahrzeuge sind ausdrücklich ausgeschlossen. Zahlung durch Lastschrift vom betrieblichen Konto.",
+      "konto": "4360",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Wiesenwacht Schutz AG"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche",
+        "Wiesenwacht Schutz AG"
+      ]
+    },
+    {
+      "datei": "C042.txt",
+      "text": "Felsbund Rechtsschutz AG\nBeitragsrechnung R-337 vom 24.06.2026 für Fennufer Feinkostküche. Gewerblicher Rechtsschutz für Vertragsstreitigkeiten des Küchen- und Ladenbetriebs, ohne Privat- und Verkehrsbaustein. Schutzzeit 01.07.2026 bis 30.06.2027. Prämie 240,00 EUR plus Versicherungsteuer 45,60 EUR, insgesamt 285,60 EUR. Der Betrag enthält keine Umsatzsteuer. Fälligkeit 01.07.2026; Policennummer FB7319 im Zahlungszweck angeben.",
+      "konto": "4360",
+      "richtung": "ausgabe",
+      "namen": [
+        "Felsbund Rechtsschutz AG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Felsbund Rechtsschutz AG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C043.txt",
+      "text": "Bescheid 2026-63 · 03.07.2026\nWirtschaftskammer Hainufer an Fennufer Feinkostküche. Pflichtumlage für das Kalenderjahr 2026 aufgrund gewerblicher Tätigkeit: Grundbetrag 145,00 EUR, zahlbar zum 31.07.2026. Öffentlich-rechtliche Erhebung, kein Entgelt für einen einzelnen Kurs und keine Umsatzsteuer. Bemessung gemäß beigefügter Satzung. Bereits geleistete Zahlungen: 0,00 EUR. Offener Gesamtbetrag 145,00 EUR, Bankverbindung aus Stammblatt verwenden.",
+      "konto": "4380",
+      "richtung": "ausgabe",
+      "namen": [
+        "Wirtschaftskammer Hainufer",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Wirtschaftskammer Hainufer",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C044.txt",
+      "text": "Verband Feinkosthandwerk Elsterland e. V.\nZahlungsaufforderung VM-26, 14.07.2026. Mitglied Fennufer Feinkostküche, Mitgliedsnummer 87. Satzungsgemäße Jahresumlage 2026 für die Interessenvertretung der angeschlossenen Betriebe: 180,00 EUR. Keine konkrete Gegenleistung, kein Seminar und keine Anzeigenbuchung darin enthalten; echte Mitgliedszahlung ohne Umsatzsteuer. Bitte bis 28.07.2026 überweisen. Mitgliedschaft besteht seit dem Vorjahr fort.",
+      "konto": "4380",
+      "richtung": "ausgabe",
+      "namen": [
+        "Verband Feinkosthandwerk Elsterland e. V.",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Verband Feinkosthandwerk Elsterland e. V.",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C045.txt",
+      "text": "Händlergemeinschaft Lindenpfad e. V. · Bescheid HG-19\nDatum 25.07.2026. An Fennufer Feinkostküche: laufende Vereinsumlage für Juli bis Dezember, sechs Monate zu 12,00 EUR, gesamt 72,00 EUR. Verwendung zur allgemeinen Interessenvertretung der Gewerbetreibenden. Keine individuell bestellte Werbeleistung. Die satzungsmäßige Mitgliedszahlung unterliegt nicht der Umsatzsteuer. Lastschrifteinzug am 01.08.2026 unter der bekannten Mandatsreferenz.",
+      "konto": "4380",
+      "richtung": "ausgabe",
+      "namen": [
+        "Händlergemeinschaft Lindenpfad e. V.",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Händlergemeinschaft Lindenpfad e. V.",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C046.txt",
+      "text": "Radbogen Servicewerk GmbH · Werkstattrechnung RS-528\n04.08.2026 für Fennufer Feinkostküche. Betrieblicher Lieferwagen, Kennzeichen L-FF 628: defekte Kupplung ausgebaut, Ersatzteil eingesetzt, Funktionsprüfung durchgeführt. Material 580,00 EUR und Arbeit 320,00 EUR, netto 900,00 EUR. USt 19 % 171,00 EUR, Gesamt 1.071,00 EUR. Reparatur stellt vorhandene Fahrbereitschaft wieder her; kein Erwerb eines neuen Fahrzeugs. Auftrag erledigt.",
+      "konto": "4500",
+      "richtung": "ausgabe",
+      "namen": [
+        "Radbogen Servicewerk GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Radbogen Servicewerk GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C047.txt",
+      "text": "Prüfstelle Morgenried GmbH\nPrüfrechnung PM-239 vom 13.08.2026, Halter Fennufer Feinkostküche. Gesetzliche Hauptuntersuchung einschließlich Abgasmessung am betrieblichen Wagen L-FF 219. Prüfentgelt netto 125,00 EUR, 19 % Umsatzsteuer 23,75 EUR, bezahlt 148,75 EUR mit Firmenkarte. Ergebnis ohne erhebliche Mängel, neue Plakette zugeteilt. Keine Kraftstoffe, keine laufende Pflege und kein Umbau in diesem Auftrag enthalten.",
+      "konto": "4500",
+      "richtung": "ausgabe",
+      "namen": [
+        "Prüfstelle Morgenried GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Prüfstelle Morgenried GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C048.txt",
+      "text": "Werkstatt Lerchenrad KG, Rechnung WL-407\n26.08.2026 an Fennufer Feinkostküche. Am Auslieferungswagen L-FF 628 wurde nach Steinschlag die Frontscheibe ersetzt. Glas 310,00 EUR, Einbau 160,00 EUR, netto 470,00 EUR; Umsatzsteuer 19 % 89,30 EUR; Forderung 559,30 EUR. Keine Erstattung durch eine Police beantragt, der Betrieb trägt den gesamten Reparaturbetrag. Gleichwertiges Ersatzglas, keine zusätzliche Ausstattung. Übergabe quittiert.",
+      "konto": "4500",
+      "richtung": "ausgabe",
+      "namen": [
+        "Werkstatt Lerchenrad KG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Werkstatt Lerchenrad KG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C049.txt",
+      "text": "Tankstation Quellrast GmbH · Kassenbon 3819\n05.09.2026, 07:46 Uhr. Käufer Fennufer Feinkostküche, Firmenwagen L-FF 628. Diesel 48,00 Liter zu 1,65 EUR, Bruttosumme 79,20 EUR. Enthaltene Umsatzsteuer 19 % 12,65 EUR, Nettobetrag 66,55 EUR. Zahlung mit betrieblicher Tankkarte, keine weiteren Artikel. Kilometerstand 78.418. Fahrer vermerkt: Betankung vor Auslieferung der bestellten Cateringboxen, ausschließlich betriebliche Fahrt.",
+      "konto": "4530",
+      "richtung": "ausgabe",
+      "namen": [
+        "Tankstation Quellrast GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Tankstation Quellrast GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C050.txt",
+      "text": "Waschpark Silberfurt KG\nBeleg WS-226, 15.09.2026. Auftraggeber Fennufer Feinkostküche, Fahrzeug L-FF 219. Einmalige Außenwäsche im Waschportal mit Unterbodenprogramm und Aussaugen des Innenraums, keine Werkstattarbeit. Netto 20,00 EUR, USt 19 % 3,80 EUR, Gesamt 23,80 EUR. Betrag per Firmenkarte erhalten. Laufende Pflege des täglich zu Kunden eingesetzten Wagens; keine private Fahrzeugnutzung Gegenstand dieser Leistung.",
+      "konto": "4530",
+      "richtung": "ausgabe",
+      "namen": [
+        "Waschpark Silberfurt KG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Waschpark Silberfurt KG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C051.txt",
+      "text": "Ladestrom Finnenfeld GmbH / Rechnung LF-86\nAbrechnungsdatum 29.09.2026, Kunde Fennufer Feinkostküche. Öffentliches Laden des elektrischen Firmenwagens L-FF 731 am 28.09., 38,0 kWh zu 0,50 EUR netto. Netto 19,00 EUR, Umsatzsteuer 19 % 3,61 EUR, brutto 22,61 EUR. Ladepunkt FF-127, Sitzung 18:12 bis 19:04 Uhr. Firmenkarte belastet. Kein häuslicher Verbrauch, keine Gebäudeeinspeisung; Energie unmittelbar in den Fahrzeugakku geladen.",
+      "konto": "4530",
+      "richtung": "ausgabe",
+      "namen": [
+        "Ladestrom Finnenfeld GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Ladestrom Finnenfeld GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C052.txt",
+      "text": "Mobilwacht AG, Vertragsabrechnung MW-531\n01.01.2026 an Fennufer Feinkostküche. Haftpflichtschutz für den betrieblichen Lieferwagen L-FF 628, Zeitraum Januar bis Dezember 2026. Jahresprämie netto vor Versicherungsteuer 360,00 EUR, Steuer 19 % 68,40 EUR, Zahlbetrag 428,40 EUR. Es handelt sich nicht um Umsatzsteuer. Einzug am 05.01.2026. Fahrzeug laut Vertrag für gewerbliche Warenfahrten zugelassen, private Risiken nicht Bestandteil dieser Rechnung.",
+      "konto": "4540",
+      "richtung": "ausgabe",
+      "namen": [
+        "Mobilwacht AG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Mobilwacht AG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C053.txt",
+      "text": "Prämienmitteilung AS-266 · 18.02.2026\nAutobund Schutz AG an Fennufer Feinkostküche. Teilkaskodeckung für den angeschafften Firmenwagen L-FF 219 vom 20.02. bis 31.12.2026, Selbstbehalt 150,00 EUR je Schaden. Zu entrichtende Prämie einschließlich Versicherungsteuer: 238,00 EUR. Keine Umsatzsteuer ausgewiesen. Die Forderung betrifft ausschließlich das genannte Kraftfahrzeug. Lastschrift wird nach Vertragsbeginn vom Geschäftskonto eingezogen.",
+      "konto": "4540",
+      "richtung": "ausgabe",
+      "namen": [
+        "Autobund Schutz AG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Autobund Schutz AG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C054.txt",
+      "text": "Fahrtstern Assekuranz AG\nPolice FA-731 / Zahlungsbeleg vom 07.03.2026. Versicherungsnehmer Fennufer Feinkostküche; Objekt elektrischer Firmenwagen L-FF 731. Vollkasko für den Zeitraum 07.03.–31.12.2026, vereinbarte gewerbliche Nutzung. Grundprämie 410,00 EUR, Versicherungsteuer 77,90 EUR, insgesamt 487,90 EUR. Umsatzsteuer fällt nicht an. Kein Schadenersatz und keine Reparaturabrechnung. Prämie durch SEPA-Lastschrift zum Vertragsbeginn fällig.",
+      "konto": "4540",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fahrtstern Assekuranz AG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Fahrtstern Assekuranz AG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C055.txt",
+      "text": "Rechnung PD-218 / 04.04.2026\nPapierduft Druck GmbH an Fennufer Feinkostküche: 3.000 farbige Faltblätter mit Cateringangebot und Bestellkontakt, nach freigegebener Druckvorlage hergestellt. Zur kostenlosen Verteilung an potenzielle Kunden im Stadtgebiet. Netto 285,00 EUR, 19 % USt 54,15 EUR, gesamt 339,15 EUR. Kein verkäufliches Druckerzeugnis. Lieferung vollständig am 03.04.2026, Zahlung binnen zehn Tagen ohne Abzug erbeten.",
+      "konto": "4600",
+      "richtung": "ausgabe",
+      "namen": [
+        "Papierduft Druck GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Papierduft Druck GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C056.txt",
+      "text": "Stadtfenster Medien KG · Anzeigenrechnung SM-56\nRechnungsempfänger Fennufer Feinkostküche. Veröffentlichung einer Viertelseite im lokalen Wochenblatt, Ausgabe 16.04.2026, Motiv: Festbuffets und Lieferangebot des Betriebs. Anzeigenhonorar netto 320,00 EUR, Umsatzsteuer 19 % 60,80 EUR, Gesamt 380,80 EUR. Belegexemplar beigefügt. Auftrag dient der Kundengewinnung, keine journalistische Leistung an den Betrieb. Rechnungsdatum 18.04.2026.",
+      "konto": "4600",
+      "richtung": "ausgabe",
+      "namen": [
+        "Stadtfenster Medien KG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Stadtfenster Medien KG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C057.txt",
+      "text": "Funkelpfad Digital GmbH, Leistungsnachweis FD-109\n30.04.2026 an Fennufer Feinkostküche. Gestaltung und Schaltung einer bezahlten Suchanzeige für das regionale Cateringangebot im April. Inlandslieferant mit deutscher USt-IdNr. Agenturleistung samt Medienbudget netto 450,00 EUR, USt 19 % 85,50 EUR, Rechnungsbetrag 535,50 EUR. Kampagnenlaufzeit 01.04.–30.04.2026, Monatsbericht beigefügt. Keine dauerhafte Software oder Website erworben.",
+      "konto": "4600",
+      "richtung": "ausgabe",
+      "namen": [
+        "Funkelpfad Digital GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Funkelpfad Digital GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C058.txt",
+      "text": "Floristik Mooskrone GmbH · Rechnung FM-183\n05.05.2026 an Fennufer Feinkostküche. Ein kleiner Olivenbaum im Topf, netto 32,00 EUR, USt 7 % 2,24 EUR, gesamt 34,24 EUR. Übergabevermerk: unentgeltliches Dankeschön an Geschäftspartnerin Ina Riedenbach für die Zusammenarbeit, keine Gegenleistung vereinbart. Ihr wurde im gesamten Jahr bisher nichts zugewendet; Jahressumme netto 32,00 EUR. Empfängerin ist keine Arbeitnehmerin des Betriebs.",
+      "konto": "4630",
+      "richtung": "ausgabe",
+      "namen": [
+        "Floristik Mooskrone GmbH",
+        "Fennufer Feinkostküche",
+        "Ina Riedenbach"
+      ],
+      "firmennamen": [
+        "Floristik Mooskrone GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C059.txt",
+      "text": "Lichtergarten Manufaktur KG, Bon LG-92 vom 13.05.2026\nFennufer Feinkostküche kauft eine handgegossene Duftkerze für 24,00 EUR netto, zuzüglich 19 % USt 4,56 EUR, brutto 28,56 EUR. Interner Nachweis: am 14.05. ohne Gegenleistung an Kundenkontakt Marlo Sennewald übergeben. Er arbeitet nicht für unseren Betrieb. Einzige Zuwendung an diese Person im Kalenderjahr 2026; gesamter Nettowert 24,00 EUR. Anlass: zehnjährige Zusammenarbeit.",
+      "konto": "4630",
+      "richtung": "ausgabe",
+      "namen": [
+        "Lichtergarten Manufaktur KG",
+        "Fennufer Feinkostküche",
+        "Marlo Sennewald"
+      ],
+      "firmennamen": [
+        "Lichtergarten Manufaktur KG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C060.txt",
+      "text": "Schreibsteg Handel GmbH · Faktura SS-241\n22.05.2026, Käufer Fennufer Feinkostküche. Ein Füllfederhalter mit Etui, netto 42,50 EUR, Umsatzsteuer 19 % 8,08 EUR, zu zahlen 50,58 EUR. Für die namentlich erfasste Geschäftspartnerin Tessa Birkenhorst als freiwillige Aufmerksamkeit ohne Gegenleistung. Keine Angestellte. Übergabe am 23.05. bestätigt; weitere Zuwendungen in 2026 gab es nicht. Nettogesamtwert je Empfängerin damit 42,50 EUR.",
+      "konto": "4630",
+      "richtung": "ausgabe",
+      "namen": [
+        "Schreibsteg Handel GmbH",
+        "Fennufer Feinkostküche",
+        "Tessa Birkenhorst"
+      ],
+      "firmennamen": [
+        "Schreibsteg Handel GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C061.txt",
+      "text": "Farbwinkel Galerie KG · Rechnung FG-71\n06.06.2026 an Fennufer Feinkostküche: gerahmter Kunstdruck, netto 120,00 EUR, USt 19 % 22,80 EUR, Bruttobetrag 142,80 EUR. Von der Inhaberin zur kostenlosen Übergabe an Geschäftspartner Levin Auenfels gekauft, ohne vereinbarte Gegenleistung und ohne Werbeaufdruck. Empfänger ist kein Mitarbeiter. Übergabe zum Firmenjubiläum am 08.06.2026 dokumentiert; bisherige Jahressumme für ihn netto 120,00 EUR.",
+      "konto": "4635",
+      "richtung": "ausgabe",
+      "namen": [
+        "Farbwinkel Galerie KG",
+        "Fennufer Feinkostküche",
+        "Levin Auenfels"
+      ],
+      "firmennamen": [
+        "Farbwinkel Galerie KG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C062.txt",
+      "text": "Uhrenhaus Morgenblatt GmbH\nKaufbeleg UM-38, 16.06.2026, Rechnungsempfänger Fennufer Feinkostküche. Eine hochwertige Tischuhr, Nettopreis 95,00 EUR, Umsatzsteuer 19 % 18,05 EUR, Gesamt 113,05 EUR. Vermerk zur Verwendung: unentgeltliche Aufmerksamkeit für Kundenvertreterin Alva Lindengrund, am 18.06.2026 persönlich überreicht. Keine Gegenleistung, kein Beschäftigungsverhältnis. Einziger Anlass im Jahr; Wert für diese Empfängerin netto 95,00 EUR.",
+      "konto": "4635",
+      "richtung": "ausgabe",
+      "namen": [
+        "Uhrenhaus Morgenblatt GmbH",
+        "Fennufer Feinkostküche",
+        "Alva Lindengrund"
+      ],
+      "firmennamen": [
+        "Uhrenhaus Morgenblatt GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C063.txt",
+      "text": "Lederhain Atelier KG, Rechnung LA-107 vom 25.06.2026\nFennufer Feinkostküche erwirbt eine Leder-Schreibmappe, netto 85,00 EUR zuzüglich 16,15 EUR Umsatzsteuer 19 %, Gesamtbetrag 101,15 EUR. Empfängernachweis: der externe Geschäftspartner Enno Hartried erhält die Mappe am 26.06. als freiwillige Zuwendung zur Geschäftseröffnung, ohne Entgelt oder sonstige Gegenleistung. Kein Arbeitnehmer. Gesamtwert aller Zuwendungen an ihn 2026 netto 85,00 EUR.",
+      "konto": "4635",
+      "richtung": "ausgabe",
+      "namen": [
+        "Lederhain Atelier KG",
+        "Fennufer Feinkostküche",
+        "Enno Hartried"
+      ],
+      "firmennamen": [
+        "Lederhain Atelier KG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C064.txt",
+      "text": "Restaurant Amselbucht GmbH · Rechnung RA-186, 08.07.2026\nAn Fennufer Feinkostküche: Speisen netto 70,00 EUR plus 7 % USt 4,90 EUR; Getränke netto 20,00 EUR plus 19 % USt 3,80 EUR. Summe 98,70 EUR, Karte, kein Trinkgeld. Teilnehmer: Inhaberin Rika Falkenau und Kundenvertreter Jaro Tannenried. Anlass: Verhandlung des Jahresvertrags für Tagungsverpflegung. Geschäftliches Essen außerhalb des eigenen Betriebs; Gastgeberin bestätigt Anlass und Teilnehmer.",
+      "konto": "4650",
+      "richtung": "ausgabe",
+      "namen": [
+        "Restaurant Amselbucht GmbH",
+        "Fennufer Feinkostküche",
+        "Rika Falkenau",
+        "Jaro Tannenried"
+      ],
+      "firmennamen": [
+        "Restaurant Amselbucht GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C065.txt",
+      "text": "Kaffeehaus Elstergold KG, Tischbon 344 vom 17.07.2026\nRechnung für Fennufer Feinkostküche: Kaffee und Mineralwasser netto 18,00 EUR, Steuer 19 % 3,42 EUR, Endbetrag 21,42 EUR. Keine Speisen, kein Trinkgeld. Ergänzung: Rika Falkenau trifft externe Einkäuferin Selma Uferloh zur Besprechung künftiger Feinkostlieferungen. Beide nahmen teil, keine privaten Gäste. Geschäftlicher Anlass und Richtigkeit am 17.07. von der Inhaberin unterschriftlich bestätigt.",
+      "konto": "4650",
+      "richtung": "ausgabe",
+      "namen": [
+        "Kaffeehaus Elstergold KG",
+        "Fennufer Feinkostküche",
+        "Rika Falkenau",
+        "Selma Uferloh"
+      ],
+      "firmennamen": [
+        "Kaffeehaus Elstergold KG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C066.txt",
+      "text": "Gasthaus Waldstimme GmbH · Gästerechnung GW-58\n28.07.2026, Kunde Fennufer Feinkostküche. Essen 60,00 EUR netto, USt 7 % 4,20 EUR; Getränke 15,00 EUR netto, USt 19 % 2,85 EUR. Gesamt 82,05 EUR, per Karte bezahlt. Aufzeichnung: Inhaberin Rika Falkenau und Lieferantenvertreter Oskar Fennbruch besprachen saisonale Bezugsbedingungen. Keine Arbeitnehmerveranstaltung, keine privaten Begleiter. Anlass und Teilnehmer von der Gastgeberin am selben Tag bestätigt.",
+      "konto": "4650",
+      "richtung": "ausgabe",
+      "namen": [
+        "Gasthaus Waldstimme GmbH",
+        "Fennufer Feinkostküche",
+        "Rika Falkenau",
+        "Oskar Fennbruch"
+      ],
+      "firmennamen": [
+        "Gasthaus Waldstimme GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C067.txt",
+      "text": "Bahnfahrschein mit Auslagenabrechnung, 04.08.2026\nKäuferin Fennufer Feinkostküche, Reisender Jorin Tannfeld, fest angestellte Küchenleitung. Hinfahrt Leipzig–Erfurt und Rückfahrt am selben Tag zur technischen Abnahme einer Lieferantencharge. Bahnbetrieb Talspur AG berechnet 64,20 EUR brutto, darin 7 % USt 4,20 EUR, netto 60,00 EUR. Ticket privat vorgestreckt; Arbeitgeber erstattet den vollen Betrag. Keine Fahrt zwischen Wohnung und regelmäßiger Arbeitsstätte.",
+      "konto": "4660",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Jorin Tannfeld",
+        "Bahnbetrieb Talspur AG"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche",
+        "Bahnbetrieb Talspur AG"
+      ]
+    },
+    {
+      "datei": "C068.txt",
+      "text": "Hotelrechnung HF-201 vom 13.08.2026\nHoflinde Hotel GmbH an Fennufer Feinkostküche. Gast: Nela Wiesenort, angestellte Vertriebsmitarbeiterin. Eine Übernachtung 12.–13.08. in Magdeburg wegen auswärtiger Gespräche mit Veranstaltungskunden. Zimmer netto 92,00 EUR, USt 7 % 6,44 EUR, Gesamt 98,44 EUR. Ohne Frühstück, ohne sonstige Leistungen. Zahlung mit Firmenkarte. Dienstauftrag liegt vor; die Inhaberin war nicht Mitreisende.",
+      "konto": "4660",
+      "richtung": "ausgabe",
+      "namen": [
+        "Hoflinde Hotel GmbH",
+        "Fennufer Feinkostküche",
+        "Nela Wiesenort"
+      ],
+      "firmennamen": [
+        "Hoflinde Hotel GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C069.txt",
+      "text": "Taxiquittung LF-91 · 25.08.2026, 16:20 Uhr\nLindenfahrt Mobil GmbH, Fahrt im Stadtgebiet Hannover, 11 km vom Bahnhof zum Kongresszentrum. Fahrgast Meike Uhlenhorst, Arbeitnehmerin der Fennufer Feinkostküche, auswärtiger Termin zur Abstimmung der Messebelieferung. Netto 30,00 EUR, USt 7 % 2,10 EUR, erhalten 32,10 EUR. Auslagenformular: vom Arbeitgeber zu erstatten, keine Pendelfahrt. Zahlung bar durch Mitarbeiterin, sachlich geprüft und freigegeben.",
+      "konto": "4660",
+      "richtung": "ausgabe",
+      "namen": [
+        "Lindenfahrt Mobil GmbH",
+        "Meike Uhlenhorst",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Lindenfahrt Mobil GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C070.txt",
+      "text": "Fahrkarte TS-402 vom 02.09.2026\nBahnbetrieb Talspur AG stellt Fennufer Feinkostküche eine Rückfahrkarte Leipzig–Berlin aus. Reisende Rika Falkenau, alleinige Inhaberin des Einzelunternehmens, besucht einen potenziellen gewerblichen Abnehmer. Abfahrt 07:10 Uhr, Rückkehr am selben Abend. Netto 80,00 EUR, 7 % USt 5,60 EUR, Gesamt 85,60 EUR. Bezahlt vom Geschäftskonto. Persönliche Geschäftsreise der Inhaberin, keine Mitarbeitererstattung.",
+      "konto": "4670",
+      "richtung": "ausgabe",
+      "namen": [
+        "Bahnbetrieb Talspur AG",
+        "Fennufer Feinkostküche",
+        "Rika Falkenau"
+      ],
+      "firmennamen": [
+        "Bahnbetrieb Talspur AG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C071.txt",
+      "text": "Hotel Fährgarten GmbH · Rechnung FG-617\n11.09.2026 an Fennufer Feinkostküche. Übernachtender Gast Rika Falkenau, Betriebsinhaberin, Aufenthalt 10.–11.09.2026 in Hamburg zur Besichtigung einer neuen Lieferküche beim Geschäftspartner. Eine Übernachtung netto 110,00 EUR, Umsatzsteuer 7 % 7,70 EUR, Gesamt 117,70 EUR. Kein Frühstück, keine Privatverlängerung oder Begleitperson. Zahlung mit betrieblicher Karte; Reiseanlass von der Inhaberin vermerkt.",
+      "konto": "4670",
+      "richtung": "ausgabe",
+      "namen": [
+        "Hotel Fährgarten GmbH",
+        "Fennufer Feinkostküche",
+        "Rika Falkenau"
+      ],
+      "firmennamen": [
+        "Hotel Fährgarten GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C072.txt",
+      "text": "Mobilitätsbeleg SW-83 / 24.09.2026\nStadtwagen Weidenbruch KG, Taxifahrt Nürnberg Hauptbahnhof zum Großmarkt, innerhalb des Stadtgebiets, 9 km. Kundin Rika Falkenau ist Inhaberin der Fennufer Feinkostküche und reist zur Verhandlung mit einem Gewürzlieferanten. Fahrpreis netto 25,00 EUR, USt 7 % 1,75 EUR, quittiert 26,75 EUR. Kein Trinkgeld. Bar aus betrieblicher Reisekasse bezahlt; eigene Geschäftsreise der Unternehmerin, keine Arbeitswegfahrt.",
+      "konto": "4670",
+      "richtung": "ausgabe",
+      "namen": [
+        "Stadtwagen Weidenbruch KG",
+        "Rika Falkenau",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Stadtwagen Weidenbruch KG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C073.txt",
+      "text": "Briefdienst Finkenpost AG · Verkaufsquittung FP-228\n05.01.2026, Kunde Fennufer Feinkostküche. Zwanzig Wertzeichen für Standardbriefe im Inland zu je 0,95 EUR, Gesamt 19,00 EUR. Steuerbefreite postalische Universaldienstleistung, keine Umsatzsteuer ausgewiesen. Marken dienen dem Versand von unterschriebenen Verträgen und Geschäftskorrespondenz. Keine Warenbeförderung berechnet. Zahlung mit Firmenkarte am Schalter, Wertzeichen vollständig ausgehändigt.",
+      "konto": "4910",
+      "richtung": "ausgabe",
+      "namen": [
+        "Briefdienst Finkenpost AG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Briefdienst Finkenpost AG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C074.txt",
+      "text": "Versandquittung 661, 14.01.2026\nFinkenpost AG bestätigt Fennufer Feinkostküche die Annahme eines Großbriefs mit Einschreiben für eine geschäftliche Vertragsunterlage. Beförderung und Zusatzleistung zusammen 4,70 EUR, umsatzsteuerfrei im Rahmen des Universaldienstes. Sendungsnummer FP8871635, Empfängeradresse auf Einlieferungsbeleg vermerkt. Betrag aus der Geschäftskasse bar bezahlt. Kein Kauf von Verpackungsmaterial und kein Warenverkauf Bestandteil dieses Belegs.",
+      "konto": "4910",
+      "richtung": "ausgabe",
+      "namen": [
+        "Finkenpost AG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Finkenpost AG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C075.txt",
+      "text": "Briefkurier Uferlauf GmbH, Monatsrechnung BU-28\n31.01.2026 an Fennufer Feinkostküche. Abholung und Zustellung von 35 Geschäftsbriefen im regionalen Netz, Entgelt je Sendung 0,70 EUR netto. Nettosumme 24,50 EUR, Umsatzsteuer 19 % 4,66 EUR, Gesamtforderung 29,16 EUR. Gewerblicher Kurierdienst ohne Steuerbefreiung. Nur Korrespondenz an Kunden und Lieferanten, keine Warenpakete. Sendungsliste für Januar liegt bei; Zahlbetrag am 07.02. fällig.",
+      "konto": "4910",
+      "richtung": "ausgabe",
+      "namen": [
+        "Briefkurier Uferlauf GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Briefkurier Uferlauf GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C076.txt",
+      "text": "Sprechfaden Netz GmbH · Rechnung SN-241\n03.02.2026, Anschlusskunde Fennufer Feinkostküche. Festnetzanschluss für Bestellungen im Laden, Abrechnungszeitraum Januar: Grundtarif 24,00 EUR und Verbindungen 6,00 EUR netto. Zusammen netto 30,00 EUR, USt 19 % 5,70 EUR, brutto 35,70 EUR. Kein Endgerät geliefert, keine private Rufnummer enthalten. Einzug vom Firmenkonto am 10.02.2026; Einzelverbindungsnachweis im Kundenkonto hinterlegt.",
+      "konto": "4920",
+      "richtung": "ausgabe",
+      "namen": [
+        "Sprechfaden Netz GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Sprechfaden Netz GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C077.txt",
+      "text": "Mobilkreis Dienste AG\nFennufer Feinkostküche, Vertragsnummer MK7781. Rechnung vom 16.02.2026 für die SIM-Karte der betrieblichen Bestellhotline: Gesprächs- und Datenpauschale Februar netto 28,00 EUR, Umsatzsteuer 19 % 5,32 EUR, zu zahlen 33,32 EUR. Ausschließlich dienstliche Nutzung beim Catering, kein Gerätekauf und keine Finanzierungsrate. Die Rechnung wird zum 23.02.2026 eingezogen; Leistungszeitraum 01.02.–28.02.2026.",
+      "konto": "4920",
+      "richtung": "ausgabe",
+      "namen": [
+        "Mobilkreis Dienste AG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Mobilkreis Dienste AG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C078.txt",
+      "text": "Datenpfad Regional GmbH, Abrechnung DR-53\nDatum 28.02.2026. Rechnungsempfänger Fennufer Feinkostküche. Monatlicher Kombianschluss im Büro mit Sprachkanal und Internetzugang für Kundenkommunikation, netto 49,00 EUR. 19 % Umsatzsteuer 9,31 EUR, Endbetrag 58,31 EUR. Keine Installation, keine Hardware, kein Erwerb einer Software. Dienstleistung Februar vollständig erbracht; keine privaten Räume angeschlossen. Zahlbar per Lastschrift am 06.03.2026.",
+      "konto": "4920",
+      "richtung": "ausgabe",
+      "namen": [
+        "Datenpfad Regional GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Datenpfad Regional GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C079.txt",
+      "text": "Papierinsel Handel KG · Rechnung PH-129\n04.03.2026 an Fennufer Feinkostküche. Zehn Packungen Kopierpapier A4 für Auftragsbestätigungen und interne Unterlagen, je 4,50 EUR netto. Netto 45,00 EUR, Umsatzsteuer 19 % 8,55 EUR, brutto 53,55 EUR. Verbrauchsmaterial für die Verwaltung; keine Verpackung für verkaufte Waren und keine Weiterveräußerung. Abholung durch Beschäftigte am Rechnungsdatum, Zahlung vom betrieblichen Konto bestätigt.",
+      "konto": "4930",
+      "richtung": "ausgabe",
+      "namen": [
+        "Papierinsel Handel KG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Papierinsel Handel KG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C080.txt",
+      "text": "Schreibblatt Kontor GmbH, Kassenbeleg SK-604\n12.03.2026, Käufer Fennufer Feinkostküche. Zwölf Aktenordner 36,00 EUR und vier Packungen Register 12,00 EUR, Nettosumme 48,00 EUR. Steuer 19 % 9,12 EUR, Gesamt 57,12 EUR. Material wird für die Ablage von Kundenaufträgen und steuerlichen Unterlagen im Verwaltungsbüro eingesetzt. Keine Zuwendung an Dritte. Zahlung mit Firmenkarte um 10:18 Uhr, Ware vollständig erhalten.",
+      "konto": "4930",
+      "richtung": "ausgabe",
+      "namen": [
+        "Schreibblatt Kontor GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Schreibblatt Kontor GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C081.txt",
+      "text": "Tintenbogen Versand GmbH · Lieferrrechnung TV-87\n23.03.2026, Lieferanschrift Fennufer Feinkostküche. Eine Tonerkartusche für den vorhandenen Bürodrucker, 62,00 EUR netto; 19 % USt 11,78 EUR, Endsumme 73,78 EUR. Kein neues Druckgerät. Kartusche als Verbrauchsmaterial für Rechnungen, Lieferlisten und Schriftverkehr des Betriebs bestellt. Versand im Warenpreis enthalten. Rechnung binnen sieben Tagen begleichen, Lieferung erfolgte am 22.03.2026.",
+      "konto": "4930",
+      "richtung": "ausgabe",
+      "namen": [
+        "Tintenbogen Versand GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Tintenbogen Versand GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C082.txt",
+      "text": "Wissensufer Verlag GmbH\nRechnung WV-215 vom 06.04.2026 an Fennufer Feinkostküche. Fachbuch „Hygiene in der gewerblichen Küche“, gedruckte Ausgabe, zur internen fachlichen Nutzung. Ladenpreis netto 48,00 EUR, Umsatzsteuer 7 % 3,36 EUR, Rechnungsbetrag 51,36 EUR. Das Exemplar verbleibt in der Betriebsbibliothek, kein Handelsbestand. Lieferung frei Haus und ohne Seminarzugang. Betrag per Banküberweisung zum 20.04.2026 fällig.",
+      "konto": "4940",
+      "richtung": "ausgabe",
+      "namen": [
+        "Wissensufer Verlag GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Wissensufer Verlag GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C083.txt",
+      "text": "Küchenfenster Fachmedien KG, Abrechnung KF-36\n15.04.2026 an Fennufer Feinkostküche. Jahresabonnement der gedruckten Fachzeitschrift „Cateringpraxis regional“, zwölf Ausgaben Mai 2026 bis April 2027. Nettopreis 96,00 EUR, ermäßigter Steuersatz 7 %, Steuer 6,72 EUR, insgesamt 102,72 EUR. Versand an das Betriebsbüro eingeschlossen. Bezug dient der fachlichen Information; keine Anzeigenfläche und kein Kursteilnahmeentgelt Bestandteil des Abonnements.",
+      "konto": "4940",
+      "richtung": "ausgabe",
+      "namen": [
+        "Küchenfenster Fachmedien KG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Küchenfenster Fachmedien KG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C084.txt",
+      "text": "Fachversand Federquell GmbH · Beleg FF-192\n28.04.2026. Käuferin Fennufer Feinkostküche bestellt ein gedrucktes Handbuch „Allergene sicher kennzeichnen“ für die Leitung der Produktionsküche. Netto 35,00 EUR, USt 7 % 2,45 EUR, Gesamt 37,45 EUR. Ein Exemplar geliefert, Versand kostenfrei. Kein Weiterverkauf, kein Geschenk und keine Veranstaltung gebucht. Zahlung mit Geschäftskarte abgeschlossen. Ausgabe 2026, Nutzung als Nachschlagewerk im Betrieb.",
+      "konto": "4940",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fachversand Federquell GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Fachversand Federquell GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C085.txt",
+      "text": "Lernbogen Akademie GmbH, Rechnung LB-85\n07.05.2026 an Fennufer Feinkostküche. Teilnahme von Küchenleiter Jorin Tannfeld am Tagesseminar „HACCP-Pläne praktisch umsetzen“, durchgeführt am 06.05.2026 in Leipzig. Kursgebühr netto 240,00 EUR, USt 19 % 45,60 EUR, zu zahlen 285,60 EUR. Der Anbieter beansprucht keine Bildungsbefreiung. Keine Fahrt, Übernachtung oder Verpflegung enthalten. Teilnahmebescheinigung wurde nach Abschluss ausgehändigt.",
+      "konto": "4945",
+      "richtung": "ausgabe",
+      "namen": [
+        "Lernbogen Akademie GmbH",
+        "Fennufer Feinkostküche",
+        "Jorin Tannfeld"
+      ],
+      "firmennamen": [
+        "Lernbogen Akademie GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C086.txt",
+      "text": "Seminarhaus Erlenwissen KG · Leistungsrechnung EW-43\n18.05.2026, Auftraggeber Fennufer Feinkostküche. Live-Onlineschulung „Kalkulation von Veranstaltungsmenüs“ für Inhaberin Rika Falkenau, zwei Termine zu je drei Stunden. Entgelt 180,00 EUR netto, 19 % Umsatzsteuer 34,20 EUR, Gesamt 214,20 EUR. Unterricht zur Vertiefung vorhandener betrieblicher Kenntnisse. Keine Softwarelizenz erworben; Zugang endete nach dem letzten Termin. Zahlung per Überweisung.",
+      "konto": "4945",
+      "richtung": "ausgabe",
+      "namen": [
+        "Seminarhaus Erlenwissen KG",
+        "Fennufer Feinkostküche",
+        "Rika Falkenau"
+      ],
+      "firmennamen": [
+        "Seminarhaus Erlenwissen KG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C087.txt",
+      "text": "Betriebsschule Quellblick GmbH / Faktura BQ-61\n29.05.2026 an Fennufer Feinkostküche. Zweistündiger Praxisunterricht im Betrieb zur sicheren Anwendung neuer Garverfahren, sechs vorhandene Küchenmitarbeiter. Pauschale netto 360,00 EUR, Umsatzsteuer 19 % 68,40 EUR, Endbetrag 428,40 EUR. Dozent und Übungsmaterial eingeschlossen. Keine Maschinenlieferung und keine einmalige Produktvorführung; strukturierter Unterricht mit Teilnahmeprotokoll, am 27.05. erbracht.",
+      "konto": "4945",
+      "richtung": "ausgabe",
+      "namen": [
+        "Betriebsschule Quellblick GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Betriebsschule Quellblick GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C088.txt",
+      "text": "Rechtsanwältin Juna Hohenried\nHonorarrechnung JH-26/49 vom 03.06.2026 an Fennufer Feinkostküche. Prüfung und Anpassung der Vertragsklauseln für Stornierungen bei Cateringaufträgen, zwei Stunden zu 180,00 EUR. Netto 360,00 EUR, Umsatzsteuer 19 % 68,40 EUR, Forderung 428,40 EUR. Beratung abgeschlossen, überarbeiteter Vertragsentwurf übermittelt. Keine Gerichtsgebühren oder private Angelegenheit enthalten. Zahlbar binnen vierzehn Tagen.",
+      "konto": "4950",
+      "richtung": "ausgabe",
+      "namen": [
+        "Juna Hohenried",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C089.txt",
+      "text": "Kompasshain Beratung GmbH · Rechnung KH-202\n12.06.2026, Kunde Fennufer Feinkostküche. Betriebswirtschaftliche Analyse der Auftragsmargen nach Cateringaufträgen und Warenverkauf, schriftliche Auswertung sowie Abschlussgespräch. Honorar netto 750,00 EUR, USt 19 % 142,50 EUR, Gesamt 892,50 EUR. Individuelle Beratung des bestehenden Betriebs; kein Seminar, keine laufende Erfassung von Belegen. Leistungen zwischen 02.06. und 10.06.2026 erbracht.",
+      "konto": "4950",
+      "richtung": "ausgabe",
+      "namen": [
+        "Kompasshain Beratung GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Kompasshain Beratung GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C090.txt",
+      "text": "Steuerkanzlei Morgenried GmbH, Rechnung SM-118\n24.06.2026 an Fennufer Feinkostküche. Einmalige steuerliche Stellungnahme zur umsatzsteuerlichen Behandlung geplanter Menüpakete und gesonderter Personaldienstleistungen. Beratungszeit 2,5 Stunden, vereinbartes Nettohonorar 400,00 EUR, Umsatzsteuer 19 % 76,00 EUR, zu überweisen 476,00 EUR. Keine Monatsbuchhaltung, kein Jahresabschluss und keine Steuererklärung Bestandteil dieses Auftrags.",
+      "konto": "4950",
+      "richtung": "ausgabe",
+      "namen": [
+        "Steuerkanzlei Morgenried GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Steuerkanzlei Morgenried GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C091.txt",
+      "text": "Kontor Zahlenweide GmbH\nHonorarabrechnung ZW-71 vom 03.07.2026 für Fennufer Feinkostküche. Laufende Erfassung und Kontierung der Belege Juni, Abstimmung von Bank und Kasse sowie monatliche Auswertung. Pauschale netto 240,00 EUR, USt 19 % 45,60 EUR, Gesamt 285,60 EUR. Leistung für den abgelaufenen Monat vollständig erbracht. Keine steuerliche Einzelfallberatung oder betriebswirtschaftliche Untersuchung. Zahlbar innerhalb zehn Tagen.",
+      "konto": "4955",
+      "richtung": "ausgabe",
+      "namen": [
+        "Kontor Zahlenweide GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Kontor Zahlenweide GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C092.txt",
+      "text": "Steuerkanzlei Morgenried GmbH · Faktura SM-139\n15.07.2026 an Fennufer Feinkostküche. Monatliche Lohnabrechnungen Juni für acht Beschäftigte, Erstellung der Zahlungslisten und laufenden Meldungen. Acht Datensätze zu 18,00 EUR netto, zusammen 144,00 EUR. Umsatzsteuer 19 % 27,36 EUR, Rechnungsbetrag 171,36 EUR. Keine Mitarbeitervergütung selbst enthalten; ausschließlich Honorar für die externe Abrechnung. Überweisung zum 29.07. erbeten.",
+      "konto": "4955",
+      "richtung": "ausgabe",
+      "namen": [
+        "Steuerkanzlei Morgenried GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Steuerkanzlei Morgenried GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C093.txt",
+      "text": "Ziffernsteg Buchservice KG · Rechnung ZB-26/83\n28.07.2026, Leistungsempfänger Fennufer Feinkostküche. Nacharbeiten zur laufenden Finanzbuchhaltung: digitale Eingangsbelege Mai und Juni erfassen, offene Posten abstimmen, Kontenblätter bereitstellen. Nettohonorar 310,00 EUR, USt 19 % 58,90 EUR, Gesamt 368,90 EUR. Keine Rechtsauskunft oder Organisationsberatung. Alle Unterlagen zurückgegeben; der Auftrag betrifft ausschließlich die laufende kaufmännische Erfassung.",
+      "konto": "4955",
+      "richtung": "ausgabe",
+      "namen": [
+        "Ziffernsteg Buchservice KG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Ziffernsteg Buchservice KG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C094.txt",
+      "text": "Ufermark Bank eG · Rechnungsabschluss 31.08.2026\nGeschäftsgiro der Fennufer Feinkostküche. Monatliches Kontoführungsentgelt 12,00 EUR und 40 Buchungsposten zu 0,15 EUR, zusammen 18,00 EUR. Umsatzsteuerfreie Finanzdienstleistungen; keine Umsatzsteuer enthalten. Belastung heute in voller Höhe. Keine Darlehenszinsen, Tilgung oder privaten Konten betroffen. Gebührenzeitraum 01.08.–31.08.2026. Dieser Abschluss gilt zugleich als Beleg für den Kontoinhaber.",
+      "konto": "4970",
+      "richtung": "ausgabe",
+      "namen": [
+        "Ufermark Bank eG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Ufermark Bank eG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C095.txt",
+      "text": "Kartenzahlungssystem Geldfink GmbH\nAbrechnung GF-208 vom 15.09.2026 an Fennufer Feinkostküche. Gebühren für die Abwicklung der Kundenkartenzahlungen: Nettoentgelt 48,00 EUR, Umsatzsteuer 19 % 9,12 EUR, Gesamt 57,12 EUR. Keine Terminalanschaffung oder Geräteüberlassung. Gebühr wird gesondert vom Geschäftskonto abgebucht; alle Kundenerlöse wurden zuvor ungekürzt ausgekehrt. Abrechnungszeitraum 01.09.–14.09.2026, Einzeltransaktionen im Anhang.",
+      "konto": "4970",
+      "richtung": "ausgabe",
+      "namen": [
+        "Geldfink GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Geldfink GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C096.txt",
+      "text": "Bankbeleg vom 29.09.2026 · Fennufer Feinkostküche\nUfermark Bank eG belastet 8,50 EUR Entgelt für die Ausführung einer geschäftlichen Auslandsüberweisung. Hauptzahlung wird auf einem eigenen Beleg ausgewiesen und ist nicht Teil dieses Betrags. Ausschließlich bankseitige Transaktionsgebühr, keine Wechselkursdifferenz und keine Zinsen. Steuerbefreite Finanzleistung ohne Umsatzsteuer. Buchungsreferenz UB77915, Wertstellung und Belastung am selben Tag.",
+      "konto": "4970",
+      "richtung": "ausgabe",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Ufermark Bank eG"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche",
+        "Ufermark Bank eG"
+      ]
+    },
+    {
+      "datei": "C097.txt",
+      "text": "Kreislauf Lindental GmbH · Entsorgungsrechnung KL-418\n06.10.2026 an Fennufer Feinkostküche. Abholung und fachgerechte Verwertung von 180 kg verbrauchtem Frittierfett aus dem Küchenbetrieb, einschließlich Behältertausch. Netto 72,00 EUR, Umsatzsteuer 19 % 13,68 EUR, Gesamt 85,68 EUR. Keine Vergütung für das Altmaterial; Entsorgungsdienstleistung vollständig erbracht. Übernahmeschein vom 05.10. beigefügt, Entgelt binnen zwei Wochen zu zahlen.",
+      "konto": "4980",
+      "richtung": "ausgabe",
+      "namen": [
+        "Kreislauf Lindental GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Kreislauf Lindental GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C098.txt",
+      "text": "Prüflabor Kornfeder GmbH\nRechnung PK-52 vom 14.10.2026, Auftraggeber Fennufer Feinkostküche. Mikrobiologische Untersuchung von drei Rückstellproben eigener Salate zur laufenden betrieblichen Qualitätssicherung. Laborhonorar netto 195,00 EUR, USt 19 % 37,05 EUR, Rechnungsbetrag 232,05 EUR. Prüfberichte übermittelt. Kein Wareneinkauf, keine medizinische Leistung und kein Kurs. Proben stammen aus der Produktion vom 08.10.2026.",
+      "konto": "4980",
+      "richtung": "ausgabe",
+      "namen": [
+        "Prüflabor Kornfeder GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Prüflabor Kornfeder GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C099.txt",
+      "text": "Rauchwacht Prüfdienst KG · Auftrag RP-94\n26.10.2026, Rechnung an Fennufer Feinkostküche. Turnusmäßige Funktionsprüfung und Wartung der vorhandenen tragbaren Feuerlöscher im Betrieb, vier Stück; Prüfplaketten erneuert. Nettoentgelt 88,00 EUR, Umsatzsteuer 19 % 16,72 EUR, Gesamtbetrag 104,72 EUR. Keine neuen Geräte und keine Arbeiten am Gebäude berechnet. Prüfprotokoll dem Betriebsleiter übergeben, nächste Fälligkeit auf jedem Löscher vermerkt.",
+      "konto": "4980",
+      "richtung": "ausgabe",
+      "namen": [
+        "Rauchwacht Prüfdienst KG",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Rauchwacht Prüfdienst KG",
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C100.txt",
+      "text": "Fennufer Feinkostküche · Ausgangsrechnung EX-17\n05.02.2026 an Alpenfarn Genuss AG, Zürich, Schweiz. 240 Gläser haltbares Apfelchutney zu 3,00 EUR, Warenwert 720,00 EUR. Versand aus Leipzig in die Schweiz durch beauftragte Spedition am 04.02.; elektronischer Ausgangsvermerk zur Ausfuhranmeldung liegt vor. Umsatzsteuer 0,00 EUR, Lieferung nach § 4 Nr. 1a i. V. m. § 6 UStG befreit. Rechnungsbetrag 720,00 EUR, keine Cateringdienstleistung, Zahlung in EUR.",
+      "konto": "8120",
+      "richtung": "einnahme",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Alpenfarn Genuss AG"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche",
+        "Alpenfarn Genuss AG"
+      ]
+    },
+    {
+      "datei": "C101.txt",
+      "text": "Handelsrechnung NF-08 vom 20.03.2026\nVerkäufer Fennufer Feinkostküche, Leipzig; Käufer Fjordglimt Mat AS, Oslo, Norwegen. 80 Kartons Kräcker aus eigener Herstellung, je 12,00 EUR, Gesamt 960,00 EUR. Ware körperlich nach Norwegen versandt; Ausfuhrzollanmeldung und bestätigter Ausgangsnachweis im Belegsatz. Deutsche Umsatzsteuer 0,00 EUR gemäß § 4 Nr. 1a in Verbindung mit § 6 UStG. Forderung 960,00 EUR. Es handelt sich ausschließlich um Warenlieferung.",
+      "konto": "8120",
+      "richtung": "einnahme",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Fjordglimt Mat AS"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche",
+        "Fjordglimt Mat AS"
+      ]
+    },
+    {
+      "datei": "C102.txt",
+      "text": "Exportrechnung UK-23 · 07.05.2026\nFennufer Feinkostküche berechnet Moorwillow Pantry Ltd, Bristol, Vereinigtes Königreich, 300 Gläser Pflaumenaufstrich zu 2,60 EUR: 780,00 EUR. Sendung aus Deutschland nach Großbritannien, Übergabe an Frachtführer 05.05.2026. Zollrechtlicher Ausgangsvermerk und Ablieferbeleg vorhanden. Befreiung nach § 4 Nr. 1a i. V. m. § 6 UStG; Umsatzsteuer 0,00 EUR. Gesamtforderung 780,00 EUR. Lieferziel liegt nicht in Nordirland.",
+      "konto": "8120",
+      "richtung": "einnahme",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Moorwillow Pantry Ltd"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche",
+        "Moorwillow Pantry Ltd"
+      ]
+    },
+    {
+      "datei": "C103.txt",
+      "text": "Fennufer Feinkostküche, DE357218649\nRechnung EU-11 vom 09.06.2026 an Duinvaren Delicatessen BV, Utrecht, NL862973514B01. 180 Gläser Zwiebelconfit zu 3,50 EUR, gesamt 630,00 EUR. Waren von Leipzig in die Niederlande befördert; Gelangensbestätigung abgelegt. Erwerb für den Betrieb des Käufers, dessen USt-IdNr. vor Lieferung bestätigt wurde. Umsatzsteuer 0,00 EUR nach § 4 Nr. 1b i. V. m. § 6a UStG. Rechnungsbetrag 630,00 EUR, zahlbar binnen 14 Tagen.",
+      "konto": "8125",
+      "richtung": "einnahme",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Duinvaren Delicatessen BV"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche",
+        "Duinvaren Delicatessen BV"
+      ]
+    },
+    {
+      "datei": "C104.txt",
+      "text": "Ausgangsrechnung AT-14, 23.07.2026\nLieferer Fennufer Feinkostküche, USt-IdNr. DE357218649. Abnehmer Wiesenfalter Genuss GmbH, Wien, ATU78321654; Unternehmereigenschaft und ID geprüft. 120 Packungen Gewürznüsse à 4,00 EUR = 480,00 EUR. Versand aus Leipzig nach Österreich, Empfang durch Kunden per Gelangensbestätigung nachgewiesen. Gemäß § 4 Nr. 1b mit § 6a UStG ohne deutsche Umsatzsteuer: 0,00 EUR. Gesamt 480,00 EUR, Verkauf für dessen Handelsgeschäft.",
+      "konto": "8125",
+      "richtung": "einnahme",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Wiesenfalter Genuss GmbH"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche",
+        "Wiesenfalter Genuss GmbH"
+      ]
+    },
+    {
+      "datei": "C105.txt",
+      "text": "Rechnung FR-19 / 14.08.2026\nFennufer Feinkostküche, DE357218649, verkauft an Brume de Sauge SARL, Lyon, FR61937528416, 200 Gläser Tomatenrelish zum Wiederverkauf. Je 3,20 EUR, Gesamt 640,00 EUR. Warenbewegung Deutschland–Frankreich durch Frachtbrief und Gelangensbestätigung dokumentiert; USt-IdNr. des Abnehmers bestätigt. Befreiung gemäß § 4 Nr. 1b i. V. m. § 6a UStG, Umsatzsteuer 0,00 EUR. Zahlbetrag 640,00 EUR, keine Dienstleistungen enthalten.",
+      "konto": "8125",
+      "richtung": "einnahme",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Brume de Sauge SARL"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche",
+        "Brume de Sauge SARL"
+      ]
+    },
+    {
+      "datei": "C106.txt",
+      "text": "Fennufer Feinkostküche · Ladenbon FF-412\n03.09.2026, 12:14 Uhr. Verkauf an Endkundin Mira Tannweide: vier abgepackte Portionen Kartoffelsalat, ausschließlich zum Mitnehmen, Gesamtpreis 25,68 EUR. Enthalten 7 % Umsatzsteuer 1,68 EUR, Nettowert 24,00 EUR. Keine Getränke, kein Geschirrservice und keine Bedienungsleistung. Zahlung bar vollständig erhalten. Ware am Ladentresen übergeben; dieser Bon bestätigt den abgeschlossenen Verkauf.",
+      "konto": "8300",
+      "richtung": "einnahme",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Mira Tannweide"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C107.txt",
+      "text": "Ausgangsrechnung WF-28 vom 16.09.2026\nFennufer Feinkostküche an Bürohaus Weidenbogen GmbH. Zwanzig belegte Brötchen zur Abholung, je 3,00 EUR netto; keine Bedienung oder sonstigen Leistungen vereinbart. Nettosumme 60,00 EUR, 7 % Umsatzsteuer 4,20 EUR, Rechnungsbetrag 64,20 EUR. Abholung durch den Kunden um 08:30 Uhr bestätigt. Nur feste Lebensmittel, keine Getränke. Zahlung am 18.09.2026 auf dem betrieblichen Bankkonto eingegangen.",
+      "konto": "8300",
+      "richtung": "einnahme",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Bürohaus Weidenbogen GmbH"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche",
+        "Bürohaus Weidenbogen GmbH"
+      ]
+    },
+    {
+      "datei": "C108.txt",
+      "text": "Fennufer Feinkostküche / Verkaufsbeleg FF-506\n24.09.2026, Kunde Lutz Erlenbach. Sechs Gläser selbst hergestelltes Birnenchutney aus dem Ladenbestand, netto je 4,00 EUR, Nettosumme 24,00 EUR. Umsatzsteuer 7 % 1,68 EUR, Bruttosumme 25,68 EUR. Ware in verschlossenen Gläsern zum Mitnehmen übergeben, ohne Restaurantleistung. Kartenbetrag 25,68 EUR autorisiert und eingezogen. Keine Rückgabe oder Verrechnung, Verkauf im Inland abgeschlossen.",
+      "konto": "8300",
+      "richtung": "einnahme",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Lutz Erlenbach"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C109.txt",
+      "text": "Fennufer Feinkostküche · Verkaufsrechnung GE-33\n02.10.2026 an Rabensteg Design GmbH. Zwölf Flaschen Weißwein aus dem Handelsbestand, 0,75 Liter, netto je 8,00 EUR, Warenwert 96,00 EUR. Umsatzsteuer 19 % 18,24 EUR, Gesamtforderung 114,24 EUR. Reiner Getränkeverkauf zur Abholung, keine Speisen. Flaschen pfandfrei; Abnahme und Bezahlung durch den Kunden am selben Tag bestätigt. Verwendungszweck der Zahlung GE-33.",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Rabensteg Design GmbH"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche",
+        "Rabensteg Design GmbH"
+      ]
+    },
+    {
+      "datei": "C110.txt",
+      "text": "Leistungsrechnung PS-46 vom 15.10.2026\nFennufer Feinkostküche an Veranstaltungshaus Auenlicht GmbH. Bereitstellung von zwei Servicekräften für fünf Stunden zur Ausgabe fremdbezogener Getränke bei der Veranstaltung am 12.10.2026. Zehn Personalstunden à 32,00 EUR, netto 320,00 EUR; Umsatzsteuer 19 % 60,80 EUR; gesamt 380,80 EUR. Weder Speisen noch Getränke geliefert, ausschließlich die vereinbarte Personaldienstleistung. Leistungszettel gegengezeichnet.",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Veranstaltungshaus Auenlicht GmbH"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche",
+        "Veranstaltungshaus Auenlicht GmbH"
+      ]
+    },
+    {
+      "datei": "C111.txt",
+      "text": "Ladenkasse Fennufer Feinkostküche, Bon 733\n27.10.2026, 10:08 Uhr. Kunde Fiete Moorwald nimmt sechs Becher frisch gebrühten schwarzen Kaffee ohne Milch mit. Netto je 2,50 EUR, Nettosumme 15,00 EUR, Umsatzsteuer 19 % 2,85 EUR, Gesamt 17,85 EUR. Keine Lebensmittel oder weiteren Artikel verkauft. Kartenbezahlung in voller Höhe abgeschlossen, Getränkebestellung übergeben. Einwegbecher im Preis enthalten; kein Pfand und keine nachträgliche Forderung.",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Fiete Moorwald"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche"
+      ]
+    },
+    {
+      "datei": "C112.txt",
+      "text": "Fennufer Feinkostküche · Abrechnung V-14, 07.04.2026\nAn Zeltwerk Lindenfels GmbH. Für die erfolgreiche Vermittlung eines Auftrags über Veranstaltungsausstattung erhält unser Betrieb vereinbarungsgemäß 8 % von 2.500,00 EUR: netto 200,00 EUR. Umsatzsteuer 19 % 38,00 EUR, Zahlbetrag 238,00 EUR. Hauptvertrag besteht unmittelbar zwischen Ihnen und dem Endkunden; wir lieferten keine Zelte. Vergütung allein für die nachgewiesene Vermittlung, zahlbar binnen 14 Tagen.",
+      "konto": "8500",
+      "richtung": "einnahme",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Zeltwerk Lindenfels GmbH"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche",
+        "Zeltwerk Lindenfels GmbH"
+      ]
+    },
+    {
+      "datei": "C113.txt",
+      "text": "Vermittlungsabrechnung VB-21 vom 18.06.2026\nFennufer Feinkostküche berechnet Florenbogen Dekor KG eine erfolgsabhängige Vergütung für den vermittelten Dekorationsauftrag einer Firmenfeier. Vereinbart: 10 % des Nettoauftragswerts 1.800,00 EUR, damit 180,00 EUR netto. Zuzüglich 19 % USt 34,20 EUR, Gesamt 214,20 EUR. Dekoration wurde vom Auftragnehmer direkt an den Endkunden geliefert und berechnet; unser Betrieb erbrachte ausschließlich die Vermittlung.",
+      "konto": "8500",
+      "richtung": "einnahme",
+      "namen": [
+        "Fennufer Feinkostküche",
+        "Florenbogen Dekor KG"
+      ],
+      "firmennamen": [
+        "Fennufer Feinkostküche",
+        "Florenbogen Dekor KG"
+      ]
+    },
+    {
+      "datei": "C114.txt",
+      "text": "Gutschrift im vereinbarten Abrechnungsverfahren LS-31\n09.09.2026, Aussteller Leihsteg Geschirrservice GmbH, Leistungserbringer Fennufer Feinkostküche. Vergütung für nachweisliche Vermittlung von drei Mietaufträgen im August: netto 150,00 EUR, Umsatzsteuer 19 % 28,50 EUR, Gutschriftbetrag 178,50 EUR. Überweisung an Fennufer Feinkostküche erfolgt am 12.09. Die Hauptleistungen wurden direkt mit den Kunden abgerechnet; dies ist keine Erstattung eines Einkaufs.",
+      "konto": "8500",
+      "richtung": "einnahme",
+      "namen": [
+        "Leihsteg Geschirrservice GmbH",
+        "Fennufer Feinkostküche"
+      ],
+      "firmennamen": [
+        "Leihsteg Geschirrservice GmbH",
+        "Fennufer Feinkostküche"
+      ]
+    }
+  ]
+}

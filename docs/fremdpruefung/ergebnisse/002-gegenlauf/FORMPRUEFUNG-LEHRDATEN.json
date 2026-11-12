@@ -1,0 +1,32 @@
+{
+  "modell": "Codex (GPT-6)",
+  "zeit": "2026-11-12T22:44:40.339Z",
+  "dateien": 342,
+  "agenten": [
+    {
+      "datei": "LEHRDATEN/AGENT-A.json",
+      "betrieb": "Radspur Elmbach, Inhaberin Mira Feldkamp",
+      "gewerbe": "Fahrradwerkstatt mit Fahrrad- und Zubehörhandel sowie kleinem Getränke- und Snackverkauf",
+      "n": 114
+    },
+    {
+      "datei": "LEHRDATEN/AGENT-B.json",
+      "betrieb": "Linienfroh, Inhaberin Mira Telscher",
+      "gewerbe": "Büroservice mit Schreibwarenhandel und digitaler Gestaltung",
+      "n": 114
+    },
+    {
+      "datei": "LEHRDATEN/AGENT-C.json",
+      "betrieb": "Fennufer Feinkostküche, Inhaberin Rika Falkenau",
+      "gewerbe": "Feinkostküche mit Catering und Warenverkauf",
+      "n": 114
+    }
+  ],
+  "konten": 38,
+  "jeKonto": 9,
+  "zeichen": {
+    "min": 408,
+    "max": 532
+  },
+  "hinweis": "Nur Lehrdaten und Kontenliste gelesen; keine Prüfbelege oder Goldlabels für das Training."
+}

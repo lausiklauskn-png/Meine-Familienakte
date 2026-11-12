@@ -1,0 +1,28 @@
+{
+  "modellErsteller": "Codex (GPT-6)",
+  "zeit": "2026-11-12T22:46:35.899Z",
+  "runtime": "v24.19.0",
+  "umgebung": "Node im Ausführungsworkspace; keine Smartphone- oder Browsermessung",
+  "methode": "Ein Durchgang je Modell, 120 Dokumente, nach zehn Aufwärmvorhersagen; Textdateien zuvor eingelesen.",
+  "lesegrenze": "Repo-Inhalte ausschließlich docs/fremdpruefung/; keine externe Recherche",
+  "runs": [
+    {
+      "mitFirmenname": true,
+      "n": 120,
+      "warmup": 10,
+      "loadAndPrepareMs": 14.163133000000002,
+      "medianMs": 0.5844850000000008,
+      "p95Ms": 2.0023300000000006,
+      "totalMs": 87.24610299999989
+    },
+    {
+      "mitFirmenname": false,
+      "n": 120,
+      "warmup": 10,
+      "loadAndPrepareMs": 3.276686000000012,
+      "medianMs": 0.5922800000000166,
+      "p95Ms": 2.125249999999994,
+      "totalMs": 95.74992299999994
+    }
+  ]
+}

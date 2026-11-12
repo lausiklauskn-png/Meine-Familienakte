@@ -1,0 +1,1530 @@
+{
+  "modell": "Codex (GPT-6)",
+  "gewerbe": "Kleine deutsche Töpferei mit Laden, eigener Gebrauchskeramik, Freizeitkursen und ergänzendem Warenverkauf",
+  "unabhaengigkeit": "Keine Lehrdaten/kein System gelesen",
+  "dateien": [
+    {
+      "datei": "P001.txt",
+      "namen": [
+        "Textilwerk Fadenflug",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Textilwerk Fadenflug",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "gegenstandsverwendung"
+      ]
+    },
+    {
+      "datei": "P002.txt",
+      "namen": [
+        "Versicherung Hafenanker",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Versicherung Hafenanker",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P003.txt",
+      "namen": [
+        "Imkerei Birkenwabe",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Imkerei Birkenwabe",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "gutschrift"
+      ]
+    },
+    {
+      "datei": "P004.txt",
+      "namen": [
+        "Medienstudio Kantenlicht",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Medienstudio Kantenlicht",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "ocr",
+        "irrefuehrender_betreff"
+      ]
+    },
+    {
+      "datei": "P005.txt",
+      "namen": [
+        "Gasthaus Flussbogen",
+        "Töpferei Windkiesel",
+        "Mara Lindner",
+        "Jonte Albers"
+      ],
+      "firmennamen": [
+        "Gasthaus Flussbogen",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "irrefuehrender_betreff"
+      ]
+    },
+    {
+      "datei": "P006.txt",
+      "namen": [
+        "Töpferei Windkiesel",
+        "Elias Wendt",
+        "Taxi Sternufer"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel",
+        "Taxi Sternufer"
+      ],
+      "merkmale": [
+        "mitarbeiterreise"
+      ]
+    },
+    {
+      "datei": "P007.txt",
+      "namen": [
+        "Töpferei Windkiesel",
+        "Mara Lindner",
+        "Bahnservice Auenland"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel",
+        "Bahnservice Auenland"
+      ],
+      "merkmale": [
+        "inhaberreise"
+      ]
+    },
+    {
+      "datei": "P008.txt",
+      "namen": [
+        "Unternehmensberatung Marktlinie",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Unternehmensberatung Marktlinie",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P009.txt",
+      "namen": [
+        "Versicherung Hafenanker",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Versicherung Hafenanker",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P010.txt",
+      "namen": [
+        "Keramikbedarf Felsenrot",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Keramikbedarf Felsenrot",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P011.txt",
+      "namen": [
+        "Wachsmanufaktur Abendglanz",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Wachsmanufaktur Abendglanz",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P012.txt",
+      "namen": [
+        "Töpferei Windkiesel",
+        "Woonatelier Duinlijn"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel",
+        "Woonatelier Duinlijn"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P013.txt",
+      "namen": [
+        "Töpferei Windkiesel",
+        "Jule Bergmann"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "irrefuehrender_betreff"
+      ]
+    },
+    {
+      "datei": "P014.txt",
+      "namen": [
+        "Tankstelle Uferweg",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Tankstelle Uferweg",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P015.txt",
+      "namen": [
+        "Mara Lindner",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P016.txt",
+      "namen": [
+        "Papieratelier Falzfreude",
+        "Töpferei Windkiesel",
+        "Benno Kranz"
+      ],
+      "firmennamen": [
+        "Papieratelier Falzfreude",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "geschenkgrenze"
+      ]
+    },
+    {
+      "datei": "P017.txt",
+      "namen": [
+        "Mara Lindner",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "privat_betrieblich"
+      ]
+    },
+    {
+      "datei": "P018.txt",
+      "namen": [
+        "Glasatelier Regenbogen",
+        "Töpferei Windkiesel",
+        "Rika Sommer"
+      ],
+      "firmennamen": [
+        "Glasatelier Regenbogen",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "geschenkgrenze"
+      ]
+    },
+    {
+      "datei": "P019.txt",
+      "namen": [
+        "Gasthaus Flussbogen",
+        "Töpferei Windkiesel",
+        "Mara Lindner",
+        "Lena Kern"
+      ],
+      "firmennamen": [
+        "Gasthaus Flussbogen",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P020.txt",
+      "namen": [
+        "Verlag Tonspur",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Verlag Tonspur",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "gegenstandsverwendung"
+      ]
+    },
+    {
+      "datei": "P021.txt",
+      "namen": [
+        "Hotel Auenlicht",
+        "Töpferei Windkiesel",
+        "Mara Lindner"
+      ],
+      "firmennamen": [
+        "Hotel Auenlicht",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "inhaberreise",
+        "irrefuehrender_betreff"
+      ]
+    },
+    {
+      "datei": "P022.txt",
+      "namen": [
+        "Keramikakademie Erdenform",
+        "Töpferei Windkiesel",
+        "Elias Wendt"
+      ],
+      "firmennamen": [
+        "Keramikakademie Erdenform",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P023.txt",
+      "namen": [
+        "Brenntechnik Glutbogen",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Brenntechnik Glutbogen",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P024.txt",
+      "namen": [
+        "Werkmaschinen Talgrund",
+        "Töpferei Windkiesel",
+        "Elias Wendt"
+      ],
+      "firmennamen": [
+        "Werkmaschinen Talgrund",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "irrefuehrender_betreff"
+      ]
+    },
+    {
+      "datei": "P025.txt",
+      "namen": [
+        "Arbeitsschutz Härtling",
+        "Töpferei Windkiesel",
+        "Elias Wendt"
+      ],
+      "firmennamen": [
+        "Arbeitsschutz Härtling",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P026.txt",
+      "namen": [
+        "Korbflechterei Weidenhand",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Korbflechterei Weidenhand",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P027.txt",
+      "namen": [
+        "Fachverlag Brennraum",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Fachverlag Brennraum",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P028.txt",
+      "namen": [
+        "Wohnhaus Morgenrain",
+        "Mara Lindner",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Wohnhaus Morgenrain",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "privat_betrieblich",
+        "irrefuehrender_betreff"
+      ]
+    },
+    {
+      "datei": "P029.txt",
+      "namen": [
+        "Töpferei Windkiesel",
+        "Café Kieselhaus"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel",
+        "Café Kieselhaus"
+      ],
+      "merkmale": [
+        "gutschrift"
+      ]
+    },
+    {
+      "datei": "P030.txt",
+      "namen": [
+        "Kunsthandwerkerbund Auenland",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Kunsthandwerkerbund Auenland",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P031.txt",
+      "namen": [
+        "Nordufer Immobilien",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Nordufer Immobilien",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P032.txt",
+      "namen": [
+        "Töpferei Windkiesel",
+        "Verlag Tonspur"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel",
+        "Verlag Tonspur"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P033.txt",
+      "namen": [
+        "Keramikbedarf Felsenrot",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Keramikbedarf Felsenrot",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "gegenstandsverwendung"
+      ]
+    },
+    {
+      "datei": "P034.txt",
+      "namen": [
+        "Kontortechnik Hafenblick",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Kontortechnik Hafenblick",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P035.txt",
+      "namen": [
+        "Stadtmagazin Uferseiten",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Stadtmagazin Uferseiten",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P036.txt",
+      "namen": [
+        "Haustechnik Quellbogen",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Haustechnik Quellbogen",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "irrefuehrender_betreff"
+      ]
+    },
+    {
+      "datei": "P037.txt",
+      "namen": [
+        "Nordufer Immobilien",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Nordufer Immobilien",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P038.txt",
+      "namen": [
+        "Werkstattakademie Farbkreis",
+        "Töpferei Windkiesel",
+        "Mara Lindner"
+      ],
+      "firmennamen": [
+        "Werkstattakademie Farbkreis",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "irrefuehrender_betreff"
+      ]
+    },
+    {
+      "datei": "P039.txt",
+      "namen": [
+        "Entsorgungsbetrieb Kreislauf",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Entsorgungsbetrieb Kreislauf",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P040.txt",
+      "namen": [
+        "Handwerkskammer Wiesenhafen",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Handwerkskammer Wiesenhafen",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P041.txt",
+      "namen": [
+        "Mara Lindner",
+        "Töpferei Windkiesel",
+        "Sportverein Feldbogen"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel",
+        "Sportverein Feldbogen"
+      ],
+      "merkmale": [
+        "privat_betrieblich"
+      ]
+    },
+    {
+      "datei": "P042.txt",
+      "namen": [
+        "Kontortechnik Hafenblick",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Kontortechnik Hafenblick",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P043.txt",
+      "namen": [
+        "Töpferei Windkiesel",
+        "Schmuckatelier Silberhalm"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel",
+        "Schmuckatelier Silberhalm"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P044.txt",
+      "namen": [
+        "Werkmaschinen Talgrund",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Werkmaschinen Talgrund",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P045.txt",
+      "namen": [
+        "Mara Lindner",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P046.txt",
+      "namen": [
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P047.txt",
+      "namen": [
+        "Wachsmanufaktur Abendglanz",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Wachsmanufaktur Abendglanz",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P048.txt",
+      "namen": [
+        "Genossenschaftsbank Ufermark",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Genossenschaftsbank Ufermark",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P049.txt",
+      "namen": [
+        "Tankstelle Uferweg",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Tankstelle Uferweg",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P050.txt",
+      "namen": [
+        "Schreinerei Holzspur",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Schreinerei Holzspur",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P051.txt",
+      "namen": [
+        "Versicherung Hafenanker",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Versicherung Hafenanker",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P052.txt",
+      "namen": [
+        "Briefdienst Uferpost",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Briefdienst Uferpost",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P053.txt",
+      "namen": [
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P054.txt",
+      "namen": [
+        "Hygienebedarf Mooslicht",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Hygienebedarf Mooslicht",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P055.txt",
+      "namen": [
+        "Töpferei Windkiesel",
+        "Elias Wendt"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P056.txt",
+      "namen": [
+        "Geschenkhaus Herbstblatt",
+        "Töpferei Windkiesel",
+        "Timo Faber"
+      ],
+      "firmennamen": [
+        "Geschenkhaus Herbstblatt",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "geschenkgrenze",
+        "mehrere_daten"
+      ]
+    },
+    {
+      "datei": "P057.txt",
+      "namen": [
+        "Versicherung Hafenanker",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Versicherung Hafenanker",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P058.txt",
+      "namen": [
+        "Zulassungsstelle Wiesenhafen",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Zulassungsstelle Wiesenhafen",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "mehrere_daten"
+      ]
+    },
+    {
+      "datei": "P059.txt",
+      "namen": [
+        "Töpferei Windkiesel",
+        "Elias Wendt",
+        "Bahnservice Auenland"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel",
+        "Bahnservice Auenland"
+      ],
+      "merkmale": [
+        "mitarbeiterreise"
+      ]
+    },
+    {
+      "datei": "P060.txt",
+      "namen": [
+        "Versicherung Hafenanker",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Versicherung Hafenanker",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P061.txt",
+      "namen": [
+        "Keramikbedarf Felsenrot",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Keramikbedarf Felsenrot",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "ocr"
+      ]
+    },
+    {
+      "datei": "P062.txt",
+      "namen": [
+        "Paketdienst Weitweg",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Paketdienst Weitweg",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P063.txt",
+      "namen": [
+        "Töpferei Windkiesel",
+        "Obsthof Apfelsteg"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel",
+        "Obsthof Apfelsteg"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P064.txt",
+      "namen": [
+        "Druckhaus Papierstrom",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Druckhaus Papierstrom",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P065.txt",
+      "namen": [
+        "Schilderwerk Sonnensaum",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Schilderwerk Sonnensaum",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P066.txt",
+      "namen": [
+        "Glasatelier Regenbogen",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Glasatelier Regenbogen",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P067.txt",
+      "namen": [
+        "Telekomdienst Wellenruf",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Telekomdienst Wellenruf",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P068.txt",
+      "namen": [
+        "Papierhaus Blattwerk",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Papierhaus Blattwerk",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P069.txt",
+      "namen": [
+        "Töpferei Windkiesel",
+        "Schmuckatelier Silberhalm"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel",
+        "Schmuckatelier Silberhalm"
+      ],
+      "merkmale": [
+        "vermittlung_eigentuemer"
+      ]
+    },
+    {
+      "datei": "P070.txt",
+      "namen": [
+        "Lichtatelier Funkensaat",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Lichtatelier Funkensaat",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P071.txt",
+      "namen": [
+        "Stadtenergie Auenstrom",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Stadtenergie Auenstrom",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "ocr"
+      ]
+    },
+    {
+      "datei": "P072.txt",
+      "namen": [
+        "Taxi Sternufer",
+        "Töpferei Windkiesel",
+        "Mara Lindner"
+      ],
+      "firmennamen": [
+        "Taxi Sternufer",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "inhaberreise"
+      ]
+    },
+    {
+      "datei": "P073.txt",
+      "namen": [
+        "Verlag Tonspur",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Verlag Tonspur",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "gegenstandsverwendung"
+      ]
+    },
+    {
+      "datei": "P074.txt",
+      "namen": [
+        "Wasserverband Auenlauf",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Wasserverband Auenlauf",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P075.txt",
+      "namen": [
+        "Papierhaus Blattwerk",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Papierhaus Blattwerk",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P076.txt",
+      "namen": [
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "ocr"
+      ]
+    },
+    {
+      "datei": "P077.txt",
+      "namen": [
+        "Sauberteam Klarwelle",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Sauberteam Klarwelle",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P078.txt",
+      "namen": [
+        "Töpferei Windkiesel",
+        "Wohnatelier Alpenfaden"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel",
+        "Wohnatelier Alpenfaden"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P079.txt",
+      "namen": [
+        "Töpferei Windkiesel",
+        "Galerie Steinfenster"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel",
+        "Galerie Steinfenster"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P080.txt",
+      "namen": [
+        "Stadtenergie Auenstrom",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Stadtenergie Auenstrom",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P081.txt",
+      "namen": [
+        "Café Kieselhaus",
+        "Töpferei Windkiesel",
+        "Mara Lindner",
+        "Benno Kranz"
+      ],
+      "firmennamen": [
+        "Café Kieselhaus",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P082.txt",
+      "namen": [
+        "Tankstelle Uferweg",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Tankstelle Uferweg",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P083.txt",
+      "namen": [
+        "Buchhaltungsbüro Zahlensteg",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Buchhaltungsbüro Zahlensteg",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "ocr",
+        "irrefuehrender_betreff"
+      ]
+    },
+    {
+      "datei": "P084.txt",
+      "namen": [
+        "Stadtenergie Auenstrom",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Stadtenergie Auenstrom",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "gutschrift",
+        "mehrere_daten"
+      ]
+    },
+    {
+      "datei": "P085.txt",
+      "namen": [
+        "Verpackungshaus Polsterblatt",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Verpackungshaus Polsterblatt",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P086.txt",
+      "namen": [
+        "Mara Lindner",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "irrefuehrender_betreff"
+      ]
+    },
+    {
+      "datei": "P087.txt",
+      "namen": [
+        "Kartendienst Zahlstrom",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Kartendienst Zahlstrom",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P088.txt",
+      "namen": [
+        "Töpferei Windkiesel",
+        "Holzatelier Astzeichen"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel",
+        "Holzatelier Astzeichen"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P089.txt",
+      "namen": [
+        "Mara Lindner",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "privat_betrieblich"
+      ]
+    },
+    {
+      "datei": "P090.txt",
+      "namen": [
+        "Hauptzollamt Auenstadt",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Hauptzollamt Auenstadt",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P091.txt",
+      "namen": [
+        "Malerbetrieb Farbsaum",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Malerbetrieb Farbsaum",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P092.txt",
+      "namen": [
+        "Stadtenergie Auenstrom",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Stadtenergie Auenstrom",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P093.txt",
+      "namen": [
+        "Buchhaltungsbüro Zahlensteg",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Buchhaltungsbüro Zahlensteg",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P094.txt",
+      "namen": [
+        "Kanzlei Rechtshafen",
+        "Töpferei Windkiesel",
+        "Mara Lindner"
+      ],
+      "firmennamen": [
+        "Kanzlei Rechtshafen",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P095.txt",
+      "namen": [
+        "Telekomdienst Wellenruf",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Telekomdienst Wellenruf",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P096.txt",
+      "namen": [
+        "Buchhaltungsbüro Zahlensteg",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Buchhaltungsbüro Zahlensteg",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P097.txt",
+      "namen": [
+        "Geschenkhaus Herbstblatt",
+        "Töpferei Windkiesel",
+        "Nora Seidel"
+      ],
+      "firmennamen": [
+        "Geschenkhaus Herbstblatt",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "geschenkgrenze"
+      ]
+    },
+    {
+      "datei": "P098.txt",
+      "namen": [
+        "Töpferei Windkiesel",
+        "Architekturbüro Raumhain"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel",
+        "Architekturbüro Raumhain"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P099.txt",
+      "namen": [
+        "Genossenschaftsbank Ufermark",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Genossenschaftsbank Ufermark",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P100.txt",
+      "namen": [
+        "Ladeneinrichtung Uferholz",
+        "Töpferei Windkiesel",
+        "Mara Lindner"
+      ],
+      "firmennamen": [
+        "Ladeneinrichtung Uferholz",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P101.txt",
+      "namen": [
+        "Tankstelle Uferweg",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Tankstelle Uferweg",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P102.txt",
+      "namen": [
+        "Töpferei Windkiesel",
+        "Café Kieselhaus"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel",
+        "Café Kieselhaus"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P103.txt",
+      "namen": [
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P104.txt",
+      "namen": [
+        "Nordufer Immobilien",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Nordufer Immobilien",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P105.txt",
+      "namen": [
+        "Töpferei Windkiesel",
+        "Atelier Fjordglas"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel",
+        "Atelier Fjordglas"
+      ],
+      "merkmale": [
+        "mehrere_daten"
+      ]
+    },
+    {
+      "datei": "P106.txt",
+      "namen": [
+        "Sauberteam Klarwelle",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Sauberteam Klarwelle",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P107.txt",
+      "namen": [
+        "Korbflechterei Weidenhand",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Korbflechterei Weidenhand",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "gutschrift"
+      ]
+    },
+    {
+      "datei": "P108.txt",
+      "namen": [
+        "Imkerei Birkenwabe",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Imkerei Birkenwabe",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P109.txt",
+      "namen": [
+        "Keramikbedarf Felsenrot",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Keramikbedarf Felsenrot",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P110.txt",
+      "namen": [
+        "Telekomdienst Wellenruf",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Telekomdienst Wellenruf",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P111.txt",
+      "namen": [
+        "Autohaus Kirschfeld",
+        "Töpferei Windkiesel",
+        "Mara Lindner"
+      ],
+      "firmennamen": [
+        "Autohaus Kirschfeld",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P112.txt",
+      "namen": [
+        "Obsthof Apfelsteg",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Obsthof Apfelsteg",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P113.txt",
+      "namen": [
+        "Töpferei Windkiesel",
+        "Elias Wendt"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P114.txt",
+      "namen": [
+        "Kontormöbel Lindenfels",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Kontormöbel Lindenfels",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P115.txt",
+      "namen": [
+        "Nordufer Immobilien",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Nordufer Immobilien",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P116.txt",
+      "namen": [
+        "Hotel Auenlicht",
+        "Töpferei Windkiesel",
+        "Jule Bergmann"
+      ],
+      "firmennamen": [
+        "Hotel Auenlicht",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": [
+        "mitarbeiterreise"
+      ]
+    },
+    {
+      "datei": "P117.txt",
+      "namen": [
+        "Briefdienst Uferpost",
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Briefdienst Uferpost",
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P118.txt",
+      "namen": [
+        "Töpferei Windkiesel",
+        "Elias Wendt"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P119.txt",
+      "namen": [
+        "Töpferei Windkiesel"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    },
+    {
+      "datei": "P120.txt",
+      "namen": [
+        "Töpferei Windkiesel",
+        "Jule Bergmann"
+      ],
+      "firmennamen": [
+        "Töpferei Windkiesel"
+      ],
+      "merkmale": []
+    }
+  ]
+}

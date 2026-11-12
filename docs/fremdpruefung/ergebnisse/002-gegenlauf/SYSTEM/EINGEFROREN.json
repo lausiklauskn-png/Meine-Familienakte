@@ -1,0 +1,40 @@
+{
+  "system": "Codex TF-IDF-Zentroid 1.0",
+  "modellErsteller": "Codex (GPT-6)",
+  "zeit": "2026-11-12T22:44:41.519Z",
+  "config": {
+    "version": "centroid-1.0",
+    "maxFeatures": 6000,
+    "minDF": 2,
+    "maxClassFeatures": 160,
+    "charWeight": 0.35,
+    "wordWeight": 1,
+    "charMin": 3,
+    "charMax": 5,
+    "quantization": 32767
+  },
+  "lehrbelege": 342,
+  "modellGroessen": {
+    "mit": {
+      "bytes": 181467,
+      "vocabulary": 6000
+    },
+    "ohne": {
+      "bytes": 181670,
+      "vocabulary": 6000
+    }
+  },
+  "dateien": {
+    "SYSTEM/klassifikator.mjs": "5bde24fd1b394837f4a92c78a962f0ae7d83da08ec031c2d874b5ec085295a0a",
+    "SYSTEM/lauf.mjs": "565ebff08c63f280a20da6b247f8f0a168a8a6587d99dc7169e2e558424f29d8",
+    "SYSTEM/PRUEFPLAN.md": "6985085593a0b7ae137406bb1e65a4d21862d5d7b00eed1e596e3917a139987a",
+    "KONTENLISTE.json": "903d9f92a200bed5871194b2eebe33aa4dc45a729883dfed0338851b14cc9ce3",
+    "LEHRDATEN/AGENT-A.json": "76df66feea3465ed16c6d5f5f48cf37fc10e522f78a01782d956b4a04674afd2",
+    "LEHRDATEN/AGENT-B.json": "06565f3155f4f2036c85ba466dd63c1fa2e6cbe47333e913f354519678c6761c",
+    "LEHRDATEN/AGENT-C.json": "3832711a1e0bdd24e6cab907cffca4121bcc4404e29e429ab818b90162ae38c7",
+    "SYSTEM/modell-mit-firmennamen.json": "994828b0a2b8dde9dc3d5d8dd751cc0390610ac0f52b4187992d0e6a4c8187b1",
+    "SYSTEM/modell-ohne-firmennamen.json": "246431247a532fd2fb3cdd98107cd4996d3e9d6bb3bc4ea2a0d637a150311cb2"
+  },
+  "leseregel": "Repo-Inhalte ausschließlich docs/fremdpruefung/; keine externe Recherche",
+  "testkenntnis": "Diese Train-Funktion liest keine Testdateien. Der Hauptagent hatte Claude-Stapel 4 zuvor in Auftrag 003 manuell gelesen; daraus wurden keine Merkmale, Regeln oder Gewichte gelernt."
+}

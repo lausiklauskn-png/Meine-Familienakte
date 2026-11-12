@@ -1,0 +1,6135 @@
+{
+  "zweck": "Drei Gewerbewechsel zur Beschreibung; keine Hyperparameterwahl anhand der Ergebnisse.",
+  "folds": [
+    {
+      "mitFirmenname": true,
+      "ausgelassen": "Fahrradwerkstatt mit Fahrrad- und Zubehörhandel sowie kleinem Getränke- und Snackverkauf",
+      "lehrbelege": 228,
+      "n": 114,
+      "richtig": 95,
+      "trefferquote": 0.8333333333333334,
+      "wilson95": {
+        "lower": 0.754308164573317,
+        "upper": 0.8906261459874554,
+        "level": 0.95
+      },
+      "makroRecall": 0.8333333333333335,
+      "abgedeckteKonten": 38,
+      "jeKonto": [
+        {
+          "konto": "0320",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "0400",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "0410",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "0480",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "1800",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "1890",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "3300",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "3400",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4120",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4210",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4240",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4250",
+          "n": 3,
+          "richtig": 1,
+          "trefferquote": 0.3333333333333333
+        },
+        {
+          "konto": "4260",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4360",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4380",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4500",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4530",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4540",
+          "n": 3,
+          "richtig": 1,
+          "trefferquote": 0.3333333333333333
+        },
+        {
+          "konto": "4600",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4630",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4635",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4650",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4660",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4670",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4910",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4920",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4930",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4940",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4945",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4950",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4955",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4970",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4980",
+          "n": 3,
+          "richtig": 1,
+          "trefferquote": 0.3333333333333333
+        },
+        {
+          "konto": "8120",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "8125",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "8300",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "8400",
+          "n": 3,
+          "richtig": 0,
+          "trefferquote": 0
+        },
+        {
+          "konto": "8500",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        }
+      ],
+      "verwechslungen": [
+        [
+          "4540 → 4360",
+          2
+        ],
+        [
+          "3300 → 8300",
+          1
+        ],
+        [
+          "3400 → 8300",
+          1
+        ],
+        [
+          "4250 → 0400",
+          1
+        ],
+        [
+          "4250 → 4980",
+          1
+        ],
+        [
+          "4360 → 4540",
+          1
+        ],
+        [
+          "4500 → 4530",
+          1
+        ],
+        [
+          "4530 → 0320",
+          1
+        ],
+        [
+          "4630 → 4635",
+          1
+        ],
+        [
+          "4635 → 4630",
+          1
+        ],
+        [
+          "4650 → 4670",
+          1
+        ],
+        [
+          "4930 → 0480",
+          1
+        ],
+        [
+          "4955 → 4120",
+          1
+        ],
+        [
+          "4980 → 4120",
+          1
+        ],
+        [
+          "4980 → 4660",
+          1
+        ],
+        [
+          "8400 → 0480",
+          1
+        ],
+        [
+          "8400 → 3300",
+          1
+        ],
+        [
+          "8400 → 8300",
+          1
+        ]
+      ],
+      "details": [
+        {
+          "datei": "A001.txt",
+          "soll": "0320",
+          "ist": "0320",
+          "richtig": true
+        },
+        {
+          "datei": "A002.txt",
+          "soll": "0320",
+          "ist": "0320",
+          "richtig": true
+        },
+        {
+          "datei": "A003.txt",
+          "soll": "0320",
+          "ist": "0320",
+          "richtig": true
+        },
+        {
+          "datei": "A004.txt",
+          "soll": "0400",
+          "ist": "0400",
+          "richtig": true
+        },
+        {
+          "datei": "A005.txt",
+          "soll": "0400",
+          "ist": "0400",
+          "richtig": true
+        },
+        {
+          "datei": "A006.txt",
+          "soll": "0400",
+          "ist": "0400",
+          "richtig": true
+        },
+        {
+          "datei": "A007.txt",
+          "soll": "0410",
+          "ist": "0410",
+          "richtig": true
+        },
+        {
+          "datei": "A008.txt",
+          "soll": "0410",
+          "ist": "0410",
+          "richtig": true
+        },
+        {
+          "datei": "A009.txt",
+          "soll": "0410",
+          "ist": "0410",
+          "richtig": true
+        },
+        {
+          "datei": "A010.txt",
+          "soll": "0480",
+          "ist": "0480",
+          "richtig": true
+        },
+        {
+          "datei": "A011.txt",
+          "soll": "0480",
+          "ist": "0480",
+          "richtig": true
+        },
+        {
+          "datei": "A012.txt",
+          "soll": "0480",
+          "ist": "0480",
+          "richtig": true
+        },
+        {
+          "datei": "A013.txt",
+          "soll": "1800",
+          "ist": "1800",
+          "richtig": true
+        },
+        {
+          "datei": "A014.txt",
+          "soll": "1800",
+          "ist": "1800",
+          "richtig": true
+        },
+        {
+          "datei": "A015.txt",
+          "soll": "1800",
+          "ist": "1800",
+          "richtig": true
+        },
+        {
+          "datei": "A016.txt",
+          "soll": "1890",
+          "ist": "1890",
+          "richtig": true
+        },
+        {
+          "datei": "A017.txt",
+          "soll": "1890",
+          "ist": "1890",
+          "richtig": true
+        },
+        {
+          "datei": "A018.txt",
+          "soll": "1890",
+          "ist": "1890",
+          "richtig": true
+        },
+        {
+          "datei": "A019.txt",
+          "soll": "3300",
+          "ist": "3300",
+          "richtig": true
+        },
+        {
+          "datei": "A020.txt",
+          "soll": "3300",
+          "ist": "8300",
+          "richtig": false
+        },
+        {
+          "datei": "A021.txt",
+          "soll": "3300",
+          "ist": "3300",
+          "richtig": true
+        },
+        {
+          "datei": "A022.txt",
+          "soll": "3400",
+          "ist": "3400",
+          "richtig": true
+        },
+        {
+          "datei": "A023.txt",
+          "soll": "3400",
+          "ist": "8300",
+          "richtig": false
+        },
+        {
+          "datei": "A024.txt",
+          "soll": "3400",
+          "ist": "3400",
+          "richtig": true
+        },
+        {
+          "datei": "A025.txt",
+          "soll": "4120",
+          "ist": "4120",
+          "richtig": true
+        },
+        {
+          "datei": "A026.txt",
+          "soll": "4120",
+          "ist": "4120",
+          "richtig": true
+        },
+        {
+          "datei": "A027.txt",
+          "soll": "4120",
+          "ist": "4120",
+          "richtig": true
+        },
+        {
+          "datei": "A028.txt",
+          "soll": "4210",
+          "ist": "4210",
+          "richtig": true
+        },
+        {
+          "datei": "A029.txt",
+          "soll": "4210",
+          "ist": "4210",
+          "richtig": true
+        },
+        {
+          "datei": "A030.txt",
+          "soll": "4210",
+          "ist": "4210",
+          "richtig": true
+        },
+        {
+          "datei": "A031.txt",
+          "soll": "4240",
+          "ist": "4240",
+          "richtig": true
+        },
+        {
+          "datei": "A032.txt",
+          "soll": "4240",
+          "ist": "4240",
+          "richtig": true
+        },
+        {
+          "datei": "A033.txt",
+          "soll": "4240",
+          "ist": "4240",
+          "richtig": true
+        },
+        {
+          "datei": "A034.txt",
+          "soll": "4250",
+          "ist": "4980",
+          "richtig": false
+        },
+        {
+          "datei": "A035.txt",
+          "soll": "4250",
+          "ist": "0400",
+          "richtig": false
+        },
+        {
+          "datei": "A036.txt",
+          "soll": "4250",
+          "ist": "4250",
+          "richtig": true
+        },
+        {
+          "datei": "A037.txt",
+          "soll": "4260",
+          "ist": "4260",
+          "richtig": true
+        },
+        {
+          "datei": "A038.txt",
+          "soll": "4260",
+          "ist": "4260",
+          "richtig": true
+        },
+        {
+          "datei": "A039.txt",
+          "soll": "4260",
+          "ist": "4260",
+          "richtig": true
+        },
+        {
+          "datei": "A040.txt",
+          "soll": "4360",
+          "ist": "4540",
+          "richtig": false
+        },
+        {
+          "datei": "A041.txt",
+          "soll": "4360",
+          "ist": "4360",
+          "richtig": true
+        },
+        {
+          "datei": "A042.txt",
+          "soll": "4360",
+          "ist": "4360",
+          "richtig": true
+        },
+        {
+          "datei": "A043.txt",
+          "soll": "4380",
+          "ist": "4380",
+          "richtig": true
+        },
+        {
+          "datei": "A044.txt",
+          "soll": "4380",
+          "ist": "4380",
+          "richtig": true
+        },
+        {
+          "datei": "A045.txt",
+          "soll": "4380",
+          "ist": "4380",
+          "richtig": true
+        },
+        {
+          "datei": "A046.txt",
+          "soll": "4500",
+          "ist": "4500",
+          "richtig": true
+        },
+        {
+          "datei": "A047.txt",
+          "soll": "4500",
+          "ist": "4500",
+          "richtig": true
+        },
+        {
+          "datei": "A048.txt",
+          "soll": "4500",
+          "ist": "4530",
+          "richtig": false
+        },
+        {
+          "datei": "A049.txt",
+          "soll": "4530",
+          "ist": "4530",
+          "richtig": true
+        },
+        {
+          "datei": "A050.txt",
+          "soll": "4530",
+          "ist": "4530",
+          "richtig": true
+        },
+        {
+          "datei": "A051.txt",
+          "soll": "4530",
+          "ist": "0320",
+          "richtig": false
+        },
+        {
+          "datei": "A052.txt",
+          "soll": "4540",
+          "ist": "4540",
+          "richtig": true
+        },
+        {
+          "datei": "A053.txt",
+          "soll": "4540",
+          "ist": "4360",
+          "richtig": false
+        },
+        {
+          "datei": "A054.txt",
+          "soll": "4540",
+          "ist": "4360",
+          "richtig": false
+        },
+        {
+          "datei": "A055.txt",
+          "soll": "4600",
+          "ist": "4600",
+          "richtig": true
+        },
+        {
+          "datei": "A056.txt",
+          "soll": "4600",
+          "ist": "4600",
+          "richtig": true
+        },
+        {
+          "datei": "A057.txt",
+          "soll": "4600",
+          "ist": "4600",
+          "richtig": true
+        },
+        {
+          "datei": "A058.txt",
+          "soll": "4630",
+          "ist": "4630",
+          "richtig": true
+        },
+        {
+          "datei": "A059.txt",
+          "soll": "4630",
+          "ist": "4635",
+          "richtig": false
+        },
+        {
+          "datei": "A060.txt",
+          "soll": "4630",
+          "ist": "4630",
+          "richtig": true
+        },
+        {
+          "datei": "A061.txt",
+          "soll": "4635",
+          "ist": "4635",
+          "richtig": true
+        },
+        {
+          "datei": "A062.txt",
+          "soll": "4635",
+          "ist": "4635",
+          "richtig": true
+        },
+        {
+          "datei": "A063.txt",
+          "soll": "4635",
+          "ist": "4630",
+          "richtig": false
+        },
+        {
+          "datei": "A064.txt",
+          "soll": "4650",
+          "ist": "4650",
+          "richtig": true
+        },
+        {
+          "datei": "A065.txt",
+          "soll": "4650",
+          "ist": "4670",
+          "richtig": false
+        },
+        {
+          "datei": "A066.txt",
+          "soll": "4650",
+          "ist": "4650",
+          "richtig": true
+        },
+        {
+          "datei": "A067.txt",
+          "soll": "4660",
+          "ist": "4660",
+          "richtig": true
+        },
+        {
+          "datei": "A068.txt",
+          "soll": "4660",
+          "ist": "4660",
+          "richtig": true
+        },
+        {
+          "datei": "A069.txt",
+          "soll": "4660",
+          "ist": "4660",
+          "richtig": true
+        },
+        {
+          "datei": "A070.txt",
+          "soll": "4670",
+          "ist": "4670",
+          "richtig": true
+        },
+        {
+          "datei": "A071.txt",
+          "soll": "4670",
+          "ist": "4670",
+          "richtig": true
+        },
+        {
+          "datei": "A072.txt",
+          "soll": "4670",
+          "ist": "4670",
+          "richtig": true
+        },
+        {
+          "datei": "A073.txt",
+          "soll": "4910",
+          "ist": "4910",
+          "richtig": true
+        },
+        {
+          "datei": "A074.txt",
+          "soll": "4910",
+          "ist": "4910",
+          "richtig": true
+        },
+        {
+          "datei": "A075.txt",
+          "soll": "4910",
+          "ist": "4910",
+          "richtig": true
+        },
+        {
+          "datei": "A076.txt",
+          "soll": "4920",
+          "ist": "4920",
+          "richtig": true
+        },
+        {
+          "datei": "A077.txt",
+          "soll": "4920",
+          "ist": "4920",
+          "richtig": true
+        },
+        {
+          "datei": "A078.txt",
+          "soll": "4920",
+          "ist": "4920",
+          "richtig": true
+        },
+        {
+          "datei": "A079.txt",
+          "soll": "4930",
+          "ist": "4930",
+          "richtig": true
+        },
+        {
+          "datei": "A080.txt",
+          "soll": "4930",
+          "ist": "4930",
+          "richtig": true
+        },
+        {
+          "datei": "A081.txt",
+          "soll": "4930",
+          "ist": "0480",
+          "richtig": false
+        },
+        {
+          "datei": "A082.txt",
+          "soll": "4940",
+          "ist": "4940",
+          "richtig": true
+        },
+        {
+          "datei": "A083.txt",
+          "soll": "4940",
+          "ist": "4940",
+          "richtig": true
+        },
+        {
+          "datei": "A084.txt",
+          "soll": "4940",
+          "ist": "4940",
+          "richtig": true
+        },
+        {
+          "datei": "A085.txt",
+          "soll": "4945",
+          "ist": "4945",
+          "richtig": true
+        },
+        {
+          "datei": "A086.txt",
+          "soll": "4945",
+          "ist": "4945",
+          "richtig": true
+        },
+        {
+          "datei": "A087.txt",
+          "soll": "4945",
+          "ist": "4945",
+          "richtig": true
+        },
+        {
+          "datei": "A088.txt",
+          "soll": "4950",
+          "ist": "4950",
+          "richtig": true
+        },
+        {
+          "datei": "A089.txt",
+          "soll": "4950",
+          "ist": "4950",
+          "richtig": true
+        },
+        {
+          "datei": "A090.txt",
+          "soll": "4950",
+          "ist": "4950",
+          "richtig": true
+        },
+        {
+          "datei": "A091.txt",
+          "soll": "4955",
+          "ist": "4955",
+          "richtig": true
+        },
+        {
+          "datei": "A092.txt",
+          "soll": "4955",
+          "ist": "4120",
+          "richtig": false
+        },
+        {
+          "datei": "A093.txt",
+          "soll": "4955",
+          "ist": "4955",
+          "richtig": true
+        },
+        {
+          "datei": "A094.txt",
+          "soll": "4970",
+          "ist": "4970",
+          "richtig": true
+        },
+        {
+          "datei": "A095.txt",
+          "soll": "4970",
+          "ist": "4970",
+          "richtig": true
+        },
+        {
+          "datei": "A096.txt",
+          "soll": "4970",
+          "ist": "4970",
+          "richtig": true
+        },
+        {
+          "datei": "A097.txt",
+          "soll": "4980",
+          "ist": "4980",
+          "richtig": true
+        },
+        {
+          "datei": "A098.txt",
+          "soll": "4980",
+          "ist": "4660",
+          "richtig": false
+        },
+        {
+          "datei": "A099.txt",
+          "soll": "4980",
+          "ist": "4120",
+          "richtig": false
+        },
+        {
+          "datei": "A100.txt",
+          "soll": "8120",
+          "ist": "8120",
+          "richtig": true
+        },
+        {
+          "datei": "A101.txt",
+          "soll": "8120",
+          "ist": "8120",
+          "richtig": true
+        },
+        {
+          "datei": "A102.txt",
+          "soll": "8120",
+          "ist": "8120",
+          "richtig": true
+        },
+        {
+          "datei": "A103.txt",
+          "soll": "8125",
+          "ist": "8125",
+          "richtig": true
+        },
+        {
+          "datei": "A104.txt",
+          "soll": "8125",
+          "ist": "8125",
+          "richtig": true
+        },
+        {
+          "datei": "A105.txt",
+          "soll": "8125",
+          "ist": "8125",
+          "richtig": true
+        },
+        {
+          "datei": "A106.txt",
+          "soll": "8300",
+          "ist": "8300",
+          "richtig": true
+        },
+        {
+          "datei": "A107.txt",
+          "soll": "8300",
+          "ist": "8300",
+          "richtig": true
+        },
+        {
+          "datei": "A108.txt",
+          "soll": "8300",
+          "ist": "8300",
+          "richtig": true
+        },
+        {
+          "datei": "A109.txt",
+          "soll": "8400",
+          "ist": "0480",
+          "richtig": false
+        },
+        {
+          "datei": "A110.txt",
+          "soll": "8400",
+          "ist": "3300",
+          "richtig": false
+        },
+        {
+          "datei": "A111.txt",
+          "soll": "8400",
+          "ist": "8300",
+          "richtig": false
+        },
+        {
+          "datei": "A112.txt",
+          "soll": "8500",
+          "ist": "8500",
+          "richtig": true
+        },
+        {
+          "datei": "A113.txt",
+          "soll": "8500",
+          "ist": "8500",
+          "richtig": true
+        },
+        {
+          "datei": "A114.txt",
+          "soll": "8500",
+          "ist": "8500",
+          "richtig": true
+        }
+      ]
+    },
+    {
+      "mitFirmenname": true,
+      "ausgelassen": "Büroservice mit Schreibwarenhandel und digitaler Gestaltung",
+      "lehrbelege": 228,
+      "n": 114,
+      "richtig": 88,
+      "trefferquote": 0.7719298245614035,
+      "wilson95": {
+        "lower": 0.686791544138177,
+        "upper": 0.8393390776350845,
+        "level": 0.95
+      },
+      "makroRecall": 0.7719298245614036,
+      "abgedeckteKonten": 38,
+      "jeKonto": [
+        {
+          "konto": "0320",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "0400",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "0410",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "0480",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "1800",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "1890",
+          "n": 3,
+          "richtig": 1,
+          "trefferquote": 0.3333333333333333
+        },
+        {
+          "konto": "3300",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "3400",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4120",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4210",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4240",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4250",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4260",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4360",
+          "n": 3,
+          "richtig": 0,
+          "trefferquote": 0
+        },
+        {
+          "konto": "4380",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4500",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4530",
+          "n": 3,
+          "richtig": 1,
+          "trefferquote": 0.3333333333333333
+        },
+        {
+          "konto": "4540",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4600",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4630",
+          "n": 3,
+          "richtig": 1,
+          "trefferquote": 0.3333333333333333
+        },
+        {
+          "konto": "4635",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4650",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4660",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4670",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4910",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4920",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4930",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4940",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4945",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4950",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4955",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4970",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4980",
+          "n": 3,
+          "richtig": 1,
+          "trefferquote": 0.3333333333333333
+        },
+        {
+          "konto": "8120",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "8125",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "8300",
+          "n": 3,
+          "richtig": 0,
+          "trefferquote": 0
+        },
+        {
+          "konto": "8400",
+          "n": 3,
+          "richtig": 0,
+          "trefferquote": 0
+        },
+        {
+          "konto": "8500",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        }
+      ],
+      "verwechslungen": [
+        [
+          "4360 → 4540",
+          3
+        ],
+        [
+          "1890 → 1800",
+          2
+        ],
+        [
+          "4630 → 4635",
+          2
+        ],
+        [
+          "8300 → 3300",
+          2
+        ],
+        [
+          "0410 → 3300",
+          1
+        ],
+        [
+          "0480 → 0410",
+          1
+        ],
+        [
+          "1800 → 1890",
+          1
+        ],
+        [
+          "3300 → 4930",
+          1
+        ],
+        [
+          "3400 → 3300",
+          1
+        ],
+        [
+          "4250 → 4260",
+          1
+        ],
+        [
+          "4260 → 4500",
+          1
+        ],
+        [
+          "4500 → 4540",
+          1
+        ],
+        [
+          "4530 → 0320",
+          1
+        ],
+        [
+          "4530 → 4500",
+          1
+        ],
+        [
+          "4945 → 4670",
+          1
+        ],
+        [
+          "4980 → 4260",
+          1
+        ],
+        [
+          "4980 → 4945",
+          1
+        ],
+        [
+          "8300 → 8400",
+          1
+        ],
+        [
+          "8400 → 4950",
+          1
+        ],
+        [
+          "8400 → 4955",
+          1
+        ],
+        [
+          "8400 → 8500",
+          1
+        ]
+      ],
+      "details": [
+        {
+          "datei": "B001.txt",
+          "soll": "0320",
+          "ist": "0320",
+          "richtig": true
+        },
+        {
+          "datei": "B002.txt",
+          "soll": "0320",
+          "ist": "0320",
+          "richtig": true
+        },
+        {
+          "datei": "B003.txt",
+          "soll": "0320",
+          "ist": "0320",
+          "richtig": true
+        },
+        {
+          "datei": "B004.txt",
+          "soll": "0400",
+          "ist": "0400",
+          "richtig": true
+        },
+        {
+          "datei": "B005.txt",
+          "soll": "0400",
+          "ist": "0400",
+          "richtig": true
+        },
+        {
+          "datei": "B006.txt",
+          "soll": "0400",
+          "ist": "0400",
+          "richtig": true
+        },
+        {
+          "datei": "B007.txt",
+          "soll": "0410",
+          "ist": "0410",
+          "richtig": true
+        },
+        {
+          "datei": "B008.txt",
+          "soll": "0410",
+          "ist": "3300",
+          "richtig": false
+        },
+        {
+          "datei": "B009.txt",
+          "soll": "0410",
+          "ist": "0410",
+          "richtig": true
+        },
+        {
+          "datei": "B010.txt",
+          "soll": "0480",
+          "ist": "0480",
+          "richtig": true
+        },
+        {
+          "datei": "B011.txt",
+          "soll": "0480",
+          "ist": "0480",
+          "richtig": true
+        },
+        {
+          "datei": "B012.txt",
+          "soll": "0480",
+          "ist": "0410",
+          "richtig": false
+        },
+        {
+          "datei": "B013.txt",
+          "soll": "1800",
+          "ist": "1890",
+          "richtig": false
+        },
+        {
+          "datei": "B014.txt",
+          "soll": "1800",
+          "ist": "1800",
+          "richtig": true
+        },
+        {
+          "datei": "B015.txt",
+          "soll": "1800",
+          "ist": "1800",
+          "richtig": true
+        },
+        {
+          "datei": "B016.txt",
+          "soll": "1890",
+          "ist": "1890",
+          "richtig": true
+        },
+        {
+          "datei": "B017.txt",
+          "soll": "1890",
+          "ist": "1800",
+          "richtig": false
+        },
+        {
+          "datei": "B018.txt",
+          "soll": "1890",
+          "ist": "1800",
+          "richtig": false
+        },
+        {
+          "datei": "B019.txt",
+          "soll": "3300",
+          "ist": "3300",
+          "richtig": true
+        },
+        {
+          "datei": "B020.txt",
+          "soll": "3300",
+          "ist": "4930",
+          "richtig": false
+        },
+        {
+          "datei": "B021.txt",
+          "soll": "3300",
+          "ist": "3300",
+          "richtig": true
+        },
+        {
+          "datei": "B022.txt",
+          "soll": "3400",
+          "ist": "3400",
+          "richtig": true
+        },
+        {
+          "datei": "B023.txt",
+          "soll": "3400",
+          "ist": "3300",
+          "richtig": false
+        },
+        {
+          "datei": "B024.txt",
+          "soll": "3400",
+          "ist": "3400",
+          "richtig": true
+        },
+        {
+          "datei": "B025.txt",
+          "soll": "4120",
+          "ist": "4120",
+          "richtig": true
+        },
+        {
+          "datei": "B026.txt",
+          "soll": "4120",
+          "ist": "4120",
+          "richtig": true
+        },
+        {
+          "datei": "B027.txt",
+          "soll": "4120",
+          "ist": "4120",
+          "richtig": true
+        },
+        {
+          "datei": "B028.txt",
+          "soll": "4210",
+          "ist": "4210",
+          "richtig": true
+        },
+        {
+          "datei": "B029.txt",
+          "soll": "4210",
+          "ist": "4210",
+          "richtig": true
+        },
+        {
+          "datei": "B030.txt",
+          "soll": "4210",
+          "ist": "4210",
+          "richtig": true
+        },
+        {
+          "datei": "B031.txt",
+          "soll": "4240",
+          "ist": "4240",
+          "richtig": true
+        },
+        {
+          "datei": "B032.txt",
+          "soll": "4240",
+          "ist": "4240",
+          "richtig": true
+        },
+        {
+          "datei": "B033.txt",
+          "soll": "4240",
+          "ist": "4240",
+          "richtig": true
+        },
+        {
+          "datei": "B034.txt",
+          "soll": "4250",
+          "ist": "4250",
+          "richtig": true
+        },
+        {
+          "datei": "B035.txt",
+          "soll": "4250",
+          "ist": "4250",
+          "richtig": true
+        },
+        {
+          "datei": "B036.txt",
+          "soll": "4250",
+          "ist": "4260",
+          "richtig": false
+        },
+        {
+          "datei": "B037.txt",
+          "soll": "4260",
+          "ist": "4260",
+          "richtig": true
+        },
+        {
+          "datei": "B038.txt",
+          "soll": "4260",
+          "ist": "4500",
+          "richtig": false
+        },
+        {
+          "datei": "B039.txt",
+          "soll": "4260",
+          "ist": "4260",
+          "richtig": true
+        },
+        {
+          "datei": "B040.txt",
+          "soll": "4360",
+          "ist": "4540",
+          "richtig": false
+        },
+        {
+          "datei": "B041.txt",
+          "soll": "4360",
+          "ist": "4540",
+          "richtig": false
+        },
+        {
+          "datei": "B042.txt",
+          "soll": "4360",
+          "ist": "4540",
+          "richtig": false
+        },
+        {
+          "datei": "B043.txt",
+          "soll": "4380",
+          "ist": "4380",
+          "richtig": true
+        },
+        {
+          "datei": "B044.txt",
+          "soll": "4380",
+          "ist": "4380",
+          "richtig": true
+        },
+        {
+          "datei": "B045.txt",
+          "soll": "4380",
+          "ist": "4380",
+          "richtig": true
+        },
+        {
+          "datei": "B046.txt",
+          "soll": "4500",
+          "ist": "4540",
+          "richtig": false
+        },
+        {
+          "datei": "B047.txt",
+          "soll": "4500",
+          "ist": "4500",
+          "richtig": true
+        },
+        {
+          "datei": "B048.txt",
+          "soll": "4500",
+          "ist": "4500",
+          "richtig": true
+        },
+        {
+          "datei": "B049.txt",
+          "soll": "4530",
+          "ist": "4530",
+          "richtig": true
+        },
+        {
+          "datei": "B050.txt",
+          "soll": "4530",
+          "ist": "0320",
+          "richtig": false
+        },
+        {
+          "datei": "B051.txt",
+          "soll": "4530",
+          "ist": "4500",
+          "richtig": false
+        },
+        {
+          "datei": "B052.txt",
+          "soll": "4540",
+          "ist": "4540",
+          "richtig": true
+        },
+        {
+          "datei": "B053.txt",
+          "soll": "4540",
+          "ist": "4540",
+          "richtig": true
+        },
+        {
+          "datei": "B054.txt",
+          "soll": "4540",
+          "ist": "4540",
+          "richtig": true
+        },
+        {
+          "datei": "B055.txt",
+          "soll": "4600",
+          "ist": "4600",
+          "richtig": true
+        },
+        {
+          "datei": "B056.txt",
+          "soll": "4600",
+          "ist": "4600",
+          "richtig": true
+        },
+        {
+          "datei": "B057.txt",
+          "soll": "4600",
+          "ist": "4600",
+          "richtig": true
+        },
+        {
+          "datei": "B058.txt",
+          "soll": "4630",
+          "ist": "4630",
+          "richtig": true
+        },
+        {
+          "datei": "B059.txt",
+          "soll": "4630",
+          "ist": "4635",
+          "richtig": false
+        },
+        {
+          "datei": "B060.txt",
+          "soll": "4630",
+          "ist": "4635",
+          "richtig": false
+        },
+        {
+          "datei": "B061.txt",
+          "soll": "4635",
+          "ist": "4635",
+          "richtig": true
+        },
+        {
+          "datei": "B062.txt",
+          "soll": "4635",
+          "ist": "4635",
+          "richtig": true
+        },
+        {
+          "datei": "B063.txt",
+          "soll": "4635",
+          "ist": "4635",
+          "richtig": true
+        },
+        {
+          "datei": "B064.txt",
+          "soll": "4650",
+          "ist": "4650",
+          "richtig": true
+        },
+        {
+          "datei": "B065.txt",
+          "soll": "4650",
+          "ist": "4650",
+          "richtig": true
+        },
+        {
+          "datei": "B066.txt",
+          "soll": "4650",
+          "ist": "4650",
+          "richtig": true
+        },
+        {
+          "datei": "B067.txt",
+          "soll": "4660",
+          "ist": "4660",
+          "richtig": true
+        },
+        {
+          "datei": "B068.txt",
+          "soll": "4660",
+          "ist": "4660",
+          "richtig": true
+        },
+        {
+          "datei": "B069.txt",
+          "soll": "4660",
+          "ist": "4660",
+          "richtig": true
+        },
+        {
+          "datei": "B070.txt",
+          "soll": "4670",
+          "ist": "4670",
+          "richtig": true
+        },
+        {
+          "datei": "B071.txt",
+          "soll": "4670",
+          "ist": "4670",
+          "richtig": true
+        },
+        {
+          "datei": "B072.txt",
+          "soll": "4670",
+          "ist": "4670",
+          "richtig": true
+        },
+        {
+          "datei": "B073.txt",
+          "soll": "4910",
+          "ist": "4910",
+          "richtig": true
+        },
+        {
+          "datei": "B074.txt",
+          "soll": "4910",
+          "ist": "4910",
+          "richtig": true
+        },
+        {
+          "datei": "B075.txt",
+          "soll": "4910",
+          "ist": "4910",
+          "richtig": true
+        },
+        {
+          "datei": "B076.txt",
+          "soll": "4920",
+          "ist": "4920",
+          "richtig": true
+        },
+        {
+          "datei": "B077.txt",
+          "soll": "4920",
+          "ist": "4920",
+          "richtig": true
+        },
+        {
+          "datei": "B078.txt",
+          "soll": "4920",
+          "ist": "4920",
+          "richtig": true
+        },
+        {
+          "datei": "B079.txt",
+          "soll": "4930",
+          "ist": "4930",
+          "richtig": true
+        },
+        {
+          "datei": "B080.txt",
+          "soll": "4930",
+          "ist": "4930",
+          "richtig": true
+        },
+        {
+          "datei": "B081.txt",
+          "soll": "4930",
+          "ist": "4930",
+          "richtig": true
+        },
+        {
+          "datei": "B082.txt",
+          "soll": "4940",
+          "ist": "4940",
+          "richtig": true
+        },
+        {
+          "datei": "B083.txt",
+          "soll": "4940",
+          "ist": "4940",
+          "richtig": true
+        },
+        {
+          "datei": "B084.txt",
+          "soll": "4940",
+          "ist": "4940",
+          "richtig": true
+        },
+        {
+          "datei": "B085.txt",
+          "soll": "4945",
+          "ist": "4945",
+          "richtig": true
+        },
+        {
+          "datei": "B086.txt",
+          "soll": "4945",
+          "ist": "4945",
+          "richtig": true
+        },
+        {
+          "datei": "B087.txt",
+          "soll": "4945",
+          "ist": "4670",
+          "richtig": false
+        },
+        {
+          "datei": "B088.txt",
+          "soll": "4950",
+          "ist": "4950",
+          "richtig": true
+        },
+        {
+          "datei": "B089.txt",
+          "soll": "4950",
+          "ist": "4950",
+          "richtig": true
+        },
+        {
+          "datei": "B090.txt",
+          "soll": "4950",
+          "ist": "4950",
+          "richtig": true
+        },
+        {
+          "datei": "B091.txt",
+          "soll": "4955",
+          "ist": "4955",
+          "richtig": true
+        },
+        {
+          "datei": "B092.txt",
+          "soll": "4955",
+          "ist": "4955",
+          "richtig": true
+        },
+        {
+          "datei": "B093.txt",
+          "soll": "4955",
+          "ist": "4955",
+          "richtig": true
+        },
+        {
+          "datei": "B094.txt",
+          "soll": "4970",
+          "ist": "4970",
+          "richtig": true
+        },
+        {
+          "datei": "B095.txt",
+          "soll": "4970",
+          "ist": "4970",
+          "richtig": true
+        },
+        {
+          "datei": "B096.txt",
+          "soll": "4970",
+          "ist": "4970",
+          "richtig": true
+        },
+        {
+          "datei": "B097.txt",
+          "soll": "4980",
+          "ist": "4980",
+          "richtig": true
+        },
+        {
+          "datei": "B098.txt",
+          "soll": "4980",
+          "ist": "4260",
+          "richtig": false
+        },
+        {
+          "datei": "B099.txt",
+          "soll": "4980",
+          "ist": "4945",
+          "richtig": false
+        },
+        {
+          "datei": "B100.txt",
+          "soll": "8120",
+          "ist": "8120",
+          "richtig": true
+        },
+        {
+          "datei": "B101.txt",
+          "soll": "8120",
+          "ist": "8120",
+          "richtig": true
+        },
+        {
+          "datei": "B102.txt",
+          "soll": "8120",
+          "ist": "8120",
+          "richtig": true
+        },
+        {
+          "datei": "B103.txt",
+          "soll": "8125",
+          "ist": "8125",
+          "richtig": true
+        },
+        {
+          "datei": "B104.txt",
+          "soll": "8125",
+          "ist": "8125",
+          "richtig": true
+        },
+        {
+          "datei": "B105.txt",
+          "soll": "8125",
+          "ist": "8125",
+          "richtig": true
+        },
+        {
+          "datei": "B106.txt",
+          "soll": "8300",
+          "ist": "3300",
+          "richtig": false
+        },
+        {
+          "datei": "B107.txt",
+          "soll": "8300",
+          "ist": "3300",
+          "richtig": false
+        },
+        {
+          "datei": "B108.txt",
+          "soll": "8300",
+          "ist": "8400",
+          "richtig": false
+        },
+        {
+          "datei": "B109.txt",
+          "soll": "8400",
+          "ist": "8500",
+          "richtig": false
+        },
+        {
+          "datei": "B110.txt",
+          "soll": "8400",
+          "ist": "4950",
+          "richtig": false
+        },
+        {
+          "datei": "B111.txt",
+          "soll": "8400",
+          "ist": "4955",
+          "richtig": false
+        },
+        {
+          "datei": "B112.txt",
+          "soll": "8500",
+          "ist": "8500",
+          "richtig": true
+        },
+        {
+          "datei": "B113.txt",
+          "soll": "8500",
+          "ist": "8500",
+          "richtig": true
+        },
+        {
+          "datei": "B114.txt",
+          "soll": "8500",
+          "ist": "8500",
+          "richtig": true
+        }
+      ]
+    },
+    {
+      "mitFirmenname": true,
+      "ausgelassen": "Feinkostküche mit Catering und Warenverkauf",
+      "lehrbelege": 228,
+      "n": 114,
+      "richtig": 84,
+      "trefferquote": 0.7368421052631579,
+      "wilson95": {
+        "lower": 0.6492423994505676,
+        "upper": 0.8090004001584021,
+        "level": 0.95
+      },
+      "makroRecall": 0.736842105263158,
+      "abgedeckteKonten": 38,
+      "jeKonto": [
+        {
+          "konto": "0320",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "0400",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "0410",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "0480",
+          "n": 3,
+          "richtig": 0,
+          "trefferquote": 0
+        },
+        {
+          "konto": "1800",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "1890",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "3300",
+          "n": 3,
+          "richtig": 0,
+          "trefferquote": 0
+        },
+        {
+          "konto": "3400",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4120",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4210",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4240",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4250",
+          "n": 3,
+          "richtig": 1,
+          "trefferquote": 0.3333333333333333
+        },
+        {
+          "konto": "4260",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4360",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4380",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4500",
+          "n": 3,
+          "richtig": 0,
+          "trefferquote": 0
+        },
+        {
+          "konto": "4530",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4540",
+          "n": 3,
+          "richtig": 0,
+          "trefferquote": 0
+        },
+        {
+          "konto": "4600",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4630",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4635",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4650",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4660",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4670",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4910",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4920",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4930",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4940",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4945",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4950",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4955",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4970",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4980",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "8120",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "8125",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "8300",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "8400",
+          "n": 3,
+          "richtig": 0,
+          "trefferquote": 0
+        },
+        {
+          "konto": "8500",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        }
+      ],
+      "verwechslungen": [
+        [
+          "4540 → 4360",
+          3
+        ],
+        [
+          "3300 → 3400",
+          2
+        ],
+        [
+          "8400 → 8300",
+          2
+        ],
+        [
+          "0400 → 0410",
+          1
+        ],
+        [
+          "0410 → 0480",
+          1
+        ],
+        [
+          "0480 → 0400",
+          1
+        ],
+        [
+          "0480 → 3300",
+          1
+        ],
+        [
+          "0480 → 4920",
+          1
+        ],
+        [
+          "3300 → 8400",
+          1
+        ],
+        [
+          "4250 → 4210",
+          1
+        ],
+        [
+          "4250 → 4600",
+          1
+        ],
+        [
+          "4260 → 4980",
+          1
+        ],
+        [
+          "4360 → 4540",
+          1
+        ],
+        [
+          "4380 → 4210",
+          1
+        ],
+        [
+          "4500 → 0400",
+          1
+        ],
+        [
+          "4500 → 4260",
+          1
+        ],
+        [
+          "4500 → 4955",
+          1
+        ],
+        [
+          "4600 → 8125",
+          1
+        ],
+        [
+          "4635 → 4630",
+          1
+        ],
+        [
+          "4660 → 4670",
+          1
+        ],
+        [
+          "4920 → 0480",
+          1
+        ],
+        [
+          "4930 → 4260",
+          1
+        ],
+        [
+          "4955 → 4950",
+          1
+        ],
+        [
+          "4980 → 4950",
+          1
+        ],
+        [
+          "8300 → 3400",
+          1
+        ],
+        [
+          "8400 → 3400",
+          1
+        ]
+      ],
+      "details": [
+        {
+          "datei": "C001.txt",
+          "soll": "0320",
+          "ist": "0320",
+          "richtig": true
+        },
+        {
+          "datei": "C002.txt",
+          "soll": "0320",
+          "ist": "0320",
+          "richtig": true
+        },
+        {
+          "datei": "C003.txt",
+          "soll": "0320",
+          "ist": "0320",
+          "richtig": true
+        },
+        {
+          "datei": "C004.txt",
+          "soll": "0400",
+          "ist": "0400",
+          "richtig": true
+        },
+        {
+          "datei": "C005.txt",
+          "soll": "0400",
+          "ist": "0410",
+          "richtig": false
+        },
+        {
+          "datei": "C006.txt",
+          "soll": "0400",
+          "ist": "0400",
+          "richtig": true
+        },
+        {
+          "datei": "C007.txt",
+          "soll": "0410",
+          "ist": "0410",
+          "richtig": true
+        },
+        {
+          "datei": "C008.txt",
+          "soll": "0410",
+          "ist": "0410",
+          "richtig": true
+        },
+        {
+          "datei": "C009.txt",
+          "soll": "0410",
+          "ist": "0480",
+          "richtig": false
+        },
+        {
+          "datei": "C010.txt",
+          "soll": "0480",
+          "ist": "0400",
+          "richtig": false
+        },
+        {
+          "datei": "C011.txt",
+          "soll": "0480",
+          "ist": "3300",
+          "richtig": false
+        },
+        {
+          "datei": "C012.txt",
+          "soll": "0480",
+          "ist": "4920",
+          "richtig": false
+        },
+        {
+          "datei": "C013.txt",
+          "soll": "1800",
+          "ist": "1800",
+          "richtig": true
+        },
+        {
+          "datei": "C014.txt",
+          "soll": "1800",
+          "ist": "1800",
+          "richtig": true
+        },
+        {
+          "datei": "C015.txt",
+          "soll": "1800",
+          "ist": "1800",
+          "richtig": true
+        },
+        {
+          "datei": "C016.txt",
+          "soll": "1890",
+          "ist": "1890",
+          "richtig": true
+        },
+        {
+          "datei": "C017.txt",
+          "soll": "1890",
+          "ist": "1890",
+          "richtig": true
+        },
+        {
+          "datei": "C018.txt",
+          "soll": "1890",
+          "ist": "1890",
+          "richtig": true
+        },
+        {
+          "datei": "C019.txt",
+          "soll": "3300",
+          "ist": "8400",
+          "richtig": false
+        },
+        {
+          "datei": "C020.txt",
+          "soll": "3300",
+          "ist": "3400",
+          "richtig": false
+        },
+        {
+          "datei": "C021.txt",
+          "soll": "3300",
+          "ist": "3400",
+          "richtig": false
+        },
+        {
+          "datei": "C022.txt",
+          "soll": "3400",
+          "ist": "3400",
+          "richtig": true
+        },
+        {
+          "datei": "C023.txt",
+          "soll": "3400",
+          "ist": "3400",
+          "richtig": true
+        },
+        {
+          "datei": "C024.txt",
+          "soll": "3400",
+          "ist": "3400",
+          "richtig": true
+        },
+        {
+          "datei": "C025.txt",
+          "soll": "4120",
+          "ist": "4120",
+          "richtig": true
+        },
+        {
+          "datei": "C026.txt",
+          "soll": "4120",
+          "ist": "4120",
+          "richtig": true
+        },
+        {
+          "datei": "C027.txt",
+          "soll": "4120",
+          "ist": "4120",
+          "richtig": true
+        },
+        {
+          "datei": "C028.txt",
+          "soll": "4210",
+          "ist": "4210",
+          "richtig": true
+        },
+        {
+          "datei": "C029.txt",
+          "soll": "4210",
+          "ist": "4210",
+          "richtig": true
+        },
+        {
+          "datei": "C030.txt",
+          "soll": "4210",
+          "ist": "4210",
+          "richtig": true
+        },
+        {
+          "datei": "C031.txt",
+          "soll": "4240",
+          "ist": "4240",
+          "richtig": true
+        },
+        {
+          "datei": "C032.txt",
+          "soll": "4240",
+          "ist": "4240",
+          "richtig": true
+        },
+        {
+          "datei": "C033.txt",
+          "soll": "4240",
+          "ist": "4240",
+          "richtig": true
+        },
+        {
+          "datei": "C034.txt",
+          "soll": "4250",
+          "ist": "4600",
+          "richtig": false
+        },
+        {
+          "datei": "C035.txt",
+          "soll": "4250",
+          "ist": "4250",
+          "richtig": true
+        },
+        {
+          "datei": "C036.txt",
+          "soll": "4250",
+          "ist": "4210",
+          "richtig": false
+        },
+        {
+          "datei": "C037.txt",
+          "soll": "4260",
+          "ist": "4260",
+          "richtig": true
+        },
+        {
+          "datei": "C038.txt",
+          "soll": "4260",
+          "ist": "4980",
+          "richtig": false
+        },
+        {
+          "datei": "C039.txt",
+          "soll": "4260",
+          "ist": "4260",
+          "richtig": true
+        },
+        {
+          "datei": "C040.txt",
+          "soll": "4360",
+          "ist": "4540",
+          "richtig": false
+        },
+        {
+          "datei": "C041.txt",
+          "soll": "4360",
+          "ist": "4360",
+          "richtig": true
+        },
+        {
+          "datei": "C042.txt",
+          "soll": "4360",
+          "ist": "4360",
+          "richtig": true
+        },
+        {
+          "datei": "C043.txt",
+          "soll": "4380",
+          "ist": "4210",
+          "richtig": false
+        },
+        {
+          "datei": "C044.txt",
+          "soll": "4380",
+          "ist": "4380",
+          "richtig": true
+        },
+        {
+          "datei": "C045.txt",
+          "soll": "4380",
+          "ist": "4380",
+          "richtig": true
+        },
+        {
+          "datei": "C046.txt",
+          "soll": "4500",
+          "ist": "4260",
+          "richtig": false
+        },
+        {
+          "datei": "C047.txt",
+          "soll": "4500",
+          "ist": "4955",
+          "richtig": false
+        },
+        {
+          "datei": "C048.txt",
+          "soll": "4500",
+          "ist": "0400",
+          "richtig": false
+        },
+        {
+          "datei": "C049.txt",
+          "soll": "4530",
+          "ist": "4530",
+          "richtig": true
+        },
+        {
+          "datei": "C050.txt",
+          "soll": "4530",
+          "ist": "4530",
+          "richtig": true
+        },
+        {
+          "datei": "C051.txt",
+          "soll": "4530",
+          "ist": "4530",
+          "richtig": true
+        },
+        {
+          "datei": "C052.txt",
+          "soll": "4540",
+          "ist": "4360",
+          "richtig": false
+        },
+        {
+          "datei": "C053.txt",
+          "soll": "4540",
+          "ist": "4360",
+          "richtig": false
+        },
+        {
+          "datei": "C054.txt",
+          "soll": "4540",
+          "ist": "4360",
+          "richtig": false
+        },
+        {
+          "datei": "C055.txt",
+          "soll": "4600",
+          "ist": "4600",
+          "richtig": true
+        },
+        {
+          "datei": "C056.txt",
+          "soll": "4600",
+          "ist": "4600",
+          "richtig": true
+        },
+        {
+          "datei": "C057.txt",
+          "soll": "4600",
+          "ist": "8125",
+          "richtig": false
+        },
+        {
+          "datei": "C058.txt",
+          "soll": "4630",
+          "ist": "4630",
+          "richtig": true
+        },
+        {
+          "datei": "C059.txt",
+          "soll": "4630",
+          "ist": "4630",
+          "richtig": true
+        },
+        {
+          "datei": "C060.txt",
+          "soll": "4630",
+          "ist": "4630",
+          "richtig": true
+        },
+        {
+          "datei": "C061.txt",
+          "soll": "4635",
+          "ist": "4635",
+          "richtig": true
+        },
+        {
+          "datei": "C062.txt",
+          "soll": "4635",
+          "ist": "4630",
+          "richtig": false
+        },
+        {
+          "datei": "C063.txt",
+          "soll": "4635",
+          "ist": "4635",
+          "richtig": true
+        },
+        {
+          "datei": "C064.txt",
+          "soll": "4650",
+          "ist": "4650",
+          "richtig": true
+        },
+        {
+          "datei": "C065.txt",
+          "soll": "4650",
+          "ist": "4650",
+          "richtig": true
+        },
+        {
+          "datei": "C066.txt",
+          "soll": "4650",
+          "ist": "4650",
+          "richtig": true
+        },
+        {
+          "datei": "C067.txt",
+          "soll": "4660",
+          "ist": "4660",
+          "richtig": true
+        },
+        {
+          "datei": "C068.txt",
+          "soll": "4660",
+          "ist": "4670",
+          "richtig": false
+        },
+        {
+          "datei": "C069.txt",
+          "soll": "4660",
+          "ist": "4660",
+          "richtig": true
+        },
+        {
+          "datei": "C070.txt",
+          "soll": "4670",
+          "ist": "4670",
+          "richtig": true
+        },
+        {
+          "datei": "C071.txt",
+          "soll": "4670",
+          "ist": "4670",
+          "richtig": true
+        },
+        {
+          "datei": "C072.txt",
+          "soll": "4670",
+          "ist": "4670",
+          "richtig": true
+        },
+        {
+          "datei": "C073.txt",
+          "soll": "4910",
+          "ist": "4910",
+          "richtig": true
+        },
+        {
+          "datei": "C074.txt",
+          "soll": "4910",
+          "ist": "4910",
+          "richtig": true
+        },
+        {
+          "datei": "C075.txt",
+          "soll": "4910",
+          "ist": "4910",
+          "richtig": true
+        },
+        {
+          "datei": "C076.txt",
+          "soll": "4920",
+          "ist": "4920",
+          "richtig": true
+        },
+        {
+          "datei": "C077.txt",
+          "soll": "4920",
+          "ist": "4920",
+          "richtig": true
+        },
+        {
+          "datei": "C078.txt",
+          "soll": "4920",
+          "ist": "0480",
+          "richtig": false
+        },
+        {
+          "datei": "C079.txt",
+          "soll": "4930",
+          "ist": "4930",
+          "richtig": true
+        },
+        {
+          "datei": "C080.txt",
+          "soll": "4930",
+          "ist": "4930",
+          "richtig": true
+        },
+        {
+          "datei": "C081.txt",
+          "soll": "4930",
+          "ist": "4260",
+          "richtig": false
+        },
+        {
+          "datei": "C082.txt",
+          "soll": "4940",
+          "ist": "4940",
+          "richtig": true
+        },
+        {
+          "datei": "C083.txt",
+          "soll": "4940",
+          "ist": "4940",
+          "richtig": true
+        },
+        {
+          "datei": "C084.txt",
+          "soll": "4940",
+          "ist": "4940",
+          "richtig": true
+        },
+        {
+          "datei": "C085.txt",
+          "soll": "4945",
+          "ist": "4945",
+          "richtig": true
+        },
+        {
+          "datei": "C086.txt",
+          "soll": "4945",
+          "ist": "4945",
+          "richtig": true
+        },
+        {
+          "datei": "C087.txt",
+          "soll": "4945",
+          "ist": "4945",
+          "richtig": true
+        },
+        {
+          "datei": "C088.txt",
+          "soll": "4950",
+          "ist": "4950",
+          "richtig": true
+        },
+        {
+          "datei": "C089.txt",
+          "soll": "4950",
+          "ist": "4950",
+          "richtig": true
+        },
+        {
+          "datei": "C090.txt",
+          "soll": "4950",
+          "ist": "4950",
+          "richtig": true
+        },
+        {
+          "datei": "C091.txt",
+          "soll": "4955",
+          "ist": "4955",
+          "richtig": true
+        },
+        {
+          "datei": "C092.txt",
+          "soll": "4955",
+          "ist": "4950",
+          "richtig": false
+        },
+        {
+          "datei": "C093.txt",
+          "soll": "4955",
+          "ist": "4955",
+          "richtig": true
+        },
+        {
+          "datei": "C094.txt",
+          "soll": "4970",
+          "ist": "4970",
+          "richtig": true
+        },
+        {
+          "datei": "C095.txt",
+          "soll": "4970",
+          "ist": "4970",
+          "richtig": true
+        },
+        {
+          "datei": "C096.txt",
+          "soll": "4970",
+          "ist": "4970",
+          "richtig": true
+        },
+        {
+          "datei": "C097.txt",
+          "soll": "4980",
+          "ist": "4980",
+          "richtig": true
+        },
+        {
+          "datei": "C098.txt",
+          "soll": "4980",
+          "ist": "4950",
+          "richtig": false
+        },
+        {
+          "datei": "C099.txt",
+          "soll": "4980",
+          "ist": "4980",
+          "richtig": true
+        },
+        {
+          "datei": "C100.txt",
+          "soll": "8120",
+          "ist": "8120",
+          "richtig": true
+        },
+        {
+          "datei": "C101.txt",
+          "soll": "8120",
+          "ist": "8120",
+          "richtig": true
+        },
+        {
+          "datei": "C102.txt",
+          "soll": "8120",
+          "ist": "8120",
+          "richtig": true
+        },
+        {
+          "datei": "C103.txt",
+          "soll": "8125",
+          "ist": "8125",
+          "richtig": true
+        },
+        {
+          "datei": "C104.txt",
+          "soll": "8125",
+          "ist": "8125",
+          "richtig": true
+        },
+        {
+          "datei": "C105.txt",
+          "soll": "8125",
+          "ist": "8125",
+          "richtig": true
+        },
+        {
+          "datei": "C106.txt",
+          "soll": "8300",
+          "ist": "8300",
+          "richtig": true
+        },
+        {
+          "datei": "C107.txt",
+          "soll": "8300",
+          "ist": "8300",
+          "richtig": true
+        },
+        {
+          "datei": "C108.txt",
+          "soll": "8300",
+          "ist": "3400",
+          "richtig": false
+        },
+        {
+          "datei": "C109.txt",
+          "soll": "8400",
+          "ist": "3400",
+          "richtig": false
+        },
+        {
+          "datei": "C110.txt",
+          "soll": "8400",
+          "ist": "8300",
+          "richtig": false
+        },
+        {
+          "datei": "C111.txt",
+          "soll": "8400",
+          "ist": "8300",
+          "richtig": false
+        },
+        {
+          "datei": "C112.txt",
+          "soll": "8500",
+          "ist": "8500",
+          "richtig": true
+        },
+        {
+          "datei": "C113.txt",
+          "soll": "8500",
+          "ist": "8500",
+          "richtig": true
+        },
+        {
+          "datei": "C114.txt",
+          "soll": "8500",
+          "ist": "8500",
+          "richtig": true
+        }
+      ]
+    },
+    {
+      "mitFirmenname": false,
+      "ausgelassen": "Fahrradwerkstatt mit Fahrrad- und Zubehörhandel sowie kleinem Getränke- und Snackverkauf",
+      "lehrbelege": 228,
+      "n": 114,
+      "richtig": 95,
+      "trefferquote": 0.8333333333333334,
+      "wilson95": {
+        "lower": 0.754308164573317,
+        "upper": 0.8906261459874554,
+        "level": 0.95
+      },
+      "makroRecall": 0.8333333333333335,
+      "abgedeckteKonten": 38,
+      "jeKonto": [
+        {
+          "konto": "0320",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "0400",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "0410",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "0480",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "1800",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "1890",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "3300",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "3400",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4120",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4210",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4240",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4250",
+          "n": 3,
+          "richtig": 1,
+          "trefferquote": 0.3333333333333333
+        },
+        {
+          "konto": "4260",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4360",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4380",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4500",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4530",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4540",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4600",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4630",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4635",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4650",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4660",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4670",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4910",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4920",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4930",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4940",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4945",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4950",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4955",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4970",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4980",
+          "n": 3,
+          "richtig": 1,
+          "trefferquote": 0.3333333333333333
+        },
+        {
+          "konto": "8120",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "8125",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "8300",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "8400",
+          "n": 3,
+          "richtig": 0,
+          "trefferquote": 0
+        },
+        {
+          "konto": "8500",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        }
+      ],
+      "verwechslungen": [
+        [
+          "8400 → 8300",
+          2
+        ],
+        [
+          "3300 → 8300",
+          1
+        ],
+        [
+          "4250 → 0400",
+          1
+        ],
+        [
+          "4250 → 4260",
+          1
+        ],
+        [
+          "4260 → 4250",
+          1
+        ],
+        [
+          "4360 → 4540",
+          1
+        ],
+        [
+          "4500 → 4530",
+          1
+        ],
+        [
+          "4530 → 0320",
+          1
+        ],
+        [
+          "4540 → 4360",
+          1
+        ],
+        [
+          "4630 → 4635",
+          1
+        ],
+        [
+          "4635 → 4630",
+          1
+        ],
+        [
+          "4650 → 4670",
+          1
+        ],
+        [
+          "4910 → 4970",
+          1
+        ],
+        [
+          "4930 → 0480",
+          1
+        ],
+        [
+          "4955 → 4120",
+          1
+        ],
+        [
+          "4980 → 4120",
+          1
+        ],
+        [
+          "4980 → 4660",
+          1
+        ],
+        [
+          "8400 → 0480",
+          1
+        ]
+      ],
+      "details": [
+        {
+          "datei": "A001.txt",
+          "soll": "0320",
+          "ist": "0320",
+          "richtig": true
+        },
+        {
+          "datei": "A002.txt",
+          "soll": "0320",
+          "ist": "0320",
+          "richtig": true
+        },
+        {
+          "datei": "A003.txt",
+          "soll": "0320",
+          "ist": "0320",
+          "richtig": true
+        },
+        {
+          "datei": "A004.txt",
+          "soll": "0400",
+          "ist": "0400",
+          "richtig": true
+        },
+        {
+          "datei": "A005.txt",
+          "soll": "0400",
+          "ist": "0400",
+          "richtig": true
+        },
+        {
+          "datei": "A006.txt",
+          "soll": "0400",
+          "ist": "0400",
+          "richtig": true
+        },
+        {
+          "datei": "A007.txt",
+          "soll": "0410",
+          "ist": "0410",
+          "richtig": true
+        },
+        {
+          "datei": "A008.txt",
+          "soll": "0410",
+          "ist": "0410",
+          "richtig": true
+        },
+        {
+          "datei": "A009.txt",
+          "soll": "0410",
+          "ist": "0410",
+          "richtig": true
+        },
+        {
+          "datei": "A010.txt",
+          "soll": "0480",
+          "ist": "0480",
+          "richtig": true
+        },
+        {
+          "datei": "A011.txt",
+          "soll": "0480",
+          "ist": "0480",
+          "richtig": true
+        },
+        {
+          "datei": "A012.txt",
+          "soll": "0480",
+          "ist": "0480",
+          "richtig": true
+        },
+        {
+          "datei": "A013.txt",
+          "soll": "1800",
+          "ist": "1800",
+          "richtig": true
+        },
+        {
+          "datei": "A014.txt",
+          "soll": "1800",
+          "ist": "1800",
+          "richtig": true
+        },
+        {
+          "datei": "A015.txt",
+          "soll": "1800",
+          "ist": "1800",
+          "richtig": true
+        },
+        {
+          "datei": "A016.txt",
+          "soll": "1890",
+          "ist": "1890",
+          "richtig": true
+        },
+        {
+          "datei": "A017.txt",
+          "soll": "1890",
+          "ist": "1890",
+          "richtig": true
+        },
+        {
+          "datei": "A018.txt",
+          "soll": "1890",
+          "ist": "1890",
+          "richtig": true
+        },
+        {
+          "datei": "A019.txt",
+          "soll": "3300",
+          "ist": "3300",
+          "richtig": true
+        },
+        {
+          "datei": "A020.txt",
+          "soll": "3300",
+          "ist": "8300",
+          "richtig": false
+        },
+        {
+          "datei": "A021.txt",
+          "soll": "3300",
+          "ist": "3300",
+          "richtig": true
+        },
+        {
+          "datei": "A022.txt",
+          "soll": "3400",
+          "ist": "3400",
+          "richtig": true
+        },
+        {
+          "datei": "A023.txt",
+          "soll": "3400",
+          "ist": "3400",
+          "richtig": true
+        },
+        {
+          "datei": "A024.txt",
+          "soll": "3400",
+          "ist": "3400",
+          "richtig": true
+        },
+        {
+          "datei": "A025.txt",
+          "soll": "4120",
+          "ist": "4120",
+          "richtig": true
+        },
+        {
+          "datei": "A026.txt",
+          "soll": "4120",
+          "ist": "4120",
+          "richtig": true
+        },
+        {
+          "datei": "A027.txt",
+          "soll": "4120",
+          "ist": "4120",
+          "richtig": true
+        },
+        {
+          "datei": "A028.txt",
+          "soll": "4210",
+          "ist": "4210",
+          "richtig": true
+        },
+        {
+          "datei": "A029.txt",
+          "soll": "4210",
+          "ist": "4210",
+          "richtig": true
+        },
+        {
+          "datei": "A030.txt",
+          "soll": "4210",
+          "ist": "4210",
+          "richtig": true
+        },
+        {
+          "datei": "A031.txt",
+          "soll": "4240",
+          "ist": "4240",
+          "richtig": true
+        },
+        {
+          "datei": "A032.txt",
+          "soll": "4240",
+          "ist": "4240",
+          "richtig": true
+        },
+        {
+          "datei": "A033.txt",
+          "soll": "4240",
+          "ist": "4240",
+          "richtig": true
+        },
+        {
+          "datei": "A034.txt",
+          "soll": "4250",
+          "ist": "4260",
+          "richtig": false
+        },
+        {
+          "datei": "A035.txt",
+          "soll": "4250",
+          "ist": "0400",
+          "richtig": false
+        },
+        {
+          "datei": "A036.txt",
+          "soll": "4250",
+          "ist": "4250",
+          "richtig": true
+        },
+        {
+          "datei": "A037.txt",
+          "soll": "4260",
+          "ist": "4260",
+          "richtig": true
+        },
+        {
+          "datei": "A038.txt",
+          "soll": "4260",
+          "ist": "4250",
+          "richtig": false
+        },
+        {
+          "datei": "A039.txt",
+          "soll": "4260",
+          "ist": "4260",
+          "richtig": true
+        },
+        {
+          "datei": "A040.txt",
+          "soll": "4360",
+          "ist": "4540",
+          "richtig": false
+        },
+        {
+          "datei": "A041.txt",
+          "soll": "4360",
+          "ist": "4360",
+          "richtig": true
+        },
+        {
+          "datei": "A042.txt",
+          "soll": "4360",
+          "ist": "4360",
+          "richtig": true
+        },
+        {
+          "datei": "A043.txt",
+          "soll": "4380",
+          "ist": "4380",
+          "richtig": true
+        },
+        {
+          "datei": "A044.txt",
+          "soll": "4380",
+          "ist": "4380",
+          "richtig": true
+        },
+        {
+          "datei": "A045.txt",
+          "soll": "4380",
+          "ist": "4380",
+          "richtig": true
+        },
+        {
+          "datei": "A046.txt",
+          "soll": "4500",
+          "ist": "4500",
+          "richtig": true
+        },
+        {
+          "datei": "A047.txt",
+          "soll": "4500",
+          "ist": "4500",
+          "richtig": true
+        },
+        {
+          "datei": "A048.txt",
+          "soll": "4500",
+          "ist": "4530",
+          "richtig": false
+        },
+        {
+          "datei": "A049.txt",
+          "soll": "4530",
+          "ist": "4530",
+          "richtig": true
+        },
+        {
+          "datei": "A050.txt",
+          "soll": "4530",
+          "ist": "4530",
+          "richtig": true
+        },
+        {
+          "datei": "A051.txt",
+          "soll": "4530",
+          "ist": "0320",
+          "richtig": false
+        },
+        {
+          "datei": "A052.txt",
+          "soll": "4540",
+          "ist": "4540",
+          "richtig": true
+        },
+        {
+          "datei": "A053.txt",
+          "soll": "4540",
+          "ist": "4360",
+          "richtig": false
+        },
+        {
+          "datei": "A054.txt",
+          "soll": "4540",
+          "ist": "4540",
+          "richtig": true
+        },
+        {
+          "datei": "A055.txt",
+          "soll": "4600",
+          "ist": "4600",
+          "richtig": true
+        },
+        {
+          "datei": "A056.txt",
+          "soll": "4600",
+          "ist": "4600",
+          "richtig": true
+        },
+        {
+          "datei": "A057.txt",
+          "soll": "4600",
+          "ist": "4600",
+          "richtig": true
+        },
+        {
+          "datei": "A058.txt",
+          "soll": "4630",
+          "ist": "4630",
+          "richtig": true
+        },
+        {
+          "datei": "A059.txt",
+          "soll": "4630",
+          "ist": "4635",
+          "richtig": false
+        },
+        {
+          "datei": "A060.txt",
+          "soll": "4630",
+          "ist": "4630",
+          "richtig": true
+        },
+        {
+          "datei": "A061.txt",
+          "soll": "4635",
+          "ist": "4635",
+          "richtig": true
+        },
+        {
+          "datei": "A062.txt",
+          "soll": "4635",
+          "ist": "4635",
+          "richtig": true
+        },
+        {
+          "datei": "A063.txt",
+          "soll": "4635",
+          "ist": "4630",
+          "richtig": false
+        },
+        {
+          "datei": "A064.txt",
+          "soll": "4650",
+          "ist": "4650",
+          "richtig": true
+        },
+        {
+          "datei": "A065.txt",
+          "soll": "4650",
+          "ist": "4670",
+          "richtig": false
+        },
+        {
+          "datei": "A066.txt",
+          "soll": "4650",
+          "ist": "4650",
+          "richtig": true
+        },
+        {
+          "datei": "A067.txt",
+          "soll": "4660",
+          "ist": "4660",
+          "richtig": true
+        },
+        {
+          "datei": "A068.txt",
+          "soll": "4660",
+          "ist": "4660",
+          "richtig": true
+        },
+        {
+          "datei": "A069.txt",
+          "soll": "4660",
+          "ist": "4660",
+          "richtig": true
+        },
+        {
+          "datei": "A070.txt",
+          "soll": "4670",
+          "ist": "4670",
+          "richtig": true
+        },
+        {
+          "datei": "A071.txt",
+          "soll": "4670",
+          "ist": "4670",
+          "richtig": true
+        },
+        {
+          "datei": "A072.txt",
+          "soll": "4670",
+          "ist": "4670",
+          "richtig": true
+        },
+        {
+          "datei": "A073.txt",
+          "soll": "4910",
+          "ist": "4910",
+          "richtig": true
+        },
+        {
+          "datei": "A074.txt",
+          "soll": "4910",
+          "ist": "4910",
+          "richtig": true
+        },
+        {
+          "datei": "A075.txt",
+          "soll": "4910",
+          "ist": "4970",
+          "richtig": false
+        },
+        {
+          "datei": "A076.txt",
+          "soll": "4920",
+          "ist": "4920",
+          "richtig": true
+        },
+        {
+          "datei": "A077.txt",
+          "soll": "4920",
+          "ist": "4920",
+          "richtig": true
+        },
+        {
+          "datei": "A078.txt",
+          "soll": "4920",
+          "ist": "4920",
+          "richtig": true
+        },
+        {
+          "datei": "A079.txt",
+          "soll": "4930",
+          "ist": "4930",
+          "richtig": true
+        },
+        {
+          "datei": "A080.txt",
+          "soll": "4930",
+          "ist": "4930",
+          "richtig": true
+        },
+        {
+          "datei": "A081.txt",
+          "soll": "4930",
+          "ist": "0480",
+          "richtig": false
+        },
+        {
+          "datei": "A082.txt",
+          "soll": "4940",
+          "ist": "4940",
+          "richtig": true
+        },
+        {
+          "datei": "A083.txt",
+          "soll": "4940",
+          "ist": "4940",
+          "richtig": true
+        },
+        {
+          "datei": "A084.txt",
+          "soll": "4940",
+          "ist": "4940",
+          "richtig": true
+        },
+        {
+          "datei": "A085.txt",
+          "soll": "4945",
+          "ist": "4945",
+          "richtig": true
+        },
+        {
+          "datei": "A086.txt",
+          "soll": "4945",
+          "ist": "4945",
+          "richtig": true
+        },
+        {
+          "datei": "A087.txt",
+          "soll": "4945",
+          "ist": "4945",
+          "richtig": true
+        },
+        {
+          "datei": "A088.txt",
+          "soll": "4950",
+          "ist": "4950",
+          "richtig": true
+        },
+        {
+          "datei": "A089.txt",
+          "soll": "4950",
+          "ist": "4950",
+          "richtig": true
+        },
+        {
+          "datei": "A090.txt",
+          "soll": "4950",
+          "ist": "4950",
+          "richtig": true
+        },
+        {
+          "datei": "A091.txt",
+          "soll": "4955",
+          "ist": "4955",
+          "richtig": true
+        },
+        {
+          "datei": "A092.txt",
+          "soll": "4955",
+          "ist": "4120",
+          "richtig": false
+        },
+        {
+          "datei": "A093.txt",
+          "soll": "4955",
+          "ist": "4955",
+          "richtig": true
+        },
+        {
+          "datei": "A094.txt",
+          "soll": "4970",
+          "ist": "4970",
+          "richtig": true
+        },
+        {
+          "datei": "A095.txt",
+          "soll": "4970",
+          "ist": "4970",
+          "richtig": true
+        },
+        {
+          "datei": "A096.txt",
+          "soll": "4970",
+          "ist": "4970",
+          "richtig": true
+        },
+        {
+          "datei": "A097.txt",
+          "soll": "4980",
+          "ist": "4980",
+          "richtig": true
+        },
+        {
+          "datei": "A098.txt",
+          "soll": "4980",
+          "ist": "4660",
+          "richtig": false
+        },
+        {
+          "datei": "A099.txt",
+          "soll": "4980",
+          "ist": "4120",
+          "richtig": false
+        },
+        {
+          "datei": "A100.txt",
+          "soll": "8120",
+          "ist": "8120",
+          "richtig": true
+        },
+        {
+          "datei": "A101.txt",
+          "soll": "8120",
+          "ist": "8120",
+          "richtig": true
+        },
+        {
+          "datei": "A102.txt",
+          "soll": "8120",
+          "ist": "8120",
+          "richtig": true
+        },
+        {
+          "datei": "A103.txt",
+          "soll": "8125",
+          "ist": "8125",
+          "richtig": true
+        },
+        {
+          "datei": "A104.txt",
+          "soll": "8125",
+          "ist": "8125",
+          "richtig": true
+        },
+        {
+          "datei": "A105.txt",
+          "soll": "8125",
+          "ist": "8125",
+          "richtig": true
+        },
+        {
+          "datei": "A106.txt",
+          "soll": "8300",
+          "ist": "8300",
+          "richtig": true
+        },
+        {
+          "datei": "A107.txt",
+          "soll": "8300",
+          "ist": "8300",
+          "richtig": true
+        },
+        {
+          "datei": "A108.txt",
+          "soll": "8300",
+          "ist": "8300",
+          "richtig": true
+        },
+        {
+          "datei": "A109.txt",
+          "soll": "8400",
+          "ist": "0480",
+          "richtig": false
+        },
+        {
+          "datei": "A110.txt",
+          "soll": "8400",
+          "ist": "8300",
+          "richtig": false
+        },
+        {
+          "datei": "A111.txt",
+          "soll": "8400",
+          "ist": "8300",
+          "richtig": false
+        },
+        {
+          "datei": "A112.txt",
+          "soll": "8500",
+          "ist": "8500",
+          "richtig": true
+        },
+        {
+          "datei": "A113.txt",
+          "soll": "8500",
+          "ist": "8500",
+          "richtig": true
+        },
+        {
+          "datei": "A114.txt",
+          "soll": "8500",
+          "ist": "8500",
+          "richtig": true
+        }
+      ]
+    },
+    {
+      "mitFirmenname": false,
+      "ausgelassen": "Büroservice mit Schreibwarenhandel und digitaler Gestaltung",
+      "lehrbelege": 228,
+      "n": 114,
+      "richtig": 86,
+      "trefferquote": 0.7543859649122807,
+      "wilson95": {
+        "lower": 0.6679340473466707,
+        "upper": 0.824252663344445,
+        "level": 0.95
+      },
+      "makroRecall": 0.7543859649122806,
+      "abgedeckteKonten": 38,
+      "jeKonto": [
+        {
+          "konto": "0320",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "0400",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "0410",
+          "n": 3,
+          "richtig": 0,
+          "trefferquote": 0
+        },
+        {
+          "konto": "0480",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "1800",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "1890",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "3300",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "3400",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4120",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4210",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4240",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4250",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4260",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4360",
+          "n": 3,
+          "richtig": 0,
+          "trefferquote": 0
+        },
+        {
+          "konto": "4380",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4500",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4530",
+          "n": 3,
+          "richtig": 1,
+          "trefferquote": 0.3333333333333333
+        },
+        {
+          "konto": "4540",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4600",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4630",
+          "n": 3,
+          "richtig": 1,
+          "trefferquote": 0.3333333333333333
+        },
+        {
+          "konto": "4635",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4650",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4660",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4670",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4910",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4920",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4930",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4940",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4945",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4950",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4955",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4970",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4980",
+          "n": 3,
+          "richtig": 1,
+          "trefferquote": 0.3333333333333333
+        },
+        {
+          "konto": "8120",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "8125",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "8300",
+          "n": 3,
+          "richtig": 1,
+          "trefferquote": 0.3333333333333333
+        },
+        {
+          "konto": "8400",
+          "n": 3,
+          "richtig": 0,
+          "trefferquote": 0
+        },
+        {
+          "konto": "8500",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        }
+      ],
+      "verwechslungen": [
+        [
+          "4360 → 4540",
+          3
+        ],
+        [
+          "0410 → 0400",
+          2
+        ],
+        [
+          "4630 → 4635",
+          2
+        ],
+        [
+          "0400 → 4920",
+          1
+        ],
+        [
+          "0410 → 3300",
+          1
+        ],
+        [
+          "0480 → 0410",
+          1
+        ],
+        [
+          "1800 → 1890",
+          1
+        ],
+        [
+          "1890 → 1800",
+          1
+        ],
+        [
+          "3300 → 4930",
+          1
+        ],
+        [
+          "3400 → 3300",
+          1
+        ],
+        [
+          "4250 → 4260",
+          1
+        ],
+        [
+          "4260 → 4500",
+          1
+        ],
+        [
+          "4500 → 4540",
+          1
+        ],
+        [
+          "4530 → 0320",
+          1
+        ],
+        [
+          "4530 → 4500",
+          1
+        ],
+        [
+          "4910 → 4930",
+          1
+        ],
+        [
+          "4945 → 4670",
+          1
+        ],
+        [
+          "4980 → 4260",
+          1
+        ],
+        [
+          "4980 → 4945",
+          1
+        ],
+        [
+          "8300 → 3300",
+          1
+        ],
+        [
+          "8300 → 8400",
+          1
+        ],
+        [
+          "8400 → 4950",
+          1
+        ],
+        [
+          "8400 → 4955",
+          1
+        ],
+        [
+          "8400 → 8500",
+          1
+        ]
+      ],
+      "details": [
+        {
+          "datei": "B001.txt",
+          "soll": "0320",
+          "ist": "0320",
+          "richtig": true
+        },
+        {
+          "datei": "B002.txt",
+          "soll": "0320",
+          "ist": "0320",
+          "richtig": true
+        },
+        {
+          "datei": "B003.txt",
+          "soll": "0320",
+          "ist": "0320",
+          "richtig": true
+        },
+        {
+          "datei": "B004.txt",
+          "soll": "0400",
+          "ist": "0400",
+          "richtig": true
+        },
+        {
+          "datei": "B005.txt",
+          "soll": "0400",
+          "ist": "4920",
+          "richtig": false
+        },
+        {
+          "datei": "B006.txt",
+          "soll": "0400",
+          "ist": "0400",
+          "richtig": true
+        },
+        {
+          "datei": "B007.txt",
+          "soll": "0410",
+          "ist": "0400",
+          "richtig": false
+        },
+        {
+          "datei": "B008.txt",
+          "soll": "0410",
+          "ist": "3300",
+          "richtig": false
+        },
+        {
+          "datei": "B009.txt",
+          "soll": "0410",
+          "ist": "0400",
+          "richtig": false
+        },
+        {
+          "datei": "B010.txt",
+          "soll": "0480",
+          "ist": "0480",
+          "richtig": true
+        },
+        {
+          "datei": "B011.txt",
+          "soll": "0480",
+          "ist": "0480",
+          "richtig": true
+        },
+        {
+          "datei": "B012.txt",
+          "soll": "0480",
+          "ist": "0410",
+          "richtig": false
+        },
+        {
+          "datei": "B013.txt",
+          "soll": "1800",
+          "ist": "1890",
+          "richtig": false
+        },
+        {
+          "datei": "B014.txt",
+          "soll": "1800",
+          "ist": "1800",
+          "richtig": true
+        },
+        {
+          "datei": "B015.txt",
+          "soll": "1800",
+          "ist": "1800",
+          "richtig": true
+        },
+        {
+          "datei": "B016.txt",
+          "soll": "1890",
+          "ist": "1890",
+          "richtig": true
+        },
+        {
+          "datei": "B017.txt",
+          "soll": "1890",
+          "ist": "1800",
+          "richtig": false
+        },
+        {
+          "datei": "B018.txt",
+          "soll": "1890",
+          "ist": "1890",
+          "richtig": true
+        },
+        {
+          "datei": "B019.txt",
+          "soll": "3300",
+          "ist": "3300",
+          "richtig": true
+        },
+        {
+          "datei": "B020.txt",
+          "soll": "3300",
+          "ist": "4930",
+          "richtig": false
+        },
+        {
+          "datei": "B021.txt",
+          "soll": "3300",
+          "ist": "3300",
+          "richtig": true
+        },
+        {
+          "datei": "B022.txt",
+          "soll": "3400",
+          "ist": "3400",
+          "richtig": true
+        },
+        {
+          "datei": "B023.txt",
+          "soll": "3400",
+          "ist": "3300",
+          "richtig": false
+        },
+        {
+          "datei": "B024.txt",
+          "soll": "3400",
+          "ist": "3400",
+          "richtig": true
+        },
+        {
+          "datei": "B025.txt",
+          "soll": "4120",
+          "ist": "4120",
+          "richtig": true
+        },
+        {
+          "datei": "B026.txt",
+          "soll": "4120",
+          "ist": "4120",
+          "richtig": true
+        },
+        {
+          "datei": "B027.txt",
+          "soll": "4120",
+          "ist": "4120",
+          "richtig": true
+        },
+        {
+          "datei": "B028.txt",
+          "soll": "4210",
+          "ist": "4210",
+          "richtig": true
+        },
+        {
+          "datei": "B029.txt",
+          "soll": "4210",
+          "ist": "4210",
+          "richtig": true
+        },
+        {
+          "datei": "B030.txt",
+          "soll": "4210",
+          "ist": "4210",
+          "richtig": true
+        },
+        {
+          "datei": "B031.txt",
+          "soll": "4240",
+          "ist": "4240",
+          "richtig": true
+        },
+        {
+          "datei": "B032.txt",
+          "soll": "4240",
+          "ist": "4240",
+          "richtig": true
+        },
+        {
+          "datei": "B033.txt",
+          "soll": "4240",
+          "ist": "4240",
+          "richtig": true
+        },
+        {
+          "datei": "B034.txt",
+          "soll": "4250",
+          "ist": "4250",
+          "richtig": true
+        },
+        {
+          "datei": "B035.txt",
+          "soll": "4250",
+          "ist": "4250",
+          "richtig": true
+        },
+        {
+          "datei": "B036.txt",
+          "soll": "4250",
+          "ist": "4260",
+          "richtig": false
+        },
+        {
+          "datei": "B037.txt",
+          "soll": "4260",
+          "ist": "4260",
+          "richtig": true
+        },
+        {
+          "datei": "B038.txt",
+          "soll": "4260",
+          "ist": "4500",
+          "richtig": false
+        },
+        {
+          "datei": "B039.txt",
+          "soll": "4260",
+          "ist": "4260",
+          "richtig": true
+        },
+        {
+          "datei": "B040.txt",
+          "soll": "4360",
+          "ist": "4540",
+          "richtig": false
+        },
+        {
+          "datei": "B041.txt",
+          "soll": "4360",
+          "ist": "4540",
+          "richtig": false
+        },
+        {
+          "datei": "B042.txt",
+          "soll": "4360",
+          "ist": "4540",
+          "richtig": false
+        },
+        {
+          "datei": "B043.txt",
+          "soll": "4380",
+          "ist": "4380",
+          "richtig": true
+        },
+        {
+          "datei": "B044.txt",
+          "soll": "4380",
+          "ist": "4380",
+          "richtig": true
+        },
+        {
+          "datei": "B045.txt",
+          "soll": "4380",
+          "ist": "4380",
+          "richtig": true
+        },
+        {
+          "datei": "B046.txt",
+          "soll": "4500",
+          "ist": "4540",
+          "richtig": false
+        },
+        {
+          "datei": "B047.txt",
+          "soll": "4500",
+          "ist": "4500",
+          "richtig": true
+        },
+        {
+          "datei": "B048.txt",
+          "soll": "4500",
+          "ist": "4500",
+          "richtig": true
+        },
+        {
+          "datei": "B049.txt",
+          "soll": "4530",
+          "ist": "4530",
+          "richtig": true
+        },
+        {
+          "datei": "B050.txt",
+          "soll": "4530",
+          "ist": "0320",
+          "richtig": false
+        },
+        {
+          "datei": "B051.txt",
+          "soll": "4530",
+          "ist": "4500",
+          "richtig": false
+        },
+        {
+          "datei": "B052.txt",
+          "soll": "4540",
+          "ist": "4540",
+          "richtig": true
+        },
+        {
+          "datei": "B053.txt",
+          "soll": "4540",
+          "ist": "4540",
+          "richtig": true
+        },
+        {
+          "datei": "B054.txt",
+          "soll": "4540",
+          "ist": "4540",
+          "richtig": true
+        },
+        {
+          "datei": "B055.txt",
+          "soll": "4600",
+          "ist": "4600",
+          "richtig": true
+        },
+        {
+          "datei": "B056.txt",
+          "soll": "4600",
+          "ist": "4600",
+          "richtig": true
+        },
+        {
+          "datei": "B057.txt",
+          "soll": "4600",
+          "ist": "4600",
+          "richtig": true
+        },
+        {
+          "datei": "B058.txt",
+          "soll": "4630",
+          "ist": "4630",
+          "richtig": true
+        },
+        {
+          "datei": "B059.txt",
+          "soll": "4630",
+          "ist": "4635",
+          "richtig": false
+        },
+        {
+          "datei": "B060.txt",
+          "soll": "4630",
+          "ist": "4635",
+          "richtig": false
+        },
+        {
+          "datei": "B061.txt",
+          "soll": "4635",
+          "ist": "4635",
+          "richtig": true
+        },
+        {
+          "datei": "B062.txt",
+          "soll": "4635",
+          "ist": "4635",
+          "richtig": true
+        },
+        {
+          "datei": "B063.txt",
+          "soll": "4635",
+          "ist": "4635",
+          "richtig": true
+        },
+        {
+          "datei": "B064.txt",
+          "soll": "4650",
+          "ist": "4650",
+          "richtig": true
+        },
+        {
+          "datei": "B065.txt",
+          "soll": "4650",
+          "ist": "4650",
+          "richtig": true
+        },
+        {
+          "datei": "B066.txt",
+          "soll": "4650",
+          "ist": "4650",
+          "richtig": true
+        },
+        {
+          "datei": "B067.txt",
+          "soll": "4660",
+          "ist": "4660",
+          "richtig": true
+        },
+        {
+          "datei": "B068.txt",
+          "soll": "4660",
+          "ist": "4660",
+          "richtig": true
+        },
+        {
+          "datei": "B069.txt",
+          "soll": "4660",
+          "ist": "4660",
+          "richtig": true
+        },
+        {
+          "datei": "B070.txt",
+          "soll": "4670",
+          "ist": "4670",
+          "richtig": true
+        },
+        {
+          "datei": "B071.txt",
+          "soll": "4670",
+          "ist": "4670",
+          "richtig": true
+        },
+        {
+          "datei": "B072.txt",
+          "soll": "4670",
+          "ist": "4670",
+          "richtig": true
+        },
+        {
+          "datei": "B073.txt",
+          "soll": "4910",
+          "ist": "4910",
+          "richtig": true
+        },
+        {
+          "datei": "B074.txt",
+          "soll": "4910",
+          "ist": "4930",
+          "richtig": false
+        },
+        {
+          "datei": "B075.txt",
+          "soll": "4910",
+          "ist": "4910",
+          "richtig": true
+        },
+        {
+          "datei": "B076.txt",
+          "soll": "4920",
+          "ist": "4920",
+          "richtig": true
+        },
+        {
+          "datei": "B077.txt",
+          "soll": "4920",
+          "ist": "4920",
+          "richtig": true
+        },
+        {
+          "datei": "B078.txt",
+          "soll": "4920",
+          "ist": "4920",
+          "richtig": true
+        },
+        {
+          "datei": "B079.txt",
+          "soll": "4930",
+          "ist": "4930",
+          "richtig": true
+        },
+        {
+          "datei": "B080.txt",
+          "soll": "4930",
+          "ist": "4930",
+          "richtig": true
+        },
+        {
+          "datei": "B081.txt",
+          "soll": "4930",
+          "ist": "4930",
+          "richtig": true
+        },
+        {
+          "datei": "B082.txt",
+          "soll": "4940",
+          "ist": "4940",
+          "richtig": true
+        },
+        {
+          "datei": "B083.txt",
+          "soll": "4940",
+          "ist": "4940",
+          "richtig": true
+        },
+        {
+          "datei": "B084.txt",
+          "soll": "4940",
+          "ist": "4940",
+          "richtig": true
+        },
+        {
+          "datei": "B085.txt",
+          "soll": "4945",
+          "ist": "4945",
+          "richtig": true
+        },
+        {
+          "datei": "B086.txt",
+          "soll": "4945",
+          "ist": "4945",
+          "richtig": true
+        },
+        {
+          "datei": "B087.txt",
+          "soll": "4945",
+          "ist": "4670",
+          "richtig": false
+        },
+        {
+          "datei": "B088.txt",
+          "soll": "4950",
+          "ist": "4950",
+          "richtig": true
+        },
+        {
+          "datei": "B089.txt",
+          "soll": "4950",
+          "ist": "4950",
+          "richtig": true
+        },
+        {
+          "datei": "B090.txt",
+          "soll": "4950",
+          "ist": "4950",
+          "richtig": true
+        },
+        {
+          "datei": "B091.txt",
+          "soll": "4955",
+          "ist": "4955",
+          "richtig": true
+        },
+        {
+          "datei": "B092.txt",
+          "soll": "4955",
+          "ist": "4955",
+          "richtig": true
+        },
+        {
+          "datei": "B093.txt",
+          "soll": "4955",
+          "ist": "4955",
+          "richtig": true
+        },
+        {
+          "datei": "B094.txt",
+          "soll": "4970",
+          "ist": "4970",
+          "richtig": true
+        },
+        {
+          "datei": "B095.txt",
+          "soll": "4970",
+          "ist": "4970",
+          "richtig": true
+        },
+        {
+          "datei": "B096.txt",
+          "soll": "4970",
+          "ist": "4970",
+          "richtig": true
+        },
+        {
+          "datei": "B097.txt",
+          "soll": "4980",
+          "ist": "4980",
+          "richtig": true
+        },
+        {
+          "datei": "B098.txt",
+          "soll": "4980",
+          "ist": "4260",
+          "richtig": false
+        },
+        {
+          "datei": "B099.txt",
+          "soll": "4980",
+          "ist": "4945",
+          "richtig": false
+        },
+        {
+          "datei": "B100.txt",
+          "soll": "8120",
+          "ist": "8120",
+          "richtig": true
+        },
+        {
+          "datei": "B101.txt",
+          "soll": "8120",
+          "ist": "8120",
+          "richtig": true
+        },
+        {
+          "datei": "B102.txt",
+          "soll": "8120",
+          "ist": "8120",
+          "richtig": true
+        },
+        {
+          "datei": "B103.txt",
+          "soll": "8125",
+          "ist": "8125",
+          "richtig": true
+        },
+        {
+          "datei": "B104.txt",
+          "soll": "8125",
+          "ist": "8125",
+          "richtig": true
+        },
+        {
+          "datei": "B105.txt",
+          "soll": "8125",
+          "ist": "8125",
+          "richtig": true
+        },
+        {
+          "datei": "B106.txt",
+          "soll": "8300",
+          "ist": "8300",
+          "richtig": true
+        },
+        {
+          "datei": "B107.txt",
+          "soll": "8300",
+          "ist": "3300",
+          "richtig": false
+        },
+        {
+          "datei": "B108.txt",
+          "soll": "8300",
+          "ist": "8400",
+          "richtig": false
+        },
+        {
+          "datei": "B109.txt",
+          "soll": "8400",
+          "ist": "8500",
+          "richtig": false
+        },
+        {
+          "datei": "B110.txt",
+          "soll": "8400",
+          "ist": "4950",
+          "richtig": false
+        },
+        {
+          "datei": "B111.txt",
+          "soll": "8400",
+          "ist": "4955",
+          "richtig": false
+        },
+        {
+          "datei": "B112.txt",
+          "soll": "8500",
+          "ist": "8500",
+          "richtig": true
+        },
+        {
+          "datei": "B113.txt",
+          "soll": "8500",
+          "ist": "8500",
+          "richtig": true
+        },
+        {
+          "datei": "B114.txt",
+          "soll": "8500",
+          "ist": "8500",
+          "richtig": true
+        }
+      ]
+    },
+    {
+      "mitFirmenname": false,
+      "ausgelassen": "Feinkostküche mit Catering und Warenverkauf",
+      "lehrbelege": 228,
+      "n": 114,
+      "richtig": 84,
+      "trefferquote": 0.7368421052631579,
+      "wilson95": {
+        "lower": 0.6492423994505676,
+        "upper": 0.8090004001584021,
+        "level": 0.95
+      },
+      "makroRecall": 0.736842105263158,
+      "abgedeckteKonten": 38,
+      "jeKonto": [
+        {
+          "konto": "0320",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "0400",
+          "n": 3,
+          "richtig": 1,
+          "trefferquote": 0.3333333333333333
+        },
+        {
+          "konto": "0410",
+          "n": 3,
+          "richtig": 1,
+          "trefferquote": 0.3333333333333333
+        },
+        {
+          "konto": "0480",
+          "n": 3,
+          "richtig": 0,
+          "trefferquote": 0
+        },
+        {
+          "konto": "1800",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "1890",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "3300",
+          "n": 3,
+          "richtig": 1,
+          "trefferquote": 0.3333333333333333
+        },
+        {
+          "konto": "3400",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4120",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4210",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4240",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4250",
+          "n": 3,
+          "richtig": 1,
+          "trefferquote": 0.3333333333333333
+        },
+        {
+          "konto": "4260",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4360",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4380",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4500",
+          "n": 3,
+          "richtig": 0,
+          "trefferquote": 0
+        },
+        {
+          "konto": "4530",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4540",
+          "n": 3,
+          "richtig": 1,
+          "trefferquote": 0.3333333333333333
+        },
+        {
+          "konto": "4600",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4630",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4635",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4650",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4660",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4670",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4910",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4920",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4930",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4940",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4945",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4950",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4955",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "4970",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "4980",
+          "n": 3,
+          "richtig": 1,
+          "trefferquote": 0.3333333333333333
+        },
+        {
+          "konto": "8120",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "8125",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        },
+        {
+          "konto": "8300",
+          "n": 3,
+          "richtig": 2,
+          "trefferquote": 0.6666666666666666
+        },
+        {
+          "konto": "8400",
+          "n": 3,
+          "richtig": 0,
+          "trefferquote": 0
+        },
+        {
+          "konto": "8500",
+          "n": 3,
+          "richtig": 3,
+          "trefferquote": 1
+        }
+      ],
+      "verwechslungen": [
+        [
+          "0400 → 0410",
+          2
+        ],
+        [
+          "0410 → 0480",
+          2
+        ],
+        [
+          "4540 → 4360",
+          2
+        ],
+        [
+          "8400 → 8300",
+          2
+        ],
+        [
+          "0480 → 0400",
+          1
+        ],
+        [
+          "0480 → 3300",
+          1
+        ],
+        [
+          "0480 → 4920",
+          1
+        ],
+        [
+          "3300 → 3400",
+          1
+        ],
+        [
+          "3300 → 8400",
+          1
+        ],
+        [
+          "4250 → 0400",
+          1
+        ],
+        [
+          "4250 → 4210",
+          1
+        ],
+        [
+          "4260 → 4210",
+          1
+        ],
+        [
+          "4380 → 4210",
+          1
+        ],
+        [
+          "4500 → 0400",
+          1
+        ],
+        [
+          "4500 → 4260",
+          1
+        ],
+        [
+          "4500 → 4955",
+          1
+        ],
+        [
+          "4600 → 8125",
+          1
+        ],
+        [
+          "4635 → 4630",
+          1
+        ],
+        [
+          "4660 → 4670",
+          1
+        ],
+        [
+          "4920 → 0480",
+          1
+        ],
+        [
+          "4930 → 4260",
+          1
+        ],
+        [
+          "4955 → 4950",
+          1
+        ],
+        [
+          "4980 → 4260",
+          1
+        ],
+        [
+          "4980 → 4950",
+          1
+        ],
+        [
+          "8300 → 3400",
+          1
+        ],
+        [
+          "8400 → 3400",
+          1
+        ]
+      ],
+      "details": [
+        {
+          "datei": "C001.txt",
+          "soll": "0320",
+          "ist": "0320",
+          "richtig": true
+        },
+        {
+          "datei": "C002.txt",
+          "soll": "0320",
+          "ist": "0320",
+          "richtig": true
+        },
+        {
+          "datei": "C003.txt",
+          "soll": "0320",
+          "ist": "0320",
+          "richtig": true
+        },
+        {
+          "datei": "C004.txt",
+          "soll": "0400",
+          "ist": "0400",
+          "richtig": true
+        },
+        {
+          "datei": "C005.txt",
+          "soll": "0400",
+          "ist": "0410",
+          "richtig": false
+        },
+        {
+          "datei": "C006.txt",
+          "soll": "0400",
+          "ist": "0410",
+          "richtig": false
+        },
+        {
+          "datei": "C007.txt",
+          "soll": "0410",
+          "ist": "0480",
+          "richtig": false
+        },
+        {
+          "datei": "C008.txt",
+          "soll": "0410",
+          "ist": "0410",
+          "richtig": true
+        },
+        {
+          "datei": "C009.txt",
+          "soll": "0410",
+          "ist": "0480",
+          "richtig": false
+        },
+        {
+          "datei": "C010.txt",
+          "soll": "0480",
+          "ist": "0400",
+          "richtig": false
+        },
+        {
+          "datei": "C011.txt",
+          "soll": "0480",
+          "ist": "3300",
+          "richtig": false
+        },
+        {
+          "datei": "C012.txt",
+          "soll": "0480",
+          "ist": "4920",
+          "richtig": false
+        },
+        {
+          "datei": "C013.txt",
+          "soll": "1800",
+          "ist": "1800",
+          "richtig": true
+        },
+        {
+          "datei": "C014.txt",
+          "soll": "1800",
+          "ist": "1800",
+          "richtig": true
+        },
+        {
+          "datei": "C015.txt",
+          "soll": "1800",
+          "ist": "1800",
+          "richtig": true
+        },
+        {
+          "datei": "C016.txt",
+          "soll": "1890",
+          "ist": "1890",
+          "richtig": true
+        },
+        {
+          "datei": "C017.txt",
+          "soll": "1890",
+          "ist": "1890",
+          "richtig": true
+        },
+        {
+          "datei": "C018.txt",
+          "soll": "1890",
+          "ist": "1890",
+          "richtig": true
+        },
+        {
+          "datei": "C019.txt",
+          "soll": "3300",
+          "ist": "8400",
+          "richtig": false
+        },
+        {
+          "datei": "C020.txt",
+          "soll": "3300",
+          "ist": "3300",
+          "richtig": true
+        },
+        {
+          "datei": "C021.txt",
+          "soll": "3300",
+          "ist": "3400",
+          "richtig": false
+        },
+        {
+          "datei": "C022.txt",
+          "soll": "3400",
+          "ist": "3400",
+          "richtig": true
+        },
+        {
+          "datei": "C023.txt",
+          "soll": "3400",
+          "ist": "3400",
+          "richtig": true
+        },
+        {
+          "datei": "C024.txt",
+          "soll": "3400",
+          "ist": "3400",
+          "richtig": true
+        },
+        {
+          "datei": "C025.txt",
+          "soll": "4120",
+          "ist": "4120",
+          "richtig": true
+        },
+        {
+          "datei": "C026.txt",
+          "soll": "4120",
+          "ist": "4120",
+          "richtig": true
+        },
+        {
+          "datei": "C027.txt",
+          "soll": "4120",
+          "ist": "4120",
+          "richtig": true
+        },
+        {
+          "datei": "C028.txt",
+          "soll": "4210",
+          "ist": "4210",
+          "richtig": true
+        },
+        {
+          "datei": "C029.txt",
+          "soll": "4210",
+          "ist": "4210",
+          "richtig": true
+        },
+        {
+          "datei": "C030.txt",
+          "soll": "4210",
+          "ist": "4210",
+          "richtig": true
+        },
+        {
+          "datei": "C031.txt",
+          "soll": "4240",
+          "ist": "4240",
+          "richtig": true
+        },
+        {
+          "datei": "C032.txt",
+          "soll": "4240",
+          "ist": "4240",
+          "richtig": true
+        },
+        {
+          "datei": "C033.txt",
+          "soll": "4240",
+          "ist": "4240",
+          "richtig": true
+        },
+        {
+          "datei": "C034.txt",
+          "soll": "4250",
+          "ist": "0400",
+          "richtig": false
+        },
+        {
+          "datei": "C035.txt",
+          "soll": "4250",
+          "ist": "4250",
+          "richtig": true
+        },
+        {
+          "datei": "C036.txt",
+          "soll": "4250",
+          "ist": "4210",
+          "richtig": false
+        },
+        {
+          "datei": "C037.txt",
+          "soll": "4260",
+          "ist": "4260",
+          "richtig": true
+        },
+        {
+          "datei": "C038.txt",
+          "soll": "4260",
+          "ist": "4210",
+          "richtig": false
+        },
+        {
+          "datei": "C039.txt",
+          "soll": "4260",
+          "ist": "4260",
+          "richtig": true
+        },
+        {
+          "datei": "C040.txt",
+          "soll": "4360",
+          "ist": "4360",
+          "richtig": true
+        },
+        {
+          "datei": "C041.txt",
+          "soll": "4360",
+          "ist": "4360",
+          "richtig": true
+        },
+        {
+          "datei": "C042.txt",
+          "soll": "4360",
+          "ist": "4360",
+          "richtig": true
+        },
+        {
+          "datei": "C043.txt",
+          "soll": "4380",
+          "ist": "4210",
+          "richtig": false
+        },
+        {
+          "datei": "C044.txt",
+          "soll": "4380",
+          "ist": "4380",
+          "richtig": true
+        },
+        {
+          "datei": "C045.txt",
+          "soll": "4380",
+          "ist": "4380",
+          "richtig": true
+        },
+        {
+          "datei": "C046.txt",
+          "soll": "4500",
+          "ist": "4260",
+          "richtig": false
+        },
+        {
+          "datei": "C047.txt",
+          "soll": "4500",
+          "ist": "4955",
+          "richtig": false
+        },
+        {
+          "datei": "C048.txt",
+          "soll": "4500",
+          "ist": "0400",
+          "richtig": false
+        },
+        {
+          "datei": "C049.txt",
+          "soll": "4530",
+          "ist": "4530",
+          "richtig": true
+        },
+        {
+          "datei": "C050.txt",
+          "soll": "4530",
+          "ist": "4530",
+          "richtig": true
+        },
+        {
+          "datei": "C051.txt",
+          "soll": "4530",
+          "ist": "4530",
+          "richtig": true
+        },
+        {
+          "datei": "C052.txt",
+          "soll": "4540",
+          "ist": "4360",
+          "richtig": false
+        },
+        {
+          "datei": "C053.txt",
+          "soll": "4540",
+          "ist": "4540",
+          "richtig": true
+        },
+        {
+          "datei": "C054.txt",
+          "soll": "4540",
+          "ist": "4360",
+          "richtig": false
+        },
+        {
+          "datei": "C055.txt",
+          "soll": "4600",
+          "ist": "4600",
+          "richtig": true
+        },
+        {
+          "datei": "C056.txt",
+          "soll": "4600",
+          "ist": "4600",
+          "richtig": true
+        },
+        {
+          "datei": "C057.txt",
+          "soll": "4600",
+          "ist": "8125",
+          "richtig": false
+        },
+        {
+          "datei": "C058.txt",
+          "soll": "4630",
+          "ist": "4630",
+          "richtig": true
+        },
+        {
+          "datei": "C059.txt",
+          "soll": "4630",
+          "ist": "4630",
+          "richtig": true
+        },
+        {
+          "datei": "C060.txt",
+          "soll": "4630",
+          "ist": "4630",
+          "richtig": true
+        },
+        {
+          "datei": "C061.txt",
+          "soll": "4635",
+          "ist": "4635",
+          "richtig": true
+        },
+        {
+          "datei": "C062.txt",
+          "soll": "4635",
+          "ist": "4630",
+          "richtig": false
+        },
+        {
+          "datei": "C063.txt",
+          "soll": "4635",
+          "ist": "4635",
+          "richtig": true
+        },
+        {
+          "datei": "C064.txt",
+          "soll": "4650",
+          "ist": "4650",
+          "richtig": true
+        },
+        {
+          "datei": "C065.txt",
+          "soll": "4650",
+          "ist": "4650",
+          "richtig": true
+        },
+        {
+          "datei": "C066.txt",
+          "soll": "4650",
+          "ist": "4650",
+          "richtig": true
+        },
+        {
+          "datei": "C067.txt",
+          "soll": "4660",
+          "ist": "4660",
+          "richtig": true
+        },
+        {
+          "datei": "C068.txt",
+          "soll": "4660",
+          "ist": "4670",
+          "richtig": false
+        },
+        {
+          "datei": "C069.txt",
+          "soll": "4660",
+          "ist": "4660",
+          "richtig": true
+        },
+        {
+          "datei": "C070.txt",
+          "soll": "4670",
+          "ist": "4670",
+          "richtig": true
+        },
+        {
+          "datei": "C071.txt",
+          "soll": "4670",
+          "ist": "4670",
+          "richtig": true
+        },
+        {
+          "datei": "C072.txt",
+          "soll": "4670",
+          "ist": "4670",
+          "richtig": true
+        },
+        {
+          "datei": "C073.txt",
+          "soll": "4910",
+          "ist": "4910",
+          "richtig": true
+        },
+        {
+          "datei": "C074.txt",
+          "soll": "4910",
+          "ist": "4910",
+          "richtig": true
+        },
+        {
+          "datei": "C075.txt",
+          "soll": "4910",
+          "ist": "4910",
+          "richtig": true
+        },
+        {
+          "datei": "C076.txt",
+          "soll": "4920",
+          "ist": "4920",
+          "richtig": true
+        },
+        {
+          "datei": "C077.txt",
+          "soll": "4920",
+          "ist": "4920",
+          "richtig": true
+        },
+        {
+          "datei": "C078.txt",
+          "soll": "4920",
+          "ist": "0480",
+          "richtig": false
+        },
+        {
+          "datei": "C079.txt",
+          "soll": "4930",
+          "ist": "4930",
+          "richtig": true
+        },
+        {
+          "datei": "C080.txt",
+          "soll": "4930",
+          "ist": "4930",
+          "richtig": true
+        },
+        {
+          "datei": "C081.txt",
+          "soll": "4930",
+          "ist": "4260",
+          "richtig": false
+        },
+        {
+          "datei": "C082.txt",
+          "soll": "4940",
+          "ist": "4940",
+          "richtig": true
+        },
+        {
+          "datei": "C083.txt",
+          "soll": "4940",
+          "ist": "4940",
+          "richtig": true
+        },
+        {
+          "datei": "C084.txt",
+          "soll": "4940",
+          "ist": "4940",
+          "richtig": true
+        },
+        {
+          "datei": "C085.txt",
+          "soll": "4945",
+          "ist": "4945",
+          "richtig": true
+        },
+        {
+          "datei": "C086.txt",
+          "soll": "4945",
+          "ist": "4945",
+          "richtig": true
+        },
+        {
+          "datei": "C087.txt",
+          "soll": "4945",
+          "ist": "4945",
+          "richtig": true
+        },
+        {
+          "datei": "C088.txt",
+          "soll": "4950",
+          "ist": "4950",
+          "richtig": true
+        },
+        {
+          "datei": "C089.txt",
+          "soll": "4950",
+          "ist": "4950",
+          "richtig": true
+        },
+        {
+          "datei": "C090.txt",
+          "soll": "4950",
+          "ist": "4950",
+          "richtig": true
+        },
+        {
+          "datei": "C091.txt",
+          "soll": "4955",
+          "ist": "4955",
+          "richtig": true
+        },
+        {
+          "datei": "C092.txt",
+          "soll": "4955",
+          "ist": "4950",
+          "richtig": false
+        },
+        {
+          "datei": "C093.txt",
+          "soll": "4955",
+          "ist": "4955",
+          "richtig": true
+        },
+        {
+          "datei": "C094.txt",
+          "soll": "4970",
+          "ist": "4970",
+          "richtig": true
+        },
+        {
+          "datei": "C095.txt",
+          "soll": "4970",
+          "ist": "4970",
+          "richtig": true
+        },
+        {
+          "datei": "C096.txt",
+          "soll": "4970",
+          "ist": "4970",
+          "richtig": true
+        },
+        {
+          "datei": "C097.txt",
+          "soll": "4980",
+          "ist": "4980",
+          "richtig": true
+        },
+        {
+          "datei": "C098.txt",
+          "soll": "4980",
+          "ist": "4950",
+          "richtig": false
+        },
+        {
+          "datei": "C099.txt",
+          "soll": "4980",
+          "ist": "4260",
+          "richtig": false
+        },
+        {
+          "datei": "C100.txt",
+          "soll": "8120",
+          "ist": "8120",
+          "richtig": true
+        },
+        {
+          "datei": "C101.txt",
+          "soll": "8120",
+          "ist": "8120",
+          "richtig": true
+        },
+        {
+          "datei": "C102.txt",
+          "soll": "8120",
+          "ist": "8120",
+          "richtig": true
+        },
+        {
+          "datei": "C103.txt",
+          "soll": "8125",
+          "ist": "8125",
+          "richtig": true
+        },
+        {
+          "datei": "C104.txt",
+          "soll": "8125",
+          "ist": "8125",
+          "richtig": true
+        },
+        {
+          "datei": "C105.txt",
+          "soll": "8125",
+          "ist": "8125",
+          "richtig": true
+        },
+        {
+          "datei": "C106.txt",
+          "soll": "8300",
+          "ist": "8300",
+          "richtig": true
+        },
+        {
+          "datei": "C107.txt",
+          "soll": "8300",
+          "ist": "8300",
+          "richtig": true
+        },
+        {
+          "datei": "C108.txt",
+          "soll": "8300",
+          "ist": "3400",
+          "richtig": false
+        },
+        {
+          "datei": "C109.txt",
+          "soll": "8400",
+          "ist": "3400",
+          "richtig": false
+        },
+        {
+          "datei": "C110.txt",
+          "soll": "8400",
+          "ist": "8300",
+          "richtig": false
+        },
+        {
+          "datei": "C111.txt",
+          "soll": "8400",
+          "ist": "8300",
+          "richtig": false
+        },
+        {
+          "datei": "C112.txt",
+          "soll": "8500",
+          "ist": "8500",
+          "richtig": true
+        },
+        {
+          "datei": "C113.txt",
+          "soll": "8500",
+          "ist": "8500",
+          "richtig": true
+        },
+        {
+          "datei": "C114.txt",
+          "soll": "8500",
+          "ist": "8500",
+          "richtig": true
+        }
+      ]
+    }
+  ]
+}
