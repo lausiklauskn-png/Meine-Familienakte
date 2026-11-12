@@ -286,3 +286,27 @@ Rechnungen, Mahnungen, Bescheide, Termine, Verträge, Fotos), in jeder Fassung g
 - **Zeit** je Stufe und Datei am PC und am Handy.
 - **Handgriffe** bis alles bestätigt ist (Ziel: nur Unsicheres anfassen).
 
+## Datenweg zum Lehrer (Klaus, 12.11.2026)
+
+Der Lehrer-Schritt braucht Zugriff auf den Sieb-Ordner. **Nicht über das Repo:** private Dokumente gehören nie in Git (die
+Geschichte bleibt für immer, das Repo hat Größengrenzen, Pull-Requests und CI sehen alles mit).
+
+Was hinausgeht, ist ohnehin klein: **nur pseudonymisierter Text**, nicht die PDFs und Fotos. 1 000 Dokumente ≈ 2 Mio. Token ≈
+wenige Megabyte Text. Die Originale bleiben im Sieb-Ordner zu Hause.
+
+| Weg | Wie | Für wen |
+|---|---|---|
+| **A Eigener Server ruft Claude auf** (Vorschlag) | Sieb legt `lehrer-paket.json` (pseudonymisierte Texte + Kategorienliste) in einen Ordner auf dem Server; ein kleines Programm dort schickt es über die Claude-Schnittstelle (Stapel), legt `lehrer-antwort.json` zurück; das Sieb holt die Antwort und führt die Platzhalter auf dem Gerät zurück | automatisch, wiederholbar, Schlüssel nur auf dem Server |
+| **B Ordner des eigenen Rechners für Claude Code freigeben** | in der Claude-App (Einstellungen › Claude Code › Remote Control) einen Ordner freigeben; eine Claude-Code-Sitzung liest dann `lehrer-paket.json` dort und schreibt die Antwort zurück | einmalig für den Altbestand, ohne Programmierung am Server; heute ist kein Ordner freigegeben |
+| C Cloud-Ordner (OneDrive) | Paket dort ablegen, Server oder Sitzung holt es | nur wenn A und B nicht gehen |
+
+- In jedem Fall geht nur das **Paket** hinaus, nie der Sieb-Ordner selbst; die Zuordnungstabelle (Platzhalter → echte Namen)
+  verlässt das Gerät nie.
+- Ansehen und Starten am Handy über Termux (SSH zum Server) ist mit Weg A möglich.
+- **S11:** Weg A (Server) oder B (Ordner freigeben)? Was läuft auf dem Server (S10), und darf dort ein kleines Programm mit dem
+  Claude-Schlüssel liegen?
+
+## Stand des Plans
+
+Plan fertig zur Durchsicht (12.11.2026). Entschieden: S1 eigene App, S2 ein Ordner mit Baum, S7 Übernahme in die Familienakte,
+S9 Lehrer = Claude (Haiku 5.5, Opus 5.5 für Schwieriges). Offen: S3–S6, S8, S10, S11, eigenes Repo.
