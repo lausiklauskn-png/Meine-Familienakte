@@ -46,7 +46,8 @@ function ton() {
     [0, 0.35, 0.7].forEach((ab, i) => { const o = c.createOscillator(); const g = c.createGain(); o.frequency.value = i === 1 ? 660 : 880; g.gain.setValueAtTime(0.0001, t + ab); g.gain.exponentialRampToValueAtTime(0.25, t + ab + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + ab + 0.3); o.connect(g).connect(c.destination); o.start(t + ab); o.stop(t + ab + 0.32); });
     window.setTimeout(() => void c.close(), 1500);
   } catch { /* ohne Ton */ }
-  try { navigator.vibrate?.([200, 100, 200]); } catch { /* ohne Vibration */ }
+  // Ohne vorherigen Tipp blockiert der Browser die Vibration und schreibt eine Konsolenmeldung – dann nur der Ton.
+  try { const ua = (navigator as Navigator & { userActivation?: { hasBeenActive: boolean } }).userActivation; if (!ua || ua.hasBeenActive) navigator.vibrate?.([200, 100, 200]); } catch { /* ohne Vibration */ }
 }
 
 /** Schalter „App-Glocke“ (ab Werk an, solange kein Kalender verbunden ist; mit Kalender erinnert dieser). */

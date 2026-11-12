@@ -75,6 +75,7 @@ nicht selbst zustimmen; das muss ihr Administrator. Private Konten (Outlook.com,
    Microsoft-Postfach › „Mails holen …“). Solange die Rechte fehlen, meldet die App das ehrlich („noch nicht eingerichtet“).
    Probe danach: Mails holen (letzte 30 Tage, im Postfach ändert sich nichts) und eine Mail an sich selbst senden
    (Assistenz › Schreiben / E-Mail › Haken › „Über Microsoft senden …“), danach in „Gesendete Elemente“ nachsehen.
+   Ausführliche Anleitung mit Fehlertabelle: `docs/PLAN_2026-11-12_MICROSOFT-MAIL-ENTRA.md`.
 
 ## Danach
 

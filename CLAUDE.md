@@ -49,7 +49,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Neuveröffentlichen mitgeben; `tools/geschenkbox-datei.mjs` nimmt beide). „Nur Neues prüfen“ statt „Inkrementell“; „Neu“ › E-Mail
   öffnet die E-Mail-Karte (Probe `neu-knopf-ziele`). Vorschau `docs/vorschau/kurzhinweise-2.28.57.html`.
 - **Cloud-Ordner:** gebaut in 2.28.65 (siehe oben). Offen bei Klaus: altes „OneDrive verbinden“ wegfallen lassen oder „Akte liegt in
-  OneDrive (alt)“ nennen; Rechte `Mail.Read`/`Mail.Send` in Entra (`docs/KALENDER-EINRICHTUNG.md` Schritt 6).
+  OneDrive (alt)“ nennen; Rechte `Mail.Read`/`Mail.Send` in Entra – Plan mit Anleitung `docs/PLAN_2026-11-12_MICROSOFT-MAIL-ENTRA.md` (Termin bei Jens).
 - **Fassung 2.28.56** (#155; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.56.json`; Brief
   `BRIEF_ABSCHLUSS_2026-11-10_NUR-LAUFWERK-2.28.56.md`): **Tresor einrichten – nur Laufwerk wählen** (Ordnerwahl öffnet am gemerkten Tresor
   oder oben auf dem Gerätespeicher, `EXTRA_INITIAL_URI`; kein Namensfenster, „Family-Projekt“, bei Belegung „Family-Projekt 2…9“; nur
