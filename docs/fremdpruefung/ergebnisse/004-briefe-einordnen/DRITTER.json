@@ -1,0 +1,1505 @@
+{
+  "einordner": "Codex (GPT-6)",
+  "dateien": [
+    {
+      "datei": "2. Mahnung Beschläge.txt",
+      "bereich": "Einkäufe, Rechnungen & Garantien",
+      "schriftstueck": "Mahnung",
+      "absender": "Beschlagwelt Nord e.K.",
+      "person": "Malte Grube",
+      "frist": "2026-11-19",
+      "sicher": false,
+      "grund": "Bereich: betrieblicher Einkauf ohne eigenes Fach; alternativ Finanzen & Konten."
+    },
+    {
+      "datei": "Abo-Bestätigung Ticket.txt",
+      "bereich": "Auto & Mobilität",
+      "schriftstueck": "Vertrag",
+      "absender": "Brakenhuder Verkehrsverbund",
+      "person": "Dörte Wiechmann",
+      "frist": "",
+      "sicher": false,
+      "grund": "Schriftstück: Abo-Bestätigung als Vertrag; alternativ Brief."
+    },
+    {
+      "datei": "Allergietest Jonte.txt",
+      "bereich": "Gesundheit & Pflege",
+      "schriftstueck": "Befund",
+      "absender": "Kinderarztpraxis Dr. Ruge & Dr. Tamsen",
+      "person": "Jonte Wiechmann",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Anfrage Treppe.txt",
+      "bereich": "Korrespondenz",
+      "schriftstueck": "Brief",
+      "absender": "Jannik Behrmann",
+      "person": "Malte Grube",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Auszug 11.txt",
+      "bereich": "Finanzen & Konten",
+      "schriftstueck": "Kontoauszug",
+      "absender": "KONTOR DIREKTBANK",
+      "person": "Dörte Wiechmann",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Autoversicherung Wechsel.txt",
+      "bereich": "Versicherungen",
+      "schriftstueck": "Vertrag",
+      "absender": "LOTSEN VERSICHERUNGSVEREIN a.G.",
+      "person": "Yasemin Baştürk",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich: Versicherungspolice; fahrzeugbezogene Ablage alternativ Auto & Mobilität."
+    },
+    {
+      "datei": "BHV police.txt",
+      "bereich": "Versicherungen",
+      "schriftstueck": "Vertrag",
+      "absender": "Hanse-Gewerbe Versicherung AG",
+      "person": "Malte Grube",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Bafög.txt",
+      "bereich": "Steuern & Behörden",
+      "schriftstueck": "Bescheid",
+      "absender": "Amt für Ausbildungsförderung Brakenhude",
+      "person": "Ilka Sörensen",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich: Ausbildungsförderung; alternativ Rente, Arbeit & Sozialversicherung."
+    },
+    {
+      "datei": "Basisrente Standmitteilung.txt",
+      "bereich": "Rente, Arbeit & Sozialversicherung",
+      "schriftstueck": "Brief",
+      "absender": "LOTSEN Lebensversicherung AG",
+      "person": "Malte Grube",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich: private Altersvorsorge; alternativ Versicherungen."
+    },
+    {
+      "datei": "Baudarlehen Jahresauszug.txt",
+      "bereich": "Finanzen & Konten",
+      "schriftstueck": "Kontoauszug",
+      "absender": "Elbmarsch Sparbank - Baufinanzierung",
+      "person": "",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich: Darlehenskonto; objektbezogen alternativ Haus & Wohnung."
+    },
+    {
+      "datei": "Baumarkt.txt",
+      "bereich": "Garten & Grundstück",
+      "schriftstueck": "Kassenbon",
+      "absender": "BAUMARKT HAMMERHAI",
+      "person": "",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Baumfällung Genehmigung.txt",
+      "bereich": "Garten & Grundstück",
+      "schriftstueck": "Bescheid",
+      "absender": "Bezirksamt Brakenhude-Nord",
+      "person": "Deniz Baştürk",
+      "frist": "2027-02-28",
+      "sicher": false,
+      "grund": "Frist: früheste Auflage 2027-02-28; zweite Auflage 2027-11-30. Bereich alternativ Steuern & Behörden."
+    },
+    {
+      "datei": "Befreiungsausweis.txt",
+      "bereich": "Gesundheit & Pflege",
+      "schriftstueck": "Bescheinigung",
+      "absender": "Hanseatische Gesundheitskasse - HGK",
+      "person": "Gesine Ottens",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Brief von Meike.txt",
+      "bereich": "Korrespondenz",
+      "schriftstueck": "Brief",
+      "absender": "Meike",
+      "person": "",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Brunkhorst Hecke.txt",
+      "bereich": "Garten & Grundstück",
+      "schriftstueck": "Rechnung",
+      "absender": "Gartenpflege Brunkhorst",
+      "person": "Hinrich Ottens",
+      "frist": "2026-11-20",
+      "sicher": false,
+      "grund": "Person: adressiert an Herrn Ottens; wegen gemeinsamer Grundstückspflege alternativ leer."
+    },
+    {
+      "datei": "Buchungsbestätigung Flug.txt",
+      "bereich": "Reisen & Freizeit",
+      "schriftstueck": "Rechnung",
+      "absender": "Wolkenreise.de",
+      "person": "",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Bürgeramt.txt",
+      "bereich": "Familie & persönliche Dokumente",
+      "schriftstueck": "Termin",
+      "absender": "Terminvergabe Bürgerservice",
+      "person": "Elif Baştürk",
+      "frist": "2026-11-23",
+      "sicher": false,
+      "grund": "Bereich: persönliches Ausweisdokument; alternativ Steuern & Behörden."
+    },
+    {
+      "datei": "Deichnetz Preisänderung.txt",
+      "bereich": "Verträge & Abonnements",
+      "schriftstueck": "Brief",
+      "absender": "Deichnetz Telekommunikation GmbH",
+      "person": "Hinrich Ottens",
+      "frist": "",
+      "sicher": false,
+      "grund": "Frist: keine Pflicht; bei gewünschter Sonderkündigung alternativ 2027-01-01."
+    },
+    {
+      "datei": "Dokument.txt",
+      "bereich": "Steuern & Behörden",
+      "schriftstueck": "Bescheid",
+      "absender": "Familienkasse Nordküste",
+      "person": "Lene Pahlke",
+      "frist": "",
+      "sicher": false,
+      "grund": "Person: Kind als Leistungsanlass; alternativ Silke Pahlke als Anspruchsberechtigte."
+    },
+    {
+      "datei": "Drucker.txt",
+      "bereich": "Technik, Geräte & Reparaturen",
+      "schriftstueck": "Kassenbon",
+      "absender": "Volt & Watt Elektromarkt Brakenhude",
+      "person": "Malte Grube",
+      "frist": "",
+      "sicher": false,
+      "grund": "Schriftstück: bezahlter Kassenbeleg, alternativ Rechnung; Bereich alternativ Einkäufe, Rechnungen & Garantien."
+    },
+    {
+      "datei": "EM-Rente Unterlagen.txt",
+      "bereich": "Rente, Arbeit & Sozialversicherung",
+      "schriftstueck": "Aufforderung",
+      "absender": "Landesrentenanstalt Küste",
+      "person": "Reinhard Klüver",
+      "frist": "2026-12-04",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Einladung JC.txt",
+      "bereich": "Rente, Arbeit & Sozialversicherung",
+      "schriftstueck": "Termin",
+      "absender": "Jobcenter Brakenhude-Mitte",
+      "person": "Reinhard Klüver",
+      "frist": "2026-11-25",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Einladung Schuluntersuchung.txt",
+      "bereich": "Gesundheit & Pflege",
+      "schriftstueck": "Termin",
+      "absender": "Bezirksamt Brakenhude-Ost",
+      "person": "Jonte Wiechmann",
+      "frist": "2027-01-14",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Elterngeld.txt",
+      "bereich": "Rente, Arbeit & Sozialversicherung",
+      "schriftstueck": "Bescheid",
+      "absender": "Elterngeldstelle Brakenhude",
+      "person": "Yasemin Baştürk",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich: Einkommensersatz nach Geburt; alternativ Steuern & Behörden."
+    },
+    {
+      "datei": "Entlassbericht.txt",
+      "bereich": "Gesundheit & Pflege",
+      "schriftstueck": "Befund",
+      "absender": "REHAZENTRUM SALZWIESE",
+      "person": "Reinhard Klüver",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Erinnerung Steuererklärung.txt",
+      "bereich": "Steuern & Behörden",
+      "schriftstueck": "Aufforderung",
+      "absender": "Finanzamt Brakenhude-Altstadt",
+      "person": "Malte Grube",
+      "frist": "2026-12-07",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "FA Bescheid 2025.txt",
+      "bereich": "Steuern & Behörden",
+      "schriftstueck": "Bescheid",
+      "absender": "Finanzamt Brakenhude-Nord",
+      "person": "",
+      "frist": "2026-12-14",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "FA Erbschaftsteuer.txt",
+      "bereich": "Steuern & Behörden",
+      "schriftstueck": "Aufforderung",
+      "absender": "Finanzamt Brakenhude für Verkehrsteuern und Erbschaften",
+      "person": "Gesine Ottens",
+      "frist": "2027-01-15",
+      "sicher": false,
+      "grund": "Bereich: Steuererklärung; fallbezogen alternativ Erbschaft, Vollmachten & Vorsorge."
+    },
+    {
+      "datei": "Ferienhaus Rømø.txt",
+      "bereich": "Reisen & Freizeit",
+      "schriftstueck": "Vertrag",
+      "absender": "Dünenhaus Vermietung Kröger",
+      "person": "Torben Pahlke",
+      "frist": "2027-06-01",
+      "sicher": false,
+      "grund": "Frist: bekannte Restzahlung; frühere Anzahlung zehn Tage nach unbekanntem Buchungsdatum."
+    },
+    {
+      "datei": "Fernseher Rechnung.txt",
+      "bereich": "Technik, Geräte & Reparaturen",
+      "schriftstueck": "Rechnung",
+      "absender": "Volt & Watt Elektromarkt Brakenhude",
+      "person": "Deniz Baştürk",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich: Geräteanschaffung mit Garantie; alternativ Einkäufe, Rechnungen & Garantien."
+    },
+    {
+      "datei": "Fitness.txt",
+      "bereich": "Reisen & Freizeit",
+      "schriftstueck": "Kündigung",
+      "absender": "Kraftwerk Fitness Lohbek",
+      "person": "Deniz Baştürk",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich: Fitnessmitgliedschaft; alternativ Verträge & Abonnements."
+    },
+    {
+      "datei": "Funkwelle Rechnung Nov.txt",
+      "bereich": "Verträge & Abonnements",
+      "schriftstueck": "Rechnung",
+      "absender": "Funkwelle Mobil GmbH",
+      "person": "Ilka Sörensen",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Garantie Laptop.txt",
+      "bereich": "Technik, Geräte & Reparaturen",
+      "schriftstueck": "Brief",
+      "absender": "Rechnerwerk Service",
+      "person": "Anke Rehders",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Gas Jahresabrechnung.txt",
+      "bereich": "Energie & Versorgung",
+      "schriftstueck": "Abrechnung",
+      "absender": "Stadtwerke Brakenhude GmbH",
+      "person": "Hinrich Ottens",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "GdB 50.txt",
+      "bereich": "Gesundheit & Pflege",
+      "schriftstueck": "Bescheid",
+      "absender": "Landesamt für Soziales und Versorgung Brakenhude",
+      "person": "Reinhard Klüver",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich: behinderungsbezogene Feststellung; alternativ Steuern & Behörden."
+    },
+    {
+      "datei": "Gebäudeversicherung 2027.txt",
+      "bereich": "Versicherungen",
+      "schriftstueck": "Rechnung",
+      "absender": "LOTSEN VERSICHERUNGSVEREIN a.G.",
+      "person": "Hinrich Ottens",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Gebührenbefreiung.txt",
+      "bereich": "Steuern & Behörden",
+      "schriftstueck": "Bescheid",
+      "absender": "Gemeinsame Rundfunkgebührenstelle",
+      "person": "Dörte Wiechmann",
+      "frist": "",
+      "sicher": false,
+      "grund": "Frist: keine unbedingte Pflicht; bei Weiterbefreiung alternativ vor 2027-10-31."
+    },
+    {
+      "datei": "Gehalt Okt.txt",
+      "bereich": "Rente, Arbeit & Sozialversicherung",
+      "schriftstueck": "Abrechnung",
+      "absender": "Pflegedienst Lotsenhus gGmbH",
+      "person": "Dörte Wiechmann",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Gehaltsabrechnung_Anke_2026-10.txt",
+      "bereich": "Rente, Arbeit & Sozialversicherung",
+      "schriftstueck": "Abrechnung",
+      "absender": "Kontorhaus Mediengesellschaft mbH",
+      "person": "Anke Rehders",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Gehaltszettel Deniz.txt",
+      "bereich": "Rente, Arbeit & Sozialversicherung",
+      "schriftstueck": "Abrechnung",
+      "absender": "Hafenlotsen Software GmbH",
+      "person": "Deniz Baştürk",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Geschäftskonto Okt.txt",
+      "bereich": "Finanzen & Konten",
+      "schriftstueck": "Kontoauszug",
+      "absender": "Elbmarsch Sparbank - Geschäftskonto",
+      "person": "Malte Grube",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Grundsteuer 2027.txt",
+      "bereich": "Steuern & Behörden",
+      "schriftstueck": "Bescheid",
+      "absender": "Finanzamt Brakenhude-Süd - Grundsteuerstelle -",
+      "person": "",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich: Steuerbescheid; objektbezogen alternativ Haus & Wohnung."
+    },
+    {
+      "datei": "Gutschrift Rücksendung.txt",
+      "bereich": "Einkäufe, Rechnungen & Garantien",
+      "schriftstueck": "Brief",
+      "absender": "Kaufkiste24",
+      "person": "Ilka Sörensen",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "HGK Kinderkrankengeld.txt",
+      "bereich": "Rente, Arbeit & Sozialversicherung",
+      "schriftstueck": "Bescheid",
+      "absender": "Hanseatische Gesundheitskasse - HGK",
+      "person": "Dörte Wiechmann",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich alternativ Gesundheit & Pflege; Schriftstück: Leistungsbewilligung, alternativ Abrechnung."
+    },
+    {
+      "datei": "HGK Mitgliedsbescheinigung.txt",
+      "bereich": "Versicherungen",
+      "schriftstueck": "Bescheinigung",
+      "absender": "Hanseatische Gesundheitskasse - HGK",
+      "person": "Silke Pahlke",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich: Krankenversicherungsnachweis; für Arbeitgeber alternativ Rente, Arbeit & Sozialversicherung."
+    },
+    {
+      "datei": "HGK Studi.txt",
+      "bereich": "Versicherungen",
+      "schriftstueck": "Bescheinigung",
+      "absender": "Hanseatische Gesundheitskasse",
+      "person": "Ilka Sörensen",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "HU fällig.txt",
+      "bereich": "Auto & Mobilität",
+      "schriftstueck": "Aufforderung",
+      "absender": "PRÜFSTELLE NORDKONTROLLE",
+      "person": "Hinrich Ottens",
+      "frist": "2026-12-31",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "HWK Beitrag.txt",
+      "bereich": "Steuern & Behörden",
+      "schriftstueck": "Bescheid",
+      "absender": "Handwerkskammer Brakenhude",
+      "person": "Malte Grube",
+      "frist": "2026-12-15",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Handyklinik.txt",
+      "bereich": "Technik, Geräte & Reparaturen",
+      "schriftstueck": "Rechnung",
+      "absender": "HANDYKLINIK NORD",
+      "person": "Silke Pahlke",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Hausrat_Nachtrag.txt",
+      "bereich": "Versicherungen",
+      "schriftstueck": "Vertrag",
+      "absender": "LOTSEN VERSICHERUNGSVEREIN a.G.",
+      "person": "Torben Pahlke",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Holzkontor Rg 26-8812.txt",
+      "bereich": "Einkäufe, Rechnungen & Garantien",
+      "schriftstueck": "Rechnung",
+      "absender": "HOLZKONTOR LÜDERS GmbH & Co. KG",
+      "person": "Malte Grube",
+      "frist": "2026-11-27",
+      "sicher": false,
+      "grund": "Bereich: betrieblicher Wareneinkauf ohne eigenes Fach; alternativ Finanzen & Konten."
+    },
+    {
+      "datei": "IMG_2031.txt",
+      "bereich": "Rente, Arbeit & Sozialversicherung",
+      "schriftstueck": "Abrechnung",
+      "absender": "HARMS & PETERSEN LOGISTIK GMBH",
+      "person": "Torben Pahlke",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Ihre Bestellung bei Kaufkiste24.txt",
+      "bereich": "Einkäufe, Rechnungen & Garantien",
+      "schriftstueck": "Rechnung",
+      "absender": "Kaufkiste24",
+      "person": "Silke Pahlke",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich alternativ Auto & Mobilität; Person: Käuferin Silke Pahlke, alternativ leer mangels genanntem Kind."
+    },
+    {
+      "datei": "Investitionskredit Angebot.txt",
+      "bereich": "Finanzen & Konten",
+      "schriftstueck": "Angebot/Werbung",
+      "absender": "Elbmarsch Sparbank - Firmenkunden",
+      "person": "Malte Grube",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "JC Bescheid.txt",
+      "bereich": "Rente, Arbeit & Sozialversicherung",
+      "schriftstueck": "Bescheid",
+      "absender": "Jobcenter Brakenhude-Mitte",
+      "person": "Reinhard Klüver",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "KV Beitrag freiwillig.txt",
+      "bereich": "Versicherungen",
+      "schriftstueck": "Bescheid",
+      "absender": "Hanseatische Gesundheitskasse",
+      "person": "Malte Grube",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "KV Dachdecker.txt",
+      "bereich": "Haus & Wohnung",
+      "schriftstueck": "Angebot/Werbung",
+      "absender": "DACHDECKEREI KLAAS FEDDERSEN GmbH",
+      "person": "Deniz Baştürk",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Karte Oma.txt",
+      "bereich": "Korrespondenz",
+      "schriftstueck": "Brief",
+      "absender": "Oma Hanne",
+      "person": "",
+      "frist": "",
+      "sicher": false,
+      "grund": "Frist: Abholung am 26.12.; Jahr fehlt, bei Bezug auf 2026 alternativ 2026-12-26."
+    },
+    {
+      "datei": "Kfz-Steuer.txt",
+      "bereich": "Steuern & Behörden",
+      "schriftstueck": "Bescheid",
+      "absender": "Hauptzollamt Brakenhude",
+      "person": "Hinrich Ottens",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich: Steuerbescheid; alternativ Auto & Mobilität."
+    },
+    {
+      "datei": "Kita Gebühr.txt",
+      "bereich": "Familie & persönliche Dokumente",
+      "schriftstueck": "Bescheid",
+      "absender": "Bezirksamt Brakenhude-Ost - Kita-Gutscheinsystem -",
+      "person": "Jonte Wiechmann",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich: Kinderbetreuung; alternativ Steuern & Behörden."
+    },
+    {
+      "datei": "Kita Zusage Elif.txt",
+      "bereich": "Familie & persönliche Dokumente",
+      "schriftstueck": "Brief",
+      "absender": "Kita Seestern - Kindertagesstätte des Vereins Kinderhafen e.V.",
+      "person": "Elif Baştürk",
+      "frist": "2026-11-30",
+      "sicher": false,
+      "grund": "Schriftstück: Platzzusage als Brief; wegen Bestätigungspflicht alternativ Aufforderung."
+    },
+    {
+      "datei": "Knöllchen.txt",
+      "bereich": "Auto & Mobilität",
+      "schriftstueck": "Aufforderung",
+      "absender": "Bezirksamt Brakenhude-Mitte",
+      "person": "Torben Pahlke",
+      "frist": "2026-11-24",
+      "sicher": false,
+      "grund": "Bereich: Verkehrsverstoß; alternativ Steuern & Behörden."
+    },
+    {
+      "datei": "Kontoauszug_2026_10.txt",
+      "bereich": "Finanzen & Konten",
+      "schriftstueck": "Kontoauszug",
+      "absender": "Elbmarsch Sparbank",
+      "person": "",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Kostenvoranschlag Hörgeräte.txt",
+      "bereich": "Gesundheit & Pflege",
+      "schriftstueck": "Angebot/Werbung",
+      "absender": "Hörstudio Klangbrücke",
+      "person": "Gesine Ottens",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Krankengeld Ende.txt",
+      "bereich": "Rente, Arbeit & Sozialversicherung",
+      "schriftstueck": "Bescheid",
+      "absender": "Hanseatische Gesundheitskasse",
+      "person": "Reinhard Klüver",
+      "frist": "2026-06-18",
+      "sicher": false,
+      "grund": "Frist: Anspruchsende als spätester Meldetermin angenommen; alternativ leer, da keine genaue Meldefrist genannt."
+    },
+    {
+      "datei": "Kündigung Streamino.txt",
+      "bereich": "Verträge & Abonnements",
+      "schriftstueck": "Kündigung",
+      "absender": "Streamino",
+      "person": "Ilka Sörensen",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Küstenstrom Willkommen.txt",
+      "bereich": "Energie & Versorgung",
+      "schriftstueck": "Vertrag",
+      "absender": "Küstenstrom eG",
+      "person": "Dörte Wiechmann",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "LStB 2025 Torben.txt",
+      "bereich": "Steuern & Behörden",
+      "schriftstueck": "Bescheinigung",
+      "absender": "Harms & Petersen Logistik GmbH",
+      "person": "Torben Pahlke",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Labor Deniz.txt",
+      "bereich": "Gesundheit & Pflege",
+      "schriftstueck": "Befund",
+      "absender": "Hausarztpraxis Dr. med. Frauke Bendixen",
+      "person": "Deniz Baştürk",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Leasing Transporter.txt",
+      "bereich": "Auto & Mobilität",
+      "schriftstueck": "Vertrag",
+      "absender": "KONTOR LEASING GmbH",
+      "person": "Malte Grube",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Lohn 10-2026 Yasemin.txt",
+      "bereich": "Rente, Arbeit & Sozialversicherung",
+      "schriftstueck": "Abrechnung",
+      "absender": "KLINIKVERBUND BRAKENHUDE gGmbH",
+      "person": "Yasemin Baştürk",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "MD Termin.txt",
+      "bereich": "Gesundheit & Pflege",
+      "schriftstueck": "Termin",
+      "absender": "Medizinischer Dienst Nord",
+      "person": "Gesine Ottens",
+      "frist": "2026-10-15",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "MRT LWS.txt",
+      "bereich": "Gesundheit & Pflege",
+      "schriftstueck": "Befund",
+      "absender": "RADIOLOGIE AM FISCHMARKT",
+      "person": "Reinhard Klüver",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Mahnung Bibliothek.txt",
+      "bereich": "Familie & persönliche Dokumente",
+      "schriftstueck": "Mahnung",
+      "absender": "Hochschulbibliothek der HTH Brakenhude",
+      "person": "Ilka Sörensen",
+      "frist": "2026-11-18",
+      "sicher": false,
+      "grund": "Bereich: Studienunterlagen ohne Bildungsfach; alternativ Korrespondenz."
+    },
+    {
+      "datei": "Mail Elternabend.txt",
+      "bereich": "Familie & persönliche Dokumente",
+      "schriftstueck": "Termin",
+      "absender": "Elternvertretung Möwengruppe",
+      "person": "Silke Pahlke",
+      "frist": "2026-11-19",
+      "sicher": false,
+      "grund": "Person: angeschriebene Silke Pahlke; alternativ leer, da kein Kind eindeutig genannt."
+    },
+    {
+      "datei": "Mieterhöhung!!.txt",
+      "bereich": "Haus & Wohnung",
+      "schriftstueck": "Aufforderung",
+      "absender": "Hausverwaltung Ahrens & Vogt GbR",
+      "person": "Dörte Wiechmann",
+      "frist": "2026-12-31",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Mietrückstand.txt",
+      "bereich": "Haus & Wohnung",
+      "schriftstueck": "Mahnung",
+      "absender": "Wohnbau Möwenhof eG - Mitgliederbetreuung",
+      "person": "Reinhard Klüver",
+      "frist": "2026-11-20",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Minijob Okt.txt",
+      "bereich": "Rente, Arbeit & Sozialversicherung",
+      "schriftstueck": "Abrechnung",
+      "absender": "Kaffeeklappe am Hafen - Inh. T. Gülcan",
+      "person": "Ilka Sörensen",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Mitwirkung.txt",
+      "bereich": "Rente, Arbeit & Sozialversicherung",
+      "schriftstueck": "Aufforderung",
+      "absender": "Jobcenter Brakenhude-Mitte",
+      "person": "Reinhard Klüver",
+      "frist": "2026-11-27",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Monteur Waschmaschine.txt",
+      "bereich": "Technik, Geräte & Reparaturen",
+      "schriftstueck": "Rechnung",
+      "absender": "Kundendienst Weißware Sander",
+      "person": "Gesine Ottens",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Motorrad Saison.txt",
+      "bereich": "Versicherungen",
+      "schriftstueck": "Rechnung",
+      "absender": "Deichschutz Versicherung AG",
+      "person": "Anke Rehders",
+      "frist": "2027-03-01",
+      "sicher": false,
+      "grund": "Bereich: Versicherungsbeitrag; alternativ Motorrad."
+    },
+    {
+      "datei": "Möwe Reisen.txt",
+      "bereich": "Reisen & Freizeit",
+      "schriftstueck": "Angebot/Werbung",
+      "absender": "MÖWE REISEN",
+      "person": "",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Nachbar Hecke.txt",
+      "bereich": "Garten & Grundstück",
+      "schriftstueck": "Brief",
+      "absender": "Gunda Möller",
+      "person": "",
+      "frist": "",
+      "sicher": false,
+      "grund": "Schriftstück: nachbarschaftlicher Brief; wegen Rückschnittbitte alternativ Aufforderung."
+    },
+    {
+      "datei": "Notar Termin Vollmacht.txt",
+      "bereich": "Erbschaft, Vollmachten & Vorsorge",
+      "schriftstueck": "Termin",
+      "absender": "Dr. Wiebke Lassen",
+      "person": "",
+      "frist": "2026-11-26",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Ohlsen Werkstatt.txt",
+      "bereich": "Motorrad",
+      "schriftstueck": "Rechnung",
+      "absender": "ZWEIRAD OHLSEN",
+      "person": "Anke Rehders",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "P-Konto.txt",
+      "bereich": "Finanzen & Konten",
+      "schriftstueck": "Bescheinigung",
+      "absender": "Schuldnerberatung Fleetkamp e.V.",
+      "person": "Reinhard Klüver",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Pflegegrad Mama.txt",
+      "bereich": "Gesundheit & Pflege",
+      "schriftstueck": "Bescheid",
+      "absender": "Pflegekasse bei der Hanseatischen Gesundheitskasse",
+      "person": "Gesine Ottens",
+      "frist": "",
+      "sicher": false,
+      "grund": "Frist: kein bestimmbarer Stichtag; alternativ wiederkehrende Halbjahresfrist für Beratungsbesuche."
+    },
+    {
+      "datei": "Privathaftpflicht.txt",
+      "bereich": "Versicherungen",
+      "schriftstueck": "Rechnung",
+      "absender": "Deichschutz Versicherung AG",
+      "person": "Dörte Wiechmann",
+      "frist": "2027-01-01",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Probeabo Fachzeitschrift.txt",
+      "bereich": "Verträge & Abonnements",
+      "schriftstueck": "Angebot/Werbung",
+      "absender": "VERLAG HOLZ & HOBEL",
+      "person": "Malte Grube",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Rasenmäher.txt",
+      "bereich": "Garten & Grundstück",
+      "schriftstueck": "Rechnung",
+      "absender": "Gartencenter Grünland",
+      "person": "Yasemin Baştürk",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich: Gartengeräte; alternativ Technik, Geräte & Reparaturen."
+    },
+    {
+      "datei": "Re_ Black Week startet JETZT.txt",
+      "bereich": "Einkäufe, Rechnungen & Garantien",
+      "schriftstueck": "Angebot/Werbung",
+      "absender": "Kaufkiste24 Deals",
+      "person": "Dörte Wiechmann",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Rechnung Dach.txt",
+      "bereich": "Haus & Wohnung",
+      "schriftstueck": "Rechnung",
+      "absender": "DACHDECKEREI KLAAS FEDDERSEN GmbH",
+      "person": "Deniz Baştürk",
+      "frist": "2026-11-24",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Reha bewilligt.txt",
+      "bereich": "Gesundheit & Pflege",
+      "schriftstueck": "Bescheid",
+      "absender": "Landesrentenanstalt Küste",
+      "person": "Reinhard Klüver",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich: medizinische Rehabilitation; alternativ Rente, Arbeit & Sozialversicherung."
+    },
+    {
+      "datei": "Rehazentrum Anreise.txt",
+      "bereich": "Gesundheit & Pflege",
+      "schriftstueck": "Termin",
+      "absender": "REHAZENTRUM SALZWIESE",
+      "person": "Reinhard Klüver",
+      "frist": "2026-09-07",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Rente Juli.txt",
+      "bereich": "Rente, Arbeit & Sozialversicherung",
+      "schriftstueck": "Bescheid",
+      "absender": "Landesrentenanstalt Küste",
+      "person": "Hinrich Ottens",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Rentenbezugsmitteilung.txt",
+      "bereich": "Steuern & Behörden",
+      "schriftstueck": "Bescheinigung",
+      "absender": "Landesrentenanstalt Küste",
+      "person": "Gesine Ottens",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich: steuerlicher Verwendungszweck; alternativ Rente, Arbeit & Sozialversicherung."
+    },
+    {
+      "datei": "Rückmeldung SoSe 27.txt",
+      "bereich": "Familie & persönliche Dokumente",
+      "schriftstueck": "Aufforderung",
+      "absender": "Studierendenservice HTH",
+      "person": "Ilka Sörensen",
+      "frist": "2027-01-31",
+      "sicher": false,
+      "grund": "Bereich: Studium ohne eigenes Bildungsfach; alternativ Steuern & Behörden."
+    },
+    {
+      "datei": "Schornsteinfeger.txt",
+      "bereich": "Haus & Wohnung",
+      "schriftstueck": "Rechnung",
+      "absender": "Uwe Heeschen",
+      "person": "Hinrich Ottens",
+      "frist": "2026-11-28",
+      "sicher": false,
+      "grund": "Bereich: Gebäudetechnikprüfung; alternativ Energie & Versorgung."
+    },
+    {
+      "datei": "Schreiben Anwalt.txt",
+      "bereich": "Familie & persönliche Dokumente",
+      "schriftstueck": "Brief",
+      "absender": "KANZLEI THORMÄHLEN",
+      "person": "Jonte Wiechmann",
+      "frist": "2026-11-30",
+      "sicher": false,
+      "grund": "Person: betroffenes Kind Jonte Wiechmann; alternativ Mandantin Dörte Wiechmann."
+    },
+    {
+      "datei": "Schuldnerberatung.txt",
+      "bereich": "Finanzen & Konten",
+      "schriftstueck": "Termin",
+      "absender": "Schuldner- und Insolvenzberatung Fleetkamp e.V.",
+      "person": "Reinhard Klüver",
+      "frist": "2026-12-02",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Speichenwerk.txt",
+      "bereich": "Auto & Mobilität",
+      "schriftstueck": "Rechnung",
+      "absender": "Speichenwerk Fahrradladen & Werkstatt",
+      "person": "Dörte Wiechmann",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Steffens Inspektion.txt",
+      "bereich": "Auto & Mobilität",
+      "schriftstueck": "Rechnung",
+      "absender": "Autohaus Steffens GmbH",
+      "person": "Torben Pahlke",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Steuerkanzlei Rg.txt",
+      "bereich": "Steuern & Behörden",
+      "schriftstueck": "Rechnung",
+      "absender": "STEUERKANZLEI IWERSEN",
+      "person": "Malte Grube",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Strom Mahnung.txt",
+      "bereich": "Energie & Versorgung",
+      "schriftstueck": "Mahnung",
+      "absender": "Stadtwerke Brakenhude GmbH",
+      "person": "Reinhard Klüver",
+      "frist": "2026-11-26",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Sturm Schaden.txt",
+      "bereich": "Versicherungen",
+      "schriftstueck": "Aufforderung",
+      "absender": "Hanse-Gewerbe Versicherung AG - Schadenservice Privat",
+      "person": "Deniz Baştürk",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "TSV Beitrag Mats.txt",
+      "bereich": "Reisen & Freizeit",
+      "schriftstueck": "Rechnung",
+      "absender": "TSV Fleetkamp von 1911 e.V.",
+      "person": "Mats Pahlke",
+      "frist": "2026-11-30",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Tageblatt Kündigung.txt",
+      "bereich": "Verträge & Abonnements",
+      "schriftstueck": "Kündigung",
+      "absender": "BRAKENHUDER TAGEBLATT",
+      "person": "Hinrich Ottens",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Tankbeleg Diesel.txt",
+      "bereich": "Auto & Mobilität",
+      "schriftstueck": "Kassenbon",
+      "absender": "TANKPUNKT AHLERS",
+      "person": "Malte Grube",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Termin Reifenwechsel.txt",
+      "bereich": "Auto & Mobilität",
+      "schriftstueck": "Termin",
+      "absender": "Autohaus Steffens Service",
+      "person": "Yasemin Baştürk",
+      "frist": "2026-11-18",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Testament Onkel Werner.txt",
+      "bereich": "Erbschaft, Vollmachten & Vorsorge",
+      "schriftstueck": "Brief",
+      "absender": "Amtsgericht Brakenhude",
+      "person": "Gesine Ottens",
+      "frist": "",
+      "sicher": false,
+      "grund": "Frist: nur bei Ausschlagung; alternativ sechs Wochen ab unbekanntem Kenntnistag, kein belastbares Kalenderdatum."
+    },
+    {
+      "datei": "Treffen Frühjahr.txt",
+      "bereich": "Motorrad",
+      "schriftstueck": "Termin",
+      "absender": "Motorradfreunde Marschland e.V.",
+      "person": "Anke Rehders",
+      "frist": "2027-04-11",
+      "sicher": false,
+      "grund": "Frist: Veranstaltungstermin; alternativ leer, weil Teilnahme freiwillig und Anmeldung ohne Stichtag."
+    },
+    {
+      "datei": "U6 Erinnerung.txt",
+      "bereich": "Gesundheit & Pflege",
+      "schriftstueck": "Termin",
+      "absender": "Kinderarztpraxis Dr. Ruge & Dr. Tamsen",
+      "person": "Elif Baştürk",
+      "frist": "2026-12-15",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "U9 Lene.txt",
+      "bereich": "Gesundheit & Pflege",
+      "schriftstueck": "Termin",
+      "absender": "Kinderarztpraxis Dr. Ruge & Dr. Tamsen",
+      "person": "Lene Pahlke",
+      "frist": "2026-12-03",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "USt VZ Q3.txt",
+      "bereich": "Steuern & Behörden",
+      "schriftstueck": "Bescheid",
+      "absender": "Finanzamt Brakenhude-Altstadt",
+      "person": "Malte Grube",
+      "frist": "",
+      "sicher": false,
+      "grund": "Frist: Bekanntgabe unbekannt; alternativ relative Monatsfrist, derzeit kein belastbares Kalenderdatum."
+    },
+    {
+      "datei": "Unfallkasse.txt",
+      "bereich": "Versicherungen",
+      "schriftstueck": "Bescheid",
+      "absender": "Unfallkasse Holzhandwerk Nord",
+      "person": "Malte Grube",
+      "frist": "2027-01-15",
+      "sicher": false,
+      "grund": "Bereich: gesetzliche Unfallversicherung; alternativ Rente, Arbeit & Sozialversicherung."
+    },
+    {
+      "datei": "Vertragsänderung.txt",
+      "bereich": "Rente, Arbeit & Sozialversicherung",
+      "schriftstueck": "Vertrag",
+      "absender": "Kontorhaus Mediengesellschaft mbH",
+      "person": "Anke Rehders",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Vorsorgeregister.txt",
+      "bereich": "Erbschaft, Vollmachten & Vorsorge",
+      "schriftstueck": "Bescheinigung",
+      "absender": "Vorsorgeregister der Notarkammer Nord",
+      "person": "Gesine Ottens",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "WG Untermietvertrag.txt",
+      "bereich": "Haus & Wohnung",
+      "schriftstueck": "Vertrag",
+      "absender": "Jasper Lindemann",
+      "person": "Ilka Sörensen",
+      "frist": "",
+      "sicher": false,
+      "grund": "Frist: wiederkehrend dritter Werktag; alternativ erster Zahlungstermin, falls eine einzelne Vertragsfälligkeit verlangt ist."
+    },
+    {
+      "datei": "Wassergebühren.txt",
+      "bereich": "Energie & Versorgung",
+      "schriftstueck": "Bescheid",
+      "absender": "Brakenhuder Wasserwerke AöR",
+      "person": "",
+      "frist": "2026-12-01",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Werftkasse.txt",
+      "bereich": "Rente, Arbeit & Sozialversicherung",
+      "schriftstueck": "Brief",
+      "absender": "Versorgungskasse der Werftbetriebe Brakenhude VVaG",
+      "person": "Hinrich Ottens",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Werkstatt Kündigung.txt",
+      "bereich": "Haus & Wohnung",
+      "schriftstueck": "Kündigung",
+      "absender": "Grundstücksgemeinschaft Werkhof Bargkamp",
+      "person": "Malte Grube",
+      "frist": "2027-06-30",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Wertmarke.txt",
+      "bereich": "Auto & Mobilität",
+      "schriftstueck": "Bescheinigung",
+      "absender": "Landesamt für Soziales und Versorgung Brakenhude",
+      "person": "Reinhard Klüver",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich: Beförderungsnachweis; alternativ Gesundheit & Pflege."
+    },
+    {
+      "datei": "Wichtige Info zu Ihrem Vertrag.txt",
+      "bereich": "Einkäufe, Rechnungen & Garantien",
+      "schriftstueck": "Angebot/Werbung",
+      "absender": "Wohnwelt Kranz",
+      "person": "",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Widerspruch Rollator.txt",
+      "bereich": "Gesundheit & Pflege",
+      "schriftstueck": "Bescheid",
+      "absender": "Hanseatische Gesundheitskasse - Widerspruchsausschuss",
+      "person": "Reinhard Klüver",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Zahnarzt Rg.txt",
+      "bereich": "Gesundheit & Pflege",
+      "schriftstueck": "Rechnung",
+      "absender": "Zahnarztpraxis Dr. Jasper Hollmann",
+      "person": "Silke Pahlke",
+      "frist": "2026-11-25",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Zahnarzt erinnerung.txt",
+      "bereich": "Gesundheit & Pflege",
+      "schriftstueck": "Termin",
+      "absender": "Zahnarztpraxis Dr. Hollmann",
+      "person": "Ilka Sörensen",
+      "frist": "2026-11-17",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Zeichenbrett Abo.txt",
+      "bereich": "Verträge & Abonnements",
+      "schriftstueck": "Rechnung",
+      "absender": "Zeichenbrett Cloud",
+      "person": "Malte Grube",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Zulagenbescheinigung.txt",
+      "bereich": "Steuern & Behörden",
+      "schriftstueck": "Bescheinigung",
+      "absender": "LOTSEN Lebensversicherung AG",
+      "person": "Yasemin Baştürk",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich: steuerliche Zulagenbescheinigung; alternativ Rente, Arbeit & Sozialversicherung."
+    },
+    {
+      "datei": "Zusage Gdansk.txt",
+      "bereich": "Familie & persönliche Dokumente",
+      "schriftstueck": "Brief",
+      "absender": "Hochschule für Technik und Hafenwirtschaft Brakenhude",
+      "person": "Ilka Sörensen",
+      "frist": "2027-01-15",
+      "sicher": false,
+      "grund": "Bereich: Studienzusage ohne Bildungsfach; alternativ Reisen & Freizeit wegen Auslandsaufenthalt."
+    },
+    {
+      "datei": "apo bon 2.txt",
+      "bereich": "Gesundheit & Pflege",
+      "schriftstueck": "Kassenbon",
+      "absender": "Löwenzahn-Apotheke am Markt",
+      "person": "",
+      "frist": "",
+      "sicher": false,
+      "grund": "Person: kein Patient genannt; alternativ Reinhard Klüver als einziges bekanntes Haushaltsmitglied."
+    },
+    {
+      "datei": "apotheke.txt",
+      "bereich": "Gesundheit & Pflege",
+      "schriftstueck": "Kassenbon",
+      "absender": "Löwenzahn-Apotheke am Markt",
+      "person": "Jonte Wiechmann",
+      "frist": "",
+      "sicher": false,
+      "grund": "Person: Kinderpräparate passen zu Jontes Allergiebefund desselben Tages; alternativ leer ohne Namensnachweis."
+    },
+    {
+      "datei": "arztbrief kardio.txt",
+      "bereich": "Gesundheit & Pflege",
+      "schriftstueck": "Befund",
+      "absender": "Kardiologische Gemeinschaftspraxis am Hafentor",
+      "person": "Hinrich Ottens",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "bank wg werner.txt",
+      "bereich": "Erbschaft, Vollmachten & Vorsorge",
+      "schriftstueck": "Aufforderung",
+      "absender": "Kontor Direktbank · Nachlassabteilung",
+      "person": "Gesine Ottens",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "baumschule herbst.txt",
+      "bereich": "Garten & Grundstück",
+      "schriftstueck": "Angebot/Werbung",
+      "absender": "Baumschule Wittorf",
+      "person": "Hinrich Ottens",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "bon.txt",
+      "bereich": "Einkäufe, Rechnungen & Garantien",
+      "schriftstueck": "Kassenbon",
+      "absender": "FRISCHMARKT KRANICH",
+      "person": "",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "brief_neu (2).txt",
+      "bereich": "Versicherungen",
+      "schriftstueck": "Rechnung",
+      "absender": "Deichschutz Versicherung AG",
+      "person": "Torben Pahlke",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich: Versicherungsbeitrag; alternativ Auto & Mobilität."
+    },
+    {
+      "datei": "einkauf 12-11.txt",
+      "bereich": "Einkäufe, Rechnungen & Garantien",
+      "schriftstueck": "Kassenbon",
+      "absender": "FRISCHMARKT KRANICH Filiale Hafenkante",
+      "person": "",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "funkwelle.txt",
+      "bereich": "Verträge & Abonnements",
+      "schriftstueck": "Kündigung",
+      "absender": "Funkwelle Mobil GmbH",
+      "person": "Silke Pahlke",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "immabescheinigung.txt",
+      "bereich": "Familie & persönliche Dokumente",
+      "schriftstueck": "Bescheinigung",
+      "absender": "Hochschule für Technik und Hafenwirtschaft Brakenhude",
+      "person": "Ilka Sörensen",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich: persönlicher Studiennachweis ohne Bildungsfach; alternativ Steuern & Behörden."
+    },
+    {
+      "datei": "letzte Mahnung inkasso.txt",
+      "bereich": "Verträge & Abonnements",
+      "schriftstueck": "Mahnung",
+      "absender": "NORDFORDERUNG INKASSO GMBH",
+      "person": "Dörte Wiechmann",
+      "frist": "2026-11-23",
+      "sicher": false,
+      "grund": "Bereich: Forderung aus Mobilfunkvertrag; alternativ Finanzen & Konten wegen Inkassoverfahren."
+    },
+    {
+      "datei": "nebenkosten 2025.txt",
+      "bereich": "Haus & Wohnung",
+      "schriftstueck": "Abrechnung",
+      "absender": "WOHNBAU MÖWENHOF eG",
+      "person": "",
+      "frist": "2026-12-15",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "quittung tanken.txt",
+      "bereich": "Auto & Mobilität",
+      "schriftstueck": "Kassenbon",
+      "absender": "TANKPUNKT AHLERS",
+      "person": "Torben Pahlke",
+      "frist": "",
+      "sicher": false,
+      "grund": "Person: Fahrzeughalter Torben Pahlke aus Versicherung; alternativ leer, da tankende Person unbekannt."
+    },
+    {
+      "datei": "rechnung.txt",
+      "bereich": "Energie & Versorgung",
+      "schriftstueck": "Mahnung",
+      "absender": "Stadtwerke Brakenhude GmbH",
+      "person": "Torben Pahlke",
+      "frist": "2026-11-20",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "rundfunk.txt",
+      "bereich": "Steuern & Behörden",
+      "schriftstueck": "Aufforderung",
+      "absender": "Gemeinsame Rundfunkgebührenstelle",
+      "person": "Ilka Sörensen",
+      "frist": "2026-11-30",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "scan_0012.txt",
+      "bereich": "Familie & persönliche Dokumente",
+      "schriftstueck": "Aufforderung",
+      "absender": "Grundschule Am Fleet",
+      "person": "Mats Pahlke",
+      "frist": "2026-11-27",
+      "sicher": false,
+      "grund": "Bereich: Schulunterlagen; wegen Klassenreise alternativ Reisen & Freizeit."
+    },
+    {
+      "datei": "scan_0013.txt",
+      "bereich": "Steuern & Behörden",
+      "schriftstueck": "Bescheid",
+      "absender": "Bezirksamt Brakenhude-Ost",
+      "person": "Jonte Wiechmann",
+      "frist": "",
+      "sicher": false,
+      "grund": "Person alternativ Dörte Wiechmann; Bereich alternativ Rente, Arbeit & Sozialversicherung."
+    },
+    {
+      "datei": "sterbegeld angebot.txt",
+      "bereich": "Versicherungen",
+      "schriftstueck": "Angebot/Werbung",
+      "absender": "LOTSEN VERSICHERUNGSVEREIN a.G.",
+      "person": "Hinrich Ottens",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich: Versicherungsangebot; alternativ Erbschaft, Vollmachten & Vorsorge."
+    },
+    {
+      "datei": "von Uwe.txt",
+      "bereich": "Korrespondenz",
+      "schriftstueck": "Brief",
+      "absender": "Uwe",
+      "person": "Reinhard Klüver",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "wohngeld.txt",
+      "bereich": "Steuern & Behörden",
+      "schriftstueck": "Bescheid",
+      "absender": "Bezirksamt Brakenhude-Ost",
+      "person": "Dörte Wiechmann",
+      "frist": "",
+      "sicher": false,
+      "grund": "Bereich alternativ Rente, Arbeit & Sozialversicherung; Frist bei Weiterleistungswunsch alternativ 2027-08-31."
+    },
+    {
+      "datei": "zuzahlungen 2026.txt",
+      "bereich": "Gesundheit & Pflege",
+      "schriftstueck": "Bescheinigung",
+      "absender": "Löwenzahn-Apotheke am Markt",
+      "person": "Hinrich Ottens",
+      "frist": "",
+      "sicher": true,
+      "grund": ""
+    }
+  ]
+}

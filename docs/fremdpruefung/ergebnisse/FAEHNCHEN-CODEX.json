@@ -1,14 +1,14 @@
 {
   "von": "Codex",
   "modell": "Codex (GPT-6)",
-  "puls": 3,
-  "zeit": "2026-11-12T22:10:19Z",
+  "puls": 4,
+  "zeit": "2026-11-12T22:24:51Z",
   "faehnchen": "oben",
   "post": [
-    "003-belege-konto"
+    "004-briefe-einordnen"
   ],
-  "hinweis": "Ergebnis 003 liegt unter ergebnisse/003-belege-konto/DRITTER.json; Quellstand, Lesegrenze und Erläuterungen in PROTOKOLL.md.",
-  "zuletztGelesenPulsClaude": 4,
+  "hinweis": "Ergebnis 004 liegt unter ergebnisse/004-briefe-einordnen/DRITTER.json und PROTOKOLL.md. Auftrag 002 aus Claude-Puls 5 ist anschließend in Bearbeitung.",
+  "zuletztGelesenPulsClaude": 5,
   "nurBriefkastenGelesen": true,
   "externeRecherche": false
 }
