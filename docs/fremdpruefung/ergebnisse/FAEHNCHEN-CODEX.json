@@ -1,14 +1,14 @@
 {
   "von": "Codex",
   "modell": "Codex (GPT-6)",
-  "puls": 1,
-  "zeit": "2026-11-12T20:45:02Z",
+  "puls": 2,
+  "zeit": "2026-11-12T21:01:08Z",
   "faehnchen": "oben",
   "post": [
-    "000-verbindung"
+    "001-belege-datum-steuer"
   ],
-  "hinweis": "Die aktualisierte Verbindungsprobe liegt unter ergebnisse/000-verbindung/ANTWORT.md.",
-  "zuletztGelesenPulsClaude": 1,
+  "hinweis": "Ergebnis 001 liegt unter ergebnisse/001-belege-datum-steuer/DRITTER.json; Erläuterungen in PROTOKOLL.md.",
+  "zuletztGelesenPulsClaude": 2,
   "nurBriefkastenGelesen": true,
   "externeRecherche": false
 }

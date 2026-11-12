@@ -1,0 +1,1205 @@
+{
+  "einordner": "Codex (GPT-6)",
+  "dateien": [
+    {
+      "datei": "CCF_001226.txt",
+      "datum": "2026-09-30",
+      "ust": 19,
+      "betrag": "14,12",
+      "konto": "4530",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "betrag: Dieselmenge mal Literpreis widerspricht dem ausgewiesenen Rechnungsbetrag."
+    },
+    {
+      "datei": "CCF_001238.txt",
+      "datum": "2026-05-31",
+      "ust": 0,
+      "betrag": "135,95",
+      "konto": "4600",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "CCF_001258.txt",
+      "datum": "2026-11-03",
+      "ust": 19,
+      "betrag": "49,30",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "konto: Dekorationsmaterial vermutlich für Verkauf; Eigenverwendung bleibt möglich."
+    },
+    {
+      "datei": "CCF_001271.txt",
+      "datum": "2026-05-11",
+      "ust": 7,
+      "betrag": "776,99",
+      "konto": "8300",
+      "richtung": "einnahme",
+      "sicher": false,
+      "grund": "konto: Gemischte Erlöse; überwiegender 7-Prozent-Anteil gewählt, 19-Prozent-Anteil benötigt Aufteilung."
+    },
+    {
+      "datei": "CCF_001287.txt",
+      "datum": "2026-03-31",
+      "ust": 19,
+      "betrag": "321,30",
+      "konto": "4250",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "CCF_001299.txt",
+      "datum": "2026-03-06",
+      "ust": 19,
+      "betrag": "18,90",
+      "konto": "4530",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "CCF_001314.txt",
+      "datum": "2026-02-05",
+      "ust": 19,
+      "betrag": "1.329,83",
+      "konto": "4260",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "CCF_001330.txt",
+      "datum": "2026-04-16",
+      "ust": 19,
+      "betrag": "113,88",
+      "konto": "4600",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "CCF_001342.txt",
+      "datum": "2026-05-14",
+      "ust": 0,
+      "betrag": "1.231,00",
+      "konto": "8120",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "CCF_001358.txt",
+      "datum": "2026-02-03",
+      "ust": 0,
+      "betrag": "29,20",
+      "konto": "4970",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "betrag: Gebühren 29,20 gewählt; Abrechnung nennt zusätzlich 6.155,10 Auszahlung."
+    },
+    {
+      "datei": "CCF_001370.txt",
+      "datum": "2026-08-03",
+      "ust": null,
+      "betrag": "1.500,00",
+      "konto": "1890",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "CCF_001381.txt",
+      "datum": "2026-07-09",
+      "ust": 19,
+      "betrag": "766,36",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "CCF_001395.txt",
+      "datum": "2026-01-29",
+      "ust": 7,
+      "betrag": "314,00",
+      "konto": "4670",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "CCF_001412.txt",
+      "datum": "2026-06-03",
+      "ust": 0,
+      "betrag": "393,50",
+      "konto": "3300",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "konto: Innergemeinschaftlicher Erwerb; passendes Erwerbskonto fehlt, 3300 nur Näherung."
+    },
+    {
+      "datei": "CCF_001430.txt",
+      "datum": "2026-03-02",
+      "ust": 0,
+      "betrag": "38,00",
+      "konto": "4980",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "CCF_001444.txt",
+      "datum": "2026-02-02",
+      "ust": 0,
+      "betrag": "70,20",
+      "konto": "4910",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "CCF_001460.txt",
+      "datum": "2026-01-27",
+      "ust": 19,
+      "betrag": "465,47",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "CCF_001470.txt",
+      "datum": "2026-10-13",
+      "ust": 7,
+      "betrag": "65,30",
+      "konto": "4650",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "konto: Bewirtung belegt; nicht abzugsfähiger Anteil benötigt zusätzliche Kontierung."
+    },
+    {
+      "datei": "CCF_001483.txt",
+      "datum": "2026-04-06",
+      "ust": 7,
+      "betrag": "272,21",
+      "konto": "8300",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "CCF_001496.txt",
+      "datum": "2026-03-18",
+      "ust": 0,
+      "betrag": "114,60",
+      "konto": "4360",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Dokument (104).txt",
+      "datum": "2026-05-28",
+      "ust": 19,
+      "betrag": "518,36",
+      "konto": "4500",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Dokument (121).txt",
+      "datum": "2026-03-09",
+      "ust": 7,
+      "betrag": "217,00",
+      "konto": "4660",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Dokument (132).txt",
+      "datum": "2025-12-15",
+      "ust": 0,
+      "betrag": "95,00",
+      "konto": "4210",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "betrag: Dauerrechnung nennt 95,00 monatlich; kein einmaliger Gesamtzahlbetrag."
+    },
+    {
+      "datei": "Dokument (144).txt",
+      "datum": "2026-03-26",
+      "ust": 7,
+      "betrag": "76,80",
+      "konto": "4650",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "konto: Bewirtung belegt; nicht abzugsfähiger Anteil benötigt zusätzliche Kontierung."
+    },
+    {
+      "datei": "Dokument (156).txt",
+      "datum": "2026-01-22",
+      "ust": 0,
+      "betrag": "426,00",
+      "konto": "4980",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Dokument (166).txt",
+      "datum": "2026-04-10",
+      "ust": 19,
+      "betrag": "378,30",
+      "konto": "4980",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Dokument (180).txt",
+      "datum": "2026-10-29",
+      "ust": 19,
+      "betrag": "678,30",
+      "konto": "4500",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Dokument (190).txt",
+      "datum": "2026-04-08",
+      "ust": 19,
+      "betrag": "480,76",
+      "konto": "4955",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Dokument (201).txt",
+      "datum": "2026-05-19",
+      "ust": 19,
+      "betrag": "3.370,08",
+      "konto": "0400",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Dokument (212).txt",
+      "datum": "2026-10-08",
+      "ust": 19,
+      "betrag": "611,66",
+      "konto": "4955",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Dokument (227).txt",
+      "datum": "2026-06-25",
+      "ust": null,
+      "betrag": "1.420,00",
+      "konto": "4120",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "betrag: Gesamtbrutto gewählt; Auftrag unterscheidet bei Lohnabrechnungen nicht eindeutig vom Auszahlungsbetrag."
+    },
+    {
+      "datei": "Dokument (237).txt",
+      "datum": "2026-02-28",
+      "ust": 7,
+      "betrag": "115,99",
+      "konto": "8300",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Dokument (247).txt",
+      "datum": "2026-04-28",
+      "ust": 7,
+      "betrag": "418,37",
+      "konto": "3300",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Dokument (258).txt",
+      "datum": "2026-04-14",
+      "ust": 19,
+      "betrag": "528,48",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "konto: Verpackungsmaterial als Wareneinsatz; zusätzlich Mahngebühr separat zu behandeln."
+    },
+    {
+      "datei": "Dokument (270).txt",
+      "datum": "2026-06-16",
+      "ust": 19,
+      "betrag": "6,98",
+      "konto": "4530",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "betrag: Dieselmenge mal Literpreis widerspricht dem ausgewiesenen Rechnungsbetrag."
+    },
+    {
+      "datei": "Dokument (47).txt",
+      "datum": "2026-09-01",
+      "ust": 0,
+      "betrag": "770,00",
+      "konto": "4945",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Dokument (55).txt",
+      "datum": "2026-01-12",
+      "ust": 7,
+      "betrag": "390,55",
+      "konto": "3300",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Dokument (70).txt",
+      "datum": "2026-04-02",
+      "ust": 19,
+      "betrag": "9.182,04",
+      "konto": "0400",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Dokument (82).txt",
+      "datum": "2026-05-21",
+      "ust": 19,
+      "betrag": "238,77",
+      "konto": "4930",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "Dokument (92).txt",
+      "datum": "2026-05-04",
+      "ust": 0,
+      "betrag": "18,36",
+      "konto": "4380",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "IMG_20260214_175448.txt",
+      "datum": "2026-02-06",
+      "ust": 19,
+      "betrag": "267,75",
+      "konto": "4600",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "IMG_20260307_130725.txt",
+      "datum": "2026-02-27",
+      "ust": 7,
+      "betrag": "54,90",
+      "konto": "4660",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "IMG_20260307_140510.txt",
+      "datum": "2026-03-05",
+      "ust": 19,
+      "betrag": "299,88",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "IMG_20260310_083040.txt",
+      "datum": "2026-03-04",
+      "ust": 19,
+      "betrag": "42,49",
+      "konto": "4920",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "IMG_20260311_120935.txt",
+      "datum": "2026-03-09",
+      "ust": 0,
+      "betrag": "97,62",
+      "konto": "4380",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "IMG_20260315_121100.txt",
+      "datum": "2026-03-12",
+      "ust": 19,
+      "betrag": "329,00",
+      "konto": "0480",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "IMG_20260327_195745.txt",
+      "datum": "2026-03-19",
+      "ust": 0,
+      "betrag": "1.090,00",
+      "konto": "8125",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "IMG_20260509_093039.txt",
+      "datum": "2026-05-07",
+      "ust": 7,
+      "betrag": "560,05",
+      "konto": "3300",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "konto: Gemischter Wareneingang; überwiegender 7-Prozent-Anteil gewählt, 19-Prozent-Anteil benötigt Aufteilung."
+    },
+    {
+      "datei": "IMG_20260604_121819.txt",
+      "datum": "2026-06-02",
+      "ust": 0,
+      "betrag": "56,49",
+      "konto": "4970",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "betrag: Gebühren 56,49 gewählt; Abrechnung nennt zusätzlich 12.391,41 Auszahlung."
+    },
+    {
+      "datei": "IMG_20260612_145843.txt",
+      "datum": "2026-06-05",
+      "ust": 7,
+      "betrag": "67,90",
+      "konto": "4940",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "IMG_20260624_182223.txt",
+      "datum": "2026-06-15",
+      "ust": 7,
+      "betrag": "508,95",
+      "konto": "8300",
+      "richtung": "einnahme",
+      "sicher": false,
+      "grund": "konto: Gemischte Erlöse; überwiegender 7-Prozent-Anteil gewählt, 19-Prozent-Anteil benötigt Aufteilung."
+    },
+    {
+      "datei": "IMG_20260803_150113.txt",
+      "datum": "2026-07-30",
+      "ust": 19,
+      "betrag": "728,28",
+      "konto": "4950",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "IMG_20260811_133219.txt",
+      "datum": "2026-08-05",
+      "ust": 19,
+      "betrag": "39,90",
+      "konto": "4920",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "IMG_20260827_100138.txt",
+      "datum": "2026-08-18",
+      "ust": 7,
+      "betrag": "95,44",
+      "konto": "3300",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "konto: Gemischter Wareneingang; überwiegender 7-Prozent-Anteil gewählt, 19-Prozent-Anteil benötigt Aufteilung."
+    },
+    {
+      "datei": "IMG_20260829_072421.txt",
+      "datum": "2026-08-24",
+      "ust": 19,
+      "betrag": "296,31",
+      "konto": "4945",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "IMG_20260830_135537.txt",
+      "datum": "2026-08-26",
+      "ust": 19,
+      "betrag": "578,34",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "IMG_20260913_080947.txt",
+      "datum": "2026-09-10",
+      "ust": 0,
+      "betrag": "1.288,00",
+      "konto": "8125",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "IMG_20261112_082900.txt",
+      "datum": "2026-11-11",
+      "ust": 19,
+      "betrag": "1.213,80",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "IMG_20261112_151324.txt",
+      "datum": "2026-11-06",
+      "ust": 0,
+      "betrag": "859,40",
+      "konto": "4540",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "IMG_20261114_145643.txt",
+      "datum": "2026-11-10",
+      "ust": 0,
+      "betrag": "31,28",
+      "konto": "4910",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "ust: Steuerfreies Porto überwiegt; Mischregel für 0 und 19 Prozent nicht ausdrücklich geregelt."
+    },
+    {
+      "datei": "SCN260122-8.txt",
+      "datum": "2026-01-19",
+      "ust": 7,
+      "betrag": "87,90",
+      "konto": "4670",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "SCN260123-4.txt",
+      "datum": "2026-01-15",
+      "ust": 0,
+      "betrag": "258,00",
+      "konto": "4380",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "SCN260216-3.txt",
+      "datum": "2026-02-11",
+      "ust": 7,
+      "betrag": "830,11",
+      "konto": "3300",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "SCN260226-5.txt",
+      "datum": "2026-02-25",
+      "ust": null,
+      "betrag": "2.680,00",
+      "konto": "4120",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "betrag: Gesamtbrutto gewählt; Auftrag unterscheidet bei Lohnabrechnungen nicht eindeutig vom Auszahlungsbetrag."
+    },
+    {
+      "datei": "SCN260228-7.txt",
+      "datum": "2026-02-20",
+      "ust": 19,
+      "betrag": "23.055,06",
+      "konto": "0320",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "konto: Nutzfahrzeug vermutlich Lkw; passendes Fahrzeuganlagekonto fehlt, 0320 nur Näherung."
+    },
+    {
+      "datei": "SCN260306-3.txt",
+      "datum": "2026-03-02",
+      "ust": 7,
+      "betrag": "250,00",
+      "konto": "8300",
+      "richtung": "einnahme",
+      "sicher": false,
+      "grund": "konto: Mahnkosten und Verzugszinsen neben Blumenumsatz erfordern zusätzliche Konten."
+    },
+    {
+      "datei": "SCN260326-3.txt",
+      "datum": "2026-03-24",
+      "ust": 7,
+      "betrag": "271,78",
+      "konto": "3300",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "SCN260403-8.txt",
+      "datum": "2026-04-01",
+      "ust": 0,
+      "betrag": "97,32",
+      "konto": "4970",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "konto: Bankentgelte überwiegen; enthaltene Sollzinsen benötigen ein anderes Konto."
+    },
+    {
+      "datei": "SCN260407-9.txt",
+      "datum": "2026-04-01",
+      "ust": 7,
+      "betrag": "51,60",
+      "konto": "4630",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "konto: Kundengeschenke vermutlich abzugsfähig; Empfängeridentitäten und jeweilige Jahressummen fehlen."
+    },
+    {
+      "datei": "SCN260424-5.txt",
+      "datum": "2026-04-20",
+      "ust": 0,
+      "betrag": "427,35",
+      "konto": "4360",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "konto: Gesetzliche Unfallversicherung; spezielles Berufsgenossenschaftskonto fehlt in der Liste."
+    },
+    {
+      "datei": "SCN260429-8.txt",
+      "datum": "2026-04-27",
+      "ust": 19,
+      "betrag": "300,00",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "sicher": false,
+      "grund": "konto: Abschlagsrechnung; separates Konto für erhaltene Anzahlungen fehlt in der Liste."
+    },
+    {
+      "datei": "SCN260505-3.txt",
+      "datum": "2026-05-05",
+      "ust": 19,
+      "betrag": "11,00",
+      "konto": "4670",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "SCN260607-9.txt",
+      "datum": "2026-06-02",
+      "ust": 19,
+      "betrag": "190,05",
+      "konto": "4910",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "SCN260708-2.txt",
+      "datum": "2026-06-30",
+      "ust": 19,
+      "betrag": "969,96",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "sicher": false,
+      "grund": "konto: Gemischte Erlöse; überwiegender 19-Prozent-Anteil gewählt, 7-Prozent-Anteil benötigt Aufteilung."
+    },
+    {
+      "datei": "SCN260708-9.txt",
+      "datum": "2026-07-01",
+      "ust": null,
+      "betrag": "2.400,00",
+      "konto": "1800",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "datum: Eigenes Belegdatum fehlt; Ausführungsdatum statt vorheriger Auftragserfassung gewählt."
+    },
+    {
+      "datei": "SCN260718-7.txt",
+      "datum": "2026-07-14",
+      "ust": 7,
+      "betrag": "384,86",
+      "konto": "4240",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "SCN260729-9.txt",
+      "datum": "2026-07-23",
+      "ust": 19,
+      "betrag": "150,20",
+      "konto": "4650",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "ust/konto: Brutto überwiegt 19 Prozent, netto 7 Prozent; Bewirtung benötigt Aufteilung."
+    },
+    {
+      "datei": "SCN260907-8.txt",
+      "datum": "2026-09-01",
+      "ust": 19,
+      "betrag": "1.618,40",
+      "konto": "4210",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "SCN260910-6.txt",
+      "datum": "2026-09-03",
+      "ust": 19,
+      "betrag": "4.263,77",
+      "konto": "0410",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "SCN261021-3.txt",
+      "datum": "2026-10-20",
+      "ust": 19,
+      "betrag": "473,99",
+      "konto": "0480",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "doc04454.txt",
+      "datum": "2026-10-05",
+      "ust": 19,
+      "betrag": "200,00",
+      "konto": "4240",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "doc04559.txt",
+      "datum": "2026-09-25",
+      "ust": 0,
+      "betrag": "75,00",
+      "konto": "8500",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "doc04634.txt",
+      "datum": "2025-12-08",
+      "ust": 0,
+      "betrag": "490,28",
+      "konto": "4360",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "doc04748.txt",
+      "datum": "2026-11-02",
+      "ust": 19,
+      "betrag": "28,99",
+      "konto": "4920",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "doc04890.txt",
+      "datum": "2026-01-07",
+      "ust": 7,
+      "betrag": "120,00",
+      "konto": "4940",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "doc04983.txt",
+      "datum": "2025-12-17",
+      "ust": 19,
+      "betrag": "68,40",
+      "konto": "4630",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "konto: Kundengeschenke vermutlich abzugsfähig; Empfängeridentitäten und jeweilige Jahressummen fehlen."
+    },
+    {
+      "datei": "doc05029.txt",
+      "datum": "2026-02-17",
+      "ust": 19,
+      "betrag": "207,70",
+      "konto": "4240",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "doc05134.txt",
+      "datum": "2026-06-22",
+      "ust": 19,
+      "betrag": "328,90",
+      "konto": "0480",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "doc05212.txt",
+      "datum": "2026-01-30",
+      "ust": 7,
+      "betrag": "500,01",
+      "konto": "8300",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "doc05301.txt",
+      "datum": "2026-06-05",
+      "ust": 19,
+      "betrag": "259,96",
+      "konto": "8500",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "doc05366.txt",
+      "datum": "2026-04-09",
+      "ust": 19,
+      "betrag": "21,82",
+      "konto": "4530",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "betrag: Dieselmenge mal Literpreis widerspricht dem ausgewiesenen Rechnungsbetrag."
+    },
+    {
+      "datei": "doc05456.txt",
+      "datum": "2026-10-30",
+      "ust": 7,
+      "betrag": "904,15",
+      "konto": "8300",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "doc05520.txt",
+      "datum": "2026-06-09",
+      "ust": 19,
+      "betrag": "158,00",
+      "konto": "4260",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "doc05608.txt",
+      "datum": "2026-08-10",
+      "ust": 19,
+      "betrag": "2.142,00",
+      "konto": "4260",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "konto: Abschlag für Rauminstandhaltung; Anzahlungsabgrenzung ist im Auftrag nicht geregelt."
+    },
+    {
+      "datei": "doc05708.txt",
+      "datum": "2026-03-06",
+      "ust": 19,
+      "betrag": "176,48",
+      "konto": "8500",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "doc05796.txt",
+      "datum": "2026-11-09",
+      "ust": 19,
+      "betrag": "35,73",
+      "konto": "4930",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "konto: Bürobedarf überwiegt; Fachbuch benötigt getrennte Zuordnung zu 4940."
+    },
+    {
+      "datei": "doc05877.txt",
+      "datum": "2026-01-27",
+      "ust": 7,
+      "betrag": "16,80",
+      "konto": "4670",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "konto: Taxi passt zur Messefahrt der Inhaberin; Fahrgast nicht genannt."
+    },
+    {
+      "datei": "doc05969.txt",
+      "datum": "2026-03-03",
+      "ust": 19,
+      "betrag": "523,48",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "konto: Verpackungsmaterial als Wareneinsatz gewählt; spezifisches Verpackungskonto fehlt in der Liste."
+    },
+    {
+      "datei": "doc06050.txt",
+      "datum": "2026-09-22",
+      "ust": 19,
+      "betrag": "149,00",
+      "konto": "4500",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "doc06103.txt",
+      "datum": "2026-02-12",
+      "ust": 0,
+      "betrag": "458,00",
+      "konto": "4945",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "konto: Fortbildungsgebühr überwiegt; gesonderte Tagungsverpflegung kann eine Aufteilung erfordern."
+    },
+    {
+      "datei": "scan_0213.txt",
+      "datum": "2026-03-12",
+      "ust": null,
+      "betrag": "66,00",
+      "konto": "4660",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "scan_0227.txt",
+      "datum": "2026-06-26",
+      "ust": 7,
+      "betrag": "144,84",
+      "konto": "4635",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "scan_0242.txt",
+      "datum": "2026-09-08",
+      "ust": 0,
+      "betrag": "370,00",
+      "konto": "4600",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "scan_0259.txt",
+      "datum": "2026-01-05",
+      "ust": null,
+      "betrag": "5.000,00",
+      "konto": "1890",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "scan_0273.txt",
+      "datum": "2026-01-20",
+      "ust": 19,
+      "betrag": "7,89",
+      "konto": "4530",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "betrag: Dieselmenge mal Literpreis widerspricht dem ausgewiesenen Rechnungsbetrag."
+    },
+    {
+      "datei": "scan_0289.txt",
+      "datum": "2026-10-19",
+      "ust": 0,
+      "betrag": "1.578,00",
+      "konto": "8120",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "scan_0303.txt",
+      "datum": "2026-02-09",
+      "ust": 19,
+      "betrag": "56,94",
+      "konto": "3400",
+      "richtung": "einnahme",
+      "sicher": false,
+      "grund": "betrag/richtung: Erstattung positiv als Einnahme erfasst; Vorzeichenregel für Gutschriften fehlt."
+    },
+    {
+      "datei": "scan_0316.txt",
+      "datum": "2026-01-14",
+      "ust": 19,
+      "betrag": "59,30",
+      "konto": "4930",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "scan_0331.txt",
+      "datum": "2026-05-08",
+      "ust": 0,
+      "betrag": "147,00",
+      "konto": "4250",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "scan_0344.txt",
+      "datum": "2026-04-22",
+      "ust": 19,
+      "betrag": "413,64",
+      "konto": "4950",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "scan_0362.txt",
+      "datum": "2026-01-02",
+      "ust": 19,
+      "betrag": "1.618,40",
+      "konto": "4210",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "scan_0374.txt",
+      "datum": "2026-07-07",
+      "ust": 19,
+      "betrag": "628,32",
+      "konto": "4955",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "scan_0382.txt",
+      "datum": "2026-03-31",
+      "ust": null,
+      "betrag": "800,00",
+      "konto": "1800",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "scan_0398.txt",
+      "datum": "2026-01-08",
+      "ust": 19,
+      "betrag": "2.183,65",
+      "konto": "0410",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "konto: Kassensystem als Geschäftsausstattung; Einrichtung und Einweisung sind nicht getrennt beziffert."
+    },
+    {
+      "datei": "scan_0415.txt",
+      "datum": "2026-07-01",
+      "ust": 19,
+      "betrag": "63,90",
+      "konto": "4970",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "scan_0432.txt",
+      "datum": "2026-07-31",
+      "ust": 7,
+      "betrag": "144,99",
+      "konto": "8300",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "scan_0446.txt",
+      "datum": "2026-05-09",
+      "ust": 7,
+      "betrag": "703,20",
+      "konto": "8300",
+      "richtung": "einnahme",
+      "sicher": false,
+      "grund": "konto: Gemischte Erlöse; überwiegender 7-Prozent-Anteil gewählt, 19-Prozent-Anteil benötigt Aufteilung."
+    },
+    {
+      "datei": "scan_0464.txt",
+      "datum": "2026-02-23",
+      "ust": 0,
+      "betrag": "771,15",
+      "konto": "4540",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "scan_0474.txt",
+      "datum": "2026-09-15",
+      "ust": 7,
+      "betrag": "453,15",
+      "konto": "3300",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    },
+    {
+      "datei": "scan_0487.txt",
+      "datum": "2026-10-06",
+      "ust": 19,
+      "betrag": "680,44",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": ""
+    }
+  ]
+}
