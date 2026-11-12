@@ -1,0 +1,845 @@
+{
+  "einordner": "Codex (GPT-6)",
+  "dateien": [
+    {
+      "datei": "0101_NL_waddenkant.txt",
+      "konto": "8125",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": "Eigene steuerfreie innergemeinschaftliche Warenlieferung an niederländischen Unternehmer."
+    },
+    {
+      "datei": "0171-ricklefs-citybike.txt",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": "Eigener Fahrradverkauf mit Zubehör und 19 Prozent Umsatzsteuer."
+    },
+    {
+      "datei": "2026-0118 Harmsen.txt",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": "Eigene Umrüstung und Werkstattleistung, ausdrücklich 19 Prozent Umsatzsteuer."
+    },
+    {
+      "datei": "2026-09-09_tank.txt",
+      "konto": "4530",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "Diesel fürs Betriebsfahrzeug; Literpreis und Gesamtbetrag widersprechen sich erheblich."
+    },
+    {
+      "datei": "AR-0058_touristinfo_karten.txt",
+      "konto": "8300",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": "Eigener Kartenverkauf mit ausgewiesenen 7 Prozent Umsatzsteuer."
+    },
+    {
+      "datei": "AR_2026-0019_aalderks.txt",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": "Eigene Inspektion samt Ersatzteilen, mit 19 Prozent Umsatzsteuer."
+    },
+    {
+      "datei": "Ausgangsrechnung 2026-0041.txt",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": "Eigene Dienstradwartung und Montage mit 19 Prozent Umsatzsteuer."
+    },
+    {
+      "datei": "BB-2608-141_reinigung.txt",
+      "konto": "4250",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Unterhaltsreinigung des Ladens und Grundreinigung des Werkstattbodens."
+    },
+    {
+      "datei": "BK-88104277.txt",
+      "konto": "4930",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Toner, Bonrollen, Versandtaschen und Etiketten sind Büroverbrauchsmaterial."
+    },
+    {
+      "datei": "BZ-26-4410 lehrgang.txt",
+      "konto": "4945",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "Fachseminar; enthaltene Verpflegung ist nicht gesondert aufgeschlüsselt."
+    },
+    {
+      "datei": "Buchgrossh. B-774120.txt",
+      "konto": "3300",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Mehrfache Buchexemplare als Handelssortiment, mit 7 Prozent Vorsteuer."
+    },
+    {
+      "datei": "Druckerei Papierboot PB-3390.txt",
+      "konto": "4600",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Flyer, Saisonplakate und zugehörige Druckvorbereitung dienen der Werbung."
+    },
+    {
+      "datei": "EB-2026-19 einlage.txt",
+      "konto": "1890",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": "Inhaberin überweist private Eigenmittel ohne Rückzahlungsverpflichtung auf Geschäftskonto."
+    },
+    {
+      "datei": "EN-2026-03381.pdf.txt",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Ersatzakkus, Ladegeräte und Displays als Handelsware beziehungsweise Reparaturmaterial."
+    },
+    {
+      "datei": "Entgeltabrechnung Juli Brandsen.txt",
+      "konto": "4120",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Entgeltabrechnung des angestellten Zweiradmechanikers einschließlich Gehaltszuschlag."
+    },
+    {
+      "datei": "Export CH Leuenbacher 0127.txt",
+      "konto": "8120",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": "Eigene steuerfreie Ausfuhrlieferung in die Schweiz mit Ausfuhrnachweis."
+    },
+    {
+      "datei": "Feddersen_2026-0093.txt",
+      "konto": "4260",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Defekte Ladenbeleuchtung wird einschließlich Montage instandgesetzt."
+    },
+    {
+      "datei": "Gas Jahresabrechnung 2025.txt",
+      "konto": "4240",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Erdgasverbrauch des Betriebs mit ausdrücklich eingezogener Nachzahlung."
+    },
+    {
+      "datei": "Gutschrift P-778120.txt",
+      "konto": "8500",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": "Vergütung eigener Versicherungsvermittlung; Auszahlung trotz fremd ausgestellter Gutschrift."
+    },
+    {
+      "datei": "HU AU quittung.txt",
+      "konto": "4500",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Hauptuntersuchung und Abgasuntersuchung des betrieblichen Fahrzeugs."
+    },
+    {
+      "datei": "HWK Beitragsbescheid 2026.txt",
+      "konto": "4380",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Öffentlich-rechtlicher Mitgliedsbeitrag der Handwerkskammer einschließlich Zusatzbeiträgen."
+    },
+    {
+      "datei": "IMG_0305_tankbon.txt",
+      "konto": "4530",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "Diesel und Scheibenreiniger fürs Betriebsfahrzeug; Kraftstoffbetrag rechnerisch unplausibel."
+    },
+    {
+      "datei": "IMG_0618_ladiga.txt",
+      "konto": "4650",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "Geschäftliche Bewirtung belegt; nicht abzugsfähiger Anteil benötigt getrennte Zuordnung."
+    },
+    {
+      "datei": "IMG_20260303_akkuschrauber.txt",
+      "konto": "0480",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "Selbständig nutzbares Werkzeug; betriebliche Verwendung im Bon nicht belegt."
+    },
+    {
+      "datei": "IMG_20260529_baumarkt.txt",
+      "konto": "4260",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Material zur ausdrücklich vermerkten Ausbesserung der Ladenwand."
+    },
+    {
+      "datei": "IMG_4471_karten_nachbestellung.txt",
+      "konto": "3300",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Karten und Tourenbücher in Handelsmengen, mit 7 Prozent Vorsteuer."
+    },
+    {
+      "datei": "Inhaltsversicherung Beitrag.txt",
+      "konto": "4360",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Geschäftsinhaltsversicherung und Betriebsunterbrechungsversicherung; Versicherungsteuer ist keine Umsatzsteuer."
+    },
+    {
+      "datei": "KA-0426.txt",
+      "konto": "4970",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Verrechnete Kartenabwicklungsentgelte sind Aufwand, keine eigenen Umsatzerlöse."
+    },
+    {
+      "datei": "Kaufvertrag_Kombi_GW-2026-0718.txt",
+      "konto": "0320",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Anschaffung eines ausdrücklich bezeichneten Pkw einschließlich Anschaffungsnebenkosten."
+    },
+    {
+      "datei": "Kontoabschluss Entgelte Q3.txt",
+      "konto": "4970",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Belastete Kontoführung, Buchungsposten und weitere Bankdienstleistungsentgelte."
+    },
+    {
+      "datei": "Mietrechnung_M-2026-06.txt",
+      "konto": "4210",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Gewerbemiete für Laden und Werkstatt einschließlich Betriebskostenvorauszahlung."
+    },
+    {
+      "datei": "Nachtrag_KF-12.550.031.txt",
+      "konto": "4540",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Nachberechneter Kfz-Versicherungsbeitrag wegen Fahrzeugwechsels."
+    },
+    {
+      "datei": "Ohlsen_Rg1407.txt",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Fahrradtaschen in Handelsmengen mit 19 Prozent Vorsteuer."
+    },
+    {
+      "datei": "PW-0926.txt",
+      "konto": "4910",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Paketversand einschließlich Expresszuschlägen."
+    },
+    {
+      "datei": "RA Brodersen 0061.txt",
+      "konto": "4950",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Anwaltliche Forderungsdurchsetzung samt zugehöriger Auslagenpauschale."
+    },
+    {
+      "datei": "RE-260114-0871_hinrichsen.txt",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Schläuche, Ketten, Bremsbeläge und Züge als Waren beziehungsweise Reparaturmaterial."
+    },
+    {
+      "datei": "RK Brandsen Mai 2026.txt",
+      "konto": "4660",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Genehmigte Dienstreisekostenerstattung an ausdrücklich bezeichneten Arbeitnehmer."
+    },
+    {
+      "datei": "Rechnung 2026-0263 (Kopie).txt",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": "Eigener Laufradbau und montiertes Zubehör mit 19 Prozent Umsatzsteuer."
+    },
+    {
+      "datei": "Rechnung Talvo TB-118204 (2).txt",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Händlereinkauf mehrerer Fahrräder samt Fracht mit 19 Prozent Vorsteuer."
+    },
+    {
+      "datei": "Rg_Stadtbuecherei_0152.txt",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": "Eigene Lastenradwartung und Reifenmontage mit 19 Prozent Umsatzsteuer."
+    },
+    {
+      "datei": "SK-05-3317.txt",
+      "konto": "3300",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Sportnahrung in Verkaufskartons und Displays mit 7 Prozent Vorsteuer."
+    },
+    {
+      "datei": "Steuerkanzlei 2026-01102.txt",
+      "konto": "4955",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Laufende Finanzbuchführung sowie Erstellung von Lohnabrechnungen."
+    },
+    {
+      "datei": "Telefonrechnung Mai.txt",
+      "konto": "4920",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Geschäftlicher Glasfaseranschluss, Telefonie und feste IP-Adresse."
+    },
+    {
+      "datei": "W-260717-11.txt",
+      "konto": "4500",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Fahrzeuginspektion einschließlich Öl, Filter und Wischerblättern."
+    },
+    {
+      "datei": "WB-260223-102 maschinen.txt",
+      "konto": "0400",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Kompressoranlage und Zentriermaschine sind dauerhafte Werkstattausstattung."
+    },
+    {
+      "datei": "anzeiger_fruehjahrscheck.txt",
+      "konto": "4600",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Zeitungsanzeige für betrieblichen Frühjahrscheck einschließlich Farbzuschlag."
+    },
+    {
+      "datei": "arbeitskleidung 5518.txt",
+      "konto": "4980",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Typische Werkstatt-Berufskleidung und Sicherheitsschuhe als sonstiger Betriebsaufwand."
+    },
+    {
+      "datei": "autoglas_AG-2077.txt",
+      "konto": "4500",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Reparatur von Windschutzscheibe und Wischerdüse am Betriebsfahrzeug."
+    },
+    {
+      "datei": "bahnticket_messe_tidemann.txt",
+      "konto": "4670",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Inhaberin fährt ausdrücklich zur Fachmesse; Bahnfahrt samt Sitzplatzreservierung."
+    },
+    {
+      "datei": "bank_entgelte_I-2026.txt",
+      "konto": "4970",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Kontoführung, Buchungsposten, Einzahlungsgebühren und Girocardentgelt des Geschäftskontos."
+    },
+    {
+      "datei": "bewirtung_altes_siel.txt",
+      "konto": "4650",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "Geschäftliche Bewirtung belegt; nicht abzugsfähiger Anteil benötigt getrennte Zuordnung."
+    },
+    {
+      "datei": "blitzblank märz.txt",
+      "konto": "4250",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Unterhaltsreinigung und Schaufensterreinigung des Ladens."
+    },
+    {
+      "datei": "bon 005102.txt",
+      "konto": "8300",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": "Eigener Kassenverkauf von Büchern und Karten mit 7 Prozent Umsatzsteuer."
+    },
+    {
+      "datei": "bon_schreibwaren_0901.txt",
+      "konto": "4930",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Papier, Ordner, Stifte, Quittungsblöcke und Heftklammern als Bürobedarf."
+    },
+    {
+      "datei": "buchhandlung fachbücher.txt",
+      "konto": "4940",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Einzelexemplare einschlägiger Fachbücher für E-Bike-Technik und Zweiradhandwerk."
+    },
+    {
+      "datei": "doc00031_ocr.txt",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Helme und Fahrradschlösser in Handelsmengen mit 19 Prozent Vorsteuer."
+    },
+    {
+      "datei": "drogerie reinigungsmittel.txt",
+      "konto": "4250",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Reinigungs- und Hygienematerial ausdrücklich für Laden und Werkstatt."
+    },
+    {
+      "datei": "eigenbeleg privatentnahme feb.txt",
+      "konto": "1800",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Inhaberin entnimmt Bargeld aus Ladenkasse für ihren privaten Haushalt."
+    },
+    {
+      "datei": "einzahlung privateinlage.txt",
+      "konto": "1890",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": "Einzahlung privater Ersparnisse auf Geschäftskonto ausdrücklich als Privateinlage."
+    },
+    {
+      "datei": "elbkette 40077.txt",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Fahrradkomponenten in Handelsmengen mit 19 Prozent Vorsteuer."
+    },
+    {
+      "datei": "entsorgung_april.txt",
+      "konto": "4980",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Entsorgung betrieblicher Altreifen, Altmetalle und ölhaltiger Werkstattabfälle."
+    },
+    {
+      "datei": "fachzeitschrift_abo_2026.txt",
+      "konto": "4940",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Jahresabonnement einer betrieblich einschlägigen Fachzeitschrift."
+    },
+    {
+      "datei": "feuerloescher_pruefung.txt",
+      "konto": "4980",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Prüfung betrieblicher Feuerlöscher einschließlich Dokumentation und Anfahrt."
+    },
+    {
+      "datei": "foerderverein_buecher_2026-0239.txt",
+      "konto": "8300",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": "Eigener Bücherverkauf an Förderverein mit 7 Prozent Umsatzsteuer."
+    },
+    {
+      "datei": "friesenschild_BH_2026.txt",
+      "konto": "4360",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Beitrag zur Betriebshaftpflichtversicherung einschließlich Versicherungsteuer."
+    },
+    {
+      "datei": "gaestehaus_soerupfeld_brandsen.txt",
+      "konto": "4660",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Übernachtung eines ausdrücklich bezeichneten Mitarbeiters als Schulungsteilnehmer."
+    },
+    {
+      "datei": "garage lager q2.txt",
+      "konto": "4210",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Garage ausdrücklich als Lagerraum für Winterräder und Kartonagen gemietet."
+    },
+    {
+      "datei": "gewerbeverein 2026-061.txt",
+      "konto": "4380",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Jährlicher betrieblicher Mitgliedsbeitrag an den Gewerbeverein."
+    },
+    {
+      "datei": "gutschein_wellness_geschenk.txt",
+      "konto": "4635",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Geschäftspartnergeschenk für 150 Euro überschreitet die steuerliche Geschenkfreigrenze."
+    },
+    {
+      "datei": "hafenbar_bewirtungsbeleg.txt",
+      "konto": "4650",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "Geschäftliche Bewirtung belegt; nicht abzugsfähiger Anteil benötigt getrennte Zuordnung."
+    },
+    {
+      "datei": "hotel kontorhaus H-26-03344.txt",
+      "konto": "4670",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "Inhaberin als Hotelgast; betrieblicher Reiseanlass fehlt auf Hotelrechnung."
+    },
+    {
+      "datei": "innung_beitrag.txt",
+      "konto": "4380",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Innungsmitgliedsbeitrag und zugehörige Umlage für Gesellenprüfungsausschuss."
+    },
+    {
+      "datei": "kanzlei_agb_pruefung.txt",
+      "konto": "4950",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Anwaltliche Prüfung betrieblicher Geschäftsbedingungen und Leihrad-Mietbedingungen."
+    },
+    {
+      "datei": "kartenabrechnung_jan.txt",
+      "konto": "4970",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Kartenabwicklungsentgelte werden verrechnet; ausgewiesener Kartenumsatz ist nur Berechnungsgrundlage."
+    },
+    {
+      "datei": "kasse_004417.txt",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": "Eigener Kassenverkauf von Zubehör und Kleinreparatur mit 19 Prozent Umsatzsteuer."
+    },
+    {
+      "datei": "kassensystem_KT-0420.txt",
+      "konto": "0410",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "Kassensystem als Geschäftsausstattung; Einweisung und Einrichtung nicht getrennt beziffert."
+    },
+    {
+      "datei": "kfz versicherung 2026.txt",
+      "konto": "4540",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Haftpflicht- und Teilkaskoversicherung des betrieblichen Kraftfahrzeugs."
+    },
+    {
+      "datei": "klickmarkt_2026-07.txt",
+      "konto": "4600",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Bezahlte Suchanzeigen für Fahrradwerkstatt und E-Bike-Vermietung."
+    },
+    {
+      "datei": "kuestenkarten_KK-2260218.txt",
+      "konto": "3300",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Radwanderkarten und Stadtpläne für den Handel mit 7 Prozent Vorsteuer."
+    },
+    {
+      "datei": "kuestennetz_0126.txt",
+      "konto": "4920",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Geschäftlicher Glasfaseranschluss einschließlich Telefonie und fester IP-Adresse."
+    },
+    {
+      "datei": "ladenbau LB-2026-014.txt",
+      "konto": "0410",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "Ladeneinrichtung; mögliche GWG-Podeste erfordern Prüfung und getrennte Zuordnung."
+    },
+    {
+      "datei": "lichtwerk_maerz.txt",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Fahrradbeleuchtung in Handelsmengen mit 19 Prozent Vorsteuer."
+    },
+    {
+      "datei": "lohn_brandsen_2026-03.txt",
+      "konto": "4120",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Monatliches Gehalt des ausdrücklich bezeichneten angestellten Zweiradmechanikers."
+    },
+    {
+      "datei": "meenken august.txt",
+      "konto": "4930",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Druckerpapier, Textmarker, Preisetiketten und Klebefilm als Bürobedarf."
+    },
+    {
+      "datei": "miete laden jan26.txt",
+      "konto": "4210",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Gewerbemiete für Laden und Werkstatt einschließlich Betriebskostenvorauszahlung."
+    },
+    {
+      "datei": "mobilfunk-2026-07.txt",
+      "konto": "4920",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Geschäftliche Mobilfunktarife und Roaming-Datenpaket."
+    },
+    {
+      "datei": "paketwelle sammelrg mai.txt",
+      "konto": "4910",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Paketversand einschließlich Sperrgut und Abholpauschalen."
+    },
+    {
+      "datei": "parkhaus_messe.txt",
+      "konto": "4500",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "Parkentgelt; Fahrzeug, betrieblicher Anlass und reisende Person fehlen."
+    },
+    {
+      "datei": "parkschein kurpromenade.txt",
+      "konto": "4500",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Kommunale Parkgebühr für das bezeichnete Betriebsfahrzeug."
+    },
+    {
+      "datei": "porto_quittung_feb.txt",
+      "konto": "4910",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Briefmarken und Einschreiben als Postdienstleistungen."
+    },
+    {
+      "datei": "provision_velolease_Q1.txt",
+      "konto": "8500",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": "Eigene Leasingvermittlungsprovision wird durch Geschäftspartner abgerechnet und ausgezahlt."
+    },
+    {
+      "datei": "präsentkorb gross 1240.txt",
+      "konto": "4635",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Präsentkorb für Geschäftspartner überschreitet bereits einzeln die steuerliche Geschenkfreigrenze."
+    },
+    {
+      "datei": "rechnung-dk-2026-0203.txt",
+      "konto": "8125",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": "Eigene ausdrücklich steuerfreie innergemeinschaftliche Warenlieferung an dänischen Unternehmer."
+    },
+    {
+      "datei": "reifen poppinga.txt",
+      "konto": "4500",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Ersatzreifen fürs Betriebsfahrzeug einschließlich Montage und Altreifenentsorgung."
+    },
+    {
+      "datei": "reisekosten_tidemann_haendlertag.txt",
+      "konto": "4670",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Ausdrücklich betriebliche Reise der Inhaberin zum Händlertag."
+    },
+    {
+      "datei": "rolltor reparatur TG-11872.txt",
+      "konto": "4260",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Reparatur des Werkstattrolltors einschließlich Ersatzfeder und Monteurstunden."
+    },
+    {
+      "datei": "scan0214.txt",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": "Eigene Mietradwartung samt Ersatzteilen mit 19 Prozent Umsatzsteuer."
+    },
+    {
+      "datei": "scan_0007.txt",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Fahrradreifen und Felgenbänder in Handelsmengen mit 19 Prozent Vorsteuer."
+    },
+    {
+      "datei": "scan_elektronikvers.txt",
+      "konto": "4360",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Betriebliche Elektronik- und Werkstattgeräteversicherung einschließlich Versicherungsteuer."
+    },
+    {
+      "datei": "scan_export_norwegen.txt",
+      "konto": "8120",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": "Eigene ausdrücklich steuerfreie Ausfuhrlieferung nach Norwegen als Drittland."
+    },
+    {
+      "datei": "scan_zettel_0109.txt",
+      "konto": "1800",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Bargeldentnahme für ausdrücklich privaten Geburtstagseinkauf."
+    },
+    {
+      "datei": "seminar_e-antrieb_AK-0177.txt",
+      "konto": "4945",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Fachliche Systemschulung eines Mitarbeiters einschließlich Schulungsunterlagen und Zertifikat."
+    },
+    {
+      "datei": "siefkes_praesent_1182.txt",
+      "konto": "4630",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Präsentkorb für Harmsen; bekannte Jahresgeschenke bleiben netto unter 50 Euro."
+    },
+    {
+      "datei": "sponsoring_bande_tus.txt",
+      "konto": "4600",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Sponsoring mit konkreter Gegenleistung: Bandenwerbung und Logo im Stadionheft."
+    },
+    {
+      "datei": "stadtwerke_abschlag_strom_01.txt",
+      "konto": "4240",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Stromabschlag für die ausdrücklich benannte betriebliche Verbrauchsstelle."
+    },
+    {
+      "datei": "stb_fibu_Q1.txt",
+      "konto": "4955",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Finanzbuchführung und zugehörige Umsatzsteuer-Voranmeldungen einschließlich Auslagen."
+    },
+    {
+      "datei": "sw_abschlag_0926.txt",
+      "konto": "4240",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Gemeinsamer Abschlag für betrieblichen Strom- und Erdgasbezug."
+    },
+    {
+      "datei": "tanken_190126.txt",
+      "konto": "4530",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "Diesel fürs Betriebsfahrzeug; Literpreis und Gesamtbetrag widersprechen sich erheblich."
+    },
+    {
+      "datei": "tankhof juni.txt",
+      "konto": "4530",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "Diesel fürs Betriebsfahrzeug; Literpreis und Gesamtbetrag widersprechen sich erheblich."
+    },
+    {
+      "datei": "terminal gebühren juli scan.txt",
+      "konto": "4970",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Verrechnete Kartenabwicklungsgebühren einschließlich Terminal-Servicepauschale."
+    },
+    {
+      "datei": "toenjes montagestaender.txt",
+      "konto": "0480",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Selbständig nutzbarer Montageständer für 649 Euro netto als GWG."
+    },
+    {
+      "datei": "ueberweisung_privat_mai.txt",
+      "konto": "1800",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Überweisung vom Geschäftskonto auf Privatkonto für Lebensunterhalt der Inhaberin."
+    },
+    {
+      "datei": "velolease q3 provisionsabr.txt",
+      "konto": "8500",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": "Eigene Leasingvermittlungsprovision wird durch Geschäftspartner abgerechnet und ausgezahlt."
+    },
+    {
+      "datei": "verkauf_wilmsen_trekkingrad.txt",
+      "konto": "8400",
+      "richtung": "einnahme",
+      "sicher": true,
+      "grund": "Eigener Trekkingradverkauf einschließlich Schloss mit 19 Prozent Umsatzsteuer."
+    },
+    {
+      "datei": "vosskamp kinderräder sept.txt",
+      "konto": "3400",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Kinderfahrräder und Laufräder in Handelsmengen mit 19 Prozent Vorsteuer."
+    },
+    {
+      "datei": "wasserverband_2026.txt",
+      "konto": "4240",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Trinkwasserverbrauch und Zählergrundgebühr für die betriebliche Abnahmestelle."
+    },
+    {
+      "datei": "weinkontor geschenke.txt",
+      "konto": "4630",
+      "richtung": "ausgabe",
+      "sicher": false,
+      "grund": "Mögliche Jahreshäufung bei Deichgraf; unterschiedliche Empfänger können Aufteilung erfordern."
+    },
+    {
+      "datei": "werbetechnik_schaufenster.txt",
+      "konto": "4600",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Schaufensterbeschriftung und bedruckter Kundenstopper dienen unmittelbar der Werbung."
+    },
+    {
+      "datei": "werkbuch_lizenz_2026.txt",
+      "konto": "4980",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Befristetes Abonnement betrieblicher Auftragssoftware; ausdrücklich kein Softwarekauf."
+    },
+    {
+      "datei": "werkstatt_bremsen_feb.txt",
+      "konto": "4500",
+      "richtung": "ausgabe",
+      "sicher": true,
+      "grund": "Bremsenreparatur und Bremsflüssigkeitswechsel am betrieblichen Lieferwagen."
+    }
+  ]
+}
