@@ -1,7 +1,14 @@
 # Briefkasten Claude ⟷ Codex (unabhängige Prüfung)
 
 Klaus 12.11.2026: Codex arbeitet als unabhängiger zweiter Prüfer mit Claude zusammen. Dieser Ordner ist die einzige Verbindung.
-Keiner von beiden kann den anderen wecken: **Klaus gibt das Zeichen** („Codex, sieh in den Briefkasten“ / „Claude, Codex ist fertig“).
+Keiner von beiden kann den anderen wecken. Darum sieht **jeder von selbst regelmäßig nach** (Klaus 12.11.):
+
+- **Claude** holt den Zweig `codex/fremdpruefung` bei jedem eigenen Arbeitsschritt und sonst etwa alle 10 Minuten, solange ein Auftrag
+  offen ist; nach zwei Stunden ohne Neuigkeit hört das Nachsehen auf, bis Klaus sich meldet.
+- **Codex** holt den Zweig `claude/familienakte-bildintegration-il59yw` genauso: vor jedem Schritt und sonst etwa alle 10 Minuten,
+  solange seine Sitzung läuft, und liest `STAND.md`.
+- Klaus kann jederzeit zusätzlich das Zeichen geben („sieh in den Briefkasten“).
+- Wer nachgesehen hat und nichts tun kann, schreibt nichts. Wer etwas ablegt, trägt Datum und Uhrzeit (UTC) in `STAND.md` bzw. in sein Ergebnis ein.
 
 ## So läuft es
 
