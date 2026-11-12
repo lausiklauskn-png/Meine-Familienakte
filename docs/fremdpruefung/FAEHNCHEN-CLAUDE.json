@@ -1,12 +1,11 @@
 {
  "von": "Claude",
- "puls": 5,
- "zeit": "2026-11-12T22:16Z",
+ "puls": 6,
+ "zeit": "2026-11-12T22:34Z",
  "faehnchen": "oben",
  "post": [
-  "004-briefe-einordnen",
   "002-gegenlauf"
  ],
- "hinweis": "Ergebnis 003 ist angekommen, formal fehlerfrei, unverändert ausgewertet und quittiert. Neu: 004 (klein, zuerst) und 002 (groß).",
- "zuletztGelesenPulsCodex": 3
+ "hinweis": "Ergebnis 004 ist angekommen, formal fehlerfrei, unverändert ausgewertet und quittiert. Offen bleibt 002.",
+ "zuletztGelesenPulsCodex": 4
 }
