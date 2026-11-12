@@ -26,15 +26,19 @@ Nur Plan, nichts gebaut, nichts ausgegeben. Plan: `docs/PLAN_2026-11-12_BILDER.m
 | 07:30–07:50 | Bestand gelesen (Scan, OCR, Prüfkern, Klon), Plan und Brief geschrieben |
 | 07:50–08:05 | Plan Datei-Organizer (Bestand Eingang/Bestand prüfen/Briefkopf gelesen) |
 | 08:05–09:30 | Datei-Organizer: Entscheidungen, Marktvergleich, KI-Wahl, Datenweg zum Lehrer |
-| 09:30–10:30 | Repo Datei-Organizer: Plan übernommen, CLAUDE.md, Vorschau Stufe A |
+| 09:30–10:20 | Repo Datei-Organizer: Plan übernommen, CLAUDE.md, Vorschau Stufe A |
+| 10:20–11:00 | Datei-Organizer 0.1.0 gebaut (Freibrief): Kern, Oberfläche, 101 Testdateien, Proben (letzter Commit 11:00:19) |
+
+Spanne gemessen am ersten und letzten Commit; Zeit vor dem ersten Commit ist nicht enthalten.
 
 ## Startauftrag
 
 ```
 Familienakte (lausiklauskn-png/Meine-Familienakte). CLAUDE.md, BRIEF_ABSCHLUSS_2026-11-12_CLOUD-ORDNER-2.28.65.md und
-docs/PLAN_2026-11-12_BILDER.md und docs/PLAN_2026-11-12_DATEI-ORGANIZER.md (Verweis; Plan im Repo Datei-Organizer) lesen. Zuerst Klaus' Antworten auf F1–F8 und den offenen S-Fragen (S8; S3–S6 und S11 entschieden)
-aufnehmen. Datei-Organizer: Repo lausiklauskn-png/Datei-Organizer (Plan docs/PLAN.md, Vorschau Stufe A auf Zweig
-claude/familienakte-bildintegration-il59yw) – Klaus' Ja zur Vorschau abholen, dann dort Stufe B. Bilder: Stufe A (HTML-Vorschau
+docs/PLAN_2026-11-12_BILDER.md und docs/PLAN_2026-11-12_DATEI-ORGANIZER.md (Verweis; Plan im Repo Datei-Organizer) lesen. Zuerst Klaus' Antworten auf F1–F8 und den offenen S-Fragen (S1–S11 entschieden)
+aufnehmen. Datei-Organizer: Repo lausiklauskn-png/Datei-Organizer, Fassung 0.1.0 gebaut (Zweig claude/familienakte-bildintegration-il59yw,
+Entwurfs-PR #1; Kern 85 grün, Browser-Probe 40 grün). Klaus' Gerätetest abholen (SD-Karte über Familienakte Pro, PC), dann in der
+Familienakte „Ordner übernehmen“ mit organizer-index.json bauen (Kern byte-gleich mit Pin). Bilder: Stufe A (HTML-Vorschau
 docs/vorschau/bilder-2.28.66.html) zeigen; nach Klaus' Ja Stufe B, dann C bauen (je Stufe ein PR auf main). Nächste freie
 Fassung 2.28.66, gesammelt ausgeben. Gerätetest 2.28.65 bleibt offen (siehe Cloud-Ordner-Brief).
 ```
