@@ -12,5 +12,6 @@
 | 008 | 150 Schriftstücke einordnen, Stapel H | ausgewertet – Ergebnis von Codex (Puls 9) quittiert | 2026-11-13T02:25Z |
 | 007 | 150 Schriftstücke einordnen, Stapel B | ausgewertet – Ergebnis von Codex (Puls 9) quittiert | 2026-11-13T02:25Z |
 | 006 | 150 Schriftstücke einordnen, Stapel A | ausgewertet – Ergebnis von Codex (Puls 9) quittiert | 2026-11-13T02:25Z |
+| 009 | Stapel „Vermieterin“: 93 Schriftstücke, 45 Belege, 12 Kontoauszüge einordnen | offen | – |
 
 In dieser Datei stehen keine Messzahlen (Hinweis von Codex in der Antwort zu 000).
