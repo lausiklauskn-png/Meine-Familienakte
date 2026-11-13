@@ -1,0 +1,37 @@
+{
+ "version": "2.28.66",
+ "source": "ff46537aab0b6b2e7e33d8f200d4d4374560b960",
+ "pullRequest": [174],
+ "recordedUtc": "2026-11-13T13:25:00Z",
+ "freigabe": "Klaus 13.11.2026: „Jetzt machen wir dann erst einmal die Herausgabe der neuen Version von Family Project mit dem neuen Kern.“",
+ "inhalt": "Eingang mit dem Sortier-Kern des Datei-Organizers (byte-gleich, Pin 534cc08): ab 200 Zeichen gelesenem Text entscheidet der Kern den Bereich und liest die Frist; Schutzklasse wird nie herabgesetzt; Briefkasten für die unabhängige Prüfung mit Codex.",
+ "ciAmPrStand": "PR #174 auf 7a6b1e7: pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) – success, je erster Lauf.",
+ "releases": [
+  {
+   "tag": "android-v2.28.66",
+   "run": 43429395633,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {"name": "Familienakte-android-v2.28.66.apk", "bytes": 20251198, "sha256": "a49f065eb387a827161456edb5265767f912e2f8c8a11a71783421659a067c14", "anonymousDownload": true, "matchesSHA256SUMS": true, "versionInside": "2.28.66 (assets/public/version.json, commit ff46537)"},
+    {"name": "Familienakte-Einzeldatei-2.28.66.html", "bytes": 4744321, "sha256": "08af5d8f11991dccb8b531325419d7d4997dcc782375b2fbd5165250ab17c13c", "anonymousDownload": true, "matchesSHA256SUMS": true}
+   ]
+  },
+  {
+   "tag": "windows-v2.28.66",
+   "run": 43429400016,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {"name": "Familienakte-Windows-2.28.66-x64-setup.exe", "bytes": 34404852, "sha256": "8fae01bc690665ea881dfd70668d8dcec96304d0e3627f0bc9820e336ab2f112", "anonymousDownload": true, "matchesSHA256SUMS": true, "latestJson": "version 2.28.66"}
+   ]
+  }
+ ],
+ "pwa": "Pages-Läufe 43429334147 (push) und 43431947481 (nach dem Windows-Lauf) auf ff46537 success; Seite aus dem Behälter nicht selbst geprüft.",
+ "notChecked": [
+  "Alles am Gerät: Vorschlag für Bereich und Frist an echten Unterlagen, Update über die Versionszeile",
+  "family-projekt.de aus dem Behälter nicht geprüft; der Freigabelauf prüft den Server selbst",
+  "Frischer Stapel nach dem Einbau; Geschenkbox nicht auf 2.28.66 nachgezogen; lib/app-stand.ts nicht für 2.28.66 ergänzt",
+  "Prüfung bei jedem PR auf main (ff46537) lief beim Schreiben noch"
+ ]
+}
