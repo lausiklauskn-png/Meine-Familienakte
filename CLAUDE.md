@@ -5,7 +5,14 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 `docs/briefe-archiv/` (Klaus 2026-11-04: archivieren statt löschen); die Veröffentlichungsnachweise in
 `docs/VEROEFFENTLICHUNG-<fassung>.json`.
 
-## Aktueller Stand (13.11.2026, nach 2.28.66)
+## Aktueller Stand (13.11.2026 abends, nach 2.28.67)
+
+- **Fassung 2.28.67 ausgegeben (13.11.; #176; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.67.json`), nicht erneut ausgeben.**
+  Absender kommt im Eingang aus dem Sortier-Kern (`mitKernAbsender`, nur bei gelesenem Text), Titel weiter nur aus dem Briefkopf-Baustein
+  (`briefTitel(kopfRoh)`; der erste Versuch „Brief von …“ aus dem Kern-Absender ersetzte bei Nicht-Briefen den Dateinamen, CI rot, behoben).
+  Nachweis mit drei Einordnern (Datei-Organizer `docs/PRUEFSTAPEL-FAMILIE-K3-REGELN.md`): Absender 45 → 97 % (gesichert), Bereich 77 → 83 %
+  (p = 0,06, nur Richtung). Brief `BRIEF_ABSCHLUSS_2026-11-13_AUSGABE-2.28.67.md`. Offen: Übernahme aus dem Datei-Organizer (Blöcke kommen
+  dazu, nichts überschreiben; Doppelte anzeigen, bei gleichem Fingerabdruck zusammenführen; erst Vorschau).
 
 - **Fassung 2.28.66 ausgegeben (13.11.; #174; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.66.json`), nicht erneut ausgeben.
   Sortier-Kern eingebaut (Klaus 13.11.):** Der Kern des Datei-Organizers liegt
@@ -23,7 +30,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Eingangsordner, dann Klick für Klick feiner (Art → Kopf → Kategorie/Nummern → Absender → Inhalt), nur Teile lesen, schnelle
   Modelle statt Sprachmodell, lernt aus Korrekturen, Verlauf mit Rückgängig. Klaus 12.11.: eigene App, alles in einem Ordner mit selbstsortierendem Baum (Sichten), Ordner wird in die Familienakte nur übernommen und dort automatisch zugeordnet. Lehrer = Claude Haiku 5.5 über Server oder freigegebenen Ordner, nie über das Repo. **Fassung 0.1.0 dort gebaut** (12.11., PR #1 Entwurf: Kern, Oberfläche im Familienakte-Design, 101 erfundene Testdateien, Archivnummern erst wenn nichts mehr zu prüfen ist); Index-Übernahme hier noch nicht gebaut. S11 entschieden: Weg A über den Hetzner-Server (KimHub `schicht/api.mjs`) mit Schlüssel und Pseudonymisierung; S3–S6 entschieden wie vorgeschlagen; S8 offen, Repo `Datei-Organizer` angelegt, Plan, Regeln und Vorschau (Stufe A) dort auf Zweig claude/familienakte-bildintegration-il59yw; Zweck: Vorarbeit für andere Programme und KI (Steckbrief, Text, Abschnitte für Vektoren).
 - **Fassung 2.28.65** (#171 mit #170; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.65.json`; Brief
-  `BRIEF_ABSCHLUSS_2026-11-12_CLOUD-ORDNER-2.28.65.md`): **Sicherung an einem zweiten Ort** (`app/zweiter-ort*.ts(x)`, `lib/zweiter-ort.ts`;
+  `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-12_CLOUD-ORDNER-2.28.65.md`): **Sicherung an einem zweiten Ort** (`app/zweiter-ort*.ts(x)`, `lib/zweiter-ort.ts`;
   selbsttätig bei Änderung höchstens einmal am Tag, verschlüsselt/lesbar, dort 1, auf dem Gerät 2 im App-Ordner `sicherungen`; erst
   schreiben und `sicherungNachpruefen`, dann alte eigene entfernen – nur mit Kennungsdatei `Zweiter_Ort.json`; nativ nur über
   `sicherungEntfernen`, Android/Windows/Rust, JUnit `SicherungEntfernenTest`), **„Synchron halten“** (Festplatte im selben Ordner mit
@@ -156,9 +163,9 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   (2.28.35, `docs/landkarte/`), Landkarte der App mit **Stand je Kasten in `lib/app-stand.ts` – bei jeder Fassung eintragen** (2.28.36),
   Hilfe-Themen als Bild, Vorschaufenster (2.28.37), Listenzeilen mit `KnopfLeiste`, Kopfleiste (2.28.38).
   Proben-Hinweise: `step()` wertet einen zurückgegebenen Text als grün, deshalb `soll()`; Seitentitel sind keine Sprungziele.
-- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.66, 2.28.65, 2.28.64, 2.28.61, 2.28.60, 2.28.59, 2.28.58, 2.28.57, 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
+- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.67, 2.28.66, 2.28.65, 2.28.64, 2.28.61, 2.28.60, 2.28.59, 2.28.58, 2.28.57, 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
   (2.28.50 ausgegeben, aber ohne eigenen Nachweis; 2.28.40–2.28.47 waren Zwischenstände). Keine davon erneut ausgeben;
-  **nächste freie Fassung 2.28.67** (2.28.62 und 2.28.63 nie ausgegeben). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
+  **nächste freie Fassung 2.28.68** (2.28.62 und 2.28.63 nie ausgegeben). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
   sammeln, Proben laufen lassen, gesammelt als eine Fassung ausgeben (ersetzt „jede neue Funktion gleich ausgeben“ vom 06.11.).
   Neue Fassung oben in `lib/fassungen.ts` eintragen. Die Versionszeile zeigt die technische Fassung aus `package.json`;
   `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
@@ -185,17 +192,17 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
-  - Nächste Sitzungen (Repo Datei-Organizer): `docs/BRIEF_SITZUNG_2026-11-13_KERN-IN-DIE-GRUPPE.md`, danach `docs/BRIEF_SITZUNG_2026-11-13_PUNKTE-3-9.md`
-  - `BRIEF_ABSCHLUSS_2026-11-13_SORTIERKERN-UND-LAUF-VERMIETERIN.md` (letzter Stand: Sortier-Kern eingebaut, Lauf „Vermieterin“, Startauftrag)
+  - Nächste Sitzung (Repo Datei-Organizer): `docs/BRIEF_SITZUNG_2026-11-14_NEEDS-RUECKWAERTSTEST.md` (Rückwärtstest Workflow Needs, nichts ändern)
+  - `BRIEF_ABSCHLUSS_2026-11-13_AUSGABE-2.28.67.md` (letzter Stand: 2.28.67, Startauftrag)
   - `BRIEF_SITZUNG_2026-11-11_CLOUD-ORDNER-2.28.65.md` (nächster Bau: Sicherung an einem zweiten Ort, Nur sichern/Synchron halten, Cloud-Ordner hereinholen; Klaus: keine Vorschau nötig)
   - `BRIEF_ABSCHLUSS_2026-11-12_PLAN-BILDER.md` (Plan Bilder, Fragen F1–F8)
-  - `BRIEF_ABSCHLUSS_2026-11-12_CLOUD-ORDNER-2.28.65.md` (letzter Bau: 2.28.65, Entscheidungen, Startauftrag)
   - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-11_GESAMMELT-2.28.64.md` (2.28.57 bis 2.28.64)
   - `BRIEF_CODEX_2026-11-04_NACH-2.28.24.md` (Abstimmung mit Codex: welche Dateien Claude gehören)
   - `BRIEF_ABSCHLUSS_2026-11-04_PDF-ARBEITSRAUM.md`, `BRIEF_ABSCHLUSS_2026-11-04_PDF-FUNKTIONSABGLEICH.md` (Codex)
 
 ## Offen
 
+- **2.28.67 am Gerät ungeprüft:** Absender und Titel an echten Unterlagen.
 - **2.28.66 am Gerät ungeprüft:** Vorschlag für Bereich und Frist an echten Unterlagen; Geschenkbox und `lib/app-stand.ts` nicht nachgezogen.
 - **2.28.65 am Gerät ungeprüft:** zweiter Ort auf OneDrive-Ordner/Stick/SD (Freigabe nach Neustart, Löschen alter Sicherungen auf SD),
   Cloud-Ordner unter Windows mit OneDrive-Platzhaltern, Paket vom Handy über die OneDrive-App bis zum PC, Mail-App mit Anlagen am Handy,

@@ -1,0 +1,36 @@
+{
+ "version": "2.28.67",
+ "source": "35198208a3ddf4555b3863afe59cd5573d0da7db",
+ "pullRequest": [176],
+ "recordedUtc": "2026-11-13T17:12:00Z",
+ "freigabe": "Klaus 13.11.2026 (Freibrief): „selbstständig veröffentlichen … dass die Programme fertig sind und veröffentlicht werden am Ende der Sitzung“.",
+ "inhalt": "Eingang: Absender aus dem Sortier-Kern (mitKernAbsender, nur bei gelesenem Text), Titel weiter nur aus dem Briefkopf-Baustein. Nachweis mit drei Einordnern: Absender 45 → 97 % (gesichert), Bereich 77 → 83 % (p = 0,06, nur Richtung).",
+ "ciAmPrStand": "PR #176 auf e44075c: pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) – success.",
+ "releases": [
+  {
+   "tag": "android-v2.28.67",
+   "run": 43467222112,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {"name": "Familienakte-android-v2.28.67.apk", "bytes": 20210238, "sha256": "3db7e2dbf97432990ba9cf996e6088c2c9897191d7a2cf0b54aae3871aff26d0", "anonymousDownload": true, "matchesSHA256SUMS": true, "versionInside": "2.28.67 (assets/public/version.json, commit 3519820)"},
+    {"name": "Familienakte-Einzeldatei-2.28.67.html", "bytes": 4552586, "sha256": "8d596e7508e92025c9105bc419c4316b4d53250bae76d18b8155e2700e11a3fc", "anonymousDownload": true, "matchesSHA256SUMS": true}
+   ]
+  },
+  {
+   "tag": "windows-v2.28.67",
+   "run": 43467228112,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {"name": "Familienakte-Windows-2.28.67-x64-setup.exe", "bytes": 34370141, "sha256": "5b4070f1a88f623f806b436db6f2882849923a6f0128076cc98f4d0e60c81b9d", "anonymousDownload": true, "matchesSHA256SUMS": true, "latestJson": "version 2.28.67"}
+   ]
+  }
+ ],
+ "pwa": "Pages-Lauf 43467198411 (push) auf 3519820 success; Seite aus dem Behälter nicht selbst geprüft.",
+ "notChecked": [
+  "Alles am Gerät: Absender und Titel an echten Unterlagen, Update über die Versionszeile",
+  "family-projekt.de aus dem Behälter nicht geprüft; der Freigabelauf prüft den Server selbst",
+  "Geschenkbox nicht auf 2.28.67 nachgezogen; lib/app-stand.ts nicht ergänzt"
+ ]
+}
