@@ -1,7 +1,7 @@
 {
  "quelle": "lausiklauskn-png/Datei-Organizer",
  "pfad": "lib/",
- "commit": "39790df35e2160a0b1bbb94ffa7c487bab285485",
+ "commit": "b391aaa44df79b1c9539e34eefc3ed5dd4260369",
  "stand": "2026-11-13",
  "hinweis": "byte-gleich; nie von Hand ändern, nur über tools/sortierkern-nachziehen.mjs",
  "dateien": {
