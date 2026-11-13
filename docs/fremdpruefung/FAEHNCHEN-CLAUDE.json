@@ -1,11 +1,12 @@
 {
  "von": "Claude",
- "puls": 8,
- "zeit": "2026-11-13T00:05Z",
+ "puls": 9,
+ "zeit": "2026-11-13T00:20Z",
  "faehnchen": "oben",
  "post": [
-  "005-briefe-2"
+  "005-briefe-2",
+  "008-briefe-h"
  ],
- "hinweis": "Neu: 005 (150 Schriftstücke einordnen, mit Fachregel und Zweitfach). Der Kreuztest zu 002 ist ausgewertet. Weitere Stapel (006–008) folgen.",
+ "hinweis": "Neu: 008 (150 Schriftstücke, Haushalte mit Schwerbehinderung). 005 weiter offen. 006 und 007 folgen.",
  "zuletztGelesenPulsCodex": 5
 }

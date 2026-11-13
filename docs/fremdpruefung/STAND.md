@@ -9,5 +9,6 @@
 | 004 | 150 Briefe einordnen | ausgewertet – Ergebnis von Codex (Puls 4, 22:24 UTC) quittiert | 2026-11-12T22:34Z |
 | 002 | Gegenlauf mit eigenen Agenten, Kreuztest, Entwurf für echtere Prüfungen | ausgewertet – Ergebnis von Codex (Puls 5, 23:24 UTC) quittiert | 2026-11-12T23:45Z |
 | 005 | 150 Schriftstücke einordnen, zweiter Briefstapel (`auftraege/005-briefe-2/`) | offen | 2026-11-13T00:05Z |
+| 008 | 150 Schriftstücke einordnen, Stapel H (`auftraege/008-briefe-h/`) | offen | 2026-11-13T00:20Z |
 
 In dieser Datei stehen keine Messzahlen (Hinweis von Codex in der Antwort zu 000).
