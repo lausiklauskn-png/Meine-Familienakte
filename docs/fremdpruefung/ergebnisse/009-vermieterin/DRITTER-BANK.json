@@ -1,0 +1,2534 @@
+{
+  "einordner": "Codex (GPT-6)",
+  "auszuege": [
+    {
+      "datei": "2025-01.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "-385,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Stadtwerke_Jahresabrechnung_Gas_2024.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 2,
+          "betrag": "-34,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Abschlagsplan Strom Allgemein 2025.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 3,
+          "betrag": "-58,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 4,
+          "betrag": "+800,00",
+          "gegenpartei": "Brandtner Markus u. Sabine",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mieterhoehung Brandtner 2025-04.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 5,
+          "betrag": "+860,00",
+          "gegenpartei": "Petrovic Dragan",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mahnung Petrovic Maerz.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 6,
+          "betrag": "+630,00",
+          "gegenpartei": "Jens Scholten und Katrin Scholten",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mietschuldenfreiheit Scholten.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 7,
+          "betrag": "-95,20",
+          "gegenpartei": "Hauswartservice Brinkmeier",
+          "art": "dauerauftrag",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 8,
+          "betrag": "-39,95",
+          "gegenpartei": "Telvia Kommunikation GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "7700371204"
+          ],
+          "stuecke": [
+            "Telvia_Preisanpassung.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 9,
+          "betrag": "+300,00",
+          "gegenpartei": "Dieter Woelk",
+          "art": "gutschrift",
+          "rechnungsnummern": [
+            "1/2025"
+          ],
+          "stuecke": [
+            "belege/Stellplatz Woelk 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 10,
+          "betrag": "-300,00",
+          "gegenpartei": "GA 00417 SELLENBRUECK MARKTSTR.",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 11,
+          "betrag": "-38,47",
+          "gegenpartei": "PAPIER U. TINTE LUEDERS//SELLENBRUECK",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Lueders Buerobedarf.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-428,16",
+          "gegenpartei": "Wupsetaler Versicherung AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "kfz beitrag 25.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "-140,70",
+          "gegenpartei": "Druckhaus Wendelsburg GmbH u. Co. KG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 14,
+          "betrag": "-242,76",
+          "gegenpartei": "Fidelia Sachversicherung AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "scan_0004.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "-285,60",
+          "gegenpartei": "Hauswartservice Brinkmeier",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "2025-009"
+          ],
+          "stuecke": [
+            "2025-01-15 Brinkmeier Winterdienst.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "-78,00",
+          "gegenpartei": "Haus- u. Grundeigentuemerverein Wendelsburg",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "B-2025-0417"
+          ],
+          "stuecke": [
+            "belege/HuG Beitrag 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 17,
+          "betrag": "-412,00",
+          "gegenpartei": "Landeshypo Mittelland AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Darlehen Jahresauszug 2024.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 18,
+          "betrag": "-64,18",
+          "gegenpartei": "FRISCHMARKT JESSEN//SELLENBRUECK",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 19,
+          "betrag": "+1.142,37",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Rentenanpassung 2025 Altersrente.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 20,
+          "betrag": "+612,48",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "scan_0027.txt"
+          ],
+          "sicher": true
+        }
+      ]
+    },
+    {
+      "datei": "2025-02.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "-385,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Stadtwerke_Jahresabrechnung_Gas_2024.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 2,
+          "betrag": "-34,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Abschlagsplan Strom Allgemein 2025.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 3,
+          "betrag": "-58,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 4,
+          "betrag": "+800,00",
+          "gegenpartei": "Brandtner Markus u. Sabine",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mieterhoehung Brandtner 2025-04.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 5,
+          "betrag": "+860,00",
+          "gegenpartei": "Petrovic Dragan",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mahnung Petrovic Maerz.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 6,
+          "betrag": "-95,20",
+          "gegenpartei": "Hauswartservice Brinkmeier",
+          "art": "dauerauftrag",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Brinkmeier 2025-014.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 7,
+          "betrag": "+630,00",
+          "gegenpartei": "Jens Scholten und Katrin Scholten",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mietschuldenfreiheit Scholten.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 8,
+          "betrag": "-39,95",
+          "gegenpartei": "Telvia Kommunikation GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "7700379815"
+          ],
+          "stuecke": [
+            "Telvia_Preisanpassung.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 9,
+          "betrag": "-80,92",
+          "gegenpartei": "Heizung-Sanitaer Droege GmbH",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "RE-2025-0102"
+          ],
+          "stuecke": [
+            "belege/scan_0007.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 10,
+          "betrag": "-1.487,50",
+          "gegenpartei": "Dachdeckerei Hinnerk Voss",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "RE-2025-0041"
+          ],
+          "stuecke": [
+            "belege/RE Dach Voss.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 11,
+          "betrag": "-359,18",
+          "gegenpartei": "Wasserverband Obere Wupse",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Wasser Abwasser Bescheid 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-214,36",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "VR-2025-0007731"
+          ],
+          "stuecke": [
+            "Stadtwerke_Jahresabrechnung_Gas_2024.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "+18,72",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "gutschrift",
+          "rechnungsnummern": [
+            "VR-2025-0007732"
+          ],
+          "stuecke": [
+            "belege/Stadtwerke Strom Allgemein Abrechnung 2024.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "-400,00",
+          "gegenpartei": "GA 00417 SELLENBRUECK MARKTSTR.",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "-192,15",
+          "gegenpartei": "Stadtkasse Sellenbrueck",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "scan_0011.txt",
+            "Grundsteuer 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "-412,00",
+          "gegenpartei": "Landeshypo Mittelland AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Darlehen Jahresauszug 2024.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 17,
+          "betrag": "+1.142,37",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Rentenanpassung 2025 Altersrente.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 18,
+          "betrag": "+612,48",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "scan_0027.txt"
+          ],
+          "sicher": true
+        }
+      ]
+    },
+    {
+      "datei": "2025-03.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "-398,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Abschlagsplan Gas 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 2,
+          "betrag": "-34,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Abschlagsplan Strom Allgemein 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 3,
+          "betrag": "-58,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 4,
+          "betrag": "+800,00",
+          "gegenpartei": "Brandtner Markus u. Sabine",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mieterhoehung Brandtner 2025-04.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 5,
+          "betrag": "+630,00",
+          "gegenpartei": "Jens Scholten und Katrin Scholten",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mietschuldenfreiheit Scholten.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 6,
+          "betrag": "-95,20",
+          "gegenpartei": "Hauswartservice Brinkmeier",
+          "art": "dauerauftrag",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 7,
+          "betrag": "-1.186,40",
+          "gegenpartei": "Wupsetaler Versicherung AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "BR-7741902"
+          ],
+          "stuecke": [
+            "belege/Wohngebaeude Beitrag 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 8,
+          "betrag": "+500,00",
+          "gegenpartei": "Petrovic Dragan",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mahnung Petrovic Maerz.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 9,
+          "betrag": "-39,95",
+          "gegenpartei": "Telvia Kommunikation GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "7700388430"
+          ],
+          "stuecke": [
+            "Telvia_Preisanpassung.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 10,
+          "betrag": "-215,50",
+          "gegenpartei": "Finanzamt Wendelsburg",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 11,
+          "betrag": "-89,70",
+          "gegenpartei": "BAUMARKT HAGEDORN//SELLENBRUECK",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/IMG_20250311_1604.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-243,20",
+          "gegenpartei": "Abfallwirtschaftsbetrieb LK Wendelsburg",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "IMG_20250114_0932.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "-36,00",
+          "gegenpartei": "Landfrauenverein Sellenbrueck e.V.",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Einladung JHV Landfrauen.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "-24,90",
+          "gegenpartei": "BUCHHANDLUNG LESELUST//SELLENBRUECK",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Leselust Bon.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "-45,00",
+          "gegenpartei": "Haus- u. Grundeigentuemerverein Wendelsburg",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "S-2025-17"
+          ],
+          "stuecke": [
+            "belege/HuG Seminar.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "-96,39",
+          "gegenpartei": "Uwe Kallweit Schornsteinfegermeister",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "2025-0312"
+          ],
+          "stuecke": [
+            "belege/scan_0015.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 17,
+          "betrag": "-412,00",
+          "gegenpartei": "Landeshypo Mittelland AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Darlehen Jahresauszug 2024.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 18,
+          "betrag": "+1.142,37",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Rentenanpassung 2025 Altersrente.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 19,
+          "betrag": "+612,48",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "scan_0027.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 20,
+          "betrag": "-23,70",
+          "gegenpartei": "Raiffeisen- und Bürgerbank Sellenbrück eG",
+          "art": "entgelt",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Entgeltabrechnung Q1.txt"
+          ],
+          "sicher": false
+        }
+      ]
+    },
+    {
+      "datei": "2025-04.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "-398,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Abschlagsplan Gas 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 2,
+          "betrag": "-34,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Abschlagsplan Strom Allgemein 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 3,
+          "betrag": "-58,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 4,
+          "betrag": "+800,00",
+          "gegenpartei": "Brandtner Markus u. Sabine",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mieterhoehung Brandtner 2025-04.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 5,
+          "betrag": "+860,00",
+          "gegenpartei": "Petrovic Dragan",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mahnung Petrovic Maerz.txt",
+            "Petrovic wg Miete Maerz.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 6,
+          "betrag": "+630,00",
+          "gegenpartei": "Jens Scholten und Katrin Scholten",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mietschuldenfreiheit Scholten.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 7,
+          "betrag": "-95,20",
+          "gegenpartei": "Hauswartservice Brinkmeier",
+          "art": "dauerauftrag",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 8,
+          "betrag": "-148,75",
+          "gegenpartei": "Waermemass Abrechnungsdienst GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "60-118-2025"
+          ],
+          "stuecke": [
+            "belege/Waermemass Rechnung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 9,
+          "betrag": "-42,95",
+          "gegenpartei": "Telvia Kommunikation GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "7700396122"
+          ],
+          "stuecke": [
+            "Telvia_Preisanpassung.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 10,
+          "betrag": "+1.237,50",
+          "gegenpartei": "Wupsetaler Versicherung AG",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Schaden Dach Abrechnung Versicherung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 11,
+          "betrag": "-549,00",
+          "gegenpartei": "ELEKTROHAUS MERTENS//SELLENBRUECK",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Waschmaschine Mertens Rechnung+Garantie.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-86,00",
+          "gegenpartei": "Bundeskasse Kfz-Steuer HZA Wendelsburg",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Kfz-Steuer.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "-312,60",
+          "gegenpartei": "Justara Rechtsschutz-Versicherung AG",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "scan_0019.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "-386,20",
+          "gegenpartei": "Zahnarztpraxis Dr. Broemmel",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "2025/0388"
+          ],
+          "stuecke": [
+            "Zahnarzt Rechnung Broemmel.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "+180,00",
+          "gegenpartei": "Petrovic Dragan",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mahnung Petrovic Maerz.txt",
+            "Petrovic wg Miete Maerz.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "-140,70",
+          "gegenpartei": "Druckhaus Wendelsburg GmbH u. Co. KG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Tageblatt Abo Ende.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 17,
+          "betrag": "-400,00",
+          "gegenpartei": "GA 00417 SELLENBRUECK MARKTSTR.",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 18,
+          "betrag": "-412,00",
+          "gegenpartei": "Landeshypo Mittelland AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Darlehen Jahresauszug 2024.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 19,
+          "betrag": "+1.142,37",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Rentenanpassung 2025 Altersrente.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 20,
+          "betrag": "+612,48",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "scan_0027.txt"
+          ],
+          "sicher": true
+        }
+      ]
+    },
+    {
+      "datei": "2025-05.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "-398,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Abschlagsplan Gas 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 2,
+          "betrag": "-34,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Abschlagsplan Strom Allgemein 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 3,
+          "betrag": "-58,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 4,
+          "betrag": "+800,00",
+          "gegenpartei": "Brandtner Markus u. Sabine",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mieterhoehung Brandtner 2025-04.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 5,
+          "betrag": "+860,00",
+          "gegenpartei": "Petrovic Dragan",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mahnung Petrovic Maerz.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 6,
+          "betrag": "+630,00",
+          "gegenpartei": "Jens Scholten und Katrin Scholten",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mietschuldenfreiheit Scholten.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 7,
+          "betrag": "-95,20",
+          "gegenpartei": "Hauswartservice Brinkmeier",
+          "art": "dauerauftrag",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 8,
+          "betrag": "-63,29",
+          "gegenpartei": "Jens Scholten und Katrin Scholten",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "NK 2024 Scholten.txt",
+            "belege/Gutschrift NK Scholten.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 9,
+          "betrag": "-452,20",
+          "gegenpartei": "Arne Tiedemann Garten- u. Landschaftspflege",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "RE-2025-0113"
+          ],
+          "stuecke": [
+            "belege/Tiedemann_RE-2025-0113.txt",
+            "IMG_20250502_1107.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 10,
+          "betrag": "-42,95",
+          "gegenpartei": "Telvia Kommunikation GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "7700403877"
+          ],
+          "stuecke": [
+            "Telvia_Preisanpassung.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 11,
+          "betrag": "-185,65",
+          "gegenpartei": "Stadtkasse Sellenbrueck",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Grundsteuer 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-318,00",
+          "gegenpartei": "Wasserverband Obere Wupse",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Wasser Abwasser Bescheid 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "-86,87",
+          "gegenpartei": "Druckhaus Wendelsburg GmbH u. Co. KG",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "AZ-250518"
+          ],
+          "stuecke": [
+            "belege/Tageblatt Anzeige.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "-279,00",
+          "gegenpartei": "BAUMARKT HAGEDORN//SELLENBRUECK",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "IMG_20250517_1542.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "-29,90",
+          "gegenpartei": "wohnfinder24 GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "WF-88213"
+          ],
+          "stuecke": [
+            "belege/wohnfinder24_rechnung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "-300,00",
+          "gegenpartei": "GA 00417 SELLENBRUECK MARKTSTR.",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 17,
+          "betrag": "+190,41",
+          "gegenpartei": "Brandtner Markus u. Sabine",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "NK 2024 Brandtner.txt",
+            "belege/Nachforderung NK Brandtner.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 18,
+          "betrag": "-412,00",
+          "gegenpartei": "Landeshypo Mittelland AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Darlehen Jahresauszug 2024.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 19,
+          "betrag": "+1.142,37",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Rentenanpassung 2025 Altersrente.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 20,
+          "betrag": "+612,48",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "scan_0027.txt"
+          ],
+          "sicher": true
+        }
+      ]
+    },
+    {
+      "datei": "2025-06.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "-398,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Abschlagsplan Gas 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 2,
+          "betrag": "-34,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Abschlagsplan Strom Allgemein 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 3,
+          "betrag": "-58,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 4,
+          "betrag": "+800,00",
+          "gegenpartei": "Brandtner Markus u. Sabine",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mieterhoehung Brandtner 2025-04.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 5,
+          "betrag": "+860,00",
+          "gegenpartei": "Petrovic Dragan",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mahnung Petrovic Maerz.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 6,
+          "betrag": "+162,70",
+          "gegenpartei": "Petrovic Mirela",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "NK 2024 Petrovic.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 7,
+          "betrag": "-142,80",
+          "gegenpartei": "Fidelia Sachversicherung AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Hausrat Nachtrag 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 8,
+          "betrag": "-100,00",
+          "gegenpartei": "Reisedienst Hollmann GmbH",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Hollmann Ostseefahrt Bestaetigung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 9,
+          "betrag": "+630,00",
+          "gegenpartei": "Jens Scholten und Katrin Scholten",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mietschuldenfreiheit Scholten.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 10,
+          "betrag": "-95,20",
+          "gegenpartei": "Hauswartservice Brinkmeier",
+          "art": "dauerauftrag",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 11,
+          "betrag": "-42,95",
+          "gegenpartei": "Telvia Kommunikation GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "7700411390"
+          ],
+          "stuecke": [
+            "Telvia_Preisanpassung.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 12,
+          "betrag": "-215,50",
+          "gegenpartei": "Finanzamt Wendelsburg",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "-400,00",
+          "gegenpartei": "GA 00417 SELLENBRUECK MARKTSTR.",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "-50,00",
+          "gegenpartei": "Jonas Wiebusch",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "-37,00",
+          "gegenpartei": "STADT SELLENBRUECK BUERGERBUERO",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Buergerbuero Ausweis.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "-412,00",
+          "gegenpartei": "Landeshypo Mittelland AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Darlehen Jahresauszug 2024.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 17,
+          "betrag": "+1.142,37",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Rentenanpassung 2025 Altersrente.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 18,
+          "betrag": "+612,48",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "scan_0027.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 19,
+          "betrag": "-23,70",
+          "gegenpartei": "Raiffeisen- und Bürgerbank Sellenbrück eG",
+          "art": "entgelt",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": false
+        }
+      ]
+    },
+    {
+      "datei": "2025-07.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "-398,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Abschlagsplan Gas 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 2,
+          "betrag": "-34,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Abschlagsplan Strom Allgemein 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 3,
+          "betrag": "-58,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 4,
+          "betrag": "+845,00",
+          "gegenpartei": "Brandtner Markus u. Sabine",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mieterhoehung Brandtner 2025-04.txt",
+            "Brandtner Antwort Mieterhoehung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 5,
+          "betrag": "+860,00",
+          "gegenpartei": "Petrovic Dragan",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mahnung Petrovic Maerz.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 6,
+          "betrag": "-95,20",
+          "gegenpartei": "Hauswartservice Brinkmeier",
+          "art": "dauerauftrag",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Brinkmeier 2025-131.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 7,
+          "betrag": "-42,95",
+          "gegenpartei": "Telvia Kommunikation GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "7700419046"
+          ],
+          "stuecke": [
+            "Telvia_Preisanpassung.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 8,
+          "betrag": "-35,00",
+          "gegenpartei": "Abfallwirtschaftsbetrieb LK Wendelsburg",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "SP-25-004417"
+          ],
+          "stuecke": [
+            "belege/Sperrmuell Gebuehr.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 9,
+          "betrag": "+1.388,92",
+          "gegenpartei": "Hannelore Wiebusch",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Kautionsabrechnung Scholten.txt",
+            "Kautionskonto Aydemir Bestaetigung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 10,
+          "betrag": "-1.238,92",
+          "gegenpartei": "Jens Scholten und Katrin Scholten",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Kautionsabrechnung Scholten.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 11,
+          "betrag": "-612,85",
+          "gegenpartei": "Fliesenhandel Ostermann GmbH",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "2025-4471"
+          ],
+          "stuecke": [
+            "belege/Ostermann Fliesen.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-3.000,00",
+          "gegenpartei": "Heizung-Sanitaer Droege GmbH",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "AR-2025-0231"
+          ],
+          "stuecke": [
+            "belege/Droege AR-2025-0231.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "-168,00",
+          "gegenpartei": "Lohnsteuerhilfe Mittelland e.V.",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "B25-0447712"
+          ],
+          "stuecke": [
+            "scan_0031.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "-300,00",
+          "gegenpartei": "GA 00417 SELLENBRUECK MARKTSTR.",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "+1.620,00",
+          "gegenpartei": "Emre Aydemir",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mietvertrag DG Aydemir 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "-1.620,00",
+          "gegenpartei": "Hannelore Wiebusch",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Kautionskonto Aydemir Bestaetigung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 17,
+          "betrag": "-412,00",
+          "gegenpartei": "Landeshypo Mittelland AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Darlehen Jahresauszug 2024.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 18,
+          "betrag": "+1.185,09",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Rentenanpassung 2025 Altersrente.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 19,
+          "betrag": "+635,38",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "scan_0027.txt"
+          ],
+          "sicher": true
+        }
+      ]
+    },
+    {
+      "datei": "2025-08.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "-398,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Abschlagsplan Gas 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 2,
+          "betrag": "-34,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Abschlagsplan Strom Allgemein 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 3,
+          "betrag": "-58,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 4,
+          "betrag": "+700,00",
+          "gegenpartei": "Aydemir Selin u. Emre",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mietvertrag DG Aydemir 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 5,
+          "betrag": "-1.130,50",
+          "gegenpartei": "Malerbetrieb Kowalczyk",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "2025-066"
+          ],
+          "stuecke": [
+            "belege/Maler Kowalczyk Rg 2025-066.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 6,
+          "betrag": "+845,00",
+          "gegenpartei": "Brandtner Markus u. Sabine",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mieterhoehung Brandtner 2025-04.txt",
+            "Brandtner Antwort Mieterhoehung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 7,
+          "betrag": "+860,00",
+          "gegenpartei": "Petrovic Dragan",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mahnung Petrovic Maerz.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 8,
+          "betrag": "-95,20",
+          "gegenpartei": "Hauswartservice Brinkmeier",
+          "art": "dauerauftrag",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 9,
+          "betrag": "-42,95",
+          "gegenpartei": "Telvia Kommunikation GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "7700426511"
+          ],
+          "stuecke": [
+            "Telvia_Preisanpassung.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 10,
+          "betrag": "-345,10",
+          "gegenpartei": "Elektro Sievers",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Elektro Sievers.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 11,
+          "betrag": "-389,00",
+          "gegenpartei": "Reisedienst Hollmann GmbH",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Hollmann Ostseefahrt Bestaetigung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-185,65",
+          "gegenpartei": "Stadtkasse Sellenbrueck",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Grundsteuer 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "-318,00",
+          "gegenpartei": "Wasserverband Obere Wupse",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Wasser Abwasser Bescheid 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "-5.942,85",
+          "gegenpartei": "Heizung-Sanitaer Droege GmbH",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "RE-2025-0417",
+            "AR-2025-0231"
+          ],
+          "stuecke": [
+            "belege/Droege Schlussrechnung Bad.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "-400,00",
+          "gegenpartei": "GA 00417 SELLENBRUECK MARKTSTR.",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "-412,83",
+          "gegenpartei": "Autohaus Reimers GmbH",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "25-2208"
+          ],
+          "stuecke": [
+            "Reimers HU Rechnung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 17,
+          "betrag": "+119,00",
+          "gegenpartei": "Heizung-Sanitaer Droege GmbH",
+          "art": "gutschrift",
+          "rechnungsnummern": [
+            "GS-2025-0031",
+            "RE-2025-0417"
+          ],
+          "stuecke": [
+            "belege/Droege Gutschrift.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 18,
+          "betrag": "-412,00",
+          "gegenpartei": "Landeshypo Mittelland AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Darlehen Jahresauszug 2024.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 19,
+          "betrag": "+1.185,09",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Rentenanpassung 2025 Altersrente.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 20,
+          "betrag": "+635,38",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "scan_0027.txt"
+          ],
+          "sicher": true
+        }
+      ]
+    },
+    {
+      "datei": "2025-09.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "-398,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Abschlagsplan Gas 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 2,
+          "betrag": "-34,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Abschlagsplan Strom Allgemein 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 3,
+          "betrag": "-58,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 4,
+          "betrag": "+700,00",
+          "gegenpartei": "Aydemir Selin u. Emre",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mietvertrag DG Aydemir 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 5,
+          "betrag": "+845,00",
+          "gegenpartei": "Brandtner Markus u. Sabine",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mieterhoehung Brandtner 2025-04.txt",
+            "Brandtner Antwort Mieterhoehung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 6,
+          "betrag": "+860,00",
+          "gegenpartei": "Petrovic Dragan",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mahnung Petrovic Maerz.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 7,
+          "betrag": "-95,20",
+          "gegenpartei": "Hauswartservice Brinkmeier",
+          "art": "dauerauftrag",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 8,
+          "betrag": "-386,00",
+          "gegenpartei": "Finanzamt Wendelsburg",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "ESt-Bescheid 2024.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 9,
+          "betrag": "+262,00",
+          "gegenpartei": "Mittelland Pflegekasse",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Pflegekasse Erstattung Sept.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 10,
+          "betrag": "-42,95",
+          "gegenpartei": "Telvia Kommunikation GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "7700434208"
+          ],
+          "stuecke": [
+            "Telvia_Preisanpassung.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 11,
+          "betrag": "-312,00",
+          "gegenpartei": "Finanzamt Wendelsburg",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "ESt-Bescheid 2024.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-71,42",
+          "gegenpartei": "FRISCHMARKT JESSEN//SELLENBRUECK",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "-300,00",
+          "gegenpartei": "GA 00417 SELLENBRUECK MARKTSTR.",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "-264,18",
+          "gegenpartei": "Heizung-Sanitaer Droege GmbH",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "RE-2025-0489",
+            "RE-2025-0502"
+          ],
+          "stuecke": [
+            "belege/Droege Wartung Heizung 2025.txt",
+            "belege/Droege RE-2025-0502.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "-178,50",
+          "gegenpartei": "Notarin Dr. Friederike Alsleben",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "2025/1147"
+          ],
+          "stuecke": [
+            "Notarin Kostenrechnung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "-412,00",
+          "gegenpartei": "Landeshypo Mittelland AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Darlehen Jahresauszug 2024.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 17,
+          "betrag": "+1.185,09",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Rentenanpassung 2025 Altersrente.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 18,
+          "betrag": "+635,38",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "scan_0027.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 19,
+          "betrag": "-23,70",
+          "gegenpartei": "Raiffeisen- und Bürgerbank Sellenbrück eG",
+          "art": "entgelt",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": false
+        }
+      ]
+    },
+    {
+      "datei": "2025-10.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "-398,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Abschlagsplan Gas 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 2,
+          "betrag": "-34,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Abschlagsplan Strom Allgemein 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 3,
+          "betrag": "-58,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 4,
+          "betrag": "+700,00",
+          "gegenpartei": "Aydemir Selin u. Emre",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mietvertrag DG Aydemir 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 5,
+          "betrag": "+845,00",
+          "gegenpartei": "Brandtner Markus u. Sabine",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mieterhoehung Brandtner 2025-04.txt",
+            "Brandtner Antwort Mieterhoehung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 6,
+          "betrag": "-95,20",
+          "gegenpartei": "Hauswartservice Brinkmeier",
+          "art": "dauerauftrag",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 7,
+          "betrag": "-247,20",
+          "gegenpartei": "Kreiskasse Wendelsburg",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "scan_0038.txt",
+            "IMG_20250114_0932.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 8,
+          "betrag": "-42,95",
+          "gegenpartei": "Telvia Kommunikation GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "7700441973"
+          ],
+          "stuecke": [
+            "Telvia_Preisanpassung.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 9,
+          "betrag": "-62,00",
+          "gegenpartei": "Kirchenamt Wendelsburg",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "scan_0040.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 10,
+          "betrag": "+860,00",
+          "gegenpartei": "Petrovic Dragan",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mahnung Petrovic Maerz.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 11,
+          "betrag": "-238,00",
+          "gegenpartei": "Arne Tiedemann Garten- u. Landschaftspflege",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "RE-2025-0688"
+          ],
+          "stuecke": [
+            "belege/tiedemann hecke okt.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-400,00",
+          "gegenpartei": "GA 00417 SELLENBRUECK MARKTSTR.",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "-79,90",
+          "gegenpartei": "SCHUHHAUS DIERKING//WENDELSBURG",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "-412,00",
+          "gegenpartei": "Landeshypo Mittelland AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Darlehen Jahresauszug 2024.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "+1.185,09",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Rentenanpassung 2025 Altersrente.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "+635,38",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "scan_0027.txt"
+          ],
+          "sicher": true
+        }
+      ]
+    },
+    {
+      "datei": "2025-11.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "-398,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Abschlagsplan Gas 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 2,
+          "betrag": "-34,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Abschlagsplan Strom Allgemein 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 3,
+          "betrag": "-58,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 4,
+          "betrag": "+700,00",
+          "gegenpartei": "Aydemir Selin u. Emre",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mietvertrag DG Aydemir 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 5,
+          "betrag": "+845,00",
+          "gegenpartei": "Brandtner Markus u. Sabine",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mieterhoehung Brandtner 2025-04.txt",
+            "Brandtner Antwort Mieterhoehung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 6,
+          "betrag": "+860,00",
+          "gegenpartei": "Petrovic Dragan",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mahnung Petrovic Maerz.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 7,
+          "betrag": "-102,34",
+          "gegenpartei": "Gebaeudedienste Ahlers u. Kramp GbR",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "AK-25-1047"
+          ],
+          "stuecke": [
+            "belege/AK-25-1047.txt",
+            "Vertrag Ahlers Kramp Hauswart.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 8,
+          "betrag": "-42,95",
+          "gegenpartei": "Telvia Kommunikation GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "7700412958"
+          ],
+          "stuecke": [
+            "belege/Telvia Rechnung Oktober 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 9,
+          "betrag": "-185,65",
+          "gegenpartei": "Stadtkasse Sellenbrueck",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Grundsteuer 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 10,
+          "betrag": "-318,00",
+          "gegenpartei": "Wasserverband Obere Wupse",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Wasser Abwasser Bescheid 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 11,
+          "betrag": "-300,00",
+          "gegenpartei": "GA 00417 SELLENBRUECK MARKTSTR.",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-39,00",
+          "gegenpartei": "Landfrauenverein Sellenbrueck e.V.",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Landfrauen Adventsfahrt.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "-58,36",
+          "gegenpartei": "FRISCHMARKT JESSEN//SELLENBRUECK",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "IMG_20251124_1718.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "-412,00",
+          "gegenpartei": "Landeshypo Mittelland AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Darlehen Jahresauszug 2024.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "+1.185,09",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Rentenanpassung 2025 Altersrente.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "+635,38",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "scan_0027.txt"
+          ],
+          "sicher": true
+        }
+      ]
+    },
+    {
+      "datei": "2025-12.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "-398,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Abschlagsplan Gas 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 2,
+          "betrag": "-34,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/Abschlagsplan Strom Allgemein 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 3,
+          "betrag": "-58,00",
+          "gegenpartei": "Stadtwerke Wendelsburg GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 4,
+          "betrag": "+700,00",
+          "gegenpartei": "Aydemir Selin u. Emre",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mietvertrag DG Aydemir 2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 5,
+          "betrag": "+845,00",
+          "gegenpartei": "Brandtner Markus u. Sabine",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mieterhoehung Brandtner 2025-04.txt",
+            "Brandtner Antwort Mieterhoehung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 6,
+          "betrag": "+860,00",
+          "gegenpartei": "Petrovic Dragan",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Mahnung Petrovic Maerz.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 7,
+          "betrag": "-102,34",
+          "gegenpartei": "Gebaeudedienste Ahlers u. Kramp GbR",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "AK-25-1163"
+          ],
+          "stuecke": [
+            "belege/AK-25-1163.txt",
+            "Vertrag Ahlers Kramp Hauswart.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 8,
+          "betrag": "-44,95",
+          "gegenpartei": "Telvia Kommunikation GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "7700457301"
+          ],
+          "stuecke": [
+            "Telvia Glasfaser Auftragsbestaetigung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 9,
+          "betrag": "-312,00",
+          "gegenpartei": "Finanzamt Wendelsburg",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "ESt-Bescheid 2024.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 10,
+          "betrag": "-100,00",
+          "gegenpartei": "Thomas Wiebusch",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 11,
+          "betrag": "-500,00",
+          "gegenpartei": "GA 00417 SELLENBRUECK MARKTSTR.",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-34,50",
+          "gegenpartei": "GAERTNEREI BLUETENZAUBER//SELLENBRUECK",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "bon gaertnerei dez.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "-398,00",
+          "gegenpartei": "Landeshypo Mittelland AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Landeshypo Prolongation Vereinbarung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "+1.185,09",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "Rentenanpassung 2025 Altersrente.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "+635,38",
+          "gegenpartei": "Rentenversicherung Mittelland",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "scan_0027.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "-23,70",
+          "gegenpartei": "Raiffeisen- und Bürgerbank Sellenbrück eG",
+          "art": "entgelt",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": false
+        }
+      ]
+    }
+  ]
+}

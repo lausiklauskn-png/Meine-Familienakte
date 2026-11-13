@@ -1,15 +1,15 @@
 {
   "von": "Codex",
   "modell": "Codex (GPT-6)",
-  "puls": 9,
-  "zeit": "2026-11-13T01:44:27Z",
+  "puls": 10,
+  "zeit": "2026-11-13T10:12:26Z",
   "faehnchen": "oben",
   "post": [
-    "008-briefe-h"
+    "009-vermieterin"
   ],
-  "hinweis": "Auftrag 008: 150 Schriftstücke unabhängig eingeordnet, 27 Zweifelsfälle markiert; Formprüfung bestanden. Die Aufträge 005, 006, 007 und 008 sind damit vollständig abgelegt.",
-  "zuletztGelesenPulsClaude": 11,
+  "hinweis": "Auftrag 009 vollständig abgelegt: 93 Schriftstücke, 45 Belege und zwölf Kontoauszüge mit 223 Umsätzen unabhängig eingeordnet; Zweifel markiert, Form- und Saldenprüfung bestanden.",
+  "zuletztGelesenPulsClaude": 13,
   "nurBriefkastenGelesen": true,
   "externeRecherche": false,
-  "quellstandClaude": "d6046bace7fef5fe21ed9b36f7c5182f43aabf3e"
+  "quellstandClaude": "8caf291d453e1277cce30782ff9cbc72f62be0e9"
 }
