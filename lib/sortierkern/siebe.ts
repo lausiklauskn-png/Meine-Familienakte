@@ -68,7 +68,7 @@ export function siebe(datei: Datei, stufe: number, regeln: Lernregel[] = []): Da
       const weitere = erkenneNummern(voll).filter((n) => !d.felder.nummern?.some((x) => x.art === n.art && x.wert === n.wert));
       d.felder.nummern = [...(d.felder.nummern || []), ...weitere];
       setze(d, "betrifft", erkenneBetrifft(voll) || { wert: "unbekannt", sicher: false, grund: "keine Anrede, kein Anschriftfeld", quelle: "regel" });
-      setze(d, "frist", erkenneFrist(voll, d.felder.datum?.wert));
+      setze(d, "frist", erkenneFrist(voll, d.felder.datum?.wert, d.felder.datum?.sicher !== false));
       setze(d, "betrag", erkenneBetrag(voll));
       const g = gehaltLesen(voll);
       if (g) { d.gehalt = g; if (g.auszahlung) setze(d, "betrag", { wert: `${g.auszahlung} €`, sicher: true, grund: "Auszahlungsbetrag der Gehaltsabrechnung", quelle: "regel" }); }

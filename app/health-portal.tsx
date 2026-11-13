@@ -4725,7 +4725,8 @@ function UploadDialog({ initialFile, uebergabeVorschlag, source, knownDocuments,
     if (!textHint.trim()) return () => { aus = true; };
     void (async () => {
       const { briefkopfLesen } = await import("./wfpdf-kern");
-      const kopf = await briefkopfLesen(textHint.split(/\r?\n/));
+      const { mitKernAbsender } = await import("../lib/sortier-vorschlag");
+      const kopf = mitKernAbsender(await briefkopfLesen(textHint.split(/\r?\n/)), textHint);
       const t = briefTitel(kopf);
       if (!aus && t) setBriefTitelHint(t);
       const a = briefAngaben(kopf as BriefkopfRoh);

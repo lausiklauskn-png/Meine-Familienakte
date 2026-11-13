@@ -54,7 +54,8 @@ export async function briefkopfAusText(text: string): Promise<{ titel: string; b
   if (!text.trim()) return { titel: "", brief: null };
   try {
     const { briefkopfLesen } = await import("./wfpdf-kern");
-    const kopf = await briefkopfLesen(text.split(/\r?\n/));
+    const { mitKernAbsender } = await import("../lib/sortier-vorschlag");
+    const kopf = mitKernAbsender(await briefkopfLesen(text.split(/\r?\n/)), text);
     return { titel: briefTitel(kopf) || "", brief: briefAngaben(kopf as BriefkopfRoh) };
   } catch { return { titel: "", brief: null }; }
 }

@@ -27,6 +27,21 @@ export function kernVorschlag(name: string, text: string): KernVorschlag | null 
 export function kernFrist(text: string): { datum: string; grund: string } | null | undefined {
   const voll = String(text || "");
   if (voll.trim().length < KERN_AB_ZEICHEN) return undefined;
-  const w = erkenneFrist(voll, erkenneDatum(voll.slice(0, 1500))?.wert);
+  const datum = erkenneDatum(voll.slice(0, 1500));
+  const w = erkenneFrist(voll, datum?.wert, datum?.sicher !== false);
   return w?.wert ? { datum: w.wert, grund: w.grund } : null;
+}
+
+/**
+ * Absender aus dem Kern statt aus dem Briefkopf-Baustein (Punkt 4 der Empfehlung, 13.11.2026): an sechs fremden Stapeln traf der Kern
+ * den Absender in rund 87 % der Fälle, der Briefkopf-Baustein in rund 35 %. Gilt nur mit gelesenem Text (ab KERN_AB_ZEICHEN); findet der
+ * Kern keinen, bleibt der Baustein. Datum, Empfänger, Nummern und Thema bleiben beim Baustein. Daraus folgt auch der Titel „Brief von …“.
+ */
+export function mitKernAbsender<T extends { absender?: { wert?: unknown } | null } | null | undefined>(kopf: T, text: string): T {
+  const voll = String(text || "");
+  if (voll.trim().length < KERN_AB_ZEICHEN) return kopf;
+  const d: Datei = { pfad: "x", name: "x", groesse: voll.length, geaendert: 0, art: "text", volltext: voll, kopfText: voll.slice(0, 1500), textQuelle: "text", stufe: 0, felder: {} };
+  const a = siebe(d, 4).felder?.absender;
+  if (!a?.wert || a.wert === "unbekannt") return kopf;
+  return { ...(kopf || {}), absender: { ...((kopf && kopf.absender) || {}), wert: a.wert, quelle: "Sortier-Kern" } } as T;
 }

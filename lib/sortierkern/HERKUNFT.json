@@ -1,18 +1,18 @@
 {
  "quelle": "lausiklauskn-png/Datei-Organizer",
  "pfad": "lib/",
- "commit": "534cc087639e2d2740b9616fe64aad6675c10249",
+ "commit": "f98a400b7ad1a8e63e33b5c5c77d9130f5281aec",
  "stand": "2026-11-13",
  "hinweis": "byte-gleich; nie von Hand ändern, nur über tools/sortierkern-nachziehen.mjs",
  "dateien": {
   "typen.ts": "195c8e0e725ece7299cedef629f511cd9823042d4c4d394456804a08b646631a",
   "kategorien.ts": "b624f0bb129f2f72d27fbea839b392a0a34c9b71c549170baf5e0075a12d2619",
-  "erkennen.ts": "be960b48bd30b80bbf146279b96f27a70a7460184d203e444cf7d8bebfdba523",
+  "erkennen.ts": "c331ce21255b0d32cc16c931ea0ac0e05ad7b83ee2fc3c59eb6a209a534c7588",
   "gehalt.ts": "81b68eae61b07d2fd4128749feb2054888cc4372a84bd1b3f88962e2e549b833",
   "eml.ts": "45ad4ad99f37644bf6532a7c0a8ed6e52f5d6055753cf25bf73ed04bd3f38d03",
   "lernen.ts": "bdbcadf2c52bffaacc24e738ffba1c3b00ef02a2a65665df33e66827d99e21f3",
   "wortmodell.ts": "d8d5564d6654898f92f23e741c80c5737d64a289b2fa294e5d0d61fee8ae86ba",
-  "wortmodell-daten.ts": "846890ec31181dd3096ead4ab2f1ae0c32fb46fa507570576c6747b07a5211c2",
-  "siebe.ts": "2aa6481043f265f208c0640c5184ae2a801020215fa3309866d192c9b04223d8"
+  "wortmodell-daten.ts": "2d6e310fac4f41a7eca205b0b8694e8c8cc1f3a5f774c492c7299f36a2faca7b",
+  "siebe.ts": "07c60491263c95aef71742437293ac9ae2ebed3d42c5396c6b58cb472b07a459"
  }
 }
