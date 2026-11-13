@@ -7,6 +7,14 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Aktueller Stand (11.11.2026 abends, nach 2.28.65)
 
+- **Sortier-Kern eingebaut (Klaus 13.11.: „wenn es sinnvoll ist, mach es“; nicht veröffentlicht):** Der Kern des Datei-Organizers liegt
+  byte-gleich unter `lib/sortierkern/` (Pin `HERKUNFT.json`, nur über `node tools/sortierkern-nachziehen.mjs`, geprüft von
+  `check:herkunft`; **nie von Hand ändern**). Anschluss `lib/sortier-vorschlag.ts`: ab 200 Zeichen gelesenem Text entscheidet der Kern
+  den Bereich (`buildDocumentIntakePlan`) und liest die Frist (`erkenneFristen`); ohne Text alles wie bisher. **Ersetzt „Dateiname
+  zuerst“ (31.10./01.11.) für Stücke mit Text.** Nachweis an sechs fremden Stapeln (Datei-Organizer
+  `docs/PRUEFSTAPEL-VERMIETERIN-REGELN.md`, „Einbau in die Familienakte“): Bereich 38–57 % → 77–87 %, Frist 51 % → 86 %.
+  Offen: Absender/Titel aus dem Kern, Zweitfach, eigene Muster des Nutzers (erst Vorschau), Gerätetest.
+
 - **Plan Bilder** `docs/PLAN_2026-11-12_BILDER.md` (Klaus 12.11.; Brief `BRIEF_ABSCHLUSS_2026-11-12_PLAN-BILDER.md`): Fotos als eigene Art mit
   Metadaten (Aufnahme, Gerät, Einstellungen, Ort), Nacharbeit im Hintergrund (erst ablegen, dann OCR/Prüfung), Kennzeichen →
   Fahrzeug, Barcodes mit Prüfung nur bei Code-Fund, Teilen ohne Ort. Nichts gebaut; Fragen F1–F8 an Klaus offen, dann Vorschau.

@@ -5,6 +5,8 @@ import { FAMILY_CATEGORIES } from "./family-categories.ts";
 
 export const DOCUMENT_INTAKE_VERSION = 1 as const;
 
+import { kernVorschlag } from "./sortier-vorschlag.ts";
+
 export const FAWOGA_LIFE_AREAS = FAMILY_CATEGORIES;
 
 export type DocumentIntakeSource = "drag-drop" | "file-picker" | "local-inbox" | "onedrive-inbox" | "camera-scan";
@@ -65,6 +67,12 @@ function classifyFile(fileName: string, textHint = "") {
   return { lifeArea: "Archiv" as const, category: "Sonstiges", documentType: "Dokument", privacyClass: "vertraulich" as const };
 }
 
+/** Vorgaben je Bereich, wenn der Sortier-Kern einen anderen Bereich wählt als die Stichwortliste: Schutzklasse wie in classifyFile. */
+function bereichVorgabe(lifeArea: (typeof FAWOGA_LIFE_AREAS)[number], schriftstueck?: string | null) {
+  const geschuetzt = ["Gesundheit & Pflege", "Rente, Arbeit & Sozialversicherung", "Erbschaft, Vollmachten & Vorsorge"].includes(lifeArea);
+  return { lifeArea, category: "Sonstiges", documentType: schriftstueck && schriftstueck !== "Unklar" ? schriftstueck : "Dokument", privacyClass: geschuetzt ? "besonders geschützt" as const : "vertraulich" as const };
+}
+
 function organisationHints(fileName: string, textHint = "") {
   const text = normalize(`${fileName} ${textHint}`);
   return [
@@ -104,7 +112,13 @@ export function buildDocumentIntakePlan(input: {
   const nachText = kurzerHinweis || nachName.lifeArea === "Archiv" ? classifyFile(input.file.name, input.file.textHint) : nachName;
   // Klaus 2026-11-01: der Briefkopf (Thema mit Gleichstand-Riegel) geht vor der Stichwortliste, aber nie vor einem Dateinamen, der etwas sagt.
   const brief = input.file.brief || null;
-  const detected = brief?.thema && nachName.lifeArea === "Archiv" && !kurzerHinweis ? { ...nachText, lifeArea: brief.thema as typeof nachText.lifeArea } : nachText;
+  const bisher = brief?.thema && nachName.lifeArea === "Archiv" && !kurzerHinweis ? { ...nachText, lifeArea: brief.thema as typeof nachText.lifeArea } : nachText;
+  // Klaus 2026-11-13: Liegt gelesener Text vor, entscheidet der Sortier-Kern des Datei-Organizers über den Bereich – auch vor einem
+  // Dateinamen, der etwas sagt (das ersetzt „Dateiname zuerst“ vom 31.10./01.11.: an sechs fremden Stapeln lag der Name allein nur
+  // in rund der Hälfte der Fälle richtig, der Kern in rund 80 %). Ohne Text oder ohne Ergebnis des Kerns bleibt alles wie bisher.
+  const kern = kernVorschlag(input.file.name, input.file.textHint || "");
+  const kernBereich = kern?.bereich && (FAWOGA_LIFE_AREAS as readonly string[]).includes(kern.bereich) ? (kern.bereich as typeof nachText.lifeArea) : null;
+  const detected = kernBereich && kernBereich !== bisher.lifeArea ? bereichVorgabe(kernBereich, kern?.schriftstueck) : bisher;
   const title = input.file.titleHint?.trim() || titleFromName(input.file.name) || input.file.name;
   const duplicateIds = input.documents.filter((document) => normalize(document.originalName) === normalize(input.file.name) && document.sizeBytes === input.file.size).map((document) => document.id);
   const assignment = proposeFamilyAssignment({
