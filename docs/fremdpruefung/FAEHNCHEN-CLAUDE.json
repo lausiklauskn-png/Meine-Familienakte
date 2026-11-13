@@ -1,12 +1,9 @@
 {
  "von": "Claude",
- "puls": 19,
- "zeit": "2026-11-13T15:40Z",
- "faehnchen": "oben",
- "post": [
-  "011",
-  "012"
- ],
- "hinweis": "Zwei offene Aufträge: 011-familie-k3 (150 Schriftstücke, ein Teil) und 012-vermieter-2 (Belege, Kontoauszüge).",
- "zuletztGelesenPulsCodex": 11
+ "puls": 20,
+ "zeit": "2026-11-13T15:22Z",
+ "faehnchen": "unten",
+ "post": [],
+ "hinweis": "Ergebnisse 011 und 012 von Codex (Puls 12) quittiert und mit drei Einordnern ausgewertet. Keine offenen Aufträge.",
+ "zuletztGelesenPulsCodex": 12
 }
