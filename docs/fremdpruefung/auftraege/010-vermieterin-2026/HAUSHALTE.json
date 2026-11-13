@@ -1,0 +1,116 @@
+{
+ "haushalte": [
+  {
+   "id": "h-wiebusch",
+   "name": "Wiebusch",
+   "personen": [
+    {
+     "vorname": "Hannelore",
+     "name": "Wiebusch",
+     "anrede": "Frau"
+    }
+   ],
+   "fahrzeuge": [
+    {
+     "art": "Pkw",
+     "kennzeichen": "XSB-HW 000",
+     "erstzulassung": "2014-04-11"
+    }
+   ],
+   "mieter": [
+    {
+     "wohnung": "1. OG links",
+     "personen": [
+      {
+       "vorname": "Markus",
+       "name": "Brandtner",
+       "anrede": "Herr"
+      },
+      {
+       "vorname": "Sabine",
+       "name": "Brandtner",
+       "anrede": "Frau"
+      },
+      {
+       "vorname": "Lena",
+       "name": "Brandtner",
+       "anrede": "Kind"
+      }
+     ]
+    },
+    {
+     "wohnung": "1. OG rechts",
+     "personen": [
+      {
+       "vorname": "Dragan",
+       "name": "Petrović",
+       "anrede": "Herr"
+      },
+      {
+       "vorname": "Mirela",
+       "name": "Petrović",
+       "anrede": "Frau"
+      },
+      {
+       "vorname": "Luka",
+       "name": "Petrović",
+       "anrede": "Kind"
+      },
+      {
+       "vorname": "Ana",
+       "name": "Petrović",
+       "anrede": "Kind"
+      }
+     ]
+    },
+    {
+     "wohnung": "Dachgeschoss",
+     "bis": "2025-06-30",
+     "personen": [
+      {
+       "vorname": "Jens",
+       "name": "Scholten",
+       "anrede": "Herr"
+      },
+      {
+       "vorname": "Katrin",
+       "name": "Scholten",
+       "anrede": "Frau"
+      },
+      {
+       "vorname": "Finn",
+       "name": "Scholten",
+       "anrede": "Kind"
+      }
+     ]
+    },
+    {
+     "wohnung": "Dachgeschoss",
+     "ab": "2025-08-01",
+     "personen": [
+      {
+       "vorname": "Emre",
+       "name": "Aydemir",
+       "anrede": "Herr"
+      },
+      {
+       "vorname": "Selin",
+       "name": "Aydemir",
+       "anrede": "Frau"
+      },
+      {
+       "vorname": "Deniz",
+       "name": "Aydemir",
+       "anrede": "Kind"
+      },
+      {
+       "vorname": "Elif",
+       "name": "Aydemir",
+       "anrede": "Kind"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
