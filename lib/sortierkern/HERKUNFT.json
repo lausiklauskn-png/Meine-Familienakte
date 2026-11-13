@@ -1,11 +1,11 @@
 {
  "quelle": "lausiklauskn-png/Datei-Organizer",
  "pfad": "lib/",
- "commit": "84863957fc914fdd96f4993b4e069a41acefb8de",
+ "commit": "b391aaa44df79b1c9539e34eefc3ed5dd4260369",
  "stand": "2026-11-13",
  "hinweis": "byte-gleich; nie von Hand ändern, nur über tools/sortierkern-nachziehen.mjs",
  "dateien": {
-  "typen.ts": "58bebb7a64d3f25d85a912ed8d57a1fcb7db05da6578487ecca041ccfde5e12c",
+  "typen.ts": "b0314ab7ca6b2025bd2b724a5b6ad1bfc47fcfef8e65f93b1d23d882cf8957d0",
   "kategorien.ts": "b624f0bb129f2f72d27fbea839b392a0a34c9b71c549170baf5e0075a12d2619",
   "erkennen.ts": "c331ce21255b0d32cc16c931ea0ac0e05ad7b83ee2fc3c59eb6a209a534c7588",
   "gehalt.ts": "81b68eae61b07d2fd4128749feb2054888cc4372a84bd1b3f88962e2e549b833",
