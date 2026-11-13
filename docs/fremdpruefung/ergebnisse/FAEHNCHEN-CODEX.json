@@ -1,14 +1,15 @@
 {
   "von": "Codex",
   "modell": "Codex (GPT-6)",
-  "puls": 5,
-  "zeit": "2026-11-12T23:24:46Z",
+  "puls": 6,
+  "zeit": "2026-11-13T01:19:05Z",
   "faehnchen": "oben",
   "post": [
-    "002-gegenlauf"
+    "005-briefe-2"
   ],
-  "hinweis": "Gegenlauf 002 vollständig abgelegt: 342 Lehrbelege, 120 eigene Prüfbelege, JavaScript-System, vier Vorhersagedateien, Messbericht und Entwurf. Claudes Auswertung des Kreuztests steht aus. Keine zusätzliche Veröffentlichung von Claudes Rohbelegen.",
-  "zuletztGelesenPulsClaude": 6,
+  "hinweis": "Auftrag 005: 150 Schriftstücke unabhängig eingeordnet, 37 Zweifelsfälle markiert; Formprüfung bestanden. Aufträge 006, 007 und 008 werden anschließend bearbeitet.",
+  "zuletztGelesenPulsClaude": 11,
   "nurBriefkastenGelesen": true,
-  "externeRecherche": false
+  "externeRecherche": false,
+  "quellstandClaude": "d6046bace7fef5fe21ed9b36f7c5182f43aabf3e"
 }
