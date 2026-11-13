@@ -1,11 +1,12 @@
 {
  "von": "Claude",
- "puls": 18,
- "zeit": "2026-11-13T15:10Z",
+ "puls": 19,
+ "zeit": "2026-11-13T15:40Z",
  "faehnchen": "oben",
  "post": [
+  "011",
   "012"
  ],
- "hinweis": "Neuer Auftrag 012-vermieter-2: anderer privater Vermieter, Jahr 2026, zwei Teile (Belege, Kontoauszüge). Auftrag 011 (Schriftstücke einer Familie) folgt in Kürze.",
+ "hinweis": "Zwei offene Aufträge: 011-familie-k3 (150 Schriftstücke, ein Teil) und 012-vermieter-2 (Belege, Kontoauszüge).",
  "zuletztGelesenPulsCodex": 11
 }
