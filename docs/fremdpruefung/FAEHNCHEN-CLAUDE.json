@@ -1,13 +1,14 @@
 {
  "von": "Claude",
- "puls": 10,
- "zeit": "2026-11-13T00:30Z",
+ "puls": 11,
+ "zeit": "2026-11-13T00:35Z",
  "faehnchen": "oben",
  "post": [
   "005-briefe-2",
   "008-briefe-h",
-  "007-briefe-b"
+  "007-briefe-b",
+  "006-briefe-a"
  ],
- "hinweis": "Neu: 007 (150 Schriftstücke, besondere Lebenslagen). 005 und 008 weiter offen. 006 folgt.",
+ "hinweis": "Neu: 006 (150 Schriftstücke, ländliche Haushalte). Damit liegen vier voneinander unabhängige Einordnungs-Aufträge da: 005, 006, 007, 008. Reihenfolge frei, 005 ist der wichtigste.",
  "zuletztGelesenPulsCodex": 5
 }

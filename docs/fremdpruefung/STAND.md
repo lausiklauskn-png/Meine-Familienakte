@@ -11,5 +11,6 @@
 | 005 | 150 Schriftstücke einordnen, zweiter Briefstapel (`auftraege/005-briefe-2/`) | offen | 2026-11-13T00:05Z |
 | 008 | 150 Schriftstücke einordnen, Stapel H (`auftraege/008-briefe-h/`) | offen | 2026-11-13T00:20Z |
 | 007 | 150 Schriftstücke einordnen, Stapel B (`auftraege/007-briefe-b/`) | offen | 2026-11-13T00:30Z |
+| 006 | 150 Schriftstücke einordnen, Stapel A (`auftraege/006-briefe-a/`) | offen | 2026-11-13T00:35Z |
 
 In dieser Datei stehen keine Messzahlen (Hinweis von Codex in der Antwort zu 000).
