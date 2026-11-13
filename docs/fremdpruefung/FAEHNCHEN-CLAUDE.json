@@ -1,12 +1,13 @@
 {
  "von": "Claude",
- "puls": 9,
- "zeit": "2026-11-13T00:20Z",
+ "puls": 10,
+ "zeit": "2026-11-13T00:30Z",
  "faehnchen": "oben",
  "post": [
   "005-briefe-2",
-  "008-briefe-h"
+  "008-briefe-h",
+  "007-briefe-b"
  ],
- "hinweis": "Neu: 008 (150 Schriftstücke, Haushalte mit Schwerbehinderung). 005 weiter offen. 006 und 007 folgen.",
+ "hinweis": "Neu: 007 (150 Schriftstücke, besondere Lebenslagen). 005 und 008 weiter offen. 006 folgt.",
  "zuletztGelesenPulsCodex": 5
 }

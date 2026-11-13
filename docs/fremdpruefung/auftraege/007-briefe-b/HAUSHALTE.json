@@ -1,0 +1,144 @@
+{
+ "haushalte": [
+  {
+   "id": "h-darwisch",
+   "name": "Familie Darwisch",
+   "personen": [
+    {
+     "vorname": "Samir",
+     "name": "Darwisch",
+     "anrede": "Herr"
+    },
+    {
+     "vorname": "Leyla",
+     "name": "Darwisch",
+     "anrede": "Frau"
+    },
+    {
+     "vorname": "Nour",
+     "name": "Darwisch",
+     "anrede": "Kind"
+    },
+    {
+     "vorname": "Karim",
+     "name": "Darwisch",
+     "anrede": "Kind"
+    }
+   ],
+   "fahrzeuge": [
+    "FBK-SD 418"
+   ]
+  },
+  {
+   "id": "h-toennissen",
+   "name": "Eheleute Tönnissen",
+   "personen": [
+    {
+     "vorname": "Wiebke",
+     "name": "Tönnissen",
+     "anrede": "Frau"
+    },
+    {
+     "vorname": "Gerhard",
+     "name": "Tönnissen",
+     "anrede": "Herr"
+    }
+   ],
+   "fahrzeuge": [
+    "MHV-GT 77"
+   ]
+  },
+  {
+   "id": "h-oberlechner",
+   "name": "Oberlechner",
+   "personen": [
+    {
+     "vorname": "Katrin",
+     "name": "Oberlechner",
+     "anrede": "Frau"
+    },
+    {
+     "vorname": "Jonas",
+     "name": "Oberlechner",
+     "anrede": "Kind"
+    }
+   ],
+   "fahrzeuge": [
+    "RTU-KO 2204"
+   ]
+  },
+  {
+   "id": "h-wojcik",
+   "name": "Wojcik",
+   "personen": [
+    {
+     "vorname": "Dennis",
+     "name": "Wojcik",
+     "anrede": "Herr"
+    }
+   ],
+   "fahrzeuge": []
+  },
+  {
+   "id": "h-brackmann",
+   "name": "Brackmann",
+   "personen": [
+    {
+     "vorname": "Heinz-Dieter",
+     "name": "Brackmann",
+     "anrede": "Herr"
+    },
+    {
+     "vorname": "Roswitha",
+     "name": "Brackmann",
+     "anrede": "Frau"
+    }
+   ],
+   "fahrzeuge": [
+    "LRO-HB 512"
+   ]
+  },
+  {
+   "id": "h-stelzer-engbrecht",
+   "name": "Stelzer / Engbrecht",
+   "personen": [
+    {
+     "vorname": "Miriam",
+     "name": "Stelzer",
+     "anrede": "Frau"
+    },
+    {
+     "vorname": "Tobias",
+     "name": "Engbrecht",
+     "anrede": "Herr"
+    }
+   ],
+   "fahrzeuge": []
+  },
+  {
+   "id": "h-vossloh",
+   "name": "Familie Vossloh",
+   "personen": [
+    {
+     "vorname": "Annegret",
+     "name": "Vossloh",
+     "anrede": "Frau"
+    },
+    {
+     "vorname": "Holger",
+     "name": "Vossloh",
+     "anrede": "Herr"
+    },
+    {
+     "vorname": "Frederik",
+     "name": "Vossloh",
+     "anrede": "Kind"
+    }
+   ],
+   "fahrzeuge": [
+    "BHL-AV 1909",
+    "BHL-HV 4"
+   ]
+  }
+ ]
+}
