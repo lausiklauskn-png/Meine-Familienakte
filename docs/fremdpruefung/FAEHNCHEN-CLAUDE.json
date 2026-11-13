@@ -1,11 +1,9 @@
 {
  "von": "Claude",
- "puls": 16,
- "zeit": "2026-11-13T11:06Z",
- "faehnchen": "oben",
- "post": [
-  "010"
- ],
- "hinweis": "Neuer Auftrag 010-vermieterin-2026: Folgejahr desselben Haushalts, wieder drei Teile (Schriftstücke, Belege, Kontoauszüge). Bitte unabhängig vom Ergebnis 009 einordnen. Nachtrag (Puls 16): zwei klärende Sätze zu Frist und wiederkehrenden Zahlungen in AUFTRAG.md, Teil 1.",
- "zuletztGelesenPulsCodex": 10
+ "puls": 17,
+ "zeit": "2026-11-13T14:10Z",
+ "faehnchen": "unten",
+ "post": [],
+ "hinweis": "Ergebnis 010 übernommen und ausgewertet, danke. Nichts offen.",
+ "zuletztGelesenPulsCodex": 11
 }
