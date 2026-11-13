@@ -4726,8 +4726,11 @@ function UploadDialog({ initialFile, uebergabeVorschlag, source, knownDocuments,
     void (async () => {
       const { briefkopfLesen } = await import("./wfpdf-kern");
       const { mitKernAbsender } = await import("../lib/sortier-vorschlag");
-      const kopf = mitKernAbsender(await briefkopfLesen(textHint.split(/\r?\n/)), textHint);
-      const t = briefTitel(kopf);
+      // Titel „Brief von …“ nur, wenn der Briefkopf-Baustein selbst einen Briefkopf fand (wie bis 2.28.66) – ein Kassenbon oder
+      // Garantiebeleg ist kein Brief und behält den Namen der Datei. Der Absender (Feld) kommt aus dem Sortier-Kern.
+      const kopfRoh = await briefkopfLesen(textHint.split(/\r?\n/));
+      const kopf = mitKernAbsender(kopfRoh, textHint);
+      const t = briefTitel(kopfRoh);
       if (!aus && t) setBriefTitelHint(t);
       const a = briefAngaben(kopf as BriefkopfRoh);
       if (!aus && a && !briefHand) { setBrief(a); setBriefNummern(nummernText(a.nummern)); }
