@@ -184,6 +184,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
+  - `BRIEF_ABSCHLUSS_2026-11-13_SORTIERKERN-UND-LAUF-VERMIETERIN.md` (letzter Stand: Sortier-Kern eingebaut, Lauf „Vermieterin“, Startauftrag)
   - `BRIEF_SITZUNG_2026-11-11_CLOUD-ORDNER-2.28.65.md` (nächster Bau: Sicherung an einem zweiten Ort, Nur sichern/Synchron halten, Cloud-Ordner hereinholen; Klaus: keine Vorschau nötig)
   - `BRIEF_ABSCHLUSS_2026-11-12_PLAN-BILDER.md` (Plan Bilder, Fragen F1–F8)
   - `BRIEF_ABSCHLUSS_2026-11-12_CLOUD-ORDNER-2.28.65.md` (letzter Bau: 2.28.65, Entscheidungen, Startauftrag)
