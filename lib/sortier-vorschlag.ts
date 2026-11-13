@@ -43,5 +43,5 @@ export function mitKernAbsender<T extends { absender?: { wert?: unknown } | null
   const d: Datei = { pfad: "x", name: "x", groesse: voll.length, geaendert: 0, art: "text", volltext: voll, kopfText: voll.slice(0, 1500), textQuelle: "text", stufe: 0, felder: {} };
   const a = siebe(d, 4).felder?.absender;
   if (!a?.wert || a.wert === "unbekannt") return kopf;
-  return { ...(kopf || {}), absender: { ...((kopf && kopf.absender) || {}), wert: a.wert, quelle: "Sortier-Kern" } } as T;
+  return { ...(kopf || {}), absender: { ...((kopf && kopf.absender) || {}), wert: a.wert, quelle: "Sortier-Kern" } } as unknown as T;
 }

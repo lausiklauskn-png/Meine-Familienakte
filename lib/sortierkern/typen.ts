@@ -5,7 +5,7 @@ export type DateiArt = "pdf" | "bild" | "email" | "office" | "text" | "archiv" |
 export type Quelle = "regel" | "gelernt" | "du";
 
 /** Ein erkannter Wert mit Sicherheit und Grund – nie ohne Grund. */
-export type Wert = { wert: string; sicher: boolean; grund: string; quelle: Quelle };
+export type Wert = { wert: string; sicher: boolean; grund: string; quelle: Quelle; vorher?: string };
 
 export type Nummer = { art: string; wert: string };
 
@@ -66,4 +66,4 @@ export type Datei = {
 
 export type Korrektur = { zeit: string; pfad: string; feld: FeldName; von: string; zu: string; bestaetigt?: boolean };
 
-export type Lernregel = { wenn: { absender: string }; feld: "kategorie" | "betrifft" | "schriftstueck"; dann: string; anzahl: number; stimmen?: Record<string, number> };
+export type Lernregel = { wenn: { absender: string; sache?: string }; feld: "kategorie" | "betrifft" | "schriftstueck"; dann: string; anzahl: number; stimmen?: Record<string, number> };
