@@ -17,29 +17,44 @@ export function lernen(regeln: Lernregel[], datei: Datei, k: Korrektur): Lernreg
   if (!lernbar(k.feld)) return regeln;
   const abs = datei.felder.absender?.wert;
   if (!abs || abs === "unbekannt" || /^eigenes foto/i.test(abs)) return regeln;
+  // Punkt 7 (13.11.2026): nach Sache merken. Neben „Absender → Bereich“ wird „Absender + Vorschlag des Kerns → Bereich“ gemerkt;
+  // derselbe Absender schreibt zu verschiedenen Sachen (Fachregel: die Sache entscheidet). Gemessen am Folgejahr eines Haushalts:
+  // nach Absender 75 → 81 von 94 (5 schlechter), nach Sache 75 → 83 (1 schlechter).
+  const sache = k.von && k.von !== "Archiv" ? k.von : undefined;
+  let r = stimme(regeln, abs, undefined, k);
+  if (sache) r = stimme(r, abs, sache, k);
+  return r;
+}
+
+function stimme(regeln: Lernregel[], abs: string, sache: string | undefined, k: Korrektur): Lernregel[] {
   const s = schluessel(abs);
-  const alt = regeln.find((r) => schluessel(r.wenn.absender) === s && r.feld === k.feld);
+  const alt = regeln.find((r) => schluessel(r.wenn.absender) === s && r.feld === k.feld && (r.wenn.sache || undefined) === sache);
   // Stimmen statt Überschreiben: eine einzelne abweichende Eingabe kippt eine bestätigte Regel nicht (Fehlklick, falsche Wahl).
   const stimmen = { ...(alt?.stimmen || (alt ? { [alt.dann]: alt.anzahl } : {})) };
   stimmen[k.zu] = (stimmen[k.zu] || 0) + 1;
   const [dann, anzahl] = Object.entries(stimmen).sort((a, b) => b[1] - a[1])[0];
-  const neu: Lernregel = { wenn: { absender: alt?.wenn.absender || abs }, feld: k.feld, dann, anzahl, stimmen };
+  const neu: Lernregel = { wenn: { absender: alt?.wenn.absender || abs, ...(sache ? { sache } : {}) }, feld: k.feld as Lernbar, dann, anzahl, stimmen };
   return alt ? regeln.map((r) => r === alt ? neu : r) : [...regeln, neu];
 }
 
-/** Regel anwenden, wenn der Absender passt und das Feld nicht vom Nutzer gesetzt ist. */
+/** Regel anwenden, wenn der Absender (und bei einer Sach-Regel der Vorschlag des Kerns) passt und das Feld nicht vom Nutzer gesetzt ist. */
 export function lernregelAnwenden(d: Datei, r: Lernregel) {
   if (!d.felder.absender || schluessel(d.felder.absender.wert) !== schluessel(r.wenn.absender)) return;
   if (d.bestaetigt?.[r.feld]) return;
   const jetzt = d.felder[r.feld];
-  if (jetzt?.wert === r.dann && jetzt.sicher) return;
+  const kernWert = jetzt ? (jetzt.quelle === "regel" ? jetzt.wert : jetzt.vorher) : undefined;
   const gegen = Object.entries(r.stimmen || {}).filter(([w]) => w !== r.dann).reduce((a, [, n]) => a + n, 0);
+  if (r.wenn.sache) { if (kernWert !== r.wenn.sache) return; }
+  // Die Regel nur nach Absender gilt, solange der Nutzer bei diesem Absender immer dasselbe gewählt hat; sonst entscheidet die Sache.
+  else if (gegen > 0) return;
+  if (jetzt?.wert === r.dann && jetzt.sicher) return;
   // Sicher erst bei mindestens zwei Stimmen und klarer Mehrheit; sonst nur ein Vorschlag, der zur Prüfung bleibt.
   const sicher = r.anzahl >= 2 && r.anzahl >= 2 * gegen;
   if (!sicher && jetzt?.sicher) return;
   // Eine sichere Erkennung des Kerns wird erst nach drei übereinstimmenden Antworten ohne Widerspruch überstimmt (Schutz vor Fehlbedienung).
   if (jetzt?.sicher && jetzt.quelle === "regel" && jetzt.wert !== r.dann && (r.anzahl < 3 || gegen > 0)) return;
-  d.felder[r.feld] = { wert: r.dann, sicher, grund: `von dir gelernt: bei „${r.wenn.absender}“ ${r.anzahl === 1 ? "einmal" : `${r.anzahl}-mal`} so eingeordnet${gegen ? `, ${gegen}-mal anders` : ""}`, quelle: "gelernt" };
+  const bei = r.wenn.sache ? `bei „${r.wenn.absender}“, wenn „${r.wenn.sache}“ vorgeschlagen war,` : `bei „${r.wenn.absender}“`;
+  d.felder[r.feld] = { wert: r.dann, sicher, grund: `von dir gelernt: ${bei} ${r.anzahl === 1 ? "einmal" : `${r.anzahl}-mal`} so eingeordnet${gegen ? `, ${gegen}-mal anders` : ""}`, quelle: "gelernt", vorher: kernWert };
 }
 
 /** Eine Korrektur oder Bestätigung auf eine Datei anwenden. */

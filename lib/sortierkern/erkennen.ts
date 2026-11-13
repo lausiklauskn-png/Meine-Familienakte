@@ -62,9 +62,15 @@ export function isoDatum(j: number, m: number, t: number): string | null {
 }
 
 export function erkenneDatum(kopf: string): Wert | undefined {
-  const m = kopf.match(/(?:datum|den|vom)\s*:?\s*(\d{1,2}\.\s?\d{1,2}\.\s?\d{2,4})/i) || kopf.match(/[A-ZÄÖÜ][a-zäöüß-]+,\s*(?:den\s*)?(\d{1,2}\.\s?\d{1,2}\.\s?\d{4})/);
+  // „Datum: 12.03.2026“ oder „Sellenbrück, (den) 12.03.2026“ – „den“/„vom“ allein (Termin „am Mittwoch, den …“, „Vertrag vom …“) zählen nicht
+  const m = kopf.match(/(?:datum|briefdatum)\s*:?\s*(\d{1,2}\.\s?\d{1,2}\.\s?\d{2,4})/i) || kopf.match(/(?:^|\n)[^\n]{0,60}?[A-ZÄÖÜ][a-zäöüß-]+(?:\s[a-zäöüßA-ZÄÖÜ.-]+)?,\s*(?:den\s*)?(\d{1,2}\.\s?\d{1,2}\.\s?\d{4})\s*(?:\n|$)/) || kopf.match(/[A-ZÄÖÜ][a-zäöüß-]+,\s*(?:den\s*)?(\d{1,2}\.\s?\d{1,2}\.\s?\d{4})/);
   if (m) { const d = datumeImText(m[1])[0]; if (d) return w(d.iso, true, `Briefdatum „${m[0].trim()}“`); }
-  const erstes = datumeImText(kopf.slice(0, 900))[0];
+  // eine Zeile, die nur ein Datum trägt (rechtsbündig im Briefkopf)
+  const zeile = kopf.slice(0, 1200).match(/(?:^|\n)[ \t]*(\d{1,2}\.\s?\d{1,2}\.\s?\d{4}|\d{1,2}\.\s?(?:januar|februar|märz|april|mai|juni|juli|august|september|oktober|november|dezember)\s\d{4})[ \t]*(?:\n|$)/i);
+  if (zeile) { const d = datumeImText(zeile[1])[0]; if (d) return w(d.iso, true, `Datumszeile „${zeile[1]}“`); }
+  const kurz = kopf.slice(0, 900);
+  const alle = datumeImText(kurz).filter((d) => !/(?:\bvom|\bv\.|\bbis|\bam|\bden|\bdem|\bab|\bzum|\bseit|\bper|\bgeb\.|geboren|\bum|anreise|abreise|beginn|termin|\bwann)\s*(?:\(?\w{2,10}\.?,?\s+)?$/i.test(kurz.slice(Math.max(0, d.pos - 25), d.pos)));
+  const erstes = alle[0] || datumeImText(kurz)[0];
   return erstes ? w(erstes.iso, false, "erstes Datum im Kopf") : undefined;
 }
 
@@ -330,10 +336,10 @@ function datumsStellen(t: string, bezug?: string): Array<{ iso: string; pos: num
   return aus;
 }
 
-const WOCHENTAG = "(?:montag|dienstag|mittwoch|donnerstag|freitag|samstag|sonnabend|sonntag|mo|di|mi|do|fr|sa|so)\\.?,?\\s+(?:den\\s+|dem\\s+)?";
+const WOCHENTAG = "(?:montag|dienstag|mittwoch|donnerstag|freitag|samstag|sonnabend|sonntag|mo|di|mi|do|fr|sa|so)\\.?,?\\s+(?:den\\s+|dem\\s+|der\\s+)?";
 const HANDLUNG = /überw|zahl|begleich|ausgleich|ausgegl|entricht|einzureich|einreich|reichen sie|nachreich|nachzureich|zusend|senden|schick|zurück|vorleg|vorzuleg|melde|mitteil|mitzuteil|antwort|äußer|abgeb|abzugeb|abgabe|rückgabe|bescheid|vornehm|vorzunehm|erledig|erwarte|eingang|\bbitte|bitten|holen|abhol|teilen sie|beheb|gleichen|gebunden|übermitt|nachprüf|konto\b|iban|zurückzuführ|aufzuforder|fordere|fordern|eingehen|eingegangen sein|vorliegen|brauchen wir|benötigen wir|anmeld|nachhol|nachzuhol|unterschr|ausfüll|ausgefüllt|beseitig|entfern|herunter|kürzen|schneid|frist|fällig|restbetrag|restzahlung|anzahlung|erstatten|nachweis|buchen sie|sagen sie|geben sie|gebt|sagt|meldet/i;
-const KEINE_FRIST = /kündig|widerspr|widerruf|einspruch|klage|gültig|garantie|gewährleist|umtausch|original|verlänger|laufzeit|befristet|bewillig|zeitraum|\bzeit\b|\bgilt\b|gelten|abgelaufen|versichert|preisbindung|abgebucht|eingezogen|ziehen wir|buchen wir|erhalten sie|überweisen wir|zahlen wir|erstatten wir|endet|ablauf|beginn|\d\.\s*(?:\([^)]*\)\s*)?(?:–|-|bis)\s*(?:zum\s+)?$/i;
-const ohneVerneinung = (x: string) => x.replace(/rücklastschrift\w*/gi, "").replace(/(?:kein\w*|nicht|ohne)\b[^.]{0,60}?(?:lastschrift\w*|mandat|einzug\w*)/gi, "");
+const KEINE_FRIST = /kündig|widerspr|widerruf|einspruch|klage|gültig|garantie|gewährleist|umtausch|original|verlänger|laufzeit|befristet|bewillig|zeitraum|\bzeit\b|\bgilt\b|gelten|abgelaufen|versichert|preisbindung|abgebucht|eingezogen|ziehen wir|buchen wir|erhalten sie|überweisen wir|zahlen wir|erstatten wir|endet|ablauf|beginn|gebunden|zinsbindung|beitragszahlung|leistungsdauer|stichtag|\bläuft|\bhalte[nt]?\b|nur bis|bei (?:abschluss|zahlung|bestellung|buchung)\b|\bskonto|\d\.\s*(?:\([^)]*\)\s*)?(?:–|-|bis)\s*(?:zum\s+)?$|\d{1,2}\.\d{1,2}\.(?:\d{2,4})?\s*(?:–|-|bis)\s*(?:zum\s+)?(?:[a-z]{2}\.?,?\s+)?$|\b(?:19|20)\d{2}\s*(?:–|-|bis)\s*$/i;
+const ohneVerneinung = (x: string) => x.replace(/rücklastschrift\w*/gi, "").replace(/(?:kein\w*|nicht|ohne)\b[^.]{0,60}?(?:lastschrift\w*|mandat|einzug\w*)/gi, "").replace(/(?:lastschrift\w*|mandat|einzug\w*)[^.]{0,50}?(?:nicht vor|nicht erteilt|nicht vorliegt|fehlt)/gi, "").replace(/(?:sofern|falls|wenn)\b[^.]{0,80}?(?:lastschrift\w*|mandat|einzug\w*|abbuch\w*)[^.]*/gi, "");
 const ABBUCHUNG = /abbuch|abgebucht|buchen wir|ziehen wir|eingezogen|einzug|lastschrift|sepa-mandat|belasten wir|wird belastet/i;
 const TERMIN_WORT = /termin|wann\s*:|tag\s*:|beginn\s*:|am\s*:|abfahrt|reserviert|gebucht|einladung|kommen sie|findet statt|bitte erscheinen|kommt am|kommt!?\s|vorbei/i;
 
@@ -348,12 +354,17 @@ function satzUm(t: string, pos: number, ende: number): { vor: string; nach: stri
  * Frist = ein Tag, bis zu dem der Haushalt etwas tun muss, oder ein Termin, den er wahrnimmt.
  * Kein Briefdatum, kein Abbuchungstag, keine Laufzeit („gültig bis“, „Garantie bis“), keine bloße Widerspruchs- oder Kündigungsfrist.
  */
-export function erkenneFrist(text: string, dokumentDatum?: string): Wert | undefined {
+export function erkenneFrist(text: string, dokumentDatum?: string, datumSicher = true): Wert | undefined {
   const t = text.replace(/\s+/g, " ");
   const stellen = datumsStellen(t, dokumentDatum);
   const tun: Array<{ iso: string; grund: string; pos: number }> = [], faellig: typeof tun = [], termin: Array<{ iso: string; grund: string; pos: number; sicher: boolean }> = [];
+  const zuFrueh = (iso: string) => datumSicher && !!dokumentDatum && iso < dokumentDatum, zuFern = (iso: string) => datumSicher && !!dokumentDatum && Date.parse(iso) - Date.parse(dokumentDatum) > 548 * 864e5;
   for (const s of stellen) {
+    if (zuFrueh(s.iso) || zuFern(s.iso)) continue;
     const { vor, nach } = satzUm(t, s.pos, s.ende);
+    if (/^\s*\S*\s*(?:\S+\s+){0,3}(?:\d+(?:,\d+)?\s*%\s*)?\bskonto/i.test(nach)) continue;
+    // Ende eines Zeitraums („vom 11.04.2025 bis 31.12.2025“, „Sa 19.07. bis Sa 26.07.“, „2019 bis 31.12.2024“) ist keine Frist
+    if (/\d{1,2}\.(?:\d{1,2}\.)?(?:\d{2,4})?\s*(?:\([^)]*\)\s*)?(?:–|-|bis)\s*(?:zum\s+)?(?:[a-z]{2}\.?,?\s+)?$|\b(?:19|20)\d{2}\s*(?:–|-|bis)\s*$/i.test(t.slice(Math.max(0, s.pos - 30), s.pos))) continue;
     const klein = (x: string) => x.toLowerCase();
     const zitat = `${vor.slice(-45)}${t.slice(s.pos, s.ende)}`.trim();
     const direkt = klein(vor.slice(-60));
@@ -361,16 +372,16 @@ export function erkenneFrist(text: string, dokumentDatum?: string): Wert | undef
     const nah = klein(vor.slice(-90)); const bitte = Math.max(nah.lastIndexOf("bitte"), nah.lastIndexOf("fordere"), nah.lastIndexOf("fordern"));
     const teilsatz = (bitte >= 0 ? nah.slice(bitte) : nah.slice(-60)) + " " + klein(nach.split(/[,;(]/)[0].slice(0, 45));
     // 1. „bis (spätestens/zum) [Freitag,] 12.03.“ mit einer Handlung im selben Satz
-    const bis = new RegExp(`(?:\\bbis|spätestens|\\balso|das ist der|das wäre der)\\s*(?:spätestens\\s+|zum\\s+|am\\s+|bis\\s+|zum\\s+ablauf\\s+des\\s+|einschließlich\\s+|ende\\s+\\S+\\s+)?\\(?(?:${WOCHENTAG})?(?:den\\s+|dem\\s+)?$`, "i").test(direkt);
+    const bis = new RegExp(`(?:\\bbis|spätestens|\\balso|das ist der|das wäre der)\\s*(?:spätestens\\s+|zum\\s+|am\\s+|bis\\s+|zum\\s+ablauf\\s+des\\s+|einschließlich\\s+|ende\\s+\\S+\\s+|(?:[a-zäöü]+\\s+){1,4}(?=\\())?\\(?(?:${WOCHENTAG})?(?:den\\s+|dem\\s+)?$`, "i").test(direkt);
     if (bis && !KEINE_FRIST.test(teilsatz) && (/spätestens/.test(direkt) || HANDLUNG.test(klein(vor) + " " + klein(nach)))) { tun.push({ iso: s.iso, grund: `„${zitat}“`, pos: s.pos }); continue; }
     // 2. „zahlbar bis“, „fällig am“, „Zahlungsziel“, „Stichtag“, „Fälligkeiten:“ – nicht, wenn abgebucht wird
-    const zahl = /(zahlbar\s+(?:bis|zum|bis zum|am)|fällig(?:keit(?:en)?)?\s*(?:am|zum|bis|:)?|zahlungsziel\s*:?|zahlungstermin\s*:?|stichtag\s*:?|frist(?:ende)?\s*:|zahlungsfrist\s*:?|letzter\s+termin\s*:?)\s*(?:[a-zäöü]{2,4}\.?,?\s+)?$/i.test(direkt) && !/hauptfällig|jährlich|monatlich|quartal|jeweils/i.test(direkt) || /^\s*(?:\S+\s+){0,2}fällig\b/i.test(nach) && /\bam\s+$/i.test(direkt) && !/jeweils|jährlich/i.test(direkt);
+    const zahl = /(zahlbar\s+(?:bis|zum|bis zum|am)|fällig(?:keit(?:en)?)?\s*(?:am|zum|bis|:)?|zahlungsziel\s*:?|zahlungsziel[^.(]{0,20}\(|zahlungstermine?\s*:?|stichtag\s*:?|frist(?:ende)?\s*:|zahlungsfrist\s*:?|letzter\s+termin\s*:?)\s*(?:[a-zäöü]{2,4}\.?,?\s+)?$/i.test(direkt) && !/hauptfällig|jährlich|monatlich|quartal|jeweils/i.test(direkt) || /^\s*(?:\S+\s+){0,2}fällig\b/i.test(nach) && /\bam\s+$/i.test(direkt) && !/jeweils|jährlich/i.test(direkt) || /fällig\w*\b[^.]{0,45}\bam\s+$/i.test(direkt) && !/hauptfällig/i.test(direkt);
     if (zahl && !ABBUCHUNG.test(ohneVerneinung(klein(t.slice(Math.max(0, s.pos - 160), s.ende + 120)))) && !(dokumentDatum && Date.parse(s.iso) - Date.parse(dokumentDatum) > 400 * 864e5) && !/abgelaufen|verstrichen|\bwar\b|gewesen/.test(klein(nach.slice(0, 40)))) { faellig.push({ iso: s.iso, grund: `„${zitat}“`, pos: s.pos }); continue; }
     // 3. Termin: Wochentag oder Etikett davor, Uhrzeit dahinter – nicht die Datumszeile einer Mail
-    const uhr = /^\)?[,;:]?\s*(?:zeit\s*:\s*)?(?:um\s*:?\s*|ab\s+|von\s+|bis\s+|zwischen\s+|zw\.\s+|gegen\s+|ca\.\s+)?\d{1,2}(?:[:.]\d{2})?(?:\s*(?:–|-|bis|und)\s*(?:ca\.\s*)?\d{1,2}(?:[:.]\d{2})?)?\s*uhr|^\)?[,;]?\s*(?:um|zwischen|zw\.)\s*:?\s*\d{1,2}[:.]\d{2}|^[,:]?\s+\d{1,2}:\d{2}\b/i.test(nach);
+    const uhr = /^\)?[,;:]?\s*(?:zeit\s*:\s*)?(?:um\s*:?\s*|ab\s+|von\s+|bis\s+|zwischen\s+|zw\.\s+|gegen\s+|ca\.\s+)?\d{1,2}(?:[:.]\d{2})?(?:\s*(?:–|-|bis|und)\s*(?:ca\.\s*)?\d{1,2}(?:[:.]\d{2})?)?\s*uhr|^\)?[,;]?\s*(?:um|zwischen|zw\.)\s*:?\s*\d{1,2}[:.]\d{2}|^[,:]?\s+\d{1,2}:\d{2}\b/i.test(nach) || /^\s*[–-]\s*(?:bitte\s+)?(?:um|ab|bis|zwischen)\s*\d{1,2}[:.]\d{2}/i.test(nach);
     const tagDavor = new RegExp(`(?:^|[\\s:(])${WOCHENTAG}$`, "i").test(direkt);
-    const etikett = /(?:termin|wann|tag|abfahrt|am|datum des termins)\s*:\s*(?:\S+\s+)?$/i.test(direkt);
-    const ohneUhr = /(?:(?:erster|nächster|ihr|neuer)\s+termin\s*:?\s*|(?:termin|wann|tag|beginn)\s*:\s*(?=\S+\s))(?:\S+\s+)?$/i.test(direkt) && (tagDavor || /termin\s*:?\s*$/i.test(direkt));
+    const etikett = /(?:termin|wann|tag|abfahrt|am|datum des termins|datum)\s*:\s*(?:\S+\s+)?$/i.test(direkt);
+    const ohneUhr = /(?:(?:aufnahme\w*|anreise\w*)\s+ist\s+|(?:erster|nächster|ihr|neuer)\s+termin\s*:?\s*|(?:termin|wann|tag|beginn)\s*:\s*(?=\S+\s))(?:\S+\s+)?$/i.test(direkt) && (tagDavor || /termin\s*:?\s*$/i.test(direkt));
     const vermerk = /(?:gebucht|bestellt|angenommen|erstellt|gedruckt|eingegangen|erhalten|ausgestellt|endet|ablauf|beginn|versicherungsbeginn|lieferbeginn)\s*:?\s+(?:am\s+)?$/i.test(direkt);
     const mailkopf = /(?:datum|gesendet|date|sent|vom)\s*:\s*(?:\S+\s+)?$/i.test(direkt) || /(?:kasse|bon|beleg)\b/i.test(nach.slice(0, 30));
     if (!mailkopf && !vermerk && ohneUhr && !uhr) termin.push({ iso: s.iso, grund: `Termin „${zitat}“`, pos: s.pos, sicher: false });
@@ -378,7 +389,8 @@ export function erkenneFrist(text: string, dokumentDatum?: string): Wert | undef
       termin.push({ iso: s.iso, grund: `Termin „${zitat}“`, pos: s.pos, sicher: TERMIN_WORT.test(vor.slice(-120)) && (tagDavor || etikett) });
     }
   }
-  if (tun.length) { const f = tun[tun.length - 1]; return w(f.iso, !(dokumentDatum && Date.parse(f.iso) - Date.parse(dokumentDatum) > 400 * 864e5), f.grund); }       // die letzte genannte Frist gilt (Mahnung nennt vorher die alte)
+  // mit sicherem Briefdatum sind vergangene Tage schon aussortiert: die nächste Frist gilt (Anzahlung vor Restzahlung); sonst die letzte (Mahnung nennt vorher die alte)
+  if (tun.length) { const f = datumSicher && dokumentDatum ? tun[0] : tun[tun.length - 1]; return w(f.iso, !(dokumentDatum && Date.parse(f.iso) - Date.parse(dokumentDatum) > 400 * 864e5), f.grund); }       // die letzte genannte Frist gilt (Mahnung nennt vorher die alte)
   if (faellig.length) { const f = faellig[0]; return w(f.iso, true, f.grund); }           // bei mehreren Fälligkeiten die nächste
   if (termin.length) { const f = termin[0]; return w(f.iso, f.sicher, f.grund); }
   // gerechnete Zahlungsfrist („zahlbar innerhalb von 14 Tagen“) – nie sicher; Widerspruchs- und Rückgabefristen zählen nicht

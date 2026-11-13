@@ -16,6 +16,7 @@ export const APP_STAND: Readonly<Record<string, StandEintrag>> = {
   "tagebuch": { stand: "fertig", seit: "2.28.49" },
   "notiz": { stand: "fertig", seit: "2.28.49" },
   "aus-antwort": { stand: "fertig", seit: "2.28.49" },
+  // 2.28.67: Eingang – Absender und Titel aus dem Sortier-Kern.
   // 2.28.65: Sicherung an einem zweiten Ort, Cloud-Ordner hereinholen, E-Mail-Wege (Private Brain als Empfang, Mail-App, Microsoft).
   "aus-zweiter-ort": { stand: "fertig", seit: "2.28.65" },
   "cloud-ordner": { stand: "fertig", seit: "2.28.65" },
@@ -55,7 +56,7 @@ export const APP_STAND: Readonly<Record<string, StandEintrag>> = {
   // Ablaufprüfung 2.28.39: geänderte Wege golden markieren (Eingang mit Titel/Text/Sammelbestätigung, Frist mit Erinnerung
   // als Teil der Aufgabe, Suche nach Inhalt und Alltagswörtern, Personen anlegen, Glocke grün).
   // Stufe E: Eingangsordner in Blöcken zu 20, von selbst, ohne Zweitkopie, Speicherprüfung.
-  "eingang": { stand: "fertig", seit: "2.28.65" },
+  "eingang": { stand: "fertig", seit: "2.28.67" },
   "vorschlag": { stand: "fertig", seit: "2.28.39" },
   // Stufe H: Original-Foto bleibt im Stapel erhalten; „Teilen“ an der Unterlage.
   "scan-stapel": { stand: "fertig", seit: "2.28.47" },
