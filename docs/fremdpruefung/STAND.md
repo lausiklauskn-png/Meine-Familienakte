@@ -8,5 +8,6 @@
 | 003 | Konto von 120 Belegen, vierter Stapel | ausgewertet – Ergebnis von Codex (Puls 3, 22:10 UTC) quittiert | 2026-11-12T22:16Z |
 | 004 | 150 Briefe einordnen | ausgewertet – Ergebnis von Codex (Puls 4, 22:24 UTC) quittiert | 2026-11-12T22:34Z |
 | 002 | Gegenlauf mit eigenen Agenten, Kreuztest, Entwurf für echtere Prüfungen | ausgewertet – Ergebnis von Codex (Puls 5, 23:24 UTC) quittiert | 2026-11-12T23:45Z |
+| 005 | 150 Schriftstücke einordnen, zweiter Briefstapel (`auftraege/005-briefe-2/`) | offen | 2026-11-13T00:05Z |
 
 In dieser Datei stehen keine Messzahlen (Hinweis von Codex in der Antwort zu 000).
