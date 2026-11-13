@@ -7,6 +7,20 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Aktueller Stand (11.11.2026 abends, nach 2.28.65)
 
+- **Sortier-Kern eingebaut (Klaus 13.11.: „wenn es sinnvoll ist, mach es“; nicht veröffentlicht):** Der Kern des Datei-Organizers liegt
+  byte-gleich unter `lib/sortierkern/` (Pin `HERKUNFT.json`, nur über `node tools/sortierkern-nachziehen.mjs`, geprüft von
+  `check:herkunft`; **nie von Hand ändern**). Anschluss `lib/sortier-vorschlag.ts`: ab 200 Zeichen gelesenem Text entscheidet der Kern
+  den Bereich (`buildDocumentIntakePlan`) und liest die Frist (`erkenneFristen`); ohne Text alles wie bisher. **Ersetzt „Dateiname
+  zuerst“ (31.10./01.11.) für Stücke mit Text.** Nachweis an sechs fremden Stapeln (Datei-Organizer
+  `docs/PRUEFSTAPEL-VERMIETERIN-REGELN.md`, „Einbau in die Familienakte“): Bereich 38–57 % → 77–87 %, Frist 51 % → 86 %.
+  Offen: Absender/Titel aus dem Kern, Zweitfach, eigene Muster des Nutzers (erst Vorschau), Gerätetest.
+
+- **Plan Bilder** `docs/PLAN_2026-11-12_BILDER.md` (Klaus 12.11.; Brief `BRIEF_ABSCHLUSS_2026-11-12_PLAN-BILDER.md`): Fotos als eigene Art mit
+  Metadaten (Aufnahme, Gerät, Einstellungen, Ort), Nacharbeit im Hintergrund (erst ablegen, dann OCR/Prüfung), Kennzeichen →
+  Fahrzeug, Barcodes mit Prüfung nur bei Code-Fund, Teilen ohne Ort. Nichts gebaut; Fragen F1–F8 an Klaus offen, dann Vorschau.
+- **Plan Datei-Organizer** (Arbeitsname war Sortiersieb) `docs/PLAN_2026-11-12_DATEI-ORGANIZER.md` (Verweis; Plan im Repo Datei-Organizer, `docs/PLAN.md`) (Klaus 12.11.): Prüf- und Sortierwerkzeug neben Auslieferungs- und Sende-Prüfer;
+  Eingangsordner, dann Klick für Klick feiner (Art → Kopf → Kategorie/Nummern → Absender → Inhalt), nur Teile lesen, schnelle
+  Modelle statt Sprachmodell, lernt aus Korrekturen, Verlauf mit Rückgängig. Klaus 12.11.: eigene App, alles in einem Ordner mit selbstsortierendem Baum (Sichten), Ordner wird in die Familienakte nur übernommen und dort automatisch zugeordnet. Lehrer = Claude Haiku 5.5 über Server oder freigegebenen Ordner, nie über das Repo. **Fassung 0.1.0 dort gebaut** (12.11., PR #1 Entwurf: Kern, Oberfläche im Familienakte-Design, 101 erfundene Testdateien, Archivnummern erst wenn nichts mehr zu prüfen ist); Index-Übernahme hier noch nicht gebaut. S11 entschieden: Weg A über den Hetzner-Server (KimHub `schicht/api.mjs`) mit Schlüssel und Pseudonymisierung; S3–S6 entschieden wie vorgeschlagen; S8 offen, Repo `Datei-Organizer` angelegt, Plan, Regeln und Vorschau (Stufe A) dort auf Zweig claude/familienakte-bildintegration-il59yw; Zweck: Vorarbeit für andere Programme und KI (Steckbrief, Text, Abschnitte für Vektoren).
 - **Fassung 2.28.65** (#171 mit #170; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.65.json`; Brief
   `BRIEF_ABSCHLUSS_2026-11-12_CLOUD-ORDNER-2.28.65.md`): **Sicherung an einem zweiten Ort** (`app/zweiter-ort*.ts(x)`, `lib/zweiter-ort.ts`;
   selbsttätig bei Änderung höchstens einmal am Tag, verschlüsselt/lesbar, dort 1, auf dem Gerät 2 im App-Ordner `sicherungen`; erst
@@ -170,8 +184,10 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
+  - `BRIEF_ABSCHLUSS_2026-11-13_SORTIERKERN-UND-LAUF-VERMIETERIN.md` (letzter Stand: Sortier-Kern eingebaut, Lauf „Vermieterin“, Startauftrag)
   - `BRIEF_SITZUNG_2026-11-11_CLOUD-ORDNER-2.28.65.md` (nächster Bau: Sicherung an einem zweiten Ort, Nur sichern/Synchron halten, Cloud-Ordner hereinholen; Klaus: keine Vorschau nötig)
-  - `BRIEF_ABSCHLUSS_2026-11-12_CLOUD-ORDNER-2.28.65.md` (jüngster Abschluss: 2.28.65, Entscheidungen, Startauftrag)
+  - `BRIEF_ABSCHLUSS_2026-11-12_PLAN-BILDER.md` (Plan Bilder, Fragen F1–F8)
+  - `BRIEF_ABSCHLUSS_2026-11-12_CLOUD-ORDNER-2.28.65.md` (letzter Bau: 2.28.65, Entscheidungen, Startauftrag)
   - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-11_GESAMMELT-2.28.64.md` (2.28.57 bis 2.28.64)
   - `BRIEF_CODEX_2026-11-04_NACH-2.28.24.md` (Abstimmung mit Codex: welche Dateien Claude gehören)
   - `BRIEF_ABSCHLUSS_2026-11-04_PDF-ARBEITSRAUM.md`, `BRIEF_ABSCHLUSS_2026-11-04_PDF-FUNKTIONSABGLEICH.md` (Codex)
@@ -264,6 +280,9 @@ sondern nur KimHub.“
 - Keine Schlüssel, PINs, Passwörter oder Chefcodes in Dateien oder im Chat.
 - **Codex-Prüfungen auslassen (Klaus 09.11.):** Codex ist nicht mehr aktiv, der Zugang ist gesperrt. Kein „@codex review“ anstoßen,
   Codex-Kommentare (auch „Failed“/„usage limits“) nicht abwarten und nicht als Befund behandeln.
+- **Codex als unabhängiger Prüfer (Klaus 12.11.):** Codex ordnet Prüfstapel unabhängig ein und entwirft eigene Vorgehensweisen. Einzige
+  Verbindung ist der Briefkasten `docs/fremdpruefung/` (`VERBINDUNG.md`, `STAND.md`); Klaus gibt das Zeichen. Dort nie Lösungen oder
+  Messergebnisse ablegen. Das hebt den Punkt darüber nicht auf: kein „@codex review“ an Pull Requests.
 - Eigene Dateien und eigene Altbriefe bevorzugt erhalten; Beispiele nur nach belegter Herkunft bereinigen.
   Keine automatischen Beispiele im eigenen Bestand (Demo hat einen eigenen Bestand).
 - Byte-1:1-Bausteine nie von Hand ändern: Workflow PDF über `tools/wfpdf-nachziehen.mjs` (Pins `public/wfpdf/HERKUNFT.json`),

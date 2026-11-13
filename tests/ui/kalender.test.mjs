@@ -145,8 +145,13 @@ try {
     return Boolean(e) && e.summary === "Rezept Physiotherapie abholen (erfunden)" && !/Befund|0815/.test(JSON.stringify(e));
   });
   await step("Erledigt: Termin wird aus dem Kalender entfernt, Zuordnung gelöscht", async () => {
-    await page.locator("button.schedule-filter", { hasText: "Offen" }).click();
+    // Die Frist hat ein festes Datum (20.11.2026); je nach heutigem Tag steht sie unter „Offen“, „Bald fällig“ (ab sieben Tagen
+    // davor) oder „Überfällig“. Bis 12.11. lag sie unter „Offen“, seit 13.11. nicht mehr – die Probe sucht sie darum in allen dreien.
     const eintrag = page.locator("article", { hasText: "Rechnung Stadtwerke bezahlen (erfunden)" }).first();
+    for (const filter of ["Offen", "Bald fällig", "Überfällig"]) {
+      await page.locator("button.schedule-filter", { hasText: filter }).click();
+      if (await eintrag.waitFor({ timeout: 1500 }).then(() => true, () => false)) break;
+    }
     await eintrag.locator("[data-termin-erledigt]").click(); // 2.28.30: Haken in der flachen Zeile
     if (await page.locator(".page-dialog").waitFor({ timeout: 3000 }).then(() => true, () => false)) await page.locator(".page-dialog button", { hasText: "Ja, fortfahren" }).click();
     for (let i = 0; i < 40 && !google.geloescht.length; i++) await page.waitForTimeout(150);

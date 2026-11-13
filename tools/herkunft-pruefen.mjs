@@ -19,4 +19,13 @@ for (const pinDatei of ["public/pro-verbund/pro-verbund.herkunft.json", "public/
   if (ist === pin.sha256) console.log(`🟢 ${datei} byte-gleich mit ${pin.quelle}/${pin.datei}${pin.commit ? ` @ ${pin.commit.slice(0, 7)}` : ""} (Stand ${pin.stand})`);
   else { rot++; console.log(`🔴 ${datei} weicht ab: ${ist} statt ${pin.sha256}`); }
 }
+// Sortier-Kern des Datei-Organizers (lib/sortierkern/, nachgezogen mit tools/sortierkern-nachziehen.mjs)
+{
+  const pin = JSON.parse(readFileSync(path.join(root, "lib/sortierkern/HERKUNFT.json"), "utf8"));
+  for (const [datei, sha] of Object.entries(pin.dateien)) {
+    const ist = createHash("sha256").update(readFileSync(path.join(root, "lib/sortierkern", datei))).digest("hex");
+    if (ist === sha) console.log(`🟢 lib/sortierkern/${datei} byte-gleich mit ${pin.quelle}/${pin.pfad}${datei} @ ${pin.commit.slice(0, 7)}`);
+    else { rot++; console.log(`🔴 lib/sortierkern/${datei} weicht ab: ${ist} statt ${sha}`); }
+  }
+}
 process.exit(rot ? 1 : 0);

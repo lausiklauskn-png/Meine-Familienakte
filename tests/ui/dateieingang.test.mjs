@@ -58,15 +58,15 @@ try {
   await step("Dateiauswahl nimmt 14 Testdateien an", async () => { await picker.setInputFiles(alle.map(f)); await page.locator(".intake-queue-item").nth(13).waitFor(); await page.waitForFunction(() => !document.querySelector(".intake-queue-item .badge")?.textContent?.includes("läuft")); });
   for (const name of alle) { kinds[name] = await queueInfo(name); }
   const erwartet = {
-    "Nebenkostenabrechnung_2025_Arenberg-Hof.pdf": ["PDF", "Einkäufe, Rechnungen & Garantien"], // Befund: „rechnung“ in „Abrechnung“ schlägt „nebenkosten“
-    "Garantiebeleg_Waschautomat_Lavorix.pdf": ["PDF", "Einkäufe, Rechnungen & Garantien"],
+    "Nebenkostenabrechnung_2025_Arenberg-Hof.pdf": ["PDF", "Haus & Wohnung"], // seit dem Sortier-Kern (13.11.2026); vorher schlug „rechnung“ in „Abrechnung“ die Nebenkosten
+    "Garantiebeleg_Waschautomat_Lavorix.pdf": ["PDF", "Technik, Geräte & Reparaturen"], // Fachregel Punkt 5: Gerät mit Garantie
     "Scan_Garantiebeleg_nur_Bild.pdf": ["PDF", "Einkäufe, Rechnungen & Garantien"],
     "Foto_Garantiebeleg_Lavorix.png": ["Foto / Bild", "Einkäufe, Rechnungen & Garantien"],
     "Mietvertrag_Arenberg-Hof_Nachtrag.docx": ["Word-Dokument", "Verträge & Abonnements"], // Befund: „Mietvertrag“ enthält nicht „miete“
     "Nebenkosten_Uebersicht_2025.xlsx": ["Tabelle", "Haus & Wohnung"],
     "Notiz_Fahrradkauf_Velotrix.txt": ["Text / Protokoll", "Einkäufe, Rechnungen & Garantien"],
     "Protokoll_Schulausflug.vtt": ["Text / Protokoll", "Korrespondenz"], // „Elternbrief“ im Text
-    "Mail_Garantiefall_mit_PDF.eml": ["E-Mail (.eml)", "Einkäufe, Rechnungen & Garantien"],
+    "Mail_Garantiefall_mit_PDF.eml": ["E-Mail (.eml)", "Technik, Geräte & Reparaturen"], // Fachregel Punkt 5
     "Outlook_Nachricht_Stromtarif.msg": ["Outlook-E-Mail (.msg)", "Energie & Versorgung"],
     "Unterlagen_Umzug_Paket.zip": ["Archivdatei", "Archiv"], // Inhalt wird nicht gelesen
     "Programm_nicht_erlaubt.exe": ["Unbekannter Dateityp", "Archiv"],
@@ -114,7 +114,7 @@ try {
     return cards.map((c) => c.split("\n")[0]).join(" · ");
   });
   const vorschlag = await page.locator(".intake-choice-card dd").allInnerTexts();
-  check(vorschlag[0].startsWith("Einkäufe") && vorschlag[1].startsWith("Rechnung / Garantie") && vorschlag[2].startsWith("vertraulich") && vorschlag[3].startsWith("Garantie / Reparatur"), "Vorschlag: Lebensbereich, Dokumentenart, Datenschutz, Bereich", vorschlag.map((c) => c.split("\n")[0]).join(" · "));
+  check(vorschlag[0].startsWith("Technik") && vorschlag[1].startsWith("Technikunterlage") && vorschlag[2].startsWith("vertraulich") && vorschlag[3].startsWith("Gerät / Technik"), "Vorschlag: Lebensbereich, Dokumentenart, Datenschutz, Bereich", vorschlag.map((c) => c.split("\n")[0]).join(" · "));
   check((await page.locator(".intake-analysis-head").innerText()).includes("Quelle: Dateiauswahl"), "Dialog zeigt Quelle und Vertrauensgrad", (await page.locator(".intake-analysis-head").innerText()).replace(/\s+/g, " "));
   await step("Auswahl ändern: Datenschutz „besonders geschützt“ wählbar", async () => {
     await page.locator("button[aria-label='Datenschutzstufe auswählen']").click();
@@ -133,7 +133,7 @@ try {
     const item = page.locator(".document-item", { hasText: "Garantiebeleg_Waschautomat_Lavorix" }).first();
     await item.waitFor({ timeout: 20000 });
     const text = await item.innerText();
-    if (!text.includes("01_Dokumente/Garantie")) throw new Error(text.replace(/\s+/g, " ").slice(0, 200));
+    if (!text.includes("01_Dokumente/Gerät")) throw new Error(text.replace(/\s+/g, " ").slice(0, 200));
     return text.match(/Me_Myself[^\s]*/)?.[0];
   });
 

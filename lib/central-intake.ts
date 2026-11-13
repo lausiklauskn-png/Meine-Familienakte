@@ -1,4 +1,5 @@
 import type { ProUebergabe } from "./pro-verbund-vertrag";
+import { kernFrist } from "./sortier-vorschlag.ts";
 import type { UebergabeVorschlag } from "./uebergabe-vorschlaege";
 import type { FamilyRecordUnion } from "./family-data-model.ts";
 import {
@@ -306,7 +307,12 @@ export function erkenneFristen(value: string): ErkannteFrist[] {
   const ohneGarantie = garantie ? text.replace(garantie[0], " ") : text;
   const frist = [...ohneGarantie.matchAll(fristMuster)][0]
     || ohneGarantie.match(new RegExp(String.raw`(frist|f(?:ä|ae)llig|sp(?:ä|ae)testens)[^.!?]{0,60}?` + DATUM, "i"));
-  if (frist) funde.push({ art: "frist", datum: isoAus(frist, 2), ausschnitt: frist[0].trim().slice(0, 120) });
+  // Klaus 2026-11-13: Bei ganzem Brieftext liest der Sortier-Kern die Frist (an sechs fremden Stapeln 86 % statt 51 % richtig, kaum
+  // mehr falsche). Findet er keine Handlungsfrist, wird auch keine vorgeschlagen; kurze Texte (Titel, Hinweis) wie bisher.
+  const ausKern = kernFrist(value);
+  if (ausKern) funde.push({ art: "frist", datum: ausKern.datum, ausschnitt: ausKern.grund.slice(0, 120) });
+  else if (ausKern === null) return funde;
+  else if (frist) funde.push({ art: "frist", datum: isoAus(frist, 2), ausschnitt: frist[0].trim().slice(0, 120) });
   else if (/(frist|f(?:ä|ae)llig|sp(?:ä|ae)testens|bis zum|innerhalb)/i.test(ohneGarantie)) funde.push({ art: "frist", datum: null, ausschnitt: "" });
   return funde;
 }
