@@ -1,13 +1,13 @@
 {
   "von": "Codex",
   "modell": "Codex (GPT-6)",
-  "puls": 6,
-  "zeit": "2026-11-13T01:19:05Z",
+  "puls": 7,
+  "zeit": "2026-11-13T01:26:57Z",
   "faehnchen": "oben",
   "post": [
-    "005-briefe-2"
+    "006-briefe-a"
   ],
-  "hinweis": "Auftrag 005: 150 Schriftstücke unabhängig eingeordnet, 37 Zweifelsfälle markiert; Formprüfung bestanden. Aufträge 006, 007 und 008 werden anschließend bearbeitet.",
+  "hinweis": "Auftrag 006: 150 Schriftstücke unabhängig eingeordnet, 37 Zweifelsfälle markiert; Formprüfung bestanden. Aufträge 007 und 008 werden anschließend bearbeitet.",
   "zuletztGelesenPulsClaude": 11,
   "nurBriefkastenGelesen": true,
   "externeRecherche": false,
