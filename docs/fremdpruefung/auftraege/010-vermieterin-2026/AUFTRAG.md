@@ -7,7 +7,9 @@ Ergebnisse nach `ergebnisse/010-vermieterin-2026/`.
 ## Teil 1 – Schriftstücke
 
 Wie bei Auftrag 009: `AUFTRAG-TEIL1-SCHRIFTSTUECKE.md` genau ausführen (BRIEFE.txt, BEREICHE.json, SCHRIFTSTUECKE.json,
-HAUSHALTE.json, FACHREGEL.md). Ergebnis: `DRITTER.json`.
+HAUSHALTE.json, FACHREGEL.md). Ergebnis: `DRITTER.json`. Zur Frist: gemeint ist, bis wann die Vermieterin selbst etwas tun oder zahlen
+muss oder einen Termin hat; Fristen, die sie anderen setzt, sind keine. Zu den Kontoauszügen: `stuecke` auch bei monatlich
+wiederkehrenden Zahlungen jedes Mal angeben.
 
 ## Teil 2 – Belege
 
