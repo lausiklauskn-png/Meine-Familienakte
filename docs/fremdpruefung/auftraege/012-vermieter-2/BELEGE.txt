@@ -1,0 +1,1111 @@
+######## BELEG 1 von 50 · Datei: belege/Download.txt ########
+WohnPortal24 GmbH | Online-Immobilienmarkt | wohnportal24.example
+Hafenallee 100, 20999 Hansestadt | USt-ID DE000333444
+
+Invoice 2026-WP-118842
+Account ID: U-7781-3390   Listing ID: 99410772
+Invoice date: 03.04.2026
+
+Bill to: Stefan Brenner, Ahornstraße 12, 79997 Neudorf
+
+Item                                         Net      VAT 19%    Gross
+Inserat "Premium 4 Wochen" Wohnung        29,33     5,57    34,90
+---------------------------------------------------------------------
+Amount due                                                  EUR 34,90
+
+Payment: SEPA direct debit from DE00 6005 0000 0123 4567 89 on or after 06.04.2026
+Mandate reference WP24-U77813390
+
+######## BELEG 2 von 50 · Datei: belege/Heizung_Schlussrechnung.txt ########
+Wärmetechnik Sommer GmbH
+Heizung · Sanitär · Wärmepumpen
+Industriestraße 14 · 79998 Erlenbach
+USt-IdNr. DE000111222
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+SCHLUSSRECHNUNG RE-2026-0934
+Datum: 30.09.2026     Leistungszeitraum: 07.09.–25.09.2026
+Auftrag: AU-2026-0233   Kunden-Nr.: 10577
+Objekt: Lindenweg 7, 79998 Erlenbach
+
+Pos Bezeichnung                                     Menge     Gesamt
+1   Luft-Wasser-Wärmepumpe 12 kW inkl. Außeneinheit  1 St  14.980,00
+2   Pufferspeicher 300 l, Trinkwasserspeicher 300 l  1 Pa   3.420,00
+3   Demontage und Entsorgung Gas-Brennwertkessel     1 psch   780,00
+4   Hydraulischer Abgleich Verfahren B               1 psch   960,00
+5   Elektroanschluss, Zählerplatz                    1 psch 1.240,00
+6   Montage, Inbetriebnahme (62 Std.)               62 h    1.620,00
+                                                           ---------
+    Summe netto                                            23.000,00
+    zzgl. 19 % USt                                          4.370,00
+    Gesamtbetrag brutto                                    27.370,00
+    abzgl. Abschlag AR-26-0881 vom 20.08.2026              -9.000,00
+    (darin 1.436,97 USt)
+    ================================================================
+    Noch zu zahlen                                         18.370,00 EUR
+
+Zahlbar bis 14.10.2026 ohne Abzug.
+Volksbank Talgau eG · IBAN DE00 6009 0000 0007 7431 20
+
+######## BELEG 3 von 50 · Datei: belege/IMG_20260318_0941.txt ########
+Uwe Haldner – Bezirksschornsteinfegermeister
+Kehrbezirk Erlenbach II · Mühlgasse 3 · 79998 Erlenbach
+Tel. 0000 55 21 90  St.-Nr. 00/111/22233
+
+Herrn und Frau Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Rechnung Nr. 2026-0417            Datum: 18.03.2026
+Liegenschaft: Lindenweg 7, 79998 Erlenbach   Kehrbuch-Nr. 11-0388
+
+Pos  Leistung                                   Betrag
+1    Kehren Abgasleitung Gasfeuerstätte          28,40
+2    Emissionsmessung Gas-Brennwert 24 kW         38,60
+3    Grundwert / Arbeitswerte                     16,00
+                                              -------
+     Nettobetrag                                 83,00
+     zzgl. 19 % MwSt.                            15,77
+     Rechnungsbetrag                             98,77 EUR
+
+Zahlbar innerhalb 14 Tagen ohne Abzug auf
+IBAN DE00 6801 0000 0044 2210 55, Bezirkssparkasse Talgau
+Bitte Rechnungsnummer angeben.
+
+######## BELEG 4 von 50 · Datei: belege/IMG_20260321_1104.txt ########
+        Schreibwaren Kunz
+   Papier · Büro · Schule
+   Hauptstraße 22 · 79997 Neudorf
+   USt-IdNr DE000777888
+
+Ordner A4 breit blau     3 x 2,99      8,97
+Kopierpapier 500 Bl.                   5,49
+Klarsichthüllen 100 St                 4,49
+Briefumschläge C4 25 St                5,02
+----------------------------------------
+Gesamt EUR                            23,97
+EC-Karte                              23,97
+Netto 20,14  19% MwSt 3,83
+
+21.03.26 11:04  Kasse 1  Beleg-Nr. 0033891
+
+######## BELEG 5 von 50 · Datei: belege/IMG_20260620_1530.txt ########
+           Modehaus Lenz
+       Marktplatz 11 · 79995 Talstadt
+
+Damen Blazer navy Gr. 40             89,95
+Herren Hemd langarm                  40,00
+-------------------------------------------
+Summe EUR                           129,95
+Mastercard                          129,95
+inkl. 19% MwSt 20,75   Netto 109,20
+
+20.06.2026 15:30  Filiale 02  Bon-Nr. 330-0918
+Umtausch innerhalb 14 Tagen mit Kassenbon.
+
+######## BELEG 6 von 50 · Datei: belege/IMG_20261028_1712.txt ########
+Grünpflege Eckert
+Garten- und Landschaftspflege · Inh. Rolf Eckert
+Feldweg 9 · 79998 Erlenbach
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Rechnung Nr. 341/26                   Erlenbach, 28.10.2026
+Objekt: Lindenweg 7, 79998 Erlenbach
+
+Herbstpflege: Laub entfernen, Rückschnitt Sträucher
+Arbeitszeit 2 Pers. x 3,5 Std. à 26,00 €        182,00 €
+Laubabfuhr                                       28,00 €
+Netto                                           210,00 €
+MwSt 19 %                                        39,90 €
+Betrag                                          249,90 €
+
+Bitte bis 12.11.2026 überweisen: IBAN DE00 6005 0000 0040 5060 70
+
+######## BELEG 7 von 50 · Datei: belege/NK-Abrechnung_2025_EG.txt ########
+Martina und Stefan Brenner
+Ahornstraße 12 · 79997 Neudorf
+
+Herrn Jonas Kessler
+Lindenweg 7 (EG)
+79998 Erlenbach
+                                              Neudorf, 20.03.2026
+Abrechnungs-Nr.: NK-2025-EG
+
+Betriebskostenabrechnung für den Zeitraum 01.01.–31.12.2025
+Mietverhältnis seit 01.08.2019, Wohnfläche 82 m² von 160 m² (51,25 %)
+
+Kostenart                    Gesamtkosten   Schlüssel     Ihr Anteil
+Grundsteuer                       405,00 €  Wfl.          207,56 €
+Abfall                            196,80 €  Personen 2/3  131,20 €
+Wasser/Abwasser                 1.106,32 €  Zähler        611,40 €
+Allgemeinstrom                    242,44 €  Wfl.          124,25 €
+Heizung (Gas, Wartung, Messung) 2.398,10 €  70/30 Verbr. 1.311,48 €
+Schornsteinfeger                   96,40 €  Wfl.           49,41 €
+Gebäudeversicherung             1.122,80 €  Wfl.          575,44 €
+Gartenpflege                      512,40 €  Wfl.          262,61 €
+Rauchmelderwartung                 71,40 €  Geräte 5/10    35,70 €
+-------------------------------------------------------------------
+Summe Ihr Anteil                                        3.309,05 €
+abzgl. Vorauszahlungen 12 x 260,00 €                   -3.120,00 €
+Nachzahlung                                               189,05 €
+
+Bitte überweisen Sie die Nachzahlung bis 30.04.2026 auf
+DE00 6005 0000 0123 4567 89 (Kreisbank Talgau eG),
+Verwendungszweck: NK-2025-EG.
+
+######## BELEG 8 von 50 · Datei: belege/NK-Abrechnung_2025_OG.txt ########
+Martina und Stefan Brenner
+Ahornstraße 12 · 79997 Neudorf
+
+Frau Petra Lang
+Lindenweg 7 (OG)
+79998 Erlenbach
+                                              Neudorf, 20.03.2026
+Abrechnungs-Nr.: NK-2025-OG
+
+Betriebskostenabrechnung für den Zeitraum 01.01.–31.12.2025
+Wohnfläche 78 m² von 160 m² (48,75 %)
+
+Kostenart                    Gesamtkosten   Schlüssel     Ihr Anteil
+Grundsteuer                       405,00 €  Wfl.          197,44 €
+Abfall                            196,80 €  Personen 1/3   65,60 €
+Wasser/Abwasser                 1.106,32 €  Zähler        494,92 €
+Allgemeinstrom                    242,44 €  Wfl.          118,19 €
+Heizung (Gas, Wartung, Messung) 2.398,10 €  70/30 Verbr. 1.086,62 €
+Schornsteinfeger                   96,40 €  Wfl.           46,99 €
+Gebäudeversicherung             1.122,80 €  Wfl.          547,36 €
+Gartenpflege                      512,40 €  Wfl.          249,79 €
+Rauchmelderwartung                 71,40 €  Geräte 5/10    35,70 €
+-------------------------------------------------------------------
+Summe Ihr Anteil                                        2.842,61 €
+abzgl. Vorauszahlungen 12 x 245,00 €                   -2.940,00 €
+Guthaben zu Ihren Gunsten                                  97,39 €
+
+Das Guthaben überweisen wir Ihnen in den nächsten Tagen auf Ihr Konto.
+
+######## BELEG 9 von 50 · Datei: belege/PDF_Anhang_2.txt ########
+Talgau Energie GmbH
+Postfach 12 12 · 79995 Talstadt
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Vertragsbestätigung Talgau WärmeStrom
+Kundennummer 5501 7730   Vertragskonto 4009 2211 95
+Datum 28.09.2026
+Lieferstelle: Lindenweg 7, 79998 Erlenbach – Wärmepumpe (separater Zähler 1EBZ0099445566)
+Lieferbeginn: 26.09.2026
+
+Arbeitspreis 0,2390 €/kWh brutto, Grundpreis 9,90 €/Monat brutto
+Ihr monatlicher Abschlag: 95,00 € (enthält 15,17 € USt 19 %)
+Erste Abbuchung 15.10.2026, danach monatlich zum 15.
+
+Dies ist keine Rechnung im Sinne des UStG; die Abrechnung erfolgt jährlich.
+
+######## BELEG 10 von 50 · Datei: belege/anzeige_wochenblatt.txt ########
+Erlenbacher Wochenblatt Verlag GmbH
+Marktstraße 9 · 79998 Erlenbach
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Anzeigenrechnung            Rechnungsnummer RE-2026-04-3381
+                            Kunden-Nr.     K 551 902
+                            Datum          08.04.2026
+
+Ausgabe 15/2026, Rubrik Vermietungen
+"Erlenbach, 3-Zi.-Whg. OG, 78 m², EBK, Garten-
+ mitbenutzung, frei ab 01.06., KM 750 €"
+Fließsatz 6 Zeilen, pauschal                       50,00
+zzgl. 19 % MwSt.                                     9,50
+Rechnungsbetrag                                      59,50 €
+
+Bitte überweisen Sie innerhalb von 8 Tagen auf
+DE00 6005 0000 0012 0098 76.
+
+######## BELEG 11 von 50 · Datei: belege/bon_0321.txt ########
+   Postagentur im Lotto-Laden Weber
+      Hauptstraße 40, 79997 Neudorf
+
+21.03.2026  09:58       Bon 2215
+
+Brief Einschreiben Einwurf      2 x 2,65    5,30
+------------------------------------------------
+Summe EUR                                   5,30
+BAR                                        10,00
+Rückgeld                                    4,70
+
+Postdienstleistungen umsatzsteuerfrei
+
+######## BELEG 12 von 50 · Datei: belege/bon_baumarkt_0509.txt ########
+      Werkhof Baumarkt Erlenbach
+       Gewerbestr. 2, 79998 Erlenbach
+        St-Nr 99/123/45678
+
+Silikon sanitär weiß 310ml   2 x 6,99     13,98 A
+Malerkrepp 50mm              3 x 3,49     10,47 A
+Abdeckfolie 4x5m                           4,99 A
+Steckdose UP reinweiß        4 x 5,99     23,96 A
+Türdrücker Edelstahl                      29,99 A
+Schleifpapier Set                          4,04 A
+---------------------------------------------
+SUMME EUR                                 87,43
+Girocard                                  87,43
+
+A 19%  Netto 73,47  MwSt 13,96  Brutto 87,43
+
+09.05.26 10:42   Bon 4471   Kasse 03
+Terminal 6655xx01  Beleg-Nr. 0817
+Vielen Dank für Ihren Einkauf!
+
+######## BELEG 13 von 50 · Datei: belege/buchhandlung_bon.txt ########
+      Buchhandlung Seitenweise
+   Marktplatz 6 · 79995 Talstadt
+
+07.02.2026 15:12   Kasse 2   Bon-Nr. 19 442
+
+Ratgeber Vermieten 2026 (Taschenbuch)   24,90 B
+-----------------------------------------
+Summe                                  24,90
+Kartenzahlung girocard                 24,90
+
+B = 7 % MwSt   Netto 23,27   MwSt 1,63
+
+######## BELEG 14 von 50 · Datei: belege/darlehen_tilgungsplan_2026.txt ########
+Lindgau Hypothekenbank AG
+Kaiserring 50 · 68999 Lindgau
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Darlehensnummer: 7700 3318 22
+Datum: 02.01.2026
+
+Jahresübersicht 2026 – Annuitätendarlehen
+Objekt: Lindenweg 7, 79998 Erlenbach
+Sollzins gebunden bis 30.06.2031: 2,15 % p.a.
+
+Restschuld 01.01.2026                       270.840,00 EUR
+Monatliche Rate (Zins und Tilgung)            1.150,00 EUR
+Belastung jeweils zum Monatsende von DE00 6005 0000 0123 4567 89
+
+Planwerte 2026
+Summe Raten                                  13.800,00 EUR
+davon Zinsen                                  4.786,20 EUR
+davon Tilgung                                 9.013,80 EUR
+Restschuld 31.12.2026 (voraussichtlich)     261.826,20 EUR
+
+Die Zinsen sind als Werbungskosten bei Vermietung und Verpachtung
+zu berücksichtigen. Eine Zinsbescheinigung erhalten Sie im Januar 2027.
+
+######## BELEG 15 von 50 · Datei: belege/dokument(4).txt ########
+Förderbank für Wohnen und Klima
+Anstalt des öffentlichen Rechts · Postfach 9 99 · 60999 Mainstadt
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+17.11.2026
+Antragsnummer: FWK-H-2026-4471903
+Förderprogramm: Heizungsförderung für Wohngebäude (Zuschuss)
+
+AUSZAHLUNGSMITTEILUNG
+
+Sehr geehrte Frau Brenner, sehr geehrter Herr Brenner,
+
+nach Prüfung Ihres Verwendungsnachweises zahlen wir den Zuschuss für
+den Einbau einer Wärmepumpe im Objekt Lindenweg 7, 79998 Erlenbach aus.
+
+förderfähige Kosten                       23.000,00 EUR
+Fördersatz (Grundförderung)                    30 %
+Zuschuss                                   6.900,00 EUR
+
+Die Gutschrift erfolgt in den nächsten Tagen auf das Konto
+DE00 6005 0000 0123 4567 89.
+
+Der Zuschuss ist kein Entgelt für eine Leistung und unterliegt
+nicht der Umsatzsteuer.
+
+######## BELEG 16 von 50 · Datei: belege/dokument.txt ########
+QUITTUNG                                   Nr. G1-2026-03
+
+Betrag: 180,00 EUR
+in Worten: einhundertachtzig ---------------------- Euro
+
+von: Herrn Erwin Bauer, Birkenweg 3, 79998 Erlenbach
+für: Miete Garage 1, Lindenweg 7, 79998 Erlenbach, Juli bis September 2026
+     (3 Monate x 60,00 EUR)
+
+dankend in bar erhalten.
+
+Ort/Datum: Erlenbach, 03.07.2026
+
+Empfänger: Martina und Stefan Brenner, Ahornstraße 12, 79997 Neudorf
+                                gez. S. Brenner
+
+######## BELEG 17 von 50 · Datei: belege/energieberatung_falk.txt ########
+Ingenieurbüro Falk Energieberatung
+Dipl.-Ing. Thomas Falk · Am Bach 2 · 79996 Oberried-Tal
+St.-Nr. 99/888/77766
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Rechnung
+Rechnung Nr.: 2026-061          Datum: 25.06.2026
+Ihr Zeichen: Heizungstausch Lindenweg 7   Projekt-Nr. P-118
+
+Leistung                                           Betrag
+Vor-Ort-Begehung, Heizlastberechnung raumweise     380,00
+Bestätigung zum Antrag (BzA), Förderantrag         120,00
+Verwendungsnachweis nach Abschluss                 100,00
+                                                 -------
+Netto                                              600,00
+19 % MwSt.                                         114,00
+Gesamt                                             714,00 EUR
+
+Zahlbar innerhalb von 10 Tagen.
+Bankverbindung: IBAN DE00 6001 0000 0033 1188 02
+
+######## BELEG 18 von 50 · Datei: belege/garage2_rechnung_2026.txt ########
+Martina und Stefan Brenner
+Ahornstraße 12 · 79997 Neudorf
+
+Frau Ngozi Okafor
+Lindenweg 11
+79998 Erlenbach
+
+Rechnung Nr. RE-2026-G2                    Neudorf, 02.01.2026
+Mietvertrag Garage 2 vom 01.03.2023 (Vertrags-Nr. MV-G2)
+
+Miete Garage 2, Lindenweg 7, 79998 Erlenbach
+Zeitraum 01.01.–31.12.2026, 12 Monate x 55,00 EUR       660,00 EUR
+
+Umsatzsteuerfrei nach § 4 Nr. 12 Buchst. a UStG (Umsatzsteuer 0,00 EUR).
+Zahlbar monatlich im Voraus jeweils bis zum 5. mit 55,00 EUR auf
+DE00 6005 0000 0123 4567 89, Verwendungszweck: RE-2026-G2 + Monat.
+
+######## BELEG 19 von 50 · Datei: belege/garagentor_reparatur.txt ########
+Torbau Klee
+Tore · Antriebe · Service
+Gewerbering 7 · 79995 Talstadt
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Rechnung Nr. TK-26-077          Datum 11.08.2026
+Service-Auftrag S-5512          Objekt Lindenweg 7, 79998 Erlenbach, Garage 1
+
+Torfeder Schwingtor ersetzt (2 St.)            168,00 €
+Seilrolle, Laufschiene justiert                 42,00 €
+Arbeitszeit 1,0 Std.                            60,00 €
+Anfahrt                                         20,00 €
+Netto                                          290,00 €
+19 % MwSt.                                      55,10 €
+Gesamtbetrag                                   345,10 €
+
+Zahlbar innerhalb 14 Tagen auf IBAN DE00 6005 0000 0098 7654 32.
+
+######## BELEG 20 von 50 · Datei: belege/gartenpflege_fruehjahr.txt ########
+Grünpflege Eckert
+Garten- und Landschaftspflege · Inh. Rolf Eckert
+Feldweg 9 · 79998 Erlenbach
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Rechnung Nr. 118/26                   Erlenbach, 30.04.2026
+Objekt: Lindenweg 7, 79998 Erlenbach
+
+Frühjahrspflege Außenanlagen
+Heckenschnitt 34 lfm, Rasen vertikutieren, Beete
+Arbeitszeit 2 Pers. x 4 Std. à 26,00 €          208,00 €
+Grünschnitt Abfuhr                               32,00 €
+Netto                                           240,00 €
+MwSt 19 %                                        45,60 €
+Betrag                                          285,60 €
+
+Bitte bis 15.05.2026 überweisen: IBAN DE00 6005 0000 0040 5060 70
+
+######## BELEG 21 von 50 · Datei: belege/gas_schlussrechnung.txt ########
+Talgau Energie GmbH
+Postfach 12 12 · 79995 Talstadt · USt-IdNr. DE000666777
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+SCHLUSSRECHNUNG ERDGAS
+Rechnungs-Nr.: SR-2026-GA-77810
+Kundennummer: 5501 7730   Vertragskonto: 4009 2211 77
+Datum: 05.10.2026
+Lieferstelle: Lindenweg 7, 79998 Erlenbach (Zentralheizung)
+Abrechnungszeitraum: 01.01.2026–25.09.2026 (Vertragsende Heizungstausch)
+
+Verbrauch 13.106 kWh (Brennwert 11,2, Z-Zahl 0,96)
+Arbeitspreis 13.106 kWh x 0,1012 €      1.326,33 €
+Grundpreis 268 Tage                       159,30 €
+Netto                                   1.485,63 €
+USt 19 %                                  282,27 €
+Gesamtbetrag                            1.767,90 €
+abzgl. Abschläge 9 x 210,00 €          -1.890,00 €
+Guthaben                                  122,10 €
+
+Das Guthaben überweisen wir auf Ihr Konto DE00 6005 0000 0123 4567 89.
+
+######## BELEG 22 von 50 · Datei: belege/grundbesitzabgaben_2026.txt ########
+Gemeinde Erlenbach – Steuer- und Kassenamt
+Rathausplatz 1 · 79998 Erlenbach
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+                                         Erlenbach, 14.01.2026
+Kassenzeichen: 4.1102.077318.6
+Objekt: Lindenweg 7, 79998 Erlenbach, Flst. 1187/3
+
+BESCHEID ÜBER GRUNDBESITZABGABEN 2026
+
+Abgabeart                Bemessung                  Jahresbetrag
+Grundsteuer B            Messbetrag 98,10 EUR
+                         x Hebesatz 420 v.H.          412,00 EUR
+Abfallgebühr             2 Haushalte, 120 l Tonne     200,40 EUR
+----------------------------------------------------------------
+Gesamtbetrag 2026                                     612,40 EUR
+
+Fälligkeiten: 15.02. / 15.05. / 15.08. / 15.11.2026 je 153,10 EUR
+Die Beträge werden aufgrund des erteilten SEPA-Lastschriftmandats
+von Ihrem Konto DE00 6005 0000 0123 4567 89 eingezogen.
+
+Rechtsbehelfsbelehrung: Gegen diesen Bescheid kann innerhalb eines
+Monats nach Bekanntgabe Widerspruch erhoben werden.
+
+######## BELEG 23 von 50 · Datei: belege/haftpflicht_hausbesitzer_2026.txt ########
+Rheintal-Versicherung AG
+Postfach 40 11 · 79990 Talstadt
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Datum 16.02.2026
+Vertrag: Haus- und Grundbesitzerhaftpflicht
+Vers.-Schein-Nr. HG 77-311.590-2   Kunden-Nr. 0049 3381
+
+BEITRAGSRECHNUNG 2026
+
+Objekt Lindenweg 7, 79998 Erlenbach
+Versicherungssumme pauschal 10 Mio. EUR
+Beitrag netto                                  75,00 EUR
+Versicherungsteuer 19 %                        14,25 EUR
+Zu zahlen                                      89,25 EUR
+
+Abbuchung am 02.03.2026 von DE00 6005 0000 0123 4567 89.
+
+######## BELEG 24 von 50 · Datei: belege/hausverwaltung_2026_Q3.txt ########
+Ritter Hausverwaltung GmbH
+Miet- und WEG-Verwaltung · Bahnhofstraße 30 · 79995 Talstadt
+USt-IdNr. DE000444555
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Rechnung Nr. 2026-HV-0721
+Verwaltungsvertrag Nr. VV-118 (Mietverwaltung Wohnung OG, Lindenweg 7, 79998 Erlenbach)
+Datum: 01.07.2026
+Leistungszeitraum: 01.07.–30.09.2026
+
+Verwaltervergütung 3 Monate x 30,00 EUR         90,00 EUR
+Summe netto                                   90,00 EUR
+zzgl. 19 % USt                                17,10 EUR
+Rechnungsbetrag                               107,10 EUR
+
+Der Betrag wird per SEPA-Lastschrift am 15. des Monats eingezogen
+(Mandatsreferenz RHV-VV118).
+Bankverbindung: IBAN DE00 6005 0000 0055 6677 88
+
+######## BELEG 25 von 50 · Datei: belege/hausverwaltung_2026_Q4.txt ########
+Ritter Hausverwaltung GmbH
+Miet- und WEG-Verwaltung · Bahnhofstraße 30 · 79995 Talstadt
+USt-IdNr. DE000444555
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Rechnung Nr. 2026-HV-1009
+Verwaltungsvertrag Nr. VV-118 (Mietverwaltung Wohnung OG, Lindenweg 7, 79998 Erlenbach)
+Datum: 01.10.2026
+Leistungszeitraum: 01.10.–31.12.2026
+
+Verwaltervergütung 3 Monate x 30,00 EUR         90,00 EUR
+Summe netto                                   90,00 EUR
+zzgl. 19 % USt                                17,10 EUR
+Rechnungsbetrag                               107,10 EUR
+
+Der Betrag wird per SEPA-Lastschrift am 15. des Monats eingezogen
+(Mandatsreferenz RHV-VV118).
+Bankverbindung: IBAN DE00 6005 0000 0055 6677 88
+
+######## BELEG 26 von 50 · Datei: belege/hv_q1.txt ########
+Ritter Hausverwaltung GmbH
+Miet- und WEG-Verwaltung · Bahnhofstraße 30 · 79995 Talstadt
+USt-IdNr. DE000444555
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Rechnung Nr. 2026-HV-0103
+Verwaltungsvertrag Nr. VV-118 (Mietverwaltung Wohnung OG, Lindenweg 7, 79998 Erlenbach)
+Datum: 05.01.2026
+Leistungszeitraum: 01.01.–31.03.2026
+
+Verwaltervergütung 3 Monate x 30,00 EUR         90,00 EUR
+Summe netto                                   90,00 EUR
+zzgl. 19 % USt                                17,10 EUR
+Rechnungsbetrag                               107,10 EUR
+
+Der Betrag wird per SEPA-Lastschrift am 15. des Monats eingezogen
+(Mandatsreferenz RHV-VV118).
+Bankverbindung: IBAN DE00 6005 0000 0055 6677 88
+
+######## BELEG 27 von 50 · Datei: belege/kassenbon_supermarkt.txt ########
+        Frischmarkt Neudorf
+   Ringstraße 2, 79997 Neudorf
+
+Bio Vollmilch 1l         4 x 1,39    5,56 B
+Vollkornbrot                         3,49 B
+Äpfel Elstar 2kg                     4,99 B
+Rinderhack 1kg                      11,99 B
+Käse Gouda Stück                     6,79 B
+Lachsfilet TK                        8,99 B
+Kaffee Bohnen 1kg                   16,99 B
+Gemüse diverse                       9,03 B
+--------------------------------------------
+SUMME                    EUR        67,83
+Kartenzahlung                       67,83
+
+MwSt    Netto    Steuer   Brutto
+B 7%    63,39    4,44    67,83
+
+14.02.2026 18:21  Kasse 4  Bon 7712
+
+######## BELEG 28 von 50 · Datei: belege/kostennote_sander.txt ########
+Rechtsanwältin Dr. Helga Sander
+Fachanwältin für Miet- und WEG-Recht
+Lindenallee 2 · 79995 Talstadt
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Kostennote Nr. 2026/0388        Az.: 112/26 Br.        08.05.2026
+
+Beratung und Prüfung Mietvertragsentwurf Wohnung OG,
+Lindenweg 7, 79998 Erlenbach; Kautionsabrechnung Vormieterin
+Erstberatung/Gutachten pauschal gem. Vereinbarung      230,00 €
+Auslagenpauschale Nr. 7002 VV RVG                       20,00 €
+Zwischensumme                                          250,00 €
+19 % USt Nr. 7008 VV RVG                                47,50 €
+Rechnungsbetrag                                        297,50 €
+
+Bitte unter Angabe der Rechnungsnummer überweisen auf
+IBAN DE00 6005 0000 0011 9988 77.
+
+######## BELEG 29 von 50 · Datei: belege/maler_OG.txt ########
+Malerbetrieb Kranz & Sohn
+Meisterbetrieb · Talweg 21 · 79998 Erlenbach
+Tel. 0000 33 44 55 · USt-IdNr. DE000222333
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Rg.-Nr.: 26-112        Kd.-Nr.: 4071        Datum: 22.05.2026
+Baustelle: Lindenweg 7, 79998 Erlenbach, Wohnung Obergeschoss
+
+RECHNUNG
+
+Pos  Leistung                              Menge    EP       GP
+1    Wände/Decken spachteln, schleifen   184 m²   4,50   828,00
+2    Raufaser tapezieren                  96 m²   6,25   600,00
+3    Dispersionsanstrich weiß, 2-fach    184 m²   5,00   920,00
+4    Heizkörper lackieren                  6 St   35,00   210,00
+5    Abdeckarbeiten, Kleinmaterial         1 psch         142,00
+                                                     --------
+     Summe netto                                     2.700,00
+     MwSt. 19 %                                        513,00
+     Endbetrag                                       3.213,00 EUR
+
+Zahlungsziel: 14 Tage netto. Bei Zahlung bitte Rg.-Nr. angeben.
+IBAN DE00 6005 0000 0088 1200 17 – Kreisbank Talgau eG
+
+######## BELEG 30 von 50 · Datei: belege/mitgliedsbeitrag_verein.txt ########
+Eigentümerverein Erlenbach und Umgebung e.V.
+Haus-, Wohnungs- und Grundeigentümer
+Kirchgasse 4 · 79998 Erlenbach
+
+Herrn Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+                                     08.01.2026
+Mitglieds-Nr.: 2209-B
+
+Beitragsmitteilung 2026
+
+Jahresbeitrag für Mitglieder mit bis zu 3 Mieteinheiten   96,00 EUR
+
+Der Beitrag wird um den 20.01.2026 per Lastschrift eingezogen
+(Gläubiger-ID DE00ZZZ00000123456, Mandat 2209-B).
+Mitgliedsbeiträge an den Verein enthalten keine Umsatzsteuer.
+
+######## BELEG 31 von 50 · Datei: belege/neu_1.txt ########
+Ritter Hausverwaltung GmbH
+Miet- und WEG-Verwaltung · Bahnhofstraße 30 · 79995 Talstadt
+USt-IdNr. DE000444555
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Rechnung Nr. 2026-HV-0588
+Verwaltungsvertrag Nr. VV-118 (Mietverwaltung Wohnung OG, Lindenweg 7, 79998 Erlenbach)
+Datum: 10.06.2026
+Leistungszeitraum: Mieterwechsel OG Mai/Juni 2026
+
+Sondervergütung Mieterwechsel: Besichtigungen (5),
+Wohnungsübergabe/-abnahme, Mietvertrag Vogel   200,00 EUR
+Summe netto                                   200,00 EUR
+zzgl. 19 % USt                                38,00 EUR
+Rechnungsbetrag                               238,00 EUR
+
+Der Betrag wird per SEPA-Lastschrift am 15. des Monats eingezogen
+(Mandatsreferenz RHV-VV118).
+Bankverbindung: IBAN DE00 6005 0000 0055 6677 88
+
+######## BELEG 32 von 50 · Datei: belege/optiker.txt ########
+Brillenwelt Talstadt
+Augenoptik · Kontaktlinsen · Rosengasse 4 · 79995 Talstadt
+
+Frau Martina Brenner, Ahornstraße 12, 79997 Neudorf
+
+Rechnung Nr. BW-26-3307      Kunden-Nr. 88120      12.09.2026
+
+Sonnenbrille mit Sehstärke, Fassung + 2 Gläser     189,00
+Netto                                              158,82
+MwSt 19 %                                           30,18
+Summe                                              189,00 EUR
+
+Bezahlt mit girocard. Vielen Dank!
+
+######## BELEG 33 von 50 · Datei: belege/quittung_garage1_Q1.txt ########
+QUITTUNG                                   Nr. G1-2026-01
+
+Betrag: 180,00 EUR
+in Worten: einhundertachtzig ---------------------- Euro
+
+von: Herrn Erwin Bauer, Birkenweg 3, 79998 Erlenbach
+für: Miete Garage 1, Lindenweg 7, 79998 Erlenbach, Januar bis März 2026
+     (3 Monate x 60,00 EUR)
+
+dankend in bar erhalten.
+
+Ort/Datum: Erlenbach, 05.01.2026
+
+Empfänger: Martina und Stefan Brenner, Ahornstraße 12, 79997 Neudorf
+                                gez. S. Brenner
+
+######## BELEG 34 von 50 · Datei: belege/quittung_garage1_Q2.txt ########
+QUITTUNG                                   Nr. G1-2026-02
+
+Betrag: 180,00 EUR
+in Worten: einhundertachtzig ---------------------- Euro
+
+von: Herrn Erwin Bauer, Birkenweg 3, 79998 Erlenbach
+für: Miete Garage 1, Lindenweg 7, 79998 Erlenbach, April bis Juni 2026
+     (3 Monate x 60,00 EUR)
+
+dankend in bar erhalten.
+
+Ort/Datum: Erlenbach, 03.04.2026
+
+Empfänger: Martina und Stefan Brenner, Ahornstraße 12, 79997 Neudorf
+                                gez. S. Brenner
+
+######## BELEG 35 von 50 · Datei: belege/quittung_garage1_Q4.txt ########
+QUITTUNG                                   Nr. G1-2026-04
+
+Betrag: 180,00 EUR
+in Worten: einhundertachtzig ---------------------- Euro
+
+von: Herrn Erwin Bauer, Birkenweg 3, 79998 Erlenbach
+für: Miete Garage 1, Lindenweg 7, 79998 Erlenbach, Oktober bis Dezember 2026
+     (3 Monate x 60,00 EUR)
+
+dankend in bar erhalten.
+
+Ort/Datum: Erlenbach, 02.10.2026
+
+Empfänger: Martina und Stefan Brenner, Ahornstraße 12, 79997 Neudorf
+                                gez. S. Brenner
+
+######## BELEG 36 von 50 · Datei: belege/rauchmelder_wartung.txt ########
+Melder-Service Süd GmbH
+Rauchwarnmelder · Wartung · Miete
+Robert-Koch-Str. 3 · 79995 Talstadt
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Invoice No. RMS-26-55127          Datum 14.07.2026
+Liegenschaft-Nr. L-20188           Objekt Lindenweg 7, 79998 Erlenbach
+
+Jährliche Funktionsprüfung Rauchwarnmelder
+nach DIN 14676, 10 Geräte (EG 5, OG 5) à 6,00 €     60,00 €
+Nettobetrag                                         60,00 €
+USt 19 %                                            11,40 €
+Rechnungsbetrag                                     71,40 €
+
+Einzug per Lastschrift am 24.07.2026, Mandat MSS-L20188.
+
+######## BELEG 37 von 50 · Datei: belege/rechnung(1).txt ########
+Gartencenter Bloom
+Landstraße 88 · 79996 Oberried-Tal · USt-IdNr. DE000888999
+
+Rechnung
+Rechnung Nr. 0042-7781     Kundenkarte 9900 1123 4
+Datum: 18.04.2026
+
+Kunde: Stefan Brenner, Ahornstraße 12, 79997 Neudorf
+Lieferadresse: Lindenweg 7, 79998 Erlenbach
+
+Akku-Rasenmäher 46 cm, 2 Akkus 36 V, Ladegerät     499,00
+Nettobetrag                                         419,33
+MwSt. 19 %                                          79,67
+Rechnungsbetrag                                     499,00 EUR
+
+Bezahlt mit girocard am 18.04.2026. Garantie 3 Jahre ab Kaufdatum.
+
+######## BELEG 38 von 50 · Datei: belege/rechnung(2).txt ########
+Elektro Kaiser e.K.
+Hausgeräte · Unterhaltungselektronik
+Bahnhofplatz 1 · 79997 Neudorf
+
+Rechnungsempfänger: Stefan Brenner, Ahornstraße 12, 79997 Neudorf
+
+Rechnung Nr.: R26-12-0412    Kunden-Nr.: 61 223    Datum: 05.12.2026
+Lieferschein-Nr.: LS-8801
+
+Kaffeevollautomat Modell CX 300, silber           249,00
+Netto                                             209,24
+USt 19 %                                           39,76
+Rechnungsbetrag                                   249,00 EUR
+
+Zahlbar bis 19.12.2026 ohne Abzug auf IBAN DE00 6005 0000 0044 8899 00.
+Gewährleistung 2 Jahre.
+
+######## BELEG 39 von 50 · Datei: belege/sanitaer_weidner_EG.txt ########
+Sanitär Weidner
+Meisterbetrieb · Am Graben 17 · 79998 Erlenbach
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Rechnung Nr. 2026-1456     Kd-Nr. 7735     Datum: 03.07.2026
+Einsatz am 01.07.2026: Lindenweg 7, 79998 Erlenbach, Wohnung EG (Mieter Kessler)
+
+Spülkasten Füllventil und Ablaufgarnitur getauscht
+Material                                         68,00 €
+Arbeitszeit 1,25 Std. x 64,00 €                  80,00 €
+Anfahrt                                           2,00 €
+Netto                                           150,00 €
+MwSt 19 %                                        28,50 €
+Rechnungsbetrag                                 178,50 €
+
+Zahlbar sofort ohne Abzug. IBAN DE00 6005 0000 0050 6070 80
+
+######## BELEG 40 von 50 · Datei: belege/scan_0003.txt ########
+Rheintal-Versicherung AG
+Postfach 40 11 · 79990 Talstadt
+Service-Telefon 0000 4711-0
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Versicherungsschein-Nr.: WG 77-311.204-9
+Kundennummer: 0049 3381
+Datum: 05.01.2026
+
+Beitragsrechnung für den Zeitraum 01.01.2026 – 31.12.2026
+
+Verbundene Wohngebäudeversicherung
+Risikoort: Lindenweg 7, 79998 Erlenbach (Zweifamilienhaus, 2 Garagen)
+Gefahren: Feuer, Leitungswasser, Sturm/Hagel, Elementar
+
+Nettobeitrag                                  965,14 EUR
+Versicherungsteuer 19 %                       183,38 EUR
+-------------------------------------------------------
+Jahresbeitrag                               1.148,52 EUR
+
+Der Betrag wird zum 01.02.2026 von Ihrem Konto
+DE00 6005 0000 0123 4567 89 abgebucht (Mandatsreferenz RV-WG77311204).
+Versicherungsteuer ist keine Umsatzsteuer und nicht als Vorsteuer abziehbar.
+
+######## BELEG 41 von 50 · Datei: belege/scan_0004.txt ########
+Talgau Energie GmbH
+Postfach 12 12 · 79995 Talstadt · USt-IdNr. DE000666777
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Jahresrechnung Strom 2025          Rechnungs-Nr. SR-2026-118552
+Kundennummer 5501 7730             Datum 22.01.2026
+Vertragskonto 4009 2211 03
+Lieferstelle: Lindenweg 7, 79998 Erlenbach – Allgemeinstrom (Treppenhaus, Keller, Außenlicht)
+Zähler 1EBZ0099112233
+
+Verbrauch 01.01.–31.12.2025: 512 kWh
+Arbeitspreis 512 kWh x 0,2810 €          143,87 €
+Grundpreis 365 Tage                       59,86 €
+Netto                                    203,73 €
+USt 19 %                                  38,71 €
+Gesamt                                   242,44 €
+abzgl. Abschläge 12 x 17,00 €           -204,00 €
+Zu zahlen                                 38,44 €
+
+Abbuchung zum 26.02.2026. Neuer Abschlag ab Januar 2026: 18,00 €/Monat.
+
+######## BELEG 42 von 50 · Datei: belege/scan_0007.txt ########
+Ritter Hausverwaltung GmbH
+Miet- und WEG-Verwaltung · Bahnhofstraße 30 · 79995 Talstadt
+USt-IdNr. DE000444555
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Rechnung Nr. 2026-HV-0412
+Verwaltungsvertrag Nr. VV-118 (Mietverwaltung Wohnung OG, Lindenweg 7, 79998 Erlenbach)
+Datum: 02.04.2026
+Leistungszeitraum: 01.04.–30.06.2026
+
+Verwaltervergütung 3 Monate x 30,00 EUR         90,00 EUR
+Summe netto                                   90,00 EUR
+zzgl. 19 % USt                                17,10 EUR
+Rechnungsbetrag                               107,10 EUR
+
+Der Betrag wird per SEPA-Lastschrift am 15. des Monats eingezogen
+(Mandatsreferenz RHV-VV118).
+Bankverbindung: IBAN DE00 6005 0000 0055 6677 88
+
+######## BELEG 43 von 50 · Datei: belege/scan_0011.txt ########
+Wärmetechnik Sommer GmbH
+Heizung · Sanitär · Wärmepumpen
+Industriestraße 14 · 79998 Erlenbach
+USt-IdNr. DE000111222
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+RECHNUNG RE-2026-0112
+Kunden-Nr.: 10577    Datum: 12.02.2026
+Objekt: Lindenweg 7, 79998 Erlenbach, Heizraum Keller
+
+Jahreswartung Gas-Brennwertkessel 24 kW
+Brenner reinigen, Dichtungen, Abgaswerte          145,00
+Kleinteile (Dichtungssatz, Zündelektrode)          35,00
+Netto                                             180,00
+19 % USt                                           34,20
+Rechnungsbetrag                                   214,20 EUR
+
+Zahlbar innerhalb 14 Tagen. IBAN DE00 6009 0000 0007 7431 20
+
+######## BELEG 44 von 50 · Datei: belege/scan_0016.txt ########
+Sicherheitstechnik Born
+Schlüsseldienst · Schließanlagen
+Burgstraße 5 · 79995 Talstadt
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Rg.-Nr. SB-2026-219      Auftrags-Nr. 4412     Datum 04.05.2026
+Einsatzort: Lindenweg 7, 79998 Erlenbach, Wohnungseingang OG
+
+Profilzylinder 30/35 mit 5 Schlüsseln          89,00
+Montage vor Ort                                 41,00
+Netto                                          130,00
+zzgl. 19 % MwSt                                 24,70
+Gesamt                                         154,70 EUR
+
+Zahlbar innerhalb 10 Tagen. IBAN DE00 6005 0000 0021 4365 87
+
+######## BELEG 45 von 50 · Datei: belege/scan_0019.txt ########
+Bodenwelt Hesse GmbH
+Parkett · Vinyl · Teppich
+Gewerbepark 5 · 79995 Talstadt-Süd
+
+INVOICE / RECHNUNG
+Invoice No.: INV-2026-00457
+Customer No.: C-22018
+Order No.: AB-2026-00391
+Date: 27.05.2026
+
+Rechnungsempfänger:
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+Leistungsort: Lindenweg 7, 79998 Erlenbach, OG
+
+Altbelag entfernen, entsorgen             62 m²     372,00
+Untergrund ausgleichen                    62 m²     248,00
+Vinyl-Designboden Eiche, verlegt          62 m²   1.054,00
+Sockelleisten                             48 lfm    146,00
+                                                  --------
+Zwischensumme netto                               1.820,00
+USt 19 %                                            345,80
+Total EUR                                         2.165,80
+
+Zahlbar binnen 10 Tagen. Talstadt Sparkasse, IBAN DE00 6005 0000 0091 2233 44
+
+######## BELEG 46 von 50 · Datei: belege/stadtwerke_wasser_2025.txt ########
+Stadtwerke Erlenbach
+Versorgung · Netze · Bäder
+Werkstraße 1 · 79998 Erlenbach · USt-IdNr. DE000555666
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Jahresabrechnung Wasser 2025
+Rechnungsnummer: 26-004471
+Kundennummer: 300 118 774   Vertragskonto: 8 004 3317
+Zählernummer: 21WA-0047713
+Datum: 10.02.2026
+Verbrauchsstelle: Lindenweg 7, 79998 Erlenbach
+
+Zeitraum 01.01.2025–31.12.2025
+Zählerstand alt 1.284 m³, neu 1.511 m³, Verbrauch 227 m³
+
+Arbeitspreis Wasser    227 m³ x 3,962 €         899,37 €
+Grundpreis             365 Tage                 134,57 €
+                                               --------
+Nettobetrag                                    1.033,94 €
+Umsatzsteuer 7 %                                  72,38 €
+Bruttobetrag                                   1.106,32 €
+abzgl. geleistete Abschläge 12 x 80,00 €        -960,00 €
+Nachzahlung                                      146,32 €
+
+Die Nachzahlung wird am 25.02.2026 abgebucht.
+Neuer Abschlag ab 15.03.2026: 85,00 € monatlich.
+
+######## BELEG 47 von 50 · Datei: belege/steuerbuero_2025.txt ########
+Steuerbüro Mertens & Partner
+Steuerberatungsgesellschaft · Schillerstraße 8 · 79995 Talstadt
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Mandant: 30772   Datum: 20.04.2026
+Rechnung Nr. 1260-0388
+
+Gebührenrechnung nach StBVV
+Einkommensteuererklärung 2025 – hier: Anteil Anlage V
+(Ermittlung Einkünfte aus Vermietung und Verpachtung,
+ Objekt Lindenweg 7, 79998 Erlenbach)
+
+§ 27 StBVV Überschussermittlung V+V, Gegenstandswert 23.240 €   520,00
+§ 16 StBVV Post- und Telekommunikationspauschale                  20,00
+                                                                ------
+Summe netto                                                      540,00
+19 % Umsatzsteuer                                                102,60
+Rechnungsbetrag                                                  642,60 €
+
+Bitte überweisen Sie den Betrag bis 05.05.2026 unter Angabe der
+Rechnungsnummer auf IBAN DE00 6005 0000 0066 0011 22.
+
+######## BELEG 48 von 50 · Datei: belege/tankbeleg.txt ########
+        Tankstelle Lindenhof
+   Lindenhofstr. 1 · 79998 Erlenbach
+
+Säule 4   Super E10
+29,83 l x 1,749 EUR/l               52,17
+----------------------------------------
+Summe EUR                           52,17
+girocard                            52,17
+Netto 43,84  MwSt 19% 8,33
+
+16.05.2026  17:33   Beleg 556120
+(Fahrten Renovierung Wohnung OG)
+
+######## BELEG 49 von 50 · Datei: belege/unbenannt.txt ########
+Dachdeckerei Albrecht GmbH
+Bedachungen · Klempnerei · Hohlweg 12 · 79996 Oberried-Tal
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+Invoice / Rechnung 26/0731            Kundennr. 2290       05.11.2026
+Bauvorhaben Lindenweg 7, 79998 Erlenbach
+
+Dachrinnen und Fallrohre reinigen, Laubfang erneuern
+Hubsteiger 2 Std.                               90,00
+Arbeitszeit 1 Gesellen-Std.                     58,00
+Laubfanggitter 2 St.                            22,00
+Summe netto                                    170,00
+USt 19 %                                        32,30
+Endbetrag                                      202,30 EUR
+
+Zahlungsziel 14 Tage. IBAN DE00 6009 0000 0003 3221 10
+
+######## BELEG 50 von 50 · Datei: belege/waermetechnik_sommer_abschlag.txt ########
+Wärmetechnik Sommer GmbH
+Heizung · Sanitär · Wärmepumpen
+Industriestraße 14 · 79998 Erlenbach
+USt-IdNr. DE000111222
+
+Martina und Stefan Brenner
+Ahornstraße 12
+79997 Neudorf
+
+ABSCHLAGSRECHNUNG
+Abschlagsrechnung Nr.: AR-26-0881
+Auftrag: AU-2026-0233   Kunden-Nr.: 10577
+Datum: 20.08.2026
+Bauvorhaben: Heizungstausch Lindenweg 7, 79998 Erlenbach
+(Demontage Gas-Brennwertkessel, Luft-Wasser-Wärmepumpe 12 kW)
+
+1. Abschlag gemäß Auftragsbestätigung vom 02.07.2026
+Material Wärmepumpe bei Anlieferung
+
+Nettobetrag                               7.563,03 EUR
+zzgl. 19 % USt                            1.436,97 EUR
+Abschlagsbetrag                           9.000,00 EUR
+
+Zahlbar sofort ohne Abzug.
+Volksbank Talgau eG · IBAN DE00 6009 0000 0007 7431 20
+

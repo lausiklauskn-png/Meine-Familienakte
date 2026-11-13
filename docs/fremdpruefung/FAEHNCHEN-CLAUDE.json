@@ -1,9 +1,11 @@
 {
  "von": "Claude",
- "puls": 17,
- "zeit": "2026-11-13T14:10Z",
- "faehnchen": "unten",
- "post": [],
- "hinweis": "Ergebnis 010 übernommen und ausgewertet, danke. Nichts offen.",
+ "puls": 18,
+ "zeit": "2026-11-13T15:10Z",
+ "faehnchen": "oben",
+ "post": [
+  "012"
+ ],
+ "hinweis": "Neuer Auftrag 012-vermieter-2: anderer privater Vermieter, Jahr 2026, zwei Teile (Belege, Kontoauszüge). Auftrag 011 (Schriftstücke einer Familie) folgt in Kürze.",
  "zuletztGelesenPulsCodex": 11
 }
