@@ -1,0 +1,2485 @@
+{
+  "einordner": "Codex (GPT-6)",
+  "auszuege": [
+    {
+      "datei": "2026-01.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "-50,00",
+          "gegenpartei": "Bausparkasse Südtal AG",
+          "art": "dauerauftrag",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 2,
+          "betrag": "+1.040,00",
+          "gegenpartei": "Jonas Kessler",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 3,
+          "betrag": "+935,00",
+          "gegenpartei": "Petra Lang",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 4,
+          "betrag": "+55,00",
+          "gegenpartei": "Ngozi Okafor",
+          "art": "gutschrift",
+          "rechnungsnummern": [
+            "RE-2026-G2"
+          ],
+          "stuecke": [
+            "belege/garage2_rechnung_2026.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 5,
+          "betrag": "-29,99",
+          "gegenpartei": "FunkNetz Mobil GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "01/2026"
+          ],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 6,
+          "betrag": "-43,17",
+          "gegenpartei": "FRISCHMARKT NEUDORF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 7,
+          "betrag": "-200,00",
+          "gegenpartei": "GA Kreisbank Talgau Neudorf",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 8,
+          "betrag": "-12,99",
+          "gegenpartei": "Kinoflat Online Ltd.",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 9,
+          "betrag": "-107,10",
+          "gegenpartei": "Ritter Hausverwaltung GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "2026-HV-0103"
+          ],
+          "stuecke": [
+            "belege/hv_q1.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 10,
+          "betrag": "-80,00",
+          "gegenpartei": "Stadtwerke Erlenbach",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/stadtwerke_wasser_2025.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 11,
+          "betrag": "-210,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/gas_schlussrechnung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-18,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/scan_0004.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "-18,45",
+          "gegenpartei": "DROGERIE MEYERHOF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "-96,00",
+          "gegenpartei": "Eigentuemerverein Erlenbach u.U. e.V.",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/mitgliedsbeitrag_verein.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "-29,85",
+          "gegenpartei": "NETTOMARKT TALSTADT",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "-6,90",
+          "gegenpartei": "Kreisbank Talgau eG",
+          "art": "entgelt",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 17,
+          "betrag": "-1.150,00",
+          "gegenpartei": "Lindgau Hypothekenbank AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/darlehen_tilgungsplan_2026.txt"
+          ],
+          "sicher": true
+        }
+      ]
+    },
+    {
+      "datei": "2026-02.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "+1.040,00",
+          "gegenpartei": "Jonas Kessler",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 2,
+          "betrag": "+935,00",
+          "gegenpartei": "Petra Lang",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 3,
+          "betrag": "-50,00",
+          "gegenpartei": "Bausparkasse Südtal AG",
+          "art": "dauerauftrag",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 4,
+          "betrag": "-1.148,52",
+          "gegenpartei": "Rheintal-Versicherung AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/scan_0003.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 5,
+          "betrag": "-29,99",
+          "gegenpartei": "FunkNetz Mobil GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "02/2026"
+          ],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 6,
+          "betrag": "+55,00",
+          "gegenpartei": "Ngozi Okafor",
+          "art": "gutschrift",
+          "rechnungsnummern": [
+            "RE-2026-G2"
+          ],
+          "stuecke": [
+            "belege/garage2_rechnung_2026.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 7,
+          "betrag": "-24,90",
+          "gegenpartei": "BUCHHANDLUNG SEITENWEISE",
+          "art": "karte",
+          "rechnungsnummern": [
+            "19 442"
+          ],
+          "stuecke": [
+            "belege/buchhandlung_bon.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 8,
+          "betrag": "-12,99",
+          "gegenpartei": "Kinoflat Online Ltd.",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 9,
+          "betrag": "-200,00",
+          "gegenpartei": "GA Kreisbank Talgau Neudorf",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 10,
+          "betrag": "-67,83",
+          "gegenpartei": "FRISCHMARKT NEUDORF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/kassenbon_supermarkt.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 11,
+          "betrag": "-153,10",
+          "gegenpartei": "Gemeinde Erlenbach",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/grundbesitzabgaben_2026.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-80,00",
+          "gegenpartei": "Stadtwerke Erlenbach",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/stadtwerke_wasser_2025.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 13,
+          "betrag": "-210,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/gas_schlussrechnung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "-18,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/scan_0004.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "-22,10",
+          "gegenpartei": "DROGERIE MEYERHOF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "-214,20",
+          "gegenpartei": "Waermetechnik Sommer GmbH",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "RE-2026-0112"
+          ],
+          "stuecke": [
+            "belege/scan_0011.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 17,
+          "betrag": "-34,10",
+          "gegenpartei": "NETTOMARKT TALSTADT",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 18,
+          "betrag": "-146,32",
+          "gegenpartei": "Stadtwerke Erlenbach",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "26-004471"
+          ],
+          "stuecke": [
+            "belege/stadtwerke_wasser_2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 19,
+          "betrag": "-38,44",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "SR-2026-118552"
+          ],
+          "stuecke": [
+            "belege/scan_0004.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 20,
+          "betrag": "-6,90",
+          "gegenpartei": "Kreisbank Talgau eG",
+          "art": "entgelt",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 21,
+          "betrag": "-1.150,00",
+          "gegenpartei": "Lindgau Hypothekenbank AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/darlehen_tilgungsplan_2026.txt"
+          ],
+          "sicher": true
+        }
+      ]
+    },
+    {
+      "datei": "2026-03.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "+1.040,00",
+          "gegenpartei": "Jonas Kessler",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 2,
+          "betrag": "+935,00",
+          "gegenpartei": "Petra Lang",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 3,
+          "betrag": "-50,00",
+          "gegenpartei": "Bausparkasse Südtal AG",
+          "art": "dauerauftrag",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 4,
+          "betrag": "-89,25",
+          "gegenpartei": "Rheintal-Versicherung AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/haftpflicht_hausbesitzer_2026.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 5,
+          "betrag": "-29,99",
+          "gegenpartei": "FunkNetz Mobil GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "03/2026"
+          ],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 6,
+          "betrag": "+55,00",
+          "gegenpartei": "Ngozi Okafor",
+          "art": "gutschrift",
+          "rechnungsnummern": [
+            "RE-2026-G2"
+          ],
+          "stuecke": [
+            "belege/garage2_rechnung_2026.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 7,
+          "betrag": "-37,42",
+          "gegenpartei": "FRISCHMARKT NEUDORF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 8,
+          "betrag": "-12,99",
+          "gegenpartei": "Kinoflat Online Ltd.",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 9,
+          "betrag": "-200,00",
+          "gegenpartei": "GA Kreisbank Talgau Neudorf",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 10,
+          "betrag": "-85,00",
+          "gegenpartei": "Stadtwerke Erlenbach",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/stadtwerke_wasser_2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 11,
+          "betrag": "-210,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/gas_schlussrechnung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-18,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/scan_0004.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "-15,97",
+          "gegenpartei": "DROGERIE MEYERHOF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "-41,66",
+          "gegenpartei": "NETTOMARKT TALSTADT",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "-23,97",
+          "gegenpartei": "SCHREIBWAREN KUNZ",
+          "art": "karte",
+          "rechnungsnummern": [
+            "0033891"
+          ],
+          "stuecke": [
+            "belege/IMG_20260321_1104.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "-98,77",
+          "gegenpartei": "Uwe Haldner Bez.-Schornsteinfegermeister",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "2026-0417"
+          ],
+          "stuecke": [
+            "belege/IMG_20260318_0941.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 17,
+          "betrag": "-6,90",
+          "gegenpartei": "Kreisbank Talgau eG",
+          "art": "entgelt",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 18,
+          "betrag": "-1.150,00",
+          "gegenpartei": "Lindgau Hypothekenbank AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/darlehen_tilgungsplan_2026.txt"
+          ],
+          "sicher": true
+        }
+      ]
+    },
+    {
+      "datei": "2026-04.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "-50,00",
+          "gegenpartei": "Bausparkasse Südtal AG",
+          "art": "dauerauftrag",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 2,
+          "betrag": "+1.040,00",
+          "gegenpartei": "Jonas Kessler",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 3,
+          "betrag": "+935,00",
+          "gegenpartei": "Petra Lang",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 4,
+          "betrag": "-97,39",
+          "gegenpartei": "Petra Lang",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "NK-2025-OG"
+          ],
+          "stuecke": [
+            "belege/NK-Abrechnung_2025_OG.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 5,
+          "betrag": "-29,99",
+          "gegenpartei": "FunkNetz Mobil GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "04/2026"
+          ],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 6,
+          "betrag": "+55,00",
+          "gegenpartei": "Ngozi Okafor",
+          "art": "gutschrift",
+          "rechnungsnummern": [
+            "RE-2026-G2"
+          ],
+          "stuecke": [
+            "belege/garage2_rechnung_2026.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 7,
+          "betrag": "-34,90",
+          "gegenpartei": "WohnPortal24 GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "2026-WP-118842"
+          ],
+          "stuecke": [
+            "belege/Download.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 8,
+          "betrag": "-61,08",
+          "gegenpartei": "FRISCHMARKT NEUDORF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 9,
+          "betrag": "-12,99",
+          "gegenpartei": "Kinoflat Online Ltd.",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 10,
+          "betrag": "-200,00",
+          "gegenpartei": "GA Kreisbank Talgau Neudorf",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 11,
+          "betrag": "+189,05",
+          "gegenpartei": "Jonas Kessler",
+          "art": "gutschrift",
+          "rechnungsnummern": [
+            "NK-2025-EG"
+          ],
+          "stuecke": [
+            "belege/NK-Abrechnung_2025_EG.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-59,50",
+          "gegenpartei": "Erlenbacher Wochenblatt Verlag",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "RE-2026-04-3381"
+          ],
+          "stuecke": [
+            "belege/anzeige_wochenblatt.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "-107,10",
+          "gegenpartei": "Ritter Hausverwaltung GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "2026-HV-0412"
+          ],
+          "stuecke": [
+            "belege/scan_0007.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "-85,00",
+          "gegenpartei": "Stadtwerke Erlenbach",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/stadtwerke_wasser_2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "-210,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/gas_schlussrechnung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "-18,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/scan_0004.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 17,
+          "betrag": "-19,80",
+          "gegenpartei": "DROGERIE MEYERHOF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 18,
+          "betrag": "-499,00",
+          "gegenpartei": "GARTENCENTER BLOOM",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/rechnung(1).txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 19,
+          "betrag": "-27,93",
+          "gegenpartei": "NETTOMARKT TALSTADT",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 20,
+          "betrag": "-642,60",
+          "gegenpartei": "Steuerbuero Mertens + Partner",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "1260-0388"
+          ],
+          "stuecke": [
+            "belege/steuerbuero_2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 21,
+          "betrag": "-6,90",
+          "gegenpartei": "Kreisbank Talgau eG",
+          "art": "entgelt",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 22,
+          "betrag": "-1.150,00",
+          "gegenpartei": "Lindgau Hypothekenbank AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/darlehen_tilgungsplan_2026.txt"
+          ],
+          "sicher": true
+        }
+      ]
+    },
+    {
+      "datei": "2026-05.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "-50,00",
+          "gegenpartei": "Bausparkasse Südtal AG",
+          "art": "dauerauftrag",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 2,
+          "betrag": "+1.040,00",
+          "gegenpartei": "Jonas Kessler",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 3,
+          "betrag": "-29,99",
+          "gegenpartei": "FunkNetz Mobil GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "05/2026"
+          ],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 4,
+          "betrag": "+55,00",
+          "gegenpartei": "Ngozi Okafor",
+          "art": "gutschrift",
+          "rechnungsnummern": [
+            "RE-2026-G2"
+          ],
+          "stuecke": [
+            "belege/garage2_rechnung_2026.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 5,
+          "betrag": "-49,95",
+          "gegenpartei": "FRISCHMARKT NEUDORF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 6,
+          "betrag": "-12,99",
+          "gegenpartei": "Kinoflat Online Ltd.",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 7,
+          "betrag": "-87,43",
+          "gegenpartei": "WERKHOF BAUMARKT ERLENBACH",
+          "art": "karte",
+          "rechnungsnummern": [
+            "4471"
+          ],
+          "stuecke": [
+            "belege/bon_baumarkt_0509.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 8,
+          "betrag": "-200,00",
+          "gegenpartei": "GA Kreisbank Talgau Neudorf",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 9,
+          "betrag": "-285,60",
+          "gegenpartei": "Gruenpflege Eckert",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "118/26"
+          ],
+          "stuecke": [
+            "belege/gartenpflege_fruehjahr.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 10,
+          "betrag": "-154,70",
+          "gegenpartei": "Sicherheitstechnik Born",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "SB-2026-219"
+          ],
+          "stuecke": [
+            "belege/scan_0016.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 11,
+          "betrag": "-153,10",
+          "gegenpartei": "Gemeinde Erlenbach",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/grundbesitzabgaben_2026.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-85,00",
+          "gegenpartei": "Stadtwerke Erlenbach",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/stadtwerke_wasser_2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "-210,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/gas_schlussrechnung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "-18,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/scan_0004.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "-52,17",
+          "gegenpartei": "TANKSTELLE LINDENHOF",
+          "art": "karte",
+          "rechnungsnummern": [
+            "556120"
+          ],
+          "stuecke": [
+            "belege/tankbeleg.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "+2.087,15",
+          "gegenpartei": "Kreisbank Talgau eG",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 17,
+          "betrag": "-297,50",
+          "gegenpartei": "RAin Dr. Helga Sander",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "2026/0388"
+          ],
+          "stuecke": [
+            "belege/kostennote_sander.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 18,
+          "betrag": "-2.087,15",
+          "gegenpartei": "Petra Lang",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 19,
+          "betrag": "-38,47",
+          "gegenpartei": "NETTOMARKT TALSTADT",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 20,
+          "betrag": "-6,90",
+          "gegenpartei": "Kreisbank Talgau eG",
+          "art": "entgelt",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 21,
+          "betrag": "-1.150,00",
+          "gegenpartei": "Lindgau Hypothekenbank AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/darlehen_tilgungsplan_2026.txt"
+          ],
+          "sicher": true
+        }
+      ]
+    },
+    {
+      "datei": "2026-06.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "+1.000,00",
+          "gegenpartei": "Anna und Tim Vogel",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 2,
+          "betrag": "+2.250,00",
+          "gegenpartei": "Anna und Tim Vogel",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 3,
+          "betrag": "-50,00",
+          "gegenpartei": "Bausparkasse Südtal AG",
+          "art": "dauerauftrag",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 4,
+          "betrag": "+1.040,00",
+          "gegenpartei": "Jonas Kessler",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 5,
+          "betrag": "+5.000,00",
+          "gegenpartei": "Martina und Stefan Brenner",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 6,
+          "betrag": "-29,99",
+          "gegenpartei": "FunkNetz Mobil GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "06/2026"
+          ],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 7,
+          "betrag": "-2.250,00",
+          "gegenpartei": "Kreisbank Talgau eG",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 8,
+          "betrag": "-3.213,00",
+          "gegenpartei": "Malerbetrieb Kranz u. Sohn",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "26-112"
+          ],
+          "stuecke": [
+            "belege/maler_OG.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 9,
+          "betrag": "+55,00",
+          "gegenpartei": "Ngozi Okafor",
+          "art": "gutschrift",
+          "rechnungsnummern": [
+            "RE-2026-G2"
+          ],
+          "stuecke": [
+            "belege/garage2_rechnung_2026.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 10,
+          "betrag": "-2.165,80",
+          "gegenpartei": "Bodenwelt Hesse GmbH",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "INV-2026-00457"
+          ],
+          "stuecke": [
+            "belege/scan_0019.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 11,
+          "betrag": "-72,31",
+          "gegenpartei": "FRISCHMARKT NEUDORF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-12,99",
+          "gegenpartei": "Kinoflat Online Ltd.",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "-200,00",
+          "gegenpartei": "GA Kreisbank Talgau Neudorf",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "-85,00",
+          "gegenpartei": "Stadtwerke Erlenbach",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/stadtwerke_wasser_2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "-210,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/gas_schlussrechnung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "-18,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/scan_0004.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 17,
+          "betrag": "-24,35",
+          "gegenpartei": "DROGERIE MEYERHOF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 18,
+          "betrag": "-129,95",
+          "gegenpartei": "MODEHAUS LENZ TALSTADT",
+          "art": "karte",
+          "rechnungsnummern": [
+            "330-0918"
+          ],
+          "stuecke": [
+            "belege/IMG_20260620_1530.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 19,
+          "betrag": "-238,00",
+          "gegenpartei": "Ritter Hausverwaltung GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "2026-HV-0588"
+          ],
+          "stuecke": [
+            "belege/neu_1.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 20,
+          "betrag": "-31,05",
+          "gegenpartei": "NETTOMARKT TALSTADT",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 21,
+          "betrag": "-6,90",
+          "gegenpartei": "Kreisbank Talgau eG",
+          "art": "entgelt",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 22,
+          "betrag": "-1.150,00",
+          "gegenpartei": "Lindgau Hypothekenbank AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/darlehen_tilgungsplan_2026.txt"
+          ],
+          "sicher": true
+        }
+      ]
+    },
+    {
+      "datei": "2026-07.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "+1.000,00",
+          "gegenpartei": "Anna und Tim Vogel",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 2,
+          "betrag": "-50,00",
+          "gegenpartei": "Bausparkasse Südtal AG",
+          "art": "dauerauftrag",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 3,
+          "betrag": "+1.040,00",
+          "gegenpartei": "Jonas Kessler",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 4,
+          "betrag": "-29,99",
+          "gegenpartei": "FunkNetz Mobil GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "07/2026"
+          ],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 5,
+          "betrag": "-714,00",
+          "gegenpartei": "Ingenieurbuero Falk",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "2026-061"
+          ],
+          "stuecke": [
+            "belege/energieberatung_falk.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 6,
+          "betrag": "+55,00",
+          "gegenpartei": "Ngozi Okafor",
+          "art": "gutschrift",
+          "rechnungsnummern": [
+            "RE-2026-G2"
+          ],
+          "stuecke": [
+            "belege/garage2_rechnung_2026.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 7,
+          "betrag": "-55,60",
+          "gegenpartei": "FRISCHMARKT NEUDORF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 8,
+          "betrag": "-12,99",
+          "gegenpartei": "Kinoflat Online Ltd.",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 9,
+          "betrag": "-200,00",
+          "gegenpartei": "GA Kreisbank Talgau Neudorf",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 10,
+          "betrag": "-107,10",
+          "gegenpartei": "Ritter Hausverwaltung GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "2026-HV-0721"
+          ],
+          "stuecke": [
+            "belege/hausverwaltung_2026_Q3.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 11,
+          "betrag": "-178,50",
+          "gegenpartei": "Sanitaer Weidner",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "2026-1456"
+          ],
+          "stuecke": [
+            "belege/sanitaer_weidner_EG.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-85,00",
+          "gegenpartei": "Stadtwerke Erlenbach",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/stadtwerke_wasser_2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "-210,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/gas_schlussrechnung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "-18,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/scan_0004.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "-16,40",
+          "gegenpartei": "DROGERIE MEYERHOF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "-45,92",
+          "gegenpartei": "NETTOMARKT TALSTADT",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 17,
+          "betrag": "-71,40",
+          "gegenpartei": "Melder-Service Sued GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "RMS-26-55127"
+          ],
+          "stuecke": [
+            "belege/rauchmelder_wartung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 18,
+          "betrag": "-6,90",
+          "gegenpartei": "Kreisbank Talgau eG",
+          "art": "entgelt",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 19,
+          "betrag": "-1.150,00",
+          "gegenpartei": "Lindgau Hypothekenbank AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/darlehen_tilgungsplan_2026.txt"
+          ],
+          "sicher": true
+        }
+      ]
+    },
+    {
+      "datei": "2026-08.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "+1.000,00",
+          "gegenpartei": "Anna und Tim Vogel",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 2,
+          "betrag": "+1.040,00",
+          "gegenpartei": "Jonas Kessler",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 3,
+          "betrag": "-50,00",
+          "gegenpartei": "Bausparkasse Südtal AG",
+          "art": "dauerauftrag",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 4,
+          "betrag": "-29,99",
+          "gegenpartei": "FunkNetz Mobil GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "08/2026"
+          ],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 5,
+          "betrag": "+55,00",
+          "gegenpartei": "Ngozi Okafor",
+          "art": "gutschrift",
+          "rechnungsnummern": [
+            "RE-2026-G2"
+          ],
+          "stuecke": [
+            "belege/garage2_rechnung_2026.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 6,
+          "betrag": "-44,83",
+          "gegenpartei": "FRISCHMARKT NEUDORF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 7,
+          "betrag": "-12,99",
+          "gegenpartei": "Kinoflat Online Ltd.",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 8,
+          "betrag": "-200,00",
+          "gegenpartei": "GA Kreisbank Talgau Neudorf",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 9,
+          "betrag": "-153,10",
+          "gegenpartei": "Gemeinde Erlenbach",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/grundbesitzabgaben_2026.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 10,
+          "betrag": "-85,00",
+          "gegenpartei": "Stadtwerke Erlenbach",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/stadtwerke_wasser_2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 11,
+          "betrag": "-210,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/gas_schlussrechnung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-18,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/scan_0004.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "-21,05",
+          "gegenpartei": "DROGERIE MEYERHOF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "-36,18",
+          "gegenpartei": "NETTOMARKT TALSTADT",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "-345,10",
+          "gegenpartei": "Torbau Klee",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "TK-26-077"
+          ],
+          "stuecke": [
+            "belege/garagentor_reparatur.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "+10.000,00",
+          "gegenpartei": "Martina und Stefan Brenner",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 17,
+          "betrag": "-9.000,00",
+          "gegenpartei": "Waermetechnik Sommer GmbH",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "AR-26-0881"
+          ],
+          "stuecke": [
+            "belege/waermetechnik_sommer_abschlag.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 18,
+          "betrag": "-6,90",
+          "gegenpartei": "Kreisbank Talgau eG",
+          "art": "entgelt",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 19,
+          "betrag": "-1.150,00",
+          "gegenpartei": "Lindgau Hypothekenbank AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/darlehen_tilgungsplan_2026.txt"
+          ],
+          "sicher": true
+        }
+      ]
+    },
+    {
+      "datei": "2026-09.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "+1.000,00",
+          "gegenpartei": "Anna und Tim Vogel",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 2,
+          "betrag": "-50,00",
+          "gegenpartei": "Bausparkasse Südtal AG",
+          "art": "dauerauftrag",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 3,
+          "betrag": "+1.040,00",
+          "gegenpartei": "Jonas Kessler",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 4,
+          "betrag": "-29,99",
+          "gegenpartei": "FunkNetz Mobil GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "09/2026"
+          ],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 5,
+          "betrag": "+55,00",
+          "gegenpartei": "Ngozi Okafor",
+          "art": "gutschrift",
+          "rechnungsnummern": [
+            "RE-2026-G2"
+          ],
+          "stuecke": [
+            "belege/garage2_rechnung_2026.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 6,
+          "betrag": "-66,12",
+          "gegenpartei": "FRISCHMARKT NEUDORF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 7,
+          "betrag": "-12,99",
+          "gegenpartei": "Kinoflat Online Ltd.",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 8,
+          "betrag": "-189,00",
+          "gegenpartei": "BRILLENWELT TALSTADT",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/optiker.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 9,
+          "betrag": "-200,00",
+          "gegenpartei": "GA Kreisbank Talgau Neudorf",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 10,
+          "betrag": "-85,00",
+          "gegenpartei": "Stadtwerke Erlenbach",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/stadtwerke_wasser_2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 11,
+          "betrag": "-210,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/gas_schlussrechnung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-18,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/scan_0004.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "-17,66",
+          "gegenpartei": "DROGERIE MEYERHOF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "-28,74",
+          "gegenpartei": "NETTOMARKT TALSTADT",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "-6,90",
+          "gegenpartei": "Kreisbank Talgau eG",
+          "art": "entgelt",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "-1.150,00",
+          "gegenpartei": "Lindgau Hypothekenbank AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/darlehen_tilgungsplan_2026.txt"
+          ],
+          "sicher": true
+        }
+      ]
+    },
+    {
+      "datei": "2026-10.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "+1.000,00",
+          "gegenpartei": "Anna und Tim Vogel",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 2,
+          "betrag": "-50,00",
+          "gegenpartei": "Bausparkasse Südtal AG",
+          "art": "dauerauftrag",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 3,
+          "betrag": "+1.040,00",
+          "gegenpartei": "Jonas Kessler",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 4,
+          "betrag": "+55,00",
+          "gegenpartei": "Ngozi Okafor",
+          "art": "gutschrift",
+          "rechnungsnummern": [
+            "RE-2026-G2"
+          ],
+          "stuecke": [
+            "belege/garage2_rechnung_2026.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 5,
+          "betrag": "-29,99",
+          "gegenpartei": "FunkNetz Mobil GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "10/2026"
+          ],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 6,
+          "betrag": "+19.000,00",
+          "gegenpartei": "Martina und Stefan Brenner",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 7,
+          "betrag": "-51,77",
+          "gegenpartei": "FRISCHMARKT NEUDORF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 8,
+          "betrag": "-18.370,00",
+          "gegenpartei": "Waermetechnik Sommer GmbH",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "RE-2026-0934"
+          ],
+          "stuecke": [
+            "belege/Heizung_Schlussrechnung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 9,
+          "betrag": "-200,00",
+          "gegenpartei": "GA Kreisbank Talgau Neudorf",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 10,
+          "betrag": "-12,99",
+          "gegenpartei": "Kinoflat Online Ltd.",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 11,
+          "betrag": "+122,10",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "gutschrift",
+          "rechnungsnummern": [
+            "SR-2026-GA-77810"
+          ],
+          "stuecke": [
+            "belege/gas_schlussrechnung.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-107,10",
+          "gegenpartei": "Ritter Hausverwaltung GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "2026-HV-1009"
+          ],
+          "stuecke": [
+            "belege/hausverwaltung_2026_Q4.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "-85,00",
+          "gegenpartei": "Stadtwerke Erlenbach",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/stadtwerke_wasser_2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "-95,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/PDF_Anhang_2.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "-18,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/scan_0004.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "-23,90",
+          "gegenpartei": "DROGERIE MEYERHOF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 17,
+          "betrag": "-39,60",
+          "gegenpartei": "NETTOMARKT TALSTADT",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 18,
+          "betrag": "-6,90",
+          "gegenpartei": "Kreisbank Talgau eG",
+          "art": "entgelt",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 19,
+          "betrag": "-1.150,00",
+          "gegenpartei": "Lindgau Hypothekenbank AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/darlehen_tilgungsplan_2026.txt"
+          ],
+          "sicher": true
+        }
+      ]
+    },
+    {
+      "datei": "2026-11.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "+1.000,00",
+          "gegenpartei": "Anna und Tim Vogel",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 2,
+          "betrag": "+1.040,00",
+          "gegenpartei": "Jonas Kessler",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 3,
+          "betrag": "-50,00",
+          "gegenpartei": "Bausparkasse Südtal AG",
+          "art": "dauerauftrag",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 4,
+          "betrag": "-29,99",
+          "gegenpartei": "FunkNetz Mobil GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "11/2026"
+          ],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 5,
+          "betrag": "+55,00",
+          "gegenpartei": "Ngozi Okafor",
+          "art": "gutschrift",
+          "rechnungsnummern": [
+            "RE-2026-G2"
+          ],
+          "stuecke": [
+            "belege/garage2_rechnung_2026.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 6,
+          "betrag": "-249,90",
+          "gegenpartei": "Gruenpflege Eckert",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "341/26"
+          ],
+          "stuecke": [
+            "belege/IMG_20261028_1712.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 7,
+          "betrag": "-47,29",
+          "gegenpartei": "FRISCHMARKT NEUDORF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 8,
+          "betrag": "-12,99",
+          "gegenpartei": "Kinoflat Online Ltd.",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 9,
+          "betrag": "-200,00",
+          "gegenpartei": "GA Kreisbank Talgau Neudorf",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 10,
+          "betrag": "-153,10",
+          "gegenpartei": "Gemeinde Erlenbach",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/grundbesitzabgaben_2026.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 11,
+          "betrag": "-85,00",
+          "gegenpartei": "Stadtwerke Erlenbach",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/stadtwerke_wasser_2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-95,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/PDF_Anhang_2.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "-18,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/scan_0004.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "-202,30",
+          "gegenpartei": "Dachdeckerei Albrecht GmbH",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "26/0731"
+          ],
+          "stuecke": [
+            "belege/unbenannt.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "-14,85",
+          "gegenpartei": "DROGERIE MEYERHOF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "+6.900,00",
+          "gegenpartei": "Foerderbank fuer Wohnen und Klima",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/dokument(4).txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 17,
+          "betrag": "-33,33",
+          "gegenpartei": "NETTOMARKT TALSTADT",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 18,
+          "betrag": "-3.000,00",
+          "gegenpartei": "Martina und Stefan Brenner",
+          "art": "ueberweisung",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 19,
+          "betrag": "-6,90",
+          "gegenpartei": "Kreisbank Talgau eG",
+          "art": "entgelt",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 20,
+          "betrag": "-1.150,00",
+          "gegenpartei": "Lindgau Hypothekenbank AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/darlehen_tilgungsplan_2026.txt"
+          ],
+          "sicher": true
+        }
+      ]
+    },
+    {
+      "datei": "2026-12.txt",
+      "umsaetze": [
+        {
+          "nr": 1,
+          "betrag": "+1.000,00",
+          "gegenpartei": "Anna und Tim Vogel",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 2,
+          "betrag": "-50,00",
+          "gegenpartei": "Bausparkasse Südtal AG",
+          "art": "dauerauftrag",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 3,
+          "betrag": "+1.040,00",
+          "gegenpartei": "Jonas Kessler",
+          "art": "gutschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 4,
+          "betrag": "-29,99",
+          "gegenpartei": "FunkNetz Mobil GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [
+            "12/2026"
+          ],
+          "stuecke": [],
+          "sicher": false
+        },
+        {
+          "nr": 5,
+          "betrag": "+55,00",
+          "gegenpartei": "Ngozi Okafor",
+          "art": "gutschrift",
+          "rechnungsnummern": [
+            "RE-2026-G2"
+          ],
+          "stuecke": [
+            "belege/garage2_rechnung_2026.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 6,
+          "betrag": "-249,00",
+          "gegenpartei": "Elektro Kaiser e.K.",
+          "art": "ueberweisung",
+          "rechnungsnummern": [
+            "R26-12-0412"
+          ],
+          "stuecke": [
+            "belege/rechnung(2).txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 7,
+          "betrag": "-88,40",
+          "gegenpartei": "FRISCHMARKT NEUDORF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 8,
+          "betrag": "-12,99",
+          "gegenpartei": "Kinoflat Online Ltd.",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 9,
+          "betrag": "-200,00",
+          "gegenpartei": "GA Kreisbank Talgau Neudorf",
+          "art": "bar",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 10,
+          "betrag": "+360,00",
+          "gegenpartei": "Bareinzahlung",
+          "art": "gutschrift",
+          "rechnungsnummern": [
+            "G1-2026-03",
+            "G1-2026-04"
+          ],
+          "stuecke": [
+            "belege/dokument.txt",
+            "belege/quittung_garage1_Q4.txt"
+          ],
+          "sicher": false
+        },
+        {
+          "nr": 11,
+          "betrag": "-85,00",
+          "gegenpartei": "Stadtwerke Erlenbach",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/stadtwerke_wasser_2025.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 12,
+          "betrag": "-95,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/PDF_Anhang_2.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 13,
+          "betrag": "-18,00",
+          "gegenpartei": "Talgau Energie GmbH",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/scan_0004.txt"
+          ],
+          "sicher": true
+        },
+        {
+          "nr": 14,
+          "betrag": "-84,60",
+          "gegenpartei": "SPIELWAREN HOPP TALSTADT",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 15,
+          "betrag": "-31,20",
+          "gegenpartei": "DROGERIE MEYERHOF",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 16,
+          "betrag": "-52,15",
+          "gegenpartei": "NETTOMARKT TALSTADT",
+          "art": "karte",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 17,
+          "betrag": "-6,90",
+          "gegenpartei": "Kreisbank Talgau eG",
+          "art": "entgelt",
+          "rechnungsnummern": [],
+          "stuecke": [],
+          "sicher": true
+        },
+        {
+          "nr": 18,
+          "betrag": "-1.150,00",
+          "gegenpartei": "Lindgau Hypothekenbank AG",
+          "art": "lastschrift",
+          "rechnungsnummern": [],
+          "stuecke": [
+            "belege/darlehen_tilgungsplan_2026.txt"
+          ],
+          "sicher": true
+        }
+      ]
+    }
+  ]
+}
