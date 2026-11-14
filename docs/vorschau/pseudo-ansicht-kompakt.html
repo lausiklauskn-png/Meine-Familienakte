@@ -78,7 +78,7 @@ h1 { font-size:1.2rem; margin:0; color:var(--navy); } p { margin:0; } .leise { c
 .einedatei input { width:15px; height:15px; margin:0; }
 .kiwahl { display:flex; position:relative; }
 .kiwahl .ki { border-radius:8px 0 0 8px; flex:1; }
-.kiwahl .kipfeil { flex:none; width:40px; border-radius:0 8px 8px 0; border-left:1px solid rgba(255,255,255,.35); text-align:center; padding:0; font-size:1rem; }
+.kiwahl .kipfeil { flex:none; width:40px; border-radius:0 8px 8px 0; border-left:0; background:var(--k-hauch); text-align:center; padding:0; font-size:1rem; }
 .kimenue { position:absolute; right:0; bottom:44px; z-index:3; background:var(--paper); border:1px solid var(--line); border-radius:10px; box-shadow:0 8px 24px var(--schatten); padding:4px; display:grid; min-width:180px; }
 .kimenue button { display:flex; align-items:center; gap:8px; height:34px; border:0; background:none; border-radius:7px; padding:0 8px; font:700 .84rem var(--sans); color:var(--ink); cursor:pointer; text-align:left; }
 .kimenue button[aria-checked="true"]::after { content:"✓"; margin-left:auto; color:var(--green); }
@@ -87,7 +87,13 @@ h1 { font-size:1.2rem; margin:0; color:var(--navy); } p { margin:0; } .leise { c
 .punkt.gpt { background:var(--gpt); } .punkt.claude { background:var(--claude); } .punkt.code { background:var(--code); } .punkt.gemini { background:var(--gemini); }
 .ki { height:40px; text-align:left; padding:0 10px; border:0; border-radius:8px; color:#fff; font:700 .76rem var(--sans); cursor:pointer; line-height:1.1; }
 .ki { font-size:.86rem; } .ki small { display:block; font-weight:400; font-size:.66rem; opacity:.9; }
-.ki.gpt { background:var(--gpt); } .ki.claude { background:var(--claude); } .ki.code { background:var(--code); } .ki.gemini { background:var(--gemini); }
+.ki { color:var(--k-ink); border:1px solid var(--k-rand); background:linear-gradient(105deg, var(--paper) 0%, var(--k-hauch) 100%); }
+.ki small { color:var(--muted); opacity:1; }
+.ki.gpt { --k-ink:#0b6e55; --k-rand:#a9dccd; --k-hauch:#e3f5ef; }
+.ki.claude { --k-ink:#9a4528; --k-rand:#ebc3b3; --k-hauch:#fbebe4; }
+.ki.code { --k-ink:#5b4636; --k-rand:#d6c8bc; --k-hauch:#f2ece6; }
+.ki.gemini { --k-ink:#3a52c4; --k-rand:#bfc9f3; --k-hauch:#e9edfc; }
+.ki:hover { filter:saturate(1.3); }
 .weiter { display:flex; gap:4px; flex-wrap:wrap; }
 
 /* Blatt (Auge, Stift) über dem Handy-Inhalt */
@@ -119,6 +125,8 @@ h1 { font-size:1.2rem; margin:0; color:var(--navy); } p { margin:0; } .leise { c
 .zur textarea { width:100%; min-height:90px; border:1px solid var(--line); border-radius:8px; padding:7px; font:.82rem var(--sans); background:var(--paper); color:var(--ink); }
 .ergebnis { background:var(--green-soft); border-radius:8px; padding:8px; font-size:.82rem; }
 [hidden] { display:none !important; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .ki.gpt { --k-ink:#8fe0c6; --k-rand:#24584a; --k-hauch:#16352c; } :root:not([data-theme="light"]) .ki.claude { --k-ink:#f0b49c; --k-rand:#6a3a2a; --k-hauch:#3a2219; } :root:not([data-theme="light"]) .ki.code { --k-ink:#dccbbb; --k-rand:#56483c; --k-hauch:#2e2620; } :root:not([data-theme="light"]) .ki.gemini { --k-ink:#b5c3ff; --k-rand:#3a4680; --k-hauch:#1f2546; } }
+:root[data-theme="dark"] .ki.gpt { --k-ink:#8fe0c6; --k-rand:#24584a; --k-hauch:#16352c; } :root[data-theme="dark"] .ki.claude { --k-ink:#f0b49c; --k-rand:#6a3a2a; --k-hauch:#3a2219; } :root[data-theme="dark"] .ki.code { --k-ink:#dccbbb; --k-rand:#56483c; --k-hauch:#2e2620; } :root[data-theme="dark"] .ki.gemini { --k-ink:#b5c3ff; --k-rand:#3a4680; --k-hauch:#1f2546; }
 </style>
 
 <div class="wrap">
