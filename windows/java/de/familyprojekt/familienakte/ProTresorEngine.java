@@ -162,6 +162,12 @@ public final class ProTresorEngine implements Closeable {
                 Eintrag e=p.uebergabeSenden(Json.text(m,"ziel"),Json.text(m,"transferId"),Json.text(m,"documentId"),Json.textOder(m,"bezug",""),Json.text(m,"name"),Json.text(m,"mime"),new ByteArrayInputStream(bytes));
                 return Map.of("vaultId",p.kennung(),"entryId",e.id,"sha256",e.sha256,"size",e.groesse,"stand","weitergegeben");
             }
+            // Stufe C (Plan Pseudonymisieren): Profile für die Maske im gemeinsamen Fach „profile“.
+            case "profilLesen": return Map.of("items",offen(m).profilLesen());
+            case "profilSchreiben": {
+                ProTresorAdapter p=offen(m); Eintrag e=p.profilSchreiben(Json.text(m,"text"));
+                return Map.of("vaultId",p.kennung(),"entryId",e.id,"sha256",e.sha256,"size",e.groesse);
+            }
             default: throw new IOException("FA_TRESOR_AKTION_UNGUELTIG");
         }
     }

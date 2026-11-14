@@ -83,7 +83,28 @@ Textdatei) · P8 Ja (Gruppe) · P9 Daten bleiben; Geburtsdatum ganz verdeckt (si
 P11 Ja · P12 Ja, Bezugsdokumente ab Werk angehakt · P13 Ja (nur privater Weg) · P14 Ja · P15 „Pseudo“ im Knopf, „Pseudonymisieren“ /
 „Zurückführen“ im Fenster.
 
-**Offen (nächste Stufen):** Profile im Pro-Tresor (C), Knopf an Unterlage/Auswahl/Mail im Eingang, Austauschordner und Bezugsdokumente (E),
+### Stand 14.11.2026 (zweite Sitzung): Stufe C gebaut (Klaus' Freibrief 14.11.)
+
+- **Fach `profile`** im Tresor-Paket, Quelle Workflow PDF Pro (#77, `Fach.PROFILE`, `Profile.java`; Ordner „Maske-Profile“, gemeinsam:
+  jede Pro-App ihre eigene Datei, alle lesen alle, neueste gilt, nichts gelöscht), byte-gleich nachgezogen (`tools/tresor-nachziehen.mjs`
+  mit `Profile`). Anschluss `ProTresorAdapter.profilLesen/profilSchreiben`, Android `FamilienakteTresorPlugin`, Windows
+  `ProTresorEngine` + `pro_tresor.rs` + `familienakte-windows.js`.
+- **Kern** `lib/maske-profil.ts`: Einträge Ich/Familie/Kontakt/Stelle, mit der Akte **verknüpft** (`akteId`, nichts kopiert), Schreibweisen,
+  Nummern nur als **HMAC-SHA-256** (Schlüssel in derselben Datei, Kennung je Schlüssel; übernommene Schlüssel bleiben zum Erkennen),
+  Regel, **feste Platzhalter** ⟦ICH-1⟧/⟦FAMILIE-n⟧/⟦KONTAKT-n⟧/⟦STELLE-n⟧, Zusammenführen (gleicher Name oder gleicher Fingerabdruck),
+  Korrigieren, strenges Einlesen fremder Dateien. `lib/maske.ts`: `feste` (ohne Groß-/Kleinschreibung, nur ganze Wörter, nie in
+  Platzhaltern), „darf bleiben“ gilt auch für Wörter einer Wendung und für Werte früherer Texte.
+- **Speicher** `app/maske-profil-speicher.ts`: Pro + Tresor offen → Fach `profile`; Tresor gesperrt → nichts (nicht still woanders);
+  Pro ohne Tresor → App-Speicher; Basic/Demo → nichts.
+- **Profilseite** `app/maske-profile.tsx` im Sicherheitscenter (Vorschau `docs/vorschau/maske-profile-stufe-c.html`,
+  https://claude.ai/artifact/VkEA57UKaH2DBn3zd7RRz7). **Pseudo-Fenster**: Profile wirken, „Korrigieren“ und die gelben unsicheren
+  Stellen merken ins Profil und rechnen neu; Link „Profile ›“. Datenschutzseite Abschnitt 3 ergänzt.
+- **Grenze (benannt):** Fingerabdrücke mit verschiedenen Schlüsseln lassen sich nicht vergleichen. Übernimmt eine App die Profile, behält
+  sie den Schlüssel (`alsEigene`); zwei Apps, die unabhängig angefangen haben, finden nur über den Namen zusammen.
+- Proben: `scripts/run-maske-profil-tests.mjs` (10 Gruppen, Gegenprobe 5/5), UI `tests/ui/maske-profile.test.mjs` (9 Schritte, Tresor
+  gestellt), JUnit `profileGemeinsamJeAppNeuesteGiltNichtsGeloescht` (Gegenprobe 4/4), Windows-Engine-Probe mit Profil-Fall.
+
+**Offen (nächste Stufen):** Knopf an Unterlage/Auswahl/Mail im Eingang, Austauschordner und Bezugsdokumente (E),
 „Alles pseudonymisieren“ mit Sortier-Datei (F), Bilder schwärzen (G), Pro-Verbund-Karte in BookLedgerPro, danach die anderen Pro-Apps.
 
 ## Grundsätze

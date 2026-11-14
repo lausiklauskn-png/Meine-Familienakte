@@ -1,0 +1,232 @@
+<title>Profile für die Maske</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: eine Spalte wie die übrigen Vorschauen; oben die Profilseite (Sicherheitscenter), darunter Ersteinrichtung,
+   Übernehmen aus einer anderen Pro-App, Korrigieren im Pseudo-Fenster, Speicherort. Farben wie in der App. */
+:root {
+  --navy:#0b3154; --blau:#174f7b; --blau-soft:#edf5fc; --ink:#15283a; --muted:#5d6c7c; --line:#d8e2ea; --canvas:#f2f7fa; --paper:#ffffff;
+  --teal:#087f7a; --teal-soft:#e8f6f5; --green:#167249; --green-soft:#eaf7f0; --amber:#8a5b08; --amber-soft:#fff4dc;
+  --red:#8f252b; --red-soft:#f8e5e6; --grau-soft:#f1f4f6; --platz:#e9e2fa;
+  --sans: Arial, Helvetica, sans-serif; --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --navy:#9cc6ef; --blau:#9cc6ef; --blau-soft:#18293a; --ink:#e4ecf2; --muted:#9fb0bf; --line:#2c3c4a; --canvas:#0f171e; --paper:#17222c;
+  --teal:#6fd2cb; --teal-soft:#123230; --green:#7fd3a5; --green-soft:#16301f; --amber:#f0c36b; --amber-soft:#3a2d12;
+  --red:#f1a3a8; --red-soft:#3b1c1f; --grau-soft:#1f2a33; --platz:#33284a; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --navy:#9cc6ef; --blau:#9cc6ef; --blau-soft:#18293a; --ink:#e4ecf2; --muted:#9fb0bf; --line:#2c3c4a; --canvas:#0f171e; --paper:#17222c;
+  --teal:#6fd2cb; --teal-soft:#123230; --green:#7fd3a5; --green-soft:#16301f; --amber:#f0c36b; --amber-soft:#3a2d12;
+  --red:#f1a3a8; --red-soft:#3b1c1f; --grau-soft:#1f2a33; --platz:#33284a; color-scheme: dark; }
+* { box-sizing:border-box; }
+body { background:var(--canvas); color:var(--ink); font:16px/1.5 var(--sans); padding-block:20px 48px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
+main { max-width:900px; margin:0 auto; display:grid; gap:22px; }
+h1 { font-size:1.45rem; margin:0; color:var(--navy); text-wrap:balance; }
+h2 { font-size:1.08rem; margin:0; color:var(--blau); background:var(--blau-soft); border:1px solid var(--line); border-radius:9px; padding:6px 10px; text-wrap:balance; }
+h3 { font-size:1rem; margin:0; color:var(--blau); }
+h4 { font-size:.8rem; margin:4px 0 0; color:var(--teal); letter-spacing:.06em; text-transform:uppercase; }
+p { margin:0; } .leise { color:var(--muted); font-size:.92rem; }
+section { display:grid; gap:12px; }
+.karte { background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:14px; display:grid; gap:10px; min-width:0; box-shadow:0 9px 30px rgba(16,52,83,.06); }
+.schloss { background:var(--green-soft); color:var(--green); border-radius:9px; padding:6px 10px; font-weight:700; font-size:.92rem; }
+.knoepfe { display:flex; flex-wrap:wrap; gap:8px; }
+.kn { display:inline-flex; align-items:center; gap:6px; border:1px solid var(--line); background:var(--paper); color:var(--blau); border-radius:10px; padding:7px 12px; font:700 .9rem var(--sans); cursor:pointer; }
+.kn.haupt { background:var(--blau); color:var(--paper); border-color:var(--blau); }
+.kn:focus-visible { outline:3px solid var(--teal); outline-offset:2px; }
+.reiter { display:flex; flex-wrap:wrap; gap:6px; }
+.reiter button { border:1px solid var(--line); background:var(--paper); color:var(--muted); border-radius:999px; padding:4px 12px; font:700 .86rem var(--sans); cursor:pointer; }
+.reiter button[aria-pressed="true"] { background:var(--blau-soft); color:var(--blau); border-color:var(--blau); }
+.zeile { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:6px 12px; border:1px solid var(--line); border-radius:11px; padding:10px 12px; align-items:start; }
+.zeile .name { font-weight:700; }
+.zeile .rechts { display:grid; gap:6px; justify-items:end; }
+.chips { display:flex; flex-wrap:wrap; gap:6px; grid-column:1 / -1; }
+.chip { display:inline-flex; align-items:center; gap:4px; border:1px solid var(--line); border-radius:999px; padding:2px 9px; font-size:.82rem; color:var(--muted); background:var(--paper); }
+.chip.akte { border-color:var(--teal); color:var(--teal); background:var(--teal-soft); }
+.chip.nummer { font-family:var(--mono); }
+.platz { font-family:var(--mono); background:var(--platz); border-radius:6px; padding:1px 6px; font-size:.84rem; }
+.schalter { display:inline-flex; border:1px solid var(--line); border-radius:9px; overflow:hidden; font-size:.82rem; font-weight:700; }
+.schalter span { padding:4px 9px; color:var(--muted); }
+.schalter .an.verdecken { background:var(--red-soft); color:var(--red); }
+.schalter .an.bleibt { background:var(--green-soft); color:var(--green); }
+.offen { border-color:var(--blau); box-shadow:0 0 0 2px var(--blau-soft); }
+.feld { display:grid; gap:4px; font-size:.9rem; }
+.feld input, .feld select { font:inherit; padding:7px 9px; border:1px solid var(--line); border-radius:8px; background:var(--paper); color:var(--ink); min-width:0; width:100%; }
+.raster { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:10px; }
+.hinweis { background:var(--amber-soft); color:var(--amber); border-radius:9px; padding:7px 10px; font-size:.9rem; }
+.tabelle { overflow-x:auto; }
+table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:520px; }
+th, td { border-bottom:1px solid var(--line); text-align:left; padding:6px 8px; vertical-align:top; }
+th { color:var(--muted); font-size:.8rem; text-transform:uppercase; letter-spacing:.05em; }
+.gelb { background:var(--amber-soft); border-radius:4px; padding:0 3px; }
+pre { margin:0; white-space:pre-wrap; font:.86rem/1.5 var(--mono); background:var(--grau-soft); border-radius:9px; padding:10px; overflow-x:auto; }
+ul { margin:0; padding-left:20px; display:grid; gap:4px; }
+ol { margin:0; padding-left:22px; display:grid; gap:6px; }
+@media (max-width:520px) { .zeile { grid-template-columns:1fr; } .zeile .rechts { justify-items:start; } }
+</style>
+
+<main>
+  <div style="display:grid;gap:6px">
+    <h1>Profile für die Maske</h1>
+    <p class="leise">Vorschau Stufe C (Plan Pseudonymisieren), 14.11.2026. Alle Namen und Nummern sind erfunden. Ort in der App: Sicherheitscenter › „Profile für die Maske“ und im Pseudo-Fenster der Link „Profile ›“.</p>
+  </div>
+
+  <section>
+    <h2>1 · Die Profilseite</h2>
+    <div class="karte" id="profilseite">
+      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
+        <h3>Profile für die Maske ⓘ</h3>
+        <span class="chip">Pro-Tresor · Fach „Maske-Profile“</span>
+      </div>
+      <p class="schloss">🔒 Profile verlassen dieses Gerät nie. Nummern sind nur als Fingerabdruck gespeichert.</p>
+      <div class="reiter" role="group" aria-label="Gruppe">
+        <button type="button" aria-pressed="true" data-g="alle">Alle 7</button>
+        <button type="button" aria-pressed="false" data-g="ich">Ich 1</button>
+        <button type="button" aria-pressed="false" data-g="familie">Familie 2</button>
+        <button type="button" aria-pressed="false" data-g="kontakt">Kontakte 2</button>
+        <button type="button" aria-pressed="false" data-g="stelle">Stellen 2</button>
+      </div>
+
+      <div class="liste" style="display:grid;gap:8px">
+        <h4 data-gruppe="ich">Ich</h4>
+        <div class="zeile offen" data-gruppe="ich">
+          <div><span class="name">Mara Testfeld</span> <span class="platz">⟦ICH-1⟧</span></div>
+          <div class="rechts"><span class="schalter"><span class="an verdecken">immer verdecken</span><span>darf bleiben</span></span></div>
+          <div class="chips"><span class="chip akte">aus der Akte verknüpft</span><span class="chip">Testfeld</span><span class="chip">M. Testfeld</span><span class="chip">TESTFELD, MARA</span><span class="chip">Lindenweg 12</span><span class="chip">geb. 03.04.1981</span></div>
+          <div class="chips"><span class="chip nummer">Steuer-ID ··· 0369</span><span class="chip nummer">KVNR T52…364·</span><span class="chip nummer">IBAN DE89 ··· 3000</span></div>
+          <div class="raster" style="grid-column:1/-1">
+            <label class="feld" for="schreib">Schreibweise hinzufügen<input id="schreib" value="Mara T." readonly></label>
+            <label class="feld" for="nummer">Nummer hinzufügen (wird nicht gespeichert, nur ihr Fingerabdruck)<input id="nummer" placeholder="z. B. Kundennummer" readonly></label>
+          </div>
+          <div class="knoepfe" style="grid-column:1/-1"><span class="kn haupt">Fertig</span><span class="kn">In der Akte öffnen ›</span><span class="kn">Aus Profil nehmen</span></div>
+        </div>
+
+        <h4 data-gruppe="familie">Familie</h4>
+        <div class="zeile" data-gruppe="familie">
+          <div><span class="name">Ole Brink</span> <span class="platz">⟦FAMILIE-1⟧</span></div>
+          <div class="rechts"><span class="schalter"><span class="an verdecken">immer verdecken</span><span>darf bleiben</span></span></div>
+          <div class="chips"><span class="chip akte">aus der Akte verknüpft</span><span class="chip">Brink</span><span class="chip nummer">KVNR ··· 4417</span></div>
+        </div>
+        <div class="zeile" data-gruppe="familie">
+          <div><span class="name">Lio Testfeld</span> <span class="platz">⟦FAMILIE-2⟧</span></div>
+          <div class="rechts"><span class="schalter"><span class="an verdecken">immer verdecken</span><span>darf bleiben</span></span></div>
+          <div class="chips"><span class="chip akte">aus der Akte verknüpft</span><span class="chip">Lio</span></div>
+        </div>
+
+        <h4 data-gruppe="kontakt">Kontakte</h4>
+        <div class="zeile" data-gruppe="kontakt">
+          <div><span class="name">Dr. Henrike Aster</span> <span class="platz">⟦KONTAKT-1⟧</span></div>
+          <div class="rechts"><span class="schalter"><span class="an verdecken">immer verdecken</span><span>darf bleiben</span></span></div>
+          <div class="chips"><span class="chip">selbst angelegt</span><span class="chip">Praxis Aster</span><span class="chip">Dr. Aster</span></div>
+        </div>
+        <div class="zeile" data-gruppe="kontakt">
+          <div><span class="name">Heike Sommer e.K.</span> <span class="platz">⟦KONTAKT-2⟧</span></div>
+          <div class="rechts"><span class="schalter"><span class="an verdecken">immer verdecken</span><span>darf bleiben</span></span></div>
+          <div class="chips"><span class="chip">beim Korrigieren gemerkt</span><span class="chip">H. Sommer</span></div>
+        </div>
+
+        <h4 data-gruppe="stelle">Stellen</h4>
+        <div class="zeile" data-gruppe="stelle">
+          <div><span class="name">Schirmchen Versicherung GmbH</span></div>
+          <div class="rechts"><span class="schalter"><span>immer verdecken</span><span class="an bleibt">darf bleiben</span></span></div>
+          <div class="chips"><span class="chip akte">aus der Akte verknüpft</span><span class="chip nummer">Vertrag ··· 8833</span></div>
+        </div>
+        <div class="zeile" data-gruppe="stelle">
+          <div><span class="name">Wolkenpost</span></div>
+          <div class="rechts"><span class="schalter"><span>immer verdecken</span><span class="an bleibt">darf bleiben</span></span></div>
+          <div class="chips"><span class="chip akte">aus der Akte verknüpft</span></div>
+        </div>
+      </div>
+
+      <div class="knoepfe"><span class="kn haupt">+ Selbst anlegen</span><span class="kn">Aus meiner Akte vorschlagen</span><span class="kn">Aus einer anderen Pro-App übernehmen</span></div>
+      <p class="leise">Darf immer bleiben (überall): „Stadtwerke Musterstadt“, „Finanzamt“ · <u>ändern</u></p>
+    </div>
+    <ul class="leise">
+      <li>Eine Person der Akte wird <b>verknüpft</b>, nicht kopiert: Name, Anschrift und Geburtsdatum kommen aus der Akte; das Profil hält nur Zusätzliches (Schreibweisen, Nummern, Regel).</li>
+      <li>Jeder Eintrag hat einen <b>festen Platzhalter</b> (⟦FAMILIE-1⟧ bleibt ⟦FAMILIE-1⟧ in allen Texten). „Zurückführen“ setzt den Namen ein.</li>
+      <li>Nummern zeigt die App nur mit den letzten vier Zeichen. Gespeichert ist ein HMAC-Fingerabdruck; die Nummer selbst steht nirgends.</li>
+      <li>Stellen sind ab Werk „darf bleiben“ (die KI soll sehen, dass es um die Versicherung geht). Ein Schalter macht daraus „immer verdecken“ mit Platzhalter ⟦STELLE-n⟧.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>2 · Erster Start</h2>
+    <div class="karte">
+      <h3>Noch keine Profile</h3>
+      <p>Die Maske verdeckt Namen und Nummern schon nach Mustern. Mit Profilen erkennt sie deine Leute und Nummern immer, auch in anderen Schreibweisen.</p>
+      <div class="knoepfe"><span class="kn haupt">Aus meiner Akte vorschlagen (5)</span><span class="kn">Aus einer anderen Pro-App übernehmen</span><span class="kn">Selbst anlegen</span></div>
+      <p class="leise">„Aus meiner Akte vorschlagen“ zeigt die Personen (→ Ich/Familie) und Organisationen (→ Stellen) der Akte mit Haken; erst „Übernehmen“ legt die Einträge an.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>3 · Aus einer anderen Pro-App übernehmen</h2>
+    <div class="karte">
+      <h3>Im Tresor gefunden</h3>
+      <p>Private Brain Pro · 12.11.2026 · 4 Einträge</p>
+      <div class="tabelle"><table>
+        <thead><tr><th>Eintrag</th><th>Dort</th><th>Hier</th><th>Ergebnis</th></tr></thead>
+        <tbody>
+          <tr><td>Mara Testfeld</td><td>2 Schreibweisen, 1 Nummer</td><td>verknüpft, 3 Nummern</td><td>zusammengeführt (gleicher Name)</td></tr>
+          <tr><td>Dr. Henrike Aster</td><td>1 Schreibweise</td><td>vorhanden</td><td>zusammengeführt</td></tr>
+          <tr><td>Paul Ginster</td><td>Kontakt</td><td>–</td><td>neu ⟦KONTAKT-3⟧</td></tr>
+          <tr><td>Zahnarztpraxis Kiesel</td><td>„immer verdecken“</td><td>–</td><td>neu ⟦STELLE-1⟧</td></tr>
+        </tbody>
+      </table></div>
+      <div class="knoepfe"><span class="kn haupt">Übernehmen</span><span class="kn">Abbrechen</span></div>
+      <p class="leise">Gleich ist: gleiche Gruppe und gleicher Name, oder gleicher Nummern-Fingerabdruck. Dann werden Schreibweisen und Nummern zusammengelegt, nichts doppelt angelegt und nichts überschrieben. Bei „immer verdecken“ gegen „darf bleiben“ gewinnt „immer verdecken“.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>4 · Korrigieren im Pseudo-Fenster merkt sich ins Profil</h2>
+    <div class="karte">
+      <pre>⟦PSEUDONYMISIERT v1⟧
+Sehr geehrte ⟦ICH-1⟧, Ihr Termin bei <span class="gelb">Heike Sommer</span> am 21.11.2026 …</pre>
+      <p class="hinweis">Bitte prüfen: „Heike Sommer“ (verdeckt, aber nicht sicher ein Name)</p>
+      <div class="raster">
+        <label class="feld" for="korr">Merken als
+          <select id="korr"><option>Neuer Kontakt</option><option>Schreibweise von Dr. Henrike Aster</option><option>Schreibweise von Mara Testfeld</option></select>
+        </label>
+      </div>
+      <div class="knoepfe"><span class="kn haupt">Immer verdecken</span><span class="kn">Darf bleiben</span></div>
+      <p class="leise">In der Pro-App mit Tresor geht die Wahl sofort ins Profil und gilt für alle nächsten Texte. In Basic gilt sie nur bis zum Schließen der App (keine gespeicherten Profile).</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>5 · Wo die Profile liegen</h2>
+    <div class="karte">
+      <div class="tabelle"><table>
+        <thead><tr><th>Lage</th><th>Ort</th><th>Schutz</th></tr></thead>
+        <tbody>
+          <tr><td>Pro, Tresor offen</td><td>Tresor › Fach „Maske-Profile“ (eine Datei je App, neueste gilt)</td><td>AES-256-GCM wie alle Tresor-Dateien; jede Pro-App kann sie lesen</td></tr>
+          <tr><td>Pro, Tresor gesperrt</td><td>wird nicht gelesen</td><td>Pseudo arbeitet nur mit Mustern und Namen der Akte; Hinweis „Tresor entsperren“</td></tr>
+          <tr><td>Pro ohne Tresor</td><td>im App-Speicher neben der Akte</td><td>gleicher Schutz wie die Akte selbst; Hinweis „Tresor einrichten“</td></tr>
+          <tr><td>Basic (PWA)</td><td>nichts gespeichert</td><td>nur Muster und Namen der Akte</td></tr>
+        </tbody>
+      </table></div>
+      <p class="leise">Der Schlüssel für die Fingerabdrücke (32 Zufallsbytes) liegt in derselben verschlüsselten Datei. Ohne ihn lässt sich aus einem Fingerabdruck die Nummer nicht zurückrechnen; mit ihm könnte man kurze Nummern durchprobieren – darum liegt er nur im Tresor.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>6 · Entscheidungen (mit Freibrief, 14.11.)</h2>
+    <div class="karte">
+      <ol>
+        <li>Fach heißt im Programm <code>profile</code>, auf der Karte „Maske-Profile“ (ein Ordner „Profile“ wäre mit eigenen Ordnern leicht zu verwechseln).</li>
+        <li>Das Fach ist <b>gemeinsam</b>: jede Pro-App schreibt ihre eigene Datei hinein, alle lesen. Nichts wird gelöscht (Tresor-Regel); die neueste Datei je App gilt.</li>
+        <li>Platzhalter mit Rolle und fester Nummer: ⟦ICH-1⟧, ⟦FAMILIE-n⟧, ⟦KONTAKT-n⟧, ⟦STELLE-n⟧ (Form ⟦TYP-n⟧ bleibt, damit Modul 25 und „nie doppelt“ sie erkennen).</li>
+        <li>Schreibweisen werden ohne Rücksicht auf Groß-/Kleinschreibung gefunden (auch „TESTFELD“); der Nachname allein zählt bei Personen mit.</li>
+        <li>„Darf bleiben“ hat Vorrang vor Mustern, aber nie vor einer gültigen Prüfziffer (eine Steuer-ID wird immer verdeckt).</li>
+      </ol>
+    </div>
+  </section>
+</main>
+<script>
+const knoepfe = document.querySelectorAll('.reiter button');
+knoepfe.forEach((b) => b.addEventListener('click', () => {
+  knoepfe.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+  const g = b.dataset.g;
+  document.querySelectorAll('.liste [data-gruppe]').forEach((el) => { el.hidden = g !== 'alle' && el.dataset.gruppe !== g; });
+}));
+</script>

@@ -15,6 +15,9 @@ interface ProTresorPlugin {
   uebergabeLesen(args: { vaultId: string; entryId: string }): Promise<{ vertrag: ProUebergabe; data: string }>;
   uebergabeQuittieren(args: { vaultId: string; entryId: string; sha256: string }): Promise<{ stand: string }>;
   uebergabeStand(args: { vaultId: string; ziel: ProApp; entryId: string }): Promise<{ bestaetigt: boolean }>;
+  /** Stufe C (Plan Pseudonymisieren): Profile für die Maske im gemeinsamen Fach „profile“ (je App die neueste Datei). */
+  profilLesen?(args: { vaultId: string }): Promise<{ items: Array<{ schreiber: string; datum: number; sha256: string; text?: string; fehler?: string }> }>;
+  profilSchreiben?(args: { vaultId: string; text: string }): Promise<{ vaultId: string; entryId: string; sha256: string; size: number }>;
 
 }
 type NativeWindow = Window & { Capacitor?: { isNativePlatform?: () => boolean; getPlatform?: () => string; Plugins?: { FamilienakteTresor?: ProTresorPlugin } } };
@@ -143,5 +146,24 @@ export const proTresorUebergaben = {
   async quittieren(vaultId: string, entryId: string, sha256: string) {
     const r = await plugin().uebergabeQuittieren({ vaultId, entryId, sha256 });
     if (r.stand !== "im-eingang") throw new Error("Eingang gespeichert, Rückmeldung noch offen. Erneut aufnehmen bleibt möglich.");
+  },
+};
+
+/** Profile für die Maske im Pro-Tresor (Fach „profile“). Nur wenn die App den Weg kennt (ältere Hüllen: nicht verfügbar). */
+export const proTresorProfile = {
+  verfuegbar: () => proTresorVerfuegbar() && typeof cap()?.Plugins?.FamilienakteTresor?.profilLesen === "function",
+  async lesen(vaultId: string) {
+    const p = plugin();
+    if (typeof p.profilLesen !== "function") throw new Error("Diese App-Fassung kann noch keine Profile im Tresor lesen.");
+    const r = await p.profilLesen({ vaultId });
+    return Array.isArray(r?.items) ? r.items : [];
+  },
+  async schreiben(vaultId: string, text: string) {
+    const p = plugin();
+    if (typeof p.profilSchreiben !== "function") throw new Error("Diese App-Fassung kann noch keine Profile im Tresor speichern.");
+    if (text.length > 1024 * 1024) throw new Error("Die Profile sind größer als 1 MB.");
+    const r = await p.profilSchreiben({ vaultId, text });
+    if (r?.vaultId !== vaultId || !/^[a-f0-9]{64}$/.test(r?.sha256 || "")) throw new Error("Der Pro-Tresor hat die Profile nicht passend bestätigt.");
+    return r;
   },
 };

@@ -93,7 +93,23 @@ export type MaskeProfil = {
   stellen: string[];      // dürfen stehen bleiben (Organisationen der Akte)
   nieVerdecken?: string[];
   zusatz?: string[];
+  /** Feste Platzhalter aus den Profilen (Stufe C): alle Werte → derselbe Platzhalter, ohne Rücksicht auf Groß-/Kleinschreibung;
+   *  Zurückführen setzt den ersten Wert (den Namen) ein. */
+  feste?: Array<{ token: string; werte: string[] }>;
 };
+
+const esc = (w: string) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\s+/g, "\\s+");
+/** Feste Platzhalter einsetzen (längster Wert zuerst, nur ganze Wörter). */
+export function festeEinsetzen(text: string, feste: Array<{ token: string; werte: string[] }>, map: Record<string, string>): { text: string; map: Record<string, string> } {
+  const paare = feste.flatMap((f) => f.werte.filter((w) => w.trim().length >= 2).map((w) => ({ token: f.token, wert: w.trim(), name: f.werte[0].trim() })))
+    .sort((a, b) => b.wert.length - a.wert.length);
+  let t = text; const m = { ...map };
+  for (const { token, wert, name } of paare) {
+    const re = new RegExp(`(?<![\\p{L}\\p{N}])${esc(wert)}(?![\\p{L}\\p{N}])(?![^⟦⟧]*⟧)`, "giu");
+    if (re.test(t)) { t = t.replace(re, token); m[token] = m[token] || name; }
+  }
+  return { text: t, map: m };
+}
 
 export type MaskeErgebnis = { text: string; map: Record<string, string>; funde: Fund[]; leck: string | null; unsicher: string[]; schonPseudonymisiert: boolean };
 
@@ -103,12 +119,16 @@ export type MaskeErgebnis = { text: string; map: Record<string, string>; funde: 
 export function maskieren(p: Pseudonymisierer, text: string, profil: MaskeProfil, map: Record<string, string> = {}): MaskeErgebnis {
   if (istPseudonymisiert(text)) return { text, map, funde: [], leck: null, unsicher: [], schonPseudonymisiert: true };
   const nie = new Set([...(profil.nieVerdecken || []), ...profil.stellen].map((w) => w.trim().toLowerCase()).filter(Boolean));
+  // Teil einer „darf bleiben“-Wendung („Frau Sonnig“ → auch „Sonnig“ allein, wie das Namensmuster es findet).
+  const nieWoerter = new Set([...nie].filter((n) => n.includes(" ")).flatMap((n) => n.split(/\s+/)).filter((x) => x.length >= 3));
+  const fest = festeEinsetzen(text, profil.feste || [], map);
+  text = fest.text; map = fest.map;
   const muster = namenImText(text);
   const unsicher: string[] = [];
   const namen: Array<{ value: string; type: string }> = [];
   for (const t of muster) {
     const w = t.wert.trim();
-    if (w.length < 3 || /^⟦/.test(w) || nie.has(w.toLowerCase()) || w.split(/\s+/).some((x) => nie.has(x.toLowerCase()))) continue;
+    if (w.length < 3 || /^⟦/.test(w) || nie.has(w.toLowerCase()) || w.split(/\s+/).some((x) => nie.has(x.toLowerCase())) || nieWoerter.has(w.toLowerCase())) continue;
     if (t.grund === "firma" && STELLE_BLEIBT.test(w)) continue;
     if (t.grund === "zweiWoerter") unsicher.push(w);
     namen.push({ value: w, type: t.grund === "firma" ? "FIRMA" : "NAME" });
@@ -123,7 +143,8 @@ export function maskieren(p: Pseudonymisierer, text: string, profil: MaskeProfil
   const funde = maskeFunde(text);
   const werte = [...funde, ...namen].sort((a, b) => b.value.length - a.value.length);
   let vorher = text;
-  for (const [tok, wert] of Object.entries(map).sort((a, b) => b[1].length - a[1].length)) vorher = vorher.split(wert).join(tok);
+  // Werte früherer Texte gleich ersetzen – außer was inzwischen bleiben darf.
+  for (const [tok, wert] of Object.entries(map).sort((a, b) => b[1].length - a[1].length)) if (!nie.has(wert.trim().toLowerCase())) vorher = vorher.split(wert).join(tok);
   const r = p.pseudonymize(vorher, {
     values: werte, map,
     types: ["SCHLUESSEL", "MAIL", "IBAN", "RECHNUNG", "TELEFON"],
