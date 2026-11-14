@@ -2,6 +2,7 @@ package de.familyprojekt.familienakte;
 
 import de.familyprojekt.tresor.*;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.*;
 
@@ -104,6 +105,22 @@ public final class ProTresorEngineProbe {
                     fehler("TRESOR_UEBERGABE_PRUEFSUMME",()->e.aufruf(Map.of("aktion","uebergabeQuittieren","vaultId",id,"entryId",rueckId,"sha256","0".repeat(64))));
                     e.aufruf(Map.of("aktion","uebergabeQuittieren","vaultId",id,"entryId",rueckId,"sha256",vertrag.get("sha256")));
                 }
+                // Stufe C (Plan Pseudonymisieren): Profil schreiben und lesen, andere App sieht es, kein Klartext im Ordner.
+                String profilText = "{\"format\":\"familyprojekt-maske-profil\",\"probe\":\"Testfeld\"}";
+                @SuppressWarnings("unchecked") Map<String,Object> pw=(Map<String,Object>)e.aufruf(Map.of("aktion","profilSchreiben","vaultId",id,"text",profilText));
+                pruefe(id.equals(pw.get("vaultId")),"Profil im falschen Tresor");
+                @SuppressWarnings("unchecked") Map<String,Object> pl=(Map<String,Object>)e.aufruf(Map.of("aktion","profilLesen","vaultId",id));
+                @SuppressWarnings("unchecked") List<Map<String,Object>> items=(List<Map<String,Object>>)pl.get("items");
+                pruefe(items.size()==1 && profilText.equals(items.get(0).get("text")) && Fach.FAMILIENAKTE_APP.equals(items.get(0).get("schreiber")),"Profil nicht unverändert zurück");
+                try(TresorOrdner pb=TresorOrdner.oeffnen(new DateiAblage(tresor.toFile()),Fach.PRIVATE_BRAIN_APP,dialog.zugang)) {
+                    List<Profile.Stand> st=new Profile(pb).lesen();
+                    pruefe(st.size()==1 && profilText.equals(new String(st.get(0).daten(),StandardCharsets.UTF_8)),"Andere Pro-App liest das Profil nicht");
+                }
+                try (java.util.stream.Stream<Path> alle = Files.walk(tresor)) {
+                    for (Path f : alle.filter(Files::isRegularFile).toList()) pruefe(!new String(Files.readAllBytes(f), StandardCharsets.ISO_8859_1).contains("Testfeld"), "Profil im Klartext: " + f);
+                }
+                fehler("FA_TRESOR_FREMDE_KENNUNG", () -> e.aufruf(Map.of("aktion", "profilLesen", "vaultId", "fremd")));
+                System.out.println("Windows-Profile: schreiben, lesen, andere App liest, verschlüsselt, fremde Kennung grün");
                 fehler("FA_TRESOR_FREMDE_KENNUNG", () -> e.aufruf(Map.of("aktion", "lesen", "vaultId", "fremd", "entryId", eintrag)));
                 fehler("FA_TRESOR_AKTION_UNGUELTIG", () -> aufruf(e, "shell"));
                 Path falsch = root.resolve("falsch"); Files.createDirectories(falsch); dialog.ordner = falsch;

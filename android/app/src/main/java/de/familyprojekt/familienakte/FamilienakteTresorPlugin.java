@@ -320,6 +320,18 @@ public class FamilienakteTresorPlugin extends Plugin {
             return new JSObject().put("vaultId",p.kennung()).put("entryId",e.id).put("sha256",e.sha256).put("size",e.groesse).put("stand","weitergegeben");
         });
     }
+    // Stufe C (Plan Pseudonymisieren): Profile für die Maske im gemeinsamen Fach „profile“.
+    @PluginMethod public void profilLesen(PluginCall call) {
+        uebergabe(call,(p,c) -> new JSObject().put("items",new JSArray(Json.schreiben(p.profilLesen()))));
+    }
+    @PluginMethod public void profilSchreiben(PluginCall call) {
+        uebergabe(call,(p,c) -> {
+            String text=c.getString("text","");
+            if(text.length()>Profile.MAX_BYTES) throw new IOException("TRESOR_PROFIL_GROESSE");
+            Eintrag e=p.profilSchreiben(text);
+            return new JSObject().put("vaultId",p.kennung()).put("entryId",e.id).put("sha256",e.sha256).put("size",e.groesse);
+        });
+    }
     @PluginMethod public void sperren(PluginCall call) {
         worker.execute(() -> { if (adapter != null) adapter.close(); adapter = null; call.resolve(); });
     }

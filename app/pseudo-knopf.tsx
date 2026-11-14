@@ -3,11 +3,14 @@
 // Dateien einfügen (Text, PDF, Bild/Scan mit Texterkennung auf dem Gerät, E-Mail .eml samt Anhängen) oder Text einfügen →
 // pseudonymisierte Fassung mit Marke, Kopieren (Doppelblatt), als Textdatei speichern, Antwort einer KI zurückführen.
 // Die Maske (lib/maske.ts auf Modul 25) hat keinen Netzweg; die Zuordnung bleibt nur im Speicher dieser Seite.
-// Profile: Personen der Akte werden verdeckt, Organisationen dürfen bleiben. Gespeichert wird hier nichts (auch nicht in Basic).
+// Profile: Personen der Akte werden verdeckt, Organisationen dürfen bleiben. In der Pro-App kommen die gespeicherten Profile dazu
+// (Stufe C, app/maske-profile.tsx); „Korrigieren“ merkt sich dort ins Profil. Basic speichert nichts.
 import { useEffect, useMemo, useState } from "react";
 import { Copy, Download, Undo2, Upload, X } from "lucide-react";
 import { InfoPopover } from "./ui-controls";
 import { maskieren, zurueckfuehren, type MaskeProfil } from "../lib/maske";
+import { korrigieren, maskeAusProfilen, neueProfile, profilNummernImText, eintragName, type MaskeProfile, type Regel } from "../lib/maske-profil";
+import { profileSpeichern, useMaskeProfile } from "./maske-profil-speicher";
 import type { Pseudonymisierer } from "../lib/ki-auftrag";
 import { extractEmlAttachments } from "../lib/central-intake";
 import { dateiAusgeben } from "./dateiausgabe";
@@ -63,7 +66,9 @@ function markiert(text: string) {
   return text.split(/(⟦[^⟧]+⟧)/g).map((t, i) => /^⟦/.test(t) ? <mark key={i} className="pseudo-platzhalter">{t}</mark> : t);
 }
 
-export function PseudoFenster({ profil, basic }: { profil: MaskeProfil; basic: boolean }) {
+type AkteRecord = { id?: string; type?: string; data?: Record<string, unknown> };
+
+export function PseudoFenster({ profil, basic, records = [], onProfile }: { profil: MaskeProfil; basic: boolean; records?: AkteRecord[]; onProfile?: () => void }) {
   const [an, setzen] = usePseudo();
   const [eingabe, setEingabe] = useState("");
   const [stuecke, setStuecke] = useState<Stueck[]>([]);
@@ -74,20 +79,44 @@ export function PseudoFenster({ profil, basic }: { profil: MaskeProfil; basic: b
   const [zurueck, setZurueck] = useState<{ text: string; offen: string[] } | null>(null);
   const [meldung, setMeldung] = useState("");
   const [busy, setBusy] = useState(false);
+  const [korrWort, setKorrWort] = useState("");
+  const [korrZiel, setKorrZiel] = useState("");
+  const stand = useMaskeProfile(basic);
+  const merktSich = !basic && (stand.ort === "tresor" || stand.ort === "geraet");
   const p = pseudo();
   const voll = useMemo<MaskeProfil>(() => ({ ...profil, zusatz: zusatz.split(/\n+/).map((w) => w.trim()).filter((w) => w.length >= 2), nieVerdecken: bleibt.split(/\n+/).map((w) => w.trim()).filter(Boolean) }), [profil, zusatz, bleibt]);
   if (!an) return null;
 
-  const verarbeiten = (liste: Array<{ name: string; text: string }>) => {
+  const einzeln = async (text: string, profile: MaskeProfile | null, m: Record<string, string>) => {
+    const nummern = profile ? await profilNummernImText(profile, text) : [];
+    return maskieren(p!, text, maskeAusProfilen(profile, records, voll, nummern), m);
+  };
+  const verarbeiten = async (liste: Array<{ name: string; text: string }>) => {
     if (!p) return;
     let m = map; const neu: Stueck[] = [];
     for (const s of liste) {
-      const r = maskieren(p, s.text, voll, m); m = r.map;
+      const r = await einzeln(s.text, stand.eigene, m); m = r.map;
       neu.push({ name: s.name, text: s.text, ergebnis: r.text, funde: r.funde.length, unsicher: r.unsicher, schon: r.schonPseudonymisiert, leck: r.leck });
     }
     setMap(m); setStuecke((alt) => [...neu, ...alt]);
     const schon = neu.filter((s) => s.schon).length;
     setMeldung(`${neu.length} pseudonymisiert${schon ? ` · ${schon} war schon pseudonymisiert und blieb unverändert` : ""}. Nichts hat das Gerät verlassen.`);
+  };
+  /** Korrigieren in der Pro-App: ins Profil merken und die gezeigten Fassungen gleich neu rechnen. */
+  const merken = async (wort: string, wie: Regel, ziel?: string) => {
+    const w = wort.trim(); if (w.length < 2 || !p) return;
+    try {
+      const neu = korrigieren(stand.eigene || await neueProfile(), w, wie, ziel || undefined);
+      await profileSpeichern(neu);
+      let m = map; const neuStuecke: Stueck[] = [];
+      for (const st of stuecke) {
+        if (st.schon) { neuStuecke.push(st); continue; }
+        const r = await einzeln(st.text, neu, m); m = r.map;
+        neuStuecke.push({ ...st, ergebnis: r.text, funde: r.funde.length, unsicher: r.unsicher, leck: r.leck });
+      }
+      setMap(m); setStuecke(neuStuecke); setKorrWort("");
+      setMeldung(`„${w}“ ${wie === "verdecken" ? "wird immer verdeckt" : "darf bleiben"} – ins Profil gemerkt und neu gerechnet.`);
+    } catch (e) { setMeldung(e instanceof Error ? e.message : String(e)); }
   };
   const dateien = async (files: FileList | null) => {
     if (!files?.length || !p) return;
@@ -106,7 +135,7 @@ export function PseudoFenster({ profil, basic }: { profil: MaskeProfil; basic: b
           liste.push({ name: f.name, text: t.trim() || "(kein lesbarer Text)" });
         }
       }
-      verarbeiten(liste);
+      await verarbeiten(liste);
     } catch (e) { setMeldung(`Lesen ging nicht: ${e instanceof Error ? e.message : String(e)}`); }
     finally { setBusy(false); }
   };
@@ -125,24 +154,39 @@ export function PseudoFenster({ profil, basic }: { profil: MaskeProfil; basic: b
   return <section className="card pseudo-fenster" data-pseudo-fenster>
     <div className="card-heading"><div><span className="ui-heading-help"><h2>Pseudonymisieren</h2><InfoPopover label="Pseudonymisieren erklären" text="Namen, Anschriften, Geburtsdaten, Steuer-ID, Versicherten-, Renten-, Ausweis-, Kunden- und Kontonummern, Telefon, Mail und Diagnose-Codes werden zu Platzhaltern wie ⟦NAME-1⟧. Daten, Fristen, Beträge und Firmen bleiben lesbar, damit eine KI sortieren und antworten kann. Personen aus deiner Akte werden immer verdeckt, Organisationen aus deiner Akte bleiben stehen. Jede Fassung beginnt mit ⟦PSEUDONYMISIERT v1⟧ und wird nie ein zweites Mal verarbeitet. Die Zuordnung bleibt nur in dieser Seite; „Zurückführen“ setzt die echten Angaben in die Antwort der KI ein. Pseudonymisieren ist kein Anonymisieren: mit der Zuordnung bleibt es persönlich."/></span></div>
       <button type="button" className="icon-button" onClick={() => setzen(false)} aria-label="Pseudo ausschalten" title="Pseudo ausschalten"><X size={18}/></button></div>
-    <p className="pseudo-hinweis">🔒 Läuft nur auf diesem Gerät, ohne Netz. {basic ? "Basic speichert keine Profile – für eigene Nummern und Gesundheitsdaten die Pro-App nehmen." : "Personen und Stellen kommen aus deiner Akte."}</p>
+    <p className="pseudo-hinweis">🔒 Läuft nur auf diesem Gerät, ohne Netz. {basic ? "Basic speichert keine Profile – für eigene Nummern und Gesundheitsdaten die Pro-App nehmen." : stand.ort === "gesperrt" ? "Pro-Tresor gesperrt: es gelten nur Muster und die Akte, bis er entsperrt ist." : `Personen und Stellen kommen aus deiner Akte${stand.eigene?.eintraege.length ? ` und ${stand.eigene.eintraege.length} Profilen` : ""}.`}{!basic && onProfile && <> <button type="button" className="link-button" onClick={onProfile} data-pseudo-profile>Profile ›</button></>}</p>
     {!p && <p className="form-error">Der Baustein zum Verdecken ist nicht geladen. Bitte die App neu laden.</p>}
     <div className="button-row">
       <label className="button primary pseudo-datei"><Upload size={16}/> Dateien einfügen<input type="file" multiple hidden disabled={busy || !p} accept=".txt,.md,.pdf,.eml,.csv,.html,image/*,message/rfc822,text/*,application/pdf" onChange={(e) => { void dateien(e.target.files); e.target.value = ""; }} data-pseudo-datei/></label>
     </div>
     <label><span>Oder Text einfügen</span><textarea rows={4} value={eingabe} onChange={(e) => setEingabe(e.target.value)} placeholder="Brief, Mail oder Notiz hier einfügen …" data-pseudo-text/></label>
-    <div className="button-row"><button type="button" className="button secondary" disabled={!eingabe.trim() || !p} onClick={() => { verarbeiten([{ name: "Eingefügter Text", text: eingabe }]); setEingabe(""); }} data-pseudo-los>Pseudonymisieren</button></div>
-    <details className="pseudo-korrektur"><summary>Korrigieren: zusätzlich verdecken / darf bleiben</summary>
+    <div className="button-row"><button type="button" className="button secondary" disabled={!eingabe.trim() || !p} onClick={() => { void verarbeiten([{ name: "Eingefügter Text", text: eingabe }]); setEingabe(""); }} data-pseudo-los>Pseudonymisieren</button></div>
+    {merktSich ? <details className="pseudo-korrektur" data-pseudo-korrektur="profil"><summary>Korrigieren: verdecken / darf bleiben – ins Profil merken</summary>
+      <div className="form-grid">
+        <label><span>Wort oder Name</span><input value={korrWort} onChange={(e) => setKorrWort(e.target.value)} data-pseudo-korr-wort/></label>
+        <label><span>Merken als</span><select value={korrZiel} onChange={(e) => setKorrZiel(e.target.value)} data-pseudo-korr-ziel>
+          <option value="">Neuer Kontakt</option>
+          {(stand.eigene?.eintraege || []).filter((e) => e.art !== "stelle").map((e) => <option key={e.id} value={e.id}>Schreibweise von {eintragName(e, records)}</option>)}
+        </select></label>
+      </div>
+      <div className="button-row">
+        <button type="button" className="button secondary" disabled={korrWort.trim().length < 2} onClick={() => void merken(korrWort, "verdecken", korrZiel)} data-pseudo-korr-verdecken>Immer verdecken</button>
+        <button type="button" className="button secondary" disabled={korrWort.trim().length < 2} onClick={() => void merken(korrWort, "bleibt")} data-pseudo-korr-bleibt>Darf bleiben</button>
+      </div>
+      <small>Gilt ab sofort für alle Texte und wird in deinen Profilen gemerkt.</small>
+    </details> : <details className="pseudo-korrektur"><summary>Korrigieren: zusätzlich verdecken / darf bleiben</summary>
       <div className="form-grid">
         <label><span>Immer verdecken (eins pro Zeile)</span><textarea rows={2} value={zusatz} onChange={(e) => setZusatz(e.target.value)} data-pseudo-zusatz/></label>
         <label><span>Darf bleiben (eins pro Zeile)</span><textarea rows={2} value={bleibt} onChange={(e) => setBleibt(e.target.value)} data-pseudo-bleibt/></label>
       </div>
       <small>Gilt für die nächsten Texte, nur bis zum Schließen der App.</small>
-    </details>
+    </details>}
     {meldung && <p className="sync-message" role="status" data-pseudo-meldung>{busy ? "⏳ " : ""}{meldung}</p>}
     {stuecke.map((s, i) => <div className="pseudo-stueck" key={`${i}-${s.name}`} data-pseudo-stueck>
       <div className="pseudo-stueck-kopf"><strong>{s.name}</strong><span className={`badge ${s.leck ? "danger" : s.schon ? "" : "success"}`}>{s.leck ? "⚠ echte Angabe übrig" : s.schon ? "schon pseudonymisiert" : `${s.funde} verdeckt`}</span></div>
-      {s.unsicher.length > 0 && <p className="pseudo-unsicher">Bitte prüfen (verdeckt, aber nicht sicher ein Name): {s.unsicher.join(" · ")} – falls das bleiben darf, unter „Korrigieren“ eintragen.</p>}
+      {s.unsicher.length > 0 && (merktSich
+        ? <div className="pseudo-unsicher">Bitte prüfen (verdeckt, aber nicht sicher ein Name): {s.unsicher.map((w) => <span key={w} className="pseudo-unsicher-wort"><strong>{w}</strong> <button type="button" className="link-button" onClick={() => void merken(w, "verdecken")} data-pseudo-unsicher-verdecken={w}>immer verdecken</button> · <button type="button" className="link-button" onClick={() => void merken(w, "bleibt")} data-pseudo-unsicher-bleibt={w}>darf bleiben</button></span>)}</div>
+        : <p className="pseudo-unsicher">Bitte prüfen (verdeckt, aber nicht sicher ein Name): {s.unsicher.join(" · ")} – falls das bleiben darf, unter „Korrigieren“ eintragen.</p>)}
       <pre className="platzhalter-text" data-pseudo-ergebnis>{markiert(s.ergebnis)}</pre>
       <div className="button-row">
         <button type="button" className="button primary" onClick={() => void kopieren(s)} data-pseudo-kopieren><Copy size={16}/> Kopieren</button>

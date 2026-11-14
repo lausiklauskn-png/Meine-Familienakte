@@ -51,6 +51,8 @@ a{color:var(--akzent)}p,li{overflow-wrap:anywhere}small{color:var(--leise)}
 <li><strong>Demo und Bsp.-Akten:</strong> erfundene Daten, nur auf dem Gerät.</li>
 </ul>
 
+<p><strong>Pseudonymisieren und Profile für die Maske.</strong> Der Knopf „Pseudo“ ersetzt Namen, Anschriften und Nummern auf dem Gerät durch Platzhalter; dabei wird nichts übertragen. In der Pro-App kann der Nutzer Profile anlegen (Personen, Schreibweisen, Nummern, „immer verdecken“/„darf bleiben“). Nummern werden dort nicht gespeichert, nur ein Fingerabdruck (HMAC-SHA-256 mit einem zufälligen Schlüssel). Die Profile liegen verschlüsselt im gemeinsamen Pro-Tresor (andere Pro-Apps des Nutzers können sie lesen) oder, ohne Tresor, im App-Speicher neben der Akte. Basic speichert keine Profile. Pseudonymisieren ist kein Anonymisieren: mit der Zuordnung auf dem Gerät bleibt der Personenbezug bestehen.</p>
+
 <h2>4. Kalender (freiwillig)</h2>
 <p>Nur wenn der Nutzer unter „Fristen und Aufgaben → Kalender verbinden“ einen Kalender wählt und eine Frist ausdrücklich zum Eintragen anhakt, wird sie als Termin in diesen Kalender geschrieben:</p>
 <ul>

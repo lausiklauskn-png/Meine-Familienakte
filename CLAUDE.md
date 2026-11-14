@@ -5,7 +5,15 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 `docs/briefe-archiv/` (Klaus 2026-11-04: archivieren statt löschen); die Veröffentlichungsnachweise in
 `docs/VEROEFFENTLICHUNG-<fassung>.json`.
 
-## Aktueller Stand (14.11.2026, nach 2.28.68)
+## Aktueller Stand (14.11.2026, nach 2.28.68 + Stufe C)
+
+- **Stufe C gebaut, nicht ausgegeben (14.11., Brief `BRIEF_ABSCHLUSS_2026-11-14_MASKE-PROFILE-STUFE-C.md`): Profile für die Maske.**
+  Fach `profile` im Tresor-Paket (Quelle Workflow PDF Pro #77, `Profile.java`, Ordner „Maske-Profile“, gemeinsam: je App eine Datei, alle
+  lesen, nichts gelöscht), nativ `profilLesen`/`profilSchreiben`. Kern `lib/maske-profil.ts` (verknüpft mit der Akte, Schreibweisen,
+  Nummern nur HMAC, feste Platzhalter ⟦ICH-1⟧/⟦FAMILIE-n⟧/⟦KONTAKT-n⟧/⟦STELLE-n⟧, Übernehmen, Korrigieren), Speicher
+  `app/maske-profil-speicher.ts` (Tresor offen → Fach; gesperrt → nichts; Pro ohne Tresor → App-Speicher; Basic → nichts), Profilseite
+  `app/maske-profile.tsx` im Sicherheitscenter, Pseudo-Fenster merkt Korrekturen ins Profil. Vorschau `docs/vorschau/maske-profile-stufe-c.html`.
+  Proben `run-maske-profil-tests`, UI `maske-profile`. Nicht am Gerät.
 
 - **Fassung 2.28.68 ausgegeben (14.11.; #181; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.68.json`), nicht erneut ausgeben.
   Knopf „Pseudo“ im Kopf (Klaus 14.11.: grün „an“, rot „aus“; am Handy liegt „Neu“ dafür hinter „‹“):** an = Fenster
@@ -15,8 +23,8 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Akte bleiben; kein Netzweg (Probe `run-maske-tests`). Basic speichert keine Profile. **Plan** `docs/PLAN_PSEUDONYMISIEREN.md` (Marktanalyse,
   Stufen B–H, Entscheidungen P1–P15 mit Klaus' Freibrief 14.11.), Vorschau `docs/vorschau/pseudonymisieren-plan.html`. **Bauplan Modul 25
   Gen. 3** liegt in Sage (`docs/components/25_pseudonym-gen3-bauplan.md`, Sage #1165) – Ausgangslage für alle weiteren Verbesserungen;
-  `lib/maske.ts` wird durch Gen. 3 mit Pin ersetzt, sobald Sage sie gebaut hat. Brief `BRIEF_ABSCHLUSS_2026-11-14_PSEUDO-2.28.68.md`.
-  Offen: Profile im Pro-Tresor (Fach `profile`), Austauschordner, Bezugsdokumente, „Alles pseudonymisieren“, Bilder schwärzen, danach Pro-Apps.
+  `lib/maske.ts` wird durch Gen. 3 mit Pin ersetzt, sobald Sage sie gebaut hat. Brief `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-14_PSEUDO-2.28.68.md`.
+  Offen: Austauschordner, Bezugsdokumente, „Alles pseudonymisieren“, Bilder schwärzen, danach Pro-Apps.
 
 - **Fassung 2.28.67 ausgegeben (13.11.; #176; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.67.json`), nicht erneut ausgeben.**
   Absender kommt im Eingang aus dem Sortier-Kern (`mitKernAbsender`, nur bei gelesenem Text), Titel weiter nur aus dem Briefkopf-Baustein
@@ -204,7 +212,8 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
   - Nächste Sitzung (Repo Datei-Organizer): `docs/BRIEF_SITZUNG_2026-11-14_NEEDS-RUECKWAERTSTEST.md` (Rückwärtstest Workflow Needs, nichts ändern)
-  - `BRIEF_ABSCHLUSS_2026-11-14_PSEUDO-2.28.68.md` (letzter Stand: 2.28.68, Startauftrag)
+  - `BRIEF_ABSCHLUSS_2026-11-14_MASKE-PROFILE-STUFE-C.md` (letzter Stand: Stufe C, Startauftrag Stufe D-Rest/P10)
+  - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-14_PSEUDO-2.28.68.md` (2.28.68)
   - `BRIEF_SITZUNG_2026-11-11_CLOUD-ORDNER-2.28.65.md` (nächster Bau: Sicherung an einem zweiten Ort, Nur sichern/Synchron halten, Cloud-Ordner hereinholen; Klaus: keine Vorschau nötig)
   - `BRIEF_ABSCHLUSS_2026-11-12_PLAN-BILDER.md` (Plan Bilder, Fragen F1–F8)
   - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-11_GESAMMELT-2.28.64.md` (2.28.57 bis 2.28.64)
@@ -213,6 +222,8 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Offen
 
+- **Stufe C am Gerät ungeprüft:** Profilseite mit echtem Tresor (Android/Windows), Korrigieren ins Profil, Übernehmen aus einer anderen Pro-App
+  (dort gibt es noch keine Profile). Workflow PDF Pro #77 (Fach `profile`) danach auch in BookLedgerPro und Private Brain Pro nachziehen.
 - **2.28.68 am Gerät ungeprüft:** Pseudo-Knopf an echten Unterlagen (OCR, Mail mit Anhängen), Kopf am Handy mit „Neu“ hinter „‹“.
 - **2.28.67 am Gerät ungeprüft:** Absender und Titel an echten Unterlagen.
 - **2.28.66 am Gerät ungeprüft:** Vorschlag für Bereich und Frist an echten Unterlagen; Geschenkbox und `lib/app-stand.ts` nicht nachgezogen.

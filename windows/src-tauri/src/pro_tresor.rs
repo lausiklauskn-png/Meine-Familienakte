@@ -22,6 +22,8 @@ const MAX_ZEILE: u64 = 30 * 1024 * 1024;
 fn aktion_erlaubt(request: &Value) -> bool {
     matches!(request.get("aktion").and_then(Value::as_str),
         Some("zustand" | "verbinden" | "entsperren" | "sperren" | "speichern" | "lesen" | "uebergabeSenden" | "uebergabeEingang" | "uebergabeLesen" | "uebergabeQuittieren" | "uebergabeStand" | "dateiExportieren"
+            // Stufe C (Plan Pseudonymisieren): Profile für die Maske im gemeinsamen Fach „profile“
+            | "profilLesen" | "profilSchreiben"
             // P4/P5: frei gewählter Sicherungsordner und stückweise Ausgabe bis 100 MB (FamilyFolders.java)
             | "ordnerWaehlen" | "ordnerListe" | "ordnerAnlegen" | "dateiInfo" | "dateiLesen" | "eigeneDateiEntfernen" | "sicherungEntfernen"
             // Stufe C (Plan 08.11.): gemeinsame Festplatte – Ort merken, wieder öffnen, Laufwerke nach der Kennung absuchen
@@ -103,7 +105,7 @@ mod tests {
     use super::*;
     use serde_json::json;
     #[test] fn nur_tresoraktionen() {
-        for aktion in ["zustand", "verbinden", "entsperren", "sperren", "speichern", "lesen", "uebergabeSenden", "uebergabeEingang", "uebergabeLesen", "uebergabeQuittieren", "uebergabeStand"] {
+        for aktion in ["zustand", "verbinden", "entsperren", "sperren", "speichern", "lesen", "uebergabeSenden", "uebergabeEingang", "uebergabeLesen", "uebergabeQuittieren", "uebergabeStand", "profilLesen", "profilSchreiben"] {
             assert!(aktion_erlaubt(&json!({"aktion": aktion})));
         }
         // P5: Sicherungsordner-Aktionen; ein allgemeines Löschen gibt es weiterhin nicht.

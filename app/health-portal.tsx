@@ -1,5 +1,7 @@
 import { SchriftKnopf } from "./schrift-knopf";
 import { PseudoFenster, PseudoKnopf } from "./pseudo-knopf";
+import { MaskeProfileKarte } from "./maske-profile";
+import { profileLaden } from "./maske-profil-speicher";
 import { profilAusAkte } from "../lib/maske";
 import { DateiOrt, akteOrtSetzen } from "./datei-ort";
 import { demoActive, switchDemo } from "../lib/demo-workspace.ts";
@@ -1632,7 +1634,7 @@ function HealthPortalContent() {
         </nav>
       </header>
       <main className="site-main">
-        <PseudoFenster profil={maskeProfil} basic={APP_VARIANTE === "Basic"}/>
+        <PseudoFenster profil={maskeProfil} basic={APP_VARIANTE === "Basic"} records={familyRecords as unknown as Array<{ id?: string; type?: string; data?: Record<string, unknown> }>} onProfile={() => go("security", undefined, { ziel: "[data-maske-profile]" })}/>
         <AppGlocke records={familyRecords} relations={familyRelations} onOeffnen={(z) => go("reminders", undefined, kalenderZiel(String(new Date(z.beginn).toLocaleDateString("sv-SE")), z.recordId))}
           onErledigt={async (z) => { if (!vaultHandle) return; try { await updateLocalScheduleStatus(vaultHandle, z.recordId, "erledigt"); await refreshLocal(vaultHandle); setNotice({ kind: "success", text: `Erledigt: ${z.titel}` }); } catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Der Status konnte nicht geändert werden." }); } }}/>
         <KalenderAnmeldeHinweis vaultHandle={vaultHandle} records={familyRecords} relations={familyRelations} onRefresh={async () => { if (vaultHandle) await refreshLocal(vaultHandle); }} onNotice={setNotice}/>
@@ -1739,7 +1741,7 @@ function HealthPortalContent() {
         {!query && active === "workflowpdf" && !demoActive() && <Suspense fallback={null}><WorkflowPdfSeite key={wfpdfStart} scan={wfpdfScan} oeffnen={wfpdfOeffnen} bindung={wfpdfSitzung?.quelle} onZurueck={() => { const sitzung = wfpdfSitzung; setWfpdfSitzung(null); setWfpdfOeffnen(null); if (sitzung) go(sitzung.zurueck, sitzung.quelle.dokumentId); }} onAblegen={ausWorkflowPdf} onGeoeffnet={() => { setWfpdfOeffnen(null); setWfpdfScan(false); }} kopf={<PageTitle icon={<FileText/>} title="Workflow PDF" extra={scanRueckweg && !wfpdfSitzung ? <button type="button" className="button secondary compact-button" onClick={() => go(scanRueckweg)} data-scan-zurueck><ArrowLeft size={15}/> Zurück: {scanRueckweg === "overview" ? "Startseite" : sectionLabels[scanRueckweg] || "Eingangszentrale"}</button> : undefined} text={scanRueckweg && !wfpdfSitzung ? "Dokument fotografieren: Seiten aufnehmen und „PDF erstellen“ tippen – danach öffnet sich die Prüfung für die Akte. Zurück führt ohne Scan an die Stelle, von der du kamst." : wfpdfSitzung ? "PDF bearbeiten und an dieselbe Stelle in der Akte zurückspeichern. Keine dauerhafte Zweitablage im PDF-Raum." : "Das ganze Werkzeug von Workflow PDF in der Familienakte: scannen, zuschneiden, Felder erkennen und setzen, ausfüllen, Prüfbericht, PDF ausgeben. Eigene Bibliothek, getrennt von der Workflow-PDF-App; nichts geht ins Netz, bis du es selbst wählst."}/>}/></Suspense>}
         {!query && active === "netz" && <Suspense fallback={null}><NetzSeite vaultHandle={vaultHandle} kopf={<PageTitle icon={<Network/>} title="Netz (Mycel)" text="Zeigt dieses Gerät auf Wunsch mit einer Visitenkarte im offenen Netz der SBKIM-Apps. Es gleicht keine Daten zwischen deinen Geräten ab. Beim Öffnen der Akte geht nichts ins Netz."/>}/></Suspense>}
         {!query && active === "security" && <SecurityCenter onDokumente={() => go("documents")}
-          aktenHandle={vaultHandle} onMeaningOpen={go} onProChange={refreshProDestination} proDestination={proDestination} browserStorage={browserStorage} folderSelectionSupported={folderPickerSupported()}
+          aktenHandle={vaultHandle} onMeaningOpen={go} onProChange={() => { refreshProDestination(); void profileLaden(APP_VARIANTE === "Basic"); }} proDestination={proDestination} browserStorage={browserStorage} folderSelectionSupported={folderPickerSupported()}
           oneDriveConnected={oneDriveReachable} oneDriveName={oneDriveName} oneDriveSummary={oneDriveSummary}
           localConnected={localVaultReachable} localVaultName={localVaultName} localVaultSummary={localVaultSummary}
           supported={vaultSupported()} onlineCount={documents.length} localCount={localDocuments.length} busy={vaultBusy || busy}
@@ -1749,6 +1751,7 @@ function HealthPortalContent() {
           onCompare={startVaultInventoryComparison} onCheckSync={checkBackupSync} onRunSync={runBackupSync} onExport={() => { setExportOpen(true); reportActivity({ kind: "info", text: "Exportvorbereitung geöffnet. Noch keine Datei geschrieben; Umfang und Zielordner bitte prüfen." }); }} onFullBackup={runFullBackup} onRestoreTest={runRestoreTest} onEinlesen={runEinlesenProbe} letzteSicherung={letzteSicherung} hatDaten={localDocuments.length + familyRecords.length > 0}
           zweiterOrtKarte={<ZweiterOrtKarte akte={vaultHandle} appVersion={APP_FASSUNG} busy={vaultBusy} onBusy={setVaultBusy} onNotice={setNotice} onDrucken={seiteDrucken} ohne={bspOhne}/>}
           cloudOrdnerKarte={<CloudOrdnerKarte aktiv={Boolean(vaultHandle)} dokumente={localDocuments} hereinholen={cloudHereinholen} busy={vaultBusy} onNotice={setNotice} onEingang={() => go("inbox")}/>}
+          maskeProfileKarte={<MaskeProfileKarte records={familyRecords as unknown as Array<{ id?: string; type?: string; data?: Record<string, unknown> }>} basic={APP_VARIANTE === "Basic"}/>}
           laufwerkKarte={<LaufwerkKarte aktiv={vaultHandle} appVersion={APP_FASSUNG} busy={vaultBusy} onBusy={setVaultBusy} onNotice={setNotice} onRefresh={() => refreshLocal()} onDrucken={seiteDrucken}/>}
           ordnerWahl={sicherungsOrdnerWaehlbar()} onEingang={() => go("inbox")}
         />}
@@ -4076,13 +4079,13 @@ function Inbox({ documents, localDocuments, loading, onUpload, onOpenDocument, o
   </>;
 }
 
-function SecurityCenter({ aktenHandle, onDokumente, onMeaningOpen, onProChange, proDestination = null, browserStorage = false, folderSelectionSupported = true, oneDriveConnected, oneDriveName, oneDriveSummary, localConnected, localVaultName, localVaultSummary, supported, onlineCount, localCount, busy, syncPreview, syncResult, onConnectOneDrive, onConnectLocal, onLockOneDrive, onLockLocal, onMigrate, onHelp, onCompare, onCheckSync, onRunSync, onExport, onFullBackup, onRestoreTest, onEinlesen, ordnerWahl = true, onEingang, letzteSicherung = null, hatDaten = false, laufwerkKarte = null, zweiterOrtKarte = null, cloudOrdnerKarte = null }: {
+function SecurityCenter({ aktenHandle, onDokumente, onMeaningOpen, onProChange, proDestination = null, browserStorage = false, folderSelectionSupported = true, oneDriveConnected, oneDriveName, oneDriveSummary, localConnected, localVaultName, localVaultSummary, supported, onlineCount, localCount, busy, syncPreview, syncResult, onConnectOneDrive, onConnectLocal, onLockOneDrive, onLockLocal, onMigrate, onHelp, onCompare, onCheckSync, onRunSync, onExport, onFullBackup, onRestoreTest, onEinlesen, ordnerWahl = true, onEingang, letzteSicherung = null, hatDaten = false, laufwerkKarte = null, zweiterOrtKarte = null, cloudOrdnerKarte = null, maskeProfileKarte = null }: {
   aktenHandle: FileSystemDirectoryHandle | null; onDokumente?: () => void;
   onMeaningOpen: (section: SectionId, targetId?: string) => void;
   onProChange?: () => void; proDestination?: ProDestination | null; browserStorage?: boolean; folderSelectionSupported?: boolean;
   oneDriveConnected: boolean; oneDriveName: string; oneDriveSummary: VaultSummary | null; localConnected: boolean; localVaultName: string; localVaultSummary: VaultSummary | null; supported: boolean; onlineCount: number; localCount: number; busy: boolean;
   syncPreview: VaultSyncPreview | null; syncResult: VaultSyncResult | null;
-  onConnectOneDrive: () => void; onConnectLocal: () => void; onLockOneDrive: () => void; onLockLocal: () => void; onMigrate: () => void; onHelp: () => void; onCompare: () => void; onCheckSync: () => void; onRunSync: () => void; onExport: () => void; onFullBackup: () => void; onRestoreTest: () => void; onEinlesen: () => void; letzteSicherung?: string | null; hatDaten?: boolean; laufwerkKarte?: ReactNode; zweiterOrtKarte?: ReactNode; cloudOrdnerKarte?: ReactNode;
+  onConnectOneDrive: () => void; onConnectLocal: () => void; onLockOneDrive: () => void; onLockLocal: () => void; onMigrate: () => void; onHelp: () => void; onCompare: () => void; onCheckSync: () => void; onRunSync: () => void; onExport: () => void; onFullBackup: () => void; onRestoreTest: () => void; onEinlesen: () => void; letzteSicherung?: string | null; hatDaten?: boolean; laufwerkKarte?: ReactNode; zweiterOrtKarte?: ReactNode; cloudOrdnerKarte?: ReactNode; maskeProfileKarte?: ReactNode;
   /** Ordner wählbar (native App oder Chrome/Edge am PC); sonst sind Sichern, Testen, Einlesen und Export hier nicht möglich (U2). */
   ordnerWahl?: boolean; onEingang?: () => void;
 }) {
@@ -4098,6 +4101,7 @@ function SecurityCenter({ aktenHandle, onDokumente, onMeaningOpen, onProChange, 
     <ProTresorAnschluss aktenHandle={aktenHandle} onChange={onProChange} onDokumente={onDokumente}/>
     <PrivateMeaningPanel handle={aktenHandle} onOpen={onMeaningOpen}/>
     <ProGeraetetransportPanel handle={aktenHandle} onEingang={onEingang}/>
+    {maskeProfileKarte}
     {!demoActive() && browserStorage && !proDestination && <section className="card browser-storage-notice"><span className="ui-heading-help"><h2>Lokaler Browserspeicher</h2><InfoPopover label="Lokaler Browserspeicher erklären" text="Deine bisherigen Unterlagen bleiben auf diesem Gerät gespeichert. Ein eigener Datentresor für Originalunterlagen ist noch nicht gewählt. Wähle unten einen eigenen Ordner oder oben in der Pro-App den gemeinsamen Pro-Tresor. Vorhandene Dateien werden nicht automatisch verschoben."/></span><span className="badge warning">Noch kein eigener Datentresor</span></section>}
     {demoActive() ? <section className="card demo-storage-card"><h2>Demo-Ablage</h2><span className={`badge ${localConnected ? "success" : "warning"}`}>{localConnected ? "Demo-Ablage bereit" : "Demo-Ablage wird vorbereitet"}</span><p>Die Beispieldateien liegen im getrennten lokalen Demobestand auf diesem Gerät. Dafür musst du keinen eigenen Datentresor anlegen oder verbinden.</p><p>Deinen eigenen Datentresor wählst du nach <strong>Demo verlassen</strong>. Seine Verbindung und Dateien bleiben von der Demo getrennt.</p></section> : <>
     <section className="security-grid security-grid-three">

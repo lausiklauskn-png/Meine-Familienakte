@@ -4,6 +4,7 @@ import de.familyprojekt.tresor.Ablage;
 import de.familyprojekt.tresor.Eintrag;
 import de.familyprojekt.tresor.Fach;
 import de.familyprojekt.tresor.Hauptordner;
+import de.familyprojekt.tresor.Profile;
 import de.familyprojekt.tresor.TresorOrdner;
 import de.familyprojekt.tresor.Umzug;
 import de.familyprojekt.tresor.Uebergaben;
@@ -241,6 +242,28 @@ public final class ProTresorAdapter implements Closeable {
     }
     public synchronized boolean uebergabeStand(String ziel,String eintragId) throws IOException {
         bereit(); return new Uebergaben(tresor).bestaetigt(ziel,eintragId);
+    }
+
+    /** Profile für die Maske (Plan Pseudonymisieren, Stufe C): eigene Profil-Datei als neue Fassung im gemeinsamen Fach „profile“.
+     * Inhalt ist das JSON aus lib/maske-profil.ts (Nummern nur als Fingerabdruck); der Kanon verschlüsselt wie jedes Fach. */
+    public synchronized Eintrag profilSchreiben(String text) throws IOException {
+        bereit();
+        if (text == null || text.isEmpty()) throw new IOException("TRESOR_PROFIL_GROESSE");
+        return new Profile(tresor).schreiben(text.getBytes(java.nio.charset.StandardCharsets.UTF_8), System.currentTimeMillis());
+    }
+
+    /** Neueste Profil-Datei je Pro-App (eigene zuerst): schreiber, datum, sha256 und text – oder fehler. */
+    public synchronized List<Map<String, Object>> profilLesen() throws IOException {
+        bereit();
+        List<Map<String, Object>> aus = new ArrayList<>();
+        for (Profile.Stand s : new Profile(tresor).lesen()) {
+            Map<String, Object> m = new java.util.LinkedHashMap<>();
+            m.put("schreiber", s.schreiber); m.put("datum", s.datum); m.put("sha256", s.sha256);
+            byte[] b = s.daten();
+            if (b != null) m.put("text", new String(b, java.nio.charset.StandardCharsets.UTF_8)); else m.put("fehler", s.fehler);
+            aus.add(m);
+        }
+        return aus;
     }
 
     private static byte[] begrenztLesen(InputStream in) throws IOException {

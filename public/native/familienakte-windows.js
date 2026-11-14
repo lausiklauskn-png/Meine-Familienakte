@@ -24,7 +24,7 @@
   };
   // Derselbe freiwillige Pro-Anschluss wie unter Android. Dialoge und Schlüssel bleiben nativ.
   window.Capacitor.Plugins.FamilienakteTresor = Object.fromEntries(
-    ['zustand', 'verbinden', 'entsperren', 'sperren', 'speichern', 'lesen', 'uebergabeSenden', 'uebergabeEingang', 'uebergabeLesen', 'uebergabeQuittieren', 'uebergabeStand'].map((aktion) =>
+    ['zustand', 'verbinden', 'entsperren', 'sperren', 'speichern', 'lesen', 'uebergabeSenden', 'uebergabeEingang', 'uebergabeLesen', 'uebergabeQuittieren', 'uebergabeStand', 'profilLesen', 'profilSchreiben'].map((aktion) =>
       [aktion, (daten = {}) => invoke('fa_pro_tresor', { anfrage: { ...daten, aktion } })])
   );
   window.Capacitor.Plugins.ProDevice = { measure: () => invoke('fa_modelle', { anfrage: { method: 'measure' } }) };

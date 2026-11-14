@@ -7,7 +7,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const quelle = path.resolve(process.argv[2] || "../Workflow-PDF-Pro");
-const dateien = ["Ablage", "DateiAblage", "Eintrag", "Ersatzschluessel", "Fach", "Hauptordner", "Json", "SafAblage", "TresorOrdner", "Uebergaben", "Umzug", "UnterAblage", "VaultCrypto"];
+const dateien = ["Ablage", "DateiAblage", "Eintrag", "Ersatzschluessel", "Fach", "Hauptordner", "Json", "SafAblage", "Profile", "TresorOrdner", "Uebergaben", "Umzug", "UnterAblage", "VaultCrypto"];
 const basis = "android/app/src/main/java/de/familyprojekt/tresor";
 const proben = ["TresorOrdnerTest", "HauptordnerTest"].map((n) => `android/app/src/test/java/de/familyprojekt/tresor/${n}.java`);
 const commit = execFileSync("git", ["-C", quelle, "rev-parse", "HEAD"], { encoding: "utf8" }).trim();
