@@ -5,24 +5,24 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 `docs/briefe-archiv/` (Klaus 2026-11-04: archivieren statt löschen); die Veröffentlichungsnachweise in
 `docs/VEROEFFENTLICHUNG-<fassung>.json`.
 
-## Aktueller Stand (14.11.2026 abends, nach 2.28.68 + Stufe C + Pseudo-Restarbeiten)
+## Aktueller Stand (14.11.2026 abends, nach 2.28.69)
 
-- **Pseudo-Restarbeiten gebaut, nicht ausgegeben (14.11. abends, Brief `BRIEF_ABSCHLUSS_2026-11-14_PSEUDO-RESTARBEITEN.md`, gesammelt
-  für 2.28.69 nur auf Klaus' Wort):** Zuordnung je Auftrag verschlüsselt (`lib/pseudo-auftraege.ts`, `app/pseudo-auftrag-speicher.ts`;
+- **Fassung 2.28.69 ausgegeben (14.11. abends; #186; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.69.json`;
+  Brief `BRIEF_ABSCHLUSS_2026-11-14_PSEUDO-RESTARBEITEN.md`), nicht erneut ausgeben. Enthält Stufe C, das Pseudo-Fenster nach PseudoDoc und:** Zuordnung je Auftrag verschlüsselt (`lib/pseudo-auftraege.ts`, `app/pseudo-auftrag-speicher.ts`;
   Schlüssel aus dem Profil, 90 Tage, „✓ erledigt“), „An KI“ (`anKi()`) an Bibliothekszeile, Auswahl-Leisten und Eingang, Briefweg der
   Assistenz nur noch Einstieg ins Fenster (Mistral mit eigenem Schlüssel jetzt im Fenster, einziger Netzweg `app/mistral-senden.ts`;
   Beträge/Daten bleiben jetzt lesbar), PDF-Seitenbild mit Kästen (`app/pseudo-pdf-seite.tsx`, `lib/pdf-kaesten.ts`), ZIP
   (`lib/zip-schreiben.ts`) und Austauschordner, Kontraste der KI-Knöpfe kräftiger (Klaus 14.11.). Vorschau
   `docs/vorschau/pseudo-auftraege-2.28.69.html`. Proben `run-pseudo-auftraege-tests`, UI `pseudo-auftraege`, `rueckmeldung-d` umgestellt.
 
-- **Stufe C gebaut, nicht ausgegeben (14.11., Brief `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-14_MASKE-PROFILE-STUFE-C.md`): Profile für die Maske.**
+- **Stufe C (14.11., ausgegeben mit 2.28.69, Brief `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-14_MASKE-PROFILE-STUFE-C.md`): Profile für die Maske.**
   Fach `profile` im Tresor-Paket (Quelle Workflow PDF Pro #77, `Profile.java`, Ordner „Maske-Profile“, gemeinsam: je App eine Datei, alle
   lesen, nichts gelöscht), nativ `profilLesen`/`profilSchreiben`. Kern `lib/maske-profil.ts` (verknüpft mit der Akte, Schreibweisen,
   Nummern nur HMAC, feste Platzhalter ⟦ICH-1⟧/⟦FAMILIE-n⟧/⟦KONTAKT-n⟧/⟦STELLE-n⟧, Übernehmen, Korrigieren), Speicher
   `app/maske-profil-speicher.ts` (Tresor offen → Fach; gesperrt → nichts; Pro ohne Tresor → App-Speicher; Basic → nichts), Profilseite
   `app/maske-profile.tsx` im Sicherheitscenter, Pseudo-Fenster merkt Korrekturen ins Profil. Vorschau `docs/vorschau/maske-profile-stufe-c.html`.
   Proben `run-maske-profil-tests`, UI `maske-profile`. Nicht am Gerät.
-- **Pseudo-Fenster nach dem Muster PseudoDoc (14.11., #184 auf main, nicht ausgegeben; Vorschau `docs/vorschau/pseudo-ansicht-kompakt.html`):**
+- **Pseudo-Fenster nach dem Muster PseudoDoc (14.11., #184, ausgegeben mit 2.28.69; Vorschau `docs/vorschau/pseudo-ansicht-kompakt.html`):**
   Klaus: einfach, Handy zuerst, kleine Knöpfe, eine Zeile je Datei, Ansicht im Dokument, **ein** KI-Knopf mit Wahl (blass mit Verlauf, gute
   Kontraste), alle Erklärungen hinter „?“. `app/pseudo-knopf.tsx`: Kopf mit dem PseudoDoc-Zeichen (`public/pseudo/pseudodoc.svg`, byte-gleich,
   Pin `native/HERKUNFT.json`), „1 Zur KI · 2 Zurück“, Zeile D01 … mit ⚑/👁/✎/mit/🗑, Ansicht (KI sieht/Original, markieren = verdecken,
@@ -197,9 +197,9 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   (2.28.35, `docs/landkarte/`), Landkarte der App mit **Stand je Kasten in `lib/app-stand.ts` – bei jeder Fassung eintragen** (2.28.36),
   Hilfe-Themen als Bild, Vorschaufenster (2.28.37), Listenzeilen mit `KnopfLeiste`, Kopfleiste (2.28.38).
   Proben-Hinweise: `step()` wertet einen zurückgegebenen Text als grün, deshalb `soll()`; Seitentitel sind keine Sprungziele.
-- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.68, 2.28.67, 2.28.66, 2.28.65, 2.28.64, 2.28.61, 2.28.60, 2.28.59, 2.28.58, 2.28.57, 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
+- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.69, 2.28.68, 2.28.67, 2.28.66, 2.28.65, 2.28.64, 2.28.61, 2.28.60, 2.28.59, 2.28.58, 2.28.57, 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
   (2.28.50 ausgegeben, aber ohne eigenen Nachweis; 2.28.40–2.28.47 waren Zwischenstände). Keine davon erneut ausgeben;
-  **nächste freie Fassung 2.28.69** (2.28.62 und 2.28.63 nie ausgegeben). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
+  **nächste freie Fassung 2.28.70** (2.28.62 und 2.28.63 nie ausgegeben). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
   sammeln, Proben laufen lassen, gesammelt als eine Fassung ausgeben (ersetzt „jede neue Funktion gleich ausgeben“ vom 06.11.).
   Neue Fassung oben in `lib/fassungen.ts` eintragen. Die Versionszeile zeigt die technische Fassung aus `package.json`;
   `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
@@ -221,7 +221,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   BookLedgerPro, Private Brain Pro. Ein-Schritt-Weg verdrahtet in Familienakte #92 (`ProTresorAdapter.einrichten`,
   `FamilienakteTresorPlugin.einrichten`) und BookLedgerPro #454, beide auf main, nicht veröffentlicht; Private Brain Pro #130 auf main (Klaus' Freibrief 05.11.), nicht veröffentlicht.
   Tresor-Leser (HTML auf der Karte, ohne Installation, nur lesend) Workflow-PDF-Pro #68, seit 2.28.52 in der Familienakte eingebaut.
-  Geschenkbox mit den veröffentlichten Downloads: `docs/geschenk/geschenkbox-pro.html` (https://claude.ai/artifact/XeUMGuSZ49FzsJYjwQznM7). Klaus will danach alle Pro-Apps neu installieren
+  Geschenkbox mit den veröffentlichten Downloads: `docs/geschenk/geschenkbox-pro.html` (https://claude.ai/artifact/XeUMGuSZ49FzsJYjwQznM7, Version 30 mit 2.28.69; vor dem Neuveröffentlichen den Live-Stand lesen – andere Sitzungen ziehen dort ihre Apps nach). Klaus will danach alle Pro-Apps neu installieren
   und frische Tresorräume anlegen.
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
@@ -238,7 +238,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Offen
 
-- **Pseudo-Fenster am Gerät ungeprüft:** Ansicht mit langem PDF (Seitenbild), Markieren am Handy (Finger), Bild abdecken mit dem Finger,
+- **2.28.69 / Pseudo-Fenster am Gerät ungeprüft:** Ansicht mit langem PDF (Seitenbild), Markieren am Handy (Finger), Bild abdecken mit dem Finger,
   KI-Knopf mit Internet an, Zwischenablage Text+Bild am Handy, Aufträge nach Neustart mit echtem Tresor, Mistral mit echtem Schlüssel,
   Austauschordner unter Windows (Android-WebView kann keine Ordnerwahl → nur ZIP), „An KI“ an echten Unterlagen/Mails.
 - **Stufe C am Gerät ungeprüft:** Profilseite mit echtem Tresor (Android/Windows), Korrigieren ins Profil, Übernehmen aus einer anderen Pro-App

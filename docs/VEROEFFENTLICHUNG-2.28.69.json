@@ -1,0 +1,35 @@
+{
+ "version": "2.28.69",
+ "source": "a4bb3050df41c50b8fd22691ff0985f616588a38",
+ "pullRequest": [186],
+ "recordedUtc": "2026-11-14T23:00:00Z",
+ "freigabe": "Klaus 14.11.2026: „Wenn CI grün ist, auf main zusammenführen“ – „Danach als Fassung 2.28.69 ausgeben“.",
+ "inhalt": "Pseudo-Fenster: Zuordnung je Auftrag verschlüsselt (A1, A2 …; „2 Zurück“ nach Neustart; Schlüssel im Profil; 90 Tage oder „erledigt“; Basic nur bis zum Schließen), „An KI“ an Bibliothekszeile, Auswahl-Leisten und Eingang (Mail mit Anlagen), Briefweg der Assistenz nur noch Einstieg ins Fenster (Mistral mit eigenem Schlüssel, Direktlink, Als Entwurf, PDF im Fenster; Beträge/Daten bleiben lesbar), PDF-Seitenbild mit Kästen, Als Datei: Textdatei/ZIP/Austauschordner, Zwischenablage-Nachprüfung, kräftigere KI-Knöpfe.",
+ "ciAmPrStand": "PR #186 auf 2b1b8d6: pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) – success.",
+ "releases": [
+  {
+   "tag": "android-v2.28.69",
+   "run": 43649567308,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {"name": "Familienakte-android-v2.28.69.apk", "bytes": 20238990, "sha256": "29673c59a9b62f1369352f2811c8c3db1128457e0c76f22674a807e931a21ff7", "anonymousDownload": true, "matchesSHA256SUMS": true, "versionInside": "2.28.69 (assets/public/version.json, commit a4bb305)"},
+    {"name": "Familienakte-Einzeldatei-2.28.69.html", "bytes": 4628011, "sha256": "8e01b1aad4f96780fb5358d9d818cffe27fbebc1ff3d3c3e86c2dabf9e4479c3", "anonymousDownload": true, "matchesSHA256SUMS": true}
+   ]
+  },
+  {
+   "tag": "windows-v2.28.69",
+   "run": 43649569862,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {"name": "Familienakte-Windows-2.28.69-x64-setup.exe", "bytes": 34401492, "sha256": "0ceab0001b7081320548c2af7685ce24c61203270fd2bfb09939a9c4063d14f3", "anonymousDownload": true, "matchesSHA256SUMS": true, "latestJson": "version 2.28.69"}
+   ]
+  }
+ ],
+ "pwa": "Pages-Läufe 43649562857 (Merge) und 43650879052 (nach dem Windows-Lauf) auf a4bb305; github.io ist aus dem Behälter gesperrt (403), Seite nicht selbst geprüft.",
+ "notChecked": [
+  "Alles am Gerät: Aufträge nach Neustart mit echtem Tresor, Zwischenablage Text+Bild am Handy, PDF-Seitenbild mit langen PDFs, Mistral mit echtem Schlüssel, Austauschordner unter Windows, An KI an echten Mails, Update über die Versionszeile",
+  "family-projekt.de aus dem Behälter nicht geprüft; der Freigabelauf prüft den Server selbst"
+ ]
+}
