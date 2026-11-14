@@ -54,6 +54,7 @@ export function CentralIntakeCenter({
   onSetStatus,
   onSammelAblegen,
   onLoeschen,
+  onKi,
   grenzeBytes = Infinity,
   onGo,
 }: {
@@ -82,6 +83,8 @@ export function CentralIntakeCenter({
   onSammelAblegen?: (ids: string[], fristIds: string[], fortschritt: (fertig: number) => void) => Promise<{ abgelegt: number; fehler: string[] }>;
   /** Noch nicht abgelegte Eingänge aus der Warteschlange entfernen (nach Rückfrage beim Aufrufer). */
   onLoeschen?: (ids: string[]) => Promise<boolean>;
+  /** „An KI“: Eingänge (Mail mit allen Anlagen) pseudonymisiert ins Pseudo-Fenster. */
+  onKi?: (ids: string[]) => void;
   /** Sichere Dateigröße dieses Geräts; darüber nur einzeln (Verkleinern). */
   grenzeBytes?: number;
   onGo: (id: "help" | "documents" | "security" | "reminders", targetId?: string) => void;
@@ -165,6 +168,7 @@ export function CentralIntakeCenter({
         aktionen={[
           ...(onSammelAblegen ? [{ key: "ablegen", haupt: true, disabled: !ablegbarIds.length || sammel.laeuft || !storageReady, title: storageReady ? "Legt die angehakten Eingänge mit den Angaben aus der Zeile ab" : "Zuerst einen Speicherort verbinden", label: sammel.laeuft ? `Wird abgelegt … ${sammel.fertig} von ${sammel.gesamt}` : `✓ ${ablegbarIds.length} ausgewählte ablegen`, onClick: () => void sammelAblegen() }] : []),
           ...(selectedImages.length > 1 && selectedImages.length === selectedIds.length ? [{ key: "scan", label: "Als gemeinsames Scan-Dokument prüfen", onClick: () => onScanQueued(selectedImages.map((item) => item.id)) }] : []),
+          ...(onKi ? [{ key: "ki", label: "An KI", title: "Pseudonymisiert ins Pseudo-Fenster (Mails mit allen Anlagen)", onClick: () => onKi(selectedIds) }] : []),
           { key: "zurueck", label: "Zurückstellen", onClick: () => onSetStatus(selectedIds, "Zurückgestellt") },
           { key: "nicht", label: "Nicht übernehmen", onClick: () => onSetStatus(selectedIds, "Nicht übernommen") },
           ...(onLoeschen ? [{ key: "loeschen", gefahr: true, label: "Löschen", title: "Nur aus der Warteschlange; nichts Abgelegtes und kein Original wird gelöscht", onClick: () => void onLoeschen(selectedIds) }] : []),
@@ -193,6 +197,7 @@ export function CentralIntakeCenter({
               {!erledigt && analysis?.email?.attachmentNames.length ? <button className="text-link" onClick={() => onExtractAttachments(item.id)}>Anlagen in Warteschlange prüfen</button> : null}
               {!erledigt && <button className="button primary" disabled={item.status === "Analyse läuft"} onClick={() => onReview(item.id)} title="Einzeln prüfen: alle Angaben ansehen und ändern" data-einzeln-pruefen={item.id}><PenLine size={15} aria-hidden="true"/>Zuordnung prüfen</button>}
               {!erledigt && <button className="button secondary" onClick={() => onSetStatus([item.id], "Zurückgestellt")}>Zurückstellen</button>}
+              {onKi && <button type="button" className="button secondary an-ki-knopf" onClick={() => onKi([item.id])} title={analysis?.email ? "Mail mit Text und allen Anlagen pseudonymisiert ins Pseudo-Fenster" : "Pseudonymisiert ins Pseudo-Fenster"} data-eingang-ki={item.id}>An KI</button>}
               {item.status === "Übernommen" && <span className="queue-gespeichert" data-gespeichert>{item.dasselbe ? "Nicht doppelt abgelegt ✓" : "Gespeichert ✓"}</span>}
               {item.status === "Übernommen" && item.savedDocumentId && <button type="button" className="text-link" data-zum-dokument onClick={() => onGo("documents", item.savedDocumentId!)}>Zum Dokument <ChevronRight size={15}/></button>}
               {item.status === "Zurückgestellt" && <button className="button secondary" onClick={() => onSetStatus([item.id], analysis?.plan.requiresReview ? "Prüfung erforderlich" : "Bereit zur Übernahme")}>Weiterbearbeiten</button>}

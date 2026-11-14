@@ -16,5 +16,10 @@ for (const datei of ["lib/maske.ts", "app/pseudo-knopf.tsx"]) {
   const q = readFileSync(datei, "utf8").replace(/\/\/.*$/gm, "");
   assert.ok(!/\bfetch\s*\(|XMLHttpRequest|WebSocket|sendBeacon|EventSource|import\(\s*["']https?:/.test(q), `${datei} enthält einen Netzaufruf.`);
 }
-console.log("🟢 Kein Netzweg in Maske und Pseudo-Knopf");
+{
+  const m = readFileSync("app/mistral-senden.ts", "utf8").replace(/\/\/.*$/gm, "");
+  assert.equal((m.match(/\bfetch\s*\(/g) || []).length, 1, "mistral-senden: genau ein Netzaufruf");
+  assert.ok(/fetch\(MISTRAL_ADRESSE/.test(m) && !/XMLHttpRequest|WebSocket|sendBeacon/.test(m), "mistral-senden geht nur an Mistral");
+}
+console.log("🟢 Kein Netzweg in Maske und Pseudo-Knopf; einziger Weg hinaus ist mistral-senden (nur Mistral)");
 console.log("Maske: alles grün");

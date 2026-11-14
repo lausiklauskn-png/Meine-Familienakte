@@ -1,5 +1,6 @@
 import { SchriftKnopf } from "./schrift-knopf";
-import { BriefKnopf, PseudoFenster, PseudoKnopf } from "./pseudo-knopf";
+import { anKi, BriefKnopf, PseudoFenster, PseudoKnopf } from "./pseudo-knopf";
+import { textAlsPdf } from "../lib/text-pdf";
 import { MaskeProfileKarte } from "./maske-profile";
 import { profileLaden } from "./maske-profil-speicher";
 import { profilAusAkte } from "../lib/maske";
@@ -883,6 +884,17 @@ function HealthPortalContent() {
     try { beginLocalUpload(await eingangDatei(item), item.source, false, null, item.id, { fristAngehakt }); }
     catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die Arbeitsdatei konnte nicht geladen werden." }); }
   };
+  // „An KI“ im Eingang: Arbeitsdatei holen (Mail mit allen Anlagen), ins Pseudo-Fenster; der Eingang bleibt unverändert liegen.
+  const anKiEingaenge = async (ids: string[]) => {
+    const dateien: File[] = [];
+    for (const id of ids) {
+      const item = centralIntakeQueue.find((candidate) => candidate.id === id);
+      if (!item) continue;
+      try { dateien.push(await eingangDatei(item)); }
+      catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Die Arbeitsdatei konnte nicht geladen werden." }); }
+    }
+    if (dateien.length) anKi({ dateien });
+  };
   const extractCentralEmailAttachments = async (id: string) => {
     const item = centralIntakeQueue.find((candidate) => candidate.id === id);
     if (!item) return;
@@ -1505,6 +1517,18 @@ function HealthPortalContent() {
       const t = teilenText(r, local.originalName); if (t) setNotice({ kind: r === "geteilt" ? "success" : "info", text: t });
     } catch (reason) { setNotice({ kind: "error", text: reason instanceof Error ? reason.message : "Die Datei konnte nicht geteilt werden." }); }
   };
+  // „An KI“ (Klaus 14.11.): Originale aus der Akte ins Pseudo-Fenster – sie bleiben auf dem Gerät, hinaus geht nur die Fassung.
+  const anKiDokumente = async (ids: string[]) => {
+    if (!vaultHandle) { setNotice({ kind: "error", text: "Bitte den zugehörigen Datentresor verbinden." }); return; }
+    const dateien: File[] = [];
+    for (const id of ids) {
+      const local = localDocuments.find((item) => item.id === id);
+      if (!local) continue;
+      try { const f = await readLocalDocumentFile(vaultHandle, id); dateien.push(new File([f], local.originalName, { type: f.type || local.mimeType })); }
+      catch (reason) { setNotice({ kind: "error", text: reason instanceof Error ? reason.message : "Eine Unterlage konnte nicht gelesen werden." }); }
+    }
+    if (dateien.length) anKi({ dateien });
+  };
   // Ausfüllen (Sitzung F): neue Fassung neben dem Original, Original bleibt unverändert; Stand am Dokument im Register.
   const fillPersons: AusfuellPerson[] = useMemo(() => familyRecords.filter((r) => r.recordType === "person").map((r) => { const d = (r.data || {}) as Record<string, string | undefined>; return { id: r.id, name: d.displayName || r.id, angaben: { displayName: d.displayName, birthDate: d.birthDate, birthPlace: d.birthPlace, address: d.address, street: d.street, postalCode: d.postalCode, city: d.city, email: d.email, phone: d.phone } }; }), [familyRecords]);
   const fillStates = useMemo(() => Object.fromEntries(localDocuments.map((item) => [item.id, fillStateOf(item)])), [localDocuments]);
@@ -1634,7 +1658,9 @@ function HealthPortalContent() {
         </nav>
       </header>
       <main className="site-main">
-        <PseudoFenster profil={maskeProfil} basic={APP_VARIANTE === "Basic"} records={familyRecords as unknown as Array<{ id?: string; type?: string; data?: Record<string, unknown> }>} onProfile={() => go("security", undefined, { ziel: "[data-maske-profile]" })}/>
+        <PseudoFenster profil={maskeProfil} basic={APP_VARIANTE === "Basic"} records={familyRecords as unknown as Array<{ id?: string; type?: string; data?: Record<string, unknown> }>} onProfile={() => go("security", undefined, { ziel: "[data-maske-profile]" })}
+          onEntwurf={vaultHandle ? async ({ betreff, text }) => { await saveAssistantCorrespondence({ status: "Entwurf", kind: "Antwort", recipient: "", subject: betreff || "Antwort", body: text, caseId: null, documentIds: [] }); } : undefined}
+          onPdf={({ betreff, text }) => dateiInWorkflowPdf(new File([textAlsPdf(`${betreff ? `${betreff}\n\n` : ""}${text}`, betreff || "Antwort") as Uint8Array<ArrayBuffer>], `${(betreff || "Antwort").replace(/[\\/:*?"<>|]+/g, " ").trim().slice(0, 60) || "Antwort"}.pdf`, { type: "application/pdf" }))}/>
         <AppGlocke records={familyRecords} relations={familyRelations} onOeffnen={(z) => go("reminders", undefined, kalenderZiel(String(new Date(z.beginn).toLocaleDateString("sv-SE")), z.recordId))}
           onErledigt={async (z) => { if (!vaultHandle) return; try { await updateLocalScheduleStatus(vaultHandle, z.recordId, "erledigt"); await refreshLocal(vaultHandle); setNotice({ kind: "success", text: `Erledigt: ${z.titel}` }); } catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Der Status konnte nicht geändert werden." }); } }}/>
         <KalenderAnmeldeHinweis vaultHandle={vaultHandle} records={familyRecords} relations={familyRelations} onRefresh={async () => { if (vaultHandle) await refreshLocal(vaultHandle); }} onNotice={setNotice}/>
@@ -1677,7 +1703,7 @@ function HealthPortalContent() {
         {!query && active === "documents" && <DocumentLibrary key={`library-${navigation.visitKey}`} navigation={navigation}
           documents={cockpitDocuments(documents, localDocuments)} records={familyRecords} relations={familyRelations}
           initialFocusId={documentLibraryFocusId} initialArea={documentLibraryRequest.area} initialQuery={documentLibraryRequest.query}
-          onUebergabe={proTresorVerfuegbar() ? anProApp : undefined} onPro={proTresorVerfuegbar() ? inProTresor : undefined} onTeilen={teileDokument} proKandidaten={new Set(localDocuments.filter((d) => !istProOriginal(d.storedPath)).map((d) => d.id))}
+          onUebergabe={proTresorVerfuegbar() ? anProApp : undefined} onPro={proTresorVerfuegbar() ? inProTresor : undefined} onTeilen={teileDokument} onKi={(ids) => void anKiDokumente(ids)} proKandidaten={new Set(localDocuments.filter((d) => !istProOriginal(d.storedPath)).map((d) => d.id))}
           fillStates={fillStates} onFill={setFillDocId} onWfpdf={(id) => void inWorkflowPdf(id)} onOpenDocument={openDocument} onGo={go} onUpload={openLocalUpload} onUnlink={unlinkContext} onChange={changeContextLink}
           lokaleIds={new Set(localDocuments.filter((d) => !d.aussortiert).map((d) => d.id))} aussortiert={localDocuments.filter((d) => d.aussortiert)}
           bereichsWahl={[...new Set([...categories, ...localDocuments.map((d) => d.category)])].sort((a, b) => a.localeCompare(b, "de"))}
@@ -1722,7 +1748,7 @@ function HealthPortalContent() {
           queue={centralIntakeQueue} storageReady={!!vaultHandle} oneDriveConnected={!!oneDriveHandle} inboxFolderName={inboxFolderName} busy={intakeBusy} checkedAt={intakeCheckedAt}
           onFiles={(files, source) => void queueCentralIntakeFiles(files, source)} onStartDocumentScan={openDocumentScan} onScanForm={() => void scanFormular()} onStapel={(files) => { setStapelNeu(files); go("stapel"); }}
           onSelectInbox={selectInboxFolder} onScanInbox={() => void scanSelectedInbox()} onScanOneDrive={checkOneDriveInbox}
-          onReview={reviewCentralIntake} onExtractAttachments={(id) => void extractCentralEmailAttachments(id)} onToggle={toggleCentralIntake} onSetStatus={setCentralIntakeStatus} onSammelAblegen={sammelAblegen} onLoeschen={eingaengeLoeschen} grenzeBytes={aktuelleGrenze().bytes}
+          onReview={reviewCentralIntake} onExtractAttachments={(id) => void extractCentralEmailAttachments(id)} onToggle={toggleCentralIntake} onSetStatus={setCentralIntakeStatus} onSammelAblegen={sammelAblegen} onLoeschen={eingaengeLoeschen} onKi={(ids) => void anKiEingaenge(ids)} grenzeBytes={aktuelleGrenze().bytes}
           onGo={(id, targetId) => go(id, targetId)}
         /></Suspense><EmailWegeKarte aktiv={!!vaultHandle} onNotice={setNotice} onDateien={(files) => queueCentralIntakeFiles(files, "file-picker")} onSchreiben={() => go("assistant")}/><Inbox compact documents={documents} localDocuments={localDocuments.filter((d) => !d.aussortiert)} loading={loadingDocs} onUpload={openLocalUpload} onOpenDocument={openDocument} onFill={setFillDocId} onWfpdf={(id) => void inWorkflowPdf(id)} onRefresh={async () => { await loadDocuments(); await refreshLocal(); }} onLocalStatus={async (id, status) => { if (!vaultHandle) return; await updateLocalStatus(vaultHandle, id, status); await refreshLocal(vaultHandle); }} onStatus={async (id, status) => {
           setBusy(true);
@@ -3907,7 +3933,7 @@ function TeilenKnopf({ onTeilen }: { onTeilen: () => Promise<void> }) {
 }
 
 /** Kompakte Zeile der Bibliothek (2.28.39, Punkt 7): Datum · Titel · Bereich; Karten bleiben wählbar. */
-function DocumentLibraryZeile({ item, gewaehlt, onWahl, onOpen, onArea, karte }: { item: DocumentLibraryItem; gewaehlt?: boolean; onWahl?: () => void; onOpen: () => void; onArea: () => void; karte?: React.ReactNode }) {
+function DocumentLibraryZeile({ item, gewaehlt, onWahl, onOpen, onArea, onKi, karte }: { item: DocumentLibraryItem; gewaehlt?: boolean; onWahl?: () => void; onOpen: () => void; onArea: () => void; onKi?: () => void; karte?: React.ReactNode }) {
   const [auf, setAuf] = useState(false);
   return <><article className={`library-zeile${item.sensitive ? " sensitive" : ""}${gewaehlt ? " gewaehlt" : ""}`} data-bibliothek-zeile={item.id}><BspEcke id={item.id}/>
     {onWahl ? <AuswahlKaestchen an={!!gewaehlt} onWechsel={onWahl} titel={item.title} data-bibliothek-wahl={item.id}/> : <span className="auswahl-platz"/>}
@@ -3915,7 +3941,8 @@ function DocumentLibraryZeile({ item, gewaehlt, onWahl, onOpen, onArea, karte }:
     <button type="button" className="library-zeile-titel" onClick={onOpen} title={item.title}>{item.protectedHealth && <LockKeyhole size={13} aria-label="geschützt"/>}<FlachText text={item.title}/></button>
     <button type="button" className="library-zeile-bereich" onClick={onArea} title={`Alle aus „${item.area}“`}>{item.area}</button>
     {/* Auge wie in den übrigen Listen: klappt die volle Karte mit allen Knöpfen (Ausfüllen, Workflow PDF, Pro-Tresor …) darunter auf. */}
-    {karte ? <AugeKnopf offen={auf} titel={item.title} onClick={() => setAuf(!auf)} data-bibliothek-auge={item.id}/> : <button type="button" className="icon-button library-zeile-auf" onClick={onOpen} aria-label={`${item.title} öffnen`}><ChevronRight size={17}/></button>}
+    <span className="library-zeile-knoepfe">{onKi && <button type="button" className="icon-button an-ki-knopf" onClick={onKi} title="An KI: pseudonymisiert ins Pseudo-Fenster" aria-label={`„${item.title}“ an KI (pseudonymisiert)`} data-bibliothek-ki={item.id}>KI</button>}
+    {karte ? <AugeKnopf offen={auf} titel={item.title} onClick={() => setAuf(!auf)} data-bibliothek-auge={item.id}/> : <button type="button" className="icon-button library-zeile-auf" onClick={onOpen} aria-label={`${item.title} öffnen`}><ChevronRight size={17}/></button>}</span>
   </article>{auf && karte && <div className="library-zeile-karte" data-bibliothek-karte={item.id}>{karte}</div>}</>;
 }
 
@@ -3939,7 +3966,7 @@ function aussortierText(r: AussortierErgebnis, zurueck: boolean) {
   ].filter(Boolean).join(" ");
 }
 
-function DocumentLibrary({ documents, records, relations, initialFocusId, initialArea, initialQuery, navigation, fillStates, onFill, onWfpdf, onPro, onUebergabe, onTeilen, proKandidaten, onOpenDocument, onGo, onUpload, onUnlink, onChange, lokaleIds = new Set<string>(), aussortiert = [], bereichsWahl = [], sammel }: {
+function DocumentLibrary({ documents, records, relations, initialFocusId, initialArea, initialQuery, navigation, fillStates, onFill, onWfpdf, onPro, onUebergabe, onTeilen, onKi, proKandidaten, onOpenDocument, onGo, onUpload, onUnlink, onChange, lokaleIds = new Set<string>(), aussortiert = [], bereichsWahl = [], sammel }: {
   navigation: PortalNavigation;
   /** Nur Dokumente im eigenen Datentresor sind für Sammelaktionen wählbar. */
   lokaleIds?: Set<string>;
@@ -3953,6 +3980,8 @@ function DocumentLibrary({ documents, records, relations, initialFocusId, initia
   onPro?: (id: string) => Promise<void>;
   onUebergabe?: (id: string, ziel: ProZiel) => Promise<void>;
   onTeilen?: (id: string) => Promise<void>;
+  /** „An KI“: Unterlagen ins Pseudo-Fenster (nur Dokumente im eigenen Datentresor). */
+  onKi?: (ids: string[]) => void;
   proKandidaten?: Set<string>;
   records: FamilyRecordUnion[];
   relations: FamilyRelation[];
@@ -4009,6 +4038,7 @@ function DocumentLibrary({ documents, records, relations, initialFocusId, initia
     aktionen={[
       { key: "bereich", label: "Bereich ändern", disabled: sammelLaeuft, onClick: () => { setSammelForm("bereich"); setSammelWert(""); setSammelMeldung(null); } },
       { key: "person", label: "Person zuordnen", disabled: sammelLaeuft || !personen.length, title: personen.length ? undefined : "Noch keine Person angelegt", onClick: () => { setSammelForm("person"); setSammelWert(""); setSammelMeldung(null); } },
+      ...(onKi ? [{ key: "ki", label: "An KI", title: "Die gewählten Unterlagen pseudonymisiert ins Pseudo-Fenster", onClick: () => onKi(gewaehlt) }] : []),
       { key: "aussortieren", label: "Aus der Akte nehmen", gefahr: true, disabled: sammelLaeuft, onClick: () => void aussortieren() },
     ]}>
     {sammelForm && gewaehlt.length > 0 && <form className="auswahl-form" data-sammel-form={sammelForm} onSubmit={(event) => { event.preventDefault(); if (!sammelWert) return; void fuehre("liste", async () => sammelForm === "bereich" ? `Gespeichert ✓ Bereich „${sammelWert}“ für ${await sammel.bereich(gewaehlt, sammelWert)} ${gewaehlt.length === 1 ? "Dokument" : "Dokumente"} gesetzt.` : `Gespeichert ✓ ${await sammel.person(gewaehlt, sammelWert)} ${gewaehlt.length === 1 ? "Dokument" : "Dokumente"} „${cockpitRecordLabel(personen.find((p) => p.id === sammelWert)!)}“ zugeordnet.`); }}>
@@ -4025,7 +4055,7 @@ function DocumentLibrary({ documents, records, relations, initialFocusId, initia
   };
   const openItem = (item: DocumentLibraryItem) => item.protectedHealth ? onGo("health") : void onOpenDocument(item.id);
   const openReference = (reference: DocumentLibraryReference) => onGo(reference.sensitive ? "health" : reference.section as SectionId, reference.id);
-  const zeile = (item: DocumentLibraryItem, mitWahl = false) => <DocumentLibraryZeile key={item.id} item={item} gewaehlt={wahl.has(item.id)} onWahl={mitWahl && sammel && lokaleIds.has(item.id) ? () => wechsel(item.id) : undefined} onOpen={() => openItem(item)} onArea={() => showAll({ area: item.area })} karte={card(item)}/>;
+  const zeile = (item: DocumentLibraryItem, mitWahl = false) => <DocumentLibraryZeile key={item.id} item={item} gewaehlt={wahl.has(item.id)} onWahl={mitWahl && sammel && lokaleIds.has(item.id) ? () => wechsel(item.id) : undefined} onOpen={() => openItem(item)} onArea={() => showAll({ area: item.area })} onKi={onKi && lokaleIds.has(item.id) ? () => onKi([item.id]) : undefined} karte={card(item)}/>;
   const liste = (eintraege: DocumentLibraryItem[], mitWahl = false, kompakt = false) => ansicht === "zeilen" ? <section className="library-zeilen" data-bibliothek-ansicht="zeilen">{eintraege.map((item) => zeile(item, mitWahl))}</section> : <section className={`library-document-grid${kompakt ? " compact" : ""}`} data-bibliothek-ansicht="karten">{eintraege.map(card)}</section>;
   const umschalter = <div className="ansicht-umschalter" role="group" aria-label="Ansicht"><button type="button" aria-pressed={ansicht === "zeilen"} className={ansicht === "zeilen" ? "active" : ""} onClick={() => setAnsicht("zeilen")} data-ansicht="zeilen">Zeilen</button><button type="button" aria-pressed={ansicht === "karten"} className={ansicht === "karten" ? "active" : ""} onClick={() => setAnsicht("karten")} data-ansicht="karten">Karten</button></div>;
   const card = (item: DocumentLibraryItem) => <DocumentLibraryCard key={item.id} item={item} fill={fillStates[item.id]} onFill={() => onFill(item.id)} onWfpdf={onWfpdf ? () => onWfpdf(item.id) : undefined} onPro={onPro && proKandidaten?.has(item.id) ? () => onPro(item.id) : undefined} onUebergabe={onUebergabe ? (ziel) => onUebergabe(item.id, ziel) : undefined} onTeilen={onTeilen && lokaleIds.has(item.id) ? () => onTeilen(item.id) : undefined} onOpen={() => openItem(item)} onArea={() => showAll({ area: item.area })} onType={() => showAll({ documentType: item.documentType })} onDate={() => item.date ? showAll({ startDate: item.date, endDate: item.date }) : openItem(item)} onReference={openReference}/>;
