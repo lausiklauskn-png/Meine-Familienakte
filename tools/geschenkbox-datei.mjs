@@ -13,6 +13,7 @@ const ziel = "docs/geschenk/Geschenkbox-Pro-Apps.html";
 const KARTEN = [
   { link: "pro-verbund.html", anker: "verbund-karte", titel: "Pro-App-Verbund", datei: "public/pro-verbund/pro-verbund.html" },
   { link: "familienakte-landkarte.html", anker: "landkarte-karte", titel: "Landkarte der Familienakte", datei: "docs/landkarte/Familienakte-Landkarte.html" },
+  { link: "datei-organizer-landkarte.html", anker: "organizer-karte", titel: "Landkarte des Datei-Organizers", datei: "docs/landkarte/Datei-Organizer-Landkarte.html" },
 ];
 
 const attr = (t) => t.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
