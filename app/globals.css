@@ -2623,8 +2623,9 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .ansicht-umschalter button { padding: 6px 14px; border: 0; background: white; color: var(--navy); font: inherit; cursor: pointer; }
 .ansicht-umschalter button.active { background: var(--teal); color: white; font-weight: 700; }
 .library-zeilen { display: grid; margin-bottom: 18px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: white; }
-.library-zeile { display: grid; grid-template-columns: 32px 6.2rem minmax(0,1fr) minmax(0,14rem) 36px; align-items: center; gap: 8px; min-height: 46px; padding: 2px 8px; border-bottom: 1px solid var(--line); }
+.library-zeile { display: grid; grid-template-columns: 32px 6.2rem minmax(0,1fr) minmax(0,14rem) auto; align-items: center; gap: 8px; min-height: 46px; padding: 2px 8px; border-bottom: 1px solid var(--line); }
 .library-zeile:last-child { border-bottom: 0; }
+.library-zeile-knoepfe { display: inline-flex; align-items: center; gap: 4px; justify-self: end; }
 .library-zeile.gewaehlt { background: var(--teal-soft); }
 .library-zeile.sensitive { border-left: 4px solid #6689a2; }
 .library-zeile-datum { color: var(--muted); font-size: .9rem; white-space: nowrap; }
@@ -2640,10 +2641,10 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .fristen-chips button { padding: 6px 12px; border: 1px solid #c5d7e2; border-radius: 999px; background: white; color: var(--navy); font: inherit; font-size: .92rem; cursor: pointer; }
 .fristen-chips button.active { border-color: var(--teal); background: var(--teal-soft); font-weight: 700; }
 @media (max-width: 600px) {
-  .library-zeile { grid-template-columns: 32px minmax(0,1fr) 32px; grid-template-areas: "w t a" "w d d"; row-gap: 0; padding: 4px 6px; }
+  .library-zeile { grid-template-columns: 32px minmax(0,1fr) auto; grid-template-areas: "w t a" "w d d"; row-gap: 0; padding: 4px 6px; }
   .library-zeile > .auswahl-kaestchen, .library-zeile > .auswahl-platz { grid-area: w; }
   .library-zeile-titel { grid-area: t; }
-  .library-zeile-auf { grid-area: a; }
+  .library-zeile-auf, .library-zeile-knoepfe { grid-area: a; }
   .library-zeile-datum { grid-area: d; font-size: .82rem; }
   .library-zeile-bereich { display: none; }
   .library-aussortiert .library-zeile { grid-template-columns: 32px minmax(0,1fr); grid-template-areas: "w t" "w d"; }
@@ -3077,5 +3078,37 @@ button.pf-daumen { cursor: pointer; }
 .pseudo-fenster .pf-zeichnen i.durch { opacity: .55; }
 .pseudo-fenster .pf-zeichnen i.zug { background: rgba(0,0,0,.6); }
 .pseudo-fenster .pf-logo { width: 30px; height: 30px; border-radius: 8px; flex: none; display: block; }
+/* 2.28.69: Aufträge (P10), Mistral, Datei-Wahl, PDF-Seitenbild (Vorschau docs/vorschau/pseudo-auftraege-2.28.69.html) */
+.pseudo-fenster .pf-auftraege { display: grid; gap: 3px; }
+.pseudo-fenster .pf-auftraege-kopf { display: flex; align-items: center; gap: 6px; font-size: .82rem; color: var(--navy); }
+.pseudo-fenster .pf-frage-klein { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--line); background: #fff; color: var(--navy); font: 700 .75rem inherit; font-family: inherit; display: inline-grid; place-items: center; cursor: pointer; padding: 0; }
+.pseudo-fenster .pf-auftrag { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; align-items: center; border: 1px solid var(--line); border-radius: 8px; padding: 3px 4px 3px 6px; }
+.pseudo-fenster .pf-auftrag[aria-current="true"] { border-color: #167249; background: #e6f5ed; }
+.pseudo-fenster .pf-auftrag .pf-kn { height: 26px; padding: 0 7px; font-size: .72rem; }
+.pseudo-fenster .pf-auftrag-wahl { display: flex; gap: 6px; align-items: center; min-width: 0; border: 0; background: none; padding: 0; text-align: left; font-family: inherit; font-size: .78rem; color: #15283a; cursor: pointer; }
+.pseudo-fenster .pf-auftrag-wahl b { color: var(--navy); flex: none; }
+.pseudo-fenster .pf-auftrag-wahl span { min-width: 0; }
+.pseudo-fenster .pf-auftrag-wahl small { display: block; color: #4d5c6b; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pseudo-fenster .pf-passt { color: #167249; font-weight: 700; font-size: .76rem; }
+.pseudo-fenster .pf-betreff { font-size: .86rem; color: var(--navy); }
+.pseudo-fenster .pf-schluessel { font-size: .8rem; display: grid; gap: 4px; }
+.pseudo-fenster .pf-schluessel summary { cursor: pointer; font-weight: 700; color: #6b3200; }
+.pseudo-fenster .pf-schluessel input[type="password"] { width: 100%; height: 30px; border: 1px solid var(--line); border-radius: 8px; padding: 0 8px; font-family: inherit; }
+.pseudo-fenster .pf-frage { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; background: #fde4c8; color: #4a2300; border-radius: 8px; padding: 6px 8px; font-size: .8rem; font-weight: 700; margin: 0; }
+.pseudo-fenster .pf-dateiwahl { display: grid; gap: 4px; border: 1px solid var(--line); border-radius: 9px; padding: 6px 8px; font-size: .8rem; }
+.pseudo-fenster .pf-dateiwahl label { display: flex; gap: 6px; align-items: center; }
+.pseudo-fenster .pf-dateiwahl input { margin: 0; width: 15px; height: 15px; }
+.pseudo-fenster .pf-pdfseite { position: relative; width: 100%; background: #fff; box-shadow: 0 4px 16px rgba(16,52,83,.16); }
+.pseudo-fenster .pf-pdfseite canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.pseudo-fenster .pf-kasten { position: absolute; border-radius: 1px; cursor: pointer; }
+.pseudo-fenster .zeigt-ki .pf-kasten { background: #111; }
+.pseudo-fenster .zeigt-ki .pf-kasten::after { content: attr(data-t); position: absolute; inset: 0; color: #f1ecff; font: 700 clamp(5px, 1.3vw, 10px)/1 ui-monospace, Consolas, monospace; display: grid; place-items: center; white-space: nowrap; overflow: hidden; }
+.pseudo-fenster .zeigt-original .pf-kasten { background: rgba(255, 226, 80, .55); outline: 1px solid #d9a400; }
+.pseudo-fenster .pf-kasten.unsicher { outline: 2px solid #e0a020; outline-offset: 1px; }
+.brief-kurz-reihe { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.brief-kurz-reihe select { flex: 1 1 200px; min-width: 0; height: 36px; }
+/* „An KI“ an Unterlage, Auswahl und Eingang: blass lila wie die Platzhalter, dunkle Schrift (guter Kontrast). */
+.an-ki-knopf { background: #e3dcf7 !important; color: #2e1f63 !important; border: 1px solid #b7a8e8 !important; font-weight: 700; }
+.icon-button.an-ki-knopf { width: auto; min-width: 34px; padding: 0 8px; font-size: .78rem; }
 /* Briefumschlag (Klaus 14.11.): zwischen 901 und 940 px reicht der Kopf nicht – dort bleibt der Weg über „Pseudo“. */
 @media (min-width: 901px) and (max-width: 940px) { .header-actions .brief-knopf { display: none !important; } }

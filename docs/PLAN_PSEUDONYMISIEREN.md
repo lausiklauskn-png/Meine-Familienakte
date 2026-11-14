@@ -104,8 +104,33 @@ P11 Ja · P12 Ja, Bezugsdokumente ab Werk angehakt · P13 Ja (nur privater Weg) 
 - Proben: `scripts/run-maske-profil-tests.mjs` (10 Gruppen, Gegenprobe 5/5), UI `tests/ui/maske-profile.test.mjs` (9 Schritte, Tresor
   gestellt), JUnit `profileGemeinsamJeAppNeuesteGiltNichtsGeloescht` (Gegenprobe 4/4), Windows-Engine-Probe mit Profil-Fall.
 
-**Offen (nächste Stufen):** Knopf an Unterlage/Auswahl/Mail im Eingang, Austauschordner und Bezugsdokumente (E),
-„Alles pseudonymisieren“ mit Sortier-Datei (F), Bilder schwärzen (G), Pro-Verbund-Karte in BookLedgerPro, danach die anderen Pro-Apps.
+### Stand 15.11.2026: Restarbeiten am Pseudo-Fenster (für 2.28.69, nicht ausgegeben)
+
+Vorschau `docs/vorschau/pseudo-auftraege-2.28.69.html` (https://claude.ai/artifact/C2TRFwoNiHrtMHYJiFZGNn), danach gebaut.
+
+- **P10 Zuordnung je Auftrag:** `lib/pseudo-auftraege.ts` (AES-GCM-256, Schlüssel per HKDF aus dem Geheimnis der eigenen Profile,
+  Kennung/Nummer/Datum als Zusatzdaten, 90 Tage, höchstens 50, passender Auftrag nach bekannten Platzhaltern), Speicher
+  `app/pseudo-auftrag-speicher.ts`: Pro → verschlüsselt auf dem Gerät, Schlüssel im Profil (Pro-Tresor oder App-Speicher); Tresor gesperrt
+  → nichts lesbar, neue nur bis zum Schließen; Basic/Demo → nur bis zum Schließen. Jeder Weg hinaus (KI, Nur kopieren, Als Datei, Mistral)
+  legt A1, A2 … an oder ergänzt ihn. „2 Zurück“: Liste klein, Antwort sucht den Auftrag selbst, „✓ erledigt“ löscht sofort.
+  Andere Pro-Apps sehen die Zuordnung nicht (sie lesen nur Profile).
+- **„An KI“** (`anKi()` in `app/pseudo-knopf.tsx`): Zeile der Bibliothek (Knopf „KI“ neben dem Auge), Auswahl-Leiste der Bibliothek und
+  des Eingangs, jeder Eingang (Arbeitsdatei über `eingangDatei`, Mail mit allen Anlagen).
+- **Briefweg** `app/brief-antwort.tsx`: nur noch Einstieg (Unterlage wählen → Fenster mit „Antwortbrief“). Das Fenster kann jetzt Mistral
+  (EU) mit eigenem Schlüssel nach Rückfrage (einziger Netzweg, eigene Datei `app/mistral-senden.ts`), Direktlink mit Text in der Adresse
+  (ChatGPT/Claude), nach dem Zurückführen „Als Entwurf“ (Korrespondenz) und „PDF“ (Workflow PDF); „BETREFF: … ---“ wird abgetrennt.
+  **Änderung gegenüber dem alten Briefweg:** Beträge und Daten bleiben lesbar (Maske, P9) – der alte Weg hatte sie verdeckt.
+- **👁 bei PDF:** echtes Seitenbild (pdf.js aus dem Paket) mit Kästen aus der Textlage (`lib/pdf-kaesten.ts`), „KI sieht“ schwarz mit
+  Platzhalter, „Original“ gelb; Kasten antippen = darf bleiben; „Text“ als Rückfall, Scan ohne Textebene schaltet von selbst um.
+- **Als Datei:** eine Textdatei, ZIP (`lib/zip-schreiben.ts`, ohne Bibliothek: auftrag.md, D0x.txt/.png, LIES-MICH) oder
+  **Austauschordner** (nur wo der Browser Ordner wählen kann: `auftraege/<datum>-A<n>/…`, „Antworten holen“ liest `antwort.md`).
+- **Zwischenablage:** nach dem Kopieren wird nachgelesen, ob Text und Bild angekommen sind; sonst „Bild extra kopieren“.
+- KI-Knöpfe mit stärkeren Kontrasten (Klaus 15.11.), Mistral orange.
+- Proben: `scripts/run-pseudo-auftraege-tests.mjs` (Verschlüsselung, Ablauf, PDF-Kästen, ZIP), UI `pseudo-auftraege` (11),
+  `rueckmeldung-d` auf das Fenster umgestellt (9), `pseudo-knopf` (18). **Nicht am Gerät.**
+
+**Offen (nächste Stufen):** Bezugsdokumente (E), „Alles pseudonymisieren“ mit Sortier-Datei (F), Bilder schwärzen (G), Landkarte/Hilfe (H),
+Pro-Verbund-Karte in BookLedgerPro, danach die anderen Pro-Apps. Am Gerät: Zwischenablage mit Bild am Handy, Austauschordner unter Windows.
 
 ## Grundsätze
 

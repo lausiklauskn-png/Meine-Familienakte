@@ -4,7 +4,9 @@
 import { startApp, launchBrowser, HANDY, ready, step, soll, check, summary, collectErrors, internetAn } from "./_harness.mjs";
 
 const BRIEF = "Sehr geehrter Herr Brandt,\nfür Ihre Kundennummer KD-2024-118833 ist ein Betrag von 412,50 € offen. Bitte überweisen Sie bis 20.11.2026 auf DE89 3704 0044 0532 0130 00.\nMit freundlichen Grüßen\nHeike Sommer";
-const KLAR = ["Brandt", "KD-2024-118833", "412,50", "DE89", "20.11.2026", "Heike Sommer"];
+const KLAR = ["Brandt", "KD-2024-118833", "DE89", "Heike Sommer"];
+// Seit 2.28.69 läuft der Briefweg über die Maske des Pseudo-Fensters: Beträge und Daten bleiben lesbar (Plan P9, Klaus 14.11.).
+const BLEIBT = ["412,50", "20.11.2026"];
 const app = await startApp();
 const browser = await launchBrowser();
 try {
@@ -35,44 +37,47 @@ try {
     const t = await page.locator("main").innerText();
     return soll(/Aus meiner Familienakte/.test(t) && /Hinweise \(feste Regeln, keine KI\)/.test(t) && !/Praktische Einordnung/.test(t), "Kästen falsch");
   });
+  // Seit 2.28.69 (Klaus 14.11.: „ein Weg zur KI“): die Briefkarte öffnet nur das Pseudo-Fenster; alles Weitere geschieht dort.
   await page.locator('[data-assistenz-weg="brief"] .assistant-mode-action').click();
-  // Erst warten, bis der Briefweg steht (Sprung/Scrollen nach dem Tipp), sonst kann die Eingabe in ein Feld gehen, das gleich neu gezeichnet wird.
   await page.locator("[data-brief-antwort]").waitFor(); await page.waitForTimeout(400);
-  const verdeckt = page.locator("[data-brief-verdeckt]");
-  await step("Weg „Brief beantworten“: „Das sieht die KI“ zeigt nur Platzhalter", async () => {
-    await page.locator("[data-brief-text]").fill(BRIEF);
-    await page.locator("[data-brief-wunsch]").fill("Ratenzahlung anfragen");
-    try { await verdeckt.waitFor({ timeout: 10000 }); }
-    catch { return soll(false, { textLaenge: (await page.locator("[data-brief-text]").inputValue()).length, karten: await page.locator("[data-brief-antwort]").count(), baustein: await page.evaluate(() => Boolean(window.SbkimPseudonym)), fehler: await page.locator("[data-brief-antwort] .form-error").count() }); }
-    const t = await verdeckt.innerText();
-    return soll(KLAR.every((k) => !t.includes(k)) && /⟦NAME-\d+⟧/.test(t) && /⟦IBAN-1⟧/.test(t), t);
+  await step("Weg „Brief beantworten“: Karte ohne eigene Felder öffnet das Pseudo-Fenster mit Textfeld", async () => {
+    const felder = await page.locator("[data-brief-antwort] textarea, [data-brief-antwort] input").count();
+    await page.locator("[data-brief-oeffnen-fenster]").click();
+    await page.locator("[data-pseudo-text]").waitFor();
+    await page.locator("[data-pseudo-text]").fill(BRIEF);
+    await page.locator("[data-pseudo-los]").click();
+    await page.locator('[data-pseudo-stueck="D01"]').waitFor();
+    await page.locator("[data-pseudo-frei]").fill("Ratenzahlung anfragen");
+    const fenster = await page.locator("[data-pseudo-fenster]").innerText();
+    return soll(felder === 0 && KLAR.every((k) => !fenster.includes(k)), { felder });
   });
-  await step("Kopieren für deine KI: Zwischenablage hat Auftrag und verdeckten Text, keinen Klartext", async () => {
-    await page.locator("[data-brief-kopieren]").click(); await page.locator("[data-brief-meldung]").waitFor();
+  await step("Nur kopieren: Zwischenablage hat Auftrag und verdeckten Text, keinen Klartext", async () => {
+    await page.locator("[data-pseudo-kopieren]").click(); await page.locator("[data-pseudo-meldung]").waitFor();
     const z = await page.evaluate(() => navigator.clipboard.readText());
-    return soll(/ausschließlich DATEN/.test(z) && KLAR.every((k) => !z.includes(k)), z.slice(0, 120));
+    return soll(/Antwortbrief/.test(z) && /⟦IBAN-1⟧/.test(z) && KLAR.every((k) => !z.includes(k)) && BLEIBT.every((k) => z.includes(k)), { drin: KLAR.filter((k) => z.includes(k)), z: z.slice(z.indexOf("=== D01"), z.indexOf("=== D01") + 300) });
   });
-  await step("Direktlink: „In ChatGPT öffnen“ öffnet chatgpt.com mit dem verdeckten Text in der Adresse", async () => {
-    const [popup] = await Promise.all([context.waitForEvent("page", { timeout: 8000 }), page.locator('[data-brief-oeffnen="chatgpt"]').click()]);
+  await step("Direktlink: „An ChatGPT“ öffnet chatgpt.com mit dem verdeckten Text in der Adresse", async () => {
+    await page.locator("[data-pseudo-ki-wahl]").click(); await page.locator('[data-pseudo-ki="chatgpt"]').click();
+    const [popup] = await Promise.all([context.waitForEvent("page", { timeout: 8000 }), page.locator("[data-pseudo-ki-los]").click()]);
     const url = decodeURIComponent(popup.url()); await popup.close();
     return soll(url.startsWith("https://chatgpt.com/?q=") && KLAR.every((k) => !url.includes(k)) && /⟦/.test(url), url.slice(0, 80));
   });
   await step("Eigener Schlüssel: nach Rückfrage geht genau eine Anfrage an Mistral, ohne Klartext; Antwort mit echtem Namen", async () => {
-    await page.locator(".brief-schluessel summary").click();
-    await page.locator("[data-brief-schluessel]").fill("probe-schluessel-nur-test");
-    await page.locator("[data-brief-senden]").click(); await page.locator("[data-brief-senden-ja]").click();
-    const e = page.locator("[data-brief-ergebnis]"); await e.waitFor({ timeout: 8000 });
+    await page.locator("[data-pseudo-ki-wahl]").click(); await page.locator('[data-pseudo-ki="mistral"]').click();
+    await page.locator("[data-pseudo-schluessel]").fill("probe-schluessel-nur-test");
+    await page.locator("[data-pseudo-ki-los]").click(); await page.locator("[data-pseudo-mistral-ja]").click();
+    const e = page.locator("[data-pseudo-klar]"); await e.waitFor({ timeout: 8000 });
     const t = await e.innerText();
     const gemerkt = await page.evaluate(() => localStorage.getItem("familienakte_mistral_schluessel_v1"));
     return soll(mistral && KLAR.every((k) => !mistral.includes(k)) && /Herr Brandt/.test(t) && !/⟦/.test(t) && gemerkt === null, { mistral: (mistral || "").slice(0, 80), t: t.slice(0, 80), gemerkt });
   });
-  await step("Als Entwurf speichern: steht in der gespeicherten Korrespondenz mit „In Workflow PDF öffnen“", async () => {
-    await page.locator("[data-brief-speichern]").click();
+  await step("Als Entwurf: steht in der gespeicherten Korrespondenz mit „In Workflow PDF öffnen“", async () => {
+    await page.locator("[data-pseudo-entwurf]").click();
     await page.locator("[data-korrespondenz-pdf]").first().waitFor({ timeout: 8000 });
     return soll((await page.locator(".assistant-history").innerText()).includes("Antwort"), "nicht in der Liste");
   });
-  await step("„In Workflow PDF öffnen“ führt in den Arbeitsraum Workflow PDF", async () => {
-    await page.locator("[data-brief-pdf]").click(); await page.waitForTimeout(1200);
+  await step("„PDF“ führt in den Arbeitsraum Workflow PDF", async () => {
+    await page.locator("[data-pseudo-pdf]").click(); await page.waitForTimeout(1200);
     return soll(/Workflow PDF/.test(await page.locator(".breadcrumb").innerText()), await page.locator(".breadcrumb").innerText());
   });
   check(errors.filter((e) => !/chatgpt|ERR_|net::/i.test(e)).length === 0, "keine Seitenfehler", errors.join(" | "));

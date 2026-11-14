@@ -27,7 +27,7 @@ type Notice = { kind: "success" | "error" | "info"; text: string } | null;
 type Weg = "akte" | "brief" | "vorgang";
 const wege: Array<{ id: Weg; label: string; art: string; hint: string; icon: React.ReactNode }> = [
   { id: "akte", label: "In der Akte nachsehen", art: "ohne KI", hint: "Frage stellen, Antwort aus deinen Unterlagen mit den Fundstellen zum Antippen. Es wird nur in deiner Akte gesucht, nicht im Internet.", icon: <SearchCheck/> },
-  { id: "brief", label: "Brief oder E-Mail beantworten", art: "mit deiner KI, verdeckt", hint: "Text einfügen; Namen, Anschriften, Nummern und Beträge werden zu Platzhaltern. In deine KI kopieren, per Link öffnen oder mit eigenem Schlüssel senden. Die Antwort bekommt die echten Angaben zurück.", icon: <Mail/> },
+  { id: "brief", label: "Brief oder E-Mail beantworten", art: "mit deiner KI, verdeckt", hint: "Im Pseudo-Fenster: Namen, Anschriften, Nummern werden zu Platzhaltern. In deine KI kopieren, per Link öffnen oder mit eigenem Schlüssel senden. Die Antwort bekommt die echten Angaben zurück.", icon: <Mail/> },
   { id: "vorgang", label: "Vorgang oder Termin vorbereiten", art: "ohne KI", hint: "Vorgang wählen: was offen ist, was fehlt, nächster Schritt. Daraus ein Schreiben aus Vorlagen mit Tonfall.", icon: <ClipboardCheck/> },
 ];
 
@@ -128,7 +128,7 @@ export function AssistantCenter({ records, relations, documents, initialCaseId, 
       {wege.map((item) => <article key={item.id} className={`card assistant-mode ${weg === item.id ? "active" : ""}`} data-assistenz-weg={item.id}><button type="button" className="assistant-mode-action" aria-pressed={weg === item.id} onClick={() => setWeg(item.id)}>{item.icon}<span><small className="assistant-weg-art">{item.art}</small><strong>{item.label}</strong></span></button><InfoPopover label={`${item.label} erklären`} text={item.hint}/></article>)}
     </section>
 
-    {weg === "brief" && <BriefAntwort namen={namen} documents={documents} cases={cases.map((r) => ({ id: r.id, label: labelOf(r) }))} vaultReady={vaultReady} onSave={(input) => onSaveCorrespondence(input)} onWorkflowPdf={(file) => onWorkflowPdf ? onWorkflowPdf(file) : onNotice({ kind: "info", text: "Workflow PDF ist hier nicht verfügbar." })} onNotice={onNotice}/>}
+    {weg === "brief" && <BriefAntwort documents={documents} onDateiLaden={onDateiLaden} onNotice={onNotice}/>}
 
     {weg !== "brief" && <section className="card assistant-question-card">
       <div className="card-heading"><div><span className="eyebrow dark">Gemeinsamer Familienakten-Kern</span><span className="ui-heading-help"><h2>Was möchtest du klären?</h2><InfoPopover label="Was möchtest du klären? erklären" text={UI_HELP["Was möchtest du klären?"]}/></span></div><span className="badge neutral">Benutzer entscheidet</span></div>
