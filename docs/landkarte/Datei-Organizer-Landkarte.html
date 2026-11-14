@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- erzeugt von scripts/landkarte-bauen.mjs – nie von Hand ändern -->
+</head>
+<body>
+<title>Landkarte Organizer und Familienakte</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: drei Ansichten (Organizer, Familienakte, Dashboard); Karte = Spalten von links (woher) nach rechts (wohin), Fäden als SVG darüber. */
+:root{
+  --bg:#f3f5f7;--fl:#ffffff;--fg:#17212b;--mut:#5b6875;--rand:#d5dce3;
+  --blau:#1f6fd1;--lila:#7b4fc9;--grau:#8a96a3;--petrol:#0f7c80;--gelb:#b7791f;--rot:#c0392b;--gruen:#2e8b57;
+  --woher:#e6f1fb;--arbeit:#eef0fb;--speicher:#e8f6f4;--wohin:#fbf1e4;
+  --t-anz:"Space Grotesk",Inter,system-ui,sans-serif;--t-text:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#11161c;--fl:#1a222b;--fg:#e6ecf2;--mut:#9aa7b4;--rand:#2c3845;--blau:#5ea2f0;--lila:#a98bea;--grau:#7d8996;--petrol:#3fb7bb;--gelb:#e0a64a;--rot:#ef7a6d;--gruen:#5cc28a;
+  --woher:#16273a;--arbeit:#1f2238;--speicher:#13302e;--wohin:#33281a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#11161c;--fl:#1a222b;--fg:#e6ecf2;--mut:#9aa7b4;--rand:#2c3845;--blau:#5ea2f0;--lila:#a98bea;--grau:#7d8996;--petrol:#3fb7bb;--gelb:#e0a64a;--rot:#ef7a6d;--gruen:#5cc28a;
+  --woher:#16273a;--arbeit:#1f2238;--speicher:#13302e;--wohin:#33281a;color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--t-text);font-size:14px;line-height:1.45;margin:0}
+.wrap{max-width:1240px;margin:0 auto;padding-block:16px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1{font-family:var(--t-anz);font-size:1.45rem;margin:0;text-wrap:balance}
+.kopf{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.reiter{display:flex;gap:6px;flex-wrap:wrap}
+.reiter button{font:inherit;font-weight:600;border:1px solid var(--rand);background:var(--fl);color:var(--fg);padding:6px 12px;border-radius:999px;cursor:pointer}
+.reiter button[aria-selected="true"]{background:var(--blau);border-color:var(--blau);color:#fff}
+button:focus-visible,summary:focus-visible{outline:2px solid var(--blau);outline-offset:2px}
+.leiste{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 10px;align-items:center}
+.leg{font:inherit;font-size:.8rem;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--rand);background:var(--fl);color:var(--fg);padding:3px 9px;border-radius:6px;cursor:pointer}
+.leg[aria-pressed="true"]{border-color:var(--fg);box-shadow:inset 0 0 0 1px var(--fg)}
+.leg b{font-variant-numeric:tabular-nums}
+.muster{width:18px;height:12px;border-radius:3px;border:2px solid var(--blau);background:var(--fl)}
+.muster.bau{border-style:dashed;border-color:var(--lila)}.muster.geplant{border-style:dashed;border-color:var(--grau)}
+.muster.woher{background:var(--woher);border-color:var(--rand)}.muster.arbeit{background:var(--arbeit);border-color:var(--rand)}
+.muster.speicher{background:var(--speicher);border-color:var(--rand)}.muster.wohin{background:var(--wohin);border-color:var(--rand)}
+.frage{position:relative}
+.frage>summary{list-style:none;cursor:pointer;width:24px;height:24px;border-radius:50%;border:1px solid var(--rand);background:var(--fl);display:grid;place-items:center;font-weight:600;color:var(--mut)}
+.frage>summary::-webkit-details-marker{display:none}
+.frage[open]>summary{background:var(--blau);color:#fff;border-color:var(--blau)}
+.frage .antwort{position:absolute;z-index:20;top:30px;right:0;width:min(330px,86vw);background:var(--fl);border:1px solid var(--rand);border-radius:8px;padding:10px 12px;box-shadow:0 6px 20px rgba(0,0,0,.18)}
+.antwort ul{margin:0;padding-left:18px}.antwort li+li{margin-top:3px}
+.antwort h3{font-size:.85rem;margin:0 0 4px}
+.fragen{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:.85rem;color:var(--mut)}
+.fragen .frage .antwort{left:0;right:auto}
+.karte{position:relative;overflow-x:auto;border:1px solid var(--rand);border-radius:10px;background:var(--fl)}
+.innen{position:relative;display:grid;grid-template-columns:repeat(var(--spalten),minmax(170px,1fr));gap:18px 34px;padding:14px;min-width:calc(var(--spalten) * 196px)}
+.spalte{display:flex;flex-direction:column;gap:10px;position:relative;z-index:2;min-width:0}
+.spalte h2{font-family:var(--t-anz);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin:0 0 2px}
+.kasten{font:inherit;text-align:left;color:var(--fg);border:2px solid var(--blau);border-radius:8px;padding:7px 9px;cursor:pointer;display:flex;flex-direction:column;gap:2px;transition:opacity .15s,box-shadow .15s}
+.kasten.bau{border-style:dashed;border-color:var(--lila)}.kasten.geplant{border-style:dashed;border-color:var(--grau)}
+.kasten.woher{background:var(--woher)}.kasten.arbeit{background:var(--arbeit)}.kasten.speicher{background:var(--speicher)}.kasten.wohin{background:var(--wohin)}
+.kasten strong{font-size:.88rem}.kasten span{font-size:.76rem;color:var(--mut)}
+.kasten.aus{opacity:.28}.kasten.an{box-shadow:0 0 0 3px var(--fg)}
+svg.faeden{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible}
+svg.faeden path{fill:none;stroke-width:2;stroke:var(--blau);opacity:.45}
+svg.faeden path.bau{stroke:var(--lila);stroke-dasharray:6 4}svg.faeden path.geplant{stroke:var(--grau);stroke-dasharray:3 5}
+svg.faeden path.aus{opacity:.07}svg.faeden path.an{opacity:1;stroke-width:3}
+.tafel{margin-top:12px;border:1px solid var(--rand);border-radius:10px;background:var(--fl);padding:12px 14px;min-height:64px}
+.tafel h3{font-family:var(--t-anz);margin:0;font-size:1.05rem}
+.tafel .zeile{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:6px}
+.pille{font-size:.74rem;font-weight:600;padding:2px 8px;border-radius:999px;color:#fff;background:var(--blau)}
+.pille.bau{background:var(--lila)}.pille.geplant{background:var(--grau)}
+.ort{font-size:.82rem}.ort code{font-size:.78rem;background:var(--bg);padding:1px 5px;border-radius:4px;word-break:break-all}
+.ziel{font:inherit;font-size:.78rem;border:1px solid var(--rand);background:var(--bg);color:var(--fg);border-radius:6px;padding:2px 8px;cursor:pointer}
+.leer{color:var(--mut)}
+/* Dashboard */
+.vorschau{font-size:.8rem;color:var(--gelb);font-weight:600}
+.kacheln{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:12px 0}
+.kachel{background:var(--fl);border:1px solid var(--rand);border-radius:10px;padding:10px 12px}
+.kachel b{display:block;font-family:var(--t-anz);font-size:1.6rem;font-variant-numeric:tabular-nums}
+.kachel span{font-size:.8rem;color:var(--mut)}
+.kachel.ok b{color:var(--gruen)}.kachel.pr b{color:var(--gelb)}.kachel.dp b{color:var(--petrol)}.kachel.ach b{color:var(--rot)}
+.zwei{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:12px}
+@media (max-width:760px){.zwei{grid-template-columns:minmax(0,1fr)}}
+.block{background:var(--fl);border:1px solid var(--rand);border-radius:10px;padding:12px 14px;min-width:0}
+.block h3{font-family:var(--t-anz);font-size:1rem;margin:0 0 8px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.balken{display:grid;grid-template-columns:minmax(0,10.5em) minmax(0,1fr) 2.6em;gap:4px 8px;align-items:center;font-size:.82rem}
+.balken .bar{height:12px;border-radius:3px;background:var(--blau)}
+.balken .bar.p{background:var(--petrol)}.balken .bar.g{background:var(--grau)}.balken .bar.r{background:var(--rot)}
+.balken .n{text-align:right;font-variant-numeric:tabular-nums;color:var(--mut)}
+.balken .lbl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fluss{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1.2fr) 2.6em;gap:5px 8px;align-items:center;font-size:.82rem}
+.fluss .pf{color:var(--mut)}.fluss .fa{font-weight:600}.fluss .n{text-align:right;font-variant-numeric:tabular-nums}
+.fluss .kopfz{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--mut)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}.chips span{font-size:.78rem;border:1px solid var(--rand);border-radius:999px;padding:2px 9px}
+.chips span b{font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <div class="kopf">
+    <h1>Landkarte Organizer und Familienakte</h1>
+    <div class="reiter" role="tablist">
+      <button role="tab" id="r-organizer" data-ansicht="organizer" aria-selected="true">Datei-Organizer</button>
+      <button role="tab" id="r-familienakte" data-ansicht="familienakte" aria-selected="false">Familienakte</button>
+      <button role="tab" id="r-dashboard" data-ansicht="dashboard" aria-selected="false">Dashboard</button>
+    </div>
+  </div>
+
+  <section id="v-karte">
+    <div class="leiste" id="legende"></div>
+    <div class="fragen" id="fragen"></div>
+    <div class="karte" style="margin-top:10px"><div class="innen" id="innen"></div></div>
+    <div class="tafel" id="tafel" aria-live="polite"><span class="leer">Kasten antippen: Du siehst, woher die Daten kommen, wo sie liegen und wohin sie gehen.</span></div>
+  </section>
+
+  <section id="v-dashboard" hidden>
+    <div class="leiste" style="justify-content:space-between">
+      <div><strong>Sortiervorgang</strong> · Ordner „Eingang“ · 13.11.2026 · <span class="vorschau">Vorschau, noch nicht in der App</span></div>
+      <details class="frage"><summary aria-label="Erklärung">?</summary><div class="antwort"><ul>
+        <li>So soll es nach jedem Durchgang im Organizer aussehen.</li>
+        <li>Zahlen: Testordner mit 102 erfundenen Dateien.</li>
+        <li>Die Bereiche sind dieselben wie in der Familienakte – dort landet die Datei.</li>
+      </ul></div></details>
+    </div>
+    <div class="kacheln" id="kacheln"></div>
+    <div class="zwei">
+      <div class="block"><h3>Formate</h3><div class="balken" id="formate"></div>
+        <h3 style="margin-top:14px">Arten</h3><div class="chips" id="arten"></div></div>
+      <div class="block"><h3>Wohin in der Familienakte
+        <details class="frage"><summary aria-label="Erklärung">?</summary><div class="antwort"><ul>
+          <li>Jede Zeile: Kategorie im Organizer → Bereich in der Familienakte.</li>
+          <li>„Ohne Bereich“: Fotos, Werbung, Unklares – bleiben im Eingang, bis du sie zuordnest.</li>
+          <li>Übernahme in die Familienakte ist noch nicht gebaut.</li>
+        </ul></div></details></h3>
+        <div class="fluss" id="fluss"></div></div>
+    </div>
+  </section>
+</div>
+
+<script>
+const KARTEN = {
+  organizer: {
+    spalten: [["woher","Woher"],["arbeit","Lesen"],["arbeit","Sortieren"],["speicher","Wo es liegt"],["wohin","Wohin"]],
+    kaesten: [
+      ["o_ordner",0,"Ordner am PC","Ordner wählen – Chrome, Edge","fertig","Bleibt, wo er ist. Nichts wird kopiert."],
+      ["o_hoch",0,"Hochladen, Hineinziehen","Handy, Firefox, einzelne Dateien","fertig","Nur im Speicher des Browsers – für kleine Mengen."],
+      ["o_sd",0,"SD-Karte über Familienakte Pro","Ordner auf dem Gerät","bau","Ordner auf der Karte. Am Gerät noch nicht geprüft."],
+      ["o_mail",0,"E-Mail-Dateien","Anhänge einzeln","fertig","Die .eml-Datei im Ordner; Anhänge werden nur gelesen."],
+      ["o_menge",0,"Große Mengen","Größe zuerst, Blöcke, weitermachen","geplant","Kommt in den nächsten 2–3 Wochen."],
+      ["o_art",1,"Art erkennen","PDF, Foto, Mail, Office … (Sieb 1)","fertig","Nur im Arbeitsspeicher."],
+      ["o_text",1,"Text lesen","PDF-Text, Word, Excel, PowerPoint","fertig","Textauszug im Browser-Speicher."],
+      ["o_ocr",1,"Texterkennung","Fotos und Scans ohne Text","bau","Gebaut (0.3.4), noch nicht veröffentlicht."],
+      ["o_innen",1,"Datei-Innere","Autor, Programm, Datum, PDF-Kennung","bau","Gebaut (0.3.4), noch nicht veröffentlicht."],
+      ["o_siebe",2,"Siebe 2–5","Kopf → Kategorie → Absender → Inhalt","fertig","Ergebnis je Datei im Browser-Speicher."],
+      ["o_doppelt",2,"Doppelte","gleicher Fingerabdruck","fertig","Aus der Sicht genommen, Original bleibt."],
+      ["o_aehnlich",2,"Ähnliche","Fassung, gleicher Text, Beleg, Foto, Name","bau","Nur markiert, nie entfernt."],
+      ["o_pruefen",2,"Du prüfst","nur Unsicheres, Klick für Klick","fertig","Deine Wahl im Browser-Speicher, mit Rückgängig."],
+      ["o_lernen",2,"Lernt","aus deinen Korrekturen","fertig","Gelerntes im Browser-Speicher, nie im Internet."],
+      ["o_dash",2,"Dashboard","Zahlen je Durchgang, führt zur Stelle","bau","In der App unter „Landkarte“; Stift, Auge, Papierkorb an jeder Datei."],
+      ["o_browser",3,"Browser-Speicher","Steckbriefe, Text, Gelerntes, Verlauf","fertig","IndexedDB „DateiOrganizer1“ – nur auf diesem Gerät, in diesem Browser."],
+      ["o_orig",3,"Originale","unverändert im Ordner","fertig","Dein Ordner. Der Organizer löscht und verschiebt nichts."],
+      ["o_index",3,"organizer-index.json","Vorschläge zum Mitnehmen","fertig","Im gewählten Ordner, neben den Dateien."],
+      ["o_fa",4,"Familienakte","übernimmt und ordnet zu","geplant","Liest den Index; Dateien kommen in ihren Bereich."],
+      ["o_ki",4,"Andere Programme, KI","Steckbrief, Text, Abschnitte","geplant","Vorarbeit für Suche und KI."],
+      ["o_lehrer",4,"Lehrer","Claude Haiku über eigenen Server","geplant","Nur Ausschnitte, Namen verdeckt."],
+    ],
+    faeden: [["o_ordner","o_art"],["o_hoch","o_art"],["o_sd","o_art","bau"],["o_mail","o_art"],["o_menge","o_art","geplant"],
+      ["o_art","o_text"],["o_art","o_ocr","bau"],["o_art","o_innen","bau"],["o_art","o_doppelt"],
+      ["o_text","o_siebe"],["o_ocr","o_siebe","bau"],["o_innen","o_aehnlich","bau"],["o_text","o_aehnlich","bau"],
+      ["o_siebe","o_pruefen"],["o_pruefen","o_lernen"],["o_siebe","o_dash","bau"],["o_dash","o_pruefen","bau"],["o_siebe","o_browser"],["o_pruefen","o_browser"],["o_lernen","o_browser"],
+      ["o_doppelt","o_browser"],["o_aehnlich","o_browser","bau"],["o_ordner","o_orig"],["o_browser","o_index"],
+      ["o_index","o_fa","geplant"],["o_index","o_ki","geplant"],["o_pruefen","o_lehrer","geplant"]],
+    fragen: [
+      ["Kopiert er meine Dateien?",["Nein. Er liest im Ordner.","Im Browser liegt nur ein Steckbrief je Datei.","Die Originale bleiben, wo sie sind."]],
+      ["Wie viele Dateien schafft er?",["Heute: einige hundert am Stück.","Danach wird er langsam – alles in einem Durchgang.","Neu kommt: Größe zuerst, Blöcke, nach Abbruch weitermachen."]],
+      ["Wie kommt es in die Familienakte?",["Er schreibt organizer-index.json in den Ordner.","Die Familienakte liest den Index und ordnet zu.","Dieser Schritt ist noch nicht gebaut."]],
+    ],
+  },
+  familienakte: {
+    spalten: [["woher","Woher"],["arbeit","Lesen und Sortieren"],["speicher","Wo es liegt"],["wohin","Wohin"]],
+    kaesten: [
+      ["f_hinzu",0,"Ablegen, Datei wählen","Knopf „Ablegen“, Startseite","fertig","Kommt in den Eingang."],
+      ["f_teilen",0,"Teilen aus anderen Apps","Android-Teilen","fertig","Kommt in den Eingang."],
+      ["f_scan",0,"Kamera und Scan","Workflow PDF in der App","fertig","Stapel → PDF → Eingang."],
+      ["f_mail",0,"E-Mail-Wege","Mail-App, Private Brain Pro, Microsoft","bau","Microsoft-Postfach wartet auf die Rechte in Entra."],
+      ["f_ordner",0,"Eingangsordner","in Blöcken zu 20","fertig","Ein Ordner, den die App beobachtet."],
+      ["f_cloud",0,"Cloud-Ordner","OneDrive & Co. hereinholen","fertig","Kopie mit Herkunft, kein Verweis."],
+      ["f_paket",0,"Paket vom anderen Gerät","Teilen, Netz, Festplatte","fertig","Wird beim Öffnen zusammengeführt."],
+      ["f_org",0,"Datei-Organizer","organizer-index.json","geplant","Vorschläge des Organizers übernehmen."],
+      ["f_lesen",1,"Text lesen","PDF-Text und Texterkennung","fertig","Textauszug an der Unterlage."],
+      ["f_kern",1,"Sortier-Kern","Bereich, Frist, Absender","fertig","Derselbe Kern wie im Organizer, byte-gleich."],
+      ["f_kopf",1,"Briefkopf","ergibt den Titel","fertig","Titel an der Unterlage."],
+      ["f_ok",1,"Du bestätigst","einzeln oder alle auf einmal","fertig","Erst dann ist es in der Akte."],
+      ["f_app",2,"App-Speicher","auf dem Gerät","fertig","Speicher der App (IndexedDB), ohne Tresor."],
+      ["f_tresor",2,"Pro-Tresor","verschlüsselt, SD-Karte, Gerät oder PC","fertig","Ordner „Family-Projekt“, Fach „familienakte“."],
+      ["f_voll",2,"Vollsicherung","verschlüsselt, mit Notfallblatt","fertig","Ein Ordner deiner Wahl."],
+      ["f_zweit",2,"Zweiter Ort","OneDrive-Ordner, Stick, SD","fertig","Höchstens einmal am Tag, bei Änderung."],
+      ["f_platte",2,"Gemeinsame Festplatte, Netz","Abgleich zwischen Geräten","fertig","Erkannt an der Kennung, nicht am Namen."],
+      ["f_bib",3,"Bibliothek und Suche","Wörter, Daten, Bedeutung","fertig","Liest aus App-Speicher oder Tresor."],
+      ["f_frist",3,"Fristen, Kalender, Glocke","Google, Microsoft, Gerät","fertig","Fristen gehen mit Titel hinaus, Notizen nie."],
+      ["f_teil",3,"Teilen und Mail","PDF, Mail-App, Paket","fertig","Nur, was du wählst."],
+      ["f_pro",3,"Andere Pro-Apps","BookLedgerPro, Workflow PDF, Private Brain","fertig","Über den gemeinsamen Tresor."],
+    ],
+    faeden: [["f_hinzu","f_lesen"],["f_teilen","f_lesen"],["f_scan","f_lesen"],["f_mail","f_lesen","bau"],["f_ordner","f_lesen"],["f_cloud","f_lesen"],
+      ["f_paket","f_app"],["f_org","f_ok","geplant"],["f_lesen","f_kern"],["f_lesen","f_kopf"],["f_kern","f_ok"],["f_kopf","f_ok"],
+      ["f_ok","f_app"],["f_ok","f_tresor"],["f_app","f_voll"],["f_tresor","f_voll"],["f_voll","f_zweit"],["f_app","f_platte"],["f_tresor","f_platte"],
+      ["f_app","f_bib"],["f_tresor","f_bib"],["f_app","f_frist"],["f_tresor","f_frist"],["f_bib","f_teil"],["f_tresor","f_pro"]],
+    fragen: [
+      ["Wo liegen meine Unterlagen?",["Ohne Tresor: im Speicher der App.","Mit Pro-Tresor: verschlüsselt auf SD-Karte, Gerät oder PC.","Dazu deine Sicherungen."]],
+      ["Was passiert beim Ablegen?",["Text lesen, Kern schlägt Bereich und Frist vor.","Du bestätigst.","Erst dann ist es in der Akte."]],
+      ["Was hat das mit dem Organizer zu tun?",["Beide nutzen denselben Sortier-Kern.","Der Organizer sortiert große Mengen vor.","Die Familienakte übernimmt – noch nicht gebaut."]],
+    ],
+  },
+};
+const STAND = {fertig:"fertig",bau:"im Bau",geplant:"geplant"};
+const ART = {woher:"Woher",arbeit:"Arbeit",speicher:"Speicher",wohin:"Wohin"};
+let ansicht = "organizer", filter = null, gewaehlt = null;
+const $ = s => document.querySelector(s);
+const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+
+function fragenZeichnen(liste){
+  const f = $("#fragen"); f.replaceChildren();
+  for (const [q, punkte] of liste) {
+    const d = el("details","frage"), s = el("summary",null,"?"), a = el("div","antwort"), ul = el("ul");
+    s.setAttribute("aria-label", q); a.append(el("h3",null,q));
+    for (const p of punkte) ul.append(el("li",null,p));
+    a.append(ul); d.append(s,a);
+    const w = el("span"); w.style.cssText = "display:inline-flex;gap:6px;align-items:center"; w.append(d, el("span",null,q)); f.append(w);
+  }
+}
+function karte(){
+  const K = KARTEN[ansicht], innen = $("#innen"); innen.replaceChildren(); innen.style.setProperty("--spalten", K.spalten.length);
+  const svg = document.createElementNS("http://www.w3.org/2000/svg","svg"); svg.classList.add("faeden"); innen.append(svg);
+  const spalten = K.spalten.map(([art, titel]) => { const s = el("div","spalte"); s.append(el("h2",null,titel)); s.dataset.art = art; innen.append(s); return s; });
+  for (const [id, sp, titel, kurz, stand] of K.kaesten) {
+    const b = el("button", `kasten ${stand} ${spalten[sp].dataset.art}`); b.type = "button"; b.id = id; b.dataset.stand = stand; b.dataset.art = spalten[sp].dataset.art;
+    b.append(el("strong",null,titel), el("span",null,kurz)); b.addEventListener("click", () => waehlen(gewaehlt === id ? null : id));
+    spalten[sp].append(b);
+  }
+  legende(); fragenZeichnen(K.fragen); requestAnimationFrame(faeden); waehlen(null);
+}
+function faeden(){
+  if (ansicht === "dashboard") return;
+  const K = KARTEN[ansicht], innen = $("#innen"), svg = innen.querySelector("svg"); if (!svg) return;
+  const r0 = innen.getBoundingClientRect(); svg.setAttribute("width", innen.scrollWidth); svg.setAttribute("height", innen.scrollHeight); svg.replaceChildren();
+  for (const [a, b, stand] of K.faeden) {
+    const A = document.getElementById(a).getBoundingClientRect(), B = document.getElementById(b).getBoundingClientRect();
+    let x1, y1, x2, y2, d;
+    if (B.left > A.right - 4) { x1 = A.right - r0.left; y1 = A.top + A.height/2 - r0.top; x2 = B.left - r0.left; y2 = B.top + B.height/2 - r0.top; const m = (x2-x1)/2; d = `M${x1},${y1} C${x1+m},${y1} ${x2-m},${y2} ${x2},${y2}`; }
+    else { x1 = A.left + 10 - r0.left; y1 = A.top + A.height/2 - r0.top; x2 = B.left + 10 - r0.left; y2 = B.top + B.height/2 - r0.top; d = `M${x1},${y1} C${x1-26},${y1} ${x2-26},${y2} ${x2},${y2}`; }
+    const p = document.createElementNS("http://www.w3.org/2000/svg","path"); p.setAttribute("d", d); p.dataset.von = a; p.dataset.nach = b;
+    if (stand) p.classList.add(stand); svg.append(p);
+  }
+  markieren();
+}
+function legende(){
+  const K = KARTEN[ansicht], L = $("#legende"); L.replaceChildren();
+  const zahl = (feld, wert) => K.kaesten.filter(k => (feld === "stand" ? k[4] : K.spalten[k[1]][0]) === wert).length;
+  const knopf = (feld, wert, text, muster) => { const b = el("button","leg"); b.type = "button"; b.setAttribute("aria-pressed", String(filter?.[0] === feld && filter[1] === wert));
+    b.append(el("span","muster " + muster), el("span",null,text), el("b",null,String(zahl(feld, wert))));
+    b.addEventListener("click", () => { filter = filter?.[0] === feld && filter[1] === wert ? null : [feld, wert]; gewaehlt = null; legende(); markieren(); tafel(); }); L.append(b); };
+  for (const s of ["fertig","bau","geplant"]) knopf("stand", s, STAND[s], s);
+  for (const a of ["woher","arbeit","speicher","wohin"]) if (K.spalten.some(sp => sp[0] === a)) knopf("art", a, ART[a], a);
+}
+function nachbarn(id){ const K = KARTEN[ansicht]; return { rein: K.faeden.filter(f => f[1] === id).map(f => f[0]), raus: K.faeden.filter(f => f[0] === id).map(f => f[1]) }; }
+function markieren(){
+  const innen = $("#innen"); const kaesten = [...innen.querySelectorAll(".kasten")], pfade = [...innen.querySelectorAll("path")];
+  let sichtbar = null;
+  if (gewaehlt) { const n = nachbarn(gewaehlt); sichtbar = new Set([gewaehlt, ...n.rein, ...n.raus]); }
+  else if (filter) sichtbar = new Set(kaesten.filter(k => k.dataset[filter[0]] === filter[1]).map(k => k.id));
+  for (const k of kaesten) { k.classList.toggle("aus", !!sichtbar && !sichtbar.has(k.id)); k.classList.toggle("an", k.id === gewaehlt); k.setAttribute("aria-pressed", String(k.id === gewaehlt)); }
+  for (const p of pfade) { const an = gewaehlt ? (p.dataset.von === gewaehlt || p.dataset.nach === gewaehlt) : sichtbar ? (sichtbar.has(p.dataset.von) && sichtbar.has(p.dataset.nach)) : false;
+    p.classList.toggle("an", an); p.classList.toggle("aus", !!sichtbar && !an); }
+}
+function tafel(){
+  const t = $("#tafel"); t.replaceChildren();
+  if (!gewaehlt) { t.append(el("span","leer","Kasten antippen: Du siehst, woher die Daten kommen, wo sie liegen und wohin sie gehen.")); return; }
+  const K = KARTEN[ansicht], k = K.kaesten.find(x => x[0] === gewaehlt), n = nachbarn(gewaehlt);
+  const kopf = el("div","zeile"); kopf.style.marginTop = "0"; kopf.append(el("h3",null,k[2]), el("span","pille " + k[4], STAND[k[4]])); t.append(kopf);
+  const ort = el("div","zeile ort"); ort.append(el("strong",null,"Liegt:"), el("span",null,k[5])); t.append(ort);
+  const ziele = (titel, liste) => { if (!liste.length) return; const z = el("div","zeile"); z.append(el("strong",null,titel));
+    for (const id of liste) { const b = el("button","ziel", K.kaesten.find(x => x[0] === id)[2]); b.type = "button"; b.addEventListener("click", () => waehlen(id)); z.append(b); } t.append(z); };
+  ziele("Kommt von:", n.rein); ziele("Geht zu:", n.raus);
+}
+function waehlen(id){ gewaehlt = id; if (id) filter = null; legende(); markieren(); tafel(); if (id) document.getElementById(id)?.scrollIntoView({block:"nearest",inline:"nearest",behavior:"smooth"}); }
+
+// Dashboard: Testordner (102 erfundene Dateien, testdaten/ERWARTUNG.json); „zu prüfen“ aus scripts/vergleich-familienakte.mjs.
+const DASH = {
+  kacheln: [["102","Dateien",""],["71","sicher einsortiert","ok"],["31","von dir zu prüfen","pr"],["2","doppelt","dp"],["2","gesperrt (Programme)","ach"],["33","mit Frist",""]],
+  formate: [["PDF",78,""],["Foto (JPG)",12,""],["E-Mail (EML)",5,"p"],["Word",2,"p"],["Text",2,"g"],["Kalender (ICS)",1,"g"],["Programm (gesperrt)",2,"r"]],
+  arten: [["Rechnung",27],["Foto",12],["Abrechnung",10],["Brief",8],["Termin",8],["Bescheid",6],["Kontoauszug",5],["Vertrag",3],["Befund",3],["Werbung",3],["Kündigung",2],["Mahnung",1],["Unklar",4]],
+  fluss: [["Energie & Versorgung",14],["Gesundheit & Pflege",14],["Verträge & Abonnements",8],["Rente, Arbeit & Sozialversicherung",8],["Versicherungen",7],["Steuern & Behörden",6],["Finanzen & Konten",6],["Auto & Mobilität",4],["Haus & Wohnung",4],["Einkäufe, Rechnungen & Garantien",3],["Familie & persönliche Dokumente",2],["Reisen & Freizeit",2],["Erbschaft, Vollmachten & Vorsorge",1],["ohne Bereich (Eingang)",23]],
+};
+function dashboard(){
+  const k = $("#kacheln"); k.replaceChildren();
+  for (const [z, t, c] of DASH.kacheln) { const d = el("div","kachel " + c); d.append(el("b",null,z), el("span",null,t)); k.append(d); }
+  const f = $("#formate"); f.replaceChildren(); const max = Math.max(...DASH.formate.map(x => x[1]));
+  for (const [t, n, c] of DASH.formate) { const bar = el("div","bar " + c); bar.style.width = (n / max * 100) + "%"; const zelle = el("div"); zelle.append(bar); f.append(el("span","lbl",t), zelle, el("span","n",String(n))); }
+  const a = $("#arten"); a.replaceChildren(); for (const [t, n] of DASH.arten) { const s = el("span"); s.append(el("span",null,t + " "), el("b",null,String(n))); a.append(s); }
+  const fl = $("#fluss"); fl.replaceChildren();
+  fl.append(el("span","kopfz","Organizer"), el("span"), el("span","kopfz","Familienakte"), el("span","kopfz n","Anz."));
+  for (const [t, n] of DASH.fluss) { const ohne = t.startsWith("ohne"); fl.append(el("span","pf", ohne ? "nicht erkannt" : t), el("span","pf","→"), el("span","fa", ohne ? "Eingang, du ordnest zu" : t), el("span","n",String(n))); }
+}
+
+function zeigen(v){
+  ansicht = v; filter = null; gewaehlt = null;
+  for (const b of document.querySelectorAll("[data-ansicht]")) b.setAttribute("aria-selected", String(b.dataset.ansicht === v));
+  $("#v-karte").hidden = v === "dashboard"; $("#v-dashboard").hidden = v !== "dashboard";
+  if (v === "dashboard") dashboard(); else karte();
+  try { if (location.hash !== "#" + v) history.replaceState(null, "", "#" + v); } catch {}
+}
+for (const b of document.querySelectorAll("[data-ansicht]")) b.addEventListener("click", () => zeigen(b.dataset.ansicht));
+addEventListener("resize", () => requestAnimationFrame(faeden));
+addEventListener("hashchange", () => { const h = location.hash.slice(1); if (h in KARTEN || h === "dashboard") zeigen(h); });
+document.addEventListener("click", e => { for (const d of document.querySelectorAll("details.frage[open]")) if (!d.contains(e.target)) d.open = false; });
+if (document.fonts?.ready) document.fonts.ready.then(() => requestAnimationFrame(faeden));
+// In der App eingebettet (?eingebettet): Reiter und Titel macht die App selbst, das Dashboard dort ist live.
+if (new URLSearchParams(location.search).has("eingebettet")) { document.querySelector(".kopf").hidden = true; }
+const start = location.hash.slice(1); zeigen(start in KARTEN || start === "dashboard" ? start : "organizer");
+</script>
+
+</body>
+</html>
