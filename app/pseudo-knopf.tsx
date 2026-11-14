@@ -1,5 +1,5 @@
 "use client";
-// Knopf „Pseudo“ im Kopf (Klaus 14.11.2026): rot = inaktiv, grün = aktiv. Aktiv öffnet oben das Fenster „Pseudonymisieren“:
+// Knopf „Pseudo“ im Kopf (Klaus 14.11.2026): grün „an“, rot „aus“. An öffnet oben das Fenster „Pseudonymisieren“:
 // Dateien einfügen (Text, PDF, Bild/Scan mit Texterkennung auf dem Gerät, E-Mail .eml samt Anhängen) oder Text einfügen →
 // pseudonymisierte Fassung mit Marke, Kopieren (Doppelblatt), als Textdatei speichern, Antwort einer KI zurückführen.
 // Die Maske (lib/maske.ts auf Modul 25) hat keinen Netzweg; die Zuordnung bleibt nur im Speicher dieser Seite.
@@ -27,8 +27,8 @@ export function usePseudo(): [boolean, (an: boolean) => void] {
 export function PseudoKnopf() {
   const [an, setzen] = usePseudo();
   return <button type="button" className={`icon-button pseudo-knopf ${an ? "pseudo-an" : "pseudo-aus"}`} aria-pressed={an} onClick={() => setzen(!an)}
-    title={an ? "Pseudonymisieren ist aktiv – tippen zum Ausschalten" : "Pseudonymisieren ist inaktiv – tippen zum Einschalten"} aria-label={`Pseudo ${an ? "aktiv" : "inaktiv"}`} data-pseudo-knopf={an ? "an" : "aus"}>
-    <span className="pseudo-wort">Pseudo</span><small className="pseudo-zustand">{an ? "aktiv" : "inaktiv"}</small>
+    title={an ? "Pseudonymisieren ist an – tippen zum Ausschalten" : "Pseudonymisieren ist aus – tippen zum Einschalten"} aria-label={`Pseudo ${an ? "an" : "aus"}`} data-pseudo-knopf={an ? "an" : "aus"}>
+    <span className="pseudo-wort">Pseudo</span><small className="pseudo-zustand">{an ? "an" : "aus"}</small>
   </button>;
 }
 

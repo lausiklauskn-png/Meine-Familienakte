@@ -1,4 +1,4 @@
-// Pseudo-Knopf (Klaus 14.11.2026): rot „inaktiv“ → Tipp → grün „aktiv“, Fenster pseudonymisiert eine eingefügte Datei
+// Pseudo-Knopf (Klaus 14.11.2026): rot „aus“ → Tipp → grün „an“, Fenster pseudonymisiert eine eingefügte Datei
 // (erfundene Daten) ohne einen einzigen Netzaufruf, Marke vorn, zweiter Durchlauf unverändert, Zurückführen. Handy und PC.
 import { startApp, launchBrowser, HANDY, DESKTOP, ready, step, soll, check, summary, collectErrors } from "./_harness.mjs";
 
@@ -12,12 +12,12 @@ try {
     const page = await context.newPage(); const errors = collectErrors(page);
     await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page);
     const knopf = page.locator("[data-pseudo-knopf]");
-    await step(`${name}: Knopf rot „inaktiv“, kein Fenster`, async () => {
+    await step(`${name}: Knopf rot „aus“, kein Fenster`, async () => {
       const r = { zustand: await knopf.getAttribute("data-pseudo-knopf"), text: await knopf.innerText(), fenster: await page.locator("[data-pseudo-fenster]").count(), sichtbar: await knopf.isVisible() };
-      return soll(r.zustand === "aus" && /Pseudo\s*inaktiv/.test(r.text) && r.fenster === 0 && r.sichtbar, r);
+      return soll(r.zustand === "aus" && /Pseudo\s*aus/.test(r.text) && r.fenster === 0 && r.sichtbar, r);
     });
     const netz = [];
-    await step(`${name}: Tipp → grün „aktiv“, Datei einfügen, alles verdeckt, kein Netzaufruf`, async () => {
+    await step(`${name}: Tipp → grün „an“, Datei einfügen, alles verdeckt, kein Netzaufruf`, async () => {
       await knopf.click();
       await page.locator("[data-pseudo-fenster]").waitFor();
       page.on("request", (r) => { if (!r.url().startsWith(app.base) && !r.url().startsWith("data:") && !r.url().startsWith("blob:")) netz.push(r.url()); });
@@ -25,7 +25,7 @@ try {
       await page.locator("[data-pseudo-ergebnis]").first().waitFor();
       const t = await page.locator("[data-pseudo-ergebnis]").first().innerText();
       const r = { knopf: await knopf.innerText(), offen: KLAR.filter((k) => t.includes(k)), marke: t.startsWith("⟦PSEUDONYMISIERT v1⟧"), bleibt: t.includes("31.12.2026") && t.includes("412,50"), netz };
-      return soll(/aktiv/.test(r.knopf) && !/inaktiv/.test(r.knopf) && r.offen.length === 0 && r.marke && r.bleibt && netz.length === 0, r);
+      return soll(/Pseudo\s*an/.test(r.knopf) && r.offen.length === 0 && r.marke && r.bleibt && netz.length === 0, r);
     });
     await step(`${name}: Kopieren nimmt nur die Fassung, zweiter Durchlauf unverändert, Zurückführen`, async () => {
       await page.locator("[data-pseudo-kopieren]").first().click();

@@ -59,8 +59,8 @@ für den Empfänger ohne Zuordnung nicht zwingend personenbezogen, für uns mit 
 
 ## Stand 14.11.2026: gebaut in 2.28.68 (Klaus' Freibrief 14.11.: „Fragen beantwortest du selber“)
 
-- **Knopf „Pseudo“** (`app/pseudo-knopf.tsx`): rechts in der blauen Navigationsleiste, am Handy als Lasche direkt unter dem Kopf
-  (die Kopfknöpfe behalten ihren Platz, Probe `kopf-leiste`). Rot mit „inaktiv“, grün mit „aktiv“; Zustand je Gerät gemerkt.
+- **Knopf „Pseudo“** (`app/pseudo-knopf.tsx`) oben im Kopf: grün mit „an“, rot mit „aus“ (Klaus 14.11.); Zustand je Gerät gemerkt.
+  Am Handy liegt „Neu“ dafür in der Aufklappleiste hinter „‹“ (Klaus 14.11.: „Neu muss nicht unbedingt oben mit sein“).
   Aktiv: Fenster „Pseudonymisieren“ oben auf jeder Seite – Dateien einfügen (Text, PDF mit Textebene, Foto/Scan mit Texterkennung auf dem
   Gerät, **E-Mail .eml mit allen Anhängen**) oder Text einfügen → Fassung mit Marke, **Kopieren** (Doppelblatt), **als Textdatei**,
   **Zurückführen** einer KI-Antwort, „Korrigieren“ (immer verdecken / darf bleiben, nur für die Sitzung).

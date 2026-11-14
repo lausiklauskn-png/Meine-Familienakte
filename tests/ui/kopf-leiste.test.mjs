@@ -23,13 +23,13 @@ try {
       await step(`${breite} px: kein Pfeil, Abmelden direkt im Kopf`, async () => soll(!(await sichtbar(page, "[data-kopf-auf]")) && await sichtbar(page, ".header-actions > :is(.logout-button, .login-button)"), "Pfeil oder Abmelden falsch"));
     } else {
       await step(`${breite} px: Pfeil ‹ sichtbar, Abmelden zunächst nicht`, async () => soll(await sichtbar(page, "[data-kopf-auf]") && !(await sichtbar(page, ".header-actions > :is(.logout-button, .login-button)")), "Pfeil fehlt oder Abmelden sichtbar"));
-      await step(`${breite} px: ‹ öffnet die Leiste mit Abmelden und ›, „Neu“ ist solange verdeckt; › schließt`, async () => {
+      await step(`${breite} px: ‹ öffnet die Leiste mit Abmelden, „Neu“ und ›; › schließt, „Neu“ wieder verdeckt (Platz für „Pseudo“)`, async () => {
         await page.locator("[data-kopf-auf]").click(); await page.waitForTimeout(300);
         const auf = { drucken: await sichtbar(page, ".header-actions > :is(.logout-button, .login-button)"), zu: await sichtbar(page, "[data-kopf-zu]"), neu: await sichtbar(page, ".header-actions > .neu-knopf") };
         if (S) await page.screenshot({ path: `${S}/kopf-${breite}-auf.png`, clip: { x: 0, y: 0, width: breite, height: 80 } });
         await page.locator("[data-kopf-zu]").click(); await page.waitForTimeout(300);
         const danach = { drucken: await sichtbar(page, ".header-actions > :is(.logout-button, .login-button)"), neu: await sichtbar(page, ".header-actions > .neu-knopf") };
-        return soll(auf.drucken && auf.zu && !auf.neu && !danach.drucken && danach.neu, { auf, danach });
+        return soll(auf.drucken && auf.zu && auf.neu && !danach.drucken && !danach.neu, { auf, danach });
       });
       await step(`${breite} px: Tipp daneben schließt die Leiste`, async () => {
         await page.locator("[data-kopf-auf]").click(); await page.waitForTimeout(200);

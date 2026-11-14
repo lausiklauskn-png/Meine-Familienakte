@@ -124,3 +124,10 @@ export async function vollsicherungStarten(page, art = "lesbar", passwort = "") 
   if (art === "verschluesselt") { await dialog.locator("[data-passwort]").fill(passwort); await dialog.locator("[data-passwort-wieder]").fill(passwort); }
   await dialog.locator("[data-sicherung-los]").click();
 }
+
+/** Knopf „Neu“: am Handy liegt er seit 2.28.68 hinter „‹“ in der Aufklappleiste (Platz für „Pseudo“). */
+export async function neuKnopf(page) {
+  const k = page.locator(".neu-knopf-schalter");
+  if (!(await k.isVisible())) { const a = page.locator("[data-kopf-auf]"); if (await a.isVisible()) { await a.click(); await page.waitForTimeout(250); } }
+  return k;
+}
