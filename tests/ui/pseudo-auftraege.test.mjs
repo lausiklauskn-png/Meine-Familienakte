@@ -25,7 +25,7 @@ const tresor = () => {
     begin: async ({ name, mime }) => { A.push({ name, mime, b64: [], size: 0 }); return { id: String(A.length - 1) }; },
     append: async ({ id, data }) => { const a = A[Number(id)]; a.b64.push(data); a.size += atob(data).length; return { size: a.size }; },
     finish: async ({ id }) => ({ size: A[Number(id)].size }),
-    save: async () => ({ saved: true }), abort: async () => ({}),
+    save: async ({ id }) => { A[Number(id)].fertig = true; return { saved: true }; }, abort: async () => ({}),
   };
 };
 try {
@@ -115,10 +115,12 @@ try {
     await page.locator("[data-pseudo-zip]").check();
     const vorher = await page.evaluate(() => window.__ausgabe.length);
     await page.locator("[data-pseudo-datei-los]").click();
-    await page.waitForFunction((n) => window.__ausgabe.length > n, vorher, { timeout: 15000 });
+    // Erst warten, bis die Ausgabe gespeichert ist (nicht nur begonnen) – sonst fehlen Stücke (CI 14.11.).
+    await page.waitForFunction((n) => window.__ausgabe.length > n && window.__ausgabe[window.__ausgabe.length - 1].fertig, vorher, { timeout: 15000 });
     const d = await page.evaluate(() => { const a = window.__ausgabe[window.__ausgabe.length - 1]; return { name: a.name, roh: a.b64.map((x) => atob(x)).join("") }; });
     const roh = Buffer.from(d.roh, "latin1").toString("utf8");
-    return soll(d.name.endsWith(".zip") && roh.startsWith("PK") && /auftrag\.md/.test(roh) && /LIES-MICH\.txt/.test(roh) && /D01\.txt/.test(roh) && !roh.includes("Testfeld") && !roh.includes("DE89 3704"), d.name);
+    const r = { name: d.name, pk: roh.startsWith("PK"), auftrag: /auftrag\.md/.test(roh), lies: /LIES-MICH\.txt/.test(roh), d01: /D01\.txt/.test(roh), klar: ["Testfeld", "DE89 3704"].filter((k) => roh.includes(k)), laenge: roh.length };
+    return soll(r.name.endsWith(".zip") && r.pk && r.auftrag && r.lies && r.d01 && !r.klar.length, r);
   });
 
   await step("Eingang: „An KI“ an einer Mail füllt das Fenster mit Text und Anlage", async () => {
