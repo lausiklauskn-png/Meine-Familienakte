@@ -1,4 +1,6 @@
 import { SchriftKnopf } from "./schrift-knopf";
+import { PseudoFenster, PseudoKnopf } from "./pseudo-knopf";
+import { profilAusAkte } from "../lib/maske";
 import { DateiOrt, akteOrtSetzen } from "./datei-ort";
 import { demoActive, switchDemo } from "../lib/demo-workspace.ts";
 import { aktuelleGrenze, grenzeMessen, mbText } from "../lib/geraete-grenze";
@@ -1351,6 +1353,7 @@ function HealthPortalContent() {
     finally { setBusy(false); }
   };
   // Namen, die vor dem KI-Auftrag unkenntlich werden: Personen, Firmen, Objekte, Vertragsnummern und Empfänger der Akte.
+  const maskeProfil = useMemo(() => profilAusAkte(familyRecords as unknown as Array<{ type?: string; data?: Record<string, unknown> }>), [familyRecords]);
   const kiNamen = useMemo(() => familyRecords.flatMap((r) => { const d = (r as unknown as { data?: Record<string, unknown> }).data || {}; return ["displayName", "name", "contractNumber", "recipient", "recipientEmail"].map((k) => d[k]).filter((v): v is string => typeof v === "string" && v.trim().length >= 3); }), [familyRecords]);
   const openChatGPTEdit = (initialRequest = "") => { setActionState("chatgpt", "pending"); setEditInitialRequest(initialRequest); setEditOpen(true); };
   const openDocumentLibrary = (request: Partial<Omit<DocumentLibraryRequest, "key">> = {}) => {
@@ -1627,8 +1630,10 @@ function HealthPortalContent() {
             <AnmeldeKnopf art="menue"/>
           </div>}
         </nav>
+        <span className="pseudo-ort"><PseudoKnopf/></span>
       </header>
       <main className="site-main">
+        <PseudoFenster profil={maskeProfil} basic={APP_VARIANTE === "Basic"}/>
         <AppGlocke records={familyRecords} relations={familyRelations} onOeffnen={(z) => go("reminders", undefined, kalenderZiel(String(new Date(z.beginn).toLocaleDateString("sv-SE")), z.recordId))}
           onErledigt={async (z) => { if (!vaultHandle) return; try { await updateLocalScheduleStatus(vaultHandle, z.recordId, "erledigt"); await refreshLocal(vaultHandle); setNotice({ kind: "success", text: `Erledigt: ${z.titel}` }); } catch (error) { setNotice({ kind: "error", text: error instanceof Error ? error.message : "Der Status konnte nicht geändert werden." }); } }}/>
         <KalenderAnmeldeHinweis vaultHandle={vaultHandle} records={familyRecords} relations={familyRelations} onRefresh={async () => { if (vaultHandle) await refreshLocal(vaultHandle); }} onNotice={setNotice}/>
