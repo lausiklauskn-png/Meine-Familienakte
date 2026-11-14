@@ -15,6 +15,17 @@ Beenden der Aufgabe, soweit es möglich ist in dieser Sitzung“). Erst HTML-Vor
   Profil“, nativ `profilLesen`/`profilSchreiben` (Android-Plugin, `ProTresorAdapter`, Windows-Engine, `pro_tresor.rs`, Windows-Brücke),
   Datenschutzseite Abschnitt 3, Plan-Stand.
 
+## Nachtrag: Pseudo-Fenster nach dem Muster PseudoDoc (gleiche Sitzung, mit Klaus)
+
+Klaus wollte die verdeckten Stellen im Dokument sehen statt in einer langen Liste, dann PseudoDoc als Muster (einfach, Handy zuerst,
+kleine Knöpfe), einen einzigen KI-Knopf mit Wahl, blasse Farben mit Verlauf, gute Kontraste, das PseudoDoc-Zeichen und einen
+Briefumschlag „Brief mit KI schreiben“. Vorschau `docs/vorschau/pseudo-ansicht-kompakt.html` (https://claude.ai/artifact/RPUDGXJnKZ91uzV3UB8Lqh,
+Version 6), gegen PseudoDoc bei 390 px geprüft, dann gebaut. Zusammen mit Stufe C in **#184 auf main** (Klaus' Wort zum Zusammenführen).
+Workflow PDF Pro #77 (Fach `profile`) ebenfalls auf main. Befunde: KI-Knopf öffnete nichts, weil der Internet-Schalter der App aus war
+(jetzt: kopiert und sagt es); Schriftangaben `font: … inherit` greifen nicht, und `.app-shell :is(button …)` schlägt einfache Klassen –
+die Pseudo-Regeln stehen deshalb unter `.pseudo-fenster`. Windows-Job einmal rot an der bekannten Wartestelle der Bedeutungssuche
+(`test-model-installed.mjs:72`), im zweiten Lauf grün.
+
 ## Entscheidungen (mit Freibrief)
 
 1. Slug `profile`, Ordner „Maske-Profile“ (ein Ordner „Profile“ wäre mit eigenen Ordnern zu verwechseln).
@@ -49,7 +60,7 @@ Beenden der Aufgabe, soweit es möglich ist in dieser Sitzung“). Erst HTML-Vor
 
 ## Stundennachweis
 
-Sitzung 14.11.2026, erste Spur ca. 11:43 UTC (Behälterstart), letzte Spur dieses Briefs ca. 12:20 UTC – Obergrenze **0 h 40 min**
+Sitzung 14.11.2026, erste Spur ca. 11:43 UTC (Behälterstart), letzte Spur dieses Briefs ca. 12:20 UTC – Obergrenze **3 h 30 min** (mit Nachtrag bis ca. 15:10 UTC)
 (einschließlich Warten auf CI). Forschungseintrag nicht angelegt (KimHub nicht in der Sitzung).
 
 ## Startauftrag zum Einfügen
@@ -57,8 +68,7 @@ Sitzung 14.11.2026, erste Spur ca. 11:43 UTC (Behälterstart), letzte Spur diese
 ```
 Repo lausiklauskn-png/Meine-Familienakte (eigener Zweig). Zuerst lesen: CLAUDE.md, BRIEF_ABSCHLUSS_2026-11-14_MASKE-PROFILE-STUFE-C.md,
 docs/PLAN_PSEUDONYMISIEREN.md (Stand und Stufen).
-Auftrag: Stufe D-Rest und P10 – Knopf „Pseudonymisieren“ an der Unterlage (KnopfLeiste), an der Auswahl-Leiste und an der Mail im
-Eingang (Text und Anhänge, gleicher Baustein wie der Pseudo-Knopf, Profile aus app/maske-profil-speicher.ts); Zuordnung je Auftrag
-verschlüsselt speichern (Pro-Tresor/App-Speicher wie die Profile), Zurückführen auch nach Neustart, löschen bei „erledigt“ oder nach 90 Tagen.
-Erst HTML-Vorschau. Nicht: echte Dokumente oder pseudonymisierte Texte ins Repo, keine Schlüssel/PINs, nichts veröffentlichen ohne Klaus' Wort.
+Auftrag: Pseudo-Fenster (app/pseudo-knopf.tsx, Muster PseudoDoc) weiter: Zuordnung je Auftrag verschlüsselt speichern (P10, Zurück auch
+nach Neustart, 90 Tage), „An KI“ an jeder Unterlage und an der Mail im Eingang (füllt das Fenster), Briefweg (Assistenz) auf dasselbe
+Fenster umstellen, echtes PDF-Seitenbild in der Ansicht. Kleine Knöpfe, Handy zuerst; neue Oberfläche erst als HTML-Vorschau. Nicht: echte Dokumente oder pseudonymisierte Texte ins Repo, keine Schlüssel/PINs, nichts veröffentlichen ohne Klaus' Wort.
 ```
