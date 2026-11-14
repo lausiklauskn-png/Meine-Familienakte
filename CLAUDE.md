@@ -14,6 +14,13 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   `app/maske-profil-speicher.ts` (Tresor offen → Fach; gesperrt → nichts; Pro ohne Tresor → App-Speicher; Basic → nichts), Profilseite
   `app/maske-profile.tsx` im Sicherheitscenter, Pseudo-Fenster merkt Korrekturen ins Profil. Vorschau `docs/vorschau/maske-profile-stufe-c.html`.
   Proben `run-maske-profil-tests`, UI `maske-profile`. Nicht am Gerät.
+- **Pseudo-Fenster nach dem Muster PseudoDoc (14.11., #184 auf main, nicht ausgegeben; Vorschau `docs/vorschau/pseudo-ansicht-kompakt.html`):**
+  Klaus: einfach, Handy zuerst, kleine Knöpfe, eine Zeile je Datei, Ansicht im Dokument, **ein** KI-Knopf mit Wahl (blass mit Verlauf, gute
+  Kontraste), alle Erklärungen hinter „?“. `app/pseudo-knopf.tsx`: Kopf mit dem PseudoDoc-Zeichen (`public/pseudo/pseudodoc.svg`, byte-gleich,
+  Pin `native/HERKUNFT.json`), „1 Zur KI · 2 Zurück“, Zeile D01 … mit ⚑/👁/✎/mit/🗑, Ansicht (KI sieht/Original, markieren = verdecken,
+  antippen = darf bleiben, ⚑ springt), Bild abdecken (schwarz, ohne Metadaten), „Alle zu einer Datei“, Dateinamen nur D01 ….
+  **Briefumschlag** im Kopf (`BriefKnopf`): „Brief mit KI schreiben“ öffnet das Fenster mit Antwortbrief und Textfeld. PseudoDoc
+  (Repo `PseudoDoc`, https://lausiklauskn-png.github.io/PseudoDoc/) ist das Muster; Bedienung dort und hier gleich halten.
 
 - **Fassung 2.28.68 ausgegeben (14.11.; #181; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.68.json`), nicht erneut ausgeben.
   Knopf „Pseudo“ im Kopf (Klaus 14.11.: grün „an“, rot „aus“; am Handy liegt „Neu“ dafür hinter „‹“):** an = Fenster
@@ -222,6 +229,9 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Offen
 
+- **Pseudo-Fenster am Gerät ungeprüft:** Ansicht mit langem PDF, Markieren am Handy (Finger), Bild abdecken mit dem Finger, KI-Knopf mit
+  Internet an (ChatGPT/Claude/Gemini öffnen sich, Einfügen mit Text und Bild), Briefumschlag am Handy hinter „‹“. Offen im Bau: Zuordnung
+  je Auftrag speichern (P10), echtes PDF-Seitenbild in der Ansicht, ZIP, Austauschordner für Claude Code, Briefweg (Assistenz) auf dasselbe Fenster.
 - **Stufe C am Gerät ungeprüft:** Profilseite mit echtem Tresor (Android/Windows), Korrigieren ins Profil, Übernehmen aus einer anderen Pro-App
   (dort gibt es noch keine Profile). Workflow PDF Pro #77 (Fach `profile`) danach auch in BookLedgerPro und Private Brain Pro nachziehen.
 - **2.28.68 am Gerät ungeprüft:** Pseudo-Knopf an echten Unterlagen (OCR, Mail mit Anhängen), Kopf am Handy mit „Neu“ hinter „‹“.
