@@ -1,0 +1,35 @@
+{
+ "version": "2.28.68",
+ "source": "8fcd9222ceb541d061feabecf4c146bdda36ea49",
+ "pullRequest": [181],
+ "recordedUtc": "2026-11-14T10:00:00Z",
+ "freigabe": "Klaus 14.11.2026: „du merkst dann selbstständig und stellst die App dann online. Die APK, die PWA und die Windows-App.“",
+ "inhalt": "Knopf „Pseudo“ im Kopf (grün an, rot aus; am Handy „Neu“ hinter ‹): Fenster Pseudonymisieren mit Dateien (Text, PDF, Foto/Scan mit OCR, .eml mit Anhängen) oder Text, Kopieren, Textdatei, Zurückführen. Maske lib/maske.ts über Modul 25: Steuer-ID, KVNR, RV-Nr., Ausweis mit Prüfziffer, USt-IdNr., Geburtsdatum, ICD mit Gruppe; Marke ⟦PSEUDONYMISIERT v1⟧; kein Netzweg.",
+ "ciAmPrStand": "PR #181 auf 08c32a3: pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) – success.",
+ "releases": [
+  {
+   "tag": "android-v2.28.68",
+   "run": 43581518690,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {"name": "Familienakte-android-v2.28.68.apk", "bytes": 20214334, "sha256": "faa1da955fe8259816d44433c2742fc1db2f380d7993ff28d9ad234d01f8a1d9", "anonymousDownload": true, "matchesSHA256SUMS": true, "versionInside": "2.28.68 (assets/public/version.json, commit 8fcd922)"},
+    {"name": "Familienakte-Einzeldatei-2.28.68.html", "bytes": 4567724, "sha256": "435b12f7103121bfca3e21d85cfd548a1e9ea0d78d9ea990f65eb1b3cc460b91", "anonymousDownload": true, "matchesSHA256SUMS": true}
+   ]
+  },
+  {
+   "tag": "windows-v2.28.68",
+   "run": 43581520618,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {"name": "Familienakte-Windows-2.28.68-x64-setup.exe", "bytes": 34382782, "sha256": "fe0752d4844686fc3de460cafc74995585a16c00097494229294ee8518590cc1", "anonymousDownload": true, "matchesSHA256SUMS": true, "latestJson": "version 2.28.68"}
+   ]
+  }
+ ],
+ "pwa": "Pages-Lauf nach dem Merge von #181 auf 8fcd922; Seite aus dem Behälter nicht selbst geprüft.",
+ "notChecked": [
+  "Alles am Gerät: Pseudo-Knopf an echten Unterlagen, OCR, Mail mit Anhängen, Kopf am Handy, Update über die Versionszeile",
+  "family-projekt.de aus dem Behälter nicht geprüft; der Freigabelauf prüft den Server selbst"
+ ]
+}
