@@ -88,7 +88,9 @@ const { tmpdir } = await import("node:os"); const { join } = await import("node:
 const ordner = mkdtempSync(join(tmpdir(), "zip-"));
 writeFileSync(join(ordner, "a.zip"), zipBauen([{ name: "D01.txt", daten: new TextEncoder().encode("⟦NAME-1⟧ schreibt") }, { name: "LIES-MICH.txt", daten: new TextEncoder().encode("pseudonymisiert") }]));
 try {
-  const liste = execFileSync("python3", ["-c", "import zipfile,sys;z=zipfile.ZipFile(sys.argv[1]);print(z.testzip());print(z.read('D01.txt').decode())", join(ordner, "a.zip")]).toString();
-  assert.match(liste, /^None\n⟦NAME-1⟧ schreibt/);
+  // Inhalt als Hex ausgeben: die Windows-Konsole (cp1252) kann „⟦“ nicht schreiben.
+  const [pruef, hex] = execFileSync("python3", ["-c", "import zipfile,sys;z=zipfile.ZipFile(sys.argv[1]);print(z.testzip());print(z.read('D01.txt').hex())", join(ordner, "a.zip")]).toString().trim().split(/\r?\n/);
+  assert.equal(pruef, "None");
+  assert.equal(Buffer.from(hex, "hex").toString("utf8"), "⟦NAME-1⟧ schreibt");
   ok("ZIP: Prüfsumme stimmt, Inhalt mit Umlauten/Platzhaltern lesbar");
 } catch (e) { if (e.code === "ENOENT") ok("ZIP: CRC geprüft (python3 fehlt zum Entpacken)"); else throw e; }
