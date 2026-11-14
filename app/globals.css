@@ -3031,14 +3031,15 @@ button.pf-daumen { cursor: pointer; }
 .pseudo-fenster .pf-eine { display: flex; align-items: center; gap: 6px; font-size: .8rem; }
 .pseudo-fenster .pf-eine input { width: 15px; height: 15px; margin: 0; }
 .pseudo-fenster .pf-kiwahl { display: flex; position: relative; }
-.pseudo-fenster .pf-kiknopf { height: 40px; text-align: left; padding: 0 12px; font-weight: 700; font-size: .9rem; font-family: inherit; cursor: pointer; line-height: 1.15; color: var(--k-ink); border: 1px solid var(--k-rand); background: linear-gradient(105deg, #fff 0%, var(--k-hauch) 100%); border-radius: 8px 0 0 8px; flex: 1; }
-.pseudo-fenster .pf-kiknopf small { display: block; font-weight: 400; font-size: .68rem; opacity: .85; }
+.pseudo-fenster .pf-kiknopf { height: 40px; text-align: left; padding: 0 12px; font-weight: 700; font-size: .9rem; font-family: inherit; cursor: pointer; line-height: 1.15; color: var(--k-ink); border: 1.5px solid var(--k-rand); background: linear-gradient(105deg, var(--k-hauch) 0%, var(--k-satt) 100%); border-radius: 8px 0 0 8px; flex: 1; }
+.pseudo-fenster .pf-kiknopf small { display: block; font-weight: 600; font-size: .7rem; opacity: 1; }
 .pseudo-fenster .pf-kiknopf:disabled { opacity: .5; cursor: default; }
-.pseudo-fenster .pf-kipfeil { flex: none; width: 42px; border-radius: 0 8px 8px 0; border-left: 0; background: var(--k-hauch); display: grid; place-items: center; padding: 0; }
-.pseudo-fenster .ki-chatgpt { --k-ink: #07513f; --k-rand: #a9dccd; --k-hauch: #e3f5ef; }
-.pseudo-fenster .ki-claude { --k-ink: #7d3519; --k-rand: #ebc3b3; --k-hauch: #fbebe4; }
-.pseudo-fenster .ki-claudecode { --k-ink: #45352a; --k-rand: #d6c8bc; --k-hauch: #f2ece6; }
-.pseudo-fenster .ki-gemini { --k-ink: #2a3f9e; --k-rand: #bfc9f3; --k-hauch: #e9edfc; }
+.pseudo-fenster .pf-kipfeil { flex: none; width: 42px; border-radius: 0 8px 8px 0; border-left: 0; background: var(--k-satt); color: var(--k-ink); display: grid; place-items: center; padding: 0; }
+.pseudo-fenster .ki-chatgpt { --k-ink: #00402f; --k-rand: #2f9e7c; --k-hauch: #d3f0e6; --k-satt: #b5e6d4; }
+.pseudo-fenster .ki-claude { --k-ink: #6a2a10; --k-rand: #c9744f; --k-hauch: #f8dfd3; --k-satt: #f1c6b2; }
+.pseudo-fenster .ki-claudecode { --k-ink: #33261c; --k-rand: #8a7462; --k-hauch: #ebe2d9; --k-satt: #dccdbf; }
+.pseudo-fenster .ki-gemini { --k-ink: #1d2f86; --k-rand: #5f78e0; --k-hauch: #dde3fb; --k-satt: #c4cff7; }
+.pseudo-fenster .ki-mistral { --k-ink: #6b3200; --k-rand: #e08a2e; --k-hauch: #fde4c8; --k-satt: #f9cd9c; }
 .pseudo-fenster .pf-kimenue { position: absolute; right: 0; bottom: 44px; z-index: 5; background: #fff; border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 24px rgba(16,52,83,.18); padding: 4px; display: grid; min-width: 180px; }
 .pseudo-fenster .pf-kimenue button { display: flex; align-items: center; gap: 8px; height: 34px; border: 0; background: none; border-radius: 7px; padding: 0 8px; font-weight: 700; font-size: .84rem; font-family: inherit; cursor: pointer; text-align: left; color: #15283a; }
 .pseudo-fenster .pf-kimenue button:hover { background: #eef3f7; }

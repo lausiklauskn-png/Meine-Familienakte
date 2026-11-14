@@ -1,0 +1,329 @@
+<title>Pseudo: Aufträge und Wege</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: Handy zuerst (Rahmen 390 px), Aufbau wie PseudoDoc: Kopf in einer Zeile (Maske links, 1 Zur KI · 2 Zurück, ?),
+   Dateien-Leiste, eine kurze Zeile je Datei (👁 ✎ mit 🗑), unten Auftrag + KI-Knöpfe. Auge = Seite wie im Dokument,
+   Stift = Bild abdecken. Kleine Knöpfe (32 px), kein Leerraum oben. Alle Namen und Nummern erfunden. */
+:root {
+  --navy:#0b3154; --blau:#174f7b; --blau-soft:#edf5fc; --ink:#15283a; --muted:#5d6c7c; --line:#d8e2ea; --canvas:#eef3f7; --paper:#ffffff;
+  --green:#167249; --green-soft:#e6f5ed; --amber:#8a5b08; --amber-soft:#fff2d6; --red:#8f252b; --red-soft:#f8e5e6;
+  --platz:#e3dcf7; --platz-ink:#3f2d78; --seite:#ffffff; --seite-ink:#1d2730; --schatten:rgba(16,52,83,.16);
+  --gpt:#10a37f; --claude:#c96442; --code:#5b4636; --gemini:#4f6bed;
+  --sans: Arial, Helvetica, sans-serif; --serif: Georgia, "Times New Roman", serif; --mono: ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --navy:#9cc6ef; --blau:#9cc6ef; --blau-soft:#18293a; --ink:#e4ecf2; --muted:#9fb0bf; --line:#2c3c4a; --canvas:#0f171e; --paper:#17222c;
+  --green:#7fd3a5; --green-soft:#16301f; --amber:#f0c36b; --amber-soft:#3a2d12; --red:#f1a3a8; --red-soft:#3b1c1f;
+  --platz:#3a2f5c; --platz-ink:#e2dafc; --seite:#f4f1ea; --seite-ink:#1d2730; --schatten:rgba(0,0,0,.5); color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --navy:#9cc6ef; --blau:#9cc6ef; --blau-soft:#18293a; --ink:#e4ecf2; --muted:#9fb0bf; --line:#2c3c4a; --canvas:#0f171e; --paper:#17222c;
+  --green:#7fd3a5; --green-soft:#16301f; --amber:#f0c36b; --amber-soft:#3a2d12; --red:#f1a3a8; --red-soft:#3b1c1f;
+  --platz:#3a2f5c; --platz-ink:#e2dafc; --seite:#f4f1ea; --seite-ink:#1d2730; --schatten:rgba(0,0,0,.5); color-scheme: dark; }
+* { box-sizing:border-box; }
+body { background:var(--canvas); color:var(--ink); font:15px/1.45 var(--sans); padding-block:14px 40px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width:980px; margin:0 auto; display:grid; gap:18px; grid-template-columns:minmax(0, 390px) minmax(0,1fr); align-items:start; }
+@media (max-width:820px) { .wrap { grid-template-columns:1fr; } }
+h1 { font-size:1.2rem; margin:0; color:var(--navy); } p { margin:0; } .leise { color:var(--muted); font-size:.86rem; }
+.notiz { display:grid; gap:10px; align-content:start; }
+.notiz ul { margin:0; padding-left:18px; display:grid; gap:4px; font-size:.9rem; }
+.notiz h2 { font-size:.95rem; margin:6px 0 0; color:var(--blau); }
+
+/* Handy-Rahmen */
+.handy { background:var(--paper); border:1px solid var(--line); border-radius:22px; overflow:hidden; box-shadow:0 10px 30px var(--schatten); position:relative; min-height:640px; display:flex; flex-direction:column; }
+.kopf { display:flex; align-items:center; gap:8px; padding:6px 8px; border-bottom:1px solid var(--line); }
+.maske { width:30px; height:30px; border-radius:8px; background:var(--navy); color:var(--paper); display:grid; place-items:center; flex:none; }
+.maske svg { width:20px; height:20px; }
+.reiter { display:flex; gap:2px; background:var(--canvas); border-radius:9px; padding:2px; flex:1; min-width:0; }
+.reiter button { flex:1; border:0; background:none; border-radius:7px; padding:5px 4px; font:700 .8rem var(--sans); color:var(--muted); cursor:pointer; white-space:nowrap; }
+.reiter button[aria-pressed="true"] { background:var(--paper); color:var(--navy); box-shadow:0 1px 3px var(--schatten); }
+.ik { width:30px; height:30px; border-radius:8px; border:1px solid var(--line); background:var(--paper); color:var(--blau); display:inline-grid; place-items:center; cursor:pointer; font:700 .85rem var(--sans); flex:none; padding:0; }
+.ik svg { width:16px; height:16px; }
+.ik:focus-visible, .kn:focus-visible, .ki:focus-visible, .chip:focus-visible { outline:3px solid #1f8a4c; outline-offset:1px; }
+.erkl { margin:6px 8px 0; background:var(--blau-soft); border-radius:8px; padding:7px 9px; font-size:.82rem; }
+.inhalt { padding:8px; display:grid; gap:7px; align-content:start; }
+.blatt .buehne { flex:1; }
+.rein { display:flex; gap:6px; align-items:center; border:1.5px dashed var(--line); border-radius:10px; padding:5px 6px; }
+.rein span { flex:1; font-size:.8rem; color:var(--muted); }
+.kn { display:inline-flex; align-items:center; gap:4px; height:30px; border:1px solid var(--line); background:var(--paper); color:var(--blau); border-radius:8px; padding:0 9px; font:700 .8rem var(--sans); cursor:pointer; white-space:nowrap; }
+.kn.haupt { background:var(--navy); color:var(--paper); border-color:var(--navy); }
+.kn svg { width:14px; height:14px; }
+.summe { display:flex; justify-content:space-between; font-size:.78rem; color:var(--muted); padding:0 2px; }
+.liste { display:grid; gap:4px; }
+.zeile { display:grid; grid-template-columns:34px minmax(0,1fr) auto; gap:7px; align-items:center; border:1px solid var(--line); border-radius:9px; padding:4px 5px; }
+.daumen { width:34px; height:34px; border-radius:6px; background:var(--blau-soft); color:var(--blau); display:grid; place-items:center; font:700 .6rem var(--sans); overflow:hidden; }
+.daumen.bild { background:linear-gradient(#9fb4c6 55%, #6f7880 55%); position:relative; }
+.daumen.bild::after { content:""; position:absolute; left:8px; right:8px; top:18px; height:9px; background:#b23b30; border-radius:3px; box-shadow:inset 6px -2px 0 -3px #111; }
+.name { min-width:0; } .name b { display:block; font-size:.85rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.name b em { font-style:normal; color:var(--green); margin-right:3px; }
+.marken { display:flex; gap:4px; flex-wrap:wrap; }
+.m { font-size:.7rem; font-weight:700; border-radius:999px; padding:0 6px; line-height:1.5; }
+.m.ok { background:var(--green-soft); color:var(--green); } .m.pr { background:var(--amber-soft); color:var(--amber); } .m.art { background:var(--canvas); color:var(--muted); }
+.aktionen { display:flex; gap:3px; align-items:center; }
+.aktionen .ik { width:28px; height:28px; }
+.mit { display:inline-flex; align-items:center; gap:2px; font-size:.72rem; color:var(--muted); }
+.mit input { width:15px; height:15px; margin:0; }
+.ki-block { border-top:1px solid var(--line); padding:8px; display:grid; gap:6px; background:var(--paper); }
+.block-titel { font-size:.88rem; color:var(--navy); }
+.weg { background:var(--green-soft); color:var(--green); border-radius:8px; padding:5px 8px; font-weight:700; font-size:.8rem; }
+.summe b { color:var(--navy); }
+.chips { flex-wrap:wrap; }
+.stil { flex:none; height:26px; border:1px solid var(--line); border-radius:999px; padding:0 6px; font:.76rem var(--sans); background:var(--paper); color:var(--ink); }
+.link { border:0; background:none; color:var(--green); font:700 .8rem var(--sans); cursor:pointer; padding:0 4px; }
+.chips { display:flex; gap:4px; overflow-x:auto; scrollbar-width:none; }
+.chip { flex:none; border:1px solid var(--line); background:var(--paper); color:var(--ink); border-radius:999px; padding:3px 9px; font:.76rem var(--sans); cursor:pointer; }
+.chip[aria-pressed="true"] { background:var(--navy); color:var(--paper); border-color:var(--navy); }
+.auftrag { width:100%; height:30px; border:1px solid var(--line); border-radius:8px; padding:0 8px; font:.82rem var(--sans); background:var(--paper); color:var(--ink); }
+.einedatei { display:flex; align-items:center; gap:6px; font-size:.8rem; }
+.einedatei input { width:15px; height:15px; margin:0; }
+.kiwahl { display:flex; position:relative; }
+.kiwahl .ki { border-radius:8px 0 0 8px; flex:1; }
+.kiwahl .kipfeil { flex:none; width:40px; border-radius:0 8px 8px 0; border-left:0; background:var(--k-satt); color:var(--k-ink); text-align:center; padding:0; font-size:1rem; }
+.kimenue { position:absolute; right:0; bottom:44px; z-index:3; background:var(--paper); border:1px solid var(--line); border-radius:10px; box-shadow:0 8px 24px var(--schatten); padding:4px; display:grid; min-width:180px; }
+.kimenue button { display:flex; align-items:center; gap:8px; height:34px; border:0; background:none; border-radius:7px; padding:0 8px; font:700 .84rem var(--sans); color:var(--ink); cursor:pointer; text-align:left; }
+.kimenue button[aria-checked="true"]::after { content:"✓"; margin-left:auto; color:var(--green); }
+.kimenue button:hover { background:var(--canvas); }
+.punkt { width:12px; height:12px; border-radius:50%; flex:none; }
+.punkt.gpt { background:var(--gpt); } .punkt.claude { background:var(--claude); } .punkt.code { background:var(--code); } .punkt.gemini { background:var(--gemini); }
+.ki { height:40px; text-align:left; padding:0 10px; border:0; border-radius:8px; color:#fff; font:700 .76rem var(--sans); cursor:pointer; line-height:1.1; }
+.ki { font-size:.86rem; } .ki small { display:block; font-weight:400; font-size:.66rem; opacity:.9; }
+.ki { color:var(--k-ink); border:1.5px solid var(--k-rand); background:linear-gradient(105deg, var(--k-hauch) 0%, var(--k-satt) 100%); }
+.ki small { color:var(--k-ink); opacity:1; font-weight:600; }
+.ki.gpt { --k-ink:#00402f; --k-rand:#2f9e7c; --k-hauch:#d3f0e6; --k-satt:#b5e6d4; }
+.ki.claude { --k-ink:#6a2a10; --k-rand:#c9744f; --k-hauch:#f8dfd3; --k-satt:#f1c6b2; }
+.ki.code { --k-ink:#33261c; --k-rand:#8a7462; --k-hauch:#ebe2d9; --k-satt:#dccdbf; }
+.ki.gemini { --k-ink:#1d2f86; --k-rand:#5f78e0; --k-hauch:#dde3fb; --k-satt:#c4cff7; }
+.ki.mistral { --k-ink:#6b3200; --k-rand:#e08a2e; --k-hauch:#fde4c8; --k-satt:#f9cd9c; }
+.ki:hover { filter:saturate(1.3); }
+.weiter { display:flex; gap:4px; flex-wrap:wrap; }
+
+/* Blatt (Auge, Stift) über dem Handy-Inhalt */
+.blatt { position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; z-index:4; }
+.blatt-kopf { display:flex; align-items:center; gap:6px; padding:6px 8px; border-bottom:1px solid var(--line); }
+.blatt-kopf b { flex:1; font-size:.85rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.blatt-leiste { display:flex; gap:4px; align-items:center; padding:5px 8px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+.blatt-leiste .seg { display:flex; background:var(--canvas); border-radius:8px; padding:2px; }
+.blatt-leiste .seg button { border:0; background:none; border-radius:6px; padding:3px 8px; font:700 .76rem var(--sans); color:var(--muted); cursor:pointer; }
+.blatt-leiste .seg button[aria-pressed="true"] { background:var(--paper); color:var(--navy); }
+.blatt-leiste .rechts { margin-left:auto; display:flex; gap:4px; align-items:center; font-size:.74rem; color:var(--muted); font-variant-numeric:tabular-nums; }
+.buehne { flex:1; overflow:auto; background:var(--canvas); padding:10px; position:relative; }
+.seite { background:var(--seite); color:var(--seite-ink); width:100%; aspect-ratio:1 / 1.414; padding:8% 8%; box-shadow:0 4px 16px var(--schatten); font:9.5px/1.5 var(--serif); position:relative; }
+.seite p { margin:0 0 .75em; }
+.absender { font:7px/1.3 var(--sans); color:#55606b; margin-bottom:1.4em !important; }
+.v { border-radius:2px; cursor:pointer; }
+.zeigt-ki .v { background:var(--platz); color:var(--platz-ink); font:700 .9em var(--mono); padding:0 1px; }
+.zeigt-original .v { background:#fff0a0; color:var(--seite-ink); }
+.v.unsicher { outline:1.5px solid #e0a020; outline-offset:1px; }
+.blase { position:absolute; z-index:6; background:var(--paper); border:1px solid var(--line); border-radius:9px; box-shadow:0 6px 18px var(--schatten); padding:4px; display:flex; gap:4px; }
+.blase button { height:28px; border:1px solid var(--line); background:var(--paper); color:var(--blau); border-radius:7px; padding:0 8px; font:700 .76rem var(--sans); cursor:pointer; }
+.blatt-fuss { display:flex; gap:6px; align-items:center; padding:6px 8px; border-top:1px solid var(--line); font-size:.74rem; color:var(--muted); }
+.bild { position:relative; width:100%; aspect-ratio:4 / 3; background:linear-gradient(#9fb4c6 52%, #6f7880 52%); border-radius:4px; overflow:hidden; }
+.schild { position:absolute; left:8%; top:8%; width:36%; height:20%; background:#fff7e3; border:2px solid #222; padding:4% 3%; }
+.auto { position:absolute; left:22%; top:45%; width:56%; height:30%; background:#b23b30; border-radius:14px; }
+.rad { position:absolute; top:68%; width:13%; aspect-ratio:1; border-radius:50%; background:#222; }
+.flaeche { position:absolute; background:#000; outline:1.5px dashed #4aa3ff; outline-offset:1px; }
+.zur { display:grid; gap:6px; }
+.zur textarea { width:100%; min-height:90px; border:1px solid var(--line); border-radius:8px; padding:7px; font:.82rem var(--sans); background:var(--paper); color:var(--ink); }
+.ergebnis { background:var(--green-soft); border-radius:8px; padding:8px; font-size:.82rem; }
+[hidden] { display:none !important; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .ki.gpt { --k-ink:#d4fff0; --k-rand:#3fbf98; --k-hauch:#0f3a2e; --k-satt:#17543f; } :root:not([data-theme="light"]) .ki.claude { --k-ink:#ffe4d8; --k-rand:#e08a66; --k-hauch:#41210f; --k-satt:#5c2e16; } :root:not([data-theme="light"]) .ki.code { --k-ink:#f6ece2; --k-rand:#b39a85; --k-hauch:#2e2620; --k-satt:#45382c; } :root:not([data-theme="light"]) .ki.gemini { --k-ink:#e3e8ff; --k-rand:#7d93f0; --k-hauch:#1b2350; --k-satt:#26326e; } :root:not([data-theme="light"]) .ki.mistral { --k-ink:#ffe9cf; --k-rand:#f0a050; --k-hauch:#3e2306; --k-satt:#5a330a; } }
+:root[data-theme="dark"] .ki.gpt { --k-ink:#d4fff0; --k-rand:#3fbf98; --k-hauch:#0f3a2e; --k-satt:#17543f; } :root[data-theme="dark"] .ki.claude { --k-ink:#ffe4d8; --k-rand:#e08a66; --k-hauch:#41210f; --k-satt:#5c2e16; } :root[data-theme="dark"] .ki.code { --k-ink:#f6ece2; --k-rand:#b39a85; --k-hauch:#2e2620; --k-satt:#45382c; } :root[data-theme="dark"] .ki.gemini { --k-ink:#e3e8ff; --k-rand:#7d93f0; --k-hauch:#1b2350; --k-satt:#26326e; } :root[data-theme="dark"] .ki.mistral { --k-ink:#ffe9cf; --k-rand:#f0a050; --k-hauch:#3e2306; --k-satt:#5a330a; }
+/* Zusätze 15.11.: mehrere Bildschirme nebeneinander, Auftragsliste, Knopf „An KI“ an fremden Stellen, PDF-Seitenbild */
+.wrap { grid-template-columns:repeat(auto-fill, minmax(min(100%, 360px), 1fr)); max-width:1180px; }
+.handy { min-height:0; }
+.karte { display:grid; gap:8px; }
+.karte h2 { font-size:.95rem; margin:0; color:var(--navy); }
+.karte .leise { font-size:.82rem; }
+.auftraege { display:grid; gap:3px; }
+.auftrag-z { display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:6px; align-items:center; border:1px solid var(--line); border-radius:8px; padding:3px 6px; font-size:.78rem; }
+.auftrag-z[aria-current="true"] { border-color:var(--green); background:var(--green-soft); }
+.auftrag-z b { color:var(--navy); } .auftrag-z small { color:var(--muted); display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.auftrag-z .kn { height:26px; padding:0 7px; font-size:.72rem; }
+.passt { font-size:.72rem; color:var(--green); font-weight:700; }
+.app-zeile { display:grid; grid-template-columns:18px 64px minmax(0,1fr) auto; gap:6px; align-items:center; border-bottom:1px solid var(--line); padding:6px 4px; font-size:.82rem; }
+.app-zeile .bereich { font-size:.7rem; color:var(--blau); background:var(--blau-soft); border-radius:999px; padding:0 6px; }
+.leiste-auf { display:flex; gap:3px; }
+.kn.ki-an { color:var(--platz-ink); background:var(--platz); border-color:transparent; }
+.auswahl { display:flex; flex-wrap:wrap; gap:4px; align-items:center; background:var(--blau-soft); border-radius:9px; padding:6px; font-size:.8rem; }
+.auswahl b { margin-right:auto; }
+.mail { border:1px solid var(--line); border-radius:10px; padding:7px; display:grid; gap:4px; font-size:.8rem; }
+.mail .reihe { display:flex; gap:4px; flex-wrap:wrap; }
+.pdfseite { position:relative; background:#fff; aspect-ratio:1 / 1.414; box-shadow:0 4px 16px var(--schatten); overflow:hidden; }
+.pdfseite .zeile-t { position:absolute; left:9%; height:1.6%; background:#c9ced3; border-radius:1px; }
+.pdfseite .kasten { position:absolute; border-radius:1px; cursor:pointer; }
+.zeigt-ki .kasten { background:#111; }
+.zeigt-ki .kasten::after { content:attr(data-t); position:absolute; inset:0; color:#e2dafc; font:700 6.5px/1 var(--mono); display:grid; place-items:center; white-space:nowrap; overflow:hidden; }
+.zeigt-original .kasten { background:rgba(255,226,80,.55); outline:1px solid #d9a400; }
+.kasten.unsicher { outline:2px solid #e0a020; outline-offset:1px; }
+.logo-t { position:absolute; left:9%; top:6%; width:26%; height:4%; background:#174f7b; border-radius:2px; }
+.datei-wahl { display:grid; gap:4px; border:1px solid var(--line); border-radius:9px; padding:6px; font-size:.8rem; }
+.datei-wahl label { display:flex; gap:6px; align-items:center; }
+.datei-wahl input { margin:0; width:15px; height:15px; }
+.ordner-baum { font:.74rem/1.5 var(--mono); background:var(--canvas); border-radius:8px; padding:6px 8px; white-space:pre; overflow-x:auto; }
+.assistenz { border:1px solid var(--line); border-radius:10px; padding:8px; display:grid; gap:6px; font-size:.82rem; }
+.assistenz select { height:30px; border:1px solid var(--line); border-radius:8px; font:.8rem var(--sans); background:var(--paper); color:var(--ink); padding:0 6px; }
+.frage { width:22px; height:22px; border-radius:50%; border:1px solid var(--line); background:var(--paper); color:var(--blau); font:700 .75rem var(--sans); display:inline-grid; place-items:center; cursor:pointer; padding:0; }
+.entscheid { border-left:3px solid var(--green); padding-left:8px; }
+.punkt.mistral { background:#f08a24; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .punkt.code { background:#b39a85; } }
+:root[data-theme="dark"] .punkt.code { background:#b39a85; }
+</style>
+<div class="wrap">
+  <section class="notiz" style="grid-column:1 / -1">
+    <h1>Pseudo-Fenster: Restarbeiten (Vorschau für 2.28.69)</h1>
+    <p class="leise">Erfundene Daten. Sechs Stellen, je ein Handy-Bild (390 px). Antippen geht in jedem Bild; nichts ist echt verbunden.</p>
+  </section>
+
+  <!-- 1 Zurück mit Auftragsliste -->
+  <section class="karte">
+    <h2>1 · „2 Zurück“ kennt die Aufträge auch nach Neustart</h2>
+    <div class="handy">
+      <div class="kopf"><span class="maske">P</span><div class="reiter"><button>1 Zur KI</button><button aria-pressed="true">2 Zurück</button></div><button class="ik">?</button><button class="ik">✕</button></div>
+      <div class="inhalt">
+        <div class="auftraege" id="auftraege">
+          <div class="auftrag-z" aria-current="true"><b>A3</b><span>D01 PDF · D02 Mail<small>Antwortbrief · heute 10:12 · 14 Platzhalter</small></span><button class="kn" data-erledigt>✓ erledigt</button></div>
+          <div class="auftrag-z"><b>A2</b><span>D01 Text<small>Prüfen · 12.11. · 5 Platzhalter</small></span><button class="kn" data-erledigt>✓ erledigt</button></div>
+          <div class="auftrag-z"><b>A1</b><span>D01 Bild<small>Zusammenfassen · 03.10. · läuft in 3 Tagen ab</small></span><button class="kn" data-erledigt>✓ erledigt</button></div>
+        </div>
+        <div class="zur"><textarea placeholder="Antwort der KI hier einfügen …">Sehr geehrte ⟦STELLE-1⟧, zu Ihrem Schreiben an ⟦ICH-1⟧ …</textarea></div>
+        <p class="passt">✓ passt zu A3 (alle 3 Platzhalter bekannt)</p>
+        <div class="weiter"><button class="kn haupt">↶ Zurückführen</button><button class="kn">Datei holen</button></div>
+        <div class="ergebnis">Sehr geehrte Stadtwerke Lindwurm, zu Ihrem Schreiben an Erika Probe …</div>
+        <div class="weiter"><button class="kn">⧉ Kopieren</button><button class="kn">⤓ Als Datei</button><button class="kn">Als Entwurf</button><button class="kn">PDF</button></div>
+      </div>
+    </div>
+    <ul class="leise">
+      <li>Jeder Weg hinaus (An KI, Nur kopieren, Als Datei) legt einen Auftrag A1, A2 … an; die Zuordnung liegt verschlüsselt.</li>
+      <li>Pro: Schlüssel im Profil (Pro-Tresor oder App-Speicher) – Tresor gesperrt = Liste leer, bis entsperrt. Basic/Demo: nur bis zum Schließen.</li>
+      <li>Eingefügte Antwort sucht sich selbst den passenden Auftrag; antippen wählt einen anderen.</li>
+      <li>„✓ erledigt“ löscht die Zuordnung sofort; nach 90 Tagen löscht sie sich selbst.</li>
+    </ul>
+  </section>
+
+  <!-- 2 An KI an Unterlage, Auswahl und Mail -->
+  <section class="karte">
+    <h2>2 · „An KI“ an Unterlage, Auswahl und Mail</h2>
+    <div class="handy"><div class="inhalt">
+      <div class="auswahl"><b>2 von 14 ausgewählt</b><button class="kn">Auswahl aufheben</button><button class="kn ki-an">An KI</button><button class="kn">Bereich ändern</button></div>
+      <div class="app-zeile"><input type="checkbox" checked><span>12.11.</span><span>Abschlag Strom <span class="bereich">Wohnen</span></span><span class="leiste-auf"><button class="kn ki-an">KI</button><button class="ik">👁</button></span></div>
+      <div class="app-zeile"><input type="checkbox" checked><span>03.11.</span><span>Mahnung Wolkenpost <span class="bereich">Finanzen</span></span><span class="leiste-auf"><button class="kn ki-an">KI</button><button class="ik">👁</button></span></div>
+      <div class="app-zeile"><input type="checkbox"><span>28.10.</span><span>Arztbrief <span class="bereich">Gesundheit</span></span><span class="leiste-auf"><button class="kn ki-an">KI</button><button class="ik">👁</button></span></div>
+      <p class="leise">Eingang:</p>
+      <div class="mail"><b>✉ Rückfrage zum Vertrag</b><span class="leise">E-Mail · 2 Anlagen · Wohnen</span>
+        <div class="reihe"><button class="kn haupt">Zuordnung prüfen</button><button class="kn">Zurückstellen</button><button class="kn ki-an">An KI</button></div></div>
+    </div></div>
+    <ul class="leise">
+      <li>Ein Tipp füllt das Pseudo-Fenster oben (schaltet „Pseudo“ an) – Mail mit Text und allen Anlagen, PDF mit Texterkennung, Fotos mit Abdecken.</li>
+      <li>„KI“ in der Zeile der Bibliothek neben dem Auge, „An KI“ in der Auswahl-Leiste (Bibliothek und Eingang) und an jedem Eingang.</li>
+      <li>Original bleibt in der Akte; hinaus geht nur, was im Fenster steht.</li>
+    </ul>
+  </section>
+
+  <!-- 3 Assistenz -->
+  <section class="karte">
+    <h2>3 · Briefweg in der Assistenz = dasselbe Fenster</h2>
+    <div class="handy"><div class="inhalt">
+      <div class="assistenz"><b>Brief oder E-Mail beantworten <button class="frage">?</button></b>
+        <select><option>Aus einer Unterlage (optional) …</option><option>Mahnung Wolkenpost</option></select>
+        <div class="weiter"><button class="kn haupt">✉ Im Pseudo-Fenster schreiben</button></div>
+        <span class="leise">Schneller Weg: Briefumschlag oben im Kopf.</span>
+      </div>
+      <div class="kiwahl"><button class="ki mistral">An Mistral (EU)<small>eigener Schlüssel · senden</small></button><button class="ki kipfeil mistral">▾</button></div>
+      <div class="kimenue" style="position:static; min-width:0">
+        <button><i class="punkt gpt"></i>ChatGPT</button><button><i class="punkt claude"></i>Claude</button><button><i class="punkt code"></i>Claude Code</button><button><i class="punkt gemini"></i>Gemini</button><button aria-checked="true"><i class="punkt mistral"></i>Mistral (EU, eigener Schlüssel)</button>
+      </div>
+    </div></div>
+    <ul class="leise">
+      <li>Die alte Briefkarte (eigene Felder, eigene Knöpfe) fällt weg. Unterlage wählen → Fenster mit Aufgabe „Antwortbrief“.</li>
+      <li>Was sie konnte, kann jetzt das Fenster: Mistral mit eigenem Schlüssel (Rückfrage „N verdeckt – senden?“), nach dem Zurückführen „Als Entwurf“ (Korrespondenz) und „PDF“ (Workflow PDF).</li>
+      <li>ChatGPT/Claude öffnen mit dem Text in der Adresse, wenn er kurz genug ist; sonst kopiert.</li>
+    </ul>
+  </section>
+
+  <!-- 4 PDF-Seitenbild -->
+  <section class="karte">
+    <h2>4 · 👁 zeigt bei PDF die echte Seite</h2>
+    <div class="handy" style="min-height:560px">
+      <div class="blatt" style="position:relative">
+        <div class="blatt-kopf"><b>D01 · Mahnung.pdf</b><button class="ik">✕</button></div>
+        <div class="blatt-leiste"><div class="seg"><button aria-pressed="true" id="s-ki">KI sieht</button><button id="s-or">Original</button></div><div class="seg"><button aria-pressed="true">Seite</button><button>Text</button></div><span class="rechts">‹ 1/2 › <button class="kn">⚑ 1</button></span></div>
+        <div class="buehne"><div class="pdfseite zeigt-ki" id="pdf">
+          <i class="logo-t"></i>
+          <i class="zeile-t" style="top:13%;width:40%"></i>
+          <span class="kasten" data-t="⟦NAME-1⟧" style="left:9%;top:20%;width:30%;height:2.2%"></span>
+          <span class="kasten" data-t="⟦ADRESSE-1⟧" style="left:9%;top:23%;width:36%;height:2.2%"></span>
+          <i class="zeile-t" style="top:33%;width:70%"></i><i class="zeile-t" style="top:36%;width:76%"></i>
+          <span class="kasten" data-t="⟦KUNDENNR-1⟧" style="left:52%;top:36%;width:24%;height:2.2%"></span>
+          <i class="zeile-t" style="top:39%;width:62%"></i><i class="zeile-t" style="top:42%;width:80%"></i>
+          <span class="kasten unsicher" data-t="⟦NAME-2⟧" style="left:30%;top:45%;width:18%;height:2.2%"></span>
+          <i class="zeile-t" style="top:48%;width:70%"></i>
+          <span class="kasten" data-t="⟦IBAN-1⟧" style="left:9%;top:51%;width:48%;height:2.2%"></span>
+          <i class="zeile-t" style="top:60%;width:30%"></i>
+        </div></div>
+        <div class="blatt-fuss"><span>Kasten antippen = darf bleiben · Wort im Text-Modus markieren = verdecken</span><button class="kn haupt">Fertig</button></div>
+      </div>
+    </div>
+    <ul class="leise">
+      <li>Die Seite wird auf dem Gerät gezeichnet (pdf.js), die Kästen liegen an der Stelle des Wortes (Textlage der PDF).</li>
+      <li>„Text“ schaltet auf die bisherige Text-Seite (dort markieren = verdecken). Ohne Textebene (Scan) bleibt die Text-Seite.</li>
+      <li>Die KI bekommt weiterhin Text; das Seitenbild ist nur zum Prüfen.</li>
+    </ul>
+  </section>
+
+  <!-- 5 Als Datei / ZIP / Austauschordner -->
+  <section class="karte">
+    <h2>5 · „Als Datei“: eine Datei, ZIP oder Austauschordner</h2>
+    <div class="handy"><div class="inhalt">
+      <div class="datei-wahl">
+        <label><input type="radio" name="d" checked> Eine Textdatei (alles zusammen)</label>
+        <label><input type="radio" name="d"> ZIP (je Datei eine, Bilder abgedeckt, LIES-MICH)</label>
+        <label><input type="radio" name="d"> In den Austauschordner (Claude Code) <button class="frage">?</button></label>
+        <div class="weiter"><button class="kn haupt">⤓ Speichern</button><button class="kn">Ordner wählen …</button></div>
+      </div>
+      <div class="ordner-baum">KI-Austausch/
+  auftraege/
+    2026-11-15-A3/
+      auftrag.md
+      D01.txt  D02.txt  D03.png
+      LIES-MICH.txt
+      antwort.md   ← legt die KI hierhin</div>
+      <div class="weiter"><button class="kn">Antworten holen</button></div>
+    </div></div>
+    <ul class="leise">
+      <li>ZIP nur auf Wahl (P7). Dateinamen nur D01 …; kein Klartext, keine Zuordnung im Ordner.</li>
+      <li>Austauschordner: einmal wählen (PC/Tablet, Ordnerwahl des Browsers); nie im Pro-Tresor. „Antworten holen“ liest <code>antwort.md</code> und führt mit dem passenden Auftrag zurück.</li>
+      <li>Wo der Browser keine Ordnerwahl kann (Handy), bleibt ZIP oder eine Datei.</li>
+    </ul>
+  </section>
+
+  <!-- 6 Zwischenablage -->
+  <section class="karte">
+    <h2>6 · Text und Bild zusammen in die Zwischenablage</h2>
+    <div class="handy"><div class="inhalt">
+      <p class="weg">Kopiert (Text). Das Bild D03 ging nicht mit – Android nimmt nur eines. <button class="link">Bild extra kopieren</button></p>
+      <p class="weg">Kopiert (Text und Bild).</p>
+    </div></div>
+    <ul class="leise">
+      <li>Die App prüft nach dem Kopieren, was wirklich angekommen ist, und sagt es ehrlich.</li>
+      <li>Geht nur eins: erst Text, dann Knopf „Bild extra kopieren“.</li>
+    </ul>
+  </section>
+
+  <section class="notiz entscheid" style="grid-column:1 / -1">
+    <h2>Entscheidungen (mit Freibrief, rückgängig machbar)</h2>
+    <ul>
+      <li>E1 Auftrag entsteht beim ersten Weg hinaus; spätere Wege im selben Fenster ergänzen denselben Auftrag. „Neu“ (Papierkorb aller Zeilen) beginnt den nächsten.</li>
+      <li>E2 Schlüssel für die Zuordnung kommt aus dem Profil (Pro); Zuordnung selbst bleibt auf dem Gerät (verschlüsselt, AES-GCM). Andere Pro-Apps sehen sie nicht.</li>
+      <li>E3 Höchstens 50 offene Aufträge; der älteste fällt dann heraus.</li>
+      <li>E4 Geschützte Gesundheitsunterlagen bekommen „KI“ ebenfalls – sie gehen nur pseudonymisiert hinaus (ICD als Gruppe).</li>
+    </ul>
+  </section>
+</div>
+<script>
+document.querySelectorAll("[data-erledigt]").forEach(b => b.onclick = () => b.closest(".auftrag-z").remove());
+document.querySelectorAll(".auftrag-z").forEach(z => z.addEventListener("click", e => { if (e.target.closest("[data-erledigt]")) return; document.querySelectorAll(".auftrag-z").forEach(x => x.removeAttribute("aria-current")); z.setAttribute("aria-current", "true"); }));
+const pdf = document.getElementById("pdf"), ki = document.getElementById("s-ki"), or = document.getElementById("s-or");
+ki.onclick = () => { pdf.className = "pdfseite zeigt-ki"; ki.setAttribute("aria-pressed","true"); or.setAttribute("aria-pressed","false"); };
+or.onclick = () => { pdf.className = "pdfseite zeigt-original"; or.setAttribute("aria-pressed","true"); ki.setAttribute("aria-pressed","false"); };
+document.querySelectorAll(".kasten").forEach(k => k.onclick = () => { k.style.display = "none"; });
+</script>
