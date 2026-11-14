@@ -52,8 +52,8 @@ webview, product (31, pixel_c), product (35, pixel_2) – alle grün.
 
 ## Stundennachweis
 
-Sitzung 14.11.2026, erste Spur ca. 20:25 UTC (Lesen; erste Datei im Arbeitsordner 20:36), letzter Commit dieses Briefs ca. 23:10 UTC –
-Obergrenze **2 h 45 min** (einschließlich Warten auf CI und Ausgabe, Pausen nicht abgezogen). Forschungseintrag in KimHub
+Sitzung 14.11.2026, erste Spur ca. 20:25 UTC (Lesen; erste Datei im Arbeitsordner 20:36), letzter Commit der Ausgabe-Unterlagen 23:01 UTC
+(gemessen, f1b2aa7) – Obergrenze **2 h 36 min** (einschließlich Warten auf CI und Ausgabe, Pausen nicht abgezogen). Forschungseintrag in KimHub
 (`forschung/messungen/familienakte-2026-11-14-pseudo-restarbeiten-2-28-69.md`).
 
 ## Startauftrag zum Einfügen
