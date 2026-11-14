@@ -178,6 +178,39 @@ function istTitel(s: string): boolean {
 const GEBIET = /^(stadt|gemeinde|markt|landkreis|kreis|land|freistaat|magistrat|kreisverwaltung|stadtverwaltung|verbandsgemeinde|amt)\b|^\S*(amt|gericht|präsidium|ministerium|behörde)\b/i;
 const EIGENE_STELLE = /^(amt\b|klinik|institut|eigenbetrieb|fachbereich|fakultät|zentrum)/i;
 
+// Absender-Runde 14.11.2026 (an verbrauchten Stapeln gelernt, Regeln docs/PRUEFSTAPEL-TRAINING-WOCHENENDE-REGELN.md): Logos und Ränder werden von
+// der Texterkennung als Zeichenreste vor und hinter dem Namen gelesen („Zn Beispiel Versicherung AG“, „® Inkasso GmbH“, „Firma GmbH BA“, „Amt rs |“).
+const RAND_WORT = /^(an|am|im|in|zu|zum|zur|der|die|das|den|dem|des|dr|st|von|vom|und|bei|für|auf|aus|mit|per|ab|ob|so|da|wo|du|er|es|wir|ihr|sie)$/i;
+const RECHTSFORM_KURZ = /^(ag|kg|se|ug|eg|ev|ek|kgaa|ohg|mbh|gbr|sa|ab|as|oy|bv|nv|ltd|inc|llc|plc|spa|srl|eu|de)$/i;
+export function ocrRand(zeile: string): string {
+  if (/^\s*\[/.test(zeile)) return zeile;                                   // „[Scan Teil 1 von 3]“: Vermerk, bleibt wie er ist
+  const zeichen = (zeile.match(/[^\p{L}\d\s]/gu) || []).length, buchst = (zeile.match(/\p{L}/gu) || []).length;
+  if (zeichen >= 3 && buchst < zeichen) return "";                         // überwiegend Zeichenreste („= - BEE == —“)
+  let s = zeile.replace(/^[^\p{L}\d"„(]+/u, "").replace(/^\d[a-z]?\s+(?=\p{L})/u, "");   // „7 Seniorenkreis …“, „7z Vorgangs-Nr.“
+  if (/^[A-ZÄÖÜ]{2}\s+/.test(s) && GEBIET.test(s.replace(/^\S+\s+/, ""))) s = s.replace(/^\S+\s+/, "");   // „FB Finanzamt …“
+  let wortRest = false;
+  for (let k = 0; k < 2; k++) {
+    const m = s.match(/^((?:[a-zäöü]{1,3}|[A-ZÄÖÜ][a-zäöü]?)[\]|)}>]?)\s+(?=[A-ZÄÖÜ][\wäöüß-]{2,})/);
+    if (!m || RAND_WORT.test(m[1])) break;
+    s = s.slice(m[0].length); wortRest = true;
+  }
+  if (wortRest && !/\s/.test(s.trim())) return "";                        // „een Peer“: vor einem einzelnen Wort ist meist alles Rest
+  for (let k = 0; k < 3; k++) {
+    const m = s.match(/\s+([a-zäöü]{1,2}|[A-ZÄÖÜ][a-zäöü]?|[A-ZÄÖÜ]{2}|\d|[a-z]\d|[|\]}=—–_~»«*]+|\((?:ex|e|x)\))\s*$/);
+    if (!m || RECHTSFORM_KURZ.test(m[1])) break;
+    if (/\d/.test(m[1]) && !(GEBIET.test(s) || RECHTSFORM.test(s))) break;   // Hausnummern bleiben; nur „Finanzamt Unistadt 7“
+    s = s.slice(0, m.index);
+  }
+  return s.replace(/\s+[|\]}]+\s*$/, "").trim();
+}
+/** Name ist nur Straße mit Hausnummer, nur Postfach oder nur Zeichenreste (kein Wort mit drei Buchstaben). */
+const OBERFLAECHE = /^(?:\S{1,3}\s+)?zeichen\b|^(vorname|nachname|name|versicherungsschein|vorgangs)\b|^(posteingang|mitteilungen|benachrichtigungen|nachrichten|neue nachricht|startseite|übersicht|menü|einstellungen|zurück|suche|profil|mein konto|meine daten|kassenbon|digitaler kassenbon|ihr schreiben|ihre nachricht|ihre anfrage|ihr antrag|unser zeichen|ihr zeichen)\b/i;
+const KEIN_ABSENDER = (n: string) => {
+  const worte = n.split(/\s+/), kurz = worte.filter((x) => /^\p{L}{1,2}$/u.test(x) && !RECHTSFORM_KURZ.test(x) && !/^(dr|st|am|an|im|in|zu|zum|zur)$/i.test(x)).length;
+  return /^[A-ZÄÖÜ][\wäöüß.-]*(straße|strasse|str\.|weg|platz|ring|allee|gasse|damm|chaussee|ufer|steig|pfad)\s*\d/i.test(n) || /^postfach\b/i.test(n) || !/\p{L}{3}/u.test(n)
+    || OBERFLAECHE.test(n) || /\bi{2,}\b|(?<![\p{L}])(\p{L})\1{2,}(?![\p{L}])/iu.test(n) || worte.length >= 3 && kurz * 2 >= worte.length;   // „iii ii 4428816“, „fr ee naeim er ren“
+};
+
 /** Aus einer Kopfzeile den Namen herausschälen: erste Spalte, ohne Anschrift, Abteilung, Werbespruch, Datum, Kürzel in Klammern, „Inh. …“. */
 export function nameAusZeile(zeile: string, fuss = false): string {
   const spalten = zeile.trim().split(/\s{2,}|\t+/).map((s) => s.trim()).filter(Boolean);
@@ -211,7 +244,7 @@ const istMailKopf = (zeilen: string[]) => { const k = zeilen.slice(0, 7); return
 export function erkenneAbsender(kopf: string): Wert | undefined {
   const alle = kopf.split(/\r?\n/).map((z) => z.trim()).filter(Boolean);
   if (istMailKopf(alle)) return undefined; // gespeicherte Mail: Absender steht in „Von:“ und in der Fußzeile → absenderAusGruss (ganzer Text)
-  const zeilen = alle.filter((z) => !TITEL.test(z)).slice(0, 18);
+  const zeilen = alle.map(ocrRand).filter((z) => z && !TITEL.test(z)).slice(0, 18);
   // Briefkopf: die erste Zeile, die keine Überschrift, kein Etikett und kein Datum ist
   let i = 0;
   while (i < zeilen.length && i < 6) {
@@ -219,7 +252,7 @@ export function erkenneAbsender(kopf: string): Wert | undefined {
     if (ANREDE_ZEILE.test(z) || EMPFAENGER_ZEILE.test(z)) break;
     if (ORT_DATUM.test(z)) { i++; continue; }
     const n = nameAusZeile(z);
-    if (n && namensartig(n) && !istTitel(n) && !KEIN_NAME.test(n)) {
+    if (n && namensartig(n) && !istTitel(n) && !KEIN_NAME.test(n) && !KEIN_ABSENDER(n)) {
       const firma = FIRMA.test(n);
       const spur = ADRESS_SPUR.test(z.slice(Math.min(z.length, n.length))) || zeilen.slice(i + 1, i + 4).some((x) => ADRESS_SPUR.test(x) && !EMPFAENGER_ZEILE.test(x));
       if (firma) return w(n, i === 0 || spur, i === 0 ? "Briefkopf oben" : "Briefkopf oben (nach der Überschrift)");
@@ -238,7 +271,7 @@ export function erkenneAbsender(kopf: string): Wert | undefined {
   for (const roh of zeilen.slice(0, 6)) {
     if (ANREDE_ZEILE.test(roh)) break;
     const z = nameAusZeile(roh);
-    if (z && FIRMA.test(z) && z.length <= 70 && !EMPFAENGER_ZEILE.test(roh) && !istTitel(z) && namensartig(z)) return w(z, false, "Zeile mit Firmenmerkmal im Kopf");
+    if (z && FIRMA.test(z) && z.length <= 70 && !EMPFAENGER_ZEILE.test(roh) && !istTitel(z) && namensartig(z) && !KEIN_ABSENDER(z)) return w(z, false, "Zeile mit Firmenmerkmal im Kopf");
   }
   return undefined;
 }
@@ -403,7 +436,9 @@ export function erkenneFrist(text: string, dokumentDatum?: string, datumSicher =
 }
 
 export function erkenneBetrag(text: string): Wert | undefined {
-  const t = text.replace(/\s+/g, " ");
+  // „Zwischensumme“ ist nicht der Betrag (lange Bons vom Großeinkauf). Fehlerbehebung, gefunden und gemessen nur am eigenen Generator
+  // (Bon-Betrag 73 → 86 %), kein Nachweis an einem fremden Stapel (Training 14.11.2026, Prüfbericht Befund 3).
+  const t = text.replace(/\s+/g, " ").replace(/zwischen\s?summe[^0-9]{0,30}\d{1,3}(?:\.\d{3})*,\d{2}/gi, " ");
   const genannt = t.match(/(?:gesamtbetrag|rechnungsbetrag|zu zahlen|betrag|summe|offener betrag)[^0-9]{0,30}(\d{1,3}(?:\.\d{3})*,\d{2})\s?(?:€|eur)/i)
     || t.match(/(?:summe|gesamt|total|zu zahlen)\s*(?:eur|€)?\s*:?\s*(\d{1,3}(?:\.\d{3})*,\d{2})(?!\d)/i);
   if (genannt) return w(`${genannt[1]} €`, true, `„${genannt[0].trim()}“`);
