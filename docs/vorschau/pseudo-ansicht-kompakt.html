@@ -76,7 +76,15 @@ h1 { font-size:1.2rem; margin:0; color:var(--navy); } p { margin:0; } .leise { c
 .auftrag { width:100%; height:30px; border:1px solid var(--line); border-radius:8px; padding:0 8px; font:.82rem var(--sans); background:var(--paper); color:var(--ink); }
 .einedatei { display:flex; align-items:center; gap:6px; font-size:.8rem; }
 .einedatei input { width:15px; height:15px; margin:0; }
-.kis { display:grid; grid-template-columns:1fr 1fr; gap:5px; }
+.kiwahl { display:flex; position:relative; }
+.kiwahl .ki { border-radius:8px 0 0 8px; flex:1; }
+.kiwahl .kipfeil { flex:none; width:40px; border-radius:0 8px 8px 0; border-left:1px solid rgba(255,255,255,.35); text-align:center; padding:0; font-size:1rem; }
+.kimenue { position:absolute; right:0; bottom:44px; z-index:3; background:var(--paper); border:1px solid var(--line); border-radius:10px; box-shadow:0 8px 24px var(--schatten); padding:4px; display:grid; min-width:180px; }
+.kimenue button { display:flex; align-items:center; gap:8px; height:34px; border:0; background:none; border-radius:7px; padding:0 8px; font:700 .84rem var(--sans); color:var(--ink); cursor:pointer; text-align:left; }
+.kimenue button[aria-checked="true"]::after { content:"✓"; margin-left:auto; color:var(--green); }
+.kimenue button:hover { background:var(--canvas); }
+.punkt { width:12px; height:12px; border-radius:50%; flex:none; }
+.punkt.gpt { background:var(--gpt); } .punkt.claude { background:var(--claude); } .punkt.code { background:var(--code); } .punkt.gemini { background:var(--gemini); }
 .ki { height:40px; text-align:left; padding:0 10px; border:0; border-radius:8px; color:#fff; font:700 .76rem var(--sans); cursor:pointer; line-height:1.1; }
 .ki { font-size:.86rem; } .ki small { display:block; font-weight:400; font-size:.66rem; opacity:.9; }
 .ki.gpt { background:var(--gpt); } .ki.claude { background:var(--claude); } .ki.code { background:var(--code); } .ki.gemini { background:var(--gemini); }
@@ -157,7 +165,16 @@ h1 { font-size:1.2rem; margin:0; color:var(--navy); } p { margin:0; } .leise { c
         <select class="stil" aria-label="Stil"><option>Stil: formell</option><option>freundlich</option><option>bestimmt</option><option>kürzer</option><option>ausführlicher</option><option>einfache Sprache</option></select></div>
       <input class="auftrag" placeholder="Was soll die KI tun? (frei)" aria-label="Eigener Auftrag">
       <label class="einedatei"><input type="checkbox" checked> Alle zu einer Datei zusammenfügen</label>
-      <div class="kis"><button type="button" class="ki gpt">ChatGPT<small>kopieren &amp; öffnen</small></button><button type="button" class="ki claude">Claude<small>kopieren &amp; öffnen</small></button><button type="button" class="ki code">Claude Code<small>in den Ordner</small></button><button type="button" class="ki gemini">Gemini<small>kopieren &amp; öffnen</small></button></div>
+      <div class="kiwahl">
+        <button type="button" class="ki gpt" id="kiLos">An ChatGPT<small>kopieren &amp; öffnen</small></button><button type="button" class="ki gpt kipfeil" id="kiPfeil" aria-haspopup="menu" aria-expanded="false" aria-label="KI wählen">▾</button>
+        <div class="kimenue" id="kiMenue" role="menu" hidden>
+          <button type="button" role="menuitemradio" aria-checked="true" data-ki="gpt" data-name="ChatGPT" data-was="kopieren &amp; öffnen"><i class="punkt gpt"></i>ChatGPT</button>
+          <button type="button" role="menuitemradio" aria-checked="false" data-ki="claude" data-name="Claude" data-was="kopieren &amp; öffnen"><i class="punkt claude"></i>Claude</button>
+          <button type="button" role="menuitemradio" aria-checked="false" data-ki="code" data-name="Claude Code" data-was="in den Ordner"><i class="punkt code"></i>Claude Code</button>
+          <button type="button" role="menuitemradio" aria-checked="false" data-ki="gemini" data-name="Gemini" data-was="kopieren &amp; öffnen"><i class="punkt gemini"></i>Gemini</button>
+        </div>
+      </div>
+      <p class="leise" id="kiMeldung" hidden></p>
       <div class="weiter"><button type="button" class="kn">⧉ Nur kopieren</button><button type="button" class="kn">⬇ Als Datei</button><button type="button" class="kn">ZIP</button><button type="button" class="link" data-zu-zurueck>Antwort da → 2 Zurück</button></div>
     </div>
 
@@ -214,7 +231,7 @@ h1 { font-size:1.2rem; margin:0; color:var(--navy); } p { margin:0; } .leise { c
     </ul>
     <h2>Geprüft gegen PseudoDoc (Handy, 390 px)</h2>
     <ul>
-      <li><b>Übernommen, weil klarer:</b> Satz „Kurz ansehen – dann zur KI“ (sagt, was als Nächstes kommt) · Abschnittsnamen „Pseudonymisiert“, „Zur KI“ · KI-Knöpfe 2×2 und gut lesbar (vorher 4 nebeneinander, „Claude Code“ abgeschnitten) · Aufgaben alle sichtbar statt seitlich versteckt · „Antwort da → 2 Zurück“ · Strichgrafiken statt Emoji · 🗑 auch beim Bild · KI-Block klebt nicht mehr unten (verdeckte sonst die Liste).</li>
+      <li><b>Übernommen, weil klarer:</b> Satz „Kurz ansehen – dann zur KI“ (sagt, was als Nächstes kommt) · Abschnittsnamen „Pseudonymisiert“, „Zur KI“ · <b>ein</b> KI-Knopf (Klaus 14.11.): „An ChatGPT“, ▾ daneben wählt die KI, der Knopf trägt danach ihren Namen und ihre Farbe, die Wahl bleibt gemerkt · Aufgaben alle sichtbar statt seitlich versteckt · „Antwort da → 2 Zurück“ · Strichgrafiken statt Emoji · 🗑 auch beim Bild · KI-Block klebt nicht mehr unten (verdeckte sonst die Liste).</li>
       <li><b>Kompakter als PseudoDoc:</b> Zeile je Datei 44 px statt rund 200 px (dort Symbol über Name über Marken über Knöpfen) · Dateien-Leiste in einer Zeile statt großem Kasten · keine Karte in der Karte · kein Fuß mit Impressum im Fenster · Stil als ein Auswahlfeld statt sechs Chips.</li>
       <li><b>Mehr als PseudoDoc:</b> Auge zeigt die Seite im Dokument-Aussehen (dort Text im Kasten) und erlaubt Markieren = verdecken · ⚑ springt zur nächsten unsicheren Stelle (dort „vorsichtshalber“ + Liste unter „Korrigieren“) · Profile und feste Platzhalter.</li>
       <li><b>Leerer Zustand</b> (noch keine Datei) wie PseudoDoc: nur Kopf und die Dateien-Leiste mit „Beispiel ansehen“.</li>
@@ -232,6 +249,19 @@ document.querySelectorAll('[data-reiter]').forEach((b) => b.onclick = () => {
   const hin = b.dataset.reiter === 'hin';
   $('#hin').hidden = !hin; $('#kiBlock').hidden = !hin; $('#zurueck').hidden = hin;
 });
+const kiMenue = $('#kiMenue'), kiPfeil = $('#kiPfeil'), kiLos = $('#kiLos');
+let kiWahl = { ki: 'gpt', name: 'ChatGPT', was: 'kopieren & öffnen' };
+try { const g = JSON.parse(localStorage.getItem('pseudo_ki') || 'null'); if (g) kiWahl = g; } catch {}
+const kiZeigen = () => {
+  for (const b of [kiLos, kiPfeil]) b.className = `ki ${kiWahl.ki}${b === kiPfeil ? ' kipfeil' : ''}`;
+  kiLos.innerHTML = `An ${kiWahl.name}<small>${kiWahl.was}</small>`;
+  kiMenue.querySelectorAll('[data-ki]').forEach((x) => x.setAttribute('aria-checked', String(x.dataset.ki === kiWahl.ki)));
+};
+kiPfeil.onclick = (e) => { e.stopPropagation(); kiMenue.hidden = !kiMenue.hidden; kiPfeil.setAttribute('aria-expanded', String(!kiMenue.hidden)); };
+kiMenue.querySelectorAll('[data-ki]').forEach((x) => x.onclick = () => { kiWahl = { ki: x.dataset.ki, name: x.dataset.name, was: x.dataset.was }; try { localStorage.setItem('pseudo_ki', JSON.stringify(kiWahl)); } catch {} kiZeigen(); kiMenue.hidden = true; kiPfeil.setAttribute('aria-expanded', 'false'); });
+kiLos.onclick = () => { const m = $('#kiMeldung'); m.hidden = false; m.textContent = kiWahl.ki === 'code' ? 'Auftrag in den Austauschordner gelegt.' : `Kopiert. ${kiWahl.name} öffnet sich – dort einfügen.`; };
+document.addEventListener('click', (e) => { if (!e.target.closest('.kiwahl')) { kiMenue.hidden = true; kiPfeil.setAttribute('aria-expanded', 'false'); } });
+kiZeigen();
 document.querySelector('[data-zu-zurueck]').onclick = () => document.querySelector('[data-reiter="zurueck"]').click();
 $('#zurueckLos').onclick = () => { $('#ergebnis').hidden = false; $('#ergebnisKnoepfe').hidden = false; };
 document.querySelectorAll('.chip').forEach((c) => c.onclick = () => c.setAttribute('aria-pressed', String(c.getAttribute('aria-pressed') !== 'true')));
