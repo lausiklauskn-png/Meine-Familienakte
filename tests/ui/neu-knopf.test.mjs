@@ -1,6 +1,6 @@
 // Knopf „Neu“ (2.28.51: sechster Eintrag „Zustand deines Geräts auf einen Blick“ ganz oben; 2.28.35: fünfter Eintrag „E-Mail in der Hilfe“; 2.28.34: vierter Eintrag „Sichern auch am Handy“; 2.28.33: „Hilfe auf neuem Stand“) mit Fenster „Was ist neu“ (Klaus 2026-11-05): roter Punkt bei Ungelesenem, × je Eintrag, gemerkt je Gerät
 // (auch nach Neuladen), Demo getrennt, „Kalender verbinden“ springt zur Karte, Platz im Kopf am Handy.
-import { startApp, launchBrowser, DESKTOP, HANDY, ready, check, step, summary, collectErrors } from "./_harness.mjs";
+import { startApp, launchBrowser, DESKTOP, HANDY, ready, check, step, summary, collectErrors, neuKnopf } from "./_harness.mjs";
 import { demoUmschalten } from "./_demo.mjs";
 
 const app = await startApp();
@@ -52,12 +52,12 @@ try {
     return zu1 && (await page.locator(".neu-fenster").count()) === 0;
   });
   await step("Nach Neuladen bleibt alles gelesen", async () => {
-    await page.reload({ waitUntil: "networkidle" }); await page.waitForSelector(".neu-knopf-schalter");
+    await page.reload({ waitUntil: "networkidle" }); await page.waitForSelector(".neu-knopf-schalter", { state: "attached" });
     return (await page.locator(".neu-knopf .neu-punkt").count()) === 0 && (await knopf.getAttribute("data-ungelesen")) === "0";
   });
   await step("Demo getrennt: in der Demo ist wieder alles ungelesen", async () => {
     await demoUmschalten(page, true);
-    await page.waitForSelector(".neu-knopf-schalter");
+    await page.waitForSelector(".neu-knopf-schalter", { state: "attached" });
     return (await page.locator(".neu-knopf-schalter").getAttribute("data-ungelesen")) === "4";
   });
   check(errors.length === 0, "Desktop: keine Seitenfehler", errors.join(" | "));
@@ -67,12 +67,12 @@ try {
     const ctx = await browser.newContext({ ...HANDY, viewport: { width: breite, height: 760 } });
     const p = await ctx.newPage(); const err = collectErrors(p);
     await p.goto(app.base, { waitUntil: "networkidle" }); await ready(p);
-    await step(`Handy ${breite} px: Kopf ohne Überlauf, „Neu“ und Menü sichtbar, Fenster im Bild, Knopf „Einrichten“ sichtbar`, async () => {
+    await step(`Handy ${breite} px: Kopf ohne Überlauf, Menü sichtbar, „Neu“ hinter ‹, Fenster im Bild, Knopf „Einrichten“ sichtbar`, async () => {
       const m = await p.evaluate(() => {
         const kopf = document.querySelector(".masthead"), neu = document.querySelector(".neu-knopf-schalter").getBoundingClientRect(), menue = document.querySelector(".mobile-menu-button").getBoundingClientRect();
         return { ueber: kopf.scrollWidth - kopf.clientWidth, seite: document.documentElement.scrollWidth - innerWidth, neuRechts: neu.right, menueRechts: menue.right, breite: innerWidth, hoehe: kopf.getBoundingClientRect().height };
       });
-      await p.locator(".neu-knopf-schalter").click();
+      await (await neuKnopf(p)).click();
       const f = await p.locator(".neu-fenster").boundingBox();
       const knopfDa = await p.locator(".neu-fenster button", { hasText: "Einrichten" }).isVisible();
       const ok = knopfDa && m.ueber <= 0 && m.seite <= 0 && m.neuRechts <= m.breite && m.menueRechts <= m.breite && f && f.x >= 0 && f.x + f.width <= m.breite + 0.5;

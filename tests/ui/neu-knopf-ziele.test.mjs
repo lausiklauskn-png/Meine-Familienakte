@@ -1,6 +1,6 @@
 // „Was ist neu“ (Klaus 10.11.2026): jeder Knopf führt an die genannte Stelle – „E-Mail in der Hilfe“ öffnet das Thema mit der
 // E-Mail-Karte, nicht nur die Hilfe. Je Eintrag ein Schritt; das Ziel muss da, aufgeklappt und im Bild sein.
-import { startApp, launchBrowser, DESKTOP, HANDY, ready, step, soll, summary, collectErrors } from "./_harness.mjs";
+import { startApp, launchBrowser, DESKTOP, HANDY, ready, step, soll, summary, collectErrors, neuKnopf } from "./_harness.mjs";
 
 const ZIELE = {
   "zweiter-ort-2026-11-12": "[data-zweiter-ort]",
@@ -16,8 +16,8 @@ try {
     await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page);
     for (const [id, ziel] of Object.entries(ZIELE)) {
       await step(`${name}: „Was ist neu“ › ${id} › Knopf führt zu ${ziel}`, async () => {
-        await page.goto(app.base, { waitUntil: "networkidle" }); await page.waitForSelector(".neu-knopf-schalter");
-        await page.locator(".neu-knopf-schalter").click();
+        await page.goto(app.base, { waitUntil: "networkidle" }); await page.waitForSelector(".neu-knopf-schalter", { state: "attached" });
+        await (await neuKnopf(page)).click();
         const knopf = page.locator(`.neu-eintrag[data-neu="${id}"] button.button`);
         soll(await knopf.count() === 1, `Eintrag ${id} ohne Knopf`);
         await knopf.scrollIntoViewIfNeeded(); await knopf.click({ timeout: 8000 });

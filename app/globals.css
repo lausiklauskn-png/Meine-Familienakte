@@ -2515,7 +2515,7 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
   .masthead { position: relative; }
   .header-actions > .kopf-pfeil-auf { display: inline-grid; place-items: center; order: 99; }
   .header-actions.kopf-auf { position: absolute; top: 0; bottom: 0; right: 0; z-index: 5; justify-content: flex-end; padding: 0 12px 0 0; background: var(--paper, #fff); box-shadow: -10px 0 18px rgba(9, 38, 63, .16); }
-  .header-actions.kopf-auf > :not(.drucken-knopf):not(.logout-button):not(.login-button):not(.familienakte-install):not(.kopf-pfeil-zu):not(.fa-schrift) { display: none !important; }
+  .header-actions.kopf-auf > :not(.drucken-knopf):not(.logout-button):not(.login-button):not(.familienakte-install):not(.kopf-pfeil-zu):not(.fa-schrift):not(.neu-knopf) { display: none !important; }
   /* Schriftgröße „A··A“ (11.11.): am Handy hinter dem Pfeil in der Aufklappleiste. */
   .header-actions > .fa-schrift { display: none !important; }
   .header-actions.kopf-auf > .fa-schrift { display: inline-flex !important; align-items: center; }
@@ -2932,3 +2932,28 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .wahl-felder { margin: 0; }
 .wahl-felder .sicherung-art { grid-template-columns: auto auto 1fr; }
 .wahl-felder .sicherung-art input:disabled + svg { opacity: .6; }
+
+/* Pseudo-Knopf (Klaus 14.11.2026): rot = inaktiv, grün = aktiv, Zustand als Wort darunter, im Kopf. Am Handy wandert dafür
+   „Neu“ in die Aufklappleiste hinter „‹“ (Klaus 14.11.: „Neu muss nicht unbedingt oben mit sein“). */
+.header-actions .pseudo-knopf { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; width: auto; min-width: 58px; height: 40px; padding: 2px 9px; border-radius: 10px; color: #fff; font-weight: 800; line-height: 1.05; border: 1px solid transparent; cursor: pointer; font-family: inherit; }
+.pseudo-knopf .pseudo-wort { font-size: .84rem; letter-spacing: .02em; }
+.pseudo-knopf .pseudo-zustand { font-size: .62rem; font-weight: 700; display: block !important; }
+.header-actions .pseudo-knopf.pseudo-aus { background: #b3262e; border-color: #8f1f25; }
+.header-actions .pseudo-knopf.pseudo-an { background: #1f8a4c; border-color: #167249; }
+.pseudo-knopf:focus-visible { outline: 3px solid #0b3154; outline-offset: 2px; }
+@media (max-width: 900px) {
+  .header-actions:not(.kopf-auf) > .neu-knopf { display: none !important; }
+  .header-actions.kopf-auf > .neu-knopf { display: inline-flex !important; }
+  .site-header .header-actions .pseudo-knopf { min-width: 0 !important; width: auto !important; height: 36px; padding: 1px 2px !important; border-radius: 8px; }
+  .pseudo-knopf .pseudo-wort { font-size: .6rem; letter-spacing: 0; } .pseudo-knopf .pseudo-zustand { font-size: .5rem; }
+}
+.pseudo-fenster { border: 2px solid #1f8a4c; margin-bottom: 16px; display: grid; gap: 10px; }
+.pseudo-hinweis { margin: 0; background: var(--green-soft); color: var(--green); border-radius: 8px; padding: 7px 10px; font-size: .9rem; }
+.pseudo-datei { cursor: pointer; }
+.pseudo-stueck { border: 1px solid var(--line); border-radius: 10px; padding: 10px; display: grid; gap: 8px; min-width: 0; }
+.pseudo-stueck-kopf { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: center; }
+.pseudo-stueck pre { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 360px; overflow: auto; margin: 0; }
+.pseudo-platzhalter { background: #dfe9fb; color: #164f7d; border-radius: 4px; padding: 0 2px; }
+.pseudo-unsicher { margin: 0; background: var(--amber-soft); color: var(--amber); border-radius: 8px; padding: 6px 10px; font-size: .88rem; }
+@media (max-width: 380px) { .site-header .header-actions .pseudo-knopf { padding: 0 1px !important; border-width: 0; } .pseudo-knopf .pseudo-wort { font-size: .52rem; letter-spacing: -.03em; } .pseudo-knopf .pseudo-zustand { font-size: .46rem; } }
+@media (min-width: 901px) and (max-width: 1100px) { .header-actions .pseudo-knopf { min-width: 0; padding: 2px 5px; } .pseudo-knopf .pseudo-wort { font-size: .74rem; } }

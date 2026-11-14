@@ -55,6 +55,7 @@ export const APP_GRUPPEN: Gruppe[] = [
   ] },
   { id: "g-aus", titel: "Ausgabe", wo: "von der Akte aus", spalte: 6, chips: [
     { id: "aus-antwort", titel: "Brief beantworten", wo: "Assistenz › Brief oder E-Mail beantworten", seite: "assistant", mehr: "Namen, Anschriften, Nummern und Beträge werden verdeckt; in die eigene KI kopieren, per Link öffnen oder mit eigenem Schlüssel (Mistral, EU) senden; die Antwort bekommt die echten Angaben zurück. Als Entwurf speichern oder in Workflow PDF öffnen. Die App verschickt nie selbst." },
+    { id: "aus-pseudo", titel: "Pseudo (Pseudonymisieren)", wo: "Kopf › Pseudo (grün an, rot aus)", seite: "overview", mehr: "Dateien oder Text einfügen: Namen, Anschriften, Geburtsdaten, Steuer-ID, Versicherten-, Renten-, Ausweis- und Kontonummern, Diagnose-Codes werden zu Platzhaltern – auf dem Gerät, ohne Netz. Kopieren, als Textdatei speichern, Antwort zurückführen. Profile im Pro-Tresor, Austauschordner für Claude Code/ChatGPT und Bezugsdokumente sind geplant." },
     { id: "aus-fristen", titel: "Fristen und Erinnerungen", wo: "Fristen und Aufgaben · Mein Kalender", seite: "reminders" },
     { id: "aus-sicherung", titel: "Vollsicherung", wo: "Sicherheit › sichern und testen", seite: "security", mehr: "Verschlüsselt mit Passwort und Notfallblatt oder lesbar; mit Prüfsummen; Android legt die APK bei, Windows einen Lies-mich mit Download." },
     { id: "aus-zweiter-ort", titel: "Sicherung an einem zweiten Ort", wo: "Sicherheit › zweiter Ort", seite: "security", mehr: "Von selbst, wenn sich etwas geändert hat (höchstens einmal am Tag), und auf Knopf. Verschlüsselt oder lesbar; dort eine, auf dem Gerät zwei. Erst geprüft, dann alt gelöscht. Auf Wunsch „Synchron halten“ über die gemeinsame Festplatte im selben Ordner." },
@@ -86,7 +87,7 @@ export const APP_KANTEN: KartenKante[] = [
   { von: "wfpdf", nach: "akte", beide: true, unten: true }, { von: "ausfuellen", nach: "akte", unten: true }, { von: "direkt", nach: "akte", unten: true },
   { von: "eingang", nach: "pruefung" }, { von: "pruefung", nach: "vorschlag" }, { von: "pruefung", nach: "befund" }, { von: "vorschlag", nach: "akte" },
   { von: "akte", nach: "datentresor", beide: true }, { von: "akte", nach: "browser", beide: true }, { von: "akte", nach: "protresor", beide: true }, { von: "akte", nach: "tresor-einschritt", beide: true },
-  { von: "akte", nach: "aus-antwort" }, { von: "akte", nach: "aus-fristen" }, { von: "akte", nach: "aus-sicherung" }, { von: "akte", nach: "aus-demo" }, { von: "akte", nach: "aus-drucken" },
+  { von: "akte", nach: "aus-antwort" }, { von: "akte", nach: "aus-pseudo" }, { von: "akte", nach: "aus-fristen" }, { von: "akte", nach: "aus-sicherung" }, { von: "akte", nach: "aus-demo" }, { von: "akte", nach: "aus-drucken" },
   { von: "aus-antwort", nach: "mailapp" }, { von: "aus-antwort", nach: "mssend" }, { von: "aus-fristen", nach: "kalender", beide: true }, { von: "aus-fristen", nach: "glocke" },
   { von: "aus-sicherung", nach: "sicherungsordner", beide: true }, { von: "akte", nach: "anderes-geraet" },
   { von: "akte", nach: "aus-zweiter-ort" }, { von: "aus-zweiter-ort", nach: "sicherungsordner" },

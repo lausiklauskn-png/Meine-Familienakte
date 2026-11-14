@@ -16,6 +16,8 @@ export const APP_STAND: Readonly<Record<string, StandEintrag>> = {
   "tagebuch": { stand: "fertig", seit: "2.28.49" },
   "notiz": { stand: "fertig", seit: "2.28.49" },
   "aus-antwort": { stand: "fertig", seit: "2.28.49" },
+  // 2.28.68: Knopf „Pseudo“ mit verbesserter Maske (lib/maske.ts auf Modul 25).
+  "aus-pseudo": { stand: "fertig", seit: "2.28.68" },
   // 2.28.67: Eingang – Absender und Titel aus dem Sortier-Kern.
   // 2.28.65: Sicherung an einem zweiten Ort, Cloud-Ordner hereinholen, E-Mail-Wege (Private Brain als Empfang, Mail-App, Microsoft).
   "aus-zweiter-ort": { stand: "fertig", seit: "2.28.65" },

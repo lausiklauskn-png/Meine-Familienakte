@@ -1,7 +1,7 @@
 // Klaus 09.11.2026 (Vorschau live-zustand-2.28.50, l1–l5 Ja): Landkarte und „Akten sichern“ zeigen den Zustand dieses Geräts –
 // grün eingerichtet · rot fehlt · gelb gesperrt oder veraltet · grau freiwillig. Immer als Karte mit Wegen, auch am Handy und Tablet.
 // Rot und gelb führen mit „Beheben ›“ an den Knopf. Demo an: rotes Band über den Karten.
-import { startApp, launchBrowser, HANDY, ready, check, step, soll, summary, footer, collectErrors } from "./_harness.mjs";
+import { startApp, launchBrowser, HANDY, ready, check, step, soll, summary, footer, collectErrors, neuKnopf } from "./_harness.mjs";
 import { capacitorStub } from "./_capacitor-stub.mjs";
 import { demoUmschalten } from "./_demo.mjs";
 const TABLET = { viewport: { width: 800, height: 1280 }, deviceScaleFactor: 1, isMobile: true, hasTouch: true, locale: "de-DE" };
@@ -65,7 +65,7 @@ try {
     });
     await step(`${name}: „Neu“ › „Landkarte zeigt, was zu tun ist“ › „Landkarte öffnen“ öffnet die Hilfe mit aufgeklappter Karte`, async () => {
       await page.evaluate(() => window.scrollTo(0, 0));
-      await page.locator(".neu-knopf-schalter").click();
+      await (await neuKnopf(page)).click();
       await page.locator('[data-neu="landkarte-farben-2026-11-11"]').getByRole("button", { name: "Landkarte öffnen", exact: true }).click();
       await page.locator('[data-app-landkarte="offen"]').waitFor({ timeout: 5000 });
       return soll(await page.locator('[data-app-landkarte="offen"] [data-karte-id="protresor"]').first().isVisible(), "Karte nicht offen");

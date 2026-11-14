@@ -1,0 +1,343 @@
+<title>Plan Pseudonymisieren</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: eine Spalte wie die übrigen Vorschauen, Karten im Stil der App (Familienakte-Farben), Fragen am Ende mit Ja/Nein. */
+:root {
+  --navy:#0b3154; --blau:#174f7b; --blau-soft:#edf5fc; --ink:#15283a; --muted:#5d6c7c; --line:#d8e2ea; --canvas:#f2f7fa; --paper:#ffffff;
+  --teal:#087f7a; --teal-soft:#e8f6f5; --green:#167249; --green-soft:#eaf7f0; --amber:#8a5b08; --amber-soft:#fff4dc;
+  --red:#8f252b; --red-soft:#f8e5e6; --grau:#7a8792; --grau-soft:#f1f4f6;
+  --m-person:#dfe9fb; --m-nummer:#f3e3fa; --m-ort:#e3f4e8; --m-stelle:#eef0f2;
+  --sans: Arial, Helvetica, sans-serif; --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --navy:#9cc6ef; --blau:#9cc6ef; --blau-soft:#18293a; --ink:#e4ecf2; --muted:#9fb0bf; --line:#2c3c4a; --canvas:#0f171e; --paper:#17222c;
+  --teal:#6fd2cb; --teal-soft:#123230; --green:#7fd3a5; --green-soft:#16301f; --amber:#f0c36b; --amber-soft:#3a2d12;
+  --red:#f1a3a8; --red-soft:#3b1c1f; --grau:#9aa7b2; --grau-soft:#1f2a33;
+  --m-person:#22344f; --m-nummer:#3a2646; --m-ort:#1d3a28; --m-stelle:#26313a; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --navy:#9cc6ef; --blau:#9cc6ef; --blau-soft:#18293a; --ink:#e4ecf2; --muted:#9fb0bf; --line:#2c3c4a; --canvas:#0f171e; --paper:#17222c;
+  --teal:#6fd2cb; --teal-soft:#123230; --green:#7fd3a5; --green-soft:#16301f; --amber:#f0c36b; --amber-soft:#3a2d12;
+  --red:#f1a3a8; --red-soft:#3b1c1f; --grau:#9aa7b2; --grau-soft:#1f2a33;
+  --m-person:#22344f; --m-nummer:#3a2646; --m-ort:#1d3a28; --m-stelle:#26313a; color-scheme: dark; }
+* { box-sizing:border-box; }
+body { background:var(--canvas); color:var(--ink); font:16px/1.5 var(--sans); padding-block:20px 48px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
+main { max-width:980px; margin:0 auto; display:grid; gap:22px; }
+h1 { font-size:1.45rem; margin:0; color:var(--navy); text-wrap:balance; }
+h2 { font-size:1.08rem; margin:0; color:var(--blau); background:var(--blau-soft); border:1px solid var(--line); border-radius:9px; padding:6px 10px; text-wrap:balance; }
+h3 { font-size:.98rem; margin:0; color:var(--blau); }
+p { margin:0; } .leise { color:var(--muted); font-size:.92rem; }
+.kopf { display:grid; gap:6px; }
+.band { display:flex; flex-wrap:wrap; gap:8px; }
+.chip { display:inline-flex; align-items:center; gap:6px; border:1px solid var(--line); background:var(--paper); border-radius:999px; padding:3px 10px; font-size:.82rem; color:var(--muted); }
+.chip.plan { border-style:dashed; }
+section { display:grid; gap:12px; }
+.paar { display:grid; grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)); gap:14px; }
+.karte { background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:14px; display:grid; gap:10px; min-width:0; }
+.karte.app { box-shadow:0 9px 30px rgba(16,52,83,.08); }
+.nr { font:700 .74rem var(--sans); letter-spacing:.06em; text-transform:uppercase; color:var(--teal); }
+.knoepfe { display:flex; flex-wrap:wrap; gap:8px; }
+.kn { display:inline-flex; align-items:center; gap:6px; border:1px solid var(--line); background:var(--paper); color:var(--blau); border-radius:10px; padding:7px 12px; font:700 .9rem var(--sans); cursor:pointer; }
+.kn.primaer { background:var(--blau); color:var(--paper); border-color:var(--blau); }
+.kn:focus-visible, .wahl button:focus-visible, .ton button:focus-visible { outline:3px solid var(--teal); outline-offset:2px; }
+.kn svg { width:17px; height:17px; flex:0 0 auto; }
+.ruhig { border-left:4px solid var(--teal); background:var(--teal-soft); border-radius:8px; padding:8px 10px; font-size:.92rem; }
+.gelb { border-left:4px solid var(--amber); background:var(--amber-soft); border-radius:8px; padding:8px 10px; font-size:.92rem; }
+.rot { border-left:4px solid var(--red); background:var(--red-soft); border-radius:8px; padding:8px 10px; font-size:.92rem; }
+.zeilen { display:grid; gap:0; border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+.zeile { display:grid; grid-template-columns:auto 1fr auto; gap:10px; align-items:center; padding:8px 10px; border-top:1px solid var(--line); min-width:0; }
+.zeile:first-child { border-top:0; }
+.zeile .was { min-width:0; overflow-wrap:anywhere; }
+.zeile small { display:block; color:var(--muted); }
+.marke { font:700 .72rem var(--sans); border-radius:6px; padding:2px 7px; white-space:nowrap; }
+.marke.ich { background:var(--m-person); } .marke.stelle { background:var(--m-stelle); }
+.marke.ok { background:var(--green-soft); color:var(--green); } .marke.warte { background:var(--amber-soft); color:var(--amber); }
+.marke.grau { background:var(--grau-soft); color:var(--grau); }
+.tabs { display:flex; gap:6px; flex-wrap:wrap; }
+.tabs span { border:1px solid var(--line); border-radius:8px; padding:4px 10px; font-size:.86rem; }
+.tabs span.an { background:var(--blau); color:var(--paper); border-color:var(--blau); }
+pre.text { margin:0; white-space:pre-wrap; overflow-wrap:anywhere; font:14px/1.6 var(--mono); background:var(--canvas); border:1px solid var(--line); border-radius:10px; padding:10px; min-width:0; }
+mark { border-radius:4px; padding:0 2px; color:inherit; }
+mark.p { background:var(--m-person); } mark.n { background:var(--m-nummer); } mark.o { background:var(--m-ort); } mark.s { background:var(--m-stelle); }
+mark.u { background:var(--amber-soft); outline:2px dashed var(--amber); }
+.legende { display:flex; flex-wrap:wrap; gap:10px; font-size:.82rem; color:var(--muted); }
+.legende mark { font-size:.82rem; }
+.pop { border:1px solid var(--amber); background:var(--paper); border-radius:10px; padding:10px; display:grid; gap:8px; font-size:.9rem; }
+.ton, .wahl { display:flex; flex-wrap:wrap; gap:6px; }
+.ton button, .wahl button { border:1px solid var(--line); background:var(--paper); color:var(--ink); border-radius:999px; padding:5px 12px; font:inherit; font-size:.88rem; cursor:pointer; }
+.ton button[aria-pressed="true"], .wahl button[aria-checked="true"] { background:var(--blau); color:var(--paper); border-color:var(--blau); }
+label.haken { display:grid; grid-template-columns:auto 1fr auto; gap:8px; align-items:center; padding:7px 10px; border-top:1px solid var(--line); }
+label.haken:first-child { border-top:0; }
+.baum { font:14px/1.55 var(--mono); background:var(--canvas); border:1px solid var(--line); border-radius:10px; padding:10px; overflow-x:auto; white-space:pre; }
+.tabelle { overflow-x:auto; border:1px solid var(--line); border-radius:10px; background:var(--paper); }
+table { border-collapse:collapse; width:100%; font-size:.88rem; min-width:720px; }
+th, td { text-align:left; vertical-align:top; padding:8px 10px; border-top:1px solid var(--line); }
+th { background:var(--blau-soft); color:var(--blau); font-size:.78rem; letter-spacing:.04em; text-transform:uppercase; border-top:0; }
+td.ja { color:var(--green); font-weight:700; } td.idee { color:var(--teal); font-weight:700; } td.nein { color:var(--red); font-weight:700; }
+.lk { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:10px; }
+.lk div { border:2px solid var(--blau); border-radius:10px; padding:8px; font-size:.86rem; background:var(--paper); }
+.lk div.geplant { border:2px dashed var(--grau); color:var(--muted); background:var(--grau-soft); }
+.fragen { display:grid; gap:8px; }
+.frage { display:grid; grid-template-columns:1fr auto; gap:10px; align-items:start; background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:10px; }
+.frage p { min-width:0; }
+.frage b { color:var(--blau); }
+.antwort { display:flex; gap:6px; }
+.antwort button { border:1px solid var(--line); background:var(--paper); color:var(--ink); border-radius:8px; padding:5px 10px; font:700 .86rem var(--sans); cursor:pointer; }
+.antwort button[aria-pressed="true"][data-a="ja"] { background:var(--green); color:var(--paper); border-color:var(--green); }
+.antwort button[aria-pressed="true"][data-a="nein"] { background:var(--red); color:var(--paper); border-color:var(--red); }
+.ergebnis { display:grid; gap:8px; }
+textarea { width:100%; min-height:70px; font:14px/1.5 var(--mono); border:1px solid var(--line); border-radius:10px; padding:8px; background:var(--paper); color:var(--ink); }
+@media (max-width:560px) { .frage { grid-template-columns:1fr; } .zeile { grid-template-columns:1fr auto; } .zeile > :first-child { display:none; } }
+@media (prefers-reduced-motion: reduce) { * { transition:none !important; } }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="doppelblatt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="14" height="14" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+  <symbol id="schild" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="zurueck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></symbol>
+  <symbol id="export" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></symbol>
+  <symbol id="ordner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="schloss" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+</svg>
+
+<main>
+  <header class="kopf">
+    <h1>Plan Pseudonymisieren – Familienakte zuerst</h1>
+    <p class="leise">Vorschau zur Abstimmung, 14.11.2026. Nichts davon ist gebaut. Alle Namen, Nummern und Anschriften sind erfunden.
+      Plan im Repo: <code>docs/PLAN_PSEUDONYMISIEREN.md</code>. Unten je Frage Ja oder Nein tippen, dann „Antworten kopieren“.</p>
+    <div class="band">
+      <span class="chip">Stufen B–H</span><span class="chip">nächste Fassung 2.28.68</span><span class="chip plan">danach: Private Brain Pro, BookLedgerPro, Workflow PDF Pro, Datei-Organizer</span>
+    </div>
+  </header>
+
+  <section aria-labelledby="markt">
+    <h2 id="markt">1 · Marktanalyse – was wir übernehmen</h2>
+    <div id="markt-inhalt"><div class="tabelle"><table>
+<thead><tr><th>Werkzeug</th><th>Lizenz · Gerät</th><th>Urteil</th><th>Was wir nehmen</th></tr></thead><tbody>
+<tr><td>Presidio</td><td>MIT · nur Python</td><td class="ja">Regeln übernehmen</td><td>deutsche Erkenner mit Kontextwörtern, Prüfziffern, Allow-/Deny-Listen</td></tr>
+<tr><td>Google Sensitive Data Protection</td><td>Cloud</td><td class="idee">Idee</td><td>gleicher Wert = gleicher Platzhalter, Marke gegen doppelt</td></tr>
+<tr><td>Private AI (Limina), Tonic</td><td>proprietär</td><td class="nein">nicht nutzbar</td><td>nur die Idee fester Ersatzwerte</td></tr>
+<tr><td>LLM Guard</td><td>MIT, archiviert</td><td class="idee">Idee</td><td>Zuordnung und Rückweg, Immer/Nie-Listen</td></tr>
+<tr><td>Edge/Purview, Chrome Enterprise</td><td>Firmen-Cloud</td><td class="nein">nicht nutzbar</td><td>blockieren statt pseudonymisieren</td></tr>
+<tr><td>stdnum (JS)</td><td>MIT · überall</td><td class="ja">übernehmen</td><td>Prüfziffern Steuer-ID, RV-Nr., Ausweis, USt-IdNr., IBAN</td></tr>
+<tr><td>OpenMed-PII-German</td><td>Apache-2.0 · ONNX</td><td class="idee">später prüfen</td><td>Namen ohne Muster; groß, klinisch trainiert</td></tr>
+<tr><td>pdf.js + pdf-lib + tesseract.js</td><td>frei · überall</td><td class="ja">übernehmen</td><td>echtes Schwärzen durch Rastern (MuPDF: AGPL, nein)</td></tr>
+</tbody></table></div>
+<p class="leise">Gebaut in 2.28.68: Knopf „Pseudo“ im Kopf (grün an, rot aus) mit verbesserter Erkennung. Die Fragen unten hat Claude mit Klaus' Freibrief vom 14.11. selbst entschieden (siehe Plan).</p></div>
+  </section>
+
+  <section aria-labelledby="profile">
+    <h2 id="profile">2 · Profile für die Maske (Stufe C)</h2>
+    <div class="paar">
+      <div class="karte app">
+        <span class="nr">Erster Start</span>
+        <h3>Profile für die Maske</h3>
+        <p class="ruhig"><svg width="15" height="15" style="vertical-align:-2px"><use href="#schloss"/></svg> Profile verlassen dieses Gerät nie. Sie liegen verschlüsselt im Pro-Tresor. Beim Pseudonymisieren wird nichts gesendet.</p>
+        <p>Damit nichts doppelt angelegt wird:</p>
+        <div class="knoepfe">
+          <span class="kn primaer">Aus meiner Akte vorschlagen</span>
+          <span class="kn">Aus einer anderen Pro-App übernehmen</span>
+          <span class="kn">Selbst anlegen</span>
+        </div>
+        <p class="leise">„Aus meiner Akte“: 4 Personen und 6 Stellen gefunden. Sie werden verknüpft, nicht kopiert.</p>
+      </div>
+      <div class="karte app">
+        <span class="nr">Liste</span>
+        <div class="tabs"><span class="an">Ich</span><span>Familie 3</span><span>Kontakte 2</span><span>Stellen 6</span></div>
+        <div class="zeilen">
+          <div class="zeile"><span class="marke ich">⟦ICH⟧</span><div class="was">Mara Testfeld<small>auch: M. Testfeld · Testfeld, Mara · Lindenweg 12, 12345 Musterstadt · geb. 1981</small></div><span class="marke ok">immer verdecken</span></div>
+          <div class="zeile"><span class="marke ich">IBAN</span><div class="was">DE…3000<small>nur Fingerabdruck gespeichert</small></div><span class="marke ok">immer verdecken</span></div>
+          <div class="zeile"><span class="marke ich">KVNR</span><div class="was">A…6789<small>Krankenversichertennummer · nur Fingerabdruck</small></div><span class="marke ok">immer verdecken</span></div>
+          <div class="zeile"><span class="marke stelle">⟦STELLE-2⟧</span><div class="was">Schirmchen Versicherung GmbH<small>Stelle · Versicherung</small></div><span class="marke grau">darf bleiben</span></div>
+        </div>
+        <div class="knoepfe"><span class="kn">+ Eintrag</span><span class="kn">+ Nummer (nur Fingerabdruck)</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="sicht">
+    <h2 id="sicht">3 · Knopf „Pseudonymisieren“ – Das sieht die KI (Stufe D)</h2>
+    <div class="karte app">
+      <div class="knoepfe" style="justify-content:space-between;align-items:center">
+        <h3>Schreiben der Wolkenpost vom 03.11.2026</h3>
+        <span class="marke warte">21 verdeckt · 1 unsicher</span>
+      </div>
+      <div class="legende"><mark class="p">Person</mark><mark class="n">Nummer</mark><mark class="o">Anschrift</mark><mark class="s">Stelle bleibt</mark><mark class="u">unsicher</mark></div>
+      <div class="paar">
+        <div><p class="leise" style="margin-bottom:6px">Original (bleibt auf dem Gerät)</p>
+<pre class="text">Sehr geehrte Frau <mark class="p">Mara Testfeld</mark>,
+<mark class="o">Lindenweg 12</mark>, <mark class="o">12345 Musterstadt</mark>
+Kundennr. <mark class="n">KD-2024-118833</mark>, geb. <mark class="n">03.04.1981</mark>
+IBAN <mark class="n">DE89 3704 0044 0532 0130 00</mark>
+Ihr Vertrag bei der <mark class="s">Schirmchen Versicherung GmbH</mark>
+endet am 31.12.2026. Ihr Berater <mark class="u">Ole Brink</mark>
+meldet sich.</pre></div>
+        <div><p class="leise" style="margin-bottom:6px">Pseudonymisiert (geht hinaus)</p>
+<pre class="text">⟦PSEUDONYMISIERT v1 · Maske a1b2⟧
+Sehr geehrte Frau ⟦ICH⟧,
+⟦ANSCHRIFT-1⟧, ⟦ORT-1⟧
+Kundennr. ⟦KUNDENNR-1⟧, geb. ⟦GEBURTSJAHR 1981⟧
+IBAN ⟦IBAN-1⟧
+Ihr Vertrag bei der Schirmchen Versicherung GmbH
+endet am 31.12.2026. Ihr Berater ⟦KONTAKT-1⟧
+meldet sich.</pre></div>
+      </div>
+      <div class="pop" role="group" aria-label="Unsichere Stelle korrigieren">
+        <p><b>„Ole Brink“</b> – sieht aus wie ein Name, steht in keinem Profil.</p>
+        <div class="knoepfe"><span class="kn primaer">Verdecken und als Kontakt merken</span><span class="kn">Darf bleiben</span></div>
+      </div>
+      <p class="leise">Daten bleiben stehen (Sortieren, Fristen), das Geburtsdatum nur als Jahr. Die Stelle bleibt, weil ihr Profil „darf bleiben“ sagt.</p>
+      <div class="knoepfe">
+        <button class="kn primaer" type="button" id="kopieren-knopf"><svg><use href="#doppelblatt"/></svg> Kopieren</button>
+        <span class="kn"><svg><use href="#export"/></svg> Exportieren</span>
+        <span class="kn"><svg><use href="#ordner"/></svg> In den Austauschordner</span>
+        <span class="kn"><svg><use href="#zurueck"/></svg> Zurückführen</span>
+      </div>
+      <p class="leise" id="kopieren-meldung" role="status">Kopieren nimmt nur die pseudonymisierte Fassung mit Marke, nie das Original.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="mail">
+    <h2 id="mail">4 · Mail mit Anhängen (Stufe D, Bild schwärzen Stufe G)</h2>
+    <div class="karte app">
+      <h3>E-Mail „Ihre Unterlagen“ – Pseudonymisieren</h3>
+      <div class="zeilen">
+        <div class="zeile"><span class="marke ok">fertig</span><div class="was">Kopf und Text<small>Absender, Empfänger, Betreff · 9 Stellen verdeckt</small></div><span class="marke ok">✓</span></div>
+        <div class="zeile"><span class="marke ok">fertig</span><div class="was">Vertrag.pdf<small>Textebene vorhanden · 4 Seiten · 17 Stellen verdeckt</small></div><span class="marke ok">✓</span></div>
+        <div class="zeile"><span class="marke warte">läuft</span><div class="was">Foto_Brief.jpg<small>Texterkennung auf dem Gerät, Seite 1 von 1 …</small></div><span class="marke warte">OCR</span></div>
+        <div class="zeile"><span class="marke grau">später</span><div class="was">Foto_Brief.jpg als Bild<small>Stellen im Bild schwärzen kommt mit Stufe G; bis dahin geht nur der Text mit</small></div><span class="marke grau">G</span></div>
+      </div>
+      <p class="leise">Gilt für empfangene und gesendete Mails. Ergebnis: eine Datei mit Mail und Anlagen als Abschnitte, mit Inhaltsliste.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="brief">
+    <h2 id="brief">5 · Briefweg mit Ton, Bezugsdokumenten und Ordner-Weg (Stufe E)</h2>
+    <div class="paar">
+      <div class="karte app">
+        <span class="nr">Ton (mehrere wählbar)</span>
+        <div class="ton" id="ton">
+          <button type="button" aria-pressed="true">formaler</button><button type="button" aria-pressed="false">freundlicher</button>
+          <button type="button" aria-pressed="true">bestimmter</button><button type="button" aria-pressed="false">strenger</button>
+          <button type="button" aria-pressed="false">kürzer</button><button type="button" aria-pressed="false">ausführlicher</button>
+          <button type="button" aria-pressed="false">einfache Sprache</button>
+        </div>
+        <span class="nr">Bezugsdokumente – gehen mit</span>
+        <div class="zeilen">
+          <label class="haken"><input type="checkbox" checked> <span>Vertrag Hausrat 2023<small class="leise"> · gleicher Vorgang · pseudonymisiert</small></span><span class="marke ich">Bezug 1</span></label>
+          <label class="haken"><input type="checkbox" checked> <span>AGB Schirmchen Versicherung<small class="leise"> · öffentlicher Text</small></span><span class="marke grau">Bezug 2</span></label>
+          <label class="haken"><input type="checkbox"> <span>Brief vom 12.08.2026<small class="leise"> · gleiche Stelle · pseudonymisiert</small></span><span class="marke ich">Bezug 3</span></label>
+        </div>
+        <p class="leise">Die KI soll sich auf Abschnitte beziehen („nach Bezug 2, § 5 Abs. 2“); die App zeigt das als Sprung zum Dokument.</p>
+      </div>
+      <div class="karte app">
+        <span class="nr">Weg zur KI</span>
+        <div class="wahl" role="radiogroup" aria-label="Weg zur KI" id="weg">
+          <button type="button" role="radio" aria-checked="false">Kopieren</button>
+          <button type="button" role="radio" aria-checked="false">Direktlink</button>
+          <button type="button" role="radio" aria-checked="true">Austauschordner</button>
+          <button type="button" role="radio" aria-checked="false">Eigener Schlüssel</button>
+        </div>
+        <div class="baum">KI-Austausch/            (gewähltes Laufwerk, nie Tresor, nie Repo)
+├─ LIES-MICH.txt
+└─ auftraege/
+   └─ 2026-11-14-wolkenpost/
+      ├─ auftrag.md         Auftrag + Ton + Brief (pseudonymisiert)
+      ├─ bezug/
+      │  ├─ 1-vertrag.md
+      │  └─ 2-agb.md
+      └─ antwort.md         ← schreibt Claude Code / legst du hin</div>
+        <p class="ruhig">Claude Code: den Ordner am PC über Remote Control freigeben; die Sitzung sieht nur diesen Ordner. ChatGPT/Claude im Browser: <code>auftrag.md</code> hochladen, Antwort als Datei zurücklegen oder einfügen.</p>
+        <div class="knoepfe"><span class="kn">Antworten holen</span><span class="kn"><svg><use href="#zurueck"/></svg> Zurückführen</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="alles">
+    <h2 id="alles">6 · Alles pseudonymisieren → KI sortiert → zurück (Stufe F)</h2>
+    <div class="karte app">
+      <p>Ganzer Bestand, ein Bereich oder die Auswahl → Austauschordner in Blöcken zu 20, mit <code>inhalt.json</code> und Marke. Die KI legt <code>sortierung.json</code> zurück (nur Platzhalter). Die App zeigt die Vorschläge an den <b>echten</b> Unterlagen:</p>
+      <div class="tabelle"><table>
+        <thead><tr><th>Unterlage (echt, nur hier sichtbar)</th><th>Vorschlag der KI</th><th>Frist</th><th>Wichtig</th><th>Entscheidung</th></tr></thead>
+        <tbody>
+          <tr><td>Wolkenpost – Mahnung</td><td>Finanzen › Mahnungen · Absender ⟦STELLE-4⟧</td><td>20.11.2026</td><td>hoch</td><td>✓ übernommen</td></tr>
+          <tr><td>Arztbrief Dr. Probe</td><td>Gesundheit › Befunde · Absender ⟦KONTAKT-3⟧</td><td>–</td><td>mittel</td><td>Bereich geändert → Gesundheit › Arztbriefe</td></tr>
+          <tr><td>Kfz-Steuer Bescheid</td><td>Fahrzeuge › Steuer</td><td>15.12.2026</td><td>mittel</td><td>offen</td></tr>
+        </tbody>
+      </table></div>
+      <p class="leise">Jede Bestätigung oder Korrektur wird ein pseudonymisiertes Lehrdatum für den Datei-Organizer (Datei im Austauschordner, nie im Repo). Erst 20 Unterlagen als Stichprobe, dann alles.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="karte">
+    <h2 id="karte">7 · Landkarten (Stufe H)</h2>
+    <div class="lk">
+      <div class="geplant"><b>Maske</b><br>Profile · Knopf · Zurückführen<br><small>geplant</small></div>
+      <div class="geplant"><b>Austauschordner</b><br>Claude Code · ChatGPT<br><small>geplant</small></div>
+      <div class="geplant"><b>Fach „profile“</b><br>im Pro-Tresor, für alle Pro-Apps<br><small>geplant</small></div>
+      <div><b>Briefweg</b><br>gibt es seit 2.28.49<br><small>wird erweitert</small></div>
+    </div>
+    <p class="leise">Pro-Verbund-Karte nur in BookLedgerPro ändern, dann byte-gleich nachziehen; Landkarte des Datei-Organizers dort. Danach Geschenkbox neu.</p>
+  </section>
+
+  <section aria-labelledby="fragen">
+    <h2 id="fragen">8 · Fragen an Klaus</h2>
+    <div class="fragen" id="fragenliste"></div>
+    <div class="ergebnis">
+      <div class="knoepfe"><button class="kn primaer" type="button" id="antworten-kopieren"><svg><use href="#doppelblatt"/></svg> Antworten kopieren</button></div>
+      <textarea id="antworten-text" readonly aria-label="Antworten zum Einfügen im Chat"></textarea>
+    </div>
+  </section>
+</main>
+
+<script>
+const FRAGEN = [
+  ["P1", "Reihenfolge der Stufen B → C → D → E → F → G → H, gesammelt als eine Fassung (Zwischenfassung nach D zum Gerätetest möglich)."],
+  ["P2", "Quelle des Bausteins: Prüfziffern und Marke als Modul 25 Gen. 3 in Sage; die Familienakte baut und prüft zuerst, dann Pin. Profil-Abgleich als eigener Baustein daneben."],
+  ["P3", "Neues gemeinsames Fach „profile“ im Tresor-Paket (Quelle Workflow PDF Pro, byte-gleich in alle Pro-Apps)."],
+  ["P4", "Basic (PWA): Profile nur als Fingerabdrücke mit eigenem Passwort und Hinweis „Gesundheit/Bank: Pro-App“ (Nein = in Basic gar keine Profile)."],
+  ["P5", "Platzhalter mit Rolle (⟦ICH⟧, ⟦FAMILIE-1⟧, ⟦STELLE-2⟧) und feste Nummern je Profil-Eintrag über alle Exporte."],
+  ["P6", "Hinaus erst, wenn alle gelben Stellen entschieden sind; Abkürzung „Unsichere verdecken“."],
+  ["P7", "Export als Ordner oder eine Textdatei; ZIP nur auf ausdrückliche Wahl."],
+  ["P8", "Gesundheit: ICD-Code ab Werk zur Gruppe (Kapitel), je Nutzer umstellbar."],
+  ["P9", "Daten bleiben stehen, Geburtsdaten nur als Jahr."],
+  ["P10", "Zuordnung je Auftrag verschlüsselt speichern (Zurückführen auch nach Neustart), löschen bei „erledigt“ oder nach 90 Tagen."],
+  ["P11", "Eigene Schlüssel auch für Claude und ChatGPT (wie Mistral), in Pro im Tresor."],
+  ["P12", "Bezugsdokumente: auch öffentliche Texte (AGB) laufen durch die Maske; Bezugsdokumente ab Werk angehakt."],
+  ["P13", "Codex bekommt pseudonymisierte Stapel nur über einen privaten Weg (Austauschordner, Datei von Hand), nie über den Briefkasten im Repo."],
+  ["P14", "Danach: Private Brain Pro → BookLedgerPro → Workflow PDF Pro → Datei-Organizer."],
+  ["P15", "Knopf heißt „Pseudonymisieren“ / „Zurückführen“ (Nein = kürzer „Verdecken“ / „Zurück“)."]
+];
+const KEY = "plan-pseudonymisieren-antworten";
+let antworten = {};
+try { antworten = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { antworten = {}; }
+const liste = document.getElementById("fragenliste");
+function zeichnen() {
+  liste.innerHTML = "";
+  for (const [id, text] of FRAGEN) {
+    const d = document.createElement("div"); d.className = "frage";
+    const p = document.createElement("p"); p.innerHTML = "<b>" + id + "</b> "; p.append(text);
+    const a = document.createElement("div"); a.className = "antwort";
+    for (const w of ["ja", "nein"]) {
+      const b = document.createElement("button"); b.type = "button"; b.dataset.a = w; b.textContent = w === "ja" ? "Ja" : "Nein";
+      b.setAttribute("aria-pressed", String(antworten[id] === w));
+      b.addEventListener("click", () => { antworten[id] = antworten[id] === w ? undefined : w; try { localStorage.setItem(KEY, JSON.stringify(antworten)); } catch (e) {} zeichnen(); });
+      a.append(b);
+    }
+    d.append(p, a); liste.append(d);
+  }
+  document.getElementById("antworten-text").value = FRAGEN.map(([id]) => id + " " + (antworten[id] === "ja" ? "Ja" : antworten[id] === "nein" ? "Nein" : "–")).join(" · ");
+}
+zeichnen();
+async function kopiere(text, meldung) {
+  try { await navigator.clipboard.writeText(text); if (meldung) meldung(); }
+  catch (e) { const t = document.getElementById("antworten-text"); t.focus(); t.select(); }
+}
+document.getElementById("antworten-kopieren").addEventListener("click", () => kopiere(document.getElementById("antworten-text").value));
+document.getElementById("kopieren-knopf").addEventListener("click", () => {
+  const txt = document.querySelectorAll("pre.text")[1].textContent;
+  kopiere(txt, () => { document.getElementById("kopieren-meldung").textContent = "Pseudonymisierte Fassung kopiert (Beispiel). Das Original bleibt auf dem Gerät."; });
+});
+for (const b of document.querySelectorAll("#ton button")) b.addEventListener("click", () => b.setAttribute("aria-pressed", String(b.getAttribute("aria-pressed") !== "true")));
+for (const b of document.querySelectorAll("#weg button")) b.addEventListener("click", () => { for (const x of document.querySelectorAll("#weg button")) x.setAttribute("aria-checked", String(x === b)); });
+</script>
