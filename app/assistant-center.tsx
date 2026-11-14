@@ -36,10 +36,11 @@ function labelOf(record: FamilyRecordUnion) {
   return String(data.title || data.displayName || data.name || record.notes || record.id);
 }
 
-export function AssistantCenter({ records, relations, documents, initialCaseId, vaultReady, onOpenRecord, onOpenDocument, onOpenInventory, onSaveCorrespondence, onNotice, namen = [], onWorkflowPdf, onDateiLaden }: {
+export function AssistantCenter({ records, relations, documents, initialCaseId, vaultReady, onOpenRecord, onOpenDocument, onOpenInventory, onSaveCorrespondence, onNotice, namen: _namen = [], onWorkflowPdf, onDateiLaden }: {
   /** 2.28.65: Anlagen für den Mailversand (Original aus der Akte). */
   onDateiLaden?: (id: string) => Promise<File>;
   /** D: Namen aus der Akte, die beim Briefweg immer verdeckt werden. */
+  /** Bis 2.28.68 für den eigenen Briefweg; seit 2.28.69 nimmt das Pseudo-Fenster die Namen aus der Akte selbst. */
   namen?: string[];
   /** D (Klaus d4): Antwortbrief als PDF in Workflow PDF öffnen. */
   onWorkflowPdf?: (file: File) => void;
