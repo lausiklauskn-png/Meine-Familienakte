@@ -5,9 +5,17 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 `docs/briefe-archiv/` (Klaus 2026-11-04: archivieren statt löschen); die Veröffentlichungsnachweise in
 `docs/VEROEFFENTLICHUNG-<fassung>.json`.
 
-## Aktueller Stand (14.11.2026, nach 2.28.68 + Stufe C)
+## Aktueller Stand (14.11.2026 abends, nach 2.28.68 + Stufe C + Pseudo-Restarbeiten)
 
-- **Stufe C gebaut, nicht ausgegeben (14.11., Brief `BRIEF_ABSCHLUSS_2026-11-14_MASKE-PROFILE-STUFE-C.md`): Profile für die Maske.**
+- **Pseudo-Restarbeiten gebaut, nicht ausgegeben (14.11. abends, Brief `BRIEF_ABSCHLUSS_2026-11-14_PSEUDO-RESTARBEITEN.md`, gesammelt
+  für 2.28.69 nur auf Klaus' Wort):** Zuordnung je Auftrag verschlüsselt (`lib/pseudo-auftraege.ts`, `app/pseudo-auftrag-speicher.ts`;
+  Schlüssel aus dem Profil, 90 Tage, „✓ erledigt“), „An KI“ (`anKi()`) an Bibliothekszeile, Auswahl-Leisten und Eingang, Briefweg der
+  Assistenz nur noch Einstieg ins Fenster (Mistral mit eigenem Schlüssel jetzt im Fenster, einziger Netzweg `app/mistral-senden.ts`;
+  Beträge/Daten bleiben jetzt lesbar), PDF-Seitenbild mit Kästen (`app/pseudo-pdf-seite.tsx`, `lib/pdf-kaesten.ts`), ZIP
+  (`lib/zip-schreiben.ts`) und Austauschordner, Kontraste der KI-Knöpfe kräftiger (Klaus 14.11.). Vorschau
+  `docs/vorschau/pseudo-auftraege-2.28.69.html`. Proben `run-pseudo-auftraege-tests`, UI `pseudo-auftraege`, `rueckmeldung-d` umgestellt.
+
+- **Stufe C gebaut, nicht ausgegeben (14.11., Brief `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-14_MASKE-PROFILE-STUFE-C.md`): Profile für die Maske.**
   Fach `profile` im Tresor-Paket (Quelle Workflow PDF Pro #77, `Profile.java`, Ordner „Maske-Profile“, gemeinsam: je App eine Datei, alle
   lesen, nichts gelöscht), nativ `profilLesen`/`profilSchreiben`. Kern `lib/maske-profil.ts` (verknüpft mit der Akte, Schreibweisen,
   Nummern nur HMAC, feste Platzhalter ⟦ICH-1⟧/⟦FAMILIE-n⟧/⟦KONTAKT-n⟧/⟦STELLE-n⟧, Übernehmen, Korrigieren), Speicher
@@ -219,7 +227,8 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
   - Nächste Sitzung (Repo Datei-Organizer): `docs/BRIEF_SITZUNG_2026-11-14_NEEDS-RUECKWAERTSTEST.md` (Rückwärtstest Workflow Needs, nichts ändern)
-  - `BRIEF_ABSCHLUSS_2026-11-14_MASKE-PROFILE-STUFE-C.md` (letzter Stand: Stufe C, Startauftrag Stufe D-Rest/P10)
+  - `BRIEF_ABSCHLUSS_2026-11-14_PSEUDO-RESTARBEITEN.md` (letzter Stand: Pseudo-Restarbeiten, Startauftrag Gerätetest/Stufe E-Rest)
+  - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-14_MASKE-PROFILE-STUFE-C.md` (Stufe C)
   - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-14_PSEUDO-2.28.68.md` (2.28.68)
   - `BRIEF_SITZUNG_2026-11-11_CLOUD-ORDNER-2.28.65.md` (nächster Bau: Sicherung an einem zweiten Ort, Nur sichern/Synchron halten, Cloud-Ordner hereinholen; Klaus: keine Vorschau nötig)
   - `BRIEF_ABSCHLUSS_2026-11-12_PLAN-BILDER.md` (Plan Bilder, Fragen F1–F8)
@@ -229,9 +238,9 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Offen
 
-- **Pseudo-Fenster am Gerät ungeprüft:** Ansicht mit langem PDF, Markieren am Handy (Finger), Bild abdecken mit dem Finger, KI-Knopf mit
-  Internet an (ChatGPT/Claude/Gemini öffnen sich, Einfügen mit Text und Bild), Briefumschlag am Handy hinter „‹“. Offen im Bau: Zuordnung
-  je Auftrag speichern (P10), echtes PDF-Seitenbild in der Ansicht, ZIP, Austauschordner für Claude Code, Briefweg (Assistenz) auf dasselbe Fenster.
+- **Pseudo-Fenster am Gerät ungeprüft:** Ansicht mit langem PDF (Seitenbild), Markieren am Handy (Finger), Bild abdecken mit dem Finger,
+  KI-Knopf mit Internet an, Zwischenablage Text+Bild am Handy, Aufträge nach Neustart mit echtem Tresor, Mistral mit echtem Schlüssel,
+  Austauschordner unter Windows (Android-WebView kann keine Ordnerwahl → nur ZIP), „An KI“ an echten Unterlagen/Mails.
 - **Stufe C am Gerät ungeprüft:** Profilseite mit echtem Tresor (Android/Windows), Korrigieren ins Profil, Übernehmen aus einer anderen Pro-App
   (dort gibt es noch keine Profile). Workflow PDF Pro #77 (Fach `profile`) danach auch in BookLedgerPro und Private Brain Pro nachziehen.
 - **2.28.68 am Gerät ungeprüft:** Pseudo-Knopf an echten Unterlagen (OCR, Mail mit Anhängen), Kopf am Handy mit „Neu“ hinter „‹“.
