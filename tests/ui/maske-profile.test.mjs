@@ -68,37 +68,63 @@ try {
     return soll(/Private Brain Pro/.test(vorschau) && /Neu: Paul Ginster/.test(vorschau) && t.includes("⟦KONTAKT-2⟧") && /Stadtwerke Musterstadt/.test(await karte.innerText()), { vorschau, t });
   });
 
+  // Helfer: Text ins Pseudo-Fenster, die Seite der letzten Zeile im Auge lesen.
+  const textRein = async (text) => {
+    if (!(await page.locator("[data-pseudo-text]").count())) await page.locator("[data-pseudo-text-auf]").click();
+    const vorher = await page.locator("[data-pseudo-stueck]").count();
+    await page.locator("[data-pseudo-text]").fill(text); await page.locator("[data-pseudo-los]").click();
+    await page.waitForFunction((n) => document.querySelectorAll("[data-pseudo-stueck]").length > n, vorher);
+  };
+  const seiteVon = async (kennung) => {
+    await page.locator(`[data-pseudo-stueck="${kennung}"] [data-pseudo-auge]`).click();
+    const t = await page.locator("[data-pseudo-seite]").innerText();
+    return t;
+  };
+  const zu = () => page.locator("[data-pseudo-ansicht] .pf-blatt-fuss .pf-kn").click();
+
   await step("Pseudo-Fenster nutzt die Profile: feste Platzhalter, Großschreibung, Nummer ohne Feldwort, kein Netzaufruf", async () => {
     await page.locator("[data-pseudo-knopf]").click();
     await page.locator("[data-pseudo-fenster]").waitFor();
-    await page.locator("[data-pseudo-text]").fill("Termin bei PRAXIS ASTER, Zeichen KD 2024 118833. Gruß P. Ginster, Stadtwerke Musterstadt. Hallo Ilse Krumm.");
-    await page.locator("[data-pseudo-los]").click();
-    const t = await page.locator("[data-pseudo-ergebnis]").first().innerText();
-    return soll(t.includes("⟦KONTAKT-1⟧") && t.includes("⟦KONTAKT-2⟧") && !/ASTER|Aster|118833|Ginster|Krumm/.test(t) && t.includes("Stadtwerke Musterstadt") && netz.length === 0, { t, netz });
+    await textRein("Termin bei PRAXIS ASTER, Zeichen KD 2024 118833. Gruß P. Ginster, Stadtwerke Musterstadt. Treffpunkt am alten Steinbruch.");
+    const t = await seiteVon("D01"); await zu();
+    return soll(t.includes("⟦KONTAKT-1⟧") && t.includes("⟦KONTAKT-2⟧") && !/ASTER|Aster|118833|Ginster/.test(t) && t.includes("Stadtwerke Musterstadt") && t.includes("alten Steinbruch") && netz.length === 0, { t, netz });
   });
-  await step("Korrigieren merkt ins Profil: „Ilse Krumm“ immer verdecken → neuer Kontakt ⟦KONTAKT-3⟧, Fassung neu gerechnet", async () => {
-    await page.locator("[data-pseudo-korrektur] summary").click();
-    await page.locator("[data-pseudo-korr-wort]").fill("Ilse Krumm");
-    await page.locator("[data-pseudo-korr-verdecken]").click();
-    await page.waitForFunction(() => /Ilse Krumm/.test(window.__profil.geschrieben.at(-1) || ""));
-    await page.waitForFunction(() => /⟦KONTAKT-3⟧/.test(document.querySelector("[data-pseudo-ergebnis]")?.textContent || ""));
-    const t = await page.locator("[data-pseudo-ergebnis]").first().innerText();
-    const meldung = await page.locator("[data-pseudo-meldung]").innerText();
-    return soll(t.includes("⟦KONTAKT-3⟧") && !t.includes("Krumm") && /ins Profil gemerkt/.test(meldung), { t, meldung });
+  await step("Korrigieren in der Seite: „alten Steinbruch“ markieren → Verdecken → neuer Kontakt ⟦KONTAKT-3⟧, ins Profil gemerkt", async () => {
+    await page.locator('[data-pseudo-stueck="D01"] [data-pseudo-auge]').click();
+    const seite = page.locator("[data-pseudo-seite]");
+    await seite.evaluate((el) => {
+      const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); let n;
+      while ((n = w.nextNode())) { const i = n.textContent.indexOf("alten Steinbruch"); if (i >= 0) { const r = document.createRange(); r.setStart(n, i); r.setEnd(n, i + 16); const s = getSelection(); s.removeAllRanges(); s.addRange(r); const b = r.getBoundingClientRect(); el.dispatchEvent(new MouseEvent("mouseup", { bubbles: true, clientX: b.left + 5, clientY: b.top + 5 })); return; } }
+    });
+    await page.locator('[data-pseudo-blase="Verdecken"]').click();
+    await page.waitForFunction(() => /alten Steinbruch/.test(window.__profil.geschrieben.at(-1) || ""));
+    await page.waitForFunction(() => /⟦KONTAKT-3⟧/.test(document.querySelector("[data-pseudo-seite]")?.textContent || ""));
+    const t = await seite.innerText(); await zu();
+    return soll(t.includes("⟦KONTAKT-3⟧") && !t.includes("Steinbruch"), t);
+  });
+  await step("Stelle antippen → „Darf bleiben“: „Paul Ginster“ darf bleiben (ganzer Eintrag), „P. Ginster“ steht danach im Klartext", async () => {
+    await page.locator('[data-pseudo-stueck="D01"] [data-pseudo-auge]').click();
+    await page.locator('[data-pseudo-stelle="⟦KONTAKT-2⟧"]').first().click();
+    await page.locator('[data-pseudo-blase="Darf bleiben"]').click();
+    await page.waitForFunction(() => /Ginster/.test(document.querySelector("[data-pseudo-seite]")?.textContent || ""));
+    const t = await page.locator("[data-pseudo-seite]").innerText(); await zu();
+    const gespeichert = await page.evaluate(() => window.__profil.geschrieben.at(-1));
+    return soll(/P\. Ginster/.test(t) && /"anzeige":"Paul Ginster"[^}]*"regel":"bleibt"/.test(gespeichert), t);
   });
   await step("Zurückführen setzt die Namen aus dem Profil ein", async () => {
+    await page.locator('[data-pseudo-reiter="zurueck"]').click();
     await page.locator("[data-pseudo-antwort]").fill("Bitte ⟦KONTAKT-1⟧ und ⟦KONTAKT-3⟧ anrufen.");
     await page.locator("[data-pseudo-zurueckfuehren]").click();
     const klar = await page.locator("[data-pseudo-klar]").innerText();
-    return soll(klar === "Bitte Henrike Aster und Ilse Krumm anrufen.", klar);
+    await page.locator('[data-pseudo-reiter="hin"]').click();
+    return soll(klar === "Bitte Henrike Aster und alten Steinbruch anrufen.", klar);
   });
-  await step("Regel umschalten: „Paul Ginster“ darf bleiben → bleibt im nächsten Text stehen", async () => {
-    await page.locator('[data-maske-eintrag="Paul Ginster"] [data-maske-regel="bleibt"]').click();
-    await page.waitForFunction(() => /"anzeige":"Paul Ginster"[^}]*"regel":"bleibt"/.test(window.__profil.geschrieben.at(-1) || ""));
-    await page.locator("[data-pseudo-text]").fill("Gruß Paul Ginster");
-    await page.locator("[data-pseudo-los]").click();
-    const t = await page.locator("[data-pseudo-ergebnis]").first().innerText();
-    return soll(t.includes("Paul Ginster") && netz.length === 0, { t, netz });
+  await step("Regel auf der Profilseite: „Henrike Aster“ darf bleiben → bleibt im nächsten Text stehen", async () => {
+    await page.locator('[data-maske-eintrag="Henrike Aster"] [data-maske-regel="bleibt"]').click();
+    await page.waitForFunction(() => { try { return JSON.parse(window.__profil.geschrieben.at(-1)).eintraege.some((e) => e.anzeige === "Henrike Aster" && e.regel === "bleibt"); } catch { return false; } });
+    await textRein("Gruß Henrike Aster");
+    const t = await seiteVon("D02"); await zu();
+    return soll(t.includes("Henrike Aster") && netz.length === 0, { t, netz });
   });
   check(errors.length === 0, "keine Seitenfehler", errors.join(" | "));
   await context.close();

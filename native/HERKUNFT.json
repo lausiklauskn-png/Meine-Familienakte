@@ -266,6 +266,13 @@
       "commit": "3cd95971c0bb1fc92a2e81a385110d624986fda3",
       "sha256": "dd898cc87ef31ce19dd39c1e727451e7beb05bcfa8f7153d4ebf32fdf4e51fba",
       "zweck": "Gemeinsamer Pro-Tresor, kanonisches Java-Paket und Originalprobe"
+    },
+    "public/pseudo/pseudodoc.svg": {
+      "repo": "lausiklauskn-png/PseudoDoc",
+      "pfad": "src/public/pseudodoc.svg",
+      "commit": "f1c7261b7435fdb53e2222e261a53a7423a64ba8",
+      "sha256": "c576ae1b244583b015e190aeba733dbb50dd9edf352c310a29365c5de0492039",
+      "zweck": "Zeichen des Pseudo-Fensters, aus PseudoDoc (Klaus 14.11.2026); nie hier ändern"
     }
   }
 }

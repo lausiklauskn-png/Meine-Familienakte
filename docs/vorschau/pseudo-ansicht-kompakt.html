@@ -88,11 +88,11 @@ h1 { font-size:1.2rem; margin:0; color:var(--navy); } p { margin:0; } .leise { c
 .ki { height:40px; text-align:left; padding:0 10px; border:0; border-radius:8px; color:#fff; font:700 .76rem var(--sans); cursor:pointer; line-height:1.1; }
 .ki { font-size:.86rem; } .ki small { display:block; font-weight:400; font-size:.66rem; opacity:.9; }
 .ki { color:var(--k-ink); border:1px solid var(--k-rand); background:linear-gradient(105deg, var(--paper) 0%, var(--k-hauch) 100%); }
-.ki small { color:var(--muted); opacity:1; }
-.ki.gpt { --k-ink:#0b6e55; --k-rand:#a9dccd; --k-hauch:#e3f5ef; }
-.ki.claude { --k-ink:#9a4528; --k-rand:#ebc3b3; --k-hauch:#fbebe4; }
-.ki.code { --k-ink:#5b4636; --k-rand:#d6c8bc; --k-hauch:#f2ece6; }
-.ki.gemini { --k-ink:#3a52c4; --k-rand:#bfc9f3; --k-hauch:#e9edfc; }
+.ki small { color:var(--k-ink); opacity:.85; font-weight:400; }
+.ki.gpt { --k-ink:#07513f; --k-rand:#a9dccd; --k-hauch:#e3f5ef; }
+.ki.claude { --k-ink:#7d3519; --k-rand:#ebc3b3; --k-hauch:#fbebe4; }
+.ki.code { --k-ink:#45352a; --k-rand:#d6c8bc; --k-hauch:#f2ece6; }
+.ki.gemini { --k-ink:#2a3f9e; --k-rand:#bfc9f3; --k-hauch:#e9edfc; }
 .ki:hover { filter:saturate(1.3); }
 .weiter { display:flex; gap:4px; flex-wrap:wrap; }
 
@@ -125,8 +125,8 @@ h1 { font-size:1.2rem; margin:0; color:var(--navy); } p { margin:0; } .leise { c
 .zur textarea { width:100%; min-height:90px; border:1px solid var(--line); border-radius:8px; padding:7px; font:.82rem var(--sans); background:var(--paper); color:var(--ink); }
 .ergebnis { background:var(--green-soft); border-radius:8px; padding:8px; font-size:.82rem; }
 [hidden] { display:none !important; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .ki.gpt { --k-ink:#8fe0c6; --k-rand:#24584a; --k-hauch:#16352c; } :root:not([data-theme="light"]) .ki.claude { --k-ink:#f0b49c; --k-rand:#6a3a2a; --k-hauch:#3a2219; } :root:not([data-theme="light"]) .ki.code { --k-ink:#dccbbb; --k-rand:#56483c; --k-hauch:#2e2620; } :root:not([data-theme="light"]) .ki.gemini { --k-ink:#b5c3ff; --k-rand:#3a4680; --k-hauch:#1f2546; } }
-:root[data-theme="dark"] .ki.gpt { --k-ink:#8fe0c6; --k-rand:#24584a; --k-hauch:#16352c; } :root[data-theme="dark"] .ki.claude { --k-ink:#f0b49c; --k-rand:#6a3a2a; --k-hauch:#3a2219; } :root[data-theme="dark"] .ki.code { --k-ink:#dccbbb; --k-rand:#56483c; --k-hauch:#2e2620; } :root[data-theme="dark"] .ki.gemini { --k-ink:#b5c3ff; --k-rand:#3a4680; --k-hauch:#1f2546; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .ki.gpt { --k-ink:#bff3e2; --k-rand:#24584a; --k-hauch:#16352c; } :root:not([data-theme="light"]) .ki.claude { --k-ink:#ffd6c6; --k-rand:#6a3a2a; --k-hauch:#3a2219; } :root:not([data-theme="light"]) .ki.code { --k-ink:#f1e6dc; --k-rand:#56483c; --k-hauch:#2e2620; } :root:not([data-theme="light"]) .ki.gemini { --k-ink:#d6defd; --k-rand:#3a4680; --k-hauch:#1f2546; } }
+:root[data-theme="dark"] .ki.gpt { --k-ink:#bff3e2; --k-rand:#24584a; --k-hauch:#16352c; } :root[data-theme="dark"] .ki.claude { --k-ink:#ffd6c6; --k-rand:#6a3a2a; --k-hauch:#3a2219; } :root[data-theme="dark"] .ki.code { --k-ink:#f1e6dc; --k-rand:#56483c; --k-hauch:#2e2620; } :root[data-theme="dark"] .ki.gemini { --k-ink:#d6defd; --k-rand:#3a4680; --k-hauch:#1f2546; }
 </style>
 
 <div class="wrap">

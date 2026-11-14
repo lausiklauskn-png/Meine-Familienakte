@@ -2101,8 +2101,8 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 
 /* Knopf „Notiz“ im Kopf (Klaus 2026-11-05) */
 /* Notiz wie die übrigen Kopf-Symbole (Klaus 2026-11-05): gleiche Größe, nur das Symbol */
-.notiz-knopf-schalter, .kalender-knopf-schalter, .tagebuch-knopf-schalter { flex: 0 0 auto; cursor: pointer; transition: background-color .15s, box-shadow .15s, transform .08s; }
-.notiz-knopf-schalter:hover, .kalender-knopf-schalter:hover, .tagebuch-knopf-schalter:hover { border-color: #9fb3c1; background: var(--blue-soft); box-shadow: 0 2px 8px rgba(16,52,83,.12); }
+.notiz-knopf-schalter, .kalender-knopf-schalter, .tagebuch-knopf-schalter, .brief-knopf { flex: 0 0 auto; cursor: pointer; transition: background-color .15s, box-shadow .15s, transform .08s; }
+.notiz-knopf-schalter:hover, .kalender-knopf-schalter:hover, .tagebuch-knopf-schalter:hover, .brief-knopf:hover { border-color: #9fb3c1; background: var(--blue-soft); box-shadow: 0 2px 8px rgba(16,52,83,.12); }
 .notiz-knopf-schalter:active { transform: scale(.97); }
 .notiz-knopf-schalter:focus-visible { outline: 3px solid #9fd8d4; outline-offset: 2px; }
 .notiz-fenster { width: min(560px, calc(100vw - 24px)); display: grid; gap: 12px; }
@@ -2117,7 +2117,7 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .notiz-aktion.loeschen:hover:not(:disabled) { background: #f9dcda; }
 .notiz-gespeichert { display: flex; align-items: center; gap: 6px; margin: 0; color: var(--green); font-weight: 700; }
 @media (max-width: 620px) {
-  .site-header.demo-mode .notiz-knopf-schalter, .site-header.demo-mode .kalender-knopf-schalter, .site-header.demo-mode .tagebuch-knopf-schalter { display: none; } /* Demo am Handy: Platz für DEMO ▾ und den Namen */
+  .site-header.demo-mode .notiz-knopf-schalter, .site-header.demo-mode .kalender-knopf-schalter, .site-header.demo-mode .tagebuch-knopf-schalter, .site-header.demo-mode .brief-knopf { display: none; } /* Demo am Handy: Platz für DEMO ▾ und den Namen */
 }
 .notiz-leeren { position: absolute; top: 6px; right: 58px; width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line); background: #fff; color: var(--muted); cursor: pointer; }
 .notiz-leeren:hover { border-color: #b42318; color: #b42318; background: #fdf0ef; }
@@ -2674,7 +2674,7 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .erste-schritte-weg { margin-left: auto; }
 .erste-schritte > p { margin: 0; font-size: .8rem; }
 @media (max-width: 620px) {
-  .header-actions :is(.netz-schalter, .ablegen-knopf-schalter, .notiz-knopf-schalter, .kalender-knopf-schalter, .tagebuch-knopf-schalter) { position: relative; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; width: auto; min-width: 30px; height: 38px; padding: 2px 1px 1px; }
+  .header-actions :is(.netz-schalter, .ablegen-knopf-schalter, .notiz-knopf-schalter, .kalender-knopf-schalter, .tagebuch-knopf-schalter, .brief-knopf) { position: relative; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; width: auto; min-width: 30px; height: 38px; padding: 2px 1px 1px; }
   .header-actions .kopf-wort { display: block; font-size: .52rem; font-weight: 700; line-height: 1; letter-spacing: -.01em; white-space: nowrap; color: var(--navy); }
   .header-actions .netz-schalter .netz-lampe { top: 3px; bottom: auto; right: 3px; width: 7px; height: 7px; }
   .header-actions .neu-knopf-schalter { height: 38px; }
@@ -2684,7 +2684,7 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 }
 @media (max-width: 430px) {
   .header-actions .kopf-wort { font-size: .47rem; letter-spacing: -.03em; }
-  .header-actions :is(.netz-schalter, .ablegen-knopf-schalter, .notiz-knopf-schalter, .kalender-knopf-schalter, .tagebuch-knopf-schalter) { min-width: 27px; padding-left: 0; padding-right: 0; }
+  .header-actions :is(.netz-schalter, .ablegen-knopf-schalter, .notiz-knopf-schalter, .kalender-knopf-schalter, .tagebuch-knopf-schalter, .brief-knopf) { min-width: 27px; padding-left: 0; padding-right: 0; }
   .header-actions .neu-knopf-schalter { padding-left: 5px; padding-right: 5px; gap: 3px; font-size: .74rem; }
   .header-actions { gap: 1px; }
 }
@@ -2830,7 +2830,7 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
   .header-actions .notiz-knopf-schalter .kopf-wort { letter-spacing: -.06em; }
   .header-actions .kopf-pfeil { min-width: 16px; width: 16px; padding: 0; }
   .header-actions .neu-knopf-schalter .neu-punkt { position: absolute; top: -4px; right: -4px; margin: 0; }
-  .header-actions :is(.netz-schalter, .ablegen-knopf-schalter, .notiz-knopf-schalter, .kalender-knopf-schalter, .tagebuch-knopf-schalter) { min-width: 25px; }
+  .header-actions :is(.netz-schalter, .ablegen-knopf-schalter, .notiz-knopf-schalter, .kalender-knopf-schalter, .tagebuch-knopf-schalter, .brief-knopf) { min-width: 25px; }
 }
 @media (max-width: 380px) { .header-actions { gap: 0; } .header-actions .neu-knopf-schalter { padding-left: 3px; padding-right: 3px; } }
 
@@ -2943,6 +2943,8 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .pseudo-knopf:focus-visible { outline: 3px solid #0b3154; outline-offset: 2px; }
 @media (max-width: 900px) {
   .header-actions:not(.kopf-auf) > .neu-knopf { display: none !important; }
+  .header-actions:not(.kopf-auf) > .brief-knopf { display: none !important; }
+  .header-actions.kopf-auf > .brief-knopf { display: inline-flex !important; }
   .header-actions.kopf-auf > .neu-knopf { display: inline-flex !important; }
   .site-header .header-actions .pseudo-knopf { min-width: 0 !important; width: auto !important; height: 36px; padding: 1px 2px !important; border-radius: 8px; }
   .pseudo-knopf .pseudo-wort { font-size: .6rem; letter-spacing: 0; } .pseudo-knopf .pseudo-zustand { font-size: .5rem; }
@@ -2983,3 +2985,96 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .link-button { background: none; border: 0; padding: 0; color: var(--navy); text-decoration: underline; cursor: pointer; font: inherit; }
 .pseudo-unsicher-wort { display: inline-flex; flex-wrap: wrap; gap: 4px; margin-right: 10px; }
 @media (max-width: 520px) { .maske-zeile { grid-template-columns: 1fr; } }
+/* Pseudo-Fenster nach dem Muster PseudoDoc (Klaus 14.11.: Handy zuerst, kleine Knöpfe; Vorschau docs/vorschau/pseudo-ansicht-kompakt.html) */
+.pseudo-fenster { gap: 7px; padding: 8px; position: relative; }
+.pseudo-fenster .pf-kopf { display: flex; align-items: center; gap: 6px; }
+.pseudo-fenster .pf-maske { width: 30px; height: 30px; border-radius: 8px; background: var(--navy); color: #fff; display: grid; place-items: center; flex: none; }
+.pseudo-fenster .pf-maske svg { width: 20px; height: 20px; }
+.pseudo-fenster .pf-reiter { display: flex; gap: 2px; background: #eef3f7; border-radius: 9px; padding: 2px; flex: 1; min-width: 0; }
+.pseudo-fenster .pf-reiter button { flex: 1; border: 0; background: none; border-radius: 7px; padding: 5px 4px; font-weight: 700; font-size: .8rem; font-family: inherit; color: var(--muted); cursor: pointer; white-space: nowrap; }
+.pseudo-fenster .pf-reiter button[aria-pressed="true"] { background: #fff; color: var(--navy); box-shadow: 0 1px 3px rgba(16,52,83,.16); }
+.pseudo-fenster .pf-ik { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--line); background: #fff; color: var(--navy); display: inline-grid; place-items: center; cursor: pointer; font-weight: 700; flex: none; padding: 0; }
+.pseudo-fenster .pf-ik:disabled { opacity: .4; cursor: default; }
+.pseudo-fenster .pf-ik[aria-pressed="true"] { background: var(--blue-soft); }
+.pseudo-fenster .pf-erkl { margin: 0; background: var(--blue-soft); border-radius: 8px; padding: 7px 9px; font-size: .84rem; }
+.pseudo-fenster .pf-rein { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; border: 1.5px dashed var(--line); border-radius: 10px; padding: 5px 6px; }
+.pseudo-fenster .pf-rein > span { flex: 1 1 110px; font-size: .8rem; color: var(--muted); }
+.pseudo-fenster .pf-kn { display: inline-flex; align-items: center; gap: 4px; height: 30px; border: 1px solid var(--line); background: #fff; color: var(--navy); border-radius: 8px; padding: 0 9px; font-weight: 700; font-size: .8rem; font-family: inherit; cursor: pointer; white-space: nowrap; }
+.pseudo-fenster .pf-kn.haupt { background: var(--navy); color: #fff; border-color: var(--navy); }
+.pseudo-fenster .pf-kn:disabled { opacity: .45; cursor: default; }
+.pseudo-fenster .pf-text { display: grid; gap: 5px; justify-items: start; }
+.pseudo-fenster .pf-text textarea, .pseudo-fenster .pf-zurueck textarea { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 7px; font-size: .86rem; font-family: inherit; }
+.pseudo-fenster .pf-weg { margin: 0; background: var(--green-soft); color: var(--green); border-radius: 8px; padding: 5px 8px; font-weight: 700; font-size: .8rem; }
+.pseudo-fenster .pf-summe { display: flex; justify-content: space-between; gap: 8px; font-size: .78rem; color: var(--muted); padding: 0 2px; }
+.pseudo-fenster .pf-summe b { color: var(--navy); } .pf-flagge { color: #8a5b08; font-weight: 700; }
+.pseudo-fenster .pf-liste { display: grid; gap: 4px; }
+.pseudo-fenster .pf-zeile { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 7px; align-items: center; border: 1px solid var(--line); border-radius: 9px; padding: 4px 5px; }
+.pseudo-fenster .pf-daumen { width: 34px; height: 34px; border-radius: 6px; background: var(--blue-soft); color: var(--navy); display: grid; place-items: center; font-weight: 700; font-size: .6rem; font-family: inherit; overflow: hidden; border: 0; padding: 0; }
+.pseudo-fenster .pf-daumen img { width: 100%; height: 100%; object-fit: cover; }
+button.pf-daumen { cursor: pointer; }
+.pseudo-fenster .pf-name { min-width: 0; } .pf-name b { display: block; font-size: .85rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pseudo-fenster .pf-name em { font-style: normal; color: var(--green); margin-right: 4px; }
+.pseudo-fenster .pf-marken { display: flex; gap: 4px; flex-wrap: wrap; }
+.pseudo-fenster .pf-m { font-size: .7rem; font-weight: 700; border-radius: 999px; padding: 0 6px; line-height: 1.5; }
+.pseudo-fenster .pf-m.ok { background: var(--green-soft); color: var(--green); } .pf-m.pr { background: #fff2d6; color: #8a5b08; } .pf-m.art { background: #eef3f7; color: var(--muted); } .pf-m.rot { background: var(--red-soft); color: var(--red); }
+.pseudo-fenster .pf-aktionen { display: flex; gap: 3px; align-items: center; }
+.pseudo-fenster .pf-aktionen .pf-ik { width: 28px; height: 28px; }
+.pseudo-fenster .pf-mit { display: inline-flex; align-items: center; gap: 2px; font-size: .72rem; color: var(--muted); }
+.pseudo-fenster .pf-mit input { width: 15px; height: 15px; margin: 0; }
+.pseudo-fenster .pf-ki { border-top: 1px solid var(--line); padding-top: 7px; display: grid; gap: 6px; }
+.pseudo-fenster .pf-titel { font-size: .88rem; color: var(--navy); }
+.pseudo-fenster .pf-chips { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
+.pseudo-fenster .pf-chip { border: 1px solid var(--line); background: #fff; color: var(--ink, #15283a); border-radius: 999px; padding: 3px 10px; font-size: .78rem; font-family: inherit; cursor: pointer; }
+.pseudo-fenster .pf-chip[aria-pressed="true"] { background: var(--navy); color: #fff; border-color: var(--navy); }
+.pseudo-fenster .pf-stil, .pseudo-fenster .pf-frei { height: 28px; border: 1px solid var(--line); border-radius: 999px; padding: 0 8px; font-size: .78rem; font-family: inherit; background: #fff; }
+.pseudo-fenster .pf-frei { border-radius: 8px; height: 30px; width: 100%; font-size: .84rem; }
+.pseudo-fenster .pf-eine { display: flex; align-items: center; gap: 6px; font-size: .8rem; }
+.pseudo-fenster .pf-eine input { width: 15px; height: 15px; margin: 0; }
+.pseudo-fenster .pf-kiwahl { display: flex; position: relative; }
+.pseudo-fenster .pf-kiknopf { height: 40px; text-align: left; padding: 0 12px; font-weight: 700; font-size: .9rem; font-family: inherit; cursor: pointer; line-height: 1.15; color: var(--k-ink); border: 1px solid var(--k-rand); background: linear-gradient(105deg, #fff 0%, var(--k-hauch) 100%); border-radius: 8px 0 0 8px; flex: 1; }
+.pseudo-fenster .pf-kiknopf small { display: block; font-weight: 400; font-size: .68rem; opacity: .85; }
+.pseudo-fenster .pf-kiknopf:disabled { opacity: .5; cursor: default; }
+.pseudo-fenster .pf-kipfeil { flex: none; width: 42px; border-radius: 0 8px 8px 0; border-left: 0; background: var(--k-hauch); display: grid; place-items: center; padding: 0; }
+.pseudo-fenster .ki-chatgpt { --k-ink: #07513f; --k-rand: #a9dccd; --k-hauch: #e3f5ef; }
+.pseudo-fenster .ki-claude { --k-ink: #7d3519; --k-rand: #ebc3b3; --k-hauch: #fbebe4; }
+.pseudo-fenster .ki-claudecode { --k-ink: #45352a; --k-rand: #d6c8bc; --k-hauch: #f2ece6; }
+.pseudo-fenster .ki-gemini { --k-ink: #2a3f9e; --k-rand: #bfc9f3; --k-hauch: #e9edfc; }
+.pseudo-fenster .pf-kimenue { position: absolute; right: 0; bottom: 44px; z-index: 5; background: #fff; border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 24px rgba(16,52,83,.18); padding: 4px; display: grid; min-width: 180px; }
+.pseudo-fenster .pf-kimenue button { display: flex; align-items: center; gap: 8px; height: 34px; border: 0; background: none; border-radius: 7px; padding: 0 8px; font-weight: 700; font-size: .84rem; font-family: inherit; cursor: pointer; text-align: left; color: #15283a; }
+.pseudo-fenster .pf-kimenue button:hover { background: #eef3f7; }
+.pseudo-fenster .pf-kimenue button[aria-checked="true"]::after { content: "✓"; margin-left: auto; color: var(--green); }
+.pseudo-fenster .pf-punkt { width: 12px; height: 12px; border-radius: 50%; flex: none; background: var(--k-ink); }
+.pseudo-fenster .pf-weiter { display: flex; gap: 5px; flex-wrap: wrap; align-items: center; }
+.pseudo-fenster .pf-gruen { color: var(--green); font-weight: 700; font-size: .82rem; text-decoration: none; }
+.pseudo-fenster .pf-zurueck { display: grid; gap: 6px; }
+.pseudo-fenster .pf-klar { white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; background: var(--green-soft); border-radius: 8px; padding: 8px; font-size: .84rem; font-family: inherit; max-height: 360px; overflow: auto; }
+.pseudo-fenster .pf-blatt { position: fixed; inset: 0; z-index: 1200; background: #fff; display: flex; flex-direction: column; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+@media (min-width: 900px) { .pseudo-fenster .pf-blatt { inset: 4vh 10vw; border-radius: 14px; box-shadow: 0 20px 60px rgba(0,0,0,.35); } }
+.pseudo-fenster .pf-blatt-kopf { display: flex; align-items: center; gap: 6px; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+.pseudo-fenster .pf-blatt-kopf b { flex: 1; font-size: .86rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pseudo-fenster .pf-blatt-leiste { display: flex; gap: 6px; align-items: center; padding: 5px 8px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.pseudo-fenster .pf-seg { display: flex; background: #eef3f7; border-radius: 8px; padding: 2px; }
+.pseudo-fenster .pf-seg button { border: 0; background: none; border-radius: 6px; padding: 3px 9px; font-weight: 700; font-size: .78rem; font-family: inherit; color: var(--muted); cursor: pointer; }
+.pseudo-fenster .pf-seg button[aria-pressed="true"] { background: #fff; color: var(--navy); }
+.pseudo-fenster .pf-rechts { margin-left: auto; display: flex; gap: 4px; align-items: center; font-size: .76rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.pseudo-fenster .pf-buehne { flex: 1; overflow: auto; background: #eef3f7; padding: 10px; position: relative; display: grid; gap: 10px; align-content: start; }
+.pseudo-fenster .pf-seite { background: #fff; color: #1d2730; width: min(100%, 720px); margin: 0 auto; min-height: 60vh; padding: 7% 8%; box-shadow: 0 4px 16px rgba(16,52,83,.16); font: 14px/1.6 Georgia, "Times New Roman", serif; white-space: pre-wrap; overflow-wrap: anywhere; user-select: text; }
+.pseudo-fenster .pf-v { border-radius: 2px; cursor: pointer; }
+.pseudo-fenster .zeigt-ki .pf-v { background: #e3dcf7; color: #3f2d78; font: 700 .86em ui-monospace, Consolas, monospace; padding: 0 1px; }
+.pseudo-fenster .zeigt-original .pf-v { background: #fff0a0; color: #1d2730; }
+.pseudo-fenster .pf-v.unsicher { outline: 2px solid #e0a020; outline-offset: 1px; }
+.pseudo-fenster .pf-blase { position: absolute; z-index: 6; background: #fff; border: 1px solid var(--line); border-radius: 9px; box-shadow: 0 6px 18px rgba(16,52,83,.2); padding: 4px; display: flex; gap: 4px; }
+.pseudo-fenster .pf-blase button { height: 30px; border: 1px solid var(--line); background: #fff; color: var(--navy); border-radius: 7px; padding: 0 9px; font-weight: 700; font-size: .8rem; font-family: inherit; cursor: pointer; }
+.pseudo-fenster .pf-blatt-fuss { display: flex; gap: 8px; align-items: center; padding: 6px 8px; border-top: 1px solid var(--line); font-size: .76rem; color: var(--muted); }
+.pseudo-fenster .pf-blatt-fuss span { flex: 1; }
+.pseudo-fenster .pf-bildseite { position: relative; width: min(100%, 720px); margin: 0 auto; line-height: 0; }
+.pseudo-fenster .pf-bildseite img { width: 100%; height: auto; border-radius: 4px; user-select: none; -webkit-user-drag: none; }
+.pseudo-fenster .pf-bildseite i { position: absolute; background: #000; }
+.pseudo-fenster .pf-zeichnen { touch-action: none; cursor: crosshair; }
+.pseudo-fenster .pf-zeichnen i { outline: 1.5px dashed #4aa3ff; outline-offset: 1px; cursor: pointer; }
+.pseudo-fenster .pf-zeichnen i.gewaehlt { outline: 2px solid #ff9f1a; }
+.pseudo-fenster .pf-zeichnen i.durch { opacity: .55; }
+.pseudo-fenster .pf-zeichnen i.zug { background: rgba(0,0,0,.6); }
+.pseudo-fenster .pf-logo { width: 30px; height: 30px; border-radius: 8px; flex: none; display: block; }
+/* Briefumschlag (Klaus 14.11.): zwischen 901 und 940 px reicht der Kopf nicht – dort bleibt der Weg über „Pseudo“. */
+@media (min-width: 901px) and (max-width: 940px) { .header-actions .brief-knopf { display: none !important; } }

@@ -206,6 +206,9 @@ export function korrigieren(p: MaskeProfile, wort: string, wie: Regel, ziel?: st
   const w = wort.trim().replace(/\s+/g, " ");
   if (w.length < 2) return p;
   if (wie === "bleibt") {
+    // Der Name eines Eintrags (so setzt „Zurückführen“ ihn ein) darf bleiben → der ganze Eintrag auf „darf bleiben“.
+    const eintrag = p.eintraege.find((e) => normal(e.anzeige) === normal(w));
+    if (eintrag) return eintragAendern(p, eintrag.id, (e) => ({ ...e, regel: "bleibt" }));
     const ohne = p.eintraege.map((e) => ({ ...e, schreibweisen: e.schreibweisen.filter((x) => normal(x) !== normal(w)) }));
     return { ...p, geaendert: Date.now(), eintraege: ohne, nieVerdecken: p.nieVerdecken.some((x) => normal(x) === normal(w)) ? p.nieVerdecken : [...p.nieVerdecken, w].slice(-500) };
   }
