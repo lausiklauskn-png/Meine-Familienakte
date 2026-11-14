@@ -1,12 +1,14 @@
-<title>Pseudo-Ansicht kompakt</title>
+<title>Pseudo nach PseudoDoc</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
-/* Layout: oben das kompakte Pseudo-Fenster (eine Zeile je Datei), darunter die Ansicht hinter dem Auge (Seite wie im PDF,
-   verdeckte Stellen im Text selbst, markieren → verdecken). Farben wie in der App. Alle Namen und Nummern erfunden. */
+/* Layout: Handy zuerst (Rahmen 390 px), Aufbau wie PseudoDoc: Kopf in einer Zeile (Maske links, 1 Zur KI · 2 Zurück, ?),
+   Dateien-Leiste, eine kurze Zeile je Datei (👁 ✎ mit 🗑), unten Auftrag + KI-Knöpfe. Auge = Seite wie im Dokument,
+   Stift = Bild abdecken. Kleine Knöpfe (32 px), kein Leerraum oben. Alle Namen und Nummern erfunden. */
 :root {
-  --navy:#0b3154; --blau:#174f7b; --blau-soft:#edf5fc; --ink:#15283a; --muted:#5d6c7c; --line:#d8e2ea; --canvas:#f2f7fa; --paper:#ffffff;
-  --green:#167249; --green-soft:#eaf7f0; --amber:#8a5b08; --amber-soft:#fff4dc; --red:#8f252b; --red-soft:#f8e5e6;
-  --platz:#e3dcf7; --platz-ink:#3f2d78; --seite:#ffffff; --seite-ink:#1d2730; --schatten:rgba(16,52,83,.14);
+  --navy:#0b3154; --blau:#174f7b; --blau-soft:#edf5fc; --ink:#15283a; --muted:#5d6c7c; --line:#d8e2ea; --canvas:#eef3f7; --paper:#ffffff;
+  --green:#167249; --green-soft:#e6f5ed; --amber:#8a5b08; --amber-soft:#fff2d6; --red:#8f252b; --red-soft:#f8e5e6;
+  --platz:#e3dcf7; --platz-ink:#3f2d78; --seite:#ffffff; --seite-ink:#1d2730; --schatten:rgba(16,52,83,.16);
+  --gpt:#10a37f; --claude:#c96442; --code:#5b4636; --gemini:#4f6bed;
   --sans: Arial, Helvetica, sans-serif; --serif: Georgia, "Times New Roman", serif; --mono: ui-monospace, Consolas, monospace;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
@@ -18,204 +20,257 @@
   --green:#7fd3a5; --green-soft:#16301f; --amber:#f0c36b; --amber-soft:#3a2d12; --red:#f1a3a8; --red-soft:#3b1c1f;
   --platz:#3a2f5c; --platz-ink:#e2dafc; --seite:#f4f1ea; --seite-ink:#1d2730; --schatten:rgba(0,0,0,.5); color-scheme: dark; }
 * { box-sizing:border-box; }
-body { background:var(--canvas); color:var(--ink); font:16px/1.5 var(--sans); padding-block:20px 48px;
+body { background:var(--canvas); color:var(--ink); font:15px/1.45 var(--sans); padding-block:14px 40px;
   padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
-main { max-width:860px; margin:0 auto; display:grid; gap:22px; }
-h1 { font-size:1.4rem; margin:0; color:var(--navy); text-wrap:balance; }
-h2 { font-size:1.02rem; margin:0; color:var(--blau); text-wrap:balance; }
-p { margin:0; } .leise { color:var(--muted); font-size:.9rem; }
-.abschnitt { display:grid; gap:10px; }
-.marke { font:700 .74rem var(--sans); letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
-.fenster { background:var(--paper); border:2px solid #1f8a4c; border-radius:14px; padding:12px; display:grid; gap:10px; }
-.kopf { display:flex; align-items:center; gap:8px; justify-content:space-between; }
-.kopf h2 { display:flex; align-items:center; gap:6px; }
-.frage { width:22px; height:22px; border-radius:50%; border:1px solid var(--line); background:var(--paper); color:var(--blau); font-weight:700; cursor:pointer; }
-.schalter { display:inline-flex; align-items:center; gap:6px; border:1px solid var(--line); border-radius:999px; padding:3px 4px 3px 10px; font-weight:700; font-size:.85rem; background:var(--paper); color:var(--ink); cursor:pointer; }
-.schalter b { border-radius:999px; padding:2px 9px; color:#fff; background:#1f8a4c; }
-.schalter[aria-pressed="false"] b { background:#b03a3a; }
-.ablage { border:1.5px dashed var(--line); border-radius:10px; padding:10px; text-align:center; color:var(--muted); font-size:.9rem; }
-.erklaerung { background:var(--blau-soft); border-radius:9px; padding:8px 10px; font-size:.88rem; }
-.liste { display:grid; border:1px solid var(--line); border-radius:10px; overflow:hidden; }
-.zeile { display:grid; grid-template-columns:auto minmax(0,1fr) auto auto; gap:10px; align-items:center; padding:8px 10px; border-top:1px solid var(--line); }
-.zeile:first-child { border-top:0; }
-.zeile.aktiv { background:var(--blau-soft); }
-.datei { min-width:0; } .datei strong { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; } .datei small { color:var(--muted); }
-.typ { width:30px; height:36px; border-radius:4px; background:var(--red-soft); color:var(--red); font:700 .62rem var(--sans); display:grid; place-items:center; }
-.typ.bild { background:var(--green-soft); color:var(--green); } .typ.mail { background:var(--blau-soft); color:var(--blau); }
-.stand { font-size:.8rem; font-weight:700; border-radius:999px; padding:2px 9px; white-space:nowrap; }
-.stand.ok { background:var(--green-soft); color:var(--green); } .stand.pruefen { background:var(--amber-soft); color:var(--amber); }
-.auge { border:1px solid var(--line); background:var(--paper); color:var(--blau); border-radius:9px; padding:5px 10px; font-weight:700; cursor:pointer; }
-.auge:focus-visible, .kn:focus-visible, .schalter:focus-visible { outline:3px solid #1f8a4c; outline-offset:2px; }
-.leiste { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
-.kn { display:inline-flex; align-items:center; gap:6px; border:1px solid var(--line); background:var(--paper); color:var(--blau); border-radius:10px; padding:7px 12px; font:700 .9rem var(--sans); cursor:pointer; }
-.kn.haupt { background:var(--blau); color:var(--paper); border-color:var(--blau); }
-.ansicht { background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:12px; display:grid; gap:10px; }
-.werkzeug { display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between; }
-.seiten { display:flex; align-items:center; gap:6px; font-size:.88rem; color:var(--muted); font-variant-numeric:tabular-nums; }
-.seiten button { border:1px solid var(--line); background:var(--paper); color:var(--blau); border-radius:8px; width:30px; height:30px; cursor:pointer; font-weight:700; }
-.buehne { background:var(--canvas); border-radius:10px; padding:14px; overflow-x:auto; }
-.seite { background:var(--seite); color:var(--seite-ink); width:min(100%, 560px); margin:0 auto; aspect-ratio:1 / 1.414; max-width:100%; padding:7% 8%; box-shadow:0 6px 24px var(--schatten); font:13px/1.55 var(--serif); position:relative; }
-.seite p { margin:0 0 .8em; }
-.absender { font:10px/1.3 var(--sans); color:#55606b; margin-bottom:1.6em !important; }
-.v { background:#1d2730; color:#1d2730; border-radius:2px; cursor:pointer; position:relative; }
-.zeigt-ki .v { background:var(--platz); color:var(--platz-ink); font:700 .82em var(--mono); padding:0 2px; }
-.v.unsicher { outline:2px solid #e0a020; outline-offset:1px; }
-.v[data-klar]::after { content:none; }
-.zeigt-original .v { background:#fff3b0; color:var(--seite-ink); font:inherit; padding:0; }
-.blase { position:absolute; z-index:5; background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:10px; box-shadow:0 8px 24px var(--schatten); padding:6px; display:flex; gap:6px; font:700 .85rem var(--sans); }
-.blase button { border:1px solid var(--line); background:var(--paper); color:var(--blau); border-radius:8px; padding:5px 9px; cursor:pointer; font:inherit; }
-.bild { position:relative; width:min(100%, 420px); margin:0 auto; aspect-ratio:4 / 3; border-radius:6px; background:linear-gradient(160deg,#c9b89a,#8a7a62); box-shadow:0 6px 24px var(--schatten); overflow:hidden; }
-.zettel { position:absolute; left:14%; top:16%; width:72%; height:66%; background:#f7f3ea; transform:rotate(-3deg); padding:6% 7%; color:#2a2a2a; font:12px/1.6 var(--serif); }
-.balken { display:inline-block; background:#111; border-radius:1px; height:1em; vertical-align:-2px; }
-.notizen { display:grid; gap:6px; }
-.notizen li { font-size:.92rem; }
-ul { margin:0; padding-left:20px; }
-@media (max-width:520px) { .zeile { grid-template-columns:auto minmax(0,1fr) auto; } .zeile .stand { grid-column:2; justify-self:start; } }
+.wrap { max-width:980px; margin:0 auto; display:grid; gap:18px; grid-template-columns:minmax(0, 390px) minmax(0,1fr); align-items:start; }
+@media (max-width:820px) { .wrap { grid-template-columns:1fr; } }
+h1 { font-size:1.2rem; margin:0; color:var(--navy); } p { margin:0; } .leise { color:var(--muted); font-size:.86rem; }
+.notiz { display:grid; gap:10px; align-content:start; }
+.notiz ul { margin:0; padding-left:18px; display:grid; gap:4px; font-size:.9rem; }
+.notiz h2 { font-size:.95rem; margin:6px 0 0; color:var(--blau); }
+
+/* Handy-Rahmen */
+.handy { background:var(--paper); border:1px solid var(--line); border-radius:22px; overflow:hidden; box-shadow:0 10px 30px var(--schatten); position:relative; min-height:640px; display:flex; flex-direction:column; }
+.kopf { display:flex; align-items:center; gap:8px; padding:6px 8px; border-bottom:1px solid var(--line); }
+.maske { width:30px; height:30px; border-radius:8px; background:var(--navy); color:var(--paper); display:grid; place-items:center; flex:none; }
+.maske svg { width:20px; height:20px; }
+.reiter { display:flex; gap:2px; background:var(--canvas); border-radius:9px; padding:2px; flex:1; min-width:0; }
+.reiter button { flex:1; border:0; background:none; border-radius:7px; padding:5px 4px; font:700 .8rem var(--sans); color:var(--muted); cursor:pointer; white-space:nowrap; }
+.reiter button[aria-pressed="true"] { background:var(--paper); color:var(--navy); box-shadow:0 1px 3px var(--schatten); }
+.ik { width:30px; height:30px; border-radius:8px; border:1px solid var(--line); background:var(--paper); color:var(--blau); display:inline-grid; place-items:center; cursor:pointer; font:700 .85rem var(--sans); flex:none; padding:0; }
+.ik svg { width:16px; height:16px; }
+.ik:focus-visible, .kn:focus-visible, .ki:focus-visible, .chip:focus-visible { outline:3px solid #1f8a4c; outline-offset:1px; }
+.erkl { margin:6px 8px 0; background:var(--blau-soft); border-radius:8px; padding:7px 9px; font-size:.82rem; }
+.inhalt { padding:8px; display:grid; gap:7px; align-content:start; }
+.blatt .buehne { flex:1; }
+.rein { display:flex; gap:6px; align-items:center; border:1.5px dashed var(--line); border-radius:10px; padding:5px 6px; }
+.rein span { flex:1; font-size:.8rem; color:var(--muted); }
+.kn { display:inline-flex; align-items:center; gap:4px; height:30px; border:1px solid var(--line); background:var(--paper); color:var(--blau); border-radius:8px; padding:0 9px; font:700 .8rem var(--sans); cursor:pointer; white-space:nowrap; }
+.kn.haupt { background:var(--navy); color:var(--paper); border-color:var(--navy); }
+.kn svg { width:14px; height:14px; }
+.summe { display:flex; justify-content:space-between; font-size:.78rem; color:var(--muted); padding:0 2px; }
+.liste { display:grid; gap:4px; }
+.zeile { display:grid; grid-template-columns:34px minmax(0,1fr) auto; gap:7px; align-items:center; border:1px solid var(--line); border-radius:9px; padding:4px 5px; }
+.daumen { width:34px; height:34px; border-radius:6px; background:var(--blau-soft); color:var(--blau); display:grid; place-items:center; font:700 .6rem var(--sans); overflow:hidden; }
+.daumen.bild { background:linear-gradient(#9fb4c6 55%, #6f7880 55%); position:relative; }
+.daumen.bild::after { content:""; position:absolute; left:8px; right:8px; top:18px; height:9px; background:#b23b30; border-radius:3px; box-shadow:inset 6px -2px 0 -3px #111; }
+.name { min-width:0; } .name b { display:block; font-size:.85rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.name b em { font-style:normal; color:var(--green); margin-right:3px; }
+.marken { display:flex; gap:4px; flex-wrap:wrap; }
+.m { font-size:.7rem; font-weight:700; border-radius:999px; padding:0 6px; line-height:1.5; }
+.m.ok { background:var(--green-soft); color:var(--green); } .m.pr { background:var(--amber-soft); color:var(--amber); } .m.art { background:var(--canvas); color:var(--muted); }
+.aktionen { display:flex; gap:3px; align-items:center; }
+.aktionen .ik { width:28px; height:28px; }
+.mit { display:inline-flex; align-items:center; gap:2px; font-size:.72rem; color:var(--muted); }
+.mit input { width:15px; height:15px; margin:0; }
+.ki-block { border-top:1px solid var(--line); padding:8px; display:grid; gap:6px; background:var(--paper); }
+.block-titel { font-size:.88rem; color:var(--navy); }
+.weg { background:var(--green-soft); color:var(--green); border-radius:8px; padding:5px 8px; font-weight:700; font-size:.8rem; }
+.summe b { color:var(--navy); }
+.chips { flex-wrap:wrap; }
+.stil { flex:none; height:26px; border:1px solid var(--line); border-radius:999px; padding:0 6px; font:.76rem var(--sans); background:var(--paper); color:var(--ink); }
+.link { border:0; background:none; color:var(--green); font:700 .8rem var(--sans); cursor:pointer; padding:0 4px; }
+.chips { display:flex; gap:4px; overflow-x:auto; scrollbar-width:none; }
+.chip { flex:none; border:1px solid var(--line); background:var(--paper); color:var(--ink); border-radius:999px; padding:3px 9px; font:.76rem var(--sans); cursor:pointer; }
+.chip[aria-pressed="true"] { background:var(--navy); color:var(--paper); border-color:var(--navy); }
+.auftrag { width:100%; height:30px; border:1px solid var(--line); border-radius:8px; padding:0 8px; font:.82rem var(--sans); background:var(--paper); color:var(--ink); }
+.einedatei { display:flex; align-items:center; gap:6px; font-size:.8rem; }
+.einedatei input { width:15px; height:15px; margin:0; }
+.kis { display:grid; grid-template-columns:1fr 1fr; gap:5px; }
+.ki { height:40px; text-align:left; padding:0 10px; border:0; border-radius:8px; color:#fff; font:700 .76rem var(--sans); cursor:pointer; line-height:1.1; }
+.ki { font-size:.86rem; } .ki small { display:block; font-weight:400; font-size:.66rem; opacity:.9; }
+.ki.gpt { background:var(--gpt); } .ki.claude { background:var(--claude); } .ki.code { background:var(--code); } .ki.gemini { background:var(--gemini); }
+.weiter { display:flex; gap:4px; flex-wrap:wrap; }
+
+/* Blatt (Auge, Stift) über dem Handy-Inhalt */
+.blatt { position:absolute; inset:0; background:var(--paper); display:flex; flex-direction:column; z-index:4; }
+.blatt-kopf { display:flex; align-items:center; gap:6px; padding:6px 8px; border-bottom:1px solid var(--line); }
+.blatt-kopf b { flex:1; font-size:.85rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.blatt-leiste { display:flex; gap:4px; align-items:center; padding:5px 8px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+.blatt-leiste .seg { display:flex; background:var(--canvas); border-radius:8px; padding:2px; }
+.blatt-leiste .seg button { border:0; background:none; border-radius:6px; padding:3px 8px; font:700 .76rem var(--sans); color:var(--muted); cursor:pointer; }
+.blatt-leiste .seg button[aria-pressed="true"] { background:var(--paper); color:var(--navy); }
+.blatt-leiste .rechts { margin-left:auto; display:flex; gap:4px; align-items:center; font-size:.74rem; color:var(--muted); font-variant-numeric:tabular-nums; }
+.buehne { flex:1; overflow:auto; background:var(--canvas); padding:10px; position:relative; }
+.seite { background:var(--seite); color:var(--seite-ink); width:100%; aspect-ratio:1 / 1.414; padding:8% 8%; box-shadow:0 4px 16px var(--schatten); font:9.5px/1.5 var(--serif); position:relative; }
+.seite p { margin:0 0 .75em; }
+.absender { font:7px/1.3 var(--sans); color:#55606b; margin-bottom:1.4em !important; }
+.v { border-radius:2px; cursor:pointer; }
+.zeigt-ki .v { background:var(--platz); color:var(--platz-ink); font:700 .9em var(--mono); padding:0 1px; }
+.zeigt-original .v { background:#fff0a0; color:var(--seite-ink); }
+.v.unsicher { outline:1.5px solid #e0a020; outline-offset:1px; }
+.blase { position:absolute; z-index:6; background:var(--paper); border:1px solid var(--line); border-radius:9px; box-shadow:0 6px 18px var(--schatten); padding:4px; display:flex; gap:4px; }
+.blase button { height:28px; border:1px solid var(--line); background:var(--paper); color:var(--blau); border-radius:7px; padding:0 8px; font:700 .76rem var(--sans); cursor:pointer; }
+.blatt-fuss { display:flex; gap:6px; align-items:center; padding:6px 8px; border-top:1px solid var(--line); font-size:.74rem; color:var(--muted); }
+.bild { position:relative; width:100%; aspect-ratio:4 / 3; background:linear-gradient(#9fb4c6 52%, #6f7880 52%); border-radius:4px; overflow:hidden; }
+.schild { position:absolute; left:8%; top:8%; width:36%; height:20%; background:#fff7e3; border:2px solid #222; padding:4% 3%; }
+.auto { position:absolute; left:22%; top:45%; width:56%; height:30%; background:#b23b30; border-radius:14px; }
+.rad { position:absolute; top:68%; width:13%; aspect-ratio:1; border-radius:50%; background:#222; }
+.flaeche { position:absolute; background:#000; outline:1.5px dashed #4aa3ff; outline-offset:1px; }
+.zur { display:grid; gap:6px; }
+.zur textarea { width:100%; min-height:90px; border:1px solid var(--line); border-radius:8px; padding:7px; font:.82rem var(--sans); background:var(--paper); color:var(--ink); }
+.ergebnis { background:var(--green-soft); border-radius:8px; padding:8px; font-size:.82rem; }
+[hidden] { display:none !important; }
 </style>
 
-<main>
-  <div style="display:grid;gap:6px">
-    <h1>Pseudo: kompakt, Ansicht im Dokument</h1>
-    <p class="leise">Vorschau nach Klaus' Rückmeldung (14.11.2026). Alle Namen und Nummern sind erfunden. Zum Ausprobieren: auf „Auge“ tippen, in der Seite ein Wort markieren, eine dunkle Stelle antippen, oben „Pseudo“ umschalten.</p>
-  </div>
+<div class="wrap">
+  <div class="handy" id="handy">
+    <div class="kopf">
+      <span class="maske" title="Pseudo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8c0-1.7 4-3 9-3s9 1.3 9 3c0 5-3 9-6 9-1.6 0-2.2-2-3-2s-1.4 2-3 2c-3 0-6-4-6-9z"/><circle cx="8.5" cy="10" r="1.6"/><circle cx="15.5" cy="10" r="1.6"/></svg></span>
+      <div class="reiter" role="group" aria-label="Richtung">
+        <button type="button" aria-pressed="true" data-reiter="hin">1 Zur KI</button>
+        <button type="button" aria-pressed="false" data-reiter="zurueck">2 Zurück</button>
+      </div>
+      <button type="button" class="ik" id="frage" aria-expanded="false" aria-label="Erklärung">?</button>
+      <button type="button" class="ik" aria-label="Pseudo schließen">✕</button>
+    </div>
+    <p class="erkl" id="erkl" hidden>Namen, Anschriften, Nummern und Diagnosen werden zu Platzhaltern (⟦NAME-1⟧), in allen Dateien gleich. Daten, Beträge, Firmen bleiben. 👁 zeigt die Seite so, wie die KI sie sieht: Wort markieren = verdecken, Stelle antippen = darf bleiben. ✎ deckt in Bildern Flächen schwarz ab. Mehrere Dateien gehen als eine Datei zur KI. Alles bleibt auf diesem Gerät; pseudonymisiert ist nicht anonym.</p>
 
-  <section class="abschnitt">
-    <span class="marke">1 · Das Fenster: eine Zeile je Datei</span>
-    <div class="fenster">
-      <div class="kopf">
-        <h2>Pseudonymisieren <button type="button" class="frage" id="frage" aria-expanded="false" aria-controls="erkl">?</button></h2>
-        <button type="button" class="schalter" id="pseudo" aria-pressed="true">Pseudo <b id="pseudoWort">an</b></button>
-      </div>
-      <p class="erklaerung" id="erkl" hidden>Namen, Anschriften, Nummern und Diagnosen werden zu Platzhaltern. Daten, Beträge und Firmen bleiben lesbar. Mit dem Auge siehst du jede Datei so, wie die KI sie sieht. Stellen markieren → verdecken; dunkle Stelle antippen → darf bleiben. Alles bleibt auf diesem Gerät.</p>
-      <div class="ablage">Dateien hierher ziehen oder <u>auswählen</u> (PDF, Foto, Mail, Text)</div>
-      <div class="liste" id="liste">
-        <div class="zeile aktiv" data-zeile="brief"><span class="typ">PDF</span><span class="datei"><strong>Schreiben Versicherung.pdf</strong><small>2 Seiten</small></span><span class="stand pruefen" id="standBrief">14 verdeckt · 1 prüfen</span><button type="button" class="auge" data-auge="brief" aria-label="Ansehen">👁 Ansehen</button></div>
-        <div class="zeile" data-zeile="agb"><span class="typ">PDF</span><span class="datei"><strong>AGB Stromtarif.pdf</strong><small>22 Seiten</small></span><span class="stand ok">3 verdeckt</span><button type="button" class="auge" data-auge="agb" aria-label="Ansehen">👁 Ansehen</button></div>
-        <div class="zeile" data-zeile="foto"><span class="typ bild">JPG</span><span class="datei"><strong>Zettel Arzt.jpg</strong><small>Foto · Texterkennung</small></span><span class="stand ok">5 verdeckt</span><button type="button" class="auge" data-auge="foto" aria-label="Ansehen">👁 Ansehen</button></div>
-        <div class="zeile" data-zeile="mail"><span class="typ mail">EML</span><span class="datei"><strong>Rechnung Oktober.eml</strong><small>Mail · 2 Anhänge</small></span><span class="stand ok">9 verdeckt</span><button type="button" class="auge" data-auge="mail" aria-label="Ansehen">👁 Ansehen</button></div>
-      </div>
-      <div class="leiste">
-        <button type="button" class="kn haupt">✓ Alle so übernehmen</button>
-        <button type="button" class="kn">⧉ Kopieren</button>
-        <button type="button" class="kn">Als Ordner speichern</button>
-        <span class="leise">4 Dateien · 1 Stelle zum Prüfen</span>
+    <div class="inhalt" id="hin">
+      <div class="rein"><span>Datei hierher ziehen</span>
+        <button type="button" class="kn haupt">＋ Dateien</button><button type="button" class="kn">Ordner</button><button type="button" class="kn">Foto</button></div>
+      <p class="weg">4 Dateien pseudonymisiert. Kurz ansehen – dann zur KI.</p>
+      <div class="summe"><b>Pseudonymisiert</b><span><span id="summe">31 verdeckt</span> · <span id="pruefsumme">⚑ 3 prüfen</span></span></div>
+      <div class="liste">
+        <div class="zeile"><span class="daumen">PDF</span><span class="name"><b><em>D01</em>Schreiben Versicherung.pdf</b><span class="marken"><span class="m art">2 S.</span><span class="m ok" id="okBrief">12 verdeckt</span><span class="m pr" id="prBrief">⚑ 1</span></span></span>
+          <span class="aktionen"><button type="button" class="ik" data-auge aria-label="D01 ansehen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button><label class="mit"><input type="checkbox" checked>mit</label><button type="button" class="ik" aria-label="D01 entfernen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button></span></div>
+        <div class="zeile"><span class="daumen">PDF</span><span class="name"><b><em>D02</em>AGB Stromtarif.pdf</b><span class="marken"><span class="m art">22 S.</span><span class="m ok">3 verdeckt</span></span></span>
+          <span class="aktionen"><button type="button" class="ik" data-auge aria-label="D02 ansehen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button><label class="mit"><input type="checkbox" checked>mit</label><button type="button" class="ik" aria-label="D02 entfernen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button></span></div>
+        <div class="zeile"><span class="daumen">EML</span><span class="name"><b><em>D03</em>Rechnung Oktober.eml</b><span class="marken"><span class="m art">Mail + 2</span><span class="m ok">9 verdeckt</span><span class="m pr">⚑ 2</span></span></span>
+          <span class="aktionen"><button type="button" class="ik" data-auge aria-label="D03 ansehen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button><label class="mit"><input type="checkbox" checked>mit</label><button type="button" class="ik" aria-label="D03 entfernen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button></span></div>
+        <div class="zeile"><span class="daumen bild"></span><span class="name"><b><em>D04</em>Foto Parkplatz.jpg</b><span class="marken"><span class="m art">Bild</span><span class="m ok">3 Flächen</span></span></span>
+          <span class="aktionen"><button type="button" class="ik" data-auge aria-label="D04 ansehen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button><button type="button" class="ik" data-stift aria-label="D04 abdecken"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16v4z"/></svg></button><label class="mit"><input type="checkbox" checked>mit</label><button type="button" class="ik" aria-label="D04 entfernen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button></span></div>
       </div>
     </div>
-    <ul class="leise">
-      <li>Keine lange Liste der gefundenen Namen mehr. Die Zeile zeigt nur die Zahl; was verdeckt ist, sieht man im Dokument.</li>
-      <li>„Alle so übernehmen“ nimmt alle Dateien, wie sie sind. Wer will, schaut einzelne mit dem Auge durch.</li>
-      <li>„Als Ordner speichern“ legt <b>einen</b> Ordner „pseudonymisiert“ an: je Datei eine Fassung plus Inhaltsliste. Kopieren nimmt alle Fassungen hintereinander.</li>
-    </ul>
-  </section>
 
-  <section class="abschnitt">
-    <span class="marke">2 · Hinter dem Auge: die Seite, wie die KI sie sieht</span>
-    <div class="ansicht">
-      <div class="werkzeug">
-        <strong id="ansichtTitel">Schreiben Versicherung.pdf</strong>
-        <div class="seiten"><button type="button" aria-label="Vorige Seite">‹</button><span>Seite 1 / 2</span><button type="button" aria-label="Nächste Seite">›</button><button type="button" id="naechste" style="width:auto;padding:0 8px" title="Zur nächsten Stelle zum Prüfen">⚑ 1 prüfen</button></div>
+    <div class="inhalt zur" id="zurueck" hidden>
+      <p class="leise">Antwort der KI einfügen oder Datei holen – die echten Angaben kommen wieder hinein (nur hier).</p>
+      <textarea aria-label="Antwort der KI">Sehr geehrte Damen und Herren, ⟦ICH-1⟧ widerspricht der Beitragsanpassung zum Vertrag ⟦NUMMER-1⟧ …</textarea>
+      <div class="weiter"><button type="button" class="kn haupt" id="zurueckLos">Zurückführen</button><button type="button" class="kn">Datei holen</button></div>
+      <p class="ergebnis" id="ergebnis" hidden>Sehr geehrte Damen und Herren, Mara Testfeld widerspricht der Beitragsanpassung zum Vertrag KV-2024-118833 …</p>
+      <div class="weiter" id="ergebnisKnoepfe" hidden><button type="button" class="kn">⧉ Kopieren</button><button type="button" class="kn">Word</button><button type="button" class="kn">In die Akte</button></div>
+    </div>
+
+    <div class="ki-block" id="kiBlock">
+      <b class="block-titel">Zur KI</b>
+      <div class="chips" role="group" aria-label="Aufgabe"><button type="button" class="chip" aria-pressed="true">Antwortbrief</button><button type="button" class="chip" aria-pressed="false">Prüfen</button><button type="button" class="chip" aria-pressed="false">Zusammenfassen</button>
+        <select class="stil" aria-label="Stil"><option>Stil: formell</option><option>freundlich</option><option>bestimmt</option><option>kürzer</option><option>ausführlicher</option><option>einfache Sprache</option></select></div>
+      <input class="auftrag" placeholder="Was soll die KI tun? (frei)" aria-label="Eigener Auftrag">
+      <label class="einedatei"><input type="checkbox" checked> Alle zu einer Datei zusammenfügen</label>
+      <div class="kis"><button type="button" class="ki gpt">ChatGPT<small>kopieren &amp; öffnen</small></button><button type="button" class="ki claude">Claude<small>kopieren &amp; öffnen</small></button><button type="button" class="ki code">Claude Code<small>in den Ordner</small></button><button type="button" class="ki gemini">Gemini<small>kopieren &amp; öffnen</small></button></div>
+      <div class="weiter"><button type="button" class="kn">⧉ Nur kopieren</button><button type="button" class="kn">⬇ Als Datei</button><button type="button" class="kn">ZIP</button><button type="button" class="link" data-zu-zurueck>Antwort da → 2 Zurück</button></div>
+    </div>
+
+    <div class="blatt" id="auge" hidden>
+      <div class="blatt-kopf"><b>D01 · Schreiben Versicherung.pdf</b><button type="button" class="ik" data-zu aria-label="Schließen">✕</button></div>
+      <div class="blatt-leiste">
+        <div class="seg" role="group" aria-label="Ansicht"><button type="button" aria-pressed="true" data-sicht="ki">KI sieht</button><button type="button" aria-pressed="false" data-sicht="original">Original</button></div>
+        <span class="rechts"><button type="button" class="ik" aria-label="Vorige Seite">‹</button>1/2<button type="button" class="ik" aria-label="Nächste Seite">›</button><button type="button" class="kn" id="springen" title="Nächste Stelle zum Prüfen">⚑ 1</button></span>
       </div>
-      <div class="buehne">
+      <div class="buehne" id="buehne">
         <div class="seite zeigt-ki" id="seite">
           <p class="absender">Schirmchen Versicherung GmbH · Wolkenallee 3 · 20095 Hamburg</p>
           <p><span class="v" data-klar="Frau Mara Testfeld">⟦ICH-1⟧</span><br><span class="v" data-klar="Lindenweg 12">⟦ANSCHRIFT-1⟧</span><br><span class="v" data-klar="12345 Musterstadt">⟦ORT-1⟧</span></p>
           <p style="text-align:right">Hamburg, 31.10.2026</p>
           <p><strong>Ihr Vertrag <span class="v" data-klar="KV-2024-118833">⟦NUMMER-1⟧</span> – Beitragsanpassung</strong></p>
           <p>Sehr geehrte <span class="v" data-klar="Frau Testfeld">⟦ICH-1⟧</span>,</p>
-          <p id="absatz">zum 01.01.2027 ändert sich Ihr Monatsbeitrag von 412,50 € auf 438,10 €. Mitversichert bleibt <span class="v" data-klar="Ole Brink">⟦FAMILIE-1⟧</span>, geb. <span class="v" data-klar="03.04.2015">⟦GEBURTSDATUM-1⟧</span>. Die Behandlung bei <span class="v unsicher" data-klar="Dr. Aster">⟦NAME-1⟧</span> wurde unter der Diagnose <span class="v" data-klar="M54.5">⟦ICD-1⟧</span> [Muskel/Skelett] abgerechnet. Ihr Ansprechpartner ist Herr Kemper aus der Leistungsabteilung.</p>
-          <p>Sie können bis zum 30.11.2026 widersprechen. Ihre IBAN <span class="v" data-klar="DE89 3704 0044 0532 0130 00">⟦IBAN-1⟧</span> bleibt hinterlegt.</p>
+          <p>zum 01.01.2027 ändert sich Ihr Monatsbeitrag von 412,50 € auf 438,10 €. Mitversichert bleibt <span class="v" data-klar="Ole Brink">⟦FAMILIE-1⟧</span>, geb. <span class="v" data-klar="03.04.2015">⟦GEBURTSDATUM-1⟧</span>. Die Behandlung bei <span class="v unsicher" data-klar="Dr. Aster">⟦NAME-1⟧</span> wurde unter <span class="v" data-klar="M54.5">⟦ICD-1⟧</span> [Muskel/Skelett] abgerechnet. Ihr Ansprechpartner ist Herr Kemper.</p>
+          <p>Widerspruch bis 30.11.2026. Ihre IBAN <span class="v" data-klar="DE89 3704 0044 0532 0130 00">⟦IBAN-1⟧</span> bleibt hinterlegt.</p>
           <p>Mit freundlichen Grüßen<br>Ihre Schirmchen Versicherung</p>
         </div>
       </div>
-      <p class="leise" id="hinweis">Ein Wort markieren → „Verdecken“. Eine dunkle Stelle antippen → „Darf bleiben“. Gelb umrandet = bitte prüfen. Pseudo aus → Original mit gelb markierten Stellen.</p>
-      <div class="leiste"><button type="button" class="kn haupt">Fertig</button><button type="button" class="kn">⧉ Diese Datei kopieren</button></div>
+      <div class="blatt-fuss">Wort markieren = verdecken · Stelle antippen = darf bleiben<button type="button" class="kn haupt" data-zu style="margin-left:auto">Fertig</button></div>
     </div>
-  </section>
 
-  <section class="abschnitt">
-    <span class="marke">3 · Foto oder Scan: die Stellen werden im Bild abgedeckt</span>
-    <div class="ansicht">
-      <div class="bild" role="img" aria-label="Foto eines Zettels mit schwarz abgedeckten Stellen">
-        <div class="zettel">
-          <b>Praxis <span class="balken" style="width:5.5em"></span></b><br>
-          Patient: <span class="balken" style="width:7em"></span><br>
-          geb. <span class="balken" style="width:5em"></span><br>
-          Nächster Termin: 21.11.2026, 9:30 Uhr<br>
-          Diagnose <span class="balken" style="width:3em"></span><br>
-          Bitte Versichertenkarte mitbringen.
-        </div>
-      </div>
-      <p class="leise">Für die KI wird das Bild neu gerechnet: Stellen schwarz übermalt, keine Textebene, keine Ortsdaten. Das ist Plan-Stufe G und kommt nach der Text-Ansicht.</p>
+    <div class="blatt" id="stift" hidden>
+      <div class="blatt-kopf"><b>D04 · Foto Parkplatz.jpg · 3 Flächen</b><button type="button" class="ik" data-zu aria-label="Schließen">✕</button></div>
+      <div class="blatt-leiste"><button type="button" class="ik" aria-label="Auswählen">↖</button><button type="button" class="ik" aria-label="Rechteck">▭</button><button type="button" class="ik" aria-label="Kreis">◯</button><button type="button" class="ik" aria-label="Vieleck">⬠</button><button type="button" class="ik" aria-label="Rückgängig">↶</button><button type="button" class="ik" aria-label="Fläche löschen">🗑</button><button type="button" class="ik" aria-label="Durchscheinend zum Ausrichten"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
+      <div class="buehne"><div class="bild" role="img" aria-label="Foto mit schwarz abgedecktem Schild und Kennzeichen">
+        <div class="schild"></div><div class="flaeche" style="left:11%;top:12%;width:22%;height:6%"></div><div class="flaeche" style="left:11%;top:20%;width:28%;height:5%"></div>
+        <div class="auto"></div><div class="rad" style="left:26%"></div><div class="rad" style="left:61%"></div>
+        <div class="flaeche" style="left:42%;top:60%;width:18%;height:7%"></div>
+      </div></div>
+      <div class="blatt-fuss">Kennzeichen und erkannte Namen schon vorgeschlagen. Schwarz deckt 100 %.<button type="button" class="kn haupt" data-zu style="margin-left:auto">Fertig</button></div>
     </div>
-  </section>
+  </div>
 
-  <section class="abschnitt">
-    <span class="marke">4 · Was sich gegenüber heute ändert</span>
-    <ul class="notizen">
-      <li>Eine Zeile je Datei statt langer Textblöcke untereinander. Auch 22 Seiten AGB sind eine Zeile.</li>
-      <li>Das Auge öffnet die Seite im echten Aussehen (PDF-Seite, Foto). Verdeckte Stellen stehen dort, wo sie im Dokument sind.</li>
-      <li>Korrigieren direkt in der Seite (markieren / antippen) statt Eingabefeldern. In der Pro-App merkt es sich ins Profil.</li>
-      <li>Pseudo an: jede geöffnete Datei erscheint, wie die KI sie sieht. Pseudo aus: Original.</li>
-      <li>Alle Erklärungen hinter dem einen „?“.</li>
-      <li>„⚑ prüfen“ springt zur nächsten unsicheren Stelle, auch auf Seite 17 von 22. Kein Durchscrollen nötig.</li>
+  <div class="notiz">
+    <h1>Pseudo nach dem Muster PseudoDoc</h1>
+    <p class="leise">Vorschau, 14.11.2026. Alle Daten erfunden. Zum Ausprobieren im Handy-Rahmen: 👁 bei D01, dort ein Wort markieren oder eine Stelle antippen, „Original“ umschalten, ✎ bei D04, oben „2 Zurück“.</p>
+    <h2>Von PseudoDoc übernommen</h2>
+    <ul>
+      <li>Kopf in einer Zeile: Maske links, „1 Zur KI · 2 Zurück“, „?“. Kein Seitentitel, kein Leerraum oben.</li>
+      <li>Datei rein in einer Leiste (Dateien, Ordner, Foto). Eine Zeile je Datei mit D01…, Zahl der verdeckten Stellen, 👁, ✎ (Bild), „mit“, 🗑.</li>
+      <li>Auftrag als kleine Chips, KI-Knöpfe „kopieren & öffnen“ (ChatGPT, Claude, Claude Code, Gemini), dazu Nur kopieren, Als Datei, ZIP.</li>
+      <li>Bild-Editor mit Rechteck, Kreis, Vieleck, Rückgängig; Kennzeichen und Namen vorgeschlagen; neu gezeichnet ohne Metadaten.</li>
     </ul>
-  </section>
-</main>
+    <h2>Aus der Familienakte dazu</h2>
+    <ul>
+      <li>👁 zeigt die Seite im Aussehen des Dokuments. Korrigieren direkt darin, merkt sich ins Profil (Pro).</li>
+      <li>Keine Liste „… ✓ darf bleiben“ mehr. Unsichere Stellen nur als ⚑-Zahl; ⚑ springt zur nächsten, auch auf Seite 17 von 22.</li>
+      <li>„Alle als eine Datei“: Brief, AGB, Mail und Bild zusammengefügt, mit D01…D04 als Abschnitte.</li>
+      <li>Profile, feste Platzhalter (⟦ICH-1⟧, ⟦FAMILIE-1⟧) und Prüfziffern aus Stufe C.</li>
+      <li>Pseudo im Kopf an/aus wie bisher.</li>
+    </ul>
+    <h2>Geprüft gegen PseudoDoc (Handy, 390 px)</h2>
+    <ul>
+      <li><b>Übernommen, weil klarer:</b> Satz „Kurz ansehen – dann zur KI“ (sagt, was als Nächstes kommt) · Abschnittsnamen „Pseudonymisiert“, „Zur KI“ · KI-Knöpfe 2×2 und gut lesbar (vorher 4 nebeneinander, „Claude Code“ abgeschnitten) · Aufgaben alle sichtbar statt seitlich versteckt · „Antwort da → 2 Zurück“ · Strichgrafiken statt Emoji · 🗑 auch beim Bild · KI-Block klebt nicht mehr unten (verdeckte sonst die Liste).</li>
+      <li><b>Kompakter als PseudoDoc:</b> Zeile je Datei 44 px statt rund 200 px (dort Symbol über Name über Marken über Knöpfen) · Dateien-Leiste in einer Zeile statt großem Kasten · keine Karte in der Karte · kein Fuß mit Impressum im Fenster · Stil als ein Auswahlfeld statt sechs Chips.</li>
+      <li><b>Mehr als PseudoDoc:</b> Auge zeigt die Seite im Dokument-Aussehen (dort Text im Kasten) und erlaubt Markieren = verdecken · ⚑ springt zur nächsten unsicheren Stelle (dort „vorsichtshalber“ + Liste unter „Korrigieren“) · Profile und feste Platzhalter.</li>
+      <li><b>Leerer Zustand</b> (noch keine Datei) wie PseudoDoc: nur Kopf und die Dateien-Leiste mit „Beispiel ansehen“.</li>
+      <li>Maße: Knöpfe 28–40 px, Schrift 12–14 px; das Wichtigste passt auf einen Handy-Bildschirm.</li>
+    </ul>
+  </div>
+</div>
 
 <script>
-const seite = document.getElementById('seite');
-const pseudo = document.getElementById('pseudo');
-let blase = null;
+const $ = (s) => document.querySelector(s);
+const handy = $('#handy'), seite = $('#seite');
+$('#frage').onclick = (e) => { const p = $('#erkl'); p.hidden = !p.hidden; e.currentTarget.setAttribute('aria-expanded', String(!p.hidden)); };
+document.querySelectorAll('[data-reiter]').forEach((b) => b.onclick = () => {
+  document.querySelectorAll('[data-reiter]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+  const hin = b.dataset.reiter === 'hin';
+  $('#hin').hidden = !hin; $('#kiBlock').hidden = !hin; $('#zurueck').hidden = hin;
+});
+document.querySelector('[data-zu-zurueck]').onclick = () => document.querySelector('[data-reiter="zurueck"]').click();
+$('#zurueckLos').onclick = () => { $('#ergebnis').hidden = false; $('#ergebnisKnoepfe').hidden = false; };
+document.querySelectorAll('.chip').forEach((c) => c.onclick = () => c.setAttribute('aria-pressed', String(c.getAttribute('aria-pressed') !== 'true')));
+document.querySelectorAll('[data-auge]').forEach((b) => b.onclick = () => { $('#auge').hidden = false; });
+document.querySelectorAll('[data-stift]').forEach((b) => b.onclick = () => { $('#stift').hidden = false; });
+document.querySelectorAll('[data-zu]').forEach((b) => b.onclick = () => { b.closest('.blatt').hidden = true; zu(); });
+document.querySelectorAll('[data-sicht]').forEach((b) => b.onclick = () => {
+  document.querySelectorAll('[data-sicht]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+  const ki = b.dataset.sicht === 'ki';
+  seite.className = `seite ${ki ? 'zeigt-ki' : 'zeigt-original'}`;
+  seite.querySelectorAll('.v').forEach((v) => { if (!v.dataset.tok) v.dataset.tok = v.textContent; v.textContent = ki ? v.dataset.tok : v.dataset.klar; });
+});
+let blase = null, nr = 2;
 const zu = () => { if (blase) { blase.remove(); blase = null; } };
 const zeigen = (x, y, knoepfe) => {
-  zu();
-  blase = document.createElement('div'); blase.className = 'blase';
-  const r = seite.getBoundingClientRect();
-  blase.style.left = Math.max(0, Math.min(x - r.left, r.width - 200)) + 'px'; blase.style.top = (y - r.top + 8) + 'px';
-  for (const [text, fn] of knoepfe) { const b = document.createElement('button'); b.type = 'button'; b.textContent = text; b.onclick = (e) => { e.stopPropagation(); fn(); zu(); }; blase.append(b); }
-  seite.append(blase);
+  zu(); blase = document.createElement('div'); blase.className = 'blase';
+  const r = $('#buehne').getBoundingClientRect();
+  blase.style.left = Math.max(4, Math.min(x - r.left, r.width - 170)) + 'px'; blase.style.top = (y - r.top + $('#buehne').scrollTop + 10) + 'px';
+  for (const [t, fn] of knoepfe) { const b = document.createElement('button'); b.type = 'button'; b.textContent = t; b.onclick = (e) => { e.stopPropagation(); fn(); zu(); }; blase.append(b); }
+  $('#buehne').append(blase);
 };
-let nr = 2;
 const stand = () => {
   const n = seite.querySelectorAll('.v').length, u = seite.querySelectorAll('.v.unsicher').length;
-  const s = document.getElementById('standBrief');
-  s.textContent = `${n} verdeckt${u ? ` · ${u} prüfen` : ''}`; s.className = `stand ${u ? 'pruefen' : 'ok'}`;
-  document.getElementById('naechste').textContent = u ? `⚑ ${u} prüfen` : '✓ alles geprüft';
+  $('#okBrief').textContent = `${n} verdeckt`; $('#prBrief').hidden = !u; $('#springen').textContent = u ? `⚑ ${u}` : '✓';
+  $('#pruefsumme').textContent = `⚑ ${2 + u} prüfen`; $('#summe').textContent = `${n + 19} verdeckt`;
 };
 seite.addEventListener('click', (e) => {
-  const v = e.target.closest('.v');
-  if (!v) return;
-  e.stopPropagation();
-  zeigen(e.clientX, e.clientY, [
-    ['Darf bleiben', () => { v.replaceWith(document.createTextNode(v.dataset.klar)); stand(); }],
-    ...(v.classList.contains('unsicher') ? [['Bleibt verdeckt', () => { v.classList.remove('unsicher'); stand(); }]] : []),
-  ]);
+  const v = e.target.closest('.v'); if (!v) return; e.stopPropagation();
+  zeigen(e.clientX, e.clientY, [['Darf bleiben', () => { v.replaceWith(document.createTextNode(v.dataset.klar)); stand(); }],
+    ...(v.classList.contains('unsicher') ? [['Bleibt verdeckt', () => { v.classList.remove('unsicher'); stand(); }]] : [])]);
 });
-document.addEventListener('mouseup', (e) => {
-  if (e.target.closest('.blase')) return;
-  const sel = window.getSelection();
-  if (!sel || sel.isCollapsed || !seite.contains(sel.anchorNode)) return;
-  const text = sel.toString().trim();
-  if (text.length < 2) return;
-  const range = sel.getRangeAt(0);
-  zeigen(e.clientX, e.clientY, [['Verdecken', () => {
-    const s = document.createElement('span'); s.className = 'v'; s.dataset.klar = text; s.textContent = `⟦NAME-${nr++}⟧`;
-    range.deleteContents(); range.insertNode(s); sel.removeAllRanges(); stand();
-  }]]);
-});
-document.addEventListener('click', (e) => { if (!e.target.closest('.blase') && !e.target.closest('.v')) zu(); });
-const anzeigen = () => {
-  const an = pseudo.getAttribute('aria-pressed') === 'true';
-  document.getElementById('pseudoWort').textContent = an ? 'an' : 'aus';
-  seite.className = `seite ${an ? 'zeigt-ki' : 'zeigt-original'}`;
-  seite.querySelectorAll('.v').forEach((v) => { if (!v.dataset.tok) v.dataset.tok = v.textContent; v.textContent = an ? v.dataset.tok : v.dataset.klar; });
+const markiert = (e) => {
+  if (e.target.closest && e.target.closest('.blase')) return;
+  const sel = getSelection(); if (!sel || sel.isCollapsed || !seite.contains(sel.anchorNode)) return;
+  const text = sel.toString().trim(); if (text.length < 2) return;
+  const range = sel.getRangeAt(0), p = e.changedTouches ? e.changedTouches[0] : e;
+  zeigen(p.clientX, p.clientY, [['Verdecken', () => { const s = document.createElement('span'); s.className = 'v'; s.dataset.klar = text; s.textContent = `⟦NAME-${nr++}⟧`; range.deleteContents(); range.insertNode(s); sel.removeAllRanges(); stand(); }]]);
 };
-pseudo.addEventListener('click', () => { pseudo.setAttribute('aria-pressed', String(pseudo.getAttribute('aria-pressed') !== 'true')); anzeigen(); });
-document.getElementById('frage').addEventListener('click', (e) => { const p = document.getElementById('erkl'); p.hidden = !p.hidden; e.currentTarget.setAttribute('aria-expanded', String(!p.hidden)); });
-document.getElementById('naechste').addEventListener('click', () => { const u = seite.querySelector('.v.unsicher'); if (u) { u.scrollIntoView({ block: 'center', behavior: 'smooth' }); u.animate([{ outlineWidth: '6px' }, { outlineWidth: '2px' }], 600); } });
-document.querySelectorAll('[data-auge]').forEach((b) => b.addEventListener('click', () => {
-  document.querySelectorAll('.zeile').forEach((z) => z.classList.toggle('aktiv', z.dataset.zeile === b.dataset.auge));
-  document.getElementById('ansichtTitel').textContent = b.closest('.zeile').querySelector('strong').textContent;
-  document.querySelector('.ansicht').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}));
+document.addEventListener('mouseup', markiert); document.addEventListener('touchend', markiert);
+$('#springen').onclick = () => { const u = seite.querySelector('.v.unsicher'); if (u) u.scrollIntoView({ block: 'center', behavior: 'smooth' }); };
+document.addEventListener('click', (e) => { if (!e.target.closest('.blase') && !e.target.closest('.v')) zu(); });
 </script>
