@@ -77,7 +77,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   oder oben auf dem Gerätespeicher, `EXTRA_INITIAL_URI`; kein Namensfenster, „Family-Projekt“, bei Belegung „Family-Projekt 2…9“; nur
   `FamilienakteTresorPlugin.java`). Alle Pro-Apps finden den Tresor am Inhalt (`tresorordner.json`), nicht am Namen. **Adresse
   `?ansicht=landkarte`** öffnet die Landkarte der App direkt (Merker in `sessionStorage` übersteht das Neuladen beim ersten Besuch); die
-  Geschenkbox nutzt sie. Geschenkbox mit Knopf „Als eine Datei speichern“ (Download-Freigabe; kein Chat-Anhang, der wird als ZIP verpackt).
+  Geschenkbox nutzt sie. Geschenkbox mit Knopf „Als eine Datei speichern“ (Download-Freigabe). Seit 14.11.: zusätzlich die HTML-Datei direkt im Chat (siehe feste Regeln).
 - **Fassung 2.28.55** (#153; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.55.json`; Brief
   `BRIEF_ABSCHLUSS_2026-11-10_GERAETETEST-2.28.53.md`): **Meldungen klarer** – info heißt „Hinweis“, Zwischenstände (`laeuft: true`)
   weichen der nächsten Meldung (`lib/ui-activity.ts`); Ordnerfehler übersetzt (`app/nativer-ordner.ts` `uebersetzt`/`ordnerFehlerText`).
@@ -285,6 +285,11 @@ sondern nur KimHub.“
 - Ist KimHub nicht in der Sitzung, das Repo `lausiklauskn-png/Kimhub` holen und den Eintrag dort ablegen.
 
 ## Weitere feste Regeln
+
+- **Geschenkbox immer als eine HTML-Datei geben, nie als ZIP (Klaus 14.11.2026: „keine ZIP mehr, die HTML-Datei, 600 KB ist nicht so groß“).**
+  Nach jeder Änderung `node tools/geschenkbox-datei.mjs` und `docs/geschenk/Geschenkbox-Pro-Apps.html` direkt im Chat als einzelne Datei
+  mitgeben (nicht gebündelt mit anderen Dateien), dazu das Artefakt mit dem Knopf „Als eine Datei speichern“ neu veröffentlichen.
+  Ersetzt den Satz „kein Chat-Anhang, der wird als ZIP verpackt“ (2.28.56).
 
 - Oberfläche und Wortlaut des Freundes nur mit Klaus' Ja je sichtbarer Änderung. Beispieldaten erfunden.
 - Keine Schlüssel, PINs, Passwörter oder Chefcodes in Dateien oder im Chat.
