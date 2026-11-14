@@ -58,7 +58,10 @@ export function siebe(datei: Datei, stufe: number, regeln: Lernregel[] = []): Da
   if (stufe >= 4 && d.stufe < 4) {
     if (d.email?.von) setze(d, "absender", { wert: absenderName(d.email.von), sicher: true, grund: "Absender der E-Mail", quelle: "regel" });
     else if (!textOhne(d)) setze(d, "absender", erkenneAbsender(kopf) || absenderAusGruss(voll) || { wert: "unbekannt", sicher: false, grund: "kein Absender im Kopf gefunden", quelle: "regel" });
-    else setze(d, "absender", { wert: d.bild?.modell ? `eigenes Foto (${d.bild.modell})` : "eigenes Foto", sicher: true, grund: "Foto ohne Text", quelle: "regel" });
+    // Nur ein Bild ohne Text ist ein eigenes Foto; ein PDF ohne lesbaren Text (Scan, Texterkennung fehlgeschlagen) bleibt offen (Training 14.11.2026;
+    // Fehlerbehebung, nicht eigens gemessen)
+    else if (d.art === "bild") setze(d, "absender", { wert: d.bild?.modell ? `eigenes Foto (${d.bild.modell})` : "eigenes Foto", sicher: true, grund: "Foto ohne Text", quelle: "regel" });
+    else setze(d, "absender", { wert: "unbekannt", sicher: false, grund: "kein lesbarer Text (Scan ohne Textebene?)", quelle: "regel" });
     // Gelerntes wirkt ab hier: es kennt den Absender
     for (const r of regeln) lernregelAnwenden(d, r);
   }
