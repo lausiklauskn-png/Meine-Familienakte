@@ -226,7 +226,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   BookLedgerPro, Private Brain Pro. Ein-Schritt-Weg verdrahtet in Familienakte #92 (`ProTresorAdapter.einrichten`,
   `FamilienakteTresorPlugin.einrichten`) und BookLedgerPro #454, beide auf main, nicht veröffentlicht; Private Brain Pro #130 auf main (Klaus' Freibrief 05.11.), nicht veröffentlicht.
   Tresor-Leser (HTML auf der Karte, ohne Installation, nur lesend) Workflow-PDF-Pro #68, seit 2.28.52 in der Familienakte eingebaut.
-  Geschenkbox mit den veröffentlichten Downloads: `docs/geschenk/geschenkbox-pro.html` (https://claude.ai/artifact/XeUMGuSZ49FzsJYjwQznM7, Version 32 mit 2.28.70, Datei-Organizer 0.4.5 und Discovery (Verweis auf die Basic-Seite); vor dem Neuveröffentlichen den Live-Stand lesen – andere Sitzungen ziehen dort ihre Apps nach). Klaus will danach alle Pro-Apps neu installieren
+  Geschenkbox mit den veröffentlichten Downloads: `docs/geschenk/geschenkbox-pro.html` (https://claude.ai/artifact/XeUMGuSZ49FzsJYjwQznM7, Version 33 mit 2.28.70, Datei-Organizer 0.4.6 und Discovery (Verweis auf die Basic-Seite); vor dem Neuveröffentlichen den Live-Stand lesen – andere Sitzungen ziehen dort ihre Apps nach). Klaus will danach alle Pro-Apps neu installieren
   und frische Tresorräume anlegen.
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
