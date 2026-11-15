@@ -11,7 +11,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Fassung nicht erhöht):** Hilfe-Thema „Discovery“ direkt hinter „Pro-App-Verbund (Vorschau)“ (`app/discovery-hilfe.tsx`, Ordnung in
   `lib/hilfe-ordnung.ts`); „Discovery öffnen“ zeigt die Seite des Datei-Organizers („so lernte der Sortier-Kern“) im selben Vollbild-Rahmen
   wie die Verbund-Karte (Schließen, Esc, Android-Zurück; kein neues Fenster). Die Seite liegt byte-gleich unter `public/discovery/`
-  (17 Dateien: Seite, three.js r128, Film, Standbild, 13 Tonspuren; Datei-Organizer @ `c251510`, Pin `HERKUNFT.json`) – **nie von Hand
+  (17 Dateien: Seite, three.js r128, Film, Standbild, 13 Tonspuren; Datei-Organizer @ `c60c982`, enthalten in main `5497e25`; Pin `HERKUNFT.json`) – **nie von Hand
   ändern, nur `node tools/discovery-nachziehen.mjs [--quelle ../Datei-Organizer]`** (`--pruefen` vergleicht; auch in `check:herkunft`).
   Worker (`scripts/build-pwa.mjs`): Film und Tonspuren nicht im Installations-Vorrat, sie kommen beim Gebrauch hinein; Ausschnitte
   (Range) bedient der Worker aus dem Vorrat als 206. APK und Windows tragen alles im Paket. Probe UI `discovery`. Nicht am Gerät.
