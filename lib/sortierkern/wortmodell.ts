@@ -1,5 +1,6 @@
 import type { Wert } from "./typen.ts";
 import { WORTMODELL_ART, WORTMODELL_BEREICH } from "./wortmodell-daten.ts";
+import { artVorhersage, ARTMODELL_MIN, ARTMODELL_SICHER, ARTMODELL_VOR_REGEL } from "./artmodell.ts";
 
 /**
  * Kleines gelerntes Wortmodell (Naive Bayes über Wörter, Wortpaare und Steuersatz) für Bereich und Art eines Schriftstücks.
@@ -51,4 +52,17 @@ export function mitModell(regel: Wert | undefined, modell: Wortmodell, text: str
   return regel;
 }
 export const bereichMitModell = (regel: Wert | undefined, text: string) => mitModell(regel, WORTMODELL_BEREICH as Wortmodell, text);
-export const artMitModell = (regel: Wert | undefined, text: string) => mitModell(regel, WORTMODELL_ART as Wortmodell, text);
+/** Art: seit 15.11.2026 das gelernte Art-Modell (lib/artmodell.ts, reihum 80,4 → 85,1 % im ganzen Kern); das Wortmodell bleibt für den Bereich. */
+export function artMitModell(regel: Wert | undefined, text: string): Wert | undefined {
+  if (!wortmodellSchalter.an) return regel;
+  const v = artVorhersage(text);
+  if (!v) return regel;
+  if (regel?.sicher && regel.wert === v.wert) return regel;
+  if ((!regel?.sicher && v.abstand >= ARTMODELL_MIN) || v.abstand >= ARTMODELL_VOR_REGEL) {
+    const wort = v.grund.length ? `gelernt: ${v.grund.map((g) => `„${g}“`).join(", ")}` : "gelerntes Art-Modell";
+    return { wert: v.wert, sicher: v.abstand >= ARTMODELL_SICHER, grund: v.abstand >= ARTMODELL_SICHER ? wort : `${wort} (knapp vor „${v.zweites}“)`, quelle: "regel" };
+  }
+  return regel;
+}
+/** Das frühere Wortmodell für die Art – nur noch für Vergleiche (Gegenprobe der rekursiven Verbesserung). */
+export const artMitWortmodell = (regel: Wert | undefined, text: string) => mitModell(regel, WORTMODELL_ART as Wortmodell, text);
