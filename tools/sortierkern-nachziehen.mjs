@@ -6,7 +6,9 @@ import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"; 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), ".."), i = process.argv.indexOf("--quelle");
 const quelle = path.resolve(root, i > 0 ? process.argv[i + 1] : "../datei-organizer"), ziel = path.join(root, "lib/sortierkern");
 // nur, was die Siebe brauchen (kein Einlesen von Dateien, kein PDF, kein ZIP – das macht die Familienakte selbst)
-const DATEIEN = ["typen.ts", "kategorien.ts", "erkennen.ts", "gehalt.ts", "eml.ts", "lernen.ts", "wortmodell.ts", "wortmodell-daten.ts", "siebe.ts"];
+const DATEIEN = ["typen.ts", "kategorien.ts", "erkennen.ts", "gehalt.ts", "eml.ts", "lernen.ts", "wortmodell.ts", "wortmodell-daten.ts", "siebe.ts",
+  // seit der rekursiven Verbesserung (Datei-Organizer 15.11.2026): gelernte Art, Absender- und Frist-Wahl
+  "artmodell.ts", "artmodell-daten.ts", "absenderwahl.ts", "absenderwahl-daten.ts", "fristwahl.ts", "fristwahl-daten.ts"];
 const git = (...a) => execFileSync("git", ["-C", quelle, ...a], { encoding: "utf8" }).trim();
 if (git("status", "--porcelain", "--", "lib")) { console.error("Quelle hat ungesicherte Änderungen in lib/ – erst dort einchecken."); process.exit(1); }
 const commit = git("log", "-1", "--format=%H", "--", "lib"); mkdirSync(ziel, { recursive: true });
