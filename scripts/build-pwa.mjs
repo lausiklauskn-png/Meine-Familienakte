@@ -33,7 +33,9 @@ const build = `${count}.${hash.digest("hex").slice(0, 8)}`;
 // Texterkennung (21 MB) und Blatterkennung (3,5 MB) von Workflow PDF kommen nicht in den Installations-Vorrat: der Worker legt sie
 // beim ersten Gebrauch ab (Sitzung F). Sonst lüde jede Installation und jedes Update 25 MB.
 // Seit 2026-11-01 liegen beide nur noch im Klon von Workflow PDF (apps/workflow-pdf/vendor/).
-const vorrat = list.filter((f) => !/^apps\/workflow-pdf\/vendor\/(tesseract|scanic)\//.test(f));
+// Discovery (Hilfe › Discovery): der Film (4 MB) und die 13 Tonspuren (1,6 MB) kommen ebenfalls erst beim Gebrauch in den Vorrat;
+// Seite, three.js und Standbild (0,8 MB) liegen vorab bereit. In APK und Windows liegt ohnehin alles im Paket.
+const vorrat = list.filter((f) => !/^apps\/workflow-pdf\/vendor\/(tesseract|scanic)\//.test(f) && !/^discovery\/(discovery-kreislauf\.mp4$|discovery-ton\/)/.test(f));
 const version = { version: pkg.version, build, commit, date, files: list.length, vorrat: vorrat.length };
 writeFileSync(path.join(dist, "version.json"), JSON.stringify(version, null, 2) + "\n");
 
@@ -49,6 +51,15 @@ self.addEventListener("activate", (event) => {
     await self.clients.claim();
   })());
 });
+// Ton und Film fragen mit „Range“ nach Teilen; aus dem Vorrat kommt dann der gewünschte Ausschnitt (206), sonst spielt Safari nichts.
+async function ausschnitt(antwort, bereich) {
+  const m = /^bytes=(\\d*)-(\\d*)$/.exec(bereich.trim());
+  if (!m || (!m[1] && !m[2])) return antwort;
+  const daten = await antwort.arrayBuffer(), n = daten.byteLength;
+  const a = m[1] ? Number(m[1]) : Math.max(0, n - Number(m[2])), e = m[1] && m[2] ? Math.min(Number(m[2]), n - 1) : n - 1;
+  if (a >= n || a > e) return new Response(null, { status: 416, headers: { "content-range": "bytes */" + n } });
+  return new Response(daten.slice(a, e + 1), { status: 206, headers: { "content-type": antwort.headers.get("content-type") || "application/octet-stream", "content-range": "bytes " + a + "-" + e + "/" + n, "content-length": String(e - a + 1), "accept-ranges": "bytes" } });
+}
 self.addEventListener("message", (event) => { if (event.data?.typ === "jetzt-aktivieren") self.skipWaiting(); });
 // Nur der eigene Ursprung kommt aus dem Vorrat; fremde Adressen gehen unverändert durch (der Internetschalter der Seite entscheidet).
 self.addEventListener("fetch", (event) => {
@@ -75,13 +86,18 @@ self.addEventListener("fetch", (event) => {
   if (url.pathname.endsWith("/version.json")) { event.respondWith(fetch(event.request).catch(() => new Response("{}", { headers: { "content-type": "application/json" } }))); return; }
   event.respondWith((async () => {
     const cache = await caches.open(VORRAT);
-    // Eingebettete Apps (apps/…, z. B. der Klon von Workflow PDF) und die Karte des Pro-App-Verbunds (pro-verbund/) sind eigene Seiten:
+    // Eingebettete Apps (apps/…, z. B. der Klon von Workflow PDF), die Karte des Pro-App-Verbunds (pro-verbund/) und Discovery (discovery/) sind eigene Seiten:
     // dort NICHT die Akte ausliefern.
-    const eigeneSeite = url.pathname.startsWith(new URL("./apps/", self.registration.scope).pathname) || url.pathname.startsWith(new URL("./pro-verbund/", self.registration.scope).pathname) || url.pathname.endsWith("/datenschutz.html");
+    const eigeneSeite = url.pathname.startsWith(new URL("./apps/", self.registration.scope).pathname) || url.pathname.startsWith(new URL("./pro-verbund/", self.registration.scope).pathname) || url.pathname.startsWith(new URL("./discovery/", self.registration.scope).pathname) || url.pathname.endsWith("/datenschutz.html");
     const key = event.request.mode === "navigate" && !eigeneSeite ? new Request(new URL("./index.html", self.registration.scope).href) : event.request;
     const hit = await cache.match(key, { ignoreSearch: true, ignoreVary: true });
-    if (hit) return hit;
-    try { const antwort = await fetch(event.request); if (antwort.ok && url.pathname.startsWith(new URL(self.registration.scope).pathname)) cache.put(event.request, antwort.clone()); return antwort; }
+    const bereich = event.request.headers.get("range");
+    if (hit) return bereich && hit.status === 200 ? ausschnitt(hit, bereich) : hit;
+    try {
+      // Teilantworten (206) lassen sich nicht ablegen: Ton und Film von Discovery holt der Worker daneben einmal ganz in den Vorrat.
+      if (bereich && url.pathname.startsWith(new URL("./discovery/", self.registration.scope).pathname)) event.waitUntil(fetch(url.href).then((ganz) => ganz.status === 200 ? cache.put(url.href, ganz) : undefined).catch(() => undefined));
+      const antwort = await fetch(event.request); if (antwort.status === 200 && url.pathname.startsWith(new URL(self.registration.scope).pathname)) cache.put(event.request, antwort.clone()); return antwort;
+    }
     catch (error) { const index = await cache.match(new URL("./index.html", self.registration.scope).href); if (index && event.request.mode === "navigate" && !eigeneSeite) return index; throw error; }
   })());
 });
