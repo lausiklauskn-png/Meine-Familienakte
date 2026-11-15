@@ -16,6 +16,7 @@ export const APP_STAND: Readonly<Record<string, StandEintrag>> = {
   "tagebuch": { stand: "fertig", seit: "2.28.49" },
   "notiz": { stand: "fertig", seit: "2.28.49" },
   "aus-antwort": { stand: "fertig", seit: "2.28.49" },
+  // 2.28.70: Sortier-Kern mit gelernter Art, Absender- und Frist-Wahl (Datei-Organizer, rekursive Verbesserung).
   // 2.28.69: Pseudo-Fenster – Aufträge gemerkt, „An KI“ an Unterlage/Auswahl/Eingang, Briefweg im Fenster, PDF-Seitenbild, ZIP.
   // 2.28.68: Knopf „Pseudo“ mit verbesserter Maske (lib/maske.ts auf Modul 25).
   "aus-pseudo": { stand: "fertig", seit: "2.28.68" },
