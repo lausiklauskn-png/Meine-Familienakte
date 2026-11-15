@@ -1,0 +1,35 @@
+{
+ "version": "2.28.70",
+ "source": "e7b6850a02fedb15b31fedab31973a40d8073166",
+ "pullRequest": [191, 192],
+ "recordedUtc": "2026-11-15T14:20:00Z",
+ "freigabe": "Klaus 15.11.2026: „neue Fassung veröffentlichen“.",
+ "inhalt": "Sortier-Kern aus dem Datei-Organizer @ 4ce27d2 (rekursive Verbesserung: gelernte Art, Absender- und Frist-Wahl); an fremden Prüfunterlagen (Welt 4) Bereich 79,0 → 82,5 %, Absender 63,5 → 65,0 %.",
+ "ciAmPrStand": "PR #192 auf 67a17ab: pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) – success (pruefung und product (35) je einmal neu gestartet nach HTTP 429 beim Herunterladen).",
+ "releases": [
+  {
+   "tag": "android-v2.28.70",
+   "run": 43721508440,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {"name": "Familienakte-android-v2.28.70.apk", "bytes": 20394638, "sha256": "67b4b083c99594af30889bf706ba9c7f1bb507b183484a3e5db18bc604bea949", "matchesSHA256SUMS": true, "versionInside": "2.28.70 (assets/public/version.json, commit e7b6850)"},
+    {"name": "Familienakte-Einzeldatei-2.28.70.html", "bytes": 5174566, "sha256": "23082aa92ea840e79f8b3dff7f0eddbf95a4d5585585b57d32ec4d533d414266", "matchesSHA256SUMS": true}
+   ]
+  },
+  {
+   "tag": "windows-v2.28.70",
+   "run": 43721510842,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {"name": "Familienakte-Windows-2.28.70-x64-setup.exe", "bytes": 34555338, "sha256": "7f522d44f411d6cc5410ece60643b33b595f803ad11d6000a35512b93e39bd1e", "matchesSHA256SUMS": true, "latestJson": "version 2.28.70"}
+   ]
+  }
+ ],
+ "pwa": "Pages über den Merge-Stand e7b6850; github.io aus dem Behälter gesperrt, Seite nicht selbst geprüft.",
+ "notChecked": [
+  "Alles am Gerät: Vorschläge für Bereich, Art, Absender und Frist an echten Unterlagen; Update über die Versionszeile",
+  "family-projekt.de aus dem Behälter nicht geprüft; der Freigabelauf prüft den Server selbst"
+ ]
+}
