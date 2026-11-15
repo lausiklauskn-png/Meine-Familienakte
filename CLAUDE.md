@@ -7,6 +7,11 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Aktueller Stand (14.11.2026 abends, nach 2.28.69)
 
+- **Sortier-Kern nachgezogen (15.11., Klaus' Ja, nicht ausgegeben):** Datei-Organizer @ `4ce27d2` (rekursive Verbesserung: gelernte Art,
+  Absender- und Frist-Wahl; dort an zwei unabhängigen Welten gesichert besser als 0.4.4). `tools/sortierkern-nachziehen.mjs` kennt die neuen
+  Dateien (`artmodell*.ts`, `absenderwahl*.ts`, `fristwahl*.ts`). Hier gemessen an Welt 4 (Datei-Organizer `pruefstapel-stadt-4`):
+  Bereich 79,0 → 82,5 %, Absender 63,5 → 65,0 %. Paket +≈0,6 MB (Art-Modell als Daten).
+
 - **Fassung 2.28.69 ausgegeben (14.11. abends; #186; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.69.json`;
   Brief `BRIEF_ABSCHLUSS_2026-11-14_PSEUDO-RESTARBEITEN.md`), nicht erneut ausgeben. Enthält Stufe C, das Pseudo-Fenster nach PseudoDoc und:** Zuordnung je Auftrag verschlüsselt (`lib/pseudo-auftraege.ts`, `app/pseudo-auftrag-speicher.ts`;
   Schlüssel aus dem Profil, 90 Tage, „✓ erledigt“), „An KI“ (`anKi()`) an Bibliothekszeile, Auswahl-Leisten und Eingang, Briefweg der

@@ -1,8 +1,8 @@
 {
  "quelle": "lausiklauskn-png/Datei-Organizer",
  "pfad": "lib/",
- "commit": "079dd6df32b4e2acd64b4c41ee8f4923f299415d",
- "stand": "2026-11-14",
+ "commit": "4ce27d2a9d2074280682ef0bbcae1076c150152f",
+ "stand": "2026-11-15",
  "hinweis": "byte-gleich; nie von Hand ändern, nur über tools/sortierkern-nachziehen.mjs",
  "dateien": {
   "typen.ts": "b0314ab7ca6b2025bd2b724a5b6ad1bfc47fcfef8e65f93b1d23d882cf8957d0",
@@ -11,8 +11,14 @@
   "gehalt.ts": "81b68eae61b07d2fd4128749feb2054888cc4372a84bd1b3f88962e2e549b833",
   "eml.ts": "45ad4ad99f37644bf6532a7c0a8ed6e52f5d6055753cf25bf73ed04bd3f38d03",
   "lernen.ts": "1ad87a83afd3c35882567416f485138eedbb14c7f21bc1ed466341a1b9e0feb8",
-  "wortmodell.ts": "d8d5564d6654898f92f23e741c80c5737d64a289b2fa294e5d0d61fee8ae86ba",
-  "wortmodell-daten.ts": "2d6e310fac4f41a7eca205b0b8694e8c8cc1f3a5f774c492c7299f36a2faca7b",
-  "siebe.ts": "129f1ad573c3964ac67e5903e05b6abe21c115a9b4678171ce1f131fbe5d1676"
+  "wortmodell.ts": "d1183aa2b42d0fa9cccfd7d33d639ad8c2d80e049456b89c5a7bfa6991797d33",
+  "wortmodell-daten.ts": "20a0b3842d00a4c13048d88ae63778310dd9e97cfdb8e41bb49cc686d5d85463",
+  "siebe.ts": "d459d398b710252b86c8d63a7acd5631ecac1bd02743b46a3fcc60d71459456e",
+  "artmodell.ts": "c2c663ee4ee9185f325b297e374c0802c025022dfa392880ca94cecbda248c99",
+  "artmodell-daten.ts": "f0e44c43ea3beb0942509d857e6b5957972eb62d0c3898547dfdc92a197f1f2c",
+  "absenderwahl.ts": "66024ecfb0cd7687800ecde5e9abe7bea3627198db69670cb3a19c29aa716179",
+  "absenderwahl-daten.ts": "d576c7fbeb75447763716253aa4d645ae95f17c28702f7221e36853b4e8ad5b5",
+  "fristwahl.ts": "38a957f95a1a87b69d35802fcf1c9451c5669efe7b591b758fb1043afe2910c1",
+  "fristwahl-daten.ts": "46ea4609f7c20ab759553e7898a3f543210e56be57588175299e55d1f50aae97"
  }
 }
