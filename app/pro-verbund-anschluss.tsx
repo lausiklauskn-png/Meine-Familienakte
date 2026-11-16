@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { PRO_ZIELE, proVerbundFehler, proAusgaengeLesen, proAusgangPruefen, proEingangAufnehmen, proEingangLesen, type ProAusgang } from "./pro-verbund";
+import { PRO_BEGLEIT_MELDUNG, PRO_ZIELE, proVerbundFehler, proAusgaengeLesen, proAusgangPruefen, proEingangAufnehmen, proEingangLesen, type ProAusgang } from "./pro-verbund";
+import { istProBegleitdatei } from "../lib/pro-begleitdatei";
 import type { ProUebergabe } from "./pro-uebergabe";
 import type { ProTresorZustand } from "./pro-tresor";
 import { InfoPopover } from "./ui-controls";
@@ -14,12 +15,12 @@ export function ProVerbundAnschluss({ stand }: { stand: ProTresorZustand }) {
     <span className="ui-heading-help"><h4>Zusammenarbeit mit Pro-Apps</h4><InfoPopover label="Zusammenarbeit mit Pro-Apps erklären" text="Eine ausgewählte Unterlage kannst du in der Dokumentenbibliothek an Workflow PDF Pro, Private Brain Pro oder BookLedgerPro geben. Jede App bleibt einzeln nutzbar. Weitergegeben bedeutet noch nicht im Ziel aufgenommen. Gemeinsame Originale werden nicht gelöscht."/></span>
     <button type="button" className="button secondary" disabled={!offen||busy} onClick={()=>void tun(async()=>{setEingang(await proEingangLesen());})}>Pro-Eingang prüfen</button>
     {eingang && eingang.vaultId===stand.id && <div>{!eingang.items.length&&<p>Keine offenen Pro-Übergaben.</p>}{eingang.items.map(e=><div key={e.entryId} className="card">
-      <p>{e.vertrag?.name||"Übergabe prüfen"} · {PRO_ZIELE[e.vertrag?.quelle as keyof typeof PRO_ZIELE]||"Herkunft noch ungeprüft"}</p>
-      {e.fehler?<p role="alert">{proVerbundFehler(e.fehler)} Quelle bleibt unverändert.</p>:<button type="button" className="button secondary" disabled={!offen||busy} onClick={()=>void tun(async()=>{
-        await proEingangAufnehmen(eingang.vaultId,e.entryId);
+      <p>{istProBegleitdatei(e.vertrag)?"Vorsortierung zu einer Mail (kein Dokument)":e.vertrag?.name||"Übergabe prüfen"} · {PRO_ZIELE[e.vertrag?.quelle as keyof typeof PRO_ZIELE]||"Herkunft noch ungeprüft"}</p>
+      {e.fehler?<p role="alert">{proVerbundFehler(e.fehler)} Quelle bleibt unverändert.</p>:<button type="button" className="button secondary" disabled={!offen||busy} data-pro-begleit={istProBegleitdatei(e.vertrag)||undefined} onClick={()=>void tun(async()=>{
+        const r=await proEingangAufnehmen(eingang.vaultId,e.entryId);
         window.dispatchEvent(new Event("familienakte:pro-eingang"));
-        setEingang(await proEingangLesen());setMeldung("Dauerhaft im Eingang aufgenommen. Bitte in der Eingangszentrale die Zuordnung prüfen.");
-      })}>In Familienakte-Eingang aufnehmen</button>}
+        setEingang(await proEingangLesen());setMeldung("begleit" in r?PRO_BEGLEIT_MELDUNG[r.stand]:"Dauerhaft im Eingang aufgenommen. Bitte in der Eingangszentrale die Zuordnung prüfen.");
+      })}>{istProBegleitdatei(e.vertrag)?"Als Vorschlag übernehmen":"In Familienakte-Eingang aufnehmen"}</button>}
     </div>)}</div>}
     {ausgaenge.some(a=>a.vaultId===stand.id)&&<div><h4>Gemerkter Ausgang</h4>{ausgaenge.filter(a=>a.vaultId===stand.id).map(a=><div key={a.id}>
       <p>{a.vertrag.name} → {PRO_ZIELE[a.vertrag.ziel as keyof typeof PRO_ZIELE]||a.vertrag.ziel}: {a.stand==="im-eingang"?"vom Ziel im Eingang bestätigt":a.stand==="weitergegeben"?"weitergegeben – Zielbestätigung offen":"noch offen – Unterlage erneut weitergeben"}</p>

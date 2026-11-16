@@ -5,6 +5,8 @@ import { MAIL_WAHL_SCHLUESSEL, emlName, microsoftFehler, mailtoAdresse, wahlLese
 import { workspaceStorage } from "../lib/demo-workspace";
 import { microsoftMailAbruf } from "./kalender-anbieter";
 import { proEingangAufnehmen, proEingangLesen } from "./pro-verbund";
+import { proBegleitAbgleichen } from "./pro-begleit";
+import { istProBegleitdatei, type BegleitZahlen } from "../lib/pro-begleitdatei";
 import { proTresor } from "./pro-tresor";
 import { nativePlattform } from "./nativer-ordner";
 
@@ -87,18 +89,28 @@ export async function microsoftMailSenden(m: { an: string[]; betreff: string; te
 }
 
 // ---------- Weg F: Private Brain Pro übergibt Mails über das Tresor-Fach ----------
-/** Holt offene Übergaben aus „eingang-familienakte“ in die Eingangszentrale (nur wenn der Pro-Tresor offen ist). */
-export async function proEingangAbholen(): Promise<{ geholt: number; fehler: number; offen: boolean }> {
+export type ProEingangLauf = { geholt: number; fehler: number; offen: boolean } & BegleitZahlen;
+/** Holt offene Übergaben aus „eingang-familienakte“ in die Eingangszentrale (nur wenn der Pro-Tresor offen ist).
+ *  Eine Vorsortierung („familienakte-uebergabe.json“ aus Private Brain Pro) wird nie ein Dokument; Mails kommen zuerst dran. */
+export async function proEingangAbholen(): Promise<ProEingangLauf> {
   const stand = await proTresor.zustand().catch(() => null);
-  if (!stand || stand.status !== "offen" || !stand.uebergaben) return { geholt: 0, fehler: 0, offen: false };
+  if (!stand || stand.status !== "offen" || !stand.uebergaben) return { geholt: 0, fehler: 0, offen: false, vorschlaege: 0, wartend: 0, ohneWirkung: 0 };
   const { vaultId, items } = await proEingangLesen();
-  let geholt = 0, fehler = 0;
-  for (const e of items) {
+  let geholt = 0, fehler = 0, vorschlaege = 0, wartend = 0, ohneWirkung = 0;
+  const reihe = [...items.filter((e) => !istProBegleitdatei(e.vertrag)), ...items.filter((e) => istProBegleitdatei(e.vertrag))];
+  for (const e of reihe) {
     if (e.fehler || !e.vertrag) { fehler++; continue; }
-    try { await proEingangAufnehmen(vaultId, e.entryId); geholt++; } catch { fehler++; }
+    try {
+      const r = await proEingangAufnehmen(vaultId, e.entryId);
+      if (!("begleit" in r)) geholt++;
+      else if (r.stand === "zugeordnet") vorschlaege++; else if (r.stand === "wartet") wartend++; else ohneWirkung++;
+    } catch { fehler++; }
   }
+  // Früher gemerkte Vorsortierungen: zuordnen, was inzwischen passt, und nach 30 Tagen ohne Mail entfallen lassen.
+  const rest = await proBegleitAbgleichen().catch(() => null);
+  if (rest) { vorschlaege += rest.zugeordnet; ohneWirkung += rest.ohneWirkung; }
   if (geholt) window.dispatchEvent(new Event("familienakte:pro-eingang"));
-  return { geholt, fehler, offen: true };
+  return { geholt, fehler, offen: true, vorschlaege, wartend, ohneWirkung };
 }
 
 /** Weg H (vorbereitet, nicht gebaut): eigenes Postfach in der Familienakte mit dem Mail-Kern aus Private Brain Pro
