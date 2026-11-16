@@ -23,6 +23,12 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   `app/health-portal.tsx`. Proben `scripts/run-organizer-uebernahme-tests.mjs` (6), UI `organizer-uebernahme` (4). Landkarte: Kasten
   „Aus dem Datei-Organizer“. Nicht am Gerät; die Frist des Organizers steht nur im Hinweis, sie wird nicht als Frist angelegt.
 
+- **Neue Kategorie aus dem Datei-Organizer (Klaus 16.11.; nicht ausgegeben, geht in 2.28.72):** eine im Organizer von Hand angelegte Kategorie
+  (dort „+ Neue Kategorie erstellen …“, im Index „von dir“ oder „gelernt“) reist als Lebensbereich im Vorschlag mit, auch wenn die Akte sie
+  nicht kennt; der Hinweis nennt „Neuer Bereich aus dem Organizer“. Sie entsteht erst mit „Vorschläge in das Formular übernehmen“ und dem
+  Ablegen (eigener Lebensbereich wie von Hand eingetragen). Gleicher Name in anderer Schreibweise = vorhandener Bereich, kein zweiter.
+  Vom Kern geratene unbekannte Bereiche bleiben draußen. Probe `run-organizer-uebernahme-tests` (7).
+
 - **Vorsortierung aus Private Brain Pro (Klaus 16.11.; #199 aus der Sitzung Private Brain Pro, in Fassung 2.28.71; Gegenstück Private Brain Pro ab 1.0.53):**
   Private Brain Pro legt nach der Mail eine zweite Übergabe `familienakte-uebergabe.json` ins Fach `eingang-familienakte` (Einordnung aus
   dem Sortier-Kern). Sie wird **nie ein Dokument oder Eingang**: merken, quittieren, über Name + SHA-256 der Mail als Vorschlag zuordnen
@@ -276,6 +282,9 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Offen
 
+- **Pseudo-Fenster, Kopieren (Klaus 16.11., nicht ausgegeben, Fassung nicht erhöht; Brief `BRIEF_ABSCHLUSS_2026-11-16_PSEUDO-KOPIEREN.md`):**
+  Meldung unter den Knöpfen statt über der Liste, erst kopieren dann Auftrag sichern (Ersatzweg `textKopieren`), Austauschordner in
+  Android/Windows über `nativenOrdnerWaehlen`. Am Gerät ungeprüft (43 PDFs: Grenze der Android-Zwischenablage rund 1 MB).
 - **2.28.71 am Gerät ungeprüft:** Eingangsordner mit `organizer-index.json` (Vorschlag im Prüf-Fenster, Doppelte bleiben im Ordner), Vorsortierung
   aus Private Brain Pro mit echtem Tresor (auch: nimmt Windows eine Übergabe mit `application/json` an?), Update über die Versionszeile bei 82 MB.
   Neue Meldungen der Vorsortierung nur Deutsch, von Klaus noch nicht gesehen.
