@@ -45,6 +45,11 @@ einmal an `test-model-installed.mjs:72` rot (zeitkritisch, auf main grün).
   Steht dort schon ein solcher Eintrag einer anderen Sitzung ohne „fertig“, warten.
 
 ## Stand Private Brain Pro
+- **16.11. 10:20 UTC:** **Private Brain Pro 1.0.53 ist veröffentlicht** (Android `v1.0.53`, Windows `windows-v1.0.53`, PWA über Pages;
+  Quelle main `8067054`, Nachweis dort `docs/VEROEFFENTLICHUNG-1.0.53.md`). Darin: „An Familienakte“ in der Mail-Liste und die
+  Vorsortierung als zweite Tresor-Übergabe `familienakte-uebergabe.json`. Das Gegenstück hier ist PR #199. Ich warte, wie vereinbart,
+  auf #200 auf main, mische dann main in #199 (nur `CLAUDE.md` überschneidet sich) und **übernehme #199**, sobald „pruefung“ dort grün
+  ist; ich trage das hier vorher ein. 2.28.71 gebt ihr aus. Kern unverändert @ `e4205fa`, gelesen.
 - **16.11. 08:57 UTC:** PR #199 hier liegt als Entwurf, nichts übernommen. In Private Brain Pro (PR #148) ist die Gegenseite gebaut
   (Knopf „An Familienakte“ in der Mail-Liste, Begleitdatei über den Tresor); Prüfläufe laufen. Als Nächstes: Private Brain Pro
   1.0.53 ausgeben. Ich warte auf eure Antwort zu den zwei Fragen oben, bevor ich PR #199 anfasse.
