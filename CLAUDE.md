@@ -7,6 +7,15 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Aktueller Stand (15.11.2026, nach 2.28.70)
 
+- **Discovery in der Hilfe (Klaus 15.11.: „Da wo der Sortierkern drin ist, Discovery nachziehen“; Zweig `claude/discovery-hilfe`, nicht ausgegeben,
+  Fassung nicht erhöht):** Hilfe-Thema „Discovery“ direkt hinter „Pro-App-Verbund (Vorschau)“ (`app/discovery-hilfe.tsx`, Ordnung in
+  `lib/hilfe-ordnung.ts`); „Discovery öffnen“ zeigt die Seite des Datei-Organizers („so lernte der Sortier-Kern“) im selben Vollbild-Rahmen
+  wie die Verbund-Karte (Schließen, Esc, Android-Zurück; kein neues Fenster). Die Seite liegt byte-gleich unter `public/discovery/`
+  (seit 16.11. 43 Dateien, rund 60 MB: Seite, three.js r128, Filme, Standbilder, 15 Tonspuren; Datei-Organizer @ `213c81b` = Stand nach 0.4.10 mit neuer Kiosk-Szene, Film bei „Führung starten“, Untertiteln, Zugabe-Murmel; Pin `HERKUNFT.json`; **macht APK und Windows-Paket um rund 55 MB größer**; dazu das Fernrohr in der Kopfleiste, `DiscoveryKnopf`, bis 900 px hinter „‹“) – **nie von Hand
+  ändern, nur `node tools/discovery-nachziehen.mjs [--quelle ../Datei-Organizer]`** (`--pruefen` vergleicht; auch in `check:herkunft`).
+  Worker (`scripts/build-pwa.mjs`): Film und Tonspuren nicht im Installations-Vorrat, sie kommen beim Gebrauch hinein; Ausschnitte
+  (Range) bedient der Worker aus dem Vorrat als 206. APK und Windows tragen alles im Paket. Probe UI `discovery`. Nicht am Gerät.
+
 - **Fassung 2.28.70 ausgegeben (15.11.; #191/#192; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.70.json`), nicht erneut ausgeben. Sortier-Kern nachgezogen (Klaus' Ja):** Datei-Organizer @ `4ce27d2` (rekursive Verbesserung: gelernte Art,
   Absender- und Frist-Wahl; dort an zwei unabhängigen Welten gesichert besser als 0.4.4). `tools/sortierkern-nachziehen.mjs` kennt die neuen
   Dateien (`artmodell*.ts`, `absenderwahl*.ts`, `fristwahl*.ts`). Hier gemessen an Welt 4 (Datei-Organizer `pruefstapel-stadt-4`):
@@ -243,6 +252,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Offen
 
+- **Discovery am Gerät ungeprüft:** Rahmen in APK und Windows (Ton, Film, 3D im Rahmen, Android-Zurück), PWA ohne Netz nach dem ersten Ansehen.
 - **2.28.69 / Pseudo-Fenster am Gerät ungeprüft:** Ansicht mit langem PDF (Seitenbild), Markieren am Handy (Finger), Bild abdecken mit dem Finger,
   KI-Knopf mit Internet an, Zwischenablage Text+Bild am Handy, Aufträge nach Neustart mit echtem Tresor, Mistral mit echtem Schlüssel,
   Austauschordner unter Windows (Android-WebView kann keine Ordnerwahl → nur ZIP), „An KI“ an echten Unterlagen/Mails.

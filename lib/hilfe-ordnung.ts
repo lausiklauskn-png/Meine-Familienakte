@@ -60,6 +60,7 @@ export const HILFE_ORDNUNG: Record<string, HilfeEintrag> = {
   "mehrere-orte": { gruppe: "arbeiten", schritt: 5, seiten: ["security"], worte: ["doppelt", "kopie", "mehrere orte", "usb"] },
   // Allgemeines
   "pro-verbund": { gruppe: "allgemein", seiten: ["help", "security"], worte: ["verbund", "pro-apps", "andere apps", "bookledgerpro", "bookledger", "workflow pdf pro", "private brain", "zusammenarbeit", "landkarte", "wege zwischen den apps"] },
+  "discovery": { gruppe: "allgemein", seiten: ["help"], worte: ["discovery", "sortier-kern", "sortierkern", "trainiert", "training", "gelernt", "lernen", "kreislauf", "kurzfilme", "film", "sprecher", "landkarte", "erfundene städte"] },
   "internet": { gruppe: "allgemein", seiten: ["overview", "netz"], worte: ["internet", "offline", "online", "wlan", "internet ausschalten", "internet einschalten", "ohne internet", "netz"] },
   "update": { gruppe: "allgemein", seiten: ["overview"], worte: ["update", "aktualisieren", "neue version", "basic", "pro", "versionsnummer", "fähnchen", "update verfügbar"] },
   "demo": { gruppe: "allgemein", seiten: ["help"], worte: ["demo", "ausprobieren", "beispiel", "testen"] },

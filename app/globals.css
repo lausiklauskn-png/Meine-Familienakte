@@ -2101,8 +2101,8 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 
 /* Knopf „Notiz“ im Kopf (Klaus 2026-11-05) */
 /* Notiz wie die übrigen Kopf-Symbole (Klaus 2026-11-05): gleiche Größe, nur das Symbol */
-.notiz-knopf-schalter, .kalender-knopf-schalter, .tagebuch-knopf-schalter, .brief-knopf { flex: 0 0 auto; cursor: pointer; transition: background-color .15s, box-shadow .15s, transform .08s; }
-.notiz-knopf-schalter:hover, .kalender-knopf-schalter:hover, .tagebuch-knopf-schalter:hover, .brief-knopf:hover { border-color: #9fb3c1; background: var(--blue-soft); box-shadow: 0 2px 8px rgba(16,52,83,.12); }
+.notiz-knopf-schalter, .kalender-knopf-schalter, .tagebuch-knopf-schalter, .brief-knopf, .discovery-knopf { flex: 0 0 auto; cursor: pointer; transition: background-color .15s, box-shadow .15s, transform .08s; }
+.notiz-knopf-schalter:hover, .kalender-knopf-schalter:hover, .tagebuch-knopf-schalter:hover, .brief-knopf:hover, .discovery-knopf:hover { border-color: #9fb3c1; background: var(--blue-soft); box-shadow: 0 2px 8px rgba(16,52,83,.12); }
 .notiz-knopf-schalter:active { transform: scale(.97); }
 .notiz-knopf-schalter:focus-visible { outline: 3px solid #9fd8d4; outline-offset: 2px; }
 .notiz-fenster { width: min(560px, calc(100vw - 24px)); display: grid; gap: 12px; }
@@ -2515,7 +2515,7 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
   .masthead { position: relative; }
   .header-actions > .kopf-pfeil-auf { display: inline-grid; place-items: center; order: 99; }
   .header-actions.kopf-auf { position: absolute; top: 0; bottom: 0; right: 0; z-index: 5; justify-content: flex-end; padding: 0 12px 0 0; background: var(--paper, #fff); box-shadow: -10px 0 18px rgba(9, 38, 63, .16); }
-  .header-actions.kopf-auf > :not(.drucken-knopf):not(.logout-button):not(.login-button):not(.familienakte-install):not(.kopf-pfeil-zu):not(.fa-schrift):not(.neu-knopf) { display: none !important; }
+  .header-actions.kopf-auf > :not(.drucken-knopf):not(.logout-button):not(.login-button):not(.familienakte-install):not(.kopf-pfeil-zu):not(.fa-schrift):not(.neu-knopf):not(.discovery-knopf) { display: none !important; }
   /* Schriftgröße „A··A“ (11.11.): am Handy hinter dem Pfeil in der Aufklappleiste. */
   .header-actions > .fa-schrift { display: none !important; }
   .header-actions.kopf-auf > .fa-schrift { display: inline-flex !important; align-items: center; }
@@ -2947,6 +2947,10 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
   .header-actions:not(.kopf-auf) > .brief-knopf { display: none !important; }
   .header-actions.kopf-auf > .brief-knopf { display: inline-flex !important; }
   .header-actions.kopf-auf > .neu-knopf { display: inline-flex !important; }
+  /* Discovery (Fernrohr, 15.11.): bis 900 px in der Aufklappleiste hinter „‹“, breiter direkt im Kopf. */
+  .header-actions:not(.kopf-auf) > .discovery-knopf { display: none !important; }
+  .header-actions.kopf-auf > .discovery-knopf { display: inline-flex !important; align-items: center; justify-content: center; }
+  .header-actions.kopf-auf > .discovery-knopf .kopf-wort { display: none; }
   .site-header .header-actions .pseudo-knopf { min-width: 0 !important; width: auto !important; height: 36px; padding: 1px 2px !important; border-radius: 8px; }
   .pseudo-knopf .pseudo-wort { font-size: .6rem; letter-spacing: 0; } .pseudo-knopf .pseudo-zustand { font-size: .5rem; }
 }
@@ -3112,3 +3116,7 @@ button.pf-daumen { cursor: pointer; }
 .icon-button.an-ki-knopf { width: auto; min-width: 34px; padding: 0 8px; font-size: .78rem; }
 /* Briefumschlag (Klaus 14.11.): zwischen 901 und 940 px reicht der Kopf nicht – dort bleibt der Weg über „Pseudo“. */
 @media (min-width: 901px) and (max-width: 940px) { .header-actions .brief-knopf { display: none !important; } }
+
+/* Discovery-Fernrohr im Kopf (16.11.): zwischen 901 und 999 px ist die Kopfleiste mit dem zusätzlichen Knopf zu breit (Querrollen);
+   dort rücken die Knöpfe enger zusammen. */
+@media (min-width: 901px) and (max-width: 999px) { .header-actions { gap: 3px; } }
