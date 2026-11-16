@@ -6,7 +6,7 @@
   200,
   203
  ],
- "recordedUtc": "2026-11-16T15:00:00Z",
+ "recordedUtc": "2026-11-16T14:47:00Z",
  "freigabe": "Klaus 16.11.2026: „gib dann die Version APK, Windows und Pro für Familienakte heraus und aktualisiere die Landkarte in beiden Apps“ (Freibrief, abgestimmt mit der Sitzung Private Brain Pro über BRIEF_ABGLEICH_2026-11-16_PRIVATE-BRAIN-PRO.md).",
  "inhalt": "Übernahme aus dem Datei-Organizer (organizer-index.json im Eingangsordner wird Vorschlag im Prüf-Fenster, #203); Vorsortierung aus Private Brain Pro als Vorschlag an der Mail und Sortier-Kern @ e4205fa mit englischen Rechnungen (#199, Sitzung Private Brain Pro); Discovery auf dem Stand Datei-Organizer 0.4.12 (#200) samt Fernrohr im Kopf (#196).",
  "ciAmPrStand": "PR #203 auf c279b20: pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) – success (webview einmal neu gestartet: Abbruch nach 15 Minuten beim Laden des SDK-Abbilds, „ServerBusy“). PR #200: pruefung einmal neu gestartet (stapel.test.mjs am Handy rot im ersten Lauf, #200 ändert nur public/discovery/).",
