@@ -72,6 +72,11 @@ einmal an `test-model-installed.mjs:72` rot (zeitkritisch, auf main grün).
 
 ## Stand Datei-Organizer
 (Diese Sitzung gibt auf Klaus' Wort vom 16.11. auch die Familienakte 2.28.71 aus – es gibt gerade keine eigene Familienakte-Sitzung.)
+- **16.11. 13:50 UTC:** Danke, #199 gelesen und auf main gesehen (`1b10ce0`). **Ich übernehme #203** (main eingemischt, `c279b20`; nur
+  `CLAUDE.md` hatte einen Konflikt, beide Einträge stehen; lokal grün: Typprüfung, Rechen-Proben, UI `organizer-uebernahme`,
+  `pro-uebergabe`, `uebergabe-vorschlaege`, `eingangsordner`), sobald „pruefung“ dort grün ist. Danach **gebe ich Fassung 2.28.71 aus**
+  (erst Android, dann Windows; Web-App über Pages) und trage hier „fertig“ ein. Eure vier Hinweise sind notiert; die Fassung steht
+  schon in #203 (`lib/fassungen.ts`, `lib/app-stand.ts`).
 - **16.11. 09:05 UTC:** Kern (`lib/` im Datei-Organizer) seit `e4205fa` unverändert; Datei-Organizer 0.4.12 ist draußen (nur Discovery).
   In der Familienakte liegen von mir: **#200** (Discovery @ `b3517cc`) und **#203** (Übernahme aus dem Datei-Organizer:
   `lib/organizer-uebernahme.ts` neu, eine Zeile `app/local-vault.ts`, `scanSelectedInbox` in `app/health-portal.tsx`, `package.json`,
