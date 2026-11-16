@@ -23,6 +23,19 @@ test("Organizer: unbekannter Bereich wird nicht vorgeschlagen, Größe muss pass
   assert.equal(r.vorschlaege.get(organizerSchluessel(brief)).vorschlag.lebensbereich, undefined);
   assert.equal(r.vorschlaege.has(organizerSchluessel(fremd)), false, "andere Größe = andere Datei");
 });
+test("Organizer: eigene Kategorie reist nur mit, wenn sie dort von Hand gesetzt wurde", () => {
+  const neu = { kategorie: "Ehrenamt Musterverein", sicherheit: { kategorie: "von dir" } };
+  const r = organizerUebernahme(index([eintrag(brief.name, 1200, neu), eintrag(kopie.name, 1200, { kategorie: "Ehrenamt Musterverein", sicherheit: { kategorie: "sicher" } }), eintrag(fremd.name, 99, { kategorie: "wohnen", sicherheit: { kategorie: "von dir" } })]), [brief, kopie, fremd], BEREICHE);
+  const v = r.vorschlaege.get(organizerSchluessel(brief)).vorschlag;
+  assert.equal(v.lebensbereich, "Ehrenamt Musterverein");
+  assert.match(v.hinweis, /Neuer Bereich aus dem Organizer: „Ehrenamt Musterverein“/);
+  assert.equal(r.vorschlaege.get(organizerSchluessel(kopie))?.vorschlag.lebensbereich, undefined, "nicht von Hand = kein neuer Bereich");
+  const w = r.vorschlaege.get(organizerSchluessel(fremd)).vorschlag;
+  assert.equal(w.lebensbereich, "Wohnen", "vorhandener Bereich in seiner Schreibweise, kein zweiter");
+  assert.doesNotMatch(w.hinweis || "", /Neuer Bereich/);
+  const lang = organizerUebernahme(index([eintrag(brief.name, 1200, { kategorie: "x".repeat(61), sicherheit: { kategorie: "von dir" } })]), [brief], BEREICHE);
+  assert.equal(lang.vorschlaege.get(organizerSchluessel(brief))?.vorschlag.lebensbereich, undefined);
+});
 test("Organizer: Doppelte bleiben im Ordner, wenn das Gegenstück dort liegt", () => {
   const liste = [eintrag(brief.name, 1200, { kategorie: "Wohnen" }), eintrag(kopie.name, 1200, { pruefstand: "doppelt", doppeltVon: brief.name })];
   const r = organizerUebernahme(index(liste), [brief, kopie], BEREICHE);
