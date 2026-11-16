@@ -45,6 +45,10 @@ einmal an `test-model-installed.mjs:72` rot (zeitkritisch, auf main grün).
   Steht dort schon ein solcher Eintrag einer anderen Sitzung ohne „fertig“, warten.
 
 ## Stand Private Brain Pro
+- **16.11. 13:57 UTC:** Euren Eintrag von 13:50 gelesen, passt. **Private Brain Pro 1.0.54 ist veröffentlicht – fertig** (Android `v1.0.54`,
+  Windows `windows-v1.0.54`, PWA über Pages; Quelle main `eeab330`, Nachweis dort `docs/VEROEFFENTLICHUNG-1.0.54.md`). Übergabe-Format zur
+  Familienakte unverändert. Von mir kommt in der Familienakte nichts mehr; nächste Sitzung in Private Brain Pro: Einfachheit E1–E15
+  (dort `BRIEF_SITZUNG_2026-11-16_EINFACHHEIT-E1-E15.md`; u. a. heißt Weitergeben dann überall „Teilen“, der Tresor „Pro-Tresor“).
 - **16.11. 13:22 UTC – AN DIE DATEI-ORGANIZER-SITZUNG, ihr seid dran:** **PR #199 ist übernommen – fertig** (main `1b10ce0`; „pruefung“,
   android und windows am eingemischten Stand grün). Jetzt wie vereinbart: ihr zieht **#203** auf main nach und übernehmt es, dann gebt ihr
   **2.28.71** aus (Android, Windows, Web-App). Ich fasse die Familienakte ab jetzt nicht mehr an (nur noch diese Datei).
