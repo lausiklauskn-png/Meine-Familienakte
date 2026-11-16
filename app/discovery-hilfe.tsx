@@ -5,10 +5,11 @@ import { KastenReihe } from "./hilfe-bilder";
 
 /**
  * Hilfe-Thema „Discovery“ (Klaus 15.11.2026: „Da wo der Sortierkern drin ist, Discovery nachziehen“ – in der Hilfe bei den Landkarten).
- * Die Seite ist eine eigenständige Seite aus dem Datei-Organizer (src/public/discovery.html samt three.js, Film und Tonspuren), hier
+ * Die Seite ist eine eigenständige Seite aus dem Datei-Organizer (src/public/discovery.html samt three.js, Filmen und Tonspuren), hier
  * byte-gleich unter public/discovery/ (Pin HERKUNFT.json, nur über tools/discovery-nachziehen.mjs, geprüft von npm run check:herkunft).
  * Nie hier abwandeln. Sie öffnet sich wie die Karte des Pro-App-Verbunds in einem Vollbild-Rahmen über der App (kein neues Fenster);
  * Schließen, Esc und Android-Zurück schließen ihn. Im Rahmen zeigt die Seite selbst keinen Rückweg-Knopf.
+ * Derselbe Rahmen öffnet sich über das Fernrohr in der Kopfleiste (DiscoveryKnopf; bis 900 px in der Aufklappleiste hinter „‹“).
  */
 export const DISCOVERY_ADRESSE = "discovery/discovery.html";
 
@@ -21,12 +22,21 @@ export function DiscoveryHilfe() {
       <KastenReihe label="Was Discovery zeigt" knoten={[{ titel: "Erfundene Städte", unter: "die Test-Welten" }, { titel: "Lern-Kreislauf", unter: "sechs Schritte", art: "hervor" }, { titel: "Kurzfilme", unter: "mit Sprecher" }]}/>
       <button type="button" className="button primary" data-discovery-oeffnen onClick={() => setOffen(true)}><Telescope size={16}/> Discovery öffnen</button>
       <ul className="merkpunkte">
-        <li><strong>Ohne Internet.</strong> Die Seite liegt in der App, mit Film und Tonspuren.</li>
+        <li><strong>Ohne Internet.</strong> Die Seite liegt in der App, mit Filmen und Tonspuren.</li>
         <li><strong>Nur zum Ansehen.</strong> Sie liest und ändert nichts in der Akte.</li>
       </ul>
     </div>
     {offen && <DiscoveryRahmen onClose={() => setOffen(false)}/>}
   </details>;
+}
+
+/** Fernrohr in der Kopfleiste (Klaus 15.11.2026: „sichtbar als Button oben in der Navi-Leiste … mit dem Fernrohr“). */
+export function DiscoveryKnopf() {
+  const [offen, setOffen] = useState(false);
+  return <>
+    <button type="button" className="icon-button discovery-knopf" onClick={() => setOffen(true)} title="Discovery: so lernte der Sortier-Kern" aria-label="Discovery" data-discovery-knopf><Telescope size={18}/><span className="kopf-wort" aria-hidden="true">Discovery</span></button>
+    {offen && <DiscoveryRahmen onClose={() => setOffen(false)}/>}
+  </>;
 }
 
 function DiscoveryRahmen({ onClose }: { onClose: () => void }) {

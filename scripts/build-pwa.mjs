@@ -33,9 +33,10 @@ const build = `${count}.${hash.digest("hex").slice(0, 8)}`;
 // Texterkennung (21 MB) und Blatterkennung (3,5 MB) von Workflow PDF kommen nicht in den Installations-Vorrat: der Worker legt sie
 // beim ersten Gebrauch ab (Sitzung F). Sonst lüde jede Installation und jedes Update 25 MB.
 // Seit 2026-11-01 liegen beide nur noch im Klon von Workflow PDF (apps/workflow-pdf/vendor/).
-// Discovery (Hilfe › Discovery): der Film (4 MB) und die 13 Tonspuren (1,6 MB) kommen ebenfalls erst beim Gebrauch in den Vorrat;
-// Seite, three.js und Standbild (0,8 MB) liegen vorab bereit. In APK und Windows liegt ohnehin alles im Paket.
-const vorrat = list.filter((f) => !/^apps\/workflow-pdf\/vendor\/(tesseract|scanic)\//.test(f) && !/^discovery\/(discovery-kreislauf\.mp4$|discovery-ton\/)/.test(f));
+// Discovery (Hilfe › Discovery, Fernrohr im Kopf): alle Filme (.mp4, rund 44 MB) und die Tonspuren (discovery-ton/, 2 MB) kommen
+// ebenfalls erst beim Gebrauch in den Vorrat – die Regel gilt für jede .mp4/.mp3 unter discovery/, nicht für eine feste Liste.
+// Seite, three.js und Standbilder (rund 3 MB) liegen vorab bereit. In APK und Windows liegt ohnehin alles im Paket.
+const vorrat = list.filter((f) => !/^apps\/workflow-pdf\/vendor\/(tesseract|scanic)\//.test(f) && !/^discovery\/(.*\.(mp4|mp3)$|discovery-ton\/)/.test(f));
 const version = { version: pkg.version, build, commit, date, files: list.length, vorrat: vorrat.length };
 writeFileSync(path.join(dist, "version.json"), JSON.stringify(version, null, 2) + "\n");
 
@@ -60,6 +61,7 @@ async function ausschnitt(antwort, bereich) {
   if (a >= n || a > e) return new Response(null, { status: 416, headers: { "content-range": "bytes */" + n } });
   return new Response(daten.slice(a, e + 1), { status: 206, headers: { "content-type": antwort.headers.get("content-type") || "application/octet-stream", "content-range": "bytes " + a + "-" + e + "/" + n, "content-length": String(e - a + 1), "accept-ranges": "bytes" } });
 }
+const unterwegs = new Set();
 self.addEventListener("message", (event) => { if (event.data?.typ === "jetzt-aktivieren") self.skipWaiting(); });
 // Nur der eigene Ursprung kommt aus dem Vorrat; fremde Adressen gehen unverändert durch (der Internetschalter der Seite entscheidet).
 self.addEventListener("fetch", (event) => {
@@ -95,7 +97,8 @@ self.addEventListener("fetch", (event) => {
     if (hit) return bereich && hit.status === 200 ? ausschnitt(hit, bereich) : hit;
     try {
       // Teilantworten (206) lassen sich nicht ablegen: Ton und Film von Discovery holt der Worker daneben einmal ganz in den Vorrat.
-      if (bereich && url.pathname.startsWith(new URL("./discovery/", self.registration.scope).pathname)) event.waitUntil(fetch(url.href).then((ganz) => ganz.status === 200 ? cache.put(url.href, ganz) : undefined).catch(() => undefined));
+      // Ein Film fragt mehrmals nach Teilen: je Adresse läuft nur ein Abruf der ganzen Datei zugleich.
+      if (bereich && url.pathname.startsWith(new URL("./discovery/", self.registration.scope).pathname) && !unterwegs.has(url.href)) { unterwegs.add(url.href); event.waitUntil(fetch(url.href).then((ganz) => ganz.status === 200 ? cache.put(url.href, ganz) : undefined).catch(() => undefined).finally(() => unterwegs.delete(url.href))); }
       const antwort = await fetch(event.request); if (antwort.status === 200 && url.pathname.startsWith(new URL(self.registration.scope).pathname)) cache.put(event.request, antwort.clone()); return antwort;
     }
     catch (error) { const index = await cache.match(new URL("./index.html", self.registration.scope).href); if (index && event.request.mode === "navigate" && !eigeneSeite) return index; throw error; }
