@@ -5,7 +5,14 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 `docs/briefe-archiv/` (Klaus 2026-11-04: archivieren statt löschen); die Veröffentlichungsnachweise in
 `docs/VEROEFFENTLICHUNG-<fassung>.json`.
 
-## Aktueller Stand (15.11.2026, nach 2.28.70)
+## Aktueller Stand (16.11.2026, nach 2.28.71)
+
+- **Fassung 2.28.71 ausgegeben (16.11.; #199, #200, #203; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.71.json`), nicht erneut
+  ausgeben.** Enthält die drei folgenden Punkte (Übernahme aus dem Datei-Organizer, Vorsortierung aus Private Brain Pro mit Kern @ `e4205fa`,
+  Discovery @ `b3517cc` mit Fernrohr im Kopf). **Erste Ausgabe mit Discovery im Paket: APK 20,4 → 82,0 MB, Windows 34,6 → 96,5 MB.**
+  Abgestimmt mit der Sitzung Private Brain Pro über `BRIEF_ABGLEICH_2026-11-16_PRIVATE-BRAIN-PRO.md` (vor Übernahmen und Ausgaben dort lesen
+  und eintragen). Geschenkbox Version 36 (Familienakte 2.28.71, Datei-Organizer 0.4.12, Organizer-Landkarte auf dem Stand).
+  Offene Punkte der Übernahme (Unterordner, Frist als Vorgabe): Datei-Organizer `docs/BRIEF_SITZUNG_2026-11-16_OFFENE-PUNKTE-LANDKARTE.md`.
 
 - **Übernahme aus dem Datei-Organizer (Klaus 16.11., Freibrief ohne Vorschau: „passt ins Design, keine Doppelung, an der passenden Stelle“;
   #203, in Fassung 2.28.71):** liegt im Eingangsordner die `organizer-index.json` des Datei-Organizers, reisen seine
@@ -228,9 +235,9 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   (2.28.35, `docs/landkarte/`), Landkarte der App mit **Stand je Kasten in `lib/app-stand.ts` – bei jeder Fassung eintragen** (2.28.36),
   Hilfe-Themen als Bild, Vorschaufenster (2.28.37), Listenzeilen mit `KnopfLeiste`, Kopfleiste (2.28.38).
   Proben-Hinweise: `step()` wertet einen zurückgegebenen Text als grün, deshalb `soll()`; Seitentitel sind keine Sprungziele.
-- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.70, 2.28.69, 2.28.68, 2.28.67, 2.28.66, 2.28.65, 2.28.64, 2.28.61, 2.28.60, 2.28.59, 2.28.58, 2.28.57, 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
+- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.71, 2.28.70, 2.28.69, 2.28.68, 2.28.67, 2.28.66, 2.28.65, 2.28.64, 2.28.61, 2.28.60, 2.28.59, 2.28.58, 2.28.57, 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
   (2.28.50 ausgegeben, aber ohne eigenen Nachweis; 2.28.40–2.28.47 waren Zwischenstände). Keine davon erneut ausgeben;
-  **nächste freie Fassung 2.28.71** (2.28.62 und 2.28.63 nie ausgegeben). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
+  **nächste freie Fassung 2.28.72** (2.28.62 und 2.28.63 nie ausgegeben). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
   sammeln, Proben laufen lassen, gesammelt als eine Fassung ausgeben (ersetzt „jede neue Funktion gleich ausgeben“ vom 06.11.).
   Neue Fassung oben in `lib/fassungen.ts` eintragen. Die Versionszeile zeigt die technische Fassung aus `package.json`;
   `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
@@ -252,7 +259,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   BookLedgerPro, Private Brain Pro. Ein-Schritt-Weg verdrahtet in Familienakte #92 (`ProTresorAdapter.einrichten`,
   `FamilienakteTresorPlugin.einrichten`) und BookLedgerPro #454, beide auf main, nicht veröffentlicht; Private Brain Pro #130 auf main (Klaus' Freibrief 05.11.), nicht veröffentlicht.
   Tresor-Leser (HTML auf der Karte, ohne Installation, nur lesend) Workflow-PDF-Pro #68, seit 2.28.52 in der Familienakte eingebaut.
-  Geschenkbox mit den veröffentlichten Downloads: `docs/geschenk/geschenkbox-pro.html` (https://claude.ai/artifact/XeUMGuSZ49FzsJYjwQznM7, Version 35 (16.11.) mit 2.28.70, Datei-Organizer 0.4.10, Discovery als Weg über den Fernrohr-Knopf mit Bild der Kopfleiste (Klaus 16.11.: keine Videos in die Box, nur der Verweis – so bekommt man immer die neueste Fassung) und Sage·Protokol; vor dem Neuveröffentlichen den Live-Stand lesen – andere Sitzungen ziehen dort ihre Apps nach). Klaus will danach alle Pro-Apps neu installieren
+  Geschenkbox mit den veröffentlichten Downloads: `docs/geschenk/geschenkbox-pro.html` (https://claude.ai/artifact/XeUMGuSZ49FzsJYjwQznM7, Version 36 (16.11.) mit 2.28.71, Datei-Organizer 0.4.12, Discovery als Weg über den Fernrohr-Knopf mit Bild der Kopfleiste (Klaus 16.11.: keine Videos in die Box, nur der Verweis – so bekommt man immer die neueste Fassung) und Sage·Protokol; vor dem Neuveröffentlichen den Live-Stand lesen – andere Sitzungen ziehen dort ihre Apps nach). Klaus will danach alle Pro-Apps neu installieren
   und frische Tresorräume anlegen.
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
@@ -269,6 +276,9 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Offen
 
+- **2.28.71 am Gerät ungeprüft:** Eingangsordner mit `organizer-index.json` (Vorschlag im Prüf-Fenster, Doppelte bleiben im Ordner), Vorsortierung
+  aus Private Brain Pro mit echtem Tresor (auch: nimmt Windows eine Übergabe mit `application/json` an?), Update über die Versionszeile bei 82 MB.
+  Neue Meldungen der Vorsortierung nur Deutsch, von Klaus noch nicht gesehen.
 - **Discovery am Gerät ungeprüft:** Rahmen in APK und Windows (Ton, Film, 3D im Rahmen, Android-Zurück), PWA ohne Netz nach dem ersten Ansehen.
 - **2.28.69 / Pseudo-Fenster am Gerät ungeprüft:** Ansicht mit langem PDF (Seitenbild), Markieren am Handy (Finger), Bild abdecken mit dem Finger,
   KI-Knopf mit Internet an, Zwischenablage Text+Bild am Handy, Aufträge nach Neustart mit echtem Tresor, Mistral mit echtem Schlüssel,
