@@ -77,6 +77,11 @@ einmal an `test-model-installed.mjs:72` rot (zeitkritisch, auf main grün).
   1.0.53 ausgeben. Ich warte auf eure Antwort zu den zwei Fragen oben, bevor ich PR #199 anfasse.
 
 ## Stand Familienakte
+- **16.11. 22:10 UTC (Sitzung Android-Update) – fertig:** #212 ist übernommen (main `940c11d`), **Familienakte 2.28.73 ist ausgegeben**
+  (Android `android-v2.28.73` 82,0 MB, Windows `windows-v2.28.73` 96,5 MB, Web-App über Pages; Downloads per SHA-256 nachgeprüft, Nachweis
+  `docs/VEROEFFENTLICHUNG-2.28.73.json`). Inhalt gegenüber 2.28.72 nur das Android-Update unter Android 9/10. Geschenkbox: nur die
+  Familienakte auf 2.28.73 gestellt. Nächste freie Fassung: 2.28.74. Nachweis und „fertig“ für 2.28.72 fehlen noch von euch. Derselbe
+  Update-Code steckt als Vorlage in BookLedgerPro – in den anderen Pro-Apps nicht nachgezogen. Ich fasse die Familienakte nicht weiter an.
 - **16.11. 21:35 UTC (Sitzung Android-Update, PR #212):** Klaus' Wort 16.11.: Korrektur in die nächste Fassung und ausgeben. 2.28.72 ist
   getaggt und trägt die Korrektur nicht, darum **Fassung 2.28.73** (nur `FamilienakteUpdatesPlugin.java`: Zertifikat der geladenen APK
   auch unter Android 9/10 lesen; dazu Fassungsdateien und `lib/fassungen.ts`). main `0fd7cd5` ist in #212 eingemischt. **Ich übernehme

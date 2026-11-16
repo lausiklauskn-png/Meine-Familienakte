@@ -5,13 +5,16 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 `docs/briefe-archiv/` (Klaus 2026-11-04: archivieren statt löschen); die Veröffentlichungsnachweise in
 `docs/VEROEFFENTLICHUNG-<fassung>.json`.
 
-## Aktueller Stand (16.11.2026, nach 2.28.71)
+## Aktueller Stand (16.11.2026, nach 2.28.73)
 
-- **Android-Update auf älteren Handys (Klaus 16.11.; PR #212 Entwurf, Fassung 2.28.73 vorbereitet, nicht übernommen, nicht ausgegeben;
-  Brief `BRIEF_ABSCHLUSS_2026-11-16_ANDROID-UPDATE-2.28.73.md`):** Update über die Versionszeile endete auf Android 9/10 vermutlich immer
-  mit `UPDATE_ZERTIFIKAT`, weil `getPackageArchiveInfo` dort für eine APK-Datei kein `signingInfo` liefert. `FamilienakteUpdatesPlugin.archiv()`
-  holt das Zertifikat dann über `GET_SIGNATURES`. Klaus' Wort: in die nächste Fassung und ausgeben. Nicht am Gerät; ältere Installationen
-  einmal von Hand über die App installieren; in den anderen Pro-Apps (Vorlage BookLedgerPro) nicht nachgezogen.
+- **Fassung 2.28.73 ausgegeben (16.11.; #212; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.73.json`; Brief
+  `BRIEF_ABSCHLUSS_2026-11-16_ANDROID-UPDATE-2.28.73.md`), nicht erneut ausgeben. Android-Update auf älteren Handys:** Update über die
+  Versionszeile endete auf Android 9/10 vermutlich immer mit `UPDATE_ZERTIFIKAT`, weil `getPackageArchiveInfo` dort für eine APK-Datei kein
+  `signingInfo` liefert. `FamilienakteUpdatesPlugin.archiv()` holt das Zertifikat dann über `GET_SIGNATURES`. Ältere Installationen dort
+  einmal von Hand über die App installieren. Nicht am Gerät; in den anderen Pro-Apps (Vorlage BookLedgerPro) nicht nachgezogen.
+- **Fassung 2.28.72 ausgegeben (16.11.; #213 mit #214; andere Sitzung; Tags `android-v2.28.72`, `windows-v2.28.72`; Nachweis lag am 16.11.
+  abends noch nicht auf main), nicht erneut ausgeben:** Pseudo-Fenster (Meldung bei den Knöpfen, Kopieren mit Ersatzweg, Austauschordner in
+  Android/Windows) und neue Kategorie aus dem Datei-Organizer.
 
 - **Fassung 2.28.71 ausgegeben (16.11.; #199, #200, #203; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.71.json`), nicht erneut
   ausgeben.** Enthält die drei folgenden Punkte (Übernahme aus dem Datei-Organizer, Vorsortierung aus Private Brain Pro mit Kern @ `e4205fa`,
@@ -249,7 +252,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Proben-Hinweise: `step()` wertet einen zurückgegebenen Text als grün, deshalb `soll()`; Seitentitel sind keine Sprungziele.
 - **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.71, 2.28.70, 2.28.69, 2.28.68, 2.28.67, 2.28.66, 2.28.65, 2.28.64, 2.28.61, 2.28.60, 2.28.59, 2.28.58, 2.28.57, 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
   (2.28.50 ausgegeben, aber ohne eigenen Nachweis; 2.28.40–2.28.47 waren Zwischenstände). Keine davon erneut ausgeben;
-  **nächste freie Fassung 2.28.72** (2.28.62 und 2.28.63 nie ausgegeben). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
+  **nächste freie Fassung 2.28.74** (2.28.62 und 2.28.63 nie ausgegeben; 2.28.72 und 2.28.73 am 16.11. ausgegeben). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
   sammeln, Proben laufen lassen, gesammelt als eine Fassung ausgeben (ersetzt „jede neue Funktion gleich ausgeben“ vom 06.11.).
   Neue Fassung oben in `lib/fassungen.ts` eintragen. Die Versionszeile zeigt die technische Fassung aus `package.json`;
   `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
@@ -271,12 +274,12 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   BookLedgerPro, Private Brain Pro. Ein-Schritt-Weg verdrahtet in Familienakte #92 (`ProTresorAdapter.einrichten`,
   `FamilienakteTresorPlugin.einrichten`) und BookLedgerPro #454, beide auf main, nicht veröffentlicht; Private Brain Pro #130 auf main (Klaus' Freibrief 05.11.), nicht veröffentlicht.
   Tresor-Leser (HTML auf der Karte, ohne Installation, nur lesend) Workflow-PDF-Pro #68, seit 2.28.52 in der Familienakte eingebaut.
-  Geschenkbox mit den veröffentlichten Downloads: `docs/geschenk/geschenkbox-pro.html` (https://claude.ai/artifact/XeUMGuSZ49FzsJYjwQznM7, Version 36 (16.11.) mit 2.28.71, Datei-Organizer 0.4.12, Discovery als Weg über den Fernrohr-Knopf mit Bild der Kopfleiste (Klaus 16.11.: keine Videos in die Box, nur der Verweis – so bekommt man immer die neueste Fassung) und Sage·Protokol; vor dem Neuveröffentlichen den Live-Stand lesen – andere Sitzungen ziehen dort ihre Apps nach). Klaus will danach alle Pro-Apps neu installieren
+  Geschenkbox mit den veröffentlichten Downloads: `docs/geschenk/geschenkbox-pro.html` (https://claude.ai/artifact/XeUMGuSZ49FzsJYjwQznM7, Version 38 (16.11.) mit 2.28.73 (Version 37 = 2.28.72 aus der anderen Sitzung), Datei-Organizer 0.4.12, Discovery als Weg über den Fernrohr-Knopf mit Bild der Kopfleiste (Klaus 16.11.: keine Videos in die Box, nur der Verweis – so bekommt man immer die neueste Fassung) und Sage·Protokol; vor dem Neuveröffentlichen den Live-Stand lesen – andere Sitzungen ziehen dort ihre Apps nach). Klaus will danach alle Pro-Apps neu installieren
   und frische Tresorräume anlegen.
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
-  - `BRIEF_ABSCHLUSS_2026-11-16_ANDROID-UPDATE-2.28.73.md` (Android-Update unter Android 9/10, 2.28.73 vorbereitet, Startauftrag Ausgabe)
+  - `BRIEF_ABSCHLUSS_2026-11-16_ANDROID-UPDATE-2.28.73.md` (letzter Stand: Android-Update unter Android 9/10, 2.28.73 ausgegeben; Startauftrag: in den anderen Pro-Apps nachziehen)
   - Nächste Sitzung (Repo Datei-Organizer): `docs/BRIEF_SITZUNG_2026-11-14_NEEDS-RUECKWAERTSTEST.md` (Rückwärtstest Workflow Needs, nichts ändern)
   - `BRIEF_ABSCHLUSS_2026-11-14_PSEUDO-RESTARBEITEN.md` (letzter Stand: Pseudo-Restarbeiten, Startauftrag Gerätetest/Stufe E-Rest)
   - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-14_MASKE-PROFILE-STUFE-C.md` (Stufe C)
@@ -289,6 +292,8 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Offen
 
+- **2.28.73 am Gerät ungeprüft:** Update über die Versionszeile unter Android 9/10 (zeigt sich erst beim Update von 2.28.73 auf die nächste
+  Fassung); Android-Version des betroffenen Handys und Wortlaut der Meldung nicht bestätigt.
 - **Pseudo-Fenster, Kopieren (Klaus 16.11., nicht ausgegeben, Fassung nicht erhöht; Brief `BRIEF_ABSCHLUSS_2026-11-16_PSEUDO-KOPIEREN.md`):**
   Meldung unter den Knöpfen statt über der Liste, erst kopieren dann Auftrag sichern (Ersatzweg `textKopieren`), Austauschordner in
   Android/Windows über `nativenOrdnerWaehlen`. Am Gerät ungeprüft (43 PDFs: Grenze der Android-Zwischenablage rund 1 MB).
