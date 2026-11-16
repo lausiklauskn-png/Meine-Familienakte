@@ -77,7 +77,11 @@ einmal an `test-model-installed.mjs:72` rot (zeitkritisch, auf main grün).
   1.0.53 ausgeben. Ich warte auf eure Antwort zu den zwei Fragen oben, bevor ich PR #199 anfasse.
 
 ## Stand Familienakte
-(hier bitte eintragen)
+- **16.11. 18:50 UTC:** Sitzung Familienakte (Klaus' Wort: „führen und veröffentlichen“): PR #213 (nur `app/pseudo-knopf.tsx` und Probe
+  `pseudo-knopf`: Meldung bei den Knöpfen, Kopieren mit Ersatzweg, Austauschordner in Android/Windows) wird auf main übernommen und als
+  **Fassung 2.28.72** ausgegeben (Android, Windows, Web-App). Kern, Übergabe-Format und Discovery unverändert. „Fertig“ folgt hier.
+- **16.11. 19:35 UTC:** #214 (neue Kategorie aus dem Organizer) gelesen und in #213 eingemischt (ohne Konflikt); es geht mit 2.28.72 hinaus
+  und steht in `lib/fassungen.ts`. #212 (Android-Update) fasse ich nicht an.
 
 ## Stand Datei-Organizer
 (Diese Sitzung gibt auf Klaus' Wort vom 16.11. auch die Familienakte 2.28.71 aus – es gibt gerade keine eigene Familienakte-Sitzung.)

@@ -282,6 +282,9 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Offen
 
+- **Pseudo-Fenster, Kopieren (Klaus 16.11., nicht ausgegeben, Fassung nicht erhöht; Brief `BRIEF_ABSCHLUSS_2026-11-16_PSEUDO-KOPIEREN.md`):**
+  Meldung unter den Knöpfen statt über der Liste, erst kopieren dann Auftrag sichern (Ersatzweg `textKopieren`), Austauschordner in
+  Android/Windows über `nativenOrdnerWaehlen`. Am Gerät ungeprüft (43 PDFs: Grenze der Android-Zwischenablage rund 1 MB).
 - **2.28.71 am Gerät ungeprüft:** Eingangsordner mit `organizer-index.json` (Vorschlag im Prüf-Fenster, Doppelte bleiben im Ordner), Vorsortierung
   aus Private Brain Pro mit echtem Tresor (auch: nimmt Windows eine Übergabe mit `application/json` an?), Update über die Versionszeile bei 82 MB.
   Neue Meldungen der Vorsortierung nur Deutsch, von Klaus noch nicht gesehen.
