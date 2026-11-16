@@ -14,6 +14,12 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   über `nativenOrdnerWaehlen` (gilt bis zum Schließen). Dazu die neue Kategorie aus dem Datei-Organizer (#214, nächster Punkt).
   Geschenkbox Version 37. Probe `pseudo-knopf` (20).
 
+- **Android-Update auf älteren Handys (Klaus 16.11.; PR #212 Entwurf, Fassung 2.28.73 vorbereitet, nicht übernommen, nicht ausgegeben;
+  Brief `BRIEF_ABSCHLUSS_2026-11-16_ANDROID-UPDATE-2.28.73.md`):** Update über die Versionszeile endete auf Android 9/10 vermutlich immer
+  mit `UPDATE_ZERTIFIKAT`, weil `getPackageArchiveInfo` dort für eine APK-Datei kein `signingInfo` liefert. `FamilienakteUpdatesPlugin.archiv()`
+  holt das Zertifikat dann über `GET_SIGNATURES`. Klaus' Wort: in die nächste Fassung und ausgeben. Nicht am Gerät; ältere Installationen
+  einmal von Hand über die App installieren; in den anderen Pro-Apps (Vorlage BookLedgerPro) nicht nachgezogen.
+
 - **Fassung 2.28.71 ausgegeben (16.11.; #199, #200, #203; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.71.json`), nicht erneut
   ausgeben.** Enthält die drei folgenden Punkte (Übernahme aus dem Datei-Organizer, Vorsortierung aus Private Brain Pro mit Kern @ `e4205fa`,
   Discovery @ `b3517cc` mit Fernrohr im Kopf). **Erste Ausgabe mit Discovery im Paket: APK 20,4 → 82,0 MB, Windows 34,6 → 96,5 MB.**
@@ -250,7 +256,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Proben-Hinweise: `step()` wertet einen zurückgegebenen Text als grün, deshalb `soll()`; Seitentitel sind keine Sprungziele.
 - **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.72, 2.28.71, 2.28.70, 2.28.69, 2.28.68, 2.28.67, 2.28.66, 2.28.65, 2.28.64, 2.28.61, 2.28.60, 2.28.59, 2.28.58, 2.28.57, 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
   (2.28.50 ausgegeben, aber ohne eigenen Nachweis; 2.28.40–2.28.47 waren Zwischenstände). Keine davon erneut ausgeben;
-  **nächste freie Fassung 2.28.73** (2.28.62 und 2.28.63 nie ausgegeben). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
+  **nächste freie Fassung 2.28.74** (2.28.73 ist mit #212 vergeben, Ausgabe durch die Sitzung Android-Update; 2.28.62 und 2.28.63 nie ausgegeben). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
   sammeln, Proben laufen lassen, gesammelt als eine Fassung ausgeben (ersetzt „jede neue Funktion gleich ausgeben“ vom 06.11.).
   Neue Fassung oben in `lib/fassungen.ts` eintragen. Die Versionszeile zeigt die technische Fassung aus `package.json`;
   `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
@@ -277,6 +283,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
+  - `BRIEF_ABSCHLUSS_2026-11-16_ANDROID-UPDATE-2.28.73.md` (Android-Update unter Android 9/10, 2.28.73 vorbereitet, Startauftrag Ausgabe)
   - Nächste Sitzung (Repo Datei-Organizer): `docs/BRIEF_SITZUNG_2026-11-14_NEEDS-RUECKWAERTSTEST.md` (Rückwärtstest Workflow Needs, nichts ändern)
   - `BRIEF_ABSCHLUSS_2026-11-16_PSEUDO-KOPIEREN.md` (letzter Stand: Pseudo-Fenster Kopieren, Ausgabe 2.28.72)
   - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-14_PSEUDO-RESTARBEITEN.md` (Pseudo-Restarbeiten)

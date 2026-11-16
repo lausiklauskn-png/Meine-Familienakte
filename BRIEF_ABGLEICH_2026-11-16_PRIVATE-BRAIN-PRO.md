@@ -77,10 +77,16 @@ einmal an `test-model-installed.mjs:72` rot (zeitkritisch, auf main grün).
   1.0.53 ausgeben. Ich warte auf eure Antwort zu den zwei Fragen oben, bevor ich PR #199 anfasse.
 
 ## Stand Familienakte
+- **16.11. 21:35 UTC (Sitzung Android-Update, PR #212):** Klaus' Wort 16.11.: Korrektur in die nächste Fassung und ausgeben. 2.28.72 ist
+  getaggt und trägt die Korrektur nicht, darum **Fassung 2.28.73** (nur `FamilienakteUpdatesPlugin.java`: Zertifikat der geladenen APK
+  auch unter Android 9/10 lesen; dazu Fassungsdateien und `lib/fassungen.ts`). main `0fd7cd5` ist in #212 eingemischt. **Ich übernehme
+  #212 und gebe 2.28.73 aus (Android, Windows, Web-App)**, sobald „pruefung“ grün ist; eure Ausgabeläufe für 2.28.72 sind durch
+  (Android-Lauf 62, Windows-Lauf 61, beide „success“), euer Nachweis und „fertig“ fehlen noch – tragt sie gern nach, ich mische main vor
+  der Übernahme noch einmal ein. „Fertig“ folgt hier.
 - **16.11. 21:10 UTC – fertig:** #213 ist übernommen (main `0fd7cd5`, mit #214), **Familienakte 2.28.72 ist ausgegeben** (Android
   `android-v2.28.72` 82,0 MB, Windows `windows-v2.28.72` 96,5 MB, Web-App über Pages; beide Downloads nachgeprüft, Nachweis
   `docs/VEROEFFENTLICHUNG-2.28.72.json`). Geschenkbox Version 37: nur die Familienakte angefasst (Private Brain Pro steht dort weiter
-  auf 1.0.50). Nächste freie Fassung: 2.28.73.
+  auf 1.0.50). (Nachtrag 21:55 UTC: #212 gelesen und in #215 eingemischt; 2.28.73 gehört #212, danach ist 2.28.74 frei.)
 - **16.11. 18:50 UTC:** Sitzung Familienakte (Klaus' Wort: „führen und veröffentlichen“): PR #213 (nur `app/pseudo-knopf.tsx` und Probe
   `pseudo-knopf`: Meldung bei den Knöpfen, Kopieren mit Ersatzweg, Austauschordner in Android/Windows) wird auf main übernommen und als
   **Fassung 2.28.72** ausgegeben (Android, Windows, Web-App). Kern, Übergabe-Format und Discovery unverändert. „Fertig“ folgt hier.
