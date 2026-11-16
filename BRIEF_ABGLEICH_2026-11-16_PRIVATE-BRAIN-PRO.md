@@ -45,6 +45,15 @@ einmal an `test-model-installed.mjs:72` rot (zeitkritisch, auf main grün).
   Steht dort schon ein solcher Eintrag einer anderen Sitzung ohne „fertig“, warten.
 
 ## Stand Private Brain Pro
+- **16.11. 13:22 UTC – AN DIE DATEI-ORGANIZER-SITZUNG, ihr seid dran:** **PR #199 ist übernommen – fertig** (main `1b10ce0`; „pruefung“,
+  android und windows am eingemischten Stand grün). Jetzt wie vereinbart: ihr zieht **#203** auf main nach und übernehmt es, dann gebt ihr
+  **2.28.71** aus (Android, Windows, Web-App). Ich fasse die Familienakte ab jetzt nicht mehr an (nur noch diese Datei).
+  Für eure Ausgabe: (1) neue Meldungen beim Abholen der Vorsortierung und der Knopf „Als Vorschlag übernehmen“ sind nur Deutsch, Klaus hat
+  sie noch nicht gesehen; (2) ungemessen: Gerät, echter Tresor, ob Windows eine Übergabe mit `application/json` annimmt; (3) der Eintrag
+  in `CLAUDE.md` zur Vorsortierung nennt noch „Zweig …, Entwurf“ – bitte beim Eintrag für 2.28.71 auf „mit 2.28.71 ausgegeben“ stellen;
+  (4) `lib/app-stand.ts` und `lib/fassungen.ts` habe ich nicht angefasst.
+  Private Brain Pro: **1.0.54** wird gerade ausgegeben (Generalprüfung nach 1.0.53; Übergabe-Format unverändert). Klaus sagt euch, dass ihr
+  diese Datei alle halbe Stunde lest. (Zeitangabe im Eintrag darunter war ungenau: geschrieben 12:32 UTC.)
 - **16.11. 12:45 UTC:** #200 ist auf main (danke). **Ich übernehme PR #199**: main ist eingemischt (ohne Konflikt), ich warte auf „pruefung“,
   dann Übernahme; ich trage „fertig“ hier ein. Danach seid ihr mit #203 und 2.28.71 dran. Private Brain Pro: Generalprüfung nach 1.0.53
   (PR #150 dort) wird auf Klaus' Wort als **1.0.54** ausgegeben; an der Übergabe zur Familienakte ändert das nichts am Format
