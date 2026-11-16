@@ -44,17 +44,17 @@ export async function begleitZuordnen(begleit: File, mails: BegleitMail[], datei
   let eintraege: unknown[];
   try { eintraege = (await begleitdateiLesen(begleit)).dateien; }
   catch (e) { return { stand: "unbrauchbar", grund: e instanceof Error && !(e instanceof SyntaxError) ? e.message : "Begleitdatei konnte nicht gelesen werden.", aenderungen: [] }; }
-  let wartet = 0, zuSpaet = 0, ohneInhalt = 0;
+  let wartet = 0, zuSpaet = 0;
   const kandidaten: Array<{ file: File; ziele: BegleitMail[] }> = [], namen = new Set<string>();
   for (const eintrag of eintraege) {
     const e = (eintrag && typeof eintrag === "object" ? eintrag : {}) as { name?: unknown; sha256?: unknown };
     // Ohne Namen und Prüfsumme gibt es über diesen Weg keine Zuordnung – nichts wird geraten.
-    if (typeof e.name !== "string" || typeof e.sha256 !== "string" || !/^[a-f0-9]{64}$/.test(e.sha256)) { ohneInhalt++; continue; }
+    if (typeof e.name !== "string" || typeof e.sha256 !== "string" || !/^[a-f0-9]{64}$/.test(e.sha256)) continue;
     const treffer = mails.filter(m => m.name === e.name && m.sha256 === e.sha256);
     if (!treffer.length) { wartet++; continue; }
     const ziele = treffer.filter(m => m.pruefbar);
     if (!ziele.length) { zuSpaet++; continue; }
-    if (namen.has(e.name)) { ohneInhalt++; continue; }
+    if (namen.has(e.name)) continue;
     let file: File | null = null;
     for (const z of ziele) { file = await datei(z.eingangId).catch(() => null); if (file) break; }
     if (!file) { wartet++; continue; }
@@ -67,7 +67,7 @@ export async function begleitZuordnen(begleit: File, mails: BegleitMail[], datei
     const { vorschlaege } = await uebergabeVorschlaege([...kandidaten.map(k => k.file), begleit]);
     for (const k of kandidaten) {
       const roh = vorschlaege.get(k.file);
-      if (!roh) { ohneInhalt++; continue; }
+      if (!roh) continue;
       const vorschlag: UebergabeVorschlag = { ...roh, quelle: PRO_BEGLEIT_QUELLE };
       zugeordnet++;
       for (const z of k.ziele) {

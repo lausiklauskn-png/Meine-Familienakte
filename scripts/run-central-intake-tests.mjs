@@ -114,3 +114,15 @@ for (const test of tests) {
 console.log(`🟢 ${tests.length} Eingangszentrale-Tests bestanden`);
 console.log("🟢 Integrationsprüfung: bestehender Dokumentenkern, Suche, Kategorien, Vorgänge, Memory, Fristen, Datenschutz und Archivierung werden wiederverwendet");
 console.log("🟢 Originalschutz: keine automatische Verschiebung, Umbenennung, Überschreibung oder Löschung");
+
+// Vorsortierung aus Private Brain Pro (eigene Übergabe im Pro-Tresor): derselbe Anzeigeweg wie „Vorschläge der anderen App“,
+// nie ein eigener Eingang, wirksam erst nach der Prüfung.
+{
+  const verbund = read("app/pro-verbund.ts"), begleit = read("app/pro-begleit.ts"), kern = read("lib/pro-begleitdatei.ts");
+  assert.ok(component.includes("item.uebergabeVorschlag") && portal.includes("data-uebergabe-vorschlag"), "Der Anzeigeweg der fremden Vorschläge fehlt.");
+  assert.ok(/neu\.uebergabeVorschlag = a\.vorschlag/.test(begleit) && begleit.includes("eingangPruefbar(item)"), "Die Vorsortierung nutzt nicht das vorhandene Vorschlagsfeld oder ändert geprüfte Eingänge.");
+  assert.ok(kern.includes("uebergabeVorschlaege(") && kern.includes("begleitdateiLesen(") && !/JSON\.parse|subtle\.digest/.test(kern), "Die Vorsortierung braucht die vorhandene Prüfung, keine zweite Fassung.");
+  assert.ok(!/saveLocalDocument|assignmentLinks|savedDocumentId\s*=|status\s*[:=]\s*"Übernommen"/.test(begleit + kern), "Eine Vorsortierung darf nichts ablegen und keinen Status setzen.");
+  assert.ok(verbund.indexOf("istProBegleitdatei(vertrag)") < verbund.indexOf("const quittung=await proUebergabeAnnehmen(vertrag,file)"), "Die Begleitdatei darf nie in die Dokument-Aufnahme laufen.");
+  console.log("🟢 Vorsortierung aus Private Brain Pro: nur Vorschlag am Eingang der Mail, nie ein Dokument");
+}
