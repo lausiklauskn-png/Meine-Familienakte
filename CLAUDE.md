@@ -5,7 +5,14 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 `docs/briefe-archiv/` (Klaus 2026-11-04: archivieren statt löschen); die Veröffentlichungsnachweise in
 `docs/VEROEFFENTLICHUNG-<fassung>.json`.
 
-## Aktueller Stand (16.11.2026, nach 2.28.71)
+## Aktueller Stand (16.11.2026, nach 2.28.72)
+
+- **Fassung 2.28.72 ausgegeben (16.11. abends; #213, #214; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.72.json`; Brief
+  `BRIEF_ABSCHLUSS_2026-11-16_PSEUDO-KOPIEREN.md`), nicht erneut ausgeben.** Pseudo-Fenster (Klaus' Befund am Tablet mit 43 PDFs: „An Claude“,
+  „Nur kopieren“, „Als Datei“ ohne sichtbare Wirkung): Meldung steht unter den Knöpfen und rückt ins Bild (vorher über der Liste), erst
+  kopieren dann Auftrag sichern, Ersatzweg `textKopieren` (`execCommand`), Hinweis ab 400 000 Zeichen, Austauschordner in Android/Windows
+  über `nativenOrdnerWaehlen` (gilt bis zum Schließen). Dazu die neue Kategorie aus dem Datei-Organizer (#214, nächster Punkt).
+  Geschenkbox Version 37. Probe `pseudo-knopf` (20).
 
 - **Fassung 2.28.71 ausgegeben (16.11.; #199, #200, #203; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.71.json`), nicht erneut
   ausgeben.** Enthält die drei folgenden Punkte (Übernahme aus dem Datei-Organizer, Vorsortierung aus Private Brain Pro mit Kern @ `e4205fa`,
@@ -23,7 +30,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   `app/health-portal.tsx`. Proben `scripts/run-organizer-uebernahme-tests.mjs` (6), UI `organizer-uebernahme` (4). Landkarte: Kasten
   „Aus dem Datei-Organizer“. Nicht am Gerät; die Frist des Organizers steht nur im Hinweis, sie wird nicht als Frist angelegt.
 
-- **Neue Kategorie aus dem Datei-Organizer (Klaus 16.11.; nicht ausgegeben, geht in 2.28.72):** eine im Organizer von Hand angelegte Kategorie
+- **Neue Kategorie aus dem Datei-Organizer (Klaus 16.11.; #214, in Fassung 2.28.72):** eine im Organizer von Hand angelegte Kategorie
   (dort „+ Neue Kategorie erstellen …“, im Index „von dir“ oder „gelernt“) reist als Lebensbereich im Vorschlag mit, auch wenn die Akte sie
   nicht kennt; der Hinweis nennt „Neuer Bereich aus dem Organizer“. Sie entsteht erst mit „Vorschläge in das Formular übernehmen“ und dem
   Ablegen (eigener Lebensbereich wie von Hand eingetragen). Gleicher Name in anderer Schreibweise = vorhandener Bereich, kein zweiter.
@@ -52,7 +59,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Bereich 79,0 → 82,5 %, Absender 63,5 → 65,0 %. Paket +≈0,6 MB (Art-Modell als Daten).
 
 - **Fassung 2.28.69 ausgegeben (14.11. abends; #186; Android, Windows, PWA; Nachweis `docs/VEROEFFENTLICHUNG-2.28.69.json`;
-  Brief `BRIEF_ABSCHLUSS_2026-11-14_PSEUDO-RESTARBEITEN.md`), nicht erneut ausgeben. Enthält Stufe C, das Pseudo-Fenster nach PseudoDoc und:** Zuordnung je Auftrag verschlüsselt (`lib/pseudo-auftraege.ts`, `app/pseudo-auftrag-speicher.ts`;
+  Brief `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-14_PSEUDO-RESTARBEITEN.md`), nicht erneut ausgeben. Enthält Stufe C, das Pseudo-Fenster nach PseudoDoc und:** Zuordnung je Auftrag verschlüsselt (`lib/pseudo-auftraege.ts`, `app/pseudo-auftrag-speicher.ts`;
   Schlüssel aus dem Profil, 90 Tage, „✓ erledigt“), „An KI“ (`anKi()`) an Bibliothekszeile, Auswahl-Leisten und Eingang, Briefweg der
   Assistenz nur noch Einstieg ins Fenster (Mistral mit eigenem Schlüssel jetzt im Fenster, einziger Netzweg `app/mistral-senden.ts`;
   Beträge/Daten bleiben jetzt lesbar), PDF-Seitenbild mit Kästen (`app/pseudo-pdf-seite.tsx`, `lib/pdf-kaesten.ts`), ZIP
@@ -241,9 +248,9 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   (2.28.35, `docs/landkarte/`), Landkarte der App mit **Stand je Kasten in `lib/app-stand.ts` – bei jeder Fassung eintragen** (2.28.36),
   Hilfe-Themen als Bild, Vorschaufenster (2.28.37), Listenzeilen mit `KnopfLeiste`, Kopfleiste (2.28.38).
   Proben-Hinweise: `step()` wertet einen zurückgegebenen Text als grün, deshalb `soll()`; Seitentitel sind keine Sprungziele.
-- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.71, 2.28.70, 2.28.69, 2.28.68, 2.28.67, 2.28.66, 2.28.65, 2.28.64, 2.28.61, 2.28.60, 2.28.59, 2.28.58, 2.28.57, 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
+- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.72, 2.28.71, 2.28.70, 2.28.69, 2.28.68, 2.28.67, 2.28.66, 2.28.65, 2.28.64, 2.28.61, 2.28.60, 2.28.59, 2.28.58, 2.28.57, 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
   (2.28.50 ausgegeben, aber ohne eigenen Nachweis; 2.28.40–2.28.47 waren Zwischenstände). Keine davon erneut ausgeben;
-  **nächste freie Fassung 2.28.72** (2.28.62 und 2.28.63 nie ausgegeben). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
+  **nächste freie Fassung 2.28.73** (2.28.62 und 2.28.63 nie ausgegeben). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
   sammeln, Proben laufen lassen, gesammelt als eine Fassung ausgeben (ersetzt „jede neue Funktion gleich ausgeben“ vom 06.11.).
   Neue Fassung oben in `lib/fassungen.ts` eintragen. Die Versionszeile zeigt die technische Fassung aus `package.json`;
   `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
@@ -265,13 +272,14 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   BookLedgerPro, Private Brain Pro. Ein-Schritt-Weg verdrahtet in Familienakte #92 (`ProTresorAdapter.einrichten`,
   `FamilienakteTresorPlugin.einrichten`) und BookLedgerPro #454, beide auf main, nicht veröffentlicht; Private Brain Pro #130 auf main (Klaus' Freibrief 05.11.), nicht veröffentlicht.
   Tresor-Leser (HTML auf der Karte, ohne Installation, nur lesend) Workflow-PDF-Pro #68, seit 2.28.52 in der Familienakte eingebaut.
-  Geschenkbox mit den veröffentlichten Downloads: `docs/geschenk/geschenkbox-pro.html` (https://claude.ai/artifact/XeUMGuSZ49FzsJYjwQznM7, Version 36 (16.11.) mit 2.28.71, Datei-Organizer 0.4.12, Discovery als Weg über den Fernrohr-Knopf mit Bild der Kopfleiste (Klaus 16.11.: keine Videos in die Box, nur der Verweis – so bekommt man immer die neueste Fassung) und Sage·Protokol; vor dem Neuveröffentlichen den Live-Stand lesen – andere Sitzungen ziehen dort ihre Apps nach). Klaus will danach alle Pro-Apps neu installieren
+  Geschenkbox mit den veröffentlichten Downloads: `docs/geschenk/geschenkbox-pro.html` (https://claude.ai/artifact/XeUMGuSZ49FzsJYjwQznM7, Version 37 (16.11.) mit 2.28.72, Datei-Organizer 0.4.12, Discovery als Weg über den Fernrohr-Knopf mit Bild der Kopfleiste (Klaus 16.11.: keine Videos in die Box, nur der Verweis – so bekommt man immer die neueste Fassung) und Sage·Protokol; vor dem Neuveröffentlichen den Live-Stand lesen – andere Sitzungen ziehen dort ihre Apps nach). Klaus will danach alle Pro-Apps neu installieren
   und frische Tresorräume anlegen.
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
   - Nächste Sitzung (Repo Datei-Organizer): `docs/BRIEF_SITZUNG_2026-11-14_NEEDS-RUECKWAERTSTEST.md` (Rückwärtstest Workflow Needs, nichts ändern)
-  - `BRIEF_ABSCHLUSS_2026-11-14_PSEUDO-RESTARBEITEN.md` (letzter Stand: Pseudo-Restarbeiten, Startauftrag Gerätetest/Stufe E-Rest)
+  - `BRIEF_ABSCHLUSS_2026-11-16_PSEUDO-KOPIEREN.md` (letzter Stand: Pseudo-Fenster Kopieren, Ausgabe 2.28.72)
+  - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-14_PSEUDO-RESTARBEITEN.md` (Pseudo-Restarbeiten)
   - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-14_MASKE-PROFILE-STUFE-C.md` (Stufe C)
   - Vorheriger: `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-14_PSEUDO-2.28.68.md` (2.28.68)
   - `BRIEF_SITZUNG_2026-11-11_CLOUD-ORDNER-2.28.65.md` (nächster Bau: Sicherung an einem zweiten Ort, Nur sichern/Synchron halten, Cloud-Ordner hereinholen; Klaus: keine Vorschau nötig)
@@ -282,9 +290,11 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Offen
 
-- **Pseudo-Fenster, Kopieren (Klaus 16.11., nicht ausgegeben, Fassung nicht erhöht; Brief `BRIEF_ABSCHLUSS_2026-11-16_PSEUDO-KOPIEREN.md`):**
-  Meldung unter den Knöpfen statt über der Liste, erst kopieren dann Auftrag sichern (Ersatzweg `textKopieren`), Austauschordner in
-  Android/Windows über `nativenOrdnerWaehlen`. Am Gerät ungeprüft (43 PDFs: Grenze der Android-Zwischenablage rund 1 MB).
+- **2.28.72 am Gerät ungeprüft:** Meldung bei den Knöpfen mit vielen Dateien, Kopieren in der Android-WebView (43 PDFs: Grenze der
+  Zwischenablage rund 1 MB), Austauschordner über die Ordnerwahl der App-Hülle, „Als Datei“ › Speichern am Tablet (warum es bei Klaus
+  nichts tat, ist ungeklärt). Der Austauschordner wird in den Apps nicht über den Neustart gemerkt.
+- **Windows-Probe Bedeutungssuche wackelt** (`windows/tools/test-model-installed.mjs:72`, Knopf „Nach Bedeutung suchen“ nach dem Neuladen
+  60 s gesperrt): am 16.11. in zwei von fünf Läufen rot, je beim Neustart grün. Ursache suchen, nicht weiter neu starten.
 - **2.28.71 am Gerät ungeprüft:** Eingangsordner mit `organizer-index.json` (Vorschlag im Prüf-Fenster, Doppelte bleiben im Ordner), Vorsortierung
   aus Private Brain Pro mit echtem Tresor (auch: nimmt Windows eine Übergabe mit `application/json` an?), Update über die Versionszeile bei 82 MB.
   Neue Meldungen der Vorsortierung nur Deutsch, von Klaus noch nicht gesehen.

@@ -77,6 +77,10 @@ einmal an `test-model-installed.mjs:72` rot (zeitkritisch, auf main grün).
   1.0.53 ausgeben. Ich warte auf eure Antwort zu den zwei Fragen oben, bevor ich PR #199 anfasse.
 
 ## Stand Familienakte
+- **16.11. 21:10 UTC – fertig:** #213 ist übernommen (main `0fd7cd5`, mit #214), **Familienakte 2.28.72 ist ausgegeben** (Android
+  `android-v2.28.72` 82,0 MB, Windows `windows-v2.28.72` 96,5 MB, Web-App über Pages; beide Downloads nachgeprüft, Nachweis
+  `docs/VEROEFFENTLICHUNG-2.28.72.json`). Geschenkbox Version 37: nur die Familienakte angefasst (Private Brain Pro steht dort weiter
+  auf 1.0.50). Nächste freie Fassung: 2.28.73.
 - **16.11. 18:50 UTC:** Sitzung Familienakte (Klaus' Wort: „führen und veröffentlichen“): PR #213 (nur `app/pseudo-knopf.tsx` und Probe
   `pseudo-knopf`: Meldung bei den Knöpfen, Kopieren mit Ersatzweg, Austauschordner in Android/Windows) wird auf main übernommen und als
   **Fassung 2.28.72** ausgegeben (Android, Windows, Web-App). Kern, Übergabe-Format und Discovery unverändert. „Fertig“ folgt hier.
