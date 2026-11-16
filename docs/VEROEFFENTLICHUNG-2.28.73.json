@@ -1,0 +1,36 @@
+{
+ "version": "2.28.73",
+ "source": "940c11d6afc9c24ba6abe52a1746d9cecac92b1a",
+ "pullRequest": [212],
+ "recordedUtc": "2026-11-16T22:10:00Z",
+ "freigabe": "Klaus 16.11.2026: „Mach die Korrektur in die Sammelfassung 72. Und gib sie dann aus.“ – 2.28.72 war da schon von einer anderen Sitzung ausgegeben (ohne die Korrektur), darum 2.28.73; Klaus danach: „Die 73 auch für die Windows-Version, ne? Und die PWA ist klar.“",
+ "inhalt": "Android-Update über die Versionszeile auch unter Android 9/10: fehlt bei der geladenen APK signingInfo, wird das Zertifikat über GET_SIGNATURES gelesen (FamilienakteUpdatesPlugin.archiv). Sonst Stand 2.28.72. Windows und Web-App inhaltlich unverändert, nur die Fassung.",
+ "ciAmPrStand": "PR #212 auf 9ae046d: pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) – success, ohne Neustart.",
+ "releases": [
+  {
+   "tag": "android-v2.28.73",
+   "run": 43963985502,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {"name": "Familienakte-android-v2.28.73.apk", "bytes": 82010878, "sha256": "b9db615f5d319b654b01efd315c3887b93db1f71b853288b0a0ce00602a07104", "matchesSHA256SUMS": true, "versionInside": "2.28.73 (assets/public/version.json, commit 940c11d)", "certificateSha256": "1f06819ff85a4a48c0bfc2c24409094141b5f86e9ac5e0bf715aa87a5fbf8f19"},
+    {"name": "Familienakte-Einzeldatei-2.28.73.html", "bytes": 5193306, "sha256": "50d14cd881916535ff726ee48811aa7624c8d6d336ef778a7336acf986d550d3", "matchesSHA256SUMS": true}
+   ]
+  },
+  {
+   "tag": "windows-v2.28.73",
+   "run": 43964007150,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {"name": "Familienakte-Windows-2.28.73-x64-setup.exe", "bytes": 96524955, "sha256": "6bd6bf67b0970577b9995d82b427e79b6b0e5f524dae0524fae1ae8e4c31080c", "matchesSHA256SUMS": true, "latestJson": "version 2.28.73"}
+   ]
+  }
+ ],
+ "pwa": "Pages über den Merge-Stand 940c11d; github.io aus dem Behälter gesperrt, Seite nicht selbst geprüft.",
+ "notChecked": [
+  "Am Gerät: ob das Update über die Versionszeile unter Android 9/10 jetzt durchläuft – prüfbar erst mit der nächsten Fassung nach 2.28.73, weil die Korrektur in der installierten App stecken muss; Android-Version des betroffenen Handys nicht bestätigt",
+  "family-projekt.de aus dem Behälter nicht geprüft; der Freigabelauf prüft den Server selbst",
+  "Nachweis für 2.28.72 (andere Sitzung) lag beim Schreiben noch nicht auf main"
+ ]
+}
