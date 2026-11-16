@@ -1,5 +1,5 @@
 import type { Wert } from "./typen.ts";
-import { nameAusZeile, ocrRand } from "./erkennen.ts";
+import { englischesFeld, nameAusZeile, ocrRand } from "./erkennen.ts";
 import { ABSENDERWAHL } from "./absenderwahl-daten.ts";
 
 /**
@@ -13,6 +13,8 @@ export interface Absenderwahl { fassung: number; gewichte: Record<string, number
 
 const norm = (s: string | null | undefined) => s == null || s === "" ? "" : String(s).toLowerCase().replace(/\b(gmbh|ag|e\.?\s?k\.?|kg|ohg|mbh|e\.?\s?v\.?|co\.?|&|und)\b/g, " ").replace(/[^a-zäöüß0-9]+/g, " ").trim();
 const ADR = /\b\d{5}\b|postfach|straße|strasse|str\.|weg\s*\d|platz\s*\d|gasse|allee/i;
+/** US-Anschriftzeile „San Francisco, CA 94104“ (15.11.2026): ein Ort, kein Absender. */
+const US_ORT = /,\s*[A-Z]{2}\s+\d{5}(-\d{4})?\s*$/;
 const IMPRESSUM = /\b(hrb|hra|amtsgericht|registergericht|ust-?id|steuernummer|geschäftsführ|vorstand|sitz der gesellschaft|bankverbindung)\b/i;
 const GRUSS = /(grüße|grüßen|gruß|grüsse|hochachtungsvoll|herzlichst)/i;
 
@@ -23,7 +25,7 @@ export function absenderKandidaten(text: string): { zeilen: string[]; k: Map<str
     if (i >= 25 && i < n - 10) return;
     for (const fuss of [false, true]) {
       let c = ""; try { c = nameAusZeile(ocrRand(z), fuss); } catch { c = ""; }
-      if (c && c.length >= 3 && c.length <= 80) { const key = norm(c); if (key && !k.has(key)) k.set(key, { wert: c, i, zeile: z, fuss }); }
+      if (c && c.length >= 3 && c.length <= 80 && !englischesFeld(c) && !US_ORT.test(z)) { const key = norm(c); if (key && !k.has(key)) k.set(key, { wert: c, i, zeile: z, fuss }); }
     }
   });
   return { zeilen, k };

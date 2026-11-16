@@ -8,13 +8,21 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 ## Aktueller Stand (15.11.2026, nach 2.28.70)
 
 - **Übernahme aus dem Datei-Organizer (Klaus 16.11., Freibrief ohne Vorschau: „passt ins Design, keine Doppelung, an der passenden Stelle“;
-  Zweig `claude/organizer-uebernahme`, geht in 2.28.71):** liegt im Eingangsordner die `organizer-index.json` des Datei-Organizers, reisen seine
+  #203, in Fassung 2.28.71):** liegt im Eingangsordner die `organizer-index.json` des Datei-Organizers, reisen seine
   Angaben (Bereich, Art, Absender, Datum, Frist, Betrag, Archivnummer; „von dir bestätigt“/„noch unsicher“) als `UebergabeVorschlag` mit –
   dieselbe Karte „Vorschläge aus …“ im Prüf-Fenster wie bei anderen Apps, kein neuer Knopf. Der Index ist keine Unterlage (`scanDirectory`);
   was der Organizer als doppelt markiert hat, bleibt im Ordner, wenn das Gegenstück dort liegt; Gesperrtes kommt mit Warnung. Nur Dateien
   direkt im Ordner (Name + Größe), nichts wird ohne Tipp übernommen. Kern `lib/organizer-uebernahme.ts`, Anschluss `scanSelectedInbox` in
   `app/health-portal.tsx`. Proben `scripts/run-organizer-uebernahme-tests.mjs` (6), UI `organizer-uebernahme` (4). Landkarte: Kasten
   „Aus dem Datei-Organizer“. Nicht am Gerät; die Frist des Organizers steht nur im Hinweis, sie wird nicht als Frist angelegt.
+
+- **Vorsortierung aus Private Brain Pro (Klaus 16.11.; #199 aus der Sitzung Private Brain Pro, in Fassung 2.28.71; Gegenstück Private Brain Pro ab 1.0.53):**
+  Private Brain Pro legt nach der Mail eine zweite Übergabe `familienakte-uebergabe.json` ins Fach `eingang-familienakte` (Einordnung aus
+  dem Sortier-Kern). Sie wird **nie ein Dokument oder Eingang**: merken, quittieren, über Name + SHA-256 der Mail als Vorschlag zuordnen
+  (`lib/pro-begleitdatei.ts`, `app/pro-begleit.ts`; Abzweig in `proEingangAufnehmen`; Prüfung nur `begleitdateiLesen`/`uebergabeVorschlaege`).
+  Reihenfolge egal; geprüfte oder abgelegte Mails bleiben unverändert; ohne passende Mail entfällt sie nach 30 Tagen; unlesbare werden
+  quittiert und nicht verwendet. Anzeige wie „Vorschläge der anderen App“, Quelle fest „Private Brain Pro“. Dieselbe Datei aus einer
+  anderen App läuft wie bisher. Proben `run-uebergabe-vorschlaege-tests` (20), UI `pro-uebergabe`, `pro-verbund`. Nativ unverändert. Nicht am Gerät.
 
 - **Discovery in der Hilfe (Klaus 15.11.: „Da wo der Sortierkern drin ist, Discovery nachziehen“; Zweig `claude/discovery-hilfe`, nicht ausgegeben,
   Fassung nicht erhöht):** Hilfe-Thema „Discovery“ direkt hinter „Pro-App-Verbund (Vorschau)“ (`app/discovery-hilfe.tsx`, Ordnung in

@@ -53,8 +53,16 @@ export function mitModell(regel: Wert | undefined, modell: Wortmodell, text: str
 }
 export const bereichMitModell = (regel: Wert | undefined, text: string) => mitModell(regel, WORTMODELL_BEREICH as Wortmodell, text);
 /** Art: seit 15.11.2026 das gelernte Art-Modell (lib/artmodell.ts, reihum 80,4 → 85,1 % im ganzen Kern); das Wortmodell bleibt für den Bereich. */
+/** Grob: überwiegend englischer Text? Das Art-Modell ist an deutscher Post gelernt; englische Wörter tragen dort Zufallsgewichte. */
+export function englischerText(text: string): boolean {
+  const t = text.slice(0, 3000).toLowerCase(), z = (r: RegExp) => (t.match(r) || []).length;
+  const en = z(/\b(the|and|you|your|of|for|from|to|is|are|this|with|amount|paid|due|date|total)\b/g), de = z(/\b(der|die|das|und|sie|ihr|ihre|ist|nicht|mit|für|von|zu|den|dem|bitte|wir)\b/g);
+  return en >= 4 && en > 2 * de;
+}
 export function artMitModell(regel: Wert | undefined, text: string): Wert | undefined {
   if (!wortmodellSchalter.an) return regel;
+  // Englischer Text (Rechnungen von Online-Diensten, 15.11.2026): eine sichere Regel bleibt, das Modell entscheidet nur, wo die Regel unsicher ist.
+  if (regel?.sicher && englischerText(text)) return regel;
   const v = artVorhersage(text);
   if (!v) return regel;
   if (regel?.sicher && regel.wert === v.wert) return regel;
