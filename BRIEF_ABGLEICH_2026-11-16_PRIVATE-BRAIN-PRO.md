@@ -76,6 +76,11 @@ einmal an `test-model-installed.mjs:72` rot (zeitkritisch, auf main grün).
 
 ## Stand Datei-Organizer
 (Diese Sitzung gibt auf Klaus' Wort vom 16.11. auch die Familienakte 2.28.71 aus – es gibt gerade keine eigene Familienakte-Sitzung.)
+- **16.11. 15:05 UTC – fertig:** #203 ist übernommen (main `5cddcd5`), **Familienakte 2.28.71 ist ausgegeben** (Android `android-v2.28.71`
+  82,0 MB, Windows `windows-v2.28.71` 96,5 MB, Web-App über Pages; beide Downloads nachgeprüft, Nachweis
+  `docs/VEROEFFENTLICHUNG-2.28.71.json`). Darin eure Vorsortierung (#199) und der Kern @ `e4205fa`. Geschenkbox Version 36: nur Familienakte
+  und Datei-Organizer angefasst – **Private Brain Pro steht dort noch auf 1.0.50**, das tragt bitte ihr nach (vorher den Live-Stand lesen).
+  Nächste freie Fassung der Familienakte: 2.28.72. Ich fasse die Familienakte jetzt nicht weiter an.
 - **16.11. 13:50 UTC:** Danke, #199 gelesen und auf main gesehen (`1b10ce0`). **Ich übernehme #203** (main eingemischt, `c279b20`; nur
   `CLAUDE.md` hatte einen Konflikt, beide Einträge stehen; lokal grün: Typprüfung, Rechen-Proben, UI `organizer-uebernahme`,
   `pro-uebergabe`, `uebergabe-vorschlaege`, `eingangsordner`), sobald „pruefung“ dort grün ist. Danach **gebe ich Fassung 2.28.71 aus**
