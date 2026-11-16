@@ -58,6 +58,18 @@ public final class FamilienakteUpdatesPlugin extends Plugin {
         Context ctx = getContext();
         return ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), Build.VERSION.SDK_INT >= 28 ? PackageManager.GET_SIGNING_CERTIFICATES : PackageManager.GET_SIGNATURES);
     }
+    /** Angaben der geladenen APK. Android 9 und 10 liefern für eine APK-Datei mit GET_SIGNING_CERTIFICATES kein signingInfo
+     *  (nur für installierte Apps) – dann das Zertifikat auf dem älteren Weg (GET_SIGNATURES) nachholen, sonst scheitert jedes Update dort. */
+    @SuppressWarnings("deprecation")
+    private PackageInfo archiv(String pfad) {
+        PackageManager pm = getContext().getPackageManager();
+        PackageInfo p = pm.getPackageArchiveInfo(pfad, Build.VERSION.SDK_INT >= 28 ? PackageManager.GET_SIGNING_CERTIFICATES : PackageManager.GET_SIGNATURES);
+        if (p != null && Build.VERSION.SDK_INT >= 28 && p.signingInfo == null) {
+            PackageInfo alt = pm.getPackageArchiveInfo(pfad, PackageManager.GET_SIGNATURES);
+            if (alt != null) p.signatures = alt.signatures;
+        }
+        return p;
+    }
     @SuppressWarnings("deprecation")
     private static long code(PackageInfo p) { return Build.VERSION.SDK_INT >= 28 ? p.getLongVersionCode() : p.versionCode; }
     @SuppressWarnings("deprecation")
@@ -115,7 +127,7 @@ public final class FamilienakteUpdatesPlugin extends Plugin {
                 if (!teil.renameTo(apk)) throw new IOException("UPDATE_NICHT_ERREICHBAR");
                 // Dasselbe Paket, dasselbe Zertifikat, höherer versionCode — sonst nichts installieren.
                 PackageInfo ich = installiert();
-                PackageInfo neu = getContext().getPackageManager().getPackageArchiveInfo(apk.getPath(), Build.VERSION.SDK_INT >= 28 ? PackageManager.GET_SIGNING_CERTIFICATES : PackageManager.GET_SIGNATURES);
+                PackageInfo neu = archiv(apk.getPath());
                 if (neu == null || !ich.packageName.equals(neu.packageName) || code(neu) != a.versionCode || code(neu) <= code(ich)
                     || !zertifikat(ich).equals(zertifikat(neu))) { apk.delete(); throw new IOException("UPDATE_ZERTIFIKAT"); }
                 Uri uri = FileProvider.getUriForFile(getContext(), getContext().getPackageName() + ".fileprovider", apk);
