@@ -3116,3 +3116,7 @@ button.pf-daumen { cursor: pointer; }
 .icon-button.an-ki-knopf { width: auto; min-width: 34px; padding: 0 8px; font-size: .78rem; }
 /* Briefumschlag (Klaus 14.11.): zwischen 901 und 940 px reicht der Kopf nicht – dort bleibt der Weg über „Pseudo“. */
 @media (min-width: 901px) and (max-width: 940px) { .header-actions .brief-knopf { display: none !important; } }
+
+/* Discovery-Fernrohr im Kopf (16.11.): zwischen 901 und 999 px ist die Kopfleiste mit dem zusätzlichen Knopf zu breit (Querrollen);
+   dort rücken die Knöpfe enger zusammen. */
+@media (min-width: 901px) and (max-width: 999px) { .header-actions { gap: 3px; } }
