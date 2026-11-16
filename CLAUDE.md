@@ -23,6 +23,12 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   `app/health-portal.tsx`. Proben `scripts/run-organizer-uebernahme-tests.mjs` (6), UI `organizer-uebernahme` (4). Landkarte: Kasten
   „Aus dem Datei-Organizer“. Nicht am Gerät; die Frist des Organizers steht nur im Hinweis, sie wird nicht als Frist angelegt.
 
+- **Neue Kategorie aus dem Datei-Organizer (Klaus 16.11.; nicht ausgegeben, geht in 2.28.72):** eine im Organizer von Hand angelegte Kategorie
+  (dort „+ Neue Kategorie erstellen …“, im Index „von dir“ oder „gelernt“) reist als Lebensbereich im Vorschlag mit, auch wenn die Akte sie
+  nicht kennt; der Hinweis nennt „Neuer Bereich aus dem Organizer“. Sie entsteht erst mit „Vorschläge in das Formular übernehmen“ und dem
+  Ablegen (eigener Lebensbereich wie von Hand eingetragen). Gleicher Name in anderer Schreibweise = vorhandener Bereich, kein zweiter.
+  Vom Kern geratene unbekannte Bereiche bleiben draußen. Probe `run-organizer-uebernahme-tests` (7).
+
 - **Vorsortierung aus Private Brain Pro (Klaus 16.11.; #199 aus der Sitzung Private Brain Pro, in Fassung 2.28.71; Gegenstück Private Brain Pro ab 1.0.53):**
   Private Brain Pro legt nach der Mail eine zweite Übergabe `familienakte-uebergabe.json` ins Fach `eingang-familienakte` (Einordnung aus
   dem Sortier-Kern). Sie wird **nie ein Dokument oder Eingang**: merken, quittieren, über Name + SHA-256 der Mail als Vorschlag zuordnen
