@@ -1,0 +1,59 @@
+{
+ "version": "2.28.72",
+ "source": "0fd7cd59e55f782b04819e6b14160f8351976a5a",
+ "pullRequest": [
+  213,
+  214
+ ],
+ "recordedUtc": "2026-11-16T21:10:00Z",
+ "freigabe": "Klaus 16.11.2026: „führen und veröffentlichen“ (auf die Frage, ob #213 zusammengeführt und als 2.28.72 ausgegeben werden soll).",
+ "inhalt": "Pseudo-Fenster: Meldung bei den Knöpfen statt über der Dateiliste, erst kopieren dann Auftrag sichern mit Ersatzweg, Hinweis bei sehr langem Text, Austauschordner in der Android- und Windows-App (#213). Neue Kategorie aus dem Datei-Organizer reist als Lebensbereich im Vorschlag mit (#214, Sitzung Datei-Organizer).",
+ "ciAmPrStand": "PR #213 auf ed089a8 (mit #214 eingemischt): pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) – success. Davor auf e78ac1d: windows einmal neu gestartet (test-model-installed.mjs:72, Knopf „Nach Bedeutung suchen“ 60 s gesperrt); auf 71d1f12: product (31, pixel_c) einmal neu gestartet (Maven Central 429 beim Bau).",
+ "releases": [
+  {
+   "tag": "android-v2.28.72",
+   "run": 43947892513,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "hinweis": "Lauf stand 33 Minuten in der Warteschlange (20:15–20:49 UTC), dann ohne Eingriff durchgelaufen.",
+   "downloadProof": [
+    {
+     "name": "Familienakte-android-v2.28.72.apk",
+     "bytes": 82010878,
+     "sha256": "efa153f677e12a7ddf23218e27a5438401c608d7af3dff958e042e95775b4b8d",
+     "matchesSHA256SUMS": true,
+     "versionInside": "2.28.72 (assets/public/version.json, commit 0fd7cd5)"
+    },
+    {
+     "name": "Familienakte-Einzeldatei-2.28.72.html",
+     "bytes": 5192913,
+     "sha256": "49f402b422e43f5dd57202d1e025ab6941546ca3ce3d7f47e566e43729af78ac",
+     "matchesSHA256SUMS": true
+    }
+   ]
+  },
+  {
+   "tag": "windows-v2.28.72",
+   "run": 43947900512,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "hinweis": "Erster Versuch rot an test-model-installed.mjs:72 (nichts veröffentlicht), zweiter Versuch grün.",
+   "downloadProof": [
+    {
+     "name": "Familienakte-Windows-2.28.72-x64-setup.exe",
+     "bytes": 96499089,
+     "sha256": "f5cc193c449dd6ce9106f31ff65459e58335901e8ea850bbce0ec1f067bf92f3",
+     "matchesSHA256SUMS": true,
+     "latestJson": "version 2.28.72"
+    }
+   ]
+  }
+ ],
+ "pwa": "Pages über den Merge-Stand 0fd7cd5; Seite aus dem Behälter nicht selbst geprüft.",
+ "notChecked": [
+  "Alles am Gerät: Meldung bei den Knöpfen mit vielen Dateien, Kopieren in der Android-WebView (auch: nimmt die Zwischenablage den Text von 43 PDFs, Grenze rund 1 MB), Austauschordner über die Ordnerwahl der App-Hülle (Android SAF, Windows), „Als Datei“ › Speichern am Tablet",
+  "Warum „Als Datei“ bei Klaus am Tablet nichts tat, ist nicht geklärt – die Meldung dazu ist jetzt sichtbar",
+  "Windows-Probe der Bedeutungssuche (test-model-installed.mjs:72) heute in zwei von fünf Läufen rot; Ursache nicht gesucht",
+  "family-projekt.de aus dem Behälter nicht geprüft; der Freigabelauf prüft den Server selbst"
+ ]
+}
