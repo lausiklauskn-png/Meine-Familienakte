@@ -1,0 +1,58 @@
+{
+ "version": "2.28.71",
+ "source": "5cddcd57644a5adcdd6febf1e8bc1f5fade75acc",
+ "pullRequest": [
+  199,
+  200,
+  203
+ ],
+ "recordedUtc": "2026-11-16T15:00:00Z",
+ "freigabe": "Klaus 16.11.2026: „gib dann die Version APK, Windows und Pro für Familienakte heraus und aktualisiere die Landkarte in beiden Apps“ (Freibrief, abgestimmt mit der Sitzung Private Brain Pro über BRIEF_ABGLEICH_2026-11-16_PRIVATE-BRAIN-PRO.md).",
+ "inhalt": "Übernahme aus dem Datei-Organizer (organizer-index.json im Eingangsordner wird Vorschlag im Prüf-Fenster, #203); Vorsortierung aus Private Brain Pro als Vorschlag an der Mail und Sortier-Kern @ e4205fa mit englischen Rechnungen (#199, Sitzung Private Brain Pro); Discovery auf dem Stand Datei-Organizer 0.4.12 (#200) samt Fernrohr im Kopf (#196).",
+ "ciAmPrStand": "PR #203 auf c279b20: pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) – success (webview einmal neu gestartet: Abbruch nach 15 Minuten beim Laden des SDK-Abbilds, „ServerBusy“). PR #200: pruefung einmal neu gestartet (stapel.test.mjs am Handy rot im ersten Lauf, #200 ändert nur public/discovery/).",
+ "releases": [
+  {
+   "tag": "android-v2.28.71",
+   "run": 43885612669,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-android-v2.28.71.apk",
+     "bytes": 82010878,
+     "sha256": "a5ac58a8a2f7087b1b9f4ae26c6407fc5a9f36eb8179205dd2f4492bb886376f",
+     "matchesSHA256SUMS": true,
+     "versionInside": "2.28.71 (assets/public/version.json, commit 5cddcd5)"
+    },
+    {
+     "name": "Familienakte-Einzeldatei-2.28.71.html",
+     "bytes": 5191142,
+     "sha256": "6b54e54e81bfa2d30a6666dfa98e9825b5f83882ed5ffa945587e02a58ab8444",
+     "matchesSHA256SUMS": true
+    }
+   ]
+  },
+  {
+   "tag": "windows-v2.28.71",
+   "run": 43886398489,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-Windows-2.28.71-x64-setup.exe",
+     "bytes": 96528562,
+     "sha256": "2b2c63b393977619e724441ad4613cf790214244a9e1fbf849afdeb8f4b97a37",
+     "matchesSHA256SUMS": true,
+     "latestJson": "version 2.28.71"
+    }
+   ]
+  }
+ ],
+ "groesse": "Erste Ausgabe mit Discovery im Paket: APK 20,4 → 82,0 MB, Windows 34,6 → 96,5 MB.",
+ "pwa": "Pages über den Merge-Stand 5cddcd5; github.io aus dem Behälter gesperrt, Seite nicht selbst geprüft.",
+ "notChecked": [
+  "Alles am Gerät: Eingangsordner mit organizer-index.json (Android-Ordner nur über die gestellte Hülle), Vorsortierung aus Private Brain Pro mit echtem Tresor, ob Windows eine Übergabe mit application/json annimmt, Discovery im Rahmen (Ton, Film, 3D), Update über die Versionszeile bei 82 MB",
+  "Neue Meldungen beim Abholen der Vorsortierung und der Knopf „Als Vorschlag übernehmen“ sind nur Deutsch und von Klaus noch nicht gesehen",
+  "family-projekt.de aus dem Behälter nicht geprüft; der Freigabelauf prüft den Server selbst"
+ ]
+}
