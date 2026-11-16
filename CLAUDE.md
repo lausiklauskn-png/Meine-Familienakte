@@ -7,7 +7,16 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Aktueller Stand (15.11.2026, nach 2.28.70)
 
-- **Vorsortierung aus Private Brain Pro (Klaus 16.11.; Zweig `ccr-7a9eceb9-aa9s4y`, Entwurf, nicht ausgegeben, Fassung nicht erhöht):**
+- **Übernahme aus dem Datei-Organizer (Klaus 16.11., Freibrief ohne Vorschau: „passt ins Design, keine Doppelung, an der passenden Stelle“;
+  #203, in Fassung 2.28.71):** liegt im Eingangsordner die `organizer-index.json` des Datei-Organizers, reisen seine
+  Angaben (Bereich, Art, Absender, Datum, Frist, Betrag, Archivnummer; „von dir bestätigt“/„noch unsicher“) als `UebergabeVorschlag` mit –
+  dieselbe Karte „Vorschläge aus …“ im Prüf-Fenster wie bei anderen Apps, kein neuer Knopf. Der Index ist keine Unterlage (`scanDirectory`);
+  was der Organizer als doppelt markiert hat, bleibt im Ordner, wenn das Gegenstück dort liegt; Gesperrtes kommt mit Warnung. Nur Dateien
+  direkt im Ordner (Name + Größe), nichts wird ohne Tipp übernommen. Kern `lib/organizer-uebernahme.ts`, Anschluss `scanSelectedInbox` in
+  `app/health-portal.tsx`. Proben `scripts/run-organizer-uebernahme-tests.mjs` (6), UI `organizer-uebernahme` (4). Landkarte: Kasten
+  „Aus dem Datei-Organizer“. Nicht am Gerät; die Frist des Organizers steht nur im Hinweis, sie wird nicht als Frist angelegt.
+
+- **Vorsortierung aus Private Brain Pro (Klaus 16.11.; #199 aus der Sitzung Private Brain Pro, in Fassung 2.28.71; Gegenstück Private Brain Pro ab 1.0.53):**
   Private Brain Pro legt nach der Mail eine zweite Übergabe `familienakte-uebergabe.json` ins Fach `eingang-familienakte` (Einordnung aus
   dem Sortier-Kern). Sie wird **nie ein Dokument oder Eingang**: merken, quittieren, über Name + SHA-256 der Mail als Vorschlag zuordnen
   (`lib/pro-begleitdatei.ts`, `app/pro-begleit.ts`; Abzweig in `proEingangAufnehmen`; Prüfung nur `begleitdateiLesen`/`uebergabeVorschlaege`).

@@ -32,6 +32,7 @@ export const APP_GRUPPEN: Gruppe[] = [
     { id: "datei-teilen", titel: "Teilen aus anderer App", wo: "Galerie, Dateien › Teilen", nach: "eingang" },
     { id: "datei-oeffnen", titel: "Öffnen mit", wo: "Windows: Rechtsklick › Öffnen mit", nach: "eingang" },
     { id: "cloud-ordner", titel: "Cloud-Ordner hereinholen", wo: "Sicherheit › Cloud-Ordner · Windows-App, Chrome/Edge am PC", nach: "eingang", seite: "security", mehr: "Liest einen Ordner (z. B. OneDrive) mit Unterordnern, ändert dort nichts. Neues und Geändertes kommt als Kopie in die Eingangszentrale, der Unterordner steht als Herkunft dabei. Pakete vom Handy werden hier gefunden und zusammengeführt." },
+    { id: "datei-organizer", titel: "Aus dem Datei-Organizer", wo: "Eingangszentrale › Eingangsordner", nach: "eingang", seite: "inbox", mehr: "Liegt im Eingangsordner die Datei organizer-index.json des Datei-Organizers, reisen seine Angaben (Bereich, Art, Absender, Frist) als Vorschlag mit. Im Prüf-Fenster stehen sie unter „Vorschläge aus Datei-Organizer“; übernommen wird erst auf deinen Tipp. Was er als doppelt markiert hat, bleibt im Ordner." },
     { id: "datei-pro", titel: "Aus anderen Pro-Apps", wo: "gemeinsames Fach im Pro-Tresor", nach: "eingang", seite: "security", mehr: "Braucht einen eingerichteten Pro-Tresor (z. B. mit Private Brain Pro, BookLedgerPro); nur in den Apps." },
   ] },
   { id: "g-scan", titel: "Dokumente scannen", wo: "Papier wird PDF", spalte: 0, chips: [

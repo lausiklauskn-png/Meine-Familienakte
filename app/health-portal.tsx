@@ -16,6 +16,7 @@ import { ZweiterOrtKarte, useZweiterOrtAuto } from "./zweiter-ort-karte";
 import { CloudOrdnerKarte, useCloudOrdnerAuto } from "./cloud-ordner-karte";
 import type { Hereinholen } from "./cloud-ordner";
 import { EmailWegeKarte, useMailBrainAuto } from "./email-wege-karte";
+import { ORGANIZER_INDEX, ORGANIZER_INDEX_MAX, organizerSchluessel, organizerUebernahme, type OrganizerUebernahme } from "../lib/organizer-uebernahme";
 import { BLOCK, blockText, dateiSchluessel, gesehenMerken, inBloecke, mbText as mbBlock, neueImOrdner, speicherReicht } from "../lib/eingang-bloecke";
 import { arbeitDienst } from "./arbeit-dienst";
 import { eingangOrdnerLeserSetzen } from "./eingang-ablage";
@@ -1038,13 +1039,21 @@ function HealthPortalContent() {
       const found = await scanLocalInbox(handle, localDocuments); setIncomingFiles(found); setIntakeCheckedAt(new Date().toISOString());
       const gesehen = gesehenLesen();
       const inWarteschlange = new Set(centralIntakeQueue.map((queued) => dateiSchluessel(queued.file)));
-      const fresh = neueImOrdner(found, new Set(gesehen), inWarteschlange, BLOCK);
-      const weitere = found.filter((f) => !gesehen.includes(dateiSchluessel(f)) && !inWarteschlange.has(dateiSchluessel(f))).length - fresh.length;
-      if (fresh.length) {
-        try { workspaceStorage.setItem(GESEHEN_SCHLUESSEL, JSON.stringify(gesehenMerken(gesehen, fresh.map(dateiSchluessel)))); } catch { /* dann beim nächsten Mal erneut angeboten */ }
-        await queueCentralIntakeFiles(fresh.map((item) => item.file), "local-inbox");
+      // Übernahme aus dem Datei-Organizer (Klaus 16.11.2026): liegt sein Index im Ordner, reisen seine Angaben als Vorschlag mit
+      // („Vorschläge aus Datei-Organizer“ im Prüf-Fenster); was er als doppelt markiert hat, bleibt im Ordner.
+      let organizer: OrganizerUebernahme | null = null;
+      try { const index = await dateiAusEingangsordner(handle, ORGANIZER_INDEX); if (index && index.size <= ORGANIZER_INDEX_MAX) organizer = organizerUebernahme(await index.text(), found, FAWOGA_LIFE_AREAS); } catch { /* ohne Index: alles wie bisher */ }
+      const doppeltLautOrganizer = organizer?.ok ? found.filter((f) => organizer!.doppelt.has(organizerSchluessel(f)) && !gesehen.includes(dateiSchluessel(f)) && !inWarteschlange.has(dateiSchluessel(f))) : [];
+      const offen = found.filter((f) => !doppeltLautOrganizer.includes(f));
+      const fresh = neueImOrdner(offen, new Set(gesehen), inWarteschlange, BLOCK);
+      const weitere = offen.filter((f) => !gesehen.includes(dateiSchluessel(f)) && !inWarteschlange.has(dateiSchluessel(f))).length - fresh.length;
+      const mitVorschlag = organizer?.ok ? fresh.filter((f) => organizer!.vorschlaege.has(organizerSchluessel(f))) : [];
+      if (fresh.length || doppeltLautOrganizer.length) {
+        try { workspaceStorage.setItem(GESEHEN_SCHLUESSEL, JSON.stringify(gesehenMerken(gesehen, [...fresh, ...doppeltLautOrganizer].map(dateiSchluessel)))); } catch { /* dann beim nächsten Mal erneut angeboten */ }
       }
-      if (!leise || fresh.length) setNotice({ kind: "info", text: fresh.length ? `${fresh.length} Datei${fresh.length === 1 ? "" : "en"} aus dem Eingangsordner „${handle.name}“ in die Eingangszentrale geholt${weitere > 0 ? `; ${weitere} weitere folgen Block für Block` : ""}.` : "Im Eingangsordner wurden keine neuen Dateien gefunden." });
+      if (fresh.length) await queueCentralIntakeFiles(fresh.map((item) => item.file), "local-inbox", null, [], new Map(mitVorschlag.map((f) => [f.file, organizer!.vorschlaege.get(organizerSchluessel(f))!])));
+      const vomOrganizer = [mitVorschlag.length ? `${mitVorschlag.length} mit Vorschlag aus dem Datei-Organizer` : "", doppeltLautOrganizer.length ? `${doppeltLautOrganizer.length} dort als doppelt markiert und nicht geholt` : ""].filter(Boolean).join(", ");
+      if (!leise || fresh.length || doppeltLautOrganizer.length) setNotice({ kind: "info", text: fresh.length || doppeltLautOrganizer.length ? `${fresh.length} Datei${fresh.length === 1 ? "" : "en"} aus dem Eingangsordner „${handle.name}“ in die Eingangszentrale geholt${vomOrganizer ? ` (${vomOrganizer})` : ""}${weitere > 0 ? `; ${weitere} weitere folgen Block für Block` : ""}.` : "Im Eingangsordner wurden keine neuen Dateien gefunden." });
     } catch (error) { if (!leise) setNotice({ kind: "error", text: error instanceof Error ? error.message : "Der Eingangsordner konnte nicht geprüft werden." }); }
     finally { setIntakeBusy(false); }
   };

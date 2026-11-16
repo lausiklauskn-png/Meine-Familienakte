@@ -405,7 +405,8 @@ async function scanDirectory(directory: FileSystemDirectoryHandle, source: Incom
   const knownKeys = new Set(known.map((item) => `${item.originalName.toLocaleLowerCase("de")}|${item.sizeBytes}`));
   const files: IncomingFolderFile[] = [];
   for await (const entry of (directory as DirectoryWithEntries).values()) {
-    if (entry.kind !== "file" || entry.name.startsWith(".")) continue;
+    // organizer-index.json ist der Begleitzettel des Datei-Organizers, keine Unterlage (lib/organizer-uebernahme.ts).
+    if (entry.kind !== "file" || entry.name.startsWith(".") || entry.name.toLowerCase() === "organizer-index.json") continue;
     const file = await (entry as FileSystemFileHandle).getFile();
     const basicKey = `${file.name.toLocaleLowerCase("de")}|${file.size}`;
     if (knownKeys.has(basicKey)) continue;
