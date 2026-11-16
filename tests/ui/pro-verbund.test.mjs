@@ -36,8 +36,13 @@ try {
  });
  await page.route(/\/__pro_probe\//,async route=>{
    const name=new URL(route.request().url()).pathname.split('/').pop();
-   if(!['pro-verbund','pro-uebergabe','stapel-ablage','pro-tresor'].includes(name))return route.abort();
+   if(!['pro-verbund','pro-uebergabe','stapel-ablage','pro-tresor','pro-begleit'].includes(name))return route.abort();
    const {outputText}=ts.transpileModule(readFileSync(`${ROOT}/app/${name}.ts`,'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}});
+   await route.fulfill({contentType:'text/javascript',body:outputText});
+ });
+ await page.route(/\/lib\/(pro-begleitdatei|uebergabe-vorschlaege)(\.ts)?$/,async route=>{
+   const name=new URL(route.request().url()).pathname.split('/').pop().replace(/\.ts$/,'');
+   const {outputText}=ts.transpileModule(readFileSync(`${ROOT}/lib/${name}.ts`,'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}});
    await route.fulfill({contentType:'text/javascript',body:outputText});
  });
  await page.goto(app.base);await ready(page);
@@ -76,6 +81,33 @@ try {
    const a=await api.proEingangAufnehmen('tresor-a','r-17'),b=await api.proEingangAufnehmen('tresor-a','r-17');
    if(a.eingangId!==b.eingangId||window.__verbund.marks!==2)throw new Error('Wiederaufnahme falsch');
    const r=indexedDB.open('FamilienakteStapel1');await new Promise((ok,no)=>{r.onsuccess=()=>{const db=r.result,t=db.transaction('eingang'),q=t.objectStore('eingang').getAll();t.oncomplete=()=>{db.close();if(q.result.filter(x=>x.id===a.eingangId).length===1)ok();else no(new Error('Doppelter Eingang'))};};r.onerror=()=>no(r.error)});
+   return true;
+ }));
+ await step('Vorsortierung aus Private Brain Pro: quittiert, nie ein Eingang, Vorschlag an der Mail – in beiden Reihenfolgen',async()=>page.evaluate(async()=>{
+   const api=await import('/__pro_probe/pro-verbund');const {proUebergabeBauen}=await import('/__pro_probe/pro-uebergabe');
+   const b64=async f=>btoa(String.fromCharCode(...new Uint8Array(await f.arrayBuffer())));
+   const faelle=async()=>{const r=indexedDB.open('FamilienakteStapel1');const db=await new Promise((ok,no)=>{r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)});try{return await new Promise((ok,no)=>{const t=db.transaction('eingang'),q=t.objectStore('eingang').getAll();t.oncomplete=()=>ok(q.result);t.onabort=()=>no(t.error)});}finally{db.close();}};
+   const kommt=async(f,dok,id)=>{window.__verbund.incoming={vertrag:await proUebergabeBauen(f,'private-brain','familienakte',dok,id),data:await b64(f)};return api.proEingangAufnehmen('tresor-a','r-17');};
+   const begleit=(mail,sha)=>new File([JSON.stringify({vertrag:'familienakte-uebergabe/1',quelle:'Private Brain Pro',dateien:[{name:mail.name,sha256:sha,lebensbereich:'Wohnen',dokumentart:'Rechnung',vorgang:'E-Mail › Rechnung',hinweis:'Absender: Erfundene Stadtwerke'}]})],'familienakte-uebergabe.json',{type:'application/json'});
+   // 1. Mail zuerst, dann die Begleitdatei.
+   const m1=new File(['From: a@example.de\r\nSubject: Eins\r\n\r\nErfunden'],'Eins.eml',{type:'message/rfc822'});
+   const q1=await kommt(m1,'mail-1','pb-mail-1'),vorher=(await faelle()).length,marken=window.__verbund.marks;
+   const r1=await kommt(begleit(m1,q1.sha256),'vorsortierung-1','pb-begleit-1');
+   if(!r1.begleit||r1.stand!=='zugeordnet'||window.__verbund.marks!==marken+1)throw new Error('Mail zuerst: '+JSON.stringify(r1));
+   let alle=await faelle();
+   if(alle.length!==vorher||alle.some(x=>/familienakte-uebergabe\.json/i.test(x.file.name)))throw new Error('Begleitdatei wurde ein Eingang');
+   if(alle.find(x=>x.id===q1.eingangId)?.uebergabeVorschlag?.quelle!=='Private Brain Pro')throw new Error('Vorschlag fehlt an der Mail');
+   // 2. Begleitdatei zuerst, dann die Mail.
+   const m2=new File(['From: b@example.de\r\nSubject: Zwei\r\n\r\nErfunden'],'Zwei.eml',{type:'message/rfc822'});
+   const sha2=[...new Uint8Array(await crypto.subtle.digest('SHA-256',await m2.arrayBuffer()))].map(x=>x.toString(16).padStart(2,'0')).join('');
+   const r2=await kommt(begleit(m2,sha2),'vorsortierung-2','pb-begleit-2');
+   if(!r2.begleit||r2.stand!=='wartet'||(await faelle()).length!==vorher)throw new Error('Begleitdatei zuerst: '+JSON.stringify(r2));
+   const q2=await kommt(m2,'mail-2','pb-mail-2');alle=await faelle();
+   if(alle.length!==vorher+1||alle.find(x=>x.id===q2.eingangId)?.uebergabeVorschlag?.dokumentart!=='Rechnung')throw new Error('Vorschlag nach später Mail fehlt');
+   // 3. Dieselbe Datei aus einer anderen App bleibt beim bisherigen Weg (kein Vorschlag aus fremder Quelle).
+   window.__verbund.incoming={vertrag:await proUebergabeBauen(begleit(m2,sha2),'bookledgerpro','familienakte','fremd-1','blp-1'),data:await b64(begleit(m2,sha2))};
+   const r3=await api.proEingangAufnehmen('tresor-a','r-17');
+   if(r3.begleit||!r3.eingangId)throw new Error('Fremde Quelle als Vorsortierung behandelt');
    return true;
  }));
  await step('Dokumentenbibliothek: nur ausgewählte Unterlage weitergeben, Wiederholung behält Kennung',async()=>{

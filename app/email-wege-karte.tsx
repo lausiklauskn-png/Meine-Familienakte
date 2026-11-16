@@ -7,6 +7,7 @@ import { mailWahl, mailWahlSetzen, microsoftMailAlsEml, microsoftMailsListen, pr
 import { microsoftMailAngemeldet, microsoftMailAnmelden } from "./kalender-anbieter";
 import type { Empfang, MailWahl, Versand } from "../lib/mail-wege";
 import { demoActive } from "../lib/demo-workspace";
+import { begleitSatz } from "../lib/pro-begleitdatei";
 
 type Notice = { kind: "success" | "error" | "info"; text: string; laeuft?: boolean } | null;
 export const MAIL_HILFE = {
@@ -31,7 +32,10 @@ export function useMailBrainAuto(aktiv: boolean, onNotice: (n: Notice) => void) 
       if (!lebt || laeuft || document.visibilityState !== "visible") return;
       const w = mailWahl(); if (w.empfang !== "brain" || !w.brainAuto) return;
       laeuft = true;
-      try { const r = await proEingangAbholen(); if (r.geholt && lebt) cb.current({ kind: "info", text: `${r.geholt} Übergabe${r.geholt === 1 ? "" : "n"} aus dem Pro-Tresor (z. B. Mails aus Private Brain) in die Eingangszentrale geholt.` }); }
+      try {
+        const r = await proEingangAbholen(), zusatz = begleitSatz({ ...r, wartend: 0 });
+        if ((r.geholt || zusatz) && lebt) cb.current({ kind: "info", text: [r.geholt ? `${r.geholt} Übergabe${r.geholt === 1 ? "" : "n"} aus dem Pro-Tresor (z. B. Mails aus Private Brain) in die Eingangszentrale geholt.` : "", zusatz].filter(Boolean).join(" ") });
+      }
       catch (e) { console.warn("Pro-Eingang", e); } finally { laeuft = false; }
     };
     const start = window.setTimeout(() => void lauf(), 8000);
@@ -52,7 +56,7 @@ export function EmailWegeKarte({ aktiv, onNotice, onDateien, onSchreiben }: { ak
   const tun = async (f: () => Promise<void>, fehler: string) => { setLaeuft(true); try { await f(); } catch (e) { onNotice({ kind: "error", text: e instanceof Error ? e.message : fehler }); } finally { setLaeuft(false); } };
   const brainJetzt = () => tun(async () => {
     const r = await proEingangAbholen();
-    onNotice(!r.offen ? { kind: "info", text: "Der Pro-Tresor ist nicht offen. Unter Sicherheit › Pro-Tresor entsperren, dann kommen die Mails aus Private Brain." } : { kind: r.geholt ? "success" : "info", text: r.geholt ? `${r.geholt} Übergabe${r.geholt === 1 ? "" : "n"} in die Eingangszentrale geholt.` : "Keine neuen Mails aus Private Brain." });
+    onNotice(!r.offen ? { kind: "info", text: "Der Pro-Tresor ist nicht offen. Unter Sicherheit › Pro-Tresor entsperren, dann kommen die Mails aus Private Brain." } : { kind: r.geholt ? "success" : "info", text: [r.geholt ? `${r.geholt} Übergabe${r.geholt === 1 ? "" : "n"} in die Eingangszentrale geholt.` : "Keine neuen Mails aus Private Brain.", begleitSatz(r)].filter(Boolean).join(" ") });
   }, "Der Pro-Eingang konnte nicht gelesen werden.");
   const microsoftHolen = () => tun(async () => {
     if (!microsoftMailAngemeldet()) await microsoftMailAnmelden();

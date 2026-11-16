@@ -1,6 +1,8 @@
 import { stapelDatenbank } from "./stapel-ablage";
-import { proUebergabeAnnehmen, proUebergabeBauen, type ProApp, type ProUebergabe } from "./pro-uebergabe";
+import { proUebergabeAnnehmen, proUebergabeBauen, type ProApp, type ProQuittung, type ProUebergabe } from "./pro-uebergabe";
 import { proTresor, proTresorUebergaben } from "./pro-tresor";
+import { istProBegleitdatei, type BegleitStand } from "../lib/pro-begleitdatei";
+import { proBegleitAbgleichen, proBegleitAnnehmen, proBegleitStand } from "./pro-begleit";
 export type ProZiel = Exclude<ProApp, "familienakte">;
 export const PRO_ZIELE: Record<ProZiel,string> = { "workflow-pdf-pro": "Workflow PDF Pro", "private-brain": "Private Brain Pro", bookledgerpro: "BookLedgerPro" };
 export function proVerbundFehler(error: unknown): string {
@@ -56,11 +58,30 @@ export async function proAusgangPruefen(auftrag: ProAusgang): Promise<ProAusgang
 export async function proEingangLesen() {
   const vaultId=await offen();return {vaultId,...await proTresorUebergaben.eingang(vaultId)};
 }
-export async function proEingangAufnehmen(vaultId: string,entryId: string) {
+/** Ergebnis einer Vorsortierung aus Private Brain Pro: kein Dokument, nur ein Vorschlag an der passenden Mail. */
+export type ProBegleitErgebnis = { begleit: true; stand: BegleitStand; grund: string };
+export const PRO_BEGLEIT_MELDUNG: Record<BegleitStand,string> = {
+  zugeordnet: "Die Vorsortierung aus Private Brain Pro steht als Vorschlag an der Mail. Sie gilt erst nach deiner Prüfung.",
+  wartet: "Die Vorsortierung aus Private Brain Pro ist gemerkt. Sie erscheint als Vorschlag, sobald die Mail dazu im Eingang ist.",
+  "zu-spaet": "Die Mail war schon geprüft oder abgelegt. Die Vorsortierung wurde nicht mehr verwendet; an der Mail ändert sich nichts.",
+  unbrauchbar: "Eine Vorsortierung aus Private Brain Pro war nicht lesbar und wurde nicht verwendet. Die Mail selbst ist davon nicht betroffen.",
+  verfallen: "Zu einer Vorsortierung aus Private Brain Pro kam keine passende Mail. Sie wurde nicht verwendet.",
+};
+export async function proEingangAufnehmen(vaultId: string,entryId: string): Promise<ProQuittung|ProBegleitErgebnis> {
   if(await offen()!==vaultId) throw new Error("Die Übergabe gehört zu einem anderen Tresor.");
   const {vertrag,file}=await proTresorUebergaben.lesen(vaultId,entryId);
+  if(istProBegleitdatei(vertrag)) {
+    // Vorsortierung: nie ein Dokument und nie ein Eingang. Erst dauerhaft merken, dann quittieren, dann zuordnen.
+    const gemerkt=await proBegleitAnnehmen(vertrag,file);
+    await proTresorUebergaben.quittieren(vaultId,entryId,gemerkt.sha256);
+    const lauf=await proBegleitAbgleichen();
+    const stand=lauf.staende[gemerkt.id]||await proBegleitStand(gemerkt.id)||{stand:"wartet" as const,grund:""};
+    return {begleit:true,stand:stand.stand,grund:stand.grund};
+  }
   // Empfang erst nach bestätigter Datei + Datensatz + wiederholbarer Quittung.
   const quittung=await proUebergabeAnnehmen(vertrag,file);
   await proTresorUebergaben.quittieren(vaultId,entryId,quittung.sha256);
+  // Eine Vorsortierung, die vor ihrer Mail kam, wird jetzt zugeordnet. Scheitert das, bleibt die Mail trotzdem aufgenommen.
+  if(quittung.quelle==="private-brain") await proBegleitAbgleichen().catch(()=>null);
   return quittung;
 }

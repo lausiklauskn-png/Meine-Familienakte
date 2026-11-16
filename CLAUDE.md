@@ -7,6 +7,14 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Aktueller Stand (15.11.2026, nach 2.28.70)
 
+- **Vorsortierung aus Private Brain Pro (Klaus 16.11.; Zweig `ccr-7a9eceb9-aa9s4y`, Entwurf, nicht ausgegeben, Fassung nicht erhöht):**
+  Private Brain Pro legt nach der Mail eine zweite Übergabe `familienakte-uebergabe.json` ins Fach `eingang-familienakte` (Einordnung aus
+  dem Sortier-Kern). Sie wird **nie ein Dokument oder Eingang**: merken, quittieren, über Name + SHA-256 der Mail als Vorschlag zuordnen
+  (`lib/pro-begleitdatei.ts`, `app/pro-begleit.ts`; Abzweig in `proEingangAufnehmen`; Prüfung nur `begleitdateiLesen`/`uebergabeVorschlaege`).
+  Reihenfolge egal; geprüfte oder abgelegte Mails bleiben unverändert; ohne passende Mail entfällt sie nach 30 Tagen; unlesbare werden
+  quittiert und nicht verwendet. Anzeige wie „Vorschläge der anderen App“, Quelle fest „Private Brain Pro“. Dieselbe Datei aus einer
+  anderen App läuft wie bisher. Proben `run-uebergabe-vorschlaege-tests` (20), UI `pro-uebergabe`, `pro-verbund`. Nativ unverändert. Nicht am Gerät.
+
 - **Discovery in der Hilfe (Klaus 15.11.: „Da wo der Sortierkern drin ist, Discovery nachziehen“; Zweig `claude/discovery-hilfe`, nicht ausgegeben,
   Fassung nicht erhöht):** Hilfe-Thema „Discovery“ direkt hinter „Pro-App-Verbund (Vorschau)“ (`app/discovery-hilfe.tsx`, Ordnung in
   `lib/hilfe-ordnung.ts`); „Discovery öffnen“ zeigt die Seite des Datei-Organizers („so lernte der Sortier-Kern“) im selben Vollbild-Rahmen

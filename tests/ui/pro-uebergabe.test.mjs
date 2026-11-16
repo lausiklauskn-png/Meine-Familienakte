@@ -11,9 +11,14 @@ try {
   });
   await page.route(/\/__pro_probe\//, async route => {
     const name = new URL(route.request().url()).pathname.split('/').pop();
-    if (!['pro-uebergabe', 'stapel-ablage', 'eingang-ablage'].includes(name)) return route.abort();
+    if (!['pro-uebergabe', 'stapel-ablage', 'eingang-ablage', 'pro-begleit'].includes(name)) return route.abort();
     const source = readFileSync(`${ROOT}/app/${name}.ts`, 'utf8');
     const { outputText } = ts.transpileModule(source, { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext } });
+    await route.fulfill({ contentType: 'text/javascript', body: outputText });
+  });
+  await page.route(/\/lib\/(pro-begleitdatei|uebergabe-vorschlaege)(\.ts)?$/, async route => {
+    const name = new URL(route.request().url()).pathname.split('/').pop().replace(/\.ts$/, '');
+    const { outputText } = ts.transpileModule(readFileSync(`${ROOT}/lib/${name}.ts`, 'utf8'), { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext } });
     await route.fulfill({ contentType: 'text/javascript', body: outputText });
   });
   await page.goto(app.base); await ready(page);
@@ -66,5 +71,80 @@ try {
       return true;
     }, saved);
   });
+
+  // ---------- Vorsortierung aus Private Brain Pro (eigene Übergabe „familienakte-uebergabe.json“) ----------
+  await page.evaluate(async () => {
+    const api = await import('/__pro_probe/pro-uebergabe'), begleit = await import('/__pro_probe/pro-begleit');
+    const { stapelDatenbank } = await import('/__pro_probe/stapel-ablage'); const { eingangAblage } = await import('/__pro_probe/eingang-ablage');
+    const sha = async f => [...new Uint8Array(await crypto.subtle.digest('SHA-256', await f.arrayBuffer()))].map(x => x.toString(16).padStart(2, '0')).join('');
+    const zahl = async () => { const db = await stapelDatenbank(); try { return await Promise.all(['eingang', 'eingang-dateien'].map(n => new Promise((ok, no) => { const t = db.transaction(n), r = t.objectStore(n).count(); t.oncomplete = () => ok(r.result); t.onabort = () => no(t.error); }))); } finally { db.close(); } };
+    const beleg = async id => { const db = await stapelDatenbank(); try { return await new Promise((ok, no) => { const t = db.transaction('uebergaben'), r = t.objectStore('uebergaben').get(id); t.oncomplete = () => ok(r.result); t.onabort = () => no(t.error); }); } finally { db.close(); } };
+    let nr = 0;
+    window.__b = { api, begleit, eingangAblage, zahl, beleg,
+      // Eine erfundene Mail aus Private Brain Pro aufnehmen (wie proEingangAufnehmen ohne Tresor).
+      mail: async (text) => { const n = ++nr, file = new File([`From: probe${n}@example.de\r\nSubject: Probe ${n}\r\n\r\n${text}`], `Probe ${n}.eml`, { type: 'message/rfc822' });
+        const m = await api.proUebergabeBauen(file, 'private-brain', 'familienakte', `mail-${n}`, `t-mail-${n}`); return { file, m, sha256: m.sha256, annehmen: () => api.proUebergabeAnnehmen(m, file) }; },
+      // Die Begleitdatei als zweite Übergabe; `zeile` überschreibt einzelne Felder, `roh` ersetzt den ganzen Inhalt.
+      begleitdatei: async (mail, zeile = {}, { roh, quelle = 'private-brain' } = {}) => {
+        const inhalt = roh ?? JSON.stringify({ vertrag: 'familienakte-uebergabe/1', quelle: 'Private Brain Pro', dateien: [{ name: mail.file.name, sha256: mail.sha256, lebensbereich: 'Wohnen', dokumentart: 'Rechnung', vorgang: 'E-Mail › Rechnung', hinweis: 'Absender: Erfundene Stadtwerke', ...zeile }] });
+        const file = new File([inhalt], 'familienakte-uebergabe.json', { type: 'application/json' });
+        const m = await api.proUebergabeBauen(file, quelle, 'familienakte', `vorsortierung-${++nr}`, `t-begleit-${nr}`); return { file, m }; },
+      fall: async id => (await eingangAblage()).find(e => e.id === id),
+      istGleich: async () => sha,
+    };
+  });
+  await step('Vorsortierung: Mail zuerst, dann Begleitdatei – Vorschlag steht am Eingang der Mail, kein neuer Eingang', async () => page.evaluate(async () => {
+    const b = window.__b, mail = await b.mail('Bitte zahlen.'), q = await mail.annehmen(), vorher = await b.zahl();
+    const s = await b.begleitdatei(mail), g = await b.begleit.proBegleitAnnehmen(s.m, s.file);
+    await b.begleit.proBegleitAnnehmen(s.m, s.file); // wiederholbar
+    const lauf = await b.begleit.proBegleitAbgleichen(), fall = await b.fall(q.eingangId), rec = await b.beleg(g.id);
+    if (JSON.stringify(vorher) !== JSON.stringify(await b.zahl())) throw new Error('Begleitdatei wurde als Eingang oder Datei angelegt');
+    if (lauf.staende[g.id]?.stand !== 'zugeordnet' || rec.stand !== 'zugeordnet' || rec.file) throw new Error('Stand ' + JSON.stringify(lauf));
+    const v = fall.uebergabeVorschlag;
+    if (!v || v.quelle !== 'Private Brain Pro' || v.lebensbereich !== 'Wohnen' || v.dokumentart !== 'Rechnung' || v.vorgang !== 'E-Mail › Rechnung' || !fall.proUebergabe) throw new Error('Vorschlag ' + JSON.stringify(v));
+    if ((await b.eingangAblage()).some(e => /familienakte-uebergabe\.json/i.test(e.file.name))) throw new Error('Begleitdatei steht im Eingang');
+    return true;
+  }));
+  await step('Vorsortierung: Begleitdatei zuerst – wartet, nach der Mail steht der Vorschlag da', async () => page.evaluate(async () => {
+    const b = window.__b, mail = await b.mail('Kommt später.'), s = await b.begleitdatei(mail, { lebensbereich: 'Gesundheit' });
+    const g = await b.begleit.proBegleitAnnehmen(s.m, s.file), frueh = await b.begleit.proBegleitAbgleichen();
+    if (frueh.staende[g.id]?.stand !== 'wartet' || !((await b.beleg(g.id)).file instanceof File)) throw new Error('wartet nicht: ' + JSON.stringify(frueh));
+    const q = await mail.annehmen(), spaet = await b.begleit.proBegleitAbgleichen(), fall = await b.fall(q.eingangId);
+    if (spaet.staende[g.id]?.stand !== 'zugeordnet' || fall.uebergabeVorschlag?.lebensbereich !== 'Gesundheit') throw new Error(JSON.stringify([spaet, fall.uebergabeVorschlag]));
+    return true;
+  }));
+  await step('Vorsortierung: schon geprüfte oder abgelegte Mail bleibt unverändert', async () => page.evaluate(async () => {
+    const b = window.__b, mail = await b.mail('Schon abgelegt.'), q = await mail.annehmen();
+    await b.eingangAblage(alle => alle.map(e => e.id === q.eingangId ? { ...e, status: 'Übernommen', savedDocumentId: 'dok-erfunden' } : e));
+    const vorher = JSON.stringify(await b.fall(q.eingangId)), s = await b.begleitdatei(mail), g = await b.begleit.proBegleitAnnehmen(s.m, s.file);
+    const lauf = await b.begleit.proBegleitAbgleichen();
+    if (lauf.staende[g.id]?.stand !== 'zu-spaet' || vorher !== JSON.stringify(await b.fall(q.eingangId))) throw new Error(JSON.stringify(lauf));
+    // Auch ein inzwischen entfernter Eingang wird nicht wieder angelegt.
+    const weg = await b.mail('Entfernt.'), qw = await weg.annehmen(); await b.eingangAblage(alle => alle.filter(e => e.id !== qw.eingangId));
+    const sw = await b.begleitdatei(weg), gw = await b.begleit.proBegleitAnnehmen(sw.m, sw.file), lw = await b.begleit.proBegleitAbgleichen();
+    if (lw.staende[gw.id]?.stand !== 'zu-spaet' || await b.fall(qw.eingangId)) throw new Error(JSON.stringify(lw));
+    return true;
+  }));
+  await step('Vorsortierung: falsche Prüfsumme wartet ohne Wirkung und verfällt nach 30 Tagen', async () => page.evaluate(async () => {
+    const b = window.__b, mail = await b.mail('Falsche Summe.'), q = await mail.annehmen();
+    const s = await b.begleitdatei(mail, { sha256: '0'.repeat(64) }), g = await b.begleit.proBegleitAnnehmen(s.m, s.file);
+    const jetzt = await b.begleit.proBegleitAbgleichen();
+    if (jetzt.staende[g.id]?.stand !== 'wartet' || (await b.fall(q.eingangId)).uebergabeVorschlag) throw new Error(JSON.stringify(jetzt));
+    const spaeter = await b.begleit.proBegleitAbgleichen(Date.now() + 31 * 86400000), rec = await b.beleg(g.id);
+    if (spaeter.staende[g.id]?.stand !== 'verfallen' || rec.stand !== 'verfallen' || rec.file || (await b.fall(q.eingangId)).uebergabeVorschlag) throw new Error(JSON.stringify(spaeter));
+    return true;
+  }));
+  await step('Vorsortierung: kaputtes JSON, zu groß und fremde Quelle legen nichts an', async () => page.evaluate(async () => {
+    const b = window.__b, mail = await b.mail('Unbrauchbar.'), q = await mail.annehmen(), vorher = await b.zahl();
+    for (const roh of ['{kein json', JSON.stringify({ vertrag: 'familienakte-uebergabe/1', dateien: [], fuell: 'x'.repeat(64 * 1024) }), JSON.stringify({ vertrag: 'falsch', dateien: [] })]) {
+      const s = await b.begleitdatei(mail, {}, { roh }), g = await b.begleit.proBegleitAnnehmen(s.m, s.file), rec = await b.beleg(g.id);
+      if (rec.stand !== 'unbrauchbar' || rec.file || !rec.grund) throw new Error('nicht als unbrauchbar gemerkt: ' + JSON.stringify(rec));
+    }
+    const fremd = await b.begleitdatei(mail, {}, { quelle: 'bookledgerpro' }); let abgelehnt = false;
+    try { await b.begleit.proBegleitAnnehmen(fremd.m, fremd.file); } catch { abgelehnt = true; }
+    await b.begleit.proBegleitAbgleichen();
+    if (!abgelehnt || JSON.stringify(vorher) !== JSON.stringify(await b.zahl()) || (await b.fall(q.eingangId)).uebergabeVorschlag) throw new Error('fremde Quelle oder unbrauchbare Datei hatte Wirkung');
+    return true;
+  }));
 } finally { await browser.close(); await app.stop(); }
 process.exit(summary('Pro-Übergabe in echter Browser-Datenbank'));
