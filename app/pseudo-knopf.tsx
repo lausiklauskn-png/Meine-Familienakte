@@ -20,6 +20,7 @@ import { korrigieren, maskeAusProfilen, neueProfile, profilNummernImText, type M
 import type { Pseudonymisierer } from "../lib/ki-auftrag";
 import { extractEmlAttachments } from "../lib/central-intake";
 import { dateiAusgeben } from "./dateiausgabe";
+import { nativenOrdnerWaehlen, ordnerFehlerText, ordnerPlugin } from "./nativer-ordner";
 import { profileSpeichern, useMaskeProfile } from "./maske-profil-speicher";
 
 const KEY = "familienakte_pseudo_v1";
@@ -167,8 +168,26 @@ async function ordnerGemerkt(): Promise<OrdnerGriff | null> {
 async function ordnerMerken(h: OrdnerGriff) {
   try { const db = await ordnerDb(); db.transaction("ordner", "readwrite").objectStore("ordner").put(h, "austausch"); } catch { /* nur Sitzung */ }
 }
+/** Ob es hier einen Austauschordner geben kann: Ordnerwahl des Browsers oder der App-Hülle. */
+const ordnerMoeglich = () => typeof window !== "undefined" && ("showDirectoryPicker" in window || !!ordnerPlugin());
+/** Altes Kopieren ohne Zwischenablage-Erlaubnis (Android-WebView lehnt `navigator.clipboard` teils ab). */
+function kopierenAlt(text: string): boolean {
+  const t = document.createElement("textarea");
+  t.value = text; t.setAttribute("readonly", ""); t.style.cssText = "position:fixed;top:0;left:0;width:1px;height:1px;opacity:0";
+  document.body.append(t); t.select();
+  let ok = false; try { ok = document.execCommand("copy"); } catch { ok = false; }
+  t.remove(); return ok;
+}
+async function textKopieren(text: string): Promise<boolean> {
+  try { await navigator.clipboard.writeText(text); return true; } catch { return kopierenAlt(text); }
+}
 /** Gemerkten Ordner holen (Erlaubnis neu erbitten); `waehlen` = sonst neu wählen lassen. */
 export async function austauschOrdner(waehlen: boolean): Promise<OrdnerGriff | null> {
+  // Android- und Windows-App: Ordnerwahl der App-Hülle (die WebView hat keine eigene); gilt bis zum Schließen der App.
+  if (ordnerPlugin()) {
+    if (!ordnerSitzung && waehlen) { try { ordnerSitzung = await nativenOrdnerWaehlen("Austauschordner für die KI wählen") as OrdnerGriff; } catch (e) { if ((e as DOMException)?.name === "AbortError") return null; throw e; } }
+    return ordnerSitzung;
+  }
   let h = ordnerSitzung || await ordnerGemerkt();
   if (h) {
     try {
@@ -226,6 +245,9 @@ export function PseudoFenster({ profil, basic, records = [], onProfile, onEntwur
   const [dateiArt, setDateiArt] = useState<"eine" | "zip" | "ordner">("eine");
   const [dateiAuf, setDateiAuf] = useState(false);
   const [bildExtra, setBildExtra] = useState<Stueck | null>(null);
+  // Die Meldung steht bei den Knöpfen (nicht über der Liste) und rückt ins Bild – bei vielen Dateien sah man sie sonst nicht.
+  const meldungOrt = useRef<HTMLParagraphElement>(null);
+  useEffect(() => { if (meldung) meldungOrt.current?.scrollIntoView?.({ block: "nearest", behavior: "smooth" }); }, [meldung]);
   const auftraege = usePseudoAuftraege(basic);
   const stand = useMaskeProfile(basic);
   const merktSich = !basic && (stand.ort === "tresor" || stand.ort === "geraet");
@@ -376,13 +398,16 @@ export function PseudoFenster({ profil, basic, records = [], onProfile, onEntwur
         }
         return "beides";
       }
-      await navigator.clipboard.writeText(text);
+      if (!await textKopieren(text)) return "fehler";
       if (bild) setBildExtra(bild);
       return "text";
     } catch {
-      try { await navigator.clipboard.writeText(text); if (bild) setBildExtra(bild); return "text"; } catch { return "fehler"; }
+      if (!await textKopieren(text)) return "fehler";
+      if (bild) setBildExtra(bild);
+      return "text";
     }
   };
+  const langHinweis = (text: string) => text.length > 400000 ? " Sehr langer Text – klappt das Einfügen nicht, „Als Datei“ nehmen." : "";
   const kopiertText = (k: "beides" | "text") => k === "beides" ? "Kopiert (Text und Bild)." : mit.some((s) => s.bild) ? "Kopiert (nur Text – das Bild bitte mit „Bild extra kopieren“)." : "Kopiert.";
 
   const zurKi = async (nurKopieren = false) => {
@@ -390,16 +415,18 @@ export function PseudoFenster({ profil, basic, records = [], onProfile, onEntwur
     if (leck) { setMeldung(`In ${leck.kennung} steht noch eine echte Angabe. Nichts wurde kopiert.`); return; }
     const text = auftragText(mit, aufgabe, stil, frei);
     if (!nurKopieren && ki === "mistral") { setMistralFrage(true); return; }
-    const gemerkt = await auftragSichern();
     if (!nurKopieren && ki === "claudecode") {
+      const gemerkt = await auftragSichern();
       await dateiAusgeben(new File([text], "Auftrag (pseudonymisiert).txt", { type: "text/plain" }));
       window.open(KIS.claudecode.url, "_blank", "noopener");
       setMeldung(`Auftrag als Datei gespeichert, Claude Code öffnet sich – dort die Datei hochladen oder den Inhalt einfügen.${gemerktText(gemerkt)}`);
       return;
     }
+    // Erst kopieren, solange der Tipp noch gilt (die WebView erlaubt die Zwischenablage nur kurz danach), dann den Auftrag sichern.
     const k = await kopieren(text);
     if (k === "fehler") { setMeldung("Kopieren ging nicht. Bitte „Als Datei“ nehmen."); return; }
-    if (nurKopieren) { setMeldung(`${kopiertText(k)} Das Original bleibt hier.${gemerktText(gemerkt)}`); return; }
+    const gemerkt = await auftragSichern();
+    if (nurKopieren) { setMeldung(`${kopiertText(k)}${langHinweis(text)} Das Original bleibt hier.${gemerktText(gemerkt)}`); return; }
     const netz = (window as unknown as { PBNetwork?: { ready?: boolean; offline?: boolean } }).PBNetwork;
     if (netz && (!netz.ready || netz.offline)) { setMeldung(`${kopiertText(k)} Internet für die App ist aus – oben einschalten, dann „An ${KIS[ki].name}“ noch einmal.${gemerktText(gemerkt)}`); return; }
     // ChatGPT/Claude: kurzer Auftrag gleich in der Adresse (wie der frühere Briefweg), sonst nur kopiert.
@@ -438,7 +465,7 @@ export function PseudoFenster({ profil, basic, records = [], onProfile, onEntwur
     aus.push({ name: "LIES-MICH.txt", daten: enc.encode(`${MARKE}\nPseudonymisiert mit der Familienakte. Namen, Anschriften und Nummern sind Platzhalter wie ⟦NAME-1⟧.\nDie Zuordnung bleibt auf dem Gerät. Antwort bitte als antwort.md neben diese Dateien legen.\n`) });
     return aus;
   };
-  const ordnerDa = typeof window !== "undefined" && "showDirectoryPicker" in window;
+  const ordnerDa = ordnerMoeglich();
 
   const alsDatei = async () => {
     if (!mit.length) return;
@@ -463,7 +490,7 @@ export function PseudoFenster({ profil, basic, records = [], onProfile, onEntwur
       }
       setDateiAuf(false);
       setMeldung(`Gespeichert. Dateinamen tragen nur D01 …, keine echten Namen.${gemerktText(gemerkt)}`);
-    } catch (e) { setMeldung(e instanceof Error ? e.message : "Speichern ging nicht."); }
+    } catch (e) { setMeldung(`Nicht gespeichert: ${ordnerFehlerText(e) || "Speichern ging nicht."}`); if (dateiArt === "ordner") ordnerSitzung = null; }
   };
 
   /** Zurückführen mit der Zuordnung eines Auftrags; „BETREFF: … ---“ wird für den Entwurf abgetrennt. */
@@ -494,7 +521,7 @@ export function PseudoFenster({ profil, basic, records = [], onProfile, onEntwur
         } catch { /* hier noch keine Antwort */ }
       }
       setMeldung("Noch keine antwort.md zu einem offenen Auftrag gefunden.");
-    } catch (e) { setMeldung(e instanceof Error ? e.message : "Der Austauschordner ist nicht erreichbar."); }
+    } catch (e) { setMeldung(ordnerFehlerText(e) || "Der Austauschordner ist nicht erreichbar."); }
   };
 
   const kiWaehlen = (k: KiWahl) => { setKi(k); setKiMenue(false); try { localStorage.setItem(KI_KEY, k); } catch { /* nur Sitzung */ } };
@@ -527,7 +554,7 @@ export function PseudoFenster({ profil, basic, records = [], onProfile, onEntwur
         <textarea ref={textFeld} rows={3} value={eingabe} onChange={(e) => setEingabe(e.target.value)} placeholder="Brief, Mail oder Notiz einfügen – oder was im Brief stehen soll …" data-pseudo-text/>
         <button type="button" className="pf-kn haupt" disabled={!eingabe.trim() || !p} onClick={() => { void hinzu([{ name: "Eingefügter Text", art: "Text", text: eingabe }]); setEingabe(""); setTextAuf(false); }} data-pseudo-los>Pseudonymisieren</button>
       </div>}
-      {meldung && <p className="pf-weg" role="status" data-pseudo-meldung>{meldung}</p>}
+      {meldung && !stuecke.length && <p className="pf-weg" role="status" data-pseudo-meldung>{meldung}</p>}
 
       {stuecke.length > 0 && <>
         <div className="pf-summe"><b>Pseudonymisiert</b><span><span data-pseudo-summe>{summe} verdeckt</span>{pruefSumme > 0 && <> · <span className="pf-flagge">⚑ {pruefSumme} prüfen</span></>}</span></div>
@@ -572,12 +599,13 @@ export function PseudoFenster({ profil, basic, records = [], onProfile, onEntwur
             {bildExtra && <button type="button" className="pf-kn" onClick={async () => { const b = await bildPng(bildExtra); const Item = (window as unknown as { ClipboardItem?: typeof ClipboardItem }).ClipboardItem; try { if (!b || !Item) throw new Error(); await navigator.clipboard.write([new Item({ "image/png": b })]); setMeldung(`Bild ${bildExtra.kennung} kopiert – dort einfügen.`); setBildExtra(null); } catch { setMeldung("Bild kopieren geht hier nicht – „Als Datei“ nehmen."); } }} data-pseudo-bild-extra>Bild extra kopieren</button>}
             <button type="button" className="link-button pf-gruen" onClick={() => setReiter("zurueck")}>Antwort da → 2 Zurück</button>
           </div>
+          {meldung && <p className="pf-weg" role="status" ref={meldungOrt} data-pseudo-meldung>{meldung}</p>}
           {dateiAuf && <div className="pf-dateiwahl" role="radiogroup" aria-label="Wie speichern?" data-pseudo-dateiwahl>
             <label><input type="radio" name="pf-datei" checked={dateiArt === "eine"} onChange={() => setDateiArt("eine")}/> Eine Textdatei (alles zusammen)</label>
             <label><input type="radio" name="pf-datei" checked={dateiArt === "zip"} onChange={() => setDateiArt("zip")} data-pseudo-zip/> ZIP (je Datei eine, Bilder abgedeckt)</label>
             {ordnerDa && <label><input type="radio" name="pf-datei" checked={dateiArt === "ordner"} onChange={() => setDateiArt("ordner")} data-pseudo-austausch/> In den Austauschordner (Claude Code)</label>}
             <div className="pf-weiter"><button type="button" className="pf-kn haupt" onClick={() => void alsDatei()} data-pseudo-datei-los><Download size={14}/> Speichern</button>
-              {ordnerDa && dateiArt === "ordner" && <button type="button" className="pf-kn" onClick={async () => { ordnerSitzung = null; const w = window as unknown as { showDirectoryPicker?: (o: { id: string; mode: string }) => Promise<OrdnerGriff> }; try { const h = await w.showDirectoryPicker!({ id: "ki-austausch", mode: "readwrite" }); ordnerSitzung = h; await ordnerMerken(h); setMeldung(`Austauschordner: ${h.name}`); } catch { /* abgebrochen */ } }}><FolderOpen size={14}/> Ordner wählen …</button>}</div>
+              {ordnerDa && dateiArt === "ordner" && <button type="button" className="pf-kn" onClick={async () => { ordnerSitzung = null; try { if (ordnerPlugin()) { const h = await austauschOrdner(true); if (h) setMeldung(`Austauschordner: ${h.name}`); return; } const w = window as unknown as { showDirectoryPicker?: (o: { id: string; mode: string }) => Promise<OrdnerGriff> }; const h = await w.showDirectoryPicker!({ id: "ki-austausch", mode: "readwrite" }); ordnerSitzung = h; await ordnerMerken(h); setMeldung(`Austauschordner: ${h.name}`); } catch (e) { if ((e as DOMException)?.name !== "AbortError") setMeldung(ordnerFehlerText(e)); } }} data-pseudo-ordner-waehlen><FolderOpen size={14}/> Ordner wählen …</button>}</div>
             <small className="leise">Dateinamen nur D01 …, dazu auftrag.md und LIES-MICH.txt. Klartext und Zuordnung bleiben auf dem Gerät.{ordnerDa ? " Austauschordner: einen eigenen Ordner wählen (nie den Pro-Tresor); die KI legt antwort.md daneben." : ""}</small>
           </div>}
         </div>
@@ -595,7 +623,7 @@ export function PseudoFenster({ profil, basic, records = [], onProfile, onEntwur
       {meldung && <p className="pf-weg" role="status">{meldung}</p>}
       {zurueck && <>{zurueck.betreff && <b className="pf-betreff">{zurueck.betreff}</b>}<pre className="pf-klar" data-pseudo-klar>{zurueck.text}</pre>
         {zurueck.offen.length > 0 && <small>{zurueck.offen.length} Platzhalter kannte die App nicht: {zurueck.offen.join(" ")}</small>}
-        <div className="pf-weiter"><button type="button" className="pf-kn" onClick={async () => { try { await navigator.clipboard.writeText(zurueck.text); setMeldung("Kopiert."); } catch { setMeldung("Kopieren ging nicht."); } }}><Copy size={14}/> Kopieren</button>
+        <div className="pf-weiter"><button type="button" className="pf-kn" onClick={async () => { setMeldung(await textKopieren(zurueck.text) ? "Kopiert." : "Kopieren ging nicht."); }}><Copy size={14}/> Kopieren</button>
           <button type="button" className="pf-kn" onClick={() => void dateiAusgeben(new File([zurueck.text], "Antwort.txt", { type: "text/plain" }))}><Download size={14}/> Als Datei</button>
           {onEntwurf && <button type="button" className="pf-kn" disabled={busy} onClick={async () => { setBusy(true); try { await onEntwurf({ betreff: zurueck.betreff, text: zurueck.text }); setMeldung("Als Entwurf gespeichert – steht in der Korrespondenz (Assistenz)."); } catch (e) { setMeldung(e instanceof Error ? e.message : "Der Entwurf konnte nicht gespeichert werden."); } finally { setBusy(false); } }} data-pseudo-entwurf>Als Entwurf</button>}
           {onPdf && <button type="button" className="pf-kn" onClick={() => onPdf({ betreff: zurueck.betreff, text: zurueck.text })} data-pseudo-pdf><FileText size={14}/> PDF</button>}</div></>}

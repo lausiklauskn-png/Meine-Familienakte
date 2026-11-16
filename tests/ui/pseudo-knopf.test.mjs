@@ -52,6 +52,19 @@ try {
       const zweite = await page.locator('[data-pseudo-stueck="D02"]').innerText();
       return soll(kopie.startsWith("⟦PSEUDONYMISIERT v1⟧") && /=== D01/.test(kopie) && !KLAR.some((k) => kopie.includes(k)) && !kopie.includes("Brief Mara") && /schon pseudonymisiert/.test(zweite), { anfang: kopie.slice(0, 80), zweite });
     });
+    await step(`${name}: Meldung steht bei den Knöpfen; ohne Zwischenablage-Erlaubnis kopiert der Ersatzweg`, async () => {
+      const r = await page.evaluate(async () => {
+        const alt = navigator.clipboard.writeText; let ersatz = 0; const cmd = document.execCommand;
+        navigator.clipboard.writeText = async () => { throw new DOMException("gesperrt", "NotAllowedError"); };
+        document.execCommand = (c) => { if (c === "copy") { ersatz++; return true; } return false; };
+        document.querySelector("[data-pseudo-kopieren]").click();
+        await new Promise((ok) => setTimeout(ok, 1200));
+        navigator.clipboard.writeText = alt; document.execCommand = cmd;
+        const m = document.querySelectorAll("[data-pseudo-meldung]");
+        return { ersatz, zahl: m.length, beiKnoepfen: !!m[0]?.closest("[data-pseudo-ki]"), text: m[0]?.textContent || "" };
+      });
+      return soll(r.ersatz === 1 && r.zahl === 1 && r.beiKnoepfen && /^Kopiert/.test(r.text), r);
+    });
     await step(`${name}: ein KI-Knopf – Wahl Claude, Knopf heißt „An Claude“, öffnet nur claude.ai, Text liegt in der Zwischenablage`, async () => {
       await page.locator('[data-pseudo-stueck="D02"] [data-pseudo-mit]').uncheck();
       // Internet für die App aus (ab Werk): kopiert, öffnet nichts, sagt es. Dann einschalten.
