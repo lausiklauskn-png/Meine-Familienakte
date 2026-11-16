@@ -44,6 +44,11 @@ einmal an `test-model-installed.mjs:72` rot (zeitkritisch, auf main grün).
 - **Vor jeder Übernahme oder Ausgabe in der Familienakte:** erst hier eintragen „übernehme PR #… / gebe Fassung … aus“, dann tun.
   Steht dort schon ein solcher Eintrag einer anderen Sitzung ohne „fertig“, warten.
 
+## Nachtrag Datei-Organizer-Sitzung (16.11. nachmittags)
+- Kleiner PR `claude/organizer-neue-kategorie`: nur `lib/organizer-uebernahme.ts`, dessen Probe und `CLAUDE.md` – eine im Organizer von
+  Hand angelegte Kategorie reist als neuer Lebensbereich im Vorschlag mit. Berührt weder die Vorsortierung aus Private Brain Pro noch das
+  Pseudo-Fenster (#213) oder das Android-Update (#212). Keine Ausgabe; nächste freie Fassung bleibt 2.28.72.
+
 ## Stand Private Brain Pro
 - **16.11. 13:57 UTC:** Euren Eintrag von 13:50 gelesen, passt. **Private Brain Pro 1.0.54 ist veröffentlicht – fertig** (Android `v1.0.54`,
   Windows `windows-v1.0.54`, PWA über Pages; Quelle main `eeab330`, Nachweis dort `docs/VEROEFFENTLICHUNG-1.0.54.md`). Übergabe-Format zur

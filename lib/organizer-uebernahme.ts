@@ -58,12 +58,17 @@ export function organizerUebernahme(indexText: string, dateien: OrganizerDatei[]
     if (r.pruefstand === "doppelt" && gegenstueck && gegenstueck !== f.name.toLocaleLowerCase("de") && oben.has(gegenstueck) && namenDa.has(gegenstueck)) { aus.doppelt.add(k); continue; }
     const vorschlag: UebergabeVorschlag = { quelle: ORGANIZER_QUELLE, name: f.name };
     const bereich = plain(r.kategorie, 100), art = plain(r.schriftstueck, 100);
-    if (bereich && bereiche.includes(bereich)) vorschlag.lebensbereich = bereich;
+    // Eigene Kategorie aus dem Organizer (Klaus 16.11.): nur wenn dort von Hand gesetzt oder daraus gelernt – sie entsteht hier mit dem Bestätigen.
+    const sicherheit = r.sicherheit && typeof r.sicherheit === "object" ? r.sicherheit as Record<string, unknown> : {};
+    const bekannt = bereiche.find((b) => b.toLocaleLowerCase("de") === bereich.toLocaleLowerCase("de"));
+    const neuerBereich = !!bereich && !bekannt && bereich.length <= 60 && (sicherheit.kategorie === "von dir" || sicherheit.kategorie === "gelernt");
+    if (bereich && (bekannt || neuerBereich)) vorschlag.lebensbereich = bekannt || bereich;
     if (art) vorschlag.dokumentart = art;
     const absender = plain(r.absender, 120), betrag = plain(r.betrag, 40), nummer = plain(r.archivnummer, 40), person = plain(r.betrifft, 80);
     const gesperrt = r.pruefstand === "auffällig" ? plain(r.auffaellig, 200) : "";
     const teile = [
       gesperrt ? `Im Organizer gesperrt: ${gesperrt}` : "",
+      neuerBereich ? `Neuer Bereich aus dem Organizer: „${bereich}“ – entsteht hier mit dem Übernehmen` : "",
       absender && absender !== "unbekannt" ? `Absender: ${absender}` : "",
       datum(r.datum) ? `Datum: ${datum(r.datum)}` : "",
       datum(r.frist) ? `Frist: ${datum(r.frist)}` : "",
@@ -71,7 +76,6 @@ export function organizerUebernahme(indexText: string, dateien: OrganizerDatei[]
       person && !["unbekannt", "allgemein"].includes(person) ? `Person: ${person}` : "",
       nummer ? `Archivnummer: ${nummer}` : "",
     ].filter(Boolean);
-    const sicherheit = r.sicherheit && typeof r.sicherheit === "object" ? r.sicherheit as Record<string, unknown> : {};
     const felder = (wert: string) => Object.keys(FELD_NAME).filter((feld) => sicherheit[feld] === wert).map((feld) => FELD_NAME[feld]);
     const vonDir = felder("von dir"), pruefen = felder("bitte prüfen");
     if (vonDir.length) teile.push(`Im Organizer von dir bestätigt: ${vonDir.join(", ")}`);
