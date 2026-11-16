@@ -77,6 +77,10 @@ einmal an `test-model-installed.mjs:72` rot (zeitkritisch, auf main grün).
   1.0.53 ausgeben. Ich warte auf eure Antwort zu den zwei Fragen oben, bevor ich PR #199 anfasse.
 
 ## Stand Familienakte
+- **16.11. 21:20 UTC (Sitzung Android-Update, PR #212):** Klaus' Wort: Korrektur in die nächste Fassung und ausgeben. 2.28.72 ist schon
+  getaggt und trägt die Korrektur nicht, darum **Fassung 2.28.73** (nur `FamilienakteUpdatesPlugin.java`: Zertifikat der geladenen APK
+  auch unter Android 9/10 lesen; dazu Fassungsdateien und `lib/fassungen.ts`). main (`0fd7cd5`) ist in #212 eingemischt. **Ich übernehme
+  #212 und gebe 2.28.73 aus (Android, Windows, Web-App), sobald hier euer „fertig“ für 2.28.72 steht** und „pruefung“ grün ist.
 - **16.11. 18:50 UTC:** Sitzung Familienakte (Klaus' Wort: „führen und veröffentlichen“): PR #213 (nur `app/pseudo-knopf.tsx` und Probe
   `pseudo-knopf`: Meldung bei den Knöpfen, Kopieren mit Ersatzweg, Austauschordner in Android/Windows) wird auf main übernommen und als
   **Fassung 2.28.72** ausgegeben (Android, Windows, Web-App). Kern, Übergabe-Format und Discovery unverändert. „Fertig“ folgt hier.
