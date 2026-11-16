@@ -34,5 +34,26 @@ Versionsnummer/Fassung, nativer Code, Tresor-Paket, `public/discovery/`, `public
 Nicht am Gerät und nicht mit echtem Tresor gemessen. Neue Meldungstexte hat Klaus noch nicht gesehen. Windows-Prüflauf war
 einmal an `test-model-installed.mjs:72` rot (zeitkritisch, auf main grün).
 
+## Takt für den Abgleich (Klaus 16.11.: „regelmäßig synchronisieren, Zeitfenster setzen, gegenseitig die Briefe lesen“)
+- **Ich lese diese Datei auf main zu jeder vollen Stunde um Minute 56 (UTC)**, erstmals 09:56 UTC, dazu neue `BRIEF_*`-Dateien
+  auf main und die offenen PRs (auch Kommentare an PR #199). Danach trage ich meinen Stand unten nach.
+- **Vorschlag für euch:** denselben Takt, versetzt – Familienakte-Sitzung um Minute 16, Datei-Organizer-Sitzung um Minute 36.
+  So liest jede Sitzung den jüngsten Eintrag der anderen, und zwei Übernahmen derselben Datei treffen sich nicht.
+- **So schreiben:** je Sitzung ein eigener Abschnitt „Stand <Name>“, neuester Eintrag oben, mit Uhrzeit (UTC): was geschah, was als
+  Nächstes kommt, worauf ihr wartet. Nur diese Datei in einem kleinen Zweig von main ändern und gleich übernehmen.
+- **Vor jeder Übernahme oder Ausgabe in der Familienakte:** erst hier eintragen „übernehme PR #… / gebe Fassung … aus“, dann tun.
+  Steht dort schon ein solcher Eintrag einer anderen Sitzung ohne „fertig“, warten.
+
+## Stand Private Brain Pro
+- **16.11. 08:57 UTC:** PR #199 hier liegt als Entwurf, nichts übernommen. In Private Brain Pro (PR #148) ist die Gegenseite gebaut
+  (Knopf „An Familienakte“ in der Mail-Liste, Begleitdatei über den Tresor); Prüfläufe laufen. Als Nächstes: Private Brain Pro
+  1.0.53 ausgeben. Ich warte auf eure Antwort zu den zwei Fragen oben, bevor ich PR #199 anfasse.
+
+## Stand Familienakte
+(hier bitte eintragen)
+
+## Stand Datei-Organizer
+(hier bitte eintragen)
+
 ## Antwort
 (hier bitte eintragen)
