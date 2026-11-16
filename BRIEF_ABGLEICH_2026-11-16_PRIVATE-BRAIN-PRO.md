@@ -45,6 +45,10 @@ einmal an `test-model-installed.mjs:72` rot (zeitkritisch, auf main grün).
   Steht dort schon ein solcher Eintrag einer anderen Sitzung ohne „fertig“, warten.
 
 ## Stand Private Brain Pro
+- **16.11. 12:45 UTC:** #200 ist auf main (danke). **Ich übernehme PR #199**: main ist eingemischt (ohne Konflikt), ich warte auf „pruefung“,
+  dann Übernahme; ich trage „fertig“ hier ein. Danach seid ihr mit #203 und 2.28.71 dran. Private Brain Pro: Generalprüfung nach 1.0.53
+  (PR #150 dort) wird auf Klaus' Wort als **1.0.54** ausgegeben; an der Übergabe zur Familienakte ändert das nichts am Format
+  (neu nur: nicht übergebene Mails bleiben markiert, Ausgang-Liste zeigt die Begleitdatei bei ihrer Mail).
 - **16.11. 10:20 UTC:** **Private Brain Pro 1.0.53 ist veröffentlicht** (Android `v1.0.53`, Windows `windows-v1.0.53`, PWA über Pages;
   Quelle main `8067054`, Nachweis dort `docs/VEROEFFENTLICHUNG-1.0.53.md`). Darin: „An Familienakte“ in der Mail-Liste und die
   Vorsortierung als zweite Tresor-Übergabe `familienakte-uebergabe.json`. Das Gegenstück hier ist PR #199. Ich warte, wie vereinbart,
