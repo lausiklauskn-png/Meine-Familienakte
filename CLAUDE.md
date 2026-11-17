@@ -293,7 +293,8 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   `claude/kalender-register-konflikt`, Entwurfs-PR, Fassung nicht erhöht, nicht ausgegeben):** Lesen–Ändern–Schreiben am Register ist
   nicht ein Schritt; schrieb der Kalender-Abgleich im Hintergrund zur selben Zeit wie Löschen/Abhaken/Ändern, wurde einer von beiden mit
   `REGISTER_CONFLICT` abgewiesen (Löschen dann ohne jede Meldung). Jetzt wiederholen `deleteLocalScheduleRecord`,
-  `updateLocalScheduleStatus`, `updateLocalScheduleTermin`, `updateLocalScheduleKalender` den Vorgang mit frischem Stand
+  `updateLocalScheduleStatus`, `updateLocalScheduleTermin`, `updateLocalScheduleKalender`, `deleteLocalMemoryRecord`,
+  `papierkorbWiederherstellen`, `papierkorbEndgueltig` den Vorgang mit frischem Stand
   (`beiKonfliktErneut` in `app/local-vault.ts`, höchstens viermal). Probe `run-vault-safety-tests` (1 neu, Gegenprobe rot). Am Gerät
   ungeprüft; die übrigen Register-Vorgänge (rund 100 Stellen) haben denselben Aufbau und sind nicht umgestellt.
   **Eigentliche Ursache (Klaus' Bilder 17.11.: Stand 1439 → 2108 → 2447 in sechs Minuten):** ein aus dem Kalender geholter Termin, in der

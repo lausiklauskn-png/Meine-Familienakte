@@ -4494,6 +4494,9 @@ export async function getLocalMemoryDeleteImpact(handle: FileSystemDirectoryHand
 }
 
 export async function deleteLocalMemoryRecord(handle: FileSystemDirectoryHandle, eventId: string, options: { keepLinkedSchedules: boolean }) {
+  return beiKonfliktErneut(() => deleteLocalMemoryRecordEinmal(handle, eventId, options));
+}
+async function deleteLocalMemoryRecordEinmal(handle: FileSystemDirectoryHandle, eventId: string, options: { keepLinkedSchedules: boolean }) {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   const index = await readIndex(handle);
   const event = index.records.find((record) => record.id === eventId && isMemoryRecord(record));
@@ -4908,6 +4911,9 @@ export async function papierkorbLesen(handle: FileSystemDirectoryHandle): Promis
 
 /** Zurückholen: Status von vorher, Verbindungen und Notiz wieder da. Was es inzwischen nicht mehr gibt, wird übersprungen. */
 export async function papierkorbWiederherstellen(handle: FileSystemDirectoryHandle, eintragId: string) {
+  return beiKonfliktErneut(() => papierkorbWiederherstellenEinmal(handle, eintragId));
+}
+async function papierkorbWiederherstellenEinmal(handle: FileSystemDirectoryHandle, eintragId: string) {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   const index = await readIndex(handle);
   const liste = papierkorbListe(index);
@@ -4934,6 +4940,9 @@ export async function papierkorbWiederherstellen(handle: FileSystemDirectoryHand
 
 /** Endgültig löschen: der Eintrag verlässt den Papierkorb; Notiz-Medien werden jetzt entfernt. Termine bleiben archiviert im Register. */
 export async function papierkorbEndgueltig(handle: FileSystemDirectoryHandle, eintragIds: string[]) {
+  return beiKonfliktErneut(() => papierkorbEndgueltigEinmal(handle, eintragIds));
+}
+async function papierkorbEndgueltigEinmal(handle: FileSystemDirectoryHandle, eintragIds: string[]) {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   const index = await readIndex(handle);
   const weg = papierkorbListe(index).filter((x) => eintragIds.includes(x.id));
