@@ -249,7 +249,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Proben-Hinweise: `step()` wertet einen zurückgegebenen Text als grün, deshalb `soll()`; Seitentitel sind keine Sprungziele.
 - **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.71, 2.28.70, 2.28.69, 2.28.68, 2.28.67, 2.28.66, 2.28.65, 2.28.64, 2.28.61, 2.28.60, 2.28.59, 2.28.58, 2.28.57, 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
   (2.28.50 ausgegeben, aber ohne eigenen Nachweis; 2.28.40–2.28.47 waren Zwischenstände). Keine davon erneut ausgeben;
-  **nächste freie Fassung 2.28.72** (2.28.62 und 2.28.63 nie ausgegeben). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
+  **nächste freie Fassung 2.28.75** (2.28.62 und 2.28.63 nie ausgegeben). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
   sammeln, Proben laufen lassen, gesammelt als eine Fassung ausgeben (ersetzt „jede neue Funktion gleich ausgeben“ vom 06.11.).
   Neue Fassung oben in `lib/fassungen.ts` eintragen. Die Versionszeile zeigt die technische Fassung aus `package.json`;
   `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
@@ -289,6 +289,21 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Offen
 
+- **Löschen im Kalender meldete „Register wurde zwischenzeitlich geändert“ (Klaus 17.11., Tablet 2.28.73; #218, **Fassung 2.28.74**,
+  Klaus' Wort 17.11.: zusammenführen und ausgeben; 2.28.72 und 2.28.73 sind ausgegeben (Tags vorhanden, Nachweise fehlen);
+  dazu Papierkorb: beim Wiederherstellen ist nur die angetippte Zeile gesperrt, Klaus' Ja 17.11.):** Lesen–Ändern–Schreiben am Register ist
+  nicht ein Schritt; schrieb der Kalender-Abgleich im Hintergrund zur selben Zeit wie Löschen/Abhaken/Ändern, wurde einer von beiden mit
+  `REGISTER_CONFLICT` abgewiesen (Löschen dann ohne jede Meldung). Jetzt wiederholen `deleteLocalScheduleRecord`,
+  `updateLocalScheduleStatus`, `updateLocalScheduleTermin`, `updateLocalScheduleKalender`, `deleteLocalMemoryRecord`,
+  `papierkorbWiederherstellen`, `papierkorbEndgueltig` den Vorgang mit frischem Stand
+  (`beiKonfliktErneut` in `app/local-vault.ts`, höchstens viermal). Probe `run-vault-safety-tests` (1 neu, Gegenprobe rot). Am Gerät
+  ungeprüft; die übrigen Register-Vorgänge (rund 100 Stellen) haben denselben Aufbau und sind nicht umgestellt.
+  **Eigentliche Ursache (Klaus' Bilder 17.11.: Stand 1439 → 2108 → 2447 in sechs Minuten):** ein aus dem Kalender geholter Termin, in der
+  Akte geändert, wurde endlos hinausgeschrieben – `standLokal` der `kalenderQuelle` ändert sich erst beim Einlesen, der Plan blieb
+  „aendern“, jeder Lauf schrieb Kalender, Register und Sicherung (rund drei Mal je Sekunde). Jetzt: `abgleichPlan` schreibt nur, wenn
+  die Zuordnung nicht schon diesen Stand trägt (`lib/kalender.ts`); dazu eine Sicherung in `useKalenderAutoAbgleich`
+  (`zuletztGelaufen`: derselbe Plan läuft nach fehlerfreiem Lauf nicht von selbst noch einmal). Probe `run-kalender-einlesen-tests`
+  (1 neu, Gegenprobe rot). Am Gerät ungeprüft; ob bei Klaus genau dieser Termin die Schleife auslöste, ist aus den Bildern geschlossen.
 - **Pseudo-Fenster, Kopieren (Klaus 16.11., nicht ausgegeben, Fassung nicht erhöht; Brief `BRIEF_ABSCHLUSS_2026-11-16_PSEUDO-KOPIEREN.md`):**
   Meldung unter den Knöpfen statt über der Liste, erst kopieren dann Auftrag sichern (Ersatzweg `textKopieren`), Austauschordner in
   Android/Windows über `nativenOrdnerWaehlen`. Am Gerät ungeprüft (43 PDFs: Grenze der Android-Zwischenablage rund 1 MB).

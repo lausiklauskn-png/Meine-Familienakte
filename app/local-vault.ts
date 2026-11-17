@@ -868,6 +868,18 @@ async function writeIndexToRegisterDirectory(resolveDirectory: () => Promise<Fil
   return withRegisterWriteLock(() => writeIndexToRegisterDirectoryUnlocked(resolveDirectory, index, options));
 }
 
+/**
+ * Lesen–Ändern–Schreiben am Register ist kein einzelner Schritt: läuft im Hintergrund ein zweiter Vorgang (Kalender-Abgleich,
+ * Sicherung), kann das Schreiben mit REGISTER_CONFLICT abgewiesen werden – dabei wurde noch nichts gespeichert. Kurze Vorgänge,
+ * die nur das Register ändern, lesen dann den neuen Stand und führen dieselbe Änderung noch einmal aus (höchstens viermal).
+ */
+async function beiKonfliktErneut<T>(vorgang: () => Promise<T>): Promise<T> {
+  for (let versuch = 1; ; versuch++) {
+    try { return await vorgang(); }
+    catch (error) { if (!(error instanceof VaultRegisterError && error.code === "REGISTER_CONFLICT") || versuch >= 4) throw error; }
+  }
+}
+
 async function writeIndex(handle: FileSystemDirectoryHandle, index: VaultIndex, options?: { preserveTimestamp?: boolean; diagnostics?: string[] }) {
   const resolvedRoot = await root(handle);
   return writeIndexToRegisterDirectory(() => resolvedRoot.getDirectoryHandle("00_Register", { create: true }), index, options);
@@ -4013,6 +4025,9 @@ function kalenderEingabe(input: Pick<CreateScheduleInput, "dueTime" | "erinnerun
  * nach einem Abgleich festhalten. Im Protokoll stehen nur Kennung und Anbieter, kein Inhalt.
  */
 export async function updateLocalScheduleKalender(handle: FileSystemDirectoryHandle, aenderungen: Array<{ id: string; kalenderEintragen?: boolean; ziel?: { anbieter: KalenderAnbieter; kalenderId: string }; zuordnung?: KalenderZuordnung | null }>) {
+  return beiKonfliktErneut(() => updateLocalScheduleKalenderEinmal(handle, aenderungen));
+}
+async function updateLocalScheduleKalenderEinmal(handle: FileSystemDirectoryHandle, aenderungen: Array<{ id: string; kalenderEintragen?: boolean; ziel?: { anbieter: KalenderAnbieter; kalenderId: string }; zuordnung?: KalenderZuordnung | null }>) {
   if (!aenderungen.length) return [];
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   const index = await readIndex(handle);
@@ -4039,6 +4054,9 @@ export async function updateLocalScheduleKalender(handle: FileSystemDirectoryHan
 export type LocalScheduleStatus = "offen" | "in_bearbeitung" | "wartet_auf_antwort" | "erledigt" | "zurückgestellt";
 
 export async function updateLocalScheduleStatus(handle: FileSystemDirectoryHandle, id: string, status: LocalScheduleStatus) {
+  return beiKonfliktErneut(() => updateLocalScheduleStatusEinmal(handle, id, status));
+}
+async function updateLocalScheduleStatusEinmal(handle: FileSystemDirectoryHandle, id: string, status: LocalScheduleStatus) {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   const index = await readIndex(handle);
   const record = index.records.find((item) => item.id === id && ["deadline", "task", "reminder"].includes(item.recordType));
@@ -4064,6 +4082,9 @@ export async function updateLocalScheduleStatus(handle: FileSystemDirectoryHandl
  * danach erscheint er in keiner Liste, keinem Kalender und keiner Glocke mehr. Die Notiz im Tagebuch bleibt.
  */
 export async function deleteLocalScheduleRecord(handle: FileSystemDirectoryHandle, id: string) {
+  return beiKonfliktErneut(() => deleteLocalScheduleRecordEinmal(handle, id));
+}
+async function deleteLocalScheduleRecordEinmal(handle: FileSystemDirectoryHandle, id: string) {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   const index = await readIndex(handle);
   const record = index.records.find((item) => item.id === id && ["deadline", "task", "reminder"].includes(item.recordType));
@@ -4404,6 +4425,9 @@ export async function updateLocalMemoryRecord(handle: FileSystemDirectoryHandle,
 
 /** Termin einer Aufgabe/Frist ändern (Klaus 2026-11-05: Zeitpunkt jederzeit änderbar); der Kalender-Abgleich zieht nach. */
 export async function updateLocalScheduleTermin(handle: FileSystemDirectoryHandle, id: string, changes: { title?: string; dueAt?: string; dueTime?: string | null; erinnerungen?: ErinnerungsWahl[]; kalenderWahl?: KalenderFelder["kalenderWahl"] | null; kalenderEintragen?: boolean }) {
+  return beiKonfliktErneut(() => updateLocalScheduleTerminEinmal(handle, id, changes));
+}
+async function updateLocalScheduleTerminEinmal(handle: FileSystemDirectoryHandle, id: string, changes: { title?: string; dueAt?: string; dueTime?: string | null; erinnerungen?: ErinnerungsWahl[]; kalenderWahl?: KalenderFelder["kalenderWahl"] | null; kalenderEintragen?: boolean }) {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   const index = await readIndex(handle);
   const erinnerung = index.records.find((item) => item.id === id && item.recordType === "reminder");
@@ -4470,6 +4494,9 @@ export async function getLocalMemoryDeleteImpact(handle: FileSystemDirectoryHand
 }
 
 export async function deleteLocalMemoryRecord(handle: FileSystemDirectoryHandle, eventId: string, options: { keepLinkedSchedules: boolean }) {
+  return beiKonfliktErneut(() => deleteLocalMemoryRecordEinmal(handle, eventId, options));
+}
+async function deleteLocalMemoryRecordEinmal(handle: FileSystemDirectoryHandle, eventId: string, options: { keepLinkedSchedules: boolean }) {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   const index = await readIndex(handle);
   const event = index.records.find((record) => record.id === eventId && isMemoryRecord(record));
@@ -4884,6 +4911,9 @@ export async function papierkorbLesen(handle: FileSystemDirectoryHandle): Promis
 
 /** Zurückholen: Status von vorher, Verbindungen und Notiz wieder da. Was es inzwischen nicht mehr gibt, wird übersprungen. */
 export async function papierkorbWiederherstellen(handle: FileSystemDirectoryHandle, eintragId: string) {
+  return beiKonfliktErneut(() => papierkorbWiederherstellenEinmal(handle, eintragId));
+}
+async function papierkorbWiederherstellenEinmal(handle: FileSystemDirectoryHandle, eintragId: string) {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   const index = await readIndex(handle);
   const liste = papierkorbListe(index);
@@ -4910,6 +4940,9 @@ export async function papierkorbWiederherstellen(handle: FileSystemDirectoryHand
 
 /** Endgültig löschen: der Eintrag verlässt den Papierkorb; Notiz-Medien werden jetzt entfernt. Termine bleiben archiviert im Register. */
 export async function papierkorbEndgueltig(handle: FileSystemDirectoryHandle, eintragIds: string[]) {
+  return beiKonfliktErneut(() => papierkorbEndgueltigEinmal(handle, eintragIds));
+}
+async function papierkorbEndgueltigEinmal(handle: FileSystemDirectoryHandle, eintragIds: string[]) {
   if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
   const index = await readIndex(handle);
   const weg = papierkorbListe(index).filter((x) => eintragIds.includes(x.id));
