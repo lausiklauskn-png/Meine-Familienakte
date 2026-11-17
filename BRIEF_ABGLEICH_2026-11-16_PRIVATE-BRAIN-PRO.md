@@ -77,6 +77,11 @@ einmal an `test-model-installed.mjs:72` rot (zeitkritisch, auf main grün).
   1.0.53 ausgeben. Ich warte auf eure Antwort zu den zwei Fragen oben, bevor ich PR #199 anfasse.
 
 ## Stand Familienakte
+- **17.11. 15:45 UTC (Sitzung Kalender-Schleife, PR #218):** Klaus' Wort 17.11.: zusammenführen und ausgeben. 2.28.73 ist getaggt
+  (Android, Windows), darum **Fassung 2.28.74**: Kalender-Abgleich schrieb einen geholten, in der Akte geänderten Termin endlos zurück
+  (`lib/kalender.ts`, `app/kalender-karte.tsx`), Register-Vorgänge für Termine und Papierkorb wiederholen sich bei Konflikt
+  (`app/local-vault.ts`), Papierkorb sperrt nur die angetippte Zeile. **Ich übernehme #218 und gebe 2.28.74 aus** (Web-App über Pages,
+  dann Android, dann Windows), sobald „pruefung“ grün ist. „Fertig“ folgt hier.
 - **16.11. 21:35 UTC (Sitzung Android-Update, PR #212):** Klaus' Wort 16.11.: Korrektur in die nächste Fassung und ausgeben. 2.28.72 ist
   getaggt und trägt die Korrektur nicht, darum **Fassung 2.28.73** (nur `FamilienakteUpdatesPlugin.java`: Zertifikat der geladenen APK
   auch unter Android 9/10 lesen; dazu Fassungsdateien und `lib/fassungen.ts`). main `0fd7cd5` ist in #212 eingemischt. **Ich übernehme

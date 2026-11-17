@@ -17,19 +17,21 @@ export function PapierkorbKarte({ vaultHandle, stand, onRefresh, onNotice, nur }
 }) {
   const [liste, setListe] = useState<PapierkorbEintrag[]>([]);
   const [sicher, setSicher] = useState<string | null>(null);
-  const [busy, setBusy] = useState(false);
+  const [busy, setBusy] = useState<string[]>([]);
   const laden = useCallback(async () => { if (!vaultHandle) return setListe([]); try { setListe(await papierkorbLesen(vaultHandle)); } catch { setListe([]); } }, [vaultHandle]);
   useEffect(() => { void laden(); }, [laden, stand]);
   useEffect(() => { if (!sicher) return; const t = window.setTimeout(() => setSicher(null), 4000); return () => window.clearTimeout(t); }, [sicher]);
   const zeigen = nur ? liste.filter((e) => e.art === nur) : liste;
   if (!vaultHandle) return null;
-  const tun = async (was: () => Promise<unknown>, text: string) => {
-    setBusy(true);
+  // Gesperrt ist nur die angetippte Zeile (Klaus 17.11.: „springen alle an“); „alle“ sperrt beim Leeren die ganze Karte.
+  const gesperrt = (id: string) => busy.includes(id) || busy.includes("alle");
+  const tun = async (schluessel: string, was: () => Promise<unknown>, text: string) => {
+    setBusy((b) => [...b, schluessel]);
     try { await was(); await laden(); await onRefresh(); onNotice({ kind: "success", text }); }
     catch (fehler) { onNotice({ kind: "error", text: fehler instanceof Error ? fehler.message : "Das ging nicht." }); }
-    finally { setBusy(false); setSicher(null); }
+    finally { setBusy((b) => b.filter((x) => x !== schluessel)); setSicher(null); }
   };
-  const endgueltig = (ids: string[], schluessel: string, text: string) => { if (sicher !== schluessel) { setSicher(schluessel); return; } void tun(() => papierkorbEndgueltig(vaultHandle, ids), text); };
+  const endgueltig = (ids: string[], schluessel: string, text: string) => { if (sicher !== schluessel) { setSicher(schluessel); return; } void tun(schluessel, () => papierkorbEndgueltig(vaultHandle, ids), text); };
   return <section className="card papierkorb" data-papierkorb>
     <details>
       <summary><Trash2 size={18}/> <strong>Papierkorb ({zeigen.length})</strong> <small className="muted">{nur === "notiz" ? "gelöschte Notizen" : "gelöschte Erinnerungen, Aufgaben, Fristen und Notizen"}</small></summary>
@@ -37,11 +39,11 @@ export function PapierkorbKarte({ vaultHandle, stand, onRefresh, onNotice, nur }
         <ul className="papierkorb-liste">
           {zeigen.map((e) => <li key={e.id} data-papierkorb-eintrag={e.id}>
             <span className="papierkorb-text"><strong>{e.titel}</strong><small>{artName(e)} · gelöscht {wann(e.geloeschtAm)}</small></span>
-            <button type="button" className="button secondary compact-button" disabled={busy} onClick={() => void tun(() => papierkorbWiederherstellen(vaultHandle, e.id), `Wiederhergestellt: ${e.titel}`)} data-papierkorb-zurueck><RotateCcw size={15}/> Wiederherstellen</button>
-            <button type="button" className={`loesch-knopf${sicher === e.id ? " sicher" : ""}`} disabled={busy} onClick={() => endgueltig([e.id], e.id, `Endgültig gelöscht: ${e.titel}`)} aria-label={sicher === e.id ? `„${e.titel}“ jetzt endgültig löschen` : `„${e.titel}“ endgültig löschen`} title="Endgültig löschen" data-papierkorb-weg={sicher === e.id ? "sicher" : "bereit"}><Trash2 size={16}/>{sicher === e.id && <span>Endgültig?</span>}</button>
+            <button type="button" className="button secondary compact-button" disabled={gesperrt(e.id)} onClick={() => void tun(e.id, () => papierkorbWiederherstellen(vaultHandle, e.id), `Wiederhergestellt: ${e.titel}`)} data-papierkorb-zurueck><RotateCcw size={15}/> Wiederherstellen</button>
+            <button type="button" className={`loesch-knopf${sicher === e.id ? " sicher" : ""}`} disabled={gesperrt(e.id)} onClick={() => endgueltig([e.id], e.id, `Endgültig gelöscht: ${e.titel}`)} aria-label={sicher === e.id ? `„${e.titel}“ jetzt endgültig löschen` : `„${e.titel}“ endgültig löschen`} title="Endgültig löschen" data-papierkorb-weg={sicher === e.id ? "sicher" : "bereit"}><Trash2 size={16}/>{sicher === e.id && <span>Endgültig?</span>}</button>
           </li>)}
         </ul>
-        <button type="button" className={`button secondary compact-button${sicher === "alle" ? " gefahr" : ""}`} disabled={busy} onClick={() => endgueltig(zeigen.map((e) => e.id), "alle", `Papierkorb geleert (${zeigen.length}).`)} data-papierkorb-leeren>{sicher === "alle" ? "Nochmal tippen: alles endgültig löschen" : "Papierkorb leeren"}</button>
+        <button type="button" className={`button secondary compact-button${sicher === "alle" ? " gefahr" : ""}`} disabled={busy.length > 0} onClick={() => endgueltig(zeigen.map((e) => e.id), "alle", `Papierkorb geleert (${zeigen.length}).`)} data-papierkorb-leeren>{sicher === "alle" ? "Nochmal tippen: alles endgültig löschen" : "Papierkorb leeren"}</button>
       </>}
     </details>
   </section>;
