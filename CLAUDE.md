@@ -247,7 +247,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   (2.28.35, `docs/landkarte/`), Landkarte der App mit **Stand je Kasten in `lib/app-stand.ts` – bei jeder Fassung eintragen** (2.28.36),
   Hilfe-Themen als Bild, Vorschaufenster (2.28.37), Listenzeilen mit `KnopfLeiste`, Kopfleiste (2.28.38).
   Proben-Hinweise: `step()` wertet einen zurückgegebenen Text als grün, deshalb `soll()`; Seitentitel sind keine Sprungziele.
-- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.71, 2.28.70, 2.28.69, 2.28.68, 2.28.67, 2.28.66, 2.28.65, 2.28.64, 2.28.61, 2.28.60, 2.28.59, 2.28.58, 2.28.57, 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
+- **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.74, 2.28.71, 2.28.70, 2.28.69, 2.28.68, 2.28.67, 2.28.66, 2.28.65, 2.28.64, 2.28.61, 2.28.60, 2.28.59, 2.28.58, 2.28.57, 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
   (2.28.50 ausgegeben, aber ohne eigenen Nachweis; 2.28.40–2.28.47 waren Zwischenstände). Keine davon erneut ausgeben;
   **nächste freie Fassung 2.28.75** (2.28.62 und 2.28.63 nie ausgegeben). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
   sammeln, Proben laufen lassen, gesammelt als eine Fassung ausgeben (ersetzt „jede neue Funktion gleich ausgeben“ vom 06.11.).
@@ -289,8 +289,8 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Offen
 
-- **Löschen im Kalender meldete „Register wurde zwischenzeitlich geändert“ (Klaus 17.11., Tablet 2.28.73; #218, **Fassung 2.28.74**,
-  Klaus' Wort 17.11.: zusammenführen und ausgeben; 2.28.72 und 2.28.73 sind ausgegeben (Tags vorhanden, Nachweise fehlen);
+- **Löschen im Kalender meldete „Register wurde zwischenzeitlich geändert“ (Klaus 17.11., Tablet 2.28.73; #218, **Fassung 2.28.74 ausgegeben
+  17.11. als Android, Windows und PWA, Nachweis `docs/VEROEFFENTLICHUNG-2.28.74.json`, nicht erneut ausgeben**; 2.28.72 und 2.28.73 sind ausgegeben (Tags vorhanden, Nachweise fehlen);
   dazu Papierkorb: beim Wiederherstellen ist nur die angetippte Zeile gesperrt, Klaus' Ja 17.11.):** Lesen–Ändern–Schreiben am Register ist
   nicht ein Schritt; schrieb der Kalender-Abgleich im Hintergrund zur selben Zeit wie Löschen/Abhaken/Ändern, wurde einer von beiden mit
   `REGISTER_CONFLICT` abgewiesen (Löschen dann ohne jede Meldung). Jetzt wiederholen `deleteLocalScheduleRecord`,
