@@ -401,6 +401,14 @@ sondern nur KimHub.“
 
 ## Weitere feste Regeln
 
+- **Bedeutungssuche – vor jedem Bau die Lehre aus Sage lesen (Klaus 17.11.2026: „merkt euch das“, gilt für alle Apps).** Der rohe
+  Cosinus von multilingual-e5-small liegt auch bei fremden deutschen Texten um 0,82; er ist eine Rangfolge, kein Urteil. **Nie eine
+  feste Schwelle auf den rohen Wert setzen.** Der Weg, der dort gebaut und am Tablet bestätigt ist: Wörter und Bedeutung verschmelzen
+  (BM25 + Vektor, Reciprocal Rank Fusion), den Mittelwert des eigenen Bestands abziehen (zentrierter Cosinus), Abschnitte einzeln
+  vergleichen statt mitteln. Quelle: Repo Sage-Protokol, `docs/LEHRE-EMBEDDING-MATCH-KALIBRIERUNG.md`, Baustein
+  `src/modules/04_match.js` (MIT). Die Private Akte hat ihn seit 0.4.0 als Klon mit Pin (`klone/sage-protokol/`, Anschluss
+  `src/tresor.ts`); **die Bedeutungssuche hier (`app/private-meaning-*.ts`) rechnet noch mit dem rohen Wert und ist nicht umgestellt.**
+
 - **Geschenkbox immer als eine HTML-Datei geben, nie als ZIP (Klaus 14.11.2026: „keine ZIP mehr, die HTML-Datei, 600 KB ist nicht so groß“).**
   Nach jeder Änderung `node tools/geschenkbox-datei.mjs` und `docs/geschenk/Geschenkbox-Pro-Apps.html` direkt im Chat als einzelne Datei
   mitgeben (nicht gebündelt mit anderen Dateien), dazu das Artefakt mit dem Knopf „Als eine Datei speichern“ neu veröffentlichen.
