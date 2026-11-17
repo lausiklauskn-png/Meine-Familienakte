@@ -127,17 +127,24 @@ export function offeneSchritte(records: FamilyRecordUnion[], relations: FamilyRe
 export function useKalenderAutoAbgleich(vaultHandle: FileSystemDirectoryHandle | null, records: FamilyRecordUnion[], relations: FamilyRelation[], aktualisieren: () => Promise<void>, melden: (n: Notice) => void) {
   const einst = useKalenderEinst();
   const laeuft = useRef(false);
+  const zuletztGelaufen = useRef("");
   const [bereit, setBereit] = useState(0);
   useEffect(() => { if (einst?.anbieter === "geraet") void ANBIETER.geraet.wiederaufnehmen?.().then(() => setBereit((x) => x + 1)); }, [einst?.anbieter]);
   useEffect(() => {
     if (!vaultHandle || !einst || einst.anbieter === "ics" || laeuft.current) return;
     const anbieter = ANBIETER[einst.anbieter];
     if (!anbieter.zustand().bereit || !anbieter.verbunden()) return;
-    if (!offeneSchritte(records, relations, einst)) return;
+    const offen = abgleichPlan(records, { anbieter: einst.anbieter, kalenderId: einst.kalenderId }, { vorgabe: einst.erinnerungen, relations }).filter((s) => s.art !== "gleich");
+    if (!offen.length) { zuletztGelaufen.current = ""; return; }
+    // Sicherung gegen Endlosläufe: bleibt nach einem fehlerfreien Lauf genau dieselbe Arbeit übrig, läuft sie nicht noch einmal
+    // von selbst (jeder Lauf schreibt Register und Sicherung). Eine Änderung an den Fristen ergibt einen neuen Plan.
+    const kennung = offen.map((s) => `${s.art}:${s.recordId}:${s.kalenderId}:${"eintrag" in s ? s.eintrag.stand : ""}`).join("|");
+    if (kennung === zuletztGelaufen.current) return;
+    zuletztGelaufen.current = kennung;
     laeuft.current = true;
     void exklusiv(() => kalenderAbgleichen(vaultHandle, records, relations, einst))
-      .then(async (r) => { if (r.angelegt + r.geaendert + r.entfernt) await aktualisieren(); if (r.fehler.length) melden({ kind: "error", text: `Kalender: ${r.fehler[0]}` }); })
-      .catch((g) => melden({ kind: "error", text: `Kalender: ${g instanceof Error ? g.message : String(g)}` }))
+      .then(async (r) => { if (r.fehler.length) zuletztGelaufen.current = ""; if (r.angelegt + r.geaendert + r.entfernt) await aktualisieren(); if (r.fehler.length) melden({ kind: "error", text: `Kalender: ${r.fehler[0]}` }); })
+      .catch((g) => { zuletztGelaufen.current = ""; melden({ kind: "error", text: `Kalender: ${g instanceof Error ? g.message : String(g)}` }); })
       .finally(() => { laeuft.current = false; });
     // Bewusst ohne letzterFehler/letzterAbgleich: ein Fehler wiederholt sich nicht von selbst, erst nach einer Änderung.
   }, [vaultHandle, records, relations, einst?.anbieter, einst?.kalenderId, einst?.erinnerungen?.join(), bereit]);

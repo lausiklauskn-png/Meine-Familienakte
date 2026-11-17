@@ -296,6 +296,12 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   `updateLocalScheduleStatus`, `updateLocalScheduleTermin`, `updateLocalScheduleKalender` den Vorgang mit frischem Stand
   (`beiKonfliktErneut` in `app/local-vault.ts`, höchstens viermal). Probe `run-vault-safety-tests` (1 neu, Gegenprobe rot). Am Gerät
   ungeprüft; die übrigen Register-Vorgänge (rund 100 Stellen) haben denselben Aufbau und sind nicht umgestellt.
+  **Eigentliche Ursache (Klaus' Bilder 17.11.: Stand 1439 → 2108 → 2447 in sechs Minuten):** ein aus dem Kalender geholter Termin, in der
+  Akte geändert, wurde endlos hinausgeschrieben – `standLokal` der `kalenderQuelle` ändert sich erst beim Einlesen, der Plan blieb
+  „aendern“, jeder Lauf schrieb Kalender, Register und Sicherung (rund drei Mal je Sekunde). Jetzt: `abgleichPlan` schreibt nur, wenn
+  die Zuordnung nicht schon diesen Stand trägt (`lib/kalender.ts`); dazu eine Sicherung in `useKalenderAutoAbgleich`
+  (`zuletztGelaufen`: derselbe Plan läuft nach fehlerfreiem Lauf nicht von selbst noch einmal). Probe `run-kalender-einlesen-tests`
+  (1 neu, Gegenprobe rot). Am Gerät ungeprüft; ob bei Klaus genau dieser Termin die Schleife auslöste, ist aus den Bildern geschlossen.
 - **Pseudo-Fenster, Kopieren (Klaus 16.11., nicht ausgegeben, Fassung nicht erhöht; Brief `BRIEF_ABSCHLUSS_2026-11-16_PSEUDO-KOPIEREN.md`):**
   Meldung unter den Knöpfen statt über der Liste, erst kopieren dann Auftrag sichern (Ersatzweg `textKopieren`), Austauschordner in
   Android/Windows über `nativenOrdnerWaehlen`. Am Gerät ungeprüft (43 PDFs: Grenze der Android-Zwischenablage rund 1 MB).

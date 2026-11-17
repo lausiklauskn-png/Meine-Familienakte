@@ -66,6 +66,12 @@ const termin = (eintragId, titel, beginn, extra = {}) => ({ eintragId, kalenderI
   const m = k.graphEreignis(plan[0].eintrag); assert.deepEqual(Object.keys(m).sort(), ["end", "start", "subject"]);
   const d = k.geraetEreignis(plan[0].eintrag, "Europe/Berlin"); assert.deepEqual(Object.keys(d).sort(), ["beginn", "ende", "titel", "zeitzone"]);
   gruen("Hinausschreiben: eingelesener Termin wird nie entfernt; Änderung geht nur mit Titel und Zeit zurück (Google, Microsoft, Gerät)");
+  // Nach dem Hinausschreiben trägt die Zuordnung den Stand des Eintrags (wie kalenderAbgleichen ihn vermerkt): Ruhe.
+  const geaendert = { ...rec, data: { ...rec.data, title: "Elternabend 19 Uhr" } };
+  const vermerkt = { ...geaendert, data: { ...geaendert.data, kalender: k.zuordnungSetzen(geaendert.data.kalender, { anbieter: "google", kalenderId: "primary", eintragId: "g2", stand: plan[0].eintrag.stand, am: q.am }, { anbieter: "google", kalenderId: "primary" }) } };
+  assert.deepEqual(k.abgleichPlan([vermerkt], ziel).map((s) => s.art), ["gleich"], "derselbe Stand wird nicht noch einmal hinausgeschrieben");
+  assert.deepEqual(k.abgleichPlan([{ ...vermerkt, data: { ...vermerkt.data, title: "Elternabend 20 Uhr" } }], ziel).map((s) => s.art), ["aendern"], "eine weitere Änderung geht wieder hinaus");
+  gruen("Hinausschreiben: ein geänderter eingelesener Termin geht einmal zurück, nicht endlos");
 }
 
 console.log(`\nKalender einlesen: ${n} Proben grün.`);

@@ -256,7 +256,9 @@ export function abgleichPlan(records: FamilyRecordUnion[], ziel: { anbieter: Kal
       const felder = record.data as { title?: string; dueAt?: string; dueTime?: string | null };
       const lokal = kurzHash(JSON.stringify({ t: (felder.title || "").trim(), d: felder.dueAt || "", u: felder.dueTime || null }));
       const eintrag = lokal !== quelle.standLokal && soll(record) ? kalenderEintrag(record, { vorgabe: opt.vorgabe, relations: opt.relations, records, geschuetzt: opt.geschuetzt?.(record) }) : null;
-      if (eintrag && zuordnung) plan.push({ art: "aendern", recordId: record.id, kalenderId: quelle.kalenderId, eintrag: { ...eintrag, quelle: true }, zuordnung });
+      // Schon hinausgeschrieben (die Zuordnung trägt den Stand dieses Eintrags): nicht noch einmal. standLokal ändert sich erst
+      // beim nächsten Einlesen – ohne diese Prüfung schrieb der Abgleich denselben Termin endlos in Kalender und Register.
+      if (eintrag && zuordnung && zuordnung.stand !== eintrag.stand) plan.push({ art: "aendern", recordId: record.id, kalenderId: quelle.kalenderId, eintrag: { ...eintrag, quelle: true }, zuordnung });
       else plan.push({ art: "gleich", recordId: record.id, kalenderId: quelle.kalenderId });
       continue;
     }
