@@ -29,7 +29,9 @@ nur dieser Brief und ein Verweis in `CLAUDE.md`.
 - **Updates der Hüllen über family-projekt.de:** Vorgehen wie hier in `docs/UPDATES-EIGENER-SERVER.md`
   (eigene Update-Unterschrift, vorhandener Hochlade-Schlüssel, Ordner `updates/familienbuero/`, dauerhafte
   APK-Signatur). Braucht Klaus' Schlüssel aus Termux.
-- **Geschenkbox Pro-Apps:** Familienbüro Pro ist dort noch nicht eingetragen.
+- **Geschenkbox Pro-Apps:** Familienbüro Pro ist als Karte eingetragen (Android-Test-APK, Windows, „Im Browser“, Geschenkbox
+  für Jens). `docs/geschenk/geschenkbox-pro.html` wurde dafür auf den Live-Stand der Box gebracht (dort stand schon
+  Familienakte 2.28.73 aus einer anderen Sitzung).
 
 ## Nebenprodukt
 
