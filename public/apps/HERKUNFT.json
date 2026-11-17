@@ -6,7 +6,7 @@
       "name": "Workflow PDF",
       "commit": "0ed15e53d9735c32e9b3c7a3b40871c2e4f7b922",
       "ordner": "public/apps/workflow-pdf",
-      "stand": "2026-11-03",
+      "stand": "2026-11-17",
       "dateien": {
         ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "LICENSE": "cb78137549787e6406741a9b4741cb650b029c4863a531527e4807fedd5c907e",
@@ -67,6 +67,8 @@
         "vendor/pdfjs/pdf.min.js": "978fd1b2d134a98e98966186a97777bebf87d8e770dadab1ece3687e21a5aa6c",
         "vendor/pdfjs/pdf.worker.min.js": "38cde5311957b86bc3669f93e7d2566de333a90055ed6635bef60d9bf00e96f2",
         "vendor/qrcode.js": "79ec86f82856005b1c887905cfccfcfbec3821ca61c7fd5a952faa5f778f791c",
+        "vendor/sbkim/03_embedding.js": "2e31baa09a2959c95efff8eecd224e8343e75695b4b293aa35209d8f96d1f3b5",
+        "vendor/sbkim/04_match.js": "721eecc3c0d6ea4c259259e6071215ec1cd16f1c43c87b42ce9e72e9a0b5e41c",
         "vendor/scanic/LICENSE-scanic.txt": "6a229290ec93f6d725561f6789c9226f4837f4fc515d17f6418202fa1bd49ae2",
         "vendor/scanic/doccornernet_lean.ort": "732eb8d02d83cc63efb3f9467f01e0c458205a89b2547de3870bc6db1a80c8b3",
         "vendor/scanic/ort-wasm-simd-threaded.mjs": "d6841aca121bba413020e1de9009c9e557cc8b424cc4b5d3ebfd8c5e0fec4fce",

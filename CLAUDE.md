@@ -7,6 +7,12 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Aktueller Stand (16.11.2026, nach 2.28.71)
 
+- **Familienbüro Pro (17.11.; eigenes Repo `lausiklauskn-png/Familienbuero-Pro`, dort `CLAUDE.md`):** Büropaket als
+  Schwester-App (Word-, Excel-, PowerPoint-Dateien ohne Server; Kern ONLYOFFICE, **AGPL-3.0 – darum eigene App, kein
+  Einbau hier**). PWA https://lausiklauskn-png.github.io/Familienbuero-Pro/ online. In der Familienakte nichts gebaut;
+  offen: Knopf „Bearbeiten“ an Word-/Excel-Unterlagen. **In der Geschenkbox eingetragen (17.11., Version 42 der Box, Familienbüro 0.1.2 mit Workflow PDF und PDF-Import; die APKs 0.1.0 und 0.1.1 öffneten kein Dokument, 0.1.2 am Gerät ungeprüft)**: Karte „Familienbüro Pro“ mit Android-Test-APK,
+  Windows, „Im Browser“ und der Geschenkbox für Jens; aufgebaut auf dem Live-Stand der Box (dort Familienakte 2.28.73). Brief `BRIEF_ABSCHLUSS_2026-11-17_FAMILIENBUERO-PRO.md`.
+
 - **Android-Update auf älteren Handys (Klaus 16.11.; PR #212 Entwurf, Fassung 2.28.73 vorbereitet, nicht übernommen, nicht ausgegeben;
   Brief `BRIEF_ABSCHLUSS_2026-11-16_ANDROID-UPDATE-2.28.73.md`):** Update über die Versionszeile endete auf Android 9/10 vermutlich immer
   mit `UPDATE_ZERTIFIKAT`, weil `getPackageArchiveInfo` dort für eine APK-Datei kein `signingInfo` liefert. `FamilienakteUpdatesPlugin.archiv()`
@@ -276,6 +282,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
+  - `BRIEF_ABSCHLUSS_2026-11-17_FAMILIENBUERO-PRO.md` (neue Schwester-App Familienbüro Pro 0.1.0 im Repo `Familienbuero-Pro`: Word/Excel/PowerPoint ohne Server, AGPL, PWA online, Windows und Android-Test-APK ungeprüft; hier kein Code geändert)
   - `BRIEF_ABSCHLUSS_2026-11-16_ANDROID-UPDATE-2.28.73.md` (Android-Update unter Android 9/10, 2.28.73 vorbereitet, Startauftrag Ausgabe)
   - Nächste Sitzung (Repo Datei-Organizer): `docs/BRIEF_SITZUNG_2026-11-14_NEEDS-RUECKWAERTSTEST.md` (Rückwärtstest Workflow Needs, nichts ändern)
   - `BRIEF_ABSCHLUSS_2026-11-14_PSEUDO-RESTARBEITEN.md` (letzter Stand: Pseudo-Restarbeiten, Startauftrag Gerätetest/Stufe E-Rest)
@@ -289,6 +296,10 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Offen
 
+- **Bedeutungssuche im Workflow-PDF-Klon (Klaus 17.11., nicht ausgegeben, Fassung nicht erhöht):** `tools/wfpdf-app-nachziehen.mjs` ließ jeden
+  Ordner namens `sbkim` weg, auch `vendor/sbkim/` (Modell und Rechnung der Bedeutungssuche) – „Datei fehlt: vendor/sbkim/03_embedding.js“.
+  Jetzt nur noch der Ordner `sbkim/` der obersten Ebene; Klon beim selben Stand `0ed15e5` neu gezogen (79 Dateien, zwei dazu). Am Gerät
+  und der Download des Modells ungeprüft.
 - **Pseudo-Fenster, Kopieren (Klaus 16.11., nicht ausgegeben, Fassung nicht erhöht; Brief `BRIEF_ABSCHLUSS_2026-11-16_PSEUDO-KOPIEREN.md`):**
   Meldung unter den Knöpfen statt über der Liste, erst kopieren dann Auftrag sichern (Ersatzweg `textKopieren`), Austauschordner in
   Android/Windows über `nativenOrdnerWaehlen`. Am Gerät ungeprüft (43 PDFs: Grenze der Android-Zwischenablage rund 1 MB).
