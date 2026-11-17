@@ -1,0 +1,58 @@
+{
+ "version": "2.28.74",
+ "source": "de4571e46f42f4d319a016fce5b221048c7eeef4",
+ "pullRequest": [
+  218
+ ],
+ "recordedUtc": "2026-11-17T17:05:00Z",
+ "freigabe": "Klaus 17.11.2026: „Familienakte PR machen wir jetzt gleich. Kannst du herausgeben … für die PWA-App und im Hintergrund kannst du die Veröffentlichung von APK und Windows laufen lassen“.",
+ "inhalt": "Kalender-Abgleich schrieb einen aus dem Kalender geholten, in der Akte geänderten Termin endlos zurück (dabei wurde fast jede eigene Änderung mit „Register wurde zwischenzeitlich geändert“ abgewiesen) – behoben; Löschen, Abhaken, Ändern, Tagebuch-Löschen und Papierkorb wiederholen sich bei einem Register-Konflikt; Papierkorb sperrt beim Wiederherstellen nur die angetippte Zeile.",
+ "ciAmPrStand": "PR #218 auf 56232c1: pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) – success, je im ersten Lauf.",
+ "releases": [
+  {
+   "tag": "android-v2.28.74",
+   "run": 44123879293,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-android-v2.28.74.apk",
+     "bytes": 82010878,
+     "sha256": "a178fe60457871394a72f2650f4900ec79fe8bf290faed8dc65e8b76e31f02a2",
+     "matchesSHA256SUMS": true,
+     "quelle": "Download von github.com (Release), in der Sitzung nachgerechnet"
+    },
+    {
+     "name": "Familienakte-Einzeldatei-2.28.74.html",
+     "bytes": 5194673,
+     "sha256": "ad48857868fdf17dd09df26ca2d8fbb1e35b50b22e0bec7edadb06cec9fd478a",
+     "quelle": "Angabe des Releases, nicht selbst geladen"
+    }
+   ]
+  },
+  {
+   "tag": "windows-v2.28.74",
+   "run": 44127299116,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-Windows-2.28.74-x64-setup.exe",
+     "bytes": 96528049,
+     "sha256": "974d50c865fb6ec89fe8c7998de70604c4b81c7519504563cd95af16138f82bd",
+     "matchesSHA256SUMS": true,
+     "quelle": "Download von github.com (Release), in der Sitzung nachgerechnet"
+    }
+   ]
+  }
+ ],
+ "reihenfolge": "Erst Android (fertig 16:22 UTC), dann Windows (gestartet 16:34 UTC) – nicht gleichzeitig, beide laden auf denselben Server.",
+ "pwa": "Pages-Lauf 44123851064 über den Merge-Stand de4571e: success. Die Seite selbst aus dem Behälter nicht geprüft.",
+ "notChecked": [
+  "Am Gerät: ob Löschen/Abhaken/Ändern im Kalender wieder gehen und „1 Änderung warten auf den Kalender“ verschwindet – dass genau ein geänderter eingelesener Termin die Schleife bei Klaus auslöste, ist aus seinen Bildern geschlossen",
+  "Papierkorb: einzelne Zeile gesperrt, am Gerät",
+  "family-projekt.de aus dem Behälter nicht erreichbar (Zugriff abgewiesen); der Freigabelauf prüft den Server selbst",
+  "Die übrigen Register-Vorgänge (rund 100 Stellen) haben denselben Lese-Schreib-Aufbau und sind nicht umgestellt",
+  "Für 2.28.72 und 2.28.73 liegen Tags vor, aber keine Nachweis-Dateien"
+ ]
+}

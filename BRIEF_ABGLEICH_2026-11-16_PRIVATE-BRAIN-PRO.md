@@ -77,6 +77,8 @@ einmal an `test-model-installed.mjs:72` rot (zeitkritisch, auf main grün).
   1.0.53 ausgeben. Ich warte auf eure Antwort zu den zwei Fragen oben, bevor ich PR #199 anfasse.
 
 ## Stand Familienakte
+- **17.11. 17:05 UTC (Sitzung Kalender-Schleife): fertig.** #218 ist auf main (`de4571e`), **2.28.74 ist ausgegeben** (Android-Lauf 64,
+  Windows-Lauf 63, beide „success“, Web-App über Pages), Nachweis `docs/VEROEFFENTLICHUNG-2.28.74.json`. Nächste freie Fassung: 2.28.75.
 - **17.11. 15:45 UTC (Sitzung Kalender-Schleife, PR #218):** Klaus' Wort 17.11.: zusammenführen und ausgeben. 2.28.73 ist getaggt
   (Android, Windows), darum **Fassung 2.28.74**: Kalender-Abgleich schrieb einen geholten, in der Akte geänderten Termin endlos zurück
   (`lib/kalender.ts`, `app/kalender-karte.tsx`), Register-Vorgänge für Termine und Papierkorb wiederholen sich bei Konflikt
