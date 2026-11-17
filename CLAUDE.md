@@ -7,6 +7,11 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Aktueller Stand (16.11.2026, nach 2.28.71)
 
+- **Familienbüro Pro (17.11.; eigenes Repo `lausiklauskn-png/Familienbuero-Pro`, dort `CLAUDE.md`):** Büropaket als
+  Schwester-App (Word-, Excel-, PowerPoint-Dateien ohne Server; Kern ONLYOFFICE, **AGPL-3.0 – darum eigene App, kein
+  Einbau hier**). PWA https://lausiklauskn-png.github.io/Familienbuero-Pro/ online. In der Familienakte nichts gebaut;
+  offen: Knopf „Bearbeiten“ an Word-/Excel-Unterlagen, Eintrag in der Geschenkbox. Brief `BRIEF_ABSCHLUSS_2026-11-17_FAMILIENBUERO-PRO.md`.
+
 - **Android-Update auf älteren Handys (Klaus 16.11.; PR #212 Entwurf, Fassung 2.28.73 vorbereitet, nicht übernommen, nicht ausgegeben;
   Brief `BRIEF_ABSCHLUSS_2026-11-16_ANDROID-UPDATE-2.28.73.md`):** Update über die Versionszeile endete auf Android 9/10 vermutlich immer
   mit `UPDATE_ZERTIFIKAT`, weil `getPackageArchiveInfo` dort für eine APK-Datei kein `signingInfo` liefert. `FamilienakteUpdatesPlugin.archiv()`
@@ -276,6 +281,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
+  - `BRIEF_ABSCHLUSS_2026-11-17_FAMILIENBUERO-PRO.md` (neue Schwester-App Familienbüro Pro 0.1.0 im Repo `Familienbuero-Pro`: Word/Excel/PowerPoint ohne Server, AGPL, PWA online, Windows und Android-Test-APK ungeprüft; hier kein Code geändert)
   - `BRIEF_ABSCHLUSS_2026-11-16_ANDROID-UPDATE-2.28.73.md` (Android-Update unter Android 9/10, 2.28.73 vorbereitet, Startauftrag Ausgabe)
   - Nächste Sitzung (Repo Datei-Organizer): `docs/BRIEF_SITZUNG_2026-11-14_NEEDS-RUECKWAERTSTEST.md` (Rückwärtstest Workflow Needs, nichts ändern)
   - `BRIEF_ABSCHLUSS_2026-11-14_PSEUDO-RESTARBEITEN.md` (letzter Stand: Pseudo-Restarbeiten, Startauftrag Gerätetest/Stufe E-Rest)
