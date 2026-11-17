@@ -14,6 +14,7 @@ import { patchIndex } from "./wfpdf-app-patch.mjs";
 const WURZEL = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 export const ZIEL = "public/apps/workflow-pdf";
 // Nicht kopiert: Entwicklung, Repo-Papiere, eigener Service Worker, der Mycel-Knoten (sbkim/, Klaus: „Weglassen“).
+// Nur Ordner der obersten Ebene: vendor/sbkim/ (Modell und Rechnung der Bedeutungssuche) gehört dazu.
 const AUSGENOMMEN_ORDNER = new Set([".git", ".github", "node_modules", "tests", "tools", "docs", "sbkim"]);
 const AUSGENOMMEN_DATEI = new Set(["package.json", "package-lock.json", "README.md", "CLAUDE.md", "AGENTS.md", "RECHTE.md", "sw.js", ".gitignore", ".gitattributes"]);
 const sha = (b) => createHash("sha256").update(b).digest("hex");
@@ -25,7 +26,7 @@ function git(klon, ...args) {
 function dateien(klon) {
   // nur Dateien, die Git kennt (keine liegengebliebenen Probe-Reste im Klon)
   const liste = git(klon, "ls-files", "-z").split("\0").filter(Boolean);
-  return liste.filter((rel) => { const t = rel.split("/"); return !t.slice(0, -1).some((o) => AUSGENOMMEN_ORDNER.has(o)) && !(t.length === 1 && AUSGENOMMEN_DATEI.has(t[0])); }).sort();
+  return liste.filter((rel) => { const t = rel.split("/"); return !(t.length > 1 && AUSGENOMMEN_ORDNER.has(t[0])) && !(t.length === 1 && AUSGENOMMEN_DATEI.has(t[0])); }).sort();
 }
 
 export function nachziehen(klon, wurzel = WURZEL) {

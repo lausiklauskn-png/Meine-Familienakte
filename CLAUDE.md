@@ -296,6 +296,10 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Offen
 
+- **Bedeutungssuche im Workflow-PDF-Klon (Klaus 17.11., nicht ausgegeben, Fassung nicht erhöht):** `tools/wfpdf-app-nachziehen.mjs` ließ jeden
+  Ordner namens `sbkim` weg, auch `vendor/sbkim/` (Modell und Rechnung der Bedeutungssuche) – „Datei fehlt: vendor/sbkim/03_embedding.js“.
+  Jetzt nur noch der Ordner `sbkim/` der obersten Ebene; Klon beim selben Stand `0ed15e5` neu gezogen (79 Dateien, zwei dazu). Am Gerät
+  und der Download des Modells ungeprüft.
 - **Pseudo-Fenster, Kopieren (Klaus 16.11., nicht ausgegeben, Fassung nicht erhöht; Brief `BRIEF_ABSCHLUSS_2026-11-16_PSEUDO-KOPIEREN.md`):**
   Meldung unter den Knöpfen statt über der Liste, erst kopieren dann Auftrag sichern (Ersatzweg `textKopieren`), Austauschordner in
   Android/Windows über `nativenOrdnerWaehlen`. Am Gerät ungeprüft (43 PDFs: Grenze der Android-Zwischenablage rund 1 MB).
