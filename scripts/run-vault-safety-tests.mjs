@@ -118,6 +118,19 @@ await test("A2: Speicherwahl wird gemerkt und ohne Entscheidung als null gemelde
   localStorage.setItem("mmi-browser-speicher", "indexeddb"); assert.equal(browserStorageKind(), "indexeddb");
   localStorage.setItem("mmi-browser-speicher", "unsinn"); assert.equal(browserStorageKind(), null);
 });
+await test("A3: Löschen und Kalender-Vermerk zur selben Zeit – beide Änderungen kommen an, kein REGISTER_CONFLICT", async () => {
+  const { createLocalScheduleBundle, deleteLocalScheduleRecord, updateLocalScheduleKalender, updateLocalScheduleStatus } = await import("../app/local-vault.ts");
+  const fs = newFs();
+  const anlegen = async (title) => { await createLocalScheduleBundle(fs.root, { recordType: "task", title, dueAt: "2030-01-15", references: [] }); return (await readIndex(fs.root)).records.find((r) => r.data.title === title).id; };
+  const a = await anlegen("Erfundene Aufgabe A"), b = await anlegen("Erfundene Aufgabe B"), c = await anlegen("Erfundene Aufgabe C");
+  // Wie in der App: der Abgleich im Hintergrund vermerkt etwas, während der Nutzer löscht und abhakt.
+  await Promise.all([deleteLocalScheduleRecord(fs.root, a), updateLocalScheduleKalender(fs.root, [{ id: b, kalenderEintragen: true }]), updateLocalScheduleStatus(fs.root, c, "erledigt")]);
+  const index = await readIndex(fs.root); const von = (id) => index.records.find((r) => r.id === id);
+  assert.equal(von(a).status, "archiviert", "A ist gelöscht (ausgeblendet)");
+  assert.equal(von(b).data.kalenderEintragen, true, "B trägt den Kalender-Haken");
+  assert.equal(von(c).status, "erledigt", "C ist erledigt");
+  assert.equal((index.papierkorb || []).length, 1, "A liegt einmal im Papierkorb");
+});
 await test("A6: Größengrenzen stehen an einer Stelle", async () => {
   assert.equal(LIMITS.documentBytes, 20 * 1024 * 1024); assert.equal(LIMITS.mediaVideoBytes, 200 * 1024 * 1024);
 });

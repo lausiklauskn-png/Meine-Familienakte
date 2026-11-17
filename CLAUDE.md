@@ -289,6 +289,13 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Offen
 
+- **Löschen im Kalender meldete „Register wurde zwischenzeitlich geändert“ (Klaus 17.11., Tablet 2.28.73; Zweig
+  `claude/kalender-register-konflikt`, Entwurfs-PR, Fassung nicht erhöht, nicht ausgegeben):** Lesen–Ändern–Schreiben am Register ist
+  nicht ein Schritt; schrieb der Kalender-Abgleich im Hintergrund zur selben Zeit wie Löschen/Abhaken/Ändern, wurde einer von beiden mit
+  `REGISTER_CONFLICT` abgewiesen (Löschen dann ohne jede Meldung). Jetzt wiederholen `deleteLocalScheduleRecord`,
+  `updateLocalScheduleStatus`, `updateLocalScheduleTermin`, `updateLocalScheduleKalender` den Vorgang mit frischem Stand
+  (`beiKonfliktErneut` in `app/local-vault.ts`, höchstens viermal). Probe `run-vault-safety-tests` (1 neu, Gegenprobe rot). Am Gerät
+  ungeprüft; die übrigen Register-Vorgänge (rund 100 Stellen) haben denselben Aufbau und sind nicht umgestellt.
 - **Pseudo-Fenster, Kopieren (Klaus 16.11., nicht ausgegeben, Fassung nicht erhöht; Brief `BRIEF_ABSCHLUSS_2026-11-16_PSEUDO-KOPIEREN.md`):**
   Meldung unter den Knöpfen statt über der Liste, erst kopieren dann Auftrag sichern (Ersatzweg `textKopieren`), Austauschordner in
   Android/Windows über `nativenOrdnerWaehlen`. Am Gerät ungeprüft (43 PDFs: Grenze der Android-Zwischenablage rund 1 MB).
