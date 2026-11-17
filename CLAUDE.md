@@ -10,7 +10,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Familienbüro Pro (17.11.; eigenes Repo `lausiklauskn-png/Familienbuero-Pro`, dort `CLAUDE.md`):** Büropaket als
   Schwester-App (Word-, Excel-, PowerPoint-Dateien ohne Server; Kern ONLYOFFICE, **AGPL-3.0 – darum eigene App, kein
   Einbau hier**). PWA https://lausiklauskn-png.github.io/Familienbuero-Pro/ online. In der Familienakte nichts gebaut;
-  offen: Knopf „Bearbeiten“ an Word-/Excel-Unterlagen. **In der Geschenkbox eingetragen (17.11., Version 39 der Box)**: Karte „Familienbüro Pro“ mit Android-Test-APK,
+  offen: Knopf „Bearbeiten“ an Word-/Excel-Unterlagen. **In der Geschenkbox eingetragen (17.11., Version 41 der Box, Familienbüro 0.1.1; die APK 0.1.0 öffnete kein Dokument)**: Karte „Familienbüro Pro“ mit Android-Test-APK,
   Windows, „Im Browser“ und der Geschenkbox für Jens; aufgebaut auf dem Live-Stand der Box (dort Familienakte 2.28.73). Brief `BRIEF_ABSCHLUSS_2026-11-17_FAMILIENBUERO-PRO.md`.
 
 - **Android-Update auf älteren Handys (Klaus 16.11.; PR #212 Entwurf, Fassung 2.28.73 vorbereitet, nicht übernommen, nicht ausgegeben;
