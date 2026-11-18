@@ -289,6 +289,11 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 
 ## Offen
 
+- **Erinnerung aus dem Text (Klaus 18.11., aus der Sitzung „Kalender und Notizen“ der Privaten Akte; nicht ausgegeben, Fassung nicht
+  erhöht):** `erinnerungAusText` (`lib/family-memory.ts`) kennt jetzt „am nächsten Tag“, „am folgenden Tag“, „tags darauf“ (der Tag nach
+  heute – stand vorher auf heute) und „um halb drei“ (14:30; eine Stunde vor 7 gilt als Nachmittag, „um halb 8“ = 07:30). Ein Satz nur
+  mit Uhrzeit ohne „erinnere“ ergibt weiter keinen Vorschlag (so entschieden 05.11.). Probe `run-kalender-tests` (Kalender-Kern 22).
+  Die Private Akte zieht ihren Klon danach nach. Am Gerät ungeprüft.
 - **Löschen im Kalender meldete „Register wurde zwischenzeitlich geändert“ (Klaus 17.11., Tablet 2.28.73; #218, **Fassung 2.28.74 ausgegeben
   17.11. als Android, Windows und PWA, Nachweis `docs/VEROEFFENTLICHUNG-2.28.74.json`, nicht erneut ausgeben**; 2.28.72 und 2.28.73 sind ausgegeben (Tags vorhanden, Nachweise fehlen);
   dazu Papierkorb: beim Wiederherstellen ist nur die angetippte Zeile gesperrt, Klaus' Ja 17.11.):** Lesen–Ändern–Schreiben am Register ist

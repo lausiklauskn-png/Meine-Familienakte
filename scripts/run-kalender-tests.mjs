@@ -187,6 +187,15 @@ assert.equal(ea("erinnere mich am 1.12.2026 um 8"), JSON.stringify({ wunsch: tru
 assert.equal(m.erinnerungsTitel("Erinnere mich am 15. November um 10 Uhr Zahnarzt anrufen"), "Zahnarzt anrufen");
 assert.equal(m.erinnerungsTitel("Erinnere mich Dienstag um 10 Uhr Oma anrufen"), "Oma anrufen");
 gruen("Gesprochene Daten: „15. November“, „fünfzehnten November“, „15.11“ ohne Punkt, „am zwanzigsten“, Wochentag allein; 10.30 Uhr bleibt Zeit");
+// Klaus 18.11.2026: „am nächsten Tag“ stand auf heute, „um halb drei“ ergab keine Uhrzeit.
+assert.equal(ea("Erinnere mich am nächsten Tag um 14 Uhr an den Zahnarzt"), JSON.stringify({ wunsch: true, dueAt: "2026-11-06", dueTime: "14:00" }));
+assert.equal(ea("erinnere mich tags darauf"), JSON.stringify({ wunsch: true, dueAt: "2026-11-06", dueTime: null }));
+assert.equal(ea("Erinnere mich nächsten Donnerstag um halb drei an den Termin"), JSON.stringify({ wunsch: true, dueAt: "2026-11-12", dueTime: "14:30" }));
+assert.equal(ea("erinnere mich morgen um halb 8"), JSON.stringify({ wunsch: true, dueAt: "2026-11-06", dueTime: "07:30" }));
+assert.equal(ea("erinnere mich morgen um halb eins"), JSON.stringify({ wunsch: true, dueAt: "2026-11-06", dueTime: "12:30" }));
+assert.equal(ea("erinnere mich am nächsten Dienstag"), JSON.stringify({ wunsch: true, dueAt: "2026-11-10", dueTime: null }), "„nächsten Dienstag“ bleibt der Wochentag");
+assert.equal(ea("Die halbe Torte um 15 Uhr holen, nicht vergessen"), JSON.stringify({ wunsch: true, dueAt: "2026-11-06", dueTime: "15:00" }), "„halbe“ ohne „um halb“ ist keine Uhrzeit");
+gruen("„am nächsten Tag“, „tags darauf“ = der Tag nach heute; „um halb drei“ = 14:30, „um halb 8“ = 07:30");
 assert.equal(m.erinnerungAusText("Wir waren heute beim Arzt", jetzt), null);
 assert.equal(m.erinnerungAusText("nur ein Satz", jetzt), null);
 assert.equal(m.erinnerungsTitel("Erinnere mich heute um 20 Uhr, Jens anzurufen"), "Jens anzurufen");
