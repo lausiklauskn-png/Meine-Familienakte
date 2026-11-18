@@ -209,8 +209,15 @@ const ortsDatum = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).pa
 export function erinnerungAusText(text: string, now: Date = new Date()): ErinnerungsVorschlag | null {
   const wunsch = /(erinner|nicht vergessen|denk\w*\s+(?:mich\s+)?(?:da|d)?ran|wecke? mich)/i.test(text);
   const zeit = text.match(/\bum\s*(\d{1,2})(?:[:.](\d{2}))?\s*(?:uhr)?\b/i) || text.match(/\b(\d{1,2})(?:[:.](\d{2}))?\s*uhr\b/i);
-  const h = zeit ? Number(zeit[1]) : NaN, m = zeit && zeit[2] ? Number(zeit[2]) : 0;
-  const dueTime = zeit && h >= 0 && h <= 23 && m <= 59 ? `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}` : null;
+  let h = zeit ? Number(zeit[1]) : NaN, m = zeit && zeit[2] ? Number(zeit[2]) : 0;
+  // „um halb drei“ (Klaus 18.11.2026): halb N = eine halbe Stunde vor N. Gesprochen ist fast immer der Tag gemeint, darum gilt eine
+  // Stunde vor 7 als Nachmittag (halb drei → 14:30, halb acht → 07:30). Der Vorschlag steht zum Prüfen im Feld.
+  const halbUhr = text.match(/\bum\s+halb\s+(\d{1,2}|eins|zwei|drei|vier|fünf|sechs|sieben|acht|neun|zehn|elf|zwölf)\b/i);
+  if (halbUhr) {
+    const n = /^\d+$/.test(halbUhr[1]) ? Number(halbUhr[1]) : ["eins", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun", "zehn", "elf", "zwölf"].indexOf(halbUhr[1].toLowerCase()) + 1;
+    if (n >= 1 && n <= 24) { h = n === 1 ? 12 : n - 1; if (h < 7) h += 12; m = 30; }
+  }
+  const dueTime = (zeit || halbUhr) && h >= 0 && h <= 23 && m <= 59 ? `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}` : null;
   const tag = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   // „in 5 Stunden“, „in 30 Minuten“, „in 3 Tagen“, „in einer Woche“ (Klaus 2026-11-05)
   const zahl = (w: string) => /^\d+$/.test(w) ? Number(w) : ({ einer: 1, einem: 1, eine: 1, ein: 1, zwei: 2, drei: 3, vier: 4, fünf: 5, sechs: 6, sieben: 7, acht: 8, neun: 9, zehn: 10, halben: 0.5, halbe: 0.5 } as Record<string, number>)[w.toLowerCase()] ?? NaN;
@@ -247,6 +254,8 @@ export function erinnerungAusText(text: string, now: Date = new Date()): Erinner
   if (!datum && /(?<![a-zäöüß])übermorgen\b/i.test(text)) datum = ortsDatum(new Date(tag.getFullYear(), tag.getMonth(), tag.getDate() + 2));
   else if (!datum && /(?<![a-zäöüß])morgen\b/i.test(text)) datum = ortsDatum(new Date(tag.getFullYear(), tag.getMonth(), tag.getDate() + 1));
   else if (!datum && /\bheute\b/i.test(text)) datum = ortsDatum(tag);
+  // „am nächsten Tag“, „am folgenden Tag“, „tags darauf“ (Klaus 18.11.2026): der Tag nach heute – stand vorher auf heute.
+  if (!datum && /\b(?:nächsten|folgenden|darauffolgenden)\s+tag\b|\btags?\s+darauf\b/i.test(text)) datum = ortsDatum(new Date(tag.getFullYear(), tag.getMonth(), tag.getDate() + 1));
   if (!datum) {
     // Mit „am/nächsten/kommenden“ immer; der Wochentag allein („Dienstag um 10“) nur bei einem Erinnerungswunsch.
     const w = WOCHENTAGE.findIndex((n) => new RegExp(`\\b(?:am|nächsten|kommenden)\\s+${n}\\b`, "i").test(text) || (wunsch && new RegExp(`(?<![\\p{L}])${n}(?![\\p{L}])`, "iu").test(text)));
