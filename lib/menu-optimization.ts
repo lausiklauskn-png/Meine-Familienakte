@@ -6,7 +6,7 @@ export const MENU_OPTIMIZATION_VERSION = 1 as const;
 // Klaus 08.11.2026 (Vorschau neugestaltung-2.28.39, Punkte 1 und 4): „So fängst du an“ ganz oben; ein Name „Cockpit“ statt „Objekt-Cockpit“.
 // 2.28.39 Navigation (U6, U10, U11): Punkte im Cockpit-Kasten und in „Zuletzt wichtig“ öffnen genau diesen Punkt.
 // Klaus 11.11.2026 (Textdurchsicht C): Unterzeile unter „Alles Wichtige an einem Ort“ gestrichen; Fußzeile ohne alten Namen.
-export const START_PAGE_REFERENCE_SHA256 = "21b0c719a627977c5ff15dc199a64293fcd553bff78d2784bde072f2b4ea611c";
+export const START_PAGE_REFERENCE_SHA256 = "b93d8923b1715f70d3b81531c0878ada990b606cee522f44da42385bd1a32eb5";
 
 export type MenuSection =
   | "documents" | "inbox" | "medical" | "benefits" | "work" | "assessment"

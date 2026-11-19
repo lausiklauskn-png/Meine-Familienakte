@@ -37,10 +37,12 @@ function ActivityRow({ entry, position, onDismiss }: { entry: ActivityEntry; pos
   const mounted = useRef(true);
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; if (timer.current) clearTimeout(timer.current); }; }, []);
   useEffect(() => {
-    if (entry.kind !== "success") return;
+    // 2.28.75 (Klaus 19.11.: „gelbe Hinweise, die ich immer nur wegklicke“): Hinweise gehen wie Erfolge von selbst;
+    // nur Fehler und laufende Zwischenstände bleiben stehen.
+    if (entry.kind === "error" || entry.vorlaeufig) return;
     const timeout = setTimeout(() => onDismiss(entry.id), 8000);
     return () => clearTimeout(timeout);
-  }, [entry.id, entry.kind, onDismiss]);
+  }, [entry.id, entry.kind, entry.vorlaeufig, onDismiss]);
   const copy = async () => {
     if (!entry) return;
     if (timer.current) clearTimeout(timer.current);
