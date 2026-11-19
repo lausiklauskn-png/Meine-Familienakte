@@ -3226,3 +3226,10 @@ button.pf-daumen { cursor: pointer; }
 .personen-rechts .klapp-karte { box-shadow: none; }
 .personen-leer { padding: 20px 8px; }
 .klapp-karte .button-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+/* 2.28.75: Der Briefumschlag ist der eine Weg zum Pseudo-Fenster – am Handy direkt im Kopf (Platz von „Buch“ und „Pseudo“). */
+@media (max-width: 900px) {
+  .header-actions:not(.kopf-auf) > .brief-knopf { display: inline-flex !important; }
+}
+@media (max-width: 620px) {
+  .header-actions > .brief-knopf .kopf-wort { display: block; }
+}

@@ -143,10 +143,9 @@ try {
   const handy = await browser.newContext({ ...HANDY, serviceWorkers: "block" });
   const seite = await handy.newPage(); const fehler2 = collectErrors(seite);
   await seite.goto(app.base, { waitUntil: "networkidle" }); await ready(seite);
-  await step("Handy: Assistenz › Brief beantworten öffnet das Pseudo-Fenster (Antwortbrief, Textfeld) – keine zweite Bedienung", async () => {
-    await seite.evaluate(() => { location.hash = "assistant"; });
-    await seite.locator('[data-assistenz-weg="brief"] .assistant-mode-action').click();
-    await seite.locator("[data-brief-oeffnen-fenster]").click();
+  await step("Handy: Briefumschlag im Kopf (2.28.75: nicht mehr in der Assistenz) öffnet das Pseudo-Fenster (Antwortbrief, Textfeld) – keine zweite Bedienung", async () => {
+    await seite.evaluate(() => window.scrollTo(0, 0));
+    await seite.locator("[data-brief-knopf]").click();
     await seite.locator("[data-pseudo-text]").waitFor();
     await seite.locator("[data-pseudo-text]").fill("Sehr geehrte Frau Mara Testfeld, bitte zahlen Sie.");
     await seite.locator("[data-pseudo-los]").click();
