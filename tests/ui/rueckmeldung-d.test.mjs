@@ -26,9 +26,9 @@ try {
   await page.locator(".main-navigation .nav-cluster > button").first().click();
   await page.locator(".mega-menu button", { hasText: "Assistenzzentrale" }).first().click(); await page.waitForTimeout(400);
 
-  await step("D1: drei Wege mit Art, kein Kasten „Aktuell recherchiert“, keine fünf Modus-Knöpfe", async () => {
+  await step("D1: Wege mit Art (2.28.75: zwei – der Briefweg steht am Briefumschlag), kein Kasten „Aktuell recherchiert“, keine fünf Modus-Knöpfe", async () => {
     const r = { wege: await page.locator("[data-assistenz-weg]").count(), alt: await page.locator("main", { hasText: "Ich habe ein Problem oder eine Frage" }).count(), b: await page.locator("main", { hasText: "Aktuell recherchiert" }).count() };
-    return soll(r.wege === 3 && r.alt === 0 && r.b === 0, r);
+    return soll(r.wege === 2 && (await page.locator('[data-assistenz-weg="brief"]').count()) === 0 && r.alt === 0 && r.b === 0, r);
   });
   await step("Weg „In der Akte nachsehen“: Antwort aus der Akte und „Hinweise (feste Regeln, keine KI)“, keine Vorlage", async () => {
     await page.locator("textarea").first().fill("Reklamation Waschmaschine");
@@ -38,11 +38,10 @@ try {
     return soll(/Aus meiner Familienakte/.test(t) && /Hinweise \(feste Regeln, keine KI\)/.test(t) && !/Praktische Einordnung/.test(t), "Kästen falsch");
   });
   // Seit 2.28.69 (Klaus 14.11.: „ein Weg zur KI“): die Briefkarte öffnet nur das Pseudo-Fenster; alles Weitere geschieht dort.
-  await page.locator('[data-assistenz-weg="brief"] .assistant-mode-action').click();
-  await page.locator("[data-brief-antwort]").waitFor(); await page.waitForTimeout(400);
-  await step("Weg „Brief beantworten“: Karte ohne eigene Felder öffnet das Pseudo-Fenster mit Textfeld", async () => {
-    const felder = await page.locator("[data-brief-antwort] textarea, [data-brief-antwort] input").count();
-    await page.locator("[data-brief-oeffnen-fenster]").click();
+  await step("Briefweg (2.28.75: nur noch am Briefumschlag im Kopf) öffnet das Pseudo-Fenster mit Textfeld", async () => {
+    const felder = 0;
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.locator("[data-brief-knopf]").click();
     await page.locator("[data-pseudo-text]").waitFor();
     await page.locator("[data-pseudo-text]").fill(BRIEF);
     await page.locator("[data-pseudo-los]").click();

@@ -23,9 +23,9 @@ try {
     return true;
   });
   const kasten = page.locator("[data-erste-schritte]");
-  await step("Startseite: „So fängst du an“ ganz oben mit drei Schritten", async () => {
+  await step("Startseite: „So fängst du an“ (2.28.75: Klappkarte gleich unter Cockpit-Band und Lebensbereichen) mit drei Schritten", async () => {
     const schritte = await page.locator("[data-erster-schritt]").evaluateAll((l) => l.map((e) => e.getAttribute("data-erster-schritt")));
-    const vorHero = await page.evaluate(() => { const k = document.querySelector("[data-erste-schritte]"); const h = document.querySelector(".family-hero"); return !!k && !!h && !!(k.compareDocumentPosition(h) & Node.DOCUMENT_POSITION_FOLLOWING); });
+    const vorHero = await page.evaluate(() => { const k = document.querySelector('[data-klapp="erste-schritte"]'); const z = document.querySelector('[data-klapp="zuletzt-wichtig"]'); return !!k && !!z && !!(k.compareDocumentPosition(z) & Node.DOCUMENT_POSITION_FOLLOWING); });
     return soll((await kasten.isVisible()) && schritte.join() === "speicher,dokument,erinnerung" && vorHero, { schritte, vorHero });
   });
   // Neu laden ohne ready(): ready() legt die Beispielfamilie wieder an.
@@ -113,14 +113,14 @@ try {
     await page.locator(".main-navigation .nav-cluster > button").nth(1).click({ force: true });
     return soll(/Termine & Aufgaben/i.test(gruppen[1]) && eintraege.join("|") === "Cockpit|Fristen und Aufgaben|Mein Kalender|Tagebuch" && !gruppen.join("|").includes("Interaktives"), { gruppen, eintraege });
   });
-  await step("„Familie & Personen“ behält Familienübersicht, Personen, Vollmachten, Versicherungen; kein zweiter Cockpit-Eintrag mehr", async () => {
+  await step("„Familie & Personen“: ein Eintrag Personen (2.28.75), Vollmachten, Versicherungen; kein zweiter Cockpit-Eintrag mehr", async () => {
     await page.locator(".main-navigation .nav-cluster > button").nth(3).click({ force: true });
     const eintraege = await page.locator(".mega-menu .mega-group button strong").allInnerTexts();
     await page.locator(".main-navigation .nav-cluster > button").nth(3).click({ force: true });
     await page.locator(".main-navigation .nav-cluster > button").nth(0).click({ force: true });
     const assistenz = await page.locator(".mega-menu .mega-group button strong").allInnerTexts();
     await page.locator(".main-navigation .nav-cluster > button").nth(0).click({ force: true });
-    return soll(eintraege.join("|") === "Familienübersicht|Personen|Vollmachten & Vorsorge|Versicherungen & Verträge" && !assistenz.some((x) => /Cockpit|weiterbearbeiten/.test(x)), { eintraege, assistenz });
+    return soll(eintraege.join("|") === "Personen|Vollmachten & Vorsorge|Versicherungen & Verträge" && !assistenz.some((x) => /Cockpit|weiterbearbeiten/.test(x)), { eintraege, assistenz });
   });
   await step("„Mein Kalender“ im Menü öffnet Fristen und Aufgaben mit Mein Kalender", async () => {
     await openMenu(page, 1, "Mein Kalender");

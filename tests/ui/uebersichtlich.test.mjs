@@ -32,7 +32,7 @@ try {
     return soll(chips >= 6 && /Fahrzeuge/.test(await page.locator(".breadcrumb").innerText()), { chips });
   });
   await step("Kopf: kein „Neu“, kein „Pseudo“, kein „Buch“; Schrift und Abmelden hinter „‹“", async () => {
-    const weg = await page.locator(".header-actions .neu-knopf-schalter, .header-actions [data-pseudo-knopf], .header-actions [data-tagebuch-knopf]").count();
+    const weg = (await page.locator(".header-actions .neu-knopf-schalter, .header-actions [data-tagebuch-knopf]").count()) + Number(await page.locator("[data-pseudo-knopf]").isVisible());
     const vorher = await page.locator(".header-actions .fa-schrift").isVisible();
     await page.locator("[data-kopf-auf]").click();
     const nachher = await page.locator(".header-actions .fa-schrift").isVisible();

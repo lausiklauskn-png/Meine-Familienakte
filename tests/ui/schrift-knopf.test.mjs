@@ -11,13 +11,16 @@ try {
   await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page);
   const schrift = () => page.evaluate(() => parseFloat(getComputedStyle(document.querySelector("main h1, main h2") || document.body).fontSize));
   const vorher = await schrift();
+  // 2.28.75: „A··A“ steht in jeder Breite hinter dem Pfeil „‹“ im Kopf.
+  const kopfAuf = async () => { if (!(await page.locator("[data-pro-schrift-knopf]").isVisible())) { await page.locator("[data-kopf-auf]").click(); await page.waitForTimeout(250); } };
+  await kopfAuf();
   await step("Kopf: Knopf „A··A“ sichtbar, Regler zunächst zu", async () => {
     const k = page.locator(".header-actions [data-pro-schrift-knopf]");
     soll(await k.isVisible() && (await k.innerText()).trim() === "A··A", "Knopf fehlt");
     return soll(await page.locator(".pro-schrift-feld").isHidden(), "Regler offen");
   });
   await step("Regler auf 130 %: Schrift wächst, Anzeige „130 %“", async () => {
-    await page.locator("[data-pro-schrift-knopf]").click();
+    await kopfAuf(); await page.locator("[data-pro-schrift-knopf]").click();
     const r = page.locator(".pro-schrift-feld input[type=range]"); await r.waitFor();
     await r.evaluate((e) => { e.value = "130"; e.dispatchEvent(new Event("input", { bubbles: true })); });
     await page.waitForTimeout(200);
@@ -30,7 +33,7 @@ try {
     return soll(await page.evaluate(() => document.documentElement.dataset.proSchrift) === "130" && (await schrift()) > vorher * 1.2, "nicht gemerkt");
   });
   await step("„Zurück auf 100 %“ setzt zurück", async () => {
-    await page.locator("[data-pro-schrift-knopf]").click();
+    await kopfAuf(); await page.locator("[data-pro-schrift-knopf]").click();
     await page.getByRole("button", { name: "Zurück auf 100 %" }).click();
     await page.waitForTimeout(200);
     return soll(Math.abs((await schrift()) - vorher) < 0.5, "nicht zurück");

@@ -17,11 +17,11 @@ try {
     const knopf = page.locator("[data-pseudo-knopf]");
     await step(`${name}: Knopf rot „aus“, kein Fenster`, async () => {
       const r = { zustand: await knopf.getAttribute("data-pseudo-knopf"), text: await knopf.innerText(), fenster: await page.locator("[data-pseudo-fenster]").count(), sichtbar: await knopf.isVisible() };
-      return soll(r.zustand === "aus" && /Pseudo\s*aus/.test(r.text) && r.fenster === 0 && r.sichtbar, r);
+      return soll(r.zustand === "aus" && /Pseudo\s*aus/.test(r.text) && r.fenster === 0 && !r.sichtbar /* 2.28.75: Knopf verdeckt, Zustand bleibt */, r);
     });
     const netz = [];
     await step(`${name}: Tipp → grün „an“, PseudoDoc-Zeichen, Datei rein → eine Zeile D01 mit Zahl, kein Netzaufruf`, async () => {
-      await knopf.click();
+      await knopf.dispatchEvent("click");
       await page.locator("[data-pseudo-fenster]").waitFor();
       page.on("request", (r) => { if (!r.url().startsWith(app.base) && !r.url().startsWith("data:") && !r.url().startsWith("blob:")) netz.push(r.url()); });
       await page.locator("[data-pseudo-datei]").setInputFiles({ name: "Brief Mara Testfeld.txt", mimeType: "text/plain", buffer: Buffer.from(BRIEF) });
@@ -107,7 +107,7 @@ try {
       return soll(/1 Fläche\b/.test(t) && schwarz === 1, { t, schwarz });
     });
     if (name === "PC") await step("PC: Briefumschlag im Kopf öffnet das Fenster mit Antwortbrief und Textfeld", async () => {
-      await knopf.click(); // aus
+      await knopf.dispatchEvent("click"); // aus
       await page.locator("[data-brief-knopf]").click();
       await page.locator("[data-pseudo-text]").waitFor();
       await page.waitForFunction(() => document.activeElement?.hasAttribute("data-pseudo-text"), null, { timeout: 3000 }).catch(() => {});
@@ -115,7 +115,7 @@ try {
       return soll(r.an === "an" && r.fokus, r);
     });
     await step(`${name}: Tipp → wieder rot, Fenster zu`, async () => {
-      await knopf.click();
+      await knopf.dispatchEvent("click");
       return soll((await knopf.getAttribute("data-pseudo-knopf")) === "aus" && (await page.locator("[data-pseudo-fenster]").count()) === 0, "nicht aus");
     });
     check(errors.length === 0, `${name}: keine Seitenfehler`, errors.join(" | "));

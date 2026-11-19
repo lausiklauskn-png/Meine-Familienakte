@@ -83,7 +83,7 @@ try {
   const zu = () => page.locator("[data-pseudo-ansicht] .pf-blatt-fuss .pf-kn").click();
 
   await step("Pseudo-Fenster nutzt die Profile: feste Platzhalter, Großschreibung, Nummer ohne Feldwort, kein Netzaufruf", async () => {
-    await page.locator("[data-pseudo-knopf]").click();
+    await page.locator("[data-pseudo-knopf]").dispatchEvent("click");
     await page.locator("[data-pseudo-fenster]").waitFor();
     await textRein("Termin bei PRAXIS ASTER, Zeichen KD 2024 118833. Gruß P. Ginster, Stadtwerke Musterstadt. Treffpunkt am alten Steinbruch.");
     const t = await seiteVon("D01"); await zu();
