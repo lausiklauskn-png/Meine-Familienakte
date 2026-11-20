@@ -3,7 +3,7 @@ import { UI_HELP } from "../lib/ui-help";
 import { VoiceInput, VoiceTextarea, InfoPopover } from "./ui-controls";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { useActivity } from "./ui-activity";
-import { CheckCircle2, ClipboardCheck, Copy, FilePenLine, FileText, Mail, MessageSquareText, SearchCheck, ShieldCheck } from "lucide-react";
+import { CheckCircle2, ClipboardCheck, Copy, FilePenLine, FileText, MessageSquareText, SearchCheck, ShieldCheck } from "lucide-react";
 import { textAlsPdf } from "../lib/text-pdf";
 import { BriefAntwort } from "./brief-antwort";
 import type { FamilyRecordUnion, FamilyRelation } from "@/lib/family-data-model";
@@ -27,7 +27,8 @@ type Notice = { kind: "success" | "error" | "info"; text: string } | null;
 type Weg = "akte" | "brief" | "vorgang";
 const wege: Array<{ id: Weg; label: string; art: string; hint: string; icon: React.ReactNode }> = [
   { id: "akte", label: "In der Akte nachsehen", art: "ohne KI", hint: "Frage stellen, Antwort aus deinen Unterlagen mit den Fundstellen zum Antippen. Es wird nur in deiner Akte gesucht, nicht im Internet.", icon: <SearchCheck/> },
-  { id: "brief", label: "Brief oder E-Mail beantworten", art: "mit deiner KI, verdeckt", hint: "Im Pseudo-Fenster: Namen, Anschriften, Nummern werden zu Platzhaltern. In deine KI kopieren, per Link öffnen oder mit eigenem Schlüssel senden. Die Antwort bekommt die echten Angaben zurück.", icon: <Mail/> },
+  // 2.28.75 (Klaus 19.11., Doppelungen heraus): der Briefweg steht nur noch am Briefumschlag oben im Kopf.
+  // { id: "brief", label: "Brief oder E-Mail beantworten", art: "mit deiner KI, verdeckt", hint: "Im Pseudo-Fenster: Namen, Anschriften, Nummern werden zu Platzhaltern. In deine KI kopieren, per Link öffnen oder mit eigenem Schlüssel senden. Die Antwort bekommt die echten Angaben zurück.", icon: <Mail/> },
   { id: "vorgang", label: "Vorgang oder Termin vorbereiten", art: "ohne KI", hint: "Vorgang wählen: was offen ist, was fehlt, nächster Schritt. Daraus ein Schreiben aus Vorlagen mit Tonfall.", icon: <ClipboardCheck/> },
 ];
 
@@ -123,7 +124,7 @@ export function AssistantCenter({ records, relations, documents, initialCaseId, 
   const mailVersand = useMailVersand({ an: recipient, betreff: subject, text: body, bestaetigt: confirmed && !busy, onDateiLaden, onNotice, onGesendet: () => save("Versendet"),
     dokumente: (analysis?.sourceDocumentIds || []).map((id) => ({ id, title: documents.find((d) => d.id === id)?.title || "Unterlage" })) });
   return <>
-    <header className="page-title"><div><MessageSquareText/></div><span><h1>Assistenz</h1><p>Fragen klären, Vorgänge weiterbearbeiten und Schreiben vorbereiten – mit vorhandenen Daten, klaren Quellen und deiner Entscheidung.</p></span></header>
+    <header className="page-title"><div><MessageSquareText/></div><span><h1>Assistenz</h1></span></header>
 
     <section className="assistant-mode-grid assistant-wege" aria-label="Assistenzweg auswählen">
       {wege.map((item) => <article key={item.id} className={`card assistant-mode ${weg === item.id ? "active" : ""}`} data-assistenz-weg={item.id}><button type="button" className="assistant-mode-action" aria-pressed={weg === item.id} onClick={() => setWeg(item.id)}>{item.icon}<span><small className="assistant-weg-art">{item.art}</small><strong>{item.label}</strong></span></button><InfoPopover label={`${item.label} erklären`} text={item.hint}/></article>)}

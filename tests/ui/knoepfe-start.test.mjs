@@ -33,7 +33,8 @@ try {
   });
   // Klaus 09.11.: Ausloggen = App schließen. Im Browser darf die Seite ihren Tab nicht schließen – Abmeldeseite statt Neuladen.
   await step("Ausloggen im Browser zeigt die Abmeldeseite; „Wieder öffnen“ lädt neu", async () => {
-    await page.locator(".logout-button").click();
+    await page.locator("[data-kopf-auf]").click(); // 2.28.75: Abmelden hinter „‹“
+    await page.locator(".header-actions .logout-button").click();
     const seite = page.locator("[data-abgemeldet]"); await seite.waitFor({ timeout: 5000 });
     const text = await seite.innerText();
     await seite.locator("[data-wieder-oeffnen]").click();

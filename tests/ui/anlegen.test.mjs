@@ -23,8 +23,8 @@ function pdf(name, zeile) {
 async function zurFamilie(page) {
   await page.evaluate(() => window.scrollTo(0, 0));
   const feld = page.locator(".global-search input");
-  await feld.fill(""); await feld.fill("Familienübersicht");
-  await page.locator(".search-results article", { has: page.locator("strong", { hasText: /^Familienübersicht$/ }) }).first().locator("button").first().click();
+  await feld.fill(""); await feld.fill("Personen");
+  await page.locator(".search-results article", { has: page.locator("strong", { hasText: /^Personen$/ }) }).first().locator("button").first().click();
   await page.locator("#familie-stamm").waitFor();
 }
 

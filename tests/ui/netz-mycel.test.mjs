@@ -9,8 +9,8 @@ const ZAEHLER = `(() => { const W = window.WebSocket; window.__ws = [];
   window.WebSocket.prototype = W.prototype; Object.assign(window.WebSocket, { CONNECTING: 0, OPEN: 1, CLOSING: 2, CLOSED: 3 }); })();`;
 const zurNetzSeite = async (page) => {
   await page.evaluate(() => window.scrollTo(0, 0));
-  await page.locator(".main-navigation .nav-cluster > button", { hasText: "Dokumente" }).first().click({ force: true });
-  await page.locator(".mega-menu button", { hasText: "Netz (Mycel)" }).first().click();
+  // 2.28.75 (Klaus 19.11.: „Netz und Mycel in den Hintergrund“): nur noch im Fuß unter „Sicherheit und Verwaltung“.
+  await page.locator("[data-fuss-netz]").click();
   await page.locator("[data-netz-seite]").waitFor();
 };
 
@@ -31,7 +31,7 @@ try {
   check(sbkimAnfragen.length === 0 && await page.locator("script[data-familienakte-sbkim]").count() === 0, "Start: kein SBKIM-Baustein geladen", sbkimAnfragen.join(" "));
   check((await page.evaluate(() => window.__ws.length)) === 0, "Start: keine Verbindung (kein WebSocket)");
 
-  await step("Menü Dokumente → „Netz (Mycel)“: Seite erscheint, Bausteine bereit", async () => {
+  await step("Fuß → „Netz (Mycel)“: Seite erscheint, Bausteine bereit", async () => {
     await zurNetzSeite(page);
     await page.locator("[data-netz-zustand]", { hasText: "bereit" }).waitFor({ timeout: 20000 });
     return `${await page.locator("script[data-familienakte-sbkim]").count()} Kanon-Module geladen`;
@@ -79,9 +79,7 @@ try {
   await handy.goto(app.base, { waitUntil: "networkidle" }); await ready(handy);
   await step("Handy 390 px: Netz-Seite ohne Querrollen", async () => {
     await handy.evaluate(() => window.scrollTo(0, 0));
-    await handy.locator(".mobile-menu-button").click();
-    await handy.locator(".main-navigation .nav-cluster > button", { hasText: "Dokumente" }).first().click({ force: true });
-    await handy.locator(".mega-menu .mega-group button", { hasText: "Netz (Mycel)" }).first().click({ force: true });
+    await handy.locator("[data-fuss-netz]").click();
     await handy.locator("[data-netz-seite]").waitFor({ timeout: 10000 });
     const ueber = await handy.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     return ueber <= 1 ? `Überlauf ${ueber} px` : false;

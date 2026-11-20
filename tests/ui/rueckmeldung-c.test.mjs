@@ -15,19 +15,18 @@ try {
   await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page);
   const TEXT = "Besuch bei der Probe-Firma. Nächstes Mal eine Flasche Wein als Dankeschön mitbringen.";
 
-  await step("Kopf: Knopf „Erinnerung“ (statt „Notiz“) und daneben das Buch „Tagebuch“", async () => {
+  await step("Kopf: Knopf „Erinnerung“ (statt „Notiz“); 2.28.75: kein Buch-Knopf mehr (Tagebuch über Startseite und Menü)", async () => {
     const r = { erinnerung: await page.locator('[data-notiz-knopf][aria-label="Erinnerung"]').count(), buch: await page.locator("[data-tagebuch-knopf]").count(), notiz: await page.locator('.site-header button[aria-label="Notiz"]').count() };
-    return soll(r.erinnerung === 1 && r.buch === 1 && r.notiz === 0, r);
+    return soll(r.erinnerung === 1 && r.buch === 0 && r.notiz === 0, r);
   });
   await step("Startseite: ein Erfassungsblock ohne Karten und ohne Zähler", async () => {
     const r = await page.evaluate(() => ({ block: document.querySelectorAll("main [data-tagebuch-erfassen]").length, karten: document.querySelectorAll("main .memory-function-grid").length, zaehler: document.querySelectorAll("main [data-tagebuch-zaehler], main .memory-counters").length }));
     return soll(r.block === 1 && r.karten === 0 && r.zaehler === 0, r);
   });
-  await step("Buch-Knopf öffnet das Tagebuch oben, Feld „Was ist heute passiert?“ hat den Fokus", async () => {
-    await page.evaluate(() => scrollTo(0, 2000));
-    await page.locator("[data-tagebuch-knopf]").click(); await page.waitForTimeout(700);
-    const r = await page.evaluate(() => ({ pfad: document.querySelector(".breadcrumb")?.textContent || "", fokus: document.activeElement?.hasAttribute("data-tagebuch-text") || false, y: scrollY }));
-    return soll(/Tagebuch/.test(r.pfad) && r.fokus && r.y < 50, r);
+  await step("Tagebuch über das Verzeichnis: Seite mit Feld „Was ist heute passiert?“", async () => {
+    await footer(page, "Tagebuch");
+    const r = await page.evaluate(() => ({ pfad: document.querySelector(".breadcrumb")?.textContent || "", feld: !!document.querySelector("main [data-tagebuch-text]") }));
+    return soll(/Tagebuch/.test(r.pfad) && r.feld, r);
   });
   await step("Tagebuch-Seite ohne das Wort „Memory“, Zähler nur mit Zahl größer null", async () => {
     const t = await page.locator("main").innerText();

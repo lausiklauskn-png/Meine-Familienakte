@@ -14,6 +14,12 @@ function uebersprungenLesen(): ErsterSchritt[] {
   try { const v = JSON.parse(workspaceStorage.getItem(ERSTE_SCHRITTE_SCHLUESSEL) || "[]"); return Array.isArray(v) ? v.filter((x): x is ErsterSchritt => ["speicher", "dokument", "erinnerung"].includes(x)) : []; } catch { return []; }
 }
 
+/** Wie viele Schritte noch offen sind (nicht erledigt, nicht übersprungen) – 0 heißt: Kasten fällt weg. */
+export function ersteSchritteOffen(erledigt: Record<ErsterSchritt, boolean>) {
+  const weg = uebersprungenLesen();
+  return (["speicher", "dokument", "erinnerung"] as ErsterSchritt[]).filter((id) => !erledigt[id] && !weg.includes(id)).length;
+}
+
 export function ErsteSchritte({ erledigt, onSchritt }: { erledigt: Record<ErsterSchritt, boolean>; onSchritt: (schritt: ErsterSchritt) => void }) {
   const [uebersprungen, setUebersprungen] = useState<ErsterSchritt[]>(uebersprungenLesen);
   const schritte: Array<{ id: ErsterSchritt; titel: string; fertig: string }> = [
@@ -39,6 +45,5 @@ export function ErsteSchritte({ erledigt, onSchritt }: { erledigt: Record<Erster
               <button type="button" className="text-link erste-schritte-weg" onClick={() => ueberspringen(s.id)} data-erster-schritt-weg={s.id}>Überspringen</button></>}
       </li>;
     })}</ol>
-    <p className="muted">Der Kasten verschwindet, sobald alle drei erledigt oder übersprungen sind.</p>
   </section>;
 }

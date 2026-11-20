@@ -3120,3 +3120,118 @@ button.pf-daumen { cursor: pointer; }
 /* Discovery-Fernrohr im Kopf (16.11.): zwischen 901 und 999 px ist die Kopfleiste mit dem zusätzlichen Knopf zu breit (Querrollen);
    dort rücken die Knöpfe enger zusammen. */
 @media (min-width: 901px) and (max-width: 999px) { .header-actions { gap: 3px; } }
+
+/* ===== 2.28.75 Familienakte übersichtlich (Klaus 19.11.2026, Brief Punkt 1–14) ===== */
+/* Kopfleiste: Seltenes (Schrift, Discovery, Installieren, Abmelden) steht in jeder Breite hinter dem Pfeil „‹“. */
+.header-actions > .kopf-pfeil-auf { display: inline-grid; place-items: center; order: 99; }
+.header-actions:not(.kopf-auf) > .fa-schrift, .header-actions:not(.kopf-auf) > .discovery-knopf,
+.header-actions:not(.kopf-auf) > .logout-button,
+.header-actions:not(.kopf-auf) > .familienakte-install { display: none !important; }
+/* „Einloggen“ (Pro-Tresor gesperrt) braucht man sofort: bleibt sichtbar. */
+@media (min-width: 901px) { .header-actions > .login-button { display: inline-flex !important; align-items: center; justify-content: center; } }
+@media (min-width: 901px) {
+  .header-actions.kopf-auf > .kopf-pfeil-auf { display: none; }
+  .header-actions.kopf-auf > .kopf-pfeil-zu { display: inline-grid; place-items: center; order: -1; }
+  .header-actions.kopf-auf > .fa-schrift, .header-actions.kopf-auf > .discovery-knopf,
+  .header-actions.kopf-auf > .logout-button, .header-actions.kopf-auf > .login-button { display: inline-flex !important; align-items: center; justify-content: center; }
+  .header-actions.kopf-auf > .familienakte-install:not([hidden]) { display: inline-flex !important; }
+  .pwa-installiert .header-actions.kopf-auf > .familienakte-install { display: none !important; }
+  .header-actions > .kopf-pfeil { width: 30px; height: 30px; border: 1px solid var(--line); border-radius: 8px; }
+}
+
+/* Einklappbare Karte (app/klapp-karte.tsx) */
+.klapp-karte { padding: 0; margin: 10px 0; overflow: visible; }
+.klapp-kopf { display: flex; align-items: center; gap: 8px; padding: 4px 10px 4px 4px; }
+.klapp-knopf { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 6px 10px; border: 0; border-radius: 10px; background: transparent; color: var(--navy); text-align: left; font-weight: 800; font-size: 1.02rem; }
+.klapp-knopf:hover { background: var(--blue-soft); }
+.klapp-pfeil { flex: none; color: var(--teal); transition: transform .15s ease; transform: rotate(-90deg); }
+.klapp-karte.offen .klapp-pfeil { transform: none; }
+.klapp-titel { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.klapp-zahl { flex: none; min-width: 24px; padding: 1px 8px; border-radius: 999px; background: var(--blue-soft); color: var(--navy-2); font-size: .82rem; text-align: center; }
+.klapp-rechts { margin-left: auto; }
+.klapp-unter { margin: -4px 14px 8px 44px; font-size: .86rem; color: var(--muted); }
+.klapp-unter.warnung { color: var(--amber); font-weight: 700; }
+.klapp-unter.gut { color: var(--green); }
+.klapp-inhalt { padding: 2px 14px 14px; border-top: 1px solid var(--line); }
+.klapp-inhalt > .card, .klapp-inhalt > section.card { margin: 8px 0 0; box-shadow: none; border: 0; padding: 0; background: transparent; }
+.klapp-inhalt .document-intake-heading, .klapp-inhalt #memory-capture-title, .klapp-inhalt .start-title-row:has(#memory-capture-title), .klapp-inhalt #erste-schritte-titel { display: none; }
+.klapp-karte.recent-card .klapp-inhalt > button { display: flex; width: 100%; align-items: center; gap: 10px; padding: 9px 4px; border: 0; border-bottom: 1px solid var(--line); background: transparent; text-align: left; }
+.klapp-karte.recent-card .klapp-inhalt > button > span:nth-child(2) { flex: 1; display: grid; }
+.klapp-karte.recent-card .klapp-inhalt > button small { color: var(--muted); }
+.klapp-karte .recent-heading-actions { margin-top: 10px; }
+.klapp-karte .vault-action-strip { margin-top: 10px; }
+
+/* Startseite: Kopfband flach statt großer Kachel */
+.family-hero.hero-flach { display: block; padding: 14px 18px; }
+.family-hero.hero-flach:after { display: none; }
+.hero-flach-kopf { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.app-shell .family-hero.hero-flach h1 { margin: 2px 0 0; font-size: clamp(1.15rem, 2.2vw, 1.5rem); color: #fff; background: none; padding: 0; }
+.family-hero.hero-flach .hero-cockpit-link { font-size: .9rem; padding: 7px 12px; border: 1px solid rgba(255,255,255,.45); border-radius: 999px; background: rgba(255,255,255,.1); }
+.hero-flach-zahlen { margin-top: 10px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important; }
+.hero-flach-zahlen > * { min-width: 0; }
+.hero-flach-zahlen strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Lebensbereiche als kleine Schnellauswahl: höchstens drei Reihen, dann seitlich schieben */
+.chip-raster { display: grid; grid-auto-flow: column; grid-template-rows: repeat(var(--chip-reihen, 1), auto); grid-auto-columns: max-content; gap: 6px; overflow-x: auto; padding: 8px 2px; scrollbar-width: thin; }
+@media (max-width: 900px) { .chip-raster { --chip-reihen: 2; } }
+@media (max-width: 520px) { .chip-raster { --chip-reihen: 3; } }
+.bereich-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 4px 11px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); color: var(--navy); font-size: .88rem; font-weight: 700; white-space: nowrap; }
+.bereich-chip svg { color: var(--teal); flex: none; }
+.bereich-chip small { padding: 0 6px; border-radius: 999px; background: var(--blue-soft); font-size: .75rem; }
+.bereich-chip:hover { background: var(--blue-soft); border-color: #b9cfe0; }
+.bereich-chip-alle { color: var(--teal); border-style: dashed; }
+
+/* Hinweis Bsp.-Akten: eine flache Zeile */
+.info-notice.sample-data-notice { display: flex; align-items: center; gap: 10px; padding: 6px 10px; margin: 6px 0; }
+.info-notice.sample-data-notice > div { flex: 1; }
+.info-notice.sample-data-notice .button { min-height: 32px; padding: 4px 12px; width: auto; }
+.app-shell .klapp-karte.card { padding: 0; margin-top: 8px; margin-bottom: 0; }
+.app-shell .klapp-karte .klapp-knopf { font-weight: 800; }
+.app-shell .family-hero.hero-flach h1 { border: 0; box-shadow: none; }
+
+/* Personen (app/personen-ansicht.tsx): links Liste, rechts Steckbrief und alles zur Person */
+.personen-ansicht { display: grid; grid-template-columns: minmax(240px, 320px) minmax(0, 1fr); gap: 12px; align-items: start; margin-top: 8px; }
+@media (max-width: 900px) { .personen-ansicht { grid-template-columns: minmax(0, 1fr); } }
+.app-shell .personen-ansicht > .card { margin-top: 0; padding: 10px; }
+.personen-kopf { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.app-shell .personen-kopf h2 { display: flex; align-items: center; gap: 6px; margin: 0; flex: 1; font-size: 1rem; }
+.personen-liste, .person-bezug { list-style: none; margin: 8px 0 0; padding: 0; }
+.personen-liste li > button, .person-bezug li > button { position: relative; display: flex; align-items: center; gap: 8px; width: 100%; min-height: 42px; padding: 6px 8px; border: 0; border-bottom: 1px solid var(--line); background: transparent; color: var(--ink); text-align: left; }
+.personen-liste li > button:hover, .person-bezug li > button:hover { background: var(--blue-soft); }
+.personen-liste li > button.gewaehlt { background: var(--teal-soft); box-shadow: inset 3px 0 0 var(--teal); }
+.personen-liste li > button > span:not(.klapp-zahl), .person-bezug li > button > span { flex: 1; min-width: 0; display: grid; }
+.personen-liste small { color: var(--muted); font-size: .8rem; }
+.personen-liste svg, .person-bezug svg { flex: none; color: var(--teal); }
+.person-neu { display: grid; gap: 6px; margin-top: 8px; padding: 8px; border: 1px dashed var(--line); border-radius: 10px; }
+.person-neu label, .person-felder label, .ausweis-zeile label, .eintrag-zeile label { display: grid; gap: 2px; font-size: .82rem; color: var(--muted); }
+.personen-pfad { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; font-size: .84rem; color: var(--muted); margin-bottom: 6px; }
+.personen-pfad strong { color: var(--navy); }
+.person-kopf { display: flex; align-items: flex-start; gap: 10px; }
+.person-kopf > svg { flex: none; margin-top: 8px; color: var(--teal); }
+.person-kopf > div { flex: 1; min-width: 0; }
+.app-shell .person-kopf h2 { margin: 0; }
+.person-kopf small { color: var(--muted); }
+.person-kopf p { margin: 2px 0 0; }
+.person-felder { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; margin: 8px 0; }
+.ausweis-zeile { display: grid; grid-template-columns: minmax(150px, 1.2fr) minmax(150px, 1fr) minmax(130px, .8fr) auto; gap: 8px; align-items: end; padding: 8px 0; border-bottom: 1px solid var(--line); }
+@media (max-width: 700px) { .ausweis-zeile { grid-template-columns: minmax(0, 1fr); } }
+.ausweis-nummer { display: flex; gap: 4px; align-items: center; }
+.ausweis-nummer > :first-child { flex: 1; min-width: 0; }
+.ausweis-stand { font-style: normal; font-size: .78rem; font-weight: 700; }
+.ausweis-stand.rot { color: var(--red); } .ausweis-stand.gelb { color: var(--amber); }
+.ausweis-fotos { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.ausweis-foto { width: 56px; height: 40px; padding: 0; border: 1px solid var(--line); border-radius: 6px; background: var(--blue-soft); overflow: hidden; display: grid; place-items: center; }
+.ausweis-foto img { width: 100%; height: 100%; object-fit: cover; }
+.ausweis-foto-knopf { cursor: pointer; }
+.eintrag-zeile { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) auto; gap: 8px; align-items: end; padding: 6px 0; }
+.app-shell .person-alles { display: flex; align-items: center; gap: 6px; margin: 14px 0 4px; font-size: 1rem; }
+.personen-rechts .klapp-karte { box-shadow: none; }
+.personen-leer { padding: 20px 8px; }
+.klapp-karte .button-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+/* 2.28.75: Der Briefumschlag ist der eine Weg zum Pseudo-Fenster – am Handy direkt im Kopf (Platz von „Buch“ und „Pseudo“). */
+@media (max-width: 900px) {
+  .header-actions:not(.kopf-auf) > .brief-knopf { display: inline-flex !important; }
+}
+@media (max-width: 620px) {
+  .header-actions > .brief-knopf .kopf-wort { display: block; }
+}

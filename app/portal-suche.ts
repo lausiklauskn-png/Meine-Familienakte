@@ -28,7 +28,27 @@ function linkedCaseId(sourceId: string, relations: FamilyRelation[]) {
 
 const healthRecordPattern = /(gesund|arzt|medizin|diagnos|krank|krankenkasse|rente|physio|pflege|heuschnupfen|erkält|rücken)/i;
 
+/** 2.28.75 (Klaus 19.11.: „Fahrzeuggarantie“ → alles zur Garantie des Fahrzeugs): findet ein zusammengesetztes Wort nichts,
+ * wird es einmal in zwei Teile zerlegt („Fahrzeug Garantie“, Fugen-s fällt weg) und damit gesucht. Nur die Hülle der Suche;
+ * die Wortsuche selbst (lib/family-search) bleibt unverändert. */
 export function buildPortalSearchResults(topNavigation: SearchNavigation, query: string, documents: UploadedDocument[], localDocuments: LocalDocument[], records: FamilyRecordUnion[] = [], relations: FamilyRelation[] = [], options: PortalSearchOptions = {}): SearchResult[] {
+  const direkt = suchenEinmal(topNavigation, query, documents, localDocuments, records, relations, options);
+  if (direkt.some((r) => r.group !== SEARCH_AREA_GROUP)) return direkt;
+  const woerter = query.trim().split(/\s+/);
+  for (let w = 0; w < woerter.length; w++) {
+    const wort = woerter[w]; if (wort.length < 9) continue;
+    for (let i = 4; i <= wort.length - 4; i++) {
+      const links = wort.slice(0, i).replace(/s$/i, ""); const rechts = wort.slice(i);
+      if (links.length < 4) continue;
+      const neu = [...woerter.slice(0, w), links, rechts, ...woerter.slice(w + 1)].join(" ");
+      const treffer = suchenEinmal(topNavigation, neu, documents, localDocuments, records, relations, options);
+      if (treffer.some((r) => r.group !== SEARCH_AREA_GROUP)) return treffer;
+    }
+  }
+  return direkt;
+}
+
+function suchenEinmal(topNavigation: SearchNavigation, query: string, documents: UploadedDocument[], localDocuments: LocalDocument[], records: FamilyRecordUnion[] = [], relations: FamilyRelation[] = [], options: PortalSearchOptions = {}): SearchResult[] {
   const interpretation = interpretFamilySearchQuery(query, options.now); if (!hasFamilySearchContent(interpretation) && !interpretation.intents.length) return [];
   const candidates: SearchResult[] = [];
   const add = (result: Omit<SearchResult, "score">, searchable: string, dates: Array<string | null | undefined> = []) => { const score = scoreFamilySearchText(searchable, interpretation, dates); if (score) candidates.push({ ...result, score }); };
@@ -115,6 +135,34 @@ export function buildPortalSearchResults(topNavigation: SearchNavigation, query:
       { id: `record-${record.id}`, section: ziel.section as SectionId, targetId: ziel.targetId, contextCaseId: record.recordType === "case" ? record.id : linkedCaseId(record.id, relations), title, detail, kind, group: kind, reason: memory ? "Passender Tagebucheintrag" : "Passender Eintrag aus der Familienakte", date, bereich },
       searchable,
     );
+  });
+  // 2.28.75 (Klaus 19.11.: „‚Klaus‘ eingeben → alles zu der Person“): passt der Name einer Person, steht oben „Alles zu …“
+  // (öffnet ihren Steckbrief unter Familie & Personen), und was mit ihr verknüpft ist, kommt mit in die Treffer –
+  // auch wenn der Name in der Unterlage selbst nicht vorkommt. Geschützte Gesundheitseinträge bleiben zusammengefasst.
+  records.filter((r) => r.recordType === "person" && r.status !== "archiviert").forEach((person) => {
+    const name = stammLesen(person).name; if (!name) return;
+    const punkte = scoreFamilySearchText(name, interpretation); if (!punkte) return;
+    const alt = candidates.findIndex((c) => c.id === `record-${person.id}`); if (alt >= 0) candidates.splice(alt, 1);
+    candidates.push({ id: `person-${person.id}`, section: "family", targetId: person.id, title: `Alles zu ${name}`, detail: "Steckbrief, Akten, Unterlagen, Termine und Tagebuch", kind: "Person", group: "Personen", reason: "Passende Person", score: punkte + 60, bereich: "Person" });
+    const verknuepft = new Set(relations.flatMap((rel) => rel.fromId === person.id ? [rel.toId] : rel.toId === person.id ? [rel.fromId] : []));
+    verknuepft.forEach((id) => {
+      const vorhanden = candidates.find((c) => c.targetId === id && c.section !== "family");
+      if (vorhanden) { vorhanden.score = Math.max(vorhanden.score, punkte + 1); vorhanden.reason = `Gehört zu ${name}`; return; }
+      const doc = [...localDocuments, ...documents].find((d) => d.id === id);
+      if (doc) {
+        if (isSensitiveHealthText(doc.originalName, doc.category, doc.notes)) return;
+        const titel = (doc as Partial<LocalDocument>).titel || doc.originalName;
+        candidates.push({ id: `doc-${doc.id}`, section: "documents", targetId: doc.id, contextCaseId: linkedCaseId(doc.id, relations), title: titel, detail: `${doc.category} · ${fmtDate(doc.documentDate)}`, kind: "Dokument", group: "Dokumente", reason: `Gehört zu ${name}`, score: punkte + 1, date: doc.documentDate, bereich: doc.category });
+        return;
+      }
+      const rec = records.find((r) => r.id === id && r.status !== "archiviert");
+      if (!rec || rec.recordType === "person") return;
+      const titel = cockpitRecordLabel(rec); const memory = memoryData(rec);
+      if (memory?.sensitive || healthRecordPattern.test(`${titel} ${rec.source || ""} ${rec.notes || ""}`)) return;
+      const ziel = zielFuerDatensatz(rec.recordType, rec.id, { tagebuch: Boolean(memory) });
+      const kind = familyRecordKindLabel(rec);
+      candidates.push({ id: `record-${rec.id}`, section: ziel.section as SectionId, targetId: ziel.targetId, contextCaseId: rec.recordType === "case" ? rec.id : linkedCaseId(rec.id, relations), title: titel, detail: kind, kind, group: kind, reason: `Gehört zu ${name}`, score: punkte + 1, bereich: kind });
+    });
   });
   if (healthRecords) candidates.push({ id: "health-records", section: "health", title: `${healthRecords} geschützte${healthRecords === 1 ? "r" : ""} Gesundheitseintr${healthRecords === 1 ? "ag" : "äge"}`, detail: "Einzelheiten im geschützten Gesundheitsbereich", kind: "Gesundheit", group: "Gesundheit", reason: "Passende Gesundheitseinträge, zusammengefasst", score: healthRecordScore });
   // „Erinnerung: X“ neben der Frist/Aufgabe „X“ verdoppelt nur die Liste; die Erinnerung steht bei ihrer Frist.

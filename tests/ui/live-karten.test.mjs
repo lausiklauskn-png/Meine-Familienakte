@@ -1,7 +1,7 @@
 // Klaus 09.11.2026 (Vorschau live-zustand-2.28.50, l1–l5 Ja): Landkarte und „Akten sichern“ zeigen den Zustand dieses Geräts –
 // grün eingerichtet · rot fehlt · gelb gesperrt oder veraltet · grau freiwillig. Immer als Karte mit Wegen, auch am Handy und Tablet.
 // Rot und gelb führen mit „Beheben ›“ an den Knopf. Demo an: rotes Band über den Karten.
-import { startApp, launchBrowser, HANDY, ready, check, step, soll, summary, footer, collectErrors, neuKnopf } from "./_harness.mjs";
+import { startApp, launchBrowser, HANDY, ready, check, step, soll, summary, footer, collectErrors } from "./_harness.mjs";
 import { capacitorStub } from "./_capacitor-stub.mjs";
 import { demoUmschalten } from "./_demo.mjs";
 const TABLET = { viewport: { width: 800, height: 1280 }, deviceScaleFactor: 1, isMobile: true, hasTouch: true, locale: "de-DE" };
@@ -63,10 +63,9 @@ try {
       const ok = await page.waitForFunction(() => { const d = document.querySelector("[data-aktensicherung]"); if (!d) return false; const r = d.getBoundingClientRect(); return d.open && r.top >= 0 && r.top < innerHeight; }, null, { timeout: 5000 }).then(() => true, () => false);
       return soll(ok, await page.locator("[data-aktensicherung]").evaluate((d) => ({ open: d.open, top: Math.round(d.getBoundingClientRect().top), h: innerHeight })));
     });
-    await step(`${name}: „Neu“ › „Landkarte zeigt, was zu tun ist“ › „Landkarte öffnen“ öffnet die Hilfe mit aufgeklappter Karte`, async () => {
-      await page.evaluate(() => window.scrollTo(0, 0));
-      await (await neuKnopf(page)).click();
-      await page.locator('[data-neu="landkarte-farben-2026-11-11"]').getByRole("button", { name: "Landkarte öffnen", exact: true }).click();
+    // 2.28.75: „Neu“ gibt es nicht mehr; die Landkarte öffnet die Adresse ?ansicht=landkarte (Geschenkbox) direkt.
+    await step(`${name}: Adresse ?ansicht=landkarte öffnet die Hilfe mit aufgeklappter Karte`, async () => {
+      await page.goto(`${app.base}?ansicht=landkarte`, { waitUntil: "networkidle" });
       await page.locator('[data-app-landkarte="offen"]').waitFor({ timeout: 5000 });
       return soll(await page.locator('[data-app-landkarte="offen"] [data-karte-id="protresor"]').first().isVisible(), "Karte nicht offen");
     });

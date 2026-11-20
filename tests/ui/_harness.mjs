@@ -87,6 +87,20 @@ export const ready = async (page) => {
   }
   const notice = new URL(page.url()).searchParams.get("demo") === "1" ? "Alle Daten" : "Bsp.-Akten in deiner Akte";
   await page.waitForSelector(`.sample-data-notice strong:has-text("${notice}")`, { timeout: 120000 });
+  // 2.28.75: Die Karten der Startseite sind ab Werk zu (Probe klappkarten.test.mjs). Die Fachproben arbeiten wie ein Nutzer,
+  // der sie einmal aufgeklappt hat – der Zustand wird je Gerät gemerkt.
+  if (!aufgeklapptLassen) await allesAufklappen(page);
+};
+let aufgeklapptLassen = false;
+/** Für Proben, die den Zustand „ab Werk zu“ prüfen. */
+export function karten_ab_werk() { aufgeklapptLassen = true; }
+export const KLAPP_IDS = ["erste-schritte", "zuletzt-wichtig", "tresor", "eingang", "heute", "familie-stamm"];
+export async function allesAufklappen(page) {
+  await page.evaluate((ids) => {
+    try { const alt = JSON.parse(localStorage.getItem("fa_klapp") || "{}"); localStorage.setItem("fa_klapp", JSON.stringify({ ...alt, ...Object.fromEntries(ids.map((id) => [id, true])) })); } catch { /* egal */ }
+    ids.forEach((id) => window.dispatchEvent(new CustomEvent("familienakte:klapp", { detail: id })));
+  }, KLAPP_IDS);
+  await page.waitForTimeout(100);
 };
 /** Hauptmenü (Index 0 = Assistenz, 1 = Termine & Aufgaben … 8 = Hilfe) und Eintrag im Mega-Menü. */
 export async function openMenu(page, navIndex, itemText) {

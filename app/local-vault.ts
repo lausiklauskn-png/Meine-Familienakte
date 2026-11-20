@@ -11,6 +11,7 @@ import { ERINNERUNG_VORGABE, erinnerungAusDatum, erinnerungenOrdnen, erinnerunge
 import { workspaceStorage } from "../lib/demo-workspace.ts";
 import type { ProUebergabe } from "../lib/pro-verbund-vertrag";
 import { kontaktPruefen, kontaktUebernehmen, type PersonKontakt } from "../lib/person-kontakt.ts";
+import { steckbriefPruefen, steckbriefUebernehmen, type Steckbrief } from "../lib/person-steckbrief.ts";
 import { stammDaten, stammPruefen, type StammAngaben, type StammArt } from "../lib/familie-stamm.ts";
 import { tresorKurzfassung } from "../lib/tresor-kurzfassung.ts";
 import { istProOriginal, proOriginalLesen, proOriginalName, proOriginalSpeichern, proOriginalVaultId, proOriginalMerkmale, proTresor, proTresorVerfuegbar } from "./pro-tresor.ts";
@@ -4115,6 +4116,25 @@ export async function updateLocalPersonContact(handle: FileSystemDirectoryHandle
   index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Kontaktangaben geändert", recordId: record.id, details: `${record.id}: Anschrift/Kontakt nach ausdrücklichem Speichern geändert (${Object.keys(sauber).length} Angaben).` });
   await writeIndex(handle, index);
   return record;
+}
+
+/** Steckbrief einer Person (2.28.75, Klaus 19.11.): Ausweise mit Nummer und „gültig bis“, weitere Einträge. Nur im Register
+ * (Tresor, Sicherung); das Protokoll nennt nur die Anzahl, nie eine Nummer. Wiederholt bei gleichzeitigem Schreiben. */
+export async function updateLocalPersonSteckbrief(handle: FileSystemDirectoryHandle, id: string, steckbrief: Steckbrief) {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  const { steckbrief: sauber, fehler } = steckbriefPruefen(steckbrief);
+  if (fehler.length) throw new Error(fehler.join(" "));
+  return beiKonfliktErneut(async () => {
+    const index = await readIndex(handle);
+    const record = index.records.find((item) => item.id === id);
+    if (!record || record.recordType !== "person") throw new Error("Die Person wurde im lokalen Register nicht gefunden.");
+    const now = new Date().toISOString();
+    record.data = steckbriefUebernehmen((record.data || {}) as Record<string, unknown>, sauber) as typeof record.data;
+    record.updatedAt = now;
+    index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: "Steckbrief geändert", recordId: record.id, details: `${record.id}: Steckbrief nach ausdrücklichem Speichern geändert (${sauber.ausweise.length} Ausweise, ${sauber.eintraege.length} weitere Einträge).` });
+    await writeIndex(handle, index);
+    return record;
+  });
 }
 
 /** Punkt 8 (2.28.39): Person, Organisation, Objekt oder Vorgang selbst anlegen oder Name/Art/Notiz ändern.

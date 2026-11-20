@@ -19,17 +19,16 @@ try {
       return soll(r.ende <= r.knoepfe + 1 && ganz, { ...r, ganz });
     });
     if (S) await page.screenshot({ path: `${S}/kopf-${breite}-zu.png`, clip: { x: 0, y: 0, width: breite, height: 80 } });
-    if (breite >= 901) {
-      await step(`${breite} px: kein Pfeil, Abmelden direkt im Kopf`, async () => soll(!(await sichtbar(page, "[data-kopf-auf]")) && await sichtbar(page, ".header-actions > :is(.logout-button, .login-button)"), "Pfeil oder Abmelden falsch"));
-    } else {
+    // 2.28.75 (Klaus 19.11.: Kopfleiste entschlacken): in jeder Breite Pfeil ‹, Abmelden dahinter; „Neu“ gibt es nicht mehr.
+    {
       await step(`${breite} px: Pfeil ‹ sichtbar, Abmelden zunächst nicht`, async () => soll(await sichtbar(page, "[data-kopf-auf]") && !(await sichtbar(page, ".header-actions > :is(.logout-button, .login-button)")), "Pfeil fehlt oder Abmelden sichtbar"));
-      await step(`${breite} px: ‹ öffnet die Leiste mit Abmelden, „Neu“ und ›; › schließt, „Neu“ wieder verdeckt (Platz für „Pseudo“)`, async () => {
+      await step(`${breite} px: ‹ öffnet die Leiste mit Abmelden und ›; › schließt; kein „Neu“`, async () => {
         await page.locator("[data-kopf-auf]").click(); await page.waitForTimeout(300);
         const auf = { drucken: await sichtbar(page, ".header-actions > :is(.logout-button, .login-button)"), zu: await sichtbar(page, "[data-kopf-zu]"), neu: await sichtbar(page, ".header-actions > .neu-knopf") };
         if (S) await page.screenshot({ path: `${S}/kopf-${breite}-auf.png`, clip: { x: 0, y: 0, width: breite, height: 80 } });
         await page.locator("[data-kopf-zu]").click(); await page.waitForTimeout(300);
         const danach = { drucken: await sichtbar(page, ".header-actions > :is(.logout-button, .login-button)"), neu: await sichtbar(page, ".header-actions > .neu-knopf") };
-        return soll(auf.drucken && auf.zu && auf.neu && !danach.drucken && !danach.neu, { auf, danach });
+        return soll(auf.drucken && auf.zu && !auf.neu && !danach.drucken && !danach.neu, { auf, danach });
       });
       await step(`${breite} px: Tipp daneben schließt die Leiste`, async () => {
         await page.locator("[data-kopf-auf]").click(); await page.waitForTimeout(200);
@@ -39,9 +38,9 @@ try {
     }
     await step(`${breite} px: kein Drucker und kein ⟳ im Kopf, „Ablegen“ sichtbar`, async () => soll((await page.locator(".header-actions .drucken-knopf, .header-actions .aktualisieren-knopf").count()) === 0 && await sichtbar(page, "[data-ablegen-knopf]"), "Drucker/⟳ noch da oder Ablegen fehlt"));
     if (breite <= 620) {
-      await step(`${breite} px: unter Internet, Ablegen, Erinnerung, Kalender, Buch steht ein Wort`, async () => {
+      await step(`${breite} px: unter Internet, Ablegen, Erinnerung, Kalender steht ein Wort (Buch seit 2.28.75 nicht mehr im Kopf)`, async () => {
         const w = await page.evaluate(() => [...document.querySelectorAll(".header-actions .kopf-wort")].filter((e) => e.getBoundingClientRect().width > 0).map((e) => e.textContent));
-        return soll(["Internet", "Ablegen", "Erinnerung", "Kalender", "Buch"].every((x) => w.includes(x)) /* C (09.11.): „Erinnerung“ statt „Notiz“, Buch fürs Tagebuch */, w);
+        return soll(["Internet", "Ablegen", "Erinnerung", "Kalender"].every((x) => w.includes(x)) && !w.includes("Buch") /* C (09.11.): „Erinnerung“ statt „Notiz“, Buch fürs Tagebuch */, w);
       });
     } else {
       await step(`${breite} px: breiter keine Wörter unter den Symbolen`, async () => soll(!(await sichtbar(page, ".header-actions .kopf-wort")), "Wörter sichtbar"));

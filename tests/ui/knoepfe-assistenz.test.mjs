@@ -13,12 +13,12 @@ try {
 
   // ---------- Assistenz ----------
   await openMenu(page, 0, "Assistenzzentrale");
-  // D (Rückmeldung 09.11., Klaus d1): drei Wege statt fünf Modi.
-  await step("Assistenz: drei Wege schalten um (aria-pressed)", async () => {
+  // D (Rückmeldung 09.11., Klaus d1): drei Wege statt fünf Modi; 2.28.75: der Briefweg steht nur noch am Briefumschlag – zwei Wege.
+  await step("Assistenz: zwei Wege schalten um (aria-pressed)", async () => {
     const modi = page.locator("button.assistant-mode-action");
     const n = await modi.count();
-    await modi.nth(2).click();
-    const ok = n === 3 && (await modi.nth(2).getAttribute("aria-pressed")) === "true";
+    await modi.nth(1).click();
+    const ok = n === 2 && (await modi.nth(1).getAttribute("aria-pressed")) === "true";
     await modi.first().click();
     return ok ? `${n} Wege` : false;
   });
@@ -78,10 +78,10 @@ try {
 
   // ---------- Korrespondenz, Gesundheit & Arbeit, Unterseiten ----------
   // 2.28.39: Menügruppe „Termine & Aufgaben“ an zweiter Stelle – Gesundheit & Arbeit ist jetzt 2, Familie 3 usw.
-  for (const [nav, eintrag] of [[0, "Korrespondenz", /Schriftverkehr|Anfragen/], [2, "Diagnosen, AU & ICD-Codes", /Gesundheitsdokumente/], [2, "Krankenkasse & Leistungen", /Leistung/], [2, "Arbeit & Arbeitgeber", /Arbeit/], [2, "Anträge & Bescheide", /Antr/], [3, "Familienübersicht", /Öffnen/]]) {
-    if (eintrag === "Familienübersicht") {
-      await step("Unterseite „Familienübersicht“: „Öffnen“-Karten führen zu Tagebuch, Cockpit, Fristen, Bibliothek", async () => {
-        await aufraeumen(page); await openMenu(page, 3, "Familienübersicht");
+  for (const [nav, eintrag] of [[0, "Korrespondenz", /Schriftverkehr|Anfragen/], [2, "Diagnosen, AU & ICD-Codes", /Gesundheitsdokumente/], [2, "Krankenkasse & Leistungen", /Leistung/], [2, "Arbeit & Arbeitgeber", /Arbeit/], [2, "Anträge & Bescheide", /Antr/], [3, "Personen", /Öffnen/]]) {
+    if (eintrag === "Personen") {
+      await step("Unterseite „Personen“ (2.28.75): kleine Knöpfe führen zu Tagebuch, Cockpit, Fristen, Bibliothek", async () => {
+        await aufraeumen(page); await openMenu(page, 3, "Personen");
         await page.locator("main button", { hasText: "Termine und Fristen" }).first().click(); await page.waitForTimeout(300);
         return (await page.locator(".breadcrumb").innerText()).includes("Fristen");
       });

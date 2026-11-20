@@ -10,6 +10,7 @@ try {
     await page.addInitScript((a) => { navigator.getInstalledRelatedApps = async () => JSON.parse(a); }, antwort);
     await page.goto(app.base, { waitUntil: "networkidle" }); await ready(page);
     await page.waitForTimeout(600);
+    await page.locator("[data-kopf-auf]").click(); await page.waitForTimeout(250); // 2.28.75: Installieren hinter „‹“
     const lage = await page.evaluate(() => ({ klasse: document.documentElement.classList.contains("pwa-installiert"),
       sichtbar: [...document.querySelectorAll(".familienakte-install")].some((k) => !k.hidden && getComputedStyle(k).display !== "none") }));
     if (name === "installiert") check(lage.klasse && !lage.sichtbar, "Web-App installiert: kein Knopf „Installieren“", JSON.stringify(lage));

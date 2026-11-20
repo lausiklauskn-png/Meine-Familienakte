@@ -86,6 +86,7 @@ try {
     await page.evaluate(() => { window.__proStand = { status: 'offen', id: 'erfundener-tresor-1', ort: 'content://erfundene-sdkarte/Pro-Tresor' }; const alt = window.Capacitor.Plugins.FamilienakteTresor.sperren; window.Capacitor.Plugins.FamilienakteTresor.sperren = async () => { sessionStorage.setItem('probe-gesperrt', '1'); return alt(); }; });
     // Klaus 09.11.: Ausloggen = Tresor sperren und die App schließen (Android: FamilienakteApp.beenden, hier gestellt).
     await page.evaluate(() => { window.Capacitor.Plugins.FamilienakteApp = { beenden: async () => { sessionStorage.setItem('probe-beendet', '1'); return { beendet: true }; } }; });
+    if (!(await page.locator(".logout-button").isVisible())) await page.locator("[data-kopf-auf]").click(); // 2.28.75: Abmelden hinter „‹“
     await page.locator(".logout-button").click();
     await page.waitForFunction(() => sessionStorage.getItem('probe-beendet') === '1', null, { timeout: 5000 });
     const gesperrt = await page.evaluate(() => sessionStorage.getItem('probe-gesperrt'));
@@ -97,7 +98,7 @@ try {
     const knopf = page.locator(".login-button"); await knopf.waitFor();
     if (await knopf.getAttribute("aria-label") !== "Einloggen") return false;
     await knopf.click();
-    await page.locator(".logout-button").waitFor();
+    await page.locator(".logout-button").waitFor({ state: "attached" }); // 2.28.75: Abmelden liegt hinter „‹“
     return (await page.evaluate(() => window.__proCalls.includes('entsperren'))) && (await page.locator(".logout-button").getAttribute("aria-label")) === "Ausloggen";
   });
   check(errors.length === 0, "Pro-Tresor: keine Seitenfehler", errors.join(" | "));

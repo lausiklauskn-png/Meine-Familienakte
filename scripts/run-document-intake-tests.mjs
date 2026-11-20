@@ -31,7 +31,7 @@ const personalAreas = buildStoredPersonalLifeAreas([
   { id: "DOC-000003", notes: "FaWoGa: Haustiere · Dokumentart: Vertrag" },
 ]);
 assert.deepEqual(personalAreas, [{ name: "Haustiere", documentCount: 2 }], "Nur tatsächlich gespeicherte persönliche Lebensbereiche dürfen ohne Dubletten auf der Startseite erscheinen.");
-assert.ok(portal.includes("buildStoredPersonalLifeAreas") && portal.includes("onOpenLifeArea(area.name)"), "Gespeicherte persönliche Lebensbereiche sind nicht dynamisch mit der vorhandenen Dokumentenbibliothek verbunden.");
+assert.ok(portal.includes("buildStoredPersonalLifeAreas") && portal.includes("onOpenLifeArea(a.name)"), "Gespeicherte persönliche Lebensbereiche sind nicht dynamisch mit der vorhandenen Dokumentenbibliothek verbunden.");
 
 const tests = runDocumentIntakeSelfTests();
 assert.equal(tests.length, 21, "Es müssen genau einundzwanzig Dokumenteneingangs-Praxistests vorhanden sein.");

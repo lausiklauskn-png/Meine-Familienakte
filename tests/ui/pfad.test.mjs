@@ -57,9 +57,10 @@ try {
       await p.locator("main button", { hasText: "Neue Unterlage ablegen" }).first().click(); await p.waitForTimeout(800);
       return pruefe(await lage(p), "Startseite");
     });
-    await weg("W3 Start → Lebensbereich „Dokumenteneingang“ → Eingangszentrale", async (p) => {
-      const k = p.locator("main button", { hasText: "Dokumenteneingang" }).last(); await k.scrollIntoViewIfNeeded(); await k.click(); await p.waitForTimeout(800);
-      return pruefe(await lage(p), "Startseite › Dokumente › Eingangszentrale");
+    // 2.28.75: Lebensbereiche als kleine Knöpfe oben; „Dokumenteneingang“ ist keine Lebensbereich-Kachel mehr (Karte „Neue Dokumente erfassen“).
+    await weg("W3 Start → Lebensbereich-Knopf „Fahrzeuge“ → Fahrzeuge", async (p) => {
+      const k = p.locator('[data-bereich-chip="Fahrzeuge"]'); await k.scrollIntoViewIfNeeded(); await k.click(); await p.waitForTimeout(800);
+      return pruefe(await lage(p), "Startseite › Fahrzeuge");
     });
     await weg("W4 Menü Termine & Aufgaben → Fristen und Aufgaben; Tipp aufs Glied führt zum Cockpit (Bereichsanfang)", async (p) => {
       await menue(p, "Termine", "Fristen und Aufgaben");
@@ -71,8 +72,8 @@ try {
     await weg("W4b Menü Familie → Personen: Personenliste im Bild, Eintrag im Pfad", async (p) => {
       await menue(p, "Familie", "Personen");
       const a = await lage(p);
-      const imBild = await p.locator("#familie-stamm").evaluate((e) => { const r = e.getBoundingClientRect(); return r.top >= 0 && r.top < innerHeight; });
-      return pruefe(a, "Startseite › Familie & Personen › Personen", imBild && a.h1 === "Familie & Personen");
+      const imBild = await p.locator("[data-personen-ansicht]").evaluate((e) => { const r = e.getBoundingClientRect(); return r.top >= 0 && r.top < innerHeight; });
+      return pruefe(a, "Startseite › Familie & Personen", imBild && a.h1 === "Familie & Personen"); // 2.28.75: Personen ist die Seite selbst
     });
     await weg("W5 Menü Dokumente → Gesamtes Verzeichnis", async (p) => {
       await menue(p, "Dokumente", "Gesamtes Verzeichnis");
