@@ -54,17 +54,36 @@ Person (Register: person) ── alles, was mit ihr verknüpft ist, aus allen Be
 
 Nicht angefasst (bewusst): Fuß-Verzeichnis (ist ein Verzeichnis, darf alles nennen), „Mit KI arbeiten“ im Fuß.
 
-## 4. Prüfung
+## 4. Ausgabe (20.11.2026, 01:30–02:05 UTC)
+
+- PR #222 zusammengeführt: https://github.com/lausiklauskn-png/Meine-Familienakte/pull/222 (main `1355d37`)
+- Android: https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/android-v2.28.75 (APK, Einzeldatei; Update-Server `server=ja`)
+- Windows: https://github.com/lausiklauskn-png/Meine-Familienakte/releases/tag/windows-v2.28.75 (Setup; Update-Server `server=ja`)
+- PWA: Pages-Lauf von main grün.
+- Downloads per SHA-256 nachgerechnet: `docs/VEROEFFENTLICHUNG-2.28.75.json`. **Nicht erneut ausgeben; nächste Fassung 2.28.76.**
+- Android- und Windows-Nutzer bekommen das Update über die Versionszeile (Fähnchen).
+
+## 5. Prüfung
 
 - `npm run check` grün (Startseiten-Referenz in `lib/menu-optimization.ts` und die Startseiten-Prüfungen in
   `run-menu-optimization-tests`, `run-system-check`, `run-document-intake-tests` auf den neuen, von Klaus freigegebenen Aufbau umgestellt).
-- Oberflächenproben: siehe Abschnitt 6 (Stand bei Ausgabe).
+- Oberflächenproben: in der CI alle grün (neue Probe `uebersichtlich`, 15 Schritte; Proben zum entfernten „Neu“-Knopf herausgenommen, die übrigen an den neuen Aufbau angepasst).
 - **Am Gerät ungeprüft:** alles Neue – Klappkarten am Tablet, Steckbrief mit Foto (Kamera, Pro-Tresor), Mikrofon in den Feldern,
   Personensuche mit echten Daten.
 
-## 5. Offen
+## 6. Offen
 
 - Private Akte: Steckbrief unter „Akten › Person“ erst nach dem Nachziehen des Klons (`klone/familienakte`) bauen.
 - Unterseiten (Gesundheit, Wohnen, Fahrzeuge …) haben noch ihre großen Kacheln und Regel-Kästen; dort dieselbe Klapp-Darstellung.
 - „Pseudo“ in den E-Mail-Bereich (eigener Auftrag). Versionshistorie später weg (eigener Auftrag).
 - Bild der Akten-Kacheln von Klaus kam nicht an – falls eine andere Stelle gemeint war, bitte nachreichen.
+
+## 7. Stunden und Startauftrag
+
+Sitzung 19.11. 22:40 – 20.11. 02:10 UTC (rund 3,5 Stunden).
+
+```
+Lies CLAUDE.md der Familienakte und BRIEF_ABSCHLUSS_2026-11-20_UEBERSICHTLICH-2.28.75.md. Nimm Klaus' Rückmeldung zu 2.28.75
+(Tablet) auf. Danach: dieselbe Klapp-Darstellung auf den Unterseiten (Gesundheit, Wohnen, Fahrzeuge, Käufe), und in der Privaten
+Akte den Klon der Familienakte nachziehen und den Steckbrief unter „Akten › Person“ zeigen.
+```
