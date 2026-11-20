@@ -1,4 +1,5 @@
 import { workspaceName, demoActive } from "../lib/demo-workspace.ts";
+import { antwortSetzen, familienEingabe, familienFelder, type Antwort, type FamilienFelder } from "../lib/kalender-familie.ts";
 import { aktuelleGrenze, mbText } from "../lib/geraete-grenze.ts";
 import { istNativerOrdner, nativenOrdnerWaehlen, ordnerPlugin, NativerOrdner } from "./nativer-ordner.ts";
 import { DEMO_PRAEFIX, eigeneDatenDa, wasAendertSich, type DemoQuelle } from "../lib/demo-kopie.ts";
@@ -189,6 +190,8 @@ export type CreateScheduleInput = {
   kalenderEintragen?: boolean;
   /** Eigener Kalender nur für diesen Eintrag; fehlt = der aus „Kalender verbinden“. */
   kalenderWahl?: KalenderFelder["kalenderWahl"] | null;
+  /** Kalender je Person (Klaus 20.11.): für wen, wer angelegt hat, vorläufig, privat. */
+  familie?: FamilienFelder;
 };
 
 const DB_NAME = "mmi-local-vault";
@@ -3988,7 +3991,7 @@ export async function createLocalScheduleBundle(handle: FileSystemDirectoryHandl
     status: "offen",
     source: input.source || "Manuelle Eingabe",
     notes: input.notes || null,
-    data: { title: input.title.trim(), dueAt: input.dueAt, ...kalenderEingabe(input) },
+    data: { title: input.title.trim(), dueAt: input.dueAt, ...kalenderEingabe(input), ...(input.familie ? familienEingabe(input.familie) : {}) },
     now,
   }) as FamilyRecordUnion;
   index.records.push(schedule);
@@ -4444,6 +4447,30 @@ export async function updateLocalMemoryRecord(handle: FileSystemDirectoryHandle,
 }
 
 /** Termin einer Aufgabe/Frist ändern (Klaus 2026-11-05: Zeitpunkt jederzeit änderbar); der Kalender-Abgleich zieht nach. */
+/** Kalender je Person (Klaus 20.11.): Antwort „passt“/„passt nicht“ der Person des Handys, vorläufig/fest, privat, für wen.
+ *  Nur deadline/task; das Protokoll nennt keine Titel. Wiederholt bei gleichzeitigem Schreiben. */
+export async function updateLocalScheduleFamilie(handle: FileSystemDirectoryHandle, id: string, changes: { antwort?: { person: string; wert: Antwort | null }; vorlaeufig?: boolean; privat?: boolean; fuer?: string[] }) {
+  if (!(await requestVaultPermission(handle))) throw new Error("Der lokale Ordner wurde nicht freigegeben.");
+  return beiKonfliktErneut(async () => {
+    const index = await readIndex(handle);
+    const record = index.records.find((item) => item.id === id && (item.recordType === "deadline" || item.recordType === "task"));
+    if (!record) throw new Error("Der Termin wurde im lokalen Register nicht gefunden.");
+    let f = familienFelder(record);
+    if (changes.antwort) f = antwortSetzen(f, changes.antwort.person, changes.antwort.wert);
+    if (typeof changes.vorlaeufig === "boolean") f.vorlaeufig = changes.vorlaeufig;
+    if (typeof changes.privat === "boolean") f.privat = changes.privat;
+    if (changes.fuer) f.fuer = changes.fuer;
+    const data = record.data as Record<string, unknown>;
+    for (const k of ["fuer", "von", "vorlaeufig", "privat", "antworten"]) delete data[k];
+    Object.assign(data, familienEingabe(f));
+    const now = new Date().toISOString();
+    record.updatedAt = now;
+    index.auditLog.unshift({ id: crypto.randomUUID(), at: now, action: changes.antwort ? "Antwort zum Termin" : "Termin für die Familie geändert", recordId: record.id, details: `${record.id}: ${changes.antwort ? (changes.antwort.wert === "passt" ? "passt" : changes.antwort.wert ? "passt nicht" : "Antwort zurückgenommen") : "fest/vorläufig, privat oder Personen geändert"}.` });
+    await writeIndex(handle, index);
+    return record;
+  });
+}
+
 export async function updateLocalScheduleTermin(handle: FileSystemDirectoryHandle, id: string, changes: { title?: string; dueAt?: string; dueTime?: string | null; erinnerungen?: ErinnerungsWahl[]; kalenderWahl?: KalenderFelder["kalenderWahl"] | null; kalenderEintragen?: boolean }) {
   return beiKonfliktErneut(() => updateLocalScheduleTerminEinmal(handle, id, changes));
 }

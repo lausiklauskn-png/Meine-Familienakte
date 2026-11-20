@@ -1,0 +1,124 @@
+<title>Kalender je Person</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: drei Handy-Bilder nebeneinander (schmal untereinander), darunter die offenen Punkte. Farben wie die Familienakte (Marine, Blau). */
+:root{
+  --bg:#eef3f7; --fg:#10283d; --muted:#5b7183; --card:#ffffff; --line:#d5e1ea;
+  --navy:#092944; --blue:#155a8a; --soft:#e4eef6;
+  --anna:#1f7a6d; --bernd:#b4561c; --clara:#7a4fb0; --paul:#2c6fb3;
+  --ok:#1f7a4d; --warn:#a06b00; --bad:#c62828;
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0d1823;--fg:#e3edf5;--muted:#93a9ba;--card:#152636;--line:#26405a;--soft:#1b3348;--blue:#6fb0e0;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1823;--fg:#e3edf5;--muted:#93a9ba;--card:#152636;--line:#26405a;--soft:#1b3348;--blue:#6fb0e0;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px}
+h1{font-size:1.35rem;margin:0 0 4px;text-wrap:balance}
+.unter{color:var(--muted);margin:0 0 18px;font-size:.92rem;max-width:68ch}
+.reihe{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;align-items:start}
+.handy{min-width:0;background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden}
+.bild{font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.kopf{background:var(--navy);color:#fff;padding:10px 14px;display:flex;align-items:center;gap:10px;font-size:.85rem}
+.kopf b{flex:1}
+.kn{border:1px solid rgba(255,255,255,.35);border-radius:9px;padding:3px 8px;font-size:.75rem}
+.kn.an{background:#fff;color:var(--navy);font-weight:700}
+.innen{padding:12px 14px;display:grid;gap:10px}
+.titel{display:flex;align-items:center;gap:8px;font-weight:700}
+.punkt{width:10px;height:10px;border-radius:50%;flex:none}
+.schalter{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:.8rem;margin-left:auto}
+.schalter span{padding:3px 9px}.schalter .an{background:var(--blue);color:#fff}
+.tag{font-size:.75rem;font-weight:700;color:var(--muted);margin-top:4px}
+.eintrag{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;border:1px solid var(--line);border-left:4px solid var(--c,var(--blue));border-radius:10px;padding:7px 9px;font-size:.86rem}
+.eintrag.vorl{border-style:dashed;border-left-style:solid}
+.eintrag small{display:block;color:var(--muted);font-size:.75rem}
+.zeit{font-variant-numeric:tabular-nums;font-weight:700;font-size:.8rem}
+.marke{font-size:.7rem;font-weight:700;border-radius:999px;padding:2px 7px;background:var(--soft)}
+.marke.v{color:var(--warn)}
+.knoepfe{grid-column:2/-1;display:flex;gap:6px}
+.k{border:1px solid var(--line);border-radius:8px;padding:3px 9px;font-size:.78rem;background:var(--card);color:var(--fg)}
+.k.ja{border-color:var(--ok);color:var(--ok)}.k.nein{border-color:var(--bad);color:var(--bad)}
+.feld{border:1px solid var(--line);border-radius:9px;padding:6px 9px;font-size:.85rem}
+.feld label{display:block;font-size:.72rem;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:999px;padding:3px 9px;font-size:.78rem}
+.chip.an{background:var(--soft);font-weight:700}
+.warn{border:1px solid var(--warn);color:var(--warn);border-radius:9px;padding:6px 9px;font-size:.8rem}
+.verb{display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted)}
+.voll{background:var(--blue);color:#fff;border:0;border-radius:10px;padding:7px 12px;font-weight:700;font-size:.85rem}
+.wahl{display:grid;gap:6px}
+.wahl .chip{justify-content:flex-start;border-radius:10px;padding:7px 10px;font-size:.88rem}
+.offen{margin-top:24px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;max-width:900px}
+.offen h2{font-size:1rem;margin:0 0 8px}
+.offen ol{margin:0;padding-left:20px;display:grid;gap:6px;font-size:.9rem}
+.offen li b{color:var(--blue)}
+</style>
+
+<h1>Kalender je Person</h1>
+<p class="unter">Vorschau, nichts gebaut. Erfundene Beispielfamilie (Anna, Bernd, Clara, Paul). Bild 1 erscheint einmal pro Handy.</p>
+
+<div class="reihe">
+ <div>
+  <p class="bild">1 · Einmal pro Handy</p>
+  <div class="handy">
+   <div class="kopf"><b>FAMILIENAKTE</b><span class="kn">Kalender</span></div>
+   <div class="innen">
+    <div class="titel">Wem gehört dieses Handy?</div>
+    <div class="wahl">
+     <span class="chip an"><i class="punkt" style="background:var(--anna)"></i>Anna Beispiel</span>
+     <span class="chip"><i class="punkt" style="background:var(--bernd)"></i>Bernd Beispiel</span>
+     <span class="chip"><i class="punkt" style="background:var(--clara)"></i>Clara Beispiel</span>
+     <span class="chip"><i class="punkt" style="background:var(--paul)"></i>Paul Beispiel</span>
+    </div>
+    <div class="titel" style="margin-top:6px">Welchen Kalender nutzt du?</div>
+    <div class="chips"><span class="chip">Google</span><span class="chip an">Microsoft</span><span class="chip">Kalender des Handys</span><span class="chip">Kalenderdatei</span><span class="chip">keinen</span></div>
+    <button class="voll">Übernehmen</button>
+   </div>
+  </div>
+ </div>
+
+ <div>
+  <p class="bild">2 · Kalender-Knopf oben = Mein Kalender</p>
+  <div class="handy">
+   <div class="kopf"><b>FAMILIENAKTE</b><span class="kn an">Kalender</span></div>
+   <div class="innen">
+    <div class="titel"><i class="punkt" style="background:var(--anna)"></i>Kalender von Anna</div>
+    <div class="verb">verbunden mit Microsoft</div>
+    <div class="tag">Samstag, 22.11.</div>
+    <div class="eintrag" style="--c:var(--anna)"><span class="zeit">10:00</span><span>Zahnarzt<small>Dr. Muster</small></span><span class="marke">fest</span></div>
+    <div class="eintrag vorl" style="--c:var(--anna)"><span class="zeit">15:00</span><span>Kaffee bei Oma<small>mit Bernd · wartet auf Bernd</small></span><span class="marke v">vorläufig</span></div>
+    <div class="titel" style="margin-top:6px;font-size:.9rem">+ Eintrag</div>
+    <div class="feld"><label>Was</label>Elternabend Clara</div>
+    <div class="feld"><label>Wann</label>Di 25.11. · 19:00</div>
+    <div class="chips"><span class="chip an">fest</span><span class="chip">vorläufig</span></div>
+    <div class="feld"><label>Für wen noch</label><span class="chips" style="margin-top:4px"><span class="chip an"><i class="punkt" style="background:var(--bernd)"></i>Bernd</span><span class="chip"><i class="punkt" style="background:var(--clara)"></i>Clara</span></span></div>
+    <div class="warn">Bernd hat da schon „Fußball“ (18:30–20:00).</div>
+    <button class="voll">Eintragen</button>
+   </div>
+  </div>
+ </div>
+
+ <div>
+  <p class="bild">3 · Fristen und Aufgaben = ganze Familie</p>
+  <div class="handy">
+   <div class="kopf"><b>FAMILIENAKTE</b><span class="kn">Kalender</span></div>
+   <div class="innen">
+    <div class="titel">Fristen und Aufgaben</div>
+    <div class="chips"><span class="chip an">Alle</span><span class="chip"><i class="punkt" style="background:var(--anna)"></i>Anna</span><span class="chip"><i class="punkt" style="background:var(--bernd)"></i>Bernd</span><span class="chip"><i class="punkt" style="background:var(--clara)"></i>Clara</span><span class="chip"><i class="punkt" style="background:var(--paul)"></i>Paul</span></div>
+    <div class="tag">Samstag, 22.11.</div>
+    <div class="eintrag" style="--c:var(--anna)"><span class="zeit">10:00</span><span>Zahnarzt<small>Anna</small></span><span class="marke">fest</span></div>
+    <div class="eintrag vorl" style="--c:var(--anna)"><span class="zeit">15:00</span><span>Kaffee bei Oma<small>Anna fragt: Bernd auch?</small></span><span class="marke v">vorläufig</span><span class="knoepfe"><span class="k ja">passt</span><span class="k nein">passt nicht</span></span></div>
+    <div class="eintrag" style="--c:var(--paul)"><span class="zeit">16:30</span><span>Training<small>Paul</small></span><span class="marke">fest</span></div>
+    <div class="tag">Montag, 24.11.</div>
+    <div class="eintrag" style="--c:var(--bernd)"><span class="zeit">—</span><span>Frist: Kfz-Steuer<small>Bernd</small></span><span class="marke" style="color:var(--bad)">Frist</span></div>
+    <div class="eintrag" style="--c:var(--clara)"><span class="zeit">08:00</span><span>Klassenfahrt-Geld abgeben<small>Clara</small></span><span class="marke">Aufgabe</span></div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<div class="offen">
+ <h2>Noch offen</h2>
+ <ol>
+  <li><b>Sehen die anderen den ganzen Termin?</b> Vorschlag: in der Familie ja, ganzer Titel. Einzelne Termine kann man auf „privat“ stellen, dann sehen die anderen nur „belegt“.</li>
+  <li><b>Wie kommen die Termine von Handy zu Handy?</b> Jeder hat seinen eigenen Kalender (Google, Microsoft …), darum reicht kein gemeinsamer Anbieter. Vorschlag: die Familienakten gleichen sich untereinander ab, im WLAN zu Hause oder über einen gemeinsamen Cloud-Ordner. Das gibt es in der App schon, bisher für die ganze Akte; neu wäre: nur die Termine, von selbst, sobald sich die Handys sehen.</li>
+ </ol>
+</div>

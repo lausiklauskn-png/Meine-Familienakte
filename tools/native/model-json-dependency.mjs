@@ -18,7 +18,8 @@ export async function jsonDependency() {
       try { response = await fetch(`https://${host}/maven2/org/json/json/20250517/${JSON_NAME}`, { signal: AbortSignal.timeout(60000) }); }
       catch (error) { if (attempt === hosts.length - 1) throw error; await pause(1000 * (attempt + 1)); continue; }
       if (!response.ok) {
-        const transient = response.status === 429 || response.status >= 500;
+        // Maven Central meldet zeitweise 404 für vorhandene Dateien (20.11.2026 zweimal in der CI); die Prüfsumme ist fest, also nächster Server.
+        const transient = response.status === 404 || response.status === 429 || response.status >= 500;
         if (!transient || attempt === hosts.length - 1) throw Error("JSON dependency download: HTTP " + response.status);
         await response.body?.cancel(); await pause(1000 * (attempt + 1)); continue;
       }

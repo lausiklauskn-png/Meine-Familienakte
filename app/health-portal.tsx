@@ -20,7 +20,7 @@ import { ORGANIZER_INDEX, ORGANIZER_INDEX_MAX, organizerSchluessel, organizerUeb
 import { BLOCK, blockText, dateiSchluessel, gesehenMerken, inBloecke, mbText as mbBlock, neueImOrdner, speicherReicht } from "../lib/eingang-bloecke";
 import { arbeitDienst } from "./arbeit-dienst";
 import { eingangOrdnerLeserSetzen } from "./eingang-ablage";
-import { dateiAusEingangsordner } from "./local-vault";
+import { dateiAusEingangsordner, updateLocalScheduleFamilie } from "./local-vault";
 import { ordnerFehlerText } from "./nativer-ordner";
 import { DemoUebernahmeDialog, DEMO_NEU_MERKER, DEMO_UEBERNAHME_MERKER } from "./demo-uebernahme";
 import { DEMO_QUELLE_SCHLUESSEL, demoQuelleLesen } from "../lib/demo-kopie";
@@ -106,6 +106,8 @@ import { AugeKnopf, FlachText, KnopfLeiste, StiftKnopf, useEinzeilig } from "./f
 import { ErinnerungLoeschen, NotizLoeschen } from "./loesch-knopf";
 import { PapierkorbKarte } from "./papierkorb-karte";
 import { AppGlocke, MeinKalender, meinKalenderOeffnen } from "./mein-kalender";
+import { useHandyBesitzer } from "./handy-besitzer";
+import { darfAntworten, nurBelegt, personenVon, personFarbe, terminStand } from "@/lib/kalender-familie";
 import { ErinnerungKasten, MemoryBearbeiten } from "./memory-bearbeiten";
 import { TerminBearbeiten } from "./termin-bearbeiten";
 import { kalenderEinstLesen } from "./kalender-abgleich";
@@ -1852,7 +1854,7 @@ function HealthPortalContent() {
       </main>
       <footer className="site-footer">
         <div className="footer-inner">
-          <div className="footer-brand-row"><div><strong>FAMILIENAKTE {APP_VARIANTE}</strong><span><b>Version {APP_FASSUNG}</b></span></div><small>Originalunterlagen bleiben verbindlich. Vorbereitete Bereiche enthalten noch keine behaupteten Aktenbestände.</small></div>
+          <div className="footer-brand-row"><div><strong>FAMILIENAKTE {APP_VARIANTE}</strong><span><b>{APP_FASSUNG}</b></span></div></div>
           <nav className="footer-directory" aria-label="Weiterführende Bereiche der Familienakte">
             <section><h2>Familienakte</h2><ul><li><button onClick={() => go("cockpit")}>Cockpit</button></li><li><button onClick={() => go("memory")}>Tagebuch</button></li><li><button onClick={() => go("reminders")}>Fristen und Aufgaben</button></li><li><button onClick={() => go("directory")}>Gesamtes Verzeichnis</button></li><li><button onClick={openLifeAreas}>Lebensbereiche</button></li></ul></section>
             <section><h2>Dokumente</h2><ul><li><button onClick={() => go("documents")}>Dokumentenbibliothek</button></li><li><button onClick={() => go("inbox")}>Eingangszentrale</button></li><li><button onClick={() => go("inventory")}>Bestand prüfen</button></li><li><button onClick={() => go("changelog")}>Was gibt’s Neues?</button></li></ul></section>
@@ -4510,6 +4512,12 @@ function ReminderCenter({ vaultHandle, records, relations, documents = [], focus
   // Fristenliste mit Suchfeld und Filtern (2.28.39, Punkt 10): Offen · Diese Woche · Überfällig · Erledigt, 50 je Seite.
   const [viewFilter, setViewFilter] = useState<"all" | "overdue" | "dueSoon" | "open" | "woche">("all");
   const [suche, setSuche] = useState("");
+  // Kalender je Person (Klaus 20.11.): hier steht die ganze Familie; Filter je Person, Farbe, vorläufig, privat = „belegt“, Antworten.
+  const ich = useHandyBesitzer();
+  const famPersonen = useMemo(() => records.filter((r) => r.recordType === "person" && r.status !== "archiviert").map((r) => ({ id: r.id, name: cockpitRecordLabel(r) })), [records]);
+  const famIds = famPersonen.map((p) => p.id);
+  const [personFilter, setPersonFilter] = useState<string | null>(null);
+  const antworten = async (id: string, wert: "passt" | "passt-nicht") => { if (!vaultHandle || !ich) return; try { await updateLocalScheduleFamilie(vaultHandle, id, { antwort: { person: ich, wert } }); await onRefresh(); onNotice({ kind: "success", text: wert === "passt" ? "Zugesagt: passt." : "Abgesagt: passt nicht." }); } catch (g) { onNotice({ kind: "error", text: g instanceof Error ? g.message : String(g) }); } };
   // Klaus 2026-11-05: kein Hin und Her – der angesprungene Eintrag wird gezeigt und hervorgehoben, „Ändern“ bearbeitet ihn hier.
   const [terminId, setTerminId] = useState<string | null>(null);
   const terminRecord = terminId ? records.find((r) => r.id === terminId) || null : null;
@@ -4536,7 +4544,8 @@ function ReminderCenter({ vaultHandle, records, relations, documents = [], focus
   };
   const sucheNorm = suche.trim().toLocaleLowerCase("de");
   const passt = (item: (typeof items)[number]) => !sucheNorm || [item.title, item.source, item.notes, ...item.links.map((link) => { const own = link.fromId === item.id; return linkName(own ? link.toType : link.fromType, own ? link.toId : link.fromId); })].filter(Boolean).join(" ").toLocaleLowerCase("de").includes(sucheNorm);
-  const visibleActive = (viewFilter === "all" ? active : viewFilter === "woche" ? active.filter((item) => { const t = item.date?.slice(0, 10) || ""; return t >= woche[0] && t <= woche[1]; }) : active.filter((item) => item.displayStatus === viewFilter)).filter(passt);
+  const fuerPerson = (item: (typeof items)[number]) => { if (!personFilter) return true; const r = records.find((x) => x.id === item.id); return !!r && personenVon(r, relations).includes(personFilter); };
+  const visibleActive = (viewFilter === "all" ? active : viewFilter === "woche" ? active.filter((item) => { const t = item.date?.slice(0, 10) || ""; return t >= woche[0] && t <= woche[1]; }) : active.filter((item) => item.displayStatus === viewFilter)).filter(passt).filter(fuerPerson);
   const visibleCompleted = completed.filter(passt);
   const fokusOffen = focusId ? visibleActive.findIndex((item) => item.id === focusId) + 1 : 0;
   const fokusErledigt = focusId ? visibleCompleted.findIndex((item) => item.id === focusId) + 1 : 0;
@@ -4577,11 +4586,13 @@ function ReminderCenter({ vaultHandle, records, relations, documents = [], focus
     finally { setBusy(false); }
   };
   // Flache Zeile (Klaus 2026-11-06): Datum, „Anfang … Ende“, Haken für erledigt, Auge; der Rest hinter dem Auge.
-  const renderItem = (item: ReturnType<typeof buildScheduleItems>[number]) => { const auf = aufIds.has(item.id); const art = item.recordType === "deadline" ? "Frist" : item.recordType === "task" ? "Aufgabe" : "Erinnerung"; const uhr = terminZeit(records, item.id).replace(/^, /, "").replace(/ Uhr$/, "");
-    return <article className={`schedule-item schedule-flach schedule-${item.displayStatus}${auf ? " offen" : ""}`} key={item.id} id={`termin-${item.id}`}><BspEcke id={item.id}/>
+  const renderItem = (item: ReturnType<typeof buildScheduleItems>[number]) => { const famRec = records.find((x) => x.id === item.id); const famWer = famRec ? personenVon(famRec, relations) : []; const belegt = !!famRec && nurBelegt(famRec, relations, ich); const famStand = famRec && (famRec.recordType === "deadline" || famRec.recordType === "task") ? terminStand(famRec) : "fest"; const famNamen = famWer.map((p) => famPersonen.find((x) => x.id === p)?.name.split(" ")[0]).filter(Boolean).join(", ");
+    if (belegt) item = { ...item, title: "belegt", notes: null, links: [] } as typeof item;
+    const auf = aufIds.has(item.id); const art = item.recordType === "deadline" ? "Frist" : item.recordType === "task" ? "Aufgabe" : "Erinnerung"; const uhr = terminZeit(records, item.id).replace(/^, /, "").replace(/ Uhr$/, "");
+    return <article className={`schedule-item schedule-flach schedule-${item.displayStatus}${auf ? " offen" : ""}${famStand === "vorläufig" ? " fam-vorlaeufig" : famStand === "abgelehnt" ? " fam-abgelehnt" : ""}`} key={item.id} id={`termin-${item.id}`} data-fam-stand={famStand} {...(famWer.length ? { "data-fam-farbe": "", style: { ["--fam-farbe" as string]: personFarbe(famIds, famWer[0]) } } : {})}><BspEcke id={item.id}/>
     <div className="fz-kopf fz-voll">
       <span className="mk-zeit">{item.date ? zeilenDatum(item.date.slice(0, 10)) : "–"}{uhr && <small>{uhr}</small>}</span>
-      <span className="mk-text"><strong><FlachText text={item.title} ganz={auf}/></strong><small>{[scheduleStatusLabels[item.displayStatus], arbeitsStand[item.status], art, terminGlockeKurz(records, item.id)].filter(Boolean).join(" · ")}</small></span>
+      <span className="mk-text"><strong><FlachText text={item.title} ganz={auf}/></strong><small>{[famNamen, famStand !== "fest" ? famStand : "", scheduleStatusLabels[item.displayStatus], arbeitsStand[item.status], art, belegt ? "" : terminGlockeKurz(records, item.id)].filter(Boolean).join(" · ")}</small></span>
       <KnopfLeiste titel={item.title}>
         {item.displayStatus !== "done" && <button type="button" className="icon-button" disabled={busy} onClick={() => changeStatus(item.id, "erledigt")} aria-label={`„${item.title}“ als erledigt markieren`} title="Als erledigt markieren" data-termin-erledigt={item.id}><Check size={18}/></button>}
         {vaultHandle && <StiftKnopf titel={item.title} disabled={busy} onClick={() => setTerminId(item.id)} data-termin-aendern={item.id}/>}
@@ -4589,6 +4600,7 @@ function ReminderCenter({ vaultHandle, records, relations, documents = [], focus
         <AugeKnopf offen={auf} titel={item.title} onClick={() => augeTippen(item.id)} data-termin-auge={item.id}/>
       </KnopfLeiste>
     </div>
+    {famRec && famStand !== "abgelehnt" && darfAntworten(famRec, ich) && <div className="fam-antwort" data-fam-antwort={item.id}><button type="button" className="chip-knopf ja" disabled={busy} onClick={() => void antworten(item.id, "passt")} data-fam-passt>passt</button><button type="button" className="chip-knopf nein" disabled={busy} onClick={() => void antworten(item.id, "passt-nicht")} data-fam-passt-nicht>passt nicht</button></div>}
     {auf && <div className="fz-offen schedule-item-main" data-termin-offen>
       {/* Auge (2.28.39, Punkt 10): nur, was nicht schon in der Zeile steht – keine Doppelung von Titel, Datum, Art und Glocke. */}
       <TagebuchHinweise id={item.id} records={records} relations={relations} onGo={onGo}/>{kalenderStand(records, item.id)}<QuelleZeile source={item.source} records={records} documents={documents} onGo={onGo}/>{item.notes && <p>{item.notes}</p>}
@@ -4610,7 +4622,7 @@ function ReminderCenter({ vaultHandle, records, relations, documents = [], focus
           <button type="button" aria-pressed={viewFilter === "overdue"} className={viewFilter === "overdue" ? "active" : ""} onClick={() => setViewFilter("overdue")} data-fristen-chip="ueberfaellig">Überfällig ({counts.overdue})</button>
           <button type="button" onClick={() => { klappOeffnen("erledigt"); window.setTimeout(() => document.getElementById("erledigte-fristen")?.scrollIntoView({ behavior: "smooth", block: "start" }), 60); }} data-fristen-chip="erledigt">Erledigt ({completed.length}) ›</button>
         </span>
-      </div>{erledigtZuletzt && <p className="erledigt-meldung" role="status" data-erledigt-meldung={erledigtZuletzt.id}><Check size={16}/><span><strong>{erledigtZuletzt.jetzt === "erledigt" ? "Erledigt" : "Zurückgestellt"}:</strong> <FlachText text={erledigtZuletzt.titel}/> <small>steht jetzt unter „Erledigte und zurückgestellte Punkte“</small></span><button type="button" className="button secondary" disabled={busy} onClick={() => { const z = erledigtZuletzt; setErledigtZuletzt(null); void changeStatus(z.id, z.vorher).then(() => setErledigtZuletzt(null)); }} data-erledigt-rueckgaengig>Rückgängig</button></p>}<div className="schedule-list">{visibleActive.length ? visibleActive.slice(0, offenGezeigt).map(renderItem) : <div className="empty-state"><CheckCircle2 size={30}/><strong>Keine passenden offenen Fristen oder Aufgaben</strong><span>{suche ? `Nichts zu „${suche}“ im gewählten Filter.` : "Der gewählte Filter enthält derzeit keinen Eintrag."}</span></div>}</div><WeitereAnzeigen gezeigt={offenGezeigt} gesamt={visibleActive.length} onMehr={offenMehr}/></section>
+      </div>{famPersonen.length > 0 && <span className="fam-personen" role="group" aria-label="Nach Person filtern" data-fam-filter><button type="button" className={`chip-knopf${!personFilter ? " aktiv" : ""}`} aria-pressed={!personFilter} onClick={() => setPersonFilter(null)}>Alle</button>{famPersonen.map((p) => <button type="button" key={p.id} className={`chip-knopf${personFilter === p.id ? " aktiv" : ""}`} aria-pressed={personFilter === p.id} onClick={() => setPersonFilter(personFilter === p.id ? null : p.id)} data-fam-person={p.id}><i className="mk-farbe" style={{ background: personFarbe(famIds, p.id) }}/>{p.name.split(" ")[0]}</button>)}</span>}{erledigtZuletzt && <p className="erledigt-meldung" role="status" data-erledigt-meldung={erledigtZuletzt.id}><Check size={16}/><span><strong>{erledigtZuletzt.jetzt === "erledigt" ? "Erledigt" : "Zurückgestellt"}:</strong> <FlachText text={erledigtZuletzt.titel}/> <small>steht jetzt unter „Erledigte und zurückgestellte Punkte“</small></span><button type="button" className="button secondary" disabled={busy} onClick={() => { const z = erledigtZuletzt; setErledigtZuletzt(null); void changeStatus(z.id, z.vorher).then(() => setErledigtZuletzt(null)); }} data-erledigt-rueckgaengig>Rückgängig</button></p>}<div className="schedule-list">{visibleActive.length ? visibleActive.slice(0, offenGezeigt).map(renderItem) : <div className="empty-state"><CheckCircle2 size={30}/><strong>Keine passenden offenen Fristen oder Aufgaben</strong><span>{suche ? `Nichts zu „${suche}“ im gewählten Filter.` : "Der gewählte Filter enthält derzeit keinen Eintrag."}</span></div>}</div><WeitereAnzeigen gezeigt={offenGezeigt} gesamt={visibleActive.length} onMehr={offenMehr}/></section>
     <section className="card" id="erledigte-fristen"><details data-klapp="erledigt"><summary><strong>Erledigte und zurückgestellte Punkte ({suche ? `${visibleCompleted.length} von ${completed.length}` : completed.length})</strong></summary><div className="schedule-list">{visibleCompleted.length ? visibleCompleted.slice(0, erledigtGezeigt).map(renderItem) : <div className="empty-state">{suche ? `Nichts zu „${suche}“.` : "Noch keine erledigten oder zurückgestellten Punkte."}</div>}</div><WeitereAnzeigen gezeigt={erledigtGezeigt} gesamt={visibleCompleted.length} onMehr={erledigtMehr}/></details></section>
     <PapierkorbKarte vaultHandle={vaultHandle} stand={records} onRefresh={onRefresh} onNotice={onNotice}/>
     {terminRecord && vaultHandle && <TerminBearbeiten record={terminRecord} vaultHandle={vaultHandle} onZu={() => setTerminId(null)} onGespeichert={async (text) => { await onRefresh(); onNotice({ kind: "success", text }); }}/>}

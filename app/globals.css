@@ -508,24 +508,22 @@ code { display: inline-block; color: var(--navy); background: var(--blue-soft); 
 .breadcrumb .pfad-ende { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 @media (max-width: 600px) { .breadcrumb .pfad .pfad-start { display: none; } }
 @media print { .breadcrumb { position: static; } }
+/* Fuß flach (Klaus 20.11.: „nimmt Arbeitsfläche weg, so flach wie möglich“): eine Zeile, seitlich zu schieben, keine Überschriften, kein Erklärsatz. */
 .site-footer { color: #dce7ef; background: #092944; }
-.footer-inner { width: calc(100% - 48px); margin: 0 auto; padding: 27px 0 18px; }
-.footer-brand-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 28px; border-bottom: 1px solid rgba(220,231,239,.2); padding-bottom: 18px; }
-.footer-brand-row strong, .footer-brand-row span { display: block; }
-.footer-brand-row strong { color: #fff; font-size: 1rem; letter-spacing: .06em; }
-.footer-brand-row span { margin-top: 4px; color: #bed0dc; font-size: .8rem; }
-.footer-brand-row small { max-width: 600px; color: #aebfcb; font-size: .76rem; line-height: 1.45; text-align: right; }
-.footer-directory { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 34px; padding: 24px 0; }
-.footer-directory h2 { margin: 0 0 9px; color: #fff; font-size: .83rem; letter-spacing: .04em; }
-.footer-directory ul { margin: 0; padding: 0; list-style: none; }
-.footer-directory li { margin: 0; }
-.footer-directory button, .footer-directory a { display: block; text-decoration: none;
-  }
-.footer-directory button { width: 100%; border: 0; padding: 5px 0; color: #bfd1dd; background: transparent; font-size: .81rem; font-weight: 600; line-height: 1.35; text-align: left; }
-.footer-directory a { width: 100%; padding: 5px 0; color: #bfd1dd; font-size: .81rem; font-weight: 600; line-height: 1.35; }
+.footer-inner { display: flex; align-items: center; gap: 14px; width: calc(100% - 32px); margin: 0 auto; padding: 5px 0; overflow-x: auto; white-space: nowrap; scrollbar-width: thin; }
+.footer-brand-row { display: flex; align-items: center; gap: 6px; flex: none; }
+.footer-brand-row > div { display: flex; align-items: baseline; gap: 6px; }
+.footer-brand-row strong { color: #fff; font-size: .72rem; letter-spacing: .05em; }
+.footer-brand-row span { color: #bed0dc; font-size: .72rem; }
+.footer-directory { display: flex; align-items: center; gap: 12px; padding: 0; }
+.footer-directory section, .footer-directory ul, .footer-directory li { display: contents; }
+.footer-directory h2 { display: none; }
+.footer-directory button, .footer-directory a { display: inline-block; flex: none; text-decoration: none; }
+.footer-directory button { border: 0; padding: 3px 0; color: #bfd1dd; background: transparent; font-size: .74rem; font-weight: 600; line-height: 1.3; }
+.footer-directory a { padding: 3px 0; color: #bfd1dd; font-size: .74rem; font-weight: 600; line-height: 1.3; }
 .footer-directory button:hover, .footer-directory button:focus-visible, .footer-directory a:hover, .footer-directory a:focus-visible { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
-.footer-meta { display: flex; align-items: center; justify-content: space-between; gap: 20px; border-top: 1px solid rgba(220,231,239,.2); padding-top: 15px; color: #9fb3c1; font-size: .75rem; }
-.footer-meta button { display: inline-flex; align-items: center; gap: 6px; border: 0; color: #bfd1dd; background: transparent; font-weight: 700; }
+.footer-meta { display: flex; align-items: center; gap: 12px; flex: none; margin-left: auto; color: #9fb3c1; font-size: .72rem; }
+.footer-meta button { display: inline-flex; align-items: center; gap: 5px; border: 0; padding: 3px 0; color: #bfd1dd; background: transparent; font-size: .72rem; font-weight: 700; }
 .version-badge { display: inline-flex; align-items: center; border-radius: 999px; padding: 7px 10px; color: #0c5e54; background: #e4f5ef; font-size: .8rem; font-weight: 900; }
 
 .family-hero { position: relative; overflow: visible; display: grid; grid-template-columns: minmax(0,1.85fr) minmax(340px,1fr); align-items: stretch; gap: 30px; padding: 36px 40px; border-radius: 12px; color: white; background: linear-gradient(115deg,#0a3155 0%,#155a8a 66%,#147a82 100%); box-shadow: var(--shadow); }
@@ -1363,7 +1361,6 @@ button.object-card:hover { transform: translateY(-2px); border-color: #8fb2c9; b
   .system-check-control-grid, .system-check-result-grid { grid-template-columns: 1fr; }
   .system-status-bar { grid-template-columns: 1fr; }
   .system-open-card { border-top: 1px solid rgba(40,83,112,.18); border-left: 0; padding-top: 14px; padding-left: 0; }
-  .footer-directory { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .cabinet-card-wide ul { grid-template-columns: 1fr; }
   .cockpit-layout, .cockpit-context-grid { grid-template-columns: 1fr; }
   .library-toolbar { align-items: stretch; flex-direction: column; }
@@ -1450,10 +1447,6 @@ button.object-card:hover { transform: translateY(-2px); border-color: #8fb2c9; b
   .topic-list > button > svg { display: none; }
   .search-results > button { grid-template-columns: 1fr auto; }
   .search-results > button .badge { grid-column: 1 / -1; }
-  .footer-inner { width: calc(100% - 32px); }
-  .footer-brand-row, .footer-meta { align-items: flex-start; flex-direction: column; }
-  .footer-brand-row small { text-align: left; }
-  .footer-directory { grid-template-columns: 1fr; gap: 22px; }
   .vault-overview-head, .changelog-head { align-items: flex-start; flex-direction: column; }
   .backup-steps { grid-template-columns: 1fr; }
   .quick-strip { grid-template-columns: 1fr; }
@@ -3235,3 +3228,20 @@ button.pf-daumen { cursor: pointer; }
 @media (max-width: 620px) {
   .header-actions > .brief-knopf .kopf-wort { display: block; }
 }
+
+/* Kalender je Person (Klaus 20.11.): Besitzer des Handys, fest/vorläufig, privat, Für wen noch, Familienliste je Person. */
+.chip-knopf { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border: 1px solid #c5d7e2; border-radius: 999px; background: white; color: var(--navy); font: inherit; font-size: .88rem; cursor: pointer; }
+.chip-knopf.aktiv { border-color: var(--teal); background: var(--teal-soft); font-weight: 700; }
+.mk-farbe { display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.mk-ich { font: inherit; font-weight: inherit; }
+.mk-ich-wahl { display: grid; gap: 6px; padding: 10px; border: 1px solid #c5d7e2; border-radius: 10px; margin: 6px 0; }
+.mk-ich-liste, .mk-wahl { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.mk-privat { display: inline-flex !important; align-items: center; gap: 4px; margin-left: 6px; font-size: .88rem; }
+.mk-warnung { margin: 0; padding: 6px 9px; border: 1px solid #a06b00; border-radius: 9px; color: #7a5200; font-size: .88rem; }
+.mk-liste li.mk-vorlaeufig, .schedule-item.fam-vorlaeufig { border-style: dashed; }
+.mk-liste li.mk-abgelehnt .mk-text strong, .schedule-item.fam-abgelehnt .mk-text strong { text-decoration: line-through; color: #c62828; }
+.schedule-item[data-fam-farbe] { border-left: 4px solid var(--fam-farbe, #6b7f8f); }
+.fam-personen { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+.fam-antwort { display: flex; gap: 6px; padding: 0 0 6px 4px; }
+.fam-antwort .ja { border-color: #1f7a4d; color: #1f7a4d; }
+.fam-antwort .nein { border-color: #c62828; color: #c62828; }
