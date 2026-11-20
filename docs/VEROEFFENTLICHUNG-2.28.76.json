@@ -1,0 +1,26 @@
+{
+ "version": "2.28.76",
+ "source": "706711bcdb8426d73e8a24fe8bd84c47d28fd213",
+ "pullRequest": [224],
+ "recordedUtc": "2026-11-20T10:00:00Z",
+ "freigabe": "Klaus 20.11.2026: „wenn du fertig bist selbstständig mergen und online stellen der Apps in PWA APK und Windowsversion. auch zum Download. Familienakte und Privat Akte“.",
+ "inhalt": "Kalender je Person (Handy gehört einer Person, „Kalender von …“, fest/vorläufig, „Für wen noch“, privat, Hinweis bei Überschneidung; „Fristen und Aufgaben“ für die ganze Familie mit Filter und Farbe je Person, „belegt“ für Privates der anderen, „passt/passt nicht“) und flacher Fuß (eine Zeile statt eines großen Kastens).",
+ "ciAmPrStand": "PR #224 auf 6f69fb1: pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) – success. Davor zweimal rot an Maven Central (404 für vorhandene Dateien); behoben in tools/native/model-json-dependency.mjs (404 → nächster Server, Prüfsumme fest).",
+ "releases": [
+  {
+   "tag": "android-v2.28.76", "run": 44711485854, "conclusion": "success", "updateServer": "server=ja",
+   "downloadProof": [
+    { "name": "Familienakte-android-v2.28.76.apk", "bytes": 82023166, "sha256": "5bed2a1933fe47074b8059b0085190c76ad43dd0ed80c1874473a968351cbfe8", "matchesSHA256SUMS": true, "quelle": "Download von github.com (Release), in der Sitzung nachgerechnet" },
+    { "name": "Familienakte-Einzeldatei-2.28.76.html", "bytes": 5218296, "sha256": "cafb05033ba44b758b232c2060ddf8934e5f022468e30b06de5a0e87583a3b4d", "matchesSHA256SUMS": true, "quelle": "Download von github.com (Release), in der Sitzung nachgerechnet" }
+   ]
+  },
+  {
+   "tag": "windows-v2.28.76", "run": 44711490173, "conclusion": "success", "updateServer": "server=ja",
+   "downloadProof": [
+    { "name": "Familienakte-Windows-2.28.76-x64-setup.exe", "bytes": 96534093, "sha256": "257c2ac227c9a4012949429e80e953d007324cdea0d1b7b01921f83178d3fbc3", "matchesSHA256SUMS": true, "quelle": "Download von github.com (Release), in der Sitzung nachgerechnet" }
+   ]
+  }
+ ],
+ "pwa": "über Pages mit main (706711b)",
+ "nichtGeprueft": "Installation am Tablet und unter Windows; Kalender je Person am Gerät; Abgleich der Termine zwischen Handys ist nicht gebaut."
+}
