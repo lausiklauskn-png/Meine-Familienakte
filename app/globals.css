@@ -3228,3 +3228,20 @@ button.pf-daumen { cursor: pointer; }
 @media (max-width: 620px) {
   .header-actions > .brief-knopf .kopf-wort { display: block; }
 }
+
+/* Kalender je Person (Klaus 20.11.): Besitzer des Handys, fest/vorläufig, privat, Für wen noch, Familienliste je Person. */
+.chip-knopf { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border: 1px solid #c5d7e2; border-radius: 999px; background: white; color: var(--navy); font: inherit; font-size: .88rem; cursor: pointer; }
+.chip-knopf.aktiv { border-color: var(--teal); background: var(--teal-soft); font-weight: 700; }
+.mk-farbe { display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.mk-ich { font: inherit; font-weight: inherit; }
+.mk-ich-wahl { display: grid; gap: 6px; padding: 10px; border: 1px solid #c5d7e2; border-radius: 10px; margin: 6px 0; }
+.mk-ich-liste, .mk-wahl { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.mk-privat { display: inline-flex !important; align-items: center; gap: 4px; margin-left: 6px; font-size: .88rem; }
+.mk-warnung { margin: 0; padding: 6px 9px; border: 1px solid #a06b00; border-radius: 9px; color: #7a5200; font-size: .88rem; }
+.mk-liste li.mk-vorlaeufig, .schedule-item.fam-vorlaeufig { border-style: dashed; }
+.mk-liste li.mk-abgelehnt .mk-text strong, .schedule-item.fam-abgelehnt .mk-text strong { text-decoration: line-through; color: #c62828; }
+.schedule-item[data-fam-farbe] { border-left: 4px solid var(--fam-farbe, #6b7f8f); }
+.fam-personen { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+.fam-antwort { display: flex; gap: 6px; padding: 0 0 6px 4px; }
+.fam-antwort .ja { border-color: #1f7a4d; color: #1f7a4d; }
+.fam-antwort .nein { border-color: #c62828; color: #c62828; }

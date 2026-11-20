@@ -13,6 +13,9 @@ import { klappOeffnen } from "./klapp";
 import { ErinnerungLoeschen } from "./loesch-knopf";
 import { TerminBearbeiten } from "./termin-bearbeiten";
 import { InfoPopover, VoiceInput } from "./ui-controls";
+import { handyBesitzerSetzen, useHandyBesitzer } from "./handy-besitzer";
+import { stammLesen } from "../lib/familie-stamm";
+import { familienFelder, gehoertMir, personFarbe, terminStand, ueberschneidungen } from "../lib/kalender-familie";
 
 /** Öffnet „Mein Kalender“ an einem Tag (z. B. nach dem Speichern einer Notiz mit Erinnerung). */
 export const MEIN_KALENDER_OEFFNEN = "familienakte:mein-kalender";
@@ -26,8 +29,8 @@ const offen = (r: FamilyRecordUnion) => !["erledigt", "zurückgestellt", "archiv
 
 type Eintrag = { record: FamilyRecordUnion; tag: string; zeit: string; titel: string; erinnerungen: ErinnerungsWahl[] | null; imKalender: boolean; eingetragen: boolean; frei?: boolean };
 
-function eintraege(records: FamilyRecordUnion[]): Eintrag[] {
-  return records.filter((r) => istTermin(r) && offen(r) && /^\d{4}-\d{2}-\d{2}/.test(String((r.data as { dueAt?: string }).dueAt || "")))
+function eintraege(records: FamilyRecordUnion[], relations: FamilyRelation[] = [], ich: string | null = null): Eintrag[] {
+  return records.filter((r) => istTermin(r) && offen(r) && gehoertMir(r, relations, ich) && /^\d{4}-\d{2}-\d{2}/.test(String((r.data as { dueAt?: string }).dueAt || "")))
     .map((r) => {
       const k = kalenderFelder(r);
       return { record: r, tag: String((r.data as { dueAt: string }).dueAt).slice(0, 10), zeit: k.dueTime || "", titel: (r.data as { title: string }).title, erinnerungen: Array.isArray(k.erinnerungen) ? k.erinnerungen : null, imKalender: k.kalenderEintragen === true, eingetragen: (k.kalender || []).length > 0 };
@@ -65,7 +68,12 @@ export function MeinKalender({ vaultHandle, records, relations, onRefresh, onNot
     finally { setBusy(false); }
   };
   const box = useRef<HTMLElement>(null);
-  const alle = useMemo(() => eintraege(records), [records]);
+  // Kalender je Person (Klaus 20.11.): das Handy gehört einer Person; „Mein Kalender“ zeigt ihre Termine und solche ohne Person.
+  const ich = useHandyBesitzer();
+  const personen = useMemo(() => records.filter((r) => r.recordType === "person" && r.status !== "archiviert").map((r) => ({ id: r.id, name: stammLesen(r).name || r.id })), [records]);
+  const ichName = personen.find((p) => p.id === ich)?.name || null;
+  const [wer, setWer] = useState(false);
+  const alle = useMemo(() => eintraege(records, relations, ichName ? ich : null), [records, relations, ich, ichName]);
   const proTag = useMemo(() => { const m = new Map<string, Eintrag[]>(); for (const e of alle) m.set(e.tag, [...(m.get(e.tag) || []), e]); return m; }, [alle]);
   useEffect(() => {
     const auf = (ev: Event) => { klappOeffnen("kalender"); const { tag: t, id } = (ev as CustomEvent<{ tag?: string; id?: string }>).detail || {}; if (t && /^\d{4}-\d{2}-\d{2}$/.test(t)) { setTag(t); setMonat(new Date(Number(t.slice(0, 4)), Number(t.slice(5, 7)) - 1, 1)); }
@@ -89,10 +97,12 @@ export function MeinKalender({ vaultHandle, records, relations, onRefresh, onNot
   const zeile = (e: Eintrag) => { const auf = offen === e.record.id; const art = e.frei ? "Erinnerung" : e.record.recordType === "deadline" ? "Frist" : "Aufgabe";
     const glocke = e.frei ? "🔔" : e.erinnerungen ? (e.erinnerungen.length ? `🔔 ${e.erinnerungen.map(erinnerungsName).join(", ")}` : "🔕 ohne Erinnerung") : `🔔 ${(kalenderEinst?.erinnerungen || ERINNERUNG_VORGABE).map(erinnerungsName).join(", ")}`;
     const kal = e.imKalender ? (e.eingetragen ? "im Kalender" : "geht in den Kalender") : "";
-    return <li key={e.record.id} data-mk-eintrag={e.record.id} className={auf ? "offen" : undefined}>
+    const stand = e.frei ? "fest" : terminStand(e.record); const ff = e.frei ? null : familienFelder(e.record);
+    const mit = ff ? (ff.fuer || []).filter((p) => p !== ich).map((p) => personen.find((x) => x.id === p)?.name.split(" ")[0]).filter(Boolean).join(", ") : "";
+    return <li key={e.record.id} data-mk-eintrag={e.record.id} data-mk-stand={stand} className={[auf ? "offen" : "", stand === "vorläufig" ? "mk-vorlaeufig" : "", stand === "abgelehnt" ? "mk-abgelehnt" : ""].filter(Boolean).join(" ") || undefined}>
     <div className="fz-kopf fz-voll">
       <span className="mk-zeit">{new Date(`${e.tag}T00:00`).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" })}{e.zeit && <small>{e.zeit}</small>}</span>
-      <span className="mk-text"><strong><FlachText text={e.titel} ganz={auf}/></strong><small>{auf ? `${new Date(`${e.tag}T00:00`).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit", year: "numeric" })}${e.zeit ? `, ${e.zeit} Uhr` : ""} · ` : ""}{[art, glocke, kal].filter(Boolean).join(" · ")}</small></span>
+      <span className="mk-text"><strong><FlachText text={e.titel} ganz={auf}/></strong><small>{auf ? `${new Date(`${e.tag}T00:00`).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit", year: "numeric" })}${e.zeit ? `, ${e.zeit} Uhr` : ""} · ` : ""}{[stand !== "fest" ? stand : "", ff?.privat ? "privat" : "", mit ? `mit ${mit}` : "", art, glocke, kal].filter(Boolean).join(" · ")}</small></span>
       <KnopfLeiste titel={e.titel}>
         {vaultHandle && <button type="button" className="icon-button" disabled={busy} onClick={() => void status(e.record.id, e.titel, "erledigt")} aria-label={`„${e.titel}“ als erledigt markieren`} title="Als erledigt markieren" data-mk-erledigt={e.record.id}><Check size={18}/></button>}
         {vaultHandle && <StiftKnopf titel={e.titel} onClick={() => setBearbeiten(e.record.id)} data-mk-aendern/>}
@@ -104,8 +114,11 @@ export function MeinKalender({ vaultHandle, records, relations, onRefresh, onNot
     {auf && <span hidden data-mk-offen/>}
   </li>; };
   return <section ref={box} className="card mein-kalender" id="mein-kalender" data-mein-kalender data-klapp="kalender">
-    <div className="card-heading"><div><span className="ui-heading-help"><h2><CalendarDays size={20}/> Mein Kalender</h2><InfoPopover label="Mein Kalender erklären" text={HILFE}/></span></div><GlockenSchalter records={records} relations={relations}/></div>
+    <div className="card-heading"><div><span className="ui-heading-help"><h2><CalendarDays size={20}/> {ichName ? <>Kalender von <button type="button" className="text-link mk-ich" onClick={() => setWer(true)} title="Anderen Besitzer wählen" data-mk-ich>{ichName.split(" ")[0]}</button></> : "Mein Kalender"}</h2><InfoPopover label="Mein Kalender erklären" text={HILFE}/></span></div><GlockenSchalter records={records} relations={relations}/></div>
     <GlockenEinstellung/>
+    {(wer || (!ichName && personen.length > 0)) && <div className="mk-ich-wahl" data-mk-ich-wahl><strong>Wem gehört dieses Handy?</strong>
+      <span className="mk-ich-liste">{personen.map((p) => <button type="button" key={p.id} className={`chip-knopf${p.id === ich ? " aktiv" : ""}`} onClick={() => { handyBesitzerSetzen(p.id); setWer(false); }} data-mk-ich-person={p.id}><i className="mk-farbe" style={{ background: personFarbe(personen.map((x) => x.id), p.id) }}/>{p.name}</button>)}</span>
+      {wer && <button type="button" className="text-link" onClick={() => setWer(false)}>Abbrechen</button>}</div>}
     <div className="mk-monat">
       <div className="mk-kopf"><button type="button" className="icon-button" onClick={() => setMonat(new Date(monat.getFullYear(), monat.getMonth() - 1, 1))} aria-label="Voriger Monat"><ChevronLeft size={18}/></button><strong data-mk-monat>{monat.toLocaleDateString("de-DE", { month: "long", year: "numeric" })}</strong><button type="button" className="icon-button" onClick={() => setMonat(new Date(monat.getFullYear(), monat.getMonth() + 1, 1))} aria-label="Nächster Monat"><ChevronRight size={18}/></button></div>
       <div className="mk-raster" role="grid">{WOCHENTAGE.map((w) => <span key={w} className="mk-wt">{w}</span>)}
@@ -115,7 +128,7 @@ export function MeinKalender({ vaultHandle, records, relations, onRefresh, onNot
     <div className="mk-tagesliste">
       <div className="mk-tag-kopf"><strong>{tagName}</strong><button type="button" className="button secondary" onClick={() => setNeu(true)} disabled={!vaultHandle} data-mk-neu><Plus size={16}/> Eintrag</button></div>
       {erledigt && <p className="erledigt-meldung" role="status" data-mk-erledigt-meldung><Check size={16}/><span><strong>Erledigt:</strong> <FlachText text={erledigt.titel}/></span><button type="button" className="button secondary" disabled={busy} onClick={() => void status(erledigt.id, erledigt.titel, "offen")} data-mk-rueckgaengig>Rückgängig</button></p>}
-      {neu && vaultHandle && <NeuerEintrag tag={tag} vaultHandle={vaultHandle} onZu={() => setNeu(false)} onGespeichert={async (t) => { await onRefresh(); onNotice({ kind: "success", text: t }); }}/>}
+      {neu && vaultHandle && <NeuerEintrag tag={tag} vaultHandle={vaultHandle} records={records} relations={relations} ich={ichName ? ich : null} personen={personen} onZu={() => setNeu(false)} onGespeichert={async (t) => { await onRefresh(); onNotice({ kind: "success", text: t }); }}/>}
       {amTag.length ? <ul className="mk-liste">{amTag.map((e) => zeile(e))}</ul> : !neu && <p className="muted">Nichts an diesem Tag.</p>}
       {ueberfaellig.length > 0 && <details className="mk-kommend mk-ueberfaellig" data-mk-ueberfaellig><summary>Überfällig ({ueberfaellig.length})</summary><ul className="mk-liste">{ueberfaellig.map((e) => zeile(e))}</ul></details>}
       {kommend.length > 0 && <details className="mk-kommend"><summary>Als Nächstes ({kommend.length})</summary><ul className="mk-liste">{kommend.map((e) => zeile(e))}</ul></details>}
@@ -124,18 +137,24 @@ export function MeinKalender({ vaultHandle, records, relations, onRefresh, onNot
   </section>;
 }
 
-function NeuerEintrag({ tag, vaultHandle, onZu, onGespeichert }: { tag: string; vaultHandle: FileSystemDirectoryHandle; onZu: () => void; onGespeichert: (t: string) => Promise<void> }) {
+function NeuerEintrag({ tag, vaultHandle, records, relations, ich, personen, onZu, onGespeichert }: { tag: string; vaultHandle: FileSystemDirectoryHandle; records: FamilyRecordUnion[]; relations: FamilyRelation[]; ich: string | null; personen: Array<{ id: string; name: string }>; onZu: () => void; onGespeichert: (t: string) => Promise<void> }) {
+  const [vorlaeufig, setVorlaeufig] = useState(false);
+  const [privat, setPrivat] = useState(false);
+  const [mit, setMit] = useState<string[]>([]);
+  const wer = [...(ich ? [ich] : []), ...mit];
   const kalender = useKalenderEinst();
   const [titel, setTitel] = useState("");
   const [zeit, setZeit] = useState("");
   const [wahl, setWahl] = useState<ErinnerungsWahl[]>(["15m"]);
+  const kollision = zeit ? ueberschneidungen(records, relations, { tag, zeit, personen: wer }) : [];
   const [busy, setBusy] = useState(false);
   const [fehler, setFehler] = useState("");
   const speichern = async () => {
     if (!titel.trim()) return setFehler("Bitte eintragen, woran erinnert werden soll.");
     setBusy(true); setFehler("");
     try {
-      await createLocalScheduleBundle(vaultHandle, { recordType: "task", title: titel.trim(), dueAt: tag, dueTime: zeit || null, erinnerungen: wahl, kalenderEintragen: kalender ? true : undefined, source: "Mein Kalender", references: [] });
+      await createLocalScheduleBundle(vaultHandle, { recordType: "task", title: titel.trim(), dueAt: tag, dueTime: zeit || null, erinnerungen: wahl, kalenderEintragen: kalender && !privat ? true : undefined, source: "Mein Kalender", references: [],
+        familie: { fuer: wer, von: ich || undefined, vorlaeufig, privat } });
       glockeEinschalten();
       await onGespeichert(`Eingetragen: ${titel.trim()} – ${new Date(`${tag}T00:00`).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" })}${zeit ? `, ${zeit} Uhr` : ""}${kalender ? ` · ${kalenderZiel(kalender)}` : ""}.`);
       onZu();
@@ -145,7 +164,10 @@ function NeuerEintrag({ tag, vaultHandle, onZu, onGespeichert }: { tag: string; 
     <label><span>Woran erinnern</span><VoiceInput value={titel} onValueChange={setTitel} speechLabel="Eintrag" placeholder="z. B. Arzt anrufen" data-mk-titel/></label>
     <label><span>Uhrzeit</span><DatumFeld art="time" value={zeit} onChange={(e) => setZeit(e.target.value)} data-mk-uhr/></label>
     <ErinnerungsChips wert={wahl} onChange={setWahl} schnell={[...KURZ_ERINNERUNGEN, "1d"]} name="Erinnern"/>
-    <small className="muted">{kalender ? `Geht auch in: ${kalenderZiel(kalender)}` : "Nur in der App (kein Kalender verbunden)"}</small>
+    <span className="mk-wahl" role="group" aria-label="Fest oder vorläufig"><button type="button" className={`chip-knopf${!vorlaeufig ? " aktiv" : ""}`} aria-pressed={!vorlaeufig} onClick={() => setVorlaeufig(false)} data-mk-fest>fest</button><button type="button" className={`chip-knopf${vorlaeufig ? " aktiv" : ""}`} aria-pressed={vorlaeufig} onClick={() => setVorlaeufig(true)} data-mk-vorlaeufig>vorläufig</button><label className="mk-privat"><input type="checkbox" checked={privat} onChange={(e) => setPrivat(e.target.checked)} data-mk-privat/> privat</label></span>
+    {personen.filter((p) => p.id !== ich).length > 0 && <span className="mk-wahl" role="group" aria-label="Für wen noch"><small>Für wen noch</small>{personen.filter((p) => p.id !== ich).map((p) => { const an = mit.includes(p.id); return <button type="button" key={p.id} className={`chip-knopf${an ? " aktiv" : ""}`} aria-pressed={an} onClick={() => setMit(an ? mit.filter((x) => x !== p.id) : [...mit, p.id])} data-mk-mit={p.id}><i className="mk-farbe" style={{ background: personFarbe(personen.map((x) => x.id), p.id) }}/>{p.name.split(" ")[0]}</button>; })}</span>}
+    {zeit && kollision.map((k) => <p className="mk-warnung" role="status" key={k.record.id + k.person} data-mk-warnung>{personen.find((p) => p.id === k.person)?.name.split(" ")[0] || "Jemand"} hat da schon „{String((k.record.data as { title?: string }).title || "")}“ ({k.zeit}).</p>)}
+    <small className="muted">{privat ? "Privat: bleibt in der App, die anderen sehen nur „belegt“" : kalender ? `Geht auch in: ${kalenderZiel(kalender)}` : "Nur in der App (kein Kalender verbunden)"}</small>
     {fehler && <p className="form-error" role="alert">{fehler}</p>}
     <div className="button-row"><button type="button" className="button secondary" onClick={onZu} disabled={busy}><X size={16}/> Abbrechen</button><button type="button" className="button primary" onClick={() => void speichern()} disabled={busy || !titel.trim()} data-mk-speichern>{busy ? "Wird gespeichert …" : "Eintragen"}</button></div>
   </div>;
