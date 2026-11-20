@@ -32,6 +32,11 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   **Ausgegeben 20.11. (Klaus' Wort) als Android, Windows und PWA, Nachweis `docs/VEROEFFENTLICHUNG-2.28.76.json`, nicht erneut ausgeben.**
   Abschlussbrief `BRIEF_ABSCHLUSS_2026-11-20_KALENDER-JE-PERSON-2.28.76.md`.
 
+- **Knopf „Aktualisieren“ in der PWA (Klaus 20.11.: „da ich nicht immer Hard Reload machen kann“; nach 2.28.76, Fassung nicht erhöht,
+  kommt über Pages):** ⟳ im Kopf nur in der Web-App (`PwaAktualisieren` in `app/update-fahne.tsx`), auch am Handy ohne „‹“; Tipp =
+  `FamilienakteApp.aktualisieren()` (Service Worker holt die neue Fassung und lädt neu, sonst „Du verwendest die aktuelle Fassung …“).
+  In Android/Windows nicht (dort Versionszeile und Fähnchen). Probe UI `pwa-aktualisieren` (5).
+
 - **Fuß flach (Klaus 20.11., Bild vom Tablet: „der dicke blaue Balken nimmt Arbeitsfläche weg, so flach wie möglich“; nicht ausgegeben,
   Fassung nicht erhöht):** der Fuß ist eine Zeile (rund 40 statt 420 px), seitlich zu schieben: Name und Fassung, alle Links wie bisher
   (`.footer-directory button`, `[data-fuss-netz]`, Impressum), ohne Überschriften und ohne den Satz „Originalunterlagen bleiben verbindlich …“.

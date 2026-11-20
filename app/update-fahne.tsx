@@ -1,3 +1,4 @@
+import { RefreshCw } from "lucide-react";
 import { useEffect, useState } from "react";
 
 /**
@@ -24,4 +25,16 @@ export function UpdateFahne() {
   // Liegt im Markenknopf (Startseite); darum ein Element mit Rolle statt eines verschachtelten <button>.
   return <span className="update-fahne" role="button" tabIndex={0} title={titel} aria-label={titel} data-update-fahne={neu}
     onClick={tippen} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") tippen(event); }}>Update<span className="fahne-lang"> verfügbar</span></span>;
+}
+
+/**
+ * Knopf „Aktualisieren“ in der Kopfleiste, nur in der Web-App (Klaus 20.11.2026: „für die PWA einen Aktualisierungsbutton, da ich
+ * nicht immer Hard Reload machen kann“). Derselbe Weg wie das Fähnchen: der Service Worker holt die neue Fassung und lädt neu;
+ * ist keine da, steht „Du verwendest die aktuelle Fassung …“. In Android und Windows nicht (dort Versionszeile und Fähnchen).
+ */
+export function PwaAktualisieren() {
+  const nativ = typeof window !== "undefined" && ((window as unknown as { Capacitor?: { isNativePlatform?: () => boolean } }).Capacitor?.isNativePlatform?.() || "__TAURI__" in window);
+  if (nativ) return null;
+  return <button type="button" className="icon-button" onClick={() => { const b = bruecke(); if (b?.aktualisieren) b.aktualisieren(); else window.location.reload(); }}
+    title="Auf neue Fassung prüfen und neu laden" aria-label="Aktualisieren: auf neue Fassung prüfen und neu laden" data-pwa-aktualisieren><RefreshCw size={18}/></button>;
 }
