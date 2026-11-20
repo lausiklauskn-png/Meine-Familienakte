@@ -2508,7 +2508,7 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
   .masthead { position: relative; }
   .header-actions > .kopf-pfeil-auf { display: inline-grid; place-items: center; order: 99; }
   .header-actions.kopf-auf { position: absolute; top: 0; bottom: 0; right: 0; z-index: 5; justify-content: flex-end; padding: 0 12px 0 0; background: var(--paper, #fff); box-shadow: -10px 0 18px rgba(9, 38, 63, .16); }
-  .header-actions.kopf-auf > :not(.drucken-knopf):not(.logout-button):not(.login-button):not(.familienakte-install):not(.kopf-pfeil-zu):not(.fa-schrift):not(.neu-knopf):not(.discovery-knopf) { display: none !important; }
+  .header-actions.kopf-auf > :not(.drucken-knopf):not(.logout-button):not(.login-button):not(.familienakte-install):not(.kopf-pfeil-zu):not(.fa-schrift):not(.neu-knopf):not(.discovery-knopf):not(.pwa-aktualisieren) { display: none !important; }
   /* Schriftgröße „A··A“ (11.11.): am Handy hinter dem Pfeil in der Aufklappleiste. */
   .header-actions > .fa-schrift { display: none !important; }
   .header-actions.kopf-auf > .fa-schrift { display: inline-flex !important; align-items: center; }
@@ -2936,6 +2936,8 @@ details.kalender-erinnerung[open] .kalender-aendern { visibility: hidden; }
 .header-actions .pseudo-knopf.pseudo-an { background: #1f8a4c; border-color: #167249; }
 .pseudo-knopf:focus-visible { outline: 3px solid #0b3154; outline-offset: 2px; }
 @media (max-width: 900px) {
+  /* ⟳ (Klaus 20.11.): in der Demo braucht der rote DEMO-Knopf den Platz – dort am Handy hinter „‹“, sonst wäre FAMILIENAKTE abgeschnitten. */
+  .site-header.demo-mode .header-actions:not(.kopf-auf) > .pwa-aktualisieren { display: none !important; }
   .header-actions:not(.kopf-auf) > .neu-knopf { display: none !important; }
   .header-actions:not(.kopf-auf) > .brief-knopf { display: none !important; }
   .header-actions.kopf-auf > .brief-knopf { display: inline-flex !important; }

@@ -35,6 +35,6 @@ export function UpdateFahne() {
 export function PwaAktualisieren() {
   const nativ = typeof window !== "undefined" && ((window as unknown as { Capacitor?: { isNativePlatform?: () => boolean } }).Capacitor?.isNativePlatform?.() || "__TAURI__" in window);
   if (nativ) return null;
-  return <button type="button" className="icon-button" onClick={() => { const b = bruecke(); if (b?.aktualisieren) b.aktualisieren(); else window.location.reload(); }}
+  return <button type="button" className="icon-button pwa-aktualisieren" onClick={() => { const b = bruecke(); if (b?.aktualisieren) b.aktualisieren(); else window.location.reload(); }}
     title="Auf neue Fassung prüfen und neu laden" aria-label="Aktualisieren: auf neue Fassung prüfen und neu laden" data-pwa-aktualisieren><RefreshCw size={18}/></button>;
 }
