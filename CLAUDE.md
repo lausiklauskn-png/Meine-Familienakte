@@ -8,7 +8,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 ## Aktueller Stand (20.11.2026, Fassung 2.28.75 – übersichtlich)
 
 - **2.28.75 Familienakte übersichtlich (Klaus 19.11., Freibrief; Brief im Repo Private-Akte
-  `docs/BRIEF_SITZUNG_2026-11-20_FAMILIENAKTE-UEBERSICHTLICH.md`; Abschluss `BRIEF_ABSCHLUSS_2026-11-20_UEBERSICHTLICH-2.28.75.md`):**
+  `docs/BRIEF_SITZUNG_2026-11-20_FAMILIENAKTE-UEBERSICHTLICH.md`; Abschluss `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-20_UEBERSICHTLICH-2.28.75.md`):**
   Startseite aus einklappbaren Karten (`app/klapp-karte.tsx`, ab Werk zu, gemerkt `fa_klapp`), Lebensbereiche als kleine Knöpfe
   (`ChipRaster`), Cockpit als flaches Band, keine Systemprüfung und keine gelbe Sicherungs-Leiste auf der Startseite; Hinweis-Zeilen
   gehen nach 8 s von selbst. Kopf: „Neu“ und „Pseudo“ heraus, Tagebuch-Knopf heraus, Schrift/Discovery/Installieren/Abmelden in jeder
@@ -30,7 +30,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   **Nicht gebaut:** Abgleich der Termine zwischen den Handys (nächster Schritt: über den vorhandenen Netz-/Cloud-Ordner-Abgleich, nur Termine,
   von selbst); Antworten/„vorläufig“ ändern im Stift; Privat-Schalter nachträglich. Am Gerät ungeprüft.
   **Ausgegeben 20.11. (Klaus' Wort) als Android, Windows und PWA, Nachweis `docs/VEROEFFENTLICHUNG-2.28.76.json`, nicht erneut ausgeben.**
-  Abschlussbrief `BRIEF_ABSCHLUSS_2026-11-20_KALENDER-JE-PERSON-2.28.76.md`.
+  Abschlussbrief `docs/briefe-archiv/BRIEF_ABSCHLUSS_2026-11-20_KALENDER-JE-PERSON-2.28.76.md`; danach (⟳, Sitzungsende) `BRIEF_ABSCHLUSS_2026-11-20_PWA-AKTUALISIEREN.md`.
 
 - **Knopf „Aktualisieren“ in der PWA (Klaus 20.11.: „da ich nicht immer Hard Reload machen kann“; nach 2.28.76, Fassung nicht erhöht,
   kommt über Pages):** ⟳ im Kopf nur in der Web-App (`PwaAktualisieren` in `app/update-fahne.tsx`), auch am Handy ohne „‹“; Tipp =
