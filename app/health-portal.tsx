@@ -1852,7 +1852,7 @@ function HealthPortalContent() {
       </main>
       <footer className="site-footer">
         <div className="footer-inner">
-          <div className="footer-brand-row"><div><strong>FAMILIENAKTE {APP_VARIANTE}</strong><span><b>Version {APP_FASSUNG}</b></span></div><small>Originalunterlagen bleiben verbindlich. Vorbereitete Bereiche enthalten noch keine behaupteten Aktenbestände.</small></div>
+          <div className="footer-brand-row"><div><strong>FAMILIENAKTE {APP_VARIANTE}</strong><span><b>{APP_FASSUNG}</b></span></div></div>
           <nav className="footer-directory" aria-label="Weiterführende Bereiche der Familienakte">
             <section><h2>Familienakte</h2><ul><li><button onClick={() => go("cockpit")}>Cockpit</button></li><li><button onClick={() => go("memory")}>Tagebuch</button></li><li><button onClick={() => go("reminders")}>Fristen und Aufgaben</button></li><li><button onClick={() => go("directory")}>Gesamtes Verzeichnis</button></li><li><button onClick={openLifeAreas}>Lebensbereiche</button></li></ul></section>
             <section><h2>Dokumente</h2><ul><li><button onClick={() => go("documents")}>Dokumentenbibliothek</button></li><li><button onClick={() => go("inbox")}>Eingangszentrale</button></li><li><button onClick={() => go("inventory")}>Bestand prüfen</button></li><li><button onClick={() => go("changelog")}>Was gibt’s Neues?</button></li></ul></section>

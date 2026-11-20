@@ -19,6 +19,12 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Assistenz ohne Briefweg (steht am Briefumschlag). **Merken (Klaus 19.11.):** „Pseudo“ kommt später in den E-Mail-Bereich;
   Versionshistorie kommt später weg. Startseiten-Referenz-Hash in `lib/menu-optimization.ts` neu gesetzt. Am Gerät ungeprüft.
 
+- **Fuß flach (Klaus 20.11., Bild vom Tablet: „der dicke blaue Balken nimmt Arbeitsfläche weg, so flach wie möglich“; nicht ausgegeben,
+  Fassung nicht erhöht):** der Fuß ist eine Zeile (rund 40 statt 420 px), seitlich zu schieben: Name und Fassung, alle Links wie bisher
+  (`.footer-directory button`, `[data-fuss-netz]`, Impressum), ohne Überschriften und ohne den Satz „Originalunterlagen bleiben verbindlich …“.
+  Nur `app/globals.css`, eine Zeile in `app/health-portal.tsx`, Prüfung in `scripts/run-system-check.mjs` umgestellt. Proben `npm run build`,
+  UI `datenschutz`, `rundgang`, `kopieren`, `neugestaltung-kopf`, `uebersichtlich`, `netz-mycel`, `zurueck-und-hinweise` grün. Am Gerät ungeprüft.
+
 ## Aktueller Stand (16.11.2026, nach 2.28.71)
 
 - **Android-Update auf älteren Handys (Klaus 16.11.; PR #212 Entwurf, Fassung 2.28.73 vorbereitet, nicht übernommen, nicht ausgegeben;
