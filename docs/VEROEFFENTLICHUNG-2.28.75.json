@@ -1,0 +1,57 @@
+{
+ "version": "2.28.75",
+ "source": "1355d37c2931c029aa9b239e2e3261134a7289c0",
+ "pullRequest": [
+  222
+ ],
+ "recordedUtc": "2026-11-20T02:05:00Z",
+ "freigabe": "Klaus 19.11.2026 nachts (Brief „Familienakte übersichtlich“, Freibrief): „bis morgen 7–8 Uhr eine neue, geprüfte Version der Familienakte ausgeben“.",
+ "inhalt": "Familienakte übersichtlich: Startseite aus einklappbaren Karten, Lebensbereiche als kleine Knöpfe, Cockpit als flaches Band, keine Systemprüfung und keine gelben Dauerhinweise auf der Startseite; Kopf ohne Neu/Pseudo/Buch, Seltenes hinter „‹“; Familie & Personen mit Steckbrief (Kontakt, Ausweise, weitere Einträge) und allem zur Person; Suche findet Personen und zerlegt zusammengesetzte Wörter; Netz (Mycel) im Fuß.",
+ "ciAmPrStand": "PR #222 auf c24886b: pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) – success. Vorläufe: 111/118 Oberflächenproben (Proben an neuen Aufbau angepasst), danach grün.",
+ "releases": [
+  {
+   "tag": "android-v2.28.75",
+   "run": 44654069261,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-android-v2.28.75.apk",
+     "bytes": 82019070,
+     "sha256": "8ecbfd6d20bac2201183238650351993b304baf7dd628f55002f03c77c0e0b4c",
+     "matchesSHA256SUMS": true,
+     "quelle": "Download von github.com (Release), in der Sitzung nachgerechnet"
+    },
+    {
+     "name": "Familienakte-Einzeldatei-2.28.75.html",
+     "bytes": 5209138,
+     "sha256": "f179c3a71abb998877d8242d1c58ad5a86164c1d623b25f45a1f2e7bcd185123",
+     "matchesSHA256SUMS": true,
+     "quelle": "Download von github.com (Release), in der Sitzung nachgerechnet"
+    }
+   ]
+  },
+  {
+   "tag": "windows-v2.28.75",
+   "run": 44654073849,
+   "conclusion": "success",
+   "updateServer": "server=ja",
+   "downloadProof": [
+    {
+     "name": "Familienakte-Windows-2.28.75-x64-setup.exe",
+     "bytes": 96529525,
+     "sha256": "72ce42fd3df995e6bbbd5671e040eca0b118eaf4a3edaa9d530afb6df8d3aa56",
+     "matchesSHA256SUMS": true,
+     "quelle": "Download von github.com (Release), in der Sitzung nachgerechnet"
+    }
+   ]
+  }
+ ],
+ "pwa": {
+  "workflow": "pages.yml",
+  "run": 44656006804,
+  "conclusion": "success",
+  "quelle": "main 1355d37"
+ },
+ "grenzen": "Update-Server family-projekt.de und Pages-Adresse aus der Sitzung nicht erreichbar (Proxy) – nur die Läufe sind grün; am Gerät ungeprüft."
+}
