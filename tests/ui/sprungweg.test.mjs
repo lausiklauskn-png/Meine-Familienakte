@@ -57,7 +57,7 @@ try {
 
     await step(`${geraet}: U6/U10 Startseite „Zuletzt wichtig“ → Aufgabe öffnet in „Fristen und Aufgaben“, nicht im Cockpit`, async () => {
       await start();
-      const knopf = page.locator("main .priority-recent > button").filter({ hasText: "Zählerstände an die Hausverwaltung" }).first();
+      const knopf = page.locator("main .priority-recent .klapp-inhalt > button").filter({ hasText: "Zählerstände an die Hausverwaltung" }).first();
       const m = await springe(page, knopf, "main .schedule-item.zurueck-hier");
       return soll(m.hash === "#reminders" && m.imBild && m.markiert, m);
     });
@@ -108,9 +108,10 @@ try {
 
     await step(`${geraet}: U2 Familie → „Gemeinsame Vorgänge“ landet bei „Offene Vorgänge“; „Personenakten“ ist ehrlich benannt`, async () => {
       await footer(page, "Cockpit"); await start();
-      await page.locator(".object-card").filter({ hasText: /Familie/ }).first().click(); await page.waitForTimeout(500);
-      const personen = await page.locator("main .object-card").filter({ hasText: /^.*Personenakten/ }).count();
-      const knopf = page.locator("main .object-card").filter({ hasText: "Gemeinsame Vorgänge" }).first();
+      // 2.28.75: Lebensbereiche und die Wege im Bereich Familie sind kleine Knöpfe.
+      await page.locator('[data-bereich-chip="Familie & Personen"]').click(); await page.waitForTimeout(500);
+      const personen = await page.locator("main .bereich-chip").filter({ hasText: /Personenakten/ }).count();
+      const knopf = page.locator("main .bereich-chip").filter({ hasText: "Gemeinsame Vorgänge" }).first();
       const m = await springe(page, knopf, "#cockpit-cases");
       return soll(m.hash === "#cockpit" && m.imBild && m.markiert && personen === 0, { m, personen });
     });

@@ -7,7 +7,7 @@ import type { SectionId } from "../app/portal-types";
  * ein Sprung dorthin führt nur zur Seite (der Rahmen säße sonst auf dem kleinen „?“).
  */
 export const SEITEN_KARTEN: Partial<Record<SectionId, string[]>> = {
-  overview: ["Cockpit", "Zuletzt wichtig", "Datentresor und Sicherung", "Dokumenteneingang", "Was ist heute passiert?", "Lebensbereiche", "Systemprüfung"],
+  overview: ["Zuletzt wichtig", "Datentresor & Sicherung", "Neue Dokumente erfassen", "Was ist heute passiert?"],
   inventory: ["Nur Neues prüfen"],
   cockpit: ["Was ist jetzt wichtig?", "To-do-Liste", "Dokumente, Tagebuch-Einträge und Vorgänge", "Offene Vorgänge", "Objektakten", "Neu hinzugekommen"],
   memory: ["Was ist heute passiert?", "Heute im Überblick", "Chronologie"],

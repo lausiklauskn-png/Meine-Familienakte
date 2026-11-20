@@ -4,15 +4,15 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 // Diagnose eines echten Browserabbruchs, keine Änderung an den Zusicherungen.
 process.env.DEBUG ||= 'pw:browser';
-const { startApp, launchBrowser, chromium, DESKTOP, HANDY, step, summary, footer, collectErrors } = await import('./_harness.mjs');
+const { startApp, launchBrowser, chromium, DESKTOP, HANDY, step, summary, footer, collectErrors, allesAufklappen } = await import('./_harness.mjs');
 import { capacitorStub } from './_capacitor-stub.mjs';
 import { demoBereit, demoUmschalten } from './_demo.mjs';
 const app=await startApp(),browser=await launchBrowser();mkdirSync('work',{recursive:true});
 const errors=[];
 const profile=mkdtempSync(path.join(tmpdir(),'familienakte-eigene-ordner-'));
 let context;
-async function ready(page){await demoBereit(page);}
-async function ownHome(page){await page.locator('.main-navigation > button').first().click();await page.locator('.vault-action').waitFor();}
+async function ready(page){await demoBereit(page);await allesAufklappen(page);}
+async function ownHome(page){await page.locator('.main-navigation > button').first().click();await allesAufklappen(page);await page.locator('.vault-action').waitFor();}
 async function switchDemo(page,active){await demoUmschalten(page,active);}
 async function neutral(page){await page.locator('.vault-action.state-pending').waitFor();assert.match(await page.locator('.vault-action').innerText(),/Eigenen Datentresor wählen/);}
 try{

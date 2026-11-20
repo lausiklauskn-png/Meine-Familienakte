@@ -3125,8 +3125,10 @@ button.pf-daumen { cursor: pointer; }
 /* Kopfleiste: Seltenes (Schrift, Discovery, Installieren, Abmelden) steht in jeder Breite hinter dem Pfeil „‹“. */
 .header-actions > .kopf-pfeil-auf { display: inline-grid; place-items: center; order: 99; }
 .header-actions:not(.kopf-auf) > .fa-schrift, .header-actions:not(.kopf-auf) > .discovery-knopf,
-.header-actions:not(.kopf-auf) > .logout-button, .header-actions:not(.kopf-auf) > .login-button,
+.header-actions:not(.kopf-auf) > .logout-button,
 .header-actions:not(.kopf-auf) > .familienakte-install { display: none !important; }
+/* „Einloggen“ (Pro-Tresor gesperrt) braucht man sofort: bleibt sichtbar. */
+@media (min-width: 901px) { .header-actions > .login-button { display: inline-flex !important; align-items: center; justify-content: center; } }
 @media (min-width: 901px) {
   .header-actions.kopf-auf > .kopf-pfeil-auf { display: none; }
   .header-actions.kopf-auf > .kopf-pfeil-zu { display: inline-grid; place-items: center; order: -1; }

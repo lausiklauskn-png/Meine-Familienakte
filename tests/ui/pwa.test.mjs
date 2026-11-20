@@ -40,6 +40,8 @@ try {
   });
   await step("Installieren-Knopf (Kanon installieren.js) steht hinten in den Kopfleisten-Aktionen", async () => {
     const k = page.locator(".header-actions [data-install-knopf]");
+    await page.evaluate(() => window.scrollTo(0, 0));
+    if ((await page.getAttribute("[data-kopf-leiste]", "data-kopf-leiste")) !== "auf") await page.locator("[data-kopf-auf]").click(); // 2.28.75: hinter „‹“
     await k.waitFor({ timeout: 8000 });
     const letzter = await page.evaluate(() => document.querySelector(".header-actions").lastElementChild?.hasAttribute("data-install-knopf"));
     const text = (await k.innerText()).replace(/\s+/g, " ").trim();
