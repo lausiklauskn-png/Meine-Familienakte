@@ -28,7 +28,7 @@ export function htmlText(roh: string): string {
     .replace(/<\/(p|div|h[1-6]|li|tr|table|section|article|header|footer|blockquote|pre|ul|ol|dl|dt|dd|address)\s*>/gi, "\n")
     .replace(/<\/(td|th)\s*>/gi, "\t")
     .replace(/<[^>]*>/g, " ");
-  const text = zeichen(koerper).replace(/[ \t ]+/g, " ").replace(/ *\n */g, "\n").replace(/\n{3,}/g, "\n\n").trim();
+  const text = zeichen(koerper).replace(/[ \t\u00a0]+/g, " ").replace(/ *\n */g, "\n").replace(/\n{3,}/g, "\n\n").trim();
   const t = zeichen(titel).replace(/\s+/g, " ");
   return t && !text.startsWith(t) ? `${t}\n\n${text}` : text;
 }

@@ -1,7 +1,7 @@
 {
  "quelle": "lausiklauskn-png/Datei-Organizer",
  "pfad": "lib/",
- "commit": "9829df6abf013d78439282616a9377c9731ddd1e",
+ "commit": "7c694197eb232eb74cb3c2497d455eb22270687d",
  "stand": "2026-11-21",
  "hinweis": "byte-gleich; nie von Hand ändern, nur über tools/sortierkern-nachziehen.mjs",
  "dateien": {
@@ -20,6 +20,6 @@
   "absenderwahl-daten.ts": "d576c7fbeb75447763716253aa4d645ae95f17c28702f7221e36853b4e8ad5b5",
   "fristwahl.ts": "38a957f95a1a87b69d35802fcf1c9451c5669efe7b591b758fb1043afe2910c1",
   "fristwahl-daten.ts": "46ea4609f7c20ab759553e7898a3f543210e56be57588175299e55d1f50aae97",
-  "htmltext.ts": "72b8e7e13ac1f29a9f4152ab47dc727fe09d227bc84c99a573aa513d0d837cae"
+  "htmltext.ts": "d56cde6580d29e10a03839fc99cda7b19460e04d518f9bbc1fc830c7fbb49822"
  }
 }
