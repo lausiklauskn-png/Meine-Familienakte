@@ -29,6 +29,11 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Fassung 2.28.77 (Klaus: „Pro-Variante draußen … APK, PWA“). Am Gerät ungeprüft.
   **Ausgegeben 21.11. als Android, Windows und PWA, Nachweis `docs/VEROEFFENTLICHUNG-2.28.77.json`, nicht erneut ausgeben.**
 
+- **Baum-Schaubilder dichter (Klaus 21.11., Bild aus der Privaten Akte: „Abstand zwischen den Ästen viel zu groß … in allen Apps nachziehen“;
+  nicht ausgegeben, Fassung nicht erhöht, kommt über Pages):** die Familienakte hat keinen Datei-Explorer, nur die Ordnerbäume der Hilfe
+  (`.ordnerbaum` in `app/globals.css`: „Akten sichern“, Benutzerabnahme, Ablaufbilder). Abstand je Ast 2 statt 6 px, Liste 3 statt 6 px.
+  Der Fehler der Akte (leerer Pfeil mit 22 px Innenabstand) gab es hier nicht. UI `hilfe-alle` 30, `aktensicherung` 20 grün.
+
 - **2.28.76 Kalender je Person (Klaus 20.11., Vorschau `docs/vorschau/kalender-person-familie.html`, sein Ja: „so bauen, privat-Schalter passt“):**
   das Handy gehört einer Person (`app/handy-besitzer.ts`, je Gerät `familienakte-ich-v1`; Frage „Wem gehört dieses Handy?“ in „Mein
   Kalender“, Name im Titel antippbar). „Mein Kalender“ = „Kalender von …“: ihre Termine und solche ohne Person. Eintragen mit fest/vorläufig,

@@ -1893,9 +1893,9 @@ input.af-feld, textarea.af-feld { width: auto; min-height: 0; resize: none; }
 .pfadangabe li + li::before { content: "›"; color: #6b7f8c; font-weight: 700; }
 .pfadangabe span, .pfadangabe button { display: inline-block; padding: 3px 9px; border-radius: 999px; border: 1px solid #c8d9e2; background: #f7fafc; font: inherit; font-size: .86rem; color: inherit; min-height: 0; }
 .pfadangabe button { border-color: #1f4e79; color: #1f4e79; cursor: pointer; font-weight: 600; }
-.ordnerbaum, .ordnerbaum ul { list-style: none; margin: 6px 0; padding: 0; }
+.ordnerbaum, .ordnerbaum ul { list-style: none; margin: 3px 0; padding: 0; }
 .ordnerbaum ul { margin-left: 14px; padding-left: 16px; border-left: 2px solid #8fb3c4; }
-.ordnerbaum ul > li { position: relative; margin: 6px 0; }
+.ordnerbaum ul > li { position: relative; margin: 2px 0; }
 .ordnerbaum ul > li::before { content: ""; position: absolute; left: -16px; top: 18px; width: 14px; border-top: 2px solid #8fb3c4; }
 .ordnerbaum ul > li:last-child::after { content: ""; position: absolute; left: -18px; top: 20px; bottom: -8px; width: 4px; background: var(--surface, #fff); }
 .ordnerbaum .ablauf-knoten { display: inline-flex; max-width: 100%; }
