@@ -1,0 +1,26 @@
+{
+ "version": "2.28.77",
+ "source": "7a3c14634f750406ac8deda6340966b6a4889048",
+ "pullRequest": [228],
+ "recordedUtc": "2026-11-21T12:00:00Z",
+ "freigabe": "Klaus 21.11.2026: „Prüf bitte gleich bei Familienakte, ob das dasselbe Problem ergibt … die Pro-Variante draußen … APK, PWA und … so weiter“.",
+ "inhalt": "HTML-Dateien als lesbarer Text (Sortier-Kern-Baustein htmltext.ts byte-gleich aus dem Datei-Organizer 0.4.24) im Eingang und in der Vorschau; „Öffnen“ in der Android-App gibt Dateien, die die App nicht selbst zeigt, an Androids „Öffnen mit“. Dazu: Probe knoepfe-cockpit auf die Fristenliste begrenzt, zweiter Maven-Spiegel und Gradle-Vorrat in der Android-CI.",
+ "ciAmPrStand": "PR #228 auf ed6dcf2: pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) – success. Davor rot: knoepfe-cockpit (datumsabhängig, auch auf main rot) und product (31, pixel_c) zweimal an Maven Central (404, dann 429).",
+ "releases": [
+  {
+   "tag": "android-v2.28.77", "run": 44899291416, "conclusion": "success", "updateServer": "server=ja",
+   "downloadProof": [
+    { "name": "Familienakte-android-v2.28.77.apk", "bytes": 82023166, "sha256": "37b194989785c2bb0d4ce2ca193f67fd3be3650fbfbf21cd2985e6a78cab5cda", "matchesSHA256SUMS": true, "quelle": "Download von github.com (Release), in der Sitzung nachgerechnet" },
+    { "name": "Familienakte-Einzeldatei-2.28.77.html", "bytes": 5221206, "sha256": "6c4cbe3d221ed976aa954b53f8271a58a487acb1944631d379b5c8edb0a6fb55", "matchesSHA256SUMS": true, "quelle": "Download von github.com (Release), in der Sitzung nachgerechnet" }
+   ]
+  },
+  {
+   "tag": "windows-v2.28.77", "run": 44900323384, "conclusion": "success", "updateServer": "server=ja",
+   "downloadProof": [
+    { "name": "Familienakte-Windows-2.28.77-x64-setup.exe", "bytes": 96531269, "sha256": "b869aadde2e70c8a2e050f3c1cfeda4eaa8a69cd20d708a8348f4edbef36919c", "matchesSHA256SUMS": true, "quelle": "Download von github.com (Release), in der Sitzung nachgerechnet" }
+   ]
+  }
+ ],
+ "pwa": "über Pages mit main (7a3c146)",
+ "nichtGeprueft": "Installation am Tablet und unter Windows; HTML-Unterlage und „Öffnen mit“ am Gerät; schon abgelegte HTML-Dateien behalten ihren alten Textauszug."
+}
