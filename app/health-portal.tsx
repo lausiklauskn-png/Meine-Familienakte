@@ -62,7 +62,7 @@ import { istProOriginal, proTresor, proTresorVerfuegbar } from "./pro-tresor";
 import { copyLocalDocumentToPro } from "./local-vault";
 import { eingangDatei } from "./eingang-ablage";
 import { openFile } from "./file-viewer";
-import { dateiTeilen, teilenText } from "./teilen";
+import { dateiTeilen, dateiOeffnenNativ, teilenText } from "./teilen";
 import { lazy, Suspense } from "react";
 import { PracticalAcceptance, StoredUserAcceptance } from "./practical-acceptance";
 // E1: große Teilansichten werden erst beim Öffnen geladen (eigene Dateien im Build).
@@ -1516,6 +1516,10 @@ function HealthPortalContent() {
     if (!local || !vaultHandle) { go("inbox"); setNotice({ kind: "error", text: "Bitte den zugehörigen Datentresor verbinden und das Dokument im Dokumenteneingang öffnen." }); return; }
     try {
       const file = await readLocalDocumentFile(vaultHandle, id);
+      // In der Android-App gehen Dateien, die die App selbst nicht zeigen kann (HTML, Office …), an „Öffnen mit“ (Klaus 21.11.2026:
+      // eine HTML-Datei bot nur „Speichern“ an); PDF, Bilder und Text bleiben in der eigenen Vorschau.
+      const typ = file.type || local.mimeType || "", selbst = /^(application\/pdf|image\/|text\/plain)/.test(typ) || /\.(pdf|png|jpe?g|webp|gif|txt)$/i.test(local.originalName);
+      if (!selbst && await dateiOeffnenNativ(new File([file], local.originalName, { type: typ }))) return;
       openFile(file, local.originalName);
     } catch (reason) { setNotice({ kind: "error", text: reason instanceof Error ? reason.message : "Das Dokument konnte nicht geöffnet werden." }); }
   };

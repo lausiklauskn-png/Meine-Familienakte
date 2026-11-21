@@ -1,7 +1,7 @@
 /** Stufe H (Plan 08.11.2026): eine Datei aus der Akte an eine andere App geben – Mail, Messenger, Drucker-App, Dateien.
  *  Android-App: eigener Baustein (ACTION_SEND über den FileProvider, in Stücken übergeben); Browser mit Teilen-Fenster: Web Share;
  *  sonst (Windows, ältere Browser) wird die Datei heruntergeladen. Die Akte verschickt nie selbst; nur was der Nutzer wählt. */
-type TeilenPlugin = { teilenStueck(a: { id: string; data: string }): Promise<void>; teilenFertig(a: { id: string; name: string; mime: string }): Promise<{ geteilt: boolean }> };
+type TeilenPlugin = { teilenStueck(a: { id: string; data: string }): Promise<void>; teilenFertig(a: { id: string; name: string; mime: string; oeffnen?: boolean }): Promise<{ geteilt: boolean }> };
 const STUECK = 768 * 1024;
 const b64 = (u: Uint8Array) => { let s = ""; for (let i = 0; i < u.length; i += 8192) s += String.fromCharCode(...u.subarray(i, i + 8192)); return btoa(s); };
 function nativ(): TeilenPlugin | null {
@@ -25,5 +25,16 @@ export async function dateiTeilen(file: File): Promise<TeilenErgebnis> {
   const url = URL.createObjectURL(file); const a = document.createElement("a"); a.href = url; a.download = file.name; document.body.appendChild(a); a.click(); a.remove();
   window.setTimeout(() => URL.revokeObjectURL(url), 60000);
   return "heruntergeladen";
+}
+/** „Öffnen“ in der Android-App (Klaus 21.11.2026: eine HTML-Datei bot nur „Speichern“ an, die Vorschau zeigte Code): die Datei geht an
+ *  Androids „Öffnen mit“ (z. B. Chrome). Gibt false zurück, wenn es den Weg nicht gibt (Browser, Windows) – dann wie bisher. */
+export async function dateiOeffnenNativ(file: File): Promise<boolean> {
+  const p = nativ(); if (!p) return false;
+  try {
+    const id = crypto.randomUUID(); const u = new Uint8Array(await file.arrayBuffer());
+    for (let o = 0; o < u.length || o === 0; o += STUECK) { await p.teilenStueck({ id, data: b64(u.subarray(o, o + STUECK)) }); if (!u.length) break; }
+    await p.teilenFertig({ id, name: file.name, mime: file.type || "application/octet-stream", oeffnen: true });
+    return true;
+  } catch { return false; }
 }
 export const teilenText = (r: TeilenErgebnis, name: string) => r === "geteilt" ? `„${name}“ wurde an die gewählte App gegeben.` : r === "heruntergeladen" ? "Teilen geht auf diesem Gerät nicht direkt — die Datei wurde heruntergeladen." : "";
