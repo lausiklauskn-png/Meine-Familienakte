@@ -121,9 +121,13 @@ public class FamilienakteSharePlugin extends Plugin {
             File ziel = new File(ordner, name); if (ziel.exists()) ziel.delete(); if (!quelle.renameTo(ziel)) throw new java.io.IOException("rename");
             aufraeumen(ordner);
             Uri uri = androidx.core.content.FileProvider.getUriForFile(getContext(), getContext().getPackageName() + ".fileprovider", ziel);
-            Intent send = new Intent(Intent.ACTION_SEND).setType(mime).putExtra(Intent.EXTRA_STREAM, uri).putExtra(Intent.EXTRA_SUBJECT, name).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            // „oeffnen“ (Klaus 21.11.2026: eine HTML-Datei bot nur „Speichern“ an): Androids „Öffnen mit“ statt Teilen.
+            boolean oeffnen = Boolean.TRUE.equals(call.getBoolean("oeffnen", false));
+            Intent send = oeffnen
+                ? new Intent(Intent.ACTION_VIEW).setDataAndType(uri, mime).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                : new Intent(Intent.ACTION_SEND).setType(mime).putExtra(Intent.EXTRA_STREAM, uri).putExtra(Intent.EXTRA_SUBJECT, name).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             send.setClipData(ClipData.newRawUri(name, uri));
-            Intent chooser = Intent.createChooser(send, "Teilen: " + name).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            Intent chooser = Intent.createChooser(send, (oeffnen ? "Öffnen mit: " : "Teilen: ") + name).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             getContext().startActivity(chooser);
             call.resolve(new JSObject().put("geteilt", true));
         } catch (Exception fehler) { quelle.delete(); call.reject("FA_TEILEN_FENSTER"); }

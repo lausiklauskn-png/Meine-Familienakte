@@ -122,7 +122,8 @@ try {
   });
   await step("Fristen: „Als erledigt markieren“ fragt nach und setzt den Status", async () => {
     await page.locator("button.schedule-filter", { hasText: "Offen" }).click();
-    const eintrag = page.locator("article, li", { hasText: "Probe-Aufgabe: Fahrradlicht" }).first();
+    // Ab 21.11. steht der Eintrag (01.12.) auch in „Mein Kalender“ – darum nur in der Fristenliste suchen.
+    const eintrag = page.locator("#offene-fristen").locator("article, li", { hasText: "Probe-Aufgabe: Fahrradlicht" }).first();
     await eintrag.locator("[data-termin-erledigt]").click(); // 2.28.30: Haken in der flachen Zeile
     const dialog = (await page.locator(".page-dialog").count()) === 1;
     if (dialog) await page.locator(".page-dialog button", { hasText: "Ja, fortfahren" }).click();

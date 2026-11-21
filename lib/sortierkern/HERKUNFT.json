@@ -1,8 +1,8 @@
 {
  "quelle": "lausiklauskn-png/Datei-Organizer",
  "pfad": "lib/",
- "commit": "e4205faf373ced17891ad300c49649c9fa200f68",
- "stand": "2026-11-16",
+ "commit": "7c694197eb232eb74cb3c2497d455eb22270687d",
+ "stand": "2026-11-21",
  "hinweis": "byte-gleich; nie von Hand ändern, nur über tools/sortierkern-nachziehen.mjs",
  "dateien": {
   "typen.ts": "b0314ab7ca6b2025bd2b724a5b6ad1bfc47fcfef8e65f93b1d23d882cf8957d0",
@@ -19,6 +19,7 @@
   "absenderwahl.ts": "656d873e47838e3086f404e78fb80044e9d250daf734aa0cddfdd5e6687e9846",
   "absenderwahl-daten.ts": "d576c7fbeb75447763716253aa4d645ae95f17c28702f7221e36853b4e8ad5b5",
   "fristwahl.ts": "38a957f95a1a87b69d35802fcf1c9451c5669efe7b591b758fb1043afe2910c1",
-  "fristwahl-daten.ts": "46ea4609f7c20ab759553e7898a3f543210e56be57588175299e55d1f50aae97"
+  "fristwahl-daten.ts": "46ea4609f7c20ab759553e7898a3f543210e56be57588175299e55d1f50aae97",
+  "htmltext.ts": "d56cde6580d29e10a03839fc99cda7b19460e04d518f9bbc1fc830c7fbb49822"
  }
 }

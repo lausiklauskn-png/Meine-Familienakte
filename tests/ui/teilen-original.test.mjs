@@ -32,6 +32,27 @@ try {
     return soll(g.bytes === groesse.bytes && g.bytes > 0 && g.name === groesse.name && /gewählte App/.test(meldung.join(" ")), { g, groesse, meldung }) && `${g.name} · ${g.bytes} Bytes an die Hülle`;
   });
 
+  await step("Bibliothek: „Öffnen“ einer PDF bleibt in der App (eigene Vorschau, nichts an „Öffnen mit“)", async () => {
+    const karte = page.locator("[data-bibliothek-karte]").first();
+    await karte.locator(".library-document-title").click(); await page.waitForTimeout(800);
+    const n = await page.evaluate(() => (window.__capState.geteilt || []).length);
+    await page.keyboard.press("Escape");
+    return soll(n === 1, `${n} Übergaben`) && "PDF in der eigenen Vorschau";
+  });
+  await step("Bibliothek: „Öffnen“ einer HTML-Datei gibt sie in der App an Androids „Öffnen mit“, nicht an „Speichern“ (Klaus 21.11.)", async () => {
+    await page.evaluate(async () => { const f = window.__vaultFixture; await f.saveLocalDocument(await f.browserVault(), new File(['<!doctype html><title>Frageblatt</title><p>Bitte ausfüllen</p>'], "Frageblatt-Probe.html", { type: "text/html" }), { category: "Steuern & Behörden", documentDate: null, notes: null }); });
+    await page.reload({ waitUntil: "networkidle" }); await ready(page);
+    await footer(page, "Dokumentenbibliothek");
+    await page.locator("button", { hasText: "Alle ansehen" }).first().click();
+    const zeile = page.locator("[data-bibliothek-zeile]", { hasText: "Frageblatt" }).first(); await zeile.waitFor();
+    const id = await zeile.getAttribute("data-bibliothek-zeile");
+    await zeile.locator("[data-bibliothek-auge]").click();
+    await page.locator(`[data-bibliothek-karte="${id}"] .library-document-title`).first().click();
+    await page.waitForFunction(() => (window.__capState.geteilt || []).some((g) => g.oeffnen), null, { timeout: 20000 });
+    const o = await page.evaluate(() => window.__capState.geteilt.find((g) => g.oeffnen));
+    return soll(o.mime === "text/html" && o.bytes > 0 && /Frageblatt-Probe\.html/.test(o.name), o) && `${o.name} · ${o.mime} an „Öffnen mit“`;
+  });
+
   const bild = await page.evaluate(async () => {
     const a = document.createElement("canvas"); a.width = 1200; a.height = 1600; const g = a.getContext("2d");
     g.fillStyle = "#3a3a3a"; g.fillRect(0, 0, a.width, a.height);

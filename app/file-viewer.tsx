@@ -4,6 +4,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ExternalLink, LoaderCircle, X } from "lucide-react";
+import { htmlText, istHtml } from "../lib/sortierkern/htmltext.ts";
 
 type ViewRequest = { id: number; file: File; title: string };
 let nextId = 1;
@@ -124,7 +125,8 @@ function Body({ file }: { file: File }) {
     const objectUrl = URL.createObjectURL(file); setUrl(objectUrl);
     return () => URL.revokeObjectURL(objectUrl);
   }, [file, isImage]);
-  useEffect(() => { if (isText) void file.text().then((value) => setText(value.slice(0, 200000))); }, [file, isText]);
+  // HTML als lesbarer Text, nicht als Code (Klaus 21.11.2026; Baustein aus dem Datei-Organizer, lib/sortierkern/htmltext.ts)
+  useEffect(() => { if (isText) void file.text().then((value) => setText((istHtml(file.name, value) ? htmlText(value) : value).slice(0, 200000))); }, [file, isText]);
   if (isPdf) return <PdfPages file={file}/>;
   if (isImage) return url ? <img className="file-viewer-image" src={url} alt={file.name}/> : null;
   if (isText) return <pre className="file-viewer-text">{text ?? "Wird geladen …"}</pre>;

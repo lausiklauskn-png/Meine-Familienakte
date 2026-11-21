@@ -43,3 +43,14 @@ for (const test of tests) {
 console.log("🟢 Integrationsprüfung: vorhandene Dokumentenbibliothek, Suche, Zuordnung, Cockpit, Neuigkeiten, Vorgänge und Gesundheitsakte werden wiederverwendet");
 console.log("🟢 Interaktive Zuordnung: Softwarevorschläge, Auswahlreiter und eigene Bezeichnungen sind geprüft");
 console.log("🟢 Originalschutz: kein automatisches Verschieben, Umbenennen, Löschen oder Überschreiben");
+
+// HTML-Dateien (Klaus 21.11.2026: Stilangaben und Tags im Auszug, Absender „doctype html>“): nur der lesbare Text
+{
+  const { extractDocumentIntakeTextHint } = await import("../lib/document-intake.ts");
+  const html = new File([`<!DOCTYPE html><html><head><title>Frageblatt</title><style>h2{font-size:1.2rem}</style></head><body><h2>Frageblatt Steuerberater</h2><p>Bitte ausf&uuml;llen &amp; zur&uuml;ck.</p></body></html>`], "frageblatt.html", { type: "text/html" });
+  const t = await extractDocumentIntakeTextHint(html);
+  assert.ok(/Frageblatt Steuerberater/.test(t) && /Bitte ausfüllen & zurück\./.test(t) && !/font-size|<|doctype/i.test(t), `HTML-Auszug ohne Code: ${JSON.stringify(t.slice(0, 120))}`);
+  const txt = await extractDocumentIntakeTextHint(new File(["a <b> c"], "notiz.txt", { type: "text/plain" }));
+  assert.equal(txt, "a <b> c", "Gewöhnlicher Text bleibt unverändert");
+  console.log("🟢 HTML-Dateien: der Auszug ist lesbarer Text ohne Stil und Tags; Textdateien bleiben unverändert");
+}

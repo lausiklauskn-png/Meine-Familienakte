@@ -5,6 +5,8 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        // Maven Central meldet zeitweise 404 oder 429 für vorhandene Dateien (20./21.11.2026 mehrfach in der CI): zweiter Spiegel derselben Dateien.
+        maven { url "https://repo1.maven.org/maven2/" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.13.0'
@@ -21,6 +23,8 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        // Maven Central meldet zeitweise 404 oder 429 für vorhandene Dateien (20./21.11.2026 mehrfach in der CI): zweiter Spiegel derselben Dateien.
+        maven { url "https://repo1.maven.org/maven2/" }
     }
 }
 

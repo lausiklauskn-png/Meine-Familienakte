@@ -19,6 +19,15 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Assistenz ohne Briefweg (steht am Briefumschlag). **Merken (Klaus 19.11.):** „Pseudo“ kommt später in den E-Mail-Bereich;
   Versionshistorie kommt später weg. Startseiten-Referenz-Hash in `lib/menu-optimization.ts` neu gesetzt. Am Gerät ungeprüft.
 
+- **2.28.77 HTML-Dateien (Klaus 21.11., Bilder vom Tablet aus der Privaten Akte: „Erkannter Text“ war Code, Absender „doctype html>“, „Öffnen“
+  und „Teilen“ boten nur „Speichern“; „Prüf bei der Familienakte, ob das dasselbe Problem ergibt“):** dasselbe hier – der Eingang las HTML roh
+  (`extractDocumentIntakeTextHint`), die Vorschau zeigte Code, „Öffnen“ in der APK ging über `window.open`. Jetzt: `lib/sortierkern/htmltext.ts`
+  byte-gleich aus dem Datei-Organizer (0.4.24, in `tools/sortierkern-nachziehen.mjs` aufgenommen) – Eingang und Vorschau (`app/file-viewer.tsx`)
+  nehmen nur den lesbaren Text; „Öffnen“ in der Android-App gibt Dateien, die die App nicht selbst zeigt (HTML, Office …), an Androids „Öffnen mit“
+  (`dateiOeffnenNativ` in `app/teilen.ts`, `teilenFertig` mit `oeffnen: true` in `FamilienakteSharePlugin.java`); PDF, Bilder, Text bleiben in der
+  eigenen Vorschau. Schon abgelegte HTML-Dateien behalten ihren alten Auszug. Proben `run-document-intake-tests` (1 neu), UI `teilen-original` (2 neu).
+  Fassung 2.28.77 (Klaus: „Pro-Variante draußen … APK, PWA“). Am Gerät ungeprüft.
+
 - **2.28.76 Kalender je Person (Klaus 20.11., Vorschau `docs/vorschau/kalender-person-familie.html`, sein Ja: „so bauen, privat-Schalter passt“):**
   das Handy gehört einer Person (`app/handy-besitzer.ts`, je Gerät `familienakte-ich-v1`; Frage „Wem gehört dieses Handy?“ in „Mein
   Kalender“, Name im Titel antippbar). „Mein Kalender“ = „Kalender von …“: ihre Termine und solche ohne Person. Eintragen mit fest/vorläufig,
@@ -287,7 +296,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Proben-Hinweise: `step()` wertet einen zurückgegebenen Text als grün, deshalb `soll()`; Seitentitel sind keine Sprungziele.
 - **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.76, 2.28.74, 2.28.71, 2.28.70, 2.28.69, 2.28.68, 2.28.67, 2.28.66, 2.28.65, 2.28.64, 2.28.61, 2.28.60, 2.28.59, 2.28.58, 2.28.57, 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
   (2.28.50 ausgegeben, aber ohne eigenen Nachweis; 2.28.40–2.28.47 waren Zwischenstände). Keine davon erneut ausgeben;
-  **nächste freie Fassung 2.28.77** (2.28.76 = Kalender je Person und flacher Fuß, 20.11.) (2.28.62 und 2.28.63 nie ausgegeben). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
+  **nächste freie Fassung 2.28.78** (2.28.77 = HTML-Dateien, 21.11.; 2.28.76 = Kalender je Person und flacher Fuß, 20.11.) (2.28.62 und 2.28.63 nie ausgegeben). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
   sammeln, Proben laufen lassen, gesammelt als eine Fassung ausgeben (ersetzt „jede neue Funktion gleich ausgeben“ vom 06.11.).
   Neue Fassung oben in `lib/fassungen.ts` eintragen. Die Versionszeile zeigt die technische Fassung aus `package.json`;
   `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.

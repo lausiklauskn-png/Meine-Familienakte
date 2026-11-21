@@ -6,6 +6,7 @@ import { FAMILY_CATEGORIES } from "./family-categories.ts";
 export const DOCUMENT_INTAKE_VERSION = 1 as const;
 
 import { kernVorschlag } from "./sortier-vorschlag.ts";
+import { htmlText, istHtml } from "./sortierkern/htmltext.ts";
 
 export const FAWOGA_LIFE_AREAS = FAMILY_CATEGORIES;
 
@@ -108,7 +109,11 @@ export async function extractDocumentIntakeTextHint(file: File): Promise<string>
     const bytes = await file.arrayBuffer();
     return new TextDecoder("utf-16le", { fatal: false }).decode(bytes).replace(/\0/g, " ").replace(/\s+/g, " ").slice(0, 300000);
   }
-  if (lowerName.endsWith(".txt") || lowerName.endsWith(".vtt") || file.type.startsWith("text/")) return (await file.text()).slice(0, 300000);
+  if (lowerName.endsWith(".txt") || lowerName.endsWith(".vtt") || file.type.startsWith("text/")) {
+    // HTML: nur der lesbare Text, sonst landen Stil und Tags im Auszug und „doctype html>“ wird Absender (Klaus 21.11.2026)
+    const roh = await file.text();
+    return (istHtml(file.name, roh) ? htmlText(roh) : roh).slice(0, 300000);
+  }
   return "";
 }
 
