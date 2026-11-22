@@ -1,0 +1,221 @@
+name: Pro-Verbund – zwei installierte Apps
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: Nur die noch offene Plattform erneut prüfen
+        type: choice
+        default: all
+        options: [all, android, windows]
+  pull_request:
+    paths: ['tools/native/pairs/**', '.github/workflows/pro-app-pairs.yml']
+permissions:
+  contents: read
+concurrency:
+  group: pro-app-pairs-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  family-windows:
+    if: github.event_name != 'workflow_dispatch' || inputs.platform != 'android'
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - run: git config --global core.autocrlf false
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-java@v4
+        with: {distribution: temurin, java-version: '21'}
+      - uses: Swatinem/rust-cache@v2
+        with: {workspaces: 'windows/src-tauri -> target'}
+      - run: npm ci
+      - run: npm ci --prefix windows
+      - run: npm run tauri --prefix windows -- build --bundles nsis --features modelprobe --config src-tauri/tauri.modelprobe.conf.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: family-pair-probe
+          path: windows/src-tauri/target/release/bundle/nsis/*-setup.exe
+          if-no-files-found: error
+          retention-days: 14
+  windows-pair:
+    needs: family-windows
+    runs-on: windows-latest
+    timeout-minutes: 55
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - app: workflow-pdf-pro
+            repo: Workflow-PDF-Pro
+            ref: e2c57b3f514c0c3f118c23f243bf5ee9fe756bb7
+          - app: private-brain
+            repo: Privat-Brain-Pro
+            ref: 326dc3d4ba1c709c0f818247e01bfb383c063ad3
+          - app: bookledgerpro
+            repo: BookLedgerPro
+            ref: 3ca7bb919245bb0ff7a293fe93beee92fbd28f61
+    steps:
+      - run: git config --global core.autocrlf false
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: lausiklauskn-png/${{ matrix.repo }}
+          ref: ${{ matrix.ref }}
+          path: work/partner
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-java@v4
+        with: {distribution: temurin, java-version: '21'}
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: work/partner/windows/src-tauri -> target
+          key: pair-${{ matrix.app }}
+          cache-on-failure: true
+      - run: npm ci
+      - run: npm ci
+        working-directory: work/partner
+      - run: npm ci --prefix windows
+        working-directory: work/partner
+      - if: matrix.app != 'workflow-pdf-pro'
+        run: node windows/tools/prepare-runtime.mjs
+        working-directory: work/partner
+      - run: npm run tauri --prefix windows -- build --bundles nsis --features messprobe
+        working-directory: work/partner
+      - uses: actions/download-artifact@v4
+        with: {name: family-pair-probe, path: work/family-installer}
+      - name: Beide wirklichen Installer und Hin-/Rückweg
+        shell: pwsh
+        run: ./tools/native/pairs/install-windows.ps1 -Partner '${{ matrix.app }}'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: installed-pair-${{ matrix.app }}
+          path: work/pair-proof/
+          if-no-files-found: error
+          retention-days: 14
+  family-android:
+    if: github.event_name != 'workflow_dispatch' || inputs.platform != 'windows'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-java@v4
+        with: {distribution: temurin, java-version: '21'}
+      - run: npm ci
+      - run: npm run sync:android
+      - run: ./gradlew --no-daemon --max-workers=2 :app:assembleDebug
+        working-directory: android
+      - name: KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - uses: reactivecircus/android-emulator-runner@4c44018e59b437e86cdfc41da381398f93ed8808
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_2
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
+          script: python3 tools/native/webview-runtime.py collect work/pair-webview
+      - uses: actions/upload-artifact@v4
+        with:
+          name: family-android-pair
+          path: |
+            android/app/build/outputs/apk/debug/app-debug.apk
+            work/pair-webview/
+          if-no-files-found: error
+          retention-days: 14
+  android-pair:
+    needs: family-android
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - app: workflow-pdf-pro
+            repo: Workflow-PDF-Pro
+            ref: e2c57b3f514c0c3f118c23f243bf5ee9fe756bb7
+          - app: private-brain
+            repo: Privat-Brain-Pro
+            ref: 326dc3d4ba1c709c0f818247e01bfb383c063ad3
+          - app: bookledgerpro
+            repo: BookLedgerPro
+            ref: 3ca7bb919245bb0ff7a293fe93beee92fbd28f61
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: lausiklauskn-png/${{ matrix.repo }}
+          ref: ${{ matrix.ref }}
+          path: work/partner
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-java@v4
+        with: {distribution: temurin, java-version: '21'}
+      - run: npm ci
+      - run: npm ci
+        working-directory: work/partner
+      - run: npm run sync:android
+        working-directory: work/partner
+      - run: ./gradlew --no-daemon --max-workers=2 :app:assembleDebug
+        working-directory: work/partner/android
+      - uses: actions/download-artifact@v4
+        with: {name: family-android-pair, path: work/family-android}
+      - name: KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Beide APKs, echter SAF-Dialog, Kaltstart und dauerhafter Rückweg
+        uses: reactivecircus/android-emulator-runner@4c44018e59b437e86cdfc41da381398f93ed8808
+        with:
+          # The VM exits during DocumentsUI on both API 35 and API 31, with
+          # ample host memory and no host OOM/segfault or guest app crash.
+          # Keep these failed runs documented. Use the emulator's current
+          # software backend rather than the legacy indirect GL translator.
+          # Exercise the same complete pair on API 31 with the official newer
+          # WebView collected above; do not weaken any transfer assertion.
+          api-level: 31
+          target: google_apis
+          arch: x86_64
+          profile: pixel_c
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu software -no-snapshot -noaudio -no-boot-anim -camera-back none -camera-front none -verbose
+          script: |
+            python3 tools/native/webview-runtime.py install work/family-android/work/pair-webview
+            # Same tablet layout (1280 x 900 dp), fewer software-rendered pixels.
+            # Bound rendering load after lost/stalled emulator runs; this is
+            # an infrastructure setting, not a change to either APK.
+            adb shell wm size 1280x900
+            adb shell wm density 160
+            adb install -r work/family-android/android/app/build/outputs/apk/debug/app-debug.apk
+            adb install -r work/partner/android/app/build/outputs/apk/debug/app-debug.apk
+            mkdir -p work/pair-proof
+            adb logcat -v threadtime > work/pair-proof/android-logcat.txt 2>&1 &
+            PAIR_ANDROID=1 node tools/native/pairs/windows.mjs ${{ matrix.app }}
+      - name: Hostdiagnose bei abgebrochener Geräteprobe
+        if: failure()
+        run: |
+          mkdir -p work/pair-proof
+          free -m > work/pair-proof/host-memory.txt
+          # Hosted runners do not promise ripgrep. Keep the full kernel log,
+          # including a possible emulator crash or host OOM, without a filter.
+          sudo dmesg -T > work/pair-proof/host-kernel.txt
+          df -h > work/pair-proof/host-disk.txt
+          sudo journalctl -u systemd-oomd --no-pager > work/pair-proof/host-oomd.txt
+          for report in /tmp/android-runner/emu-crash-*.db; do
+            if test -e "$report"; then cp -R "$report" work/pair-proof/; fi
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-pair-${{ matrix.app }}
+          path: work/pair-proof/
+          if-no-files-found: warn
+          retention-days: 14
