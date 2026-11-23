@@ -329,6 +329,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
 - **Aktensicherung (Klaus 2026-11-05):** Hilfe → „Akten sichern – Plan zum Abhaken“, Orte als Baum, rot/grün/grau je Gerät gemerkt,
   Kästen mit › springen zur Akte bzw. Sicherheitscenter (`app/aktensicherung-hilfe.tsx`). Ordner im Dateimanager öffnen kann die App nicht.
 - Aktuelle Briefe im Hauptordner (ältere unter `docs/briefe-archiv/`):
+  - `BRIEF_ABSCHLUSS_2026-11-23_ENTSCHEIDUNG-REZEPTBUECHER.md` (Dashboard Fassung 3, Bewertung Rezeptbücher/Mixarium, Gestaltungsvorgaben, Startaufträge V/A/B für die Repos Mein-Rezeptbuch und Mein-Mixarium)
   - `BRIEF_ABSCHLUSS_2026-11-16_ANDROID-UPDATE-2.28.73.md` (Android-Update unter Android 9/10, 2.28.73 vorbereitet, Startauftrag Ausgabe)
   - Nächste Sitzung (Repo Datei-Organizer): `docs/BRIEF_SITZUNG_2026-11-14_NEEDS-RUECKWAERTSTEST.md` (Rückwärtstest Workflow Needs, nichts ändern)
   - `BRIEF_ABSCHLUSS_2026-11-14_PSEUDO-RESTARBEITEN.md` (letzter Stand: Pseudo-Restarbeiten, Startauftrag Gerätetest/Stufe E-Rest)
