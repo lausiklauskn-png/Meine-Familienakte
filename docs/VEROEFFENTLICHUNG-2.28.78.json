@@ -1,0 +1,53 @@
+{
+  "version": "2.28.78",
+  "source": "a00b98181e7db4f1c7b923ce767ca405e0773b02",
+  "pullRequest": [
+    232,
+    230
+  ],
+  "recordedUtc": "2026-11-24T18:00:00Z",
+  "freigabe": "Klaus 24.11.2026: „Ja, bitte ausgeben.“ (nach dem Befund am Galaxy Z Fold 7, Android 17: Mikrofon „nicht erkannt“).",
+  "inhalt": "Diktat in Workflow PDF im Rahmen über Androids Sprachfenster: die Brücke fa-wfpdf-bruecke.js übernimmt das Sprachfenster der Akte (FamilienakteDiktat); die Akte selbst diktierte schon so. Dazu die dichteren Ordnerbäume der Hilfe (#230) und die Probe knoepfe-cockpit mit Datum 60 Tage voraus (vorher fest 01.12.2026, ab 24.11. „bald fällig“ und damit rot, auch auf main).",
+  "ciAmPrStand": "PR #232 auf 2bccc21: pruefung, android, windows, webview, product (31, pixel_c), product (35, pixel_2) – success. abgleich rot wie auf main seit 17.11. (Workflow PDF Pro hat einen anderen PDF-Kern; nicht diese Änderung).",
+  "releases": [
+    {
+      "tag": "android-v2.28.78",
+      "run": 45452001215,
+      "conclusion": "success",
+      "updateServer": "server=ja",
+      "downloadProof": [
+        {
+          "name": "Familienakte-android-v2.28.78.apk",
+          "bytes": 82023166,
+          "sha256": "4b0ec7eb2ed96e87d3e5913cd7b78959dbcd101f72f2fda101bea91d047a8849",
+          "matchesSHA256SUMS": true,
+          "quelle": "Download von github.com (Release), in der Sitzung nachgerechnet; Manifest 2.28.78 und Brücke mit FamilienakteDiktat in der APK nachgesehen (Größe gleicht zufällig 2.28.77)"
+        },
+        {
+          "name": "Familienakte-Einzeldatei-2.28.78.html",
+          "bytes": 5221520,
+          "sha256": "6c3de8dbe2dfad230f08f48a8cdb66fae7cc8dfea238d803d0307ee19f1bdf32",
+          "matchesSHA256SUMS": true,
+          "quelle": "Download von github.com (Release), in der Sitzung nachgerechnet"
+        }
+      ]
+    },
+    {
+      "tag": "windows-v2.28.78",
+      "run": 45452006205,
+      "conclusion": "success",
+      "updateServer": "server=ja",
+      "downloadProof": [
+        {
+          "name": "Familienakte-Windows-2.28.78-x64-setup.exe",
+          "bytes": 96514067,
+          "sha256": "419c5a55e577f4954f5d8db006f6b91e39c48b21728c77af7b19ccf93f40f276",
+          "matchesSHA256SUMS": true,
+          "quelle": "Download von github.com (Release), in der Sitzung nachgerechnet"
+        }
+      ]
+    }
+  ],
+  "pwa": "über Pages mit main (a00b981)",
+  "nichtGeprueft": "Diktat in Workflow PDF am Fold 7 und am Tablet (braucht Googles Sprachfenster); Installation unter Windows; Update-Server nur über die Läufe."
+}
