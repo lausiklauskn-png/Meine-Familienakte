@@ -109,7 +109,8 @@ try {
     const form = page.locator("form", { has: page.locator('button:has-text("Frist oder Aufgabe bestätigt anlegen")') });
     await form.locator("select").first().selectOption({ label: "Aufgabe" }).catch(() => form.locator("select").first().selectOption("task"));
     await form.locator('input[placeholder="Zum Beispiel: Antwort an Krankenkasse"]').fill("Probe-Aufgabe: Fahrradlicht prüfen (erfunden)");
-    await form.locator('input[type="date"]').first().fill("2026-12-01");
+    // Datum immer 60 Tage voraus: ein festes Datum (früher 01.12.2026) rückte in „Heute/diese Woche“ und die Probe wurde datumsabhängig rot.
+    await form.locator('input[type="date"]').first().fill(new Date(Date.now() + 60 * 864e5).toISOString().slice(0, 10));
     await form.locator('input[placeholder="Zum Beispiel: Schreiben vom 07.10.2026"]').fill("Probe");
     const knopf = form.locator("button", { hasText: "Frist oder Aufgabe bestätigt anlegen" });
     const vorher = await knopf.isDisabled();
@@ -122,7 +123,7 @@ try {
   });
   await step("Fristen: „Als erledigt markieren“ fragt nach und setzt den Status", async () => {
     await page.locator("button.schedule-filter", { hasText: "Offen" }).click();
-    // Ab 21.11. steht der Eintrag (01.12.) auch in „Mein Kalender“ – darum nur in der Fristenliste suchen.
+    // Der Eintrag steht auch in „Mein Kalender“ – darum nur in der Fristenliste suchen.
     const eintrag = page.locator("#offene-fristen").locator("article, li", { hasText: "Probe-Aufgabe: Fahrradlicht" }).first();
     await eintrag.locator("[data-termin-erledigt]").click(); // 2.28.30: Haken in der flachen Zeile
     const dialog = (await page.locator(".page-dialog").count()) === 1;
