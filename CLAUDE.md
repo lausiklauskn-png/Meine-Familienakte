@@ -29,6 +29,12 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Fassung 2.28.77 (Klaus: „Pro-Variante draußen … APK, PWA“). Am Gerät ungeprüft.
   **Ausgegeben 21.11. als Android, Windows und PWA, Nachweis `docs/VEROEFFENTLICHUNG-2.28.77.json`, nicht erneut ausgeben.**
 
+- **2.28.78 Diktat in Workflow PDF in der App (Klaus 24.11., Galaxy Z Fold 7 / Android 17: Mikrofon „nicht erkannt“; Klaus: „Ja, bitte
+  ausgeben“; enthält auch die dichteren Ordnerbäume #230):** Die Akte selbst diktiert über Androids Sprachfenster (`native/familienakte-android.js`, kein Mikrofon-Recht – Absicht).
+  Der Klon von Workflow PDF im Rahmen nahm aber die Spracherkennung der WebView, die es dort nicht gibt. Jetzt übernimmt die Brücke
+  (`public/apps/fa-wfpdf-bruecke.js`, Punkt 0) das Sprachfenster der Akte, sobald die Marke `FamilienakteDiktat` oben steht; im Browser
+  unverändert. UI `workflow-pdf-diktat` (5, Gegenprobe rot), `workflow-pdf` (4 Proben) grün. Am Gerät ungeprüft. Gegenstück Private Akte PR #95.
+
 - **Baum-Schaubilder dichter (Klaus 21.11., Bild aus der Privaten Akte: „Abstand zwischen den Ästen viel zu groß … in allen Apps nachziehen“;
   nicht ausgegeben, Fassung nicht erhöht, kommt über Pages):** die Familienakte hat keinen Datei-Explorer, nur die Ordnerbäume der Hilfe
   (`.ordnerbaum` in `app/globals.css`: „Akten sichern“, Benutzerabnahme, Ablaufbilder). Abstand je Ast 2 statt 6 px, Liste 3 statt 6 px.
@@ -302,7 +308,7 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Proben-Hinweise: `step()` wertet einen zurückgegebenen Text als grün, deshalb `soll()`; Seitentitel sind keine Sprungziele.
 - **Fassungen und Nachweise:** `docs/VEROEFFENTLICHUNG-<fassung>.json` für 2.28.77, 2.28.76, 2.28.74, 2.28.71, 2.28.70, 2.28.69, 2.28.68, 2.28.67, 2.28.66, 2.28.65, 2.28.64, 2.28.61, 2.28.60, 2.28.59, 2.28.58, 2.28.57, 2.28.56, 2.28.55, 2.28.54, 2.28.53, 2.28.52, 2.28.51, 2.28.49, 2.28.48, 2.28.39 … 2.28.22
   (2.28.50 ausgegeben, aber ohne eigenen Nachweis; 2.28.40–2.28.47 waren Zwischenstände). Keine davon erneut ausgeben;
-  **nächste freie Fassung 2.28.78** (2.28.77 = HTML-Dateien, 21.11.; 2.28.76 = Kalender je Person und flacher Fuß, 20.11.) (2.28.62 und 2.28.63 nie ausgegeben). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
+  **nächste freie Fassung 2.28.79** (2.28.78 = Diktat in Workflow PDF, 24.11.; 2.28.77 = HTML-Dateien, 21.11.; 2.28.76 = Kalender je Person und flacher Fuß, 20.11.) (2.28.62 und 2.28.63 nie ausgegeben). **Klaus 11.11.: nicht nach jedem Umbau veröffentlichen** – Änderungen
   sammeln, Proben laufen lassen, gesammelt als eine Fassung ausgeben (ersetzt „jede neue Funktion gleich ausgeben“ vom 06.11.).
   Neue Fassung oben in `lib/fassungen.ts` eintragen. Die Versionszeile zeigt die technische Fassung aus `package.json`;
   `APP_VERSION` 2.28.1 in `app/health-portal.tsx` bleibt interner Prüf-, Hilfe- und Changelog-Stand.
