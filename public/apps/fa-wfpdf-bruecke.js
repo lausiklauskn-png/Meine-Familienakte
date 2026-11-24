@@ -39,6 +39,13 @@
     Object.defineProperty(raumWfp, "DB", { configurable: false, enumerable: true, get: function () { return memoryDb; }, set: function () {} });
     W.WFP = raumWfp;
   }
+  // 0. Diktat (Klaus 2026-11-24, Galaxy Z Fold 7): die WebView der App hat keine eigene Spracherkennung. Die Akte setzt dafür
+  //    das Sprachfenster des Systems ein (native/familienakte-android.js bzw. -windows.js, Marke FamilienakteDiktat); im Rahmen
+  //    nimmt der Klon dasselbe, damit sein Mikrofon (sprechen.js, byte-1:1) über die Akte hört. Im Browser bleibt alles wie es ist.
+  try {
+    var oben = eingebettet && W.parent.FamilienakteDiktat && (W.parent.SpeechRecognition || W.parent.webkitSpeechRecognition);
+    if (oben) { W.SpeechRecognition = oben; W.webkitSpeechRecognition = oben; }
+  } catch { /* fremder Rahmen: Diktat wie vorher */ }
   var KEY_ALT = "wfpdf_", KEY_NEU = "fa_", VORRAT = "fa-wfpdf-";
   // 1a. Einstellungen
   try {

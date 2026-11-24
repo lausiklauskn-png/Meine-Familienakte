@@ -29,6 +29,12 @@ Sie enthält nur den aktuellen Stand und die festen Regeln. Ältere Briefe und Z
   Fassung 2.28.77 (Klaus: „Pro-Variante draußen … APK, PWA“). Am Gerät ungeprüft.
   **Ausgegeben 21.11. als Android, Windows und PWA, Nachweis `docs/VEROEFFENTLICHUNG-2.28.77.json`, nicht erneut ausgeben.**
 
+- **Diktat in Workflow PDF in der App (Klaus 24.11., Galaxy Z Fold 7 / Android 17: Mikrofon „nicht erkannt“; nicht ausgegeben, Fassung
+  nicht erhöht):** Die Akte selbst diktiert über Androids Sprachfenster (`native/familienakte-android.js`, kein Mikrofon-Recht – Absicht).
+  Der Klon von Workflow PDF im Rahmen nahm aber die Spracherkennung der WebView, die es dort nicht gibt. Jetzt übernimmt die Brücke
+  (`public/apps/fa-wfpdf-bruecke.js`, Punkt 0) das Sprachfenster der Akte, sobald die Marke `FamilienakteDiktat` oben steht; im Browser
+  unverändert. UI `workflow-pdf-diktat` (5, Gegenprobe rot), `workflow-pdf` (4 Proben) grün. Am Gerät ungeprüft. Gegenstück Private Akte PR #95.
+
 - **Baum-Schaubilder dichter (Klaus 21.11., Bild aus der Privaten Akte: „Abstand zwischen den Ästen viel zu groß … in allen Apps nachziehen“;
   nicht ausgegeben, Fassung nicht erhöht, kommt über Pages):** die Familienakte hat keinen Datei-Explorer, nur die Ordnerbäume der Hilfe
   (`.ordnerbaum` in `app/globals.css`: „Akten sichern“, Benutzerabnahme, Ablaufbilder). Abstand je Ast 2 statt 6 px, Liste 3 statt 6 px.
