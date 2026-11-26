@@ -427,8 +427,10 @@ code { display: inline-block; color: var(--navy); background: var(--blue-soft); 
 .site-brand small { margin-top: 2px; color: var(--muted); font-size: .75rem; }
 .site-brand .site-brand-version { color: var(--navy-2); font-weight: 850; letter-spacing: .025em; }
 /* Klaus 2026-10-31: statt „MMI“ das App-Icon, damit seine Fassung (Pro/Basic) vom Stand des Freundes zu unterscheiden ist. */
-.brand-symbol.brand-symbol-icon { background: #f2f6fb; border: 1px solid var(--navy-2); }
-.brand-symbol.brand-symbol-icon[data-variante="basic"] { background: #0b3154; }
+/* Klaus 26.11.2026: Pro (Android, Windows) dunkel mit Verlauf von der Mitte nach außen, Basic (Web-App) hell ohne Verlauf –
+   wie die App-Symbole (tools/icons-bauen.mjs). Bis dahin war es hier genau vertauscht. */
+.brand-symbol.brand-symbol-icon { background: radial-gradient(circle at 50% 50%, #1f5d96 0%, #103f6c 55%, #061c33 100%); border: 1px solid var(--navy-2); }
+.brand-symbol.brand-symbol-icon[data-variante="basic"] { background: #f2f6fb; }
 .brand-symbol.brand-symbol-icon svg { width: 30px; height: 30px; display: block; }
 .site-brand .brand-symbol { flex: 0 0 auto; }
 .site-brand > span:last-child { min-width: 0; }
