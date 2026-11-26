@@ -1,0 +1,31 @@
+{
+  "version": "2.28.79",
+  "source": "6de39f5022164c682e4992b1495a3207d76078e2",
+  "pullRequest": [235, 234],
+  "recordedUtc": "2026-11-26T15:00:00Z",
+  "freigabe": "Klaus 26.11.2026: „Zweimal ja“ (Private Brain Pro 1.0.59 und Familienakte 2.28.79).",
+  "inhalt": "Neue Symbole: Pro-App (Android, Windows) mit dem dunklen Symbol mit Verlauf, Web-App hell, auch in der Kopfleiste. Vorher vertauscht.",
+  "releases": [
+    {
+      "tag": "android-v2.28.79",
+      "run": 45841550672,
+      "conclusion": "success",
+      "updateServer": "server=ja",
+      "downloadProof": [
+        { "name": "Familienakte-android-v2.28.79.apk", "bytes": 82355222, "sha256": "c4c75a2d5d30c797c3b5ccafb4cc52338f166967c0f0788e86b83434e0bc5c64", "matchesSHA256SUMS": true, "quelle": "Download von github.com (Release), in der Sitzung nachgerechnet" },
+        { "name": "Familienakte-Einzeldatei-2.28.79.html", "bytes": 5221744, "sha256": "8ca47d001d88dad34b83d11bc2f72e4211a454df1783ca95e2adf60e79f0087a", "matchesSHA256SUMS": true, "quelle": "Download von github.com (Release), in der Sitzung nachgerechnet" }
+      ]
+    },
+    {
+      "tag": "windows-v2.28.79",
+      "run": 45841556315,
+      "conclusion": "success",
+      "updateServer": "server=ja",
+      "downloadProof": [
+        { "name": "Familienakte-Windows-2.28.79-x64-setup.exe", "bytes": 96588541, "sha256": "514146ff43d61c179e26b11f7fdbd40f848224c6b04519953aee80bdcaf2a7b4", "matchesSHA256SUMS": true, "quelle": "Download von github.com (Release), in der Sitzung nachgerechnet" }
+      ]
+    }
+  ],
+  "pwa": "über Pages mit main (6de39f5)",
+  "nichtGeprueft": "Symbol am Gerät (Android-Startbildschirm, Windows-Startmenü); Update über die Versionszeile."
+}
